@@ -1,0 +1,59 @@
+{
+  "name": "@openmrs/esm-config",
+  "version": "1.0.0",
+  "description": "A configuration library for the OpenMRS Single-Spa framework.",
+  "main": "dist/openmrs-esm-config.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "start": "webpack-dev-server --mode=development",
+    "test": "jest",
+    "lint": "eslint src",
+    "build": "npm run clean && webpack --mode production && webpack --entry ./src/openmrs-esm-root-config.lib.js --output-filename openmrs-esm-root-config.lib.js  --output-library-target commonjs",
+    "prepublishOnly": "npm run build"
+  },
+  "directories": {
+    "lib": "dist"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && npm run lint && npm test"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-root-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-root-config/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-root-config#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@types/jest": "^24.0.18",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "browserslist-config-openmrs": "^1.0.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copyfiles": "^2.1.1",
+    "eslint": "^6.3.0",
+    "eslint-config-important-stuff": "^1.1.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^3.0.8",
+    "jest": "^24.9.0",
+    "jest-cli": "^24.9.0",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^1.11.1",
+    "systemjs-webpack-interop": "^1.1.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "dependencies": {}
+}
