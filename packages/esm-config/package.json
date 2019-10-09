@@ -55,5 +55,7 @@
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ramda": "^0.26.1"
+  }
 }
