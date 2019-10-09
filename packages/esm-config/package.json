@@ -1,14 +1,14 @@
 {
-  "name": "@openmrs/esm-config",
+  "name": "@openmrs/esm-module-config",
   "version": "1.0.0",
   "description": "A configuration library for the OpenMRS Single-Spa framework.",
-  "main": "dist/openmrs-esm-config.js",
+  "main": "dist/openmrs-esm-module-config.js",
   "scripts": {
     "clean": "rimraf dist",
     "start": "webpack-dev-server --mode=development",
     "test": "jest",
     "lint": "eslint src",
-    "build": "npm run clean && webpack --mode production && webpack --entry ./src/openmrs-esm-root-config.lib.js --output-filename openmrs-esm-root-config.lib.js  --output-library-target commonjs",
+    "build": "npm run clean && webpack --mode production && webpack --entry ./src/openmrs-esm-module-config.js --output-filename openmrs-esm-module-config.js  --output-library-target commonjs",
     "prepublishOnly": "npm run build"
   },
   "directories": {
@@ -24,12 +24,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openmrs/openmrs-esm-root-config.git"
+    "url": "git+https://github.com/openmrs/openmrs-esm-module-config.git"
   },
   "bugs": {
-    "url": "https://github.com/openmrs/openmrs-esm-root-config/issues"
+    "url": "https://github.com/openmrs/openmrs-esm-module-config/issues"
   },
-  "homepage": "https://github.com/openmrs/openmrs-esm-root-config#readme",
+  "homepage": "https://github.com/openmrs/openmrs-esm-module-config#readme",
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
