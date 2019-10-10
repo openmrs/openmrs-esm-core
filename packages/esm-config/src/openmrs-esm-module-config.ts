@@ -1,7 +1,7 @@
 import * as R from "ramda";
 
 // The configurations that have been provided
-const configs = [];
+const configs : object[] = [];
 
 // An object with module names for keys and schemas for values.
 const schemas = {};
