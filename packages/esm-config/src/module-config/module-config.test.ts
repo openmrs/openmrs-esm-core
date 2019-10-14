@@ -1,4 +1,4 @@
-import * as Config from "./openmrs-esm-module-config";
+import * as Config from "./module-config";
 
 describe("getConfig", () => {
   afterEach(() => {
