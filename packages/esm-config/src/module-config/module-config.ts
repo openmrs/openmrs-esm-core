@@ -22,27 +22,52 @@ export function getConfig(moduleName) {
   }
   const schema = schemas[moduleName];
 
-  // Create a config object composed of all the defaults
-  const defaultConfig = R.map(R.prop("default"), schema);
-
   // Merge all of the configs provided for moduleName
+  const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
   const allConfigsForModule = R.map(R.prop(moduleName), configs);
-  const providedConfig = R.mergeAll(allConfigsForModule);
+  const providedConfig = mergeDeepAll(allConfigsForModule);
 
-  for (let [key, value] of Object.entries(providedConfig)) {
-    if (!schema.hasOwnProperty(key)) {
-      throw Error(
-        `Unknown config key ${key} provided for module ${moduleName}. Please see the config schema for ${moduleName}.`
-      );
+  // Recursively check the provided config tree to make sure that all
+  // of the provided properties exist in the schema.
+  const checkForUnknownConfigProperties = (schema, config, keyPath = "") => {
+    for (let [key, value] of Object.entries(config)) {
+      keyPath += key;
+      if (!schema.hasOwnProperty(key)) {
+        throw Error(
+          `Unknown config key ${keyPath} provided for module ${moduleName}. Please see the config schema for ${moduleName}.`
+        );
+      } else if (typeof value === "object" && value !== null) {
+        // Recurse to config[key] and schema[key].
+        const schemaPart = schema[key];
+        checkForUnknownConfigProperties(schemaPart, value, keyPath + ".");
+      }
     }
-  }
-  for (let key of Object.keys(schema)) {
-    if (!providedConfig.hasOwnProperty(key)) {
-      providedConfig[key] = schema[key]["default"];
-    }
-  }
+  };
+  checkForUnknownConfigProperties(schema, providedConfig);
 
-  return providedConfig;
+  // Recursively fill in the config with values from the schema.
+  const setDefaults = (schema, config) => {
+    for (let key of Object.keys(schema)) {
+      if (schema[key].hasOwnProperty("default")) {
+        // We assume that schema[key] defines a config value, since it has
+        // a property "default."
+        if (!config.hasOwnProperty(key)) {
+          config[key] = schema[key]["default"];
+        }
+      } else {
+        // Since schema[key] has no property "default", we assume it is a
+        // parent config property. We recurse to config[key] and schema[key].
+        // Default config[key] to {}.
+        const schemaPart = schema[key];
+        const configPart = config.hasOwnProperty(key) ? config[key] : {};
+        config[key] = setDefaults(schemaPart, configPart);
+      }
+    }
+    return config;
+  };
+  const config = setDefaults(schema, providedConfig);
+
+  return config;
 }
 
 export function clearAll() {

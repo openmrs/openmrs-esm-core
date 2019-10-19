@@ -29,9 +29,50 @@ describe("getConfig", () => {
     expect(() => Config.getConfig("foo-module")).toThrowError(/schema/);
   });
 
+  it("requires nested config values to have been defined in the schema", () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: { bar: { default: "qux" } }
+    });
+    Config.provide({ "foo-module": { foo: { doof: "nope" } } });
+    expect(() => Config.getConfig("foo-module")).toThrowError(/schema/);
+  });
+
   it("throws if looking up module with no schema", () => {
     expect(() => Config.getConfig("fake-module")).toThrowError(
       /schema.*defined/
     );
+  });
+
+  it("returns a nested configuration", () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        bar: {
+          default: -1
+        },
+        baz: {
+          qux: {
+            default: "N/A"
+          },
+          quy: {
+            default: ""
+          }
+        }
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: {
+          bar: 0,
+          baz: {
+            quy: "xyz"
+          }
+        }
+      }
+    };
+    Config.provide(testConfig);
+    const config = Config.getConfig("foo-module");
+    expect(config.foo.bar).toBe(0);
+    expect(config.foo.baz.qux).toBe("N/A");
+    expect(config.foo.baz.quy).toBe("xyz");
   });
 });
