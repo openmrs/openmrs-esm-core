@@ -27,7 +27,6 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"]
   },
-  externals: ["openmrs-config"],
   plugins: [new CleanWebpackPlugin(), new ForkTsCheckerWebpackPlugin()],
   devServer: {
     disableHostCheck: true,

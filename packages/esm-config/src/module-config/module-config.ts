@@ -6,6 +6,28 @@ const configs: object[] = [];
 // An object with module names for keys and schemas for values.
 const schemas = {};
 
+// resolveImportMapConfig -- not working
+// Pull default config file from the import map. Module 'config-file'
+// TODO: Get this to actually work
+let importMapConfigHasBeenAdded = false;
+export async function resolveImportMapConfig() {
+  if (importMapConfigHasBeenAdded) return;
+  let importMapConfigExists;
+  try {
+    System.resolve("config-file");
+    importMapConfigExists = true;
+  } catch {
+    importMapConfigExists = false;
+  }
+
+  if (importMapConfigExists) {
+    await System.import("config-file").then(res => {
+      configs.unshift(res);
+      importMapConfigHasBeenAdded = true;
+    });
+  }
+}
+
 export function defineConfigSchema(moduleName, schema) {
   // console.log( "defineConfigSchema received schema for " + moduleName + ": " + JSON.stringify(schema));
   schemas[moduleName] = schema;
