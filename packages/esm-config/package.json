@@ -9,10 +9,11 @@
     "test": "jest",
     "lint": "eslint src --ext ts",
     "typescript": "tsc",
-    "prettier": "prettier src/**/* --write",
+    "prettier": "prettier 'src/**/*' --write",
     "build": "webpack --mode=production",
     "prepublishOnly": "npm run build"
   },
+  "license": "MPL-2.0",
   "directories": {
     "lib": "dist"
   },
@@ -55,13 +56,12 @@
     "jest-cli": "^24.9.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^2.0.0",
+    "ramda": "^0.26.1",
     "systemjs-webpack-interop": "^1.1.0",
     "typescript": "^3.6.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.9.0"
   },
-  "dependencies": {
-    "ramda": "^0.26.1"
-  }
+  "dependencies": {}
 }

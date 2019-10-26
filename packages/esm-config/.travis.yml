@@ -7,8 +7,8 @@ script:
   - npm run typescript
   - npm run build
   - echo "Folder name in Digital Ocean Spaces - $TRAVIS_COMMIT"
-  - mkdir -p dist/@openmrs/esm-api/$TRAVIS_COMMIT
-  - mv dist/*.* dist/@openmrs/esm-api/$TRAVIS_COMMIT/
+  - mkdir -p dist/@openmrs/esm-module-config/$TRAVIS_COMMIT
+  - mv dist/*.* dist/@openmrs/esm-module-config/$TRAVIS_COMMIT/
 deploy:
   provider: s3
   access_key_id: "$DIGITAL_OCEAN_SPACES_KEY_ID"
