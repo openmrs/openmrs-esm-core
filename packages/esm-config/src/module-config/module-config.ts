@@ -6,28 +6,6 @@ const configs: object[] = [];
 // An object with module names for keys and schemas for values.
 const schemas = {};
 
-// resolveImportMapConfig -- not working
-// Pull default config file from the import map. Module 'config-file'
-// TODO: Get this to actually work
-let importMapConfigHasBeenAdded = false;
-export async function resolveImportMapConfig() {
-  if (importMapConfigHasBeenAdded) return;
-  let importMapConfigExists;
-  try {
-    System.resolve("config-file");
-    importMapConfigExists = true;
-  } catch {
-    importMapConfigExists = false;
-  }
-
-  if (importMapConfigExists) {
-    await System.import("config-file").then(res => {
-      configs.unshift(res);
-      importMapConfigHasBeenAdded = true;
-    });
-  }
-}
-
 export function defineConfigSchema(moduleName, schema) {
   // console.log( "defineConfigSchema received schema for " + moduleName + ": " + JSON.stringify(schema));
   schemas[moduleName] = schema;
@@ -38,7 +16,26 @@ export function provide(config) {
   configs.push(config);
 }
 
-export function getConfig(moduleName) {
+let importMapConfigHasBeenAdded = false;
+export async function getConfig(moduleName: string): Promise<any> {
+  // Get config file from import map and prepend it to `configs`
+  if (!importMapConfigHasBeenAdded) {
+    let importMapConfigExists;
+    try {
+      System.resolve("config-file");
+      importMapConfigExists = true;
+    } catch {
+      importMapConfigExists = false;
+    }
+
+    if (importMapConfigExists) {
+      await System.import("config-file").then(res => {
+        configs.unshift(res.default);
+        importMapConfigHasBeenAdded = true;
+      });
+    }
+  }
+
   if (!schemas.hasOwnProperty(moduleName)) {
     throw Error("No config schema has been defined for " + moduleName);
   }

@@ -27,6 +27,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"]
   },
+  externals: ["react", "react-dom", /^@openmrs\/esm.*/],
   plugins: [new CleanWebpackPlugin(), new ForkTsCheckerWebpackPlugin()],
   devServer: {
     disableHostCheck: true,

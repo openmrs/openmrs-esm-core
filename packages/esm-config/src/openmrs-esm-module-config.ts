@@ -3,3 +3,5 @@ export {
   getConfig,
   provide
 } from "./module-config/module-config";
+
+export { ModuleNameContext, useConfig } from "./react-hook/react-hook";

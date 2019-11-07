@@ -5,6 +5,7 @@
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
     "moduleResolution": "node",
+    "jsx": "react",
     "lib": [
       "dom",
       "es5",
