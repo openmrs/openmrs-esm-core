@@ -22,7 +22,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && concurrently -n lint,test,typescript 'npm run lint' 'npm test' 'npm run typescript'"
+      "pre-commit": "pretty-quick --staged && concurrently npm:lint npm:test npm:typescript"
     }
   },
   "repository": {

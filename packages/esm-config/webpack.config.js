@@ -8,7 +8,8 @@ module.exports = {
   output: {
     filename: "openmrs-esm-module-config.js",
     path: path.resolve(__dirname, "dist"),
-    libraryTarget: "system"
+    libraryTarget: "system",
+    jsonpFunction: "webpackJsonp_openmrs_esm_module_config"
   },
   module: {
     rules: [
