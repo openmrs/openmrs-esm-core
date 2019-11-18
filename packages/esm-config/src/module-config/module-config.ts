@@ -7,35 +7,41 @@ const configs: object[] = [];
 const schemas = {};
 
 export function defineConfigSchema(moduleName, schema) {
-  // console.log( "defineConfigSchema received schema for " + moduleName + ": " + JSON.stringify(schema));
   schemas[moduleName] = schema;
 }
 
 export function provide(config) {
-  // console.log("provide recieved config " + JSON.stringify(config));
   configs.push(config);
 }
 
-let importMapConfigHasBeenAdded = false;
-export async function getConfig(moduleName: string): Promise<any> {
-  // Get config file from import map and prepend it to `configs`
-  if (!importMapConfigHasBeenAdded) {
-    let importMapConfigExists;
-    try {
-      System.resolve("config-file");
-      importMapConfigExists = true;
-    } catch {
-      importMapConfigExists = false;
-    }
+// We cache the Promise that loads the import mapped config file
+// so that we can be sure to only call it once
+let getImportMapConfigPromise;
+export async function getConfig(moduleName: string): Promise<ConfigObject> {
+  if (!getImportMapConfigPromise) {
+    getImportMapConfigPromise = getImportMapConfigFile();
+  }
+  await getImportMapConfigPromise;
+  return getConfigForModule(moduleName);
+}
 
-    if (importMapConfigExists) {
-      await System.import("config-file").then(res => {
-        configs.unshift(res.default);
-        importMapConfigHasBeenAdded = true;
-      });
-    }
+// Get config file from import map and prepend it to `configs`
+async function getImportMapConfigFile(): Promise<void> {
+  let importMapConfigExists;
+  try {
+    System.resolve("config-file");
+    importMapConfigExists = true;
+  } catch {
+    importMapConfigExists = false;
   }
 
+  if (importMapConfigExists) {
+    const configFileModule = await System.import("config-file");
+    configs.unshift(configFileModule.default);
+  }
+}
+
+function getConfigForModule(moduleName: string): ConfigObject {
   if (!schemas.hasOwnProperty(moduleName)) {
     throw Error("No config schema has been defined for " + moduleName);
   }
@@ -90,6 +96,11 @@ export async function getConfig(moduleName: string): Promise<any> {
 }
 
 export function clearAll() {
+  getImportMapConfigPromise = undefined;
   configs.length = 0;
   for (var member in schemas) delete schemas[member];
+}
+
+export interface ConfigObject extends Object {
+  [key: string]: any;
 }

@@ -75,6 +75,17 @@ describe("getConfig", () => {
     expect(config.foo.baz.qux).toBe("N/A");
     expect(config.foo.baz.quy).toBe("xyz");
   });
+
+  it("works for multiple modules", async () => {
+    Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
+    Config.defineConfigSchema("bar-module", { bar: { default: "quinn" } });
+    const testConfig = { "bar-module": { bar: "baz" } };
+    Config.provide(testConfig);
+    const fooConfig = Config.getConfig("foo-module");
+    await expect(fooConfig).resolves.toHaveProperty("foo", "qux");
+    const barConfig = Config.getConfig("bar-module");
+    await expect(barConfig).resolves.toHaveProperty("bar", "baz");
+  });
 });
 
 describe("resolveImportMapConfig", () => {
@@ -104,7 +115,7 @@ describe("resolveImportMapConfig", () => {
     expect(config.foo).toBe("baz");
   });
 
-  it("does not 404 when no config file is in the import map", async () => {
+  it("does not 404 when no config file is in the import map", () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     // this line below is actually all that the test requires, the rest is sanity checking
     expect(() => Config.getConfig("foo-module")).not.toThrow();
