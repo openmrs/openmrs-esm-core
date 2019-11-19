@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "webpack-dev-server",
-    "test": "jest",
+    "test": "BABEL_ENV=test jest",
     "lint": "eslint src --ext ts",
     "typescript": "tsc",
     "prettier": "prettier 'src/**/*' --write",
@@ -36,8 +36,9 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
-    "@babel/preset-react": "^7.6.3",
+    "@babel/preset-react": "^7.7.0",
     "@babel/preset-typescript": "^7.6.0",
+    "@testing-library/react": "^9.3.2",
     "@types/jest": "^24.0.20",
     "@types/systemjs": "^0.20.6",
     "babel-eslint": "^11.0.0-beta.0",

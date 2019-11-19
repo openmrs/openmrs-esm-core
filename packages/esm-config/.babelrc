@@ -3,5 +3,12 @@
     "@babel/preset-env",
     "@babel/preset-typescript",
   ],
-  "plugins": ["babel-plugin-ramda"]
+  "plugins": ["babel-plugin-ramda"],
+  "env": {
+    "test": {
+      "presets": [
+        "@babel/preset-react"
+      ]
+    }
+  }
 }
