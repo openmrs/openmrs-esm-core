@@ -53,7 +53,8 @@ function getConfigForModule(moduleName: string): ConfigObject {
   const providedConfig = mergeDeepAll(allConfigsForModule);
 
   // Recursively check the provided config tree to make sure that all
-  // of the provided properties exist in the schema.
+  // of the provided properties exist in the schema. Run validators
+  // where present in the schema.
   const checkForUnknownConfigProperties = (schema, config, keyPath = "") => {
     for (let [key, value] of Object.entries(config)) {
       keyPath += key;
@@ -65,6 +66,17 @@ function getConfigForModule(moduleName: string): ConfigObject {
         // Recurse to config[key] and schema[key].
         const schemaPart = schema[key];
         checkForUnknownConfigProperties(schemaPart, value, keyPath + ".");
+      } else {
+        if (schema[key].validators) {
+          for (let validator of schema[key].validators) {
+            const validatorResult = validator(value);
+            if (typeof validatorResult === "string") {
+              throw Error(
+                `Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`
+              );
+            }
+          }
+        }
       }
     }
   };

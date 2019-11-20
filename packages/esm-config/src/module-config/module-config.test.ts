@@ -1,4 +1,5 @@
 import * as Config from "./module-config";
+import { validator } from "../validators/validator";
 
 describe("getConfig", () => {
   afterEach(() => {
@@ -85,6 +86,45 @@ describe("getConfig", () => {
     await expect(fooConfig).resolves.toHaveProperty("foo", "qux");
     const barConfig = Config.getConfig("bar-module");
     await expect(barConfig).resolves.toHaveProperty("bar", "baz");
+  });
+
+  it("validates config values", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        default: "thing",
+        validators: [
+          validator(val => val.startsWith("thi"), "must start with 'thi'")
+        ]
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: "bar"
+      }
+    };
+    Config.provide(testConfig);
+    await expect(Config.getConfig("foo-module")).rejects.toThrow(
+      /bar.*foo.*must start with 'thi'.*/
+    );
+  });
+
+  it("validators pass", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        default: "thing",
+        validators: [
+          validator(val => val.startsWith("thi"), "must start with 'thi'")
+        ]
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: "this"
+      }
+    };
+    Config.provide(testConfig);
+    const config = await Config.getConfig("foo-module");
+    expect(config.foo).toBe("this");
   });
 });
 
