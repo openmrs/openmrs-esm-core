@@ -34,10 +34,13 @@ async function getImportMapConfigFile(): Promise<void> {
   } catch {
     importMapConfigExists = false;
   }
-
   if (importMapConfigExists) {
-    const configFileModule = await System.import("config-file");
-    configs.unshift(configFileModule.default);
+    try {
+      const configFileModule = await System.import("config-file");
+      configs.unshift(configFileModule.default);
+    } catch (e) {
+      throw Error("Problem importing config-file: " + e);
+    }
   }
 }
 
@@ -57,22 +60,22 @@ function getConfigForModule(moduleName: string): ConfigObject {
   // where present in the schema.
   const checkForUnknownConfigProperties = (schema, config, keyPath = "") => {
     for (let [key, value] of Object.entries(config)) {
-      keyPath += key;
+      const thisKeyPath = keyPath + key;
       if (!schema.hasOwnProperty(key)) {
         throw Error(
-          `Unknown config key ${keyPath} provided for module ${moduleName}. Please see the config schema for ${moduleName}.`
+          `Unknown config key '${thisKeyPath}' provided for module ${moduleName}. Please see the config schema for ${moduleName}.`
         );
       } else if (typeof value === "object" && value !== null) {
         // Recurse to config[key] and schema[key].
         const schemaPart = schema[key];
-        checkForUnknownConfigProperties(schemaPart, value, keyPath + ".");
+        checkForUnknownConfigProperties(schemaPart, value, thisKeyPath + ".");
       } else {
         if (schema[key].validators) {
           for (let validator of schema[key].validators) {
             const validatorResult = validator(value);
             if (typeof validatorResult === "string") {
               throw Error(
-                `Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`
+                `Invalid configuration value ${value} for ${thisKeyPath}: ${validatorResult}`
               );
             }
           }

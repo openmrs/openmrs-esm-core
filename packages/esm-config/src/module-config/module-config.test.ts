@@ -35,7 +35,9 @@ describe("getConfig", () => {
       foo: { bar: { default: "qux" } }
     });
     Config.provide({ "foo-module": { foo: { doof: "nope" } } });
-    await expect(Config.getConfig("foo-module")).rejects.toThrowError(/schema/);
+    await expect(Config.getConfig("foo-module")).rejects.toThrowError(
+      /foo\.doof.*schema/
+    );
   });
 
   it("throws if looking up module with no schema", async () => {
