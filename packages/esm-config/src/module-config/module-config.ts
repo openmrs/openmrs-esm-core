@@ -81,7 +81,11 @@ function getConfigForModule(moduleName: string): ConfigObject {
         throw Error(
           `Unknown config key '${thisKeyPath}' provided for module ${moduleName}. Please see the config schema for ${moduleName}.`
         );
-      } else if (typeof value === "object" && value !== null) {
+      } else if (
+        typeof value === "object" &&
+        !Array.isArray(value) &&
+        value !== null
+      ) {
         // Recurse to config[key] and schema[key].
         const schemaPart = schema[key];
         checkForUnknownConfigProperties(schemaPart, value, thisKeyPath + ".");

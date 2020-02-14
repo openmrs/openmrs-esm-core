@@ -158,6 +158,22 @@ describe("getConfig", () => {
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toBe("this");
   });
+
+  it("supports array elements", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        default: [1, 2, 3]
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: [0, 2, 4]
+      }
+    };
+    Config.provide(testConfig);
+    const config = await Config.getConfig("foo-module");
+    expect(config.foo).toStrictEqual([0, 2, 4]);
+  });
 });
 
 describe("resolveImportMapConfig", () => {
