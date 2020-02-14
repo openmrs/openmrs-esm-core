@@ -174,6 +174,26 @@ describe("getConfig", () => {
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toStrictEqual([0, 2, 4]);
   });
+
+  it("supports validation of array elements", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        default: [1, 2, 3],
+        arrayElements: {
+          validators: [validator(Number.isInteger, "must be an integer")]
+        }
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: [0, 1.5, "bad"]
+      }
+    };
+    Config.provide(testConfig);
+    await expect(Config.getConfig("foo-module")).rejects.toThrow(
+      /must be an integer/
+    );
+  });
 });
 
 describe("resolveImportMapConfig", () => {

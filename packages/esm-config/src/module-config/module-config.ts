@@ -90,6 +90,7 @@ function getConfigForModule(moduleName: string): ConfigObject {
         const schemaPart = schema[key];
         checkForUnknownConfigProperties(schemaPart, value, thisKeyPath + ".");
       } else {
+        // This is a defined config value; validate it
         if (schema[key].validators) {
           for (let validator of schema[key].validators) {
             const validatorResult = validator(value);
@@ -97,6 +98,23 @@ function getConfigForModule(moduleName: string): ConfigObject {
               throw Error(
                 `Invalid configuration value ${value} for ${thisKeyPath}: ${validatorResult}`
               );
+            }
+          }
+        }
+        if (schema[key].arrayElements && schema[key].arrayElements.validators) {
+          if (!Array.isArray(value)) {
+            throw Error(
+              `Invalid configuration value ${value} for ${thisKeyPath}: value must be an array.`
+            );
+          }
+          for (let validator of schema[key].arrayElements.validators) {
+            for (let element of value) {
+              const validatorResult = validator(element);
+              if (typeof validatorResult === "string") {
+                throw Error(
+                  `Invalid array element ${element} in configuration value for ${thisKeyPath}: ${validatorResult}`
+                );
+              }
             }
           }
         }
