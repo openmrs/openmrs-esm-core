@@ -74,23 +74,19 @@ function getConfigForModule(moduleName: string): ConfigObject {
   // Recursively check the provided config tree to make sure that all
   // of the provided properties exist in the schema. Run validators
   // where present in the schema.
-  const checkForUnknownConfigProperties = (schema, config, keyPath = "") => {
+  const validateConfig = (schema, config, keyPath = "") => {
     for (let [key, value] of Object.entries(config)) {
       const thisKeyPath = keyPath + key;
       if (!schema.hasOwnProperty(key)) {
         throw Error(
           `Unknown config key '${thisKeyPath}' provided for module ${moduleName}. Please see the config schema for ${moduleName}.`
         );
-      } else if (
-        typeof value === "object" &&
-        !Array.isArray(value) &&
-        value !== null
-      ) {
-        // Recurse to config[key] and schema[key].
+      } else if (isOrdinaryObject(value)) {
+        // value is a normal object; recurse to config[key] and schema[key].
         const schemaPart = schema[key];
-        checkForUnknownConfigProperties(schemaPart, value, thisKeyPath + ".");
+        validateConfig(schemaPart, value, thisKeyPath + ".");
       } else {
-        // This is a defined config value; validate it
+        // value is a defined config property; validate it
         if (schema[key].validators) {
           for (let validator of schema[key].validators) {
             const validatorResult = validator(value);
@@ -101,19 +97,45 @@ function getConfigForModule(moduleName: string): ConfigObject {
             }
           }
         }
-        if (schema[key].arrayElements && schema[key].arrayElements.validators) {
+        if (schema[key].arrayElements) {
           if (!Array.isArray(value)) {
             throw Error(
               `Invalid configuration value ${value} for ${thisKeyPath}: value must be an array.`
             );
           }
-          for (let validator of schema[key].arrayElements.validators) {
-            for (let element of value) {
-              const validatorResult = validator(element);
-              if (typeof validatorResult === "string") {
-                throw Error(
-                  `Invalid array element ${element} in configuration value for ${thisKeyPath}: ${validatorResult}`
-                );
+          // if there is an array element object schema, verify that elements match it
+          const allowedKeys = Object.keys(schema[key].arrayElements).filter(
+            e => !["default", "validators"].includes(e)
+          );
+          if (allowedKeys.length > 0) {
+            for (let i = 0; i < value.length; i++) {
+              const arrayElement = value[i];
+              if (isOrdinaryObject(arrayElement)) {
+                for (let [arrayObjectKey, arrayObjectValue] of Object.entries(
+                  arrayElement
+                )) {
+                  if (!allowedKeys.includes(arrayObjectKey)) {
+                    throw Error(
+                      `For module ${moduleName}, in the array provided for '${thisKeyPath}', ` +
+                        `element #${i +
+                          1} contains unknown key '${arrayObjectKey}'. ` +
+                        `Allowed keys are ${allowedKeys.join(", ")}. ` +
+                        `Please see the config schema for ${moduleName}.`
+                    );
+                  }
+                }
+              }
+            }
+          }
+          if (schema[key].arrayElements.validators) {
+            for (let validator of schema[key].arrayElements.validators) {
+              for (let element of value) {
+                const validatorResult = validator(element);
+                if (typeof validatorResult === "string") {
+                  throw Error(
+                    `Invalid array element ${element} in configuration value for ${thisKeyPath}: ${validatorResult}`
+                  );
+                }
               }
             }
           }
@@ -121,7 +143,7 @@ function getConfigForModule(moduleName: string): ConfigObject {
       }
     }
   };
-  checkForUnknownConfigProperties(schema, providedConfig);
+  validateConfig(schema, providedConfig);
 
   // Recursively fill in the config with values from the schema.
   const setDefaults = (schema, config) => {
@@ -146,6 +168,10 @@ function getConfigForModule(moduleName: string): ConfigObject {
   const config = setDefaults(schema, providedConfig);
 
   return config;
+}
+
+function isOrdinaryObject(value) {
+  return typeof value === "object" && !Array.isArray(value) && value !== null;
 }
 
 export function clearAll() {

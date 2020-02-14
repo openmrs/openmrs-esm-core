@@ -194,6 +194,29 @@ describe("getConfig", () => {
       /must be an integer/
     );
   });
+
+  it("supports validating structure of array element objects", async () => {
+    Config.defineConfigSchema("foo-module", {
+      bar: {
+        baz: {
+          default: [{ a: 0, b: 1 }],
+          arrayElements: {
+            a: {},
+            b: {}
+          }
+        }
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        bar: { baz: [{ a: 1, b: 2 }, { a: 3, b: 4, dingo: 5 }] }
+      }
+    };
+    Config.provide(testConfig);
+    await expect(Config.getConfig("foo-module")).rejects.toThrow(
+      /bar.baz.*element #2.*dingo.*schema/
+    );
+  });
 });
 
 describe("resolveImportMapConfig", () => {
