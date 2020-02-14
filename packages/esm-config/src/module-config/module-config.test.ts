@@ -191,7 +191,7 @@ describe("getConfig", () => {
     };
     Config.provide(testConfig);
     await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /must be an integer/
+      /element.*1\.5.*foo.*must be an integer/
     );
   });
 
@@ -214,7 +214,54 @@ describe("getConfig", () => {
     };
     Config.provide(testConfig);
     await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /bar.baz.*element #2.*dingo.*schema/
+      /key.*bar\.baz\[1\]\.dingo.*schema/
+    );
+  });
+
+  it("supports validating structure of array element nested objects", async () => {
+    Config.defineConfigSchema("foo-module", {
+      bar: {
+        baz: {
+          default: [{ a: 0, b: { c: 2 } }],
+          arrayElements: {
+            a: {},
+            b: { c: {} }
+          }
+        }
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        bar: { baz: [{ a: 1, b: 2 }, { a: 3, b: { dingo: 5 } }] }
+      }
+    };
+    Config.provide(testConfig);
+    await expect(Config.getConfig("foo-module")).rejects.toThrow(
+      /key.*bar\.baz\[1\]\.b\.dingo.*schema/
+    );
+  });
+
+  it("supports validation of nested array element objects", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        default: [{ a: { b: 1 } }],
+        arrayElements: {
+          a: {
+            b: {
+              validators: [validator(Number.isInteger, "must be an integer")]
+            }
+          }
+        }
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: [{ a: { b: 0.2 } }]
+      }
+    };
+    Config.provide(testConfig);
+    await expect(Config.getConfig("foo-module")).rejects.toThrow(
+      /value.*foo\[0\]\.a\.b.*must be an integer/
     );
   });
 });

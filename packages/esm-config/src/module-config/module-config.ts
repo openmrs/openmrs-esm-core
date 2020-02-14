@@ -98,33 +98,26 @@ function getConfigForModule(moduleName: string): ConfigObject {
           }
         }
         if (schema[key].arrayElements) {
+          // value should be an array
           if (!Array.isArray(value)) {
             throw Error(
               `Invalid configuration value ${value} for ${thisKeyPath}: value must be an array.`
             );
           }
           // if there is an array element object schema, verify that elements match it
-          const allowedKeys = Object.keys(schema[key].arrayElements).filter(
-            e => !["default", "validators"].includes(e)
-          );
-          if (allowedKeys.length > 0) {
+
+          const hasObjectSchema =
+            Object.keys(schema[key].arrayElements).filter(
+              e => !["default", "validators"].includes(e)
+            ).length > 0;
+          if (hasObjectSchema) {
             for (let i = 0; i < value.length; i++) {
               const arrayElement = value[i];
-              if (isOrdinaryObject(arrayElement)) {
-                for (let [arrayObjectKey, arrayObjectValue] of Object.entries(
-                  arrayElement
-                )) {
-                  if (!allowedKeys.includes(arrayObjectKey)) {
-                    throw Error(
-                      `For module ${moduleName}, in the array provided for '${thisKeyPath}', ` +
-                        `element #${i +
-                          1} contains unknown key '${arrayObjectKey}'. ` +
-                        `Allowed keys are ${allowedKeys.join(", ")}. ` +
-                        `Please see the config schema for ${moduleName}.`
-                    );
-                  }
-                }
-              }
+              validateConfig(
+                schema[key].arrayElements,
+                arrayElement,
+                `${thisKeyPath}[${i}].`
+              );
             }
           }
           if (schema[key].arrayElements.validators) {

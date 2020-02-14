@@ -9,3 +9,5 @@ export const isBoolean = validator(
   val => typeof val === "boolean",
   "must be a boolean"
 );
+
+export const validators = { isString, isBoolean };
