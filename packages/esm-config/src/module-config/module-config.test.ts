@@ -1,6 +1,36 @@
 import * as Config from "./module-config";
 import { validator } from "../validators/validator";
 
+describe("defineConfigSchema", () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
+
+  afterEach(() => {
+    Config.clearAll();
+  });
+
+  it("logs an error if an unexpected value is provided as a key", () => {
+    const schema = {
+      bar: true
+    };
+    Config.defineConfigSchema("foo-module", schema);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/foo-module.*bar/)
+    );
+  });
+
+  it("logs an error if an unexpected nested value is provided as a key", () => {
+    const schema = {
+      bar: { baz: "bad bad bad" }
+    };
+    Config.defineConfigSchema("foo-module", schema);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/foo-module.*bar\.baz/)
+    );
+  });
+});
+
 describe("getConfig", () => {
   afterEach(() => {
     Config.clearAll();
