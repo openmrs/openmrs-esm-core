@@ -57,7 +57,9 @@ describe("getConfig", () => {
   it("requires config values to have been defined in the schema", async () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     Config.provide({ "foo-module": { bar: "baz" } });
-    await expect(Config.getConfig("foo-module")).rejects.toThrow(/schema/);
+    await expect(Config.getConfig("foo-module")).rejects.toThrow(
+      /foo-module.*bar/
+    );
   });
 
   it("requires nested config values to have been defined in the schema", async () => {
@@ -66,7 +68,7 @@ describe("getConfig", () => {
     });
     Config.provide({ "foo-module": { foo: { doof: "nope" } } });
     await expect(Config.getConfig("foo-module")).rejects.toThrowError(
-      /foo\.doof.*schema/
+      /foo-module.*foo\.doof.*/
     );
   });
 
@@ -191,7 +193,7 @@ describe("getConfig", () => {
     };
     Config.provide(testConfig);
     await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /element.*1\.5.*foo.*must be an integer/
+      /1\.5.*foo-module.*foo.*must be an integer/
     );
   });
 
@@ -214,7 +216,7 @@ describe("getConfig", () => {
     };
     Config.provide(testConfig);
     await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /key.*bar\.baz\[1\]\.dingo.*schema/
+      /key.*foo-module.*bar\.baz\[1\]\.dingo/
     );
   });
 
@@ -237,7 +239,7 @@ describe("getConfig", () => {
     };
     Config.provide(testConfig);
     await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /key.*bar\.baz\[1\]\.b\.dingo.*schema/
+      /key.*foo-module.*bar\.baz\[1\]\.b\.dingo/
     );
   });
 
@@ -267,7 +269,7 @@ describe("getConfig", () => {
 });
 
 describe("resolveImportMapConfig", () => {
-  afterEach(() => {
+  beforeEach(() => {
     Config.clearAll();
     (<any>window).System.resolve.mockReset();
     (<any>window).System.import.mockReset();
