@@ -19,20 +19,29 @@ export function provide(config: Config) {
   configs.push(config);
 }
 
-// We cache the Promise that loads the import mapped config file
-// so that we can be sure to only call it once
-let getImportMapConfigPromise;
 export async function getConfig(moduleName: string): Promise<ConfigObject> {
-  if (!getImportMapConfigPromise) {
-    getImportMapConfigPromise = getImportMapConfigFile();
-  }
-  await getImportMapConfigPromise;
+  await loadConfigs();
   return getConfigForModule(moduleName);
+}
+
+export async function getDevtoolsConfig(): Promise<object> {
+  await loadConfigs();
+  return getAllConfigs();
 }
 
 /**
  * Helper functions
  */
+
+// We cache the Promise that loads the import mapped config file
+// so that we can be sure to only call it once
+let getImportMapConfigPromise;
+async function loadConfigs() {
+  if (!getImportMapConfigPromise) {
+    getImportMapConfigPromise = getImportMapConfigFile();
+  }
+  return await getImportMapConfigPromise;
+}
 
 function validateConfigSchema(
   moduleName: string,
@@ -74,6 +83,16 @@ async function getImportMapConfigFile(): Promise<void> {
   }
 }
 
+function getAllConfigs() {
+  const providedConfigs = mergeConfigs(configs);
+  const resultConfigs = {};
+  for (let [moduleName, schema] of Object.entries(schemas)) {
+    const providedConfig = providedConfigs[moduleName] || {};
+    resultConfigs[moduleName] = setDefaults(schema, providedConfig);
+  }
+  return resultConfigs;
+}
+
 function getConfigForModule(moduleName: string): ConfigObject {
   if (!schemas.hasOwnProperty(moduleName)) {
     throw Error("No config schema has been defined for " + moduleName);
@@ -86,10 +105,13 @@ function getConfigForModule(moduleName: string): ConfigObject {
 }
 
 function mergeConfigsFor(moduleName: string, allConfigs: Config[]) {
-  const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
   const allConfigsForModule = R.map(R.prop(moduleName), allConfigs);
-  const providedConfig = mergeDeepAll(allConfigsForModule);
-  return providedConfig;
+  return mergeConfigs(allConfigsForModule);
+}
+
+function mergeConfigs(configs: Config[]) {
+  const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
+  return mergeDeepAll(configs);
 }
 
 // Recursively check the provided config tree to make sure that all

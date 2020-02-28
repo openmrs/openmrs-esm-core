@@ -269,17 +269,19 @@ describe("getConfig", () => {
 });
 
 describe("resolveImportMapConfig", () => {
-  beforeEach(() => {
+  afterEach(() => {
     Config.clearAll();
-    (<any>window).System.resolve.mockReset();
+    (<any>window).System.resolve.mockImplementation(() => {
+      throw new Error("config.json not available in import map");
+    });
     (<any>window).System.import.mockReset();
   });
 
   it("gets config file from import map", async () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     const testConfig = importableConfig({ "foo-module": { foo: "bar" } });
-    (<any>window).System.resolve = jest.fn();
-    (<any>window).System.import = jest.fn().mockResolvedValue(testConfig);
+    (<any>window).System.resolve.mockReturnValue(true);
+    (<any>window).System.import.mockResolvedValue(testConfig);
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toBe("bar");
   });
@@ -287,8 +289,8 @@ describe("resolveImportMapConfig", () => {
   it("always puts config file from import map at lowest priority", async () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     const importedConfig = importableConfig({ "foo-module": { foo: "bar" } });
-    (<any>window).System.resolve = jest.fn();
-    (<any>window).System.import = jest.fn().mockResolvedValue(importedConfig);
+    (<any>window).System.resolve.mockReturnValue(true);
+    (<any>window).System.import.mockResolvedValue(importedConfig);
     const providedConfig = { "foo-module": { foo: "baz" } };
     Config.provide(providedConfig);
     const config = await Config.getConfig("foo-module");
@@ -299,6 +301,22 @@ describe("resolveImportMapConfig", () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     // this line below is actually all that the test requires, the rest is sanity checking
     expect(() => Config.getConfig("foo-module")).not.toThrow();
+  });
+});
+
+describe("getDevtoolsConfig", () => {
+  afterEach(() => {
+    Config.clearAll();
+  });
+
+  it("returns the full config tree", async () => {
+    Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
+    Config.defineConfigSchema("bar-module", { bar: { default: "quinn" } });
+    const testConfig = { "bar-module": { bar: "baz" } };
+    Config.provide(testConfig);
+    const devConfig = await Config.getDevtoolsConfig();
+    expect(devConfig).toHaveProperty("foo-module", { foo: "qux" });
+    expect(devConfig).toHaveProperty("bar-module", { bar: "baz" });
   });
 });
 

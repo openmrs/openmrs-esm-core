@@ -1,7 +1,8 @@
 export {
   defineConfigSchema,
   getConfig,
-  provide
+  provide,
+  getDevtoolsConfig
 } from "./module-config/module-config";
 
 export { ModuleNameContext, useConfig } from "./react-hook/react-hook";
