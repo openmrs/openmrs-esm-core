@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "start": "webpack-dev-server",
+    "start-https": "webpack-dev-server --https",
     "test": "BABEL_ENV=test jest",
     "lint": "eslint src --ext ts",
     "typescript": "tsc",

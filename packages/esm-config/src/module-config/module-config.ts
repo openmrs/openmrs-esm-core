@@ -105,7 +105,9 @@ function getConfigForModule(moduleName: string): ConfigObject {
 }
 
 function mergeConfigsFor(moduleName: string, allConfigs: Config[]) {
-  const allConfigsForModule = R.map(R.prop(moduleName), allConfigs);
+  const allConfigsForModule = R.map(R.prop(moduleName), allConfigs).filter(
+    item => item !== undefined && item !== null
+  );
   return mergeConfigs(allConfigsForModule);
 }
 
