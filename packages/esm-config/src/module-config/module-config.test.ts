@@ -308,13 +308,45 @@ describe("getConfig", () => {
   });
 });
 
+it("fills array element object elements with defaults", async () => {
+  Config.defineConfigSchema("foo-module", {
+    foo: {
+      default: [{ a: { b: "arrayDefaultB", filler: "arrayDefault" } }],
+      arrayElements: {
+        a: {
+          b: {},
+          filler: { default: "defaultFiller" }
+        }
+      }
+    }
+  });
+  const testConfig = {
+    "foo-module": {
+      foo: [
+        { a: { b: "customB", filler: "customFiller" } },
+        { a: { b: "anotherB" } }
+      ]
+    }
+  };
+  Config.provide(testConfig);
+  const config = await Config.getConfig("foo-module");
+  expect(config.foo).toStrictEqual([
+    { a: { b: "customB", filler: "customFiller" } },
+    { a: { b: "anotherB", filler: "defaultFiller" } }
+  ]);
+});
+
 describe("resolveImportMapConfig", () => {
-  afterEach(() => {
+  beforeEach(() => {
     Config.clearAll();
     (<any>window).System.resolve.mockImplementation(() => {
       throw new Error("config.json not available in import map");
     });
     (<any>window).System.import.mockReset();
+  });
+
+  afterAll(() => {
+    Config.clearAll();
   });
 
   it("gets config file from import map", async () => {
