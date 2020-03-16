@@ -146,11 +146,7 @@ function validateArray(arraySchema, value, keyPath) {
     );
   }
   // if there is an array element object schema, verify that elements match it
-  const hasObjectSchema =
-    Object.keys(arraySchema.arrayElements).filter(
-      e => !["default", "validators"].includes(e)
-    ).length > 0;
-  if (hasObjectSchema) {
+  if (hasObjectSchema(arraySchema.arrayElements)) {
     for (let i = 0; i < value.length; i++) {
       const arrayElement = value[i];
       validateConfig(
@@ -187,10 +183,20 @@ const setDefaults = (schema, config) => {
       if (!config.hasOwnProperty(key)) {
         config[key] = schema[key]["default"];
       }
-    } else {
-      // Since schema[key] has no property "default", we assume it is a
-      // parent config property. We recurse to config[key] and schema[key].
-      // Default config[key] to {}.
+      // We also check if it is an array with object elements, in which case we recurse
+      if (
+        schema[key].hasOwnProperty("arrayElements") &&
+        hasObjectSchema(schema[key].arrayElements)
+      ) {
+        const configWithDefaults = config[key].map(conf =>
+          setDefaults(schema[key].arrayElements, conf)
+        );
+        config[key] = configWithDefaults;
+      }
+    } else if (isOrdinaryObject(schema[key])) {
+      // Since schema[key] has no property "default", if it's an ordinary object
+      // (unlike, importantly, the validators array), we assume it is a parent config property.
+      // We recurse to config[key] and schema[key]. Default config[key] to {}.
       const schemaPart = schema[key];
       const configPart = config.hasOwnProperty(key) ? config[key] : {};
       config[key] = setDefaults(schemaPart, configPart);
@@ -198,6 +204,14 @@ const setDefaults = (schema, config) => {
   }
   return config;
 };
+
+function hasObjectSchema(arrayElementsSchema) {
+  return (
+    Object.keys(arrayElementsSchema).filter(
+      e => !["default", "validators"].includes(e)
+    ).length > 0
+  );
+}
 
 function isOrdinaryObject(value) {
   return typeof value === "object" && !Array.isArray(value) && value !== null;
