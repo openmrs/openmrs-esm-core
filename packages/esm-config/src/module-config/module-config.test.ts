@@ -112,54 +112,20 @@ describe("getConfig", () => {
     expect(config.foo.baz.quy).toBe("xyz");
   });
 
-  it("works for multiple modules", async () => {
+  it("works for multiple modules and multiple provides", async () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     Config.defineConfigSchema("bar-module", { bar: { default: "quinn" } });
-    const testConfig = { "bar-module": { bar: "baz" } };
-    Config.provide(testConfig);
+    Config.defineConfigSchema("baz-module", { baz: { default: "quip" } });
+    const barTestConfig = { "bar-module": { bar: "barrr" } };
+    const bazTestConfig = { "baz-module": { baz: "bazzz" } };
+    Config.provide(barTestConfig);
+    Config.provide(bazTestConfig);
     const fooConfig = Config.getConfig("foo-module");
     await expect(fooConfig).resolves.toHaveProperty("foo", "qux");
     const barConfig = Config.getConfig("bar-module");
-    await expect(barConfig).resolves.toHaveProperty("bar", "baz");
-
-    // TEST CASE 2: One that bugs out for multiple modules: see conversation on:
-    // https://github.com/openmrs/openmrs-esm-module-config/pull/18
-    // This example fails because the merge function https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L107
-    // introduces undefined into the final merged configs array i.e [ workingconfig, undefined ]
-    Config.clearAll();
-    Config.defineConfigSchema("@openmrs/esm-patient-chart", {
-      defaultTabIndex: {
-        default: 0
-      }
-    });
-    Config.defineConfigSchema("@openmrs/esm-login", {
-      logo: {
-        src: {
-          default: null
-        }
-      }
-    });
-
-    const login = {
-      "@openmrs/esm-login": {
-        logo: {
-          src: "https://ampath-poc.fra1.digitaloceanspaces.com/ampath.png"
-        }
-      }
-    };
-
-    const patientChart = {
-      "@openmrs/esm-patient-chart": {
-        defaultTabIndex: 0
-      }
-    };
-
-    Config.provide(login);
-    Config.provide(patientChart);
-    const loginConfig = Config.getConfig("@openmrs/esm-login");
-    const patientConfig = Config.getConfig("@openmrs/esm-patient-chart");
-    await expect(loginConfig).resolves.toHaveProperty("logo");
-    await expect(patientConfig).resolves.toHaveProperty("defaultTabIndex");
+    await expect(barConfig).resolves.toHaveProperty("bar", "barrr");
+    const bazConfig = Config.getConfig("baz-module");
+    await expect(bazConfig).resolves.toHaveProperty("baz", "bazzz");
   });
 
   it("validates config values", async () => {
