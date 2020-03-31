@@ -33,6 +33,10 @@ describe("defineConfigSchema", () => {
 });
 
 describe("getConfig", () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
+
   afterEach(() => {
     Config.clearAll();
   });
@@ -55,11 +59,12 @@ describe("getConfig", () => {
     expect(config.foo).toBe("qux");
   });
 
-  it("requires config values to have been defined in the schema", async () => {
+  it("logs an error if config values not defined in the schema", async () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     Config.provide({ "foo-module": { bar: "baz" } });
-    await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /foo-module.*bar/
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/Unknown.*key.*foo-module.*bar/)
     );
   });
 
@@ -68,14 +73,15 @@ describe("getConfig", () => {
       foo: { bar: { default: "qux" } }
     });
     Config.provide({ "foo-module": { foo: { doof: "nope" } } });
-    await expect(Config.getConfig("foo-module")).rejects.toThrowError(
-      /foo-module.*foo\.doof.*/
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/foo-module.*foo\.doof.*/)
     );
   });
 
   it("throws if looking up module with no schema", async () => {
     await expect(Config.getConfig("fake-module")).rejects.toThrow(
-      /schema.*defined/
+      /No config schema has been defined.*fake-module/
     );
   });
 
@@ -143,8 +149,9 @@ describe("getConfig", () => {
       }
     };
     Config.provide(testConfig);
-    await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /bar.*foo.*must start with 'thi'.*/
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/bar.*foo.*must start with 'thi'.*/)
     );
   });
 
@@ -198,8 +205,9 @@ describe("getConfig", () => {
       }
     };
     Config.provide(testConfig);
-    await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /1\.5.*foo-module.*foo\[1\].*must be an integer/
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/1\.5.*foo-module.*foo\[1\].*must be an integer/)
     );
   });
 
@@ -226,8 +234,9 @@ describe("getConfig", () => {
       }
     };
     Config.provide(testConfig);
-    await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /key.*foo-module.*bar\.baz\[1\]\.dingo/
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/key.*foo-module.*bar\.baz\[1\]\.dingo/)
     );
   });
 
@@ -254,8 +263,9 @@ describe("getConfig", () => {
       }
     };
     Config.provide(testConfig);
-    await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /key.*foo-module.*bar\.baz\[1\]\.b\.dingo/
+    await expect(Config.getConfig("foo-module")).rejects.toThrow(); // throws incidentally
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/key.*foo-module.*bar\.baz\[1\]\.b\.dingo/)
     );
   });
 
@@ -278,13 +288,14 @@ describe("getConfig", () => {
       }
     };
     Config.provide(testConfig);
-    await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /value.*foo\[0\]\.a\.b.*must be an integer/
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/value.*foo\[0\]\.a\.b.*must be an integer/)
     );
   });
   it("supports validation of array element objects", async () => {
     Config.defineConfigSchema("foo-module", {
-      foo: {
+      bar: {
         default: [{ a: { b: 1 }, c: 2 }],
         arrayElements: {
           validators: [validator(o => o.a.b + 1 == o.c, "c must equal a.b + 1")]
@@ -293,15 +304,18 @@ describe("getConfig", () => {
     });
     const testConfig = {
       "foo-module": {
-        foo: [
+        bar: [
           { a: { b: 4 }, c: 5 },
           { a: { b: 1 }, c: 3 }
         ]
       }
     };
     Config.provide(testConfig);
-    await expect(Config.getConfig("foo-module")).rejects.toThrow(
-      /value.*{\"a\":{\"b\":1},\"c\":3}.*foo\[1\].*c must equal a\.b \+ 1/
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /value.*{\"a\":{\"b\":1},\"c\":3}.*foo-module.bar\[1\].*c must equal a\.b \+ 1/
+      )
     );
   });
 

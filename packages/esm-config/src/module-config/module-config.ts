@@ -123,7 +123,7 @@ const validateConfig = (schema, config, keyPath = "") => {
   for (let [key, value] of Object.entries(config)) {
     const thisKeyPath = keyPath + "." + key;
     if (!schema.hasOwnProperty(key)) {
-      throw Error(`Unknown config key '${thisKeyPath}' provided.`);
+      console.error(`Unknown config key '${thisKeyPath}' provided. Ignoring.`);
     } else if (isOrdinaryObject(value)) {
       // nested config; recurse
       const schemaPart = schema[key];
@@ -141,9 +141,10 @@ const validateConfig = (schema, config, keyPath = "") => {
 function validateArray(arraySchema, value, keyPath) {
   // value should be an array
   if (!Array.isArray(value)) {
-    throw Error(
+    console.error(
       `Invalid configuration value ${value} for ${keyPath}: value must be an array.`
     );
+    return;
   }
   // if there is an array element object schema, verify that elements match it
   if (hasObjectSchema(arraySchema.arrayElements)) {
@@ -172,7 +173,7 @@ function runValidators(keyPath, validators, value) {
       if (typeof validatorResult === "string") {
         const valueString =
           typeof value === "object" ? JSON.stringify(value) : value;
-        throw Error(
+        console.error(
           `Invalid configuration value ${valueString} for ${keyPath}: ${validatorResult}`
         );
       }
