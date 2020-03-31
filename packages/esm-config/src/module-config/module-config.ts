@@ -156,8 +156,12 @@ function validateArray(arraySchema, value, keyPath) {
       );
     }
   }
-  for (let element of value) {
-    runValidators(keyPath, arraySchema.arrayElements.validators, element);
+  for (let i = 0; i < value.length; i++) {
+    runValidators(
+      `${keyPath}[${i}]`,
+      arraySchema.arrayElements.validators,
+      value[i]
+    );
   }
 }
 
@@ -166,8 +170,10 @@ function runValidators(keyPath, validators, value) {
     for (let validator of validators) {
       const validatorResult = validator(value);
       if (typeof validatorResult === "string") {
+        const valueString =
+          typeof value === "object" ? JSON.stringify(value) : value;
         throw Error(
-          `Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`
+          `Invalid configuration value ${valueString} for ${keyPath}: ${validatorResult}`
         );
       }
     }
