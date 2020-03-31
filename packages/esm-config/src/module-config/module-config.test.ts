@@ -217,7 +217,12 @@ describe("getConfig", () => {
     });
     const testConfig = {
       "foo-module": {
-        bar: { baz: [{ a: 1, b: 2 }, { a: 3, b: 4, dingo: 5 }] }
+        bar: {
+          baz: [
+            { a: 1, b: 2 },
+            { a: 3, b: 4, dingo: 5 }
+          ]
+        }
       }
     };
     Config.provide(testConfig);
@@ -240,7 +245,12 @@ describe("getConfig", () => {
     });
     const testConfig = {
       "foo-module": {
-        bar: { baz: [{ a: 1, b: 2 }, { a: 3, b: { dingo: 5 } }] }
+        bar: {
+          baz: [
+            { a: 1, b: 2 },
+            { a: 3, b: { dingo: 5 } }
+          ]
+        }
       }
     };
     Config.provide(testConfig);
@@ -283,7 +293,10 @@ describe("getConfig", () => {
     });
     const testConfig = {
       "foo-module": {
-        foo: [{ a: { b: 4 }, c: 5 }, { a: { b: 1 }, c: 3 }]
+        foo: [
+          { a: { b: 4 }, c: 5 },
+          { a: { b: 1 }, c: 3 }
+        ]
       }
     };
     Config.provide(testConfig);

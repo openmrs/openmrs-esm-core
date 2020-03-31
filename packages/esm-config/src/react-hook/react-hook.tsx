@@ -19,9 +19,10 @@ export function useConfig() {
   }
   if (!config[moduleName]) {
     // React will prevent the client component from rendering until the promise resolves
-    throw Config.getConfig(moduleName).then(res => {
-      config[moduleName] = res;
-    })
+    throw Config.getConfig(moduleName)
+      .then(res => {
+        config[moduleName] = res;
+      })
       .catch(err => {
         error = err;
       });
