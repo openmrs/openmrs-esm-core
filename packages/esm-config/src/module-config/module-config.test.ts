@@ -30,6 +30,25 @@ describe("defineConfigSchema", () => {
       expect.stringMatching(/foo-module.*bar\.baz/)
     );
   });
+
+  it("doesn't mind higher-level description and validator keys", () => {
+    const schema = {
+      foo: {
+        description: "Composed of bar and baz.",
+        validators: [
+          validator(f => f.bar != f.baz, "bar and baz must not be equal")
+        ],
+        bar: {
+          default: 0
+        },
+        baz: {
+          default: 1
+        }
+      }
+    };
+    Config.defineConfigSchema("foo-module", schema);
+    expect(console.error).not.toHaveBeenCalled();
+  });
 });
 
 describe("getConfig", () => {

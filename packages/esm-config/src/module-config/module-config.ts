@@ -49,17 +49,19 @@ function validateConfigSchema(
   keyPath = ""
 ) {
   for (let key of Object.keys(schema)) {
-    if (!isOrdinaryObject(schema[key])) {
-      console.error(
-        `${moduleName} has bad config schema definition for key ${keyPath}${key}. ` +
-          `Please verify that you are running the latest version and, if so, ` +
-          `alert the maintainer.`
-      );
-      return;
-    }
-    if (!schema[key].hasOwnProperty("default")) {
-      // recurse for nested config keys
-      validateConfigSchema(moduleName, schema[key], keyPath + key + ".");
+    if (!["description", "validators"].includes(key)) {
+      if (!isOrdinaryObject(schema[key])) {
+        console.error(
+          `${moduleName} has bad config schema definition for key ${keyPath}${key}. ` +
+            `Please verify that you are running the latest version and, if so, ` +
+            `alert the maintainer.`
+        );
+        return;
+      }
+      if (!schema[key].hasOwnProperty("default")) {
+        // recurse for nested config keys
+        validateConfigSchema(moduleName, schema[key], keyPath + key + ".");
+      }
     }
   }
 }
