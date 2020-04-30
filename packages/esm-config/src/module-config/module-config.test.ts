@@ -389,7 +389,7 @@ describe("resolveImportMapConfig", () => {
     expect(config.foo).toBe("bar");
   });
 
-  it("always puts config file from import map at lowest priority", async () => {
+  it("always puts config file from import map at highest priority", async () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     const importedConfig = importableConfig({ "foo-module": { foo: "bar" } });
     (<any>window).System.resolve.mockReturnValue(true);
@@ -397,7 +397,7 @@ describe("resolveImportMapConfig", () => {
     const providedConfig = { "foo-module": { foo: "baz" } };
     Config.provide(providedConfig);
     const config = await Config.getConfig("foo-module");
-    expect(config.foo).toBe("baz");
+    expect(config.foo).toBe("bar");
   });
 
   it("does not 404 when no config file is in the import map", () => {

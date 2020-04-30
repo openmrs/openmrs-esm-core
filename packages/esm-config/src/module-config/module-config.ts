@@ -78,7 +78,7 @@ async function getImportMapConfigFile(): Promise<void> {
   if (importMapConfigExists) {
     try {
       const configFileModule = await System.import("config-file");
-      configs.unshift(configFileModule.default);
+      configs.push(configFileModule.default);
     } catch (e) {
       throw Error("Problem importing config-file: " + e);
     }
