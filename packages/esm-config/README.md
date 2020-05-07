@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/openmrs/openmrs-esm-module-config.svg?branch=master)](https://travis-ci.com/openmrs/openmrs-esm-module-config)
 
-npm: @openmrs/esm-module-confg
+npm: [@openmrs/esm-module-confg](https://www.npmjs.com/package/@openmrs/esm-module-config)
 
 ## What is this?
 
