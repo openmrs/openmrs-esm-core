@@ -1,4 +1,4 @@
-# openmrs-esm-config
+# openmrs-esm-module-config
 
 [![Build Status](https://travis-ci.com/openmrs/openmrs-esm-module-config.svg?branch=master)](https://travis-ci.com/openmrs/openmrs-esm-module-config)
 
