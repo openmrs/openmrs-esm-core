@@ -193,6 +193,64 @@ describe("getConfig", () => {
     expect(config.foo).toBe("this");
   });
 
+  it("supports dictionary elements", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        default: {
+          a: {
+            name: "A"
+          },
+          b: {
+            name: "B"
+          }
+        }
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: {
+          c: {
+            name: "C"
+          }
+        }
+      }
+    };
+    Config.provide(testConfig);
+    const config = await Config.getConfig("foo-module");
+    expect(config.foo).toStrictEqual({
+      c: {
+        name: "C"
+      }
+    });
+  });
+
+  it("supports dictionary elements validations", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        dictionaryElements: {
+          name: { validators: [isString] }
+        }
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: {
+          b: {
+            name: "B"
+          },
+          c: {
+            name: 1
+          }
+        }
+      }
+    };
+    Config.provide(testConfig);
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/foo-module.foo.c.name: must be a string/)
+    );
+  });
+
   it("supports array elements", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: {
