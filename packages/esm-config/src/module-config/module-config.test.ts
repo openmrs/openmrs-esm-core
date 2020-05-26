@@ -448,6 +448,34 @@ describe("getConfig", () => {
     );
   });
 
+  it("skips validation of dictionary objects if property skipValidation = trues", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        dictionaryElements: {
+          name: { validators: [isString] },
+          skipValidations: true
+        }
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: {
+          b: {
+            name: "B"
+          },
+          c: {
+            name: 1
+          }
+        }
+      }
+    };
+    Config.provide(testConfig);
+    await Config.getConfig("foo-module");
+    expect(console.error).not.toHaveBeenCalledWith(
+      expect.stringMatching(/foo-module.foo.c.name: must be a string/)
+    );
+  });
+
   it("fills array element object elements with defaults", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: {

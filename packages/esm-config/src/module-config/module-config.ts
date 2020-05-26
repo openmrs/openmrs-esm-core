@@ -49,7 +49,7 @@ function validateConfigSchema(
   keyPath = ""
 ) {
   for (let key of Object.keys(schema)) {
-    if (!["description", "validators"].includes(key)) {
+    if (!["description", "validators", "skipValidations"].includes(key)) {
       if (!isOrdinaryObject(schema[key])) {
         console.error(
           `${moduleName} has bad config schema definition for key ${keyPath}${key}. ` +
@@ -155,6 +155,12 @@ function validateDictionary(
   config: ConfigObject,
   keyPath: string
 ) {
+  if (
+    hasObjectSchema(dictionarySchema.dictionaryElements) &&
+    dictionarySchema.dictionaryElements.skipValidations
+  ) {
+    return;
+  }
   for (let [key, value] of Object.entries(config)) {
     validateConfig(
       dictionarySchema.dictionaryElements,
