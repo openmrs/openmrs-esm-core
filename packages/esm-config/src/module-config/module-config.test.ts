@@ -312,6 +312,7 @@ describe("getConfig", () => {
       expect.stringMatching(/value.*foo\[0\]\.a\.b.*must be an integer/)
     );
   });
+
   it("supports validation of array element objects", async () => {
     Config.defineConfigSchema("foo-module", {
       bar: {
@@ -332,6 +333,57 @@ describe("getConfig", () => {
     Config.provide(testConfig);
     await Config.getConfig("foo-module");
     expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /value.*{\"a\":{\"b\":1},\"c\":3}.*foo-module.bar\[1\].*c must equal a\.b \+ 1/
+      )
+    );
+  });
+
+  it("skips validation if property skipValidation = true", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        default: "thing",
+        validators: [
+          validator(val => val.startsWith("thi"), "must start with 'thi'")
+        ],
+        skipValidations: true
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: "bar"
+      }
+    };
+    Config.provide(testConfig);
+    await Config.getConfig("foo-module");
+    expect(console.error).not.toHaveBeenCalledWith(
+      expect.stringMatching(/bar.*foo.*must start with 'thi'.*/)
+    );
+  });
+
+  it("skips validation of array objects if property skipValidation = true", async () => {
+    Config.defineConfigSchema("foo-module", {
+      bar: {
+        default: [{ a: { b: 1 }, c: 2 }],
+        arrayElements: {
+          validators: [
+            validator(o => o.a.b + 1 == o.c, "c must equal a.b + 1")
+          ],
+          skipValidations: true
+        }
+      }
+    });
+    const testConfig = {
+      "foo-module": {
+        bar: [
+          { a: { b: 4 }, c: 5 },
+          { a: { b: 1 }, c: 3 }
+        ]
+      }
+    };
+    Config.provide(testConfig);
+    await Config.getConfig("foo-module");
+    expect(console.error).not.toHaveBeenCalledWith(
       expect.stringMatching(
         /value.*{\"a\":{\"b\":1},\"c\":3}.*foo-module.bar\[1\].*c must equal a\.b \+ 1/
       )

@@ -121,11 +121,13 @@ function mergeConfigs(configs: Config[]) {
 // Recursively check the provided config tree to make sure that all
 // of the provided properties exist in the schema. Run validators
 // where present in the schema.
-const validateConfig = (schema, config, keyPath = "") => {
+export const validateConfig = (schema, config, keyPath = "") => {
   for (let [key, value] of Object.entries(config)) {
     const thisKeyPath = keyPath + "." + key;
     if (!schema.hasOwnProperty(key)) {
       console.error(`Unknown config key '${thisKeyPath}' provided. Ignoring.`);
+    } else if (schema[key].skipValidations === true) {
+      continue;
     } else if (isOrdinaryObject(value)) {
       // nested config; recurse
       const schemaPart = schema[key];
@@ -146,6 +148,12 @@ function validateArray(arraySchema, value, keyPath) {
     console.error(
       `Invalid configuration value ${value} for ${keyPath}: value must be an array.`
     );
+    return;
+  }
+  if (
+    hasObjectSchema(arraySchema.arrayElements) &&
+    arraySchema.arrayElements.skipValidations
+  ) {
     return;
   }
   // if there is an array element object schema, verify that elements match it
