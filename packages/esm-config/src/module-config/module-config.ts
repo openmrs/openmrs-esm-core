@@ -49,7 +49,7 @@ function validateConfigSchema(
   keyPath = ""
 ) {
   for (let key of Object.keys(schema)) {
-    if (!["description", "validators", "skipValidations"].includes(key)) {
+    if (!["description", "validators"].includes(key)) {
       if (!isOrdinaryObject(schema[key])) {
         console.error(
           `${moduleName} has bad config schema definition for key ${keyPath}${key}. ` +
@@ -134,8 +134,6 @@ export const validateConfig = (
     const thisKeyPath = keyPath + "." + key;
     if (!schema.hasOwnProperty(key)) {
       console.error(`Unknown config key '${thisKeyPath}' provided. Ignoring.`);
-    } else if (schema[key].skipValidations === true) {
-      continue;
     } else if (isOrdinaryObject(value)) {
       // nested config; recurse
       const schemaPart = schema[key];
@@ -155,12 +153,6 @@ function validateDictionary(
   config: ConfigObject,
   keyPath: string
 ) {
-  if (
-    hasObjectSchema(dictionarySchema.dictionaryElements) &&
-    dictionarySchema.dictionaryElements.skipValidations
-  ) {
-    return;
-  }
   for (let [key, value] of Object.entries(config)) {
     validateConfig(
       dictionarySchema.dictionaryElements,
@@ -180,12 +172,6 @@ function validateArray(
     console.error(
       `Invalid configuration value ${value} for ${keyPath}: value must be an array.`
     );
-    return;
-  }
-  if (
-    hasObjectSchema(arraySchema.arrayElements) &&
-    arraySchema.arrayElements.skipValidations
-  ) {
     return;
   }
   // if there is an array element object schema, verify that elements match it
