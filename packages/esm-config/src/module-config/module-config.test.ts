@@ -466,6 +466,34 @@ describe("resolveImportMapConfig", () => {
   });
 });
 
+describe("processConfig", () => {
+  it("validates a config object", () => {
+    const schema = {
+      foo: {
+        default: false,
+        validators: [validators.isBoolean]
+      }
+    };
+    const inputConfig = {
+      foo: "fAlSe"
+    };
+    const config = Config.processConfig(schema, inputConfig, "nowhere");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/nowhere\.foo.*boolean/)
+    );
+    expect(config.foo).toBe("fAlSe");
+  });
+
+  it("interpolates defaults", () => {
+    const schema = {
+      foo: { default: false }
+    };
+    const inputConfig = {};
+    const config = Config.processConfig(schema, inputConfig, "nowhere");
+    expect(config.foo).toBe(false);
+  });
+});
+
 describe("getDevtoolsConfig", () => {
   afterEach(() => {
     Config.clearAll();

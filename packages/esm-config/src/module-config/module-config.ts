@@ -24,9 +24,27 @@ export async function getConfig(moduleName: string): Promise<ConfigObject> {
   return getConfigForModule(moduleName);
 }
 
+/**
+ * Validate and interpolate defaults for `providedConfig` according to `schema`
+ *
+ * @param schema  a configuration schema
+ * @param providedConfig  an object of config values (without the top-level module name)
+ * @param keyPathContext  a dot-deparated string which helps the user figure out where
+ *     the provided config came from
+ */
+export function processConfig(
+  schema: ConfigSchema,
+  providedConfig: ConfigObject,
+  keyPathContext: string
+) {
+  validateConfig(schema, providedConfig, keyPathContext);
+  const config = setDefaults(schema, providedConfig);
+  return config;
+}
+
 export async function getDevtoolsConfig(): Promise<object> {
   await loadConfigs();
-  return getAllConfigs();
+  return getAllConfigsWithoutValidating();
 }
 
 /**
@@ -85,7 +103,7 @@ async function getImportMapConfigFile(): Promise<void> {
   }
 }
 
-function getAllConfigs() {
+function getAllConfigsWithoutValidating() {
   const providedConfigs = mergeConfigs(configs);
   const resultConfigs = {};
   for (let [moduleName, schema] of Object.entries(schemas)) {
@@ -121,7 +139,7 @@ function mergeConfigs(configs: Config[]) {
 // Recursively check the provided config tree to make sure that all
 // of the provided properties exist in the schema. Run validators
 // where present in the schema.
-export const validateConfig = (
+const validateConfig = (
   schema: ConfigSchema,
   config: ConfigObject,
   keyPath: string = ""
