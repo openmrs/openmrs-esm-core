@@ -5,6 +5,7 @@
   "main": "dist/openmrs-esm-module-config.js",
   "scripts": {
     "clean": "rimraf dist",
+    "document": "typedoc src/openmrs-esm-module-config.ts && ./docs/assemble_readme.sh",
     "start": "webpack-dev-server",
     "start-https": "webpack-dev-server --https",
     "test": "BABEL_ENV=test jest",
@@ -23,7 +24,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && concurrently npm:lint npm:test npm:typescript"
+      "pre-commit": "pretty-quick --staged && concurrently npm:lint npm:test npm:typescript npm:document && git add README.md"
     }
   },
   "repository": {
@@ -62,6 +63,8 @@
     "pretty-quick": "^2.0.1",
     "ramda": "^0.26.1",
     "systemjs-webpack-interop": "^1.1.2",
+    "typedoc": "^0.17.0-3",
+    "typedoc-plugin-markdown": "^2.3.1",
     "typescript": "^3.8.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",

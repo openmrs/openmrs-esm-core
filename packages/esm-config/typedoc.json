@@ -1,0 +1,6 @@
+{
+  "mode": "library",
+  "out": "docs/typedoc",
+  "excludeNotExported": true,
+  "readme": "none"
+}
