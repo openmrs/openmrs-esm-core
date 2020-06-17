@@ -6,7 +6,7 @@ const configs: Config[] = [];
 // An object with module names for keys and schemas for values.
 const schemas = {};
 
-/**
+/*
  * API
  */
 
@@ -47,7 +47,7 @@ export async function getDevtoolsConfig(): Promise<object> {
   return getAllConfigsWithoutValidating();
 }
 
-/**
+/*
  * Helper functions
  */
 
@@ -270,7 +270,7 @@ function isOrdinaryObject(value) {
   return typeof value === "object" && !Array.isArray(value) && value !== null;
 }
 
-/**
+/*
  * Package-scoped functions
  */
 
@@ -280,7 +280,7 @@ export function clearAll() {
   for (var member in schemas) delete schemas[member];
 }
 
-/**
+/*
  * Types
  */
 

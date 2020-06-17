@@ -10,6 +10,18 @@ This is the configuration library for
 It makes configurability easier for developers and configuring easier for
 implementers.
 
+## Contents
+
+<!-- toc -->
+
+- [What does an OpenMRS frontend configuration file look like?](#what-does-an-openmrs-frontend-configuration-file-look-like)
+- [How do I configure my OpenMRS implementation?](#how-do-i-configure-my-openmrs-implementation)
+- [I'm developing an ESM module. How do I make it configurable?](#im-developing-an-esm-module-how-do-i-make-it-configurable)
+- [API](#api)
+- [Contributing & Development](#contributing--development)
+
+<!-- tocstop -->
+
 ## What does an OpenMRS frontend configuration file look like?
 
 OpenMRS frontend configuration files are JSON files containing module names as top-level elements. All configuration elements are optional. The available configuration elements for each module should be documented in the module's wiki page.
@@ -295,7 +307,7 @@ defaults for configuration elements for which no values have been provided.
 
 This hasn't been implemented yet, but we would like to implement it! See "Contributing"
 
-## API
+# API
 
 <!-- API -->
 
@@ -323,7 +335,7 @@ This hasn't been implemented yet, but we would like to implement it! See "Contri
 
 • **ModuleNameContext**: *Context‹null | string›* = React.createContext<string | null>(null)
 
-*Defined in [react-hook/react-hook.tsx:4](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/react-hook/react-hook.tsx#L4)*
+*Defined in [react-hook/react-hook.tsx:4](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/react-hook/react-hook.tsx#L4)*
 
 ## Functions
 
@@ -331,9 +343,7 @@ This hasn't been implemented yet, but we would like to implement it! See "Contri
 
 ▸ **defineConfigSchema**(`moduleName`: string, `schema`: ConfigSchema): *void*
 
-*Defined in [module-config/module-config.ts:13](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/module-config/module-config.ts#L13)*
-
-API
+*Defined in [module-config/module-config.ts:13](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L13)*
 
 **Parameters:**
 
@@ -350,7 +360,7 @@ ___
 
 ▸ **getConfig**(`moduleName`: string): *Promise‹ConfigObject›*
 
-*Defined in [module-config/module-config.ts:22](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/module-config/module-config.ts#L22)*
+*Defined in [module-config/module-config.ts:22](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L22)*
 
 **Parameters:**
 
@@ -366,7 +376,7 @@ ___
 
 ▸ **getDevtoolsConfig**(): *Promise‹object›*
 
-*Defined in [module-config/module-config.ts:45](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/module-config/module-config.ts#L45)*
+*Defined in [module-config/module-config.ts:45](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L45)*
 
 **Returns:** *Promise‹object›*
 
@@ -376,7 +386,7 @@ ___
 
 ▸ **processConfig**(`schema`: ConfigSchema, `providedConfig`: ConfigObject, `keyPathContext`: string): *any*
 
-*Defined in [module-config/module-config.ts:35](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/module-config/module-config.ts#L35)*
+*Defined in [module-config/module-config.ts:35](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L35)*
 
 Validate and interpolate defaults for `providedConfig` according to `schema`
 
@@ -396,7 +406,7 @@ ___
 
 ▸ **provide**(`config`: Config): *void*
 
-*Defined in [module-config/module-config.ts:18](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/module-config/module-config.ts#L18)*
+*Defined in [module-config/module-config.ts:18](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L18)*
 
 **Parameters:**
 
@@ -412,7 +422,7 @@ ___
 
 ▸ **useConfig**(): *any*
 
-*Defined in [react-hook/react-hook.tsx:8](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/react-hook/react-hook.tsx#L8)*
+*Defined in [react-hook/react-hook.tsx:8](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/react-hook/react-hook.tsx#L8)*
 
 **Returns:** *any*
 
@@ -422,7 +432,7 @@ ___
 
 ▸ **validator**(`validationFunction`: ValidatorFunction, `message`: String): *Validator*
 
-*Defined in [validators/validator.ts:1](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/validators/validator.ts#L1)*
+*Defined in [validators/validator.ts:1](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/validators/validator.ts#L1)*
 
 **Parameters:**
 
@@ -439,13 +449,13 @@ Name | Type |
 
 ### ▪ **validators**: *object*
 
-*Defined in [validators/validators.ts:21](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/validators/validators.ts#L21)*
+*Defined in [validators/validators.ts:21](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/validators/validators.ts#L21)*
 
 ###  isBoolean
 
 • **isBoolean**: *function*
 
-*Defined in [validators/validators.ts:21](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/validators/validators.ts#L21)*
+*Defined in [validators/validators.ts:21](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/validators/validators.ts#L21)*
 
 #### Type declaration:
 
@@ -461,7 +471,7 @@ Name | Type |
 
 • **isString**: *function*
 
-*Defined in [validators/validators.ts:21](https://github.com/openmrs/esm-module-config/blob/9b6d0aa/src/validators/validators.ts#L21)*
+*Defined in [validators/validators.ts:21](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/validators/validators.ts#L21)*
 
 #### Type declaration:
 

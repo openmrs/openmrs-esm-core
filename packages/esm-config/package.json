@@ -5,7 +5,7 @@
   "main": "dist/openmrs-esm-module-config.js",
   "scripts": {
     "clean": "rimraf dist",
-    "document": "typedoc src/openmrs-esm-module-config.ts && ./docs/assemble_readme.sh",
+    "document": "./document.sh",
     "start": "webpack-dev-server",
     "start-https": "webpack-dev-server --https",
     "test": "BABEL_ENV=test jest",
@@ -59,6 +59,7 @@
     "husky": "^3.1.0",
     "jest": "^26.0.1",
     "jest-cli": "^26.0.1",
+    "markdown-toc": "^1.2.0",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "ramda": "^0.26.1",
