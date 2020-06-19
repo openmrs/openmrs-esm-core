@@ -54,12 +54,29 @@ This is the method to use if you do not have an
 All you need to do is upload your configuration file and add its URL to
 your import map as a module named **config-file**. If you are serving your
 microfrontends from your OpenMRS server, you can simply add your config
-file to your server's `frontend/` directory. Your import map will then look like
+file to your server's `frontend/` directory. Your config and import map will then look like
 
-```json
+```config.js
+  exports = {
+    default: {
+      @openmrs/esm-login-app": {
+      "chooseLocation": {
+        "enabled": true
+      },
+      "links": {
+        "loginSuccess": {
+          "url": "/home",
+          "spa": true
+        }
+      },
+    }
+  }
+```
+
+```import-map.json
 {
   "imports": {
-    "config-file": "/openmrs/frontend/config.json"
+    "config-file": "/openmrs/frontend/config.js"
   }
 }
 ```
