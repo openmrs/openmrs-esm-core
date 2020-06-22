@@ -30,14 +30,33 @@ Here's an example!
 
 ```json
 {
-  "@openmrs/esm-login": {
+  "@openmrs/esm-login-app": {
     "logo": {
       "src": "https://pbs.twimg.com/media/C1w_czvWgAAWONL.jpg"
     }
   },
-  "@openmrs/esm-home": {
-    "search": {
-      "numResultsPerPage": 20
+  "@openmrs/esm-home-app": {
+    "buttons": {
+      "enabled": false
+    }
+  }
+}
+```
+
+Alternatively you can provide your config file as a Javascript file.
+It will look just about the same, but with some magic words at the beginning:
+
+```js
+exports = {};
+exports.default = {
+  "@openmrs/esm-login-app": {
+    logo: {
+      src: "https://pbs.twimg.com/media/C1w_czvWgAAWONL.jpg"
+    }
+  },
+  "@openmrs/esm-home-app": {
+    buttons: {
+      enabled: false
     }
   }
 }
@@ -54,29 +73,12 @@ This is the method to use if you do not have an
 All you need to do is upload your configuration file and add its URL to
 your import map as a module named **config-file**. If you are serving your
 microfrontends from your OpenMRS server, you can simply add your config
-file to your server's `frontend/` directory. Your config and import map will then look like
+file to your server's `frontend/` directory. Your import map will then look like
 
-```config.js
-  exports = {
-    default: {
-      @openmrs/esm-login-app": {
-      "chooseLocation": {
-        "enabled": true
-      },
-      "links": {
-        "loginSuccess": {
-          "url": "/home",
-          "spa": true
-        }
-      },
-    }
-  }
-```
-
-```import-map.json
+```json
 {
   "imports": {
-    "config-file": "/openmrs/frontend/config.js"
+    "config-file": "/openmrs/frontend/config.js[on]"
   }
 }
 ```
