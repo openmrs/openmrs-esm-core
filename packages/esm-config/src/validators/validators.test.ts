@@ -1,4 +1,4 @@
-import { isString, isBoolean, isUuid } from "./validators";
+import { isString, isBoolean, isUuid, isObject } from "./validators";
 
 describe("isString", () => {
   it("accepts strings", () => {
@@ -39,5 +39,20 @@ describe("isUuid", () => {
     expect(isUuid("123118AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")).toMatch(
       "must be a valid UUID"
     );
+  });
+});
+
+describe("isObject", () => {
+  it("accepts plain objects", () => {
+    expect(isObject({})).toBeUndefined();
+    expect(isObject({ foo: 0 })).toBeUndefined();
+  });
+
+  it("rejects arrays", () => {
+    expect(isObject([])).toMatch(/must be an object/i);
+  });
+
+  it("rejects null", () => {
+    expect(isObject(null)).toMatch(/must be an object/i);
   });
 });

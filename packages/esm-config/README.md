@@ -68,9 +68,7 @@ There are two methods for doing so.
 
 ### The Simple Way
 
-This is the method to use if you do not have an
-[esm-root-config override](https://wiki.openmrs.org/display/projects/openmrs-esm-root-config).
-All you need to do is upload your configuration file and add its URL to
+Upload your configuration file and add its URL to
 your import map as a module named **config-file**. If you are serving your
 microfrontends from your OpenMRS server, you can simply add your config
 file to your server's `frontend/` directory. Your import map will then look like
@@ -83,7 +81,15 @@ file to your server's `frontend/` directory. Your import map will then look like
 }
 ```
 
-### The Flexible Way
+### The Flexible Way *(under construction)*
+
+*Due to [RFC-26](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0026-activation-distribution.md)
+this method will not work as described with 
+[openmrs-module-spa](https://github.com/openmrs/openmrs-module-spa)
+after 
+[1.0.6](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0026-activation-distribution.md).
+Please hang tight while we work out how to support hierarchal config files
+in the new architecture.*
 
 This method requires you have an
 [esm-root-config override](https://wiki.openmrs.org/display/projects/openmrs-esm-root-config).
@@ -229,12 +235,23 @@ If the function
 returns something [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy),
 an error is thrown with the second argument as an explanation.
 
-For convenience, some common validators are provided out of the box. These are
+You can even validate nested objects:
 
-- isBoolean
-- isString
+```js
+colorPicker: {
+  options: { default: ["black", "red"] }
+  initial: { default: "black" },
+  validators: [
+    validator(o => o.options.includes(o.initial),
+      "initial must be one of the options")
+  ]
+}
+```
 
-### Arrays
+For convenience, some common validators are provided out of the box. See the
+[API / validators](#const-validators).
+
+#### Arrays
 
 You can accept and validate arrays, and arrays containing objects, in your
 configuration schema. This is configured with the `arrayElements` parameter. For
@@ -273,6 +290,26 @@ robots: {
 
 This schema will require that any objects in the robots array must only have
 the keys `name` and `homeworld`.
+
+#### Freeform objects
+
+In unusual scenarios you might want to accept an object without
+validating its keys. To do this, you can specify the config element 
+like a normal non-object element.
+
+```js
+beepsPerRobot: {
+  default: {
+    "R2-D2": 4,
+    "C-3P0": 0
+  },
+  validators: [  // you can (and should) still run validators
+    validators.isObject,
+    validator(o => Object.values(o).every(Number.isInteger),
+      "robot beeps must be integers")
+  ]
+}
+```
 
 ### Using config values
 
@@ -354,7 +391,7 @@ This hasn't been implemented yet, but we would like to implement it! See "Contri
 
 • **ModuleNameContext**: *Context‹null | string›* = React.createContext<string | null>(null)
 
-*Defined in [react-hook/react-hook.tsx:4](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/react-hook/react-hook.tsx#L4)*
+*Defined in [react-hook/react-hook.tsx:4](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/react-hook/react-hook.tsx#L4)*
 
 ## Functions
 
@@ -362,7 +399,7 @@ This hasn't been implemented yet, but we would like to implement it! See "Contri
 
 ▸ **defineConfigSchema**(`moduleName`: string, `schema`: ConfigSchema): *void*
 
-*Defined in [module-config/module-config.ts:13](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L13)*
+*Defined in [module-config/module-config.ts:13](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/module-config/module-config.ts#L13)*
 
 **Parameters:**
 
@@ -379,7 +416,7 @@ ___
 
 ▸ **getConfig**(`moduleName`: string): *Promise‹ConfigObject›*
 
-*Defined in [module-config/module-config.ts:22](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L22)*
+*Defined in [module-config/module-config.ts:22](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/module-config/module-config.ts#L22)*
 
 **Parameters:**
 
@@ -395,7 +432,7 @@ ___
 
 ▸ **getDevtoolsConfig**(): *Promise‹object›*
 
-*Defined in [module-config/module-config.ts:45](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L45)*
+*Defined in [module-config/module-config.ts:45](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/module-config/module-config.ts#L45)*
 
 **Returns:** *Promise‹object›*
 
@@ -405,7 +442,7 @@ ___
 
 ▸ **processConfig**(`schema`: ConfigSchema, `providedConfig`: ConfigObject, `keyPathContext`: string): *any*
 
-*Defined in [module-config/module-config.ts:35](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L35)*
+*Defined in [module-config/module-config.ts:35](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/module-config/module-config.ts#L35)*
 
 Validate and interpolate defaults for `providedConfig` according to `schema`
 
@@ -425,7 +462,7 @@ ___
 
 ▸ **provide**(`config`: Config): *void*
 
-*Defined in [module-config/module-config.ts:18](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/module-config/module-config.ts#L18)*
+*Defined in [module-config/module-config.ts:18](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/module-config/module-config.ts#L18)*
 
 **Parameters:**
 
@@ -441,7 +478,7 @@ ___
 
 ▸ **useConfig**(): *any*
 
-*Defined in [react-hook/react-hook.tsx:8](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/react-hook/react-hook.tsx#L8)*
+*Defined in [react-hook/react-hook.tsx:8](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/react-hook/react-hook.tsx#L8)*
 
 **Returns:** *any*
 
@@ -451,7 +488,7 @@ ___
 
 ▸ **validator**(`validationFunction`: ValidatorFunction, `message`: String): *Validator*
 
-*Defined in [validators/validator.ts:1](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/validators/validator.ts#L1)*
+*Defined in [validators/validator.ts:1](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/validators/validator.ts#L1)*
 
 **Parameters:**
 
@@ -468,13 +505,29 @@ Name | Type |
 
 ### ▪ **validators**: *object*
 
-*Defined in [validators/validators.ts:21](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/validators/validators.ts#L21)*
+*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/validators/validators.ts#L26)*
 
 ###  isBoolean
 
 • **isBoolean**: *function*
 
-*Defined in [validators/validators.ts:21](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/validators/validators.ts#L21)*
+*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/validators/validators.ts#L26)*
+
+#### Type declaration:
+
+▸ (`value`: any): *void | String*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | any |
+
+###  isObject
+
+• **isObject**: *function*
+
+*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/validators/validators.ts#L26)*
 
 #### Type declaration:
 
@@ -490,7 +543,23 @@ Name | Type |
 
 • **isString**: *function*
 
-*Defined in [validators/validators.ts:21](https://github.com/openmrs/openmrs-esm-module-config/blob/9766947/src/validators/validators.ts#L21)*
+*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/validators/validators.ts#L26)*
+
+#### Type declaration:
+
+▸ (`value`: any): *void | String*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | any |
+
+###  isUuid
+
+• **isUuid**: *function*
+
+*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/bb9f745/src/validators/validators.ts#L26)*
 
 #### Type declaration:
 

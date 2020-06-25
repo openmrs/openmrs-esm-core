@@ -18,4 +18,9 @@ export const isUuid = validator(
   "must be a valid UUID or a 36-character hexadecimal string"
 );
 
-export const validators = { isString, isBoolean };
+export const isObject = validator(
+  val => typeof val === "object" && !Array.isArray(val) && val !== null,
+  "must be an object (not an array or null)"
+);
+
+export const validators = { isString, isBoolean, isUuid, isObject };

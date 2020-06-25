@@ -66,19 +66,29 @@ function validateConfigSchema(
   schema: ConfigSchema,
   keyPath = ""
 ) {
+  const updateMessage = `Please verify that you are running the latest version and, if so, alert the maintainer.`;
   for (let key of Object.keys(schema)) {
+    const thisKeyPath = keyPath + (keyPath && ".") + key;
     if (!["description", "validators"].includes(key)) {
       if (!isOrdinaryObject(schema[key])) {
         console.error(
-          `${moduleName} has bad config schema definition for key ${keyPath}${key}. ` +
-            `Please verify that you are running the latest version and, if so, ` +
-            `alert the maintainer.`
+          `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}`
         );
-        return;
+        continue;
       }
       if (!schema[key].hasOwnProperty("default")) {
         // recurse for nested config keys
-        validateConfigSchema(moduleName, schema[key], keyPath + key + ".");
+        validateConfigSchema(moduleName, schema[key], thisKeyPath);
+      }
+    } else if (key === "validators") {
+      for (let validator of schema[key]) {
+        if (typeof validator !== "function") {
+          console.error(
+            `${moduleName} has invalid validator for key '${keyPath}' ${updateMessage}.` +
+              `\n\nIf you're the maintainer: validators must be functions that return either ` +
+              `undefined or an error string. Received ${validator}.`
+          );
+        }
       }
     }
   }
@@ -145,21 +155,24 @@ const validateConfig = (
   config: ConfigObject,
   keyPath: string = ""
 ) => {
-  if (schema.hasOwnProperty("dictionaryElements")) {
-    validateDictionary(schema, config, keyPath);
-    return;
-  }
   for (let [key, value] of Object.entries(config)) {
     const thisKeyPath = keyPath + "." + key;
     if (!schema.hasOwnProperty(key)) {
       console.error(`Unknown config key '${thisKeyPath}' provided. Ignoring.`);
-    } else if (isOrdinaryObject(value)) {
-      // nested config; recurse
-      const schemaPart = schema[key];
-      validateConfig(schemaPart, value, thisKeyPath);
+      continue;
+    }
+    runValidators(thisKeyPath, schema[key].validators, value);
+    if (isOrdinaryObject(value)) {
+      // structurally validate only if there's dictionaryElements specified
+      // or there's a `default` value, which indicates a freeform object
+      if (schema[key].dictionaryElements) {
+        validateDictionary(schema[key], value, thisKeyPath);
+      } else if (!schema[key].default) {
+        // recurse to validate nested object structure
+        const schemaPart = schema[key];
+        validateConfig(schemaPart, value, thisKeyPath);
+      }
     } else {
-      // config value; validate
-      runValidators(thisKeyPath, schema[key].validators, value);
       if (schema[key].arrayElements) {
         validateArray(schema[key], value, thisKeyPath);
       }

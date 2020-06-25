@@ -49,6 +49,18 @@ describe("defineConfigSchema", () => {
     Config.defineConfigSchema("foo-module", schema);
     expect(console.error).not.toHaveBeenCalled();
   });
+
+  it("logs an error if a non-function validator is provided", () => {
+    const schema = {
+      bar: { validators: [false] }
+    };
+    Config.defineConfigSchema("foo-module", schema);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /foo-module.*has invalid validator.*bar[\s\S]*false.*/i
+      )
+    );
+  });
 });
 
 describe("getConfig", () => {
@@ -87,7 +99,7 @@ describe("getConfig", () => {
     );
   });
 
-  it("requires nested config values to have been defined in the schema", async () => {
+  it("validates the values in object elements against the schema", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: { bar: { default: "qux" } }
     });
@@ -95,6 +107,77 @@ describe("getConfig", () => {
     await Config.getConfig("foo-module");
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(/foo-module.*foo\.doof.*/)
+    );
+  });
+
+  it("supports running validators on nested objects", async () => {
+    const fooSchema = {
+      bar: {
+        a: { default: { b: 1 } },
+        c: { default: 2 },
+        diff: { default: 1 },
+        validators: [
+          validator(o => o.a.b + o.diff == o.c, "c must equal a.b + diff")
+        ]
+      }
+    };
+    Config.defineConfigSchema("foo-module", fooSchema);
+    const badConfig = {
+      "foo-module": {
+        bar: { a: { b: 5 } }
+      }
+    };
+    Config.provide(badConfig);
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /value.*{\"a\":{\"b\":5}\}.*foo-module.bar.*c must equal a\.b \+ diff/
+      )
+    );
+    Config.clearAll();
+    Config.defineConfigSchema("foo-module", fooSchema);
+    const goodConfig = { "foo-module": { bar: { a: { b: 0 }, diff: 2 } } };
+    Config.provide(goodConfig);
+    const result = await Config.getConfig("foo-module");
+    expect(result.bar.a.b).toBe(0);
+    expect(result.bar.c).toBe(2);
+    expect(result.bar.diff).toBe(2);
+  });
+
+  it("supports freeform object elements, which have no structural validation", async () => {
+    const fooSchema = {
+      baz: {
+        default: {},
+        validators: [
+          validator(
+            o => typeof o === "object" && !Array.isArray(o),
+            "Must be an object"
+          )
+        ]
+      }
+    };
+    Config.defineConfigSchema("foo-module", fooSchema);
+    const testConfig = {
+      "foo-module": {
+        baz: { what: "ever", goes: "here" }
+      }
+    };
+    Config.provide(testConfig);
+    const result = await Config.getConfig("foo-module");
+    expect(console.error).not.toHaveBeenCalled();
+    expect(result.baz.what).toBe("ever");
+
+    Config.clearAll();
+    Config.defineConfigSchema("foo-module", fooSchema);
+    const badConfig = {
+      "foo-module": {
+        baz: 0
+      }
+    };
+    Config.provide(badConfig);
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/0.*foo-module.*baz.*must be an object/i)
     );
   });
 
@@ -372,15 +455,16 @@ describe("getConfig", () => {
   });
 
   it("supports validation of array element objects", async () => {
-    Config.defineConfigSchema("foo-module", {
+    const fooSchema = {
       bar: {
         default: [{ a: { b: 1 }, c: 2 }],
         arrayElements: {
           validators: [validator(o => o.a.b + 1 == o.c, "c must equal a.b + 1")]
         }
       }
-    });
-    const testConfig = {
+    };
+    Config.defineConfigSchema("foo-module", fooSchema);
+    const badConfig = {
       "foo-module": {
         bar: [
           { a: { b: 4 }, c: 5 },
@@ -388,13 +472,19 @@ describe("getConfig", () => {
         ]
       }
     };
-    Config.provide(testConfig);
+    Config.provide(badConfig);
     await Config.getConfig("foo-module");
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(
         /value.*{\"a\":{\"b\":1},\"c\":3}.*foo-module.bar\[1\].*c must equal a\.b \+ 1/
       )
     );
+    Config.clearAll();
+    Config.defineConfigSchema("foo-module", fooSchema);
+    const goodConfig = { "foo-module": { bar: [{ a: { b: 2 }, c: 3 }] } };
+    Config.provide(goodConfig);
+    const result = await Config.getConfig("foo-module");
+    expect(result.bar[0].a.b).toBe(2);
   });
 
   it("fills array element object elements with defaults", async () => {
