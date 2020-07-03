@@ -94,7 +94,7 @@ function validateConfigSchema(
   }
 }
 
-// Get config file from import map and prepend it to `configs`
+// Get config file from import map and append it to `configs`
 async function getImportMapConfigFile(): Promise<void> {
   let importMapConfigExists: boolean;
   try {

@@ -2,6 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "module": "esnext",
+    "target": "ESNext",
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
     "moduleResolution": "node",
