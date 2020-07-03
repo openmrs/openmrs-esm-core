@@ -1,5 +1,20 @@
 import { navigateToUrl } from "single-spa";
 
+/**
+ * Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
+ *
+ * Example usage:
+ * ```js
+ * const config = getConfig();
+ * const submitHandler = () => {
+ *   navigate({ to: config.links.submitSuccess });
+ * };
+ * ```
+ *
+ * @param to The target path or URL. Supports templating with 'openmrsBase' and 'openmrsSpaBase'.
+ * For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home`
+ * for implementations using the standard OpenMRS and SPA base paths.
+ */
 export function navigate({ to }: NavigateOptions): void {
   const target = interpolateUrl(to);
   const isSpaPath = target.startsWith(window.getOpenmrsSpaBase());

@@ -1,19 +1,28 @@
-import React, { FunctionComponent, MouseEvent } from "react";
+import React, { MouseEvent, AnchorHTMLAttributes } from "react";
 import { navigate, interpolateUrl } from "./navigate";
 
-const ConfigurableLink: FunctionComponent<ConfigurableLinkProps> = ({
+/**
+ * A React link component which calls [[navigate]] when clicked
+ *
+ * @param to The target path or URL. Supports interpolation. See [[navigate]]
+ * @param children Inline elements within the link
+ * @param otherProps Any other valid props for an <a> tag except `href` and `onClick`
+ */
+export function ConfigurableLink({
   to,
   children,
   ...otherProps
-}) => (
-  <a
-    onClick={event => handleClick(event, to)}
-    href={interpolateUrl(to)}
-    {...otherProps}
-  >
-    {children}
-  </a>
-);
+}: ConfigurableLinkProps) {
+  return (
+    <a
+      onClick={event => handleClick(event, to)}
+      href={interpolateUrl(to)}
+      {...otherProps}
+    >
+      {children}
+    </a>
+  );
+}
 
 function handleClick(event: MouseEvent, to: string) {
   if (
@@ -27,9 +36,8 @@ function handleClick(event: MouseEvent, to: string) {
   }
 }
 
-type ConfigurableLinkProps = {
+interface ConfigurableLinkProps
+  extends AnchorHTMLAttributes<HTMLAnchorElement> {
   to: string;
-  className?: string;
-};
-
-export default ConfigurableLink;
+  children: any;
+}

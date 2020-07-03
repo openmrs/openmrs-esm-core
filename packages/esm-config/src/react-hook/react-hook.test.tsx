@@ -1,6 +1,6 @@
 import React from "react";
 import { clearAll, defineConfigSchema } from "../module-config/module-config";
-import { render, wait, cleanup } from "@testing-library/react";
+import { render, cleanup, waitFor } from "@testing-library/react";
 import { ModuleNameContext, useConfig, clearConfig } from "./react-hook";
 
 describe(`useConfig`, () => {
@@ -23,7 +23,7 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await wait(() => {
+    await waitFor(() => {
       expect(getByText("The first thing")).toBeTruthy();
     });
   });
@@ -49,7 +49,7 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await wait(() => {
+    await waitFor(() => {
       expect(wrapper.getByText("foo thing")).toBeTruthy();
     });
 
@@ -63,7 +63,7 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await wait(() => {
+    await waitFor(() => {
       expect(wrapper.getByText("bar thing")).toBeTruthy();
     });
   });

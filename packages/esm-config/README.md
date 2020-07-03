@@ -373,9 +373,11 @@ This hasn't been implemented yet, but we would like to implement it! See "Contri
 
 ### Functions
 
+* [ConfigurableLink](README.md#configurablelink)
 * [defineConfigSchema](README.md#defineconfigschema)
 * [getConfig](README.md#getconfig)
 * [getDevtoolsConfig](README.md#getdevtoolsconfig)
+* [navigate](README.md#navigate)
 * [processConfig](README.md#processconfig)
 * [provide](README.md#provide)
 * [useConfig](README.md#useconfig)
@@ -394,6 +396,28 @@ This hasn't been implemented yet, but we would like to implement it! See "Contri
 *Defined in [react-hook/react-hook.tsx:4](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/react-hook/react-hook.tsx#L4)*
 
 ## Functions
+
+###  ConfigurableLink
+
+▸ **ConfigurableLink**(`__namedParameters`: object): *Element‹›*
+
+*Defined in [navigation/react-configurable-link.tsx:11](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/react-configurable-link.tsx#L11)*
+
+A React link component which calls [navigate](README.md#navigate) when clicked
+
+**Parameters:**
+
+▪ **__namedParameters**: *object*
+
+Name | Type | Description |
+------ | ------ | ------ |
+`children` | any | Inline elements within the link |
+`otherProps` | otherProps | Any other valid props for an <a> tag except `href` and `onClick`  |
+`to` | string | The target path or URL. Supports interpolation. See [navigate](README.md#navigate) |
+
+**Returns:** *Element‹›*
+
+___
 
 ###  defineConfigSchema
 
@@ -435,6 +459,34 @@ ___
 *Defined in [module-config/module-config.ts:45](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L45)*
 
 **Returns:** *Promise‹object›*
+
+___
+
+###  navigate
+
+▸ **navigate**(`__namedParameters`: object): *void*
+
+*Defined in [navigation/navigate.ts:18](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/navigate.ts#L18)*
+
+Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
+
+Example usage:
+```js
+const config = getConfig();
+const submitHandler = () => {
+  navigate({ to: config.links.submitSuccess });
+};
+```
+
+**Parameters:**
+
+▪ **__namedParameters**: *object*
+
+Name | Type | Description |
+------ | ------ | ------ |
+`to` | string | The target path or URL. Supports templating with 'openmrsBase' and 'openmrsSpaBase'. For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home` for implementations using the standard OpenMRS and SPA base paths.  |
+
+**Returns:** *void*
 
 ___
 
