@@ -7,6 +7,9 @@ cd "$(dirname "$0")"
 # Generate new API docs at docs/typedoc/README.md
 npx typedoc src/openmrs-esm-module-config.ts
 
+# Don't update the commit every time; just refer to master
+sed -i 's/\(Defined in.*\/blob\/\)[0123456789abcdef]\{7\}/\1master/' docs/typedoc/README.md
+
 # Delete the current API docs
 sed -i '/<!-- API -->/,/<!-- ENDAPI -->/{/<!-- API -->/!{/<!-- ENDAPI -->/!d;};}' README.md
 
