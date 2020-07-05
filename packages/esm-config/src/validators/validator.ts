@@ -10,4 +10,5 @@ export function validator(
 }
 
 type ValidatorFunction = (value: any) => Boolean;
-type Validator = (value: any) => void | String;
+
+export type Validator = (value: any) => void | String;

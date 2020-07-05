@@ -1,5 +1,6 @@
 import React, { MouseEvent, AnchorHTMLAttributes } from "react";
-import { navigate, interpolateUrl } from "./navigate";
+import { navigate } from "./navigate";
+import { interpolateUrl } from "./interpolate-string";
 
 /**
  * A React link component which calls [[navigate]] when clicked
@@ -7,6 +8,7 @@ import { navigate, interpolateUrl } from "./navigate";
  * @param to The target path or URL. Supports interpolation. See [[navigate]]
  * @param children Inline elements within the link
  * @param otherProps Any other valid props for an <a> tag except `href` and `onClick`
+ * @category Navigation
  */
 export function ConfigurableLink({
   to,

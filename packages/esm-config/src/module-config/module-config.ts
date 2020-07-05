@@ -42,6 +42,9 @@ export function processConfig(
   return config;
 }
 
+/**
+ * @internal
+ */
 export async function getDevtoolsConfig(): Promise<object> {
   await loadConfigs();
   return getAllConfigsWithoutValidating();

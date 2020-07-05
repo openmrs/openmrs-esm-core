@@ -1,4 +1,11 @@
-import { isString, isBoolean, isUuid, isObject } from "./validators";
+import {
+  isString,
+  isBoolean,
+  isUuid,
+  isObject,
+  isUrl,
+  isUrlWithTemplateParameters
+} from "./validators";
 
 describe("isString", () => {
   it("accepts strings", () => {
@@ -54,5 +61,21 @@ describe("isObject", () => {
 
   it("rejects null", () => {
     expect(isObject(null)).toMatch(/must be an object/i);
+  });
+});
+
+describe("isUrl", () => {
+  it("accepts a string with valid URL parameters", () => {
+    expect(isUrl("${openmrsSpaBase}/${openmrsBase}/thing")).toBeUndefined();
+  });
+
+  it("accepts a string with no parameters", () => {
+    expect(isUrl("/thing")).toBeUndefined();
+  });
+
+  it("rejects a string with unknkown URL parameters", () => {
+    expect(isUrl("${foo}/bad")).toMatch(
+      /allowed template parameters are \${openmrsBase}, \${openmrsSpaBase}/i
+    );
   });
 });

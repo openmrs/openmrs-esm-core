@@ -3,20 +3,15 @@ import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ConfigurableLink } from "./react-configurable-link";
-import { navigate, interpolateUrl } from "./navigate";
+import { navigate } from "./navigate";
 
 jest.mock("./navigate");
 const mockNavigate = navigate as jest.Mock;
-const mockInterpolateUrl = interpolateUrl as jest.Mock;
-window.openmrsBase = "/openmrs";
-window.spaBase = "/spa";
-window.getOpenmrsSpaBase = () => "/openmrs/spa";
 
 describe(`ConfigurableLink`, () => {
-  const path = "${openmrsSpaPath}/home";
+  const path = "${openmrsSpaBase}/home";
   beforeEach(() => {
     mockNavigate.mockClear();
-    mockInterpolateUrl.mockReturnValue("/openmrs/spa/home");
     render(
       <ConfigurableLink to={path} className="fancy-link">
         SPA Home

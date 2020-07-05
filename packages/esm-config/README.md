@@ -371,13 +371,16 @@ This hasn't been implemented yet, but we would like to implement it! See "Contri
 
 * [ModuleNameContext](README.md#const-modulenamecontext)
 
-### Functions
+### Navigation Functions
 
 * [ConfigurableLink](README.md#configurablelink)
+* [interpolateString](README.md#interpolatestring)
+* [navigate](README.md#navigate)
+
+### Other Functions
+
 * [defineConfigSchema](README.md#defineconfigschema)
 * [getConfig](README.md#getconfig)
-* [getDevtoolsConfig](README.md#getdevtoolsconfig)
-* [navigate](README.md#navigate)
 * [processConfig](README.md#processconfig)
 * [provide](README.md#provide)
 * [useConfig](README.md#useconfig)
@@ -395,13 +398,13 @@ This hasn't been implemented yet, but we would like to implement it! See "Contri
 
 *Defined in [react-hook/react-hook.tsx:4](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/react-hook/react-hook.tsx#L4)*
 
-## Functions
+## Navigation Functions
 
 ###  ConfigurableLink
 
 ▸ **ConfigurableLink**(`__namedParameters`: object): *Element‹›*
 
-*Defined in [navigation/react-configurable-link.tsx:11](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/react-configurable-link.tsx#L11)*
+*Defined in [navigation/react-configurable-link.tsx:13](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/react-configurable-link.tsx#L13)*
 
 A React link component which calls [navigate](README.md#navigate) when clicked
 
@@ -412,12 +415,73 @@ A React link component which calls [navigate](README.md#navigate) when clicked
 Name | Type | Description |
 ------ | ------ | ------ |
 `children` | any | Inline elements within the link |
-`otherProps` | otherProps | Any other valid props for an <a> tag except `href` and `onClick`  |
+`otherProps` | otherProps | Any other valid props for an <a> tag except `href` and `onClick` |
 `to` | string | The target path or URL. Supports interpolation. See [navigate](README.md#navigate) |
 
 **Returns:** *Element‹›*
 
 ___
+
+###  interpolateString
+
+▸ **interpolateString**(`template`: string, `params`: object): *string*
+
+*Defined in [navigation/interpolate-string.ts:38](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/interpolate-string.ts#L38)*
+
+Interpolates values of `params` into the `template` string.
+
+Useful for additional template parameters in URLs.
+
+Example usage:
+```js
+navigate({
+ to: interpolateString(
+   config.links.patientChart,
+   { patientUuid: patient.uuid }
+ )
+});
+```
+
+**Parameters:**
+
+Name | Type | Description |
+------ | ------ | ------ |
+`template` | string | With optional params wrapped in `${ }` |
+`params` | object | Values to interpolate into the string template |
+
+**Returns:** *string*
+
+___
+
+###  navigate
+
+▸ **navigate**(`__namedParameters`: object): *void*
+
+*Defined in [navigation/navigate.ts:24](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/navigate.ts#L24)*
+
+Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
+
+Example usage:
+```js
+const config = getConfig();
+const submitHandler = () => {
+  navigate({ to: config.links.submitSuccess });
+};
+```
+
+**Parameters:**
+
+▪ **__namedParameters**: *object*
+
+Name | Type | Description |
+------ | ------ | ------ |
+`to` | string | The target path or URL. Supports templating with 'openmrsBase' and 'openmrsSpaBase'. For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home` for implementations using the standard OpenMRS and SPA base paths. |
+
+**Returns:** *void*
+
+___
+
+## Other Functions
 
 ###  defineConfigSchema
 
@@ -449,44 +513,6 @@ Name | Type |
 `moduleName` | string |
 
 **Returns:** *Promise‹ConfigObject›*
-
-___
-
-###  getDevtoolsConfig
-
-▸ **getDevtoolsConfig**(): *Promise‹object›*
-
-*Defined in [module-config/module-config.ts:45](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L45)*
-
-**Returns:** *Promise‹object›*
-
-___
-
-###  navigate
-
-▸ **navigate**(`__namedParameters`: object): *void*
-
-*Defined in [navigation/navigate.ts:18](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/navigate.ts#L18)*
-
-Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
-
-Example usage:
-```js
-const config = getConfig();
-const submitHandler = () => {
-  navigate({ to: config.links.submitSuccess });
-};
-```
-
-**Parameters:**
-
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`to` | string | The target path or URL. Supports templating with 'openmrsBase' and 'openmrsSpaBase'. For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home` for implementations using the standard OpenMRS and SPA base paths.  |
-
-**Returns:** *void*
 
 ___
 
@@ -557,13 +583,13 @@ Name | Type |
 
 ### ▪ **validators**: *object*
 
-*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L26)*
+*Defined in [validators/validators.ts:58](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L58)*
 
 ###  isBoolean
 
 • **isBoolean**: *function*
 
-*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L26)*
+*Defined in [validators/validators.ts:60](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L60)*
 
 #### Type declaration:
 
@@ -579,7 +605,7 @@ Name | Type |
 
 • **isObject**: *function*
 
-*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L26)*
+*Defined in [validators/validators.ts:62](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L62)*
 
 #### Type declaration:
 
@@ -595,7 +621,7 @@ Name | Type |
 
 • **isString**: *function*
 
-*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L26)*
+*Defined in [validators/validators.ts:59](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L59)*
 
 #### Type declaration:
 
@@ -607,11 +633,33 @@ Name | Type |
 ------ | ------ |
 `value` | any |
 
+###  isUrl
+
+• **isUrl**: *function*
+
+*Defined in [validators/validators.ts:63](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L63)*
+
+#### Type declaration:
+
+▸ (`value`: any): *void | String*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | any |
+
+###  isUrlWithTemplateParameters
+
+• **isUrlWithTemplateParameters**: *isUrlWithTemplateParameters*
+
+*Defined in [validators/validators.ts:64](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L64)*
+
 ###  isUuid
 
 • **isUuid**: *function*
 
-*Defined in [validators/validators.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L26)*
+*Defined in [validators/validators.ts:61](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L61)*
 
 #### Type declaration:
 

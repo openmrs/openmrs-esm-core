@@ -1,4 +1,9 @@
 import { navigateToUrl } from "single-spa";
+import { interpolateUrl } from "./interpolate-string";
+
+function trimTrailingSlash(str: string) {
+  return str.replace(/\/$/, "");
+}
 
 /**
  * Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
@@ -14,40 +19,18 @@ import { navigateToUrl } from "single-spa";
  * @param to The target path or URL. Supports templating with 'openmrsBase' and 'openmrsSpaBase'.
  * For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home`
  * for implementations using the standard OpenMRS and SPA base paths.
+ * @category Navigation
  */
 export function navigate({ to }: NavigateOptions): void {
+  const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());
   const target = interpolateUrl(to);
-  const isSpaPath = target.startsWith(window.getOpenmrsSpaBase());
+  const isSpaPath = target.startsWith(openmrsSpaBase);
   if (isSpaPath) {
-    const spaTarget = target.replace(
-      new RegExp("^" + window.getOpenmrsSpaBase()),
-      ""
-    );
+    const spaTarget = target.replace(new RegExp("^" + openmrsSpaBase), "");
     navigateToUrl(spaTarget);
   } else {
     window.location.assign(target);
   }
-}
-
-/**
- * @internal
- * Interpolates a string with openmrsBase and openmrsSpaBase
- *
- * @param template A string to interpolate
- */
-export function interpolateUrl(template: string): string {
-  return interpolateString(template, {
-    openmrsBase: window.openmrsBase,
-    openmrsSpaBase: window.getOpenmrsSpaBase()
-  }).replace(/^\/\//, "/"); // remove extra initial slash if present
-}
-
-function interpolateString(template: string, params: object): string {
-  const names = Object.keys(params);
-  return names.reduce(
-    (prev, curr) => prev.split("${" + curr + "}").join(params[curr]),
-    template
-  );
 }
 
 type NavigateOptions = {

@@ -23,4 +23,43 @@ export const isObject = validator(
   "must be an object (not an array or null)"
 );
 
-export const validators = { isString, isBoolean, isUuid, isObject };
+/**
+ * Verifies that a string contains only the default URL template
+ * parameters, plus any specified in `allowedTemplateParameters`.
+ *
+ * @param allowedTemplateParameters To be added to `openmrsBase` and `openmrsSpaBase`
+ * @category Navigation
+ */
+export const isUrlWithTemplateParameters = (
+  allowedTemplateParameters: string[]
+) => {
+  const allowedParams = allowedTemplateParameters.concat([
+    "openmrsBase",
+    "openmrsSpaBase"
+  ]);
+  return validator(val => {
+    const matches = val.matchAll(/\${(.*?)}/g);
+    for (let match of matches) {
+      if (!allowedParams.includes(match[1])) {
+        return false;
+      }
+    }
+    return true;
+  }, "the allowed template parameters are " + allowedParams.map(p => "${" + p + "}").join(", "));
+};
+
+/**
+ * Verifies that a string contains only the default URL template parameters.
+ *
+ * @category Navigation
+ */
+export const isUrl = isUrlWithTemplateParameters([]);
+
+export const validators = {
+  isString,
+  isBoolean,
+  isUuid,
+  isObject,
+  isUrl,
+  isUrlWithTemplateParameters
+};

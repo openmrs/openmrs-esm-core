@@ -1,5 +1,5 @@
-import { interpolateUrl, navigate } from "./navigate";
 import { navigateToUrl } from "single-spa";
+import { navigate } from "./navigate";
 
 jest.mock("single-spa");
 const mockNavigateToUrl = navigateToUrl as jest.Mock;
@@ -7,9 +7,6 @@ const mockNavigateToUrl = navigateToUrl as jest.Mock;
 describe("navigate", () => {
   const originalWindowLocation = window.location;
   let mockLocationAssign;
-  window.openmrsBase = "/openmrs";
-  window.spaBase = "/spa";
-  window.getOpenmrsSpaBase = () => "/openmrs/spa";
 
   beforeAll(() => {
     delete window.location;
@@ -63,17 +60,5 @@ describe("navigate", () => {
     navigate({ to: "/${openmrsSpaBase}/baz/page" });
     expect(navigateToUrl).toHaveBeenCalledWith("/baz/page");
     expect(window.location.assign).not.toHaveBeenCalled();
-  });
-});
-
-describe("interpolateUrl", () => {
-  it("interpolates URL template elements", () => {
-    const result = interpolateUrl("test ${openmrsBase} ${openmrsSpaBase} ok");
-    expect(result).toBe("test /openmrs /openmrs/spa ok");
-  });
-
-  it("works when no interpolation needed", () => {
-    const result = interpolateUrl("test ok");
-    expect(result).toBe("test ok");
   });
 });
