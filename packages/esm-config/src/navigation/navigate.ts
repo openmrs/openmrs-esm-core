@@ -26,8 +26,7 @@ export function navigate({ to }: NavigateOptions): void {
   const target = interpolateUrl(to);
   const isSpaPath = target.startsWith(openmrsSpaBase);
   if (isSpaPath) {
-    const spaTarget = target.replace(new RegExp("^" + openmrsSpaBase), "");
-    navigateToUrl(spaTarget);
+    navigateToUrl(target);
   } else {
     window.location.assign(target);
   }

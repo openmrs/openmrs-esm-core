@@ -46,19 +46,19 @@ describe("navigate", () => {
 
   it("uses single-spa navigateToUrl to navigate to SPA path literal", () => {
     navigate({ to: "/openmrs/spa/foo/page" });
-    expect(navigateToUrl).toHaveBeenCalledWith("/foo/page");
+    expect(navigateToUrl).toHaveBeenCalledWith("/openmrs/spa/foo/page");
     expect(window.location.assign).not.toHaveBeenCalled();
   });
 
   it("uses single-spa navigateToUrl to navigate to interpolated SPA path", () => {
     navigate({ to: "${openmrsSpaBase}/bar/page" });
-    expect(navigateToUrl).toHaveBeenCalledWith("/bar/page");
+    expect(navigateToUrl).toHaveBeenCalledWith("/openmrs/spa/bar/page");
     expect(window.location.assign).not.toHaveBeenCalled();
   });
 
   it("tolerates an extra inital slash", () => {
     navigate({ to: "/${openmrsSpaBase}/baz/page" });
-    expect(navigateToUrl).toHaveBeenCalledWith("/baz/page");
+    expect(navigateToUrl).toHaveBeenCalledWith("/openmrs/spa/baz/page");
     expect(window.location.assign).not.toHaveBeenCalled();
   });
 });
