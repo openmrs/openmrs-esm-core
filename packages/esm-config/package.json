@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-module-config",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "A configuration library for the OpenMRS Single-Spa framework.",
   "main": "dist/openmrs-esm-module-config.js",
   "scripts": {

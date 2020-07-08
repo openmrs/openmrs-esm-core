@@ -583,13 +583,13 @@ Name | Type |
 
 ### ▪ **validators**: *object*
 
-*Defined in [validators/validators.ts:58](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L58)*
+*Defined in [validators/validators.ts:63](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L63)*
 
 ###  isBoolean
 
 • **isBoolean**: *function*
 
-*Defined in [validators/validators.ts:60](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L60)*
+*Defined in [validators/validators.ts:66](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L66)*
 
 #### Type declaration:
 
@@ -605,7 +605,7 @@ Name | Type |
 
 • **isNumber**: *function*
 
-*Defined in [validators/validators.ts:65](https://github.com/mddubey/openmrs-esm-module-config/blob/190bb7f/src/validators/validators.ts#L65)*
+*Defined in [validators/validators.ts:65](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L65)*
 
 #### Type declaration:
 
@@ -621,7 +621,7 @@ Name | Type |
 
 • **isObject**: *function*
 
-*Defined in [validators/validators.ts:62](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L62)*
+*Defined in [validators/validators.ts:68](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L68)*
 
 #### Type declaration:
 
@@ -637,7 +637,7 @@ Name | Type |
 
 • **isString**: *function*
 
-*Defined in [validators/validators.ts:59](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L59)*
+*Defined in [validators/validators.ts:64](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L64)*
 
 #### Type declaration:
 
@@ -653,7 +653,7 @@ Name | Type |
 
 • **isUrl**: *function*
 
-*Defined in [validators/validators.ts:63](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L63)*
+*Defined in [validators/validators.ts:69](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L69)*
 
 #### Type declaration:
 
@@ -669,13 +669,13 @@ Name | Type |
 
 • **isUrlWithTemplateParameters**: *isUrlWithTemplateParameters*
 
-*Defined in [validators/validators.ts:64](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L64)*
+*Defined in [validators/validators.ts:70](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L70)*
 
 ###  isUuid
 
 • **isUuid**: *function*
 
-*Defined in [validators/validators.ts:61](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L61)*
+*Defined in [validators/validators.ts:67](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L67)*
 
 #### Type declaration:
 
