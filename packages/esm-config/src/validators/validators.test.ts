@@ -4,7 +4,8 @@ import {
   isUuid,
   isObject,
   isUrl,
-  isUrlWithTemplateParameters
+  isUrlWithTemplateParameters,
+  isNumber
 } from "./validators";
 
 describe("isString", () => {
@@ -14,6 +15,16 @@ describe("isString", () => {
 
   it("rejects non-strings", () => {
     expect(isString([""])).toMatch("must be a string");
+  });
+});
+
+describe("isNumber", () => {
+  it("accepts numbers", () => {
+    expect(isNumber(10)).toBeUndefined();
+  });
+
+  it("rejects non-numbers", () => {
+    expect(isNumber("Not a Number")).toMatch("must be a number");
   });
 });
 

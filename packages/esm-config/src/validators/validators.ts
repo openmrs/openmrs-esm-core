@@ -5,6 +5,11 @@ export const isString = validator(
   "must be a string"
 );
 
+export const isNumber = validator(
+  val => typeof val === "number",
+  "must be a number"
+);
+
 export const isBoolean = validator(
   val => typeof val === "boolean",
   "must be a boolean"
@@ -57,6 +62,7 @@ export const isUrl = isUrlWithTemplateParameters([]);
 
 export const validators = {
   isString,
+  isNumber,
   isBoolean,
   isUuid,
   isObject,

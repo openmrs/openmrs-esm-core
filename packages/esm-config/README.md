@@ -601,6 +601,22 @@ Name | Type |
 ------ | ------ |
 `value` | any |
 
+###  isNumber
+
+• **isNumber**: *function*
+
+*Defined in [validators/validators.ts:65](https://github.com/mddubey/openmrs-esm-module-config/blob/190bb7f/src/validators/validators.ts#L65)*
+
+#### Type declaration:
+
+▸ (`value`: any): *void | String*
+
+**Parameters:**
+
+Name | Type |
+------ | ------ |
+`value` | any |
+
 ###  isObject
 
 • **isObject**: *function*
