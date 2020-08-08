@@ -1,5 +1,13 @@
 import * as R from "ramda";
 
+declare global {
+  interface Window {
+    openmrsConfigUseDevDefaults: boolean;
+  }
+}
+window.openmrsConfigUseDevDefaults =
+  window.openmrsConfigUseDevDefaults || false;
+
 // The configurations that have been provided
 const configs: Config[] = [];
 
@@ -249,9 +257,12 @@ const setDefaults = (schema, config) => {
   for (let key of Object.keys(schema)) {
     if (schema[key].hasOwnProperty("default")) {
       // We assume that schema[key] defines a config value, since it has
-      // a property "default."
+      // a property `default`.
       if (!config.hasOwnProperty(key)) {
-        config[key] = schema[key]["default"];
+        const devDefault = schema[key]["devDefault"] || schema[key]["default"];
+        config[key] = window.openmrsConfigUseDevDefaults
+          ? devDefault
+          : schema[key]["default"];
       }
       // We also check if it is an array with object elements, in which case we recurse
       if (

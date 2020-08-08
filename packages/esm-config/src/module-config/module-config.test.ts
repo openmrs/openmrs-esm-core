@@ -90,6 +90,23 @@ describe("getConfig", () => {
     expect(config.foo).toBe("qux");
   });
 
+  it("returns devDefault values when defined when turned on", async () => {
+    window.openmrsConfigUseDevDefaults = true;
+    Config.defineConfigSchema("testmod", {
+      foo: {
+        default: "qux"
+      },
+      bar: {
+        default: "pub",
+        devDefault: "barcade"
+      }
+    });
+    const config = await Config.getConfig("testmod");
+    expect(config.foo).toBe("qux");
+    expect(config.bar).toBe("barcade");
+    delete window.openmrsConfigUseDevDefaults;
+  });
+
   it("logs an error if config values not defined in the schema", async () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     Config.provide({ "foo-module": { bar: "baz" } });
