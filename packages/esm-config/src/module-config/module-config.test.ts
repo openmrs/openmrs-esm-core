@@ -91,7 +91,7 @@ describe("getConfig", () => {
   });
 
   it("returns devDefault values when defined when turned on", async () => {
-    window.openmrsConfigUseDevDefaults = true;
+    Config.setAreDevDefaultsOn(true);
     Config.defineConfigSchema("testmod", {
       foo: {
         default: "qux"
@@ -104,7 +104,7 @@ describe("getConfig", () => {
     const config = await Config.getConfig("testmod");
     expect(config.foo).toBe("qux");
     expect(config.bar).toBe("barcade");
-    delete window.openmrsConfigUseDevDefaults;
+    Config.setAreDevDefaultsOn(false);
   });
 
   it("logs an error if config values not defined in the schema", async () => {

@@ -487,7 +487,7 @@ ___
 
 ▸ **defineConfigSchema**(`moduleName`: string, `schema`: ConfigSchema): *void*
 
-*Defined in [module-config/module-config.ts:21](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L21)*
+*Defined in [module-config/module-config.ts:13](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L13)*
 
 **Parameters:**
 
@@ -504,7 +504,7 @@ ___
 
 ▸ **getConfig**(`moduleName`: string): *Promise‹ConfigObject›*
 
-*Defined in [module-config/module-config.ts:30](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L30)*
+*Defined in [module-config/module-config.ts:22](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L22)*
 
 **Parameters:**
 
@@ -520,7 +520,7 @@ ___
 
 ▸ **processConfig**(`schema`: ConfigSchema, `providedConfig`: ConfigObject, `keyPathContext`: string): *any*
 
-*Defined in [module-config/module-config.ts:43](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L43)*
+*Defined in [module-config/module-config.ts:35](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L35)*
 
 Validate and interpolate defaults for `providedConfig` according to `schema`
 
@@ -540,7 +540,7 @@ ___
 
 ▸ **provide**(`config`: Config): *void*
 
-*Defined in [module-config/module-config.ts:26](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L26)*
+*Defined in [module-config/module-config.ts:18](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L18)*
 
 **Parameters:**
 

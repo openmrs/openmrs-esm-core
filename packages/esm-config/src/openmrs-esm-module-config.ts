@@ -3,6 +3,8 @@ export {
   getConfig,
   provide,
   getDevtoolsConfig,
+  getAreDevDefaultsOn,
+  setAreDevDefaultsOn,
   processConfig
 } from "./module-config/module-config";
 

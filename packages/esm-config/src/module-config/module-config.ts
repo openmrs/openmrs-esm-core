@@ -1,13 +1,5 @@
 import * as R from "ramda";
 
-declare global {
-  interface Window {
-    openmrsConfigUseDevDefaults: boolean;
-  }
-}
-window.openmrsConfigUseDevDefaults =
-  window.openmrsConfigUseDevDefaults || false;
-
 // The configurations that have been provided
 const configs: Config[] = [];
 
@@ -56,6 +48,22 @@ export function processConfig(
 export async function getDevtoolsConfig(): Promise<object> {
   await loadConfigs();
   return getAllConfigsWithoutValidating();
+}
+
+/**
+ * @internal
+ */
+export function setAreDevDefaultsOn(value: boolean): void {
+  localStorage.setItem("openmrsConfigAreDevDefaultsOn", JSON.stringify(value));
+}
+
+/**
+ * @internal
+ */
+export function getAreDevDefaultsOn(): boolean {
+  return JSON.parse(
+    localStorage.getItem("openmrsConfigAreDevDefaultsOn") || "false"
+  );
 }
 
 /*
@@ -260,7 +268,7 @@ const setDefaults = (schema, config) => {
       // a property `default`.
       if (!config.hasOwnProperty(key)) {
         const devDefault = schema[key]["devDefault"] || schema[key]["default"];
-        config[key] = window.openmrsConfigUseDevDefaults
+        config[key] = getAreDevDefaultsOn()
           ? devDefault
           : schema[key]["default"];
       }
