@@ -1,0 +1,73 @@
+{
+  "name": "@openmrs/esm-extension-manager",
+  "version": "1.0.0",
+  "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
+  "main": "dist/openmrs-esm-extension-manager.js",
+  "scripts": {
+    "test": "jest --passWithNoTests",
+    "start": "webpack-dev-server",
+    "build": "rimraf dist && concurrently -n webpack,typescript 'webpack --mode=production' 'npm run typescript'",
+    "typescript": "tsc",
+    "prettier": "prettier 'src/**/*' --write",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src --ext ts"
+  },
+  "directories": {
+    "lib": "dist"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && concurrently -n lint,test,typescript 'npm run lint' 'npm test' 'npm run typescript'"
+    }
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/esm-extension-manager.git"
+  },
+  "keywords": [
+    "openmrs"
+  ],
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/openmrs/esm-extension-manager/issues"
+  },
+  "homepage": "https://github.com/openmrs/esm-extension-manager#readme",
+  "dependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/react": "^16.9.46",
+    "@types/systemjs": "^6.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "single-spa": "^5.5.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.3.0",
+    "babel-loader": "^8.1.0",
+    "browserslist-config-openmrs": "^1.0.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.3.0",
+    "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-ts-react-important-stuff": "^3.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "fork-ts-checker-webpack-plugin": "^5.1.0",
+    "husky": "^4.2.5",
+    "jest": "^26.4.2",
+    "jest-cli": "^26.4.2",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^3.0.0",
+    "systemjs-webpack-interop": "^2.1.2",
+    "typescript": "^4.0.2",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
