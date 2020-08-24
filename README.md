@@ -6,4 +6,4 @@ packages for the OpenMRS Frontend. These packages handle the
 [Domain Decomposition](https://wiki.openmrs.org/display/projects/MFE+Domain+Decomposition)
 document.
 
-- [@openmrs/esm-extension-manager](packages/extension-manager)
+- [@openmrs/esm-extension-manager](packages/esm-extension-manager)
