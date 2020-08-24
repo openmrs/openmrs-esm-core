@@ -3,10 +3,10 @@ node_js:
   - node
 script:
   - npx lerna bootstrap
-  - npm run lint
-  - npm run test
-  - npm run typescript
-  - npm run build
+  - npx lerna run lint
+  - npx lerna run test
+  - npx lerna run typescript
+  - npx lerna run build
   - echo "Folder name in Digital Ocean Spaces - $TRAVIS_COMMIT"
   - mkdir -p dist/@openmrs/esm-extension-manager/$TRAVIS_COMMIT
   - mv dist/*.* dist/@openmrs/esm-extension-manager/$TRAVIS_COMMIT/

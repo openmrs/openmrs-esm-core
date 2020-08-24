@@ -19,13 +19,14 @@ module.exports = {
       },
       {
         test: /\.m?(js|ts|tsx)$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: "babel-loader",
       },
     ],
   },
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
+    modules: ['node_modules', path.resolve(__dirname, 'node_modules')]
   },
   plugins: [new CleanWebpackPlugin(), new ForkTsCheckerWebpackPlugin()],
   externals: ["react", "react-dom", /^@openmrs\/esm/, "single-spa", "i18next"],
