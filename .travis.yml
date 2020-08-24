@@ -9,7 +9,7 @@ script:
   - npx lerna run build
   - echo "Folder name in Digital Ocean Spaces - $TRAVIS_COMMIT"
   - mkdir -p dist/@openmrs/esm-extension-manager/$TRAVIS_COMMIT
-  - mv dist/*.* dist/@openmrs/esm-extension-manager/$TRAVIS_COMMIT/
+  - mv packages/esm-extension-manager/dist/*.* dist/@openmrs/esm-extension-manager/$TRAVIS_COMMIT/
 deploy:
   provider: s3
   access_key_id: "$DIGITAL_OCEAN_SPACES_KEY_ID"
