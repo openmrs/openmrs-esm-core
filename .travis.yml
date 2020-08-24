@@ -2,8 +2,9 @@ language: node_js
 node_js:
   - node
 script:
+  - npx lerna bootstrap
   - npm run lint
-  - npm test
+  - npm run test
   - npm run typescript
   - npm run build
   - echo "Folder name in Digital Ocean Spaces - $TRAVIS_COMMIT"

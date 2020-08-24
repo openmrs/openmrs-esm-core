@@ -1,6 +1,12 @@
 {
   "name": "openmrs-core",
   "private": true,
+  "scripts": {
+    "lint": "lerna run lint",
+    "test": "lerna run test",
+    "typescript": "lerna run typescript",
+    "build": "lerna run build"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged && concurrently -n lint,test,typescript 'lerna run lint' 'lerna run test' 'lerna run typescript'"
