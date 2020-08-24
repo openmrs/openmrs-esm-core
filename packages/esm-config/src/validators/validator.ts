@@ -1,6 +1,6 @@
 export function validator(
   validationFunction: ValidatorFunction,
-  message: String
+  message: string
 ): Validator {
   return value => {
     if (!validationFunction(value)) {
@@ -9,6 +9,6 @@ export function validator(
   };
 }
 
-type ValidatorFunction = (value: any) => Boolean;
+type ValidatorFunction = (value: any) => boolean;
 
-export type Validator = (value: any) => void | String;
+export type Validator = (value: any) => void | string;

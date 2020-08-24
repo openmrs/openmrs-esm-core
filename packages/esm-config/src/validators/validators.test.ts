@@ -8,6 +8,18 @@ import {
   isNumber
 } from "./validators";
 
+describe("all validators", () => {
+  it("fail on undefined", () => {
+    expect(isString(undefined)).toMatch(/.*/);
+    expect(isBoolean(undefined)).toMatch(/.*/);
+    expect(isUuid(undefined)).toMatch(/.*/);
+    expect(isObject(undefined)).toMatch(/.*/);
+    expect(isUrl(undefined)).toMatch(/.*/);
+    expect(isUrlWithTemplateParameters(["foo"])(undefined)).toMatch(/.*/);
+    expect(isNumber(undefined)).toMatch(/.*/);
+  });
+});
+
 describe("isString", () => {
   it("accepts strings", () => {
     expect(isString("")).toBeUndefined();
