@@ -7,3 +7,11 @@ packages for the OpenMRS Frontend. These packages handle the
 document.
 
 - [@openmrs/esm-extension-manager](packages/esm-extension-manager)
+
+## Getting Started
+
+```
+npm install -g lerna
+npm install
+lerna bootstrap
+```
