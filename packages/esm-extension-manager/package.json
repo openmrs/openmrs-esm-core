@@ -1,0 +1,53 @@
+{
+  "name": "@openmrs/esm-extension-manager",
+  "version": "1.0.0",
+  "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
+  "main": "dist/openmrs-esm-extension-manager.js",
+  "scripts": {
+    "test": "jest --passWithNoTests",
+    "start": "webpack-dev-server",
+    "build": "rimraf dist && concurrently -n webpack,typescript 'webpack --mode=production' 'npm run typescript'",
+    "typescript": "tsc",
+    "prettier": "prettier 'src/**/*' --write",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src --ext ts"
+  },
+  "directories": {
+    "lib": "dist"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/esm-extension-manager.git"
+  },
+  "keywords": [
+    "openmrs"
+  ],
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/openmrs/esm-extension-manager/issues"
+  },
+  "homepage": "https://github.com/openmrs/esm-extension-manager#readme",
+  "dependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/react": "^16.9.46",
+    "@types/systemjs": "^6.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "single-spa": "^5.5.5"
+  },
+  "devDependencies": {
+    "browserslist-config-openmrs": "^1.0.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "fork-ts-checker-webpack-plugin": "^5.1.0",
+    "jest": "^26.4.2",
+    "jest-cli": "^26.4.2",
+    "systemjs-webpack-interop": "^2.1.2",
+    "typescript": "^4.0.2",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
