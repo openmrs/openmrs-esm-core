@@ -1,10 +1,17 @@
 import * as R from "ramda";
 
-// The configurations that have been provided
-const configs: Config[] = [];
+// The input configs
+type ProvidedConfig = {
+  source: string;
+  config: Config;
+};
+let _providedConfigs: ProvidedConfig[] = [];
+let _importMapConfig: Config = {};
+let _temporaryConfig: Config = {};
+updateTemporaryConfigValueFromLocalStorage();
 
 // An object with module names for keys and schemas for values.
-const schemas = {};
+const _schemas: Record<string, ConfigSchema> = {};
 
 /*
  * API
@@ -12,11 +19,11 @@ const schemas = {};
 
 export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
-  schemas[moduleName] = schema;
+  _schemas[moduleName] = schema;
 }
 
-export function provide(config: Config) {
-  configs.push(config);
+export function provide(config: Config, sourceName = "provided") {
+  _providedConfigs.push({ source: sourceName, config });
 }
 
 export async function getConfig(moduleName: string): Promise<ConfigObject> {
@@ -66,9 +73,56 @@ export function getAreDevDefaultsOn(): boolean {
   );
 }
 
+/**
+ * @internal
+ */
+export function getTemporaryConfig(): Config {
+  return _temporaryConfig;
+}
+
+/**
+ * @internal
+ */
+export function setTemporaryConfigValue(path: string[], value: any): void {
+  const current = getTemporaryConfig();
+  _temporaryConfig = R.assocPath(path, value, current);
+  localStorage.setItem(
+    "openmrsTemporaryConfig",
+    JSON.stringify(_temporaryConfig)
+  );
+}
+
+/**
+ * @internal
+ */
+export function unsetTemporaryConfigValue(path: string[]): void {
+  const current = getTemporaryConfig();
+  _temporaryConfig = R.dissocPath(path, current);
+  localStorage.setItem(
+    "openmrsTemporaryConfig",
+    JSON.stringify(_temporaryConfig)
+  );
+}
+
+/**
+ * @internal
+ */
+export function clearTemporaryConfig(): void {
+  _temporaryConfig = {};
+  localStorage.removeItem("openmrsTemporaryConfig");
+}
+
 /*
  * Helper functions
  */
+
+function getProvidedConfigs(): Config[] {
+  return [
+    ..._providedConfigs.map(c => c.config),
+    _importMapConfig,
+    _temporaryConfig
+  ];
+}
 
 // We cache the Promise that loads the import mapped config file
 // so that we can be sure to only call it once
@@ -99,6 +153,32 @@ function validateConfigSchema(
         // recurse for nested config keys
         validateConfigSchema(moduleName, schema[key], thisKeyPath);
       }
+      if (schema[key].hasOwnProperty("arrayElements")) {
+        if (hasObjectSchema(schema[key].arrayElements)) {
+          validateConfigSchema(
+            moduleName,
+            schema[key].arrayElements,
+            thisKeyPath + ".arrayElements"
+          );
+        }
+      }
+      if (
+        Object.keys(schema[key]).every(k =>
+          [
+            "description",
+            "validators",
+            "arrayElements",
+            "dictionaryElements"
+          ].includes(k)
+        )
+      ) {
+        console.error(
+          `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
+            `\n\nIf you're the maintainer: all config elements must have a default. Received ${JSON.stringify(
+              schema[key]
+            )}`
+        );
+      }
     } else if (key === "validators") {
       for (let validator of schema[key]) {
         if (typeof validator !== "function") {
@@ -125,7 +205,7 @@ async function getImportMapConfigFile(): Promise<void> {
   if (importMapConfigExists) {
     try {
       const configFileModule = await System.import("config-file");
-      configs.push(configFileModule.default);
+      _importMapConfig = configFileModule.default;
     } catch (e) {
       console.error(`Problem importing config-file ${e}`);
       throw e;
@@ -134,23 +214,23 @@ async function getImportMapConfigFile(): Promise<void> {
 }
 
 function getAllConfigsWithoutValidating() {
-  const providedConfigs = mergeConfigs(configs);
+  const configs = mergeConfigs(getProvidedConfigs());
   const resultConfigs = {};
-  for (let [moduleName, schema] of Object.entries(schemas)) {
-    const providedConfig = providedConfigs[moduleName] || {};
-    resultConfigs[moduleName] = setDefaults(schema, providedConfig);
+  for (let [moduleName, schema] of Object.entries(_schemas)) {
+    const config = configs[moduleName] || {};
+    resultConfigs[moduleName] = setDefaults(schema, config);
   }
   return resultConfigs;
 }
 
 function getConfigForModule(moduleName: string): ConfigObject {
-  if (!schemas.hasOwnProperty(moduleName)) {
+  if (!_schemas.hasOwnProperty(moduleName)) {
     throw Error("No config schema has been defined for " + moduleName);
   }
-  const schema = schemas[moduleName];
-  const providedConfig = mergeConfigsFor(moduleName, configs);
-  validateConfig(schema, providedConfig, moduleName);
-  const config = setDefaults(schema, providedConfig);
+  const schema = _schemas[moduleName];
+  const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
+  validateConfig(schema, inputConfig, moduleName);
+  const config = setDefaults(schema, inputConfig);
   return config;
 }
 
@@ -261,7 +341,7 @@ function runValidators(keyPath, validators, value) {
 }
 
 // Recursively fill in the config with values from the schema.
-const setDefaults = (schema, config) => {
+const setDefaults = (schema: ConfigSchema, config: Config) => {
   for (let key of Object.keys(schema)) {
     if (schema[key].hasOwnProperty("default")) {
       // We assume that schema[key] defines a config value, since it has
@@ -294,6 +374,18 @@ const setDefaults = (schema, config) => {
   return config;
 };
 
+function updateTemporaryConfigValueFromLocalStorage() {
+  try {
+    _temporaryConfig = JSON.parse(
+      localStorage.getItem("openmrsTemporaryConfig") || "{}"
+    );
+  } catch (e) {
+    console.error(
+      "Failed to parse temporary config in localStorage key 'openmrsTemporaryConfig'. Try clearing or fixing the value."
+    );
+  }
+}
+
 function hasObjectSchema(arrayElementsSchema) {
   return (
     Object.keys(arrayElementsSchema).filter(
@@ -312,8 +404,10 @@ function isOrdinaryObject(value) {
 
 export function clearAll() {
   getImportMapConfigPromise = undefined;
-  configs.length = 0;
-  for (var member in schemas) delete schemas[member];
+  _providedConfigs.length = 0;
+  _importMapConfig = {};
+  _temporaryConfig = {};
+  for (var member in _schemas) delete _schemas[member];
 }
 
 /*

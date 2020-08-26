@@ -61,6 +61,29 @@ describe("defineConfigSchema", () => {
       )
     );
   });
+
+  it("logs an error if an unexpected value nested in an array is provided as a key", () => {
+    const schema = {
+      foo: {
+        default: [],
+        arrayElements: { bar: "bad" }
+      }
+    };
+    Config.defineConfigSchema("mod-mod", schema);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/mod-mod.*foo.*bar/)
+    );
+  });
+
+  it("logs an error if any key does not include a default", () => {
+    const schema = {
+      foo: { bar: { description: "lol idk" } }
+    };
+    Config.defineConfigSchema("mod-mod", schema);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/mod-mod.*foo\.bar[\s\S]*default/)
+    );
+  });
 });
 
 describe("getConfig", () => {
@@ -614,6 +637,39 @@ describe("getDevtoolsConfig", () => {
     const devConfig = await Config.getDevtoolsConfig();
     expect(devConfig).toHaveProperty("foo-module", { foo: "qux" });
     expect(devConfig).toHaveProperty("bar-module", { bar: "baz" });
+  });
+});
+
+describe("temporary config", () => {
+  afterEach(() => {
+    Config.clearAll();
+  });
+
+  it("allows overriding the existing config", async () => {
+    Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
+    const testConfig = { "foo-module": { foo: "baz" } };
+    Config.provide(testConfig);
+    Config.setTemporaryConfigValue(["foo-module", "foo"], 3);
+    expect(Config.getTemporaryConfig()).toStrictEqual({
+      "foo-module": { foo: 3 }
+    });
+    let config = await Config.getConfig("foo-module");
+    expect(config).toStrictEqual({ foo: 3 });
+    Config.unsetTemporaryConfigValue(["foo-module", "foo"]);
+    config = await Config.getConfig("foo-module");
+    expect(config).toStrictEqual({ foo: "baz" });
+  });
+
+  it("can be gotten and cleared", async () => {
+    Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
+    Config.setTemporaryConfigValue(["foo-module", "foo"], 3);
+    expect(Config.getTemporaryConfig()).toStrictEqual({
+      "foo-module": { foo: 3 }
+    });
+    Config.clearTemporaryConfig();
+    expect(Config.getTemporaryConfig()).toStrictEqual({});
+    const config = await Config.getConfig("foo-module");
+    expect(config).toStrictEqual({ foo: "qux" });
   });
 });
 

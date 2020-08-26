@@ -487,7 +487,7 @@ ___
 
 ▸ **defineConfigSchema**(`moduleName`: string, `schema`: ConfigSchema): *void*
 
-*Defined in [module-config/module-config.ts:13](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L13)*
+*Defined in [module-config/module-config.ts:20](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L20)*
 
 **Parameters:**
 
@@ -504,7 +504,7 @@ ___
 
 ▸ **getConfig**(`moduleName`: string): *Promise‹ConfigObject›*
 
-*Defined in [module-config/module-config.ts:22](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L22)*
+*Defined in [module-config/module-config.ts:29](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L29)*
 
 **Parameters:**
 
@@ -518,9 +518,9 @@ ___
 
 ###  processConfig
 
-▸ **processConfig**(`schema`: ConfigSchema, `providedConfig`: ConfigObject, `keyPathContext`: string): *any*
+▸ **processConfig**(`schema`: ConfigSchema, `providedConfig`: ConfigObject, `keyPathContext`: string): *Config*
 
-*Defined in [module-config/module-config.ts:35](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L35)*
+*Defined in [module-config/module-config.ts:42](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L42)*
 
 Validate and interpolate defaults for `providedConfig` according to `schema`
 
@@ -532,21 +532,22 @@ Name | Type | Description |
 `providedConfig` | ConfigObject | an object of config values (without the top-level module name) |
 `keyPathContext` | string | a dot-deparated string which helps the user figure out where     the provided config came from  |
 
-**Returns:** *any*
+**Returns:** *Config*
 
 ___
 
 ###  provide
 
-▸ **provide**(`config`: Config): *void*
+▸ **provide**(`config`: Config, `sourceName`: string): *void*
 
-*Defined in [module-config/module-config.ts:18](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L18)*
+*Defined in [module-config/module-config.ts:25](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L25)*
 
 **Parameters:**
 
-Name | Type |
------- | ------ |
-`config` | Config |
+Name | Type | Default |
+------ | ------ | ------ |
+`config` | Config | - |
+`sourceName` | string | "provided" |
 
 **Returns:** *void*
 
