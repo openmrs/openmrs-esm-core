@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-extension-manager",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
   "main": "dist/openmrs-esm-extension-manager.js",
   "scripts": {
