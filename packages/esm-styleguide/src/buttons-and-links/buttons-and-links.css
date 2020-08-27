@@ -1,0 +1,309 @@
+/* The default button styles */
+/* "Unstyled" button css taken from https://gist.github.com/MoOx/9137295 */
+button.omrs-unstyled,
+input[type="submit"].omrs-unstyled,
+input[type="button"].omrs-unstyled {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  height: inherit;
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+}
+
+button.omrs-unstyled:focus,
+input[type="submit"].omrs-unstyled:focus,
+input[type="button"].omrs-unstyled:focus {
+  /*
+    there's some 3rd party css that turns these off using !important, so the only way to override them is to also use important.
+    this is why you don't use !important -- it makes it hard for other people to override it when they need to :(
+  */
+  outline: solid !important;
+  outline-width: thin !important;
+  outline-color: var(--omrs-color-bg-lowest-contrast) !important;
+}
+
+a.omrs-unstyled,
+a.omrs-unstyled:visited,
+a.omrs-unstyled:hover,
+a.omrs-unstyled:active,
+a.omrs-unstyled:focus,
+a.omrs-unstyled:active:hover {
+  font-style: inherit;
+  color: inherit;
+  background-color: transparent;
+  font-size: inherit;
+  text-decoration: none;
+  font-variant: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  border-radius: inherit;
+  border: inherit;
+  outline: inherit;
+  box-shadow: inherit;
+  padding: inherit;
+  vertical-align: inherit;
+}
+
+a.omrs-link,
+button.omrs-btn,
+input[type="submit"].omrs-btn,
+input[type="button"].omrs-btn {
+  border: none;
+  font-size: 1rem;
+  letter-spacing: 0.0125rem;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: 0.25rem;
+  line-height: 2.25rem;
+  padding: 0 1.5rem;
+}
+
+a.omrs-link {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+}
+
+a.omrs-disabled,
+button.omrs-btn:disabled,
+input[type="submit"].omrs-btn:disabled,
+input[type="button"].omrs-btn:disabled {
+  cursor: not-allowed;
+}
+
+a.omrs-disabled {
+  pointer-events: none;
+}
+
+a.omrs-link:focus,
+button.omrs-btn:focus,
+input[type="submit"].omrs-btn:focus,
+input[type="button"].omrs-btn:focus {
+  outline: solid !important;
+  outline-width: thin !important;
+  outline-color: var(--omrs-color-interaction);
+}
+
+/* Filled Square Button Styles */
+
+a.omrs-filled-action,
+button.omrs-filled-action,
+input[type="submit"].omrs-filled-action,
+input[type="button"].omrs-filled-action {
+  background: var(--omrs-color-interaction);
+  color: white;
+}
+
+a.omrs-filled-action:hover,
+button.omrs-filled-action:hover,
+input[type="submit"].omrs-filled-action:hover,
+input[type="button"].omrs-filled-action:hover {
+  background: var(--omrs-color-interaction-plus-one);
+  color: white;
+}
+
+a.omrs-filled-neutral,
+button.omrs-filled-neutral,
+input[type="submit"].omrs-filled-neutral,
+input[type="button"].omrs-filled-neutral {
+  background: rgba(73, 133, 224, 0.2);
+  color: var(--omrs-color-interaction);
+}
+
+a.omrs-filled-neutral:hover,
+button.omrs-filled-neutral:hover,
+input[type="submit"].omrs-filled-neutral:hover,
+input[type="button"].omrs-filled-neutral:hover {
+  background: rgba(73, 133, 224, 0.12);
+}
+
+a.omrs-filled.omrs-disabled, /* links don't have a browser :disabled state */
+button.omrs-filled:disabled,
+input[type="submit"].omrs-filled:disabled,
+input[type="button"].omrs-filled:disabled {
+  background: #e5e5e6;
+  color: rgba(60, 60, 67, 0.3);
+}
+
+/* Text Only Square Buttons */
+
+a.omrs-text-action,
+button.omrs-text-action,
+input[type="submit"].omrs-text-action,
+input[type="button"].omrs-text-action {
+  color: var(--omrs-color-interaction);
+  background-color: transparent;
+}
+
+a.omrs-text-action:hover,
+button.omrs-text-action:hover,
+input[type="submit"].omrs-text-action:hover,
+input[type="button"].omrs-text-action:hover {
+  background-color: var(--omrs-color-interaction-minus-two);
+}
+
+a.omrs-text-destructive,
+button.omrs-text-destructive,
+input[type="submit"].omrs-text-destructive,
+input[type="button"].omrs-text-destructive {
+  color: var(--omrs-color-danger);
+  background-color: transparent;
+}
+
+a.omrs-text-destructive:hover,
+button.omrs-text-destructive:hover,
+input[type="submit"].omrs-text-destructive:hover,
+input[type="button"].omrs-text-destructive:hover {
+  background-color: #f8eaea;
+}
+
+a.omrs-text-neutral,
+button.omrs-text-neutral,
+input[type="submit"].omrs-text-neutral,
+input[type="button"].omrs-text-neutral {
+  color: rgba(19, 19, 21, 0.6);
+  background-color: transparent;
+}
+
+a.omrs-text-neutral:hover,
+button.omrs-text-neutral:hover,
+input[type="submit"].omrs-text-neutral:hover,
+input[type="button"].omrs-text-neutral:hover {
+  background-color: #eff1f2;
+}
+
+a.omrs-text.omrs-disabled, /* links don't have a browser :disabled state */
+button.omrs-text:disabled,
+input[type="submit"].omrs-text:disabled,
+input[type="button"].omrs-text:disabled {
+  color: var(--omrs-color-ink-low-contrast);
+  background-color: transparent;
+}
+
+/* Outlined Buttons */
+
+a.omrs-outlined-neutral,
+button.omrs-outlined-neutral,
+input[type="submit"].omrs-outlined-neutral,
+input[type="button"].omrs-outlined-neutral {
+  color: rgba(19, 19, 21, 0.6);
+  background-color: white;
+}
+
+a.omrs-outlined-neutral:hover,
+button.omrs-outlined-neutral:hover,
+input[type="submit"].omrs-outlined-neutral:hover,
+input[type="button"].omrs-outlined-neutral:hover {
+  background: #eff1f2;
+  color: rgba(19, 19, 21, 0.6);
+}
+
+a.omrs-outlined-action,
+button.omrs-outlined-action,
+input[type="submit"].omrs-outlined-action,
+input[type="button"].omrs-outlined-action {
+  color: var(--omrs-color-interaction);
+  background-color: white;
+}
+
+a.omrs-outlined-action:hover,
+button.omrs-outlined-action:hover,
+input[type="submit"].omrs-outlined-action:hover,
+input[type="button"].omrs-outlined-action:hover {
+  background: var(--omrs-color-interaction-minus-two);
+  color: var(--omrs-color-interaction);
+}
+
+a.omrs-outlined-destructive,
+button.omrs-outlined-destructive,
+input[type="submit"].omrs-outlined-destructive,
+input[type="button"].omrs-outlined-destructive {
+  color: var(--omrs-color-danger);
+  background-color: white;
+}
+
+a.omrs-outlined-destructive:hover,
+button.omrs-outlined-destructive:hover,
+input[type="submit"].omrs-outlined-destructive:hover,
+input[type="button"].omrs-outlined-destructive:hover {
+  background-color: #f8eaea;
+  color: var(--omrs-color-danger);
+}
+
+a.omrs-outlined.omrs-disabled, /* links don't have a browser :disabled state */
+button.omrs-outlined:disabled,
+input[type="submit"].omrs-outlined:disabled,
+input[type="button"].omrs-outlined:disabled {
+  color: var(--omrs-color-ink-low-contrast);
+  background-color: white;
+}
+
+/*setting border color for all outlined buttons*/
+
+a.omrs-outlined-destructive,
+button.omrs-outlined-destructive,
+input[type="submit"].omrs-outlined-destructive,
+input[type="button"].omrs-outlined-destructive,
+a.omrs-outlined-neutral,
+button.omrs-outlined-neutral,
+input[type="submit"].omrs-outlined-neutral,
+input[type="button"].omrs-outlined-neutral,
+a.omrs-outlined-action,
+button.omrs-outlined-action,
+input[type="submit"].omrs-outlined-action,
+input[type="button"].omrs-outlined-action,
+a.omrs-outlined.omrs-disabled,
+button.omrs-outlined:disabled,
+input[type="submit"].omrs-outlined:disabled,
+input[type="button"].omrs-outlined:disabled {
+  border: 1px solid var(--omrs-color-ink-low-contrast);
+}
+
+/* Rounded Button  */
+a.omrs-rounded,
+button.omrs-rounded,
+input[type="submit"].omrs-rounded,
+input[type="button"].omrs-rounded {
+  border-radius: 6.25rem;
+}
+
+/* Button Sizes */
+
+a.omrs-rounded-lg,
+button.omrs-rounded-lg,
+input[type="submit"].omrs-rounded-lg,
+input[type="button"].omrs-rounded-lg {
+  border-radius: 6.25rem;
+  line-height: 3.5rem;
+  padding: 0 1.5rem;
+}
+
+a.omrs-link-lg,
+button.omrs-btn-lg,
+input[type="submit"].omrs-btn-lg,
+input[type="button"].omrs-btn-lg {
+  border-radius: 0.5rem;
+  line-height: 3.5rem;
+  padding: 0 1.5rem;
+}

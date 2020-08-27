@@ -1,0 +1,361 @@
+.omrs-checkbox label {
+  position: relative;
+}
+.omrs-checkbox input[type="checkbox"] {
+  opacity: 0;
+}
+.omrs-checkbox input[type="checkbox"] + span::before,
+.omrs-checkbox input[type="checkbox"] + span::after {
+  position: absolute;
+}
+.omrs-checkbox input[type="checkbox"] + span::before {
+  content: "";
+  display: inline-flex;
+  height: 1rem;
+  width: 1rem;
+  border: 0.125rem solid var(--omrs-color-ink-medium-contrast);
+  top: 0rem;
+  left: 0rem;
+}
+.omrs-checkbox input[type="checkbox"]:checked + span::before {
+  border: 0.125rem solid var(--omrs-color-interaction);
+  background: var(--omrs-color-interaction);
+}
+.omrs-checkbox input[type="checkbox"] + span::after {
+  content: none;
+  display: inline-flex;
+  height: 0.25rem;
+  width: 0.75rem;
+  transform: translate(-45%, -40%) rotate(-50deg);
+  left: 0.5625rem;
+  top: 0.5rem;
+}
+.omrs-checkbox input[type="checkbox"]:checked + span::after {
+  content: "";
+  border-left: 0.125rem solid var(--omrs-color-ink-white);
+  border-bottom: 0.125rem solid var(--omrs-color-ink-white);
+}
+.omrs-checkbox input[type="checkbox"] + span {
+  padding-left: 0.25rem;
+  color: var(--omrs-color-ink-high-contrast);
+}
+.omrs-checkbox input[type="checkbox"]:checked + span {
+  color: var(--omrs-color-interaction);
+}
+
+/* checkbox style two */
+.omrs-checkbox input[type="checkbox"] + label {
+  display: inline-flex;
+  position: absolute;
+  left: 0;
+}
+
+.omrs-checkbox input[type="checkbox"] + label::before {
+  content: "";
+  display: inline-flex;
+  height: 1rem;
+  width: 1rem;
+  border: 0.125rem solid var(--omrs-color-ink-medium-contrast);
+  top: 0rem;
+  left: 0rem;
+  margin-right: 0.5rem;
+  align-content: center;
+}
+
+.omrs-checkbox input[type="checkbox"] + label::after {
+  position: absolute;
+  content: "";
+  display: inline-flex;
+  height: 0.25rem;
+  width: 0.75rem;
+  transform: translate(-45%, -40%) rotate(-50deg);
+  left: 0.5625rem;
+  top: 0.5rem;
+}
+
+.omrs-checkbox input[type="checkbox"]:checked + label::before {
+  border: 0.125rem solid var(--omrs-color-interaction);
+  background: var(--omrs-color-interaction);
+}
+
+.omrs-checkbox input[type="checkbox"]:checked + label::after {
+  content: "";
+  border-left: 0.125rem solid var(--omrs-color-ink-white);
+  border-bottom: 0.125rem solid var(--omrs-color-ink-white);
+}
+
+.omrs-checkbox input[type="checkbox"]:checked + label {
+  color: var(--omrs-color-interaction);
+}
+
+/* Radio Button styles */
+.omrs-radio-button label {
+  position: relative;
+}
+.omrs-radio-button input[type="radio"] {
+  opacity: 0;
+}
+.omrs-radio-button input[type="radio"] + span::before,
+.omrs-radio-button input[type="radio"] + span::after {
+  position: absolute;
+  border-radius: 50%;
+}
+.omrs-radio-button input[type="radio"] + span::before {
+  content: "";
+  display: inline-flex;
+  height: 1rem;
+  width: 1rem;
+  border: 0.125rem solid var(--omrs-color-ink-medium-contrast);
+  top: 0rem;
+  left: 0rem;
+}
+.omrs-radio-button input[type="radio"]:checked + span::before {
+  border: 0.125rem solid var(--omrs-color-interaction);
+  background: var(--omrs-color-interaction);
+}
+.omrs-radio-button input[type="radio"] + span::after {
+  content: none;
+  display: inline-block;
+  height: 0.625rem;
+  width: 0.625rem;
+  transform: translate(-50%, -50%);
+  left: 0.625rem;
+  top: 0.625rem;
+}
+.omrs-radio-button input[type="radio"]:checked + span::after {
+  content: "";
+  border: 0.15625rem solid var(--omrs-color-ink-white);
+  background: var(--omrs-color-interaction);
+}
+.omrs-radio-button input[type="radio"] + span {
+  padding-left: 0.25rem;
+  color: var(--omrs-color-ink-high-contrast);
+}
+.omrs-radio-button input[type="radio"]:checked + span {
+  color: var(--omrs-color-interaction);
+}
+
+/* Radio button styles two */
+.omrs-radio-button input[type="radio"] + label {
+  display: inline-flex;
+  left: 0;
+}
+
+.omrs-radio-button input[type="radio"] + label::after,
+.omrs-radio-button input[type="radio"] + label::before {
+  border-radius: 50%;
+}
+
+.omrs-radio-button input[type="radio"] + label::before {
+  content: "";
+  display: inline-flex;
+  height: 1rem;
+  width: 1rem;
+  border: 0.125rem solid var(--omrs-color-ink-medium-contrast);
+  top: 0rem;
+  left: 0rem;
+  margin-right: 0.5rem;
+}
+
+.omrs-radio-button input[type="radio"] + label::after {
+  position: absolute;
+  content: none;
+  display: inline-block;
+  height: 0.625rem;
+  width: 0.625rem;
+  transform: translate(-50%, -50%);
+  left: 0.875rem;
+  top: 0.875rem;
+}
+
+.omrs-radio-button input[type="radio"]:checked + label::before {
+  border: 0.125rem solid var(--omrs-color-interaction);
+  background: var(--omrs-color-interaction);
+}
+
+.omrs-radio-button input[type="radio"]:checked + label::after {
+  content: "";
+  border: 0.15625rem solid var(--omrs-color-ink-white);
+  background: var(--omrs-color-interaction);
+}
+
+.omrs-radio-button input[type="radio"]:checked + label {
+  color: var(--omrs-color-interaction);
+}
+
+/* datepicker */
+
+.omrs-datepicker {
+  position: relative;
+  display: inline-flex;
+}
+
+.omrs-datepicker input[type="date"],
+.omrs-datepicker input[type="time"] {
+  font-family: "Roboto";
+  font-size: 1rem;
+}
+
+.omrs-datepicker input[type="date"]::-webkit-inner-spin-button,
+.omrs-datepicker input[type="time"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+.omrs-datepicker input[type="date"]::-webkit-calendar-picker-indicator,
+.omrs-datepicker input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+.omrs-datepicker input[type="date"],
+.omrs-datepicker input[type="time"] {
+  width: 100%;
+  outline: none;
+  background: var(--omrs-color-ink-white);
+  border: 0.0625rem solid var(--omrs-color-ink-low-contrast);
+  color: var(--omrs-color-ink-medium-contrast);
+  padding: 0.5rem;
+}
+
+.omrs-datepicker svg {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  top: 0.5rem;
+  right: 0;
+  margin-right: 0.25rem;
+  fill: var(--omrs-color-ink-medium-contrast);
+  pointer-events: none;
+}
+
+.omrs-datepicker input[type="date"]:valid,
+.omrs-datepicker input[type="time"]:valid {
+  color: var(--omrs-color-interaction);
+}
+
+.omrs-datepicker input[type="date"]:valid + svg,
+.omrs-datepicker input[type="time"]:valid + svg {
+  fill: var(--omrs-color-interaction);
+}
+
+.omrs-datepicker input[type="date"]:invalid,
+.omrs-datepicker input[type="time"]:invalid {
+  color: var(--omrs-color-danger);
+  border: 1px solid var(--omrs-color-danger);
+}
+
+.omrs-datepicker input[type="date"]:invalid + svg,
+.omrs-datepicker input[type="time"]:invalid + svg {
+  fill: var(--omrs-color-danger);
+}
+
+/* dropdown */
+
+.omrs-dropdown {
+  min-width: 8em;
+  width: 100%;
+  height: 3.5rem;
+  background: transparent;
+  border: 1px solid var(--omrs-color-ink-lowest-contrast);
+  border-radius: 0.25rem;
+  background-clip: padding-box;
+  margin: 0;
+}
+.omrs-dropdown:disabled {
+  opacity: 0.8;
+  background: lightgrey;
+  cursor: not-allowed;
+}
+.omrs-dropdown:focus {
+  border: 2px solid var(--omrs-color-interaction);
+  outline: 0;
+}
+
+/* toggle Switch styles */
+
+.toggleSwitch {
+  border: 0.0625rem solid var(--omrs-color-ink-lowest-contrast);
+  border-radius: 2rem;
+  display: flex;
+  background-color: var(--omrs-color-ink-white);
+  min-width: 100%;
+  z-index: 1;
+  justify-content: space-between;
+}
+
+.toggleSwitch input[type="radio"] {
+  display: none;
+}
+
+.toggleSwitch input[type="radio"] + label {
+  color: var(--omrs-color-ink-medium-contrast);
+  font-weight: bold;
+  padding: 0.5rem 0.5rem;
+  z-index: 100;
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.toggleSwitch input[type="radio"]:checked + label {
+  border: 0.0625rem solid var(--omrs-color-interaction);
+  border-radius: 2rem;
+  color: var(--omrs-color-interaction);
+  background-color: var(--omrs-color-ink-white);
+}
+
+/* Increment buttons styles */
+
+.omrs-increment-buttons {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  border: 0.0625rem solid var(--omrs-color-ink-lowest-contrast);
+  align-items: center;
+  border-radius: 6.5rem;
+  background-color: var(--omrs-color-ink-white);
+}
+
+.omrs-increment-buttons div {
+  padding: 0.4rem;
+}
+
+.omrs-increment-buttons svg {
+  cursor: pointer;
+  user-select: none;
+}
+
+.omrs-increment-buttons div:nth-child(1) {
+  background-color: var(--omrs-color-bg-low-contrast);
+  flex: 1;
+  border-radius: 6.5rem 0rem 0rem 6.5rem;
+}
+
+.omrs-increment-buttons div:nth-child(2) {
+  display: flex;
+  flex: 1;
+  margin: 0rem;
+  padding: 0rem;
+  justify-content: center;
+}
+
+.omrs-increment-buttons div:nth-child(2) input {
+  color: var(--omrs-color-interaction);
+  font-weight: 700;
+  text-align: center;
+  background-color: var(--omrs-color-ink-white);
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.625rem 0rem;
+  border: none;
+  outline: none;
+}
+
+.omrs-increment-buttons div:nth-child(3) {
+  background-color: var(--omrs-color-bg-low-contrast);
+  flex: 1;
+  border-radius: 0rem 6.5rem 6.5rem 0rem;
+}
+
+.omrs-increment-buttons svg {
+  fill: var(--omrs-color-ink-medium-contrast);
+}
