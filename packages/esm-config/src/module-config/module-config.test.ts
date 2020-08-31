@@ -84,6 +84,29 @@ describe("defineConfigSchema", () => {
       expect.stringMatching(/mod-mod.*foo\.bar[\s\S]*default/)
     );
   });
+
+  it("logs an error if any key is empty", () => {
+    const schema = {
+      foo: { bar: {} }
+    };
+    Config.defineConfigSchema("mod-mod", schema);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/mod-mod.*foo\.bar[\s\S]*default/)
+    );
+  });
+
+  it("does not log an error if an arrayElement object has a key without a default", () => {
+    const schema = {
+      foo: {
+        default: [],
+        arrayElements: {
+          bar: {}
+        }
+      }
+    };
+    Config.defineConfigSchema("mod-mod", schema);
+    expect(console.error).not.toHaveBeenCalled();
+  });
 });
 
 describe("getConfig", () => {

@@ -170,7 +170,8 @@ function validateConfigSchema(
             "arrayElements",
             "dictionaryElements"
           ].includes(k)
-        )
+        ) &&
+        !keyPath.includes(".arrayElements")
       ) {
         console.error(
           `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
