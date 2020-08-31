@@ -5,4 +5,11 @@ export {
   CancelLoading,
   renderExtension,
   registerExtension,
+  getExtensionNamesForExtensionSlot,
+  attach,
 } from "./extensions";
+
+export {
+  ExtensionSlotReact,
+  ExtensionReact,
+} from "./extension-slot-react.component";
