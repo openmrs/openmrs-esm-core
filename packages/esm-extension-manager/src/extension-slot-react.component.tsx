@@ -9,10 +9,6 @@ export interface ExtensionSlotReactProps {
   children?: ReactNode;
 }
 
-interface CancelLoading {
-  (): void;
-}
-
 interface ExtensionContextData {
   extensionSlotName: string;
   extensionName: string;
@@ -23,7 +19,7 @@ const ExtensionContext = React.createContext<ExtensionContextData>({
   extensionName: "",
 });
 
-export const ExtensionSlotReact = ({
+export const ExtensionSlotReact: React.FC = ({
   extensionSlotName,
   children,
 }: ExtensionSlotReactProps) => {
