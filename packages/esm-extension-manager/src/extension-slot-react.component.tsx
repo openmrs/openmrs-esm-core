@@ -19,7 +19,7 @@ const ExtensionContext = React.createContext<ExtensionContextData>({
   extensionName: "",
 });
 
-export const ExtensionSlotReact: React.FC = ({
+export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   extensionSlotName,
   children,
 }: ExtensionSlotReactProps) => {
