@@ -1,5 +1,5 @@
 {
-  "name": "@openmrs/esm-initial-script",
+  "name": "@openmrs/esm-app-shell",
   "license": "MPL-2.0",
   "version": "0.1.0",
   "main": "dist/openmrs.js",
