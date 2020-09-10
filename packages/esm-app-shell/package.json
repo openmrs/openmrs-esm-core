@@ -1,7 +1,7 @@
 {
   "name": "@openmrs/esm-app-shell",
   "license": "MPL-2.0",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/openmrs.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -10,7 +10,7 @@
     "start": "concurrently npm:webpack-dev npm:browsersync"
   },
   "dependencies": {
-    "@openmrs/esm-extension-manager": "^0.1.0",
+    "@openmrs/esm-extension-manager": "^0.1.1",
     "i18next-browser-languagedetector": "^4.3.1",
     "i18next-icu": "^1.4.2",
     "i18next-xhr-backend": "^3.2.2",
