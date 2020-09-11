@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "es6",
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "declaration": false,
+    "lib": ["dom", "es2019"]
+  },
+  "include": ["src/**/*"]
+}

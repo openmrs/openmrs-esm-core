@@ -1,0 +1,32 @@
+{
+  "name": "@openmrs/esm-app-shell",
+  "license": "MPL-2.0",
+  "version": "0.1.1",
+  "main": "dist/openmrs.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "webpack-dev": "webpack --mode development --watch",
+    "browsersync": "./browsersync.js",
+    "start": "concurrently npm:webpack-dev npm:browsersync"
+  },
+  "dependencies": {
+    "@openmrs/esm-extension-manager": "^0.1.1",
+    "i18next-browser-languagedetector": "^4.3.1",
+    "i18next-icu": "^1.4.2",
+    "i18next-xhr-backend": "^3.2.2",
+    "import-map-overrides": "^1.15.2",
+    "systemjs": "^6.3.3"
+  },
+  "devDependencies": {
+    "@types/systemjs": "^6.1.0",
+    "browser-sync": "^2.26.7",
+    "concurrently": "^5.2.0",
+    "i18next": "^19.6.0",
+    "react-i18next": "^11.7.0",
+    "single-spa": "^4.4.1",
+    "ts-loader": "^7.0.5",
+    "typescript": "^3.9.6",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  }
+}
