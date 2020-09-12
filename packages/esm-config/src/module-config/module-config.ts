@@ -118,9 +118,9 @@ export function clearTemporaryConfig(): void {
 
 function getProvidedConfigs(): Config[] {
   return [
-    ..._providedConfigs.map(c => c.config),
+    ..._providedConfigs.map((c) => c.config),
     _importMapConfig,
-    _temporaryConfig
+    _temporaryConfig,
   ];
 }
 
@@ -163,12 +163,12 @@ function validateConfigSchema(
         }
       }
       if (
-        Object.keys(schema[key]).every(k =>
+        Object.keys(schema[key]).every((k) =>
           [
             "description",
             "validators",
             "arrayElements",
-            "dictionaryElements"
+            "dictionaryElements",
           ].includes(k)
         ) &&
         !keyPath.includes(".arrayElements")
@@ -237,7 +237,7 @@ function getConfigForModule(moduleName: string): ConfigObject {
 
 function mergeConfigsFor(moduleName: string, allConfigs: Config[]) {
   const allConfigsForModule = R.map(R.prop(moduleName), allConfigs).filter(
-    item => item !== undefined && item !== null
+    (item) => item !== undefined && item !== null
   );
   return mergeConfigs(allConfigsForModule);
 }
@@ -359,7 +359,7 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
         schema[key].hasOwnProperty("arrayElements") &&
         hasObjectSchema(schema[key].arrayElements)
       ) {
-        const configWithDefaults = config[key].map(conf =>
+        const configWithDefaults = config[key].map((conf) =>
           setDefaults(schema[key].arrayElements, conf)
         );
         config[key] = configWithDefaults;
@@ -391,7 +391,7 @@ function updateTemporaryConfigValueFromLocalStorage() {
 function hasObjectSchema(arrayElementsSchema) {
   return (
     Object.keys(arrayElementsSchema).filter(
-      e => !["default", "validators"].includes(e)
+      (e) => !["default", "validators"].includes(e)
     ).length > 0
   );
 }

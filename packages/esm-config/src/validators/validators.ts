@@ -1,22 +1,22 @@
 import { validator } from "./validator";
 
 export const isString = validator(
-  val => typeof val === "string",
+  (val) => typeof val === "string",
   "must be a string"
 );
 
 export const isNumber = validator(
-  val => typeof val === "number",
+  (val) => typeof val === "number",
   "must be a number"
 );
 
 export const isBoolean = validator(
-  val => typeof val === "boolean",
+  (val) => typeof val === "boolean",
   "must be a boolean"
 );
 
 export const isUuid = validator(
-  val =>
+  (val) =>
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
       val
     ) || /^[0-9a-f]{36}$/i.test(val),
@@ -24,7 +24,7 @@ export const isUuid = validator(
 );
 
 export const isObject = validator(
-  val => typeof val === "object" && !Array.isArray(val) && val !== null,
+  (val) => typeof val === "object" && !Array.isArray(val) && val !== null,
   "must be an object (not an array or null)"
 );
 
@@ -40,9 +40,9 @@ export const isUrlWithTemplateParameters = (
 ) => {
   const allowedParams = allowedTemplateParameters.concat([
     "openmrsBase",
-    "openmrsSpaBase"
+    "openmrsSpaBase",
   ]);
-  return validator(val => {
+  return validator((val) => {
     if (!val) {
       return false;
     }
@@ -53,7 +53,7 @@ export const isUrlWithTemplateParameters = (
       }
     }
     return true;
-  }, "the allowed template parameters are " + allowedParams.map(p => "${" + p + "}").join(", "));
+  }, "the allowed template parameters are " + allowedParams.map((p) => "${" + p + "}").join(", "));
 };
 
 /**
@@ -70,5 +70,5 @@ export const validators = {
   isUuid,
   isObject,
   isUrl,
-  isUrlWithTemplateParameters
+  isUrlWithTemplateParameters,
 };

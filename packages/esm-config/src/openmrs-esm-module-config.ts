@@ -9,7 +9,7 @@ export {
   getTemporaryConfig,
   setTemporaryConfigValue,
   unsetTemporaryConfigValue,
-  clearTemporaryConfig
+  clearTemporaryConfig,
 } from "./module-config/module-config";
 
 export { ModuleNameContext, useConfig } from "./react-hook/react-hook";

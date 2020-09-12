@@ -22,24 +22,7 @@
   "browserslist": [
     "extends browserslist-config-openmrs"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && concurrently npm:lint npm:test npm:typescript npm:document && git add README.md"
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/openmrs/openmrs-esm-module-config.git"
-  },
-  "bugs": {
-    "url": "https://github.com/openmrs/openmrs-esm-module-config/issues"
-  },
-  "homepage": "https://github.com/openmrs/openmrs-esm-module-config#readme",
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/preset-react": "^7.10.4",
-    "@babel/preset-typescript": "^7.10.4",
     "@testing-library/dom": "^7.20.0",
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
@@ -47,24 +30,13 @@
     "@types/jest": "^25.2.2",
     "@types/ramda": "^0.26.44",
     "@types/systemjs": "^0.20.7",
-    "babel-eslint": "^11.0.0-beta.2",
-    "babel-jest": "^26.0.1",
-    "babel-loader": "^8.1.0",
     "babel-plugin-ramda": "^2.0.0",
     "browserslist-config-openmrs": "^1.0.0",
     "clean-webpack-plugin": "^3.0.0",
-    "concurrently": "^5.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-config-ts-react-important-stuff": "^1.1.0",
-    "eslint-plugin-prettier": "^3.1.2",
     "fork-ts-checker-webpack-plugin": "^4.1.3",
-    "husky": "^3.1.0",
     "jest": "^26.1.0",
     "jest-cli": "^26.0.1",
     "markdown-toc": "^1.2.0",
-    "prettier": "^1.19.1",
-    "pretty-quick": "^2.0.1",
     "ramda": "^0.26.1",
     "systemjs-webpack-interop": "^1.1.2",
     "typedoc": "0.17.0-3",

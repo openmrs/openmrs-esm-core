@@ -16,7 +16,7 @@ describe("interpolateString", () => {
   it("interpolates template elements", () => {
     const result = interpolateString("test ${one} ${two} 3", {
       one: 1,
-      two: 2
+      two: 2,
     });
     expect(result).toBe("test 1 2 3");
   });
