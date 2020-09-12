@@ -13,7 +13,7 @@ describe("defineConfigSchema", () => {
 
   it("logs an error if an unexpected value is provided as a key", () => {
     const schema = {
-      bar: true
+      bar: true,
     };
     Config.defineConfigSchema("foo-module", schema);
     expect(console.error).toHaveBeenCalledWith(
@@ -23,7 +23,7 @@ describe("defineConfigSchema", () => {
 
   it("logs an error if an unexpected nested value is provided as a key", () => {
     const schema = {
-      bar: { baz: "bad bad bad" }
+      bar: { baz: "bad bad bad" },
     };
     Config.defineConfigSchema("foo-module", schema);
     expect(console.error).toHaveBeenCalledWith(
@@ -36,15 +36,15 @@ describe("defineConfigSchema", () => {
       foo: {
         description: "Composed of bar and baz.",
         validators: [
-          validator(f => f.bar != f.baz, "bar and baz must not be equal")
+          validator((f) => f.bar != f.baz, "bar and baz must not be equal"),
         ],
         bar: {
-          default: 0
+          default: 0,
         },
         baz: {
-          default: 1
-        }
-      }
+          default: 1,
+        },
+      },
     };
     Config.defineConfigSchema("foo-module", schema);
     expect(console.error).not.toHaveBeenCalled();
@@ -52,7 +52,7 @@ describe("defineConfigSchema", () => {
 
   it("logs an error if a non-function validator is provided", () => {
     const schema = {
-      bar: { validators: [false] }
+      bar: { validators: [false] },
     };
     Config.defineConfigSchema("foo-module", schema);
     expect(console.error).toHaveBeenCalledWith(
@@ -66,8 +66,8 @@ describe("defineConfigSchema", () => {
     const schema = {
       foo: {
         default: [],
-        arrayElements: { bar: "bad" }
-      }
+        arrayElements: { bar: "bad" },
+      },
     };
     Config.defineConfigSchema("mod-mod", schema);
     expect(console.error).toHaveBeenCalledWith(
@@ -77,7 +77,7 @@ describe("defineConfigSchema", () => {
 
   it("logs an error if any key does not include a default", () => {
     const schema = {
-      foo: { bar: { description: "lol idk" } }
+      foo: { bar: { description: "lol idk" } },
     };
     Config.defineConfigSchema("mod-mod", schema);
     expect(console.error).toHaveBeenCalledWith(
@@ -87,7 +87,7 @@ describe("defineConfigSchema", () => {
 
   it("logs an error if any key is empty", () => {
     const schema = {
-      foo: { bar: {} }
+      foo: { bar: {} },
     };
     Config.defineConfigSchema("mod-mod", schema);
     expect(console.error).toHaveBeenCalledWith(
@@ -100,9 +100,9 @@ describe("defineConfigSchema", () => {
       foo: {
         default: [],
         arrayElements: {
-          bar: {}
-        }
-      }
+          bar: {},
+        },
+      },
     };
     Config.defineConfigSchema("mod-mod", schema);
     expect(console.error).not.toHaveBeenCalled();
@@ -129,8 +129,8 @@ describe("getConfig", () => {
   it("returns default values from the schema", async () => {
     Config.defineConfigSchema("testmod", {
       foo: {
-        default: "qux"
-      }
+        default: "qux",
+      },
     });
     const config = await Config.getConfig("testmod");
     expect(config.foo).toBe("qux");
@@ -140,12 +140,12 @@ describe("getConfig", () => {
     Config.setAreDevDefaultsOn(true);
     Config.defineConfigSchema("testmod", {
       foo: {
-        default: "qux"
+        default: "qux",
       },
       bar: {
         default: "pub",
-        devDefault: "barcade"
-      }
+        devDefault: "barcade",
+      },
     });
     const config = await Config.getConfig("testmod");
     expect(config.foo).toBe("qux");
@@ -164,7 +164,7 @@ describe("getConfig", () => {
 
   it("validates the values in object elements against the schema", async () => {
     Config.defineConfigSchema("foo-module", {
-      foo: { bar: { default: "qux" } }
+      foo: { bar: { default: "qux" } },
     });
     Config.provide({ "foo-module": { foo: { doof: "nope" } } });
     await Config.getConfig("foo-module");
@@ -180,15 +180,15 @@ describe("getConfig", () => {
         c: { default: 2 },
         diff: { default: 1 },
         validators: [
-          validator(o => o.a.b + o.diff == o.c, "c must equal a.b + diff")
-        ]
-      }
+          validator((o) => o.a.b + o.diff == o.c, "c must equal a.b + diff"),
+        ],
+      },
     };
     Config.defineConfigSchema("foo-module", fooSchema);
     const badConfig = {
       "foo-module": {
-        bar: { a: { b: 5 } }
-      }
+        bar: { a: { b: 5 } },
+      },
     };
     Config.provide(badConfig);
     await Config.getConfig("foo-module");
@@ -213,17 +213,17 @@ describe("getConfig", () => {
         default: {},
         validators: [
           validator(
-            o => typeof o === "object" && !Array.isArray(o),
+            (o) => typeof o === "object" && !Array.isArray(o),
             "Must be an object"
-          )
-        ]
-      }
+          ),
+        ],
+      },
     };
     Config.defineConfigSchema("foo-module", fooSchema);
     const testConfig = {
       "foo-module": {
-        baz: { what: "ever", goes: "here" }
-      }
+        baz: { what: "ever", goes: "here" },
+      },
     };
     Config.provide(testConfig);
     const result = await Config.getConfig("foo-module");
@@ -234,8 +234,8 @@ describe("getConfig", () => {
     Config.defineConfigSchema("foo-module", fooSchema);
     const badConfig = {
       "foo-module": {
-        baz: 0
-      }
+        baz: 0,
+      },
     };
     Config.provide(badConfig);
     await Config.getConfig("foo-module");
@@ -254,27 +254,27 @@ describe("getConfig", () => {
     Config.defineConfigSchema("foo-module", {
       foo: {
         bar: {
-          default: -1
+          default: -1,
         },
         baz: {
           qux: {
-            default: "N/A"
+            default: "N/A",
           },
           quy: {
-            default: ""
-          }
-        }
-      }
+            default: "",
+          },
+        },
+      },
     });
     const testConfig = {
       "foo-module": {
         foo: {
           bar: 0,
           baz: {
-            quy: "xyz"
-          }
-        }
-      }
+            quy: "xyz",
+          },
+        },
+      },
     };
     Config.provide(testConfig);
     const config = await Config.getConfig("foo-module");
@@ -304,14 +304,14 @@ describe("getConfig", () => {
       foo: {
         default: "thing",
         validators: [
-          validator(val => val.startsWith("thi"), "must start with 'thi'")
-        ]
-      }
+          validator((val) => val.startsWith("thi"), "must start with 'thi'"),
+        ],
+      },
     });
     const testConfig = {
       "foo-module": {
-        foo: "bar"
-      }
+        foo: "bar",
+      },
     };
     Config.provide(testConfig);
     await Config.getConfig("foo-module");
@@ -325,14 +325,14 @@ describe("getConfig", () => {
       foo: {
         default: "thing",
         validators: [
-          validator(val => val.startsWith("thi"), "must start with 'thi'")
-        ]
-      }
+          validator((val) => val.startsWith("thi"), "must start with 'thi'"),
+        ],
+      },
     });
     const testConfig = {
       "foo-module": {
-        foo: "this"
-      }
+        foo: "this",
+      },
     };
     Config.provide(testConfig);
     const config = await Config.getConfig("foo-module");
@@ -344,29 +344,29 @@ describe("getConfig", () => {
       foo: {
         default: {
           a: {
-            name: "A"
+            name: "A",
           },
           b: {
-            name: "B"
-          }
-        }
-      }
+            name: "B",
+          },
+        },
+      },
     });
     const testConfig = {
       "foo-module": {
         foo: {
           c: {
-            name: "C"
-          }
-        }
-      }
+            name: "C",
+          },
+        },
+      },
     };
     Config.provide(testConfig);
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toStrictEqual({
       c: {
-        name: "C"
-      }
+        name: "C",
+      },
     });
   });
 
@@ -374,21 +374,21 @@ describe("getConfig", () => {
     Config.defineConfigSchema("foo-module", {
       foo: {
         dictionaryElements: {
-          name: { validators: [isString] }
-        }
-      }
+          name: { validators: [isString] },
+        },
+      },
     });
     const testConfig = {
       "foo-module": {
         foo: {
           b: {
-            name: "B"
+            name: "B",
           },
           c: {
-            name: 1
-          }
-        }
-      }
+            name: 1,
+          },
+        },
+      },
     };
     Config.provide(testConfig);
     await Config.getConfig("foo-module");
@@ -400,13 +400,13 @@ describe("getConfig", () => {
   it("supports array elements", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: {
-        default: [1, 2, 3]
-      }
+        default: [1, 2, 3],
+      },
     });
     const testConfig = {
       "foo-module": {
-        foo: [0, 2, 4]
-      }
+        foo: [0, 2, 4],
+      },
     };
     Config.provide(testConfig);
     const config = await Config.getConfig("foo-module");
@@ -418,14 +418,14 @@ describe("getConfig", () => {
       foo: {
         default: [1, 2, 3],
         arrayElements: {
-          validators: [validator(Number.isInteger, "must be an integer")]
-        }
-      }
+          validators: [validator(Number.isInteger, "must be an integer")],
+        },
+      },
     });
     const testConfig = {
       "foo-module": {
-        foo: [0, 1.5, "bad"]
-      }
+        foo: [0, 1.5, "bad"],
+      },
     };
     Config.provide(testConfig);
     await Config.getConfig("foo-module");
@@ -441,20 +441,20 @@ describe("getConfig", () => {
           default: [{ a: 0, b: 1 }],
           arrayElements: {
             a: {},
-            b: {}
-          }
-        }
-      }
+            b: {},
+          },
+        },
+      },
     });
     const testConfig = {
       "foo-module": {
         bar: {
           baz: [
             { a: 1, b: 2 },
-            { a: 3, b: 4, dingo: 5 }
-          ]
-        }
-      }
+            { a: 3, b: 4, dingo: 5 },
+          ],
+        },
+      },
     };
     Config.provide(testConfig);
     await Config.getConfig("foo-module");
@@ -470,20 +470,20 @@ describe("getConfig", () => {
           default: [{ a: 0, b: { c: 2 } }],
           arrayElements: {
             a: {},
-            b: { c: {} }
-          }
-        }
-      }
+            b: { c: {} },
+          },
+        },
+      },
     });
     const testConfig = {
       "foo-module": {
         bar: {
           baz: [
             { a: 1, b: 2 },
-            { a: 3, b: { dingo: 5 } }
-          ]
-        }
-      }
+            { a: 3, b: { dingo: 5 } },
+          ],
+        },
+      },
     };
     Config.provide(testConfig);
     await expect(Config.getConfig("foo-module")).rejects.toThrow(); // throws incidentally
@@ -499,16 +499,16 @@ describe("getConfig", () => {
         arrayElements: {
           a: {
             b: {
-              validators: [validator(Number.isInteger, "must be an integer")]
-            }
-          }
-        }
-      }
+              validators: [validator(Number.isInteger, "must be an integer")],
+            },
+          },
+        },
+      },
     });
     const testConfig = {
       "foo-module": {
-        foo: [{ a: { b: 0.2 } }]
-      }
+        foo: [{ a: { b: 0.2 } }],
+      },
     };
     Config.provide(testConfig);
     await Config.getConfig("foo-module");
@@ -522,18 +522,20 @@ describe("getConfig", () => {
       bar: {
         default: [{ a: { b: 1 }, c: 2 }],
         arrayElements: {
-          validators: [validator(o => o.a.b + 1 == o.c, "c must equal a.b + 1")]
-        }
-      }
+          validators: [
+            validator((o) => o.a.b + 1 == o.c, "c must equal a.b + 1"),
+          ],
+        },
+      },
     };
     Config.defineConfigSchema("foo-module", fooSchema);
     const badConfig = {
       "foo-module": {
         bar: [
           { a: { b: 4 }, c: 5 },
-          { a: { b: 1 }, c: 3 }
-        ]
-      }
+          { a: { b: 1 }, c: 3 },
+        ],
+      },
     };
     Config.provide(badConfig);
     await Config.getConfig("foo-module");
@@ -557,24 +559,24 @@ describe("getConfig", () => {
         arrayElements: {
           a: {
             b: { validators: [] },
-            filler: { default: "defaultFiller", validators: [isString] }
-          }
-        }
-      }
+            filler: { default: "defaultFiller", validators: [isString] },
+          },
+        },
+      },
     });
     const testConfig = {
       "foo-module": {
         foo: [
           { a: { b: "customB", filler: "customFiller" } },
-          { a: { b: "anotherB" } }
-        ]
-      }
+          { a: { b: "anotherB" } },
+        ],
+      },
     };
     Config.provide(testConfig);
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toStrictEqual([
       { a: { b: "customB", filler: "customFiller" } },
-      { a: { b: "anotherB", filler: "defaultFiller" } }
+      { a: { b: "anotherB", filler: "defaultFiller" } },
     ]);
   });
 });
@@ -624,11 +626,11 @@ describe("processConfig", () => {
     const schema = {
       foo: {
         default: false,
-        validators: [validators.isBoolean]
-      }
+        validators: [validators.isBoolean],
+      },
     };
     const inputConfig = {
-      foo: "fAlSe"
+      foo: "fAlSe",
     };
     const config = Config.processConfig(schema, inputConfig, "nowhere");
     expect(console.error).toHaveBeenCalledWith(
@@ -639,7 +641,7 @@ describe("processConfig", () => {
 
   it("interpolates defaults", () => {
     const schema = {
-      foo: { default: false }
+      foo: { default: false },
     };
     const inputConfig = {};
     const config = Config.processConfig(schema, inputConfig, "nowhere");
@@ -674,7 +676,7 @@ describe("temporary config", () => {
     Config.provide(testConfig);
     Config.setTemporaryConfigValue(["foo-module", "foo"], 3);
     expect(Config.getTemporaryConfig()).toStrictEqual({
-      "foo-module": { foo: 3 }
+      "foo-module": { foo: 3 },
     });
     let config = await Config.getConfig("foo-module");
     expect(config).toStrictEqual({ foo: 3 });
@@ -687,7 +689,7 @@ describe("temporary config", () => {
     Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
     Config.setTemporaryConfigValue(["foo-module", "foo"], 3);
     expect(Config.getTemporaryConfig()).toStrictEqual({
-      "foo-module": { foo: 3 }
+      "foo-module": { foo: 3 },
     });
     Config.clearTemporaryConfig();
     expect(Config.getTemporaryConfig()).toStrictEqual({});
@@ -696,4 +698,4 @@ describe("temporary config", () => {
   });
 });
 
-const importableConfig = configObject => ({ default: configObject });
+const importableConfig = (configObject) => ({ default: configObject });

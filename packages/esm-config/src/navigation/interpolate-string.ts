@@ -12,7 +12,7 @@ export function interpolateUrl(template: string): string {
   const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());
   return interpolateString(template, {
     openmrsBase: window.openmrsBase,
-    openmrsSpaBase: openmrsSpaBase
+    openmrsSpaBase: openmrsSpaBase,
   }).replace(/^\/\//, "/"); // remove extra initial slash if present
 }
 

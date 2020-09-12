@@ -2,7 +2,7 @@ export function validator(
   validationFunction: ValidatorFunction,
   message: string
 ): Validator {
-  return value => {
+  return (value) => {
     if (!validationFunction(value)) {
       return message;
     }

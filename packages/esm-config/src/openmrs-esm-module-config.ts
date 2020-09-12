@@ -5,7 +5,7 @@ export {
   getDevtoolsConfig,
   getAreDevDefaultsOn,
   setAreDevDefaultsOn,
-  processConfig
+  processConfig,
 } from "./module-config/module-config";
 
 export { ModuleNameContext, useConfig } from "./react-hook/react-hook";

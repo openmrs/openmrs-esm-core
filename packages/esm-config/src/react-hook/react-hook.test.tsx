@@ -11,8 +11,8 @@ describe(`useConfig`, () => {
   it(`can return config as a react hook`, async () => {
     defineConfigSchema("foo-module", {
       thing: {
-        default: "The first thing"
-      }
+        default: "The first thing",
+      },
     });
 
     const { getByText } = render(
@@ -31,14 +31,14 @@ describe(`useConfig`, () => {
   it(`can handle multiple calls to useConfig from different modules`, async () => {
     defineConfigSchema("foo-module", {
       thing: {
-        default: "foo thing"
-      }
+        default: "foo thing",
+      },
     });
 
     defineConfigSchema("bar-module", {
       thing: {
-        default: "bar thing"
-      }
+        default: "bar thing",
+      },
     });
 
     let wrapper = render(

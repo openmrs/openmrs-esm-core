@@ -5,7 +5,7 @@ import {
   isObject,
   isUrl,
   isUrlWithTemplateParameters,
-  isNumber
+  isNumber,
 } from "./validators";
 
 describe("all validators", () => {

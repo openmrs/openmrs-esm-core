@@ -17,7 +17,7 @@ export function ConfigurableLink({
 }: ConfigurableLinkProps) {
   return (
     <a
-      onClick={event => handleClick(event, to)}
+      onClick={(event) => handleClick(event, to)}
       href={interpolateUrl(to)}
       {...otherProps}
     >
