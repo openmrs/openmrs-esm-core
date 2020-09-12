@@ -5,7 +5,11 @@ export {
   getDevtoolsConfig,
   getAreDevDefaultsOn,
   setAreDevDefaultsOn,
-  processConfig
+  processConfig,
+  getTemporaryConfig,
+  setTemporaryConfigValue,
+  unsetTemporaryConfigValue,
+  clearTemporaryConfig
 } from "./module-config/module-config";
 
 export { ModuleNameContext, useConfig } from "./react-hook/react-hook";
