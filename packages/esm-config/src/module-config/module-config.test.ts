@@ -694,6 +694,22 @@ describe("temporary config", () => {
     const config = await Config.getConfig("foo-module");
     expect(config).toStrictEqual({ foo: "qux" });
   });
+
+  it("is not mutated by getConfig", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        bar: { default: "qux" },
+        baz: { default: "also qux" }
+      }
+    });
+    await Config.getConfig("foo-module");
+    Config.setTemporaryConfigValue(["foo-module", "foo", "bar"], 3);
+    await Config.getConfig("foo-module");
+    Config.setTemporaryConfigValue(["foo-module", "foo", "bar"], 4);
+    expect(Config.getTemporaryConfig()).toStrictEqual({
+      "foo-module": { foo: { bar: 4 } }
+    });
+  });
 });
 
 const importableConfig = configObject => ({ default: configObject });
