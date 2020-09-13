@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+  - node
+script:
+  - npm run lint
+  - npm test
+  - npm run typescript
+  - npm run build
+  - echo "Folder name in Digital Ocean Spaces - $TRAVIS_COMMIT"
+  - mkdir -p dist/@openmrs/esm-module-config/$TRAVIS_COMMIT
+  - mv dist/*.* dist/@openmrs/esm-module-config/$TRAVIS_COMMIT/
+deploy:
+  provider: s3
+  access_key_id: "$DIGITAL_OCEAN_SPACES_KEY_ID"
+  secret_access_key: "$DIGITAL_OCEAN_SPACES_ACCESS_KEY"
+  bucket: "$DIGITAL_OCEAN_SPACES_BUCKET"
+  endpoint: "$DIGITAL_OCEAN_SPACES_ENDPOINT"
+  cache-control: "max-age=31536000"
+  local_dir: dist
+  skip_cleanup: true
+  acl: public_read
+  on:
+    branch: master
+after_deploy:
+  - echo "Updating import map to point to new version of @openmrs/esm-module-config"
+  - curl -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@openmrs/esm-module-config","url":"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-module-config/'$TRAVIS_COMMIT'/openmrs-esm-module-config.js" }' -X PATCH $DEPLOYER_HOST/services\?env=prod -H "Accept:application/json" -H "Content-Type:application/json" --fail
