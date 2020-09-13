@@ -20,16 +20,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openmrs/esm-extension-manager.git"
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
   },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "keywords": [
     "openmrs"
   ],
   "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://github.com/openmrs/esm-extension-manager/issues"
-  },
-  "homepage": "https://github.com/openmrs/esm-extension-manager#readme",
   "dependencies": {
   },
   "peerDependencies": {},
