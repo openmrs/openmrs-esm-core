@@ -342,7 +342,8 @@ function runValidators(keyPath, validators, value) {
 }
 
 // Recursively fill in the config with values from the schema.
-const setDefaults = (schema: ConfigSchema, config: Config) => {
+const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
+  const config = R.clone(inputConfig);
   for (let key of Object.keys(schema)) {
     if (schema[key].hasOwnProperty("default")) {
       // We assume that schema[key] defines a config value, since it has
