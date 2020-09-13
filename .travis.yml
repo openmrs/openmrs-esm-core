@@ -10,6 +10,8 @@ script:
   - echo "Folder name in Digital Ocean Spaces - $TRAVIS_COMMIT"
   - mkdir -p dist/@openmrs/esm-extension-manager/$TRAVIS_COMMIT
   - mv packages/esm-extension-manager/dist/*.* dist/@openmrs/esm-extension-manager/$TRAVIS_COMMIT/
+  - mkdir -p dist/@openmrs/esm-module-config/$TRAVIS_COMMIT
+  - mv packages/esm-config/dist/*.* dist/@openmrs/esm-module-config/$TRAVIS_COMMIT/
 deploy:
   provider: s3
   access_key_id: "$DIGITAL_OCEAN_SPACES_KEY_ID"
@@ -25,5 +27,9 @@ deploy:
 after_deploy:
   - echo "Updating import map to point to new version of @openmrs/esm-extension-manager"
   - statuscode=$(curl --output /dev/null --write-out %{http_code} -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@openmrs/esm-extension-manager","url":"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-extension-manager/'$TRAVIS_COMMIT'/openmrs-esm-extension-manager.js" }' -X PATCH $DEPLOYER_HOST/services\?env=prod -H "Accept:application/json" -H "Content-Type:application/json")
-  - echo "Deployment Status Code --> ${statuscode}"
+  - echo "Extension Manager deployment Status Code --> ${statuscode}"
+  - if [ "$statuscode" -ne 200 ]; then travis_terminate "$statuscode"; fi
+  - echo "Updating import map to point to new version of @openmrs/esm-module-config"
+  - statuscode=$(curl --output /dev/null --write-out %{http_code} -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@openmrs/esm-module-config","url":"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-module-config/'$TRAVIS_COMMIT'/openmrs-esm-module-config.js" }' -X PATCH $DEPLOYER_HOST/services\?env=prod -H "Accept:application/json" -H "Content-Type:application/json")
+  - echo "Module Config deployment Status Code --> ${statuscode}"
   - if [ "$statuscode" -ne 200 ]; then travis_terminate "$statuscode"; fi
