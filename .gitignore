@@ -66,3 +66,5 @@ dist
 # Intellij integration
 *.iml
 .idea/
+
+docs/
