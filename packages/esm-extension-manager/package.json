@@ -38,7 +38,7 @@
     "@types/systemjs": "^6.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "single-spa": "^5.5.5",
+    "single-spa": "^4.4.1",
     "systemjs-webpack-interop": "^2.1.2"
   }
 }
