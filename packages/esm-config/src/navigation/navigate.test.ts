@@ -9,7 +9,7 @@ describe("navigate", () => {
   let mockLocationAssign;
 
   beforeAll(() => {
-    delete window.location;
+    delete (window as any).location;
     //@ts-ignore
     window.location = { assign: jest.fn() };
     mockLocationAssign = window.location.assign as jest.Mock;
