@@ -2,6 +2,7 @@ import React, { useState, useContext, ReactNode } from "react";
 import {
   renderExtension,
   getExtensionNamesForExtensionSlot,
+  getIsUIEditorEnabled,
 } from "./extensions";
 
 export interface ExtensionSlotReactProps {
@@ -30,7 +31,7 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   }, [extensionSlotName]);
 
   return (
-    <>
+    <div style={{ backgroundColor: getIsUIEditorEnabled() ? "cyan" : "" }}>
       {extensionNames.map((extensionName) => (
         <ExtensionContext.Provider
           key={extensionName}
@@ -42,7 +43,7 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
           {children ?? <ExtensionReact />}
         </ExtensionContext.Provider>
       ))}
-    </>
+    </div>
   );
 };
 
@@ -57,5 +58,11 @@ export const ExtensionReact: React.FC = (props) => {
     }
   }, []);
 
-  return <slot ref={ref} />;
+  return getIsUIEditorEnabled() ? (
+    <div style={{ outline: "0.125rem solid yellow" }}>
+      <slot ref={ref} />
+    </div>
+  ) : (
+    <slot ref={ref} />
+  );
 };

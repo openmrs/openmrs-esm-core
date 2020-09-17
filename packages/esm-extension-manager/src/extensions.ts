@@ -74,6 +74,16 @@ export function renderExtension(
   };
 }
 
+export function getIsUIEditorEnabled(): boolean {
+  return JSON.parse(
+    localStorage.getItem("openmrs:isUIEditorEnabled") ?? "false"
+  );
+}
+
+export function setIsUIEditorEnabled(enabled: boolean): void {
+  localStorage.setItem("openmrs:isUIEditorEnabled", JSON.stringify(enabled));
+}
+
 interface Lifecycle {
   bootstrap: () => void;
   mount: () => void;

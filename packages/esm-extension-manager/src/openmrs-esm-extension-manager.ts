@@ -7,6 +7,8 @@ export {
   registerExtension,
   getExtensionNamesForExtensionSlot,
   attach,
+  setIsUIEditorEnabled,
+  getIsUIEditorEnabled,
 } from "./extensions";
 
 export {
