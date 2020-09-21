@@ -1,4 +1,5 @@
 const { resolve } = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: resolve(__dirname, "src/index.ts"),
@@ -22,7 +23,19 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      inject: false,
+      template: resolve(__dirname, "src/index.ejs"),
+      templateParameters: {
+        openmrsBaseUrlContext: process.env.OMRS_BASE_URL || "/openmrs",
+        spaBaseUrlContext: process.env.OMRS_SPA_PATH || "/spa",
+        openmrsImportmap:
+          process.env.OMRS_ESM_IMPORTMAP || "/openmrs/frontend/import-map.json",
+      },
+    }),
+  ],
   resolve: {
-    extensions: [".ts", ".js"],
+    extensions: [".ts", ".tsx", ".js"],
   },
 };
