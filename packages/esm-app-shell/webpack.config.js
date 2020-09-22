@@ -2,6 +2,7 @@ const { resolve } = require("path");
 const { readFileSync } = require("fs");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: resolve(__dirname, "src/index.ts"),
@@ -57,6 +58,16 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      inject: false,
+      template: resolve(__dirname, "src/index.ejs"),
+      templateParameters: {
+        openmrsBaseUrlContext: process.env.OMRS_BASE_URL || "/openmrs",
+        spaBaseUrlContext: process.env.OMRS_SPA_PATH || "/spa",
+        openmrsImportmap:
+          process.env.OMRS_ESM_IMPORTMAP || "/openmrs/frontend/import-map.json",
+      },
+    }),
     new MiniCssExtractPlugin({ filename: "openmrs.css" }),
   ],
 };
