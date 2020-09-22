@@ -68,3 +68,4 @@ dist
 .idea/
 
 docs/
+storybook-static

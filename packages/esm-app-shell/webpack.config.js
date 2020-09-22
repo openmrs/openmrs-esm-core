@@ -1,4 +1,7 @@
 const { resolve } = require("path");
+const { readFileSync } = require("fs");
+const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: resolve(__dirname, "src/index.ts"),
@@ -16,13 +19,44 @@ module.exports = {
         },
       },
       {
-        test: /\.ts$/,
+        test: /\.css$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          "css-loader",
+          "postcss-loader",
+        ],
+      },
+      {
+        test: /\.(woff|woff2|png)?$/,
+        use: ["file-loader"],
+      },
+      {
+        test: /\.(svg|html)$/,
+        use: ["raw-loader"],
+      },
+      {
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
-        use: "ts-loader",
+        use: [
+          {
+            loader: "babel-loader",
+            options: JSON.parse(readFileSync("./.babelrc", "utf8")),
+          },
+        ],
+      },
+      {
+        test: /\.(ts|tsx)?$/,
+        exclude: /(node_modules|bower_components)/,
+        use: ["ts-loader"],
       },
     ],
   },
   resolve: {
-    extensions: [".ts", ".js"],
+    mainFields: ["module", "main"],
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({ filename: "openmrs.css" }),
+  ],
 };

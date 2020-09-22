@@ -1,28 +1,41 @@
+import { mountRootParcel } from "single-spa";
+
 /**
  * Creates the extension component <-> extension slot management engine.
- *
  */
-
-const extensions: Record<string, ExtensionDefinition> = {};
+const extensions: Record<string, ExtensionRegistration> = {};
 const attachedExtensionsForExtensionSlot: Record<string, Array<string>> = {};
 
-const importSingleSpaPromise = System.import("single-spa");
+interface ExtensionRegistration extends ExtensionDefinition {
+  appName: string;
+}
 
 export interface ExtensionDefinition {
-  appName: string;
   name: string;
   load(): Promise<any>;
+}
+
+export interface PageDefinition {
+  route: string;
+  load(): Promise<any>;
+}
+
+export interface Lifecycle {
+  bootstrap(): void;
+  mount(): void;
+  unmount(): void;
+  update?(): void;
 }
 
 export interface CancelLoading {
   (): void;
 }
 
-export function registerExtension({
-  name,
-  load,
-  appName,
-}: ExtensionDefinition): void {
+export function registerExtension(
+  appName: string,
+  name: string,
+  load: () => Promise<any>
+) {
   extensions[name] = {
     name,
     load,
@@ -30,7 +43,7 @@ export function registerExtension({
   };
 }
 
-export function attach(extensionSlotName: string, extensionName: string): void {
+export function attach(extensionSlotName: string, extensionName: string) {
   if (attachedExtensionsForExtensionSlot.hasOwnProperty(extensionSlotName)) {
     attachedExtensionsForExtensionSlot[extensionSlotName].push(extensionName);
   } else {
@@ -38,9 +51,7 @@ export function attach(extensionSlotName: string, extensionName: string): void {
   }
 }
 
-export function getExtensionNamesForExtensionSlot(
-  extensionSlotName: string
-): string[] {
+export function getExtensionNamesForExtensionSlot(extensionSlotName: string) {
   return attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
 }
 
@@ -58,25 +69,17 @@ export function renderExtension(
   const component = extensions[extensionName];
   let active = true;
 
-  importSingleSpaPromise.then(({ mountRootParcel }) => {
-    if (domElement) {
-      component.load().then(
-        ({ default: result }) =>
-          active &&
-          mountRootParcel(renderFunction(result), {
-            domElement,
-          })
-      );
-    }
-  });
+  if (domElement) {
+    component.load().then(
+      ({ default: result }) =>
+        active &&
+        mountRootParcel(renderFunction(result) as any, {
+          domElement,
+        })
+    );
+  }
+
   return () => {
     active = false;
   };
-}
-
-interface Lifecycle {
-  bootstrap: () => void;
-  mount: () => void;
-  unmount: () => void;
-  update?: () => void;
 }

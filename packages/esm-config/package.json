@@ -2,7 +2,9 @@
   "name": "@openmrs/esm-module-config",
   "version": "2.2.0",
   "description": "A configuration library for the OpenMRS Single-Spa framework.",
-  "main": "dist/openmrs-esm-module-config.js",
+  "browser": "dist/openmrs-esm-module-config.js",
+  "main": "src/index.ts",
+  "source": true,
   "scripts": {
     "clean": "rimraf dist",
     "document": "./document.sh",

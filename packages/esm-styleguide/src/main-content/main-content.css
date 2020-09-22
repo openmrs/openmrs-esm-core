@@ -1,0 +1,14 @@
+:root {
+  --omrs-sidenav-width: 16.25rem;
+  --omrs-topnav-height: 3.5rem;
+}
+
+.omrs-main-content {
+  margin-top: var(--omrs-topnav-height);
+  margin-left: 0;
+  transition: margin-left 0.5s ease;
+}
+
+body.omrs-sidenav-expanded .omrs-main-content {
+  margin-left: var(--omrs-sidenav-width);
+}

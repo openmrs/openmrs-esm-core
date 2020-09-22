@@ -1,0 +1,31 @@
+:root {
+  --omrs-color-bg-high-contrast: #ffffff;
+  --omrs-color-bg-medium-contrast: rgba(249, 249, 249, 0.94);
+  --omrs-color-bg-low-contrast: #eff1f2;
+  --omrs-color-bg-lowest-contrast: #e5e5e6;
+
+  --omrs-color-ink-high-contrast: #121212;
+  --omrs-color-ink-medium-contrast: rgba(19, 19, 21, 0.6);
+  --omrs-color-ink-low-contrast: rgba(60, 60, 67, 0.3);
+  --omrs-color-ink-lowest-contrast: rgba(47, 60, 85, 0.18);
+  --omrs-color-ink-white: #ffffff;
+
+  --omrs-color-interaction-plus-two: #122c7b;
+  --omrs-color-interaction-plus-one: #193faf;
+  --omrs-color-interaction: #1e4bd1;
+  --omrs-color-interaction-minus-one: #456de4;
+  --omrs-color-interaction-minus-two: rgba(73, 133, 224, 0.12);
+
+  --omrs-color-success: #006800;
+  --omrs-color-success-two: #e6f0e6;
+  --omrs-color-warning: #6d5d01;
+  --omrs-color-warning-two: #efede4;
+  --omrs-color-danger: #b50706;
+  --omrs-color-danger-two: #f8eaea;
+
+  --omrs-color-brand-orange: #f26522;
+  --omrs-color-brand-violet: #5b57a6;
+  --omrs-color-brand-gold: #eea616;
+  --omrs-color-brand-teal: #009384;
+  --omrs-color-brand-black: #231f20;
+}

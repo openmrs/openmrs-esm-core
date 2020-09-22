@@ -1,5 +1,14 @@
-import { loadModules } from "./system";
-import { ExtensionDefinition } from "@openmrs/esm-extension-manager";
+import "carbon-components/css/carbon-components.min.css";
+
+import {
+  ExtensionDefinition,
+  PageDefinition,
+  registerExtension,
+} from "@openmrs/esm-extension-manager";
+import { registerApplication, start } from "single-spa";
+import "@openmrs/esm-styleguide";
+import "carbon-components";
+import "carbon-icons";
 import { setupI18n } from "./locale";
 import {
   routePrefix,
@@ -7,35 +16,8 @@ import {
   ActivatorDefinition,
   routeRegex,
 } from "./helpers";
-
-declare global {
-  interface Window extends SpaConfig {
-    getOpenmrsSpaBase(): string;
-    importMapOverrides: {
-      getCurrentPageMap: () => Promise<ImportMap>;
-    };
-  }
-}
-
-interface ImportMap {
-  imports: Record<string, string>;
-}
-
-export interface SpaConfig {
-  /**
-   * The base path for the OpenMRS API / endpoints.
-   */
-  openmrsBase: string;
-  /**
-   * The base path for the SPA root path.
-   */
-  spaBase: string;
-  /**
-   * The names of additional modules to load initially,
-   * if any.
-   */
-  coreLibs?: Array<string>;
-}
+import { loadModules } from "./system";
+import type { SpaConfig } from "./types";
 
 /**
  * Gets the microfrontend modules (apps). These are entries
@@ -93,24 +75,25 @@ function setupApps(modules: Array<[string, System.Module]>) {
       const result = setup();
 
       if (result && typeof result === "object") {
-        System.import("single-spa").then(({ registerApplication }) => {
-          System.import("@openmrs/esm-extension-manager").then(
-            ({ registerExtension }) => {
-              const availableExtensions: Array<ExtensionDefinition> =
-                result.extensions ?? [];
+        const availableExtensions: Array<ExtensionDefinition> =
+          result.extensions ?? [];
 
-              for (const { name, load } of availableExtensions) {
-                registerExtension({ name, load, appName });
-              }
+        const availablePages: Array<PageDefinition> = result.pages ?? [];
 
-              registerApplication(
-                appName,
-                result.lifecycle,
-                preprocessActivator(result.activate)
-              );
-            }
-          );
-        });
+        if (typeof result.activate !== "undefined") {
+          availablePages.push({
+            load: result.lifecycle,
+            route: result.activate,
+          });
+        }
+
+        for (const { name, load } of availableExtensions) {
+          registerExtension(appName, name, load);
+        }
+
+        for (const { route, load } of availablePages) {
+          registerApplication(appName, load, preprocessActivator(route));
+        }
       }
     }
   }
@@ -120,11 +103,9 @@ function setupApps(modules: Array<[string, System.Module]>) {
  * Runs the shell by importing the translations and starting single SPA.
  */
 function runShell() {
-  return System.import("single-spa").then(({ start }) => {
-    return setupI18n()
-      .catch((err) => console.error(`Failed to initialize translations`, err))
-      .then(start);
-  });
+  return setupI18n()
+    .catch((err) => console.error(`Failed to initialize translations`, err))
+    .then(start);
 }
 
 /**
@@ -132,21 +113,10 @@ function runShell() {
  * @param config The global configuration to apply.
  */
 export function initializeSpa(config: SpaConfig) {
-  const libs = [
-    "single-spa",
-    "@openmrs/esm-styleguide",
-    "@openmrs/esm-extension-manager",
-  ];
-
   window.openmrsBase = config.openmrsBase;
   window.spaBase = config.spaBase;
   window.getOpenmrsSpaBase = () => `${window.openmrsBase}${window.spaBase}/`;
-
-  return loadModules(libs)
-    .then(loadApps)
-    .then(setupApps)
-    .then(runShell)
-    .catch(handleInitFailure);
+  return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
 }
 
 function handleInitFailure() {

@@ -1,8 +1,10 @@
 {
   "name": "@openmrs/esm-extension-manager",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
-  "main": "dist/openmrs-esm-extension-manager.js",
+  "browser": "dist/openmrs-esm-extension-manager.js",
+  "main": "src/index.ts",
+  "source": true,
   "scripts": {
     "test": "jest --passWithNoTests",
     "start": "webpack-dev-server",
@@ -13,7 +15,8 @@
     "lint": "eslint src --ext ts"
   },
   "directories": {
-    "lib": "dist"
+    "lib": "dist",
+    "src": "src"
   },
   "browserslist": [
     "extends browserslist-config-openmrs"
@@ -30,14 +33,14 @@
     "openmrs"
   ],
   "license": "MPL-2.0",
-  "dependencies": {
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "16.x",
+    "single-spa": "4.x"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@types/react": "^16.9.46",
-    "@types/systemjs": "^6.1.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "single-spa": "^4.4.1",
     "systemjs-webpack-interop": "^2.1.2"
   }

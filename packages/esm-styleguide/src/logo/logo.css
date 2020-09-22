@@ -1,0 +1,19 @@
+#omrs-logo-full-color,
+#omrs-logo-partial-color,
+#omrs-logo-icon-color {
+  --logo-red: #e15d29;
+  --logo-orange: #e4a12a;
+  --logo-purple: #545090;
+  --logo-green: #008877;
+  --logo-black: #1a1919;
+}
+
+#omrs-logo-full-mono,
+#omrs-logo-partial-mono,
+#omrs-logo-icon-mono {
+  --logo-red: rgba(19, 19, 21, 0.6) !important;
+  --logo-orange: rgba(19, 19, 21, 0.6) !important;
+  --logo-purple: rgba(19, 19, 21, 0.6) !important;
+  --logo-green: rgba(19, 19, 21, 0.6) !important;
+  --logo-black: rgba(19, 19, 21, 0.6) !important;
+}

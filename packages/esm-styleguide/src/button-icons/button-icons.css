@@ -1,0 +1,59 @@
+.omrs-btn-icon-medium {
+  width: 2rem;
+  height: 2rem;
+  vertical-align: middle;
+  background: transparent;
+  border: none;
+}
+
+.omrs-btn-icon-large {
+  width: 2rem;
+  height: 2rem;
+  vertical-align: middle;
+  background: transparent;
+  border: none;
+}
+
+.omrs-btn-icon-medium:hover:enabled {
+  border-radius: 1rem;
+  background-color: rgba(73, 133, 224, 0.12);
+}
+
+.omrs-btn-icon-large:hover:enabled {
+  border-radius: 1.5rem;
+  background-color: rgba(73, 133, 224, 0.12);
+}
+
+.omrs-btn-icon-large svg {
+  position: relative;
+  right: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.omrs-btn-icon-medium svg {
+  position: relative;
+  right: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.omrs-btn-icon-medium:disabled svg {
+  fill: var(--omrs-color-ink-low-contrast);
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.omrs-btn-icon-large:disabled svg {
+  fill: var(--omrs-color-ink-low-contrast);
+  width: 2rem;
+  height: 2rem;
+}
+
+.omrs-btn-icon-medium:disabled {
+  cursor: not-allowed;
+}
+
+.omrs-btn-icon-large:disabled {
+  cursor: not-allowed;
+}
