@@ -124,6 +124,7 @@ describe("getConfig", () => {
     Config.provide(testConfig);
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toBe("bar");
+    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("returns default values from the schema", async () => {
@@ -151,6 +152,7 @@ describe("getConfig", () => {
     expect(config.foo).toBe("qux");
     expect(config.bar).toBe("barcade");
     Config.setAreDevDefaultsOn(false);
+    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("logs an error if config values not defined in the schema", async () => {
@@ -281,6 +283,7 @@ describe("getConfig", () => {
     expect(config.foo.bar).toBe(0);
     expect(config.foo.baz.qux).toBe("N/A");
     expect(config.foo.baz.quy).toBe("xyz");
+    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("works for multiple modules and multiple provides", async () => {
@@ -297,6 +300,7 @@ describe("getConfig", () => {
     await expect(barConfig).resolves.toHaveProperty("bar", "barrr");
     const bazConfig = Config.getConfig("baz-module");
     await expect(bazConfig).resolves.toHaveProperty("baz", "bazzz");
+    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("validates config values", async () => {
@@ -337,6 +341,7 @@ describe("getConfig", () => {
     Config.provide(testConfig);
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toBe("this");
+    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("supports dictionary elements", async () => {
@@ -368,6 +373,7 @@ describe("getConfig", () => {
         name: "C",
       },
     });
+    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("supports dictionary elements validations", async () => {
@@ -411,6 +417,7 @@ describe("getConfig", () => {
     Config.provide(testConfig);
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toStrictEqual([0, 2, 4]);
+    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("supports validation of array elements", async () => {
@@ -578,6 +585,7 @@ describe("getConfig", () => {
       { a: { b: "customB", filler: "customFiller" } },
       { a: { b: "anotherB", filler: "defaultFiller" } },
     ]);
+    expect(console.error).not.toHaveBeenCalled();
   });
 });
 
@@ -622,6 +630,14 @@ describe("resolveImportMapConfig", () => {
 });
 
 describe("processConfig", () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
+
+  afterEach(() => {
+    Config.clearAll();
+  });
+
   it("validates a config object", () => {
     const schema = {
       foo: {
@@ -646,6 +662,7 @@ describe("processConfig", () => {
     const inputConfig = {};
     const config = Config.processConfig(schema, inputConfig, "nowhere");
     expect(config.foo).toBe(false);
+    expect(console.error).not.toHaveBeenCalled();
   });
 });
 
@@ -711,6 +728,110 @@ describe("temporary config", () => {
     expect(Config.getTemporaryConfig()).toStrictEqual({
       "foo-module": { foo: { bar: 4 } },
     });
+  });
+});
+
+describe("extension slot config", () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
+
+  afterEach(() => {
+    Config.clearAll();
+  });
+
+  it("returns an object with add, remove, and order keys", async () => {
+    Config.provide({
+      "foo-module": {
+        extensions: {
+          fooSlot: {
+            add: [
+              {
+                extension: "bar",
+                config: { a: 1 },
+              },
+              {
+                extension: "baz",
+              },
+            ],
+            remove: ["zap"],
+            order: ["qux", "baz", "bar"],
+          },
+        },
+      },
+    });
+    const config = await Config.getExtensionSlotConfig("foo-module", "fooSlot");
+    expect(config).toStrictEqual({
+      add: ["bar", "baz"],
+      remove: ["zap"],
+      order: ["qux", "baz", "bar"],
+    });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("doesn't get returned by getConfig", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: { default: 0 },
+    });
+    Config.provide({
+      "foo-module": {
+        extensions: { fooSlot: { remove: ["bar"] } },
+      },
+    });
+    const config = await Config.getConfig("foo-module");
+    expect(config).toStrictEqual({ foo: 0 });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("isn't mutated by getConfig", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: { default: 0 },
+    });
+    Config.provide({
+      "foo-module": {
+        extensions: { fooSlot: { remove: ["bar"] } },
+      },
+    });
+    await Config.getConfig("foo-module");
+    const extConfig = await Config.getExtensionSlotConfig(
+      "foo-module",
+      "fooSlot"
+    );
+    expect(extConfig).toStrictEqual({ remove: ["bar"] });
+  });
+
+  it("does get returned by getImplementerToolsConfig", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: { default: 0 },
+    });
+    Config.provide({
+      "foo-module": {
+        extensions: { fooSlot: { remove: ["bar"] } },
+      },
+    });
+    const config = await Config.getDevtoolsConfig();
+    expect(config).toStrictEqual({
+      "foo-module": {
+        foo: 0,
+        extensions: {
+          fooSlot: {
+            remove: ["bar"],
+          },
+        },
+      },
+    });
+  });
+
+  it("validates that no other keys are present for the slot", async () => {
+    Config.provide({
+      "foo-module": {
+        extensions: { fooSlot: { quitar: ["bar"] } },
+      },
+    });
+    await Config.getExtensionSlotConfig("foo-module", "fooSlot");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/foo-module.extensions.fooSlot.*invalid.*quitar/)
+    );
   });
 });
 
