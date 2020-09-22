@@ -1,7 +1,7 @@
 {
   "name": "@openmrs/esm-app-shell",
-  "license": "MPL-2.0",
   "version": "0.2.0",
+  "license": "MPL-2.0",
   "main": "dist/openmrs.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -31,11 +31,15 @@
     "i18next-icu": "^1.4.2",
     "i18next-xhr-backend": "^3.2.2",
     "import-map-overrides": "^1.15.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-i18next": "^11.7.0",
     "rxjs": "^6.5.3",
     "single-spa": "^4.4.1",
     "systemjs": "^6.3.3"
   },
+  "peerDependencies": {},
   "devDependencies": {
     "@types/systemjs": "^6.1.0",
     "browser-sync": "^2.26.7",

@@ -1,6 +1,7 @@
 {
   "name": "@openmrs/esm-styleguide",
   "version": "1.4.0",
+  "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "browser": "dist/openmrs-esm-styleguide.js",
   "main": "src/index.js",
@@ -34,11 +35,15 @@
     "openmrs",
     "styleguide"
   ],
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/openmrs/openmrs-esm-styleguide/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-styleguide#readme",
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "16.x",
+    "rxjs": "6.x"
+  },
   "devDependencies": {
     "@pickra/copy-code-block": "^1.1.7",
     "@storybook/addon-a11y": "^5.2.1",
@@ -46,14 +51,9 @@
     "@storybook/html": "^5.2.1",
     "highlight.js": "^9.15.10",
     "kremling": "^2.0.1",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "rxjs": "^6.5.3",
-    "systemjs-webpack-interop": "^1.1.0"
-  },
-  "peerDependencies": {
-    "react": "16.x",
-    "rxjs": "6.x"
-  },
-  "dependencies": {}
+    "systemjs-webpack-interop": "^2.1.2"
+  }
 }
