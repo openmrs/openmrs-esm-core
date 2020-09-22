@@ -1,9 +1,3 @@
-export interface Activator {
-  (location: Location): boolean;
-}
-
-export type ActivatorDefinition = Activator | RegExp | string;
-
 export function routePrefix(prefix: string, location: Location) {
   return location.pathname.startsWith(window.getOpenmrsSpaBase() + prefix);
 }

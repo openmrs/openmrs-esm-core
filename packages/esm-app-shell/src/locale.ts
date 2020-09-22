@@ -2,7 +2,7 @@ import * as i18next from "i18next";
 import ICU from "i18next-icu";
 import i18nextXhrBackend from "i18next-xhr-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { i18n } from "i18next";
+import type { i18n } from "i18next";
 import { initReactI18next } from "react-i18next";
 
 declare global {

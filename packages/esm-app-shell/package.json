@@ -32,6 +32,7 @@
     "i18next-xhr-backend": "^3.2.2",
     "import-map-overrides": "^1.15.2",
     "react-i18next": "^11.7.0",
+    "rxjs": "^6.5.3",
     "single-spa": "^4.4.1",
     "systemjs": "^6.3.3"
   },

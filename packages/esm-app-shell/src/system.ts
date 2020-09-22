@@ -20,3 +20,11 @@ export function loadModules(modules: Array<string>) {
     )
   );
 }
+
+export function registerModules(modules: Record<string, System.Module>) {
+  Object.keys(modules).forEach((name) => registerModule(name, modules[name]));
+}
+
+export function registerModule(name: string, content: System.Module) {
+  System.set(name, content);
+}

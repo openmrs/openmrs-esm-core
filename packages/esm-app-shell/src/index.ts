@@ -6,18 +6,10 @@ import {
   registerExtension,
 } from "@openmrs/esm-extension-manager";
 import { registerApplication, start } from "single-spa";
-import "@openmrs/esm-styleguide";
-import "carbon-components";
-import "carbon-icons";
 import { setupI18n } from "./locale";
-import {
-  routePrefix,
-  Activator,
-  ActivatorDefinition,
-  routeRegex,
-} from "./helpers";
-import { loadModules } from "./system";
-import type { SpaConfig } from "./types";
+import { routePrefix, routeRegex } from "./helpers";
+import { loadModules, registerModules } from "./system";
+import type { SpaConfig, Activator, ActivatorDefinition } from "./types";
 
 /**
  * Gets the microfrontend modules (apps). These are entries
@@ -108,15 +100,10 @@ function runShell() {
     .then(start);
 }
 
-/**
- * Initializes the OpenMRS Microfrontend App Shell.
- * @param config The global configuration to apply.
- */
-export function initializeSpa(config: SpaConfig) {
+function setupPaths(config: SpaConfig) {
   window.openmrsBase = config.openmrsBase;
   window.spaBase = config.spaBase;
   window.getOpenmrsSpaBase = () => `${window.openmrsBase}${window.spaBase}/`;
-  return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
 }
 
 function handleInitFailure() {
@@ -136,8 +123,8 @@ function renderApology() {
 
 function renderDevResetButton() {
   const btn = document.createElement("button");
-  btn.onclick = clearDevOverrides;
-  btn.innerHTML = "Reset dev overrides";
+  btn.addEventListener("click", clearDevOverrides);
+  btn.textContent = "Reset dev overrides";
   document.body.appendChild(btn);
 }
 
@@ -153,4 +140,27 @@ function clearDevOverrides() {
     }
   }
   location.reload();
+}
+
+/**
+ * Initializes the OpenMRS Microfrontend App Shell.
+ * @param config The global configuration to apply.
+ */
+export function initializeSpa(config: SpaConfig) {
+  setupPaths(config);
+  registerModules({
+    i18next: require("i18next"),
+    rxjs: require("rxjs"),
+    react: require("react"),
+    "react-dom": require("react-dom"),
+    "react-router-dom": require("react-router-dom"),
+    "react-i18next": require("react-i18next"),
+    "single-spa": require("single-spa"),
+    "@openmrs/esm-module-config": require("@openmrs/esm-module-config"),
+    "@openmrs/esm-extension-manager": require("@openmrs/esm-extension-manager"),
+    "@openmrs/esm-styleguide": require("@openmrs/esm-styleguide"),
+    "carbon-components": require("carbon-components"),
+    "carbon-icons": require("carbon-icons"),
+  });
+  return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
 }
