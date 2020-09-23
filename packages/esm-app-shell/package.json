@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "@openmrs/esm-api": "^3.0.0",
+    "@openmrs/esm-error-handling": "^1.2.0",
     "@openmrs/esm-extension-manager": "^0.2.0",
     "@openmrs/esm-module-config": "^2.2.0",
     "@openmrs/esm-styleguide": "^1.3.0",

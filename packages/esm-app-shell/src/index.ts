@@ -8,6 +8,7 @@ import {
 import { registerApplication, start } from "single-spa";
 import { setupI18n } from "./locale";
 import { routePrefix, routeRegex } from "./helpers";
+import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import type { SpaConfig, Activator, ActivatorDefinition } from "./types";
 
@@ -150,20 +151,6 @@ function clearDevOverrides() {
  */
 export function initializeSpa(config: SpaConfig) {
   setupPaths(config);
-  registerModules({
-    i18next: () => require("i18next"),
-    react: () => require("react"),
-    "react-dom": () => require("react-dom"),
-    "react-router-dom": () => require("react-router-dom"),
-    "react-i18next": () => require("react-i18next"),
-    "single-spa": () => require("single-spa"),
-    "@openmrs/esm-module-config": () => require("@openmrs/esm-module-config"),
-    "@openmrs/esm-extension-manager": () =>
-      require("@openmrs/esm-extension-manager"),
-    "@openmrs/esm-styleguide": () => require("@openmrs/esm-styleguide"),
-    "carbon-components": () => import("carbon-components"),
-    "carbon-icons": () => import("carbon-icons"),
-    rxjs: () => import("rxjs"),
-  });
+  registerModules(sharedDependencies);
   return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
 }

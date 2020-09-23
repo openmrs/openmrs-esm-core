@@ -1,0 +1,40 @@
+{
+  "name": "@openmrs/esm-error-handling",
+  "version": "1.2.0",
+  "license": "MPL-2.0",
+  "description": "An ES module to help with error handling",
+  "browser": "dist/openmrs-esm-error-handling.js",
+  "main": "src/index.ts",
+  "source": true,
+  "scripts": {
+    "start": "webpack-dev-server --mode=development",
+    "lint": "eslint src --ext ts",
+    "typescript": "tsc",
+    "build": "webpack",
+    "test": "jest --config jest.config.json",
+    "prepublishOnly": "npm run build"
+  },
+  "directories": {
+    "lib": "dist",
+    "src": "src"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "dependencies": {},
+  "peerDependencies": {
+    "@openmrs/esm-styleguide": "^1.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-styleguide": "^1.4.0",
+    "systemjs-webpack-interop": "^2.1.2"
+  }
+}
