@@ -29,9 +29,6 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
-    alias: {
-      "./fhirjs": "fhir.js/src/fhir.js",
-    },
   },
   plugins: [new CleanWebpackPlugin(), new ForkTsCheckerWebpackPlugin()],
   externals: ["react", "react-dom", /^@openmrs\/esm/, "single-spa", "i18next"],

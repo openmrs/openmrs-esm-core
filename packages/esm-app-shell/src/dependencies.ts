@@ -5,9 +5,9 @@ export const sharedDependencies = {
   "react-router-dom": () => require("react-router-dom"),
   "react-i18next": () => require("react-i18next"),
   "single-spa": () => require("single-spa"),
-  "@openmrs/esm-api": () => import("@openmrs/esm-api"),
-  "@openmrs/esm-error-handling": () => import("@openmrs/esm-error-handling"),
-  "@openmrs/esm-module-config": () => import("@openmrs/esm-module-config"),
+  "@openmrs/esm-api": () => require("@openmrs/esm-api"),
+  "@openmrs/esm-error-handling": () => require("@openmrs/esm-error-handling"),
+  "@openmrs/esm-module-config": () => require("@openmrs/esm-module-config"),
   "@openmrs/esm-extension-manager": () =>
     require("@openmrs/esm-extension-manager"),
   "@openmrs/esm-styleguide": () => require("@openmrs/esm-styleguide"),

@@ -7,10 +7,17 @@ export const toastsSubject = new Subject();
 let toastId = 0;
 
 const toastsContainer = document.createElement("div");
+const renderToasts = () => {
+  document.body.appendChild(toastsContainer);
+  ReactDOM.render(<ActiveToasts />, toastsContainer);
+};
 toastsContainer.className = "omrs-toasts-container";
-document.body.appendChild(toastsContainer);
 
-ReactDOM.render(<ActiveToasts />, toastsContainer);
+if (document.readyState === "complete") {
+  renderToasts();
+} else {
+  window.addEventListener("load", renderToasts);
+}
 
 export function showToast(toast) {
   if (

@@ -13,10 +13,9 @@ declare global {
 
 const languageChangeObserver = new MutationObserver(() => {
   const reDetect: any = undefined;
-  window.i18next.changeLanguage(reDetect).catch((e) => {
-    console.error("i18next failed to re-detect language");
-    console.error(e);
-  });
+  window.i18next
+    .changeLanguage(reDetect)
+    .catch((e) => console.error("i18next failed to re-detect language", e));
 });
 
 languageChangeObserver.observe(document.documentElement, {
@@ -66,11 +65,7 @@ export function setupI18n() {
 
                 return importPromise;
               })
-              .then((json) => callback(json, { status: 200 }))
-              .catch((err) => {
-                console.error(err);
-                callback(null, { status: 404 });
-              });
+              .then((json) => callback(json, { status: 200 }), (err) => callback(null, { status: 404, message: err }));
           }
         },
       },

@@ -1,6 +1,10 @@
 window.addEventListener("resize", setBodyCssClasses);
 
-setBodyCssClasses();
+if (document.readyState === "complete") {
+  setBodyCssClasses();
+} else {
+  window.addEventListener("load", setBodyCssClasses);
+}
 
 function setBodyCssClasses() {
   document.body.classList.toggle(

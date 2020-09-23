@@ -1,4 +1,4 @@
-import makeFhir from "./fhirjs";
+import makeFhir from "fhir.js/src/fhir.js";
 import { openmrsFetch, FetchHeaders, OpenmrsFetchError } from "./openmrs-fetch";
 
 export const fhirBaseUrl = `/ws/fhir2/R4`;

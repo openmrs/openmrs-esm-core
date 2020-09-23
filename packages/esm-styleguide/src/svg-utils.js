@@ -7,9 +7,17 @@
  * This approach is known as "svg sprites"
  */
 const svgContainer = document.createElement("div");
+const appendContainer = () => {
+  document.body.appendChild(svgContainer);
+};
 svgContainer.id = "omrs-svgs-container";
 svgContainer.style.display = "none";
-document.body.appendChild(svgContainer);
+
+if (document.readyState === "complete") {
+  appendContainer();
+} else {
+  window.addEventListener("load", appendContainer);
+}
 
 export function addSvg(htmlId, svgString) {
   const domParser = new DOMParser();
