@@ -1,4 +1,4 @@
-import "carbon-components/css/carbon-components.min.css";
+import "./layout";
 
 import {
   ExtensionDefinition,
@@ -106,7 +106,9 @@ function setupPaths(config: SpaConfig) {
   window.getOpenmrsSpaBase = () => `${window.openmrsBase}${window.spaBase}/`;
 }
 
-function handleInitFailure() {
+function handleInitFailure(e: Error) {
+  console.error(e);
+
   if (localStorage.getItem("openmrs:devtools")) {
     renderDevResetButton();
   } else {
@@ -118,7 +120,7 @@ function renderApology() {
   const msg = document.createTextNode(
     "Sorry, something has gone as badly as possible"
   );
-  document.appendChild(msg);
+  document.body.appendChild(msg);
 }
 
 function renderDevResetButton() {
@@ -149,18 +151,19 @@ function clearDevOverrides() {
 export function initializeSpa(config: SpaConfig) {
   setupPaths(config);
   registerModules({
-    i18next: require("i18next"),
-    rxjs: require("rxjs"),
-    react: require("react"),
-    "react-dom": require("react-dom"),
-    "react-router-dom": require("react-router-dom"),
-    "react-i18next": require("react-i18next"),
-    "single-spa": require("single-spa"),
-    "@openmrs/esm-module-config": require("@openmrs/esm-module-config"),
-    "@openmrs/esm-extension-manager": require("@openmrs/esm-extension-manager"),
-    "@openmrs/esm-styleguide": require("@openmrs/esm-styleguide"),
-    "carbon-components": require("carbon-components"),
-    "carbon-icons": require("carbon-icons"),
+    i18next: () => require("i18next"),
+    react: () => require("react"),
+    "react-dom": () => require("react-dom"),
+    "react-router-dom": () => require("react-router-dom"),
+    "react-i18next": () => require("react-i18next"),
+    "single-spa": () => require("single-spa"),
+    "@openmrs/esm-module-config": () => require("@openmrs/esm-module-config"),
+    "@openmrs/esm-extension-manager": () =>
+      require("@openmrs/esm-extension-manager"),
+    "@openmrs/esm-styleguide": () => require("@openmrs/esm-styleguide"),
+    "carbon-components": () => import("carbon-components"),
+    "carbon-icons": () => import("carbon-icons"),
+    rxjs: () => import("rxjs"),
   });
   return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
 }

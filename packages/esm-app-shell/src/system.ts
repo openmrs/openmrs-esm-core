@@ -4,6 +4,7 @@ import "systemjs/dist/extras/amd";
 import "systemjs/dist/extras/named-exports";
 import "systemjs/dist/extras/named-register";
 import "systemjs/dist/extras/use-default";
+import type { ModuleResolver } from "./types";
 
 /**
  * Loads all provided modules by their name. Performs a
@@ -21,10 +22,20 @@ export function loadModules(modules: Array<string>) {
   );
 }
 
-export function registerModules(modules: Record<string, System.Module>) {
+export function registerModules(modules: Record<string, ModuleResolver>) {
   Object.keys(modules).forEach((name) => registerModule(name, modules[name]));
 }
 
-export function registerModule(name: string, content: System.Module) {
-  System.set(name, content);
+export function registerModule(name: string, resolve: ModuleResolver) {
+  System.register(name, [], (_exports) => ({
+    execute() {
+      const content = resolve();
+
+      if (content instanceof Promise) {
+        return content.then((innerContent) => _exports(innerContent));
+      } else {
+        _exports(content);
+      }
+    },
+  }));
 }

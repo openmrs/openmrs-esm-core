@@ -3,6 +3,7 @@ const { readFileSync } = require("fs");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: resolve(__dirname, "src/index.ts"),
@@ -64,9 +65,12 @@ module.exports = {
       templateParameters: {
         openmrsBaseUrlContext: process.env.OMRS_BASE_URL || "/openmrs",
         spaBaseUrlContext: process.env.OMRS_SPA_PATH || "/spa",
-        openmrsImportmap:
-          process.env.OMRS_ESM_IMPORTMAP || "/openmrs/frontend/import-map.json",
+        openmrsFavicon: process.env.OMRS_FAVICON || "favicon.ico",
+        openmrsImportmap: process.env.OMRS_ESM_IMPORTMAP || "importmap.json",
       },
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: "src/assets" }],
     }),
     new MiniCssExtractPlugin({ filename: "openmrs.css" }),
   ],

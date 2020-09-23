@@ -1,4 +1,3 @@
-import "./load-css.js";
 import "./canvas/canvas.css";
 import "./colors/colors.css";
 import "./typography/typography.css";

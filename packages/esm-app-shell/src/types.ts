@@ -27,3 +27,7 @@ export interface Activator {
 }
 
 export type ActivatorDefinition = Activator | RegExp | string;
+
+export interface ModuleResolver {
+  (): System.Module | Promise<System.Module>;
+}
