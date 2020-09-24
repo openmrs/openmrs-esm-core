@@ -760,7 +760,7 @@ describe("extension slot config", () => {
         },
       },
     });
-    const config = await Config.getExtensionSlotConfig("foo-module", "fooSlot");
+    const config = await Config.getExtensionSlotConfig("fooSlot", "foo-module");
     expect(config).toStrictEqual({
       add: ["bar", "baz"],
       remove: ["zap"],
@@ -794,8 +794,8 @@ describe("extension slot config", () => {
     });
     await Config.getConfig("foo-module");
     const extConfig = await Config.getExtensionSlotConfig(
-      "foo-module",
-      "fooSlot"
+      "fooSlot",
+      "foo-module"
     );
     expect(extConfig).toStrictEqual({ remove: ["bar"] });
   });
@@ -828,7 +828,7 @@ describe("extension slot config", () => {
         extensions: { fooSlot: { quitar: ["bar"] } },
       },
     });
-    await Config.getExtensionSlotConfig("foo-module", "fooSlot");
+    await Config.getExtensionSlotConfig("fooSlot", "foo-module");
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(/foo-module.extensions.fooSlot.*invalid.*quitar/)
     );
