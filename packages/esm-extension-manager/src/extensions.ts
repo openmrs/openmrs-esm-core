@@ -86,13 +86,19 @@ export function renderExtension(
 
   importSingleSpaPromise.then(({ mountRootParcel }) => {
     if (domElement) {
-      component.load().then(
-        ({ default: result }) =>
-          active &&
-          mountRootParcel(renderFunction(result), {
-            domElement,
-          })
-      );
+      if (component) {
+        component.load().then(
+          ({ default: result }) =>
+            active &&
+            mountRootParcel(renderFunction(result), {
+              domElement,
+            })
+        );
+      } else {
+        throw Error(
+          `Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`
+        );
+      }
     }
   });
   return () => {

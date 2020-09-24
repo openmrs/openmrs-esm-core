@@ -121,7 +121,7 @@ export async function getExtensionSlotConfig(
 ): Promise<ExtensionSlotConfigObject> {
   await loadConfigs();
   const moduleConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
-  const inputConfig = moduleConfig?.extensions?.[slotName];
+  const inputConfig = moduleConfig?.extensions?.[slotName] ?? {};
   validateExtensionSlotConfig(inputConfig, moduleName, slotName);
   const config = processExtensionSlotConfig(inputConfig);
   return config;
