@@ -30,7 +30,7 @@ describe("getExtensionNamesForExtensionSlot", () => {
             remove: ["bar"],
             order: ["baz", "quinn", "qux"],
           }
-        : { bad: "bad" }
+        : {}
     );
     const res = await getExtensionNamesForExtensionSlot("slotski", "moddy");
     expect(res).toStrictEqual(["baz", "quinn", "qux", "foo"]);
