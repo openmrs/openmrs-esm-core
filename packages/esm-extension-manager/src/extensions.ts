@@ -3,10 +3,11 @@
  *
  */
 
-const extensions: Record<string, ExtensionDefinition> = {};
-const attachedExtensionsForExtensionSlot: Record<string, Array<string>> = {};
+let extensions: Record<string, ExtensionDefinition> = {};
+let attachedExtensionsForExtensionSlot: Record<string, Array<string>> = {};
 
 const importSingleSpaPromise = System.import("single-spa");
+const importConfigPromise = System.import("@openmrs/esm-module-config");
 
 export interface ExtensionDefinition {
   appName: string;
@@ -38,10 +39,35 @@ export function attach(extensionSlotName: string, extensionName: string): void {
   }
 }
 
-export function getExtensionNamesForExtensionSlot(
-  extensionSlotName: string
-): string[] {
-  return attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
+export async function getExtensionNamesForExtensionSlot(
+  extensionSlotName: string,
+  moduleName: string
+): Promise<Array<string>> {
+  const { getExtensionSlotConfig } = await importConfigPromise;
+  const config: ExtensionSlotConfigObject = await getExtensionSlotConfig(
+    extensionSlotName,
+    moduleName
+  );
+  let extensionNames =
+    attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
+  if (config.add) {
+    extensionNames = extensionNames.concat(config.add);
+  }
+  if (config.remove) {
+    extensionNames = extensionNames.filter((n) => !config.remove?.includes(n));
+  }
+  if (config.order) {
+    extensionNames = extensionNames.sort((a, b) =>
+      config.order.includes(a)
+        ? config.order.includes(b)
+          ? config.order.indexOf(a) - config.order.indexOf(b)
+          : -1
+        : config.order.includes(b)
+        ? 1
+        : 0
+    );
+  }
+  return extensionNames;
 }
 
 /**
@@ -60,13 +86,19 @@ export function renderExtension(
 
   importSingleSpaPromise.then(({ mountRootParcel }) => {
     if (domElement) {
-      component.load().then(
-        ({ default: result }) =>
-          active &&
-          mountRootParcel(renderFunction(result), {
-            domElement,
-          })
-      );
+      if (component) {
+        component.load().then(
+          ({ default: result }) =>
+            active &&
+            mountRootParcel(renderFunction(result), {
+              domElement,
+            })
+        );
+      } else {
+        throw Error(
+          `Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`
+        );
+      }
     }
   });
   return () => {
@@ -89,4 +121,21 @@ interface Lifecycle {
   mount: () => void;
   unmount: () => void;
   update?: () => void;
+}
+
+interface ExtensionSlotConfigObject {
+  // All these are optional, but TS 4.0.2 doesn't understand the undefined
+  // guards above, so we're just telling TS they're not optional.
+  add: string[];
+  remove: string[];
+  order: string[];
+}
+
+/**
+ * @internal
+ * Just for testing.
+ */
+export function reset() {
+  extensions = {};
+  attachedExtensionsForExtensionSlot = {};
 }
