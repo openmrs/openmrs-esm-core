@@ -5,8 +5,8 @@ script:
   - npx lerna bootstrap
   - npx lerna run lint
   - npx lerna run test
-  - npx lerna run typescript
   - npx lerna run build
+  - npx lerna run typescript
   - echo "Folder name in Digital Ocean Spaces - $TRAVIS_COMMIT"
   - mkdir -p dist/@openmrs/esm-module-config/$TRAVIS_COMMIT
   - mv packages/esm-config/dist/*.* dist/@openmrs/esm-module-config/$TRAVIS_COMMIT/

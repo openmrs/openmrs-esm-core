@@ -12,7 +12,7 @@
     "lint": "eslint src --ext ts,tsx",
     "typescript": "tsc",
     "build": "rimraf dist && concurrently -n webpack,typescript 'webpack --mode=production' 'npm run typescript'",
-    "prepare": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "license": "MPL-2.0",
   "directories": {
