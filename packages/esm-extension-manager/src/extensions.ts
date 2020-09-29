@@ -1,5 +1,5 @@
 import { mountRootParcel } from "single-spa";
-import { getExtensionSlotConfig } from '@openmrs/esm-config';
+import { getExtensionSlotConfig } from "@openmrs/esm-config";
 
 /**
  * Creates the extension component <-> extension slot management engine.
@@ -75,8 +75,8 @@ export async function getExtensionNamesForExtensionSlot(
           ? config.order.indexOf(a) - config.order.indexOf(b)
           : -1
         : config.order.includes(b)
-          ? 1
-          : 0
+        ? 1
+        : 0
     );
   }
   return extensionNames;
@@ -140,6 +140,8 @@ interface ExtensionSlotConfigObject {
  * Just for testing.
  */
 export function reset() {
-  Object.keys(extensions).forEach(key => delete extensions[key]);
-  Object.keys(attachedExtensionsForExtensionSlot).forEach(key => delete attachedExtensionsForExtensionSlot[key]);
+  Object.keys(extensions).forEach((key) => delete extensions[key]);
+  Object.keys(attachedExtensionsForExtensionSlot).forEach(
+    (key) => delete attachedExtensionsForExtensionSlot[key]
+  );
 }

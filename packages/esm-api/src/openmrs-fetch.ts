@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { navigateToUrl } from "single-spa";
 import isPlainObject from "lodash-es/isPlainObject";
-import { getConfig } from "@openmrs/esm-module-config";
+import { getConfig } from "@openmrs/esm-config";
 import { FetchResponse } from "./types";
 
 export function openmrsFetch<T = any>(

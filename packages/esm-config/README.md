@@ -1,7 +1,7 @@
-# openmrs-esm-module-config
+# openmrs-esm-config
 
-[![Build Status](https://travis-ci.com/openmrs/openmrs-esm-module-config.svg?branch=master)](https://travis-ci.com/openmrs/openmrs-esm-module-config)
-[![npm: openmrs/esm-module-config](https://img.shields.io/npm/v/@openmrs/esm-module-config)](https://www.npmjs.com/package/@openmrs/esm-module-config)
+[![Build Status](https://travis-ci.com/openmrs/openmrs-esm-config.svg?branch=master)](https://travis-ci.com/openmrs/openmrs-esm-config)
+[![npm: openmrs/esm-module-config](https://img.shields.io/npm/v/@openmrs/esm-config)](https://www.npmjs.com/package/@openmrs/esm-config)
 
 ## What is this?
 
@@ -101,7 +101,7 @@ esm-module-config. All this must happen before you register your applications.
 Example code:
 
 ```js
-import { provide } from "@openmrs/esm-module-config";
+import { provide } from "@openmrs/esm-config";
 
 import pihConfig from "./pih-config.json";
 import pihMexicoConfig from "./pih-mexico-config.json";
@@ -122,7 +122,7 @@ You can break up your configuration files into hierarchies, or per module, or pe
 
 You should use this module, esm-module-config, to make your modules configurable.
 
-Start by `npm install --save @openmrs/esm-module-config`. This is a runtime
+Start by `npm install --save @openmrs/esm-config`. This is a runtime
 dependency, so it should be included in your webpack `externals`.
 
 The main task is to create a config schema for your module. The config schema
@@ -165,7 +165,7 @@ In the following section, we'll see how to write a config schema that supports t
 We'll start with just that first nested config element from above, `hologram.color`. We must provide defaults for all of the values—in OpenMRS Microfrontends, all configuration is optional.
 
 ```js
-import { defineConfigSchema, validators, validator } from "@openmrs/esm-module-config"
+import { defineConfigSchema, validators, validator } from "@openmrs/esm-config"
 
 defineConfigSchema("@openmrs/esm-hologram-doctor", {
   hologram: {
@@ -319,7 +319,7 @@ The config is fetched asynchronously using `getConfig(moduleName)`. Continuing t
 above example, we would have something like
 
 ```js
-import { getConfig } from "@openmrs/esm-module-config"
+import { getConfig } from "@openmrs/esm-config"
 
 async function doctorGreeting() {
   const config = await getConfig("@openmrs/esm-hologram-doctor")
@@ -347,7 +347,7 @@ export default openmrsRootDecorator({
 You can then get the config tree as an object using the `useConfig` React hook.
 
 ```js
-import { useConfig } from "@openmrs/esm-module-config"
+import { useConfig } from "@openmrs/esm-config"
 
 export default function DoctorGreeting() {
   const config = useConfig()

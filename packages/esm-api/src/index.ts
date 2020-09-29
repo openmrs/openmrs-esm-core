@@ -1,4 +1,4 @@
-import { defineConfigSchema } from "@openmrs/esm-module-config";
+import { defineConfigSchema } from "@openmrs/esm-config";
 
 defineConfigSchema("@openmrs/esm-api", {
   redirectAuthFailure: {

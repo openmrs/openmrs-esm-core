@@ -1,5 +1,5 @@
+import { getExtensionSlotConfig } from "@openmrs/esm-config";
 import { attach, getExtensionNamesForExtensionSlot, reset } from "./extensions";
-import { getExtensionSlotConfig } from "@openmrs/esm-module-config";
 
 const mockGetExtensionSlotConfig = getExtensionSlotConfig as jest.Mock;
 
