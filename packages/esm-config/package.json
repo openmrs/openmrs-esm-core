@@ -14,7 +14,7 @@
     "test": "BABEL_ENV=test jest",
     "lint": "eslint src --ext ts,tsx",
     "typescript": "tsc",
-    "build": "webpack --mode=production",
+    "build": "rimraf dist && concurrently -n webpack,typescript 'webpack --mode=production' 'npm run typescript'",
     "prepublishOnly": "npm run build"
   },
   "directories": {

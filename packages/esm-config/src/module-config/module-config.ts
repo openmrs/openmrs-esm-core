@@ -112,6 +112,112 @@ export function clearTemporaryConfig(): void {
   localStorage.removeItem("openmrsTemporaryConfig");
 }
 
+/**
+ * @internal
+ */
+export async function getExtensionSlotConfig(
+  slotName: string,
+  moduleName: string
+): Promise<ExtensionSlotConfigObject> {
+  await loadConfigs();
+  const moduleConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
+  const inputConfig = moduleConfig?.extensions?.[slotName] ?? {};
+  validateExtensionSlotConfig(inputConfig, moduleName, slotName);
+  const config = processExtensionSlotConfig(inputConfig);
+  return config;
+}
+
+function validateExtensionSlotConfig(
+  config: ExtensionSlotConfig,
+  moduleName: string,
+  slotName: string
+): void {
+  const errorPrefix = `Extension slot config '${moduleName}.extensions.${slotName}`;
+  const invalidKeys = Object.keys(config).filter(
+    (k) => !["add", "remove", "order", "configure"].includes(k)
+  );
+  if (invalidKeys.length) {
+    console.error(
+      errorPrefix + `' contains invalid keys '${invalidKeys.join("', '")}'`
+    );
+  }
+  if (config.add) {
+    if (!Array.isArray(config.add)) {
+      console.error(
+        errorPrefix +
+          `.add' is invalid. Must be an array of objects with keys 'extension' and 'config'.`
+      );
+    } else {
+      for (let i = 0; i++; i < config.add.length) {
+        if (!isOrdinaryObject(config.add[i])) {
+          console.error(
+            errorPrefix +
+              `.add[${i}]' is invalid. Must be an object with keys 'extension' and 'config'. Received ${JSON.stringify(
+                config.add[i]
+              )}`
+          );
+        } else {
+          const invalidAddKeys = Object.keys(config.add[i]).filter(
+            (k) => !["extension", "config"].includes(k)
+          );
+          if (invalidAddKeys.length) {
+            console.error(
+              errorPrefix +
+                `.add[${i}]' contains invalid keys '${invalidAddKeys.join(
+                  "', '"
+                )}'`
+            );
+          }
+          if (!config.add[i].extension) {
+            console.error(
+              errorPrefix +
+                `.add[${i}]' is invalid. The 'extension' key specifying the extension name/ID is mandatory.`
+            );
+          }
+        }
+      }
+    }
+  }
+  if (config.remove) {
+    if (
+      !Array.isArray(config.remove) ||
+      !config.remove.every((n) => typeof n === "string")
+    ) {
+      console.error(
+        errorPrefix +
+          `.remove' is invalid. Must be an array of strings (extension IDs)`
+      );
+    }
+  }
+  if (config.order) {
+    if (
+      !Array.isArray(config.order) ||
+      !config.order.every((n) => typeof n === "string")
+    ) {
+      console.error(
+        errorPrefix +
+          `.order' is invalid. Must be an array of strings (extension IDs)`
+      );
+    }
+  }
+}
+
+function processExtensionSlotConfig(
+  config: ExtensionSlotConfig
+): ExtensionSlotConfigObject {
+  const result: ExtensionSlotConfigObject = {};
+  if (config.remove) {
+    result.remove = config.remove;
+  }
+  if (config.order) {
+    result.order = config.order;
+  }
+  if (config.add) {
+    result.add = config.add.map((e) => e.extension);
+  }
+  return result;
+}
+
 /*
  * Helper functions
  */
@@ -232,10 +338,14 @@ function getConfigForModule(moduleName: string): ConfigObject {
   const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
   validateConfig(schema, inputConfig, moduleName);
   const config = setDefaults(schema, inputConfig);
+  delete config.extensions;
   return config;
 }
 
-function mergeConfigsFor(moduleName: string, allConfigs: Config[]) {
+function mergeConfigsFor(
+  moduleName: string,
+  allConfigs: Config[]
+): ConfigObject {
   const allConfigsForModule = R.map(R.prop(moduleName), allConfigs).filter(
     (item) => item !== undefined && item !== null
   );
@@ -258,7 +368,11 @@ const validateConfig = (
   for (let [key, value] of Object.entries(config)) {
     const thisKeyPath = keyPath + "." + key;
     if (!schema.hasOwnProperty(key)) {
-      console.error(`Unknown config key '${thisKeyPath}' provided. Ignoring.`);
+      if (key !== "extensions") {
+        console.error(
+          `Unknown config key '${thisKeyPath}' provided. Ignoring.`
+        );
+      }
       continue;
     }
     runValidators(thisKeyPath, schema[key].validators, value);
@@ -426,4 +540,19 @@ export interface Config extends Object {
 
 export interface ConfigObject extends Object {
   [key: string]: any;
+}
+
+interface ExtensionSlotConfig {
+  add?: Array<{
+    extension: string;
+    config: {};
+  }>;
+  remove?: string[];
+  order?: string[];
+}
+
+interface ExtensionSlotConfigObject {
+  add?: string[];
+  remove?: string[];
+  order?: string[];
 }

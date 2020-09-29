@@ -1,7 +1,9 @@
 import React, { useState, useContext, ReactNode } from "react";
+import { ModuleNameContext } from "@openmrs/esm-module-config";
 import {
   renderExtension,
   getExtensionNamesForExtensionSlot,
+  getIsUIEditorEnabled,
 } from "./extensions";
 
 export interface ExtensionSlotReactProps {
@@ -24,13 +26,22 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   children,
 }: ExtensionSlotReactProps) => {
   const [extensionNames, setExtensionNames] = useState<Array<string>>([]);
+  const moduleName = useContext<string>(ModuleNameContext);
+  if (!moduleName) {
+    throw Error(
+      "ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator"
+    );
+  }
 
   React.useEffect(() => {
-    setExtensionNames(getExtensionNamesForExtensionSlot(extensionSlotName));
-  }, [extensionSlotName]);
+    getExtensionNamesForExtensionSlot(
+      extensionSlotName,
+      moduleName
+    ).then((names) => setExtensionNames(names));
+  }, [extensionSlotName, moduleName]);
 
   return (
-    <>
+    <div style={{ backgroundColor: getIsUIEditorEnabled() ? "cyan" : "" }}>
       {extensionNames.map((extensionName) => (
         <ExtensionContext.Provider
           key={extensionName}
@@ -42,7 +53,7 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
           {children ?? <ExtensionReact />}
         </ExtensionContext.Provider>
       ))}
-    </>
+    </div>
   );
 };
 
@@ -55,7 +66,13 @@ export const ExtensionReact: React.FC = (props) => {
     if (ref.current) {
       return renderExtension(ref.current, extensionSlotName, extensionName);
     }
-  }, []);
+  }, [extensionSlotName, extensionName]);
 
-  return <slot ref={ref} />;
+  return getIsUIEditorEnabled() ? (
+    <div style={{ outline: "0.125rem solid yellow" }}>
+      <slot ref={ref} />
+    </div>
+  ) : (
+    <slot ref={ref} />
+  );
 };

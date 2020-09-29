@@ -1,4 +1,5 @@
 import { mountRootParcel } from "single-spa";
+import { getExtensionSlotConfig } from '@openmrs/esm-config';
 
 /**
  * Creates the extension component <-> extension slot management engine.
@@ -51,8 +52,34 @@ export function attach(extensionSlotName: string, extensionName: string) {
   }
 }
 
-export function getExtensionNamesForExtensionSlot(extensionSlotName: string) {
-  return attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
+export async function getExtensionNamesForExtensionSlot(
+  extensionSlotName: string,
+  moduleName: string
+): Promise<Array<string>> {
+  const config: ExtensionSlotConfigObject = await getExtensionSlotConfig(
+    extensionSlotName,
+    moduleName
+  );
+  let extensionNames =
+    attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
+  if (config.add) {
+    extensionNames = extensionNames.concat(config.add);
+  }
+  if (config.remove) {
+    extensionNames = extensionNames.filter((n) => !config.remove?.includes(n));
+  }
+  if (config.order) {
+    extensionNames = extensionNames.sort((a, b) =>
+      config.order.includes(a)
+        ? config.order.includes(b)
+          ? config.order.indexOf(a) - config.order.indexOf(b)
+          : -1
+        : config.order.includes(b)
+          ? 1
+          : 0
+    );
+  }
+  return extensionNames;
 }
 
 /**
@@ -70,16 +97,49 @@ export function renderExtension(
   let active = true;
 
   if (domElement) {
-    component.load().then(
-      ({ default: result }) =>
-        active &&
-        mountRootParcel(renderFunction(result) as any, {
-          domElement,
-        })
-    );
+    if (component) {
+      component.load().then(
+        ({ default: result }) =>
+          active &&
+          mountRootParcel(renderFunction(result) as any, {
+            domElement,
+          })
+      );
+    } else {
+      throw Error(
+        `Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`
+      );
+    }
   }
 
   return () => {
     active = false;
   };
+}
+
+export function getIsUIEditorEnabled(): boolean {
+  return JSON.parse(
+    localStorage.getItem("openmrs:isUIEditorEnabled") ?? "false"
+  );
+}
+
+export function setIsUIEditorEnabled(enabled: boolean): void {
+  localStorage.setItem("openmrs:isUIEditorEnabled", JSON.stringify(enabled));
+}
+
+interface ExtensionSlotConfigObject {
+  // All these are optional, but TS 4.0.2 doesn't understand the undefined
+  // guards above, so we're just telling TS they're not optional.
+  add: Array<string>;
+  remove: Array<string>;
+  order: Array<string>;
+}
+
+/**
+ * @internal
+ * Just for testing.
+ */
+export function reset() {
+  Object.keys(extensions).forEach(key => delete extensions[key]);
+  Object.keys(attachedExtensionsForExtensionSlot).forEach(key => delete attachedExtensionsForExtensionSlot[key]);
 }
