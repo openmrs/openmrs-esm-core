@@ -5,12 +5,26 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
+const openmrsApiUrl = process.env.OMRS_API_URL || "/openmrs";
+const openmrsPublicUrl = process.env.OMRS_PUBLIC_URL || "/openmrs/spa";
+
 module.exports = {
   entry: resolve(__dirname, "src/index.ts"),
   output: {
     filename: "openmrs.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "window",
+    publicPath: openmrsPublicUrl,
+  },
+  devServer: {
+    compress: true,
+    historyApiFallback: true,
+    proxy: {
+      [openmrsApiUrl]: {
+        target: 'https://openmrs-spa.org/',
+        changeOrigin: true,
+      },
+    },
   },
   devtool: "sourcemap",
   module: {
@@ -63,8 +77,8 @@ module.exports = {
       inject: false,
       template: resolve(__dirname, "src/index.ejs"),
       templateParameters: {
-        openmrsBaseUrlContext: process.env.OMRS_BASE_URL || "/openmrs",
-        spaBaseUrlContext: process.env.OMRS_SPA_PATH || "/spa",
+        openmrsApiUrl,
+        openmrsPublicUrl,
         openmrsFavicon: process.env.OMRS_FAVICON || "favicon.ico",
         openmrsImportmap: process.env.OMRS_ESM_IMPORTMAP || "importmap.json",
       },

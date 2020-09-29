@@ -26,7 +26,8 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   children,
 }: ExtensionSlotReactProps) => {
   const [extensionNames, setExtensionNames] = useState<Array<string>>([]);
-  const moduleName = useContext<string>(ModuleNameContext);
+  const moduleName = useContext(ModuleNameContext);
+
   if (!moduleName) {
     throw Error(
       "ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator"

@@ -56,29 +56,33 @@ export async function getExtensionNamesForExtensionSlot(
   extensionSlotName: string,
   moduleName: string
 ): Promise<Array<string>> {
-  const config: ExtensionSlotConfigObject = await getExtensionSlotConfig(
+  const config = await getExtensionSlotConfig(
     extensionSlotName,
     moduleName
   );
   let extensionNames =
     attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
+
   if (config.add) {
     extensionNames = extensionNames.concat(config.add);
   }
+
   if (config.remove) {
     extensionNames = extensionNames.filter((n) => !config.remove?.includes(n));
   }
+
   if (config.order) {
     extensionNames = extensionNames.sort((a, b) =>
-      config.order.includes(a)
+      config.order?.includes(a)
         ? config.order.includes(b)
           ? config.order.indexOf(a) - config.order.indexOf(b)
           : -1
-        : config.order.includes(b)
+        : config.order?.includes(b)
         ? 1
         : 0
     );
   }
+
   return extensionNames;
 }
 

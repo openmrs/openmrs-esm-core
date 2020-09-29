@@ -5,10 +5,8 @@
   "main": "dist/openmrs.js",
   "scripts": {
     "build": "webpack --mode production",
-    "watch:shell": "webpack-dev-server",
-    "webpack-dev": "webpack --mode development --watch",
-    "browsersync": "./browsersync.js",
-    "start": "concurrently npm:webpack-dev npm:browsersync"
+    "watch": "webpack-dev-server",
+    "start": "npm run watch"
   },
   "browserslist": [
     "extends browserslist-config-openmrs"
