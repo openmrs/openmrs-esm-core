@@ -1,5 +1,5 @@
 {
-  "name": "@openmrs/esm-module-config",
+  "name": "@openmrs/esm-config",
   "version": "2.2.0",
   "license": "MPL-2.0",
   "description": "A configuration library for the OpenMRS Single-Spa framework.",
