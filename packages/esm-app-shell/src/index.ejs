@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>OpenMRS</title>
+    <base href="<%= openmrsPublicUrl %>/" />
     <link
       rel="shortcut icon"
       type="image/x-icon"
@@ -11,6 +12,7 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="importmap-type" content="systemjs-importmap" />
+    <link rel="stylesheet" type="text/css" href="openmrs.css" />
     <link
       rel="preload"
       href="<%= openmrsImportmap %>"
@@ -23,8 +25,8 @@
     <script src="openmrs.js"></script>
     <script>
       initializeSpa({
-        openmrsBase: "<%= openmrsApiUrl %>",
-        spaBase: "<%= openmrsPublicUrl %>",
+        apiUrl: "<%= openmrsApiUrl %>",
+        spaUrl: "<%= openmrsPublicUrl %>",
       });
     </script>
   </body>

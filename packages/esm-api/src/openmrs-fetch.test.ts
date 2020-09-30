@@ -2,7 +2,7 @@ import { openmrsFetch, openmrsObservableFetch } from "./openmrs-fetch";
 import { isObservable } from "rxjs";
 
 import { navigateToUrl as mockNavigateToUrl } from "single-spa";
-import { getConfig as mockGetConfig } from "@openmrs/esm-module-config";
+import { getConfig as mockGetConfig } from "@openmrs/esm-config";
 
 describe("openmrsFetch", () => {
   beforeEach(() => {

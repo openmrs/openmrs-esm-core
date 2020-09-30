@@ -18,13 +18,21 @@ module.exports = {
   },
   devServer: {
     compress: true,
-    historyApiFallback: true,
-    proxy: {
-      [openmrsApiUrl]: {
-        target: 'https://openmrs-spa.org/',
+    historyApiFallback: {
+      rewrites: [
+        {
+          from: new RegExp(`^${openmrsPublicUrl}/`),
+          to: `${openmrsPublicUrl}/index.html`,
+        },
+      ],
+    },
+    proxy: [
+      {
+        context: [`${openmrsApiUrl}/**`, `!${openmrsPublicUrl}/**`],
+        target: "https://openmrs-spa.org/",
         changeOrigin: true,
       },
-    },
+    ],
   },
   devtool: "sourcemap",
   module: {

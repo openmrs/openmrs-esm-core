@@ -102,9 +102,9 @@ function runShell() {
 }
 
 function setupPaths(config: SpaConfig) {
-  window.openmrsBase = config.openmrsBase;
-  window.spaBase = config.spaBase;
-  window.getOpenmrsSpaBase = () => `${window.openmrsBase}${window.spaBase}/`;
+  window.openmrsBase = config.apiUrl;
+  window.spaBase = config.spaUrl;
+  window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
 
 function handleInitFailure(e: Error) {

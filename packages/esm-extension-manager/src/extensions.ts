@@ -56,10 +56,7 @@ export async function getExtensionNamesForExtensionSlot(
   extensionSlotName: string,
   moduleName: string
 ): Promise<Array<string>> {
-  const config = await getExtensionSlotConfig(
-    extensionSlotName,
-    moduleName
-  );
+  const config = await getExtensionSlotConfig(extensionSlotName, moduleName);
   let extensionNames =
     attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
 

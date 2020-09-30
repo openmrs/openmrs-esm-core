@@ -1,6 +1,8 @@
 declare global {
-  interface Window extends SpaConfig {
+  interface Window {
     getOpenmrsSpaBase(): string;
+    openmrsBase: string;
+    spaBase: string;
     importMapOverrides: {
       getCurrentPageMap: () => Promise<ImportMap>;
     };
@@ -15,11 +17,11 @@ export interface SpaConfig {
   /**
    * The base path for the OpenMRS API / endpoints.
    */
-  openmrsBase: string;
+  apiUrl: string;
   /**
    * The base path for the SPA root path.
    */
-  spaBase: string;
+  spaUrl: string;
 }
 
 export interface Activator {

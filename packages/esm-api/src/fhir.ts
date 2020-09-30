@@ -30,7 +30,10 @@ const openmrsFhirAdapter = {
   },
 };
 
-export const fhir: FhirClient = makeFhir({ baseUrl: fhirBaseUrl }, openmrsFhirAdapter);
+export const fhir: FhirClient = makeFhir(
+  { baseUrl: fhirBaseUrl },
+  openmrsFhirAdapter
+);
 
 export interface FHIRRequestObj {
   url: string;
