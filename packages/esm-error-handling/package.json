@@ -30,7 +30,7 @@
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {},
   "peerDependencies": {
-    "@openmrs/esm-styleguide": "^1.x"
+    "@openmrs/esm-styleguide": "*"
   },
   "devDependencies": {
     "@openmrs/esm-styleguide": "^1.4.0",

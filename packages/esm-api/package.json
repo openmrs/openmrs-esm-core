@@ -32,8 +32,8 @@
     "unistore": "^3.5.2"
   },
   "peerDependencies": {
-    "@openmrs/esm-error-handling": "1.x",
-    "@openmrs/esm-config": "2.x",
+    "@openmrs/esm-error-handling": "*",
+    "@openmrs/esm-config": "*",
     "react": "16.x",
     "single-spa": "4.x"
   },
@@ -41,7 +41,7 @@
     "@types/fhir": "0.0.31",
     "@types/react": "^16.9.46",
     "@openmrs/esm-error-handling": "^1.2.0",
-    "@openmrs/esm-config": "^2.2.0",
+    "@openmrs/esm-config": "^0.2.0",
     "fhir.js": "0.0.22",
     "lodash-es": "^4.17.15",
     "react": "^16.13.1",

@@ -26,7 +26,7 @@
     "@openmrs/esm-api": "^3.0.0",
     "@openmrs/esm-error-handling": "^1.2.0",
     "@openmrs/esm-extension-manager": "^0.2.0",
-    "@openmrs/esm-config": "^2.2.0",
+    "@openmrs/esm-config": "^0.2.0",
     "@openmrs/esm-styleguide": "^1.3.0",
     "carbon-components": "^10.19.0",
     "carbon-icons": "^7.0.7",
