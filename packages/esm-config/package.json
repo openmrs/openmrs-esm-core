@@ -7,18 +7,16 @@
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "clean": "rimraf dist",
     "document": "./document.sh",
-    "start": "webpack-dev-server",
-    "start-https": "webpack-dev-server --https",
-    "test": "BABEL_ENV=test jest",
-    "lint": "eslint src --ext ts,tsx",
+    "test": "jest --passWithNoTests",
+    "build": "webpack --mode=production",
     "typescript": "tsc",
-    "build": "rimraf dist && concurrently -n webpack,typescript 'webpack --mode=production' 'npm run typescript'",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src --ext ts,tsx"
   },
   "directories": {
-    "lib": "dist"
+    "lib": "dist",
+    "src": "src"
   },
   "browserslist": [
     "extends browserslist-config-openmrs"

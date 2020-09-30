@@ -1,15 +1,15 @@
-const path = require("path");
+const { resolve } = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
   entry: [
-    path.resolve(__dirname, "src/set-public-path.ts"),
-    path.resolve(__dirname, "src/index.ts"),
+    resolve(__dirname, "src/set-public-path.ts"),
+    resolve(__dirname, "src/index.ts"),
   ],
   output: {
     filename: "openmrs-esm-extension-manager.js",
-    path: path.resolve(__dirname, "dist"),
+    path: resolve(__dirname, "dist"),
     libraryTarget: "system",
   },
   devtool: "sourcemap",
@@ -29,7 +29,7 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
-    modules: ["node_modules", path.resolve(__dirname, "node_modules")],
+    modules: ["node_modules", resolve(__dirname, "node_modules")],
   },
   plugins: [new CleanWebpackPlugin(), new ForkTsCheckerWebpackPlugin()],
   externals: ["react", "react-dom", /^@openmrs\/esm/, "single-spa", "i18next"],

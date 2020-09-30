@@ -7,15 +7,11 @@
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "test": "jest",
-    "start": "webpack-dev-server",
-    "start-https": "webpack-dev-server --https",
-    "build": "rimraf dist && concurrently -n webpack,typescript 'webpack --mode=production' 'npm run typescript'",
-    "build-webpack": "webpack --mode=production",
+    "test": "jest --passWithNoTests",
+    "build": "webpack --mode=production",
     "typescript": "tsc",
-    "prettier": "prettier 'src/**/*' --write",
     "prepublishOnly": "npm run build",
-    "lint": "eslint src --ext ts"
+    "lint": "eslint src --ext ts,tsx"
   },
   "directories": {
     "lib": "dist",

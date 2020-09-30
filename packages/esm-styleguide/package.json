@@ -7,38 +7,32 @@
   "main": "src/index.js",
   "source": true,
   "scripts": {
-    "start": "webpack-dev-server --mode=development",
-    "start-https": "webpack-dev-server --mode=development --https",
-    "storybook": "start-storybook --port 7000",
-    "build-storybook": "build-storybook",
-    "lint": "eslint src",
-    "build": "webpack",
+    "test": "jest --passWithNoTests",
+    "start:storybook": "start-storybook --port 7000",
+    "build:storybook": "build-storybook",
+    "build": "webpack --mode=production",
     "prepublishOnly": "npm run build",
-    "test": "jest"
+    "lint": "eslint src"
   },
   "directories": {
-    "lib": "dist"
+    "lib": "dist",
+    "src": "src"
   },
   "browserslist": [
     "extends browserslist-config-openmrs"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && concurrently 'npm:test' 'npm:lint'"
-    }
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openmrs/openmrs-esm-styleguide.git"
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
   },
   "keywords": [
     "openmrs",
     "styleguide"
   ],
   "bugs": {
-    "url": "https://github.com/openmrs/openmrs-esm-styleguide/issues"
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
-  "homepage": "https://github.com/openmrs/openmrs-esm-styleguide#readme",
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {},
   "peerDependencies": {
     "react": "16.x",

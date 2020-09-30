@@ -8,10 +8,8 @@
   "source": true,
   "scripts": {
     "test": "jest --passWithNoTests",
-    "start": "webpack-dev-server",
-    "build": "rimraf dist && concurrently -n webpack,typescript 'webpack --mode=production' 'npm run typescript'",
+    "build": "webpack --mode=production",
     "typescript": "tsc",
-    "prettier": "prettier 'src/**/*' --write",
     "prepublishOnly": "npm run build",
     "lint": "eslint src --ext ts,tsx"
   },

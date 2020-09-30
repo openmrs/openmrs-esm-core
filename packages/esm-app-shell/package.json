@@ -4,9 +4,12 @@
   "license": "MPL-2.0",
   "main": "dist/openmrs.js",
   "scripts": {
+    "start": "npm run watch",
+    "test": "jest --passWithNoTests",
     "build": "webpack --mode production",
     "watch": "webpack-dev-server",
-    "start": "npm run watch"
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src --ext ts,tsx"
   },
   "browserslist": [
     "extends browserslist-config-openmrs"
@@ -42,8 +45,6 @@
   },
   "peerDependencies": {},
   "devDependencies": {
-    "@types/systemjs": "^6.1.0",
-    "browser-sync": "^2.26.7",
-    "concurrently": "^5.2.0"
+    "@types/systemjs": "^6.1.0"
   }
 }
