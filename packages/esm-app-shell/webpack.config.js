@@ -4,9 +4,20 @@ const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const { removeTrailingSlash } = require("./tools/helpers");
 
-const openmrsApiUrl = process.env.OMRS_API_URL || "/openmrs";
-const openmrsPublicUrl = process.env.OMRS_PUBLIC_URL || "/openmrs/spa";
+const openmrsApiUrl = removeTrailingSlash(
+  process.env.OMRS_API_URL || "/openmrs"
+);
+const openmrsPublicPath = removeTrailingSlash(
+  process.env.OMRS_PUBLIC_PATH || "/openmrs/spa"
+);
+const openmrsProxyTarget =
+  process.env.OMRS_PROXY_TARGET || "https://openmrs-spa.org/";
+const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
+const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
+const openmrsImportmapUrl =
+  process.env.OMRS_ESM_IMPORTMAP_URL || "importmap.json";
 
 module.exports = {
   entry: resolve(__dirname, "src/index.ts"),
@@ -14,22 +25,22 @@ module.exports = {
     filename: "openmrs.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "window",
-    publicPath: openmrsPublicUrl,
+    publicPath: openmrsPublicPath,
   },
   devServer: {
     compress: true,
     historyApiFallback: {
       rewrites: [
         {
-          from: new RegExp(`^${openmrsPublicUrl}/`),
-          to: `${openmrsPublicUrl}/index.html`,
+          from: new RegExp(`^${openmrsPublicPath}/`),
+          to: `${openmrsPublicPath}/index.html`,
         },
       ],
     },
     proxy: [
       {
-        context: [`${openmrsApiUrl}/**`, `!${openmrsPublicUrl}/**`],
-        target: "https://openmrs-spa.org/",
+        context: [`${openmrsApiUrl}/**`, `!${openmrsPublicPath}/**`],
+        target: openmrsProxyTarget,
         changeOrigin: true,
       },
     ],
@@ -86,9 +97,10 @@ module.exports = {
       template: resolve(__dirname, "src/index.ejs"),
       templateParameters: {
         openmrsApiUrl,
-        openmrsPublicUrl,
-        openmrsFavicon: process.env.OMRS_FAVICON || "favicon.ico",
-        openmrsImportmap: process.env.OMRS_ESM_IMPORTMAP || "importmap.json",
+        openmrsPublicPath,
+        openmrsFavicon,
+        openmrsImportmapDef,
+        openmrsImportmapUrl,
       },
     }),
     new CopyWebpackPlugin({

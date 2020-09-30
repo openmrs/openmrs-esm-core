@@ -103,7 +103,7 @@ function runShell() {
 
 function setupPaths(config: SpaConfig) {
   window.openmrsBase = config.apiUrl;
-  window.spaBase = config.spaUrl;
+  window.spaBase = config.spaPath;
   window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
 

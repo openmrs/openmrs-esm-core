@@ -32,7 +32,9 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
-  "dependencies": {},
+  "dependencies": {
+    "unistore": "^3.5.2"
+  },
   "peerDependencies": {
     "@openmrs/esm-error-handling": "1.x",
     "@openmrs/esm-config": "2.x",

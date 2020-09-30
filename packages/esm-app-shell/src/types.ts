@@ -15,13 +15,13 @@ export interface ImportMap {
 
 export interface SpaConfig {
   /**
-   * The base path for the OpenMRS API / endpoints.
+   * The base path or URL for the OpenMRS API / endpoints.
    */
   apiUrl: string;
   /**
    * The base path for the SPA root path.
    */
-  spaUrl: string;
+  spaPath: string;
 }
 
 export interface Activator {
