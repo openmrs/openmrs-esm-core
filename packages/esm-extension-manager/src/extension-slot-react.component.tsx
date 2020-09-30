@@ -9,6 +9,8 @@ import {
 export interface ExtensionSlotReactProps {
   extensionSlotName: string;
   children?: ReactNode;
+  style?: {};
+  [key: string]: any; // rest of params passed to div
 }
 
 interface ExtensionContextData {
@@ -24,6 +26,8 @@ const ExtensionContext = React.createContext<ExtensionContextData>({
 export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   extensionSlotName,
   children,
+  style,
+  ...divProps
 }: ExtensionSlotReactProps) => {
   const [extensionNames, setExtensionNames] = useState<Array<string>>([]);
   const moduleName = useContext<string>(ModuleNameContext);
@@ -40,8 +44,12 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
     ).then((names) => setExtensionNames(names));
   }, [extensionSlotName, moduleName]);
 
+  const divStyle = getIsUIEditorEnabled()
+    ? Object.assign(style || {}, { backgroundColor: "cyan" })
+    : style;
+
   return (
-    <div style={{ backgroundColor: getIsUIEditorEnabled() ? "cyan" : "" }}>
+    <div style={divStyle} {...divProps}>
       {extensionNames.map((extensionName) => (
         <ExtensionContext.Provider
           key={extensionName}
