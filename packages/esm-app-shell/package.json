@@ -1,7 +1,7 @@
 {
   "name": "@openmrs/esm-app-shell",
   "license": "MPL-2.0",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "main": "dist/openmrs.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "@openmrs/esm-extension-manager": "^0.1.1",
-    "@openmrs/esm-module-config": "^2.2.0",
+    "@openmrs/esm-extension-manager": "^0.2.0",
+    "@openmrs/esm-module-config": "^0.2.0",
     "i18next-browser-languagedetector": "^4.3.1",
     "i18next-icu": "^1.4.2",
     "i18next-xhr-backend": "^3.2.2",
