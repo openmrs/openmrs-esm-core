@@ -10,6 +10,7 @@
     "packages/*"
   ],
   "scripts": {
+    "run:shell": "lerna run watch --scope @openmrs/esm-app-shell --stream",
     "prettier": "prettier 'packages/**/src/**/*' --write"
   },
   "devDependencies": {

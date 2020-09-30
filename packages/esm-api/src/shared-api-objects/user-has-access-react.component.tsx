@@ -6,7 +6,7 @@ export interface UserHasAccessReactProps {
   privilege: string;
 }
 
-const UserHasAccessReact: React.FC<UserHasAccessReactProps> = ({
+export const UserHasAccessReact: React.FC<UserHasAccessReactProps> = ({
   privilege,
   children,
 }) => {
@@ -25,5 +25,3 @@ const UserHasAccessReact: React.FC<UserHasAccessReactProps> = ({
 
   return null;
 };
-
-export default UserHasAccessReact;

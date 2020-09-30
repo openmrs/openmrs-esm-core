@@ -13,8 +13,6 @@ import {
 const userSubject = new ReplaySubject<Promise<LoggedInUserFetchResponse>>(1);
 let lastFetchTimeMillis = 0;
 
-refetchCurrentUser();
-
 function getCurrentUser(): Observable<LoggedInUser>;
 function getCurrentUser(
   opts: CurrentUserWithResponseOption

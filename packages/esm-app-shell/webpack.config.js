@@ -1,9 +1,10 @@
-const { resolve } = require("path");
-const { readFileSync } = require("fs");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+
+const { resolve } = require("path");
+const { readFileSync } = require("fs");
 const { removeTrailingSlash } = require("./tools/helpers");
 
 const openmrsApiUrl = removeTrailingSlash(
@@ -29,6 +30,8 @@ module.exports = {
   },
   devServer: {
     compress: true,
+    open: true,
+    openPage: `${openmrsPublicPath}/`.substr(1),
     historyApiFallback: {
       rewrites: [
         {

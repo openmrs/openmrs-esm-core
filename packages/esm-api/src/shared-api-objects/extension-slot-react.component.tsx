@@ -19,7 +19,7 @@ interface CancelLoading {
   (): void;
 }
 
-const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
+export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   name,
   params,
 }) => {
@@ -33,5 +33,3 @@ const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
 
   return <slot ref={ref} />;
 };
-
-export default ExtensionSlotReact;
