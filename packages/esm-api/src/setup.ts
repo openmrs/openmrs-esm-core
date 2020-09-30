@@ -19,6 +19,6 @@ export function setupApiModule() {
       },
     },
   });
-  
+
   refetchCurrentUser();
 }

@@ -3,7 +3,7 @@
   "private": true,
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && concurrently -n lint,test,typescript 'lerna run lint' 'lerna run test' 'lerna run typescript'"
+      "pre-commit": "pretty-quick --staged && lerna run lint && lerna run test && lerna run typescript"
     }
   },
   "workspaces": [
@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "run:shell": "lerna run watch --scope @openmrs/esm-app-shell --stream",
+    "verify": "lerna run lint && lerna run test && lerna run typescript",
     "prettier": "prettier 'packages/**/src/**/*' --write"
   },
   "devDependencies": {
@@ -33,7 +34,7 @@
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
     "ejs": "^2.6.2",
-    "eslint": "^7.7.0",
+    "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-ts-react-important-stuff": "^3.0.0",
     "eslint-plugin-prettier": "^3.1.4",

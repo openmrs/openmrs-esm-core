@@ -2,12 +2,11 @@ import * as i18next from "i18next";
 import ICU from "i18next-icu";
 import i18nextXhrBackend from "i18next-xhr-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
-import type { i18n } from "i18next";
 import { initReactI18next } from "react-i18next";
 
 declare global {
   interface Window {
-    i18next: i18n;
+    i18next: i18next.i18n;
   }
 }
 
@@ -65,7 +64,10 @@ export function setupI18n() {
 
                 return importPromise;
               })
-              .then((json) => callback(json, { status: 200 }), (err) => callback(null, { status: 404, message: err }));
+              .then(
+                (json) => callback(json, { status: 200 }),
+                (err) => callback(null, { status: 404, message: err })
+              );
           }
         },
       },
