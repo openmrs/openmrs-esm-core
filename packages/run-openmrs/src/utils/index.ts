@@ -58,12 +58,14 @@ export function getImportmap(value: string): ImportmapDeclaration {
       const valid = checkImportmapJson(content);
 
       if (!valid) {
-        console.warn(`The importmap provided in "${value}" does not seem right. Skipping.`);
+        console.warn(
+          `The importmap provided in "${value}" does not seem right. Skipping.`
+        );
       }
 
       return {
         type: "inline",
-        value: valid ? content : '',
+        value: valid ? content : "",
       };
     } else if (checkImportmapJson(value)) {
       return {
