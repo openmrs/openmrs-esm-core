@@ -1,10 +1,11 @@
-import { loadConfig } from "./_utils";
+import { ImportmapDeclaration, loadConfig } from "../utils";
 
 /* eslint-disable no-console */
 
 export interface DebugArgs {
   port: number;
   backend: string;
+  importmap: ImportmapDeclaration;
 }
 
 export function runDebug(args: DebugArgs) {
@@ -12,7 +13,8 @@ export function runDebug(args: DebugArgs) {
   const WebpackDevServer = require("webpack-dev-server");
 
   const config = loadConfig({
-    OMRS_PROXY_TARGET: args.backend,
+    importmap: args.importmap,
+    backend: args.backend,
   });
 
   console.log(`[OpenMRS] Starting the dev server ...`);

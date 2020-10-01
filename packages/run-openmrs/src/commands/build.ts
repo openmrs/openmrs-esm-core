@@ -1,14 +1,17 @@
-import { loadConfig } from "./_utils";
+import { ImportmapDeclaration, loadConfig } from "../utils";
 
 /* eslint-disable no-console */
 
 export interface BuildArgs {
   target: string;
+  importmap: ImportmapDeclaration;
 }
 
 export function runBuild(args: BuildArgs) {
   const webpack = require("webpack");
-  const config = loadConfig({});
+  const config = loadConfig({
+    importmap: args.importmap,
+  });
 
   console.log(`[OpenMRS] Running build process ...`);
 

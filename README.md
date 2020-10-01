@@ -16,3 +16,31 @@ To install and setup the repository just use the following command:
 ```sh
 npx lerna bootstrap
 ```
+
+For working with the app shell you don't need to have the repository cloned. You can also just use the `run-openmrs` directly.
+
+```sh
+npx run-openmrs
+```
+
+This is a command line utility for running (or building) the app shell in isolation. In particular, it deals with everything that touches the development, distribution, and deployment of an app shell.
+
+## Possibilities
+
+The new architecture offers a couple of interesting possibilities. We go into them one by one.
+
+### Proxying OpenMRS Backends
+
+We can now proxy *any* backend. For instance, using the backend of the demo instance we just run:
+
+```sh
+npx run-openmrs debug --backend https://demo.openmrs.org/
+```
+
+There are a couple of interesting public instances:
+
+```sh
+https://qa-refapp.openmrs.org/
+https://demo.openmrs.org/
+https://openmrs-spa.org/
+```
