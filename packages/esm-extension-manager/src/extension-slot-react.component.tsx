@@ -6,12 +6,14 @@ import {
   getIsUIEditorEnabled,
 } from "./extensions";
 
-export interface ExtensionSlotReactProps {
+interface ExtensionSlotBaseProps {
   extensionSlotName: string;
   children?: ReactNode;
-  style?: {};
-  [key: string]: any; // rest of params passed to div
+  style?: React.CSSProperties;
 }
+
+// remainder of props are for the top-level <div>
+export type ExtensionSlotReactProps<T = {}> = ExtensionSlotBaseProps & T;
 
 interface ExtensionContextData {
   extensionSlotName: string;
@@ -45,7 +47,7 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   }, [extensionSlotName, moduleName]);
 
   const divStyle = getIsUIEditorEnabled()
-    ? Object.assign(style || {}, { backgroundColor: "cyan" })
+    ? { ...style, backgroundColor: "cyan" }
     : style;
 
   return (
