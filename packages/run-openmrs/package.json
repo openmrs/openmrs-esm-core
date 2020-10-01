@@ -10,7 +10,6 @@
     "start": "npm run watch",
     "test": "jest --passWithNoTests",
     "build": "tsc",
-    "prepublishOnly": "npm run build",
     "lint": "eslint src --ext ts,tsx"
   },
   "repository": {

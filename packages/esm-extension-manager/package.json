@@ -10,7 +10,6 @@
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
     "typescript": "tsc",
-    "prepublishOnly": "npm run build",
     "lint": "eslint src --ext ts,tsx"
   },
   "directories": {

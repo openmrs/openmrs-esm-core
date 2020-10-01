@@ -8,7 +8,6 @@
     "test": "jest --passWithNoTests",
     "build": "webpack --mode production",
     "watch": "webpack-dev-server",
-    "prepublishOnly": "npm run build",
     "lint": "eslint src --ext ts,tsx"
   },
   "browserslist": [
