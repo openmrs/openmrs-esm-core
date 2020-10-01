@@ -9,10 +9,8 @@ export const sharedDependencies = {
   "@openmrs/esm-error-handling": () => require("@openmrs/esm-error-handling"),
   "@openmrs/esm-config": () => require("@openmrs/esm-config"),
   "@openmrs/esm-module-config": () => require("@openmrs/esm-config"),
-  "@openmrs/esm-extensions": () =>
-    require("@openmrs/esm-extensions"),
-  "@openmrs/esm-extension-manager": () =>
-    require("@openmrs/esm-extensions"),
+  "@openmrs/esm-extensions": () => require("@openmrs/esm-extensions"),
+  "@openmrs/esm-extension-manager": () => require("@openmrs/esm-extensions"),
   "@openmrs/esm-styleguide": () => require("@openmrs/esm-styleguide"),
   "carbon-components": () => import("carbon-components"),
   "carbon-icons": () => import("carbon-icons"),

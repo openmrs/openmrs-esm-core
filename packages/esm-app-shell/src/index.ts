@@ -1,4 +1,4 @@
-import "./layout";
+import "./style";
 
 import { start } from "single-spa";
 import { createAppState, setupApiModule } from "@openmrs/esm-api";

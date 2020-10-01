@@ -6,6 +6,6 @@
     "@openmrs/esm-primary-navigation-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-primary-navigation-app/811ce7cdcf5548d41191bda1fd4fef1cd004bb1a/openmrs-esm-primary-navigation.js",
     "@openmrs/esm-login-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-login-app/ba86336f68ddc4fa364534b605a4184fea5ac1eb/openmrs-esm-login.js",
     "@openmrs/esm-devtools-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-devtools-app/75bc1045345193218fccb1058e061d24b6baa98b/openmrs-esm-devtools.js",
-    "@openmrs/esm-patient-registration-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-registration-app/4c21c56c4ecf57fed6a830d776cf161cf1eebba8/openmrs-esm-patient-registration.js",
+    "@openmrs/esm-patient-registration-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-registration-app/4c21c56c4ecf57fed6a830d776cf161cf1eebba8/openmrs-esm-patient-registration.js"
   }
 }
