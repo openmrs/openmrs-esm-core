@@ -23,7 +23,12 @@ module.exports = {
         use: [
           { loader: MiniCssExtractPlugin.loader },
           "css-loader",
-          "postcss-loader",
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: require("./postcss.config"),
+            },
+          },
         ],
       },
       {

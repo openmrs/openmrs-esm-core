@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "kremling": "^2.0.1",
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
@@ -45,7 +46,6 @@
     "@storybook/addon-knobs": "^5.2.1",
     "@storybook/html": "^5.2.1",
     "highlight.js": "^9.15.10",
-    "kremling": "^2.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "rxjs": "^6.5.3"

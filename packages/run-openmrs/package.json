@@ -40,7 +40,7 @@
     "fork-ts-checker-webpack-plugin": "^5.1.0",
     "html-webpack-plugin": "^4.5.0",
     "mini-css-extract-plugin": "^0.8.0",
-    "postcss-loader": "^3.0.0",
+    "postcss-loader": "^4.0.2",
     "raw-loader": "^3.1.0",
     "style-loader": "^1.0.0",
     "ts-loader": "^8.0.3",

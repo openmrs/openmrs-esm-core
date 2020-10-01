@@ -74,7 +74,6 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
         use: [
           {
             loader: "babel-loader",
@@ -86,7 +85,6 @@ module.exports = {
       },
       {
         test: /\.(ts|tsx)?$/,
-        exclude: /(node_modules|bower_components)/,
         use: ["ts-loader"],
       },
     ],
