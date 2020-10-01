@@ -21,12 +21,13 @@
     "@openmrs/esm-extension-manager": "^0.2.0",
     "@openmrs/esm-module-config": "^0.2.0",
     "i18next-browser-languagedetector": "^4.3.1",
+    "i18next-http-backend": "^1.0.21",
     "i18next-icu": "^1.4.2",
-    "i18next-xhr-backend": "^3.2.2",
     "import-map-overrides": "^1.15.2",
     "systemjs": "^6.3.3"
   },
   "devDependencies": {
+    "@openmrs/esm-extension-manager": "^0.2.0",
     "@types/systemjs": "^6.1.0",
     "browser-sync": "^2.26.7",
     "concurrently": "^5.2.0",

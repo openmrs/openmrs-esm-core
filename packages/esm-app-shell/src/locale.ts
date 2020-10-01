@@ -1,5 +1,5 @@
 import ICU from "i18next-icu";
-import i18nextXhrBackend from "i18next-xhr-backend";
+import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { i18n } from "i18next";
 
@@ -37,18 +37,18 @@ export function setupI18n() {
 
     return window.i18next
       .use(LanguageDetector)
-      .use(i18nextXhrBackend)
+      .use(HttpApi)
       .use(initReactI18next)
       .use(ICU)
       .init({
         backend: {
           parse: (data) => data,
           loadPath: "{{lng}}|{{ns}}",
-          ajax(url, _, callback) {
+          request: (options, url, payload, callback) => {
             const [language, namespace] = url.split("|");
 
             if (namespace === "translation") {
-              callback(null, { status: 404 });
+              callback(null, { status: 404, data: null });
             } else {
               System.import(decodeHtmlEntity(namespace))
                 .then((m) => {
@@ -70,10 +70,10 @@ export function setupI18n() {
 
                   return importPromise;
                 })
-                .then((json) => callback(json, { status: 200 }))
+                .then((json) => callback(null, { status: 200, data: json }))
                 .catch((err) => {
                   console.error(err);
-                  callback(null, { status: 404 });
+                  callback(err, { status: 404, data: null });
                 });
             }
           },
