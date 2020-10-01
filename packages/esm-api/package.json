@@ -29,7 +29,8 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "unistore": "^3.5.2"
+    "unistore": "^3.5.2",
+    "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
     "@openmrs/esm-error-handling": "*",
@@ -46,7 +47,6 @@
     "lodash-es": "^4.17.15",
     "react": "^16.13.1",
     "rxjs": "^6.5.3",
-    "single-spa": "^4.4.1",
-    "systemjs-webpack-interop": "^2.1.2"
+    "single-spa": "^4.4.1"
   }
 }

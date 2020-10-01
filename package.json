@@ -11,11 +11,11 @@
   ],
   "scripts": {
     "run:shell": "lerna run watch --scope @openmrs/esm-app-shell --stream",
+    "run:omrs": "run-openmrs",
     "verify": "lerna run lint && lerna run test && lerna run typescript",
     "prettier": "prettier 'packages/**/src/**/*' --write"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.10",
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
@@ -24,6 +24,7 @@
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
     "@testing-library/user-event": "^12.0.11",
+    "@types/jest": "^26.0.10",
     "autoprefixer": "^9.6.1",
     "browserslist-config-openmrs": "^1.0.1",
     "babel-eslint": "^11.0.0-beta.2",

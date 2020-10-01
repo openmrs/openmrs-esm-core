@@ -28,12 +28,13 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
-  "dependencies": {},
+  "dependencies": {
+    "systemjs-webpack-interop": "^2.1.2"
+  },
   "peerDependencies": {
     "@openmrs/esm-styleguide": "*"
   },
   "devDependencies": {
-    "@openmrs/esm-styleguide": "^1.4.0",
-    "systemjs-webpack-interop": "^2.1.2"
+    "@openmrs/esm-styleguide": "^1.4.0"
   }
 }

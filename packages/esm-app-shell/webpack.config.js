@@ -78,7 +78,9 @@ module.exports = {
         use: [
           {
             loader: "babel-loader",
-            options: JSON.parse(readFileSync("./.babelrc", "utf8")),
+            options: JSON.parse(
+              readFileSync(resolve(__dirname, ".babelrc"), "utf8")
+            ),
           },
         ],
       },
@@ -107,7 +109,7 @@ module.exports = {
       },
     }),
     new CopyWebpackPlugin({
-      patterns: [{ from: "src/assets" }],
+      patterns: [{ from: resolve(__dirname, "src/assets") }],
     }),
     new MiniCssExtractPlugin({ filename: "openmrs.css" }),
   ],

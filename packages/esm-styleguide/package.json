@@ -33,7 +33,9 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
-  "dependencies": {},
+  "dependencies": {
+    "systemjs-webpack-interop": "^2.1.2"
+  },
   "peerDependencies": {
     "react": "16.x",
     "rxjs": "6.x"
@@ -47,7 +49,6 @@
     "kremling": "^2.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "rxjs": "^6.5.3",
-    "systemjs-webpack-interop": "^2.1.2"
+    "rxjs": "^6.5.3"
   }
 }

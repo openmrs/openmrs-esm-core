@@ -31,7 +31,9 @@
   "keywords": [
     "openmrs"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "systemjs-webpack-interop": "^2.1.2"
+  },
   "peerDependencies": {
     "@openmrs/esm-config": "*",
     "react": "16.x",
@@ -41,7 +43,6 @@
     "@openmrs/esm-config": "^0.2.0",
     "@types/react": "^16.9.46",
     "react": "^16.13.1",
-    "single-spa": "^4.4.1",
-    "systemjs-webpack-interop": "^2.1.2"
+    "single-spa": "^4.4.1"
   }
 }
