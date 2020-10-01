@@ -46,7 +46,7 @@ export const isUrlWithTemplateParameters = (
     if (!val) {
       return false;
     }
-    
+
     const matches = val.matchAll(/\${(.*?)}/g);
 
     for (let match of matches) {
