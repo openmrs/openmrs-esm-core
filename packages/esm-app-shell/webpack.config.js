@@ -59,24 +59,24 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          { loader: MiniCssExtractPlugin.loader },
-          "css-loader",
-          "postcss-loader",
+          { loader: require.resolve(MiniCssExtractPlugin.loader) },
+          { loader: require.resolve("css-loader") },
+          { loader: require.resolve("postcss-loader") },
         ],
       },
       {
         test: /\.(woff|woff2|png)?$/,
-        use: ["file-loader"],
+        use: [{ loader: require.resolve("file-loader") }],
       },
       {
         test: /\.(svg|html)$/,
-        use: ["raw-loader"],
+        use: [{ loader: require.resolve("raw-loader") }],
       },
       {
         test: /\.(js|jsx)$/,
         use: [
           {
-            loader: "babel-loader",
+            loader: require.resolve("babel-loader"),
             options: JSON.parse(
               readFileSync(resolve(__dirname, ".babelrc"), "utf8")
             ),
@@ -85,7 +85,14 @@ module.exports = {
       },
       {
         test: /\.(ts|tsx)?$/,
-        use: ["ts-loader"],
+        use: [
+          {
+            loader: require.resolve("ts-loader"),
+            options: {
+              allowTsInNodeModules: true,
+            },
+          },
+        ],
       },
     ],
   },
