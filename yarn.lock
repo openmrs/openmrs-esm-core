@@ -2217,6 +2217,33 @@
   dependencies:
     "@types/node" ">= 8"
 
+"@openmrs/esm-app-shell@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@openmrs/esm-app-shell/-/esm-app-shell-0.2.0.tgz#bfed3709ce1ea88c0f609b898070706d47acfb95"
+  integrity sha512-87SyXSwnflkdGK24Dj2H6+XVtmHmt4gqEv4AG8jOhPIdEciFnQv8TdvewKJFsNa1kB1TgyF4FUe37DnToyTJSg==
+  dependencies:
+    "@openmrs/esm-extension-manager" "^0.2.0"
+    "@openmrs/esm-module-config" "^0.2.0"
+    i18next-browser-languagedetector "^4.3.1"
+    i18next-icu "^1.4.2"
+    i18next-xhr-backend "^3.2.2"
+    import-map-overrides "^1.15.2"
+    systemjs "^6.3.3"
+
+"@openmrs/esm-extension-manager@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@openmrs/esm-extension-manager/-/esm-extension-manager-0.2.0.tgz#9f64c6c7120d0c6c64fd935b94a2479dfc5a3678"
+  integrity sha512-S4WWTCXvtU8pVs1iiemNDs1oknesM2nirbdSie4CzpsoK3PJ8+ejWGmyyOBNj0Zw5EQyGz2Jzhh1iIMDa3XOow==
+  dependencies:
+    "@openmrs/esm-module-config" "^0.2.0"
+
+"@openmrs/esm-module-config@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@openmrs/esm-module-config/-/esm-module-config-0.2.0.tgz#a42e20e01a3175f9cf698bb0b578f543cf9037c5"
+  integrity sha512-jsZ3EbalqdZQOfYUZunDBjy5Y9iMZP2CIhkWf0nmOcY5JxfMIjHknM2bR+uYPFcKYBvvwllLwhzS18hNFKIEVA==
+  dependencies:
+    ramda "^0.26.1"
+
 "@pickra/copy-code-block@^1.1.7":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@pickra/copy-code-block/-/copy-code-block-1.2.0.tgz#08b9d01d92dd5f4950e013b43e0730abb3add3db"
