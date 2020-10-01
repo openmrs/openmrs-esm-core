@@ -1,3 +1,5 @@
+import { loadConfig } from "./_utils";
+
 /* eslint-disable no-console */
 
 export interface BuildArgs {
@@ -6,8 +8,7 @@ export interface BuildArgs {
 
 export function runBuild(args: BuildArgs) {
   const webpack = require("webpack");
-  const config = require("@openmrs/esm-app-shell/webpack.config.js");
-  const target = args.target;
+  const config = loadConfig({});
 
   console.log(`[OpenMRS] Running build process ...`);
 
@@ -15,7 +16,7 @@ export function runBuild(args: BuildArgs) {
     ...config,
     output: {
       ...config.output,
-      path: target,
+      path: args.target,
     },
   });
 

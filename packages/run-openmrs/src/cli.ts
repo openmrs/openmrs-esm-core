@@ -31,7 +31,10 @@ yargs.command(
     argv
       .number("port")
       .default("port", 8080)
-      .describe("port", "The port where the dev server should run."),
+      .describe("port", "The port where the dev server should run.")
+      .string("backend")
+      .default("backend", "https://openmrs-spa.org/")
+      .describe("backend", "The backend to proxy API requests to."),
   (args) =>
     runCommand("runDebug", {
       ...args,

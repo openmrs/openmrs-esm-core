@@ -1,14 +1,19 @@
+import { loadConfig } from "./_utils";
+
 /* eslint-disable no-console */
 
 export interface DebugArgs {
   port: number;
+  backend: string;
 }
 
 export function runDebug(args: DebugArgs) {
   const webpack = require("webpack");
   const WebpackDevServer = require("webpack-dev-server");
-  const config = require("@openmrs/esm-app-shell/webpack.config.js");
-  const port = args.port;
+
+  const config = loadConfig({
+    OMRS_PROXY_TARGET: args.backend,
+  });
 
   console.log(`[OpenMRS] Starting the dev server ...`);
 
@@ -19,6 +24,7 @@ export function runDebug(args: DebugArgs) {
   };
 
   const server = new WebpackDevServer(webpack(config), options);
+  const port = args.port;
 
   server.listen(port, "localhost", function (err) {
     if (err) {
