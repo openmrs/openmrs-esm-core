@@ -1,9 +1,9 @@
 {
-  "name": "@openmrs/esm-extension-manager",
+  "name": "@openmrs/esm-extensions",
   "version": "0.3.0",
   "license": "MPL-2.0",
   "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
-  "browser": "dist/openmrs-esm-extension-manager.js",
+  "browser": "dist/openmrs-esm-extensions.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {

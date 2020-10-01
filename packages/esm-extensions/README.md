@@ -1,11 +1,10 @@
-# openmrs-esm-extension-manager
-[![Build Status](https://travis-ci.org/openmrs/openmrs-extension-manager.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-esm-extension-manager)
+# openmrs-esm-extensions
 
 An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
 
 ## What is this?
 
-openmrs-esm-extension-manager is an [in-browser javascript module](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0002-modules.md) that
+openmrs-esm-extensions is an [in-browser javascript module](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0002-modules.md) that
 connects Extensions with Extension Slots. It is part of the OpenMRS Frontend
 [Extension System](https://github.com/openmrs/openmrs-rfc-frontend/pull/27/files).
 
@@ -15,7 +14,7 @@ connects Extensions with Extension Slots. It is part of the OpenMRS Frontend
 
 ## API
 
-The following functions are exported from the @openmrs/esm-extension-manager module:
+The following functions are exported from the @openmrs/esm-extensions module:
 
 ## foo(args): void
 

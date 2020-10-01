@@ -1,4 +1,4 @@
 dist/
 README.md
 docs/
-packages/esm-styleguide/src/buttons-and-links/buttons-and-links.stories.html
+packages/esm-styleguide/src/**/*.html

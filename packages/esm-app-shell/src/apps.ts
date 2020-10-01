@@ -2,7 +2,7 @@ import {
   ExtensionDefinition,
   PageDefinition,
   registerExtension,
-} from "@openmrs/esm-extension-manager";
+} from "@openmrs/esm-extensions";
 import { registerApplication } from "single-spa";
 import { routePrefix, routeRegex } from "./helpers";
 import type { Activator, ActivatorDefinition } from "./types";

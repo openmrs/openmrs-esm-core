@@ -1,3 +1,3 @@
 import { setPublicPath } from "systemjs-webpack-interop";
 
-setPublicPath("@openmrs/esm-extension-manager");
+setPublicPath("@openmrs/esm-extensions");

@@ -1,6 +1,5 @@
 # openmrs-esm-config
 
-[![Build Status](https://travis-ci.com/openmrs/openmrs-esm-config.svg?branch=master)](https://travis-ci.com/openmrs/openmrs-esm-config)
 [![npm: openmrs/esm-module-config](https://img.shields.io/npm/v/@openmrs/esm-config)](https://www.npmjs.com/package/@openmrs/esm-config)
 
 ## What is this?

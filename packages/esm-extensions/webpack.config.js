@@ -8,7 +8,7 @@ module.exports = {
     resolve(__dirname, "src/index.ts"),
   ],
   output: {
-    filename: "openmrs-esm-extension-manager.js",
+    filename: "openmrs-esm-extensions.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
   },

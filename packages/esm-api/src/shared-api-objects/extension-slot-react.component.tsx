@@ -20,7 +20,7 @@ interface CancelLoading {
 }
 
 /**
- * @deprecated Use the import from @openmrs/esm-extension-manager instead!
+ * @deprecated Use the import from @openmrs/esm-extensions instead!
  */
 export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   name,
