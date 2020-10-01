@@ -6,10 +6,14 @@ import {
   getIsUIEditorEnabled,
 } from "./extensions";
 
-export interface ExtensionSlotReactProps {
+interface ExtensionSlotBaseProps {
   extensionSlotName: string;
   children?: ReactNode;
+  style?: React.CSSProperties;
 }
+
+// remainder of props are for the top-level <div>
+export type ExtensionSlotReactProps<T = {}> = ExtensionSlotBaseProps & T;
 
 interface ExtensionContextData {
   extensionSlotName: string;
@@ -24,6 +28,8 @@ const ExtensionContext = React.createContext<ExtensionContextData>({
 export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   extensionSlotName,
   children,
+  style,
+  ...divProps
 }: ExtensionSlotReactProps) => {
   const [extensionNames, setExtensionNames] = useState<Array<string>>([]);
   const moduleName = useContext<string>(ModuleNameContext);
@@ -40,8 +46,12 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
     ).then((names) => setExtensionNames(names));
   }, [extensionSlotName, moduleName]);
 
+  const divStyle = getIsUIEditorEnabled()
+    ? { ...style, backgroundColor: "cyan" }
+    : style;
+
   return (
-    <div style={{ backgroundColor: getIsUIEditorEnabled() ? "cyan" : "" }}>
+    <div style={divStyle} {...divProps}>
       {extensionNames.map((extensionName) => (
         <ExtensionContext.Provider
           key={extensionName}
