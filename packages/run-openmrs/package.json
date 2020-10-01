@@ -1,6 +1,6 @@
 {
   "name": "run-openmrs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "bin": {
@@ -30,8 +30,8 @@
     "@types/react": "^16.9.46",
     "@types/systemjs": "^6.1.0",
     "autoprefixer": "^9.6.1",
-    "browserslist-config-openmrs": "^1.0.1",
     "babel-loader": "^8.1.0",
+    "browserslist-config-openmrs": "^1.0.1",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "6.1.1",
     "css-loader": "^3.2.0",
@@ -50,7 +50,5 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "yargs": "16.0.3"
-  },
-  "peerDependencies": {},
-  "devDependencies": {}
+  }
 }

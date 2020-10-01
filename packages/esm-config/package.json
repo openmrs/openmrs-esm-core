@@ -38,8 +38,8 @@
     "single-spa": "4.x"
   },
   "devDependencies": {
-    "@types/react": "^16.9.46",
     "@types/ramda": "^0.26.44",
+    "@types/react": "^16.9.46",
     "@types/systemjs": "^6.1.0",
     "babel-plugin-ramda": "^2.0.0",
     "react": "^16.13.1",
