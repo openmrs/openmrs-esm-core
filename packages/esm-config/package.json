@@ -1,22 +1,21 @@
 {
-  "name": "@openmrs/esm-module-config",
-  "version": "0.2.0",
-  "description": "A configuration library for the OpenMRS Single-Spa framework.",
-  "main": "dist/openmrs-esm-module-config.js",
-  "scripts": {
-    "clean": "rimraf dist",
-    "document": "./document.sh",
-    "start": "webpack-dev-server",
-    "start-https": "webpack-dev-server --https",
-    "test": "BABEL_ENV=test jest",
-    "lint": "eslint src --ext ts,tsx",
-    "typescript": "tsc",
-    "build": "rimraf dist && concurrently -n webpack,typescript 'webpack --mode=production' 'npm run typescript'",
-    "prepublishOnly": "npm run build"
-  },
+  "name": "@openmrs/esm-config",
+  "version": "0.3.0",
   "license": "MPL-2.0",
+  "description": "A configuration library for the OpenMRS Single-Spa framework.",
+  "browser": "dist/openmrs-esm-module-config.js",
+  "main": "src/index.ts",
+  "source": true,
+  "scripts": {
+    "document": "./document.sh",
+    "test": "jest --config jest.config.js --passWithNoTests",
+    "build": "webpack --mode=production",
+    "typescript": "tsc",
+    "lint": "eslint src --ext ts,tsx"
+  },
   "directories": {
-    "lib": "dist"
+    "lib": "dist",
+    "src": "src"
   },
   "browserslist": [
     "extends browserslist-config-openmrs"
@@ -30,16 +29,19 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "ramda": "^0.26.1"
+    "ramda": "^0.26.1",
+    "systemjs-webpack-interop": "^2.1.2"
+  },
+  "peerDependencies": {
+    "react": "16.x",
+    "single-spa": "4.x"
   },
   "devDependencies": {
     "@types/ramda": "^0.26.44",
-    "@types/react": "^16.9.30",
+    "@types/react": "^16.9.46",
     "@types/systemjs": "^6.1.0",
     "babel-plugin-ramda": "^2.0.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "single-spa": "^4.4.1",
-    "systemjs-webpack-interop": "^2.1.2"
+    "single-spa": "^4.4.1"
   }
 }

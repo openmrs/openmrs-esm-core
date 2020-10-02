@@ -1,0 +1,53 @@
+{
+  "name": "run-openmrs",
+  "version": "0.3.0",
+  "license": "MPL-2.0",
+  "main": "dist/index.js",
+  "bin": {
+    "run-openmrs": "./dist/cli.js"
+  },
+  "scripts": {
+    "start": "npm run watch",
+    "test": "jest --passWithNoTests",
+    "build": "tsc",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "dependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@openmrs/esm-app-shell": "^0.3.0",
+    "@types/react": "^16.9.46",
+    "@types/systemjs": "^6.1.0",
+    "autoprefixer": "^9.6.1",
+    "babel-loader": "^8.1.0",
+    "browserslist-config-openmrs": "^1.0.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "6.1.1",
+    "css-loader": "^3.2.0",
+    "cssnano": "^4.1.10",
+    "ejs": "^2.6.2",
+    "file-loader": "^4.2.0",
+    "fork-ts-checker-webpack-plugin": "^5.1.0",
+    "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "postcss-loader": "^4.0.2",
+    "raw-loader": "^3.1.0",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^8.0.3",
+    "typescript": "^4.0.2",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "yargs": "16.0.3"
+  }
+}

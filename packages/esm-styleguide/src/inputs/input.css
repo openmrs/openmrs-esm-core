@@ -1,0 +1,182 @@
+/* Remove shadow in ios inputs */
+textarea,
+input[type="text"] {
+  -webkit-appearance: none;
+}
+
+div.omrs-input-group {
+  margin-bottom: 1.5rem;
+  position: relative;
+  width: 100%;
+}
+
+input.omrs-input-underlined,
+input.omrs-input-filled,
+input.omrs-input-outlined {
+  font-size: 1rem;
+  width: 100%;
+  height: 3.5rem;
+  padding-left: 0.875rem;
+  outline: none;
+}
+
+input.omrs-input-underlined,
+input.omrs-input-filled {
+  border: none;
+  border-bottom: 2px solid var(--omrs-color-ink-lowest-contrast);
+  border-radius: 0.25rem 0.25rem 0 0;
+  vertical-align: middle;
+  line-height: 147.6%;
+}
+
+input.omrs-input-outlined {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--omrs-color-ink-lowest-contrast);
+  border-radius: 0.25rem;
+}
+
+input.omrs-input-filled {
+  background: var(--omrs-color-bg-low-contrast);
+}
+
+input.omrs-input-underlined {
+  background: var(--omrs-color-ink-white);
+}
+
+input.omrs-input-underlined ~ label,
+input.omrs-input-filled ~ label,
+input.omrs-input-outlined ~ label {
+  color: var(--omrs-color-ink-medium-contrast);
+  font-size: 1.0625rem;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  top: 1.25rem;
+  left: 0.875rem;
+  transition: 0.2s ease all;
+  letter-spacing: 0.0275rem;
+  color: var(--omrs-color-ink-medium-contrast);
+}
+
+input.omrs-input-underlined:focus ~ label,
+input.omrs-input-filled:focus ~ label,
+input.omrs-input-underlined:valid ~ label,
+input.omrs-input-filled:valid ~ label {
+  top: 0;
+  font-size: 0.9375rem;
+}
+
+input.omrs-input-outlined:focus ~ label,
+input.omrs-input-outlined:valid ~ label {
+  top: -0.75rem;
+  left: 0.875rem;
+  font-size: 0.9375rem;
+
+  /** for now, easiest way to show label ontop of border **/
+  background: white;
+  padding: 0.25rem;
+}
+
+/* input.omrs-input-outlined:valid ~ label {
+	display: none;
+} */
+
+input.omrs-input-underlined:hover:not(:focus):not(:disabled),
+input.omrs-input-filled:hover:not(:focus):not(:disabled) {
+  background-color: var(--omrs-color-interaction-minus-two);
+  border-bottom-color: var(--omrs-color-ink-high-contrast);
+}
+
+input.omrs-input-outlined:hover:not(:focus):not(:disabled) {
+  border-color: var(--omrs-color-ink-medium-contrast);
+}
+
+input.omrs-input-underlined:disabled,
+input.omrs-input-filled:disabled,
+input.omrs-input-outlined:disabled {
+  cursor: not-allowed;
+}
+
+input.omrs-input-underlined:disabled,
+input.omrs-input-filled:disabled {
+  background-color: var(--omrs-color-bg-low-contrast);
+  border-color: var(--omrs-color-ink-low-contrast);
+}
+
+input.omrs-input-outlined:disabled {
+  border-color: var(--omrs-color-ink-lowest-contrast);
+}
+
+input.omrs-input-underlined:disabled ~ label,
+input.omrs-input-filled:disabled ~ label,
+input.omrs-input-outlined:disabled ~ label,
+input.omrs-input-underlined:disabled ~ span.omrs-input-helper,
+input.omrs-input-outlined:disabled ~ span.omrs-input-helper,
+input.omrs-input-filled:disabled ~ span.omrs-input-helper {
+  color: var(--omrs-color-ink-low-contrast);
+}
+
+input.omrs-input-danger {
+  border-color: var(--omrs-color-danger);
+}
+
+input.omrs-input-danger ~ label,
+input.omrs-input-danger ~ span.omrs-input-helper {
+  color: var(--omrs-color-danger);
+}
+
+input.omrs-input-danger ~ button > svg {
+  fill: var(--omrs-color-danger);
+}
+
+input.omrs-input-underlined:disabled ~ button > svg,
+input.omrs-input-filled:disabled ~ button > svg,
+input.omrs-input-outlined:disabled ~ button > svg {
+  fill: var(--omrs-color-ink-low-contrast);
+}
+
+input.omrs-input-underlined ~ button > svg,
+input.omrs-input-filled ~ button > svg,
+input.omrs-input-outlined ~ button > svg {
+  position: absolute;
+  top: 1rem;
+  right: 0.875rem;
+  fill: grey;
+}
+
+input.omrs-input-underlined:focus:not(.omrs-input-danger) ~ button > svg,
+input.omrs-input-filled:focus:not(.omrs-input-danger) ~ button > svg {
+  fill: var(--omrs-color-ink-high-contrast);
+}
+
+input.omrs-input-danger ~ button > svg {
+  fill: var(--omrs-color-danger);
+}
+
+span.omrs-input-helper {
+  font-size: 0.9375rem;
+  letter-spacing: 0.44px;
+  color: var(--omrs-color-ink-medium-contrast);
+  padding-left: 0.875rem;
+  line-height: 138.3%;
+}
+
+input.omrs-input-danger ~ span.omrs-input-helper {
+  color: var(--omrs-color-danger);
+}
+
+input.omrs-input-underlined:focus:not(.omrs-input-danger) ~ label,
+input.omrs-input-filled:focus:not(.omrs-input-danger) ~ label,
+input.omrs-input-outlined:focus:not(.omrs-input-danger) ~ label {
+  color: var(--omrs-color-interaction);
+}
+
+input.omrs-input-underlined:focus:not(.omrs-input-danger),
+input.omrs-input-filled:focus:not(.omrs-input-danger),
+input.omrs-input-outlined:focus:not(.omrs-input-danger) {
+  border-color: var(--omrs-color-interaction);
+}
+
+input.omrs-input-outlined:focus {
+  border-width: 0.125rem;
+}

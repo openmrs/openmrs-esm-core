@@ -1,41 +1,12 @@
-import { loadModules } from "./system";
-import { ExtensionDefinition } from "@openmrs/esm-extension-manager";
+import "./style";
+
+import { start } from "single-spa";
+import { createAppState, setupApiModule } from "@openmrs/esm-api";
 import { setupI18n } from "./locale";
-import {
-  routePrefix,
-  Activator,
-  ActivatorDefinition,
-  routeRegex,
-} from "./helpers";
-
-declare global {
-  interface Window extends SpaConfig {
-    getOpenmrsSpaBase(): string;
-    importMapOverrides: {
-      getCurrentPageMap: () => Promise<ImportMap>;
-    };
-  }
-}
-
-interface ImportMap {
-  imports: Record<string, string>;
-}
-
-export interface SpaConfig {
-  /**
-   * The base path for the OpenMRS API / endpoints.
-   */
-  openmrsBase: string;
-  /**
-   * The base path for the SPA root path.
-   */
-  spaBase: string;
-  /**
-   * The names of additional modules to load initially,
-   * if any.
-   */
-  coreLibs?: Array<string>;
-}
+import { registerApp } from "./apps";
+import { sharedDependencies } from "./dependencies";
+import { loadModules, registerModules } from "./system";
+import type { SpaConfig } from "./types";
 
 /**
  * Gets the microfrontend modules (apps). These are entries
@@ -58,27 +29,6 @@ function loadApps() {
 }
 
 /**
- * Normalizes the activator function, i.e., if we receive a
- * string we'll prepend the SPA base (prefix). We'll also handle
- * the case of a supplied array.
- * @param activator The activator to preprocess.
- */
-function preprocessActivator(
-  activator: ActivatorDefinition | Array<ActivatorDefinition>
-): Activator {
-  if (Array.isArray(activator)) {
-    const activators = activator.map(preprocessActivator);
-    return (location) => activators.some((activator) => activator(location));
-  } else if (typeof activator === "string") {
-    return (location) => routePrefix(activator, location);
-  } else if (activator instanceof RegExp) {
-    return (location) => routeRegex(activator, location);
-  } else {
-    return activator;
-  }
-}
-
-/**
  * Sets up the microfrontends (apps). Uses the defined export
  * from the root modules of the apps, which should export a
  * special function called "setupOpenMRS".
@@ -87,32 +37,7 @@ function preprocessActivator(
  */
 function setupApps(modules: Array<[string, System.Module]>) {
   for (const [appName, appExports] of modules) {
-    const setup = appExports.setupOpenMRS;
-
-    if (typeof setup === "function") {
-      const result = setup();
-
-      if (result && typeof result === "object") {
-        System.import("single-spa").then(({ registerApplication }) => {
-          System.import("@openmrs/esm-extension-manager").then(
-            ({ registerExtension }) => {
-              const availableExtensions: Array<ExtensionDefinition> =
-                result.extensions ?? [];
-
-              for (const { name, load } of availableExtensions) {
-                registerExtension({ name, load, appName });
-              }
-
-              registerApplication(
-                appName,
-                result.lifecycle,
-                preprocessActivator(result.activate)
-              );
-            }
-          );
-        });
-      }
-    }
+    registerApp(appName, appExports);
   }
 }
 
@@ -120,36 +45,20 @@ function setupApps(modules: Array<[string, System.Module]>) {
  * Runs the shell by importing the translations and starting single SPA.
  */
 function runShell() {
-  return System.import("single-spa").then(({ start }) => {
-    return setupI18n()
-      .catch((err) => console.error(`Failed to initialize translations`, err))
-      .then(start);
-  });
+  return setupI18n()
+    .catch((err) => console.error(`Failed to initialize translations`, err))
+    .then(start);
 }
 
-/**
- * Initializes the OpenMRS Microfrontend App Shell.
- * @param config The global configuration to apply.
- */
-export function initializeSpa(config: SpaConfig) {
-  const libs = [
-    "single-spa",
-    "@openmrs/esm-styleguide",
-    "@openmrs/esm-extension-manager",
-  ];
-
-  window.openmrsBase = config.openmrsBase;
-  window.spaBase = config.spaBase;
-  window.getOpenmrsSpaBase = () => `${window.openmrsBase}${window.spaBase}/`;
-
-  return loadModules(libs)
-    .then(loadApps)
-    .then(setupApps)
-    .then(runShell)
-    .catch(handleInitFailure);
+function setupPaths(config: SpaConfig) {
+  window.openmrsBase = config.apiUrl;
+  window.spaBase = config.spaPath;
+  window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
 
-function handleInitFailure() {
+function handleInitFailure(e: Error) {
+  console.error(e);
+
   if (localStorage.getItem("openmrs:devtools")) {
     renderDevResetButton();
   } else {
@@ -161,18 +70,18 @@ function renderApology() {
   const msg = document.createTextNode(
     "Sorry, something has gone as badly as possible"
   );
-  document.appendChild(msg);
+  document.body.appendChild(msg);
 }
 
 function renderDevResetButton() {
   const btn = document.createElement("button");
-  btn.onclick = clearDevOverrides;
-  btn.innerHTML = "Reset dev overrides";
+  btn.addEventListener("click", clearDevOverrides);
+  btn.textContent = "Reset dev overrides";
   document.body.appendChild(btn);
 }
 
 function clearDevOverrides() {
-  for (let key of Object.keys(localStorage)) {
+  for (const key of Object.keys(localStorage)) {
     if (
       key.startsWith("import-map-override:") &&
       !["import-map-override:react", "import-map-override:react-dom"].includes(
@@ -183,4 +92,16 @@ function clearDevOverrides() {
     }
   }
   location.reload();
+}
+
+/**
+ * Initializes the OpenMRS Microfrontend App Shell.
+ * @param config The global configuration to apply.
+ */
+export function initializeSpa(config: SpaConfig) {
+  setupPaths(config);
+  registerModules(sharedDependencies);
+  setupApiModule();
+  createAppState({});
+  return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
 }

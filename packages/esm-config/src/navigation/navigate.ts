@@ -1,8 +1,13 @@
 import { navigateToUrl } from "single-spa";
 import { interpolateUrl } from "./interpolate-string";
+import type {} from "@openmrs/esm-app-shell/src/types";
 
 function trimTrailingSlash(str: string) {
   return str.replace(/\/$/, "");
+}
+
+export interface NavigateOptions {
+  to: string;
 }
 
 /**
@@ -25,21 +30,10 @@ export function navigate({ to }: NavigateOptions): void {
   const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());
   const target = interpolateUrl(to);
   const isSpaPath = target.startsWith(openmrsSpaBase);
+
   if (isSpaPath) {
     navigateToUrl(target);
   } else {
     window.location.assign(target);
-  }
-}
-
-type NavigateOptions = {
-  to: string;
-};
-
-declare global {
-  interface Window {
-    spaBase: string;
-    openmrsBase: string;
-    getOpenmrsSpaBase: () => string;
   }
 }

@@ -1,3 +1,7 @@
 dist/
 README.md
 docs/
+*.svg
+*.ico
+*.ejs
+packages/esm-styleguide/src/**/*.html

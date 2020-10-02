@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <g id="icon/navigation/menu_24px">
+    <path id="icon/navigation/menu_24px_2" fill-rule="evenodd" clip-rule="evenodd" d="M4 8C3.44995 8 3 7.54999 3 7C3 6.45001 3.44995 6 4 6H20C20.55 6 21 6.45001 21 7C21 7.54999 20.55 8 20 8H4ZM4 13H20C20.55 13 21 12.55 21 12C21 11.45 20.55 11 20 11H4C3.44995 11 3 11.45 3 12C3 12.55 3.44995 13 4 13ZM4 18H20C20.55 18 21 17.55 21 17C21 16.45 20.55 16 20 16H4C3.44995 16 3 16.45 3 17C3 17.55 3.44995 18 4 18Z"/>
+  </g>
+  <title>Menu rounded</title>
+</svg>
