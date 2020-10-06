@@ -1,10 +1,10 @@
 {
-  "name": "run-openmrs",
+  "name": "openmrs",
   "version": "0.3.0",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "bin": {
-    "run-openmrs": "./dist/cli.js"
+    "openmrs": "./dist/cli.js"
   },
   "scripts": {
     "start": "npm run watch",

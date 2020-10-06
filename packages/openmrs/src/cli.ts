@@ -74,6 +74,20 @@ yargs.command(
     })
 );
 
+yargs.command(
+  "assemble",
+  "Assembles an import map with all resources.",
+  (argv) => argv,
+  (args) => runCommand("runAssemble", { ...args })
+);
+
+yargs.command(
+  ["start", "$0"],
+  "Starts the app shell using the provided configuration.",
+  (argv) => argv,
+  (args) => runCommand("runStart", { ...args })
+);
+
 yargs
   .epilog(
     "For more information visit https://github.com/openmrs/openmrs-esm-core."
