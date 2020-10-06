@@ -27,7 +27,7 @@ function runCommand<T extends CommandNames>(
 
 yargs.command(
   "debug",
-  "Starts a new debugging session of the OpenMRS app shell.",
+  "Starts a new debugging session of the OpenMRS app shell. This uses Webpack as a debug server with proxy middleware.",
   (argv) =>
     argv
       .number("port")
@@ -76,15 +76,35 @@ yargs.command(
 
 yargs.command(
   "assemble",
-  "Assembles an import map with all resources.",
-  (argv) => argv,
+  "Assembles an import map incl. all required resources.",
+  (argv) =>
+    argv
+      .string("target")
+      .default("target", "dist")
+      .describe(
+        "target",
+        "The target directory where the gathered artifacts will be stored."
+      ),
   (args) => runCommand("runAssemble", { ...args })
 );
 
 yargs.command(
   ["start", "$0"],
-  "Starts the app shell using the provided configuration.",
-  (argv) => argv,
+  "Starts the app shell using the provided configuration. This uses express for serving static files with some proxy middleware.",
+  (argv) =>
+    argv
+      .number("port")
+      .default("port", 8080)
+      .describe("port", "The port where the dev server should run.")
+      .string("backend")
+      .default("backend", "https://openmrs-spa.org/")
+      .describe("backend", "The backend to proxy API requests to.")
+      .string("importmap")
+      .default("importmap", "importmap.json")
+      .describe(
+        "importmap",
+        "The importmap to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
+      ),
   (args) => runCommand("runStart", { ...args })
 );
 
