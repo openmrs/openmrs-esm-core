@@ -1,7 +1,5 @@
 import { ImportmapDeclaration, loadConfig, logInfo, logWarn } from "../utils";
 
-/* eslint-disable no-console */
-
 export interface DebugArgs {
   port: number;
   backend: string;

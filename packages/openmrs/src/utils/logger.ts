@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 export function logInfo(message: string) {
   console.log(`[openmrs] ${message}`);
 }

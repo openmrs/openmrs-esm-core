@@ -12,8 +12,6 @@ import { prompt, Question } from "inquirer";
 import { logInfo, untar } from "../utils";
 import axios from "axios";
 
-/* eslint-disable no-console */
-
 export interface AssembleArgs {
   target: string;
   mode: string;
