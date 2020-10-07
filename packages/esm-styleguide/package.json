@@ -13,6 +13,7 @@
     "build": "webpack --mode=production",
     "lint": "eslint src"
   },
+  "keywords": ["openmrs", "microfrontends", "styleguide"],
   "directories": {
     "lib": "dist",
     "src": "src"
@@ -24,10 +25,6 @@
     "type": "git",
     "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
   },
-  "keywords": [
-    "openmrs",
-    "styleguide"
-  ],
   "bugs": {
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },

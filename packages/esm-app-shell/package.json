@@ -10,6 +10,7 @@
     "watch": "webpack-dev-server",
     "lint": "eslint src --ext ts,tsx"
   },
+  "keywords": ["openmrs", "microfrontends"],
   "browserslist": [
     "extends browserslist-config-openmrs"
   ],

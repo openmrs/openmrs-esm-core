@@ -19,6 +19,7 @@
   "bugs": {
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
+  "keywords": ["openmrs", "microfrontends", "cli", "tool"],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
     "@babel/core": "^7.11.4",

@@ -12,6 +12,7 @@
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },
+  "keywords": ["openmrs", "microfrontends"],
   "directories": {
     "lib": "dist",
     "src": "src"
@@ -27,9 +28,6 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
-  "keywords": [
-    "openmrs"
-  ],
   "dependencies": {
     "systemjs-webpack-interop": "^2.1.2"
   },

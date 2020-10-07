@@ -13,6 +13,7 @@
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },
+  "keywords": ["openmrs", "microfrontends"],
   "directories": {
     "lib": "dist",
     "src": "src"
