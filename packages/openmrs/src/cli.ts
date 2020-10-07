@@ -23,8 +23,6 @@ function runCommand<T extends CommandNames>(
     type,
     args,
   });
-
-  ps.on("close", (code) => process.exit(code));
 }
 
 yargs.command(

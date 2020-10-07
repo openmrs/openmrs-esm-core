@@ -19,6 +19,7 @@ export function runDebug(args: DebugArgs) {
 
   const options = {
     ...config.devServer,
+    port: args.port,
     publicPath: config.output.publicPath,
     stats: { colors: true },
   };
