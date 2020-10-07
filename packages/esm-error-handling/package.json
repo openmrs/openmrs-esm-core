@@ -35,6 +35,6 @@
     "@openmrs/esm-styleguide": "*"
   },
   "devDependencies": {
-    "@openmrs/esm-styleguide": "^1.5.0"
+    "@openmrs/esm-styleguide": "^3.0.1"
   }
 }

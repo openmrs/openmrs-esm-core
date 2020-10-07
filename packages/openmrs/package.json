@@ -26,7 +26,7 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
-    "@openmrs/esm-app-shell": "^0.3.0",
+    "@openmrs/esm-app-shell": "^3.0.1",
     "@types/react": "^16.9.46",
     "@types/systemjs": "^6.1.0",
     "autoprefixer": "^9.6.1",
