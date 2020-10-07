@@ -1,5 +1,7 @@
-import { resolve } from "path";
+import { resolve, basename } from "path";
 import { existsSync, readFileSync } from "fs";
+import { logFail, logWarn } from "./logger";
+import { startWebpack } from "./webpack";
 
 export interface ImportmapDeclaration {
   type: "inline" | "url";
@@ -15,8 +17,36 @@ export function checkImportmapJson(value: string) {
   }
 }
 
-export function getImportmap(value: string): ImportmapDeclaration {
-  if (!/https?:\/\//.test(value)) {
+export function getImportmap(
+  value: string,
+  basePort?: number
+): ImportmapDeclaration {
+  if (value === "@" && basePort) {
+    const projectFile = resolve(process.cwd(), "package.json");
+
+    if (!existsSync(projectFile)) {
+      logFail(`No "package.json" found in the current directory.`);
+      return process.exit(1);
+    }
+
+    const configPath = resolve(process.cwd(), "webpack.config.js");
+
+    if (!existsSync(configPath)) {
+      logFail(`No "webpack.config.json" found in the current directory.`);
+      return process.exit(1);
+    }
+
+    const project = require(projectFile);
+    const port = basePort + 1;
+    const file = basename(project.browser || project.module || project.main);
+
+    startWebpack(configPath, port);
+
+    return {
+      type: "inline",
+      value: `{ "imports": { "${project.name}": "http://localhost:${port}/${file}" } }`,
+    };
+  } else if (!/https?:\/\//.test(value)) {
     const path = resolve(process.cwd(), value);
 
     if (existsSync(path)) {
@@ -24,7 +54,7 @@ export function getImportmap(value: string): ImportmapDeclaration {
       const valid = checkImportmapJson(content);
 
       if (!valid) {
-        console.warn(
+        logWarn(
           `The importmap provided in "${value}" does not seem right. Skipping.`
         );
       }

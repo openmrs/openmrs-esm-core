@@ -26,7 +26,7 @@ export function runDebug(args: DebugArgs) {
   const server = new WebpackDevServer(webpack(config), options);
   const port = args.port;
 
-  server.listen(port, "localhost", function (err) {
+  server.listen(port, "localhost", (err?: Error) => {
     if (err) {
       logWarn(`Error: ${err}`);
     } else {

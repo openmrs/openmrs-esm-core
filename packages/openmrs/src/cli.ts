@@ -42,12 +42,12 @@ yargs.command(
       .default("importmap", "importmap.json")
       .describe(
         "importmap",
-        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
+        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object. Alternatively, use the string `@` to debug the current microfrontend."
       ),
   (args) =>
     runCommand("runDebug", {
       ...args,
-      importmap: getImportmap(args.importmap),
+      importmap: getImportmap(args.importmap, args.port),
     })
 );
 
