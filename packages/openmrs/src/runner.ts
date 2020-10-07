@@ -1,9 +1,16 @@
 import * as commands from "./commands";
+import { logFail } from "./utils";
 
-process.on("message", ({ type, args }) => {
+process.on("message", async ({ type, args }) => {
   const command = commands[type];
 
   if (typeof command === "function") {
-    command(args);
+    try {
+      await command(args);
+      process.exit(0);
+    } catch (err) {
+      logFail(err.message);
+      process.exit(1);
+    }
   }
 });

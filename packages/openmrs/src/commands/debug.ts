@@ -1,4 +1,4 @@
-import { ImportmapDeclaration, loadConfig } from "../utils";
+import { ImportmapDeclaration, loadConfig, logInfo, logWarn } from "../utils";
 
 /* eslint-disable no-console */
 
@@ -17,7 +17,7 @@ export function runDebug(args: DebugArgs) {
     backend: args.backend,
   });
 
-  console.log(`[OpenMRS] Starting the dev server ...`);
+  logInfo(`Starting the dev server ...`);
 
   const options = {
     ...config.devServer,
@@ -30,9 +30,9 @@ export function runDebug(args: DebugArgs) {
 
   server.listen(port, "localhost", function (err) {
     if (err) {
-      console.warn(`[OpenMRS] Error: ${err}`);
+      logWarn(`Error: ${err}`);
+    } else {
+      logInfo(`Listening at http://localhost:${port}`);
     }
-
-    console.log(`[OpenMRS] Listening at http://localhost:${port}`);
   });
 }

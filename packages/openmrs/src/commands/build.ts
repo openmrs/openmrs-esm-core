@@ -1,4 +1,4 @@
-import { ImportmapDeclaration, loadConfig } from "../utils";
+import { ImportmapDeclaration, loadConfig, logInfo } from "../utils";
 
 /* eslint-disable no-console */
 
@@ -13,7 +13,7 @@ export function runBuild(args: BuildArgs) {
     importmap: args.importmap,
   });
 
-  console.log(`[OpenMRS] Running build process ...`);
+  logInfo(`Running build process ...`);
 
   const compiler = webpack({
     ...config,
@@ -33,7 +33,7 @@ export function runBuild(args: BuildArgs) {
         })
       );
 
-      console.log(`[OpenMRS] Build finished.`);
+      logInfo(`Build finished.`);
     }
   });
 }

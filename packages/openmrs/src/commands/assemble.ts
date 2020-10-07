@@ -1,7 +1,167 @@
+import {
+  readFileSync,
+  writeFileSync,
+  unlinkSync,
+  existsSync,
+  mkdirSync,
+  createReadStream,
+} from "fs";
+import { resolve, dirname, basename } from "path";
+import { execSync } from "child_process";
+import { prompt, Question } from "inquirer";
+import { logInfo, untar } from "../utils";
+import axios from "axios";
+
 /* eslint-disable no-console */
 
 export interface AssembleArgs {
   target: string;
+  mode: string;
+  config: string;
 }
 
-export function runAssemble(args: AssembleArgs) {}
+interface NpmSearchResult {
+  objects: Array<{
+    package: {
+      name: string;
+      version: string;
+    };
+  }>;
+}
+
+async function readConfig(mode: string, config: string) {
+  switch (mode) {
+    case "config":
+      if (!existsSync(config)) {
+        throw new Error(`Could not find the config file "${config}".`);
+      }
+
+      logInfo(`Reading configuration ...`);
+
+      return JSON.parse(readFileSync(config, "utf8"));
+    case "survey":
+      logInfo(`Loading available microfrontends ...`);
+
+      const packages = await axios
+        .get<NpmSearchResult>(
+          `https://registry.npmjs.org/-/v1/search?text=keywords:openmrs&size=250`
+        )
+        .then((res) => res.data)
+        .then((res) =>
+          res.objects
+            .map((m) => ({
+              name: m.package.name,
+              version: m.package.version,
+            }))
+            .filter((m) => m.name.endsWith("-app"))
+        );
+      const questions: Array<Question> = [];
+
+      for (const pckg of packages) {
+        questions.push(
+          {
+            name: pckg.name,
+            message: `Include microfrontend "${pckg.name}"?`,
+            default: false,
+            type: "confirm",
+          },
+          {
+            name: pckg.name,
+            askAnswered: true,
+            message: `Version for "${pckg.name}"?`,
+            default: pckg.version,
+            type: "string",
+            when(ans) {
+              return ans[pckg.name];
+            },
+          } as Question
+        );
+      }
+
+      const answers = await prompt(questions);
+
+      return {
+        publicUrl: ".",
+        microfrontends: Object.keys(answers)
+          .filter((m) => answers[m])
+          .reduce((prev, curr) => {
+            prev[curr] = answers[curr];
+            return prev;
+          }, {}),
+      };
+  }
+}
+
+async function downloadPackage(
+  cacheDir: string,
+  esmName: string,
+  esmVersion: string
+) {
+  const packageName = `${esmName}@${esmVersion}`;
+  const command = `npm pack ${packageName}`;
+  mkdirSync(cacheDir, { recursive: true });
+  const result = execSync(command, {
+    cwd: cacheDir,
+  });
+  return result.toString("utf8").split("\n").filter(Boolean).pop() ?? "";
+}
+
+async function extractFiles(sourceFile: string, targetDir: string) {
+  mkdirSync(targetDir, { recursive: true });
+  const packageRoot = "package";
+  const rs = createReadStream(sourceFile);
+  const files = await untar(rs);
+  const packageJson = JSON.parse(
+    files[`${packageRoot}/package.json`].toString("utf8")
+  );
+  const entryModule =
+    packageJson.browser ?? packageJson.module ?? packageJson.main;
+  const fileName = basename(entryModule);
+  const sourceDir = dirname(entryModule);
+
+  Object.keys(files)
+    .filter((m) => m.startsWith(`${packageRoot}/${sourceDir}`))
+    .forEach((m) => {
+      const content = files[m];
+      const fileName = m.replace(`${packageRoot}/${sourceDir}/`, "");
+      const targetFile = resolve(targetDir, fileName);
+      mkdirSync(dirname(targetFile), { recursive: true });
+      writeFileSync(targetFile, content);
+    });
+
+  unlinkSync(sourceFile);
+  return fileName;
+}
+
+export async function runAssemble(args: AssembleArgs) {
+  const config = await readConfig(args.mode, args.config);
+  const importmap = {
+    imports: {},
+  };
+
+  logInfo(`Assembling the importmap ...`);
+
+  const { microfrontends = {}, publicUrl = "." } = config;
+  const cacheDir = resolve(process.cwd(), ".cache");
+
+  mkdirSync(args.target, { recursive: true });
+
+  await Promise.all(
+    Object.keys(microfrontends).map(async (esmName) => {
+      const esmVersion = microfrontends[esmName];
+      const tgzFileName = await downloadPackage(cacheDir, esmName, esmVersion);
+      const dirName = tgzFileName.replace(".tgz", "");
+      const fileName = await extractFiles(
+        resolve(cacheDir, tgzFileName),
+        resolve(args.target, dirName)
+      );
+      importmap.imports[esmName] = `${publicUrl}/${dirName}/${fileName}`;
+    })
+  );
+
+  writeFileSync(
+    resolve(args.target, "importmap.json"),
+    JSON.stringify(importmap, undefined, 2),
+    "utf8"
+  );
+}

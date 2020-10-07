@@ -23,6 +23,8 @@ function runCommand<T extends CommandNames>(
     type,
     args,
   });
+
+  ps.on("close", (code) => process.exit(code));
 }
 
 yargs.command(
@@ -40,7 +42,7 @@ yargs.command(
       .default("importmap", "importmap.json")
       .describe(
         "importmap",
-        "The importmap to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
+        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
       ),
   (args) =>
     runCommand("runDebug", {
@@ -64,7 +66,7 @@ yargs.command(
       .default("importmap", "importmap.json")
       .describe(
         "importmap",
-        "The importmap to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
+        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
       ),
   (args) =>
     runCommand("runBuild", {
@@ -84,8 +86,25 @@ yargs.command(
       .describe(
         "target",
         "The target directory where the gathered artifacts will be stored."
+      )
+      .string("config")
+      .default("config", "microfrontends.json")
+      .describe(
+        "config",
+        "The configuration for gathering the list of microfrontends to include."
+      )
+      .choices("mode", ["config", "survey"])
+      .default("mode", "survey")
+      .describe(
+        "mode",
+        "The source of the microfrontends to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey."
       ),
-  (args) => runCommand("runAssemble", { ...args })
+  (args) =>
+    runCommand("runAssemble", {
+      ...args,
+      config: resolve(process.cwd(), args.config),
+      target: resolve(process.cwd(), args.target),
+    })
 );
 
 yargs.command(
@@ -103,7 +122,7 @@ yargs.command(
       .default("importmap", "importmap.json")
       .describe(
         "importmap",
-        "The importmap to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
+        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
       ),
   (args) => runCommand("runStart", { ...args })
 );
