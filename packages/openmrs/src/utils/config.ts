@@ -4,6 +4,7 @@ import { setEnvVariables } from "./variables";
 export interface WebpackOptions {
   backend?: string;
   importmap?: ImportmapDeclaration;
+  env?: string;
 }
 
 export function loadConfig(options: WebpackOptions = {}) {
@@ -11,6 +12,10 @@ export function loadConfig(options: WebpackOptions = {}) {
 
   if (typeof options.backend === "string") {
     variables.OMRS_PROXY_TARGET = options.backend;
+  }
+
+  if (typeof options.env === "string") {
+    variables.OMRS_ENV = options.env;
   }
 
   if (typeof options.importmap === "object") {

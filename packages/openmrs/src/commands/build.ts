@@ -11,6 +11,7 @@ export function runBuild(args: BuildArgs) {
   const webpack = require("webpack");
   const config = loadConfig({
     importmap: args.importmap,
+    env: 'production',
   });
 
   logInfo(`Running build process ...`);

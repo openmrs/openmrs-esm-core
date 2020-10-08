@@ -17,6 +17,7 @@ const openmrsProxyTarget =
   process.env.OMRS_PROXY_TARGET || "https://openmrs-spa.org/";
 const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
+const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || '';
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL || "importmap.json";
 
@@ -111,6 +112,7 @@ module.exports = {
         openmrsFavicon,
         openmrsImportmapDef,
         openmrsImportmapUrl,
+        openmrsEnvironment,
       },
     }),
     new CopyWebpackPlugin({
