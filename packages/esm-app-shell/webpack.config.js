@@ -124,7 +124,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({ filename: "openmrs.css" }),
     new DefinePlugin({
-      BUILD_VERSION: JSON.stringify(`${version}-${timestamp}`),
+      'process.env.BUILD_VERSION': JSON.stringify(`${version}-${timestamp}`),
     }),
   ],
 };
