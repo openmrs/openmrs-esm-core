@@ -1,6 +1,4 @@
-import { ImportmapDeclaration, loadConfig } from "../utils";
-
-/* eslint-disable no-console */
+import { ImportmapDeclaration, loadConfig, logInfo, logWarn } from "../utils";
 
 export interface DebugArgs {
   port: number;
@@ -15,12 +13,14 @@ export function runDebug(args: DebugArgs) {
   const config = loadConfig({
     importmap: args.importmap,
     backend: args.backend,
+    env: "development",
   });
 
-  console.log(`[OpenMRS] Starting the dev server ...`);
+  logInfo(`Starting the dev server ...`);
 
   const options = {
     ...config.devServer,
+    port: args.port,
     publicPath: config.output.publicPath,
     stats: { colors: true },
   };
@@ -28,11 +28,11 @@ export function runDebug(args: DebugArgs) {
   const server = new WebpackDevServer(webpack(config), options);
   const port = args.port;
 
-  server.listen(port, "localhost", function (err) {
+  server.listen(port, "localhost", (err?: Error) => {
     if (err) {
-      console.warn(`[OpenMRS] Error: ${err}`);
+      logWarn(`Error: ${err}`);
+    } else {
+      logInfo(`Listening at http://localhost:${port}`);
     }
-
-    console.log(`[OpenMRS] Listening at http://localhost:${port}`);
   });
 }

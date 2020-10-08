@@ -13,14 +13,20 @@ script:
   - cp packages/esm-app-shell/dist/*.* dist/@openmrs/esm-app-shell/$TRAVIS_COMMIT/
   - cp packages/esm-app-shell/dist/*.* dist/@openmrs/esm-app-shell/latest/
 deploy:
-  provider: s3
-  access_key_id: "$DIGITAL_OCEAN_SPACES_KEY_ID"
-  secret_access_key: "$DIGITAL_OCEAN_SPACES_ACCESS_KEY"
-  bucket: "$DIGITAL_OCEAN_SPACES_BUCKET"
-  endpoint: "$DIGITAL_OCEAN_SPACES_ENDPOINT"
-  cache-control: "max-age=31536000"
-  local_dir: dist
-  skip_cleanup: true
-  acl: public_read
-  on:
-    branch: master
+  - provider: s3
+    access_key_id: "$DIGITAL_OCEAN_SPACES_KEY_ID"
+    secret_access_key: "$DIGITAL_OCEAN_SPACES_ACCESS_KEY"
+    bucket: "$DIGITAL_OCEAN_SPACES_BUCKET"
+    endpoint: "$DIGITAL_OCEAN_SPACES_ENDPOINT"
+    cache-control: "max-age=31536000"
+    local_dir: dist
+    skip_cleanup: true
+    acl: public_read
+    on:
+      branch: master
+  - provider: npm
+    run_script: "ci:publish"
+    api_token: "$NPM_AUTH_TOKEN"
+    edge: true
+    on:
+      tags: true
