@@ -48,5 +48,8 @@
     "react": "^16.13.1",
     "rxjs": "^6.5.3",
     "single-spa": "^4.4.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

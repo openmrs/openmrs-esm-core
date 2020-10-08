@@ -44,5 +44,8 @@
     "babel-plugin-ramda": "^2.0.0",
     "react": "^16.13.1",
     "single-spa": "^4.4.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

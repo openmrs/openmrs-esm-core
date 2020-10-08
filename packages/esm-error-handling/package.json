@@ -36,5 +36,8 @@
   },
   "devDependencies": {
     "@openmrs/esm-styleguide": "^3.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
