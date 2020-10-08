@@ -5,6 +5,7 @@ import {
   existsSync,
   mkdirSync,
   createReadStream,
+  copyFileSync,
 } from "fs";
 import { resolve, dirname, basename } from "path";
 import { execSync } from "child_process";
@@ -28,7 +29,17 @@ interface NpmSearchResult {
   }>;
 }
 
-async function readConfig(mode: string, config: string, registry: string) {
+interface AssembleConfig {
+  baseDir: string;
+  publicUrl: string;
+  microfrontends: Record<string, string>;
+}
+
+async function readConfig(
+  mode: string,
+  config: string,
+  registry: string
+): Promise<AssembleConfig> {
   switch (mode) {
     case "config":
       if (!existsSync(config)) {
@@ -37,7 +48,10 @@ async function readConfig(mode: string, config: string, registry: string) {
 
       logInfo(`Reading configuration ...`);
 
-      return JSON.parse(readFileSync(config, "utf8"));
+      return {
+        baseDir: dirname(config),
+        ...JSON.parse(readFileSync(config, "utf8")),
+      };
     case "survey":
       logInfo(`Loading available microfrontends ...`);
 
@@ -80,6 +94,7 @@ async function readConfig(mode: string, config: string, registry: string) {
       const answers = await prompt(questions);
 
       return {
+        baseDir: process.cwd(),
         publicUrl: ".",
         microfrontends: Object.keys(answers)
           .filter((m) => answers[m])
@@ -89,21 +104,42 @@ async function readConfig(mode: string, config: string, registry: string) {
           }, {}),
       };
   }
+
+  return {
+    baseDir: process.cwd(),
+    microfrontends: {},
+    publicUrl: ".",
+  };
 }
 
 async function downloadPackage(
   cacheDir: string,
   esmName: string,
   esmVersion: string,
+  baseDir: string,
   registry: string
 ) {
-  const packageName = `${esmName}@${esmVersion}`;
-  const command = `npm pack ${packageName} --registry ${registry}`;
-  mkdirSync(cacheDir, { recursive: true });
-  const result = execSync(command, {
-    cwd: cacheDir,
-  });
-  return result.toString("utf8").split("\n").filter(Boolean).pop() ?? "";
+  if (esmVersion.startsWith("file:")) {
+    const source = resolve(baseDir, esmVersion.substr(5));
+    const file = basename(source);
+    const target = resolve(cacheDir, file);
+    copyFileSync(source, target);
+    return file;
+  } else if (/^https?:\/\//.test(esmVersion)) {
+    const response = await axios.get<Buffer>(esmVersion);
+    const content = response.data;
+    const file = esmName.replace("@", "").replace(/\//g, "-") + ".tgz";
+    writeFileSync(resolve(cacheDir, file), content);
+    return file;
+  } else {
+    const packageName = `${esmName}@${esmVersion}`;
+    const command = `npm pack ${packageName} --registry ${registry}`;
+    mkdirSync(cacheDir, { recursive: true });
+    const result = execSync(command, {
+      cwd: cacheDir,
+    });
+    return result.toString("utf8").split("\n").filter(Boolean).pop() ?? "";
+  }
 }
 
 async function extractFiles(sourceFile: string, targetDir: string) {
@@ -153,6 +189,7 @@ export async function runAssemble(args: AssembleArgs) {
         cacheDir,
         esmName,
         esmVersion,
+        config.baseDir,
         args.registry
       );
       const dirName = tgzFileName.replace(".tgz", "");
