@@ -13,7 +13,7 @@ export function runDebug(args: DebugArgs) {
   const config = loadConfig({
     importmap: args.importmap,
     backend: args.backend,
-    env: 'development',
+    env: "development",
   });
 
   logInfo(`Starting the dev server ...`);

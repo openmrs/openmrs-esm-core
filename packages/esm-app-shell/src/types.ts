@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-export type SpaEnvironment = 'production' | 'development' | 'test';
+export type SpaEnvironment = "production" | "development" | "test";
 
 export interface ImportMap {
   imports: Record<string, string>;
