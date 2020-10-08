@@ -3,7 +3,7 @@
 import * as yargs from "yargs";
 import { fork } from "child_process";
 import { resolve } from "path";
-import { getImportmap } from "./utils";
+import { getImportmap, trimEnd } from "./utils";
 
 import type * as commands from "./commands";
 
@@ -85,6 +85,9 @@ yargs.command(
         "target",
         "The target directory where the gathered artifacts will be stored."
       )
+      .string("registry")
+      .default("registry", "https://registry.npmjs.org/")
+      .describe("registry", "The NPM registry used for getting the packages.")
       .string("config")
       .default("config", "microfrontends.json")
       .describe(
@@ -100,6 +103,7 @@ yargs.command(
   (args) =>
     runCommand("runAssemble", {
       ...args,
+      registry: trimEnd(args.registry, "/"),
       config: resolve(process.cwd(), args.config),
       target: resolve(process.cwd(), args.target),
     })

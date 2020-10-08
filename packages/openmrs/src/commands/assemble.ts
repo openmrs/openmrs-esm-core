@@ -16,6 +16,7 @@ export interface AssembleArgs {
   target: string;
   mode: string;
   config: string;
+  registry: string;
 }
 
 interface NpmSearchResult {
@@ -27,7 +28,7 @@ interface NpmSearchResult {
   }>;
 }
 
-async function readConfig(mode: string, config: string) {
+async function readConfig(mode: string, config: string, registry: string) {
   switch (mode) {
     case "config":
       if (!existsSync(config)) {
@@ -42,7 +43,7 @@ async function readConfig(mode: string, config: string) {
 
       const packages = await axios
         .get<NpmSearchResult>(
-          `https://registry.npmjs.org/-/v1/search?text=keywords:openmrs&size=250`
+          `${registry}/-/v1/search?text=keywords:openmrs&size=250`
         )
         .then((res) => res.data)
         .then((res) =>
@@ -93,10 +94,11 @@ async function readConfig(mode: string, config: string) {
 async function downloadPackage(
   cacheDir: string,
   esmName: string,
-  esmVersion: string
+  esmVersion: string,
+  registry: string
 ) {
   const packageName = `${esmName}@${esmVersion}`;
-  const command = `npm pack ${packageName}`;
+  const command = `npm pack ${packageName} --registry ${registry}`;
   mkdirSync(cacheDir, { recursive: true });
   const result = execSync(command, {
     cwd: cacheDir,
@@ -132,7 +134,7 @@ async function extractFiles(sourceFile: string, targetDir: string) {
 }
 
 export async function runAssemble(args: AssembleArgs) {
-  const config = await readConfig(args.mode, args.config);
+  const config = await readConfig(args.mode, args.config, args.registry);
   const importmap = {
     imports: {},
   };
@@ -147,7 +149,12 @@ export async function runAssemble(args: AssembleArgs) {
   await Promise.all(
     Object.keys(microfrontends).map(async (esmName) => {
       const esmVersion = microfrontends[esmName];
-      const tgzFileName = await downloadPackage(cacheDir, esmName, esmVersion);
+      const tgzFileName = await downloadPackage(
+        cacheDir,
+        esmName,
+        esmVersion,
+        args.registry
+      );
       const dirName = tgzFileName.replace(".tgz", "");
       const fileName = await extractFiles(
         resolve(cacheDir, tgzFileName),
@@ -162,4 +169,6 @@ export async function runAssemble(args: AssembleArgs) {
     JSON.stringify(importmap, undefined, 2),
     "utf8"
   );
+
+  process.exit(0);
 }

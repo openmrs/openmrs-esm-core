@@ -2,5 +2,10 @@
   "packages": ["packages/*"],
   "npmClient": "yarn",
   "useWorkspaces": true,
-  "version": "3.0.1"
+  "version": "3.0.1",
+  "commands": {
+    "publish": {
+      "verifyAccess": false
+    }
+  }
 }

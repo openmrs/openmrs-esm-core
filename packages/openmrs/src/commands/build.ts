@@ -37,4 +37,6 @@ export function runBuild(args: BuildArgs) {
       logInfo(`Build finished.`);
     }
   });
+
+  process.exit(0);
 }

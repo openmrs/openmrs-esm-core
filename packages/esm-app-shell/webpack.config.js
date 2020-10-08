@@ -3,9 +3,13 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
+const { DefinePlugin } = require("webpack");
 const { resolve } = require("path");
 const { readFileSync } = require("fs");
-const { removeTrailingSlash } = require("./tools/helpers");
+const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
+const { version } = require("./package.json");
+
+const timestamp = getTimestamp();
 
 const openmrsApiUrl = removeTrailingSlash(
   process.env.OMRS_API_URL || "/openmrs"
@@ -17,7 +21,7 @@ const openmrsProxyTarget =
   process.env.OMRS_PROXY_TARGET || "https://openmrs-spa.org/";
 const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
-const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || '';
+const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL || "importmap.json";
 
@@ -119,5 +123,8 @@ module.exports = {
       patterns: [{ from: resolve(__dirname, "src/assets") }],
     }),
     new MiniCssExtractPlugin({ filename: "openmrs.css" }),
+    new DefinePlugin({
+      BUILD_VERSION: JSON.stringify(`${version}-${timestamp}`),
+    }),
   ],
 };

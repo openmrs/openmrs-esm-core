@@ -4,6 +4,7 @@ declare global {
     openmrsBase: string;
     spaBase: string;
     spaEnv: SpaEnvironment;
+    spaVersion?: string;
     importMapOverrides: {
       getCurrentPageMap: () => Promise<ImportMap>;
     };
