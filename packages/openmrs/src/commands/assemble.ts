@@ -206,6 +206,4 @@ export async function runAssemble(args: AssembleArgs) {
     JSON.stringify(importmap, undefined, 2),
     "utf8"
   );
-
-  process.exit(0);
 }

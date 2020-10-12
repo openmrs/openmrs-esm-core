@@ -24,19 +24,20 @@ export function runBuild(args: BuildArgs) {
     },
   });
 
-  compiler.run((err, stats) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(
-        stats.toString({
-          colors: true,
-        })
-      );
+  return new Promise((resolve, reject) => {
+    compiler.run((err, stats) => {
+      if (err) {
+        reject(err);
+      } else {
+        console.log(
+          stats.toString({
+            colors: true,
+          })
+        );
 
-      logInfo(`Build finished.`);
-    }
+        logInfo(`Build finished.`);
+        resolve();
+      }
+    });
   });
-
-  process.exit(0);
 }

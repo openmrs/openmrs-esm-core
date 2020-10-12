@@ -7,6 +7,7 @@ process.on("message", async ({ type, args }) => {
   if (typeof command === "function") {
     try {
       await command(args);
+      process.exit(0);
     } catch (err) {
       logFail(err.message);
       process.exit(1);

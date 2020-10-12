@@ -35,4 +35,6 @@ export function runDebug(args: DebugArgs) {
       logInfo(`Listening at http://localhost:${port}`);
     }
   });
+
+  return new Promise(() => {});
 }
