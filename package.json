@@ -13,6 +13,7 @@
     "run:shell": "lerna run watch --scope @openmrs/esm-app-shell --stream",
     "run:omrs": "openmrs",
     "ci:publish": "lerna publish from-package --yes",
+    "ci:release": "lerna version --no-git-tag-version",
     "verify": "lerna run lint && lerna run test && lerna run typescript",
     "prettier": "prettier 'packages/**/src/**/*' --write"
   },

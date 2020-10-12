@@ -120,6 +120,9 @@ yargs.command(
       .string("backend")
       .default("backend", "https://openmrs-spa.org/")
       .describe("backend", "The backend to proxy API requests to.")
+      .boolean("open")
+      .default("open", false)
+      .describe("open", "Immediately opens the SPA page URL in the browser.")
       .string("importmap")
       .default("importmap", "importmap.json")
       .describe(
