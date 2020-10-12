@@ -2,7 +2,7 @@ import { resolve } from "path";
 import { existsSync, readFileSync } from "fs";
 import { logFail, logInfo, logWarn } from "./logger";
 import { startWebpack } from "./webpack";
-import { getDependentModules, getMainPath } from "./dependencies";
+import { getDependentModules, getMainBundle } from "./dependencies";
 
 export interface ImportmapDeclaration {
   type: "inline" | "url";
@@ -41,7 +41,7 @@ export function getImportmap(
 
     const project = require(projectFile);
     const port = basePort + 1;
-    const file = getMainPath(project);
+    const bundle = getMainBundle(project);
     const host = `http://localhost:${port}`;
     const dependencies = getDependentModules(
       process.cwd(),
@@ -56,7 +56,7 @@ export function getImportmap(
       value: JSON.stringify({
         imports: {
           ...dependencies,
-          [project.name]: `${host}/${file}`,
+          [project.name]: `${host}/${bundle.name}`,
         },
       }),
     };

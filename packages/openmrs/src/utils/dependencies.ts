@@ -1,4 +1,4 @@
-import { basename } from "path";
+import { basename, dirname } from "path";
 
 export function getSharedDependencies() {
   return [
@@ -21,8 +21,13 @@ export function getSharedDependencies() {
   ];
 }
 
-export function getMainPath(project: any) {
-  return basename(project.browser || project.module || project.main);
+export function getMainBundle(project: any) {
+  const file = project.browser || project.module || project.main;
+  return {
+    path: file,
+    name: basename(file),
+    dir: dirname(file),
+  };
 }
 
 export function getDependentModules(
@@ -38,8 +43,8 @@ export function getDependentModules(
 
   return mifeRequired.reduce((deps, moduleName) => {
     const project = require(`${root}/node_modules/${moduleName}/package.json`);
-    const path = getMainPath(project);
-    deps[moduleName] = `${host}/node_modules/${moduleName}/${path}`;
+    const bundle = getMainBundle(project);
+    deps[moduleName] = `${host}/node_modules/${moduleName}/${bundle.path}`;
     return deps;
   }, {});
 }
