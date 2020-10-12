@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-error-handling",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "license": "MPL-2.0",
   "description": "An ES module to help with error handling",
   "browser": "dist/openmrs-esm-error-handling.js",
@@ -12,7 +12,10 @@
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },
-  "keywords": ["openmrs", "microfrontends"],
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
   "directories": {
     "lib": "dist",
     "src": "src"
@@ -35,7 +38,7 @@
     "@openmrs/esm-styleguide": "*"
   },
   "devDependencies": {
-    "@openmrs/esm-styleguide": "^3.0.1"
+    "@openmrs/esm-styleguide": "^3.0.2"
   },
   "publishConfig": {
     "access": "public"

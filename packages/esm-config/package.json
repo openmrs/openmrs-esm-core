@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-config",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "license": "MPL-2.0",
   "description": "A configuration library for the OpenMRS Single-Spa framework.",
   "browser": "dist/openmrs-esm-module-config.js",
@@ -13,7 +13,10 @@
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },
-  "keywords": ["openmrs", "microfrontends"],
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
   "directories": {
     "lib": "dist",
     "src": "src"

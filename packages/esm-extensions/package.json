@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-extensions",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "license": "MPL-2.0",
   "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
   "browser": "dist/openmrs-esm-extensions.js",
@@ -12,7 +12,10 @@
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },
-  "keywords": ["openmrs", "microfrontends"],
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
   "directories": {
     "lib": "dist",
     "src": "src"
@@ -37,7 +40,7 @@
     "single-spa": "4.x"
   },
   "devDependencies": {
-    "@openmrs/esm-config": "^3.0.1",
+    "@openmrs/esm-config": "^3.0.2",
     "@types/react": "^16.9.46",
     "react": "^16.13.1",
     "single-spa": "^4.4.1"

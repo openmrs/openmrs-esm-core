@@ -1,6 +1,6 @@
 {
   "name": "openmrs",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "bin": {
@@ -19,14 +19,19 @@
   "bugs": {
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
-  "keywords": ["openmrs", "microfrontends", "cli", "tool"],
+  "keywords": [
+    "openmrs",
+    "microfrontends",
+    "cli",
+    "tool"
+  ],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
     "@babel/core": "^7.11.4",
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
-    "@openmrs/esm-app-shell": "^3.0.1",
+    "@openmrs/esm-app-shell": "^3.0.2",
     "@types/react": "^16.9.46",
     "@types/systemjs": "^6.1.0",
     "autoprefixer": "^9.6.1",

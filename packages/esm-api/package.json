@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-api",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "license": "MPL-2.0",
   "description": "The javascript module for interacting with the OpenMRS API",
   "browser": "dist/openmrs-esm-api.js",
@@ -12,7 +12,10 @@
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },
-  "keywords": ["openmrs", "microfrontends"],
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
   "directories": {
     "lib": "dist",
     "src": "src"
@@ -41,8 +44,8 @@
     "single-spa": "4.x"
   },
   "devDependencies": {
-    "@openmrs/esm-config": "^3.0.1",
-    "@openmrs/esm-error-handling": "^3.0.1",
+    "@openmrs/esm-config": "^3.0.2",
+    "@openmrs/esm-error-handling": "^3.0.2",
     "@types/fhir": "0.0.31",
     "@types/react": "^16.9.46",
     "react": "^16.13.1",

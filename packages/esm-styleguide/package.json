@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-styleguide",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "browser": "dist/openmrs-esm-styleguide.js",
@@ -13,7 +13,11 @@
     "build": "webpack --mode=production",
     "lint": "eslint src"
   },
-  "keywords": ["openmrs", "microfrontends", "styleguide"],
+  "keywords": [
+    "openmrs",
+    "microfrontends",
+    "styleguide"
+  ],
   "directories": {
     "lib": "dist",
     "src": "src"
