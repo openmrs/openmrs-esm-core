@@ -1,7 +1,8 @@
-import { resolve, basename } from "path";
+import { resolve } from "path";
 import { existsSync, readFileSync } from "fs";
-import { logFail, logWarn } from "./logger";
+import { logFail, logInfo, logWarn } from "./logger";
 import { startWebpack } from "./webpack";
+import { getDependentModules, getMainPath } from "./dependencies";
 
 export interface ImportmapDeclaration {
   type: "inline" | "url";
@@ -36,15 +37,28 @@ export function getImportmap(
       return process.exit(1);
     }
 
+    logInfo("Loading dynamic import map ...");
+
     const project = require(projectFile);
     const port = basePort + 1;
-    const file = basename(project.browser || project.module || project.main);
+    const file = getMainPath(project);
+    const host = `http://localhost:${port}`;
+    const dependencies = getDependentModules(
+      process.cwd(),
+      host,
+      project.peerDependencies
+    );
 
     startWebpack(configPath, port);
 
     return {
       type: "inline",
-      value: `{ "imports": { "${project.name}": "http://localhost:${port}/${file}" } }`,
+      value: JSON.stringify({
+        imports: {
+          ...dependencies,
+          [project.name]: `${host}/${file}`,
+        },
+      }),
     };
   } else if (!/https?:\/\//.test(value)) {
     const path = resolve(process.cwd(), value);

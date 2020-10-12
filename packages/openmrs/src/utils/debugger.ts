@@ -1,3 +1,4 @@
+import { dirname } from "path";
 import { logInfo, logWarn } from "./logger";
 
 function debug(configPath: string, port: number) {
@@ -8,6 +9,7 @@ function debug(configPath: string, port: number) {
   const options = {
     ...config.devServer,
     port,
+    contentBase: dirname(configPath),
     stats: { colors: true },
   };
 
