@@ -3,7 +3,7 @@
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "3.0.1",
-  "commands": {
+  "command": {
     "publish": {
       "verifyAccess": false
     }
