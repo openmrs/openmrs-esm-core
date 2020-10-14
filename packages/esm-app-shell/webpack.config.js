@@ -31,7 +31,7 @@ module.exports = {
     filename: "openmrs.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "window",
-    publicPath: openmrsPublicPath,
+    publicPath: `${openmrsPublicPath}/`,
   },
   devServer: {
     compress: true,
@@ -124,7 +124,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({ filename: "openmrs.css" }),
     new DefinePlugin({
-      'process.env.BUILD_VERSION': JSON.stringify(`${version}-${timestamp}`),
+      "process.env.BUILD_VERSION": JSON.stringify(`${version}-${timestamp}`),
     }),
   ],
 };
