@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run watch",
     "test": "jest --passWithNoTests",
-    "build": "webpack --mode production",
+    "build": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json\" webpack --mode production",
     "watch": "webpack-dev-server",
     "lint": "eslint src --ext ts,tsx"
   },

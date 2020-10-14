@@ -36,6 +36,7 @@
     "copy-webpack-plugin": "6.1.1",
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
+    "cross-env": "7.0.2",
     "ejs": "^2.6.2",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.11.0",
