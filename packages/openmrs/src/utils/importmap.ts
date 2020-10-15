@@ -5,6 +5,22 @@ import { startWebpack } from "./webpack";
 import { getDependentModules, getMainBundle } from "./dependencies";
 import axios from "axios";
 
+async function readImportmap(path: string) {
+  if (path.startsWith("http://") || path.startsWith("https://")) {
+    return await axios
+      .get(path)
+      .then((res) => res.data)
+      .then((m) => (typeof m !== "string" ? JSON.stringify(m) : m));
+  } else if (path === "importmap.json") {
+    const path = require.resolve(
+      "@openmrs/esm-app-shell/src/assets/importmap.json"
+    );
+    return readFileSync(path, "utf8");
+  }
+
+  return '{"imports":{}}';
+}
+
 export interface ImportmapDeclaration {
   type: "inline" | "url";
   value: string;
@@ -61,10 +77,7 @@ export async function mergeImportmap(
   if (imports && Object.keys(imports).length > 0) {
     if (decl.type === "url") {
       decl.type = "inline";
-      decl.value = await axios
-        .get(decl.value)
-        .then((res) => res.data)
-        .then((m) => (typeof m !== "string" ? JSON.stringify(m) : m));
+      decl.value = await readImportmap(decl.value);
     }
 
     const map = JSON.parse(decl.value);
