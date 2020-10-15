@@ -4,6 +4,10 @@ import * as Config from "../module-config/module-config";
 
 let config = {};
 let error;
+
+/**
+ * Use this React Hook to obtain your module's configuration.
+ */
 export function useConfig() {
   const moduleName = React.useContext(ModuleNameContext);
   if (!moduleName) {

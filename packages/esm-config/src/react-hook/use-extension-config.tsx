@@ -7,6 +7,10 @@ import * as Config from "../module-config/module-config";
 
 let configCache = {};
 let error;
+
+/**
+ * Use this React Hook to obtain the configuration for your extension.
+ */
 export function useExtensionConfig() {
   const slotModuleName = useContext(SlotModuleNameContext);
   if (!slotModuleName) {
