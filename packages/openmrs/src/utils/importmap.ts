@@ -85,6 +85,10 @@ export function getImportmap(
   basePort?: number
 ): ImportmapDeclaration {
   if (value === "@" && basePort) {
+    logWarn(
+      'Using the "@" import map is deprecated. Switch to use the "--run-project" flag.'
+    );
+
     return {
       type: "inline",
       value: JSON.stringify({
@@ -100,7 +104,7 @@ export function getImportmap(
 
       if (!valid) {
         logWarn(
-          `The importmap provided in "${value}" does not seem right. Skipping.`
+          `The import map provided in "${value}" does not seem right. Skipping.`
         );
       }
 
