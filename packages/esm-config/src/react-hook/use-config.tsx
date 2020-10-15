@@ -1,7 +1,6 @@
 import React from "react";
+import { ModuleNameContext } from "@openmrs/esm-core-context";
 import * as Config from "../module-config/module-config";
-
-export const ModuleNameContext = React.createContext<string | null>(null);
 
 let config = {};
 let error;

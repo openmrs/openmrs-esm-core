@@ -8,7 +8,7 @@ const extensions: Record<string, ExtensionRegistration> = {};
 const attachedExtensionsForExtensionSlot: Record<string, Array<string>> = {};
 
 interface ExtensionRegistration extends ExtensionDefinition {
-  appName: string;
+  moduleName: string;
 }
 
 export interface ExtensionDefinition {
@@ -33,43 +33,50 @@ export interface CancelLoading {
 }
 
 export function registerExtension(
-  appName: string,
+  moduleName: string,
   name: string,
   load: () => Promise<any>
 ) {
   extensions[name] = {
     name,
     load,
-    appName,
+    moduleName,
   };
 }
 
-export function attach(extensionSlotName: string, extensionName: string) {
+export function attach(extensionSlotName: string, extensionId: string) {
   if (attachedExtensionsForExtensionSlot.hasOwnProperty(extensionSlotName)) {
-    attachedExtensionsForExtensionSlot[extensionSlotName].push(extensionName);
+    attachedExtensionsForExtensionSlot[extensionSlotName].push(extensionId);
   } else {
-    attachedExtensionsForExtensionSlot[extensionSlotName] = [extensionName];
+    attachedExtensionsForExtensionSlot[extensionSlotName] = [extensionId];
   }
 }
 
-export async function getExtensionNamesForExtensionSlot(
+export function getExtensionRegistration(
+  extensionId: string
+): ExtensionRegistration {
+  const extensionName = extensionId.split("#")[0];
+  return extensions[extensionName];
+}
+
+export async function getExtensionIdsForExtensionSlot(
   extensionSlotName: string,
   moduleName: string
 ): Promise<Array<string>> {
   const config = await getExtensionSlotConfig(extensionSlotName, moduleName);
-  let extensionNames =
+  let extensionIds =
     attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
 
   if (config.add) {
-    extensionNames = extensionNames.concat(config.add);
+    extensionIds = extensionIds.concat(config.add);
   }
 
   if (config.remove) {
-    extensionNames = extensionNames.filter((n) => !config.remove?.includes(n));
+    extensionIds = extensionIds.filter((n) => !config.remove?.includes(n));
   }
 
   if (config.order) {
-    extensionNames = extensionNames.sort((a, b) =>
+    extensionIds = extensionIds.sort((a, b) =>
       config.order?.includes(a)
         ? config.order.includes(b)
           ? config.order.indexOf(a) - config.order.indexOf(b)
@@ -80,20 +87,21 @@ export async function getExtensionNamesForExtensionSlot(
     );
   }
 
-  return extensionNames;
+  return extensionIds;
 }
 
 /**
- * Updates a DOM node (representing a so-called "extension slot")
- * dynamically with a lazy loaded component from *any* microfrontend
+ * Mounts into a DOM node (representing an extension slot)
+ * a lazy-loaded component from *any* microfrontend
  * that registered an extension component for this slot.
  */
 export function renderExtension(
   domElement: HTMLElement,
   extensionSlotName: string, // will be used to look up configuration info
-  extensionName: string,
+  extensionId: string,
   renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x
 ): CancelLoading {
+  const extensionName = extensionId.split("#")[0];
   const component = extensions[extensionName];
   let active = true;
 
@@ -126,14 +134,6 @@ export function getIsUIEditorEnabled(): boolean {
 
 export function setIsUIEditorEnabled(enabled: boolean): void {
   localStorage.setItem("openmrs:isUIEditorEnabled", JSON.stringify(enabled));
-}
-
-interface ExtensionSlotConfigObject {
-  // All these are optional, but TS 4.0.2 doesn't understand the undefined
-  // guards above, so we're just telling TS they're not optional.
-  add: Array<string>;
-  remove: Array<string>;
-  order: Array<string>;
 }
 
 /**

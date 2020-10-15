@@ -1,7 +1,7 @@
 module.exports = {
   setupFiles: ["<rootDir>/src/setup-tests.js"],
   moduleNameMapper: {
-    "@openmrs/esm-core-context":
-      "<rootDir>/__mocks__/openmrs-esm-core-context.mock.tsx",
+    "@openmrs/esm-config":
+      "<rootDir>/__mocks__/openmrs-esm-module-config.mock.tsx",
   },
 };

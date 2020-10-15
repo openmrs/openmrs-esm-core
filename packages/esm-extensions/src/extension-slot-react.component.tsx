@@ -1,9 +1,10 @@
 import React, { useState, useContext, ReactNode } from "react";
-import { ModuleNameContext } from "@openmrs/esm-config";
+import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-core-context";
 import {
   renderExtension,
-  getExtensionNamesForExtensionSlot,
+  getExtensionIdsForExtensionSlot,
   getIsUIEditorEnabled,
+  getExtensionRegistration,
 } from "./extensions";
 
 interface ExtensionSlotBaseProps {
@@ -15,37 +16,27 @@ interface ExtensionSlotBaseProps {
 // remainder of props are for the top-level <div>
 export type ExtensionSlotReactProps<T = {}> = ExtensionSlotBaseProps & T;
 
-interface ExtensionContextData {
-  extensionSlotName: string;
-  extensionName: string;
-}
-
-const ExtensionContext = React.createContext<ExtensionContextData>({
-  extensionSlotName: "",
-  extensionName: "",
-});
-
 export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   extensionSlotName,
   children,
   style,
   ...divProps
 }: ExtensionSlotReactProps) => {
-  const [extensionNames, setExtensionNames] = useState<Array<string>>([]);
-  const moduleName = useContext(ModuleNameContext);
+  const [extensionIds, setExtensionIds] = useState<Array<string>>([]);
+  const slotModuleName = useContext(ModuleNameContext);
 
-  if (!moduleName) {
+  if (!slotModuleName) {
     throw Error(
       "ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator"
     );
   }
 
   React.useEffect(() => {
-    getExtensionNamesForExtensionSlot(
+    getExtensionIdsForExtensionSlot(
       extensionSlotName,
-      moduleName
-    ).then((names) => setExtensionNames(names));
-  }, [extensionSlotName, moduleName]);
+      slotModuleName
+    ).then((ids) => setExtensionIds(ids));
+  }, [extensionSlotName, slotModuleName]);
 
   const divStyle = getIsUIEditorEnabled()
     ? { ...style, backgroundColor: "cyan" }
@@ -53,31 +44,35 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
 
   return (
     <div style={divStyle} {...divProps}>
-      {extensionNames.map((extensionName) => (
-        <ExtensionContext.Provider
-          key={extensionName}
-          value={{
-            extensionSlotName,
-            extensionName,
-          }}
-        >
-          {children ?? <ExtensionReact />}
-        </ExtensionContext.Provider>
-      ))}
+      {extensionIds.map((extensionId) => {
+        const extensionRegistration = getExtensionRegistration(extensionId);
+        return (
+          <ExtensionContext.Provider
+            key={extensionId}
+            value={{
+              extensionSlotName,
+              extensionId,
+              extensionModuleName: extensionRegistration.moduleName,
+            }}
+          >
+            {children ?? <ExtensionReact />}
+          </ExtensionContext.Provider>
+        );
+      })}
     </div>
   );
 };
 
 export const ExtensionReact: React.FC = (props) => {
   const ref = React.useRef<HTMLSlotElement>(null);
-  const { extensionSlotName, extensionName } = useContext(ExtensionContext);
+  const { extensionSlotName, extensionId } = useContext(ExtensionContext);
   // TODO: handle error if Extension not wrapped in ExtensionSlot
 
   React.useEffect(() => {
     if (ref.current) {
-      return renderExtension(ref.current, extensionSlotName, extensionName);
+      return renderExtension(ref.current, extensionSlotName, extensionId);
     }
-  }, [extensionSlotName, extensionName]);
+  }, [extensionSlotName, extensionId]);
 
   return getIsUIEditorEnabled() ? (
     <div style={{ outline: "0.125rem solid yellow" }}>
