@@ -1,0 +1,45 @@
+{
+  "name": "@openmrs/react-root-decorator",
+  "version": "3.2.0",
+  "license": "MPL-2.0",
+  "description": "A decorator for OpenMRS Root react components",
+  "main": "lib/openmrs-react-root-decorator.js",
+  "scripts": {
+    "test": "jest",
+    "build": "rimraf lib && babel src/openmrs-react-root-decorator.js --out-dir lib --source-maps",
+    "lint": "eslint src",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "openmrs",
+    "react",
+    "error",
+    "boundary"
+  ],
+  "directories": {
+    "lib": "lib",
+    "src": "src"
+  },
+  "files": [
+    "lib"
+  ],
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-react-error-boundary.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-react-root-decorator/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-react-root-decorator#readme",
+  "peerDependencies": {
+    "i18next": "*",
+    "react": ">=16.0.0",
+    "react-i18next": ">=9"
+  },
+  "devDependencies": {
+    "@openmrs/esm-core-context": "file:../esm-core-context"
+  }
+}

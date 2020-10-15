@@ -7,7 +7,7 @@
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "test": "jest --config jest.config.js --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "build": "webpack --mode=production",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
