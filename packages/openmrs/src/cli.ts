@@ -3,7 +3,7 @@
 import * as yargs from "yargs";
 import { fork } from "child_process";
 import { resolve } from "path";
-import { getImportmap, trimEnd } from "./utils";
+import { getImportmap, mergeImportmap, runProject, trimEnd } from "./utils";
 
 import type * as commands from "./commands";
 
@@ -45,18 +45,27 @@ yargs.command(
         "api-url",
         "The URL of the API. Can be a path if the API is on the same target server."
       )
+      .boolean("run-project")
+      .default("run-project", false)
+      .default(
+        "run-project",
+        "Runs the project in the current directory fusing it with the specified import map."
+      )
       .string("importmap")
       .default("importmap", "importmap.json")
       .describe(
         "importmap",
-        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object. Alternatively, use the string `@` to debug the current microfrontend."
+        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
       ),
-  (args) =>
+  async (args) =>
     runCommand("runDebug", {
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
       ...args,
-      importmap: getImportmap(args.importmap, args.port),
+      importmap: await mergeImportmap(
+        getImportmap(args.importmap, args.port),
+        (args["run-project"] || args.runProject) && runProject(args.port)
+      ),
     })
 );
 
