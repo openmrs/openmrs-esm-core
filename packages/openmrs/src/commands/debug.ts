@@ -4,6 +4,8 @@ export interface DebugArgs {
   port: number;
   backend: string;
   importmap: ImportmapDeclaration;
+  spaPath: string;
+  apiUrl: string;
 }
 
 export function runDebug(args: DebugArgs) {
@@ -13,6 +15,8 @@ export function runDebug(args: DebugArgs) {
   const config = loadConfig({
     importmap: args.importmap,
     backend: args.backend,
+    apiUrl: args.apiUrl,
+    spaPath: args.spaPath,
     env: "development",
   });
 

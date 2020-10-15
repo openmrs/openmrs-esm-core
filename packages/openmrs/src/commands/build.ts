@@ -5,6 +5,8 @@ import { ImportmapDeclaration, loadConfig, logInfo } from "../utils";
 export interface BuildArgs {
   target: string;
   importmap: ImportmapDeclaration;
+  spaPath: string;
+  apiUrl: string;
 }
 
 export function runBuild(args: BuildArgs) {
@@ -12,6 +14,8 @@ export function runBuild(args: BuildArgs) {
   const config = loadConfig({
     importmap: args.importmap,
     env: "production",
+    apiUrl: args.apiUrl,
+    spaPath: args.spaPath,
   });
 
   logInfo(`Running build process ...`);

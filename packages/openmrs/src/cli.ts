@@ -36,6 +36,15 @@ yargs.command(
       .string("backend")
       .default("backend", "https://openmrs-spa.org/")
       .describe("backend", "The backend to proxy API requests to.")
+      .string("spa-path")
+      .default("spa-path", "/openmrs/spa/")
+      .describe("spa-path", "The path of the application on the target server.")
+      .string("api-url")
+      .default("api-url", "/openmrs/spa/")
+      .describe(
+        "api-url",
+        "The URL of the API. Can be a path if the API is on the same target server."
+      )
       .string("importmap")
       .default("importmap", "importmap.json")
       .describe(
@@ -44,6 +53,8 @@ yargs.command(
       ),
   (args) =>
     runCommand("runDebug", {
+      apiUrl: args["api-url"],
+      spaPath: args["spa-path"],
       ...args,
       importmap: getImportmap(args.importmap, args.port),
     })
@@ -60,6 +71,15 @@ yargs.command(
         "target",
         "The target directory where the build artifacts will be stored."
       )
+      .string("spa-path")
+      .default("spa-path", "/openmrs/spa/")
+      .describe("spa-path", "The path of the application on the target server.")
+      .string("api-url")
+      .default("api-url", "/openmrs/spa/")
+      .describe(
+        "api-url",
+        "The URL of the API. Can be a path if the API is on the same target server."
+      )
       .string("importmap")
       .default("importmap", "importmap.json")
       .describe(
@@ -68,6 +88,8 @@ yargs.command(
       ),
   (args) =>
     runCommand("runBuild", {
+      apiUrl: args["api-url"],
+      spaPath: args["spa-path"],
       ...args,
       importmap: getImportmap(args.importmap),
       target: resolve(process.cwd(), args.target),
