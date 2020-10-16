@@ -1,11 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ExtensionContext,
   ModuleNameContext as SlotModuleNameContext,
 } from "@openmrs/esm-context";
 import * as Config from "../module-config/module-config";
+import {
+  configCache,
+  configCacheNotifier,
+  useForceUpdate,
+} from "./config-cache";
 
-let configCache = {};
 let error;
 
 /**
@@ -21,6 +25,30 @@ export function useExtensionConfig() {
   const { extensionSlotName, extensionId, extensionModuleName } = useContext(
     ExtensionContext
   );
+  const forceUpdate = useForceUpdate();
+
+  function getConfigAndSetCache(slotModuleName: string) {
+    return Config.getExtensionConfig(
+      slotModuleName,
+      extensionModuleName,
+      extensionSlotName,
+      extensionId
+    )
+      .then((res) => {
+        configCache[uniqueExtensionLookupId] = res;
+        forceUpdate();
+      })
+      .catch((err) => {
+        error = err;
+      });
+  }
+
+  useEffect(() => {
+    const sub = configCacheNotifier.subscribe(() => {
+      getConfigAndSetCache(slotModuleName);
+    });
+    return () => sub.unsubscribe();
+  }, [slotModuleName]);
 
   if (error) {
     // Suspense will just keep calling useConfig if the thrown promise rejects.
@@ -30,23 +58,8 @@ export function useExtensionConfig() {
   const uniqueExtensionLookupId = extensionSlotName + "-" + extensionId;
   if (!configCache[uniqueExtensionLookupId]) {
     // React will prevent the client component from rendering until the promise resolves
-    throw Config.getExtensionConfig(
-      slotModuleName,
-      extensionModuleName,
-      extensionSlotName,
-      extensionId
-    )
-      .then((res) => {
-        configCache[uniqueExtensionLookupId] = res;
-      })
-      .catch((err) => {
-        error = err;
-      });
+    throw getConfigAndSetCache(slotModuleName);
   } else {
     return configCache[uniqueExtensionLookupId];
   }
-}
-
-export function clearConfig() {
-  configCache = {};
 }

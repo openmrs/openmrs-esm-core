@@ -5,14 +5,15 @@ import {
   clearAll,
   defineConfigSchema,
   provide,
-  getExtensionConfig,
+  setTemporaryConfigValue,
 } from "../module-config/module-config";
-import { useExtensionConfig, clearConfig } from "./use-extension-config";
+import { useExtensionConfig } from "./use-extension-config";
+import { clearConfigCache } from "./config-cache";
 
 describe(`useExtensionConfig`, () => {
   afterEach(clearAll);
   afterEach(cleanup);
-  afterEach(clearConfig);
+  afterEach(clearConfigCache);
 
   it(`can return extension config as a react hook`, async () => {
     defineConfigSchema("ext-module", {
@@ -136,6 +137,56 @@ describe(`useExtensionConfig`, () => {
       expect(screen.getByText("foo thing")).toBeTruthy();
     });
     expect(screen.getByText("another thing")).toBeTruthy();
+  });
+
+  it("updates with a new value when the temporary config is updated", async () => {
+    defineConfigSchema("ext-module", {
+      thing: {
+        default: "The first thing",
+      },
+    });
+
+    render(
+      <React.Suspense fallback={<div>Suspense!</div>}>
+        <ModuleNameContext.Provider value="slot-module">
+          <ExtensionContext.Provider
+            value={{
+              extensionModuleName: "ext-module",
+              extensionSlotName: "fooSlot",
+              extensionId: "barExt#id1",
+            }}
+          >
+            <RenderConfig configKey="thing" />
+          </ExtensionContext.Provider>
+        </ModuleNameContext.Provider>
+      </React.Suspense>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("The first thing")).toBeTruthy();
+    });
+
+    setTemporaryConfigValue(["ext-module", "thing"], "A new thing");
+
+    await waitFor(() => {
+      expect(screen.getByText("A new thing")).toBeTruthy();
+    });
+
+    setTemporaryConfigValue(
+      [
+        "slot-module",
+        "extensions",
+        "fooSlot",
+        "configure",
+        "barExt#id1",
+        "thing",
+      ],
+      "Yet another thing"
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("Yet another thing")).toBeTruthy();
+    });
   });
 });
 

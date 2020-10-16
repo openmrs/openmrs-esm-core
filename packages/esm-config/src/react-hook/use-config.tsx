@@ -1,7 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { ModuleNameContext } from "@openmrs/esm-context";
 import * as Config from "../module-config/module-config";
-import { configCache, configCacheNotifier } from "./config-cache";
+import {
+  configCache,
+  configCacheNotifier,
+  useForceUpdate,
+} from "./config-cache";
 
 let error;
 
@@ -10,7 +14,7 @@ let error;
  */
 export function useConfig() {
   const moduleName = useContext(ModuleNameContext);
-  const [config, setConfig] = useState<Config.ConfigObject | null>(null);
+  const forceUpdate = useForceUpdate();
 
   if (!moduleName) {
     throw Error(
@@ -22,7 +26,7 @@ export function useConfig() {
     return Config.getConfig(moduleName)
       .then((res) => {
         configCache[moduleName] = res;
-        setConfig(res);
+        forceUpdate();
       })
       .catch((err) => {
         error = err;
@@ -45,6 +49,6 @@ export function useConfig() {
     // React will prevent the client component from rendering until the promise resolves
     throw getConfigAndSetCache(moduleName);
   } else {
-    return config ?? configCache[moduleName];
+    return configCache[moduleName];
   }
 }
