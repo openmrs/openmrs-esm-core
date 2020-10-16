@@ -1,5 +1,5 @@
 import React, { useState, useContext, ReactNode } from "react";
-import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-core-context";
+import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
 import {
   renderExtension,
   getExtensionIdsForExtensionSlot,

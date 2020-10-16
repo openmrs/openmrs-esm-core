@@ -1,5 +1,5 @@
 import React from "react";
-import { ModuleNameContext } from "@openmrs/esm-core-context";
+import { ModuleNameContext } from "@openmrs/esm-context";
 import * as Config from "../module-config/module-config";
 
 let config = {};

@@ -1,8 +1,8 @@
-# openmrs-esm-core-context
+# openmrs-esm-context
 
 ## What is this?
 
-openmrs-esm-core-context is an
+openmrs-esm-context is an
 [in-browser javascript module](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0002-modules.md)
 that provides React [Context](https://reactjs.org/docs/context.html)
 that can be shared between modules, including core modules. It exists in order

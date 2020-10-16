@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {
   ExtensionContext,
   ModuleNameContext as SlotModuleNameContext,
-} from "@openmrs/esm-core-context";
+} from "@openmrs/esm-context";
 import * as Config from "../module-config/module-config";
 
 let configCache = {};

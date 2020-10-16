@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, cleanup, waitFor } from "@testing-library/react";
-import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-core-context";
+import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
 import {
   clearAll,
   defineConfigSchema,

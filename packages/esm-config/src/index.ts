@@ -8,4 +8,4 @@ export * from "./validators/validator";
 export * from "./validators/validators";
 
 // compatibility hack for old versions of react-root-decorator
-export { ModuleNameContext } from "@openmrs/esm-core-context";
+export { ModuleNameContext } from "@openmrs/esm-context";

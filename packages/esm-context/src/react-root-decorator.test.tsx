@@ -1,7 +1,7 @@
 import React from "react";
-import openmrsRootDecorator from "./openmrs-react-root-decorator";
-import { render } from "@testing-library/react";
-import { ModuleNameContext } from "@openmrs/esm-core-context";
+import { openmrsRootDecorator } from "./react-root-decorator";
+import { render, screen, waitFor } from "@testing-library/react";
+import { ModuleNameContext } from "./context";
 
 describe("openmrs-react-root-decorator", () => {
   const opts = {
@@ -12,8 +12,10 @@ describe("openmrs-react-root-decorator", () => {
 
   it("renders a component", () => {
     const DecoratedComp = openmrsRootDecorator(opts)(CompThatWorks);
-    const { getByText } = render(<DecoratedComp />);
-    expect(getByText("The button")).toBeTruthy();
+    render(<DecoratedComp />);
+    waitFor(() => {
+      expect(screen.getByText("The button")).toBeTruthy();
+    });
   });
 
   it("catches any errors in the component tree and renders a ui explaining something bad happened", () => {
@@ -24,6 +26,7 @@ describe("openmrs-react-root-decorator", () => {
 
   it("provides ModuleNameContext", () => {
     const DecoratedComp = openmrsRootDecorator(opts)(CompWithConfig);
+    render(<DecoratedComp />);
   });
 });
 

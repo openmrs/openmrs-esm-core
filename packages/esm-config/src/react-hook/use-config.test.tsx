@@ -1,5 +1,5 @@
 import React from "react";
-import { ModuleNameContext } from "@openmrs/esm-core-context";
+import { ModuleNameContext } from "@openmrs/esm-context";
 import { render, cleanup, waitFor } from "@testing-library/react";
 import { useConfig, clearConfig } from "./use-config";
 import { clearAll, defineConfigSchema } from "../module-config/module-config";

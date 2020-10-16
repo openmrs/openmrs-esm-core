@@ -1,10 +1,10 @@
 {
-  "name": "@openmrs/esm-core-context",
+  "name": "@openmrs/esm-context",
   "private": true,
   "version": "3.0.3",
   "license": "MPL-2.0",
-  "description": "Provides React Context that allow sharing information between core modules",
-  "browser": "dist/openmrs-esm-core-context.js",
+  "description": "Provides core React Context and the React Root Decorator",
+  "browser": "dist/openmrs-esm-context.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {

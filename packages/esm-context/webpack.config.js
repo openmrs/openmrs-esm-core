@@ -5,7 +5,7 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 module.exports = {
   entry: [resolve(__dirname, "src/index.ts")],
   output: {
-    filename: "openmrs-esm-core-context.js",
+    filename: "openmrs-esm-context.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
   },

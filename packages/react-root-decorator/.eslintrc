@@ -1,3 +1,0 @@
-{
-  "extends": ["react-important-stuff", "plugin:prettier/recommended"]
-}

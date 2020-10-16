@@ -1,9 +1,9 @@
 import React from "react";
-import { ModuleNameContext } from "@openmrs/esm-core-context";
 import { I18nextProvider } from "react-i18next";
 import _i18n from "i18next";
+import { ModuleNameContext } from "./context";
 
-const i18n = _i18n.default || _i18n;
+const i18n = (_i18n as any).default || _i18n;
 
 const defaultOpts = {
   strictMode: true,
@@ -11,7 +11,7 @@ const defaultOpts = {
   disableTranslations: false,
 };
 
-export default function decorateOptions(userOpts) {
+export function openmrsRootDecorator(userOpts) {
   if (
     typeof userOpts !== "object" ||
     typeof userOpts.featureName !== "string" ||
@@ -49,10 +49,7 @@ export default function decorateOptions(userOpts) {
                     ns={opts.moduleName}
                     forceUpdate={() => this.forceUpdate()}
                   >
-                    <I18nextProvider
-                      defaultNS={opts.moduleName}
-                      disableTranslations={opts.disableTranslations}
-                    >
+                    <I18nextProvider i18n={i18n} defaultNS={opts.moduleName}>
                       <Comp {...this.props} />
                     </I18nextProvider>
                   </I18nextLoadNamespace>

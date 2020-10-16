@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@openmrs/esm-config": "^3.0.3",
-    "@openmrs/esm-core-context": "file:../esm-core-context",
+    "@openmrs/esm-context": "^3.0.3",
     "@types/react": "^16.9.46",
     "react": "^16.13.1",
     "single-spa": "^4.4.1"
