@@ -6,6 +6,7 @@ import { getExtensionSlotConfig } from "@openmrs/esm-config";
  */
 const extensions: Record<string, ExtensionRegistration> = {};
 const attachedExtensionsForExtensionSlot: Record<string, Array<string>> = {};
+const extensionSlotsForModule: Record<string, Array<string>> = {};
 
 interface ExtensionRegistration extends ExtensionDefinition {
   moduleName: string;
@@ -42,6 +43,30 @@ export function registerExtension(
     load,
     moduleName,
   };
+}
+
+/**
+ * This is only used to inform tooling about the extension slot. Extension slots
+ * do not have to be registered to mount extensions.
+ *
+ * @param moduleName The name of the module that contains the extension slot
+ * @param name The extension slot name
+ */
+export function registerExtensionSlot(moduleName: string, name: string) {
+  if (extensionSlotsForModule.hasOwnProperty(moduleName)) {
+    extensionSlotsForModule[moduleName].push(name);
+  } else {
+    extensionSlotsForModule[moduleName] = [name];
+  }
+}
+export function unregisterExtensionSlot(moduleName: string, name: string) {
+  extensionSlotsForModule[moduleName].splice(
+    extensionSlotsForModule[moduleName].indexOf(name),
+    1
+  );
+}
+export function getExtensionSlotsForModule(moduleName: string) {
+  return extensionSlotsForModule[moduleName] ?? [];
 }
 
 export function attach(extensionSlotName: string, extensionId: string) {

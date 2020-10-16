@@ -1,10 +1,12 @@
-import React, { useState, useContext, ReactNode } from "react";
+import React, { useState, useContext, ReactNode, useEffect } from "react";
 import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
 import {
   renderExtension,
   getExtensionIdsForExtensionSlot,
   getIsUIEditorEnabled,
   getExtensionRegistration,
+  registerExtensionSlot,
+  unregisterExtensionSlot,
 } from "./extensions";
 
 interface ExtensionSlotBaseProps {
@@ -31,12 +33,17 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
     );
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     getExtensionIdsForExtensionSlot(
       extensionSlotName,
       slotModuleName
     ).then((ids) => setExtensionIds(ids));
   }, [extensionSlotName, slotModuleName]);
+
+  useEffect(() => {
+    registerExtensionSlot(slotModuleName, extensionSlotName);
+    return () => unregisterExtensionSlot(slotModuleName, extensionSlotName);
+  }, []);
 
   const divStyle = getIsUIEditorEnabled()
     ? { ...style, backgroundColor: "cyan" }
