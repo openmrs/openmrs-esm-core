@@ -1,13 +1,14 @@
 import React from "react";
 import { ModuleNameContext } from "@openmrs/esm-context";
 import { render, cleanup, waitFor } from "@testing-library/react";
-import { useConfig, clearConfig } from "./use-config";
+import { useConfig } from "./use-config";
 import { clearAll, defineConfigSchema } from "../module-config/module-config";
+import { clearConfigCache } from "./config-cache";
 
 describe(`useConfig`, () => {
   afterEach(clearAll);
   afterEach(cleanup);
-  afterEach(clearConfig);
+  afterEach(clearConfigCache);
 
   it(`can return config as a react hook`, async () => {
     defineConfigSchema("foo-module", {
