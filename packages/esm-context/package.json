@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-context",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "license": "MPL-2.0",
   "description": "Provides core React Context and the React Root Decorator",
   "browser": "dist/openmrs-esm-context.js",
