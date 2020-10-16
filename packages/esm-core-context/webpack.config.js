@@ -3,10 +3,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
-  entry: [
-    resolve(__dirname, "src/set-public-path.ts"),
-    resolve(__dirname, "src/index.ts"),
-  ],
+  entry: [resolve(__dirname, "src/index.ts")],
   output: {
     filename: "openmrs-esm-core-context.js",
     path: resolve(__dirname, "dist"),
