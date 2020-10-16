@@ -32,6 +32,49 @@ export async function getConfig(moduleName: string): Promise<ConfigObject> {
 }
 
 /**
+ * Returns the configuration for an extension. This configuration is specific
+ * to the slot in which it is mounted, and its ID within that slot.
+ *
+ * The schema for that configuration is the schema for the module in which the
+ * extension is defined.
+ *
+ * *If writing an extension in React, do not use this. Just use the `useExtensionConfig` hook.*
+ *
+ * @param slotModuleName The name of the module which defines the extension slot
+ * @param extensionModuleName The name of the module which defines the extension (and therefore the config schema)
+ * @param slotName The name of the extension slot where the extension is mounted
+ * @param extensionId The ID of the extension in its slot
+ */
+export async function getExtensionConfig(
+  slotModuleName: string,
+  extensionModuleName: string,
+  slotName: string,
+  extensionId: string
+) {
+  await loadConfigs();
+  const slotModuleConfig = mergeConfigsFor(
+    slotModuleName,
+    getProvidedConfigs()
+  );
+  const addedConfig = slotModuleConfig?.extensions?.[slotName]?.add?.find(
+    (a) => a.extension == extensionId
+  )?.config;
+  const configuredConfig =
+    slotModuleConfig?.extensions?.[slotName]?.configure?.[extensionId];
+  const configOverride = addedConfig ?? configuredConfig ?? {};
+  const extensionModuleConfig = mergeConfigsFor(
+    extensionModuleName,
+    getProvidedConfigs()
+  );
+  const extensionConfig = mergeConfigs([extensionModuleConfig, configOverride]);
+  const schema = _schemas[extensionModuleName];
+  validateConfig(schema, extensionConfig, extensionModuleName);
+  const config = setDefaults(schema, extensionConfig);
+  delete config.extensions;
+  return config;
+}
+
+/**
  * Validate and interpolate defaults for `providedConfig` according to `schema`
  *
  * @param schema  a configuration schema

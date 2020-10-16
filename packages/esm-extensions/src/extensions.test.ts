@@ -1,9 +1,9 @@
 import { getExtensionSlotConfig } from "@openmrs/esm-config";
-import { attach, getExtensionNamesForExtensionSlot, reset } from "./extensions";
+import { attach, getExtensionIdsForExtensionSlot, reset } from "./extensions";
 
 const mockGetExtensionSlotConfig = getExtensionSlotConfig as jest.Mock;
 
-describe("getExtensionNamesForExtensionSlot", () => {
+describe("getExtensionIdsForExtensionSlot", () => {
   afterEach(() => {
     reset();
   });
@@ -12,9 +12,9 @@ describe("getExtensionNamesForExtensionSlot", () => {
     attach("slotski", "foo");
     attach("slotski", "bar");
     attach("slotso", "foo");
-    const res1 = await getExtensionNamesForExtensionSlot("slotski", "moddy");
+    const res1 = await getExtensionIdsForExtensionSlot("slotski", "moddy");
     expect(res1).toStrictEqual(["foo", "bar"]);
-    const res2 = await getExtensionNamesForExtensionSlot("slotso", "moddy");
+    const res2 = await getExtensionIdsForExtensionSlot("slotso", "moddy");
     expect(res2).toStrictEqual(["foo"]);
   });
 
@@ -32,7 +32,7 @@ describe("getExtensionNamesForExtensionSlot", () => {
           }
         : {}
     );
-    const res = await getExtensionNamesForExtensionSlot("slotski", "moddy");
+    const res = await getExtensionIdsForExtensionSlot("slotski", "moddy");
     expect(res).toStrictEqual(["baz", "quinn", "qux", "foo"]);
   });
 });

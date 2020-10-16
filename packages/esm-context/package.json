@@ -1,14 +1,14 @@
 {
-  "name": "@openmrs/esm-config",
+  "name": "@openmrs/esm-context",
+  "private": true,
   "version": "3.0.3",
   "license": "MPL-2.0",
-  "description": "A configuration library for the OpenMRS Single-Spa framework.",
-  "browser": "dist/openmrs-esm-module-config.js",
+  "description": "Provides core React Context and the React Root Decorator",
+  "browser": "dist/openmrs-esm-context.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "document": "./document.sh",
-    "test": "jest --config jest.config.js --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "build": "webpack --mode=production",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
@@ -33,24 +33,12 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "ramda": "^0.26.1",
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
-    "react": "16.x",
-    "single-spa": "4.x"
+    "react": "16.x"
   },
   "devDependencies": {
-    "@openmrs/esm-context": "^3.0.3",
-    "@types/ramda": "^0.26.44",
-    "@types/react": "^16.9.46",
-    "@types/systemjs": "^6.1.0",
-    "babel-plugin-ramda": "^2.0.0",
-    "react": "^16.13.1",
-    "single-spa": "^4.4.1",
-    "typescript": "^4.0.3"
-  },
-  "publishConfig": {
-    "access": "public"
+    "react": "^16.13.1"
   }
 }

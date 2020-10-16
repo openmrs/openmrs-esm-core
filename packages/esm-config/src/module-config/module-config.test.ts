@@ -835,4 +835,110 @@ describe("extension slot config", () => {
   });
 });
 
+describe("extension config", () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
+
+  afterEach(() => {
+    Config.clearAll();
+  });
+
+  it("returns the module config", async () => {
+    Config.defineConfigSchema("ext-mod", {
+      bar: { default: "barry" },
+      baz: { default: "bazzy" },
+    });
+    const testConfig = { "ext-mod": { bar: "qux" } };
+    Config.provide(testConfig);
+    const config = await Config.getExtensionConfig(
+      "slot-mod",
+      "ext-mod",
+      "barSlot",
+      "fooExt"
+    );
+    expect(config).toStrictEqual({ bar: "qux", baz: "bazzy" });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("uses the 'add' config if one is present", async () => {
+    Config.defineConfigSchema("ext-mod", {
+      bar: { default: "barry" },
+      baz: { default: "bazzy" },
+    });
+    const testConfig = {
+      "ext-mod": { bar: "qux" },
+      "slot-mod": {
+        extensions: {
+          barSlot: {
+            add: [{ extension: "fooExt#id0", config: { baz: "quinn" } }],
+          },
+        },
+      },
+    };
+    Config.provide(testConfig);
+    const config = await Config.getExtensionConfig(
+      "slot-mod",
+      "ext-mod",
+      "barSlot",
+      "fooExt#id0"
+    );
+    expect(config).toStrictEqual({ bar: "qux", baz: "quinn" });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("uses the 'configure' config if one is present", async () => {
+    Config.defineConfigSchema("ext-mod", {
+      bar: { default: "barry" },
+      baz: { default: "bazzy" },
+    });
+    const testConfig = {
+      "ext-mod": { bar: "qux" },
+      "slot-mod": {
+        extensions: {
+          barSlot: {
+            configure: { "fooExt#id0": { baz: "quiz" } },
+          },
+        },
+      },
+    };
+    Config.provide(testConfig);
+    const config = await Config.getExtensionConfig(
+      "slot-mod",
+      "ext-mod",
+      "barSlot",
+      "fooExt#id0"
+    );
+    expect(config).toStrictEqual({ bar: "qux", baz: "quiz" });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("validates the extension slot config", async () => {
+    Config.defineConfigSchema("ext-mod", {
+      bar: { default: "barry" },
+      baz: { default: "bazzy" },
+    });
+    const testConfig = {
+      "ext-mod": { bar: "qux" },
+      "slot-mod": {
+        extensions: {
+          barSlot: {
+            configure: { "fooExt#id0": { beef: "bad" } },
+          },
+        },
+      },
+    };
+    Config.provide(testConfig);
+    await Config.getExtensionConfig(
+      "slot-mod",
+      "ext-mod",
+      "barSlot",
+      "fooExt#id0"
+    );
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/unknown config key 'ext-mod.beef' provided.*/i)
+    );
+  });
+});
+
 const importableConfig = (configObject) => ({ default: configObject });

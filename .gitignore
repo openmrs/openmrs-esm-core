@@ -70,3 +70,4 @@ dist
 
 docs/
 storybook-static
+package-lock.json

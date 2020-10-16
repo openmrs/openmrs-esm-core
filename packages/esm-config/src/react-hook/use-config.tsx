@@ -1,10 +1,13 @@
 import React from "react";
+import { ModuleNameContext } from "@openmrs/esm-context";
 import * as Config from "../module-config/module-config";
-
-export const ModuleNameContext = React.createContext<string | null>(null);
 
 let config = {};
 let error;
+
+/**
+ * Use this React Hook to obtain your module's configuration.
+ */
 export function useConfig() {
   const moduleName = React.useContext(ModuleNameContext);
   if (!moduleName) {

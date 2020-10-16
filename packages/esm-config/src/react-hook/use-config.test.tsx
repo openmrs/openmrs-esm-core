@@ -1,7 +1,8 @@
 import React from "react";
-import { clearAll, defineConfigSchema } from "../module-config/module-config";
+import { ModuleNameContext } from "@openmrs/esm-context";
 import { render, cleanup, waitFor } from "@testing-library/react";
-import { ModuleNameContext, useConfig, clearConfig } from "./react-hook";
+import { useConfig, clearConfig } from "./use-config";
+import { clearAll, defineConfigSchema } from "../module-config/module-config";
 
 describe(`useConfig`, () => {
   afterEach(clearAll);
