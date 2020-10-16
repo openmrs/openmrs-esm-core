@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { ModuleNameContext } from "@openmrs/esm-context";
 import * as Config from "../module-config/module-config";
 import {
