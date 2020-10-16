@@ -5,10 +5,11 @@ import {
   clearAll,
   defineConfigSchema,
   provide,
+  getExtensionConfig,
 } from "../module-config/module-config";
 import { useExtensionConfig, clearConfig } from "./use-extension-config";
 
-xdescribe(`useExtensionConfig`, () => {
+describe(`useExtensionConfig`, () => {
   afterEach(clearAll);
   afterEach(cleanup);
   afterEach(clearConfig);
@@ -97,7 +98,7 @@ xdescribe(`useExtensionConfig`, () => {
         extensions: {
           slot2: {
             configure: {
-              thing: "another thing",
+              fooExt: { thing: "another thing" },
             },
           },
         },
