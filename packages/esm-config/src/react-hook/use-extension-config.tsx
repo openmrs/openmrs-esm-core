@@ -55,7 +55,7 @@ export function useExtensionConfig() {
     // So we check ahead of time and avoid creating a new promise.
     throw error;
   }
-  const uniqueExtensionLookupId = extensionSlotName + "-" + extensionId;
+  const uniqueExtensionLookupId = `${extensionSlotName}-${extensionId}`;
   if (!configCache[uniqueExtensionLookupId]) {
     // React will prevent the client component from rendering until the promise resolves
     throw getConfigAndSetCache(slotModuleName);
