@@ -5,14 +5,15 @@ import {
   clearAll,
   defineConfigSchema,
   provide,
-  getExtensionConfig,
+  setTemporaryConfigValue,
 } from "../module-config/module-config";
-import { useExtensionConfig, clearConfig } from "./use-extension-config";
+import { useExtensionConfig } from "./use-extension-config";
+import { clearConfigCache } from "./config-cache";
 
 describe(`useExtensionConfig`, () => {
   afterEach(clearAll);
   afterEach(cleanup);
-  afterEach(clearConfig);
+  afterEach(clearConfigCache);
 
   it(`can return extension config as a react hook`, async () => {
     defineConfigSchema("ext-module", {
@@ -37,9 +38,7 @@ describe(`useExtensionConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("The first thing")).toBeTruthy();
-    });
+    expect(screen.findByText("The first thing")).toBeTruthy();
   });
 
   it(`can handle multiple extensions`, async () => {
@@ -80,10 +79,8 @@ describe(`useExtensionConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("foo thing")).toBeTruthy();
-    });
-    expect(screen.getByText("bar thing")).toBeTruthy();
+    expect(await screen.findByText("foo thing")).toBeTruthy();
+    expect(screen.findByText("bar thing")).toBeTruthy();
   });
 
   it("can handle multiple extension slots", async () => {
@@ -132,10 +129,52 @@ describe(`useExtensionConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("foo thing")).toBeTruthy();
+    expect(await screen.findByText("foo thing")).toBeTruthy();
+    expect(screen.findByText("another thing")).toBeTruthy();
+  });
+
+  it("updates with a new value when the temporary config is updated", async () => {
+    defineConfigSchema("ext-module", {
+      thing: {
+        default: "The first thing",
+      },
     });
-    expect(screen.getByText("another thing")).toBeTruthy();
+
+    render(
+      <React.Suspense fallback={<div>Suspense!</div>}>
+        <ModuleNameContext.Provider value="slot-module">
+          <ExtensionContext.Provider
+            value={{
+              extensionModuleName: "ext-module",
+              extensionSlotName: "fooSlot",
+              extensionId: "barExt#id1",
+            }}
+          >
+            <RenderConfig configKey="thing" />
+          </ExtensionContext.Provider>
+        </ModuleNameContext.Provider>
+      </React.Suspense>
+    );
+
+    expect(await screen.findByText("The first thing")).toBeTruthy();
+
+    setTemporaryConfigValue(["ext-module", "thing"], "A new thing");
+
+    expect(await screen.findByText("A new thing")).toBeTruthy();
+
+    setTemporaryConfigValue(
+      [
+        "slot-module",
+        "extensions",
+        "fooSlot",
+        "configure",
+        "barExt#id1",
+        "thing",
+      ],
+      "Yet another thing"
+    );
+
+    expect(await screen.findByText("Yet another thing")).toBeTruthy();
   });
 });
 

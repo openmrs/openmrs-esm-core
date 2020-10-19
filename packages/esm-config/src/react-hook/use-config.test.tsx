@@ -1,13 +1,18 @@
 import React from "react";
 import { ModuleNameContext } from "@openmrs/esm-context";
-import { render, cleanup, waitFor } from "@testing-library/react";
-import { useConfig, clearConfig } from "./use-config";
-import { clearAll, defineConfigSchema } from "../module-config/module-config";
+import { render, cleanup, screen, waitFor } from "@testing-library/react";
+import { useConfig } from "./use-config";
+import {
+  clearAll,
+  defineConfigSchema,
+  setTemporaryConfigValue,
+} from "../module-config/module-config";
+import { clearConfigCache } from "./config-cache";
 
 describe(`useConfig`, () => {
   afterEach(clearAll);
   afterEach(cleanup);
-  afterEach(clearConfig);
+  afterEach(clearConfigCache);
 
   it(`can return config as a react hook`, async () => {
     defineConfigSchema("foo-module", {
@@ -16,7 +21,7 @@ describe(`useConfig`, () => {
       },
     });
 
-    const { getByText } = render(
+    render(
       <React.Suspense fallback={<div>Suspense!</div>}>
         <ModuleNameContext.Provider value="foo-module">
           <RenderConfig configKey="thing" />
@@ -24,9 +29,7 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(getByText("The first thing")).toBeTruthy();
-    });
+    expect(screen.findByText("The first thing")).toBeTruthy();
   });
 
   it(`can handle multiple calls to useConfig from different modules`, async () => {
@@ -42,7 +45,7 @@ describe(`useConfig`, () => {
       },
     });
 
-    let wrapper = render(
+    render(
       <React.Suspense fallback={<div>Suspense!</div>}>
         <ModuleNameContext.Provider value="foo-module">
           <RenderConfig configKey="thing" />
@@ -50,13 +53,11 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(wrapper.getByText("foo thing")).toBeTruthy();
-    });
+    expect(screen.findByText("foo thing")).toBeTruthy();
 
     cleanup();
 
-    wrapper = render(
+    render(
       <React.Suspense fallback={<div>Suspense!</div>}>
         <ModuleNameContext.Provider value="bar-module">
           <RenderConfig configKey="thing" />
@@ -64,9 +65,29 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(wrapper.getByText("bar thing")).toBeTruthy();
+    expect(screen.findByText("bar thing")).toBeTruthy();
+  });
+
+  it("updates with a new value when the temporary config is updated", async () => {
+    defineConfigSchema("foo-module", {
+      thing: {
+        default: "The first thing",
+      },
     });
+
+    render(
+      <React.Suspense fallback={<div>Suspense!</div>}>
+        <ModuleNameContext.Provider value="foo-module">
+          <RenderConfig configKey="thing" />
+        </ModuleNameContext.Provider>
+      </React.Suspense>
+    );
+
+    expect(screen.findByText("The first thing")).toBeTruthy();
+
+    setTemporaryConfigValue(["foo-module", "thing"], "A new thing");
+
+    expect(screen.findByText("A new thing")).toBeTruthy();
   });
 });
 

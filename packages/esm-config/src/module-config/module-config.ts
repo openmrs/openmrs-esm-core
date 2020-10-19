@@ -1,4 +1,5 @@
 import * as R from "ramda";
+import { invalidateConfigCache } from "../react-hook/config-cache";
 
 // The input configs
 type ProvidedConfig = {
@@ -105,6 +106,7 @@ export async function getDevtoolsConfig(): Promise<object> {
  */
 export function setAreDevDefaultsOn(value: boolean): void {
   localStorage.setItem("openmrsConfigAreDevDefaultsOn", JSON.stringify(value));
+  invalidateConfigCache();
 }
 
 /**
@@ -133,6 +135,7 @@ export function setTemporaryConfigValue(path: string[], value: any): void {
     "openmrsTemporaryConfig",
     JSON.stringify(_temporaryConfig)
   );
+  invalidateConfigCache();
 }
 
 /**
@@ -145,6 +148,7 @@ export function unsetTemporaryConfigValue(path: string[]): void {
     "openmrsTemporaryConfig",
     JSON.stringify(_temporaryConfig)
   );
+  invalidateConfigCache();
 }
 
 /**
@@ -153,6 +157,7 @@ export function unsetTemporaryConfigValue(path: string[]): void {
 export function clearTemporaryConfig(): void {
   _temporaryConfig = {};
   localStorage.removeItem("openmrsTemporaryConfig");
+  invalidateConfigCache();
 }
 
 /**
