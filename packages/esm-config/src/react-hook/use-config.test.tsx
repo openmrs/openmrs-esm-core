@@ -29,9 +29,7 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("The first thing")).toBeTruthy();
-    });
+    expect(screen.findByText("The first thing")).toBeTruthy();
   });
 
   it(`can handle multiple calls to useConfig from different modules`, async () => {
@@ -55,9 +53,7 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("foo thing")).toBeTruthy();
-    });
+    expect(screen.findByText("foo thing")).toBeTruthy();
 
     cleanup();
 
@@ -69,9 +65,7 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("bar thing")).toBeTruthy();
-    });
+    expect(screen.findByText("bar thing")).toBeTruthy();
   });
 
   it("updates with a new value when the temporary config is updated", async () => {
@@ -89,15 +83,11 @@ describe(`useConfig`, () => {
       </React.Suspense>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("The first thing")).toBeTruthy();
-    });
+    expect(screen.findByText("The first thing")).toBeTruthy();
 
     setTemporaryConfigValue(["foo-module", "thing"], "A new thing");
 
-    await waitFor(() => {
-      expect(screen.getByText("A new thing")).toBeTruthy();
-    });
+    expect(screen.findByText("A new thing")).toBeTruthy();
   });
 });
 
