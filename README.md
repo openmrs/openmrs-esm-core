@@ -58,6 +58,22 @@ yarn ci:release
 
 **Important**: Creating a tag on GitHub will trigger a new release.
 
+### Creating a Release
+
+First of all: **Not** every merge into `master` has to result in release. We should only release when we have gathered enough interesting changes in `master` to benefit from it.
+
+Now, let's say we have enough interesting changes accumulated in `master`.
+
+Please check:
+
+1. Do we have a unique version number that reflects the changes in `master` (changes as compared to the previous release)? We use minor changes to indicate big new features (requiring attention) and patch levels to indicate rather small fixes and improvements.
+2. If we have new packages in the monorepo - did we set `"private": true` if we don't want them to be published?
+3. Did we add a `publishConfig` section to the *package.json* of all new packages that should be published (i.e., `"private": false`)? This section should have a `"access": "public"` field.
+
+If we still need to have a version update run `yarn ci:release` (see section beforehand) and make a new PR / merge into `master` with the resulting changeset.
+
+**Don't** run `lerna publish` or any related command locally. Once merged into `master` go to GitHub and [draft a new release](https://github.com/openmrs/openmrs-esm-core/releases/new). The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title should just be the version number (e.g., `3.2.1`).
+
 ## Possibilities
 
 The new architecture offers a couple of interesting possibilities. We go into them one by one.
