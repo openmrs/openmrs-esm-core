@@ -109,6 +109,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
+      hash: true,
       template: resolve(__dirname, "src/index.ejs"),
       templateParameters: {
         openmrsApiUrl,
