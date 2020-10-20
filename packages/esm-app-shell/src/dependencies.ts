@@ -8,6 +8,7 @@ export const sharedDependencies = {
   "@openmrs/esm-api": () => require("@openmrs/esm-api"),
   "@openmrs/esm-error-handling": () => require("@openmrs/esm-error-handling"),
   "@openmrs/esm-config": () => require("@openmrs/esm-config"),
+  "@openmrs/esm-context": () => require("@openmrs/esm-context"),
   "@openmrs/esm-module-config": () => require("@openmrs/esm-config"),
   "@openmrs/esm-extensions": () => require("@openmrs/esm-extensions"),
   "@openmrs/esm-extension-manager": () => require("@openmrs/esm-extensions"),
