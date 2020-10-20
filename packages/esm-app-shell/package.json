@@ -29,6 +29,7 @@
   "dependencies": {
     "@openmrs/esm-api": "^3.0.5",
     "@openmrs/esm-config": "^3.0.5",
+    "@openmrs/esm-context": "^3.0.5",
     "@openmrs/esm-error-handling": "^3.0.5",
     "@openmrs/esm-extensions": "^3.0.5",
     "@openmrs/esm-styleguide": "^3.0.5",
