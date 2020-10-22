@@ -2,6 +2,8 @@ const { resolve } = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
+const { peerDependencies } = require('./package.json');
+
 module.exports = {
   entry: [resolve(__dirname, "src/index.ts")],
   devtool: "sourcemap",
@@ -28,7 +30,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
   },
-  externals: ["react", "react-dom", "single-spa", /^@openmrs\/esm.*/],
+  externals: Object.keys(peerDependencies),
   plugins: [new CleanWebpackPlugin(), new ForkTsCheckerWebpackPlugin()],
   devServer: {
     disableHostCheck: true,

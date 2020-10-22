@@ -38,8 +38,8 @@
     "unistore": "^3.5.2"
   },
   "peerDependencies": {
-    "@openmrs/esm-config": "*",
-    "@openmrs/esm-error-handling": "*",
+    "@openmrs/esm-config": "3.x",
+    "@openmrs/esm-error-handling": "3.x",
     "react": "16.x",
     "single-spa": "4.x"
   },

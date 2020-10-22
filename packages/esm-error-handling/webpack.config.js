@@ -2,6 +2,8 @@ const { resolve } = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
+const { peerDependencies } = require('./package.json');
+
 module.exports = {
   entry: [
     resolve(__dirname, "src/set-public-path.ts"),
@@ -37,7 +39,7 @@ module.exports = {
     },
     disableHostCheck: true,
   },
-  externals: ["react", "react-dom", /^@openmrs\/esm/],
+  externals: Object.keys(peerDependencies),
   plugins: [new ForkTsCheckerWebpackPlugin(), new CleanWebpackPlugin()],
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],

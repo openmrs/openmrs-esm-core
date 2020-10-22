@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
 import {
   clearAll,

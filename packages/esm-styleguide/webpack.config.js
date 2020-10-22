@@ -2,6 +2,8 @@ const { resolve } = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const { peerDependencies } = require('./package.json');
+
 module.exports = {
   entry: [
     resolve(__dirname, "src/set-public-path.js"),
@@ -51,7 +53,7 @@ module.exports = {
       "Access-Control-Allow-Origin": "*",
     },
   },
-  externals: [/^@openmrs\/.+$/, "react", "react-dom", "rxjs"],
+  externals: Object.keys(peerDependencies),
   resolve: {
     modules: ["node_modules"],
     extensions: [".js", ".jsx", ".json"],

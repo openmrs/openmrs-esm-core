@@ -35,10 +35,16 @@
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "@openmrs/esm-styleguide": "3.x",
+    "i18next": "19.x",
+    "react": "16.x",
+    "react-i18next": "11.x"
   },
   "devDependencies": {
-    "react": "^16.13.1"
+    "@openmrs/esm-styleguide": "^3.0.6",
+    "i18next": "^19.6.0",
+    "react": "^16.13.1",
+    "react-i18next": "^11.7.0"
   },
   "publishConfig": {
     "access": "public"
