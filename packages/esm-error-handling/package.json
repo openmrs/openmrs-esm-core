@@ -35,7 +35,7 @@
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
-    "@openmrs/esm-styleguide": "*"
+    "@openmrs/esm-styleguide": "3.x"
   },
   "devDependencies": {
     "@openmrs/esm-styleguide": "^3.0.7"
