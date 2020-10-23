@@ -65,7 +65,7 @@ module.exports = {
         test: /\.css$/,
         use: [
           { loader: require.resolve(MiniCssExtractPlugin.loader) },
-          { loader: require.resolve("css-loader") },
+          { loader: require.resolve("css-loader") }, // to convert the resulting CSS to Javascript to be bundled (modules:true to rename CSS classes in output to cryptic identifiers, except if wrapped in a :global(...) pseudo class)
           { loader: require.resolve("postcss-loader") },
         ],
       },

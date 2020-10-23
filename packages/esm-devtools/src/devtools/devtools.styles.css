@@ -1,0 +1,14 @@
+.devtoolsTriggerButton {
+  z-index: 100000;
+  background-color: var(--omrs-color-ink-low-contrast);
+  height: 40px !important;
+  width: 40px !important;
+  bottom: 10px;
+  right: 54px;
+  position: fixed;
+  border-radius: 2px;
+}
+
+.overridden {
+  background-color: var(--omrs-color-danger);
+}
