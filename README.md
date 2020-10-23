@@ -6,8 +6,10 @@ This is a [Lerna](https://lerna.js.org/) project containing the core packages fo
 - [@openmrs/esm-api](packages/esm-api)
 - [@openmrs/esm-app-shell](packages/esm-app-shell)
 - [@openmrs/esm-config](packages/esm-config)
+- [@openmrs/esm-devtools](packages/esm-devtools)
 - [@openmrs/esm-error-handling](packages/esm-error-handling)
 - [@openmrs/esm-extension-manager](packages/esm-extension-manager)
+- [@openmrs/esm-implementer-tools](packages/esm-implementer-tools)
 - [@openmrs/esm-styleguide](packages/esm-styleguide)
 
 ## Repository Development

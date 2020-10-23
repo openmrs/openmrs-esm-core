@@ -1,0 +1,60 @@
+{
+  "name": "@openmrs/esm-implementer-tools-app",
+  "version": "3.0.6",
+  "license": "MPL-2.0",
+  "description": "The admin interface for OpenMRS Frontend",
+  "browser": "dist/openmrs-esm-implementer-tools-app.js",
+  "main": "src/index.ts",
+  "source": true,
+  "scripts": {
+    "test": "jest --config jest.config.js --passWithNoTests",
+    "build": "webpack --mode=production",
+    "typescript": "tsc",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
+  "directories": {
+    "lib": "dist",
+    "src": "src"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "dependencies": {
+    "lodash-es": "^4.17.15",
+    "react-hooks-global-state": "^1.0.1",
+    "single-spa-react": "^3.0.1",
+    "systemjs-webpack-interop": "^2.1.2"
+  },
+  "peerDependencies": {
+    "@openmrs/esm-api": "^3.0.6",
+    "@openmrs/esm-config": "^3.0.6",
+    "@openmrs/esm-context": "^3.0.6",
+    "@openmrs/esm-error-handling": "^3.0.6",
+    "@openmrs/esm-extensions": "^3.0.6",
+    "i18next": "^19.6.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-i18next": "^11.7.0",
+    "rxjs": "^6.5.3",
+    "single-spa": "^4.4.1"
+  },
+  "devDependencies": {
+    "identity-obj-proxy": "^3.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-i18next": "^11.7.2",
+    "single-spa": "^4.4.1"
+  }
+}

@@ -1,0 +1,14 @@
+.popupTriggerButton {
+  z-index: 100000;
+  background-color: var(--omrs-color-interaction-minus-two);
+  height: 40px !important;
+  width: 40px !important;
+  bottom: 10px;
+  right: 8px;
+  position: fixed;
+  border-radius: 2px;
+}
+
+.triggerButtonAlert {
+  background-color: var(--omrs-color-danger);
+}
