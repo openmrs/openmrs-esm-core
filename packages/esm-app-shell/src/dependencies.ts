@@ -17,9 +17,3 @@ export const sharedDependencies = {
   "carbon-icons": () => require("carbon-icons"),
   rxjs: () => require("rxjs"),
 };
-
-export const coreApps = {
-  "@openmrs/esm-devtools": () => require("@openmrs/esm-devtools"),
-  "@openmrs/esm-implementer-tools": () =>
-    require("@openmrs/esm-implementer-tools"),
-};

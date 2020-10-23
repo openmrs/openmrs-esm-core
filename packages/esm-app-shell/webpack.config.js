@@ -62,25 +62,11 @@ module.exports = {
         },
       },
       {
-        test: /.+\.css$/,
-        exclude: [/esm-devtools\/.*/, /esm-implementer-tools\/.*/],
+        test: /\.css$/,
         use: [
           { loader: require.resolve(MiniCssExtractPlugin.loader) },
           { loader: require.resolve("css-loader") },
           { loader: require.resolve("postcss-loader") },
-        ],
-      },
-      {
-        test: /src\/.+\.css$/i,
-        exclude: [/esm-styleguide\/.*/, /carbon-components\/.*/],
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-            },
-          },
         ],
       },
       {

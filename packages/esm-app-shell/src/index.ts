@@ -4,7 +4,7 @@ import { start } from "single-spa";
 import { createAppState, setupApiModule } from "@openmrs/esm-api";
 import { setupI18n } from "./locale";
 import { registerApp } from "./apps";
-import { coreApps, sharedDependencies } from "./dependencies";
+import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import type { SpaConfig } from "./types";
 
@@ -105,7 +105,5 @@ export function initializeSpa(config: SpaConfig) {
   registerModules(sharedDependencies);
   setupApiModule();
   createAppState({});
-  registerModules(coreApps);
-  loadModules(Object.keys(coreApps)).then(setupApps);
   return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
 }
