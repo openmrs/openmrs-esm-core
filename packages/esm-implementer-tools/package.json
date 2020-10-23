@@ -1,9 +1,9 @@
 {
-  "name": "@openmrs/esm-implementer-tools",
+  "name": "@openmrs/esm-implementer-tools-app",
   "version": "3.0.6",
   "license": "MPL-2.0",
   "description": "The admin interface for OpenMRS Frontend",
-  "browser": "dist/openmrs-esm-implementer-tools.js",
+  "browser": "dist/openmrs-esm-implementer-tools-app.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {

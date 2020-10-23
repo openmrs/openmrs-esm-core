@@ -1,3 +1,3 @@
 import { setPublicPath } from "systemjs-webpack-interop";
 
-setPublicPath("@openmrs/esm-implementer-tools");
+setPublicPath("@openmrs/esm-implementer-tools-app");

@@ -10,7 +10,7 @@ module.exports = {
     path.resolve(__dirname, "src/index.ts"),
   ],
   output: {
-    filename: "openmrs-esm-implementer-tools.js",
+    filename: "openmrs-esm-implementer-tools-app.js",
     path: path.resolve(__dirname, "dist"),
     libraryTarget: "system",
   },
