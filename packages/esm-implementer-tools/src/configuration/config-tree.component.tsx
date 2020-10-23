@@ -1,5 +1,7 @@
 import React from "react";
 import EditableValue from "./editable-value.component";
+import { ExtensionSlotConfigTree } from "./extension-slot-config-tree";
+import styles from "./configuration.styles.css";
 
 interface ConfigTreeProps {
   config: { [key: string]: any };
@@ -13,10 +15,14 @@ export default function ConfigTree({ config, path = [] }: ConfigTreeProps) {
         Object.entries(config).map(([key, value]) => {
           const thisPath = path.concat([key]);
           return (
-            <div key={key} style={{ margin: `0.25em 0em 0.25em 3em` }}>
+            <div key={key} className={styles.treeIndent}>
               {isOrdinaryObject(value) ? (
                 <div>
-                  {key}: <ConfigTree config={value} path={thisPath} />
+                  {key}:
+                  <ConfigTree config={value} path={thisPath} />
+                  {thisPath.length === 1 && (
+                    <ExtensionSlotConfigTree moduleName={thisPath[0]} />
+                  )}
                 </div>
               ) : (
                 <div
