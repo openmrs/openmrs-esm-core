@@ -33,7 +33,6 @@
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
     "@openmrs/esm-context": "^3.0.6",
-    "kremling": "^2.0.3",
     "single-spa-react": "^2.13.0",
     "systemjs-webpack-interop": "^2.0.0"
   },
