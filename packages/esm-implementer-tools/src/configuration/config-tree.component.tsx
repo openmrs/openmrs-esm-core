@@ -1,6 +1,6 @@
 import React from "react";
 import EditableValue from "./editable-value.component";
-import { ExtensionSlotConfigTree } from "./extension-slot-config-tree";
+import { ExtensionsConfigTree } from "./extensions-config-tree";
 import styles from "./configuration.styles.css";
 
 interface ConfigTreeProps {
@@ -12,32 +12,31 @@ export default function ConfigTree({ config, path = [] }: ConfigTreeProps) {
   return (
     <div>
       {config &&
-        Object.entries(config).map(([key, value]) => {
-          const thisPath = path.concat([key]);
-          return (
-            <div key={key} className={styles.treeIndent}>
-              {isOrdinaryObject(value) ? (
-                <div>
-                  {key}:
-                  <ConfigTree config={value} path={thisPath} />
-                  {thisPath.length === 1 && (
-                    <ExtensionSlotConfigTree moduleName={thisPath[0]} />
-                  )}
-                </div>
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    flexFlow: "row wrap",
-                    alignItems: "center",
-                  }}
-                >
-                  {key}: <EditableValue path={thisPath} value={value} />
-                </div>
-              )}
-            </div>
-          );
-        })}
+        Object.entries(config)
+          .filter(([k, v]) => k != "extensions")
+          .map(([key, value]) => {
+            const thisPath = path.concat([key]);
+            return (
+              <div key={key} className={styles.treeIndent}>
+                {isOrdinaryObject(value) ? (
+                  <div>
+                    {key}:
+                    {thisPath.length === 1 && (
+                      <ExtensionsConfigTree
+                        config={value.extensions}
+                        moduleName={thisPath[0]}
+                      />
+                    )}
+                    <ConfigTree config={value} path={thisPath} />
+                  </div>
+                ) : (
+                  <div className={styles.treeLeaf}>
+                    {key}: <EditableValue path={thisPath} value={value} />
+                  </div>
+                )}
+              </div>
+            );
+          })}
     </div>
   );
 }

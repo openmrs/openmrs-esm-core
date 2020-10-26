@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
+import { ExtensionSlotConfig } from "@openmrs/esm-config";
 import {
   getExtensionSlotsForModule,
   getExtensionIdsForExtensionSlot,
@@ -6,13 +7,15 @@ import {
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
 
-interface ExtensionSlotConfigTreeProps {
+interface ExtensionsConfigTreeProps {
+  config: { [key: string]: any };
   moduleName: string;
 }
 
-export function ExtensionSlotConfigTree({
+export function ExtensionsConfigTree({
+  config,
   moduleName,
-}: ExtensionSlotConfigTreeProps) {
+}: ExtensionsConfigTreeProps) {
   const extensionSlotNames = useMemo(
     () => getExtensionSlotsForModule(moduleName),
     []
@@ -31,26 +34,43 @@ export function ExtensionSlotConfigTree({
       const idsForExtSlot = Object.fromEntries(
         extensionSlotNames.map((name, i) => [name, extensionIdsArr[i]])
       );
-      console.log(idsForExtSlot);
-      setExtensionIdsForExtensionSlot(idsForExtSlot)
-      }
-    );
+      setExtensionIdsForExtensionSlot(idsForExtSlot);
+    });
   }, []);
 
   return extensionSlotNames.length ? (
     <div className={styles.treeIndent}>
-      extensions: {JSON.stringify(extensionIdsForExtensionSlot)}
+      extensions:
       {extensionSlotNames.map((slotName) => (
         <div className={styles.treeIndent}>
-          {slotName}:
-          {extensionIdsForExtensionSlot[slotName]?.map(
-            (extensionId: string) =>
-            <div className={styles.treeIndent}>
-              add: <EditableValue path={[moduleName, 'extensions', slotName, 'add']} value={''}/>
-            </div>
-          )}
+          <ExtensionSlotConfigTree
+            config={config?.[slotName]}
+            path={[moduleName, "extensions", slotName]}
+          />
         </div>
       ))}
     </div>
   ) : null;
+}
+
+interface ExtensionSlotConfigProps {
+  config: ExtensionSlotConfig;
+  path: string[];
+}
+
+function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
+  return (
+    <div>
+      {path[path.length - 1]}:
+      {["add", "remove", "order"].map((key) => (
+        <div className={`${styles.treeIndent} ${styles.treeLeaf}`}>
+          {key}:{" "}
+          <EditableValue
+            path={path.concat([key])}
+            value={config?.[key] || []}
+          />
+        </div>
+      ))}
+    </div>
+  );
 }
