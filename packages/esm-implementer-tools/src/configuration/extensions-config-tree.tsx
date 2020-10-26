@@ -7,7 +7,7 @@ import {
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
 
-interface ExtensionsConfigTreeProps {
+export interface ExtensionsConfigTreeProps {
   config: { [key: string]: any };
   moduleName: string;
 }
