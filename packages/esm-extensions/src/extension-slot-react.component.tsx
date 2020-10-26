@@ -1,10 +1,19 @@
-import React, { useState, useContext, ReactNode } from "react";
+import React, {
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+  useCallback,
+} from "react";
 import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
+import { configCacheNotifier } from "@openmrs/esm-config";
 import {
   renderExtension,
   getExtensionIdsForExtensionSlot,
   getIsUIEditorEnabled,
   getExtensionRegistration,
+  registerExtensionSlot,
+  unregisterExtensionSlot,
 } from "./extensions";
 
 interface ExtensionSlotBaseProps {
@@ -31,12 +40,28 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
     );
   }
 
-  React.useEffect(() => {
+  const getAndSetExtensionIds = useCallback(() => {
     getExtensionIdsForExtensionSlot(
       extensionSlotName,
       slotModuleName
     ).then((ids) => setExtensionIds(ids));
-  }, [extensionSlotName, slotModuleName]);
+  }, [getExtensionIdsForExtensionSlot, extensionSlotName, slotModuleName]);
+
+  useEffect(() => {
+    getAndSetExtensionIds();
+  }, [getAndSetExtensionIds, extensionSlotName, slotModuleName]);
+
+  useEffect(() => {
+    registerExtensionSlot(slotModuleName, extensionSlotName);
+    return () => unregisterExtensionSlot(slotModuleName, extensionSlotName);
+  }, []);
+
+  useEffect(() => {
+    const sub = configCacheNotifier.subscribe(() => {
+      getAndSetExtensionIds();
+    });
+    return () => sub.unsubscribe();
+  }, [extensionSlotName]);
 
   const divStyle = getIsUIEditorEnabled()
     ? { ...style, backgroundColor: "cyan" }

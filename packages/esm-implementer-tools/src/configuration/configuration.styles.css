@@ -32,3 +32,13 @@
   text-decoration: none;
   color: #000;
 }
+
+.treeIndent {
+  margin: 0.25em 0em 0.25em 3em;
+}
+
+.treeLeaf {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
