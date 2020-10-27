@@ -19,7 +19,7 @@ export function createGlobalStore<TState>(
         "Cannot override an existing store. Make sure that stores are only created once."
       );
     } else {
-      available.value = createStore(initialState);
+      available.value.setState(initialState, true);
     }
 
     available.active = true;
