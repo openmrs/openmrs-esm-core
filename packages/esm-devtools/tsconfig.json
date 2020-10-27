@@ -4,7 +4,6 @@
     "module": "esnext",
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
-    "strictNullChecks": true,
     "moduleResolution": "node",
     "lib": [
       "dom",
@@ -13,9 +12,9 @@
       "es2015",
       "es2015.promise",
       "es2016.array.include",
-      "es2018",
-      "esnext"
-    ]
+      "es2018"
+    ],
+    "noEmit": true
   },
   "include": ["src/**/*"]
 }

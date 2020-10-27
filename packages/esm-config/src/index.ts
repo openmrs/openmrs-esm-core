@@ -1,6 +1,7 @@
 export * from "./module-config/module-config";
 export { useConfig } from "./react-hook/use-config";
 export { useExtensionConfig } from "./react-hook/use-extension-config";
+export * from "./react-hook/config-cache";
 export * from "./navigation/navigate";
 export * from "./navigation/react-configurable-link";
 export * from "./navigation/interpolate-string";

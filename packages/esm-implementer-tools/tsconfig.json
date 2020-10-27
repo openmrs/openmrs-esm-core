@@ -6,6 +6,9 @@
     "jsx": "react",
     "strictNullChecks": true,
     "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "dist",
+    "emitDeclarationOnly": true,
     "lib": [
       "dom",
       "es5",

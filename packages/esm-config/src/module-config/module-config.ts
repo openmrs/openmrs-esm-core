@@ -590,7 +590,7 @@ export interface ConfigObject extends Object {
   [key: string]: any;
 }
 
-interface ExtensionSlotConfig {
+export interface ExtensionSlotConfig {
   add?: Array<{
     extension: string;
     config: {};

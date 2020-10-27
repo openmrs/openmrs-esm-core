@@ -1,0 +1,44 @@
+.tools {
+  margin: -1.5em -1.5em 0 -1.5em;
+  padding: 0.5em 1.5em;
+  border-bottom: #888 solid 1px;
+  display: flex;
+  gap: 2em;
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+}
+
+.panel {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.configContent {
+  margin-top: "1.5em";
+  font-family: "monospace";
+  font-size: "12pt";
+}
+
+.downloadButton {
+  display: flex;
+  align-items: center;
+}
+
+.downloadLink {
+  display: inline-flex;
+  text-decoration: none;
+  color: #000;
+}
+
+.treeIndent {
+  margin: 0.25em 0em 0.25em 3em;
+}
+
+.treeLeaf {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
