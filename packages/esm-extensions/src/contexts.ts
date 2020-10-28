@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { navigate } from "./navigate";
+import { navigate } from "@openmrs/esm-config";
 
+const fallbackType: NavigationContextType = "link";
 const navigationContexts: Array<NavigationContext> = [
   {
-    type: "link",
+    type: fallbackType,
     handler(link) {
       navigate({ to: link });
       return true;
@@ -30,6 +31,8 @@ export function switchTo<T>(
       return;
     }
   }
+
+  switchTo(fallbackType, link, state);
 }
 
 export function pushNavigationContext(context: NavigationContext) {

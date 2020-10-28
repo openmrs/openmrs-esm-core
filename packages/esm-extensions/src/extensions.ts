@@ -1,4 +1,5 @@
 import { mountRootParcel } from "single-spa";
+import { pathToRegexp, Key } from "path-to-regexp";
 import { getExtensionSlotConfig } from "@openmrs/esm-config";
 
 /**
@@ -8,8 +9,39 @@ const extensions: Record<string, ExtensionRegistration> = {};
 const attachedExtensionsForExtensionSlot: Record<string, Array<string>> = {};
 const extensionSlotsForModule: Record<string, Array<string>> = {};
 
+interface ExtensionLinkMatcher {
+  (link: string): undefined | Record<string, string>;
+}
+
 interface ExtensionRegistration extends ExtensionDefinition {
   moduleName: string;
+  matcher: ExtensionLinkMatcher;
+}
+
+/**
+ * Generates a matcher for URL-like extension slot names.
+ * Returns a function that provides the params (or an empty object)
+ * if a match has been found. Otherwise undefined is returned.
+ * @param url The URL to generate a matcher for.
+ */
+function getUrlMatcher(url: string): ExtensionLinkMatcher {
+  const keys: Array<Key> = [];
+  const ptr = pathToRegexp(url, keys);
+
+  return (link) => {
+    if (link && link[0] === "/") {
+      const result = ptr.exec(link);
+
+      if (result) {
+        return keys.reduce((p, c, i) => {
+          p[c.name] = result[i + 1];
+          return p;
+        }, {} as Record<string, string>);
+      }
+    }
+
+    return undefined;
+  };
 }
 
 export interface ExtensionDefinition {
@@ -42,6 +74,7 @@ export function registerExtension(
     name,
     load,
     moduleName,
+    matcher: name.startsWith("/") ? getUrlMatcher(name) : () => undefined,
   };
 }
 
@@ -59,12 +92,14 @@ export function registerExtensionSlot(moduleName: string, name: string) {
     extensionSlotsForModule[moduleName] = [name];
   }
 }
+
 export function unregisterExtensionSlot(moduleName: string, name: string) {
   extensionSlotsForModule[moduleName].splice(
     extensionSlotsForModule[moduleName].indexOf(name),
     1
   );
 }
+
 export function getExtensionSlotsForModule(moduleName: string) {
   return extensionSlotsForModule[moduleName] ?? [];
 }
@@ -115,6 +150,22 @@ export async function getExtensionIdsForExtensionSlot(
   return extensionIds;
 }
 
+function getExtensionComponent(extensionName: string) {
+  const component = extensions[extensionName];
+
+  if (!component) {
+    for (const name of Object.keys(extensions)) {
+      const routeProps = extensions[name].matcher(extensionName);
+
+      if (routeProps) {
+        return { component: extensionName[name], routeProps };
+      }
+    }
+  }
+
+  return { component, routeProps: {} };
+}
+
 /**
  * Mounts into a DOM node (representing an extension slot)
  * a lazy-loaded component from *any* microfrontend
@@ -124,10 +175,11 @@ export function renderExtension(
   domElement: HTMLElement,
   extensionSlotName: string, // will be used to look up configuration info
   extensionId: string,
-  renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x
+  renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x,
+  additionalProps: Record<string, any> = {}
 ): CancelLoading {
   const extensionName = extensionId.split("#")[0];
-  const component = extensions[extensionName];
+  const { component, routeProps } = getExtensionComponent(extensionName);
   let active = true;
 
   if (domElement) {
@@ -136,6 +188,8 @@ export function renderExtension(
         ({ default: result }) =>
           active &&
           mountRootParcel(renderFunction(result) as any, {
+            ...additionalProps,
+            ...routeProps,
             domElement,
           })
       );

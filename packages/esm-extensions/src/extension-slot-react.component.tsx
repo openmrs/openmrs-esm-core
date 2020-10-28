@@ -20,6 +20,7 @@ interface ExtensionSlotBaseProps {
   extensionSlotName: string;
   children?: ReactNode;
   style?: React.CSSProperties;
+  state?: Record<string, any>;
 }
 
 // remainder of props are for the top-level <div>
@@ -29,6 +30,7 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   extensionSlotName,
   children,
   style,
+  state,
   ...divProps
 }: ExtensionSlotReactProps) => {
   const [extensionIds, setExtensionIds] = useState<Array<string>>([]);
@@ -80,7 +82,7 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
               extensionModuleName: extensionRegistration.moduleName,
             }}
           >
-            {children ?? <ExtensionReact />}
+            {children ?? <ExtensionReact state={state} />}
           </ExtensionContext.Provider>
         );
       })}
@@ -88,14 +90,24 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   );
 };
 
-export const ExtensionReact: React.FC = (props) => {
+export interface ExtensionReactProps {
+  state?: Record<string, any>;
+}
+
+export const ExtensionReact: React.FC<ExtensionReactProps> = ({ state }) => {
   const ref = React.useRef<HTMLSlotElement>(null);
   const { extensionSlotName, extensionId } = useContext(ExtensionContext);
   // TODO: handle error if Extension not wrapped in ExtensionSlot
 
   React.useEffect(() => {
     if (ref.current) {
-      return renderExtension(ref.current, extensionSlotName, extensionId);
+      return renderExtension(
+        ref.current,
+        extensionSlotName,
+        extensionId,
+        undefined,
+        state
+      );
     }
   }, [extensionSlotName, extensionId]);
 

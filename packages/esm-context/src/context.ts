@@ -1,6 +1,6 @@
 import React from "react";
 
-interface ExtensionContextData {
+export interface ExtensionContextData {
   extensionSlotName: string;
   extensionId: string;
   extensionModuleName: string;

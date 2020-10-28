@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "path-to-regexp": "6.1.0",
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
