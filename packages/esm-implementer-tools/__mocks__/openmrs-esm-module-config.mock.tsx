@@ -2,7 +2,7 @@ import React from "react";
 
 let areDevDefaultsOn = false;
 
-export const getDevtoolsConfig = jest
+export const getImplementerToolsConfig = jest
   .fn()
   .mockResolvedValue({ "esm-something": { foo: 1 } });
 export const getAreDevDefaultsOn = jest

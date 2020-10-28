@@ -96,7 +96,7 @@ export function processConfig(
 /**
  * @internal
  */
-export async function getDevtoolsConfig(): Promise<object> {
+export async function getImplementerToolsConfig(): Promise<object> {
   await loadConfigs();
   return getAllConfigsWithoutValidating();
 }

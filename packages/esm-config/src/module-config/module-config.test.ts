@@ -666,19 +666,33 @@ describe("processConfig", () => {
   });
 });
 
-describe("getDevtoolsConfig", () => {
+describe("getImplementerToolsConfig", () => {
   afterEach(() => {
     Config.clearAll();
   });
 
-  it("returns the full config tree", async () => {
-    Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
+  it("returns all config schemas, with values and sources interpolated", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: { default: "qux", description: "All the foo", validators: [] },
+    });
     Config.defineConfigSchema("bar-module", { bar: { default: "quinn" } });
     const testConfig = { "bar-module": { bar: "baz" } };
-    Config.provide(testConfig);
-    const devConfig = await Config.getDevtoolsConfig();
-    expect(devConfig).toHaveProperty("foo-module", { foo: "qux" });
-    expect(devConfig).toHaveProperty("bar-module", { bar: "baz" });
+    Config.provide(testConfig, "my config source");
+    const devConfig = await Config.getImplementerToolsConfig();
+    expect(devConfig).toStrictEqual({
+      "foo-module": {
+        foo: {
+          value: "qux",
+          source: "default",
+          default: "qux",
+          description: "All the foo",
+          validators: [],
+        },
+      },
+      "bar-module": {
+        bar: { value: "baz", source: "my config source", default: "baz" },
+      },
+    });
   });
 });
 
@@ -809,7 +823,7 @@ describe("extension slot config", () => {
         extensions: { fooSlot: { remove: ["bar"] } },
       },
     });
-    const config = await Config.getDevtoolsConfig();
+    const config = await Config.getImplementerToolsConfig();
     expect(config).toStrictEqual({
       "foo-module": {
         foo: 0,

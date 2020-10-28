@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  getDevtoolsConfig,
+  getImplementerToolsConfig,
   getAreDevDefaultsOn,
   setAreDevDefaultsOn,
   clearTemporaryConfig,
@@ -30,7 +30,7 @@ export default function Configuration(props: ConfigurationProps) {
   );
 
   const updateConfig = () => {
-    getDevtoolsConfig().then((res) => {
+    getImplementerToolsConfig().then((res) => {
       setConfig(res);
     });
   };
