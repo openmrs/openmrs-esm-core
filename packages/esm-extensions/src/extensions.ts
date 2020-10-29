@@ -29,15 +29,13 @@ function getUrlMatcher(url: string): ExtensionLinkMatcher {
   const ptr = pathToRegexp(url, keys);
 
   return (link) => {
-    if (link && link[0] === "/") {
-      const result = ptr.exec(link);
+    const result = ptr.exec(link);
 
-      if (result) {
-        return keys.reduce((p, c, i) => {
-          p[c.name] = result[i + 1];
-          return p;
-        }, {} as Record<string, string>);
-      }
+    if (result) {
+      return keys.reduce((p, c, i) => {
+        p[c.name] = result[i + 1];
+        return p;
+      }, {} as Record<string, string>);
     }
 
     return undefined;
@@ -153,7 +151,7 @@ export async function getExtensionIdsForExtensionSlot(
 function getExtensionComponent(extensionName: string) {
   const component = extensions[extensionName];
 
-  if (!component) {
+  if (!component && extensionName && extensionName[0] === "/") {
     for (const name of Object.keys(extensions)) {
       const routeProps = extensions[name].matcher(extensionName);
 
