@@ -690,7 +690,7 @@ describe("getImplementerToolsConfig", () => {
         },
       },
       "bar-module": {
-        bar: { value: "baz", source: "my config source", default: "baz" },
+        bar: { value: "baz", source: "my config source", default: "quinn" },
       },
     });
   });
@@ -814,7 +814,7 @@ describe("extension slot config", () => {
     expect(extConfig).toStrictEqual({ remove: ["bar"] });
   });
 
-  it("does get returned by getImplementerToolsConfig", async () => {
+  it("is included in getImplementerToolsConfig", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: { default: 0 },
     });
@@ -826,10 +826,10 @@ describe("extension slot config", () => {
     const config = await Config.getImplementerToolsConfig();
     expect(config).toStrictEqual({
       "foo-module": {
-        foo: 0,
+        foo: { default: 0, value: 0, source: "default" },
         extensions: {
           fooSlot: {
-            remove: ["bar"],
+            remove: { value: ["bar"], source: "provided" },
           },
         },
       },
