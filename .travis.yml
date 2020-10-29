@@ -38,11 +38,11 @@ after_deploy:
   - >
     if [[ "$TRAVIS_BRANCH" == "master" ]]; then
       echo "Updating import map to point to new version of @openmrs/esm-devtools-app"
-      statuscode=$(curl --output /dev/null --write-out %{http_code} -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@openmrs/esm-devtools-app","url":"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-devtools-app/'$TRAVIS_COMMIT'/openmrs-esm-devtools.js" }' -X PATCH $DEPLOYER_HOST/services\?env=prod -H "Accept:application/json" -H "Content-Type:application/json")
+      statuscode=$(curl --output /dev/null --write-out %{http_code} -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@openmrs/esm-devtools-app","url":"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-devtools-app/'$TRAVIS_COMMIT'/openmrs-esm-devtools-app.js" }' -X PATCH $DEPLOYER_HOST/services\?env=prod -H "Accept:application/json" -H "Content-Type:application/json")
       echo "Deployment Status Code --> ${statuscode}"
       if [ "$statuscode" -ne 200 ]; then travis_terminate "$statuscode"; fi
       echo "Updating import map to point to new version of  @openmrs/esm-implementer-tools-app"
-      statuscode=$(curl --output /dev/null --write-out %{http_code} -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@openmrs/esm-implementer-tools-app","url":"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-implementer-tools-app/'$TRAVIS_COMMIT'/openmrs-esm-implementer-tools.js" }' -X PATCH $DEPLOYER_HOST/services\?env=prod -H "Accept:application/json" -H "Content-Type:application/json")
+      statuscode=$(curl --output /dev/null --write-out %{http_code} -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@openmrs/esm-implementer-tools-app","url":"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-implementer-tools-app/'$TRAVIS_COMMIT'/openmrs-esm-implementer-tools-app.js" }' -X PATCH $DEPLOYER_HOST/services\?env=prod -H "Accept:application/json" -H "Content-Type:application/json")
       echo "Deployment Status Code --> ${statuscode}"
       if [ "$statuscode" -ne 200 ]; then travis_terminate "$statuscode"; fi
     fi
