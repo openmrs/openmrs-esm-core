@@ -10,12 +10,12 @@ script:
   - echo "Folder name in Digital Ocean Spaces - $TRAVIS_COMMIT"
   - mkdir -p dist/@openmrs/esm-app-shell/$TRAVIS_COMMIT
   - mkdir -p dist/@openmrs/esm-app-shell/latest
-  - mkdir -p dist/@openmrs/esm-devtools/$TRAVIS_COMMIT
-  - mkdir -p dist/@openmrs/esm-implementer-tools/$TRAVIS_COMMIT
+  - mkdir -p dist/@openmrs/esm-devtools-app/$TRAVIS_COMMIT
+  - mkdir -p dist/@openmrs/esm-implementer-tools-app/$TRAVIS_COMMIT
   - cp packages/esm-app-shell/dist/*.* dist/@openmrs/esm-app-shell/$TRAVIS_COMMIT/
   - cp packages/esm-app-shell/dist/*.* dist/@openmrs/esm-app-shell/latest/
-  - cp packages/esm-devtools/dist/*.* dist/@openmrs/esm-devtools/$TRAVIS_COMMIT/
-  - cp packages/esm-implementer-tools/dist/*.* dist/@openmrs/esm-implementer-tools/$TRAVIS_COMMIT/
+  - cp packages/esm-devtools/dist/*.* dist/@openmrs/esm-devtools-app/$TRAVIS_COMMIT/
+  - cp packages/esm-implementer-tools/dist/*.* dist/@openmrs/esm-implementer-tools-app/$TRAVIS_COMMIT/
 deploy:
   - provider: s3
     access_key_id: "$DIGITAL_OCEAN_SPACES_KEY_ID"
