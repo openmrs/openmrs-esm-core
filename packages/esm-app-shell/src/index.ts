@@ -4,9 +4,16 @@ import { start } from "single-spa";
 import { createAppState, setupApiModule } from "@openmrs/esm-api";
 import { setupI18n } from "./locale";
 import { registerApp } from "./apps";
+import {
+  modulesWithMissingBackendModules,
+  modulesWithWrongBackendModulesVersion,
+  initInstalledBackendModules,
+  checkIfModulesAreInstalled,
+} from "./openmrs-backend-dependencies";
 import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import type { SpaConfig } from "./types";
+import { find } from "lodash-es";
 
 /**
  * Gets the microfrontend modules (apps). These are entries
@@ -35,10 +42,28 @@ function loadApps() {
  * This function returns an object that is used to feed Single
  * SPA.
  */
-function setupApps(modules: Array<[string, System.Module]>) {
+async function setupApps(modules: Array<[string, System.Module]>) {
+  await initInstalledBackendModules();
   for (const [appName, appExports] of modules) {
-    registerApp(appName, appExports);
+    if (appExports.backendDependencies) {
+      checkIfModulesAreInstalled({
+        backendDependencies: appExports.backendDependencies,
+        moduleName: appName,
+      });
+      if (
+        !find(modulesWithMissingBackendModules, { moduleName: appName }) &&
+        !find(modulesWithWrongBackendModulesVersion, { moduleName: appName })
+      ) {
+        registerApp(appName, appExports);
+      }
+    } else {
+      registerApp(appName, appExports);
+    }
   }
+  window.unresolvedBackendDeps = {
+    modulesWithMissingBackendModules: modulesWithMissingBackendModules,
+    modulesWithWrongBackendModulesVersion: modulesWithWrongBackendModulesVersion,
+  };
 }
 
 /**
