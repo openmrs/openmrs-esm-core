@@ -10,7 +10,7 @@ const modulesWithWrongBackendModulesVersion: MissingBackendModules[] = [];
 export async function initInstalledBackendModules() {
   try {
     const response = await fetchInstalledBackendModules();
-    installedBackendModules.push(response.data.results);
+    installedBackendModules.push(...response.data.results);
   } catch (err) {
     setTimeout(() => {
       throw err;
