@@ -67,7 +67,7 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
           {key}:{" "}
           <EditableValue
             path={path.concat([key])}
-            value={config?.[key] || []}
+            element={config?.[key] || { _value: [], _source: "default" }}
           />
         </div>
       ))}

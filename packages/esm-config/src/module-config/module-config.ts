@@ -96,9 +96,44 @@ export function processConfig(
 /**
  * @internal
  */
-export async function getDevtoolsConfig(): Promise<object> {
+export async function getImplementerToolsConfig(): Promise<object> {
+  let result = getSchemaWithValuesAndSources(R.clone(_schemas));
   await loadConfigs();
-  return getAllConfigsWithoutValidating();
+  const configsAndSources = [
+    ..._providedConfigs.map((c) => [c.config, c.source]),
+    [_importMapConfig, "config-file"],
+    [_temporaryConfig, "temporary config"],
+  ] as Array<[Config, string]>;
+  for (let [config, source] of configsAndSources) {
+    result = mergeConfigs([result, createValuesAndSourcesTree(config, source)]);
+  }
+  return result;
+}
+
+function getSchemaWithValuesAndSources(schema) {
+  if (schema.hasOwnProperty("default")) {
+    return { ...schema, _value: schema.default, _source: "default" };
+  } else {
+    return Object.fromEntries(
+      Object.entries(schema).map(([key, subtree]) => [
+        key,
+        getSchemaWithValuesAndSources(subtree),
+      ])
+    );
+  }
+}
+
+function createValuesAndSourcesTree(config: ConfigObject, source: string) {
+  if (isOrdinaryObject(config)) {
+    return Object.fromEntries(
+      Object.entries(config).map(([key, subtree]) => [
+        key,
+        createValuesAndSourcesTree(subtree, source),
+      ])
+    );
+  } else {
+    return { _value: config, _source: source };
+  }
 }
 
 /**
@@ -589,6 +624,8 @@ export interface Config extends Object {
 export interface ConfigObject extends Object {
   [key: string]: any;
 }
+
+export type ConfigValue = string | number | void | Array<any>;
 
 export interface ExtensionSlotConfig {
   add?: Array<{

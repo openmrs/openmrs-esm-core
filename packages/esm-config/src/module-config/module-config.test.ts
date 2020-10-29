@@ -666,19 +666,33 @@ describe("processConfig", () => {
   });
 });
 
-describe("getDevtoolsConfig", () => {
+describe("getImplementerToolsConfig", () => {
   afterEach(() => {
     Config.clearAll();
   });
 
-  it("returns the full config tree", async () => {
-    Config.defineConfigSchema("foo-module", { foo: { default: "qux" } });
+  it("returns all config schemas, with values and sources interpolated", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: { default: "qux", description: "All the foo", validators: [] },
+    });
     Config.defineConfigSchema("bar-module", { bar: { default: "quinn" } });
     const testConfig = { "bar-module": { bar: "baz" } };
-    Config.provide(testConfig);
-    const devConfig = await Config.getDevtoolsConfig();
-    expect(devConfig).toHaveProperty("foo-module", { foo: "qux" });
-    expect(devConfig).toHaveProperty("bar-module", { bar: "baz" });
+    Config.provide(testConfig, "my config source");
+    const devConfig = await Config.getImplementerToolsConfig();
+    expect(devConfig).toStrictEqual({
+      "foo-module": {
+        foo: {
+          _value: "qux",
+          _source: "default",
+          default: "qux",
+          description: "All the foo",
+          validators: [],
+        },
+      },
+      "bar-module": {
+        bar: { _value: "baz", _source: "my config source", default: "quinn" },
+      },
+    });
   });
 });
 
@@ -800,7 +814,7 @@ describe("extension slot config", () => {
     expect(extConfig).toStrictEqual({ remove: ["bar"] });
   });
 
-  it("does get returned by getImplementerToolsConfig", async () => {
+  it("is included in getImplementerToolsConfig", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: { default: 0 },
     });
@@ -809,13 +823,13 @@ describe("extension slot config", () => {
         extensions: { fooSlot: { remove: ["bar"] } },
       },
     });
-    const config = await Config.getDevtoolsConfig();
+    const config = await Config.getImplementerToolsConfig();
     expect(config).toStrictEqual({
       "foo-module": {
-        foo: 0,
+        foo: { default: 0, _value: 0, _source: "default" },
         extensions: {
           fooSlot: {
-            remove: ["bar"],
+            remove: { _value: ["bar"], _source: "provided" },
           },
         },
       },
