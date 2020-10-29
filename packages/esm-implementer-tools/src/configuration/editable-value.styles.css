@@ -12,38 +12,6 @@
   font-size: 11pt;
 }
 
-.autocomplete,
-.autocomplete > [role="combobox"] {
-  position: relative;
-  width: 60%;
-}
-
-.autocomplete > input {
-  width: 60%;
-}
-
-.autocomplete [role="listbox"] {
-  width: 60%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-flow: column wrap;
-  background-color: whitesmoke;
-  color: #fff;
-}
-
-.autocomplete li {
-  line-height: 0.75rem;
-  padding: 0.5em;
-  display: block;
-  border-bottom: 0.125rem solid #718096;
-  outline: 0;
-  margin: 0;
-  color: #000;
-}
-
-.autocomplete [role="option"]:hover {
-  background-color: #38a169;
-  border-color: #38a169;
-  color: #f7fafc;
+.overriddenValue {
+  color: lightblue;
 }

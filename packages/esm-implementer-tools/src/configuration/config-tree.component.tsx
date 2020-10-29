@@ -1,5 +1,7 @@
 import React from "react";
-import EditableValue from "./editable-value.component";
+import EditableValue, {
+  ConfigValueDescriptor,
+} from "./editable-value.component";
 import { ExtensionsConfigTree } from "./extensions-config-tree";
 import styles from "./configuration.styles.css";
 
@@ -18,7 +20,7 @@ export default function ConfigTree({ config, path = [] }: ConfigTreeProps) {
             const thisPath = path.concat([key]);
             return (
               <div key={key} className={styles.treeIndent}>
-                {isOrdinaryObject(value) ? (
+                {!value.hasOwnProperty("_value") ? (
                   <div>
                     {key}:
                     {thisPath.length === 1 && (
@@ -31,7 +33,7 @@ export default function ConfigTree({ config, path = [] }: ConfigTreeProps) {
                   </div>
                 ) : (
                   <div className={styles.treeLeaf}>
-                    {key}: <EditableValue path={thisPath} value={value} />
+                    {key}: <EditableValue path={thisPath} element={value} />
                   </div>
                 )}
               </div>
