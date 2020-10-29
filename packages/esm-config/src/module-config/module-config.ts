@@ -112,7 +112,7 @@ export async function getImplementerToolsConfig(): Promise<object> {
 
 function getSchemaWithValuesAndSources(schema) {
   if (schema.hasOwnProperty("default")) {
-    return { ...schema, value: schema.default, source: "default" };
+    return { ...schema, _value: schema.default, _source: "default" };
   } else {
     return Object.fromEntries(
       Object.entries(schema).map(([key, subtree]) => [
@@ -132,7 +132,7 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
       ])
     );
   } else {
-    return { value: config, source };
+    return { _value: config, _source: source };
   }
 }
 

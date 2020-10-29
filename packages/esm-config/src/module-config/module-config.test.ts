@@ -682,15 +682,15 @@ describe("getImplementerToolsConfig", () => {
     expect(devConfig).toStrictEqual({
       "foo-module": {
         foo: {
-          value: "qux",
-          source: "default",
+          _value: "qux",
+          _source: "default",
           default: "qux",
           description: "All the foo",
           validators: [],
         },
       },
       "bar-module": {
-        bar: { value: "baz", source: "my config source", default: "quinn" },
+        bar: { _value: "baz", _source: "my config source", default: "quinn" },
       },
     });
   });
@@ -826,10 +826,10 @@ describe("extension slot config", () => {
     const config = await Config.getImplementerToolsConfig();
     expect(config).toStrictEqual({
       "foo-module": {
-        foo: { default: 0, value: 0, source: "default" },
+        foo: { default: 0, _value: 0, _source: "default" },
         extensions: {
           fooSlot: {
-            remove: { value: ["bar"], source: "provided" },
+            remove: { _value: ["bar"], _source: "provided" },
           },
         },
       },
