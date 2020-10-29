@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-implementer-tools-app",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "license": "MPL-2.0",
   "description": "The admin interface for OpenMRS Frontend",
   "browser": "dist/openmrs-esm-implementer-tools-app.js",
@@ -38,23 +38,23 @@
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "^3.0.6",
-    "@openmrs/esm-config": "^3.0.6",
-    "@openmrs/esm-context": "^3.0.6",
-    "@openmrs/esm-error-handling": "^3.0.6",
-    "@openmrs/esm-extensions": "^3.0.6",
-    "i18next": "^19.6.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-i18next": "^11.7.0",
-    "rxjs": "^6.5.3",
-    "single-spa": "^4.4.1"
+    "@openmrs/esm-api": "^3.0.7",
+    "@openmrs/esm-config": "^3.0.7",
+    "@openmrs/esm-context": "^3.0.7",
+    "@openmrs/esm-error-handling": "^3.0.7",
+    "@openmrs/esm-extensions": "^3.0.7",
+    "react": "16.x",
+    "react-dom": "16.x",
+    "react-i18next": "11.x",
+    "rxjs": "6.x",
+    "single-spa": "4.x"
   },
   "devDependencies": {
     "identity-obj-proxy": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.7.2",
+    "rxjs": "^6.5.3",
     "single-spa": "^4.4.1"
   }
 }

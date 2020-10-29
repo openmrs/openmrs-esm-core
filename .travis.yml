@@ -10,8 +10,12 @@ script:
   - echo "Folder name in Digital Ocean Spaces - $TRAVIS_COMMIT"
   - mkdir -p dist/@openmrs/esm-app-shell/$TRAVIS_COMMIT
   - mkdir -p dist/@openmrs/esm-app-shell/latest
+  - mkdir -p dist/@openmrs/esm-devtools/$TRAVIS_COMMIT
+  - mkdir -p dist/@openmrs/esm-implementer-tools/$TRAVIS_COMMIT
   - cp packages/esm-app-shell/dist/*.* dist/@openmrs/esm-app-shell/$TRAVIS_COMMIT/
   - cp packages/esm-app-shell/dist/*.* dist/@openmrs/esm-app-shell/latest/
+  - cp packages/esm-devtools/dist/*.* dist/@openmrs/esm-devtools/$TRAVIS_COMMIT/
+  - cp packages/esm-implementer-tools/dist/*.* dist/@openmrs/esm-implementer-tools/$TRAVIS_COMMIT/
 deploy:
   - provider: s3
     access_key_id: "$DIGITAL_OCEAN_SPACES_KEY_ID"
@@ -30,3 +34,15 @@ deploy:
     edge: true
     on:
       tags: true
+after_deploy:
+  - >
+    if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+      echo "Updating import map to point to new version of @openmrs/esm-devtools-app"
+      statuscode=$(curl --output /dev/null --write-out %{http_code} -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@openmrs/esm-devtools-app","url":"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-devtools-app/'$TRAVIS_COMMIT'/openmrs-esm-devtools.js" }' -X PATCH $DEPLOYER_HOST/services\?env=prod -H "Accept:application/json" -H "Content-Type:application/json")
+      echo "Deployment Status Code --> ${statuscode}"
+      if [ "$statuscode" -ne 200 ]; then travis_terminate "$statuscode"; fi
+      echo "Updating import map to point to new version of  @openmrs/esm-implementer-tools-app"
+      statuscode=$(curl --output /dev/null --write-out %{http_code} -u $DEPLOYER_USERNAME:$DEPLOYER_PASSWORD -d '{ "service":"@openmrs/esm-implementer-tools-app","url":"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-implementer-tools-app/'$TRAVIS_COMMIT'/openmrs-esm-implementer-tools.js" }' -X PATCH $DEPLOYER_HOST/services\?env=prod -H "Accept:application/json" -H "Content-Type:application/json")
+      echo "Deployment Status Code --> ${statuscode}"
+      if [ "$statuscode" -ne 200 ]; then travis_terminate "$statuscode"; fi
+    fi
