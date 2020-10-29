@@ -3,9 +3,9 @@ import * as semver from "semver";
 import { difference } from "lodash-es";
 import { MissingBackendModules, Module, BackendModule } from "./types";
 
-let installedBackendModules: any[] = [];
-let modulesWithMissingBackendModules: MissingBackendModules[] = [];
-let modulesWithWrongBackendModulesVersion: MissingBackendModules[] = [];
+let installedBackendModules: Array<Record<string, string>> = [];
+const modulesWithMissingBackendModules: MissingBackendModules[] = [];
+const modulesWithWrongBackendModulesVersion: MissingBackendModules[] = [];
 
 export async function initInstalledBackendModules() {
   try {
@@ -45,7 +45,9 @@ function fetchInstalledBackendModules() {
   });
 }
 
-function getMissingBackendModules(requiredBackendModules: object) {
+function getMissingBackendModules(
+  requiredBackendModules: Record<string, string>
+) {
   const requiredBackendModulesUuids = Object.keys(requiredBackendModules);
   const installedBackendModuleUuids = installedBackendModules.map(
     (res) => res.uuid
@@ -59,7 +61,9 @@ function getMissingBackendModules(requiredBackendModules: object) {
   });
 }
 
-function getInstalledAndRequiredBackendModules(requiredBackendModules: object) {
+function getInstalledAndRequiredBackendModules(
+  requiredBackendModules: Record<string, string>
+) {
   const requiredModules = Object.keys(requiredBackendModules).map((key) => {
     return { uuid: key, version: requiredBackendModules[key] };
   });

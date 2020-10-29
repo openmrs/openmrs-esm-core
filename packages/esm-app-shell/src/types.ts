@@ -62,5 +62,5 @@ export interface MissingBackendModules {
 
 export interface Module {
   moduleName: string;
-  backendDependencies: object;
+  backendDependencies: Record<string, string>;
 }
