@@ -5,11 +5,12 @@ import { createAppState, setupApiModule } from "@openmrs/esm-api";
 import { setupI18n } from "./locale";
 import { registerApp } from "./apps";
 import {
-  sharedDependencies,
-  checkBackendDeps,
   modulesWithMissingBackendModules,
   modulesWithWrongBackendModulesVersion,
-} from "./dependencies";
+  initInstalledBackendModules,
+  checkIfModulesAreInstalled,
+} from "./openmrs-backend-dependencies";
+import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import type { SpaConfig } from "./types";
 import { find } from "lodash-es";
@@ -42,9 +43,13 @@ function loadApps() {
  * SPA.
  */
 async function setupApps(modules: Array<[string, System.Module]>) {
+  await initInstalledBackendModules();
   for (const [appName, appExports] of modules) {
     if (appExports.backendDependencies) {
-      await checkBackendDeps({ ...appExports, moduleName: appName });
+      checkIfModulesAreInstalled({
+        backendDependencies: appExports.backendDependencies,
+        moduleName: appName,
+      });
       if (
         !find(modulesWithMissingBackendModules, { moduleName: appName }) &&
         !find(modulesWithWrongBackendModulesVersion, { moduleName: appName })
@@ -55,6 +60,10 @@ async function setupApps(modules: Array<[string, System.Module]>) {
       registerApp(appName, appExports);
     }
   }
+  window.unresolvedBackendDeps = {
+    modulesWithMissingBackendModules: modulesWithMissingBackendModules,
+    modulesWithWrongBackendModulesVersion: modulesWithWrongBackendModulesVersion,
+  };
 }
 
 /**
