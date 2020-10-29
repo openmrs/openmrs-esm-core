@@ -3,14 +3,14 @@ import * as semver from "semver";
 import { difference } from "lodash-es";
 import { MissingBackendModules, Module, BackendModule } from "./types";
 
-let installedBackendModules: Array<Record<string, string>> = [];
+const installedBackendModules: Array<Record<string, string>> = [];
 const modulesWithMissingBackendModules: MissingBackendModules[] = [];
 const modulesWithWrongBackendModulesVersion: MissingBackendModules[] = [];
 
 export async function initInstalledBackendModules() {
   try {
     const response = await fetchInstalledBackendModules();
-    installedBackendModules = response.data.results;
+    installedBackendModules.push(response.data.results);
   } catch (err) {
     setTimeout(() => {
       throw err;
