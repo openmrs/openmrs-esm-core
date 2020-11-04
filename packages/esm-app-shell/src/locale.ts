@@ -65,7 +65,7 @@ export function setupI18n() {
                 return importPromise;
               })
               .then(
-                (json) => callback(json, null, { status: 200, data: json }),
+                (json) => callback(null, { status: 200, data: json }),
                 (err) => callback(err, { status: 404, data: null })
               );
           }
