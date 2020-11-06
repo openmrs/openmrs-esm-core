@@ -15,7 +15,7 @@
     "ci:publish": "lerna publish from-package --yes",
     "ci:release": "lerna version --no-git-tag-version",
     "verify": "lerna run lint && lerna run test && lerna run typescript",
-    "prettier": "prettier 'packages/**/src/**/*' --write"
+    "prettier": "prettier \"packages/**/src/**/*\" --write"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
