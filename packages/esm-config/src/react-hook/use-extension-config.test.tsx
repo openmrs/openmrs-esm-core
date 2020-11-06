@@ -28,7 +28,8 @@ describe(`useExtensionConfig`, () => {
           <ExtensionContext.Provider
             value={{
               extensionModuleName: "ext-module",
-              extensionSlotName: "fooSlot",
+              actualExtensionSlotName: "fooSlot",
+              attachedExtensionSlotName: "fooSlot",
               extensionId: "barExt#id1",
             }}
           >
@@ -59,7 +60,8 @@ describe(`useExtensionConfig`, () => {
         <ModuleNameContext.Provider value="slot-module">
           <ExtensionContext.Provider
             value={{
-              extensionSlotName: "fooSlot",
+              actualExtensionSlotName: "fooSlot",
+              attachedExtensionSlotName: "fooSlot",
               extensionModuleName: "foo-module",
               extensionId: "fooExt#id1",
             }}
@@ -68,7 +70,8 @@ describe(`useExtensionConfig`, () => {
           </ExtensionContext.Provider>
           <ExtensionContext.Provider
             value={{
-              extensionSlotName: "fooSlot",
+              actualExtensionSlotName: "fooSlot",
+              attachedExtensionSlotName: "fooSlot",
               extensionModuleName: "bar-module",
               extensionId: "barExt",
             }}
@@ -107,7 +110,8 @@ describe(`useExtensionConfig`, () => {
         <ModuleNameContext.Provider value="slot-1-module">
           <ExtensionContext.Provider
             value={{
-              extensionSlotName: "slot1",
+              actualExtensionSlotName: "slot1",
+              attachedExtensionSlotName: "slot1",
               extensionModuleName: "foo-module",
               extensionId: "fooExt",
             }}
@@ -118,7 +122,8 @@ describe(`useExtensionConfig`, () => {
         <ModuleNameContext.Provider value="slot-2-module">
           <ExtensionContext.Provider
             value={{
-              extensionSlotName: "slot2",
+              actualExtensionSlotName: "slot2",
+              attachedExtensionSlotName: "slot2",
               extensionModuleName: "foo-module",
               extensionId: "fooExt",
             }}
@@ -145,8 +150,9 @@ describe(`useExtensionConfig`, () => {
         <ModuleNameContext.Provider value="slot-module">
           <ExtensionContext.Provider
             value={{
+              actualExtensionSlotName: "fooSlot",
+              attachedExtensionSlotName: "fooSlot",
               extensionModuleName: "ext-module",
-              extensionSlotName: "fooSlot",
               extensionId: "barExt#id1",
             }}
           >

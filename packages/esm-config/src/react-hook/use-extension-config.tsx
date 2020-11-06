@@ -22,16 +22,18 @@ export function useExtensionConfig() {
       "Slot ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator in the module defining the extension slot."
     );
   }
-  const { extensionSlotName, extensionId, extensionModuleName } = useContext(
-    ExtensionContext
-  );
+  const {
+    attachedExtensionSlotName,
+    extensionId,
+    extensionModuleName,
+  } = useContext(ExtensionContext);
   const forceUpdate = useForceUpdate();
 
   function getConfigAndSetCache(slotModuleName: string) {
     return Config.getExtensionConfig(
       slotModuleName,
       extensionModuleName,
-      extensionSlotName,
+      attachedExtensionSlotName,
       extensionId
     )
       .then((res) => {
@@ -55,7 +57,7 @@ export function useExtensionConfig() {
     // So we check ahead of time and avoid creating a new promise.
     throw error;
   }
-  const uniqueExtensionLookupId = `${extensionSlotName}-${extensionId}`;
+  const uniqueExtensionLookupId = `${attachedExtensionSlotName}-${extensionId}`;
   if (!configCache[uniqueExtensionLookupId]) {
     // React will prevent the client component from rendering until the promise resolves
     throw getConfigAndSetCache(slotModuleName);

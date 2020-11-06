@@ -1,9 +1,13 @@
 import { getExtensionSlotConfig } from "@openmrs/esm-config";
-import { attach, getExtensionIdsForExtensionSlot, reset } from "./extensions";
+import {
+  attach,
+  getAttachedExtensionInfoForSlotAndConfig,
+  reset,
+} from "./extensions";
 
 const mockGetExtensionSlotConfig = getExtensionSlotConfig as jest.Mock;
 
-describe("getExtensionIdsForExtensionSlot", () => {
+describe("getAttachedExtensionInfoForSlotAndConfig", () => {
   afterEach(() => {
     reset();
   });
@@ -12,10 +16,35 @@ describe("getExtensionIdsForExtensionSlot", () => {
     attach("slotski", "foo");
     attach("slotski", "bar");
     attach("slotso", "foo");
-    const res1 = await getExtensionIdsForExtensionSlot("slotski", "moddy");
-    expect(res1).toStrictEqual(["foo", "bar"]);
-    const res2 = await getExtensionIdsForExtensionSlot("slotso", "moddy");
-    expect(res2).toStrictEqual(["foo"]);
+
+    const res1 = await getAttachedExtensionInfoForSlotAndConfig(
+      "slotski",
+      "moddy"
+    );
+    expect(res1).toStrictEqual([
+      {
+        actualExtensionSlotName: "slotski",
+        attachedExtensionSlotName: "slotski",
+        extensionId: "foo",
+      },
+      {
+        actualExtensionSlotName: "slotski",
+        attachedExtensionSlotName: "slotski",
+        extensionId: "bar",
+      },
+    ]);
+
+    const res2 = await getAttachedExtensionInfoForSlotAndConfig(
+      "slotso",
+      "moddy"
+    );
+    expect(res2).toStrictEqual([
+      {
+        extensionId: "foo",
+        attachedExtensionSlotName: "slotso",
+        actualExtensionSlotName: "slotso",
+      },
+    ]);
   });
 
   it("respects add, remove, and order elements of configuration", async () => {
@@ -32,7 +61,15 @@ describe("getExtensionIdsForExtensionSlot", () => {
           }
         : {}
     );
-    const res = await getExtensionIdsForExtensionSlot("slotski", "moddy");
-    expect(res).toStrictEqual(["baz", "quinn", "qux", "foo"]);
+    const res = await getAttachedExtensionInfoForSlotAndConfig(
+      "slotski",
+      "moddy"
+    );
+    expect(res.map((x) => x.extensionId)).toStrictEqual([
+      "baz",
+      "quinn",
+      "qux",
+      "foo",
+    ]);
   });
 });

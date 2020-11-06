@@ -9,11 +9,12 @@ import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
 import { configCacheNotifier } from "@openmrs/esm-config";
 import {
   renderExtension,
-  getExtensionIdsForExtensionSlot,
+  getAttachedExtensionInfoForSlotAndConfig,
   getIsUIEditorEnabled,
   getExtensionRegistration,
   registerExtensionSlot,
   unregisterExtensionSlot,
+  AttachedExtensionInfo,
 } from "./extensions";
 
 interface ExtensionSlotBaseProps {
@@ -33,7 +34,9 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   state,
   ...divProps
 }: ExtensionSlotReactProps) => {
-  const [extensionIds, setExtensionIds] = useState<Array<string>>([]);
+  const [attachedExtensionInfos, setAttachedExtensionInfos] = useState<
+    Array<AttachedExtensionInfo>
+  >([]);
   const slotModuleName = useContext(ModuleNameContext);
 
   if (!slotModuleName) {
@@ -42,16 +45,20 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
     );
   }
 
-  const getAndSetExtensionIds = useCallback(() => {
-    getExtensionIdsForExtensionSlot(
+  const getAttachedExtensionInfos = useCallback(() => {
+    getAttachedExtensionInfoForSlotAndConfig(
       extensionSlotName,
       slotModuleName
-    ).then((ids) => setExtensionIds(ids));
-  }, [getExtensionIdsForExtensionSlot, extensionSlotName, slotModuleName]);
+    ).then((ids) => setAttachedExtensionInfos(ids));
+  }, [
+    getAttachedExtensionInfoForSlotAndConfig,
+    extensionSlotName,
+    slotModuleName,
+  ]);
 
   useEffect(() => {
-    getAndSetExtensionIds();
-  }, [getAndSetExtensionIds, extensionSlotName, slotModuleName]);
+    getAttachedExtensionInfos();
+  }, [getAttachedExtensionInfos, extensionSlotName, slotModuleName]);
 
   useEffect(() => {
     registerExtensionSlot(slotModuleName, extensionSlotName);
@@ -60,7 +67,7 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
 
   useEffect(() => {
     const sub = configCacheNotifier.subscribe(() => {
-      getAndSetExtensionIds();
+      getAttachedExtensionInfos();
     });
     return () => sub.unsubscribe();
   }, [extensionSlotName]);
@@ -71,21 +78,28 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
 
   return (
     <div style={divStyle} {...divProps}>
-      {extensionIds.map((extensionId) => {
-        const extensionRegistration = getExtensionRegistration(extensionId);
-        return (
-          <ExtensionContext.Provider
-            key={extensionId}
-            value={{
-              extensionSlotName,
-              extensionId,
-              extensionModuleName: extensionRegistration.moduleName,
-            }}
-          >
-            {children ?? <ExtensionReact state={state} />}
-          </ExtensionContext.Provider>
-        );
-      })}
+      {attachedExtensionInfos.map(
+        ({
+          extensionId,
+          actualExtensionSlotName,
+          attachedExtensionSlotName,
+        }) => {
+          const extensionRegistration = getExtensionRegistration(extensionId);
+          return (
+            <ExtensionContext.Provider
+              key={extensionId}
+              value={{
+                actualExtensionSlotName,
+                attachedExtensionSlotName,
+                extensionId,
+                extensionModuleName: extensionRegistration.moduleName,
+              }}
+            >
+              {children ?? <ExtensionReact state={state} />}
+            </ExtensionContext.Provider>
+          );
+        }
+      )}
     </div>
   );
 };
@@ -96,20 +110,25 @@ export interface ExtensionReactProps {
 
 export const ExtensionReact: React.FC<ExtensionReactProps> = ({ state }) => {
   const ref = React.useRef<HTMLSlotElement>(null);
-  const { extensionSlotName, extensionId } = useContext(ExtensionContext);
+  const {
+    actualExtensionSlotName,
+    attachedExtensionSlotName,
+    extensionId,
+  } = useContext(ExtensionContext);
   // TODO: handle error if Extension not wrapped in ExtensionSlot
 
   React.useEffect(() => {
     if (ref.current) {
       return renderExtension(
         ref.current,
-        extensionSlotName,
+        actualExtensionSlotName,
+        attachedExtensionSlotName,
         extensionId,
         undefined,
         state
       );
     }
-  }, [extensionSlotName, extensionId]);
+  }, [actualExtensionSlotName, attachedExtensionSlotName, extensionId]);
 
   return getIsUIEditorEnabled() ? (
     <div style={{ outline: "0.125rem solid yellow" }}>
