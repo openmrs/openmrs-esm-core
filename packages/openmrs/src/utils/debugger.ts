@@ -1,10 +1,27 @@
 import { dirname } from "path";
 import { logInfo, logWarn } from "./logger";
 
+function getWebpackEnv() {
+  return {
+    ...process.env,
+    analyze: process.env.BUNDLE_ANALYZE === "true",
+    production: process.env.NODE_ENV === "production",
+    development: process.env.NODE_ENV === "development",
+  };
+}
+
+function loadConfig(configPath: string) {
+  const content = require(configPath);
+  if (typeof content === "function") {
+    return content(getWebpackEnv());
+  }
+  return content;
+}
+
 function debug(configPath: string, port: number) {
   const webpack = require("webpack");
   const WebpackDevServer = require("webpack-dev-server");
-  const config = require(configPath);
+  const config = loadConfig(configPath);
 
   const options = {
     ...config.devServer,
