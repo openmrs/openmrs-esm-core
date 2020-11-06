@@ -125,6 +125,13 @@ export async function getExtensionIdsForExtensionSlot(
   let extensionIds =
     attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
 
+  const extensionsMatchingUrlPattern = Object.keys(
+    extensions
+  ).filter((extensionId) =>
+    getExtensionComponent(extensionId).component?.matcher(extensionSlotName)
+  );
+  extensionIds.push(...extensionsMatchingUrlPattern);
+
   if (config.add) {
     extensionIds = extensionIds.concat(config.add);
   }
@@ -156,7 +163,7 @@ function getExtensionComponent(extensionName: string) {
       const routeProps = extensions[name].matcher(extensionName);
 
       if (routeProps) {
-        return { component: extensionName[name], routeProps };
+        return { component: extensions[name], routeProps };
       }
     }
   }

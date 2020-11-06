@@ -1,4 +1,5 @@
 import {
+  attach,
   ExtensionDefinition,
   PageDefinition,
   registerExtension,
@@ -28,6 +29,13 @@ function preprocessActivator(
   }
 }
 
+interface AppExtensionDefinition {
+  id?: string;
+  name?: string;
+  slot?: string;
+  load?(): Promise<any>;
+}
+
 export function registerApp(appName: string, appExports: System.Module) {
   const setup = appExports.setupOpenMRS;
 
@@ -35,7 +43,7 @@ export function registerApp(appName: string, appExports: System.Module) {
     const result = setup();
 
     if (result && typeof result === "object") {
-      const availableExtensions: Array<ExtensionDefinition> =
+      const availableExtensions: Array<AppExtensionDefinition> =
         result.extensions ?? [];
 
       const availablePages: Array<PageDefinition> = result.pages ?? [];
@@ -47,13 +55,42 @@ export function registerApp(appName: string, appExports: System.Module) {
         });
       }
 
-      for (const { name, load } of availableExtensions) {
-        registerExtension(appName, name, load);
+      for (const ext of availableExtensions) {
+        tryRegisterExtension(appName, ext);
       }
 
       for (const { route, load } of availablePages) {
         registerApplication(appName, load, preprocessActivator(route));
       }
     }
+  }
+}
+
+function tryRegisterExtension(appName: string, ext: AppExtensionDefinition) {
+  const name = ext.id ?? ext.name;
+  const slot = ext.slot;
+
+  if (!name) {
+    console.warn(
+      "A registered extension definition is missing an id and thus cannot be registered. " +
+        "To fix this, ensure that you define the `id` (or alternatively the `name`) field inside the extension definition.",
+      ext
+    );
+    return;
+  }
+
+  if (!ext.load) {
+    console.warn(
+      "A registered extension definition is missing the loader and thus cannot be registered. " +
+        "To fix this, ensure that you define a `load` function inside the extension definition.",
+      ext
+    );
+    return;
+  }
+
+  registerExtension(appName, name, ext.load);
+
+  if (slot) {
+    attach(slot, name);
   }
 }
