@@ -18,6 +18,12 @@ export interface ExtensionDefinition {
   load(): Promise<any>;
 }
 
+export interface AttachedExtensionInfo {
+  extensionId: string;
+  actualExtensionSlotName: string;
+  attachedExtensionSlotName: string;
+}
+
 export interface PageDefinition {
   route: string;
   load(): Promise<any>;
@@ -87,31 +93,38 @@ export function getExtensionRegistration(
   return extensions[extensionName];
 }
 
-export async function getExtensionIdsForExtensionSlot(
-  extensionSlotName: string,
+export async function getAttachedExtensionInfoForSlotAndConfig(
+  actualExtensionSlotName: string,
   moduleName: string
-): Promise<Array<{ extensionId: string; attachedExtensionSlotName: string }>> {
-  const config = await getExtensionSlotConfig(extensionSlotName, moduleName);
-  let extensionIds = getAttachedExtensionIdsMatchingSlotName(extensionSlotName);
+): Promise<Array<AttachedExtensionInfo>> {
+  const config = await getExtensionSlotConfig(
+    actualExtensionSlotName,
+    moduleName
+  );
+  let extensionIds = getAttachedExtensionInfoForSlot(actualExtensionSlotName);
 
   if (config.add) {
     extensionIds = extensionIds.concat(
       config.add.map((id) => ({
         extensionId: id,
-        attachedExtensionSlotName: extensionSlotName,
+        attachedExtensionSlotName: actualExtensionSlotName,
+        actualExtensionSlotName,
       }))
     );
   }
 
   if (config.remove) {
-    extensionIds = extensionIds.filter((n) => !config.remove?.includes(n.extensionId));
+    extensionIds = extensionIds.filter(
+      (n) => !config.remove?.includes(n.extensionId)
+    );
   }
 
   if (config.order) {
     extensionIds = extensionIds.sort((a, b) =>
       config.order?.includes(a.extensionId)
         ? config.order.includes(b.extensionId)
-          ? config.order.indexOf(a.extensionId) - config.order.indexOf(b.extensionId)
+          ? config.order.indexOf(a.extensionId) -
+            config.order.indexOf(b.extensionId)
           : -1
         : config.order?.includes(b.extensionId)
         ? 1
@@ -122,11 +135,14 @@ export async function getExtensionIdsForExtensionSlot(
   return extensionIds;
 }
 
-function getAttachedExtensionIdsMatchingSlotName(extensionSlotName: string) {
+function getAttachedExtensionInfoForSlot(
+  actualExtensionSlotName: string
+): Array<AttachedExtensionInfo> {
   const strictlyMatchingExtensions = (
-    attachedExtensionsForExtensionSlot[extensionSlotName] ?? []
+    attachedExtensionsForExtensionSlot[actualExtensionSlotName] ?? []
   ).map((extensionId) => ({
-    attachedExtensionSlotName: extensionSlotName,
+    attachedExtensionSlotName: actualExtensionSlotName,
+    actualExtensionSlotName,
     extensionId,
   }));
 
@@ -135,11 +151,16 @@ function getAttachedExtensionIdsMatchingSlotName(extensionSlotName: string) {
   )
     .filter(
       ([attachedExtensionSlotName]) =>
-        !!getActualRouteProps(attachedExtensionSlotName, extensionSlotName)
+        !attachedExtensionsForExtensionSlot[actualExtensionSlotName] &&
+        !!getActualRouteProps(
+          attachedExtensionSlotName,
+          actualExtensionSlotName
+        )
     )
     .flatMap(([attachedExtensionSlotName, extensionIds]) =>
       extensionIds.map((extensionId) => ({
         attachedExtensionSlotName,
+        actualExtensionSlotName,
         extensionId,
       }))
     );
@@ -164,7 +185,7 @@ export function renderExtension(
   const {
     extensionRegistration,
     routeProps,
-  } = tryGetExtensionRegistrationWithRouteProps(
+  } = tryGetExtensionRegistrationAndRouteProps(
     extensionId,
     actualExtensionSlotName,
     attachedExtensionSlotName
@@ -194,6 +215,23 @@ export function renderExtension(
   };
 }
 
+function tryGetExtensionRegistrationAndRouteProps(
+  extensionName: string,
+  actualExtensionSlotName: string,
+  attachedExtensionSlotName: string
+) {
+  const extensionRegistration = extensions[extensionName];
+  if (!extensionRegistration) {
+    return { extensionRegistration: undefined, routeProps: {} };
+  }
+
+  const routeProps = getActualRouteProps(
+    attachedExtensionSlotName,
+    actualExtensionSlotName
+  );
+  return { extensionRegistration, routeProps };
+}
+
 function getActualRouteProps(
   pathTemplate: string,
   url: string
@@ -210,23 +248,6 @@ function getActualRouteProps(
   }
 
   return undefined;
-}
-
-function tryGetExtensionRegistrationWithRouteProps(
-  extensionName: string,
-  actualExtensionSlotName: string,
-  attachedExtensionSlotName: string
-) {
-  const extensionRegistration = extensions[extensionName];
-  if (!extensionRegistration) {
-    return { extensionRegistration: undefined, routeProps: {} };
-  }
-
-  const routeProps = getActualRouteProps(
-    attachedExtensionSlotName,
-    actualExtensionSlotName
-  );
-  return { extensionRegistration, routeProps };
 }
 
 export function getIsUIEditorEnabled(): boolean {

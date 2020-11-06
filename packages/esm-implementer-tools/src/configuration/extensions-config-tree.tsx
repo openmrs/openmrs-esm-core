@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
 import {
   getExtensionSlotsForModule,
-  getExtensionIdsForExtensionSlot,
+  getAttachedExtensionInfoForSlotAndConfig,
 } from "@openmrs/esm-extensions";
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
@@ -23,16 +23,19 @@ export function ExtensionsConfigTree({
   const [
     extensionIdsForExtensionSlot,
     setExtensionIdsForExtensionSlot,
-  ] = useState({});
+  ] = useState<Record<string, Array<string>>>({});
 
   useEffect(() => {
     Promise.all(
       extensionSlotNames.map((slotName) =>
-        getExtensionIdsForExtensionSlot(slotName, moduleName)
+        getAttachedExtensionInfoForSlotAndConfig(slotName, moduleName)
       )
-    ).then((extensionIdsArr) => {
+    ).then((attachedExtensionInfos) => {
       const idsForExtSlot = Object.fromEntries(
-        extensionSlotNames.map((name, i) => [name, extensionIdsArr[i]])
+        extensionSlotNames.map((name, i) => [
+          name,
+          attachedExtensionInfos[i].map((x) => x.extensionId),
+        ])
       );
       setExtensionIdsForExtensionSlot(idsForExtSlot);
     });
