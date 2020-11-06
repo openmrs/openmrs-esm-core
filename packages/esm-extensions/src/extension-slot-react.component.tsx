@@ -33,7 +33,7 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   state,
   ...divProps
 }: ExtensionSlotReactProps) => {
-  const [extensionIds, setExtensionIds] = useState<Array<string>>([]);
+  const [extensionIds, setExtensionIds] = useState<Array<{attachedExtensionSlotName: string, extensionId: string}>>([]);
   const slotModuleName = useContext(ModuleNameContext);
 
   if (!slotModuleName) {
@@ -72,13 +72,14 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   return (
     <div style={divStyle} {...divProps}>
       {extensionIds.map((extensionId) => {
-        const extensionRegistration = getExtensionRegistration(extensionId);
+        const extensionRegistration = getExtensionRegistration(extensionId.extensionId);
         return (
           <ExtensionContext.Provider
-            key={extensionId}
+            key={extensionId.extensionId}
             value={{
-              extensionSlotName,
-              extensionId,
+              actualExtensionSlotName: extensionSlotName,
+              attachedExtensionSlotName: extensionId.attachedExtensionSlotName,
+              extensionId: extensionId.extensionId,
               extensionModuleName: extensionRegistration.moduleName,
             }}
           >
@@ -96,20 +97,21 @@ export interface ExtensionReactProps {
 
 export const ExtensionReact: React.FC<ExtensionReactProps> = ({ state }) => {
   const ref = React.useRef<HTMLSlotElement>(null);
-  const { extensionSlotName, extensionId } = useContext(ExtensionContext);
+  const { actualExtensionSlotName, attachedExtensionSlotName, extensionId } = useContext(ExtensionContext);
   // TODO: handle error if Extension not wrapped in ExtensionSlot
 
   React.useEffect(() => {
     if (ref.current) {
       return renderExtension(
         ref.current,
-        extensionSlotName,
+        actualExtensionSlotName,
+        attachedExtensionSlotName,
         extensionId,
         undefined,
         state
       );
     }
-  }, [extensionSlotName, extensionId]);
+  }, [actualExtensionSlotName, attachedExtensionSlotName, extensionId]);
 
   return getIsUIEditorEnabled() ? (
     <div style={{ outline: "0.125rem solid yellow" }}>

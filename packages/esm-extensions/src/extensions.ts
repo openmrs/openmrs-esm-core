@@ -9,37 +9,8 @@ const extensions: Record<string, ExtensionRegistration> = {};
 const attachedExtensionsForExtensionSlot: Record<string, Array<string>> = {};
 const extensionSlotsForModule: Record<string, Array<string>> = {};
 
-interface ExtensionLinkMatcher {
-  (link: string): undefined | Record<string, string>;
-}
-
 interface ExtensionRegistration extends ExtensionDefinition {
   moduleName: string;
-  matcher: ExtensionLinkMatcher;
-}
-
-/**
- * Generates a matcher for URL-like extension slot names.
- * Returns a function that provides the params (or an empty object)
- * if a match has been found. Otherwise undefined is returned.
- * @param url The URL to generate a matcher for.
- */
-function getUrlMatcher(url: string): ExtensionLinkMatcher {
-  const keys: Array<Key> = [];
-  const ptr = pathToRegexp(url, keys);
-
-  return (link) => {
-    const result = ptr.exec(link);
-
-    if (result) {
-      return keys.reduce((p, c, i) => {
-        p[c.name] = result[i + 1];
-        return p;
-      }, {} as Record<string, string>);
-    }
-
-    return undefined;
-  };
 }
 
 export interface ExtensionDefinition {
@@ -72,7 +43,6 @@ export function registerExtension(
     name,
     load,
     moduleName,
-    matcher: name.startsWith("/") ? getUrlMatcher(name) : () => undefined,
   };
 }
 
@@ -120,33 +90,30 @@ export function getExtensionRegistration(
 export async function getExtensionIdsForExtensionSlot(
   extensionSlotName: string,
   moduleName: string
-): Promise<Array<string>> {
+): Promise<Array<{ extensionId: string; attachedExtensionSlotName: string }>> {
   const config = await getExtensionSlotConfig(extensionSlotName, moduleName);
-  let extensionIds =
-    attachedExtensionsForExtensionSlot[extensionSlotName] ?? [];
-
-  const extensionsMatchingUrlPattern = Object.keys(
-    extensions
-  ).filter((extensionId) =>
-    getExtensionComponent(extensionId).component?.matcher(extensionSlotName)
-  );
-  extensionIds.push(...extensionsMatchingUrlPattern);
+  let extensionIds = getAttachedExtensionIdsMatchingSlotName(extensionSlotName);
 
   if (config.add) {
-    extensionIds = extensionIds.concat(config.add);
+    extensionIds = extensionIds.concat(
+      config.add.map((id) => ({
+        extensionId: id,
+        attachedExtensionSlotName: extensionSlotName,
+      }))
+    );
   }
 
   if (config.remove) {
-    extensionIds = extensionIds.filter((n) => !config.remove?.includes(n));
+    extensionIds = extensionIds.filter((n) => !config.remove?.includes(n.extensionId));
   }
 
   if (config.order) {
     extensionIds = extensionIds.sort((a, b) =>
-      config.order?.includes(a)
-        ? config.order.includes(b)
-          ? config.order.indexOf(a) - config.order.indexOf(b)
+      config.order?.includes(a.extensionId)
+        ? config.order.includes(b.extensionId)
+          ? config.order.indexOf(a.extensionId) - config.order.indexOf(b.extensionId)
           : -1
-        : config.order?.includes(b)
+        : config.order?.includes(b.extensionId)
         ? 1
         : 0
     );
@@ -155,20 +122,29 @@ export async function getExtensionIdsForExtensionSlot(
   return extensionIds;
 }
 
-function getExtensionComponent(extensionName: string) {
-  const component = extensions[extensionName];
+function getAttachedExtensionIdsMatchingSlotName(extensionSlotName: string) {
+  const strictlyMatchingExtensions = (
+    attachedExtensionsForExtensionSlot[extensionSlotName] ?? []
+  ).map((extensionId) => ({
+    attachedExtensionSlotName: extensionSlotName,
+    extensionId,
+  }));
 
-  if (!component && extensionName && extensionName[0] === "/") {
-    for (const name of Object.keys(extensions)) {
-      const routeProps = extensions[name].matcher(extensionName);
+  const pathTemplateMatchingExtensions = Object.entries(
+    attachedExtensionsForExtensionSlot
+  )
+    .filter(
+      ([attachedExtensionSlotName]) =>
+        !!getActualRouteProps(attachedExtensionSlotName, extensionSlotName)
+    )
+    .flatMap(([attachedExtensionSlotName, extensionIds]) =>
+      extensionIds.map((extensionId) => ({
+        attachedExtensionSlotName,
+        extensionId,
+      }))
+    );
 
-      if (routeProps) {
-        return { component: extensions[name], routeProps };
-      }
-    }
-  }
-
-  return { component, routeProps: {} };
+  return [...strictlyMatchingExtensions, ...pathTemplateMatchingExtensions];
 }
 
 /**
@@ -178,18 +154,26 @@ function getExtensionComponent(extensionName: string) {
  */
 export function renderExtension(
   domElement: HTMLElement,
-  extensionSlotName: string, // will be used to look up configuration info
+  actualExtensionSlotName: string,
+  attachedExtensionSlotName: string,
   extensionId: string,
   renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x,
   additionalProps: Record<string, any> = {}
 ): CancelLoading {
   const extensionName = extensionId.split("#")[0];
-  const { component, routeProps } = getExtensionComponent(extensionName);
+  const {
+    extensionRegistration,
+    routeProps,
+  } = tryGetExtensionRegistrationWithRouteProps(
+    extensionId,
+    actualExtensionSlotName,
+    attachedExtensionSlotName
+  );
   let active = true;
 
   if (domElement) {
-    if (component) {
-      component.load().then(
+    if (extensionRegistration) {
+      extensionRegistration.load().then(
         ({ default: result }) =>
           active &&
           mountRootParcel(renderFunction(result) as any, {
@@ -200,7 +184,7 @@ export function renderExtension(
       );
     } else {
       throw Error(
-        `Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`
+        `Couldn't find extension '${extensionName}' to attach to '${actualExtensionSlotName}'`
       );
     }
   }
@@ -208,6 +192,41 @@ export function renderExtension(
   return () => {
     active = false;
   };
+}
+
+function getActualRouteProps(
+  pathTemplate: string,
+  url: string
+): object | undefined {
+  const keys: Array<Key> = [];
+  const ptr = pathToRegexp(pathTemplate, keys);
+  const result = ptr.exec(url);
+
+  if (result) {
+    return keys.reduce((p, c, i) => {
+      p[c.name] = result[i + 1];
+      return p;
+    }, {} as Record<string, string>);
+  }
+
+  return undefined;
+}
+
+function tryGetExtensionRegistrationWithRouteProps(
+  extensionName: string,
+  actualExtensionSlotName: string,
+  attachedExtensionSlotName: string
+) {
+  const extensionRegistration = extensions[extensionName];
+  if (!extensionRegistration) {
+    return { extensionRegistration: undefined, routeProps: {} };
+  }
+
+  const routeProps = getActualRouteProps(
+    attachedExtensionSlotName,
+    actualExtensionSlotName
+  );
+  return { extensionRegistration, routeProps };
 }
 
 export function getIsUIEditorEnabled(): boolean {
