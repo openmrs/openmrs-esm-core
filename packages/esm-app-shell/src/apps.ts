@@ -33,7 +33,7 @@ interface AppExtensionDefinition {
   id?: string;
   name?: string;
   slot?: string;
-  load?(): Promise<any>;
+  load(): Promise<any>;
 }
 
 export function registerApp(appName: string, appExports: System.Module) {
