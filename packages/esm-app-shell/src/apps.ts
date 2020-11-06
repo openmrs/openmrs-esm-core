@@ -29,12 +29,19 @@ function preprocessActivator(
   }
 }
 
-interface AppExtensionDefinition {
-  id?: string;
-  name?: string;
-  slot?: string;
+interface ModernAppExtensionDefinition {
+  id: string;
+  slot: string;
   load(): Promise<any>;
 }
+
+interface LegacyAppExtensionDefinition {
+  name: string;
+  load(): Promise<any>;
+}
+
+type AppExtensionDefinition = ModernAppExtensionDefinition &
+  LegacyAppExtensionDefinition;
 
 export function registerApp(appName: string, appExports: System.Module) {
   const setup = appExports.setupOpenMRS;
@@ -43,7 +50,7 @@ export function registerApp(appName: string, appExports: System.Module) {
     const result = setup();
 
     if (result && typeof result === "object") {
-      const availableExtensions: Array<AppExtensionDefinition> =
+      const availableExtensions: Array<Partial<AppExtensionDefinition>> =
         result.extensions ?? [];
 
       const availablePages: Array<PageDefinition> = result.pages ?? [];
@@ -66,7 +73,10 @@ export function registerApp(appName: string, appExports: System.Module) {
   }
 }
 
-function tryRegisterExtension(appName: string, ext: AppExtensionDefinition) {
+function tryRegisterExtension(
+  appName: string,
+  ext: Partial<AppExtensionDefinition>
+) {
   const name = ext.id ?? ext.name;
   const slot = ext.slot;
 
