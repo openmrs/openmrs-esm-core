@@ -19,8 +19,29 @@ export interface ExtensionDefinition {
 }
 
 export interface AttachedExtensionInfo {
+  /** The ID of the extension which is attached to the slot. */
   extensionId: string;
+  /**
+   * The *actual* name of the extension slot which is defined when the slot is created.
+   *
+   * If the extension slot has a "normal" name (e.g. `my-extension-slot`), this is equal to `attachedExtensionSlot`.
+   *
+   * If the extension slot has a URL-like name, this `actualExtensionSlotName`'s path parameters have
+   * actual values (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
+   * This is in contrast to the `attachedExtensionSlotName` which defines the path parameters
+   * (`e.g. `/mySlot/:uuidParameter`).
+   */
   actualExtensionSlotName: string;
+  /**
+   * The name which has been used to attach the extension to the extension slot.
+   *
+   * If the extension slot has a "normal" name (e.g. `my-extension-slot`), this is equal to `actualExtensionSlotName`.
+   *
+   * If the extension slot has a URL-like name, this `attachedExtensionSlotName`'s defines the path parameters
+   * (`e.g. `/mySlot/:uuidParameter`).
+   * This is in contrast to the `actualExtensionSlotName` where the parameters have been replaced with actual values
+   * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
+   */
   attachedExtensionSlotName: string;
 }
 
@@ -93,6 +114,16 @@ export function getExtensionRegistration(
   return extensions[extensionName];
 }
 
+/**
+ * Returns information describing all extensions which can be rendered into an extension slot with
+ * the specified name.
+ * The returned information describe the extension itself, as well as the extension slot name(s)
+ * with which it has been attached.
+ * @param actualExtensionSlotName The extension slot name for which matching extension info should be returned.
+ * For URL like extension slots, this should be the name where parameters have been replaced with actual values
+ * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
+ * @param moduleName The module name. Used for applying extension-specific config values to the result.
+ */
 export async function getAttachedExtensionInfoForSlotAndConfig(
   actualExtensionSlotName: string,
   moduleName: string
