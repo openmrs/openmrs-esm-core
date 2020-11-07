@@ -339,6 +339,7 @@ function validateConfigSchema(
   const updateMessage = `Please verify that you are running the latest version and, if so, alert the maintainer.`;
   for (let key of Object.keys(schema)) {
     const thisKeyPath = keyPath + (keyPath && ".") + key;
+    const schemaPart = schema[key] as ConfigSchema;
     if (!["description", "validators"].includes(key)) {
       // allow higher-level description and validators
       if (!isOrdinaryObject(schema[key])) {
@@ -347,19 +348,16 @@ function validateConfigSchema(
         );
         continue;
       }
-      if (!schema[key].hasOwnProperty("default")) {
+      if (!schemaPart.hasOwnProperty("default")) {
         // recurse for nested config keys
-        validateConfigSchema(moduleName, schema[key], thisKeyPath);
+        validateConfigSchema(moduleName, schemaPart, thisKeyPath);
       }
-      if (hasObjectSchema(schema[key].elements)) {
-        validateConfigSchema(
-          moduleName,
-          schema[key].elements,
-          thisKeyPath + ".elements"
-        );
+      const elements = schemaPart.elements;
+      if (hasObjectSchema(elements)) {
+        validateConfigSchema(moduleName, elements, thisKeyPath + ".elements");
       }
-      if (schema[key].validators) {
-        for (let validator of schema[key].validators) {
+      if (schemaPart.validators) {
+        for (let validator of schemaPart.validators) {
           if (typeof validator !== "function") {
             console.error(
               `${moduleName} has invalid validator for key '${thisKeyPath}' ${updateMessage}.` +
@@ -369,17 +367,18 @@ function validateConfigSchema(
           }
         }
       }
-      if (schema[key].type && !configValueTypes.includes(schema[key].type)) {
+      const valueType = schemaPart.type;
+      if (valueType && !Object.values(Type).includes(valueType)) {
         console.error(
           `${moduleName} has invalid type for key '${thisKeyPath}' ${updateMessage}.` +
-            `\n\nIf you're the maintainer: the allowed types are ${configValueTypes.join(
-              ", "
-            )}. ` +
-            `Received '${schema[key].type}'`
+            `\n\nIf you're the maintainer: the allowed types are ${Object.values(
+              Type
+            ).join(", ")}. ` +
+            `Received '${valueType}'`
         );
       }
       if (
-        Object.keys(schema[key]).every((k) =>
+        Object.keys(schemaPart).every((k) =>
           ["description", "validators", "elements", "type"].includes(k)
         ) &&
         !keyPath.includes(".elements")
@@ -387,17 +386,18 @@ function validateConfigSchema(
         console.error(
           `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
             `\n\nIf you're the maintainer: all config elements must have a default. ` +
-            `Received ${JSON.stringify(schema[key])}`
+            `Received ${JSON.stringify(schemaPart)}`
         );
       }
       if (
-        schema[key].elements &&
-        !["Array", "Object"].includes(schema[key].type)
+        elements &&
+        valueType &&
+        ![Type.Array, Type.Object].includes(valueType)
       ) {
         console.error(
           `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
             `\n\nIf you're the maintainer: the 'elements' key only works with 'type' equal to 'Array' or 'Object'. ` +
-            `Received ${JSON.stringify(schema[key].type)}`
+            `Received ${JSON.stringify(valueType)}`
         );
       }
     }
@@ -461,6 +461,7 @@ const validateConfig = (
 ) => {
   for (let [key, value] of Object.entries(config)) {
     const thisKeyPath = keyPath + "." + key;
+    const schemaPart = schema[key] as ConfigSchema;
     if (!schema.hasOwnProperty(key)) {
       if (key !== "extensions") {
         console.error(
@@ -469,21 +470,20 @@ const validateConfig = (
       }
       continue;
     }
-    checkType(thisKeyPath, schema[key].type, value);
-    runValidators(thisKeyPath, schema[key].validators, value);
+    checkType(thisKeyPath, schemaPart.type, value);
+    runValidators(thisKeyPath, schemaPart.validators, value);
     if (isOrdinaryObject(value)) {
       // structurally validate only if there's elements specified
       // or there's a `default` value, which indicates a freeform object
-      if (schema[key].type === "Object") {
-        validateDictionary(schema[key], value, thisKeyPath);
-      } else if (!schema[key].hasOwnProperty("default")) {
+      if (schemaPart.type === Type.Object) {
+        validateDictionary(schemaPart, value, thisKeyPath);
+      } else if (!schemaPart.hasOwnProperty("default")) {
         // recurse to validate nested object structure
-        const schemaPart = schema[key];
         validateConfig(schemaPart, value, thisKeyPath);
       }
     } else {
-      if (schema[key].type === "Array") {
-        validateArray(schema[key], value, thisKeyPath);
+      if (schemaPart.type === Type.Array) {
+        validateArray(schemaPart, value, thisKeyPath);
       }
     }
   }
@@ -522,9 +522,9 @@ function validateArray(
   }
 }
 
-function checkType(keyPath: string, type: ConfigValueType, value: any) {
+function checkType(keyPath: string, type: Type | undefined, value: any) {
   if (type) {
-    const validator: Record<ConfigValueType, Function> = {
+    const validator: Record<string, Function> = {
       Array: isArray,
       Boolean: isBoolean,
       ConceptUuid: isUuid,
@@ -537,7 +537,11 @@ function checkType(keyPath: string, type: ConfigValueType, value: any) {
   }
 }
 
-function runValidators(keyPath: string, validators: Function[], value: any) {
+function runValidators(
+  keyPath: string,
+  validators: Function[] | undefined,
+  value: any
+) {
   if (validators) {
     for (let validator of validators) {
       const validatorResult = validator(value);
@@ -556,34 +560,35 @@ function runValidators(keyPath: string, validators: Function[], value: any) {
 const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   const config = R.clone(inputConfig);
   for (let key of Object.keys(schema)) {
-    if (schema[key].hasOwnProperty("default")) {
-      // We assume that schema[key] defines a config value, since it has
+    const schemaPart = schema[key] as ConfigSchema;
+    if (schemaPart.hasOwnProperty("default")) {
+      // We assume that schemaPart defines a config value, since it has
       // a property `default`.
       if (!config.hasOwnProperty(key)) {
-        const devDefault = schema[key]["devDefault"] || schema[key]["default"];
-        config[key] = getAreDevDefaultsOn()
+        const devDefault = schemaPart["devDefault"] || schemaPart["default"];
+        (config[key] as any) = getAreDevDefaultsOn()
           ? devDefault
-          : schema[key]["default"];
+          : schemaPart["default"];
       }
       // We also check if it is an object or array with object elements, in which case we recurse
-      if (hasObjectSchema(schema[key].elements)) {
-        if (schema[key].type == "Array") {
+      const elements = schemaPart.elements;
+      if (hasObjectSchema(elements)) {
+        if (schemaPart.type == Type.Array) {
           const configWithDefaults = config[key].map((conf) =>
-            setDefaults(schema[key].elements, conf)
+            setDefaults(elements, conf)
           );
           config[key] = configWithDefaults;
-        } else if (schema[key].type == "Object") {
+        } else if (schemaPart.type == Type.Object) {
           const configWithDefaults = Object.values(config[key]).map((conf) =>
-            setDefaults(schema[key].elements, conf)
+            setDefaults(elements, conf)
           );
           config[key] = configWithDefaults;
         }
       }
-    } else if (isOrdinaryObject(schema[key])) {
-      // Since schema[key] has no property "default", if it's an ordinary object
+    } else if (isOrdinaryObject(schemaPart)) {
+      // Since schemaPart has no property "default", if it's an ordinary object
       // (unlike, importantly, the validators array), we assume it is a parent config property.
       // We recurse to config[key] and schema[key]. Default config[key] to {}.
-      const schemaPart = schema[key];
       const configPart = config.hasOwnProperty(key) ? config[key] : {};
       if (isOrdinaryObject(configPart)) {
         config[key] = setDefaults(schemaPart, configPart);
@@ -605,9 +610,11 @@ function updateTemporaryConfigValueFromLocalStorage() {
   }
 }
 
-function hasObjectSchema(elementsSchema: Object | undefined) {
+function hasObjectSchema(
+  elementsSchema: Object | undefined
+): elementsSchema is ConfigSchema {
   return (
-    elementsSchema &&
+    elementsSchema != null &&
     Object.keys(elementsSchema).filter(
       (e) => !["default", "validators"].includes(e)
     ).length > 0
@@ -634,8 +641,15 @@ export function clearAll() {
  * Types
  */
 
-export interface ConfigSchema extends Object {
-  [key: string]: any;
+// Full-powered typing for Config and Schema trees depends on being able to
+// have types like `string not "default"`. There is an experimental PR
+// for this feature, https://github.com/microsoft/TypeScript/pull/29317
+// But it is not likely to be merged any time terribly soon.
+export interface ConfigSchema {
+  [key: string]: ConfigSchema | ConfigValue;
+  type?: Type;
+  validators?: Function[];
+  elements?: ConfigSchema;
 }
 
 export interface Config extends Object {
@@ -646,18 +660,17 @@ export interface ConfigObject extends Object {
   [key: string]: any;
 }
 
-export type ConfigValue = string | number | void | Array<any>;
+export type ConfigValue = string | number | boolean | void | Array<any>;
 
-export const configValueTypes = [
-  "Array",
-  "Boolean",
-  "ConceptUuid",
-  "Number",
-  "Object",
-  "String",
-  "UUID",
-] as const;
-export type ConfigValueType = typeof configValueTypes[number]; // = "Array" | "Boolean" | "ConceptUuid" | ...
+export enum Type {
+  Array = "Array",
+  Boolean = "Boolean",
+  ConceptUuid = "ConceptUuid",
+  Number = "Number",
+  Object = "Object",
+  String = "String",
+  UUID = "UUID",
+}
 
 export interface ExtensionSlotConfig {
   add?: Array<{
