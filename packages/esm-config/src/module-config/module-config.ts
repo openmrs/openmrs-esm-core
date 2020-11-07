@@ -1,5 +1,13 @@
 import * as R from "ramda";
 import { invalidateConfigCache } from "../react-hook/config-cache";
+import {
+  isArray,
+  isBoolean,
+  isUuid,
+  isNumber,
+  isObject,
+  isString,
+} from "../validators/type-validators";
 
 // The input configs
 type ProvidedConfig = {
@@ -332,6 +340,7 @@ function validateConfigSchema(
   for (let key of Object.keys(schema)) {
     const thisKeyPath = keyPath + (keyPath && ".") + key;
     if (!["description", "validators"].includes(key)) {
+      // allow higher-level description and validators
       if (!isOrdinaryObject(schema[key])) {
         console.error(
           `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}`
@@ -342,42 +351,54 @@ function validateConfigSchema(
         // recurse for nested config keys
         validateConfigSchema(moduleName, schema[key], thisKeyPath);
       }
-      if (schema[key].hasOwnProperty("arrayElements")) {
-        if (hasObjectSchema(schema[key].arrayElements)) {
-          validateConfigSchema(
-            moduleName,
-            schema[key].arrayElements,
-            thisKeyPath + ".arrayElements"
-          );
+      if (hasObjectSchema(schema[key].elements)) {
+        validateConfigSchema(
+          moduleName,
+          schema[key].elements,
+          thisKeyPath + ".elements"
+        );
+      }
+      if (schema[key].validators) {
+        for (let validator of schema[key].validators) {
+          if (typeof validator !== "function") {
+            console.error(
+              `${moduleName} has invalid validator for key '${thisKeyPath}' ${updateMessage}.` +
+                `\n\nIf you're the maintainer: validators must be functions that return either ` +
+                `undefined or an error string. Received ${validator}.`
+            );
+          }
         }
+      }
+      if (schema[key].type && !configValueTypes.includes(schema[key].type)) {
+        console.error(
+          `${moduleName} has invalid type for key '${thisKeyPath}' ${updateMessage}.` +
+            `\n\nIf you're the maintainer: the allowed types are ${configValueTypes.join(
+              ", "
+            )}. ` +
+            `Received '${schema[key].type}'`
+        );
       }
       if (
         Object.keys(schema[key]).every((k) =>
-          [
-            "description",
-            "validators",
-            "arrayElements",
-            "dictionaryElements",
-          ].includes(k)
+          ["description", "validators", "elements", "type"].includes(k)
         ) &&
-        !keyPath.includes(".arrayElements")
+        !keyPath.includes(".elements")
       ) {
         console.error(
           `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
-            `\n\nIf you're the maintainer: all config elements must have a default. Received ${JSON.stringify(
-              schema[key]
-            )}`
+            `\n\nIf you're the maintainer: all config elements must have a default. ` +
+            `Received ${JSON.stringify(schema[key])}`
         );
       }
-    } else if (key === "validators") {
-      for (let validator of schema[key]) {
-        if (typeof validator !== "function") {
-          console.error(
-            `${moduleName} has invalid validator for key '${keyPath}' ${updateMessage}.` +
-              `\n\nIf you're the maintainer: validators must be functions that return either ` +
-              `undefined or an error string. Received ${validator}.`
-          );
-        }
+      if (
+        schema[key].elements &&
+        !["Array", "Object"].includes(schema[key].type)
+      ) {
+        console.error(
+          `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
+            `\n\nIf you're the maintainer: the 'elements' key only works with 'type' equal to 'Array' or 'Object'. ` +
+            `Received ${JSON.stringify(schema[key].type)}`
+        );
       }
     }
   }
@@ -401,16 +422,6 @@ async function getImportMapConfigFile(): Promise<void> {
       throw e;
     }
   }
-}
-
-function getAllConfigsWithoutValidating() {
-  const configs = mergeConfigs(getProvidedConfigs());
-  const resultConfigs = {};
-  for (let [moduleName, schema] of Object.entries(_schemas)) {
-    const config = configs[moduleName] || {};
-    resultConfigs[moduleName] = setDefaults(schema, config);
-  }
-  return resultConfigs;
 }
 
 function getConfigForModule(moduleName: string): ConfigObject {
@@ -458,19 +469,20 @@ const validateConfig = (
       }
       continue;
     }
+    checkType(thisKeyPath, schema[key].type, value);
     runValidators(thisKeyPath, schema[key].validators, value);
     if (isOrdinaryObject(value)) {
-      // structurally validate only if there's dictionaryElements specified
+      // structurally validate only if there's elements specified
       // or there's a `default` value, which indicates a freeform object
-      if (schema[key].dictionaryElements) {
+      if (schema[key].type === "Object") {
         validateDictionary(schema[key], value, thisKeyPath);
-      } else if (!schema[key].default) {
+      } else if (!schema[key].hasOwnProperty("default")) {
         // recurse to validate nested object structure
         const schemaPart = schema[key];
         validateConfig(schemaPart, value, thisKeyPath);
       }
     } else {
-      if (schema[key].arrayElements) {
+      if (schema[key].type === "Array") {
         validateArray(schema[key], value, thisKeyPath);
       }
     }
@@ -482,12 +494,10 @@ function validateDictionary(
   config: ConfigObject,
   keyPath: string
 ) {
-  for (let [key, value] of Object.entries(config)) {
-    validateConfig(
-      dictionarySchema.dictionaryElements,
-      value,
-      `${keyPath}.${key}`
-    );
+  if (dictionarySchema.elements) {
+    for (let [key, value] of Object.entries(config)) {
+      validateConfig(dictionarySchema.elements, value, `${keyPath}.${key}`);
+    }
   }
 }
 
@@ -496,34 +506,38 @@ function validateArray(
   value: ConfigObject,
   keyPath: string
 ) {
-  // value should be an array
-  if (!Array.isArray(value)) {
-    console.error(
-      `Invalid configuration value ${value} for ${keyPath}: value must be an array.`
-    );
-    return;
-  }
   // if there is an array element object schema, verify that elements match it
-  if (hasObjectSchema(arraySchema.arrayElements)) {
+  if (hasObjectSchema(arraySchema.elements)) {
     for (let i = 0; i < value.length; i++) {
-      const arrayElement = value[i];
-      validateConfig(
-        arraySchema.arrayElements,
-        arrayElement,
-        `${keyPath}[${i}]`
-      );
+      validateConfig(arraySchema.elements, value[i], `${keyPath}[${i}]`);
     }
   }
   for (let i = 0; i < value.length; i++) {
+    checkType(`${keyPath}[${i}]`, arraySchema.elements?.type, value[i]);
     runValidators(
       `${keyPath}[${i}]`,
-      arraySchema.arrayElements.validators,
+      arraySchema.elements?.validators,
       value[i]
     );
   }
 }
 
-function runValidators(keyPath, validators, value) {
+function checkType(keyPath: string, type: ConfigValueType, value: any) {
+  if (type) {
+    const validator: Record<ConfigValueType, Function> = {
+      Array: isArray,
+      Boolean: isBoolean,
+      ConceptUuid: isUuid,
+      Number: isNumber,
+      Object: isObject,
+      String: isString,
+      UUID: isUuid,
+    };
+    runValidators(keyPath, [validator[type]], value);
+  }
+}
+
+function runValidators(keyPath: string, validators: Function[], value: any) {
   if (validators) {
     for (let validator of validators) {
       const validatorResult = validator(value);
@@ -551,15 +565,19 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
           ? devDefault
           : schema[key]["default"];
       }
-      // We also check if it is an array with object elements, in which case we recurse
-      if (
-        schema[key].hasOwnProperty("arrayElements") &&
-        hasObjectSchema(schema[key].arrayElements)
-      ) {
-        const configWithDefaults = config[key].map((conf) =>
-          setDefaults(schema[key].arrayElements, conf)
-        );
-        config[key] = configWithDefaults;
+      // We also check if it is an object or array with object elements, in which case we recurse
+      if (hasObjectSchema(schema[key].elements)) {
+        if (schema[key].type == "Array") {
+          const configWithDefaults = config[key].map((conf) =>
+            setDefaults(schema[key].elements, conf)
+          );
+          config[key] = configWithDefaults;
+        } else if (schema[key].type == "Object") {
+          const configWithDefaults = Object.values(config[key]).map((conf) =>
+            setDefaults(schema[key].elements, conf)
+          );
+          config[key] = configWithDefaults;
+        }
       }
     } else if (isOrdinaryObject(schema[key])) {
       // Since schema[key] has no property "default", if it's an ordinary object
@@ -567,7 +585,9 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
       // We recurse to config[key] and schema[key]. Default config[key] to {}.
       const schemaPart = schema[key];
       const configPart = config.hasOwnProperty(key) ? config[key] : {};
-      config[key] = setDefaults(schemaPart, configPart);
+      if (isOrdinaryObject(configPart)) {
+        config[key] = setDefaults(schemaPart, configPart);
+      }
     }
   }
   return config;
@@ -585,9 +605,10 @@ function updateTemporaryConfigValueFromLocalStorage() {
   }
 }
 
-function hasObjectSchema(arrayElementsSchema) {
+function hasObjectSchema(elementsSchema: Object | undefined) {
   return (
-    Object.keys(arrayElementsSchema).filter(
+    elementsSchema &&
+    Object.keys(elementsSchema).filter(
       (e) => !["default", "validators"].includes(e)
     ).length > 0
   );
@@ -626,6 +647,17 @@ export interface ConfigObject extends Object {
 }
 
 export type ConfigValue = string | number | void | Array<any>;
+
+export const configValueTypes = [
+  "Array",
+  "Boolean",
+  "ConceptUuid",
+  "Number",
+  "Object",
+  "String",
+  "UUID",
+] as const;
+export type ConfigValueType = typeof configValueTypes[number]; // = "Array" | "Boolean" | "ConceptUuid" | ...
 
 export interface ExtensionSlotConfig {
   add?: Array<{
