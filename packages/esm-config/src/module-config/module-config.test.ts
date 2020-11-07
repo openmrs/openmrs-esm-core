@@ -35,6 +35,7 @@ describe("defineConfigSchema", () => {
     const schema = {
       bar: { default: 0, type: "numeral" },
     };
+    //@ts-ignore
     Config.defineConfigSchema("foo-module", schema);
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(/foo-module.*bar[\s\S]*Number.*numeral/i)
@@ -64,6 +65,7 @@ describe("defineConfigSchema", () => {
     const schema = {
       bar: { default: [], validators: [false] },
     };
+    //@ts-ignore
     Config.defineConfigSchema("foo-module", schema);
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(
@@ -76,7 +78,7 @@ describe("defineConfigSchema", () => {
     const schema = {
       foo: {
         default: [],
-        type: "Array",
+        type: Config.Type.Array,
         elements: { bar: "bad" },
       },
     };
@@ -90,7 +92,7 @@ describe("defineConfigSchema", () => {
     const schema = {
       foo: {
         default: [],
-        type: "Boolean",
+        type: Config.Type.Boolean,
         elements: {},
       },
     };
@@ -124,7 +126,7 @@ describe("defineConfigSchema", () => {
     const schema = {
       foo: {
         default: [],
-        type: "Array",
+        type: Config.Type.Array,
         elements: {
           bar: {},
         },
@@ -373,7 +375,7 @@ describe("getConfig", () => {
   it("supports freeform object elements validations", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: {
-        type: "Object",
+        type: Config.Type.Object,
         elements: {
           name: { validators: [isUrl] },
         },
@@ -419,7 +421,7 @@ describe("getConfig", () => {
   it("supports validation of array elements", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: {
-        type: "Array",
+        type: Config.Type.Array,
         default: [1, 2, 3],
         elements: {
           validators: [validator(Number.isInteger, "must be an integer")],
@@ -443,7 +445,7 @@ describe("getConfig", () => {
       bar: {
         baz: {
           default: [{ a: 0, b: 1 }],
-          type: "Array",
+          type: Config.Type.Array,
           elements: {
             a: {},
             b: {},
@@ -473,7 +475,7 @@ describe("getConfig", () => {
       yoshi: {
         nori: {
           default: [{ a: 0, b: { c: 2 } }],
-          type: "Array",
+          type: Config.Type.Array,
           elements: {
             a: {},
             b: { c: {} },
@@ -503,7 +505,7 @@ describe("getConfig", () => {
     Config.defineConfigSchema("foo-module", {
       foo: {
         default: [{ a: { b: 1 } }],
-        type: "Array",
+        type: Config.Type.Array,
         elements: {
           a: {
             b: {
@@ -529,7 +531,7 @@ describe("getConfig", () => {
     const fooSchema = {
       bar: {
         default: [{ a: { b: 1 }, c: 2 }],
-        type: "Array",
+        type: Config.Type.Array,
         elements: {
           validators: [
             validator((o) => o.a.b + 1 == o.c, "c must equal a.b + 1"),
@@ -565,7 +567,7 @@ describe("getConfig", () => {
     Config.defineConfigSchema("array-def", {
       foo: {
         default: [{ a: { b: "arrayDefaultB", filler: "arrayDefault" } }],
-        type: "Array",
+        type: Config.Type.Array,
         elements: {
           a: {
             b: { validators: [] },
@@ -602,13 +604,13 @@ describe("type validations", () => {
   });
 
   test.each([
-    ["Array", "doop"],
-    ["Boolean", 0],
-    ["ConceptUuid", "Weight"],
-    ["Number", "foo"],
-    ["Object", []],
-    ["String", 0],
-    ["UUID", "not-valid"],
+    [Config.Type.Array, "doop"],
+    [Config.Type.Boolean, 0],
+    [Config.Type.ConceptUuid, "Weight"],
+    [Config.Type.Number, "foo"],
+    [Config.Type.Object, []],
+    [Config.Type.String, 0],
+    [Config.Type.UUID, "not-valid"],
   ])("validates %s type", async (configType, badValue) => {
     Config.defineConfigSchema("foo-module", {
       foo: { default: "qux", type: configType },
