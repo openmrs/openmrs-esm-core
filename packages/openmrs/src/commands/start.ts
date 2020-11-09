@@ -8,6 +8,7 @@ import { logInfo, logWarn } from "../utils";
 export interface StartArgs {
   port: number;
   open: boolean;
+  backend: string;
 }
 
 export function runStart(args: StartArgs) {
@@ -25,7 +26,7 @@ export function runStart(args: StartArgs) {
   app.use(
     "/openmrs",
     proxy([`/openmrs/**`, `!${spaPath}/**`], {
-      target: "https://openmrs-spa.org/",
+      target: args.backend,
       changeOrigin: true,
     })
   );
