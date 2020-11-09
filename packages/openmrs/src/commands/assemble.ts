@@ -11,6 +11,7 @@ import { resolve, dirname, basename } from "path";
 import { execSync } from "child_process";
 import { prompt, Question } from "inquirer";
 import { logInfo, untar } from "../utils";
+import rimraf from "rimraf";
 import axios from "axios";
 
 export interface AssembleArgs {
@@ -18,6 +19,7 @@ export interface AssembleArgs {
   mode: string;
   config: string;
   registry: string;
+  fresh: boolean;
 }
 
 interface NpmSearchResult {
@@ -179,6 +181,10 @@ export async function runAssemble(args: AssembleArgs) {
 
   const { microfrontends = {}, publicUrl = "." } = config;
   const cacheDir = resolve(process.cwd(), ".cache");
+
+  if (args.fresh && existsSync(args.target)) {
+    await new Promise((resolve) => rimraf(args.target, resolve));
+  }
 
   mkdirSync(args.target, { recursive: true });
 

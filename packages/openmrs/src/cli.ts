@@ -80,6 +80,12 @@ yargs.command(
         "target",
         "The target directory where the build artifacts will be stored."
       )
+      .boolean("fresh")
+      .describe(
+        "fresh",
+        "Determines if the output directory should be cleaned before the run."
+      )
+      .default("fresh", false)
       .string("spa-path")
       .default("spa-path", "/openmrs/spa/")
       .describe("spa-path", "The path of the application on the target server.")
@@ -125,6 +131,12 @@ yargs.command(
         "config",
         "The configuration for gathering the list of microfrontends to include."
       )
+      .boolean("fresh")
+      .describe(
+        "fresh",
+        "Determines if the output directory should be cleaned before the run."
+      )
+      .default("fresh", false)
       .choices("mode", ["config", "survey"])
       .default("mode", "survey")
       .describe(
