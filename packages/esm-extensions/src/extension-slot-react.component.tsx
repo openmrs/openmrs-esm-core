@@ -16,6 +16,7 @@ import {
   unregisterExtensionSlot,
   AttachedExtensionInfo,
 } from "./extensions";
+import { TooltipIcon } from "carbon-components-react";
 
 interface ExtensionSlotBaseProps {
   extensionSlotName: string;
@@ -131,9 +132,15 @@ export const ExtensionReact: React.FC<ExtensionReactProps> = ({ state }) => {
   }, [actualExtensionSlotName, attachedExtensionSlotName, extensionId]);
 
   return getIsUIEditorEnabled() ? (
-    <div style={{ outline: "0.125rem solid yellow" }}>
-      <slot ref={ref} />
-    </div>
+    <TooltipIcon
+      tooltipText={`Slot Name: ${actualExtensionSlotName} Extension: ${attachedExtensionSlotName}`}
+      align="center"
+      direction="top"
+    >
+      <div style={{ outline: "0.125rem solid yellow" }}>
+        <slot ref={ref} />
+      </div>
+    </TooltipIcon>
   ) : (
     <slot ref={ref} />
   );

@@ -32,10 +32,13 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "carbon-components-react": "^7.23.2",
     "path-to-regexp": "6.1.0",
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
+    "carbon-icons": "^7.0.7",
+    "carbon-components": "^10.23.2",
     "@openmrs/esm-config": "3.x",
     "@openmrs/esm-context": "3.x",
     "react": "16.x",
@@ -44,6 +47,9 @@
   "devDependencies": {
     "@openmrs/esm-config": "^3.0.8",
     "@openmrs/esm-context": "^3.0.8",
+    "@types/carbon-components": "^10.23.0",
+    "@types/carbon-components-react": "^7.23.0",
+    "@types/carbon__icons-react": "^10.20.0",
     "@types/react": "^16.9.46",
     "react": "^16.13.1",
     "single-spa": "^4.4.1"
