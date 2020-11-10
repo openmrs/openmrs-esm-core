@@ -1,6 +1,6 @@
 import { mountRootParcel } from "single-spa";
 import { pathToRegexp, Key } from "path-to-regexp";
-import { getExtensionSlotConfig } from "@openmrs/esm-config";
+import { getExtensionSlotConfigs } from "@openmrs/esm-config";
 
 /**
  * Creates the extension component <-> extension slot management engine.
@@ -128,39 +128,48 @@ export async function getAttachedExtensionInfoForSlotAndConfig(
   actualExtensionSlotName: string,
   moduleName: string
 ): Promise<Array<AttachedExtensionInfo>> {
-  const config = await getExtensionSlotConfig(
+  const allExtensionSlotConfigs = await getExtensionSlotConfigs(
     actualExtensionSlotName,
     moduleName
   );
+  const matchingExtensionSlotConfigs = Object.entries(allExtensionSlotConfigs)
+    .filter(
+      ([key]) =>
+        key === actualExtensionSlotName ||
+        !!getActualRouteProps(key, actualExtensionSlotName)
+    )
+    .map(([_, value]) => value);
   let extensionIds = getAttachedExtensionInfoForSlot(actualExtensionSlotName);
 
-  if (config.add) {
-    extensionIds = extensionIds.concat(
-      config.add.map((id) => ({
-        extensionId: id,
-        attachedExtensionSlotName: actualExtensionSlotName,
-        actualExtensionSlotName,
-      }))
-    );
-  }
+  for (const config of matchingExtensionSlotConfigs) {
+    if (config.add) {
+      extensionIds = extensionIds.concat(
+        config.add.map((id) => ({
+          extensionId: id,
+          attachedExtensionSlotName: actualExtensionSlotName,
+          actualExtensionSlotName,
+        }))
+      );
+    }
 
-  if (config.remove) {
-    extensionIds = extensionIds.filter(
-      (n) => !config.remove?.includes(n.extensionId)
-    );
-  }
+    if (config.remove) {
+      extensionIds = extensionIds.filter(
+        (n) => !config.remove?.includes(n.extensionId)
+      );
+    }
 
-  if (config.order) {
-    extensionIds = extensionIds.sort((a, b) =>
+    if (config.order) {
+      extensionIds = extensionIds.sort((a, b) =>
       config.order?.includes(a.extensionId)
-        ? config.order.includes(b.extensionId)
-          ? config.order.indexOf(a.extensionId) -
+          ? config.order.includes(b.extensionId)
+            ? config.order.indexOf(a.extensionId) -
             config.order.indexOf(b.extensionId)
-          : -1
-        : config.order?.includes(b.extensionId)
-        ? 1
-        : 0
-    );
+            : -1
+          : config.order?.includes(b.extensionId)
+          ? 1
+          : 0
+      );
+    }
   }
 
   return extensionIds;

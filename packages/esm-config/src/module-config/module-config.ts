@@ -198,16 +198,17 @@ export function clearTemporaryConfig(): void {
 /**
  * @internal
  */
-export async function getExtensionSlotConfig(
+export async function getExtensionSlotConfigs(
   slotName: string,
   moduleName: string
-): Promise<ExtensionSlotConfigObject> {
+): Promise<Record<string, ExtensionSlotConfigObject>> {
   await loadConfigs();
   const moduleConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
-  const inputConfig = moduleConfig?.extensions?.[slotName] ?? {};
-  validateExtensionSlotConfig(inputConfig, moduleName, slotName);
-  const config = processExtensionSlotConfig(inputConfig);
-  return config;
+  const allExtensionSlotConfigs: Record<string, ExtensionSlotConfig> = moduleConfig?.extensions ?? {};
+  for (const config of Object.values(allExtensionSlotConfigs)) {
+    validateExtensionSlotConfig(config, moduleName, slotName);
+  }
+  return processExtensionSlotConfigs(allExtensionSlotConfigs);
 }
 
 function validateExtensionSlotConfig(
@@ -285,18 +286,21 @@ function validateExtensionSlotConfig(
   }
 }
 
-function processExtensionSlotConfig(
-  config: ExtensionSlotConfig
-): ExtensionSlotConfigObject {
-  const result: ExtensionSlotConfigObject = {};
-  if (config.remove) {
-    result.remove = config.remove;
-  }
-  if (config.order) {
-    result.order = config.order;
-  }
-  if (config.add) {
-    result.add = config.add.map((e) => e.extension);
+function processExtensionSlotConfigs(
+  allExtensionSlotConfigs: Record<string, ExtensionSlotConfig>
+): Record<string, ExtensionSlotConfigObject> {
+  const result: Record<string, ExtensionSlotConfigObject> = {};
+  for (const [key, config] of Object.entries(allExtensionSlotConfigs)) {
+    result[key] = {};
+    if (config.remove) {
+      result[key].remove = config.remove;
+    }
+    if (config.order) {
+      result[key].order = config.order;
+    }
+    if (config.add) {
+      result[key].add = config.add.map((e) => e.extension);
+    }
   }
   return result;
 }
