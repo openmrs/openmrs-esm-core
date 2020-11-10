@@ -119,8 +119,8 @@ export async function getImplementerToolsConfig(): Promise<object> {
 }
 
 function getSchemaWithValuesAndSources(schema) {
-  if (schema.hasOwnProperty("default")) {
-    return { ...schema, _value: schema.default, _source: "default" };
+  if (schema.hasOwnProperty("_default")) {
+    return { ...schema, _value: schema._default, _source: "default" };
   } else {
     return Object.fromEntries(
       Object.entries(schema).map(([key, subtree]) => [
@@ -340,24 +340,24 @@ function validateConfigSchema(
   for (let key of Object.keys(schema)) {
     const thisKeyPath = keyPath + (keyPath && ".") + key;
     const schemaPart = schema[key] as ConfigSchema;
-    if (!["description", "validators"].includes(key)) {
-      // allow higher-level description and validators
+    if (!["_description", "_validators"].includes(key)) {
+      // allow higher-level _description and _validators
       if (!isOrdinaryObject(schema[key])) {
         console.error(
           `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}`
         );
         continue;
       }
-      if (!schemaPart.hasOwnProperty("default")) {
+      if (!schemaPart.hasOwnProperty("_default")) {
         // recurse for nested config keys
         validateConfigSchema(moduleName, schemaPart, thisKeyPath);
       }
-      const elements = schemaPart.elements;
+      const elements = schemaPart._elements;
       if (hasObjectSchema(elements)) {
         validateConfigSchema(moduleName, elements, thisKeyPath + ".elements");
       }
-      if (schemaPart.validators) {
-        for (let validator of schemaPart.validators) {
+      if (schemaPart._validators) {
+        for (let validator of schemaPart._validators) {
           if (typeof validator !== "function") {
             console.error(
               `${moduleName} has invalid validator for key '${thisKeyPath}' ${updateMessage}.` +
@@ -367,7 +367,7 @@ function validateConfigSchema(
           }
         }
       }
-      const valueType = schemaPart.type;
+      const valueType = schemaPart._type;
       if (valueType && !Object.values(Type).includes(valueType)) {
         console.error(
           `${moduleName} has invalid type for key '${thisKeyPath}' ${updateMessage}.` +
@@ -379,7 +379,7 @@ function validateConfigSchema(
       }
       if (
         Object.keys(schemaPart).every((k) =>
-          ["description", "validators", "elements", "type"].includes(k)
+          ["_description", "_validators", "elements", "_type"].includes(k)
         ) &&
         !keyPath.includes(".elements")
       ) {
@@ -396,7 +396,7 @@ function validateConfigSchema(
       ) {
         console.error(
           `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
-            `\n\nIf you're the maintainer: the 'elements' key only works with 'type' equal to 'Array' or 'Object'. ` +
+            `\n\nIf you're the maintainer: the 'elements' key only works with '_type' equal to 'Array' or 'Object'. ` +
             `Received ${JSON.stringify(valueType)}`
         );
       }
@@ -470,19 +470,19 @@ const validateConfig = (
       }
       continue;
     }
-    checkType(thisKeyPath, schemaPart.type, value);
-    runValidators(thisKeyPath, schemaPart.validators, value);
+    checkType(thisKeyPath, schemaPart._type, value);
+    runValidators(thisKeyPath, schemaPart._validators, value);
     if (isOrdinaryObject(value)) {
       // structurally validate only if there's elements specified
-      // or there's a `default` value, which indicates a freeform object
-      if (schemaPart.type === Type.Object) {
+      // or there's a `_default` value, which indicates a freeform object
+      if (schemaPart._type === Type.Object) {
         validateDictionary(schemaPart, value, thisKeyPath);
-      } else if (!schemaPart.hasOwnProperty("default")) {
+      } else if (!schemaPart.hasOwnProperty("_default")) {
         // recurse to validate nested object structure
         validateConfig(schemaPart, value, thisKeyPath);
       }
     } else {
-      if (schemaPart.type === Type.Array) {
+      if (schemaPart._type === Type.Array) {
         validateArray(schemaPart, value, thisKeyPath);
       }
     }
@@ -494,9 +494,9 @@ function validateDictionary(
   config: ConfigObject,
   keyPath: string
 ) {
-  if (dictionarySchema.elements) {
+  if (dictionarySchema._elements) {
     for (let [key, value] of Object.entries(config)) {
-      validateConfig(dictionarySchema.elements, value, `${keyPath}.${key}`);
+      validateConfig(dictionarySchema._elements, value, `${keyPath}.${key}`);
     }
   }
 }
@@ -507,23 +507,23 @@ function validateArray(
   keyPath: string
 ) {
   // if there is an array element object schema, verify that elements match it
-  if (hasObjectSchema(arraySchema.elements)) {
+  if (hasObjectSchema(arraySchema._elements)) {
     for (let i = 0; i < value.length; i++) {
-      validateConfig(arraySchema.elements, value[i], `${keyPath}[${i}]`);
+      validateConfig(arraySchema._elements, value[i], `${keyPath}[${i}]`);
     }
   }
   for (let i = 0; i < value.length; i++) {
-    checkType(`${keyPath}[${i}]`, arraySchema.elements?.type, value[i]);
+    checkType(`${keyPath}[${i}]`, arraySchema._elements?._type, value[i]);
     runValidators(
       `${keyPath}[${i}]`,
-      arraySchema.elements?.validators,
+      arraySchema._elements?._validators,
       value[i]
     );
   }
 }
 
-function checkType(keyPath: string, type: Type | undefined, value: any) {
-  if (type) {
+function checkType(keyPath: string, _type: Type | undefined, value: any) {
+  if (_type) {
     const validator: Record<string, Function> = {
       Array: isArray,
       Boolean: isBoolean,
@@ -533,7 +533,7 @@ function checkType(keyPath: string, type: Type | undefined, value: any) {
       String: isString,
       UUID: isUuid,
     };
-    runValidators(keyPath, [validator[type]], value);
+    runValidators(keyPath, [validator[_type]], value);
   }
 }
 
@@ -561,24 +561,24 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   const config = R.clone(inputConfig);
   for (let key of Object.keys(schema)) {
     const schemaPart = schema[key] as ConfigSchema;
-    if (schemaPart.hasOwnProperty("default")) {
+    if (schemaPart.hasOwnProperty("_default")) {
       // We assume that schemaPart defines a config value, since it has
-      // a property `default`.
+      // a property `_default`.
       if (!config.hasOwnProperty(key)) {
-        const devDefault = schemaPart["devDefault"] || schemaPart["default"];
+        const devDefault = schemaPart["_devDefault"] || schemaPart["_default"];
         (config[key] as any) = getAreDevDefaultsOn()
           ? devDefault
-          : schemaPart["default"];
+          : schemaPart["_default"];
       }
       // We also check if it is an object or array with object elements, in which case we recurse
-      const elements = schemaPart.elements;
+      const elements = schemaPart._elements;
       if (hasObjectSchema(elements)) {
-        if (schemaPart.type == Type.Array) {
+        if (schemaPart._type == Type.Array) {
           const configWithDefaults = config[key].map((conf) =>
             setDefaults(elements, conf)
           );
           config[key] = configWithDefaults;
-        } else if (schemaPart.type == Type.Object) {
+        } else if (schemaPart._type == Type.Object) {
           const configWithDefaults = Object.values(config[key]).map((conf) =>
             setDefaults(elements, conf)
           );
@@ -586,7 +586,7 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
         }
       }
     } else if (isOrdinaryObject(schemaPart)) {
-      // Since schemaPart has no property "default", if it's an ordinary object
+      // Since schemaPart has no property "_default", if it's an ordinary object
       // (unlike, importantly, the validators array), we assume it is a parent config property.
       // We recurse to config[key] and schema[key]. Default config[key] to {}.
       const configPart = config.hasOwnProperty(key) ? config[key] : {};
@@ -616,7 +616,7 @@ function hasObjectSchema(
   return (
     elementsSchema != null &&
     Object.keys(elementsSchema).filter(
-      (e) => !["default", "validators"].includes(e)
+      (e) => !["_default", "_validators"].includes(e)
     ).length > 0
   );
 }
@@ -642,14 +642,14 @@ export function clearAll() {
  */
 
 // Full-powered typing for Config and Schema trees depends on being able to
-// have types like `string not "default"`. There is an experimental PR
+// have types like `string not "_default"`. There is an experimental PR
 // for this feature, https://github.com/microsoft/TypeScript/pull/29317
 // But it is not likely to be merged any time terribly soon.
 export interface ConfigSchema {
   [key: string]: ConfigSchema | ConfigValue;
-  type?: Type;
-  validators?: Function[];
-  elements?: ConfigSchema;
+  _type?: Type;
+  _validators?: Function[];
+  _elements?: ConfigSchema;
 }
 
 export interface Config extends Object {

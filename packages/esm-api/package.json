@@ -10,7 +10,8 @@
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
     "typescript": "tsc",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "format": "prettier --write src/**"
   },
   "keywords": [
     "openmrs",
