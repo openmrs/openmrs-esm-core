@@ -14,9 +14,9 @@ export interface EditableValueProps {
 export interface ConfigValueDescriptor {
   _value: ConfigValue;
   _source: string;
-  default: ConfigValue;
-  description?: string;
-  validators?: Array<Function>;
+  _default: ConfigValue;
+  _description?: string;
+  _validators?: Array<Function>;
 }
 
 export default function EditableValue({ path, element }: EditableValueProps) {
