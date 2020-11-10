@@ -1,6 +1,19 @@
 import { validator } from "./validator";
 
 /**
+ * Verifies that the value is between the provided minimum and maximum
+ *
+ * @param min Minimum acceptable value
+ * @param max Maximum acceptable value
+ */
+export const inRange = (min: number, max: number) => {
+  return validator(
+    (val) => min <= val && val <= max,
+    `must be between ${min} and ${max}`
+  );
+};
+
+/**
  * Verifies that a string contains only the default URL template
  * parameters, plus any specified in `allowedTemplateParameters`.
  *
@@ -37,6 +50,7 @@ export const isUrlWithTemplateParameters = (
 export const isUrl = isUrlWithTemplateParameters([]);
 
 export const validators = {
+  inRange,
   isUrl,
   isUrlWithTemplateParameters,
 };

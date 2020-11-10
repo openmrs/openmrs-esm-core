@@ -18,7 +18,7 @@ describe(`useExtensionConfig`, () => {
   it(`can return extension config as a react hook`, async () => {
     defineConfigSchema("ext-module", {
       thing: {
-        default: "The first thing",
+        _default: "The first thing",
       },
     });
 
@@ -44,13 +44,13 @@ describe(`useExtensionConfig`, () => {
   it(`can handle multiple extensions`, async () => {
     defineConfigSchema("foo-module", {
       thing: {
-        default: "foo thing",
+        _default: "foo thing",
       },
     });
 
     defineConfigSchema("bar-module", {
       thing: {
-        default: "bar thing",
+        _default: "bar thing",
       },
     });
 
@@ -86,7 +86,7 @@ describe(`useExtensionConfig`, () => {
   it("can handle multiple extension slots", async () => {
     defineConfigSchema("foo-module", {
       thing: {
-        default: "foo thing",
+        _default: "foo thing",
       },
     });
 
@@ -136,7 +136,7 @@ describe(`useExtensionConfig`, () => {
   it("updates with a new value when the temporary config is updated", async () => {
     defineConfigSchema("ext-module", {
       thing: {
-        default: "The first thing",
+        _default: "The first thing",
       },
     });
 
