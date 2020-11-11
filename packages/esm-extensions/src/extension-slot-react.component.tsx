@@ -63,7 +63,7 @@ const ConnectedExtensionSlot = connect(["slots", "extensions"])(
       : style;
 
     return (
-      <Provider store={extensionStore}>
+      <Provider store={extensionStore.}>
         <div style={divStyle} {...divProps}>
           {extensionIdsToRender.map((extensionId) => {
             const extensionRegistration = getExtensionRegistration(extensionId);
