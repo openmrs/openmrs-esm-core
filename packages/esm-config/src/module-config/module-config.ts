@@ -198,13 +198,14 @@ export function clearTemporaryConfig(): void {
 /**
  * @internal
  */
-export async function getExtensionSlotConfigs(
+export async function getExtensionSlotConfig(
   slotName: string,
   moduleName: string
 ): Promise<Record<string, ExtensionSlotConfigObject>> {
   await loadConfigs();
   const moduleConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
-  const allExtensionSlotConfigs: Record<string, ExtensionSlotConfig> = moduleConfig?.extensions ?? {};
+  const allExtensionSlotConfigs: Record<string, ExtensionSlotConfig> =
+    moduleConfig?.extensions ?? {};
   for (const config of Object.values(allExtensionSlotConfigs)) {
     validateExtensionSlotConfig(config, moduleName, slotName);
   }

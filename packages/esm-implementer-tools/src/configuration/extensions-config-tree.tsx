@@ -1,8 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
-import {
-  getExtensionSlotsForModule,
-} from "@openmrs/esm-extensions";
+import { getExtensionSlotsForModule } from "@openmrs/esm-extensions";
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
 
@@ -24,6 +22,7 @@ export function ExtensionsConfigTree({
     setExtensionIdsForExtensionSlot,
   ] = useState<Record<string, Array<string>>>({});
 
+  // TODO: Use ExtensionStore to get the appropriate values.
   // useEffect(() => {
   //   Promise.all(
   //     extensionSlotNames.map((slotName) =>

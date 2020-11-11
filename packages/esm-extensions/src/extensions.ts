@@ -1,6 +1,5 @@
 import { mountRootParcel } from "single-spa";
 import { pathToRegexp, Key } from "path-to-regexp";
-import { getExtensionSlotConfigs } from "@openmrs/esm-config";
 import { createGlobalStore } from "@openmrs/esm-api";
 
 export interface ExtensionDefinition {
@@ -175,10 +174,6 @@ export function renderExtension(
   );
   let active = true;
 
-  // const disposeStateSub = extensionStore.subscribe(state => {
-    
-  // });
-
   if (domElement) {
     if (extensionRegistration) {
       extensionRegistration.load().then(
@@ -199,7 +194,6 @@ export function renderExtension(
 
   return () => {
     active = false;
-    // disposeStateSub();
   };
 }
 
