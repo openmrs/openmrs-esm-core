@@ -36,12 +36,14 @@
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
+    "@openmrs/esm-api": "^3.x",
     "@openmrs/esm-config": "3.x",
     "@openmrs/esm-context": "3.x",
     "react": "16.x",
     "single-spa": "4.x"
   },
   "devDependencies": {
+    "@openmrs/esm-api": "^3.0.8",
     "@openmrs/esm-config": "^3.0.8",
     "@openmrs/esm-context": "^3.0.8",
     "@types/react": "^16.9.46",

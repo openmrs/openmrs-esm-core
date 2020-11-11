@@ -2,7 +2,6 @@ import React, { useMemo, useState, useEffect } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
 import {
   getExtensionSlotsForModule,
-  getAttachedExtensionInfoForSlotAndConfig,
 } from "@openmrs/esm-extensions";
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
@@ -25,21 +24,21 @@ export function ExtensionsConfigTree({
     setExtensionIdsForExtensionSlot,
   ] = useState<Record<string, Array<string>>>({});
 
-  useEffect(() => {
-    Promise.all(
-      extensionSlotNames.map((slotName) =>
-        getAttachedExtensionInfoForSlotAndConfig(slotName, moduleName)
-      )
-    ).then((attachedExtensionInfos) => {
-      const idsForExtSlot = Object.fromEntries(
-        extensionSlotNames.map((name, i) => [
-          name,
-          attachedExtensionInfos[i].map((x) => x.extensionId),
-        ])
-      );
-      setExtensionIdsForExtensionSlot(idsForExtSlot);
-    });
-  }, []);
+  // useEffect(() => {
+  //   Promise.all(
+  //     extensionSlotNames.map((slotName) =>
+  //       // getAttachedExtensionInfoForSlotAndConfig(slotName, moduleName)
+  //     )
+  //   ).then((attachedExtensionInfos) => {
+  //     const idsForExtSlot = Object.fromEntries(
+  //       extensionSlotNames.map((name, i) => [
+  //         name,
+  //         attachedExtensionInfos[i].map((x) => x.extensionId),
+  //       ])
+  //     );
+  //     setExtensionIdsForExtensionSlot(idsForExtSlot);
+  //   });
+  // }, []);
 
   return extensionSlotNames.length ? (
     <div className={styles.treeIndent}>
