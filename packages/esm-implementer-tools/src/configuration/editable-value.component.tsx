@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { isEqual } from "lodash";
-import { setTemporaryConfigValue, ConfigValue } from "@openmrs/esm-config";
+import {
+  setTemporaryConfigValue,
+  ConfigValue,
+  Validator,
+} from "@openmrs/esm-config";
 import styles from "./editable-value.styles.css";
 import ValueEditor from "./value-editor";
 import { useGlobalState } from "../global-state";
-import { ConceptSearchBox } from "./concept-search";
 
 export interface EditableValueProps {
   path: string[];
@@ -16,7 +19,7 @@ export interface ConfigValueDescriptor {
   _source: string;
   _default: ConfigValue;
   _description?: string;
-  _validators?: Array<Function>;
+  _validators?: Array<Validator>;
 }
 
 export default function EditableValue({ path, element }: EditableValueProps) {
