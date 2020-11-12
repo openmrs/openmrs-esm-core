@@ -6,10 +6,15 @@ import ActiveToasts from "./active-toasts.component";
 export const toastsSubject = new Subject();
 let toastId = 0;
 
+export interface Foo {
+ bar: string;
+}
+
 const toastsContainer = document.createElement("div");
 
 const renderToasts = () => {
   document.body.appendChild(toastsContainer);
+  // @ts-ignore
   render(<ActiveToasts subject={toastsSubject} />, toastsContainer);
 };
 

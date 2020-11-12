@@ -34,7 +34,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|tsx)$/,
         use: ["babel-loader"],
       },
       {
@@ -56,7 +56,7 @@ module.exports = {
   externals: Object.keys(peerDependencies),
   resolve: {
     modules: ["node_modules"],
-    extensions: [".js", ".jsx", ".json"],
+    extensions: [".js", ".jsx", ".json", ".tsx"],
   },
   plugins: [
     new CleanWebpackPlugin(),
