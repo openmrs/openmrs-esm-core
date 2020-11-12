@@ -8,6 +8,7 @@ import {
   isObject,
   isString,
 } from "../validators/type-validators";
+import { Validator } from "../validators/validator";
 
 // The input configs
 type ProvidedConfig = {
@@ -644,11 +645,11 @@ export function clearAll() {
 // Full-powered typing for Config and Schema trees depends on being able to
 // have types like `string not "_default"`. There is an experimental PR
 // for this feature, https://github.com/microsoft/TypeScript/pull/29317
-// But it is not likely to be merged any time terribly soon.
+// But it is not likely to be merged any time terribly soon. (Nov 11, 2020)
 export interface ConfigSchema {
   [key: string]: ConfigSchema | ConfigValue;
   _type?: Type;
-  _validators?: Function[];
+  _validators?: Array<Validator>;
   _elements?: ConfigSchema;
 }
 
