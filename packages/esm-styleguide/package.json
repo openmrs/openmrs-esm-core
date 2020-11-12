@@ -34,6 +34,9 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "carbon-components": "^10.23.2",
+    "carbon-components-react": "^7.22.0",
+    "carbon-icons": "^7.0.7",
     "kremling": "^2.0.1",
     "systemjs-webpack-interop": "^2.1.2"
   },
