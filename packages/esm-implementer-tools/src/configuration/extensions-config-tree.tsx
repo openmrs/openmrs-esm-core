@@ -45,7 +45,7 @@ export function ExtensionsConfigTree({
     <div className={styles.treeIndent}>
       extensions:
       {extensionSlotNames.map((slotName) => (
-        <div className={styles.treeIndent}>
+        <div key={slotName} className={styles.treeIndent}>
           <ExtensionSlotConfigTree
             config={config?.[slotName]}
             path={[moduleName, "extensions", slotName]}
@@ -66,7 +66,7 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
     <div>
       {path[path.length - 1]}:
       {["add", "remove", "order"].map((key) => (
-        <div className={`${styles.treeIndent} ${styles.treeLeaf}`}>
+        <div key={key} className={`${styles.treeIndent} ${styles.treeLeaf}`}>
           {key}:{" "}
           <EditableValue
             path={path.concat([key])}
