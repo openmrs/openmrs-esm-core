@@ -23,9 +23,11 @@ git clone https://github.com/openmrs/openmrs-esm-patient-chart
 Make sure that you installed the dependencies (in the repository’s directory)
 npm install
 
-Start a dev server
+Start a dev server:
+```
 npx openmrs debug --run-project
 npx openmrs@latest
+```
 
 Modify the code (e.g., in VS Code)
 
