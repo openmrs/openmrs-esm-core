@@ -8,7 +8,7 @@ You can find the reference application (“refapp”) that is used for testing t
 
 - [How do I create a new microfrontend?](#how-do-i-create-a-new-microfrontend)
 - [How do I work on multiple microfrontends at the same time?](#how-do-i-work-on-multiple-microfrontends-at-the-same-time)
-- [How do I create a distribution?]
+- [How do I create a distribution?](#how-do-i-create-a-distribution)
 
 <!-- tocstop -->
 
