@@ -3,11 +3,12 @@
 You can find the reference application (“refapp”) that is used for testing the latest bits and pieces at https://openmrs-spa.org/openmrs/spa.
 
 ## Table of Contents
+
 <!-- toc -->
 
-- [How do I create a new microfrontend?] (#How-do-I-create-a-new-microfrontend)
-- How do I work on multiple microfrontends at the same time?
-- How do I create a distribution?
+- [How do I create a new microfrontend?] (#how-do-i-create-a-new-microfrontend)
+- [How do I work on multiple microfrontends at the same time?] (#how-do-i-work-on-multiple-microfrontends-at-the-same-time)
+- [How do I create a distribution?]
 
 <!-- tocstop -->
 
