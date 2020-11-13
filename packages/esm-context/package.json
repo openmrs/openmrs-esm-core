@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-context",
-  "version": "3.0.8",
+  "version": "4.0.0",
   "license": "MPL-2.0",
   "description": "Provides core React Context and the React Root Decorator",
   "browser": "dist/openmrs-esm-context.js",
@@ -41,7 +41,7 @@
     "react-i18next": "11.x"
   },
   "devDependencies": {
-    "@openmrs/esm-styleguide": "^3.0.8",
+    "@openmrs/esm-styleguide": "^4.0.0",
     "i18next": "^19.6.0",
     "react": "^16.13.1",
     "react-i18next": "^11.7.0"
