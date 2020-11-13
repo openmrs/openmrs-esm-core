@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-error-handling",
-  "version": "4.0.0",
+  "version": "3.0.8",
   "license": "MPL-2.0",
   "description": "An ES module to help with error handling",
   "browser": "dist/openmrs-esm-error-handling.js",
@@ -38,7 +38,7 @@
     "@openmrs/esm-styleguide": "3.x"
   },
   "devDependencies": {
-    "@openmrs/esm-styleguide": "^4.0.0"
+    "@openmrs/esm-styleguide": "^3.0.8"
   },
   "publishConfig": {
     "access": "public"

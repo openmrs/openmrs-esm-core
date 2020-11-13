@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-extensions",
-  "version": "4.0.0",
+  "version": "3.0.8",
   "license": "MPL-2.0",
   "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
   "browser": "dist/openmrs-esm-extensions.js",
@@ -37,16 +37,16 @@
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
+    "carbon-icons": "^7.0.7",
+    "carbon-components": "^10.23.2",
     "@openmrs/esm-config": "3.x",
     "@openmrs/esm-context": "3.x",
-    "carbon-components": "^10.23.2",
-    "carbon-icons": "^7.0.7",
     "react": "16.x",
     "single-spa": "4.x"
   },
   "devDependencies": {
-    "@openmrs/esm-config": "^4.0.0",
-    "@openmrs/esm-context": "^4.0.0",
+    "@openmrs/esm-config": "^3.0.8",
+    "@openmrs/esm-context": "^3.0.8",
     "@types/carbon-components": "^10.23.0",
     "@types/carbon-components-react": "^7.23.0",
     "@types/carbon__icons-react": "^10.20.0",
