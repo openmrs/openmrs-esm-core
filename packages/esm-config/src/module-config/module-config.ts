@@ -338,69 +338,73 @@ function validateConfigSchema(
   keyPath = ""
 ) {
   const updateMessage = `Please verify that you are running the latest version and, if so, alert the maintainer.`;
-  for (let key of Object.keys(schema)) {
+  for (let key of Object.keys(schema).filter((k) => !k.startsWith("_"))) {
     const thisKeyPath = keyPath + (keyPath && ".") + key;
     const schemaPart = schema[key] as ConfigSchema;
-    if (!["_description", "_validators"].includes(key)) {
-      // allow higher-level _description and _validators
-      if (!isOrdinaryObject(schema[key])) {
-        console.error(
-          `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}`
-        );
-        continue;
-      }
-      if (!schemaPart.hasOwnProperty("_default")) {
-        // recurse for nested config keys
-        validateConfigSchema(moduleName, schemaPart, thisKeyPath);
-      }
-      const elements = schemaPart._elements;
-      if (hasObjectSchema(elements)) {
-        validateConfigSchema(moduleName, elements, thisKeyPath + ".elements");
-      }
-      if (schemaPart._validators) {
-        for (let validator of schemaPart._validators) {
-          if (typeof validator !== "function") {
-            console.error(
-              `${moduleName} has invalid validator for key '${thisKeyPath}' ${updateMessage}.` +
-                `\n\nIf you're the maintainer: validators must be functions that return either ` +
-                `undefined or an error string. Received ${validator}.`
-            );
-          }
+
+    if (!isOrdinaryObject(schemaPart)) {
+      console.error(
+        `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}`
+      );
+      continue;
+    }
+
+    if (!schemaPart.hasOwnProperty("_default")) {
+      // recurse for nested config keys
+      validateConfigSchema(moduleName, schemaPart, thisKeyPath);
+    }
+
+    const elements = schemaPart._elements;
+    if (hasObjectSchema(elements)) {
+      validateConfigSchema(moduleName, elements, thisKeyPath + "._elements");
+    }
+
+    if (schemaPart._validators) {
+      for (let validator of schemaPart._validators) {
+        if (typeof validator !== "function") {
+          console.error(
+            `${moduleName} has invalid validator for key '${thisKeyPath}' ${updateMessage}.` +
+              `\n\nIf you're the maintainer: validators must be functions that return either ` +
+              `undefined or an error string. Received ${validator}.`
+          );
         }
       }
-      const valueType = schemaPart._type;
-      if (valueType && !Object.values(Type).includes(valueType)) {
-        console.error(
-          `${moduleName} has invalid type for key '${thisKeyPath}' ${updateMessage}.` +
-            `\n\nIf you're the maintainer: the allowed types are ${Object.values(
-              Type
-            ).join(", ")}. ` +
-            `Received '${valueType}'`
-        );
-      }
-      if (
-        Object.keys(schemaPart).every((k) =>
-          ["_description", "_validators", "elements", "_type"].includes(k)
-        ) &&
-        !keyPath.includes(".elements")
-      ) {
-        console.error(
-          `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
-            `\n\nIf you're the maintainer: all config elements must have a default. ` +
-            `Received ${JSON.stringify(schemaPart)}`
-        );
-      }
-      if (
-        elements &&
-        valueType &&
-        ![Type.Array, Type.Object].includes(valueType)
-      ) {
-        console.error(
-          `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
-            `\n\nIf you're the maintainer: the 'elements' key only works with '_type' equal to 'Array' or 'Object'. ` +
-            `Received ${JSON.stringify(valueType)}`
-        );
-      }
+    }
+
+    const valueType = schemaPart._type;
+    if (valueType && !Object.values(Type).includes(valueType)) {
+      console.error(
+        `${moduleName} has invalid type for key '${thisKeyPath}' ${updateMessage}.` +
+          `\n\nIf you're the maintainer: the allowed types are ${Object.values(
+            Type
+          ).join(", ")}. ` +
+          `Received '${valueType}'`
+      );
+    }
+
+    if (
+      Object.keys(schemaPart).every((k) =>
+        ["_description", "_validators", "_elements", "_type"].includes(k)
+      ) &&
+      !keyPath.includes("._elements")
+    ) {
+      console.error(
+        `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
+          `\n\nIf you're the maintainer: all config elements must have a default. ` +
+          `Received ${JSON.stringify(schemaPart)}`
+      );
+    }
+
+    if (
+      elements &&
+      valueType &&
+      ![Type.Array, Type.Object].includes(valueType)
+    ) {
+      console.error(
+        `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
+          `\n\nIf you're the maintainer: the 'elements' key only works with '_type' equal to 'Array' or 'Object'. ` +
+          `Received ${JSON.stringify(valueType)}`
+      );
     }
   }
 }
@@ -544,15 +548,19 @@ function runValidators(
   value: any
 ) {
   if (validators) {
-    for (let validator of validators) {
-      const validatorResult = validator(value);
-      if (typeof validatorResult === "string") {
-        const valueString =
-          typeof value === "object" ? JSON.stringify(value) : value;
-        console.error(
-          `Invalid configuration value ${valueString} for ${keyPath}: ${validatorResult}`
-        );
+    try {
+      for (let validator of validators) {
+        const validatorResult = validator(value);
+        if (typeof validatorResult === "string") {
+          const valueString =
+            typeof value === "object" ? JSON.stringify(value) : value;
+          console.error(
+            `Invalid configuration value ${valueString} for ${keyPath}: ${validatorResult}`
+          );
+        }
       }
+    } catch (e) {
+      console.error("Skipping invalid validator at " + keyPath);
     }
   }
 }
@@ -562,7 +570,12 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   const config = R.clone(inputConfig);
   for (let key of Object.keys(schema)) {
     const schemaPart = schema[key] as ConfigSchema;
-    if (schemaPart.hasOwnProperty("_default")) {
+    // The `schemaPart &&` clause of this `if` statement will only fail
+    // if the schema is very invalid. It is there to prevent the app from
+    // crashing completely, though it will produce unexpected behavior.
+    // If this happens, there should be legible errors in the console from
+    // the schema validator.
+    if (schemaPart && schemaPart.hasOwnProperty("_default")) {
       // We assume that schemaPart defines a config value, since it has
       // a property `_default`.
       if (!config.hasOwnProperty(key)) {

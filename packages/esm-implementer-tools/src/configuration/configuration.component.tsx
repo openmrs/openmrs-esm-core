@@ -22,8 +22,9 @@ export default function Configuration(props: ConfigurationProps) {
   const [isUIEditorActive, setIsUIEditorActive] = React.useState(
     getIsUIEditorEnabled()
   );
+  const tempConfig = getTemporaryConfig();
   const tempConfigObjUrl = new Blob(
-    [JSON.stringify(getTemporaryConfig(), undefined, 2)],
+    [JSON.stringify(tempConfig, undefined, 2)],
     {
       type: "application/json",
     }
