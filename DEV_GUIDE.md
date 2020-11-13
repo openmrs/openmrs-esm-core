@@ -1,7 +1,9 @@
-#Developer Guide to Developing an MF and Creating a Distribution
+# Developer Guide to Developing an MF and Creating a Distribution
 
 You can find the reference application (“refapp”) that is used for testing the latest bits and pieces at https://openmrs-spa.org/openmrs/spa.
-Development
+
+## How do I create a new microfrontend?
+
 What is the general workflow?
 
 Clone the repository of interest
@@ -27,7 +29,9 @@ Repeat 4) and 5); then have somebody to create a new release on GitHub incl. cor
 The package is now available on NPM and can be used in any OpenMRS instance
 
 Example for release notes: https://github.com/openmrs/openmrs-esm-drugorder/releases/tag/v0.3.0
-How do I work on multiple microfrontends at the same time?
+
+
+## How do I work on multiple microfrontends at the same time?
 There are multiple ways; on your machine and using the reference application.
 
 Local machine:
@@ -40,10 +44,15 @@ Refapp:
 
 In the reference application the devtools are not always loaded. Instead, they need to be enabled first. To enable the devtools, open your browser’s developer tools, and in the Javascript console run 
 
+```
 localStorage.setItem('openmrs:devtools', true)
+```
 
 After refreshing the page, you will see a little box appear in the lower-right hand side of the page. This will open an interface you can use to add or override entries of the import map. Rest is as on the local machine.
-Distribution
+
+
+## How do I create a distribution
+
 For creating a new distribution using the OpenMRS microfrontends the following steps should be followed.
 
 Build your app shell using
