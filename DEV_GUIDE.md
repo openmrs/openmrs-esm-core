@@ -2,6 +2,14 @@
 
 You can find the reference application (“refapp”) that is used for testing the latest bits and pieces at https://openmrs-spa.org/openmrs/spa.
 
+## Table of Contents
+
+1. How do I create a new microfrontend?
+2. How do I work on multiple microfrontends at the same time?
+3. How do I create a distribution?
+
+
+
 ## How do I create a new microfrontend?
 
 What is the general workflow?
@@ -51,7 +59,7 @@ localStorage.setItem('openmrs:devtools', true)
 After refreshing the page, you will see a little box appear in the lower-right hand side of the page. This will open an interface you can use to add or override entries of the import map. Rest is as on the local machine.
 
 
-## How do I create a distribution
+## How do I create a distribution?
 
 For creating a new distribution using the OpenMRS microfrontends the following steps should be followed.
 
