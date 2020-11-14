@@ -597,7 +597,9 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
       // Since schemaPart has no property "_default", if it's an ordinary object
       // (unlike, importantly, the validators array), we assume it is a parent config property.
       // We recurse to config[key] and schema[key]. Default config[key] to {}.
-      const configPart = config.hasOwnProperty(key) ? config[key] : {};
+      const configPart = config.hasOwnProperty(key)
+        ? config[key]
+        : ({} as Config);
       if (isOrdinaryObject(configPart)) {
         config[key] = setDefaults(schemaPart, configPart);
       }
