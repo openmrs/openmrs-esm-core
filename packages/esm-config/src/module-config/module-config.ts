@@ -9,7 +9,6 @@ import {
   isString,
 } from "../validators/type-validators";
 import { Validator } from "../validators/validator";
-import { Functor } from "ramda";
 
 // The input configs
 type ProvidedConfig = {
@@ -132,7 +131,7 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
   if (isOrdinaryObject(config)) {
     return R.map(
       (subtree) => createValuesAndSourcesTree(subtree, source),
-      config as Functor<any>
+      config as R.Functor<any>
     );
   } else {
     return { _value: config, _source: source };
