@@ -34,7 +34,9 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "@types/string.prototype.matchall": "^4.0.0",
     "ramda": "^0.26.1",
+    "string.prototype.matchall": "^4.0.2",
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {

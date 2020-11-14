@@ -1,4 +1,5 @@
 import { validator } from "./validator";
+import matchAll from "string.prototype.matchall";
 
 /**
  * Verifies that the value is between the provided minimum and maximum
@@ -32,7 +33,7 @@ export const isUrlWithTemplateParameters = (
       return false;
     }
 
-    const matches = val.matchAll(/\${(.*?)}/g);
+    const matches = matchAll(val, /\${(.*?)}/g);
     for (let match of Array.from(matches)) {
       if (!allowedParams.includes(match[1])) {
         return false;

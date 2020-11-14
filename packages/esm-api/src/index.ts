@@ -1,5 +1,4 @@
 export * from "./shared-api-objects/user-has-access-react.component";
-export * from "./shared-api-objects/extension-slot-react.component";
 
 export * from "./types";
 export * from "./openmrs-fetch";

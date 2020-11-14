@@ -32,6 +32,8 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "@types/array.prototype.flatmap": "^1.2.2",
+    "array.prototype.flatmap": "^1.2.3",
     "carbon-components-react": "^7.23.2",
     "path-to-regexp": "6.1.0",
     "systemjs-webpack-interop": "^2.1.2"

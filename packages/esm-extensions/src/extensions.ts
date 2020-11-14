@@ -1,5 +1,6 @@
 import { mountRootParcel } from "single-spa";
 import { pathToRegexp, Key } from "path-to-regexp";
+import flatMap from "array.prototype.flatmap";
 import { getExtensionSlotConfig } from "@openmrs/esm-config";
 
 /**
@@ -177,7 +178,7 @@ function getAttachedExtensionInfoForSlot(
     extensionId,
   }));
 
-  const pathTemplateMatchingExtensions = Object.entries(
+  const pathTemplateMatchingExtensions = flatMap(Object.entries(
     attachedExtensionsForExtensionSlot
   )
     .filter(
@@ -187,8 +188,8 @@ function getAttachedExtensionInfoForSlot(
           attachedExtensionSlotName,
           actualExtensionSlotName
         )
-    )
-    .flatMap(([attachedExtensionSlotName, extensionIds]) =>
+    ),
+    ([attachedExtensionSlotName, extensionIds]) =>
       extensionIds.map((extensionId) => ({
         attachedExtensionSlotName,
         actualExtensionSlotName,
