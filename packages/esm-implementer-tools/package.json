@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "@types/lodash-es": "^4.17.3",
     "lodash-es": "^4.17.15",
     "react-hooks-global-state": "^1.0.1",
     "single-spa-react": "^3.0.1",

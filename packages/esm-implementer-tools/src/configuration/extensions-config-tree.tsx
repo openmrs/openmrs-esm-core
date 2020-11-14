@@ -4,6 +4,7 @@ import {
   getExtensionSlotsForModule,
   getAttachedExtensionInfoForSlotAndConfig,
 } from "@openmrs/esm-extensions";
+import { mapValues } from "lodash-es";
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
 
@@ -31,12 +32,12 @@ export function ExtensionsConfigTree({
         getAttachedExtensionInfoForSlotAndConfig(slotName, moduleName)
       )
     ).then((attachedExtensionInfos) => {
-      const idsForExtSlot = Object.fromEntries(
+      const idsForExtSlot = mapValues(
         extensionSlotNames.map((name, i) => [
           name,
           attachedExtensionInfos[i].map((x) => x.extensionId),
         ])
-      );
+      ) as Record<string, string[]>;
       setExtensionIdsForExtensionSlot(idsForExtSlot);
     });
   }, []);

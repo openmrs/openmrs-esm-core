@@ -9,6 +9,7 @@ import {
   isString,
 } from "../validators/type-validators";
 import { Validator } from "../validators/validator";
+import { Functor } from "ramda";
 
 // The input configs
 type ProvidedConfig = {
@@ -123,23 +124,13 @@ function getSchemaWithValuesAndSources(schema) {
   if (schema.hasOwnProperty("_default")) {
     return { ...schema, _value: schema._default, _source: "default" };
   } else {
-    return Object.fromEntries(
-      Object.entries(schema).map(([key, subtree]) => [
-        key,
-        getSchemaWithValuesAndSources(subtree),
-      ])
-    );
+    return R.map(subtree => getSchemaWithValuesAndSources(subtree), schema);
   }
 }
 
 function createValuesAndSourcesTree(config: ConfigObject, source: string) {
   if (isOrdinaryObject(config)) {
-    return Object.fromEntries(
-      Object.entries(config).map(([key, subtree]) => [
-        key,
-        createValuesAndSourcesTree(subtree, source),
-      ])
-    );
+    return R.map(subtree => createValuesAndSourcesTree(subtree, source), config as Functor<any>);
   } else {
     return { _value: config, _source: source };
   }
