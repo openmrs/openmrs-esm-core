@@ -124,13 +124,16 @@ function getSchemaWithValuesAndSources(schema) {
   if (schema.hasOwnProperty("_default")) {
     return { ...schema, _value: schema._default, _source: "default" };
   } else {
-    return R.map(subtree => getSchemaWithValuesAndSources(subtree), schema);
+    return R.map((subtree) => getSchemaWithValuesAndSources(subtree), schema);
   }
 }
 
 function createValuesAndSourcesTree(config: ConfigObject, source: string) {
   if (isOrdinaryObject(config)) {
-    return R.map(subtree => createValuesAndSourcesTree(subtree, source), config as Functor<any>);
+    return R.map(
+      (subtree) => createValuesAndSourcesTree(subtree, source),
+      config as Functor<any>
+    );
   } else {
     return { _value: config, _source: source };
   }

@@ -178,10 +178,8 @@ function getAttachedExtensionInfoForSlot(
     extensionId,
   }));
 
-  const pathTemplateMatchingExtensions = flatMap(Object.entries(
-    attachedExtensionsForExtensionSlot
-  )
-    .filter(
+  const pathTemplateMatchingExtensions = flatMap(
+    Object.entries(attachedExtensionsForExtensionSlot).filter(
       ([attachedExtensionSlotName]) =>
         !attachedExtensionsForExtensionSlot[actualExtensionSlotName] &&
         !!getActualRouteProps(
@@ -195,7 +193,7 @@ function getAttachedExtensionInfoForSlot(
         actualExtensionSlotName,
         extensionId,
       }))
-    );
+  );
 
   return [...strictlyMatchingExtensions, ...pathTemplateMatchingExtensions];
 }

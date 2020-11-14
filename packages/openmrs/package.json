@@ -10,7 +10,8 @@
     "start": "npm run watch",
     "test": "jest --passWithNoTests",
     "build": "tsc",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "format": "prettier --write src/**"
   },
   "repository": {
     "type": "git",

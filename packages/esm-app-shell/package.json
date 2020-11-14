@@ -9,7 +9,8 @@
     "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json\" NODE_ENV=\"development\" webpack-dev-server --mode development",
     "build": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json\" NODE_ENV=\"production\" webpack --mode production",
     "watch": "webpack-dev-server --mode development",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "format": "prettier --write src/**"
   },
   "keywords": [
     "openmrs",
