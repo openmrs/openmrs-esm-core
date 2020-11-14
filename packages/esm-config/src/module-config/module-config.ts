@@ -588,14 +588,14 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
       const elements = schemaPart._elements;
       if (hasObjectSchema(elements)) {
         if (schemaPart._type == Type.Array) {
-          const configWithDefaults = config[key].map((conf) =>
+          const configWithDefaults = config[key].map((conf: Config) =>
             setDefaults(elements, conf)
           );
           config[key] = configWithDefaults;
         } else if (schemaPart._type == Type.Object) {
-          const configWithDefaults = Object.values(config[key]).map((conf) =>
-            setDefaults(elements, conf)
-          );
+          const configWithDefaults = Object.values(
+            config[key]
+          ).map((conf: Config) => setDefaults(elements, conf));
           config[key] = configWithDefaults;
         }
       }
