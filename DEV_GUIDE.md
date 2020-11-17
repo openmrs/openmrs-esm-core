@@ -9,6 +9,8 @@ You can find the reference application (“refapp”) that is used for testing t
 - [How do I create a new microfrontend?](#how-do-i-create-a-new-microfrontend)
 - [How do I work on multiple microfrontends at the same time?](#how-do-i-work-on-multiple-microfrontends-at-the-same-time)
 - [How do I create a distribution?](#how-do-i-create-a-distribution)
+- [Which version of OpenMRS is required to support Microfrontends?](#which-version-of-openmrs-is-required-to-support-microfrontends)
+- [Which OpenMRS modules are required by the Microfrontends framework?](#which-openmrs-modules-are-required-by-the-microfrontends-framework)
 
 <!-- tocstop -->
 
@@ -89,3 +91,9 @@ With the openmrs-module-spa backend module:
 With a custom nginx Docker image:
 
 (tbd)
+
+## Which version of OpenMRS is required to support Microfrontends?
+(in progress)
+
+## Which OpenMRS modules are required by the Microfrontends framework?
+(in progress)
