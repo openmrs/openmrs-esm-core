@@ -32,12 +32,17 @@ export const isUrlWithTemplateParameters = (
       return false;
     }
 
-    const matches = val.matchAll(/\${(.*?)}/g);
-    for (let match of Array.from(matches)) {
+    const rx = /\${(.*?)}/g;
+    let match = rx.exec(val);
+
+    while (match) {
       if (!allowedParams.includes(match[1])) {
         return false;
       }
+
+      match = rx.exec(val);
     }
+
     return true;
   }, "should be a URL or path. The allowed template parameters are " + allowedParams.map((p) => "${" + p + "}").join(", "));
 };

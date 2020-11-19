@@ -1,5 +1,6 @@
 import * as R from "ramda";
 import { invalidateConfigCache } from "../react-hook/config-cache";
+import { Validator } from "../validators/validator";
 import {
   isArray,
   isBoolean,
@@ -8,7 +9,6 @@ import {
   isObject,
   isString,
 } from "../validators/type-validators";
-import { Validator } from "../validators/validator";
 
 // The input configs
 type ProvidedConfig = {
@@ -123,23 +123,19 @@ function getSchemaWithValuesAndSources(schema) {
   if (schema.hasOwnProperty("_default")) {
     return { ...schema, _value: schema._default, _source: "default" };
   } else {
-    return Object.fromEntries(
-      Object.entries(schema).map(([key, subtree]) => [
-        key,
-        getSchemaWithValuesAndSources(subtree),
-      ])
-    );
+    return Object.keys(schema).reduce((obj, key) => {
+      obj[key] = getSchemaWithValuesAndSources(schema[key]);
+      return obj;
+    }, {});
   }
 }
 
 function createValuesAndSourcesTree(config: ConfigObject, source: string) {
   if (isOrdinaryObject(config)) {
-    return Object.fromEntries(
-      Object.entries(config).map(([key, subtree]) => [
-        key,
-        createValuesAndSourcesTree(subtree, source),
-      ])
-    );
+    return Object.keys(config).reduce((obj, key) => {
+      obj[key] = createValuesAndSourcesTree(config[key], source);
+      return obj;
+    }, {});
   } else {
     return { _value: config, _source: source };
   }
@@ -325,6 +321,7 @@ function getProvidedConfigs(): Config[] {
 // We cache the Promise that loads the import mapped config file
 // so that we can be sure to only call it once
 let getImportMapConfigPromise;
+
 async function loadConfigs() {
   if (!getImportMapConfigPromise) {
     getImportMapConfigPromise = getImportMapConfigFile();
@@ -338,7 +335,8 @@ function validateConfigSchema(
   keyPath = ""
 ) {
   const updateMessage = `Please verify that you are running the latest version and, if so, alert the maintainer.`;
-  for (let key of Object.keys(schema).filter((k) => !k.startsWith("_"))) {
+
+  for (const key of Object.keys(schema).filter((k) => !k.startsWith("_"))) {
     const thisKeyPath = keyPath + (keyPath && ".") + key;
     const schemaPart = schema[key] as ConfigSchema;
 
@@ -456,6 +454,10 @@ function mergeConfigs(configs: Config[]) {
   return mergeDeepAll(configs);
 }
 
+function getEntries(config: ConfigObject): Array<[string, any]> {
+  return Object.keys(config).map((key) => [key, config[key]]);
+}
+
 // Recursively check the provided config tree to make sure that all
 // of the provided properties exist in the schema. Run validators
 // where present in the schema.
@@ -464,7 +466,7 @@ const validateConfig = (
   config: ConfigObject,
   keyPath: string = ""
 ) => {
-  for (let [key, value] of Object.entries(config)) {
+  for (let [key, value] of getEntries(config)) {
     const thisKeyPath = keyPath + "." + key;
     const schemaPart = schema[key] as ConfigSchema;
     if (!schema.hasOwnProperty(key)) {
@@ -477,6 +479,7 @@ const validateConfig = (
     }
     checkType(thisKeyPath, schemaPart._type, value);
     runValidators(thisKeyPath, schemaPart._validators, value);
+
     if (isOrdinaryObject(value)) {
       // structurally validate only if there's elements specified
       // or there's a `_default` value, which indicates a freeform object
@@ -500,7 +503,7 @@ function validateDictionary(
   keyPath: string
 ) {
   if (dictionarySchema._elements) {
-    for (let [key, value] of Object.entries(config)) {
+    for (let [key, value] of getEntries(config)) {
       validateConfig(dictionarySchema._elements, value, `${keyPath}.${key}`);
     }
   }
@@ -568,7 +571,8 @@ function runValidators(
 // Recursively fill in the config with values from the schema.
 const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   const config = R.clone(inputConfig);
-  for (let key of Object.keys(schema)) {
+
+  for (const key of Object.keys(schema)) {
     const schemaPart = schema[key] as ConfigSchema;
     // The `schemaPart &&` clause of this `if` statement will only fail
     // if the schema is very invalid. It is there to prevent the app from

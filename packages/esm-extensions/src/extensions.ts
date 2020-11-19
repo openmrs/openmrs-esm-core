@@ -166,10 +166,14 @@ export async function getAttachedExtensionInfoForSlotAndConfig(
   return extensionIds;
 }
 
+function getEntries<T>(obj: Record<string, T>): Array<[string, T]> {
+  return Object.keys(obj).map((key) => [key, obj[key]]);
+}
+
 function getAttachedExtensionInfoForSlot(
   actualExtensionSlotName: string
 ): Array<AttachedExtensionInfo> {
-  const strictlyMatchingExtensions = (
+  const result = (
     attachedExtensionsForExtensionSlot[actualExtensionSlotName] ?? []
   ).map((extensionId) => ({
     attachedExtensionSlotName: actualExtensionSlotName,
@@ -177,26 +181,28 @@ function getAttachedExtensionInfoForSlot(
     extensionId,
   }));
 
-  const pathTemplateMatchingExtensions = Object.entries(
+  const pathTemplateMatchingExtensions = getEntries(
     attachedExtensionsForExtensionSlot
-  )
-    .filter(
-      ([attachedExtensionSlotName]) =>
-        !attachedExtensionsForExtensionSlot[actualExtensionSlotName] &&
-        !!getActualRouteProps(
-          attachedExtensionSlotName,
-          actualExtensionSlotName
-        )
-    )
-    .flatMap(([attachedExtensionSlotName, extensionIds]) =>
-      extensionIds.map((extensionId) => ({
+  ).filter(
+    ([attachedExtensionSlotName]) =>
+      !attachedExtensionsForExtensionSlot[actualExtensionSlotName] &&
+      !!getActualRouteProps(attachedExtensionSlotName, actualExtensionSlotName)
+  );
+
+  for (const [
+    attachedExtensionSlotName,
+    extensionIds,
+  ] of pathTemplateMatchingExtensions) {
+    result.push(
+      ...extensionIds.map((extensionId) => ({
         attachedExtensionSlotName,
         actualExtensionSlotName,
         extensionId,
       }))
     );
+  }
 
-  return [...strictlyMatchingExtensions, ...pathTemplateMatchingExtensions];
+  return result;
 }
 
 /**
