@@ -68,6 +68,5 @@ dist
 *.iml
 .idea/
 
-docs/
 storybook-static
 package-lock.json

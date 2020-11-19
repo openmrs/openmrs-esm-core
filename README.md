@@ -12,6 +12,8 @@ This is a [Lerna](https://lerna.js.org/) project containing the core packages fo
 - [@openmrs/esm-implementer-tools](packages/esm-implementer-tools)
 - [@openmrs/esm-styleguide](packages/esm-styleguide)
 
+You can find more documentation in the [docs](./docs) folder.
+
 ## Repository Development
 
 ### Getting Started
