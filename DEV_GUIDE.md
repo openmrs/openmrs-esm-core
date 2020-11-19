@@ -14,77 +14,98 @@ You can find the reference application (“refapp”) that is used for testing t
 
 <!-- tocstop -->
 
-
 ## How do I create a new microfrontend?
 
 What is the general workflow?
 
-Clone the repository of interest
-git clone https://github.com/openmrs/openmrs-esm-patient-chart 
+Clone the repository of interest (e.g. [openmrs-esm-patient chart](https://github.com/openmrs/openmrs-esm-patient-chart)):
 
-Make sure that you installed the dependencies (in the repository’s directory)
+```
+git clone https://github.com/openmrs/openmrs-esm-patient-chart
+```
+
+Change to the cloned repository's directory and install its dependencies:
+
+```
+cd openmrs-esm-patient-chart
 npm install
+```
 
 Start a dev server:
+
 ```
 npx openmrs debug --run-project
 npx openmrs@latest
 ```
 
-Modify the code (e.g., in VS Code)
+Make changes to the code and when done, commit them upstream and make a pull request. The pull request is then reviewed and merged. The changes introduced will be automatically be deployed to the reference application.
 
-Commit code and create a PR
+Once everything is fine make sure to bump the version in the `package.json` (e.g., from `1.2.3` to `1.2.4` for a bugfix, or `1.2.3` to `1.3.0` if a new feature had been implemented. See [semantic versioning guidelines](https://semver.org/)).
 
-PR is reviewed and merged. This will be available on the reference application first
+Once enough pull requests have merged in to merit a new release, you can reach out to one of the our maintainers for help creating a new release. Following the release, an updated package will be available on NPM and ready for use in any OpenMRS instance.
 
-Once everything is fine make sure to update the version in the package.json (e.g., from 1.2.3 to 1.2.4 if its a bugfix, or 1.2.3 to 1.3.0 if a new feature had been implemented)
-
-Repeat 4) and 5); then have somebody to create a new release on GitHub incl. correct release notes
-
-The package is now available on NPM and can be used in any OpenMRS instance
-
-Example for release notes: https://github.com/openmrs/openmrs-esm-drugorder/releases/tag/v0.3.0
-
+Example showing release notes from a recent release in the [drugorder](https://github.com/openmrs/openmrs-esm-drugorder) microfrontend: https://github.com/openmrs/openmrs-esm-drugorder/releases/tag/v0.3.0.
 
 ## How do I work on multiple microfrontends at the same time?
-There are multiple ways; on your machine and using the reference application.
 
-Local machine:
+There are multiple ways of achieving this.
 
-After starting the first one with npx openmrs debug, additional microfrontends can be served using npx webpack-dev-server. The microfrontend will be served at a URL like http://localhost:8081/openmrs-esm-xyz.js (the path is the output filename shown in that module’s webpack config).
+### Working on your local machine:
+
+Start the first microfrontend using:
+
+```
+npx openmrs debug
+```
+
+With this running, additional microfrontends can be served using:
+
+```
+npx webpack-dev-server
+```
+
+The microfrontend will be served at a URL such as `http://localhost:8081/openmrs-esm-xyz.js` (where the path is the output filename as indicated in that module’s webpack config).
 
 Now you can use the devtools displayed via the little box in the lower-right hand side of the page. Click on it and add the respective modules via their local URLs.
 
-Refapp:
+### Working in the reference application:
 
-In the reference application the devtools are not always loaded. Instead, they need to be enabled first. To enable the devtools, open your browser’s developer tools, and in the Javascript console run 
+One thing to note about this case is that the OpenMRS devtools (which allow you to perform [import-map overrides](https://github.com/joeldenning/import-map-overrides) ) are not enabled by default. You might need to enable them first. To do so, open your browser's devtools panel and run the following command in the JavaScript console:
 
 ```
 localStorage.setItem('openmrs:devtools', true)
 ```
 
-After refreshing the page, you will see a little box appear in the lower-right hand side of the page. This will open an interface you can use to add or override entries of the import map. Rest is as on the local machine.
-
+After refreshing the page, a little box appear should in the lower-right hand corner of the page. Clicking this box should open the import map overrides panel. You can use this interface to override URLs for the JavaScript modules that are loaded in your application so that they reference locally running versions of the modules at development-time. You can then proceed with your usual local development workflow.
 
 ## How do I create a distribution?
 
-For creating a new distribution using the OpenMRS microfrontends the following steps should be followed.
+The process for creating a distribution with OpenMRS microfrontends is as follows:
 
-Build your app shell using
+Build your app shell using:
+
+```
 npx openmrs build
+```
 
-Assemble your selected microfrontends / modules to be used
+Assemble your selected microfrontends / modules:
+
+```
 npx openmrs assemble
+```
 
-Select a way of running the frontend
-Using the “openmrs-module-spa” backend module
-Using a dedicated frontend server, e.g., using an nginx Docker image
+Choose a way of running the microfrontend:
 
-For (1) and (2) there are multiple command line flags to set the right options. If in doubt consult the documentation. A quick way to see what is possible is to run these commands with the --help flag, e.g.,
+1. Using the `openmrs-module-spa` backend module.
+2. Using a dedicated frontend server, e.g., using an nginx Docker image.
 
+In both cases, there are multiple command line flags available that allow you can tweak to get the right setup. If in doubt, consult the documentation, or run the commands with the `--help` flag e.g.
+
+```
 npx openmrs build --help
+```
 
-With the openmrs-module-spa backend module:
+With the `openmrs-module-spa` backend module:
 
 (tbd)
 
@@ -93,7 +114,9 @@ With a custom nginx Docker image:
 (tbd)
 
 ## Which version of OpenMRS is required to support Microfrontends?
+
 (in progress)
 
 ## Which OpenMRS modules are required by the Microfrontends framework?
+
 (in progress)
