@@ -19,7 +19,12 @@ export default function ConfigTree({ config, path = [] }: ConfigTreeProps) {
           .map(([key, value]) => {
             const thisPath = path.concat([key]);
             return (
-              <div key={key} className={styles.treeIndent}>
+              <div
+                key={key}
+                className={
+                  path.length ? styles.treeIndent : styles.topLevelTree
+                }
+              >
                 {!value.hasOwnProperty("_value") ? (
                   <div>
                     {key}:

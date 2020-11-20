@@ -1,36 +1,33 @@
-.tools {
-  margin: -1.5em -1.5em 0 -1.5em;
-  padding: 0.5em 1.5em;
-  border-bottom: #888 solid 1px;
-  display: flex;
-  gap: 2em;
-}
-
-.switch {
-  display: flex;
-  align-items: center;
-}
-
 .panel {
-  width: 100%;
-  margin-top: 24px;
+  margin: -16px -32px;
+}
+
+.tools {
+  background-color: #e0e0e0;
+  display: flex;
+  gap: 4em;
+  padding: 0.5em 1.5em;
+  border-bottom: 1px solid #a0a0a0;
+  border-top: 1px solid #c0c0c0;
+}
+
+.tools > div {
+  flex: 0 1 auto;
 }
 
 .configContent {
-  margin-top: "1.5em";
-  font-family: "monospace";
-  font-size: "12pt";
-}
-
-.downloadButton {
-  display: flex;
-  align-items: center;
+  background-color: #f0f0f0;
+  font-family: monospace;
+  font-size: 10pt;
 }
 
 .downloadLink {
-  display: inline-flex;
   text-decoration: none;
-  color: #000;
+  color: inherit;
+}
+
+.topLevelTree {
+  margin-top: 1em;
 }
 
 .treeIndent {

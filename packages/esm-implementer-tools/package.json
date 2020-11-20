@@ -33,6 +33,8 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "@carbon/icons-react": "^10.21.0",
+    "carbon-components-react": "^7.24.0",
     "lodash-es": "^4.17.15",
     "react-hooks-global-state": "^1.0.1",
     "single-spa-react": "^3.0.1",
