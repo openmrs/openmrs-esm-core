@@ -51,7 +51,7 @@ export default function EditableValue({ path, element }: EditableValueProps) {
 
   return (
     <>
-      <div style={{ display: "flex" }}>
+      <div className={styles.line}>
         {editing ? (
           <ValueEditor
             element={element}
@@ -82,6 +82,7 @@ export default function EditableValue({ path, element }: EditableValueProps) {
           </button>
         )}
         {error && <div className={styles.error}>{error}</div>}
+        <div className={styles.configElementSource}>{element._source}</div>
       </div>
     </>
   );
