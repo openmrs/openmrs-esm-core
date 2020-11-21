@@ -16,7 +16,8 @@ implementers.
 - [What does an OpenMRS frontend configuration file look like?](#what-does-an-openmrs-frontend-configuration-file-look-like)
 - [How do I configure my OpenMRS implementation?](#how-do-i-configure-my-openmrs-implementation)
 - [I'm developing an ESM module. How do I make it configurable?](#im-developing-an-esm-module-how-do-i-make-it-configurable)
-- [API](#api)
+- [Reference: Schema definition](#schema-reference)
+- [Reference: API](#api)
 - [Contributing & Development](#contributing--development)
 
 <!-- tocstop -->
@@ -80,52 +81,49 @@ file to your server's `frontend/` directory. Your import map will then look like
 }
 ```
 
-### The Flexible Way *(under construction)*
+### The Flexible Way
 
-*Due to [RFC-26](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0026-activation-distribution.md)
-this method will not work as described with 
-[openmrs-module-spa](https://github.com/openmrs/openmrs-module-spa)
-after 
-[1.0.6](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0026-activation-distribution.md).
-Please hang tight while we work out how to support hierarchal config files
-in the new architecture.*
+You can also provide config files programmatically. This technique 
+allows you to have multiple configuration files, which will be
+merged together in an order that you specify.
 
-This method requires you have an
-[esm-root-config override](https://wiki.openmrs.org/display/projects/openmrs-esm-root-config).
-This allows you to have multiple configuration files, which will be
-merged together in an order that you specify. You add your configuration
-files to your root override module, import them, and provide them to
-esm-module-config. All this must happen before you register your applications.
+To do this you need to create a (simple) custom module, which you will add to your
+import map. Its name in the import map should be suffixed with `-app`.
+This will ensure it is loaded.
+
+You add your configuration
+files to this module, import them, and `provide` them to
+esm-config.
 
 Example code:
 
 ```js
 import { provide } from "@openmrs/esm-config";
 
-import pihConfig from "./pih-config.json";
-import pihMexicoConfig from "./pih-mexico-config.json";
+import myOrgConfig from "./org-config.json";
+import myOrgLocalConfig from "./org-local-config.json";
 
-provide(pihConfig);
-provide(pihMexicoConfig);
+provide(myOrgConfig);
+provide(myOrgLocalConfig);
 ```
 
 All provided configs will be merged, with elements provided by later calls
 to provide taking priority. The import map config file, `config-file`, will
-also be merged, and will take the lowest priority. In the above example,
-configuration elements in `pih-mexico-config.json` will take priority over
-those in `pih-config.json`.
+also be merged, and will take the highest priority. In the above example,
+configuration elements in `org-local-config.json` will take priority over
+those in `org-config.json`.
 
 You can break up your configuration files into hierarchies, or per module, or per groups of modules.
 
 ## I'm developing an ESM module. How do I make it configurable?
 
-You should use this module, esm-module-config, to make your modules configurable.
+You should use this module, esm-config, to make your modules configurable.
 
-Start by `npm install --save @openmrs/esm-config`. This is a runtime
-dependency, so it should be included in your webpack `externals`.
+Start with `npm install --save-dev @openmrs/esm-config`. This is a runtime
+dependency, so you should also include it in `peerDependencies`.
 
 The main task is to create a config schema for your module. The config schema
-is what tells `esm-module-config` what configuration files should look like,
+is what tells `esm-config` what configuration files should look like,
 including defaults and validations.
 
 ### Designing a schema
@@ -161,24 +159,26 @@ In the following section, we'll see how to write a config schema that supports t
 
 ### Defining a schema
 
-We'll start with just that first nested config element from above, `hologram.color`. We must provide defaults for all of the values—in OpenMRS Microfrontends, all configuration is optional.
+We'll start with just that first nested config element from above, `hologram.color`.
+We must provide defaults for all of the values—in OpenMRS Frontend 3.0, all
+configuration is optional. All modules should do something reasonable out of the box.
 
 ```js
-import { defineConfigSchema, validators, validator } from "@openmrs/esm-config"
+import { defineConfigSchema, Type } from "@openmrs/esm-config"
 
 defineConfigSchema("@openmrs/esm-hologram-doctor", {
   hologram: {
     color: {
-      default: false,
-      validators: [validators.isBoolean],
-      description: "Whether the cologram supports color display."
+      _type: Type.Boolean,
+      _default: false,
+      _description: "Whether the cologram supports color display."
     }
   }
 }
 ```
 
 Note that each configuration element should have an object for a value, and
-that this object must define the default for that element. Do not do this:
+that this object must define the properties for that element. Do not do this:
 
 ```js
 ❌ // This is wrong!
@@ -188,19 +188,28 @@ that this object must define the default for that element. Do not do this:
 ❌ })
 ```
 
-The following names are reserved and cannot be used as config keys:
-`default`, `validators`, `description`, and `arrayElements`. Doing so
-will result in undefined behavior. Do not do this:
+The words prefixed with `_` are schema keywords. Do not prefix the names of your
+config elements with underscores. Especially do not use a schema keyword as
+a config element name.
 
 ```js
 ❌ // Don't do this!
 ❌ defineConfigSchema("@openmrs/esm-hologram-doctor",
 ❌  hologram: {
 ❌    salutation: {
-❌      default: {
-❌        default: "Greetings ? this is bad don't do it"
+❌      _default: {
+❌        _default: "Greetings ? this is bad don't do it"
 ❌ }}})
 ```
+
+#### Typing
+
+While not strictly required in the current version, you should provide a type
+for every config element you define. The `_type` keyword accepts values from
+the Type enum.
+
+These types are used both to validate input and to support special behavior
+in the implementer tools.
 
 #### Validators
 
@@ -213,9 +222,10 @@ on't work.
 ```js
 robot: {
   name: {
-    default: "R2D2",
-    validators: [
-      validators.isString,
+    _type: Type.String,
+    _default: "R2D2",
+    _description: "What to call the robot",
+    _validators: [
       validator(n => /\d/.test(n), "Robots must have numbers in their names")
     ]
   }
@@ -238,11 +248,12 @@ You can even validate nested objects:
 
 ```js
 colorPicker: {
-  options: { default: ["black", "red"] }
-  initial: { default: "black" },
-  validators: [
+  options: { _default: ["green", "red", "blue"] }
+  initial: { _default: "green" },
+  _description: "The color picker for lightsabers",
+  _validators: [
     validator(o => o.options.includes(o.initial),
-      "initial must be one of the options")
+      "Initial must be one of the options")
   ]
 }
 ```
@@ -253,19 +264,24 @@ For convenience, some common validators are provided out of the box. See the
 #### Arrays
 
 You can accept and validate arrays, and arrays containing objects, in your
-configuration schema. This is configured with the `arrayElements` parameter. For
-example, a schema which would accept an array of strings:
+configuration schema. This is configured with the `elements` parameter, used
+with `_type: Type.Array`. For example, a schema which would accept an array
+of strings up to 30 characters long:
 
 ```js
 virtualProvider: {
   name: {
     given: {
-      default: ["Obi", "Wan"]
-      arrayElements: {
-        validators: [validators.isString]
+      _type: Type.Array,
+      _default: ["Obi", "Wan"]
+      _elements: {
+        _type: Type.String
+        _validators: [validator(n => n.length < 30, "Must be less than 30 characters")]
       }
-    }
-  }
+    },
+    _description: "The name of the avatar. Does not have to be the name of the actual provider"
+  },
+  _description: "The avatar of the medical practitioner"
 }
 ```
 
@@ -273,22 +289,33 @@ Here is an example of a schema that expects an array of objects structured in a 
 
 ```js
 robots: {
-  default: [
+  _type: Type.Array,
+  _default: [
     { name: "R2-D2", homeworld: "Naboo" },
     { name: "C-3PO", homeworld: "Tatooine" }
   ],
-  arrayElements: {
-    name: { validators: [robotNameValidator] },
+  _description: "The list of all available robots",
+  _elements: {
+    name: {
+      _type: Type.String,
+      _description: "What to call the robot",
+      _validators: [robotNameValidator]
+    },
     homeworld: {
-      default: null  // not required
-      validators: [validators.isString]
+      _type: Type.String,
+      _description: "Where the robot is from",
+      _default: null  // not required
     }
   }
 }
 ```
 
 This schema will require that any objects in the robots array must only have
-the keys `name` and `homeworld`.
+the keys `name` and `homeworld`, and that `name` is required.
+
+Objects within arrays do not
+have to have defaults. If an object is supplied to the `robots` array that
+does not have a `name`, an error will be thrown.
 
 #### Freeform objects
 
@@ -298,17 +325,24 @@ like a normal non-object element.
 
 ```js
 beepsPerRobot: {
-  default: {
+  _type: Type.Object
+  _default: {
     "R2-D2": 4,
     "C-3P0": 0
   },
-  validators: [  // you can (and should) still run validators
-    validators.isObject,
-    validator(o => Object.values(o).every(Number.isInteger),
-      "robot beeps must be integers")
+  _elements: {  // describes the *values* of the object
+    _type: Type.Number
+    _validators: [validator(n => Number.isInteger(n), "Beeps must be integers")]
+  },
+  _description: "An object mapping robot names to number of beeps",
+  _validators: [
+    validator(o => Object.keys(o).every(n => /\d/.test(n)),
+      "Robots must have numbers in their names")
   ]
 }
 ```
+
+Note that this is the only situation in which you should ever use `Type.Object`.
 
 ### Using config values
 
@@ -362,7 +396,48 @@ defaults for configuration elements for which no values have been provided.
 
 This hasn't been implemented yet, but we would like to implement it! See "Contributing"
 
-# API
+## Schema Reference
+
+#### `_default`
+
+All config elements must have a default (excluding elements within arrays of objects).
+
+The default does not necessarily need to satisfy the `_type` or the `_validators` of
+the element, but this may change in future versions.
+
+#### `_type`
+
+One of the values from the `Type` enum. Used for validation and to help the
+implementer tools work with the element.
+
+Should always appear alongside `_default`.
+
+#### `_description`
+
+Helps implementers understand what the configuration element actually does and
+how it is intended to be used.
+
+Can be used anywhere within the schema structure.
+
+#### `_validators`
+
+An array of validator objects.
+
+Some common validators are
+provided: [API / validators](#const-validators).
+
+Custom validators should
+be created with the [validator](#validator) function.
+
+Can be used anywhere within the schema structure.
+
+#### `_elements`
+
+Only valid alongside `_type: Type.Array` or `_type: Type.Object`. A `_default`
+must also be provided at this level. Value should be an object which is
+a schema for the values contained in the array or object.
+
+## API
 
 <!-- API -->
 
