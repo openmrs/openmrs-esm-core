@@ -15,7 +15,9 @@ import type { SpaConfig } from "./types";
  * import maps.
  */
 function getApps(maps: Record<string, string>) {
-  return Object.keys(maps).filter((m) => m.endsWith("-app"));
+  return Object.keys(maps).filter(
+    (m) => m.endsWith("-app") || m.endsWith("-widgets")
+  );
 }
 
 /**
