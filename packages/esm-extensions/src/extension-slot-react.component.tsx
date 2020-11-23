@@ -16,6 +16,7 @@ interface ExtensionSlotBaseProps {
   children?: ReactNode;
   style?: React.CSSProperties;
   state?: Record<string, any>;
+  className?: string;
 }
 
 // remainder of props are for the top-level <div>
@@ -24,8 +25,9 @@ export type ExtensionSlotReactProps<T = {}> = ExtensionSlotBaseProps & T;
 export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   extensionSlotName,
   children,
-  style,
   state,
+  style,
+  className,
   ...divProps
 }: ExtensionSlotReactProps) => {
   const slotModuleName = useContext(ModuleNameContext);
@@ -38,6 +40,7 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   const [matchingExtensionSlot, setMatchingExtensionSlot] = useState<
     ExtensionSlotDefinition | undefined
   >(undefined);
+
   const extensionIdsToRender = matchingExtensionSlot?.assignedIds ?? [];
 
   useEffect(() => {
