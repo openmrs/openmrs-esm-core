@@ -1,6 +1,6 @@
 {
   "name": "openmrs",
-  "version": "3.1.1",
+  "version": "3.1.3",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "bin": {
@@ -31,7 +31,7 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
-    "@openmrs/esm-app-shell": "^3.1.1",
+    "@openmrs/esm-app-shell": "^3.1.3",
     "@types/react": "^16.9.46",
     "@types/systemjs": "^6.1.0",
     "autoprefixer": "^9.6.1",
