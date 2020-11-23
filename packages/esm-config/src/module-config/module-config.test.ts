@@ -845,7 +845,7 @@ describe("extension slot config", () => {
       "fooSlot",
       "foo-module"
     );
-    expect(extConfig).toStrictEqual({ remove: ["bar"] });
+    expect(extConfig).toStrictEqual({ fooSlot: { remove: ["bar"] } });
   });
 
   it("is included in getImplementerToolsConfig", async () => {
