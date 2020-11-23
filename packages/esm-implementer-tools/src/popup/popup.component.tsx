@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Button, Tabs, Tab } from "carbon-components-react";
+import { Close16 } from "@carbon/icons-react";
 import styles from "./popup.styles.css";
 import Configuration from "../configuration/configuration.component";
 import BackendModule from "../backend-dependencies/backend-dependecies.component";
@@ -6,7 +8,6 @@ import BackendModule from "../backend-dependencies/backend-dependecies.component
 export default function Popup(props: DevToolsPopupProps) {
   const [configHasAlert, setConfigHasAlert] = useState(false);
   const [backendHasAlert, setBackendHasAlert] = useState(false);
-  const [visibleTabIndex, setVisibleTabIndex] = useState(0);
 
   useEffect(() => {
     props.setHasAlert(configHasAlert || backendHasAlert);
@@ -14,32 +15,23 @@ export default function Popup(props: DevToolsPopupProps) {
 
   return (
     <div className={styles.popup}>
-      <nav className={styles.tabs}>
-        <button
-          className={visibleTabIndex == 0 ? styles.selectedTab : ""}
-          onClick={() => setVisibleTabIndex(0)}
-        >
-          Configuration
-        </button>
-        <button
-          className={visibleTabIndex == 1 ? styles.selectedTab : ""}
-          onClick={() => setVisibleTabIndex(1)}
-        >
-          Backend Modules
-        </button>
-      </nav>
-      <div>
-        {visibleTabIndex === 0 && (
+      <Tabs>
+        <Tab id="configuration-tab" label="Configuration">
           <Configuration setHasAlert={setConfigHasAlert} />
-        )}
-        {visibleTabIndex === 1 && (
+        </Tab>
+        <Tab id="backend-modules-tab" label="Backend Modules">
           <BackendModule setHasAlert={setBackendHasAlert} />
-        )}
-      </div>
+        </Tab>
+      </Tabs>
       <div className={styles.farRight}>
-        <button onClick={props.close} className="omrs-unstyled">
-          {"\u24e7"}
-        </button>
+        <Button
+          className={styles.closeButton}
+          kind="secondary"
+          renderIcon={Close16}
+          iconDescription="Close"
+          onClick={props.close}
+          hasIconOnly
+        />
       </div>
     </div>
   );
