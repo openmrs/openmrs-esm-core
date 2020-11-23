@@ -1,8 +1,10 @@
 import { openmrsFetch, openmrsObservableFetch } from "./openmrs-fetch";
 import { isObservable } from "rxjs";
 
-import { navigateToUrl as mockNavigateToUrl } from "single-spa";
-import { getConfig as mockGetConfig } from "@openmrs/esm-config";
+import {
+  getConfig as mockGetConfig,
+  navigate as mockNavigate,
+} from "@openmrs/esm-config";
 
 describe("openmrsFetch", () => {
   beforeEach(() => {
@@ -209,33 +211,9 @@ describe("openmrsFetch", () => {
 
     return openmrsFetch("/ws/rest/v1/session").then((data) => {
       //@ts-ignore
-      expect(mockNavigateToUrl.mock.calls[0][0]).toBe("/openmrs/spa/login");
-    });
-  });
-
-  it(`redirects to openmrs login page when the server responds with a 401`, () => {
-    (mockGetConfig as any).mockResolvedValueOnce({
-      redirectAuthFailure: {
-        enabled: true,
-        url: "/openmrs/login",
-        errors: [401],
-        resolvePromise: true,
-      },
-    });
-
-    // @ts-ignore
-    window.fetch.mockReturnValue(
-      Promise.resolve({
-        ok: false,
-        status: 401,
-        statusText: "You are not authorized",
-        text: () => Promise.resolve("a string response body"),
-      })
-    );
-
-    return openmrsFetch("/ws/rest/v1/session").then((data) => {
-      //@ts-ignore
-      expect(window.location.assign.mock.calls[0][0]).toBe("/openmrs/login");
+      expect(mockNavigate.mock.calls[0][0]).toStrictEqual({
+        to: "/openmrs/spa/login",
+      });
     });
   });
 });
