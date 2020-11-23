@@ -1,17 +1,38 @@
 import React from "react";
 import { always } from "kremling";
-import {
-  ToastNotification,
-  InlineNotification,
-  NotificationActionButton,
-} from "carbon-components-react";
+import { InlineNotification } from "carbon-components-react/es/components/Notification";
 
 const defaultOptions = {
   millis: 4000,
 };
 
-export default function Toast({ toast, closeToast, isClosing }) {
-  const { millis = defaultOptions.millis, description } = toast;
+interface ToastProps {
+  toast: ToastDescriptor;
+  closeToast: any;
+  isClosing: any;
+}
+
+interface ToastDescriptor {
+  kind: ToastType;
+  title: string;
+  description: React.ReactNode;
+  action?: React.ReactNode;
+}
+
+export type ToastType =
+  | "error"
+  | "info"
+  | "info-square"
+  | "success"
+  | "warning"
+  | "warning-alt";
+
+export const Toast: React.FC<ToastProps> = ({
+  toast,
+  closeToast,
+  isClosing,
+}) => {
+  const { millis, description } = Object.assign({}, toast, defaultOptions);
 
   const [waitingForTime, setWaitingForTime] = React.useState(true);
   const [isMounting, setIsMounting] = React.useState(true);
@@ -35,36 +56,12 @@ export default function Toast({ toast, closeToast, isClosing }) {
   }, []);
 
   return (
-<<<<<<< HEAD
-    <span
-      className={always("omrs-toast omrs-type-body-regular")
-        .maybe("omrs-toast-closing", isClosing)
-        .maybe("omrs-toast-mounting", isMounting)}
-      onMouseEnter={() => setWaitingForTime(false)}
-      onMouseLeave={() => setWaitingForTime(true)}
-    >
-      <span>{description}</span>
-      <span>
-        <button className="omrs-btn-icon-medium" onClick={onClose}>
-          <svg className="omrs-icon" fill="var(--omrs-color-ink-white)">
-            <use xlinkHref="#omrs-icon-close" />
-          </svg>
-        </button>
-      </span>
-    </span>
-=======
     <>
       <InlineNotification
-        kind="info"
-        iconDescription="describes the close button"
-        subtitle={
-          <span>
-            Subtitle text goes here. <a href="#example">Example link</a>
-          </span>
-        }
-        title=""
+        kind={toast.kind || "info"}
+        subtitle={toast.description}
+        title={toast.title || ""}
       />
     </>
->>>>>>> b6abf73... Add carbon-components-react
   );
-}
+};
