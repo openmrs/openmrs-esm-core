@@ -62,27 +62,11 @@ module.exports = {
         },
       },
       {
-        test: /esm-styleguide\/.+\.css$/i,
+        test: /\.css$/,
         use: [
           { loader: require.resolve(MiniCssExtractPlugin.loader) },
           { loader: require.resolve("css-loader") },
           { loader: require.resolve("postcss-loader") },
-        ],
-      },
-      {
-        test: /node_modules\/.+\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /esm-extensions\/.+\.css$/i,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-            },
-          },
         ],
       },
       {

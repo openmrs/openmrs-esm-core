@@ -2,7 +2,7 @@ const { resolve } = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
-const { peerDependencies } = require("./package.json");
+const { peerDependencies } = require('./package.json');
 
 module.exports = {
   entry: [
@@ -26,22 +26,6 @@ module.exports = {
         test: /\.m?(js|ts|tsx)$/,
         exclude: /node_modules/,
         use: "babel-loader",
-      },
-      {
-        test: /node_modules\/.+\.css$/i,
-        use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /\.css$/,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: true,
-            },
-          },
-        ],
       },
     ],
   },

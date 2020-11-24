@@ -5,7 +5,6 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { TooltipIcon } from "carbon-components-react";
 import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
 import { configCacheNotifier } from "@openmrs/esm-config";
 import {
@@ -17,13 +16,13 @@ import {
   unregisterExtensionSlot,
   AttachedExtensionInfo,
 } from "./extensions";
-import styles from "./ui-editor.styles.css";
+import { TooltipIcon } from "carbon-components-react";
 
 interface ExtensionSlotBaseProps {
   extensionSlotName: string;
   children?: ReactNode;
+  style?: React.CSSProperties;
   state?: Record<string, any>;
-  className?: string;
 }
 
 // remainder of props are for the top-level <div>
@@ -32,8 +31,8 @@ export type ExtensionSlotReactProps<T = {}> = ExtensionSlotBaseProps & T;
 export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   extensionSlotName,
   children,
+  style,
   state,
-  className,
   ...divProps
 }: ExtensionSlotReactProps) => {
   const [attachedExtensionInfos, setAttachedExtensionInfos] = useState<
@@ -74,12 +73,12 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
     return () => sub.unsubscribe();
   }, [extensionSlotName]);
 
-  const divClassName = `${className ?? ""} ${
-    getIsUIEditorEnabled() ? styles.slot : ""
-  }`;
+  const divStyle = getIsUIEditorEnabled()
+    ? { ...style, backgroundColor: "cyan" }
+    : style;
 
   return (
-    <div className={divClassName} {...divProps}>
+    <div style={divStyle} {...divProps}>
       {attachedExtensionInfos.map(
         ({
           extensionId,
@@ -101,9 +100,6 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
             </ExtensionContext.Provider>
           );
         }
-      )}
-      {getIsUIEditorEnabled() && (
-        <div className={styles.slotName}>{extensionSlotName}</div>
       )}
     </div>
   );
@@ -136,8 +132,12 @@ export const ExtensionReact: React.FC<ExtensionReactProps> = ({ state }) => {
   }, [actualExtensionSlotName, attachedExtensionSlotName, extensionId]);
 
   return getIsUIEditorEnabled() ? (
-    <TooltipIcon tooltipText={extensionId} align="center" direction="top">
-      <div className={styles.extension}>
+    <TooltipIcon
+      tooltipText={`Slot Name : ${attachedExtensionSlotName}`}
+      align="center"
+      direction="top"
+    >
+      <div style={{ outline: "0.125rem solid yellow" }}>
         <slot ref={ref} />
       </div>
     </TooltipIcon>
