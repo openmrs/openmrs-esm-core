@@ -74,8 +74,6 @@ export interface CancelLoading {
   (): void;
 }
 
-const extensionSlotsForModule: Record<string, Array<string>> = {};
-
 export const extensionStore = createGlobalStore<ExtensionStore>("extensions", {
   slots: {},
   extensions: {},

@@ -1,15 +1,16 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
 import { getExtensionSlotsForModule } from "@openmrs/esm-extensions";
+import { connect } from 'unistore/react';
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
 
-export interface ExtensionsConfigTreeProps {
+interface ExtensionsConfigTreeProps {
   config: { [key: string]: any };
   moduleName: string;
 }
 
-export function ExtensionsConfigTree({
+function ExtensionsConfigTreeImpl({
   config,
   moduleName,
 }: ExtensionsConfigTreeProps) {
@@ -53,6 +54,8 @@ export function ExtensionsConfigTree({
     </div>
   ) : null;
 }
+
+export const ExtensionsConfigTree = connect()(ExtensionsConfigTreeImpl);
 
 interface ExtensionSlotConfigProps {
   config: ExtensionSlotConfig;

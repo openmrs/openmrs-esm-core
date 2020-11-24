@@ -1,5 +1,4 @@
 import "./style";
-
 import { start } from "single-spa";
 import { createAppState, setupApiModule } from "@openmrs/esm-api";
 import { setupI18n } from "./locale";
@@ -58,6 +57,7 @@ function runShell() {
 }
 
 function setupPaths(config: SpaConfig) {
+  __webpack_public_path__ = config.spaPath;
   window.openmrsBase = config.apiUrl;
   window.spaBase = config.spaPath;
   window.spaEnv = config.env || "production";
