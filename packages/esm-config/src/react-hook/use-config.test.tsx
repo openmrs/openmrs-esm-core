@@ -17,7 +17,7 @@ describe(`useConfig`, () => {
   it(`can return config as a react hook`, async () => {
     defineConfigSchema("foo-module", {
       thing: {
-        default: "The first thing",
+        _default: "The first thing",
       },
     });
 
@@ -35,13 +35,13 @@ describe(`useConfig`, () => {
   it(`can handle multiple calls to useConfig from different modules`, async () => {
     defineConfigSchema("foo-module", {
       thing: {
-        default: "foo thing",
+        _default: "foo thing",
       },
     });
 
     defineConfigSchema("bar-module", {
       thing: {
-        default: "bar thing",
+        _default: "bar thing",
       },
     });
 
@@ -71,7 +71,7 @@ describe(`useConfig`, () => {
   it("updates with a new value when the temporary config is updated", async () => {
     defineConfigSchema("foo-module", {
       thing: {
-        default: "The first thing",
+        _default: "The first thing",
       },
     });
 

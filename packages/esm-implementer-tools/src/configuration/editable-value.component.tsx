@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { isEqual } from "lodash";
-import { setTemporaryConfigValue, ConfigValue } from "@openmrs/esm-config";
+import {
+  setTemporaryConfigValue,
+  ConfigValue,
+  Validator,
+} from "@openmrs/esm-config";
 import styles from "./editable-value.styles.css";
 import ValueEditor from "./value-editor";
 import { useGlobalState } from "../global-state";
-import { ConceptSearchBox } from "./concept-search";
 
 export interface EditableValueProps {
   path: string[];
@@ -14,9 +17,9 @@ export interface EditableValueProps {
 export interface ConfigValueDescriptor {
   _value: ConfigValue;
   _source: string;
-  default: ConfigValue;
-  description?: string;
-  validators?: Array<Function>;
+  _default: ConfigValue;
+  _description?: string;
+  _validators?: Array<Validator>;
 }
 
 export default function EditableValue({ path, element }: EditableValueProps) {
@@ -48,7 +51,7 @@ export default function EditableValue({ path, element }: EditableValueProps) {
 
   return (
     <>
-      <div style={{ display: "flex" }}>
+      <div className={styles.line}>
         {editing ? (
           <ValueEditor
             element={element}
@@ -79,6 +82,7 @@ export default function EditableValue({ path, element }: EditableValueProps) {
           </button>
         )}
         {error && <div className={styles.error}>{error}</div>}
+        <div className={styles.configElementSource}>{element._source}</div>
       </div>
     </>
   );

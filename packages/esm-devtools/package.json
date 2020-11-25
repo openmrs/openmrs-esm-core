@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-devtools-app",
-  "version": "3.0.8",
+  "version": "3.1.4",
   "license": "MPL-2.0",
   "description": "Dev tools for frontend devs using OpenMRS",
   "browser": "dist/openmrs-esm-devtools-app.js",
@@ -36,9 +36,9 @@
     "systemjs-webpack-interop": "^2.0.0"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "^3.0.7",
-    "@openmrs/esm-config": "^3.0.7",
-    "@openmrs/esm-context": "^3.0.7",
+    "@openmrs/esm-api": "3.x",
+    "@openmrs/esm-config": "3.x",
+    "@openmrs/esm-context": "3.x",
     "react": "16.x",
     "react-dom": "16.x",
     "react-i18next": "11.x",
@@ -46,9 +46,9 @@
     "single-spa": "4.x"
   },
   "devDependencies": {
-    "@openmrs/esm-api": "^3.0.8",
-    "@openmrs/esm-config": "^3.0.8",
-    "@openmrs/esm-context": "^3.0.8",
+    "@openmrs/esm-api": "^3.1.4",
+    "@openmrs/esm-config": "^3.1.4",
+    "@openmrs/esm-context": "^3.1.4",
     "identity-obj-proxy": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

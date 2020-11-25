@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { navigateToUrl } from "single-spa";
 import isPlainObject from "lodash-es/isPlainObject";
-import { getConfig } from "@openmrs/esm-config";
+import { getConfig, navigate } from "@openmrs/esm-config";
 import { FetchResponse } from "./types";
 
 export function openmrsFetch<T = any>(
@@ -94,16 +94,9 @@ export function openmrsFetch<T = any>(
       const { redirectAuthFailure } = await getConfig("@openmrs/esm-api");
       if (
         redirectAuthFailure.enabled &&
-        redirectAuthFailure.errors.indexOf(response.status) >= 0
+        redirectAuthFailure.errors.includes(response.status)
       ) {
-        const navigatesWithInSpa = (url) => {
-          // @ts-ignore
-          return url.startsWith(window.getOpenmrsSpaBase());
-        };
-
-        navigatesWithInSpa(redirectAuthFailure.url)
-          ? navigateToUrl(redirectAuthFailure.url)
-          : location.assign(redirectAuthFailure.url);
+        navigate({ to: redirectAuthFailure.url });
 
         /* We sometimes don't really want this promise to resolve since there's no response data,
          * nor do we want it to reject because that would trigger error handling. We instead

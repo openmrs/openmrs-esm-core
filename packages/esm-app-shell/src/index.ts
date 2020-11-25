@@ -8,6 +8,8 @@ import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import type { SpaConfig } from "./types";
 
+const allowedSuffixes = ["-app", "-widgets"];
+
 /**
  * Gets the microfrontend modules (apps). These are entries
  * in the import maps that end with "-app".
@@ -15,12 +17,17 @@ import type { SpaConfig } from "./types";
  * import maps.
  */
 function getApps(maps: Record<string, string>) {
-  return Object.keys(maps).filter((m) => m.endsWith("-app"));
+  return Object.keys(maps).filter((m) =>
+    allowedSuffixes.some((n) => m.endsWith(n))
+  );
 }
 
 /**
- * Loads the microfrontends (apps). Should be done *after* the
- * import maps initialized, i.e., after modules loaded.
+ * Loads the microfrontends (apps and widgets). Should be done *after*
+ * the import maps initialized, i.e., after modules loaded.
+ *
+ * By convention we call microfrontends registering activation functions
+ * apps, and all others widgets. This is not enforced technically.
  */
 function loadApps() {
   return window.importMapOverrides

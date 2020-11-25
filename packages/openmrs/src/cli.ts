@@ -47,7 +47,7 @@ yargs.command(
       )
       .boolean("run-project")
       .default("run-project", false)
-      .default(
+      .describe(
         "run-project",
         "Runs the project in the current directory fusing it with the specified import map."
       )
