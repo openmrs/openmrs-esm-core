@@ -1,6 +1,6 @@
 import React from "react";
-import { openmrsRootDecorator } from "./openmrsRootDecorator";
 import { render, screen, waitFor } from "@testing-library/react";
+import { openmrsRootDecorator } from "./openmrsRootDecorator";
 import { ModuleNameContext } from "./ModuleNameContext";
 
 describe("openmrs-react-root-decorator", () => {

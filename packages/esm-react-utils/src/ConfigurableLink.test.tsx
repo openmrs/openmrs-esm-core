@@ -5,7 +5,7 @@ import { navigate } from "@openmrs/esm-config";
 import userEvent from "@testing-library/user-event";
 import { ConfigurableLink } from "./ConfigurableLink";
 
-jest.mock("./navigate");
+jest.mock("@openmrs/esm-config");
 const mockNavigate = navigate as jest.Mock;
 
 describe(`ConfigurableLink`, () => {

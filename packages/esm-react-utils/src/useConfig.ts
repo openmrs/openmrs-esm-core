@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react";
-import { ModuleNameContext } from "@openmrs/esm-context";
 import {
   getConfig,
   configCache,
   configCacheNotifier,
 } from "@openmrs/esm-config";
+import { ModuleNameContext } from "./ModuleNameContext";
 import { useForceUpdate } from "./useForceUpdate";
 
 let error: Error | undefined;

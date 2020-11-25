@@ -1,6 +1,5 @@
 {
   "moduleNameMapper": {
-    "@openmrs/esm-styleguide": "<rootDir>/__mocks__/openmrs-esm-styleguide.mock.tsx",
-    "./set-public-path": "<rootDir>/__mocks__/set-public-path"
+    "@openmrs/esm-styleguide": "<rootDir>/__mocks__/openmrs-esm-styleguide.mock.tsx"
   }
 }

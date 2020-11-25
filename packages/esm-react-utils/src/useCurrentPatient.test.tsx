@@ -1,8 +1,8 @@
 import React from "react";
+import { render } from "@testing-library/react";
 import { getCurrentPatient, getCurrentPatientUuid } from "@openmrs/esm-api";
 import { never, of, throwError } from "rxjs";
 import { useCurrentPatient } from "./useCurrentPatient";
-import { render } from "@testing-library/react";
 
 const mockedGetPatient = (getCurrentPatient as unknown) as jest.MockedFunction<
   any
@@ -11,7 +11,7 @@ const mockedGetPatientUuid = (getCurrentPatientUuid as unknown) as jest.MockedFu
   any
 >;
 
-jest.mock("./current-patient", () => ({
+jest.mock("@openmrs/esm-api", () => ({
   getCurrentPatient: jest.fn(),
   getCurrentPatientUuid: jest.fn(),
 }));

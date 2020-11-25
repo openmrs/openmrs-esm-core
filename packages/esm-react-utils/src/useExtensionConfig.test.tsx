@@ -1,7 +1,5 @@
 import React from "react";
 import { render, screen, cleanup } from "@testing-library/react";
-import { ModuleNameContext } from "./ModuleNameContext";
-import { ExtensionContext } from "./ExtensionContext";
 import {
   clearAll,
   defineConfigSchema,
@@ -9,6 +7,8 @@ import {
   provide,
   setTemporaryConfigValue,
 } from "@openmrs/esm-config";
+import { ModuleNameContext } from "./ModuleNameContext";
+import { ExtensionContext } from "./ExtensionContext";
 import { useExtensionConfig } from "./useExtensionConfig";
 
 describe(`useExtensionConfig`, () => {

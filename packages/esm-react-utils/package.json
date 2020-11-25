@@ -40,7 +40,6 @@
   "peerDependencies": {
     "@openmrs/esm-api": "3.x",
     "@openmrs/esm-config": "3.x",
-    "@openmrs/esm-context": "3.x",
     "@openmrs/esm-error-handling": "3.x",
     "@openmrs/esm-extensions": "3.x",
     "i18next": "19.x",
@@ -50,7 +49,6 @@
   "devDependencies": {
     "@openmrs/esm-api": "^3.1.4",
     "@openmrs/esm-config": "^3.1.4",
-    "@openmrs/esm-context": "^3.1.4",
     "@openmrs/esm-error-handling": "^3.1.4",
     "@openmrs/esm-extensions": "^3.1.4",
     "@types/single-spa-react": "^2.12.0",
