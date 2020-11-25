@@ -11,3 +11,7 @@ export const ModuleNameContext = React.createContext(null);
 export const openmrsRootDecorator = jest
   .fn()
   .mockImplementation(() => (component) => component);
+
+export function UserHasAccess(props: any) {
+  return props.children;
+}

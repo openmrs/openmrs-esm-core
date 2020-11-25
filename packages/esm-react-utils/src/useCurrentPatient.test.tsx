@@ -16,6 +16,18 @@ jest.mock("@openmrs/esm-api", () => ({
   getCurrentPatientUuid: jest.fn(),
 }));
 
+function RenderPatientValues() {
+  const [isLoadingPatient, patient, patientUuid, err] = useCurrentPatient();
+  return (
+    <>
+      <div>{isLoadingPatient ? "loadingPatient" : "notLoadingPatient"}</div>
+      <div>{patient || "noPatient"}</div>
+      <div>{patientUuid || "noPatientUuid"}</div>
+      <div>{err ? err.message : "noErr"}</div>
+    </>
+  );
+}
+
 describe(`useCurrentPatient`, () => {
   beforeEach(() => {
     mockedGetPatient.mockReset();
@@ -64,15 +76,3 @@ describe(`useCurrentPatient`, () => {
     expect(wrapper.getByText("Could not find patient")).toBeTruthy();
   });
 });
-
-function RenderPatientValues() {
-  const [isLoadingPatient, patient, patientUuid, err] = useCurrentPatient();
-  return (
-    <>
-      <div>{isLoadingPatient ? "loadingPatient" : "notLoadingPatient"}</div>
-      <div>{patient || "noPatient"}</div>
-      <div>{patientUuid || "noPatientUuid"}</div>
-      <div>{err ? err.message : "noErr"}</div>
-    </>
-  );
-}

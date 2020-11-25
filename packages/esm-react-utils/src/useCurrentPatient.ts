@@ -1,10 +1,10 @@
 import React from "react";
+import { createErrorHandler, reportError } from "@openmrs/esm-error-handling";
 import {
   getCurrentPatient,
   getCurrentPatientUuid,
   PatientUuid,
 } from "@openmrs/esm-api";
-import { createErrorHandler, reportError } from "@openmrs/esm-error-handling";
 
 /* This React hook returns the current patient, as specified by the current route. It returns
  * all the information needed to render a loading state, error state, and normal/success state.
@@ -28,7 +28,7 @@ export function useCurrentPatient(): [
   }, []);
 
   React.useEffect(() => {
-    const subscription = getCurrentPatient().subscribe(
+    const sub = getCurrentPatient().subscribe(
       (patient) => dispatch({ type: ActionTypes.newPatient, patient }),
       (err) => {
         dispatch({ type: ActionTypes.patientLoadError, err });
@@ -36,7 +36,7 @@ export function useCurrentPatient(): [
       }
     );
     return () => {
-      subscription.unsubscribe();
+      sub.unsubscribe();
     };
   }, []);
 

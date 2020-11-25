@@ -1,12 +1,19 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
-import { navigate } from "@openmrs/esm-config";
+import { navigate, interpolateUrl } from "@openmrs/esm-config";
 import userEvent from "@testing-library/user-event";
 import { ConfigurableLink } from "./ConfigurableLink";
 
 jest.mock("@openmrs/esm-config");
 const mockNavigate = navigate as jest.Mock;
+
+const realInterpolate = jest.requireActual("@openmrs/esm-config")
+  .interpolateUrl;
+
+(interpolateUrl as jest.Mock).mockImplementation((...args) =>
+  realInterpolate(...args)
+);
 
 describe(`ConfigurableLink`, () => {
   const path = "${openmrsSpaBase}/home";
