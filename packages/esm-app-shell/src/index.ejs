@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>OpenMRS</title>
-    <base href="<%= openmrsPublicPath %>/">
     <link
       rel="shortcut icon"
       type="image/x-icon"
@@ -30,9 +29,10 @@
     <script>
       initializeSpa({
         apiUrl: "<%= openmrsApiUrl %>",
-        spaPath: document.baseURI.substr(document.location.origin.length),
+        spaPath: "<%= openmrsPublicPath %>",
         env: "<%= openmrsEnvironment %>",
       });
     </script>
   </body>
 </html>
+ 
