@@ -1,6 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
-import { getExtensionSlotsForModule } from "@openmrs/esm-extensions";
+import {
+  ExtensionSlotDefinition,
+  ExtensionStore,
+} from "@openmrs/esm-extensions";
 import { connect } from "unistore/react";
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
@@ -10,35 +13,22 @@ interface ExtensionsConfigTreeProps {
   moduleName: string;
 }
 
-function ExtensionsConfigTreeImpl({
+interface ExtensionsConfigTreeImplProps extends ExtensionsConfigTreeProps {
+  slots: Record<string, ExtensionSlotDefinition>;
+}
+
+const ExtensionsConfigTreeImpl: React.FC<ExtensionsConfigTreeImplProps> = ({
   config,
   moduleName,
-}: ExtensionsConfigTreeProps) {
+  slots,
+}) => {
   const extensionSlotNames = useMemo(
-    () => getExtensionSlotsForModule(moduleName),
-    []
+    () =>
+      Object.keys(slots).filter((name) =>
+        slots[name].modules.includes(moduleName)
+      ),
+    [slots]
   );
-  const [
-    extensionIdsForExtensionSlot,
-    setExtensionIdsForExtensionSlot,
-  ] = useState<Record<string, Array<string>>>({});
-
-  // TODO: Use ExtensionStore to get the appropriate values.
-  // useEffect(() => {
-  //   Promise.all(
-  //     extensionSlotNames.map((slotName) =>
-  //       // getAttachedExtensionInfoForSlotAndConfig(slotName, moduleName)
-  //     )
-  //   ).then((attachedExtensionInfos) => {
-  //     const idsForExtSlot = Object.fromEntries(
-  //       extensionSlotNames.map((name, i) => [
-  //         name,
-  //         attachedExtensionInfos[i].map((x) => x.extensionId),
-  //       ])
-  //     );
-  //     setExtensionIdsForExtensionSlot(idsForExtSlot);
-  //   });
-  // }, []);
 
   return extensionSlotNames.length ? (
     <div className={styles.treeIndent}>
@@ -53,9 +43,13 @@ function ExtensionsConfigTreeImpl({
       ))}
     </div>
   ) : null;
-}
+};
 
-export const ExtensionsConfigTree = connect()(ExtensionsConfigTreeImpl);
+export const ExtensionsConfigTree = connect(
+  (state: ExtensionStore, _: ExtensionsConfigTreeProps) => ({
+    slots: state.slots,
+  })
+)(ExtensionsConfigTreeImpl);
 
 interface ExtensionSlotConfigProps {
   config: ExtensionSlotConfig;
