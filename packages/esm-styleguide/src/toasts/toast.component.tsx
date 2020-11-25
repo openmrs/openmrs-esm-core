@@ -1,5 +1,5 @@
 import React from "react";
-import { always } from "kremling";
+import { maybe } from "kremling";
 import { InlineNotification } from "carbon-components-react/es/components/Notification";
 
 const defaultOptions = {
@@ -12,9 +12,10 @@ interface ToastProps {
   isClosing: any;
 }
 
-interface ToastDescriptor {
-  kind: ToastType;
-  title: string;
+export interface ToastDescriptor {
+  id?: number;
+  kind?: ToastType;
+  title?: string;
   description: React.ReactNode;
   action?: React.ReactNode;
 }
@@ -32,7 +33,11 @@ export const Toast: React.FC<ToastProps> = ({
   closeToast,
   isClosing,
 }) => {
-  const { millis, description } = Object.assign({}, toast, defaultOptions);
+  const { millis, title, description, kind, action } = Object.assign(
+    {},
+    toast,
+    defaultOptions
+  );
 
   const [waitingForTime, setWaitingForTime] = React.useState(true);
   const [isMounting, setIsMounting] = React.useState(true);
@@ -56,12 +61,20 @@ export const Toast: React.FC<ToastProps> = ({
   }, []);
 
   return (
-    <>
+    <div
+      className={maybe("omrs-toast-closing", isClosing).maybe(
+        "omrs-toast-mounting",
+        isMounting
+      )}
+      onMouseEnter={() => setWaitingForTime(false)}
+      onMouseLeave={() => setWaitingForTime(true)}
+    >
       <InlineNotification
-        kind={toast.kind || "info"}
-        subtitle={toast.description}
-        title={toast.title || ""}
+        kind={kind || "info"}
+        subtitle={description}
+        title={title || ""}
+        actions={action}
       />
-    </>
+    </div>
   );
 };

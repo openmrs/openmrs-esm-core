@@ -2,13 +2,11 @@ import React from "react";
 import { render } from "react-dom";
 import { Subject } from "rxjs";
 import ActiveToasts from "./active-toasts.component";
+import { ToastDescriptor } from "./toast.component";
+import { isEmpty } from "lodash";
 
 export const toastsSubject = new Subject();
 let toastId = 0;
-
-export interface Foo {
- bar: string;
-}
 
 const toastsContainer = document.createElement("div");
 
@@ -26,17 +24,21 @@ if (document.readyState === "complete") {
   window.addEventListener("load", renderToasts);
 }
 
-export function showToast(toast) {
-  if (
-    toast &&
-    typeof toast.description === "string" &&
-    toast.description.trim().length > 0
-  ) {
+export function showToast(toast: ToastDescriptor) {
+  if (toast && isNotEmpty(toast.description)) {
     toast.id = toastId++;
     toastsSubject.next(toast);
   } else {
     throw Error(
-      `showToast must be called with an object that has a 'description' property that is a non-empty string`
+      `showToast must be called with an object that has a 'description' property that is a non-empty string or object`
     );
   }
+}
+
+function isNotEmpty(description) {
+  return typeof description === "string"
+    ? description.trim().length > 0
+    : typeof description === "object"
+    ? !isEmpty(description)
+    : false;
 }
