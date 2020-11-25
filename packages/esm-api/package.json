@@ -40,18 +40,13 @@
   },
   "peerDependencies": {
     "@openmrs/esm-config": "3.x",
-    "@openmrs/esm-error-handling": "3.x",
-    "react": "16.x",
-    "single-spa": "4.x"
+    "@openmrs/esm-error-handling": "3.x"
   },
   "devDependencies": {
     "@openmrs/esm-config": "^3.1.4",
     "@openmrs/esm-error-handling": "^3.1.4",
     "@types/fhir": "0.0.31",
-    "@types/react": "^16.9.46",
-    "react": "^16.13.1",
-    "rxjs": "^6.5.3",
-    "single-spa": "^4.4.1"
+    "rxjs": "^6.5.3"
   },
   "publishConfig": {
     "access": "public"

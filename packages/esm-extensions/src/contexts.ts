@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { navigate } from "@openmrs/esm-config";
 
 const fallbackType: NavigationContextType = "link";
@@ -41,8 +40,4 @@ export function pushNavigationContext(context: NavigationContext) {
     const index = navigationContexts.indexOf(context);
     navigationContexts.splice(index, 1);
   };
-}
-
-export function useNavigationContext(context: NavigationContext) {
-  useEffect(() => pushNavigationContext(context), []);
 }

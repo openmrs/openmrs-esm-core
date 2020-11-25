@@ -1,7 +1,5 @@
 import React, { useContext, ReactNode, useEffect, useState } from "react";
-import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
 import {
-  renderExtension,
   getIsUIEditorEnabled,
   getExtensionRegistration,
   registerExtensionSlot,
@@ -9,9 +7,12 @@ import {
   ExtensionSlotDefinition,
   extensionStore,
   ExtensionStore,
-} from "./extensions";
+} from "@openmrs/esm-extensions";
+import { ExtensionContext } from "./ExtensionContext";
+import { ModuleNameContext } from "./ModuleNameContext";
+import { Extension } from "./Extension";
 
-interface ExtensionSlotBaseProps {
+export interface ExtensionSlotBaseProps {
   extensionSlotName: string;
   children?: ReactNode;
   style?: React.CSSProperties;
@@ -20,16 +21,16 @@ interface ExtensionSlotBaseProps {
 }
 
 // remainder of props are for the top-level <div>
-export type ExtensionSlotReactProps<T = {}> = ExtensionSlotBaseProps & T;
+export type ExtensionSlotProps<T = {}> = ExtensionSlotBaseProps & T;
 
-export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
+export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   extensionSlotName,
   children,
   state,
   style,
   className,
   ...divProps
-}: ExtensionSlotReactProps) => {
+}: ExtensionSlotProps) => {
   const slotModuleName = useContext(ModuleNameContext);
   if (!slotModuleName) {
     throw Error(
@@ -79,46 +80,11 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
                 extensionModuleName: extensionRegistration.moduleName,
               }}
             >
-              {children ?? <ExtensionReact state={state} />}
+              {children ?? <Extension state={state} />}
             </ExtensionContext.Provider>
           )
         );
       })}
     </div>
-  );
-};
-
-export interface ExtensionReactProps {
-  state?: Record<string, any>;
-}
-
-export const ExtensionReact: React.FC<ExtensionReactProps> = ({ state }) => {
-  const ref = React.useRef<HTMLSlotElement>(null);
-  const {
-    actualExtensionSlotName,
-    attachedExtensionSlotName,
-    extensionId,
-  } = useContext(ExtensionContext);
-  // TODO: handle error if Extension not wrapped in ExtensionSlot
-
-  React.useEffect(() => {
-    if (ref.current) {
-      return renderExtension(
-        ref.current,
-        actualExtensionSlotName,
-        attachedExtensionSlotName,
-        extensionId,
-        undefined,
-        state
-      );
-    }
-  }, [actualExtensionSlotName, attachedExtensionSlotName, extensionId]);
-
-  return getIsUIEditorEnabled() ? (
-    <div style={{ outline: "0.125rem solid yellow" }}>
-      <slot ref={ref} />
-    </div>
-  ) : (
-    <slot ref={ref} />
   );
 };

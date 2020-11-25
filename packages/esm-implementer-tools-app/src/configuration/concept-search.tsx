@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { debounce, uniqueId } from "lodash";
+import debounce from "lodash-es/debounce";
+import uniqueId from "lodash-es/uniqueId";
 import {
   fetchConceptByUuid,
   performConceptSearch,

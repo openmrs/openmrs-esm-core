@@ -10,7 +10,7 @@ module.exports = {
     resolve(__dirname, "src/index.ts"),
   ],
   output: {
-    filename: "openmrs-esm-react.js",
+    filename: "openmrs-esm-react-utils.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
   },
@@ -24,14 +24,13 @@ module.exports = {
       },
       {
         test: /\.m?(js|ts|tsx)$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|bower_components)/,
         use: "babel-loader",
       },
     ],
   },
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
-    modules: ["node_modules", resolve(__dirname, "node_modules")],
   },
   plugins: [new CleanWebpackPlugin(), new ForkTsCheckerWebpackPlugin()],
   externals: Object.keys(peerDependencies),

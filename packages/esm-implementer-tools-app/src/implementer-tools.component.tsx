@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { openmrsRootDecorator } from "@openmrs/esm-context";
+import { UserHasAccess } from "@openmrs/esm-react-utils";
 import Popup from "./popup/popup.component";
 import styles from "./implementer-tools.styles.css";
-import { UserHasAccessReact } from "@openmrs/esm-api";
 
-function Root(props: RootProps) {
+import "./backend-dependencies/openmrs-backend-dependencies";
+
+export default function ImplementerTools() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [hasAlert, setHasAlert] = useState(false);
 
@@ -13,7 +14,7 @@ function Root(props: RootProps) {
   }
 
   return (
-    <UserHasAccessReact privilege="coreapps.systemAdministration">
+    <UserHasAccess privilege="coreapps.systemAdministration">
       <button
         tabIndex={0}
         onClick={togglePopup}
@@ -22,13 +23,6 @@ function Root(props: RootProps) {
         }`}
       />
       {isPopupOpen && <Popup close={togglePopup} setHasAlert={setHasAlert} />}
-    </UserHasAccessReact>
+    </UserHasAccess>
   );
 }
-
-export default openmrsRootDecorator({
-  featureName: "Implementer Tools",
-  moduleName: "@openmrs/esm-implementer-tools-app",
-})(Root);
-
-type RootProps = {};

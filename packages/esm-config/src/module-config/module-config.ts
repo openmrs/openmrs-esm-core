@@ -1,5 +1,13 @@
-import * as R from "ramda";
-import { invalidateConfigCache } from "../react-hook/config-cache";
+import {
+  assocPath,
+  dissocPath,
+  clone,
+  map,
+  reduce,
+  mergeDeepRight,
+  prop,
+} from "ramda";
+import { invalidateConfigCache } from "./config-cache";
 import { Validator } from "../validators/validator";
 import {
   isArray,
@@ -106,7 +114,7 @@ export function processConfig(
  * @internal
  */
 export async function getImplementerToolsConfig(): Promise<object> {
-  let result = getSchemaWithValuesAndSources(R.clone(_schemas));
+  let result = getSchemaWithValuesAndSources(clone(_schemas));
   await loadConfigs();
   const configsAndSources = [
     ..._providedConfigs.map((c) => [c.config, c.source]),
@@ -170,7 +178,7 @@ export function getTemporaryConfig(): Config {
  */
 export function setTemporaryConfigValue(path: string[], value: any): void {
   const current = getTemporaryConfig();
-  _temporaryConfig = R.assocPath(path, value, current);
+  _temporaryConfig = assocPath(path, value, current);
   localStorage.setItem(
     "openmrsTemporaryConfig",
     JSON.stringify(_temporaryConfig)
@@ -183,7 +191,7 @@ export function setTemporaryConfigValue(path: string[], value: any): void {
  */
 export function unsetTemporaryConfigValue(path: string[]): void {
   const current = getTemporaryConfig();
-  _temporaryConfig = R.dissocPath(path, current);
+  _temporaryConfig = dissocPath(path, current);
   localStorage.setItem(
     "openmrsTemporaryConfig",
     JSON.stringify(_temporaryConfig)
@@ -461,7 +469,7 @@ function mergeConfigsFor(
   moduleName: string,
   allConfigs: Config[]
 ): ConfigObject {
-  const allConfigsForModule = R.map(R.prop(moduleName), allConfigs).filter(
+  const allConfigsForModule = map(prop(moduleName), allConfigs).filter(
     (item) => item !== undefined && item !== null
   );
 
@@ -469,7 +477,7 @@ function mergeConfigsFor(
 }
 
 function mergeConfigs(configs: Config[]) {
-  const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
+  const mergeDeepAll = reduce(mergeDeepRight, {});
   return mergeDeepAll(configs);
 }
 
@@ -590,7 +598,7 @@ function runValidators(
 
 // Recursively fill in the config with values from the schema.
 const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
-  const config = R.clone(inputConfig);
+  const config = clone(inputConfig);
 
   for (const key of Object.keys(schema)) {
     const schemaPart = schema[key] as ConfigSchema;

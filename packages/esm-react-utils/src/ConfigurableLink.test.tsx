@@ -1,9 +1,9 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
+import { navigate } from "@openmrs/esm-config";
 import userEvent from "@testing-library/user-event";
-import { ConfigurableLink } from "./react-configurable-link";
-import { navigate } from "./navigate";
+import { ConfigurableLink } from "./ConfigurableLink";
 
 jest.mock("./navigate");
 const mockNavigate = navigate as jest.Mock;

@@ -1,12 +1,11 @@
 import React from "react";
-import { getCurrentUser, userHasAccess } from "./current-user";
-import { LoggedInUser } from "../types";
+import { getCurrentUser, userHasAccess, LoggedInUser } from "@openmrs/esm-api";
 
-export interface UserHasAccessReactProps {
+export interface UserHasAccessProps {
   privilege: string;
 }
 
-export const UserHasAccessReact: React.FC<UserHasAccessReactProps> = ({
+export const UserHasAccess: React.FC<UserHasAccessProps> = ({
   privilege,
   children,
 }) => {

@@ -3,7 +3,7 @@ import {
   getCurrentPatient,
   getCurrentPatientUuid,
   PatientUuid,
-} from "./current-patient";
+} from "@openmrs/esm-api";
 import { createErrorHandler, reportError } from "@openmrs/esm-error-handling";
 
 /* This React hook returns the current patient, as specified by the current route. It returns

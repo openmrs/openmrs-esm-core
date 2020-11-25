@@ -1,3 +1,5 @@
+import { getAsyncLifecycle } from "@openmrs/esm-react-utils";
+
 declare global {
   interface Window {
     spaEnv: "production" | "development" | "test";
@@ -6,7 +8,13 @@ declare global {
 
 function setupOpenMRS() {
   return {
-    lifecycle: () => import("./openmrs-esm-devtools"),
+    lifecycle: getAsyncLifecycle(
+      () => import("./devtools/devtools.component"),
+      {
+        featureName: "devtools",
+        moduleName: "@openmrs/esm-devtools-app",
+      }
+    ),
     activate: () =>
       window.spaEnv === "development" ||
       !!localStorage.getItem("openmrs:devtools"),

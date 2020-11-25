@@ -3,25 +3,27 @@ import {
   ExtensionContext,
   ModuleNameContext as SlotModuleNameContext,
 } from "@openmrs/esm-context";
-import * as Config from "../module-config/module-config";
 import {
+  getExtensionConfig,
   configCache,
   configCacheNotifier,
-  useForceUpdate,
-} from "./config-cache";
+} from "@openmrs/esm-config";
+import { useForceUpdate } from "./useForceUpdate";
 
-let error;
+let error: Error | undefined;
 
 /**
  * Use this React Hook to obtain the configuration for your extension.
  */
 export function useExtensionConfig() {
   const slotModuleName = useContext(SlotModuleNameContext);
+
   if (!slotModuleName) {
     throw Error(
       "Slot ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator in the module defining the extension slot."
     );
   }
+
   const {
     attachedExtensionSlotName,
     extensionId,
@@ -30,7 +32,7 @@ export function useExtensionConfig() {
   const forceUpdate = useForceUpdate();
 
   function getConfigAndSetCache(slotModuleName: string) {
-    return Config.getExtensionConfig(
+    return getExtensionConfig(
       slotModuleName,
       extensionModuleName,
       attachedExtensionSlotName,
@@ -57,7 +59,9 @@ export function useExtensionConfig() {
     // So we check ahead of time and avoid creating a new promise.
     throw error;
   }
+
   const uniqueExtensionLookupId = `${attachedExtensionSlotName}-${extensionId}`;
+
   if (!configCache[uniqueExtensionLookupId]) {
     // React will prevent the client component from rendering until the promise resolves
     throw getConfigAndSetCache(slotModuleName);

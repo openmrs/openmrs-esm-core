@@ -1,14 +1,15 @@
 import React from "react";
 import { render, screen, cleanup } from "@testing-library/react";
-import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
+import { ModuleNameContext } from "./ModuleNameContext";
+import { ExtensionContext } from "./ExtensionContext";
 import {
   clearAll,
   defineConfigSchema,
+  clearConfigCache,
   provide,
   setTemporaryConfigValue,
-} from "../module-config/module-config";
-import { useExtensionConfig } from "./use-extension-config";
-import { clearConfigCache } from "./config-cache";
+} from "@openmrs/esm-config";
+import { useExtensionConfig } from "./useExtensionConfig";
 
 describe(`useExtensionConfig`, () => {
   afterEach(clearAll);

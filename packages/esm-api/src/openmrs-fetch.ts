@@ -1,5 +1,4 @@
 import { Observable } from "rxjs";
-import { navigateToUrl } from "single-spa";
 import isPlainObject from "lodash-es/isPlainObject";
 import { getConfig, navigate } from "@openmrs/esm-config";
 import { FetchResponse } from "./types";

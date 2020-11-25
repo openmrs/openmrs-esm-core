@@ -3,8 +3,8 @@
   "version": "3.1.4",
   "license": "MPL-2.0",
   "description": "React utilities for OpenMRS.",
-  "browser": "dist/openmrs-esm-react.js",
-  "main": "src/index.tsx",
+  "browser": "dist/openmrs-esm-react-utils.js",
+  "main": "src/index.ts",
   "source": true,
   "scripts": {
     "test": "jest --passWithNoTests",
@@ -34,14 +34,31 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "systemjs-webpack-interop": "^2.1.2"
+    "systemjs-webpack-interop": "^2.1.2",
+    "single-spa-react": "^2.13.0"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "@openmrs/esm-api": "3.x",
+    "@openmrs/esm-config": "3.x",
+    "@openmrs/esm-context": "3.x",
+    "@openmrs/esm-error-handling": "3.x",
+    "@openmrs/esm-extensions": "3.x",
+    "i18next": "19.x",
+    "react": "16.x",
+    "react-i18next": "11.x"
   },
   "devDependencies": {
+    "@openmrs/esm-api": "^3.1.4",
+    "@openmrs/esm-config": "^3.1.4",
+    "@openmrs/esm-context": "^3.1.4",
+    "@openmrs/esm-error-handling": "^3.1.4",
+    "@openmrs/esm-extensions": "^3.1.4",
+    "@types/single-spa-react": "^2.12.0",
+    "i18next": "^19.6.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-i18next": "^11.7.0",
+    "rxjs": "^6.5.3"
   },
   "publishConfig": {
     "access": "public"

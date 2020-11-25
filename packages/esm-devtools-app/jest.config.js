@@ -6,7 +6,8 @@ module.exports = {
   moduleNameMapper: {
     "\\.(css)$": "identity-obj-proxy",
     "@openmrs/esm-api": "<rootDir>/__mocks__/openmrs-esm-api.mock.tsx",
-    "@openmrs/esm-context": "<rootDir>/__mocks__/openmrs-esm-context.mock.tsx",
+    "@openmrs/esm-react-utils":
+      "<rootDir>/__mocks__/openmrs-esm-react-utils.mock.tsx",
   },
   globals: {
     System: {

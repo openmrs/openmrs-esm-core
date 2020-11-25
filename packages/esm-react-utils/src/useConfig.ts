@@ -1,13 +1,13 @@
 import { useContext, useEffect } from "react";
 import { ModuleNameContext } from "@openmrs/esm-context";
-import * as Config from "../module-config/module-config";
 import {
+  getConfig,
   configCache,
   configCacheNotifier,
-  useForceUpdate,
-} from "./config-cache";
+} from "@openmrs/esm-config";
+import { useForceUpdate } from "./useForceUpdate";
 
-let error;
+let error: Error | undefined;
 
 /**
  * Use this React Hook to obtain your module's configuration.
@@ -23,7 +23,7 @@ export function useConfig() {
   }
 
   function getConfigAndSetCache(moduleName: string) {
-    return Config.getConfig(moduleName)
+    return getConfig(moduleName)
       .then((res) => {
         configCache[moduleName] = res;
         forceUpdate();
@@ -45,6 +45,7 @@ export function useConfig() {
     // So we check ahead of time and avoid creating a new promise.
     throw error;
   }
+
   if (!configCache[moduleName]) {
     // React will prevent the client component from rendering until the promise resolves
     throw getConfigAndSetCache(moduleName);

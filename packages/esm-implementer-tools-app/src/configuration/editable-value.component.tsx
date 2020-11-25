@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { isEqual } from "lodash";
+import isEqual from "lodash-es/isEqual";
 import {
   setTemporaryConfigValue,
   ConfigValue,

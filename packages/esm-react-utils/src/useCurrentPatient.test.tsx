@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  getCurrentPatient,
-  getCurrentPatientUuid,
-  CurrentPatient,
-  PatientUuid,
-} from "./current-patient";
+import { getCurrentPatient, getCurrentPatientUuid } from "@openmrs/esm-api";
 import { never, of, throwError } from "rxjs";
-import { useCurrentPatient } from "./use-current-patient.hook";
+import { useCurrentPatient } from "./useCurrentPatient";
 import { render } from "@testing-library/react";
 
 const mockedGetPatient = (getCurrentPatient as unknown) as jest.MockedFunction<

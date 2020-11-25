@@ -37,27 +37,27 @@
     "carbon-components-react": "^7.24.0",
     "lodash-es": "^4.17.15",
     "react-hooks-global-state": "^1.0.1",
-    "single-spa-react": "^3.0.1",
+    "semver": "^7.3.2",
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
     "@openmrs/esm-api": "3.x",
     "@openmrs/esm-config": "3.x",
-    "@openmrs/esm-context": "3.x",
     "@openmrs/esm-error-handling": "3.x",
     "@openmrs/esm-extensions": "3.x",
+    "@openmrs/esm-react-utils": "3.x",
     "react": "16.x",
     "react-dom": "16.x",
-    "react-i18next": "11.x",
-    "rxjs": "6.x",
-    "single-spa": "4.x"
+    "rxjs": "6.x"
   },
   "devDependencies": {
+    "@openmrs/esm-api": "^3.1.4",
+    "@openmrs/esm-react-utils": "^3.1.4",
+    "@types/lodash-es": "^4.17.3",
+    "@types/semver": "^7.3.4",
     "identity-obj-proxy": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-i18next": "^11.7.2",
-    "rxjs": "^6.5.3",
-    "single-spa": "^4.4.1"
+    "rxjs": "^6.5.3"
   }
 }

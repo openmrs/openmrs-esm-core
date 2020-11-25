@@ -13,5 +13,3 @@ export const ExtensionContext = React.createContext<ExtensionContextData>({
   extensionId: "",
   extensionModuleName: "",
 });
-
-export const ModuleNameContext = React.createContext<string | null>(null);

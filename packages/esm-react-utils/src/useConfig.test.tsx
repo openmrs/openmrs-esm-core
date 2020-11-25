@@ -1,13 +1,13 @@
 import React from "react";
 import { ModuleNameContext } from "@openmrs/esm-context";
-import { render, cleanup, screen, waitFor } from "@testing-library/react";
-import { useConfig } from "./use-config";
+import { render, cleanup, screen } from "@testing-library/react";
+import { useConfig } from "./useConfig";
 import {
   clearAll,
   defineConfigSchema,
   setTemporaryConfigValue,
-} from "../module-config/module-config";
-import { clearConfigCache } from "./config-cache";
+  clearConfigCache,
+} from "@openmrs/esm-config";
 
 describe(`useConfig`, () => {
   afterEach(clearAll);
