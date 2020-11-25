@@ -1,0 +1,49 @@
+{
+  "name": "@openmrs/esm-react-utils",
+  "version": "3.1.4",
+  "license": "MPL-2.0",
+  "description": "React utilities for OpenMRS.",
+  "browser": "dist/openmrs-esm-react.js",
+  "main": "src/index.tsx",
+  "source": true,
+  "scripts": {
+    "test": "jest --passWithNoTests",
+    "build": "webpack --mode=production",
+    "lint": "eslint src"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends",
+    "react",
+    "support",
+    "utilities"
+  ],
+  "directories": {
+    "lib": "dist",
+    "src": "src"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "dependencies": {
+    "systemjs-webpack-interop": "^2.1.2"
+  },
+  "peerDependencies": {
+    "react": "16.x"
+  },
+  "devDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

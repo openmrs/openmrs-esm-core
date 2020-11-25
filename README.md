@@ -2,17 +2,33 @@
 
 This is a [Lerna](https://lerna.js.org/) project containing the core packages for the OpenMRS Frontend. These packages handle the "cross-cutting concerns" described in the [Domain Decomposition](https://wiki.openmrs.org/display/projects/MFE+Domain+Decomposition) document.
 
+## Available Packages
+
+You can find more documentation on these in the [docs](./docs) folder.
+
+### Application
+
+This contains tooling and the app shell.
+
 - [openmrs](packages/openmrs)
-- [@openmrs/esm-api](packages/esm-api)
 - [@openmrs/esm-app-shell](packages/esm-app-shell)
+
+### Libraries
+
+The following common libraries have been developed. They may also be used independently of the app shell.
+
+- [@openmrs/esm-api](packages/esm-api)
 - [@openmrs/esm-config](packages/esm-config)
-- [@openmrs/esm-devtools](packages/esm-devtools)
 - [@openmrs/esm-error-handling](packages/esm-error-handling)
 - [@openmrs/esm-extensions](packages/esm-extensions)
-- [@openmrs/esm-implementer-tools](packages/esm-implementer-tools)
 - [@openmrs/esm-styleguide](packages/esm-styleguide)
 
-You can find more documentation in the [docs](./docs) folder.
+### Microfrontends
+
+A set of microfrontends to provide core technical functionality for working with the application.
+
+- [@openmrs/esm-devtools-app](packages/esm-devtools-app)
+- [@openmrs/esm-implementer-tools-app](packages/esm-implementer-tools-app)
 
 ## Repository Development
 
