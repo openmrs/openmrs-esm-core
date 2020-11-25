@@ -203,16 +203,20 @@ export function clearTemporaryConfig(): void {
 /**
  * @internal
  */
-export async function getExtensionSlotConfigs(
+export async function getExtensionSlotConfig(
   slotName: string,
   moduleName: string
 ): Promise<Record<string, ExtensionSlotConfigObject>> {
   await loadConfigs();
   const moduleConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
-  const allExtensionSlotConfigs: Record<string, ExtensionSlotConfig> = moduleConfig?.extensions ?? {};
-  for (const config of Object.values(allExtensionSlotConfigs)) {
+  const allExtensionSlotConfigs: Record<string, ExtensionSlotConfig> =
+    moduleConfig?.extensions ?? {};
+
+  for (const configKey of Object.keys(allExtensionSlotConfigs)) {
+    const config = allExtensionSlotConfigs[configKey];
     validateExtensionSlotConfig(config, moduleName, slotName);
   }
+
   return processExtensionSlotConfigs(allExtensionSlotConfigs);
 }
 
@@ -295,18 +299,24 @@ function processExtensionSlotConfigs(
   allExtensionSlotConfigs: Record<string, ExtensionSlotConfig>
 ): Record<string, ExtensionSlotConfigObject> {
   const result: Record<string, ExtensionSlotConfigObject> = {};
-  for (const [key, config] of Object.entries(allExtensionSlotConfigs)) {
+
+  for (const key of Object.keys(allExtensionSlotConfigs)) {
+    const config = allExtensionSlotConfigs[key];
     result[key] = {};
+
     if (config.remove) {
       result[key].remove = config.remove;
     }
+
     if (config.order) {
       result[key].order = config.order;
     }
+
     if (config.add) {
       result[key].add = config.add.map((e) => e.extension);
     }
   }
+
   return result;
 }
 
@@ -330,6 +340,7 @@ async function loadConfigs() {
   if (!getImportMapConfigPromise) {
     getImportMapConfigPromise = getImportMapConfigFile();
   }
+
   return await getImportMapConfigPromise;
 }
 
@@ -414,12 +425,14 @@ function validateConfigSchema(
 // Get config file from import map and append it to `configs`
 async function getImportMapConfigFile(): Promise<void> {
   let importMapConfigExists: boolean;
+
   try {
     System.resolve("config-file");
     importMapConfigExists = true;
   } catch {
     importMapConfigExists = false;
   }
+
   if (importMapConfigExists) {
     try {
       const configFileModule = await System.import("config-file");
@@ -435,6 +448,7 @@ function getConfigForModule(moduleName: string): ConfigObject {
   if (!_schemas.hasOwnProperty(moduleName)) {
     throw Error("No config schema has been defined for " + moduleName);
   }
+
   const schema = _schemas[moduleName];
   const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
   validateConfig(schema, inputConfig, moduleName);
@@ -450,16 +464,13 @@ function mergeConfigsFor(
   const allConfigsForModule = R.map(R.prop(moduleName), allConfigs).filter(
     (item) => item !== undefined && item !== null
   );
+
   return mergeConfigs(allConfigsForModule);
 }
 
 function mergeConfigs(configs: Config[]) {
   const mergeDeepAll = R.reduce(R.mergeDeepRight, {});
   return mergeDeepAll(configs);
-}
-
-function getEntries(config: ConfigObject): Array<[string, any]> {
-  return Object.keys(config).map((key) => [key, config[key]]);
 }
 
 // Recursively check the provided config tree to make sure that all
@@ -470,17 +481,21 @@ const validateConfig = (
   config: ConfigObject,
   keyPath: string = ""
 ) => {
-  for (let [key, value] of getEntries(config)) {
+  for (const key of Object.keys(config)) {
+    const value = config[key];
     const thisKeyPath = keyPath + "." + key;
     const schemaPart = schema[key] as ConfigSchema;
+
     if (!schema.hasOwnProperty(key)) {
       if (key !== "extensions") {
         console.error(
           `Unknown config key '${thisKeyPath}' provided. Ignoring.`
         );
       }
+
       continue;
     }
+
     checkType(thisKeyPath, schemaPart._type, value);
     runValidators(thisKeyPath, schemaPart._validators, value);
 
@@ -507,7 +522,8 @@ function validateDictionary(
   keyPath: string
 ) {
   if (dictionarySchema._elements) {
-    for (let [key, value] of getEntries(config)) {
+    for (const key of Object.keys(config)) {
+      const value = config[key];
       validateConfig(dictionarySchema._elements, value, `${keyPath}.${key}`);
     }
   }

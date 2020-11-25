@@ -30,7 +30,7 @@
     <script>
       initializeSpa({
         apiUrl: "<%= openmrsApiUrl %>",
-        spaPath: "<%= openmrsPublicPath %>",
+        spaPath: document.baseURI.substr(document.location.origin.length),
         env: "<%= openmrsEnvironment %>",
       });
     </script>

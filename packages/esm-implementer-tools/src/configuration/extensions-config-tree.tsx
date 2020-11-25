@@ -1,18 +1,16 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
-import {
-  getExtensionSlotsForModule,
-  getAttachedExtensionInfoForSlotAndConfig,
-} from "@openmrs/esm-extensions";
+import { getExtensionSlotsForModule } from "@openmrs/esm-extensions";
+import { connect } from "unistore/react";
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
 
-export interface ExtensionsConfigTreeProps {
+interface ExtensionsConfigTreeProps {
   config: { [key: string]: any };
   moduleName: string;
 }
 
-export function ExtensionsConfigTree({
+function ExtensionsConfigTreeImpl({
   config,
   moduleName,
 }: ExtensionsConfigTreeProps) {
@@ -25,21 +23,22 @@ export function ExtensionsConfigTree({
     setExtensionIdsForExtensionSlot,
   ] = useState<Record<string, Array<string>>>({});
 
-  useEffect(() => {
-    Promise.all(
-      extensionSlotNames.map((slotName) =>
-        getAttachedExtensionInfoForSlotAndConfig(slotName, moduleName)
-      )
-    ).then((attachedExtensionInfos) => {
-      const idsForExtSlot = Object.fromEntries(
-        extensionSlotNames.map((name, i) => [
-          name,
-          attachedExtensionInfos[i].map((x) => x.extensionId),
-        ])
-      );
-      setExtensionIdsForExtensionSlot(idsForExtSlot);
-    });
-  }, []);
+  // TODO: Use ExtensionStore to get the appropriate values.
+  // useEffect(() => {
+  //   Promise.all(
+  //     extensionSlotNames.map((slotName) =>
+  //       // getAttachedExtensionInfoForSlotAndConfig(slotName, moduleName)
+  //     )
+  //   ).then((attachedExtensionInfos) => {
+  //     const idsForExtSlot = Object.fromEntries(
+  //       extensionSlotNames.map((name, i) => [
+  //         name,
+  //         attachedExtensionInfos[i].map((x) => x.extensionId),
+  //       ])
+  //     );
+  //     setExtensionIdsForExtensionSlot(idsForExtSlot);
+  //   });
+  // }, []);
 
   return extensionSlotNames.length ? (
     <div className={styles.treeIndent}>
@@ -55,6 +54,8 @@ export function ExtensionsConfigTree({
     </div>
   ) : null;
 }
+
+export const ExtensionsConfigTree = connect()(ExtensionsConfigTreeImpl);
 
 interface ExtensionSlotConfigProps {
   config: ExtensionSlotConfig;

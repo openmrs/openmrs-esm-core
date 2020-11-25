@@ -1,48 +1,61 @@
 import { mountRootParcel } from "single-spa";
 import { pathToRegexp, Key } from "path-to-regexp";
-import { getExtensionSlotConfigs } from "@openmrs/esm-config";
-
-/**
- * Creates the extension component <-> extension slot management engine.
- */
-const extensions: Record<string, ExtensionRegistration> = {};
-const attachedExtensionsForExtensionSlot: Record<string, Array<string>> = {};
-const extensionSlotsForModule: Record<string, Array<string>> = {};
-
-interface ExtensionRegistration extends ExtensionDefinition {
-  moduleName: string;
-}
+import { createGlobalStore } from "@openmrs/esm-api";
 
 export interface ExtensionDefinition {
   name: string;
   load(): Promise<any>;
 }
 
-export interface AttachedExtensionInfo {
-  /** The ID of the extension which is attached to the slot. */
-  extensionId: string;
+interface ExtensionRegistration extends ExtensionDefinition {
+  moduleName: string;
+}
+
+export interface ExtensionStore {
+  slots: Record<string, ExtensionSlotDefinition>;
+  extensions: Record<string, ExtensionRegistration>;
+}
+
+export interface ExtensionSlotDefinition {
   /**
-   * The *actual* name of the extension slot which is defined when the slot is created.
-   *
-   * If the extension slot has a "normal" name (e.g. `my-extension-slot`), this is equal to `attachedExtensionSlot`.
-   *
-   * If the extension slot has a URL-like name, this `actualExtensionSlotName`'s path parameters have
-   * actual values (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
-   * This is in contrast to the `attachedExtensionSlotName` which defines the path parameters
-   * (`e.g. `/mySlot/:uuidParameter`).
+   * The name under which the extension slot has been registered.
    */
-  actualExtensionSlotName: string;
+  name: string;
   /**
-   * The name which has been used to attach the extension to the extension slot.
-   *
-   * If the extension slot has a "normal" name (e.g. `my-extension-slot`), this is equal to `actualExtensionSlotName`.
-   *
-   * If the extension slot has a URL-like name, this `attachedExtensionSlotName`'s defines the path parameters
-   * (`e.g. `/mySlot/:uuidParameter`).
-   * This is in contrast to the `actualExtensionSlotName` where the parameters have been replaced with actual values
+   * The set of extension IDs which have been attached to this slot.
+   * This is essentially a complete history of `attach` calls to this specific slot.
+   * However, not all of these extension IDs should be rendered.
+   * `assignedIds` is the set defining those.
+   */
+  attachedIds: Array<string>;
+  /**
+   * The set of extensions IDs which should be rendered into this slot at the current point in time.
+   */
+  assignedIds: Array<string>;
+  /**
+   * A set of additional extension IDs which have been added to to this slot despite not being
+   * explicitly `attach`ed to it.
+   * An example may be an extension which is added to the slot via the configuration.
+   */
+  addedIds: Array<string>;
+  /**
+   * A set of extension IDs which have been removed/hidden from this slot, even though they have
+   * previously been `attach`ed/added to it.
+   * An example may be an extension which is removed from the slot via the configuration.
+   */
+  removedIds: Array<string>;
+  /**
+   * A set allowing explicit ordering of the `assignedIds`.
+   */
+  idOrder: Array<string>;
+  /**
+   * Returns a value indicating whether extensions of this extension slot definition can be rendered
+   * into an arbitrary extension slot component with the specified `actualExtensionSlotName`.
+   * @param actualExtensionSlotName The actual extension slot name into which the extensions might be rendered.
+   * For URL like extension slots, this should be the name where parameters have been replaced with actual values
    * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
    */
-  attachedExtensionSlotName: string;
+  canRenderInto: (actualExtensionSlotName: string) => boolean;
 }
 
 export interface PageDefinition {
@@ -61,157 +74,79 @@ export interface CancelLoading {
   (): void;
 }
 
-export function registerExtension(
-  moduleName: string,
-  name: string,
-  load: () => Promise<any>
-) {
-  extensions[name] = {
-    name,
-    load,
-    moduleName,
-  };
-}
-
-/**
- * This is only used to inform tooling about the extension slot. Extension slots
- * do not have to be registered to mount extensions.
- *
- * @param moduleName The name of the module that contains the extension slot
- * @param name The extension slot name
- */
-export function registerExtensionSlot(moduleName: string, name: string) {
-  if (extensionSlotsForModule.hasOwnProperty(moduleName)) {
-    extensionSlotsForModule[moduleName].push(name);
-  } else {
-    extensionSlotsForModule[moduleName] = [name];
-  }
-}
-
-export function unregisterExtensionSlot(moduleName: string, name: string) {
-  extensionSlotsForModule[moduleName].splice(
-    extensionSlotsForModule[moduleName].indexOf(name),
-    1
-  );
-}
-
-export function getExtensionSlotsForModule(moduleName: string) {
-  return extensionSlotsForModule[moduleName] ?? [];
-}
-
-export function attach(extensionSlotName: string, extensionId: string) {
-  if (attachedExtensionsForExtensionSlot.hasOwnProperty(extensionSlotName)) {
-    attachedExtensionsForExtensionSlot[extensionSlotName].push(extensionId);
-  } else {
-    attachedExtensionsForExtensionSlot[extensionSlotName] = [extensionId];
-  }
-}
+export const extensionStore = createGlobalStore<ExtensionStore>("extensions", {
+  slots: {},
+  extensions: {},
+});
 
 export function getExtensionRegistration(
   extensionId: string
-): ExtensionRegistration {
+): ExtensionRegistration | undefined {
+  const state = extensionStore.getState();
   const extensionName = extensionId.split("#")[0];
-  return extensions[extensionName];
+  return state.extensions[extensionName];
 }
 
-/**
- * Returns information describing all extensions which can be rendered into an extension slot with
- * the specified name.
- * The returned information describe the extension itself, as well as the extension slot name(s)
- * with which it has been attached.
- * @param actualExtensionSlotName The extension slot name for which matching extension info should be returned.
- * For URL like extension slots, this should be the name where parameters have been replaced with actual values
- * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
- * @param moduleName The module name. Used for applying extension-specific config values to the result.
- */
-export async function getAttachedExtensionInfoForSlotAndConfig(
-  actualExtensionSlotName: string,
-  moduleName: string
-): Promise<Array<AttachedExtensionInfo>> {
-  const allExtensionSlotConfigs = await getExtensionSlotConfigs(
-    actualExtensionSlotName,
-    moduleName
-  );
-  const matchingExtensionSlotConfigs = Object.entries(allExtensionSlotConfigs)
-    .filter(
-      ([key]) =>
-        key === actualExtensionSlotName ||
-        !!getActualRouteProps(key, actualExtensionSlotName)
-    )
-    .map(([_, value]) => value);
-  let extensionIds = getAttachedExtensionInfoForSlot(actualExtensionSlotName);
+export const registerExtension: (
+  moduleName: string,
+  name: string,
+  load: () => Promise<any>
+) => void = extensionStore.action(
+  (state, moduleName: string, name: string, load: () => Promise<any>) => {
+    state.extensions[name] = {
+      name,
+      load,
+      moduleName,
+    };
+  }
+);
 
-  for (const config of matchingExtensionSlotConfigs) {
-    if (config.add) {
-      extensionIds = extensionIds.concat(
-        config.add.map((id) => ({
-          extensionId: id,
-          attachedExtensionSlotName: actualExtensionSlotName,
-          actualExtensionSlotName,
-        }))
-      );
-    }
-
-    if (config.remove) {
-      extensionIds = extensionIds.filter(
-        (n) => !config.remove?.includes(n.extensionId)
-      );
-    }
-
-    if (config.order) {
-      extensionIds = extensionIds.sort((a, b) =>
-      config.order?.includes(a.extensionId)
-          ? config.order.includes(b.extensionId)
-            ? config.order.indexOf(a.extensionId) -
-            config.order.indexOf(b.extensionId)
-            : -1
-          : config.order?.includes(b.extensionId)
-          ? 1
-          : 0
-      );
+export const attach: (
+  extensionSlotName: string,
+  extensionId: string
+) => void = extensionStore.action(
+  (state, extensionSlotName: string, extensionId: string) => {
+    const existingSlot = state.slots[extensionSlotName];
+    if (!existingSlot) {
+      return {
+        slots: {
+          ...state.slots,
+          [extensionSlotName]: {
+            name: extensionSlotName,
+            attachedIds: [extensionId],
+            assignedIds: [extensionId],
+            addedIds: [],
+            removedIds: [],
+            idOrder: [],
+            canRenderInto: (actualExtensionSlotName) =>
+              canSlotRenderInto(extensionSlotName, actualExtensionSlotName),
+          },
+        },
+      };
+    } else {
+      return {
+        slots: {
+          ...state.slots,
+          [extensionSlotName]: {
+            ...existingSlot,
+            attachedIds: [...existingSlot.attachedIds, extensionId],
+            assignedIds: [...existingSlot.assignedIds, extensionId],
+          },
+        },
+      };
     }
   }
+);
 
-  return extensionIds;
-}
-
-function getEntries<T>(obj: Record<string, T>): Array<[string, T]> {
-  return Object.keys(obj).map((key) => [key, obj[key]]);
-}
-
-function getAttachedExtensionInfoForSlot(
+function canSlotRenderInto(
+  attachedExtensionSlotName: string,
   actualExtensionSlotName: string
-): Array<AttachedExtensionInfo> {
-  const result = (
-    attachedExtensionsForExtensionSlot[actualExtensionSlotName] ?? []
-  ).map((extensionId) => ({
-    attachedExtensionSlotName: actualExtensionSlotName,
-    actualExtensionSlotName,
-    extensionId,
-  }));
-
-  const pathTemplateMatchingExtensions = getEntries(
-    attachedExtensionsForExtensionSlot
-  ).filter(
-    ([attachedExtensionSlotName]) =>
-      !attachedExtensionsForExtensionSlot[actualExtensionSlotName] &&
-      !!getActualRouteProps(attachedExtensionSlotName, actualExtensionSlotName)
+) {
+  return (
+    attachedExtensionSlotName === actualExtensionSlotName ||
+    (attachedExtensionSlotName.startsWith("/") &&
+      !!getActualRouteProps(attachedExtensionSlotName, actualExtensionSlotName))
   );
-
-  for (const [
-    attachedExtensionSlotName,
-    extensionIds,
-  ] of pathTemplateMatchingExtensions) {
-    result.push(
-      ...extensionIds.map((extensionId) => ({
-        attachedExtensionSlotName,
-        actualExtensionSlotName,
-        extensionId,
-      }))
-    );
-  }
-
-  return result;
 }
 
 /**
@@ -241,9 +176,9 @@ export function renderExtension(
   if (domElement) {
     if (extensionRegistration) {
       extensionRegistration.load().then(
-        ({ default: result }) =>
+        ({ default: result, ...lifecycle }) =>
           active &&
-          mountRootParcel(renderFunction(result) as any, {
+          mountRootParcel(renderFunction(result ?? lifecycle) as any, {
             ...additionalProps,
             ...routeProps,
             domElement,
@@ -266,7 +201,8 @@ function tryGetExtensionRegistrationAndRouteProps(
   actualExtensionSlotName: string,
   attachedExtensionSlotName: string
 ) {
-  const extensionRegistration = extensions[extensionName];
+  const state = extensionStore.getState();
+  const extensionRegistration = state.extensions[extensionName];
   if (!extensionRegistration) {
     return { extensionRegistration: undefined, routeProps: {} };
   }
@@ -296,6 +232,32 @@ function getActualRouteProps(
   return undefined;
 }
 
+/**
+ * This is only used to inform tooling about the extension slot. Extension slots
+ * do not have to be registered to mount extensions.
+ *
+ * @param moduleName The name of the module that contains the extension slot
+ * @param name The extension slot name
+ */
+export function registerExtensionSlot(moduleName: string, name: string) {
+  if (extensionSlotsForModule.hasOwnProperty(moduleName)) {
+    extensionSlotsForModule[moduleName].push(name);
+  } else {
+    extensionSlotsForModule[moduleName] = [name];
+  }
+}
+
+export function unregisterExtensionSlot(moduleName: string, name: string) {
+  extensionSlotsForModule[moduleName].splice(
+    extensionSlotsForModule[moduleName].indexOf(name),
+    1
+  );
+}
+
+export function getExtensionSlotsForModule(moduleName: string) {
+  return extensionSlotsForModule[moduleName] ?? [];
+}
+
 export function getIsUIEditorEnabled(): boolean {
   return JSON.parse(
     localStorage.getItem("openmrs:isUIEditorEnabled") ?? "false"
@@ -310,9 +272,9 @@ export function setIsUIEditorEnabled(enabled: boolean): void {
  * @internal
  * Just for testing.
  */
-export function reset() {
-  Object.keys(extensions).forEach((key) => delete extensions[key]);
-  Object.keys(attachedExtensionsForExtensionSlot).forEach(
-    (key) => delete attachedExtensionsForExtensionSlot[key]
-  );
-}
+export const reset: () => void = extensionStore.action(() => {
+  return {
+    slots: {},
+    extensions: {},
+  };
+});

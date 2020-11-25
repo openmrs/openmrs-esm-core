@@ -1,28 +1,22 @@
-import React, {
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { useContext, ReactNode, useEffect, useState } from "react";
 import { ModuleNameContext, ExtensionContext } from "@openmrs/esm-context";
-import { configCacheNotifier } from "@openmrs/esm-config";
 import {
   renderExtension,
-  getAttachedExtensionInfoForSlotAndConfig,
   getIsUIEditorEnabled,
   getExtensionRegistration,
   registerExtensionSlot,
   unregisterExtensionSlot,
-  AttachedExtensionInfo,
+  ExtensionSlotDefinition,
+  extensionStore,
+  ExtensionStore,
 } from "./extensions";
-import { TooltipIcon } from "carbon-components-react";
 
 interface ExtensionSlotBaseProps {
   extensionSlotName: string;
   children?: ReactNode;
   style?: React.CSSProperties;
   state?: Record<string, any>;
+  className?: string;
 }
 
 // remainder of props are for the top-level <div>
@@ -31,47 +25,39 @@ export type ExtensionSlotReactProps<T = {}> = ExtensionSlotBaseProps & T;
 export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
   extensionSlotName,
   children,
-  style,
   state,
+  style,
+  className,
   ...divProps
 }: ExtensionSlotReactProps) => {
-  const [attachedExtensionInfos, setAttachedExtensionInfos] = useState<
-    Array<AttachedExtensionInfo>
-  >([]);
   const slotModuleName = useContext(ModuleNameContext);
-
   if (!slotModuleName) {
     throw Error(
       "ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator"
     );
   }
 
-  const getAttachedExtensionInfos = useCallback(() => {
-    getAttachedExtensionInfoForSlotAndConfig(
-      extensionSlotName,
-      slotModuleName
-    ).then((ids) => setAttachedExtensionInfos(ids));
-  }, [
-    getAttachedExtensionInfoForSlotAndConfig,
-    extensionSlotName,
-    slotModuleName,
-  ]);
+  const [matchingExtensionSlot, setMatchingExtensionSlot] = useState<
+    ExtensionSlotDefinition | undefined
+  >(undefined);
+
+  const extensionIdsToRender = matchingExtensionSlot?.assignedIds ?? [];
 
   useEffect(() => {
-    getAttachedExtensionInfos();
-  }, [getAttachedExtensionInfos, extensionSlotName, slotModuleName]);
+    const update = (state: ExtensionStore) => {
+      const matchingExtensionSlot = Object.values(state.slots).find((slotDef) =>
+        slotDef.canRenderInto(extensionSlotName)
+      );
+      setMatchingExtensionSlot(matchingExtensionSlot);
+    };
+    update(extensionStore.getState());
+    return extensionStore.subscribe((state) => update(state));
+  }, []);
 
   useEffect(() => {
     registerExtensionSlot(slotModuleName, extensionSlotName);
     return () => unregisterExtensionSlot(slotModuleName, extensionSlotName);
   }, []);
-
-  useEffect(() => {
-    const sub = configCacheNotifier.subscribe(() => {
-      getAttachedExtensionInfos();
-    });
-    return () => sub.unsubscribe();
-  }, [extensionSlotName]);
 
   const divStyle = getIsUIEditorEnabled()
     ? { ...style, backgroundColor: "cyan" }
@@ -79,28 +65,25 @@ export const ExtensionSlotReact: React.FC<ExtensionSlotReactProps> = ({
 
   return (
     <div style={divStyle} {...divProps}>
-      {attachedExtensionInfos.map(
-        ({
-          extensionId,
-          actualExtensionSlotName,
-          attachedExtensionSlotName,
-        }) => {
-          const extensionRegistration = getExtensionRegistration(extensionId);
-          return (
+      {extensionIdsToRender.map((extensionId) => {
+        const extensionRegistration = getExtensionRegistration(extensionId);
+        return (
+          matchingExtensionSlot &&
+          extensionRegistration && (
             <ExtensionContext.Provider
               key={extensionId}
               value={{
-                actualExtensionSlotName,
-                attachedExtensionSlotName,
+                actualExtensionSlotName: extensionSlotName,
+                attachedExtensionSlotName: matchingExtensionSlot.name,
                 extensionId,
                 extensionModuleName: extensionRegistration.moduleName,
               }}
             >
               {children ?? <ExtensionReact state={state} />}
             </ExtensionContext.Provider>
-          );
-        }
-      )}
+          )
+        );
+      })}
     </div>
   );
 };
@@ -132,15 +115,9 @@ export const ExtensionReact: React.FC<ExtensionReactProps> = ({ state }) => {
   }, [actualExtensionSlotName, attachedExtensionSlotName, extensionId]);
 
   return getIsUIEditorEnabled() ? (
-    <TooltipIcon
-      tooltipText={`Slot Name : ${attachedExtensionSlotName}`}
-      align="center"
-      direction="top"
-    >
-      <div style={{ outline: "0.125rem solid yellow" }}>
-        <slot ref={ref} />
-      </div>
-    </TooltipIcon>
+    <div style={{ outline: "0.125rem solid yellow" }}>
+      <slot ref={ref} />
+    </div>
   ) : (
     <slot ref={ref} />
   );

@@ -37,6 +37,7 @@
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
+    "@openmrs/esm-api": "3.x",
     "@openmrs/esm-config": "3.x",
     "@openmrs/esm-context": "3.x",
     "carbon-components": "^10.23.2",
@@ -45,6 +46,7 @@
     "single-spa": "4.x"
   },
   "devDependencies": {
+    "@openmrs/esm-api": "^3.1.4",
     "@openmrs/esm-config": "^3.1.4",
     "@openmrs/esm-context": "^3.1.4",
     "@types/carbon-components": "^10.23.0",
