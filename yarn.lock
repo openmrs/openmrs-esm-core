@@ -2312,13 +2312,6 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@openmrs/esm-context@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@openmrs/esm-context/-/esm-context-3.1.4.tgz#a8bb5b3bcaff3bdc7af00f6b9dd309f68f398fc5"
-  integrity sha512-PiwzBd62Z6rYD9UkkNnktOgCS02Y3CjFlrakgwXLOjZrzJo5jLtkq78xEBWZbimeeYatp5ojWcdB3MyvVITeOQ==
-  dependencies:
-    systemjs-webpack-interop "^2.1.2"
-
 "@pickra/copy-code-block@^1.1.7":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@pickra/copy-code-block/-/copy-code-block-1.2.0.tgz#08b9d01d92dd5f4950e013b43e0730abb3add3db"
