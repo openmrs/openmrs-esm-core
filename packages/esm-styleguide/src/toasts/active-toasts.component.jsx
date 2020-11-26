@@ -1,22 +1,27 @@
 import React from "react";
-import { toastsSubject } from "./toasts";
 import Toast from "./toast.component";
 
-export default function ActiveToasts() {
+export default function ActiveToasts({ subject }) {
   const [toasts, setToasts] = React.useState([]);
   const [toastsClosing, setToastsClosing] = React.useState([]);
-  const closeToastRef = React.useRef();
-  closeToastRef.current = closeToast;
+  const closeToast = React.useCallback(
+    (toast) => {
+      if (!toastsClosing.some((t) => t === toast)) {
+        setToastsClosing(toastsClosing.concat(toast));
+      }
+    },
+    [toastsClosing]
+  );
 
   React.useEffect(() => {
-    const subscription = toastsSubject.subscribe((toast) =>
+    const subscription = subject.subscribe((toast) =>
       setToasts([...toasts, toast])
     );
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [toastsSubject, toasts]);
+  }, [subject, toasts]);
 
   React.useEffect(() => {
     if (toastsClosing.length > 0) {
@@ -30,9 +35,7 @@ export default function ActiveToasts() {
         setToastsClosing([]);
       }, 200);
 
-      return () => {
-        clearTimeout(timeoutId);
-      };
+      return () => clearTimeout(timeoutId);
     }
   }, [toastsClosing, toasts]);
 
@@ -41,13 +44,7 @@ export default function ActiveToasts() {
       key={toast.id}
       toast={toast}
       isClosing={toastsClosing.some((t) => t === toast)}
-      closeToastRef={closeToastRef}
+      closeToast={closeToast}
     />
   ));
-
-  function closeToast(toast) {
-    if (!toastsClosing.some((t) => t === toast)) {
-      setToastsClosing(toastsClosing.concat(toast));
-    }
-  }
 }

@@ -53,6 +53,7 @@ module.exports = {
       },
     ],
   },
+  mode: process.env.NODE_ENV || "production",
   devtool: "sourcemap",
   module: {
     rules: [

@@ -5,21 +5,17 @@ const defaultOptions = {
   millis: 4000,
 };
 
-export default function Toast({ toast, closeToastRef, isClosing }) {
-  const { millis, description } = Object.assign({}, toast, defaultOptions);
+export default function Toast({ toast, closeToast, isClosing }) {
+  const { millis = defaultOptions.millis, description } = toast;
 
   const [waitingForTime, setWaitingForTime] = React.useState(true);
   const [isMounting, setIsMounting] = React.useState(true);
+  const onClose = React.useCallback(() => closeToast(toast), []);
 
   React.useEffect(() => {
     if (waitingForTime) {
-      const timeoutId = setTimeout(() => {
-        closeToastRef.current(toast);
-      }, millis);
-
-      return () => {
-        clearTimeout(timeoutId);
-      };
+      const timeoutId = setTimeout(() => closeToast(toast), millis);
+      return () => clearTimeout(timeoutId);
     }
   }, [waitingForTime]);
 
@@ -43,10 +39,7 @@ export default function Toast({ toast, closeToastRef, isClosing }) {
     >
       <span>{description}</span>
       <span>
-        <button
-          className="omrs-btn-icon-medium"
-          onClick={() => closeToastRef.current(toast)}
-        >
+        <button className="omrs-btn-icon-medium" onClick={onClose}>
           <svg className="omrs-icon" fill="var(--omrs-color-ink-white)">
             <use xlinkHref="#omrs-icon-close" />
           </svg>

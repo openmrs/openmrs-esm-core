@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
 import { Subject } from "rxjs";
 import ActiveToasts from "./active-toasts.component";
 
@@ -7,10 +7,12 @@ export const toastsSubject = new Subject();
 let toastId = 0;
 
 const toastsContainer = document.createElement("div");
+
 const renderToasts = () => {
   document.body.appendChild(toastsContainer);
-  ReactDOM.render(<ActiveToasts />, toastsContainer);
+  render(<ActiveToasts subject={toastsSubject} />, toastsContainer);
 };
+
 toastsContainer.className = "omrs-toasts-container";
 
 if (document.readyState === "complete") {
