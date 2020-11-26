@@ -7,7 +7,7 @@ import {
 } from "@openmrs/esm-config";
 import styles from "./editable-value.styles.css";
 import ValueEditor from "./value-editor";
-import { useGlobalState } from "../global-state";
+import { getStore, ImplementerToolsStore } from "../store";
 
 export interface EditableValueProps {
   path: string[];
@@ -26,9 +26,7 @@ export default function EditableValue({ path, element }: EditableValueProps) {
   const [valueString, setValueString] = useState<string | null>(null);
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [configPathBeingEdited, setConfigPathBeingEdited] = useGlobalState(
-    "configPathBeingEdited"
-  );
+  const store = getStore();
   const activeConfigPath = useRef<HTMLButtonElement>(null);
 
   const closeEditor = () => {
@@ -44,30 +42,37 @@ export default function EditableValue({ path, element }: EditableValueProps) {
   };
 
   useEffect(() => {
-    if (isEqual(configPathBeingEdited, path)) {
-      focusOnConfigPathBeingEdited();
-    }
-  }, [configPathBeingEdited]);
+    const update = (state: ImplementerToolsStore) => {
+      if (isEqual(state.configPathBeingEdited, path)) {
+        focusOnConfigPathBeingEdited();
+      }
+    };
+    update(store.getState());
+    return store.subscribe((state) => update(state));
+  }, []);
 
   return (
     <>
       <div className={styles.line}>
         {editing ? (
-          <ValueEditor
-            element={element}
-            handleClose={closeEditor}
-            handleSave={(val) => {
-              try {
-                const result = JSON.parse(val);
-                setTemporaryConfigValue(path, result);
-                setValueString(val);
-                closeEditor();
-              } catch (e) {
-                console.warn(e);
-                setError("That's not formatted quite right. Try again.");
-              }
-            }}
-          />
+          <>
+            <ValueEditor
+              element={element}
+              handleClose={closeEditor}
+              handleSave={(val) => {
+                try {
+                  const result = JSON.parse(val);
+                  setTemporaryConfigValue(path, result);
+                  setValueString(val);
+                  closeEditor();
+                } catch (e) {
+                  console.warn(e);
+                  setError("That's not formatted quite right. Try again.");
+                }
+              }}
+            />
+            <div>{element._description}</div>
+          </>
         ) : (
           <button
             className={`${styles.secretButton} ${
