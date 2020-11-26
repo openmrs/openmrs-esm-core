@@ -1,7 +1,7 @@
 import React from "react";
 import _i18n from "i18next";
 import { I18nextProvider } from "react-i18next";
-import { ModuleNameContext } from "./ModuleNameContext";
+import { ExtensionContext, ExtensionContextData } from "./ExtensionContext";
 
 const i18n = (_i18n as any).default || _i18n;
 
@@ -31,7 +31,7 @@ const I18nextLoadNamespace: React.FC<I18nextLoadNamespaceProps> = (props) => {
   if (!i18n.hasLoadedNamespace(props.ns)) {
     const timeoutId = setTimeout(() => {
       console.warn(
-        `openmrsRootDecorator: the React suspense promise for i18next.loadNamespaces(['${props.ns}']) did not resolve nor reject after three seconds. This could mean you have multiple versions of i18next and haven't made i18next a webpack external in all projects.`
+        `openmrsExtensionDecorator: the React suspense promise for i18next.loadNamespaces(['${props.ns}']) did not resolve nor reject after three seconds. This could mean you have multiple versions of i18next and haven't made i18next a webpack external in all projects.`
       );
     }, 3000);
 
@@ -49,36 +49,44 @@ const I18nextLoadNamespace: React.FC<I18nextLoadNamespaceProps> = (props) => {
   return <>{props.children}</>;
 };
 
-export interface RootDecoratorOptions {
-  moduleName: string;
-  featureName: string;
+export interface ExtensionDecoratorOptions {
   disableTranslations?: boolean;
   strictMode?: boolean;
 }
 
-export function openmrsRootDecorator(userOpts: RootDecoratorOptions) {
-  if (
-    typeof userOpts !== "object" ||
-    typeof userOpts.featureName !== "string" ||
-    typeof userOpts.moduleName !== "string"
-  ) {
-    throw new Error(
-      "openmrsRootDecorator should be called with an opts object that has " +
-        "1. a featureName string that will be displayed to users, and 2. a moduleName string. " +
-        "The moduleName string will be used to look up configuration. " +
-        "e.g. openmrsRootDecorator({featureName: 'nice feature', moduleName: '@openmrs/esm-nice-feature' })"
-    );
-  }
-
+export function openmrsExtensionDecorator(
+  userOpts?: ExtensionDecoratorOptions
+) {
   const opts = Object.assign({}, defaultOpts, userOpts);
 
   return function decorateComponent(Comp: React.ComponentType) {
     return class OpenmrsReactRoot extends React.Component {
-      static displayName = `OpenmrsReactRoot(${opts.featureName})`;
+      static displayName = "Extension";
+
+      constructor(props) {
+        super(props);
+        if (!props._extensionContext) {
+          throw Error(
+            "Extension did not receive _extensionContext prop. Perhaps " +
+              "it was not rendered using `renderExtension`?"
+          );
+        }
+        this.state = {
+          ...this.state,
+          extensionContext: props._extensionContext as ExtensionContextData,
+        };
+      }
 
       state = {
         caughtError: null,
         caughtErrorInfo: null,
+        extensionContext: {
+          actualExtensionSlotName: "",
+          attachedExtensionSlotName: "",
+          extensionSlotModuleName: "",
+          extensionId: "",
+          extensionModuleName: "",
+        },
       };
 
       render() {
@@ -87,22 +95,27 @@ export function openmrsRootDecorator(userOpts: RootDecoratorOptions) {
           return null;
         } else {
           const content = (
-            <ModuleNameContext.Provider value={opts.moduleName}>
+            <ExtensionContext.Provider value={this.state.extensionContext}>
               <React.Suspense fallback={null}>
                 {opts.disableTranslations ? (
                   <Comp {...this.props} />
                 ) : (
                   <I18nextLoadNamespace
-                    ns={opts.moduleName}
+                    ns={this.state.extensionContext.extensionModuleName}
                     forceUpdate={() => this.forceUpdate()}
                   >
-                    <I18nextProvider i18n={i18n} defaultNS={opts.moduleName}>
+                    <I18nextProvider
+                      i18n={i18n}
+                      defaultNS={
+                        this.state.extensionContext.extensionModuleName
+                      }
+                    >
                       <Comp {...this.props} />
                     </I18nextProvider>
                   </I18nextLoadNamespace>
                 )}
               </React.Suspense>
-            </ModuleNameContext.Provider>
+            </ExtensionContext.Provider>
           );
 
           if (opts.strictMode || !React.StrictMode) {
@@ -126,6 +139,7 @@ export function openmrsRootDecorator(userOpts: RootDecoratorOptions) {
         }
 
         this.setState({
+          ...this.state,
           caughtError: err,
           caughtErrorInfo: info,
         });

@@ -8,7 +8,7 @@ import {
   setTemporaryConfigValue,
 } from "@openmrs/esm-config";
 import { ModuleNameContext } from "./ModuleNameContext";
-import { ExtensionContext } from "./ExtensionContext";
+import { ExtensionContext } from "./ExtensionSlotContext";
 import { useExtensionConfig } from "./useExtensionConfig";
 
 describe(`useExtensionConfig`, () => {

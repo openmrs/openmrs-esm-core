@@ -12,11 +12,11 @@ interface ExtensionRegistration extends ExtensionDefinition {
 }
 
 export interface ExtensionStore {
-  slots: Record<string, ExtensionSlotDefinition>;
+  slots: Record<string, ExtensionSlotInfo>;
   extensions: Record<string, ExtensionRegistration>;
 }
 
-export interface ExtensionSlotDefinition {
+export interface ExtensionSlotInfo {
   /**
    * The name under which the extension slot has been registered.
    */
@@ -53,13 +53,12 @@ export interface ExtensionSlotDefinition {
    */
   idOrder: Array<string>;
   /**
-   * Returns a value indicating whether extensions of this extension slot definition can be rendered
-   * into an arbitrary extension slot component with the specified `actualExtensionSlotName`.
+   * Returns whether the given extension slot name corresponds to this ExtensionSlotInfo.
    * @param actualExtensionSlotName The actual extension slot name into which the extensions might be rendered.
    * For URL like extension slots, this should be the name where parameters have been replaced with actual values
    * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
    */
-  canRenderInto(actualExtensionSlotName: string): boolean;
+  matches(actualExtensionSlotName: string): boolean;
 }
 
 export interface PageDefinition {
@@ -99,8 +98,8 @@ function createNewExtensionSlot(extensionSlotName: string) {
     addedIds: [],
     removedIds: [],
     idOrder: [],
-    canRenderInto: (actualExtensionSlotName) =>
-      canSlotRenderInto(extensionSlotName, actualExtensionSlotName),
+    matches: (actualExtensionSlotName) =>
+      slotNamesMatch(extensionSlotName, actualExtensionSlotName),
   };
 }
 
@@ -156,7 +155,7 @@ export function attach(extensionSlotName: string, extensionId: string) {
   });
 }
 
-function canSlotRenderInto(
+function slotNamesMatch(
   attachedExtensionSlotName: string,
   actualExtensionSlotName: string
 ) {
@@ -176,28 +175,37 @@ export function renderExtension(
   domElement: HTMLElement,
   actualExtensionSlotName: string,
   attachedExtensionSlotName: string,
+  extensionSlotModuleName: string,
   extensionId: string,
   renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x,
   additionalProps: Record<string, any> = {}
 ): CancelLoading {
   const extensionName = extensionId.split("#")[0];
-  const {
-    extensionRegistration,
-    routeProps,
-  } = tryGetExtensionRegistrationAndRouteProps(
-    extensionId,
-    actualExtensionSlotName,
-    attachedExtensionSlotName
-  );
+  const extensionRegistration = getExtensionRegistration(extensionId);
   let active = true;
 
   if (domElement) {
     if (extensionRegistration) {
+      const routeProps = getActualRouteProps(
+        actualExtensionSlotName,
+        attachedExtensionSlotName
+      );
+      const extensionContextProps = {
+        _extensionContext: {
+          extensionId,
+          actualExtensionSlotName,
+          attachedExtensionSlotName,
+          extensionSlotModuleName,
+          extensionModuleName: extensionRegistration.moduleName,
+        },
+      };
+
       extensionRegistration.load().then(
         ({ default: result, ...lifecycle }) =>
           active &&
           mountRootParcel(renderFunction(result ?? lifecycle) as any, {
             ...additionalProps,
+            ...extensionContextProps,
             ...routeProps,
             domElement,
           })
@@ -212,24 +220,6 @@ export function renderExtension(
   return () => {
     active = false;
   };
-}
-
-function tryGetExtensionRegistrationAndRouteProps(
-  extensionName: string,
-  actualExtensionSlotName: string,
-  attachedExtensionSlotName: string
-) {
-  const state = extensionStore.getState();
-  const extensionRegistration = state.extensions[extensionName];
-  if (!extensionRegistration) {
-    return { extensionRegistration: undefined, routeProps: {} };
-  }
-
-  const routeProps = getActualRouteProps(
-    attachedExtensionSlotName,
-    actualExtensionSlotName
-  );
-  return { extensionRegistration, routeProps };
 }
 
 function getActualRouteProps(
