@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-app-shell",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "license": "MPL-2.0",
   "main": "dist/openmrs.js",
   "scripts": {
@@ -27,12 +27,12 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "@openmrs/esm-api": "^3.1.4",
-    "@openmrs/esm-config": "^3.1.4",
-    "@openmrs/esm-error-handling": "^3.1.4",
-    "@openmrs/esm-extensions": "^3.1.4",
-    "@openmrs/esm-react-utils": "^3.1.4",
-    "@openmrs/esm-styleguide": "^3.1.4",
+    "@openmrs/esm-api": "^3.1.5",
+    "@openmrs/esm-config": "^3.1.5",
+    "@openmrs/esm-error-handling": "^3.1.5",
+    "@openmrs/esm-extensions": "^3.1.5",
+    "@openmrs/esm-react-utils": "^3.1.5",
+    "@openmrs/esm-styleguide": "^3.1.5",
     "carbon-components": "^10.19.0",
     "carbon-icons": "^7.0.7",
     "i18next": "^19.6.0",
