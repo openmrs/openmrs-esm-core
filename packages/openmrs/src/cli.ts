@@ -51,6 +51,12 @@ yargs.command(
         "run-project",
         "Runs the project in the current directory fusing it with the specified import map."
       )
+      .array("shared-dependencies")
+      .default("shared-dependencies", [])
+      .describe(
+        "shared-dependencies",
+        "The additional shared dependencies besides the ones from the app shell."
+      )
       .string("importmap")
       .default("importmap", "importmap.json")
       .describe(
@@ -64,7 +70,8 @@ yargs.command(
       ...args,
       importmap: await mergeImportmap(
         getImportmap(args.importmap, args.port),
-        (args["run-project"] || args.runProject) && runProject(args.port)
+        (args["run-project"] || args.runProject) &&
+          runProject(args.port, args["shared-dependencies"])
       ),
     })
 );

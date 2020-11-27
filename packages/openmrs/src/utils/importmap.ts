@@ -35,7 +35,10 @@ export function checkImportmapJson(value: string) {
   }
 }
 
-export function runProject(basePort: number): Record<string, string> {
+export function runProject(
+  basePort: number,
+  sharedDependencies: Array<string>
+): Record<string, string> {
   const projectFile = resolve(process.cwd(), "package.json");
 
   if (!existsSync(projectFile)) {
@@ -59,7 +62,8 @@ export function runProject(basePort: number): Record<string, string> {
   const dependencies = getDependentModules(
     process.cwd(),
     host,
-    project.peerDependencies
+    project.peerDependencies,
+    sharedDependencies
   );
 
   startWebpack(configPath, port);
@@ -105,7 +109,7 @@ export function getImportmap(
     return {
       type: "inline",
       value: JSON.stringify({
-        imports: runProject(basePort),
+        imports: runProject(basePort, []),
       }),
     };
   } else if (!/https?:\/\//.test(value)) {

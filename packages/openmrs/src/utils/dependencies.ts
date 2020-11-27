@@ -35,9 +35,10 @@ export function getMainBundle(project: any) {
 export function getDependentModules(
   root: string,
   host: string,
-  peerDependencies: Record<string, string> = {}
+  peerDependencies: Record<string, string> = {},
+  sharedDependencies: Array<string> = []
 ) {
-  const appShellShared = getSharedDependencies();
+  const appShellShared = [...getSharedDependencies(), ...sharedDependencies];
   const mifeExpected = Object.keys(peerDependencies);
   const mifeRequired = mifeExpected.filter(
     (name) => !appShellShared.includes(name)
