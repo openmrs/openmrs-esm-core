@@ -57,7 +57,6 @@ interface ExtensionSlotConfigProps {
 }
 
 function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
-  console.log(config?.configure);
   return (
     <div>
       {path[path.length - 1]}:
