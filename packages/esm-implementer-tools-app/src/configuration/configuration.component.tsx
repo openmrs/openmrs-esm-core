@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   getImplementerToolsConfig,
   getAreDevDefaultsOn,
@@ -14,15 +14,23 @@ import {
   getIsUIEditorEnabled,
   setIsUIEditorEnabled,
 } from "@openmrs/esm-extensions";
+import { getStore, ImplementerToolsStore } from "../store";
+import { ConfigValueDescriptor } from "./editable-value.component";
+import { get } from "lodash-es";
 
 export default function Configuration(props: ConfigurationProps) {
-  const [config, setConfig] = React.useState({});
-  const [isDevConfigActive, setIsDevConfigActive] = React.useState(
+  const [config, setConfig] = useState({});
+  const [isDevConfigActive, setIsDevConfigActive] = useState(
     getAreDevDefaultsOn()
   );
-  const [isUIEditorActive, setIsUIEditorActive] = React.useState(
+  const [isUIEditorActive, setIsUIEditorActive] = useState(
     getIsUIEditorEnabled()
   );
+  const [activeConfigElement, setActiveConfigElement] = useState<{
+    path: string[];
+    value: ConfigValueDescriptor;
+  }>();
+  const store = getStore();
   const tempConfig = getTemporaryConfig();
   const tempConfigObjUrl = new Blob(
     [JSON.stringify(tempConfig, undefined, 2)],
@@ -37,7 +45,20 @@ export default function Configuration(props: ConfigurationProps) {
     });
   };
 
-  React.useEffect(updateConfig, []);
+  useEffect(updateConfig, []);
+
+  useEffect(() => {
+    const update = (state: ImplementerToolsStore) => {
+      if (state.configPathBeingHovered) {
+        setActiveConfigElement({
+          path: state.configPathBeingHovered,
+          value: get(config, state.configPathBeingHovered),
+        });
+      }
+    };
+    update(store.getState());
+    return store.subscribe((state) => update(state));
+  }, [config]);
 
   return (
     <div className={styles.panel}>
@@ -83,9 +104,16 @@ export default function Configuration(props: ConfigurationProps) {
             </Button>
           </Column>
         </Row>
-        <Row>
-          <Column className={styles.configContent}>
+        <Row className={styles.mainContent}>
+          <Column sm={3} className={styles.configContent}>
             <ConfigTree config={config} />
+          </Column>
+          <Column sm={1}>
+            <div className={styles.configDescription}>
+              {activeConfigElement?.path?.join(".")}
+              {activeConfigElement?.value?._description}
+              {activeConfigElement?.value?._source}
+            </div>
           </Column>
         </Row>
       </Grid>

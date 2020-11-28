@@ -16,10 +16,21 @@
   flex: 0 1 auto;
 }
 
-.configContent {
+.mainContent {
   background-color: #f0f0f0;
+}
+
+.configContent {
   font-family: monospace;
   font-size: 10pt;
+}
+
+.configDescription {
+  background-color: #e0e0e0;
+  margin-top: 1em;
+  border: 1px solid #c0c0c0;
+  min-height: 12em;
+  padding: 0.5em;
 }
 
 .downloadLink {

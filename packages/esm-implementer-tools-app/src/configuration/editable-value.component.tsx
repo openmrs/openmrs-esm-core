@@ -53,7 +53,16 @@ export default function EditableValue({ path, element }: EditableValueProps) {
 
   return (
     <>
-      <div className={styles.line}>
+      <div
+        className={styles.line}
+        onMouseEnter={() => {
+          store.setState({ configPathBeingHovered: path });
+        }}
+        onMouseLeave={() => {
+          isEqual(store.getState().configPathBeingHovered, path) &&
+            store.setState({ configPathBeingHovered: [] });
+        }}
+      >
         {editing ? (
           <>
             <ValueEditor
@@ -87,7 +96,6 @@ export default function EditableValue({ path, element }: EditableValueProps) {
           </button>
         )}
         {error && <div className={styles.error}>{error}</div>}
-        <div className={styles.configElementSource}>{element._source}</div>
       </div>
     </>
   );

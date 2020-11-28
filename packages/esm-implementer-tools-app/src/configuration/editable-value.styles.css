@@ -2,16 +2,6 @@
   display: flex;
 }
 
-.configElementSource {
-  display: none;
-  color: #808080;
-  margin-left: 3em;
-}
-
-.line:hover > .configElementSource {
-  display: block;
-}
-
 .secretButton {
   background: none;
   color: inherit;
