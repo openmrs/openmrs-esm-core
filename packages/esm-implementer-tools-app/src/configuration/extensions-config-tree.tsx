@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
-import {
-  ExtensionSlotDefinition,
-  ExtensionStore,
-} from "@openmrs/esm-extensions";
+import { ExtensionSlotInfo, ExtensionStore } from "@openmrs/esm-extensions";
 import { connect } from "unistore/react";
 import styles from "./configuration.styles.css";
-import EditableValue from "./editable-value.component";
+import EditableValue, {
+  ConfigValueDescriptor,
+} from "./editable-value.component";
+import ConfigTree from "./config-tree.component";
 
 interface ExtensionsConfigTreeProps {
   config: { [key: string]: any };
@@ -14,7 +14,7 @@ interface ExtensionsConfigTreeProps {
 }
 
 interface ExtensionsConfigTreeImplProps extends ExtensionsConfigTreeProps {
-  slots: Record<string, ExtensionSlotDefinition>;
+  slots: Record<string, ExtensionSlotInfo>;
 }
 
 const ExtensionsConfigTreeImpl: React.FC<ExtensionsConfigTreeImplProps> = ({
@@ -61,14 +61,26 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
     <div>
       {path[path.length - 1]}:
       {["add", "remove", "order"].map((key) => (
-        <div key={key} className={`${styles.treeIndent} ${styles.treeLeaf}`}>
+        <div
+          key={path.join(".") + key}
+          className={`${styles.treeIndent} ${styles.treeLeaf}`}
+        >
           {key}:{" "}
           <EditableValue
             path={path.concat([key])}
-            element={config?.[key] || { _value: [], _source: "default" }}
+            element={config?.[key] ?? { _value: [], _source: "default" }}
           />
         </div>
       ))}
+      <div className={`${styles.treeIndent} ${styles.treeLeaf}`}>
+        configure:
+      </div>
+      <div className={`${styles.treeIndent} ${styles.treeLeaf}`}>
+        <ConfigTree
+          path={path.concat(["configure"])}
+          config={config?.configure || {}}
+        />
+      </div>
     </div>
   );
 }

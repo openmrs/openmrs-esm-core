@@ -74,18 +74,14 @@ export async function getExtensionConfig(
     slotModuleName,
     getProvidedConfigs()
   );
-  const addedConfig = slotModuleConfig?.extensions?.[slotName]?.add?.find(
-    (a) => a.extension == extensionId
-  )?.config;
-  const configuredConfig =
-    slotModuleConfig?.extensions?.[slotName]?.configure?.[extensionId];
-  const configOverride = addedConfig ?? configuredConfig ?? {};
+  const configOverride =
+    slotModuleConfig?.extensions?.[slotName]?.configure?.[extensionId] ?? {};
   const extensionModuleConfig = mergeConfigsFor(
     extensionModuleName,
     getProvidedConfigs()
   );
   const extensionConfig = mergeConfigs([extensionModuleConfig, configOverride]);
-  const schema = _schemas[extensionModuleName];
+  const schema = _schemas[extensionModuleName]; // TODO: validate that a schema exists for the module
   validateConfig(schema, extensionConfig, extensionModuleName);
   const config = setDefaults(schema, extensionConfig);
   delete config.extensions;
@@ -210,6 +206,15 @@ export function clearTemporaryConfig(): void {
 
 /**
  * @internal
+ *
+ * This function as written does not make sense. Its name and parameters
+ * suggest that it corresponds to a particular ExtensionSlot, but its
+ * return value is an object containing all extension slot configs. In its
+ * implementation it does some partial validation.
+ *
+ * It should be fixed to either do what one would expect from a function called
+ * `getExtensionSlotConfig`, or become a proper implementation of something called
+ * `getAllExtensionSlotConfigs`.
  */
 export async function getExtensionSlotConfig(
   slotName: string,
@@ -224,7 +229,6 @@ export async function getExtensionSlotConfig(
     const config = allExtensionSlotConfigs[configKey];
     validateExtensionSlotConfig(config, moduleName, slotName);
   }
-
   return processExtensionSlotConfigs(allExtensionSlotConfigs);
 }
 
@@ -243,40 +247,14 @@ function validateExtensionSlotConfig(
     );
   }
   if (config.add) {
-    if (!Array.isArray(config.add)) {
+    if (
+      !Array.isArray(config.add) ||
+      !config.add.every((n) => typeof n === "string")
+    ) {
       console.error(
         errorPrefix +
-          `.add' is invalid. Must be an array of objects with keys 'extension' and 'config'.`
+          `.add' is invalid. Must be an array of strings (extension IDs)`
       );
-    } else {
-      for (let i = 0; i++; i < config.add.length) {
-        if (!isOrdinaryObject(config.add[i])) {
-          console.error(
-            errorPrefix +
-              `.add[${i}]' is invalid. Must be an object with keys 'extension' and 'config'. Received ${JSON.stringify(
-                config.add[i]
-              )}`
-          );
-        } else {
-          const invalidAddKeys = Object.keys(config.add[i]).filter(
-            (k) => !["extension", "config"].includes(k)
-          );
-          if (invalidAddKeys.length) {
-            console.error(
-              errorPrefix +
-                `.add[${i}]' contains invalid keys '${invalidAddKeys.join(
-                  "', '"
-                )}'`
-            );
-          }
-          if (!config.add[i].extension) {
-            console.error(
-              errorPrefix +
-                `.add[${i}]' is invalid. The 'extension' key specifying the extension name/ID is mandatory.`
-            );
-          }
-        }
-      }
     }
   }
   if (config.remove) {
@@ -301,6 +279,14 @@ function validateExtensionSlotConfig(
       );
     }
   }
+  if (config.configure) {
+    if (!isOrdinaryObject(config.configure)) {
+      console.error(
+        errorPrefix +
+          `.configure' is invalid. Must be an object with extension IDs for keys`
+      );
+    }
+  }
 }
 
 function processExtensionSlotConfigs(
@@ -321,7 +307,7 @@ function processExtensionSlotConfigs(
     }
 
     if (config.add) {
-      result[key].add = config.add.map((e) => e.extension);
+      result[key].add = config.add;
     }
   }
 
@@ -719,12 +705,14 @@ export enum Type {
 }
 
 export interface ExtensionSlotConfig {
-  add?: Array<{
-    extension: string;
-    config: {};
-  }>;
+  add?: string[];
   remove?: string[];
   order?: string[];
+  configure?: ExtensionSlotConfigureValueObject;
+}
+
+export interface ExtensionSlotConfigureValueObject {
+  [key: string]: object;
 }
 
 interface ExtensionSlotConfigObject {

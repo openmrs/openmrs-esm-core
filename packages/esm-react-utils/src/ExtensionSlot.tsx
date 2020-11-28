@@ -4,7 +4,7 @@ import {
   getExtensionRegistration,
   registerExtensionSlot,
   unregisterExtensionSlot,
-  ExtensionSlotDefinition,
+  ExtensionSlotInfo,
   extensionStore,
   ExtensionStore,
 } from "@openmrs/esm-extensions";
@@ -38,18 +38,18 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
     );
   }
 
-  const [matchingExtensionSlot, setMatchingExtensionSlot] = useState<
-    ExtensionSlotDefinition | undefined
-  >(undefined);
+  const [slotInfo, setSlotInfo] = useState<ExtensionSlotInfo | undefined>(
+    undefined
+  );
 
-  const extensionIdsToRender = matchingExtensionSlot?.assignedIds ?? [];
+  const extensionIdsToRender = slotInfo?.assignedIds ?? [];
 
   useEffect(() => {
     const update = (state: ExtensionStore) => {
-      const matchingExtensionSlot = Object.values(state.slots).find((slotDef) =>
-        slotDef.canRenderInto(extensionSlotName)
+      const matchingSlotInfo = Object.values(state.slots).find((slotDef) =>
+        slotDef.matches(extensionSlotName)
       );
-      setMatchingExtensionSlot(matchingExtensionSlot);
+      setSlotInfo(matchingSlotInfo);
     };
     update(extensionStore.getState());
     return extensionStore.subscribe((state) => update(state));
@@ -69,13 +69,14 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
       {extensionIdsToRender.map((extensionId) => {
         const extensionRegistration = getExtensionRegistration(extensionId);
         return (
-          matchingExtensionSlot &&
+          slotInfo &&
           extensionRegistration && (
             <ExtensionContext.Provider
               key={extensionId}
               value={{
                 actualExtensionSlotName: extensionSlotName,
-                attachedExtensionSlotName: matchingExtensionSlot.name,
+                attachedExtensionSlotName: slotInfo.name,
+                extensionSlotModuleName: slotModuleName,
                 extensionId,
                 extensionModuleName: extensionRegistration.moduleName,
               }}
