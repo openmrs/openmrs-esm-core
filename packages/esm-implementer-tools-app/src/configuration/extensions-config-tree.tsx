@@ -1,9 +1,6 @@
 import React, { useMemo } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
-import {
-  ExtensionSlotDefinition,
-  ExtensionStore,
-} from "@openmrs/esm-extensions";
+import { ExtensionSlotInfo, ExtensionStore } from "@openmrs/esm-extensions";
 import { connect } from "unistore/react";
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
@@ -14,7 +11,7 @@ interface ExtensionsConfigTreeProps {
 }
 
 interface ExtensionsConfigTreeImplProps extends ExtensionsConfigTreeProps {
-  slots: Record<string, ExtensionSlotDefinition>;
+  slots: Record<string, ExtensionSlotInfo>;
 }
 
 const ExtensionsConfigTreeImpl: React.FC<ExtensionsConfigTreeImplProps> = ({
@@ -60,7 +57,7 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   return (
     <div>
       {path[path.length - 1]}:
-      {["add", "remove", "order"].map((key) => (
+      {["add", "remove", "order", "configure"].map((key) => (
         <div key={key} className={`${styles.treeIndent} ${styles.treeLeaf}`}>
           {key}:{" "}
           <EditableValue

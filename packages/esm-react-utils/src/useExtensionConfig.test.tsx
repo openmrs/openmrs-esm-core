@@ -7,8 +7,7 @@ import {
   provide,
   setTemporaryConfigValue,
 } from "@openmrs/esm-config";
-import { ModuleNameContext } from "./ModuleNameContext";
-import { ExtensionContext } from "./ExtensionSlotContext";
+import { ExtensionContext } from "./ExtensionContext";
 import { useExtensionConfig } from "./useExtensionConfig";
 
 describe(`useExtensionConfig`, () => {
@@ -19,78 +18,77 @@ describe(`useExtensionConfig`, () => {
   it(`can return extension config as a react hook`, async () => {
     defineConfigSchema("ext-module", {
       thing: {
-        _default: "The first thing",
+        _default: "The basics",
       },
     });
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ModuleNameContext.Provider value="slot-module">
-          <ExtensionContext.Provider
-            value={{
-              extensionModuleName: "ext-module",
-              actualExtensionSlotName: "fooSlot",
-              attachedExtensionSlotName: "fooSlot",
-              extensionId: "barExt#id1",
-            }}
-          >
-            <RenderConfig configKey="thing" />
-          </ExtensionContext.Provider>
-        </ModuleNameContext.Provider>
+        <ExtensionContext.Provider
+          value={{
+            extensionModuleName: "ext-module",
+            actualExtensionSlotName: "fooSlot",
+            attachedExtensionSlotName: "fooSlot",
+            extensionSlotModuleName: "slot-mod",
+            extensionId: "barExt#id1",
+          }}
+        >
+          <RenderConfig configKey="thing" />
+        </ExtensionContext.Provider>
       </React.Suspense>
     );
 
-    expect(screen.findByText("The first thing")).toBeTruthy();
+    expect(screen.findByText("The basics")).toBeTruthy();
   });
 
   it(`can handle multiple extensions`, async () => {
-    defineConfigSchema("foo-module", {
+    defineConfigSchema("first-module", {
       thing: {
-        _default: "foo thing",
+        _default: "first thing",
       },
     });
 
-    defineConfigSchema("bar-module", {
+    defineConfigSchema("second-module", {
       thing: {
-        _default: "bar thing",
+        _default: "second thing",
       },
     });
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ModuleNameContext.Provider value="slot-module">
-          <ExtensionContext.Provider
-            value={{
-              actualExtensionSlotName: "fooSlot",
-              attachedExtensionSlotName: "fooSlot",
-              extensionModuleName: "foo-module",
-              extensionId: "fooExt#id1",
-            }}
-          >
-            <RenderConfig configKey="thing" />
-          </ExtensionContext.Provider>
-          <ExtensionContext.Provider
-            value={{
-              actualExtensionSlotName: "fooSlot",
-              attachedExtensionSlotName: "fooSlot",
-              extensionModuleName: "bar-module",
-              extensionId: "barExt",
-            }}
-          >
-            <RenderConfig configKey="thing" />
-          </ExtensionContext.Provider>
-        </ModuleNameContext.Provider>
+        <ExtensionContext.Provider
+          value={{
+            actualExtensionSlotName: "fooSlot",
+            attachedExtensionSlotName: "fooSlot",
+            extensionSlotModuleName: "slot-mod",
+            extensionModuleName: "first-module",
+            extensionId: "fooExt#id1",
+          }}
+        >
+          <RenderConfig configKey="thing" />
+        </ExtensionContext.Provider>
+        <ExtensionContext.Provider
+          value={{
+            actualExtensionSlotName: "fooSlot",
+            attachedExtensionSlotName: "fooSlot",
+            extensionSlotModuleName: "slot-mod",
+            extensionModuleName: "second-module",
+            extensionId: "barExt",
+          }}
+        >
+          <RenderConfig configKey="thing" />
+        </ExtensionContext.Provider>
       </React.Suspense>
     );
 
-    expect(await screen.findByText("foo thing")).toBeTruthy();
-    expect(screen.findByText("bar thing")).toBeTruthy();
+    expect(await screen.findByText("first thing")).toBeTruthy();
+    expect(screen.findByText("second thing")).toBeTruthy();
   });
 
   it("can handle multiple extension slots", async () => {
-    defineConfigSchema("foo-module", {
+    defineConfigSchema("extension-module", {
       thing: {
-        _default: "foo thing",
+        _default: "old extension thing",
       },
     });
 
@@ -99,7 +97,7 @@ describe(`useExtensionConfig`, () => {
         extensions: {
           slot2: {
             configure: {
-              fooExt: { thing: "another thing" },
+              fooExt: { thing: "a different thing" },
             },
           },
         },
@@ -108,35 +106,33 @@ describe(`useExtensionConfig`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ModuleNameContext.Provider value="slot-1-module">
-          <ExtensionContext.Provider
-            value={{
-              actualExtensionSlotName: "slot1",
-              attachedExtensionSlotName: "slot1",
-              extensionModuleName: "foo-module",
-              extensionId: "fooExt",
-            }}
-          >
-            <RenderConfig configKey="thing" />
-          </ExtensionContext.Provider>
-        </ModuleNameContext.Provider>
-        <ModuleNameContext.Provider value="slot-2-module">
-          <ExtensionContext.Provider
-            value={{
-              actualExtensionSlotName: "slot2",
-              attachedExtensionSlotName: "slot2",
-              extensionModuleName: "foo-module",
-              extensionId: "fooExt",
-            }}
-          >
-            <RenderConfig configKey="thing" />
-          </ExtensionContext.Provider>
-        </ModuleNameContext.Provider>
+        <ExtensionContext.Provider
+          value={{
+            actualExtensionSlotName: "slot1",
+            attachedExtensionSlotName: "slot1",
+            extensionSlotModuleName: "slot-1-module",
+            extensionModuleName: "extension-module",
+            extensionId: "fooExt",
+          }}
+        >
+          <RenderConfig configKey="thing" />
+        </ExtensionContext.Provider>
+        <ExtensionContext.Provider
+          value={{
+            actualExtensionSlotName: "slot2",
+            attachedExtensionSlotName: "slot2",
+            extensionSlotModuleName: "slot-2-module",
+            extensionModuleName: "extension-module",
+            extensionId: "fooExt",
+          }}
+        >
+          <RenderConfig configKey="thing" />
+        </ExtensionContext.Provider>
       </React.Suspense>
     );
 
-    expect(await screen.findByText("foo thing")).toBeTruthy();
-    expect(screen.findByText("another thing")).toBeTruthy();
+    expect(await screen.findByText("old extension thing")).toBeTruthy();
+    expect(screen.findByText("a different thing")).toBeTruthy();
   });
 
   it("updates with a new value when the temporary config is updated", async () => {
@@ -148,18 +144,17 @@ describe(`useExtensionConfig`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ModuleNameContext.Provider value="slot-module">
-          <ExtensionContext.Provider
-            value={{
-              actualExtensionSlotName: "fooSlot",
-              attachedExtensionSlotName: "fooSlot",
-              extensionModuleName: "ext-module",
-              extensionId: "barExt#id1",
-            }}
-          >
-            <RenderConfig configKey="thing" />
-          </ExtensionContext.Provider>
-        </ModuleNameContext.Provider>
+        <ExtensionContext.Provider
+          value={{
+            actualExtensionSlotName: "fooSlot",
+            attachedExtensionSlotName: "fooSlot",
+            extensionSlotModuleName: "slot-module",
+            extensionModuleName: "ext-module",
+            extensionId: "barExt#id1",
+          }}
+        >
+          <RenderConfig configKey="thing" />
+        </ExtensionContext.Provider>
       </React.Suspense>
     );
 

@@ -788,34 +788,29 @@ describe("extension slot config", () => {
     Config.clearAll();
   });
 
-  // it("returns an object with add, remove, and order keys", async () => {
-  //   Config.provide({
-  //     "foo-module": {
-  //       extensions: {
-  //         fooSlot: {
-  //           add: [
-  //             {
-  //               extension: "bar",
-  //               config: { a: 1 },
-  //             },
-  //             {
-  //               extension: "baz",
-  //             },
-  //           ],
-  //           remove: ["zap"],
-  //           order: ["qux", "baz", "bar"],
-  //         },
-  //       },
-  //     },
-  //   });
-  //   const config = await Config.getExtensionSlotConfig("fooSlot", "foo-module");
-  //   expect(config).toStrictEqual({
-  //     add: ["bar", "baz"],
-  //     remove: ["zap"],
-  //     order: ["qux", "baz", "bar"],
-  //   });
-  //   expect(console.error).not.toHaveBeenCalled();
-  // });
+  it("returns an object with add, remove, and order keys", async () => {
+    Config.provide({
+      "foo-module": {
+        extensions: {
+          fooSlot: {
+            add: ["bar", "baz"],
+            remove: ["zap"],
+            order: ["qux", "baz", "bar"],
+            configure: { bar: { a: 0 } },
+          },
+        },
+      },
+    });
+    const config = await Config.getExtensionSlotConfig("fooSlot", "foo-module");
+    expect(config).toStrictEqual({
+      fooSlot: {
+        add: ["bar", "baz"],
+        remove: ["zap"],
+        order: ["qux", "baz", "bar"],
+      },
+    });
+    expect(console.error).not.toHaveBeenCalled();
+  });
 
   it("doesn't get returned by getConfig", async () => {
     Config.defineConfigSchema("foo-module", {
@@ -906,32 +901,6 @@ describe("extension config", () => {
       "fooExt"
     );
     expect(config).toStrictEqual({ bar: "qux", baz: "bazzy" });
-    expect(console.error).not.toHaveBeenCalled();
-  });
-
-  it("uses the 'add' config if one is present", async () => {
-    Config.defineConfigSchema("ext-mod", {
-      bar: { _default: "barry" },
-      baz: { _default: "bazzy" },
-    });
-    const testConfig = {
-      "ext-mod": { bar: "qux" },
-      "slot-mod": {
-        extensions: {
-          barSlot: {
-            add: [{ extension: "fooExt#id0", config: { baz: "quinn" } }],
-          },
-        },
-      },
-    };
-    Config.provide(testConfig);
-    const config = await Config.getExtensionConfig(
-      "slot-mod",
-      "ext-mod",
-      "barSlot",
-      "fooExt#id0"
-    );
-    expect(config).toStrictEqual({ bar: "qux", baz: "quinn" });
     expect(console.error).not.toHaveBeenCalled();
   });
 
