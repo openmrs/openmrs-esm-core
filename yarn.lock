@@ -1075,13 +1075,6 @@
   dependencies:
     "@carbon/icon-helpers" "^10.9.0"
 
-"@carbon/icons-react@^10.21.0":
-  version "10.21.0"
-  resolved "https://registry.yarnpkg.com/@carbon/icons-react/-/icons-react-10.21.0.tgz#7f943b6b9aff44913c209b8f02bcc2aa173b5bff"
-  integrity sha512-Oi3k+0crssTXe+8MIkkmNgEvigS+a6V09ruh1nFw0JjIc1fJ/J7waZMm/JQnFZ96w5XttkkQkB6yxMu1TF2Sug==
-  dependencies:
-    "@carbon/icon-helpers" "^10.9.0"
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -4735,37 +4728,10 @@ capture-exit@^2.0.0:
   dependencies:
     rsvp "^4.8.4"
 
-<<<<<<< HEAD
-carbon-components-react@^7.24.0:
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.24.0.tgz#e8aaccb8541076b7fcc21b8e6edb928236b3b25f"
-  integrity sha512-Oic0qA6IuioVYpV1/qhNGJk37SGEV3CNq9pkZabA/pDHKRmKosuS4s2BsIMEjp8PDU/FzmGiZwz7VhJsv+1DQw==
-=======
 carbon-components-react@^7.22.0, carbon-components-react@^7.24.0:
   version "7.24.0"
   resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.24.0.tgz#e8aaccb8541076b7fcc21b8e6edb928236b3b25f"
   integrity sha512-Oic0qA6IuioVYpV1/qhNGJk37SGEV3CNq9pkZabA/pDHKRmKosuS4s2BsIMEjp8PDU/FzmGiZwz7VhJsv+1DQw==
-  dependencies:
-    "@carbon/icons-react" "^10.21.0"
-    classnames "2.2.6"
-    downshift "5.2.1"
-    flatpickr "4.6.1"
-    invariant "^2.2.3"
-    lodash.debounce "^4.0.8"
-    lodash.findlast "^4.5.0"
-    lodash.isequal "^4.5.0"
-    lodash.omit "^4.5.0"
-    lodash.throttle "^4.1.1"
-    react-is "^16.8.6"
-    use-resize-observer "^6.0.0"
-    warning "^3.0.0"
-    window-or-global "^1.0.1"
-
-carbon-components-react@^7.23.2:
-  version "7.23.2"
-  resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.23.2.tgz#9d88800048e1fda705083a7b062fff5f361eeaa5"
-  integrity sha512-JKqR9JD55kKNtITWYwtSYdcjg+c5QE6rYBDfdJGdbOCxxHv5KFLTwWJ4jD6rD8h2KM45rPjDaIy+c35GkSluYQ==
->>>>>>> bb62dcd... MF-372: Proper alignment of dependencies
   dependencies:
     "@carbon/icons-react" "^10.21.0"
     classnames "2.2.6"
