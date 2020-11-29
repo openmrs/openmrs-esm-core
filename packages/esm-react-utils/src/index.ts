@@ -7,7 +7,6 @@ export * from "./openmrsRootDecorator";
 export * from "./openmrsExtensionDecorator";
 export * from "./useConfig";
 export * from "./useCurrentPatient";
-export * from "./useExtensionConfig";
 export * from "./useForceUpdate";
 export * from "./useNavigationContext";
 export * from "./UserHasAccess";
