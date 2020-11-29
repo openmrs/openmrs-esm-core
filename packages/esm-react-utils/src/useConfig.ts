@@ -3,8 +3,10 @@ import {
   getConfig,
   configCache,
   configCacheNotifier,
+  getExtensionConfig,
 } from "@openmrs/esm-config";
 import { ModuleNameContext } from "./ModuleNameContext";
+import { ExtensionContext } from "./ExtensionContext";
 import { useForceUpdate } from "./useForceUpdate";
 
 let error: Error | undefined;
@@ -13,19 +15,42 @@ let error: Error | undefined;
  * Use this React Hook to obtain your module's configuration.
  */
 export function useConfig() {
+  // This hook uses the extension config if an ExtensionContext is
+  // found, and uses the normal config if the ModuleNameContext is
+  // found.
+  const {
+    extensionId,
+    extensionModuleName,
+    attachedExtensionSlotName,
+    extensionSlotModuleName,
+  } = useContext(ExtensionContext);
+
   const moduleName = useContext(ModuleNameContext);
+
   const forceUpdate = useForceUpdate();
 
-  if (!moduleName) {
+  if (!moduleName && !extensionId) {
     throw Error(
-      "ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator"
+      "Neither ModuleNameContext nor ExtensionCotext were provided. " +
+        "They should come from `openmrsRootDecorator` or `openmrsExtensionDecorator` respectively. " +
+        "These usually come from `get[Async]RootLifecycle` or `get[Async]ExtensionLifecycle`, respectively."
     );
   }
 
-  function getConfigAndSetCache(moduleName: string) {
-    return getConfig(moduleName)
+  const cacheId = moduleName || `${attachedExtensionSlotName}-${extensionId}`;
+
+  function getConfigAndSetCache(lookupName: string) {
+    const getConfigPromise = moduleName
+      ? getConfig(lookupName)
+      : getExtensionConfig(
+          lookupName,
+          extensionModuleName,
+          attachedExtensionSlotName,
+          extensionId
+        );
+    return getConfigPromise
       .then((res) => {
-        configCache[moduleName] = res;
+        configCache[cacheId] = res;
         forceUpdate();
       })
       .catch((err) => {
@@ -35,10 +60,10 @@ export function useConfig() {
 
   useEffect(() => {
     const sub = configCacheNotifier.subscribe(() => {
-      getConfigAndSetCache(moduleName);
+      getConfigAndSetCache(moduleName || extensionSlotModuleName);
     });
     return () => sub.unsubscribe();
-  }, [moduleName]);
+  }, [moduleName, extensionSlotModuleName]);
 
   if (error) {
     // Suspense will just keep calling useConfig if the thrown promise rejects.
@@ -46,10 +71,10 @@ export function useConfig() {
     throw error;
   }
 
-  if (!configCache[moduleName]) {
+  if (!configCache[cacheId]) {
     // React will prevent the client component from rendering until the promise resolves
-    throw getConfigAndSetCache(moduleName);
+    throw getConfigAndSetCache(moduleName || extensionSlotModuleName);
   } else {
-    return configCache[moduleName];
+    return configCache[cacheId];
   }
 }
