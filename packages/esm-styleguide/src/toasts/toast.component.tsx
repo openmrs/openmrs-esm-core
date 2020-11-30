@@ -35,7 +35,7 @@ export const Toast: React.FC<ToastProps> = ({
   isClosing,
 }) => {
   const {
-    millis = toast.millis ?? defaultOptions.millis,
+    millis = defaultOptions.millis,
     title,
     description,
     kind,
