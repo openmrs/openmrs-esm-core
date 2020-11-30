@@ -18,6 +18,7 @@ export interface ToastDescriptor {
   title?: string;
   description: React.ReactNode;
   action?: React.ReactNode;
+  millis?: number;
 }
 
 export type ToastType =
@@ -33,12 +34,15 @@ export const Toast: React.FC<ToastProps> = ({
   closeToast,
   isClosing,
 }) => {
-  const { title, description, kind, action } = toast;
-  const { millis } = defaultOptions;
-
+  const {
+    millis = toast.millis ?? defaultOptions.millis,
+    title,
+    description,
+    kind,
+    action,
+  } = toast;
   const [waitingForTime, setWaitingForTime] = React.useState(true);
   const [isMounting, setIsMounting] = React.useState(true);
-  const onClose = React.useCallback(() => closeToast(toast), []);
 
   React.useEffect(() => {
     if (waitingForTime) {
