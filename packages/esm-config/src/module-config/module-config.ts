@@ -219,17 +219,14 @@ export function clearTemporaryConfig(): void {
 export async function getExtensionSlotConfig(
   slotName: string,
   moduleName: string
-): Promise<Record<string, ExtensionSlotConfigObject>> {
+): Promise<ExtensionSlotConfigObject> {
   await loadConfigs();
   const moduleConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
   const allExtensionSlotConfigs: Record<string, ExtensionSlotConfig> =
     moduleConfig?.extensions ?? {};
-
-  for (const configKey of Object.keys(allExtensionSlotConfigs)) {
-    const config = allExtensionSlotConfigs[configKey];
-    validateExtensionSlotConfig(config, moduleName, slotName);
-  }
-  return processExtensionSlotConfigs(allExtensionSlotConfigs);
+  const config = allExtensionSlotConfigs[slotName] || {};
+  validateExtensionSlotConfig(config, moduleName, slotName);
+  return config;
 }
 
 function validateExtensionSlotConfig(
@@ -287,31 +284,6 @@ function validateExtensionSlotConfig(
       );
     }
   }
-}
-
-function processExtensionSlotConfigs(
-  allExtensionSlotConfigs: Record<string, ExtensionSlotConfig>
-): Record<string, ExtensionSlotConfigObject> {
-  const result: Record<string, ExtensionSlotConfigObject> = {};
-
-  for (const key of Object.keys(allExtensionSlotConfigs)) {
-    const config = allExtensionSlotConfigs[key];
-    result[key] = {};
-
-    if (config.remove) {
-      result[key].remove = config.remove;
-    }
-
-    if (config.order) {
-      result[key].order = config.order;
-    }
-
-    if (config.add) {
-      result[key].add = config.add;
-    }
-  }
-
-  return result;
 }
 
 /*
@@ -715,7 +687,7 @@ export interface ExtensionSlotConfigureValueObject {
   [key: string]: object;
 }
 
-interface ExtensionSlotConfigObject {
+export interface ExtensionSlotConfigObject {
   add?: string[];
   remove?: string[];
   order?: string[];

@@ -1,6 +1,7 @@
 import { mountRootParcel } from "single-spa";
 import { pathToRegexp, Key } from "path-to-regexp";
 import { createGlobalStore } from "@openmrs/esm-api";
+import { getExtensionSlotConfig } from "@openmrs/esm-config";
 
 export interface ExtensionDefinition {
   name: string;
@@ -324,3 +325,55 @@ export const reset: () => void = extensionStore.action(() => {
     extensions: {},
   };
 });
+
+/**
+ * Returns information describing all extensions which can be rendered into an extension slot with
+ * the specified name.
+ * The returned information describe the extension itself, as well as the extension slot name(s)
+ * with which it has been attached.
+ * @param actualExtensionSlotName The extension slot name for which matching extension info should be returned.
+ * For URL like extension slots, this should be the name where parameters have been replaced with actual values
+ * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
+ * @param moduleName The module name. Used for applying extension-specific config values to the result.
+ */
+export async function getAttachedExtensionInfoForSlotAndConfig(
+  actualExtensionSlotName: string,
+  moduleName: string
+): Promise<Array<AttachedExtensionInfo>> {
+  const config = await getExtensionSlotConfig(
+    actualExtensionSlotName,
+    moduleName
+  );
+  let extensionIds = getAttachedExtensionInfoForSlot(actualExtensionSlotName);
+
+  if (config.add) {
+    extensionIds = extensionIds.concat(
+      config.add.map((id) => ({
+        extensionId: id,
+        attachedExtensionSlotName: actualExtensionSlotName,
+        actualExtensionSlotName,
+      }))
+    );
+  }
+
+  if (config.remove) {
+    extensionIds = extensionIds.filter(
+      (n) => !config.remove?.includes(n.extensionId)
+    );
+  }
+
+  if (config.order) {
+    extensionIds = extensionIds.sort((a, b) =>
+      config.order?.includes(a.extensionId)
+        ? config.order.includes(b.extensionId)
+          ? config.order.indexOf(a.extensionId) -
+            config.order.indexOf(b.extensionId)
+          : -1
+        : config.order?.includes(b.extensionId)
+        ? 1
+        : 0
+    );
+  }
+
+  return extensionIds;
+}
