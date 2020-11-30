@@ -33,11 +33,8 @@ export const Toast: React.FC<ToastProps> = ({
   closeToast,
   isClosing,
 }) => {
-  const { millis, title, description, kind, action } = Object.assign(
-    {},
-    toast,
-    defaultOptions
-  );
+  const { title, description, kind, action } = toast;
+  const { millis } = defaultOptions;
 
   const [waitingForTime, setWaitingForTime] = React.useState(true);
   const [isMounting, setIsMounting] = React.useState(true);
