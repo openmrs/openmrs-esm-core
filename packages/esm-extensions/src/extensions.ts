@@ -83,11 +83,17 @@ export const extensionStore = createGlobalStore<ExtensionStore>("extensions", {
   extensions: {},
 });
 
-function updateStore<U extends keyof ExtensionStore>(
-  updater: (state: ExtensionStore) => Pick<ExtensionStore, U>
+type MaybeAsync<T> = T | Promise<T>;
+
+async function updateStore<U extends keyof ExtensionStore>(
+  updater: (state: ExtensionStore) => MaybeAsync<Pick<ExtensionStore, U>>
 ) {
   const state = extensionStore.getState();
-  extensionStore.setState(updater(state));
+  const newState = await updater(state);
+
+  if (newState !== state) {
+    extensionStore.setState(newState);
+  }
 }
 
 function createNewExtensionSlot(extensionSlotName: string) {
@@ -326,6 +332,39 @@ export const reset: () => void = extensionStore.action(() => {
   };
 });
 
+export function updateExtensionSlotInfo(actualExtensionSlotName: string) {
+  updateStore(async (state) => {
+    for (const slotName of Object.keys(state.slots)) {
+      const originalSlotInfo = state.slots[slotName];
+
+      if (originalSlotInfo.matches(actualExtensionSlotName)) {
+        let slotInfo = originalSlotInfo;
+
+        for (const moduleName of originalSlotInfo.modules) {
+          const updatedSlotInfo = await getUpdatedExtensionSlotInfo(
+            actualExtensionSlotName,
+            moduleName,
+            slotInfo
+          );
+
+          if (updatedSlotInfo !== slotInfo) {
+            slotInfo = updatedSlotInfo;
+          }
+        }
+
+        if (slotInfo !== originalSlotInfo) {
+          return {
+            ...state,
+            [slotName]: slotInfo,
+          };
+        }
+      }
+    }
+
+    return state;
+  });
+}
+
 /**
  * Returns information describing all extensions which can be rendered into an extension slot with
  * the specified name.
@@ -335,45 +374,56 @@ export const reset: () => void = extensionStore.action(() => {
  * For URL like extension slots, this should be the name where parameters have been replaced with actual values
  * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
  * @param moduleName The module name. Used for applying extension-specific config values to the result.
+ * @param extensionSlot The extension slot information object.
  */
-export async function getAttachedExtensionInfoForSlotAndConfig(
+export async function getUpdatedExtensionSlotInfo(
   actualExtensionSlotName: string,
-  moduleName: string
-): Promise<Array<AttachedExtensionInfo>> {
+  moduleName: string,
+  extensionSlot: ExtensionSlotInfo
+): Promise<ExtensionSlotInfo> {
   const config = await getExtensionSlotConfig(
     actualExtensionSlotName,
     moduleName
   );
-  let extensionIds = getAttachedExtensionInfoForSlot(actualExtensionSlotName);
 
-  if (config.add) {
-    extensionIds = extensionIds.concat(
-      config.add.map((id) => ({
-        extensionId: id,
-        attachedExtensionSlotName: actualExtensionSlotName,
-        actualExtensionSlotName,
-      }))
-    );
+  if (Array.isArray(config.add)) {
+    config.add.forEach((extensionId) => {
+      if (!extensionSlot.addedIds.includes(extensionId)) {
+        extensionSlot = {
+          ...extensionSlot,
+          addedIds: [...extensionSlot.addedIds, extensionId],
+        };
+      }
+    });
   }
 
-  if (config.remove) {
-    extensionIds = extensionIds.filter(
-      (n) => !config.remove?.includes(n.extensionId)
-    );
+  if (Array.isArray(config.remove)) {
+    config.remove.forEach((extensionId) => {
+      if (!extensionSlot.removedIds.includes(extensionId)) {
+        extensionSlot = {
+          ...extensionSlot,
+          removedIds: [...extensionSlot.removedIds, extensionId],
+        };
+      }
+    });
   }
 
-  if (config.order) {
-    extensionIds = extensionIds.sort((a, b) =>
-      config.order?.includes(a.extensionId)
-        ? config.order.includes(b.extensionId)
-          ? config.order.indexOf(a.extensionId) -
-            config.order.indexOf(b.extensionId)
-          : -1
-        : config.order?.includes(b.extensionId)
-        ? 1
-        : 0
-    );
+  if (Array.isArray(config.order)) {
+    const testOrder = config.order.join(",");
+    const fullOrder = extensionSlot.idOrder.join(",");
+
+    if (!fullOrder.endsWith(testOrder)) {
+      config.order.forEach((extensionId) => {
+        extensionSlot = {
+          ...extensionSlot,
+          idOrder: [
+            ...extensionSlot.idOrder.filter((m) => m !== extensionId),
+            extensionId,
+          ],
+        };
+      });
+    }
   }
 
-  return extensionIds;
+  return extensionSlot;
 }

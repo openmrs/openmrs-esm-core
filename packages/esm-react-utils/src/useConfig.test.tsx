@@ -11,6 +11,12 @@ import { ModuleNameContext } from "./ModuleNameContext";
 import { useConfig } from "./useConfig";
 import { ExtensionContext } from "./ExtensionContext";
 
+function RenderConfig(props) {
+  const config = useConfig();
+
+  return <button>{config[props.configKey]}</button>;
+}
+
 describe(`useConfig in root context`, () => {
   afterEach(clearAll);
   afterEach(cleanup);
@@ -31,7 +37,7 @@ describe(`useConfig in root context`, () => {
       </React.Suspense>
     );
 
-    expect(screen.findByText("The first thing")).toBeTruthy();
+    expect(await screen.findByText("The first thing")).toBeTruthy();
   });
 
   it(`can handle multiple calls to useConfig from different modules`, async () => {
@@ -57,7 +63,7 @@ describe(`useConfig in root context`, () => {
 
     expect(await screen.findByText("foo thing")).toBeTruthy();
 
-    cleanup();
+    await cleanup();
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
@@ -67,7 +73,7 @@ describe(`useConfig in root context`, () => {
       </React.Suspense>
     );
 
-    expect(screen.findByText("bar thing")).toBeTruthy();
+    expect(await screen.findByText("bar thing")).toBeTruthy();
   });
 
   it("updates with a new value when the temporary config is updated", async () => {
@@ -85,11 +91,11 @@ describe(`useConfig in root context`, () => {
       </React.Suspense>
     );
 
-    expect(screen.findByText("The first thing")).toBeTruthy();
+    expect(await screen.findByText("The first thing")).toBeTruthy();
 
     setTemporaryConfigValue(["foo-module", "thing"], "A new thing");
 
-    expect(screen.findByText("A new thing")).toBeTruthy();
+    expect(await screen.findByText("A new thing")).toBeTruthy();
   });
 });
 
@@ -121,7 +127,7 @@ describe(`useConfig in an extension`, () => {
       </React.Suspense>
     );
 
-    expect(screen.findByText("The basics")).toBeTruthy();
+    expect(await screen.findByText("The basics")).toBeTruthy();
   });
 
   it(`can handle multiple extensions`, async () => {
@@ -165,7 +171,7 @@ describe(`useConfig in an extension`, () => {
     );
 
     expect(await screen.findByText("first thing")).toBeTruthy();
-    expect(screen.findByText("second thing")).toBeTruthy();
+    expect(await screen.findByText("second thing")).toBeTruthy();
   });
 
   it("can handle multiple extension slots", async () => {
@@ -215,7 +221,7 @@ describe(`useConfig in an extension`, () => {
     );
 
     expect(await screen.findByText("old extension thing")).toBeTruthy();
-    expect(screen.findByText("a different thing")).toBeTruthy();
+    expect(await screen.findByText("a different thing")).toBeTruthy();
   });
 
   it("updates with a new value when the temporary config is updated", async () => {
@@ -262,9 +268,3 @@ describe(`useConfig in an extension`, () => {
     expect(await screen.findByText("Yet another thing")).toBeTruthy();
   });
 });
-
-function RenderConfig(props) {
-  const config = useConfig();
-
-  return <button>{config[props.configKey]}</button>;
-}

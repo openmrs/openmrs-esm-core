@@ -7,6 +7,7 @@ import {
   ExtensionSlotInfo,
   extensionStore,
   ExtensionStore,
+  updateExtensionSlotInfo,
 } from "@openmrs/esm-extensions";
 import { ExtensionContext } from "./ExtensionContext";
 import { ModuleNameContext } from "./ModuleNameContext";
@@ -32,6 +33,7 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   ...divProps
 }: ExtensionSlotProps) => {
   const slotModuleName = useContext(ModuleNameContext);
+
   if (!slotModuleName) {
     throw Error(
       "ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator"
@@ -57,6 +59,7 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
 
   useEffect(() => {
     registerExtensionSlot(slotModuleName, extensionSlotName);
+    updateExtensionSlotInfo(extensionSlotName);
     return () => unregisterExtensionSlot(slotModuleName, extensionSlotName);
   }, []);
 

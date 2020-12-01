@@ -1,6 +1,8 @@
 import "./style";
 import type { SpaConfig } from "./types";
 
+declare var __webpack_public_path__: string;
+
 function wireSpaPaths() {
   const baseElement = document.createElement("base");
   baseElement.href = window.getOpenmrsSpaBase();
