@@ -34,8 +34,10 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "carbon-components-react": "^7.22.0",
     "kremling": "^2.0.1",
-    "systemjs-webpack-interop": "^2.1.2"
+    "systemjs-webpack-interop": "^2.1.2",
+    "lodash-es": "^4.17.15"
   },
   "peerDependencies": {
     "react": "16.x",
@@ -49,7 +51,9 @@
     "highlight.js": "^9.15.10",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.5.3",
+    "carbon-components": "^10.23.2",
+    "carbon-icons": "^7.0.7"
   },
   "publishConfig": {
     "access": "public"

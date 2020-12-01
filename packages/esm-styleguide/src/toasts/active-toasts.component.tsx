@@ -1,8 +1,8 @@
 import React from "react";
-import Toast from "./toast.component";
+import { Toast, ToastDescriptor } from "./toast.component";
 
 export default function ActiveToasts({ subject }) {
-  const [toasts, setToasts] = React.useState([]);
+  const [toasts, setToasts] = React.useState<Array<ToastDescriptor>>([]);
   const [toastsClosing, setToastsClosing] = React.useState([]);
   const closeToast = React.useCallback(
     (toast) => {

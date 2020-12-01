@@ -4728,7 +4728,7 @@ capture-exit@^2.0.0:
   dependencies:
     rsvp "^4.8.4"
 
-carbon-components-react@^7.24.0:
+carbon-components-react@^7.22.0, carbon-components-react@^7.24.0:
   version "7.24.0"
   resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.24.0.tgz#e8aaccb8541076b7fcc21b8e6edb928236b3b25f"
   integrity sha512-Oic0qA6IuioVYpV1/qhNGJk37SGEV3CNq9pkZabA/pDHKRmKosuS4s2BsIMEjp8PDU/FzmGiZwz7VhJsv+1DQw==
@@ -4752,6 +4752,15 @@ carbon-components@^10.19.0:
   version "10.21.0"
   resolved "https://registry.yarnpkg.com/carbon-components/-/carbon-components-10.21.0.tgz#3e7f79530af79039aab7bf937f0f129642806316"
   integrity sha512-IS8WPFGg74g6ZyWpJc4cDlkhqGeNZ1sJshAVTftkb7Nur9W58lSRcu6G9cRMgeL+I/YAia3Q+X4lPh/X16JsGw==
+  dependencies:
+    flatpickr "4.6.1"
+    lodash.debounce "^4.0.8"
+    warning "^3.0.0"
+
+carbon-components@^10.23.2:
+  version "10.24.0"
+  resolved "https://registry.yarnpkg.com/carbon-components/-/carbon-components-10.24.0.tgz#6fe2a0423bcbb654e4a8db3af86d46210c2ddf31"
+  integrity sha512-ROfvSJmE2x2+vFUT/z2d8I3RMJKUA8vFTUKqithoXXgrrodRSCob07yi0Qq1c9dgEXR2VZNJrHY7TT/Uhr8OMQ==
   dependencies:
     flatpickr "4.6.1"
     lodash.debounce "^4.0.8"

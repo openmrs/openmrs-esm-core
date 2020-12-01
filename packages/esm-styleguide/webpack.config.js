@@ -2,7 +2,7 @@ const { resolve } = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const { peerDependencies } = require('./package.json');
+const { peerDependencies } = require("./package.json");
 
 module.exports = {
   entry: [
@@ -34,7 +34,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         use: ["babel-loader"],
       },
       {
@@ -56,7 +56,7 @@ module.exports = {
   externals: Object.keys(peerDependencies),
   resolve: {
     modules: ["node_modules"],
-    extensions: [".js", ".jsx", ".json"],
+    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
   },
   plugins: [
     new CleanWebpackPlugin(),
