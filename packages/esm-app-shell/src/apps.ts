@@ -1,3 +1,4 @@
+import { getAppState } from "@openmrs/esm-api";
 import {
   attach,
   ExtensionDefinition,
@@ -50,24 +51,28 @@ export function registerApp(appName: string, appExports: System.Module) {
     const result = setup();
 
     if (result && typeof result === "object") {
-      const availableExtensions: Array<Partial<AppExtensionDefinition>> =
-        result.extensions ?? [];
-
-      const availablePages: Array<PageDefinition> = result.pages ?? [];
-
+      // Register apps declared with `lifecycle` and `activate`
       if (typeof result.activate !== "undefined") {
-        availablePages.push({
-          load: result.lifecycle,
-          route: result.activate,
-        });
+        registerApplication(
+          appName,
+          result.lifecycle,
+          preprocessActivator(result.activate)
+        );
       }
 
+      // Register extensions
+      const availableExtensions: Array<Partial<AppExtensionDefinition>> =
+        result.extensions ?? [];
       for (const ext of availableExtensions) {
         tryRegisterExtension(appName, ext);
       }
 
+      // Register pages
+      const availablePages: Array<PageDefinition> = result.pages ?? [];
       for (const { route, load } of availablePages) {
-        registerApplication(appName, load, preprocessActivator(route));
+        const activator = preprocessActivator(route);
+        registerApplication(appName, load, activator);
+        createActivePageSetterHook(route, activator);
       }
     }
   }
@@ -103,4 +108,43 @@ function tryRegisterExtension(
   if (slot) {
     attach(slot, name);
   }
+}
+
+function createActivePageSetterHook(route: string, activator: Activator) {
+  const simplifiedRoute = simplify("" + route); // cast to string
+  const appName = simplifiedRoute + "-activePageRoute-setter";
+  const application = {
+    bootstrap: () => Promise.resolve(),
+    mount: getPageMountFunction(simplifiedRoute),
+    unmount: getPageUnmountFunction(simplifiedRoute),
+  };
+
+  registerApplication(appName, application, activator);
+}
+
+function getPageMountFunction(route: string) {
+  return () =>
+    Promise.resolve().then(() => getAppState().setState({ activePage: route }));
+}
+
+function getPageUnmountFunction(route: string) {
+  return () =>
+    Promise.resolve().then(() => {
+      const state = getAppState();
+      if (state.getState().activePage === route) {
+        state.setState({ activePage: null });
+      }
+    });
+}
+
+/**
+ * Replaces all sequences of special characters with a single dash
+ * @param route An arbitrary string
+ */
+function simplify(route: string) {
+  return route
+    .replaceAll(/[\/\.\+\(\)\*\\_\^\$]/g, "-")
+    .split("-")
+    .filter((v) => v)
+    .join("-");
 }

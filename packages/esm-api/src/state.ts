@@ -54,12 +54,23 @@ export function getGlobalStore<TState = any>(
   return available.value;
 }
 
-export interface AppState {}
+export interface AppState {
+  /**
+   * The simplified route of the currently active page.
+   * Pages are declared in `setupOpenMRS`, as a `pages` array.
+   *
+   * For example, for route `/^patient\/.+\/chart/` the activePage
+   * will be `patient-chart`.
+   */
+  activePage: string | null;
+}
 
 export function createAppState(initialState: AppState) {
   return createGlobalStore("app", initialState);
 }
 
 export function getAppState() {
-  return getGlobalStore<AppState>("app", {});
+  return getGlobalStore<AppState>("app", {
+    activePage: null,
+  });
 }

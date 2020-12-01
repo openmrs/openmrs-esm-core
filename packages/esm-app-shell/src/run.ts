@@ -95,6 +95,6 @@ function clearDevOverrides() {
 export function run() {
   registerModules(sharedDependencies);
   setupApiModule();
-  createAppState({});
+  createAppState({ activePage: null });
   return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
 }
