@@ -4,7 +4,6 @@ import {
   unregisterExtensionSlot,
   extensionStore,
   ExtensionStore,
-  updateExtensionSlotInfo,
 } from "@openmrs/esm-extensions";
 import { ModuleNameContext } from "./ModuleNameContext";
 
@@ -24,7 +23,6 @@ export function useExtensionSlot(actualExtensionSlotName: string) {
 
   useEffect(() => {
     registerExtensionSlot(extensionSlotModuleName, actualExtensionSlotName);
-    updateExtensionSlotInfo(actualExtensionSlotName);
     return () =>
       unregisterExtensionSlot(extensionSlotModuleName, actualExtensionSlotName);
   }, []);
@@ -41,12 +39,13 @@ export function useExtensionSlot(actualExtensionSlotName: string) {
         if (
           instance &&
           (attachedExtensionSlotName !== slotInfo.name ||
-            extensionIdsToRender !== instance.assignedIds)
+            extensionIdsToRender.join(",") !== instance.assignedIds.join(","))
         ) {
           setState([slotInfo.name, instance.assignedIds]);
         }
       }
     };
+
     update(extensionStore.getState());
     return extensionStore.subscribe((state) => update(state));
   }, [

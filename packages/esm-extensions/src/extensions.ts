@@ -138,109 +138,115 @@ function getAssignedIds(
     });
 }
 
+function getUpdatedExtensionSlotInfoForRegistration(
+  existingSlot: ExtensionSlotInfo,
+  actualExtensionSlotName: string,
+  moduleName: string
+) {
+  if (!existingSlot) {
+    return getUpdatedExtensionSlotInfo(actualExtensionSlotName, moduleName, {
+      ...createNewExtensionSlotInfo(actualExtensionSlotName),
+      instances: {
+        [moduleName]: createNewExtensionSlotInstance(),
+      },
+    });
+  } else if (moduleName in existingSlot.instances) {
+    return getUpdatedExtensionSlotInfo(actualExtensionSlotName, moduleName, {
+      ...existingSlot,
+      instances: {
+        ...existingSlot.instances,
+        [moduleName]: {
+          ...existingSlot.instances[moduleName],
+          registered: existingSlot.instances[moduleName].registered + 1,
+        },
+      },
+    });
+  } else {
+    return getUpdatedExtensionSlotInfo(actualExtensionSlotName, moduleName, {
+      ...existingSlot,
+      instances: {
+        ...existingSlot.instances,
+        [moduleName]: createNewExtensionSlotInstance(),
+      },
+    });
+  }
+}
+
+function getUpdatedExtensionSlotInfoForUnregistration(
+  existingSlot: ExtensionSlotInfo,
+  actualExtensionSlotName: string,
+  moduleName: string
+) {
+  const { [moduleName]: existing, ...instances } = existingSlot.instances;
+
+  if (existing.registered > 1) {
+    return getUpdatedExtensionSlotInfo(actualExtensionSlotName, moduleName, {
+      ...existingSlot,
+      instances: {
+        ...instances,
+        [moduleName]: {
+          ...existing,
+          registered: existing.registered - 1,
+        },
+      },
+    });
+  } else {
+    return getUpdatedExtensionSlotInfo(actualExtensionSlotName, moduleName, {
+      ...existingSlot,
+      instances,
+    });
+  }
+}
+
 /**
  * This is only used to inform tooling about the extension slot. Extension slots
  * do not have to be registered to mount extensions.
  *
  * @param moduleName The name of the module that contains the extension slot
- * @param extensionSlotName The extension slot name
+ * @param actualExtensionSlotName The extension slot name that is actually used
  */
 export function registerExtensionSlot(
   moduleName: string,
-  extensionSlotName: string
+  actualExtensionSlotName: string
 ) {
-  updateExtensionStore((state) => {
-    const existingSlot = state.slots[extensionSlotName];
-
-    if (!existingSlot) {
-      return {
-        ...state,
-        slots: {
-          ...state.slots,
-          [extensionSlotName]: {
-            ...createNewExtensionSlotInfo(extensionSlotName),
-            instances: {
-              [moduleName]: createNewExtensionSlotInstance(),
-            },
-          },
-        },
-      };
-    } else if (moduleName in existingSlot.instances) {
-      return {
-        ...state,
-        slots: {
-          ...state.slots,
-          [extensionSlotName]: {
-            ...existingSlot,
-            instances: {
-              ...existingSlot.instances,
-              [moduleName]: {
-                ...existingSlot.instances[moduleName],
-                registered: existingSlot.instances[moduleName].registered + 1,
-              },
-            },
-          },
-        },
-      };
-    } else {
-      return {
-        ...state,
-        slots: {
-          ...state.slots,
-          [extensionSlotName]: {
-            ...existingSlot,
-            instances: {
-              ...existingSlot.instances,
-              [moduleName]: createNewExtensionSlotInstance(),
-            },
-          },
-        },
-      };
-    }
+  updateExtensionStore(async (state) => {
+    const existingSlot = state.slots[actualExtensionSlotName];
+    const updatedSlot = await getUpdatedExtensionSlotInfoForRegistration(
+      existingSlot,
+      actualExtensionSlotName,
+      moduleName
+    );
+    return {
+      ...state,
+      slots: {
+        ...state.slots,
+        [actualExtensionSlotName]: updatedSlot,
+      },
+    };
   });
 }
 
 export function unregisterExtensionSlot(
   moduleName: string,
-  extensionSlotName: string
+  actualExtensionSlotName: string
 ) {
-  updateExtensionStore((state) => {
-    if (extensionSlotName in state.slots) {
-      const extensionSlot = state.slots[extensionSlotName];
+  updateExtensionStore(async (state) => {
+    const existingSlot = state.slots[actualExtensionSlotName];
 
-      if (moduleName in extensionSlot.instances) {
-        const {
-          [moduleName]: existing,
-          ...instances
-        } = extensionSlot.instances;
+    if (existingSlot && moduleName in existingSlot.instances) {
+      const updatedSlot = await getUpdatedExtensionSlotInfoForUnregistration(
+        existingSlot,
+        actualExtensionSlotName,
+        moduleName
+      );
 
-        if (existing.registered > 1) {
-          return {
-            ...state,
-            [extensionSlotName]: {
-              ...extensionSlot,
-              instances: {
-                ...instances,
-                [moduleName]: {
-                  ...existing,
-                  registered: existing.registered - 1,
-                },
-              },
-            },
-          };
-        }
-
-        return {
-          ...state,
-          slots: {
-            ...state.slots,
-            [extensionSlotName]: {
-              ...extensionSlot,
-              instances,
-            },
-          },
-        };
-      }
+      return {
+        ...state,
+        slots: {
+          ...state.slots,
+          [actualExtensionSlotName]: updatedSlot,
+        },
+      };
     }
 
     return state;
@@ -329,67 +335,70 @@ export async function getUpdatedExtensionSlotInfo(
   extensionSlot: ExtensionSlotInfo
 ): Promise<ExtensionSlotInfo> {
   let instance = extensionSlot.instances[moduleName];
-  const originalInstance = instance;
-  const config = await getExtensionSlotConfig(
-    actualExtensionSlotName,
-    moduleName
-  );
 
-  if (Array.isArray(config.add)) {
-    config.add.forEach((extensionId) => {
-      if (!instance.addedIds.includes(extensionId)) {
-        instance = {
-          ...instance,
-          addedIds: [...instance.addedIds, extensionId],
-        };
-      }
-    });
-  }
+  if (instance) {
+    const originalInstance = instance;
+    const config = await getExtensionSlotConfig(
+      actualExtensionSlotName,
+      moduleName
+    );
 
-  if (Array.isArray(config.remove)) {
-    config.remove.forEach((extensionId) => {
-      if (!instance.removedIds.includes(extensionId)) {
-        instance = {
-          ...instance,
-          removedIds: [...instance.removedIds, extensionId],
-        };
-      }
-    });
-  }
-
-  if (Array.isArray(config.order)) {
-    const testOrder = config.order.join(",");
-    const fullOrder = instance.idOrder.join(",");
-
-    if (!fullOrder.endsWith(testOrder)) {
-      config.order.forEach((extensionId) => {
-        instance = {
-          ...instance,
-          idOrder: [
-            ...instance.idOrder.filter((m) => m !== extensionId),
-            extensionId,
-          ],
-        };
+    if (Array.isArray(config.add)) {
+      config.add.forEach((extensionId) => {
+        if (!instance.addedIds.includes(extensionId)) {
+          instance = {
+            ...instance,
+            addedIds: [...instance.addedIds, extensionId],
+          };
+        }
       });
     }
-  }
 
-  const assignedIds = getAssignedIds(instance, extensionSlot.attachedIds);
+    if (Array.isArray(config.remove)) {
+      config.remove.forEach((extensionId) => {
+        if (!instance.removedIds.includes(extensionId)) {
+          instance = {
+            ...instance,
+            removedIds: [...instance.removedIds, extensionId],
+          };
+        }
+      });
+    }
 
-  if (
-    instance !== originalInstance ||
-    assignedIds.join(",") !== instance.assignedIds.join(",")
-  ) {
-    return {
-      ...extensionSlot,
-      instances: {
-        ...extensionSlot.instances,
-        [moduleName]: {
-          ...instance,
-          assignedIds,
+    if (Array.isArray(config.order)) {
+      const testOrder = config.order.join(",");
+      const fullOrder = instance.idOrder.join(",");
+
+      if (!fullOrder.endsWith(testOrder)) {
+        config.order.forEach((extensionId) => {
+          instance = {
+            ...instance,
+            idOrder: [
+              ...instance.idOrder.filter((m) => m !== extensionId),
+              extensionId,
+            ],
+          };
+        });
+      }
+    }
+
+    const assignedIds = getAssignedIds(instance, extensionSlot.attachedIds);
+
+    if (
+      instance !== originalInstance ||
+      assignedIds.join(",") !== instance.assignedIds.join(",")
+    ) {
+      return {
+        ...extensionSlot,
+        instances: {
+          ...extensionSlot.instances,
+          [moduleName]: {
+            ...instance,
+            assignedIds,
+          },
         },
-      },
-    };
+      };
+    }
   }
 
   return extensionSlot;
