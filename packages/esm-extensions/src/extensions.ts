@@ -85,15 +85,19 @@ export const extensionStore = createGlobalStore<ExtensionStore>("extensions", {
 
 type MaybeAsync<T> = T | Promise<T>;
 
-async function updateStore<U extends keyof ExtensionStore>(
+let storeUpdates = Promise.resolve();
+
+function updateStore<U extends keyof ExtensionStore>(
   updater: (state: ExtensionStore) => MaybeAsync<Pick<ExtensionStore, U>>
 ) {
-  const state = extensionStore.getState();
-  const newState = await updater(state);
+  storeUpdates = storeUpdates.then(async () => {
+    const state = extensionStore.getState();
+    const newState = await updater(state);
 
-  if (newState !== state) {
-    extensionStore.setState(newState);
-  }
+    if (newState !== state) {
+      extensionStore.setState(newState);
+    }
+  });
 }
 
 function createNewExtensionSlot(extensionSlotName: string) {
@@ -138,6 +142,7 @@ export function attach(extensionSlotName: string, extensionId: string) {
 
     if (!existingSlot) {
       return {
+        ...state,
         slots: {
           ...state.slots,
           [extensionSlotName]: {
@@ -149,6 +154,7 @@ export function attach(extensionSlotName: string, extensionId: string) {
       };
     } else {
       return {
+        ...state,
         slots: {
           ...state.slots,
           [extensionSlotName]: {
@@ -381,6 +387,7 @@ export async function getUpdatedExtensionSlotInfo(
   moduleName: string,
   extensionSlot: ExtensionSlotInfo
 ): Promise<ExtensionSlotInfo> {
+  const originalExtensionSlot = extensionSlot;
   const config = await getExtensionSlotConfig(
     actualExtensionSlotName,
     moduleName
@@ -423,6 +430,28 @@ export async function getUpdatedExtensionSlotInfo(
         };
       });
     }
+  }
+
+  if (originalExtensionSlot !== extensionSlot) {
+    const { assignedIds, addedIds, removedIds, idOrder } = extensionSlot;
+
+    return {
+      ...extensionSlot,
+      assignedIds: [...assignedIds, ...addedIds]
+        .filter((m) => !removedIds.includes(m))
+        .sort((a, b) => {
+          const ai = idOrder.indexOf(a);
+          const bi = idOrder.indexOf(b);
+
+          if (bi === -1) {
+            return -1;
+          } else if (ai === -1) {
+            return 1;
+          } else {
+            return ai - bi;
+          }
+        }),
+    };
   }
 
   return extensionSlot;
