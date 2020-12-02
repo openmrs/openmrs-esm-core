@@ -1,114 +1,30 @@
-import { mountRootParcel } from "single-spa";
-import { pathToRegexp, Key } from "path-to-regexp";
-import { createGlobalStore } from "@openmrs/esm-api";
 import { getExtensionSlotConfig } from "@openmrs/esm-config";
+import { getActualRouteProps } from "./route";
+import {
+  ExtensionRegistration,
+  ExtensionSlotInfo,
+  ExtensionSlotInstance,
+  extensionStore,
+  updateExtensionStore,
+} from "./store";
 
-export interface ExtensionDefinition {
-  name: string;
-  load(): Promise<any>;
+function createNewExtensionSlotInstance(): ExtensionSlotInstance {
+  return {
+    addedIds: [],
+    assignedIds: [],
+    idOrder: [],
+    removedIds: [],
+    registered: 1,
+  };
 }
 
-interface ExtensionRegistration extends ExtensionDefinition {
-  moduleName: string;
-}
-
-export interface ExtensionStore {
-  slots: Record<string, ExtensionSlotInfo>;
-  extensions: Record<string, ExtensionRegistration>;
-}
-
-export interface ExtensionSlotInfo {
-  /**
-   * The name under which the extension slot has been registered.
-   */
-  name: string;
-  /**
-   * The set of modules where the extension slot has been used.
-   */
-  modules: Array<string>;
-  /**
-   * The set of extension IDs which have been attached to this slot.
-   * This is essentially a complete history of `attach` calls to this specific slot.
-   * However, not all of these extension IDs should be rendered.
-   * `assignedIds` is the set defining those.
-   */
-  attachedIds: Array<string>;
-  /**
-   * The set of extensions IDs which should be rendered into this slot at the current point in time.
-   */
-  assignedIds: Array<string>;
-  /**
-   * A set of additional extension IDs which have been added to to this slot despite not being
-   * explicitly `attach`ed to it.
-   * An example may be an extension which is added to the slot via the configuration.
-   */
-  addedIds: Array<string>;
-  /**
-   * A set of extension IDs which have been removed/hidden from this slot, even though they have
-   * previously been `attach`ed/added to it.
-   * An example may be an extension which is removed from the slot via the configuration.
-   */
-  removedIds: Array<string>;
-  /**
-   * A set allowing explicit ordering of the `assignedIds`.
-   */
-  idOrder: Array<string>;
-  /**
-   * Returns whether the given extension slot name corresponds to this ExtensionSlotInfo.
-   * @param actualExtensionSlotName The actual extension slot name into which the extensions might be rendered.
-   * For URL like extension slots, this should be the name where parameters have been replaced with actual values
-   * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
-   */
-  matches(actualExtensionSlotName: string): boolean;
-}
-
-export interface PageDefinition {
-  route: string;
-  load(): Promise<any>;
-}
-
-export interface Lifecycle {
-  bootstrap(): void;
-  mount(): void;
-  unmount(): void;
-  update?(): void;
-}
-
-export interface CancelLoading {
-  (): void;
-}
-
-export const extensionStore = createGlobalStore<ExtensionStore>("extensions", {
-  slots: {},
-  extensions: {},
-});
-
-type MaybeAsync<T> = T | Promise<T>;
-
-let storeUpdates = Promise.resolve();
-
-function updateStore<U extends keyof ExtensionStore>(
-  updater: (state: ExtensionStore) => MaybeAsync<Pick<ExtensionStore, U>>
-) {
-  storeUpdates = storeUpdates.then(async () => {
-    const state = extensionStore.getState();
-    const newState = await updater(state);
-
-    if (newState !== state) {
-      extensionStore.setState(newState);
-    }
-  });
-}
-
-function createNewExtensionSlot(extensionSlotName: string) {
+function createNewExtensionSlotInfo(
+  extensionSlotName: string
+): ExtensionSlotInfo {
   return {
     name: extensionSlotName,
     attachedIds: [],
-    assignedIds: [],
-    modules: [],
-    addedIds: [],
-    removedIds: [],
-    idOrder: [],
+    instances: {},
     matches: (actualExtensionSlotName) =>
       slotNamesMatch(extensionSlotName, actualExtensionSlotName),
   };
@@ -137,7 +53,7 @@ export const registerExtension: (
 );
 
 export function attach(extensionSlotName: string, extensionId: string) {
-  updateStore((state) => {
+  updateExtensionStore((state) => {
     const existingSlot = state.slots[extensionSlotName];
 
     if (!existingSlot) {
@@ -146,9 +62,8 @@ export function attach(extensionSlotName: string, extensionId: string) {
         slots: {
           ...state.slots,
           [extensionSlotName]: {
-            ...createNewExtensionSlot(extensionSlotName),
+            ...createNewExtensionSlotInfo(extensionSlotName),
             attachedIds: [extensionId],
-            assignedIds: [extensionId],
           },
         },
       };
@@ -160,10 +75,32 @@ export function attach(extensionSlotName: string, extensionId: string) {
           [extensionSlotName]: {
             ...existingSlot,
             attachedIds: [...existingSlot.attachedIds, extensionId],
-            assignedIds: [...existingSlot.assignedIds, extensionId],
           },
         },
       };
+    }
+  });
+}
+
+export function detach(extensionSlotName: string, extensionId: string) {
+  updateExtensionStore((state) => {
+    const existingSlot = state.slots[extensionSlotName];
+
+    if (existingSlot && existingSlot.attachedIds.includes(extensionId)) {
+      return {
+        ...state,
+        slots: {
+          ...state.slots,
+          [extensionSlotName]: {
+            ...existingSlot,
+            attachedIds: existingSlot.attachedIds.filter(
+              (id) => id !== extensionId
+            ),
+          },
+        },
+      };
+    } else {
+      return state;
     }
   });
 }
@@ -179,78 +116,26 @@ function slotNamesMatch(
   );
 }
 
-/**
- * Mounts into a DOM node (representing an extension slot)
- * a lazy-loaded component from *any* microfrontend
- * that registered an extension component for this slot.
- */
-export function renderExtension(
-  domElement: HTMLElement,
-  actualExtensionSlotName: string,
-  attachedExtensionSlotName: string,
-  extensionSlotModuleName: string,
-  extensionId: string,
-  renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x,
-  additionalProps: Record<string, any> = {}
-): CancelLoading {
-  const extensionName = extensionId.split("#")[0];
-  const extensionRegistration = getExtensionRegistration(extensionId);
-  let active = true;
+function getAssignedIds(
+  instance: ExtensionSlotInstance,
+  attachedIds: Array<string>
+) {
+  const { addedIds, removedIds, idOrder } = instance;
 
-  if (domElement) {
-    if (extensionRegistration) {
-      const routeProps = getActualRouteProps(
-        actualExtensionSlotName,
-        attachedExtensionSlotName
-      );
-      const extensionContextProps = {
-        _extensionContext: {
-          extensionId,
-          actualExtensionSlotName,
-          attachedExtensionSlotName,
-          extensionSlotModuleName,
-          extensionModuleName: extensionRegistration.moduleName,
-        },
-      };
+  return [...attachedIds, ...addedIds]
+    .filter((m) => !removedIds.includes(m))
+    .sort((a, b) => {
+      const ai = idOrder.indexOf(a);
+      const bi = idOrder.indexOf(b);
 
-      extensionRegistration.load().then(
-        ({ default: result, ...lifecycle }) =>
-          active &&
-          mountRootParcel(renderFunction(result ?? lifecycle) as any, {
-            ...additionalProps,
-            ...extensionContextProps,
-            ...routeProps,
-            domElement,
-          })
-      );
-    } else {
-      throw Error(
-        `Couldn't find extension '${extensionName}' to attach to '${actualExtensionSlotName}'`
-      );
-    }
-  }
-
-  return () => {
-    active = false;
-  };
-}
-
-function getActualRouteProps(
-  pathTemplate: string,
-  url: string
-): object | undefined {
-  const keys: Array<Key> = [];
-  const ptr = pathToRegexp(pathTemplate, keys);
-  const result = ptr.exec(url);
-
-  if (result) {
-    return keys.reduce((p, c, i) => {
-      p[c.name] = result[i + 1];
-      return p;
-    }, {} as Record<string, string>);
-  }
-
-  return undefined;
+      if (bi === -1) {
+        return -1;
+      } else if (ai === -1) {
+        return 1;
+      } else {
+        return ai - bi;
+      }
+    });
 }
 
 /**
@@ -264,26 +149,50 @@ export function registerExtensionSlot(
   moduleName: string,
   extensionSlotName: string
 ) {
-  updateStore((state) => {
+  updateExtensionStore((state) => {
     const existingSlot = state.slots[extensionSlotName];
 
-    if (existingSlot) {
+    if (!existingSlot) {
       return {
+        ...state,
+        slots: {
+          ...state.slots,
+          [extensionSlotName]: {
+            ...createNewExtensionSlotInfo(extensionSlotName),
+            instances: {
+              [moduleName]: createNewExtensionSlotInstance(),
+            },
+          },
+        },
+      };
+    } else if (moduleName in existingSlot.instances) {
+      return {
+        ...state,
         slots: {
           ...state.slots,
           [extensionSlotName]: {
             ...existingSlot,
-            modules: [...existingSlot.modules, moduleName],
+            instances: {
+              ...existingSlot.instances,
+              [moduleName]: {
+                ...existingSlot.instances[moduleName],
+                registered: existingSlot.instances[moduleName].registered + 1,
+              },
+            },
           },
         },
       };
     } else {
       return {
+        ...state,
         slots: {
           ...state.slots,
           [extensionSlotName]: {
-            ...createNewExtensionSlot(extensionSlotName),
-            modules: [moduleName],
+            ...existingSlot,
+            instances: {
+              ...existingSlot.instances,
+              [moduleName]: createNewExtensionSlotInstance(),
+            },
           },
         },
       };
@@ -291,40 +200,72 @@ export function registerExtensionSlot(
   });
 }
 
-export function unregisterExtensionSlot(moduleName: string, name: string) {
-  updateStore((state) => {
-    if (name in state.slots) {
-      return {
-        ...state,
-        slots: {
-          ...state.slots,
-          [name]: {
-            ...state.slots[name],
-            modules: state.slots[name].modules.filter((m) => m !== moduleName),
+export function unregisterExtensionSlot(
+  moduleName: string,
+  extensionSlotName: string
+) {
+  updateExtensionStore((state) => {
+    if (extensionSlotName in state.slots) {
+      const extensionSlot = state.slots[extensionSlotName];
+
+      if (moduleName in extensionSlot.instances) {
+        const {
+          [moduleName]: existing,
+          ...instances
+        } = extensionSlot.instances;
+
+        if (existing.registered > 1) {
+          return {
+            ...state,
+            [extensionSlotName]: {
+              ...extensionSlot,
+              instances: {
+                ...instances,
+                [moduleName]: {
+                  ...existing,
+                  registered: existing.registered - 1,
+                },
+              },
+            },
+          };
+        }
+
+        return {
+          ...state,
+          slots: {
+            ...state.slots,
+            [extensionSlotName]: {
+              ...extensionSlot,
+              instances,
+            },
           },
-        },
-      };
-    } else {
-      return state;
+        };
+      }
     }
+
+    return state;
   });
 }
 
 export function getExtensionSlotsForModule(moduleName: string) {
   const state = extensionStore.getState();
-  return Object.keys(state.slots).filter((name) =>
-    state.slots[name].modules.includes(moduleName)
+  return Object.keys(state.slots).filter(
+    (name) => moduleName in state.slots[name].instances
   );
 }
+
+const uiEditorSettingKey = "openmrs:isUIEditorEnabled";
 
 export function getIsUIEditorEnabled(): boolean {
-  return JSON.parse(
-    localStorage.getItem("openmrs:isUIEditorEnabled") ?? "false"
-  );
+  try {
+    return JSON.parse(localStorage.getItem(uiEditorSettingKey) ?? "false");
+  } catch {
+    return false;
+  }
 }
 
-export function setIsUIEditorEnabled(enabled: boolean): void {
-  localStorage.setItem("openmrs:isUIEditorEnabled", JSON.stringify(enabled));
+export function setIsUIEditorEnabled(enabled: boolean) {
+  localStorage.setItem(uiEditorSettingKey, JSON.stringify(enabled));
 }
 
 /**
@@ -339,14 +280,14 @@ export const reset: () => void = extensionStore.action(() => {
 });
 
 export function updateExtensionSlotInfo(actualExtensionSlotName: string) {
-  updateStore(async (state) => {
+  updateExtensionStore(async (state) => {
     for (const slotName of Object.keys(state.slots)) {
       const originalSlotInfo = state.slots[slotName];
 
       if (originalSlotInfo.matches(actualExtensionSlotName)) {
         let slotInfo = originalSlotInfo;
 
-        for (const moduleName of originalSlotInfo.modules) {
+        for (const moduleName of Object.keys(originalSlotInfo.instances)) {
           const updatedSlotInfo = await getUpdatedExtensionSlotInfo(
             actualExtensionSlotName,
             moduleName,
@@ -387,7 +328,8 @@ export async function getUpdatedExtensionSlotInfo(
   moduleName: string,
   extensionSlot: ExtensionSlotInfo
 ): Promise<ExtensionSlotInfo> {
-  const originalExtensionSlot = extensionSlot;
+  let instance = extensionSlot.instances[moduleName];
+  const originalInstance = instance;
   const config = await getExtensionSlotConfig(
     actualExtensionSlotName,
     moduleName
@@ -395,10 +337,10 @@ export async function getUpdatedExtensionSlotInfo(
 
   if (Array.isArray(config.add)) {
     config.add.forEach((extensionId) => {
-      if (!extensionSlot.addedIds.includes(extensionId)) {
-        extensionSlot = {
-          ...extensionSlot,
-          addedIds: [...extensionSlot.addedIds, extensionId],
+      if (!instance.addedIds.includes(extensionId)) {
+        instance = {
+          ...instance,
+          addedIds: [...instance.addedIds, extensionId],
         };
       }
     });
@@ -406,10 +348,10 @@ export async function getUpdatedExtensionSlotInfo(
 
   if (Array.isArray(config.remove)) {
     config.remove.forEach((extensionId) => {
-      if (!extensionSlot.removedIds.includes(extensionId)) {
-        extensionSlot = {
-          ...extensionSlot,
-          removedIds: [...extensionSlot.removedIds, extensionId],
+      if (!instance.removedIds.includes(extensionId)) {
+        instance = {
+          ...instance,
+          removedIds: [...instance.removedIds, extensionId],
         };
       }
     });
@@ -417,14 +359,14 @@ export async function getUpdatedExtensionSlotInfo(
 
   if (Array.isArray(config.order)) {
     const testOrder = config.order.join(",");
-    const fullOrder = extensionSlot.idOrder.join(",");
+    const fullOrder = instance.idOrder.join(",");
 
     if (!fullOrder.endsWith(testOrder)) {
       config.order.forEach((extensionId) => {
-        extensionSlot = {
-          ...extensionSlot,
+        instance = {
+          ...instance,
           idOrder: [
-            ...extensionSlot.idOrder.filter((m) => m !== extensionId),
+            ...instance.idOrder.filter((m) => m !== extensionId),
             extensionId,
           ],
         };
@@ -432,25 +374,21 @@ export async function getUpdatedExtensionSlotInfo(
     }
   }
 
-  if (originalExtensionSlot !== extensionSlot) {
-    const { assignedIds, addedIds, removedIds, idOrder } = extensionSlot;
+  const assignedIds = getAssignedIds(instance, extensionSlot.attachedIds);
 
+  if (
+    instance !== originalInstance ||
+    assignedIds.join(",") !== instance.assignedIds.join(",")
+  ) {
     return {
       ...extensionSlot,
-      assignedIds: [...assignedIds, ...addedIds]
-        .filter((m) => !removedIds.includes(m))
-        .sort((a, b) => {
-          const ai = idOrder.indexOf(a);
-          const bi = idOrder.indexOf(b);
-
-          if (bi === -1) {
-            return -1;
-          } else if (ai === -1) {
-            return 1;
-          } else {
-            return ai - bi;
-          }
-        }),
+      instances: {
+        ...extensionSlot.instances,
+        [moduleName]: {
+          ...instance,
+          assignedIds,
+        },
+      },
     };
   }
 

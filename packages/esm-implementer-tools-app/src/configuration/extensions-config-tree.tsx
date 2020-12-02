@@ -24,9 +24,7 @@ const ExtensionsConfigTreeImpl: React.FC<ExtensionsConfigTreeImplProps> = ({
 }) => {
   const extensionSlotNames = useMemo(
     () =>
-      Object.keys(slots).filter((name) =>
-        slots[name].modules.includes(moduleName)
-      ),
+      Object.keys(slots).filter((name) => moduleName in slots[name].instances),
     [slots]
   );
 

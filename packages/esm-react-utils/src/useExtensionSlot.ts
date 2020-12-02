@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import {
   registerExtensionSlot,
   unregisterExtensionSlot,
-  ExtensionSlotInfo,
   extensionStore,
   ExtensionStore,
   updateExtensionSlotInfo,
@@ -36,17 +35,25 @@ export function useExtensionSlot(actualExtensionSlotName: string) {
         slotDef.matches(actualExtensionSlotName)
       );
 
-      if (
-        slotInfo &&
-        (attachedExtensionSlotName !== slotInfo.name ||
-          extensionIdsToRender !== slotInfo.assignedIds)
-      ) {
-        setState([slotInfo.name, slotInfo.assignedIds]);
+      if (slotInfo) {
+        const instance = slotInfo.instances[extensionSlotModuleName];
+
+        if (
+          instance &&
+          (attachedExtensionSlotName !== slotInfo.name ||
+            extensionIdsToRender !== instance.assignedIds)
+        ) {
+          setState([slotInfo.name, instance.assignedIds]);
+        }
       }
     };
     update(extensionStore.getState());
     return extensionStore.subscribe((state) => update(state));
-  }, [attachedExtensionSlotName, extensionIdsToRender]);
+  }, [
+    attachedExtensionSlotName,
+    extensionIdsToRender,
+    extensionSlotModuleName,
+  ]);
 
   return {
     extensionSlotModuleName,
