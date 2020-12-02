@@ -1,6 +1,7 @@
 import { mountRootParcel } from "single-spa";
 import { pathToRegexp, Key } from "path-to-regexp";
 import { createGlobalStore } from "@openmrs/esm-api";
+import { getExtensionSlotConfig } from "@openmrs/esm-config";
 
 export interface ExtensionDefinition {
   name: string;
@@ -82,11 +83,21 @@ export const extensionStore = createGlobalStore<ExtensionStore>("extensions", {
   extensions: {},
 });
 
+type MaybeAsync<T> = T | Promise<T>;
+
+let storeUpdates = Promise.resolve();
+
 function updateStore<U extends keyof ExtensionStore>(
-  updater: (state: ExtensionStore) => Pick<ExtensionStore, U>
+  updater: (state: ExtensionStore) => MaybeAsync<Pick<ExtensionStore, U>>
 ) {
-  const state = extensionStore.getState();
-  extensionStore.setState(updater(state));
+  storeUpdates = storeUpdates.then(async () => {
+    const state = extensionStore.getState();
+    const newState = await updater(state);
+
+    if (newState !== state) {
+      extensionStore.setState(newState);
+    }
+  });
 }
 
 function createNewExtensionSlot(extensionSlotName: string) {
@@ -131,6 +142,7 @@ export function attach(extensionSlotName: string, extensionId: string) {
 
     if (!existingSlot) {
       return {
+        ...state,
         slots: {
           ...state.slots,
           [extensionSlotName]: {
@@ -142,6 +154,7 @@ export function attach(extensionSlotName: string, extensionId: string) {
       };
     } else {
       return {
+        ...state,
         slots: {
           ...state.slots,
           [extensionSlotName]: {
@@ -324,3 +337,122 @@ export const reset: () => void = extensionStore.action(() => {
     extensions: {},
   };
 });
+
+export function updateExtensionSlotInfo(actualExtensionSlotName: string) {
+  updateStore(async (state) => {
+    for (const slotName of Object.keys(state.slots)) {
+      const originalSlotInfo = state.slots[slotName];
+
+      if (originalSlotInfo.matches(actualExtensionSlotName)) {
+        let slotInfo = originalSlotInfo;
+
+        for (const moduleName of originalSlotInfo.modules) {
+          const updatedSlotInfo = await getUpdatedExtensionSlotInfo(
+            actualExtensionSlotName,
+            moduleName,
+            slotInfo
+          );
+
+          if (updatedSlotInfo !== slotInfo) {
+            slotInfo = updatedSlotInfo;
+          }
+        }
+
+        if (slotInfo !== originalSlotInfo) {
+          return {
+            ...state,
+            [slotName]: slotInfo,
+          };
+        }
+      }
+    }
+
+    return state;
+  });
+}
+
+/**
+ * Returns information describing all extensions which can be rendered into an extension slot with
+ * the specified name.
+ * The returned information describe the extension itself, as well as the extension slot name(s)
+ * with which it has been attached.
+ * @param actualExtensionSlotName The extension slot name for which matching extension info should be returned.
+ * For URL like extension slots, this should be the name where parameters have been replaced with actual values
+ * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
+ * @param moduleName The module name. Used for applying extension-specific config values to the result.
+ * @param extensionSlot The extension slot information object.
+ */
+export async function getUpdatedExtensionSlotInfo(
+  actualExtensionSlotName: string,
+  moduleName: string,
+  extensionSlot: ExtensionSlotInfo
+): Promise<ExtensionSlotInfo> {
+  const originalExtensionSlot = extensionSlot;
+  const config = await getExtensionSlotConfig(
+    actualExtensionSlotName,
+    moduleName
+  );
+
+  if (Array.isArray(config.add)) {
+    config.add.forEach((extensionId) => {
+      if (!extensionSlot.addedIds.includes(extensionId)) {
+        extensionSlot = {
+          ...extensionSlot,
+          addedIds: [...extensionSlot.addedIds, extensionId],
+        };
+      }
+    });
+  }
+
+  if (Array.isArray(config.remove)) {
+    config.remove.forEach((extensionId) => {
+      if (!extensionSlot.removedIds.includes(extensionId)) {
+        extensionSlot = {
+          ...extensionSlot,
+          removedIds: [...extensionSlot.removedIds, extensionId],
+        };
+      }
+    });
+  }
+
+  if (Array.isArray(config.order)) {
+    const testOrder = config.order.join(",");
+    const fullOrder = extensionSlot.idOrder.join(",");
+
+    if (!fullOrder.endsWith(testOrder)) {
+      config.order.forEach((extensionId) => {
+        extensionSlot = {
+          ...extensionSlot,
+          idOrder: [
+            ...extensionSlot.idOrder.filter((m) => m !== extensionId),
+            extensionId,
+          ],
+        };
+      });
+    }
+  }
+
+  if (originalExtensionSlot !== extensionSlot) {
+    const { assignedIds, addedIds, removedIds, idOrder } = extensionSlot;
+
+    return {
+      ...extensionSlot,
+      assignedIds: [...assignedIds, ...addedIds]
+        .filter((m) => !removedIds.includes(m))
+        .sort((a, b) => {
+          const ai = idOrder.indexOf(a);
+          const bi = idOrder.indexOf(b);
+
+          if (bi === -1) {
+            return -1;
+          } else if (ai === -1) {
+            return 1;
+          } else {
+            return ai - bi;
+          }
+        }),
+    };
+  }
+
+  return extensionSlot;
+}

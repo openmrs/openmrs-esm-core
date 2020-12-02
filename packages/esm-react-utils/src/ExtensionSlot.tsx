@@ -1,16 +1,11 @@
-import React, { useContext, ReactNode, useEffect, useState } from "react";
+import React, { ReactNode } from "react";
 import {
   getIsUIEditorEnabled,
   getExtensionRegistration,
-  registerExtensionSlot,
-  unregisterExtensionSlot,
-  ExtensionSlotInfo,
-  extensionStore,
-  ExtensionStore,
 } from "@openmrs/esm-extensions";
 import { ExtensionContext } from "./ExtensionContext";
-import { ModuleNameContext } from "./ModuleNameContext";
 import { Extension } from "./Extension";
+import { useExtensionSlot } from "./useExtensionSlot";
 
 export interface ExtensionSlotBaseProps {
   extensionSlotName: string;
@@ -24,41 +19,18 @@ export interface ExtensionSlotBaseProps {
 export type ExtensionSlotProps<T = {}> = ExtensionSlotBaseProps & T;
 
 export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
-  extensionSlotName,
+  extensionSlotName: actualExtensionSlotName,
   children,
   state,
   style,
   className,
   ...divProps
 }: ExtensionSlotProps) => {
-  const slotModuleName = useContext(ModuleNameContext);
-  if (!slotModuleName) {
-    throw Error(
-      "ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator"
-    );
-  }
-
-  const [slotInfo, setSlotInfo] = useState<ExtensionSlotInfo | undefined>(
-    undefined
-  );
-
-  const extensionIdsToRender = slotInfo?.assignedIds ?? [];
-
-  useEffect(() => {
-    const update = (state: ExtensionStore) => {
-      const matchingSlotInfo = Object.values(state.slots).find((slotDef) =>
-        slotDef.matches(extensionSlotName)
-      );
-      setSlotInfo(matchingSlotInfo);
-    };
-    update(extensionStore.getState());
-    return extensionStore.subscribe((state) => update(state));
-  }, []);
-
-  useEffect(() => {
-    registerExtensionSlot(slotModuleName, extensionSlotName);
-    return () => unregisterExtensionSlot(slotModuleName, extensionSlotName);
-  }, []);
+  const {
+    attachedExtensionSlotName,
+    extensionIdsToRender,
+    extensionSlotModuleName,
+  } = useExtensionSlot(actualExtensionSlotName);
 
   const divStyle = getIsUIEditorEnabled()
     ? { ...style, backgroundColor: "cyan" }
@@ -68,15 +40,16 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
     <div style={divStyle} {...divProps}>
       {extensionIdsToRender.map((extensionId) => {
         const extensionRegistration = getExtensionRegistration(extensionId);
+
         return (
-          slotInfo &&
+          attachedExtensionSlotName &&
           extensionRegistration && (
             <ExtensionContext.Provider
               key={extensionId}
               value={{
-                actualExtensionSlotName: extensionSlotName,
-                attachedExtensionSlotName: slotInfo.name,
-                extensionSlotModuleName: slotModuleName,
+                actualExtensionSlotName,
+                attachedExtensionSlotName,
+                extensionSlotModuleName,
                 extensionId,
                 extensionModuleName: extensionRegistration.moduleName,
               }}

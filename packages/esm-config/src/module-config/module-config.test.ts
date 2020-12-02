@@ -803,10 +803,13 @@ describe("extension slot config", () => {
     });
     const config = await Config.getExtensionSlotConfig("fooSlot", "foo-module");
     expect(config).toStrictEqual({
-      fooSlot: {
-        add: ["bar", "baz"],
-        remove: ["zap"],
-        order: ["qux", "baz", "bar"],
+      add: ["bar", "baz"],
+      remove: ["zap"],
+      order: ["qux", "baz", "bar"],
+      configure: {
+        bar: {
+          a: 0,
+        },
       },
     });
     expect(console.error).not.toHaveBeenCalled();
@@ -840,7 +843,7 @@ describe("extension slot config", () => {
       "fooSlot",
       "foo-module"
     );
-    expect(extConfig).toStrictEqual({ fooSlot: { remove: ["bar"] } });
+    expect(extConfig).toStrictEqual({ remove: ["bar"] });
   });
 
   it("is included in getImplementerToolsConfig", async () => {
