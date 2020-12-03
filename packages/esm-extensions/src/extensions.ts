@@ -210,7 +210,10 @@ export function registerExtensionSlot(
   actualExtensionSlotName: string
 ) {
   updateExtensionStore(async (state) => {
-    const existingSlot = state.slots[actualExtensionSlotName];
+    const [slotName] = Object.keys(state.slots).filter((name) =>
+      state.slots[name].matches(actualExtensionSlotName)
+    );
+    const existingSlot = state.slots[slotName];
     const updatedSlot = await getUpdatedExtensionSlotInfoForRegistration(
       existingSlot,
       actualExtensionSlotName,
@@ -220,7 +223,7 @@ export function registerExtensionSlot(
       ...state,
       slots: {
         ...state.slots,
-        [actualExtensionSlotName]: updatedSlot,
+        [slotName]: updatedSlot,
       },
     };
   });
@@ -231,7 +234,10 @@ export function unregisterExtensionSlot(
   actualExtensionSlotName: string
 ) {
   updateExtensionStore(async (state) => {
-    const existingSlot = state.slots[actualExtensionSlotName];
+    const [slotName] = Object.keys(state.slots).filter((name) =>
+      state.slots[name].matches(actualExtensionSlotName)
+    );
+    const existingSlot = state.slots[slotName];
 
     if (existingSlot && moduleName in existingSlot.instances) {
       const updatedSlot = await getUpdatedExtensionSlotInfoForUnregistration(
@@ -244,7 +250,7 @@ export function unregisterExtensionSlot(
         ...state,
         slots: {
           ...state.slots,
-          [actualExtensionSlotName]: updatedSlot,
+          [slotName]: updatedSlot,
         },
       };
     }
@@ -284,39 +290,6 @@ export const reset: () => void = extensionStore.action(() => {
     extensions: {},
   };
 });
-
-export function updateExtensionSlotInfo(actualExtensionSlotName: string) {
-  updateExtensionStore(async (state) => {
-    for (const slotName of Object.keys(state.slots)) {
-      const originalSlotInfo = state.slots[slotName];
-
-      if (originalSlotInfo.matches(actualExtensionSlotName)) {
-        let slotInfo = originalSlotInfo;
-
-        for (const moduleName of Object.keys(originalSlotInfo.instances)) {
-          const updatedSlotInfo = await getUpdatedExtensionSlotInfo(
-            actualExtensionSlotName,
-            moduleName,
-            slotInfo
-          );
-
-          if (updatedSlotInfo !== slotInfo) {
-            slotInfo = updatedSlotInfo;
-          }
-        }
-
-        if (slotInfo !== originalSlotInfo) {
-          return {
-            ...state,
-            [slotName]: slotInfo,
-          };
-        }
-      }
-    }
-
-    return state;
-  });
-}
 
 /**
  * Returns information describing all extensions which can be rendered into an extension slot with

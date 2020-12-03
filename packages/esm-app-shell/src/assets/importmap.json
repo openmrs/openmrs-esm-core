@@ -1,13 +1,13 @@
 {
   "imports": {
-    "@openmrs/esm-patient-chart-widgets": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-chart-widgets/5d85993e881d16fea62049052b7993b3cf4dff64/openmrs-esm-patient-chart-widgets.js",
-    "@openmrs/esm-patient-chart-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-chart-app/dcac09f978ce0879b62c2c4a48be6a1eb161b1ba/openmrs-esm-patient-chart.js",
-    "@openmrs/esm-home-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-home-app/8ec63c32d8ef61a486237e4ec82264bbe6fcb56e/openmrs-esm-home-app.js",
-    "@openmrs/esm-primary-navigation-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-primary-navigation-app/b40f15aa682a22766da9d39356fb1ec55f719b16/openmrs-esm-primary-navigation-app.js",
-    "@openmrs/esm-login-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-login-app/d9660e1ebd91f434c05bb5fc0bf474f3d3e0b3b8/openmrs-esm-login-app.js",
-    "@openmrs/esm-devtools-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-devtools-app/5a669fd762777fbdd462bf979a28f059fcf1e155/openmrs-esm-devtools-app.js",
-    "@openmrs/esm-patient-registration-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-registration-app/7040813dbfd72b9c25f127d514dc5ca8071018d5/openmrs-esm-patient-registration-app.js",
-    "@openmrs/esm-implementer-tools-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-implementer-tools-app/5a669fd762777fbdd462bf979a28f059fcf1e155/openmrs-esm-implementer-tools-app.js",
-    "@openmrs/esm-drugorder-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-drugorder-app/3ca4176b0b5b435de869d20f4268e2e4b9e7e7e5/openmrs-esm-drugorder-app.js"
+    "@openmrs/esm-patient-chart-widgets": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-chart-widgets/7d8e83ba4cb1d57b14210ba95f66d67fef73bc27/openmrs-esm-patient-chart-widgets.js",
+    "@openmrs/esm-patient-chart-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-chart-app/00cc5441096693f27ef8e3b5b0134102344c8388/openmrs-esm-patient-chart.js",
+    "@openmrs/esm-home-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-home-app/5d57f44c51ab9ec7cd57bfbfe4cc0148e7fca946/openmrs-esm-home-app.js",
+    "@openmrs/esm-primary-navigation-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-primary-navigation-app/4a24625c056f8b67dbaa934faf09561fc7367bdb/openmrs-esm-primary-navigation-app.js",
+    "@openmrs/esm-login-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-login-app/e76b0e4488115a7a3a86c5f57bac03d52e1ffc34/openmrs-esm-login-app.js",
+    "@openmrs/esm-devtools-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-devtools-app/d5efde6b10eb2c7bbd8798dcbf19d278c017c959/openmrs-esm-devtools-app.js",
+    "@openmrs/esm-patient-registration-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-registration-app/b9261eba6cb307532ee8bbe519fbb77a4585bced/openmrs-esm-patient-registration-app.js",
+    "@openmrs/esm-implementer-tools-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-implementer-tools-app/d5efde6b10eb2c7bbd8798dcbf19d278c017c959/openmrs-esm-implementer-tools-app.js",
+    "@openmrs/esm-drugorder-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-drugorder-app/cd6303c33ba3229f51a8871847954c9f6eaf4a09/openmrs-esm-drugorder-app.js"
   }
 }
