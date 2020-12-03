@@ -5,10 +5,7 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const { peerDependencies } = require("./package.json");
 
 module.exports = {
-  entry: [
-    resolve(__dirname, "src/set-public-path.ts"),
-    resolve(__dirname, "src/index.ts"),
-  ],
+  entry: [resolve(__dirname, "src/index.ts")],
   output: {
     filename: "openmrs-esm-react-utils.js",
     path: resolve(__dirname, "dist"),
