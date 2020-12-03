@@ -3,11 +3,17 @@ import isPlainObject from "lodash-es/isPlainObject";
 import { getConfig, navigate } from "@openmrs/esm-config";
 import { FetchResponse } from "./types";
 
+export const sessionEndpoint = "/ws/rest/v1/session";
+
+export function makeUrl(path: string) {
+  return window.openmrsBase + path;
+}
+
 export function openmrsFetch<T = any>(
-  url: string,
+  path: string,
   fetchInit: FetchConfig = {}
 ): Promise<FetchResponse<T>> {
-  if (typeof url !== "string") {
+  if (typeof path !== "string") {
     throw Error(
       "The first argument to @openmrs/api's openmrsFetch function must be a url string"
     );
@@ -28,7 +34,7 @@ export function openmrsFetch<T = any>(
 
   // Prefix the url with the openmrs spa base
   // @ts-ignore
-  url = window.openmrsBase + url;
+  const url = makeUrl(path);
 
   // We're going to need some headers
   if (!fetchInit.headers) {
@@ -91,9 +97,11 @@ export function openmrsFetch<T = any>(
        *Redirect to given url when redirect on auth failure is enabled
        */
       const { redirectAuthFailure } = await getConfig("@openmrs/esm-api");
+
       if (
-        redirectAuthFailure.enabled &&
-        redirectAuthFailure.errors.includes(response.status)
+        (url === makeUrl(sessionEndpoint) && response.status === 403) ||
+        (redirectAuthFailure.enabled &&
+          redirectAuthFailure.errors.includes(response.status))
       ) {
         navigate({ to: redirectAuthFailure.url });
 
@@ -103,7 +111,7 @@ export function openmrsFetch<T = any>(
          */
         return redirectAuthFailure.resolvePromise
           ? ((Promise.resolve() as unknown) as Promise<FetchResponse>)
-          : new Promise<FetchResponse>((resolve) => {});
+          : new Promise<FetchResponse>(() => {});
       } else {
         // Attempt to download a response body, if it has one
         return response.text().then(

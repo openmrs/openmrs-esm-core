@@ -1,6 +1,6 @@
 import { Observable, ReplaySubject } from "rxjs";
 import { filter, map, tap, mergeAll } from "rxjs/operators";
-import { openmrsFetch } from "../openmrs-fetch";
+import { openmrsFetch, sessionEndpoint } from "../openmrs-fetch";
 import {
   LoggedInUserFetchResponse,
   LoggedInUser,
@@ -60,7 +60,7 @@ export { getCurrentUser };
 
 export function refetchCurrentUser() {
   lastFetchTimeMillis = Date.now();
-  userSubject.next(openmrsFetch("/ws/rest/v1/session"));
+  userSubject.next(openmrsFetch(sessionEndpoint));
 }
 
 export function userHasAccess(requiredPrivilege: string, user: LoggedInUser) {
