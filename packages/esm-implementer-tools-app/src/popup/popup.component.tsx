@@ -8,6 +8,7 @@ import BackendModule from "../backend-dependencies/backend-dependecies.component
 export default function Popup(props: DevToolsPopupProps) {
   const [configHasAlert, setConfigHasAlert] = useState(false);
   const [backendHasAlert, setBackendHasAlert] = useState(false);
+  const { visibleTabIndex = 0 } = props;
 
   useEffect(() => {
     props.setHasAlert(configHasAlert || backendHasAlert);
@@ -49,4 +50,5 @@ export default function Popup(props: DevToolsPopupProps) {
 type DevToolsPopupProps = {
   close(): void;
   setHasAlert(value: boolean): void;
+  visibleTabIndex?: number;
 };

@@ -43,6 +43,7 @@ async function setupApps(modules: Array<[string, System.Module]>) {
   for (const [appName, appExports] of modules) {
     registerApp(appName, appExports);
   }
+  window.installedModules = modules;
 }
 
 /**
