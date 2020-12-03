@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { openmrsRootDecorator } from "./openmrsRootDecorator";
 import { ModuleNameContext } from "./ModuleNameContext";
@@ -34,9 +34,9 @@ function CompThatWorks() {
   return <button>The button</button>;
 }
 
-function CompThatThrows() {
+let CompThatThrows = function () {
   throw Error("ahahaa");
-}
+};
 
 function CompWithConfig() {
   const moduleName = React.useContext(ModuleNameContext);

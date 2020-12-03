@@ -71,13 +71,20 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
         </div>
       ))}
       <div className={`${styles.treeIndent} ${styles.treeLeaf}`}>
-        configure:
-      </div>
-      <div className={`${styles.treeIndent} ${styles.treeLeaf}`}>
-        <ConfigTree
-          path={path.concat(["configure"])}
-          config={config?.configure || {}}
-        />
+        configure:{" "}
+        {config?.configure ? (
+          <div className={styles.extExpand}>
+            <ConfigTree
+              path={path.concat(["configure"])}
+              config={config?.configure}
+            />
+          </div>
+        ) : (
+          <EditableValue
+            path={path.concat(["configure"])}
+            element={{ _value: "", _source: "", _default: "" }}
+          />
+        )}
       </div>
     </div>
   );
