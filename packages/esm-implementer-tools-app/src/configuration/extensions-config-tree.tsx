@@ -3,10 +3,8 @@ import { ExtensionSlotConfig } from "@openmrs/esm-config";
 import { ExtensionSlotInfo, ExtensionStore } from "@openmrs/esm-extensions";
 import { connect } from "unistore/react";
 import styles from "./configuration.styles.css";
-import EditableValue, {
-  ConfigValueDescriptor,
-} from "./editable-value.component";
-import ConfigTree from "./config-tree.component";
+import EditableValue from "./editable-value.component";
+import { ConfigSubtree } from "./config-subtree.component";
 
 interface ExtensionsConfigTreeProps {
   config: { [key: string]: any };
@@ -74,7 +72,7 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
         configure:{" "}
         {config?.configure ? (
           <div className={styles.extExpand}>
-            <ConfigTree
+            <ConfigSubtree
               path={path.concat(["configure"])}
               config={config?.configure}
             />

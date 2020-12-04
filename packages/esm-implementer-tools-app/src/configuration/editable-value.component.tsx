@@ -53,16 +53,7 @@ export default function EditableValue({ path, element }: EditableValueProps) {
 
   return (
     <>
-      <div
-        className={styles.line}
-        onMouseEnter={() => {
-          store.setState({ configPathBeingHovered: path });
-        }}
-        onMouseLeave={() => {
-          isEqual(store.getState().configPathBeingHovered, path) &&
-            store.setState({ configPathBeingHovered: [] });
-        }}
-      >
+      <div className={styles.line}>
         {editing ? (
           <>
             <ValueEditor

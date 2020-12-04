@@ -9,7 +9,7 @@ import {
 import { Column, Grid, Row, Toggle, Button } from "carbon-components-react";
 import { Download16 } from "@carbon/icons-react";
 import styles from "./configuration.styles.css";
-import ConfigTree from "./config-tree.component";
+import { ConfigTree } from "./config-tree.component";
 import {
   getIsUIEditorEnabled,
   setIsUIEditorEnabled,
@@ -105,10 +105,10 @@ export default function Configuration(props: ConfigurationProps) {
           </Column>
         </Row>
         <Row className={styles.mainContent}>
-          <Column sm={3} className={styles.configContent}>
+          <Column sm={2} className={styles.configContent}>
             <ConfigTree config={config} />
           </Column>
-          <Column sm={1}>
+          <Column sm={2}>
             <div className={styles.configDescription}>
               {activeConfigElement?.path?.join(".")}
               {activeConfigElement?.value?._description}
