@@ -3,6 +3,7 @@
 }
 
 .tools {
+  width: 100vw;
   background-color: #e0e0e0;
   display: flex;
   gap: 4em;
@@ -38,4 +39,8 @@
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+}
+
+.extExpand {
+  flex-basis: 100%;
 }
