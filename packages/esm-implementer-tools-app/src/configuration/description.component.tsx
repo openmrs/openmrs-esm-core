@@ -19,7 +19,11 @@ export const Description = connect("activeItemDescription")(
               {activeItemDescription.source ? <>Source:</> : null}{" "}
               {activeItemDescription.source}
             </p>
-            <p className={styles.value}>{activeItemDescription.value}</p>
+            <p className={styles.value}>
+              {Array.isArray(activeItemDescription.value)
+                ? activeItemDescription.value.map((v) => <p key={v}>{v}</p>)
+                : activeItemDescription.value}
+            </p>
           </>
         ) : null}
       </div>

@@ -1,6 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
-import { ExtensionSlotInfo, ExtensionStore } from "@openmrs/esm-extensions";
+import {
+  ExtensionSlotInfo,
+  extensionStore,
+  ExtensionStore,
+} from "@openmrs/esm-extensions";
 import { Provider, connect } from "unistore/react";
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
@@ -60,9 +64,33 @@ interface ExtensionSlotConfigProps {
 }
 
 function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
+  const [assignedExtensions, setAssignedExtensions] = useState<Array<string>>(
+    []
+  );
   const store = getStore();
   const moduleName = path[0];
   const slotName = path[2];
+
+  useEffect(() => {
+    function update(state) {
+      setAssignedExtensions(
+        state.slots[slotName]?.instances?.[moduleName]?.assignedIds
+      );
+    }
+    update(extensionStore.getState());
+    return extensionStore.subscribe(update);
+  }, []);
+
+  function setActiveExtensionSlotOnMouseEnter(moduleName, slotName) {
+    if (!store.getState().configPathBeingEdited) {
+      store.setState({
+        activeItemDescription: {
+          path: [moduleName, slotName],
+          value: assignedExtensions,
+        },
+      });
+    }
+  }
 
   function setActiveItemDescriptionOnMouseEnter(
     moduleName,
@@ -99,8 +127,17 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   }
 
   return (
-    <div>
-      {slotName}:
+    <>
+      <div
+        onMouseEnter={() =>
+          setActiveExtensionSlotOnMouseEnter(moduleName, slotName)
+        }
+        onMouseLeave={() =>
+          removeActiveItemDescriptionOnMouseLeave([moduleName, slotName])
+        }
+      >
+        {slotName}:
+      </div>
       {["add", "remove", "order"].map((key) => (
         <div
           key={path.join(".") + key}
@@ -158,6 +195,6 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
           />
         )}
       </div>
-    </div>
+    </>
   );
 }

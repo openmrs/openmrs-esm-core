@@ -10,7 +10,7 @@ export interface ActiveItemDescription {
   path: string[];
   description?: string;
   value?: string | string[];
-  source: string;
+  source?: string;
 }
 
 createGlobalStore("implementer-tools", {
