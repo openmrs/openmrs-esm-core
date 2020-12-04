@@ -1,18 +1,20 @@
 import { createGlobalStore, getGlobalStore } from "@openmrs/esm-api";
 
-export type ImplementerToolsStore = {
-  activeItemDescription: {
-    path: string[];
-    description: string;
-    value: string | string[];
-  };
+export interface ImplementerToolsStore {
+  activeItemDescription?: ActiveItemDescription;
   configPathBeingEdited: null | string[];
-};
+}
+
+export interface ActiveItemDescription {
+  path: string[];
+  description?: string;
+  value?: string | string[];
+  source: string;
+}
 
 createGlobalStore("implementer-tools", {
-  activeItemDescription: {},
+  activeItemDescription: null,
   configPathBeingEdited: null,
-  configPathBeingHovered: null,
 });
 
 export const getStore = () =>

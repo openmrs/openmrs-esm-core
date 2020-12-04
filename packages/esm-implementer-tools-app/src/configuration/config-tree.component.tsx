@@ -9,31 +9,23 @@ export interface ConfigTreeProps {
 }
 
 export function ConfigTree({ config }: ConfigTreeProps) {
-  const store = React.useMemo(() => getGlobalStore("extensions"), []);
-  console.log(config);
-
   return (
-    <Provider store={store}>
-      <div>
-        {config &&
-          Object.keys(config)
-            .sort()
-            .map((moduleName) => {
-              const moduleConfig = config[moduleName];
-              return (
-                <div
-                  key={`${moduleName}-config`}
-                  className={styles.moduleConfig}
-                >
-                  <h4 className={styles.moduleName}>{moduleName}</h4>
-                  <ConfigTreeForModule
-                    config={moduleConfig}
-                    moduleName={moduleName}
-                  />
-                </div>
-              );
-            })}
-      </div>
-    </Provider>
+    <div>
+      {config &&
+        Object.keys(config)
+          .sort()
+          .map((moduleName) => {
+            const moduleConfig = config[moduleName];
+            return Object.keys(moduleConfig).length ? (
+              <div key={`${moduleName}-config`} className={styles.moduleConfig}>
+                <h4 className={styles.moduleName}>{moduleName}</h4>
+                <ConfigTreeForModule
+                  config={moduleConfig}
+                  moduleName={moduleName}
+                />
+              </div>
+            ) : null;
+          })}
+    </div>
   );
 }

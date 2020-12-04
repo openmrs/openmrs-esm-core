@@ -3,6 +3,8 @@
 }
 
 .tools {
+  margin-top: 42px;
+  position: fixed;
   width: 100vw;
   background-color: #e0e0e0;
   display: flex;
@@ -17,19 +19,12 @@
 }
 
 .mainContent {
+  margin-top: 110px;
   background-color: #f0f0f0;
 }
 
 .configContent {
   font-size: 12pt;
-}
-
-.configDescription {
-  background-color: #e0e0e0;
-  margin-top: 1em;
-  border: 1px solid #c0c0c0;
-  min-height: 12em;
-  padding: 0.5em;
 }
 
 .downloadLink {

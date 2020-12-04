@@ -23,11 +23,11 @@ export interface ConfigValueDescriptor {
 }
 
 export default function EditableValue({ path, element }: EditableValueProps) {
-  const [valueString, setValueString] = useState<string | null>(null);
+  const [valueString, setValueString] = useState<string>();
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const store = getStore();
-  const activeConfigPath = useRef<HTMLButtonElement>(null);
+  const activeConfigRef = useRef<HTMLButtonElement>(null);
 
   const closeEditor = () => {
     setEditing(false);
@@ -35,9 +35,9 @@ export default function EditableValue({ path, element }: EditableValueProps) {
   };
 
   const focusOnConfigPathBeingEdited = () => {
-    if (activeConfigPath && activeConfigPath.current) {
+    if (activeConfigRef && activeConfigRef.current) {
       setEditing(true);
-      activeConfigPath.current.focus();
+      activeConfigRef.current.focus();
     }
   };
 
@@ -49,7 +49,25 @@ export default function EditableValue({ path, element }: EditableValueProps) {
     };
     update(store.getState());
     return store.subscribe((state) => update(state));
-  }, []);
+  }, [store]);
+
+  useEffect(() => {
+    const state = store.getState();
+    if (editing && !isEqual(state.configPathBeingEdited, path)) {
+      store.setState({
+        configPathBeingEdited: path,
+        activeItemDescription: {
+          path: path,
+          source: element._source,
+          description: element._description,
+          value: valueString,
+        },
+      });
+    }
+    if (!editing && isEqual(state.configPathBeingEdited, path)) {
+      store.setState({ configPathBeingEdited: null });
+    }
+  }, [editing, store]);
 
   return (
     <>
@@ -71,7 +89,6 @@ export default function EditableValue({ path, element }: EditableValueProps) {
                 }
               }}
             />
-            <div>{element._description}</div>
           </>
         ) : (
           <button
@@ -81,7 +98,7 @@ export default function EditableValue({ path, element }: EditableValueProps) {
                 : ""
             }`}
             onClick={() => setEditing(true)}
-            ref={activeConfigPath}
+            ref={activeConfigRef}
           >
             {valueString ?? JSON.stringify(element._value)}
           </button>

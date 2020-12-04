@@ -1,10 +1,11 @@
 import React, { useMemo } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
 import { ExtensionSlotInfo, ExtensionStore } from "@openmrs/esm-extensions";
-import { connect } from "unistore/react";
+import { Provider, connect } from "unistore/react";
 import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
 import { ConfigSubtree } from "./config-subtree.component";
+import { getGlobalStore } from "@openmrs/esm-api";
 
 interface ExtensionsConfigTreeProps {
   config: { [key: string]: any };
@@ -15,11 +16,11 @@ interface ExtensionsConfigTreeImplProps extends ExtensionsConfigTreeProps {
   slots: Record<string, ExtensionSlotInfo>;
 }
 
-const ExtensionsConfigTreeImpl: React.FC<ExtensionsConfigTreeImplProps> = ({
-  config,
-  moduleName,
-  slots,
-}) => {
+const ExtensionsConfigTreeImpl = connect(
+  (state: ExtensionStore, _: ExtensionsConfigTreeProps) => ({
+    slots: state.slots,
+  })
+)(({ config, moduleName, slots }: ExtensionsConfigTreeImplProps) => {
   const extensionSlotNames = useMemo(
     () =>
       Object.keys(slots).filter((name) => moduleName in slots[name].instances),
@@ -39,13 +40,17 @@ const ExtensionsConfigTreeImpl: React.FC<ExtensionsConfigTreeImplProps> = ({
       ))}
     </div>
   ) : null;
-};
+});
 
-export const ExtensionsConfigTree = connect(
-  (state: ExtensionStore, _: ExtensionsConfigTreeProps) => ({
-    slots: state.slots,
-  })
-)(ExtensionsConfigTreeImpl);
+export function ExtensionsConfigTree(props) {
+  const store = React.useMemo(() => getGlobalStore("extensions"), []);
+
+  return (
+    <Provider store={store}>
+      <ExtensionsConfigTreeImpl {...props} />
+    </Provider>
+  );
+}
 
 interface ExtensionSlotConfigProps {
   config: ExtensionSlotConfig;

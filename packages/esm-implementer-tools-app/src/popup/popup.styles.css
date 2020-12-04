@@ -17,8 +17,15 @@
   overflow-y: auto;
 }
 
+.topBar {
+  position: fixed;
+  background-color: #d0d0d0;
+  width: 100%;
+  height: 42px;
+}
+
 .farRight {
-  position: absolute;
+  position: fixed;
   right: 0;
   display: flex;
   z-index: 1000;

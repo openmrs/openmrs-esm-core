@@ -1,7 +1,7 @@
 import React from "react";
-import { connect } from "unistore/react";
 import EditableValue from "./editable-value.component";
 import styles from "./configuration.styles.css";
+import { getStore } from "../store";
 import { isEqual } from "lodash-es";
 
 export interface ConfigSubtreeProps {
@@ -9,24 +9,28 @@ export interface ConfigSubtreeProps {
   path?: Array<string>;
 }
 
-export const ConfigSubtree = connect()(({ config, path = [] }: ConfigSubtreeProps) {
+export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
   const store = getStore();
 
-  function setActiveItemDescription(thisPath, key, value) {
+  function setActiveItemDescriptionOnMouseEnter(thisPath, key, value) {
     if (!store.getState().configPathBeingEdited) {
       store.setState({
         activeItemDescription: {
           path: thisPath,
           source: value._source,
           description: value._description,
-          value: value._value,
+          value: JSON.stringify(value._value),
         },
       });
     }
   }
 
-  function removeActiveItemDescription(thisPath) {
-    if (isEqual(store.getState().activeItemDescription?.path, thisPath)) {
+  function removeActiveItemDescriptionOnMouseLeave(thisPath) {
+    const state = store.getState();
+    if (
+      isEqual(state.activeItemDescription?.path, thisPath) &&
+      !isEqual(state.configPathBeingEdited, thisPath)
+    ) {
       store.setState({ activeItemDescription: undefined });
     }
   }
@@ -42,9 +46,11 @@ export const ConfigSubtree = connect()(({ config, path = [] }: ConfigSubtreeProp
             <div
               className={styles.treeIndent}
               onMouseEnter={() =>
-                setActiveItemDescription(thisPath, key, value)
+                setActiveItemDescriptionOnMouseEnter(thisPath, key, value)
               }
-              onMouseLeave={() => removeActiveItemDescription(thisPath)}
+              onMouseLeave={() =>
+                removeActiveItemDescriptionOnMouseLeave(thisPath)
+              }
             >
               {key}:
               {isLeaf ? (
