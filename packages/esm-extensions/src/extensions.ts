@@ -210,9 +210,10 @@ export function registerExtensionSlot(
   actualExtensionSlotName: string
 ) {
   updateExtensionStore(async (state) => {
-    const [slotName] = Object.keys(state.slots).filter((name) =>
-      state.slots[name].matches(actualExtensionSlotName)
-    );
+    const slotName =
+      Object.keys(state.slots).filter((name) =>
+        state.slots[name].matches(actualExtensionSlotName)
+      )?.[0] ?? actualExtensionSlotName;
     const existingSlot = state.slots[slotName];
     const updatedSlot = await getUpdatedExtensionSlotInfoForRegistration(
       existingSlot,
@@ -234,9 +235,10 @@ export function unregisterExtensionSlot(
   actualExtensionSlotName: string
 ) {
   updateExtensionStore(async (state) => {
-    const [slotName] = Object.keys(state.slots).filter((name) =>
-      state.slots[name].matches(actualExtensionSlotName)
-    );
+    const slotName =
+      Object.keys(state.slots).filter((name) =>
+        state.slots[name].matches(actualExtensionSlotName)
+      )?.[0] ?? actualExtensionSlotName;
     const existingSlot = state.slots[slotName];
 
     if (existingSlot && moduleName in existingSlot.instances) {
