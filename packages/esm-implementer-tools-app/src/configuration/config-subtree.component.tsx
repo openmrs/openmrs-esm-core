@@ -1,7 +1,7 @@
 import React from "react";
+import { connect } from "unistore/react";
 import EditableValue from "./editable-value.component";
 import styles from "./configuration.styles.css";
-import { getStore } from "../store";
 import { isEqual } from "lodash-es";
 
 export interface ConfigSubtreeProps {
@@ -9,8 +9,28 @@ export interface ConfigSubtreeProps {
   path?: Array<string>;
 }
 
-export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
+export const ConfigSubtree = connect()(({ config, path = [] }: ConfigSubtreeProps) {
   const store = getStore();
+
+  function setActiveItemDescription(thisPath, key, value) {
+    if (!store.getState().configPathBeingEdited) {
+      store.setState({
+        activeItemDescription: {
+          path: thisPath,
+          source: value._source,
+          description: value._description,
+          value: value._value,
+        },
+      });
+    }
+  }
+
+  function removeActiveItemDescription(thisPath) {
+    if (isEqual(store.getState().activeItemDescription?.path, thisPath)) {
+      store.setState({ activeItemDescription: undefined });
+    }
+  }
+
   return (
     <div>
       {Object.entries(config).map(([key, value]) => {
@@ -21,13 +41,10 @@ export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
           <div key={key}>
             <div
               className={styles.treeIndent}
-              onMouseEnter={() => {
-                store.setState({ configPathBeingHovered: thisPath });
-              }}
-              onMouseLeave={() => {
-                isEqual(store.getState().configPathBeingHovered, thisPath) &&
-                  store.setState({ configPathBeingHovered: [] });
-              }}
+              onMouseEnter={() =>
+                setActiveItemDescription(thisPath, key, value)
+              }
+              onMouseLeave={() => removeActiveItemDescription(thisPath)}
             >
               {key}:
               {isLeaf ? (
