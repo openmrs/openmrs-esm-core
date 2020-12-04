@@ -55,7 +55,7 @@ export default function EditableValue({
       }
     };
     update(store.getState());
-    return store.subscribe((state) => update(state));
+    return store.subscribe(update);
   }, [store]);
 
   useEffect(() => {

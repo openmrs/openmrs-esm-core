@@ -34,7 +34,7 @@
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
     "@carbon/icons-react": "^10.21.0",
-    "@types/carbon-components-react": "^7.24.0",
+    "carbon-components-react": "^7.25.0",
     "lodash-es": "^4.17.15",
     "react-hooks-global-state": "^1.0.1",
     "semver": "^7.3.2",
@@ -53,9 +53,9 @@
   "devDependencies": {
     "@openmrs/esm-api": "^3.1.7",
     "@openmrs/esm-react-utils": "^3.1.7",
+    "@types/carbon-components-react": "^7.24.0",
     "@types/lodash-es": "^4.17.3",
     "@types/semver": "^7.3.4",
-    "carbon-components-react": "^7.25.0",
     "identity-obj-proxy": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

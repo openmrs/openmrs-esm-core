@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { Type } from "@openmrs/esm-config";
 import { ConfigValueDescriptor } from "./editable-value.component";
 import { ConceptSearchBox } from "./concept-search";
 import styles from "./configuration.styles.css";
-import { Type } from "@openmrs/esm-config";
 import { ExtensionSlotAdd } from "./extension-slot-add";
 
 export type CustomValueType = "add" | "remove" | "order" | "configure";
@@ -20,8 +20,10 @@ export function ValueEditor({
   handleSave,
   handleClose,
 }: ValueEditorProps) {
-  const ref = useRef(null);
-  const [tmpValue, setTmpValue] = useState(JSON.stringify(element._value));
+  const ref = useRef<HTMLDivElement>(null);
+  const [tmpValue, setTmpValue] = useState(() =>
+    JSON.stringify(element._value)
+  );
 
   const valueType = customType ?? element._type;
 
@@ -34,7 +36,7 @@ export function ValueEditor({
   };
 
   const clickListener = (e: MouseEvent) => {
-    if (!(ref.current! as any).contains(e.target)) {
+    if (!ref.current?.contains(e.target as Node)) {
       handleClose?.(); // using optional chaining here, change to onClose && onClose(), if required
     }
   };
