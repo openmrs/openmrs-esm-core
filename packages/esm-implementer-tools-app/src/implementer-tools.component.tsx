@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
+import { Provider } from "unistore/react";
 import { UserHasAccess } from "@openmrs/esm-react-utils";
-import { connect, Provider } from "unistore/react";
 import Popup from "./popup/popup.component";
 import styles from "./implementer-tools.styles.css";
-import { getStore } from "./store";
 import { showToast } from "@openmrs/esm-styleguide";
 import {
   checkModules,
   MissingBackendModules,
 } from "./backend-dependencies/openmrs-backend-dependencies";
 import { NotificationActionButton } from "carbon-components-react/lib/components/Notification";
+import { getStore, useStore } from "./store";
+import { UiEditor } from "./ui-editor/ui-editor";
 
 export default function ImplementerTools() {
   const store = getStore();
@@ -23,7 +24,7 @@ export default function ImplementerTools() {
   );
 }
 
-const PopupHandler = connect("isOpen")(({ isOpen }) => {
+function PopupHandler() {
   const [hasAlert, setHasAlert] = useState(false);
   const [visibleTabIndex, setVisibleTabIndex] = useState(0);
   const [
@@ -34,6 +35,10 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
     modulesWithWrongBackendModulesVersion,
     setModulesWithWrongBackendModulesVersion,
   ] = useState<Array<MissingBackendModules>>([]);
+  const { isOpen, isUIEditorEnabled } = useStore([
+    "isOpen",
+    "isUIEditorEnabled",
+  ]);
 
   function togglePopup() {
     getStore().setState({ isOpen: !isOpen });
@@ -102,6 +107,7 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
           visibleTabIndex={visibleTabIndex}
         />
       ) : null}
+      {isUIEditorEnabled ? <UiEditor /> : null}
     </>
   );
-});
+}

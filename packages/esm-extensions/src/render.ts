@@ -1,6 +1,8 @@
 import { mountRootParcel } from "single-spa";
+import { cloneDeep, set } from "lodash-es";
 import { getExtensionRegistration } from "./extensions";
 import { getActualRouteProps } from "./route";
+import { updateExtensionStore } from "./store";
 
 export interface Lifecycle {
   bootstrap(): void;
@@ -56,6 +58,21 @@ export function renderExtension(
             ...routeProps,
             domElement,
           })
+      );
+
+      updateExtensionStore((state) =>
+        set(
+          cloneDeep(state),
+          [
+            "extensions",
+            extensionName,
+            "instances",
+            extensionSlotModuleName,
+            actualExtensionSlotName,
+            "domElement",
+          ],
+          domElement
+        )
       );
     } else {
       throw Error(

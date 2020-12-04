@@ -1,0 +1,55 @@
+.slotOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(43, 43, 185, 0.1);
+  border: 1px solid rgba(43, 43, 185, 0.4);
+  pointer-events: none;
+}
+
+.slotName {
+  background-color: rgb(255, 255, 255, 0.85);
+  border: 1px solid rgba(43, 43, 185, 0.4);
+  color: #393939;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  pointer-events: none;
+}
+
+.extensionOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+}
+
+.extensionOverlay:hover {
+  background-color: rgba(43, 43, 185, 0.1);
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.extensionOverlay:focus .extensionTooltip,
+.extensionOverlay:hover .extensionTooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.extensionTooltip {
+  visibility: hidden;
+  width: auto;
+  background-color: rgb(255, 255, 255, 0.85);
+  text-align: center;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  border: 1px solid rgba(43, 43, 185, 0.4);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}

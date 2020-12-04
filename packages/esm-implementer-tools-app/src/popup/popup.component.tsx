@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, ContentSwitcher, Switch } from "carbon-components-react";
 import { Close16 } from "@carbon/icons-react";
 import styles from "./popup.styles.css";
-import Configuration from "../configuration/configuration.component";
+import { Configuration } from "../configuration/configuration.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependecies.component";
 import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-dependencies";
 
