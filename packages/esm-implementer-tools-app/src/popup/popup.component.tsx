@@ -15,11 +15,20 @@ export default function Popup(props: DevToolsPopupProps) {
 
   return (
     <div className={styles.popup}>
+      <div className={styles.topBar} />
       <Tabs>
-        <Tab id="configuration-tab" label="Configuration">
+        <Tab
+          id="configuration-tab"
+          label="Configuration"
+          style={{ position: "fixed" }}
+        >
           <Configuration setHasAlert={setConfigHasAlert} />
         </Tab>
-        <Tab id="backend-modules-tab" label="Backend Modules">
+        <Tab
+          id="backend-modules-tab"
+          label="Backend Modules"
+          style={{ position: "fixed", marginLeft: "160px" }}
+        >
           <BackendModule setHasAlert={setBackendHasAlert} />
         </Tab>
       </Tabs>

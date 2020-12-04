@@ -1,5 +1,5 @@
 import React from "react";
-import { useGlobalState } from "../global-state";
+import { getStore } from "../store";
 
 interface ConfigEditButtonProps {
   configPath: string[];
@@ -8,13 +8,11 @@ interface ConfigEditButtonProps {
 export default function ConfigEditButton({
   configPath,
 }: ConfigEditButtonProps) {
-  const [configPathBeingEdited, setConfigPathBeingEdited] = useGlobalState(
-    "configPathBeingEdited"
-  );
+  const store = getStore();
   return (
     <button
       onClick={() => {
-        setConfigPathBeingEdited(configPath);
+        store.setState({ configPathBeingEdited: configPath });
       }}
     >
       Edit

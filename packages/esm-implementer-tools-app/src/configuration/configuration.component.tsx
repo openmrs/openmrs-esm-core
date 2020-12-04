@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   getImplementerToolsConfig,
   getAreDevDefaultsOn,
@@ -9,20 +9,23 @@ import {
 import { Column, Grid, Row, Toggle, Button } from "carbon-components-react";
 import { Download16 } from "@carbon/icons-react";
 import styles from "./configuration.styles.css";
-import ConfigTree from "./config-tree.component";
+import { ConfigTree } from "./config-tree.component";
 import {
   getIsUIEditorEnabled,
   setIsUIEditorEnabled,
 } from "@openmrs/esm-extensions";
+import { getStore } from "../store";
+import { Description } from "./description.component";
 
 export default function Configuration(props: ConfigurationProps) {
-  const [config, setConfig] = React.useState({});
-  const [isDevConfigActive, setIsDevConfigActive] = React.useState(
+  const [config, setConfig] = useState({});
+  const [isDevConfigActive, setIsDevConfigActive] = useState(
     getAreDevDefaultsOn()
   );
-  const [isUIEditorActive, setIsUIEditorActive] = React.useState(
+  const [isUIEditorActive, setIsUIEditorActive] = useState(
     getIsUIEditorEnabled()
   );
+  const store = getStore();
   const tempConfig = getTemporaryConfig();
   const tempConfigObjUrl = new Blob(
     [JSON.stringify(tempConfig, undefined, 2)],
@@ -37,7 +40,7 @@ export default function Configuration(props: ConfigurationProps) {
     });
   };
 
-  React.useEffect(updateConfig, []);
+  useEffect(updateConfig, []);
 
   return (
     <div className={styles.panel}>
@@ -83,9 +86,12 @@ export default function Configuration(props: ConfigurationProps) {
             </Button>
           </Column>
         </Row>
-        <Row>
-          <Column className={styles.configContent}>
+        <Row className={styles.mainContent}>
+          <Column sm={2} className={styles.configContent}>
             <ConfigTree config={config} />
+          </Column>
+          <Column sm={2}>
+            <Description />
           </Column>
         </Row>
       </Grid>

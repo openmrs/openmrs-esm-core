@@ -1,0 +1,31 @@
+.container {
+  background-color: #e0e0e0;
+  color: #424242;
+  margin-top: 1em;
+  border: 1px solid #c0c0c0;
+  min-height: 14em;
+  padding: 1em;
+  font-size: 12pt;
+  position: fixed;
+  width: 45vw;
+}
+
+.path {
+  color: #303030;
+  margin-bottom: 1em;
+}
+
+.description {
+  margin-bottom: 0.5em;
+}
+
+.source {
+  font-style: italic;
+  margin-bottom: 0.5em;
+}
+
+.value {
+  font-family: monospace;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+}

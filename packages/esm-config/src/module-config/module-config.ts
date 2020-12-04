@@ -664,7 +664,13 @@ export interface ConfigObject extends Object {
   [key: string]: any;
 }
 
-export type ConfigValue = string | number | boolean | void | Array<any>;
+export type ConfigValue =
+  | string
+  | number
+  | boolean
+  | void
+  | Array<any>
+  | object;
 
 export enum Type {
   Array = "Array",

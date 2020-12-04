@@ -4,14 +4,16 @@ import {
   setTemporaryConfigValue,
   ConfigValue,
   Validator,
+  Type,
 } from "@openmrs/esm-config";
 import styles from "./editable-value.styles.css";
-import ValueEditor from "./value-editor";
-import { useGlobalState } from "../global-state";
+import { ValueEditor, CustomValueType } from "./value-editor";
+import { getStore, ImplementerToolsStore } from "../store";
 
 export interface EditableValueProps {
   path: string[];
   element: ConfigValueDescriptor;
+  customType?: CustomValueType;
 }
 
 export interface ConfigValueDescriptor {
@@ -20,16 +22,19 @@ export interface ConfigValueDescriptor {
   _default: ConfigValue;
   _description?: string;
   _validators?: Array<Validator>;
+  _type?: Type;
 }
 
-export default function EditableValue({ path, element }: EditableValueProps) {
-  const [valueString, setValueString] = useState<string | null>(null);
+export default function EditableValue({
+  path,
+  element,
+  customType,
+}: EditableValueProps) {
+  const [valueString, setValueString] = useState<string>();
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [configPathBeingEdited, setConfigPathBeingEdited] = useGlobalState(
-    "configPathBeingEdited"
-  );
-  const activeConfigPath = useRef<HTMLButtonElement>(null);
+  const store = getStore();
+  const activeConfigRef = useRef<HTMLButtonElement>(null);
 
   const closeEditor = () => {
     setEditing(false);
@@ -37,37 +42,62 @@ export default function EditableValue({ path, element }: EditableValueProps) {
   };
 
   const focusOnConfigPathBeingEdited = () => {
-    if (activeConfigPath && activeConfigPath.current) {
+    if (activeConfigRef && activeConfigRef.current) {
       setEditing(true);
-      activeConfigPath.current.focus();
+      activeConfigRef.current.focus();
     }
   };
 
   useEffect(() => {
-    if (isEqual(configPathBeingEdited, path)) {
-      focusOnConfigPathBeingEdited();
+    const update = (state: ImplementerToolsStore) => {
+      if (isEqual(state.configPathBeingEdited, path)) {
+        focusOnConfigPathBeingEdited();
+      }
+    };
+    update(store.getState());
+    return store.subscribe(update);
+  }, [store]);
+
+  useEffect(() => {
+    const state = store.getState();
+    if (editing && !isEqual(state.configPathBeingEdited, path)) {
+      store.setState({
+        configPathBeingEdited: path,
+        activeItemDescription: {
+          path: path,
+          source: element._source,
+          description: element._description,
+          value: valueString,
+        },
+      });
     }
-  }, [configPathBeingEdited]);
+    if (!editing && isEqual(state.configPathBeingEdited, path)) {
+      store.setState({ configPathBeingEdited: null });
+    }
+  }, [editing, store]);
 
   return (
     <>
       <div className={styles.line}>
         {editing ? (
-          <ValueEditor
-            element={element}
-            handleClose={closeEditor}
-            handleSave={(val) => {
-              try {
-                const result = JSON.parse(val);
-                setTemporaryConfigValue(path, result);
-                setValueString(val);
-                closeEditor();
-              } catch (e) {
-                console.warn(e);
-                setError("That's not formatted quite right. Try again.");
-              }
-            }}
-          />
+          <>
+            <ValueEditor
+              element={element}
+              customType={customType}
+              handleClose={closeEditor}
+              handleSave={(val) => {
+                try {
+                  const result = JSON.parse(val);
+                  setTemporaryConfigValue(path, result);
+                  setValueString(val);
+                  closeEditor();
+                } catch (e) {
+                  console.warn(e);
+                  setError("That's not formatted quite right. Try again.");
+                }
+              }}
+            />
+          </>
         ) : (
           <button
             className={`${styles.secretButton} ${
@@ -76,13 +106,12 @@ export default function EditableValue({ path, element }: EditableValueProps) {
                 : ""
             }`}
             onClick={() => setEditing(true)}
-            ref={activeConfigPath}
+            ref={activeConfigRef}
           >
-            {valueString ?? JSON.stringify(element._value)}
+            {valueString ?? JSON.stringify(element._value) ?? "none"}
           </button>
         )}
         {error && <div className={styles.error}>{error}</div>}
-        <div className={styles.configElementSource}>{element._source}</div>
       </div>
     </>
   );
