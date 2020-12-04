@@ -12,21 +12,24 @@ import { ConfigSubtree } from "./config-subtree.component";
 import { getGlobalStore } from "@openmrs/esm-api";
 import { getStore } from "../store";
 import { isEqual } from "lodash-es";
+import { ExtensionConfigureTree } from "./extension-configure-tree";
+import { ExtensionSlotAdd } from "./extension-slot-add";
 
-interface ExtensionsConfigTreeProps {
+interface ExtensionsSlotsConfigTreeProps {
   config: { [key: string]: any };
   moduleName: string;
 }
 
-interface ExtensionsConfigTreeImplProps extends ExtensionsConfigTreeProps {
+interface ExtensionSlotsConfigTreeImplProps
+  extends ExtensionsSlotsConfigTreeProps {
   slots: Record<string, ExtensionSlotInfo>;
 }
 
-const ExtensionsConfigTreeImpl = connect(
-  (state: ExtensionStore, _: ExtensionsConfigTreeProps) => ({
+const ExtensionSlotsConfigTreeImpl = connect(
+  (state: ExtensionStore, _: ExtensionsSlotsConfigTreeProps) => ({
     slots: state.slots,
   })
-)(({ config, moduleName, slots }: ExtensionsConfigTreeImplProps) => {
+)(({ config, moduleName, slots }: ExtensionSlotsConfigTreeImplProps) => {
   const extensionSlotNames = useMemo(
     () =>
       Object.keys(slots).filter((name) => moduleName in slots[name].instances),
@@ -48,12 +51,12 @@ const ExtensionsConfigTreeImpl = connect(
   ) : null;
 });
 
-export function ExtensionsConfigTree(props) {
+export function ExtensionSlotsConfigTree(props) {
   const store = React.useMemo(() => getGlobalStore("extensions"), []);
 
   return (
     <Provider store={store}>
-      <ExtensionsConfigTreeImpl {...props} />
+      <ExtensionSlotsConfigTreeImpl {...props} />
     </Provider>
   );
 }
@@ -138,7 +141,8 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
       >
         {slotName}:
       </div>
-      {["add", "remove", "order"].map((key) => (
+
+      {(["add", "remove", "order", "configure"] as const).map((key) => (
         <div
           key={path.join(".") + key}
           onMouseEnter={() =>
@@ -155,46 +159,28 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
         >
           <div className={`${styles.treeIndent} ${styles.treeLeaf}`}>
             {key}:{" "}
-            <EditableValue
-              path={path.concat([key])}
-              element={config?.[key] ?? { _value: [], _source: "default" }}
-            />
+            {key === "configure" ? (
+              <ExtensionConfigureTree
+                moduleName={moduleName}
+                slotName={slotName}
+                config={config?.configure}
+              />
+            ) : (
+              <EditableValue
+                path={path.concat([key])}
+                element={
+                  { _value: config?.[key], _source: "", _default: [] } ?? {
+                    _value: [],
+                    _source: "default",
+                    _default: [],
+                  }
+                }
+                customType={key}
+              />
+            )}
           </div>
         </div>
       ))}
-      <div
-        className={`${styles.treeIndent} ${styles.treeLeaf}`}
-        onMouseEnter={() =>
-          setActiveItemDescriptionOnMouseEnter(
-            moduleName,
-            slotName,
-            "configure",
-            config?.configure
-          )
-        }
-        onMouseLeave={() =>
-          removeActiveItemDescriptionOnMouseLeave([
-            moduleName,
-            slotName,
-            "configure",
-          ])
-        }
-      >
-        configure:{" "}
-        {config?.configure ? (
-          <div className={styles.extExpand}>
-            <ConfigSubtree
-              path={path.concat(["configure"])}
-              config={config?.configure}
-            />
-          </div>
-        ) : (
-          <EditableValue
-            path={path.concat(["configure"])}
-            element={{ _value: "", _source: "", _default: "" }}
-          />
-        )}
-      </div>
     </>
   );
 }

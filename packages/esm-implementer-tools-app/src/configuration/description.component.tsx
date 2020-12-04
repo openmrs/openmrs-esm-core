@@ -4,7 +4,6 @@ import styles from "./description.styles.css";
 
 export const Description = connect("activeItemDescription")(
   ({ activeItemDescription }) => {
-    console.log(activeItemDescription);
     return (
       <div className={styles.container}>
         {activeItemDescription ? (

@@ -58,3 +58,7 @@
 .extExpand {
   flex-basis: 100%;
 }
+
+.valueEditorInput {
+  width: 25em;
+}

@@ -17,4 +17,5 @@ export const getGlobalStore = jest.fn().mockImplementation(() => ({
     updateFcn(state);
     return () => {};
   },
+  unsubscribe: () => {},
 }));

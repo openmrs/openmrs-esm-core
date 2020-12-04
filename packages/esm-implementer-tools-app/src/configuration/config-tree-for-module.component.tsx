@@ -1,5 +1,5 @@
 import React from "react";
-import { ExtensionsConfigTree } from "./extensions-config-tree";
+import { ExtensionSlotsConfigTree } from "./extension-slots-config-tree";
 import { ConfigSubtree } from "./config-subtree.component";
 import { pickBy } from "lodash-es";
 import styles from "./configuration.styles.css";
@@ -15,7 +15,7 @@ export function ConfigTreeForModule({
 }: ConfigTreeForModuleProps) {
   return (
     <div className={styles.topLevelConfig}>
-      <ExtensionsConfigTree
+      <ExtensionSlotsConfigTree
         config={config.extensions}
         moduleName={moduleName}
       />

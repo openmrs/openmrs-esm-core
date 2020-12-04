@@ -24,7 +24,6 @@ export const getStore = () =>
 
 let lastValueOfIsOpen = false;
 getStore().subscribe((state) => {
-  console.log(state);
   if (state.isOpen != lastValueOfIsOpen) {
     setIsImplementerToolsOpen(state.isOpen);
     lastValueOfIsOpen = state.isOpen;

@@ -4,14 +4,16 @@ import {
   setTemporaryConfigValue,
   ConfigValue,
   Validator,
+  Type,
 } from "@openmrs/esm-config";
 import styles from "./editable-value.styles.css";
-import ValueEditor from "./value-editor";
+import { ValueEditor, CustomValueType } from "./value-editor";
 import { getStore, ImplementerToolsStore } from "../store";
 
 export interface EditableValueProps {
   path: string[];
   element: ConfigValueDescriptor;
+  customType?: CustomValueType;
 }
 
 export interface ConfigValueDescriptor {
@@ -20,9 +22,14 @@ export interface ConfigValueDescriptor {
   _default: ConfigValue;
   _description?: string;
   _validators?: Array<Validator>;
+  _type?: Type;
 }
 
-export default function EditableValue({ path, element }: EditableValueProps) {
+export default function EditableValue({
+  path,
+  element,
+  customType,
+}: EditableValueProps) {
   const [valueString, setValueString] = useState<string>();
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -76,6 +83,7 @@ export default function EditableValue({ path, element }: EditableValueProps) {
           <>
             <ValueEditor
               element={element}
+              customType={customType}
               handleClose={closeEditor}
               handleSave={(val) => {
                 try {
@@ -100,7 +108,7 @@ export default function EditableValue({ path, element }: EditableValueProps) {
             onClick={() => setEditing(true)}
             ref={activeConfigRef}
           >
-            {valueString ?? JSON.stringify(element._value)}
+            {valueString ?? JSON.stringify(element._value) ?? "none"}
           </button>
         )}
         {error && <div className={styles.error}>{error}</div>}
