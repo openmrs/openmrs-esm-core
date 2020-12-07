@@ -1,48 +1,20 @@
 import React, { Fragment, useEffect, useState } from "react";
-import {
-  checkModules,
-  MissingBackendModules,
-} from "./openmrs-backend-dependencies";
+import { MissingBackendModules } from "./openmrs-backend-dependencies";
 import style from "./backend-dependencies-style.css";
 
-export default function BackendModule(props: BackendModulesProps) {
-  const [
-    modulesWithMissingBackendModules,
-    setModulesWithMissingBackendModules,
-  ] = useState<Array<MissingBackendModules>>([]);
-  const [
-    modulesWithWrongBackendModulesVersion,
-    setModulesWithWrongBackendModulesVersion,
-  ] = useState<Array<MissingBackendModules>>([]);
-
+export const BackendModule: React.FC<BackendModulesProps> = ({
+  modulesWithMissingBackendModules,
+  modulesWithWrongBackendModulesVersion,
+  setHasAlert,
+}) => {
   useEffect(() => {
     if (
       modulesWithMissingBackendModules.length ||
       modulesWithWrongBackendModulesVersion.length
     ) {
-      props.setHasAlert(true);
+      setHasAlert(true);
     }
   }, [modulesWithMissingBackendModules, modulesWithWrongBackendModulesVersion]);
-
-  useEffect(() => {
-    const modules = window.installedModules
-      .filter((module) => module[1].backendDependencies)
-      .map((module) => ({
-        backendDependencies: module[1].backendDependencies,
-        moduleName: module[0],
-      }));
-    checkModules(modules).then(
-      ({
-        modulesWithMissingBackendModules,
-        modulesWithWrongBackendModulesVersion,
-      }) => {
-        setModulesWithMissingBackendModules(modulesWithMissingBackendModules);
-        setModulesWithWrongBackendModulesVersion(
-          modulesWithWrongBackendModulesVersion
-        );
-      }
-    );
-  }, []);
 
   return (
     <div className={style.panel}>
@@ -146,8 +118,10 @@ export default function BackendModule(props: BackendModulesProps) {
       </div>
     </div>
   );
-}
+};
 
 type BackendModulesProps = {
   setHasAlert(value: boolean): void;
+  modulesWithMissingBackendModules: Array<MissingBackendModules>;
+  modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
 };

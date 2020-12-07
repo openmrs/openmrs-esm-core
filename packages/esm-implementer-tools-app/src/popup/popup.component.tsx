@@ -3,7 +3,8 @@ import { Button, Tabs, Tab } from "carbon-components-react";
 import { Close16 } from "@carbon/icons-react";
 import styles from "./popup.styles.css";
 import Configuration from "../configuration/configuration.component";
-import BackendModule from "../backend-dependencies/backend-dependecies.component";
+import { BackendModule } from "../backend-dependencies/backend-dependecies.component";
+import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-dependencies";
 
 export default function Popup(props: DevToolsPopupProps) {
   const [configHasAlert, setConfigHasAlert] = useState(false);
@@ -30,7 +31,15 @@ export default function Popup(props: DevToolsPopupProps) {
           label="Backend Modules"
           style={{ position: "fixed", marginLeft: "160px" }}
         >
-          <BackendModule setHasAlert={setBackendHasAlert} />
+          <BackendModule
+            setHasAlert={setBackendHasAlert}
+            modulesWithMissingBackendModules={
+              props.modulesWithMissingBackendModules
+            }
+            modulesWithWrongBackendModulesVersion={
+              props.modulesWithWrongBackendModulesVersion
+            }
+          />
         </Tab>
       </Tabs>
       <div className={styles.farRight}>
@@ -50,5 +59,7 @@ export default function Popup(props: DevToolsPopupProps) {
 type DevToolsPopupProps = {
   close(): void;
   setHasAlert(value: boolean): void;
+  modulesWithMissingBackendModules: Array<MissingBackendModules>;
+  modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
   visibleTabIndex?: number;
 };
