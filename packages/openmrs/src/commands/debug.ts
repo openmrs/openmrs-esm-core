@@ -2,6 +2,7 @@ import { ImportmapDeclaration, loadConfig, logInfo, logWarn } from "../utils";
 
 export interface DebugArgs {
   port: number;
+  host: string;
   backend: string;
   importmap: ImportmapDeclaration;
   spaPath: string;
@@ -22,21 +23,22 @@ export function runDebug(args: DebugArgs) {
 
   logInfo(`Starting the dev server ...`);
 
+  const { host, port } = args;
   const options = {
     ...config.devServer,
-    port: args.port,
+    port,
+    host,
     publicPath: config.output.publicPath,
     stats: { colors: true },
   };
 
   const server = new WebpackDevServer(webpack(config), options);
-  const port = args.port;
 
-  server.listen(port, "localhost", (err?: Error) => {
+  server.listen(port, host, (err?: Error) => {
     if (err) {
       logWarn(`Error: ${err}`);
     } else {
-      logInfo(`Listening at http://localhost:${port}`);
+      logInfo(`Listening at http://${host}:${port}`);
     }
   });
 

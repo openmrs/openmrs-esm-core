@@ -7,6 +7,7 @@ import { logInfo, logWarn } from "../utils";
 
 export interface StartArgs {
   port: number;
+  host: string;
   open: boolean;
   backend: string;
 }
@@ -20,7 +21,7 @@ export function runStart(args: StartArgs) {
   );
   const index = resolve(source, "index.html");
   const spaPath = "/openmrs/spa";
-  const pageUrl = `http://localhost:${args.port}${spaPath}`;
+  const pageUrl = `http://${args.host}:${args.port}${spaPath}`;
 
   app.use("/openmrs/spa", express.static(source));
   app.use(
@@ -30,10 +31,10 @@ export function runStart(args: StartArgs) {
       changeOrigin: true,
     })
   );
-  app.get("/*", (req, res) => res.sendFile(index));
+  app.get("/*", (_, res) => res.sendFile(index));
 
-  app.listen(args.port, () => {
-    logInfo(`Listening at http://localhost:${args.port}`);
+  app.listen(args.port, args.host, () => {
+    logInfo(`Listening at http://${args.host}:${args.port}`);
     logInfo(`SPA available at ${pageUrl}`);
 
     if (args.open) {
