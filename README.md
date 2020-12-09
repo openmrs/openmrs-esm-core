@@ -1,3 +1,5 @@
+![Node.js CI](https://github.com/openmrs/openmrs-esm-core/workflows/Node.js%20CI/badge.svg)
+
 # OpenMRS Frontend Core
 
 This is a [Lerna](https://lerna.js.org/) project containing the core packages for the OpenMRS Frontend. These packages handle the "cross-cutting concerns" described in the [Domain Decomposition](https://wiki.openmrs.org/display/projects/MFE+Domain+Decomposition) document.
@@ -21,6 +23,7 @@ The following common libraries have been developed. They may also be used indepe
 - [@openmrs/esm-config](packages/esm-config)
 - [@openmrs/esm-error-handling](packages/esm-error-handling)
 - [@openmrs/esm-extensions](packages/esm-extensions)
+- [@openmrs/esm-react-utils](packages/esm-react-utils)
 - [@openmrs/esm-styleguide](packages/esm-styleguide)
 
 ### Microfrontends
