@@ -18,7 +18,7 @@ export default function Popup(props: DevToolsPopupProps) {
   return (
     <div className={styles.popup}>
       <div className={styles.topBar} />
-      <Tabs>
+      <Tabs selected={visibleTabIndex}>
         <Tab
           id="configuration-tab"
           label="Configuration"

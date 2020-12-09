@@ -11,6 +11,7 @@ import {
   checkModules,
   MissingBackendModules,
 } from "./backend-dependencies/openmrs-backend-dependencies";
+import { useEffect } from "react";
 
 export default function ImplementerTools() {
   const store = getStore();
@@ -26,6 +27,7 @@ export default function ImplementerTools() {
 
 const PopupHandler = connect("isOpen")(({ isOpen }) => {
   const [hasAlert, setHasAlert] = useState(false);
+  const [visibleTabIndex, setVisibleTabIndex] = useState(0);
   const [
     modulesWithMissingBackendModules,
     setModulesWithMissingBackendModules,
@@ -35,9 +37,20 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
     setModulesWithWrongBackendModulesVersion,
   ] = useState<Array<MissingBackendModules>>([]);
 
+  useEffect(() => {
+    determineUnresolvedDeps();
+  }, []);
   function togglePopup() {
     getStore().setState({ isOpen: !isOpen });
   }
+  const showModuleDiagnostics = (e) => {
+    e.preventDefault();
+    setVisibleTabIndex(1);
+    if (!isOpen) {
+      togglePopup();
+    }
+    return false;
+  };
 
   const determineUnresolvedDeps = () => {
     const modules = window.installedModules
@@ -59,30 +72,41 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
           modulesWithMissingBackendModules.length > 0 ||
           modulesWithWrongBackendModulesVersion.length > 0
         ) {
-          console.log("Expect a toast");
-          console.log(showToast);
           showToast({
-            description: "Found modules with unresolved backend dependencies",
+            description: (
+              <span>
+                Found modules with unresolved backend dependencies.{" "}
+                <a href="#" onClick={showModuleDiagnostics}>
+                  See details
+                </a>
+              </span>
+            ),
+            kind: "error",
           });
         }
       }
     );
   };
-  determineUnresolvedDeps();
   return (
     <>
       {" "}
       <button
-        tabIndex={0}
         onClick={togglePopup}
         className={`${styles.popupTriggerButton} ${
           hasAlert ? styles.triggerButtonAlert : ""
         }`}
       />{" "}
-      {isOpen ? <Popup close={togglePopup} setHasAlert={setHasAlert} modulesWithMissingBackendModules={modulesWithMissingBackendModules}
+      {isOpen ? (
+        <Popup
+          close={togglePopup}
+          setHasAlert={setHasAlert}
+          modulesWithMissingBackendModules={modulesWithMissingBackendModules}
           modulesWithWrongBackendModulesVersion={
             modulesWithWrongBackendModulesVersion
-          }/> : null}
+          }
+          visibleTabIndex={visibleTabIndex}
+        />
+      ) : null}
     </>
   );
 });
