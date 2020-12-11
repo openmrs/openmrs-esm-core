@@ -87,6 +87,7 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
       }
     );
   };
+  console.log("Is open:", isOpen);
   return (
     <>
       {" "}
