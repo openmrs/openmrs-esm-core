@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { MissingBackendModules } from "./openmrs-backend-dependencies";
 import style from "./backend-dependencies-style.css";
+import { find } from "lodash-es";
 import {
   DataTable,
   Table,
@@ -10,160 +11,167 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  Grid,
-  Row,
 } from "carbon-components-react";
 
-export const BackendModule: React.FC<BackendModulesProps> = ({
+export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
   modulesWithMissingBackendModules,
   modulesWithWrongBackendModulesVersion,
   setHasAlert,
 }) => {
+  const [unresolvedDeps, setUnresolvedDeps] = useState<Array<FrontendModule>>(
+    []
+  );
+  let counter: number = 0;
+
   useEffect(() => {
     if (
       modulesWithMissingBackendModules.length ||
       modulesWithWrongBackendModulesVersion.length
     ) {
+      let similarEsms: Array<MissingBackendModules> = [];
+      setUnresolvedDeps(
+        modulesWithWrongBackendModulesVersion.map((m) => {
+          const similarEsm = find(modulesWithMissingBackendModules, {
+            moduleName: m.moduleName,
+          });
+          let leavesForSimilarEsm: Array<UnresolvedBackendDependency> = [];
+          if (similarEsm) {
+            leavesForSimilarEsm = similarEsm.backendModules.map(
+              (m) =>
+                ({
+                  name: m.uuid,
+                  requiredVersion: m.version,
+                  type: "missing",
+                } as UnresolvedBackendDependency)
+            );
+            similarEsms.push(similarEsm);
+          }
+          const leaves = m.backendModules.map(
+            (m) =>
+              ({
+                name: m.uuid,
+                installedVersion: m.version,
+                requiredVersion: m.requiredVersion,
+                type: "version-mismatch",
+              } as UnresolvedBackendDependency)
+          );
+          return {
+            name: m.moduleName,
+            unresolvedDeps: [...leaves, ...leavesForSimilarEsm],
+          };
+        })
+      );
+      modulesWithMissingBackendModules.forEach((m) => {
+        if (!similarEsms.includes(m)) {
+          const leaves = m.backendModules.map(
+            (m) =>
+              ({
+                name: m.uuid,
+                requiredVersion: m.version,
+                type: "missing",
+              } as UnresolvedBackendDependency)
+          );
+          unresolvedDeps.push({
+            name: m.moduleName,
+            unresolvedDeps: [...leaves],
+          });
+        }
+      });
       setHasAlert(true);
     }
   }, [modulesWithMissingBackendModules, modulesWithWrongBackendModulesVersion]);
 
-  const getRows = (esms: Array<MissingBackendModules>) => {
-    let counter = 0;
-    let rows: Array<RowProps> = [];
-    esms
-      .filter((esm) => esm.backendModules.length > 0)
-      .forEach((esm) => {
-        rows.push({
-          id: counter.toString(),
-          name: esm.moduleName,
-          isFrontendModule: true,
-        });
-        const unresolvedBackendDeps = esm.backendModules.map((m) => {
-          counter++;
-          return {
-            id: counter.toString(),
-            name: m.uuid,
-            installedVersion: m.version,
-            requiredVersion: m.requiredVersion,
-          };
-        }) as Array<RowProps>;
-        rows = rows.concat(unresolvedBackendDeps);
-        counter++;
-      });
-    return rows;
+  const nextId = () => {
+    counter++;
+    return counter.toString();
   };
 
-  const missingModulesTableProps: TableProps = {
-    headers: [
-      {
-        key: "name",
-        header: "Module Name",
-      },
-      {
-        key: "installedVersion",
-        header: "Installed Version",
-      },
-    ],
-    rows: getRows(modulesWithMissingBackendModules),
-    title: "Missing openmrs backend modules",
-  };
-
-  const modulesWithWrongVersionsTableProps: TableProps = {
-    headers: [
-      {
-        key: "name",
-        header: "Module Name",
-      },
-      {
-        key: "installedVersion",
-        header: "Installed Version",
-      },
-      {
-        key: "requiredVersion",
-        header: "Required Version",
-      },
-    ],
-    rows: getRows(modulesWithWrongBackendModulesVersion),
-    title: "Modules with wrong versions installed",
-  };
-
-  const containsEsmTitle = (row) => {
-    let counter = 0;
-    row.cells.forEach((cell) => {
-      if (cell.value) {
-        counter++;
-      }
-    });
-    return counter == 1;
-  };
-
-  const carbonTable = (props: TableProps) => {
-    return (
-      <DataTable rows={props.rows} headers={props.headers}>
-        {({ rows, headers, getTableProps, getHeaderProps, getRowProps }) => (
-          <TableContainer title={props.title}>
-            <Table {...getTableProps()}>
-              <TableHead>
-                <TableRow>
-                  {headers.map((header) => (
-                    <TableHeader {...getHeaderProps({ header })}>
-                      {header.header}
-                    </TableHeader>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow {...getRowProps({ row })}>
-                    {row.cells.map((cell) => {
-                      return containsEsmTitle(row) && cell.value ? (
-                        <TableCell key={cell.id}>
-                          <strong>{cell.value}</strong>
-                        </TableCell>
-                      ) : (
-                        <TableCell key={cell.id}>{cell.value}</TableCell>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
-      </DataTable>
-    );
-  };
+  const headers = [
+    {
+      key: "name",
+      header: "Module Name",
+    },
+    {
+      key: "installedVersion",
+      header: "Installed Version",
+    },
+    {
+      key: "requiredVersion",
+      header: "Required Version",
+    },
+  ];
 
   return (
     <div className={style.panel}>
-      <div className={style.tableWrapper}>
-        {carbonTable(missingModulesTableProps)}
-      </div>
-      <div className={style.tableWrapper}>
-        {carbonTable(modulesWithWrongVersionsTableProps)}
+      <div>
+        <DataTable rows={[]} headers={headers}>
+          {({ headers, getTableProps, getHeaderProps }) => (
+            <TableContainer title={""}>
+              <Table {...getTableProps()}>
+                <TableHead>
+                  <TableRow>
+                    {headers.map((header) => (
+                      <TableHeader {...getHeaderProps({ header })}>
+                        {header.header}
+                      </TableHeader>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {unresolvedDeps.map((esm, key) => (
+                    <Fragment key={key}>
+                      <TableRow key={nextId()}>
+                        <TableCell key={nextId()}>
+                          <strong>{esm.name}</strong>
+                        </TableCell>
+                        <TableCell key={nextId()}>{undefined}</TableCell>
+                        <TableCell key={nextId()}>{undefined}</TableCell>
+                      </TableRow>
+                      {esm.unresolvedDeps.map((dep) => (
+                        <TableRow key={nextId()}>
+                          <TableCell key={nextId()}>{dep.name}</TableCell>
+                          {dep.type === "missing" ? (
+                            <TableCell key={nextId()}>
+                              <span style={{ color: "red" }}>Missing</span>
+                            </TableCell>
+                          ) : (
+                            <TableCell key={nextId()}>
+                              {dep.installedVersion}
+                            </TableCell>
+                          )}
+                          <TableCell key={nextId()}>
+                            {dep.requiredVersion}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </Fragment>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </DataTable>
       </div>
     </div>
   );
 };
 
-type BackendModulesProps = {
+type ModuleDiagnosticsProps = {
   setHasAlert(value: boolean): void;
   modulesWithMissingBackendModules: Array<MissingBackendModules>;
   modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
 };
 
-interface TableProps {
-  rows: Array<RowProps>;
-  headers: Array<{ key: string; header: string }>;
-  title?: string;
+interface FrontendModule {
+  name: string;
+  unresolvedDeps: Array<UnresolvedBackendDependency>;
 }
 
-interface RowProps {
-  id: string;
+type DeficiencyType = "missing" | "version-mismatch";
+
+interface UnresolvedBackendDependency {
+  name: string;
   requiredVersion?: string;
   installedVersion?: string;
-  name: string;
-  isSelected?: boolean;
-  isFrontendModule?: boolean;
+  type: DeficiencyType;
 }

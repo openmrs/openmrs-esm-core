@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { UserHasAccess } from "@openmrs/esm-react-utils";
 import { connect, Provider } from "unistore/react";
 import Popup from "./popup/popup.component";
 import styles from "./implementer-tools.styles.css";
-
-import "./backend-dependencies/openmrs-backend-dependencies";
 import { getStore } from "./store";
 import { showToast } from "@openmrs/esm-styleguide";
 import {
   checkModules,
   MissingBackendModules,
 } from "./backend-dependencies/openmrs-backend-dependencies";
-import { useEffect } from "react";
+import { NotificationActionButton } from "carbon-components-react/lib/components/Notification";
 
 export default function ImplementerTools() {
   const store = getStore();
@@ -38,21 +36,6 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
   ] = useState<Array<MissingBackendModules>>([]);
 
   useEffect(() => {
-    determineUnresolvedDeps();
-  }, []);
-  function togglePopup() {
-    getStore().setState({ isOpen: !isOpen });
-  }
-  const showModuleDiagnostics = (e) => {
-    e.preventDefault();
-    setVisibleTabIndex(1);
-    if (!isOpen) {
-      togglePopup();
-    }
-    return false;
-  };
-
-  const determineUnresolvedDeps = () => {
     const modules = window.installedModules
       .filter((module) => module[1].backendDependencies)
       .map((module) => ({
@@ -74,20 +57,31 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
         ) {
           showToast({
             description: (
-              <span>
-                Found modules with unresolved backend dependencies.{" "}
-                <a href="#" onClick={showModuleDiagnostics}>
-                  See details
-                </a>
-              </span>
+              <span>Found modules with unresolved backend dependencies.</span>
+            ),
+            action: (
+              <NotificationActionButton onClick={showModuleDiagnostics}>
+                View
+              </NotificationActionButton>
             ),
             kind: "error",
           });
         }
       }
     );
+  }, []);
+
+  function togglePopup() {
+    getStore().setState({ isOpen: !isOpen });
+  }
+  const showModuleDiagnostics = () => {
+    setVisibleTabIndex(1);
+    if (!isOpen) {
+      togglePopup();
+    }
+    return false;
   };
-  console.log("Is open:", isOpen);
+
   return (
     <>
       {" "}
