@@ -14,5 +14,7 @@ module.exports = {
       "<rootDir>/__mocks__/openmrs-esm-react-utils.mock.tsx",
     "@openmrs/esm-extensions":
       "<rootDir>/__mocks__/openmrs-esm-extensions.mock.tsx",
+    "@openmrs/esm-styleguide":
+      "<rootDir>/__mocks__/openmrs-esm-styleguide.mock.tsx",
   },
 };

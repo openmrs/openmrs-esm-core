@@ -36,7 +36,7 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
   ] = useState<Array<MissingBackendModules>>([]);
 
   useEffect(() => {
-    const modules = window.installedModules
+    const modules = (window.installedModules ?? [])
       .filter((module) => module[1].backendDependencies)
       .map((module) => ({
         backendDependencies: module[1].backendDependencies,
