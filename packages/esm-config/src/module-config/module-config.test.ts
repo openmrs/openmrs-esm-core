@@ -237,43 +237,6 @@ describe("getConfig", () => {
     });
   });
 
-  it("supports freeform object elements, which have no structural validation", async () => {
-    const fooSchema = {
-      baz: {
-        _default: {},
-        _validators: [
-          validator(
-            (o) => typeof o === "object" && !Array.isArray(o),
-            "Must be an object"
-          ),
-        ],
-      },
-    };
-    Config.defineConfigSchema("foo-module", fooSchema);
-    const testConfig = {
-      "foo-module": {
-        baz: { what: "ever", goes: "here" },
-      },
-    };
-    Config.provide(testConfig);
-    const result = await Config.getConfig("foo-module");
-    expect(console.error).not.toHaveBeenCalled();
-    expect(result.baz.what).toBe("ever");
-
-    Config.clearAll();
-    Config.defineConfigSchema("foo-module", fooSchema);
-    const badConfig = {
-      "foo-module": {
-        baz: 0,
-      },
-    };
-    Config.provide(badConfig);
-    await Config.getConfig("foo-module");
-    expect(console.error).toHaveBeenCalledWith(
-      expect.stringMatching(/0.*foo-module.*baz.*must be an object/i)
-    );
-  });
-
   it("throws if looking up module with no schema", async () => {
     await expect(Config.getConfig("fake-module")).rejects.toThrow(
       /No config schema has been defined.*fake-module/
@@ -372,6 +335,38 @@ describe("getConfig", () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 
+  it("supports freeform object elements, which have no structural validation", async () => {
+    const fooSchema = {
+      baz: {
+        _type: Config.Type.Object,
+        _default: {},
+      },
+    };
+    Config.defineConfigSchema("foo-module", fooSchema);
+    const testConfig = {
+      "foo-module": {
+        baz: { what: "ever", goes: "here" },
+      },
+    };
+    Config.provide(testConfig);
+    const result = await Config.getConfig("foo-module");
+    expect(console.error).not.toHaveBeenCalled();
+    expect(result.baz.what).toBe("ever");
+
+    Config.clearAll();
+    Config.defineConfigSchema("foo-module", fooSchema);
+    const badConfig = {
+      "foo-module": {
+        baz: 0,
+      },
+    };
+    Config.provide(badConfig);
+    await Config.getConfig("foo-module");
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/0.*foo-module.*baz.*must be an object/i)
+    );
+  });
+
   it("supports freeform object elements validations", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: {
@@ -399,6 +394,52 @@ describe("getConfig", () => {
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(/foo-module.foo.c.name: .*url/i)
     );
+  });
+
+  it("returns freeform object default", async () => {
+    Config.defineConfigSchema("object-def", {
+      furi: {
+        _type: Config.Type.Object,
+        _elements: {
+          gohan: { _type: Config.Type.String },
+        },
+        _default: {
+          kake: { gohan: "ok" },
+        },
+      },
+    });
+    const config = await Config.getConfig("object-def");
+    expect(config).toStrictEqual({ furi: { kake: { gohan: "ok" } } });
+  });
+
+  it("interpolates freeform object element defaults", async () => {
+    Config.defineConfigSchema("object-def", {
+      tamago: {
+        _type: Config.Type.Object,
+        _elements: {
+          gohan: { _type: Config.Type.String },
+          nori: { _type: Config.Type.Boolean, _default: true },
+        },
+        _default: {
+          kake: { gohan: "ok", nori: true },
+        },
+      },
+    });
+    Config.provide({
+      "object-def": {
+        tamago: {
+          gyudon: { gohan: "no" },
+          sake: { gohan: "maybe", nori: false },
+        },
+      },
+    });
+    const config = await Config.getConfig("object-def");
+    expect(config).toStrictEqual({
+      tamago: {
+        gyudon: { gohan: "no", nori: true },
+        sake: { gohan: "maybe", nori: false },
+      },
+    });
   });
 
   it("supports array elements", async () => {

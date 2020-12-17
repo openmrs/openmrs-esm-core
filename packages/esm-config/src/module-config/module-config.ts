@@ -583,10 +583,12 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
           );
           config[key] = configWithDefaults;
         } else if (schemaPart._type == Type.Object) {
-          const configWithDefaults = Object.values(
-            config[key]
-          ).map((conf: Config) => setDefaults(elements, conf));
-          config[key] = configWithDefaults;
+          for (let objectKey of Object.keys(config[key])) {
+            config[key][objectKey] = setDefaults(
+              elements,
+              config[key][objectKey]
+            );
+          }
         }
       }
     } else if (isOrdinaryObject(schemaPart)) {
