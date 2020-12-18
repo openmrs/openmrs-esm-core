@@ -110,16 +110,16 @@ describe("parseUnresolvedDeps", () => {
         name: "openmrs-esm-login-app",
         unresolvedDeps: [
           {
-            name: "fhir",
-            requiredVersion: "^1.4.2",
-            type: "missing",
-          },
-          {
             name: "webservice.rest",
             installedVersion: "2.2",
             requiredVersion: "2.24.0",
             type: "version-mismatch",
           },
+          {
+            name: "fhir",
+            requiredVersion: "^1.4.2",
+            type: "missing",
+          }
         ],
       },
     ]);
