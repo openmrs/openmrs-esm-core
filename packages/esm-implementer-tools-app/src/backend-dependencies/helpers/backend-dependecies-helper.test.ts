@@ -119,7 +119,7 @@ describe("parseUnresolvedDeps", () => {
             name: "fhir",
             requiredVersion: "^1.4.2",
             type: "missing",
-          }
+          },
         ],
       },
     ]);
