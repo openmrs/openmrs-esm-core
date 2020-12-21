@@ -78,19 +78,19 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
                         <TableCell>
                           <strong>{esm.name}</strong>
                         </TableCell>
-                        <TableCell>{undefined}</TableCell>
-                        <TableCell>{undefined}</TableCell>
+                        <TableCell></TableCell>
+                        <TableCell></TableCell>
                       </TableRow>
                       {esm.unresolvedDeps.map((dep) => (
                         <TableRow key={dep.name}>
                           <TableCell>{dep.name}</TableCell>
-                          {dep.type === "missing" ? (
-                            <TableCell>
+                          <TableCell>
+                            {dep.type === "missing" ? (
                               <span style={{ color: "red" }}>Missing</span>
-                            </TableCell>
-                          ) : (
-                            <TableCell>{dep.installedVersion}</TableCell>
-                          )}
+                            ) : (
+                              dep.installedVersion
+                            )}
+                          </TableCell>
                           <TableCell>{dep.requiredVersion}</TableCell>
                         </TableRow>
                       ))}
