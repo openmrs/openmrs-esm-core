@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Type } from "@openmrs/esm-config";
+import { Button, ButtonSet } from "carbon-components-react";
+import { Close16, Save16 } from "@carbon/icons-react";
 import { ConfigValueDescriptor } from "./editable-value.component";
-import { ConceptSearchBox } from "./concept-search";
+import { ValueEditorField } from "./value-editors/value-editor-field";
 import styles from "./configuration.styles.css";
-import { ExtensionSlotAdd } from "./extension-slot-add";
 
 export type CustomValueType = "add" | "remove" | "order" | "configure";
 
 interface ValueEditorProps {
   element: ConfigValueDescriptor;
   customType?: CustomValueType;
+  path: String[];
   handleSave: (val: string) => void;
   handleClose: () => void;
 }
@@ -17,13 +18,12 @@ interface ValueEditorProps {
 export function ValueEditor({
   element,
   customType,
+  path,
   handleSave,
   handleClose,
 }: ValueEditorProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [tmpValue, setTmpValue] = useState(() =>
-    JSON.stringify(element._value)
-  );
+  const [tmpValue, setTmpValue] = useState(element._value);
 
   const valueType = customType ?? element._type;
 
@@ -31,51 +31,44 @@ export function ValueEditor({
     if (e.key === "Escape") {
       handleClose();
     } else if (e.key === "Enter") {
-      handleSave(tmpValue);
-    }
-  };
-
-  const clickListener = (e: MouseEvent) => {
-    if (!ref.current?.contains(e.target as Node)) {
-      handleClose?.(); // using optional chaining here, change to onClose && onClose(), if required
+      handleSave(JSON.stringify(tmpValue));
     }
   };
 
   useEffect(() => {
-    // Attach the listeners on component mount.
-    document.addEventListener("click", clickListener);
     document.addEventListener("keyup", keyListener);
-    // Detach the listeners on component unmount.
     return () => {
-      document.removeEventListener("click", clickListener);
       document.removeEventListener("keyup", keyListener);
     };
   }, [tmpValue]);
 
   return (
     <div ref={ref} style={{ display: "inherit" }}>
-      {valueType === Type.ConceptUuid ? (
-        <ConceptSearchBox
-          setConcept={(concept) => {
-            handleSave(JSON.stringify(concept.uuid));
-          }}
+      <ValueEditorField
+        element={element}
+        path={path}
+        value={tmpValue}
+        onChange={(v) => setTmpValue(v)}
+        valueType={valueType}
+      />
+      <div className={styles.valueEditorButtons}>
+        <Button
+          renderIcon={Save16}
+          size="small"
+          kind="primary"
+          iconDescription="Save"
+          hasIconOnly
+          onClick={() => handleSave(JSON.stringify(tmpValue))}
         />
-      ) : valueType === "add" ? (
-        <ExtensionSlotAdd
-          value={tmpValue ?? element._value}
-          setValue={(value) => {
-            setTmpValue(JSON.stringify(value));
-          }}
+        <Button
+          renderIcon={Close16}
+          size="small"
+          kind="secondary"
+          iconDescription="Cancel"
+          hasIconOnly
+          onClick={handleClose}
         />
-      ) : (
-        <input
-          type="text"
-          value={tmpValue}
-          onChange={(e) => setTmpValue(e.target.value)}
-          className={styles.valueEditorInput}
-        ></input>
-      )}
-      <button onClick={() => handleSave(tmpValue)}>Save</button>
+      </div>
     </div>
   );
 }

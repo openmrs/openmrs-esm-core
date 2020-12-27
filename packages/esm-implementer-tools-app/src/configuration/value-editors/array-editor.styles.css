@@ -1,0 +1,11 @@
+.arrayEditor :global(.bx--structured-list-td) {
+  padding: 0.25rem 1rem 0.25rem 1rem;
+}
+
+.arrayEditor :global(.bx--structured-list) {
+  margin-bottom: 0.25rem;
+}
+
+.addButtonCell {
+  text-align: right;
+}

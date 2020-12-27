@@ -17,18 +17,24 @@
   overflow-y: auto;
 }
 
+.content {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.tabs {
+  width: 30em;
+}
+
 .topBar {
   position: fixed;
   background-color: #d0d0d0;
   width: 100%;
   height: 42px;
-}
-
-.farRight {
-  position: fixed;
-  right: 0;
   display: flex;
-  z-index: 1000;
+  justify-content: space-between;
+  border-bottom: 1px solid #a0a0a0;
+  z-index: 2;
 }
 
 .closeButton {

@@ -5,6 +5,7 @@ import {
   ConfigValue,
   Validator,
   Type,
+  Config,
 } from "@openmrs/esm-config";
 import styles from "./editable-value.styles.css";
 import { ValueEditor, CustomValueType } from "./value-editor";
@@ -21,6 +22,7 @@ export interface ConfigValueDescriptor {
   _source: string;
   _default: ConfigValue;
   _description?: string;
+  _elements?: Config | ConfigValueDescriptor;
   _validators?: Array<Validator>;
   _type?: Type;
 }
@@ -33,7 +35,6 @@ export default function EditableValue({
   const [valueString, setValueString] = useState<string>();
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const store = getStore();
   const activeConfigRef = useRef<HTMLButtonElement>(null);
 
   const closeEditor = () => {
@@ -54,11 +55,13 @@ export default function EditableValue({
         focusOnConfigPathBeingEdited();
       }
     };
+    const store = getStore();
     update(store.getState());
     return store.subscribe(update);
-  }, [store]);
+  }, []);
 
   useEffect(() => {
+    const store = getStore();
     const state = store.getState();
     if (editing && !isEqual(state.configPathBeingEdited, path)) {
       store.setState({
@@ -74,7 +77,7 @@ export default function EditableValue({
     if (!editing && isEqual(state.configPathBeingEdited, path)) {
       store.setState({ configPathBeingEdited: null });
     }
-  }, [editing, store]);
+  }, [editing]);
 
   return (
     <>
@@ -84,6 +87,7 @@ export default function EditableValue({
             <ValueEditor
               element={element}
               customType={customType}
+              path={path}
               handleClose={closeEditor}
               handleSave={(val) => {
                 try {

@@ -13,7 +13,14 @@ import { getGlobalStore } from "@openmrs/esm-api";
 import { getStore } from "../store";
 import { isEqual } from "lodash-es";
 import { ExtensionConfigureTree } from "./extension-configure-tree";
-import { ExtensionSlotAdd } from "./extension-slot-add";
+import {
+  StructuredListBody,
+  StructuredListCell,
+  StructuredListRow,
+  StructuredListWrapper,
+} from "carbon-components-react";
+import { Subtree } from "./layout/subtree.component";
+import { TreeContainer } from "./layout/tree-container.component";
 
 interface ExtensionsSlotsConfigTreeProps {
   config: { [key: string]: any };
@@ -37,17 +44,14 @@ const ExtensionSlotsConfigTreeImpl = connect(
   );
 
   return extensionSlotNames.length ? (
-    <div className={styles.treeIndent}>
-      extensions:
+    <Subtree label={"extension slots"} leaf={false}>
       {extensionSlotNames.map((slotName) => (
-        <div key={slotName} className={styles.treeIndent}>
-          <ExtensionSlotConfigTree
-            config={config?.[slotName]}
-            path={[moduleName, "extensions", slotName]}
-          />
-        </div>
+        <ExtensionSlotConfigTree
+          config={config?.[slotName]}
+          path={[moduleName, "extensions", slotName]}
+        />
       ))}
-    </div>
+    </Subtree>
   ) : null;
 });
 
@@ -130,21 +134,21 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   }
 
   return (
-    <>
-      <div
-        onMouseEnter={() =>
-          setActiveExtensionSlotOnMouseEnter(moduleName, slotName)
-        }
-        onMouseLeave={() =>
-          removeActiveItemDescriptionOnMouseLeave([moduleName, slotName])
-        }
-      >
-        {slotName}:
-      </div>
-
+    <Subtree
+      label={slotName}
+      leaf={false}
+      onMouseEnter={() =>
+        setActiveExtensionSlotOnMouseEnter(moduleName, slotName)
+      }
+      onMouseLeave={() =>
+        removeActiveItemDescriptionOnMouseLeave([moduleName, slotName])
+      }
+    >
       {(["add", "remove", "order", "configure"] as const).map((key) => (
-        <div
+        <Subtree
+          label={key}
           key={path.join(".") + key}
+          leaf={true}
           onMouseEnter={() =>
             setActiveItemDescriptionOnMouseEnter(
               moduleName,
@@ -157,30 +161,31 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
             removeActiveItemDescriptionOnMouseLeave([moduleName, slotName, key])
           }
         >
-          <div className={`${styles.treeIndent} ${styles.treeLeaf}`}>
-            {key}:{" "}
-            {key === "configure" ? (
-              <ExtensionConfigureTree
-                moduleName={moduleName}
-                slotName={slotName}
-                config={config?.configure}
-              />
-            ) : (
-              <EditableValue
-                path={path.concat([key])}
-                element={
-                  { _value: config?.[key], _source: "", _default: [] } ?? {
-                    _value: [],
-                    _source: "default",
-                    _default: [],
-                  }
+          {key === "configure" ? (
+            <ExtensionConfigureTree
+              moduleName={moduleName}
+              slotName={slotName}
+              config={config?.configure}
+            />
+          ) : (
+            <EditableValue
+              path={path.concat([key])}
+              element={
+                {
+                  _value: config?.[key],
+                  _source: "",
+                  _default: [],
+                } ?? {
+                  _value: [],
+                  _source: "default",
+                  _default: [],
                 }
-                customType={key}
-              />
-            )}
-          </div>
-        </div>
+              }
+              customType={key}
+            />
+          )}
+        </Subtree>
       ))}
-    </>
+    </Subtree>
   );
 }
