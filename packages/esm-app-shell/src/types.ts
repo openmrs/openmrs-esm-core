@@ -8,7 +8,7 @@ declare global {
     importMapOverrides: {
       getCurrentPageMap: () => Promise<ImportMap>;
     };
-    unresolvedBackendDeps: UnresolvedBackendDependencies;
+    installedModules: Array<any>;
   }
 }
 
@@ -42,25 +42,4 @@ export type ActivatorDefinition = Activator | RegExp | string;
 
 export interface ModuleResolver {
   (): System.Module | Promise<System.Module>;
-}
-
-export interface UnresolvedBackendDependencies {
-  modulesWithMissingBackendModules: MissingBackendModules[];
-  modulesWithWrongBackendModulesVersion: MissingBackendModules[];
-}
-
-export interface BackendModule {
-  uuid: string;
-  version: string;
-  requiredVersion?: string;
-}
-
-export interface MissingBackendModules {
-  moduleName: string;
-  backendModules: BackendModule[];
-}
-
-export interface Module {
-  moduleName: string;
-  backendDependencies: Record<string, string>;
 }

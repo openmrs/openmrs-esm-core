@@ -3,20 +3,22 @@ import { Button, Tabs, Tab } from "carbon-components-react";
 import { Close16 } from "@carbon/icons-react";
 import styles from "./popup.styles.css";
 import Configuration from "../configuration/configuration.component";
-import BackendModule from "../backend-dependencies/backend-dependecies.component";
+import { ModuleDiagnostics } from "../backend-dependencies/backend-dependecies.component";
+import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-dependencies";
 
 export default function Popup(props: DevToolsPopupProps) {
   const [configHasAlert, setConfigHasAlert] = useState(false);
-  const [backendHasAlert, setBackendHasAlert] = useState(false);
+  const [diagnosticsHasAlert, setDiagnosticsHasAlert] = useState(false);
+  const { visibleTabIndex = 0 } = props;
 
   useEffect(() => {
-    props.setHasAlert(configHasAlert || backendHasAlert);
-  }, [backendHasAlert, configHasAlert]);
+    props.setHasAlert(configHasAlert || diagnosticsHasAlert);
+  }, [diagnosticsHasAlert, configHasAlert]);
 
   return (
     <div className={styles.popup}>
       <div className={styles.topBar} />
-      <Tabs>
+      <Tabs selected={visibleTabIndex}>
         <Tab
           id="configuration-tab"
           label="Configuration"
@@ -29,7 +31,15 @@ export default function Popup(props: DevToolsPopupProps) {
           label="Backend Modules"
           style={{ position: "fixed", marginLeft: "160px" }}
         >
-          <BackendModule setHasAlert={setBackendHasAlert} />
+          <ModuleDiagnostics
+            setHasAlert={setDiagnosticsHasAlert}
+            modulesWithMissingBackendModules={
+              props.modulesWithMissingBackendModules
+            }
+            modulesWithWrongBackendModulesVersion={
+              props.modulesWithWrongBackendModulesVersion
+            }
+          />
         </Tab>
       </Tabs>
       <div className={styles.farRight}>
@@ -49,4 +59,7 @@ export default function Popup(props: DevToolsPopupProps) {
 type DevToolsPopupProps = {
   close(): void;
   setHasAlert(value: boolean): void;
+  modulesWithMissingBackendModules: Array<MissingBackendModules>;
+  modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
+  visibleTabIndex?: number;
 };

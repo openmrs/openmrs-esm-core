@@ -1,23 +1,4 @@
-table {
-  border-collapse: collapse;
-}
-
-.backendtable td {
-  border: 1px solid white;
-  text-align: left;
-  min-width: 150px;
-  padding: 5px;
-  min-width: 250px;
-}
-
-table caption {
-  text-align: left;
-  font-size: 1.2em;
-  font-weight: bold;
-  margin: 3px;
-}
-
 .panel {
-  width: 100%;
-  margin-top: 24px;
+  width: 130%;
+  margin: 30px;
 }

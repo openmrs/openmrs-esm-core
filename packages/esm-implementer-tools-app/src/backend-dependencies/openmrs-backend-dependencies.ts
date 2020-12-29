@@ -1,96 +1,58 @@
-import * as semver from "semver";
 import { openmrsFetch } from "@openmrs/esm-api";
-import difference from "lodash-es/difference";
-import isEmpty from "lodash-es/isEmpty";
+import * as semver from "semver";
+import { difference } from "lodash-es";
 
-interface FrontendModuleSpecifier {
-  moduleName: string;
-}
+const installedBackendModules: Array<Record<string, string>> = [];
+const modulesWithMissingBackendModules: MissingBackendModules[] = [];
+const modulesWithWrongBackendModulesVersion: MissingBackendModules[] = [];
 
-interface BackendModuleSpecifier {
-  uuid: string;
-}
+let memorizedUnresolvedsBackendDeps: UnresolvedBackendDependencies;
 
-interface BackendModule extends BackendModuleSpecifier {
-  version: string;
-}
-
-interface MismatchingModules extends BackendModuleSpecifier {
-  installedVersion?: string;
-  requiredVersion: string;
-}
-
-type ModuleDefinition = FrontendModuleSpecifier & System.Module;
-
-interface MissingBackendModules extends FrontendModuleSpecifier {
-  backendModules: Array<BackendModule>;
-}
-
-interface WrongBackendModules extends FrontendModuleSpecifier {
-  backendModules: Array<MismatchingModules>;
-}
-
-const installedBackendModules: Array<BackendModule> = [];
-const modulesWithMissingBackendModules: Array<MissingBackendModules> = [];
-const modulesWithWrongBackendModulesVersion: Array<WrongBackendModules> = [];
-
-const originalOnload = System.constructor.prototype.onload;
-
-System.constructor.prototype.onload = function (
-  err: Error | undefined,
-  id: string
-) {
-  const moduleName = id.substring(id.lastIndexOf("/") + 1, id.indexOf(".js"));
-
-  if (!err) {
-    System.import(id)
-      .then((response) => {
-        const module = Object.assign({ moduleName }, response);
-        if (module.backendDependencies) {
-          checkBackendDeps(module);
-        }
-      })
-      .catch((err) => {
-        setTimeout(() => {
-          throw err;
-        });
-      });
-  }
-  return originalOnload.apply(this, arguments);
-};
-
-function checkBackendDeps(module: ModuleDefinition) {
-  if (isEmpty(installedBackendModules)) {
-    fetchInstalledBackendModules()
-      .then(({ data }) => {
-        installedBackendModules.push(...data.results);
-        checkIfModulesAreInstalled(module);
-      })
-      .catch((err) => {
-        setTimeout(() => {
-          throw err;
-        });
-      });
-  } else {
-    checkIfModulesAreInstalled(module);
+async function initInstalledBackendModules() {
+  try {
+    const response = await fetchInstalledBackendModules();
+    installedBackendModules.push(...response.data.results);
+  } catch (err) {
+    setTimeout(() => {
+      throw err;
+    });
   }
 }
 
-function checkIfModulesAreInstalled(module: ModuleDefinition) {
+export async function checkModules(): Promise<UnresolvedBackendDependencies> {
+  if (memorizedUnresolvedsBackendDeps) return memorizedUnresolvedsBackendDeps;
+
+  const modules = (window.installedModules ?? [])
+    .filter((module) => module[1].backendDependencies)
+    .map((module) => ({
+      backendDependencies: module[1].backendDependencies,
+      moduleName: module[0],
+    }));
+
+  await initInstalledBackendModules();
+  modules.forEach((module) => checkIfModulesAreInstalled(module));
+
+  memorizedUnresolvedsBackendDeps = {
+    modulesWithMissingBackendModules,
+    modulesWithWrongBackendModulesVersion,
+  };
+
+  return memorizedUnresolvedsBackendDeps;
+}
+
+function checkIfModulesAreInstalled(module: Module) {
   const missingBackendModule = getMissingBackendModules(
     module.backendDependencies
   );
   const installedAndRequiredModules = getInstalledAndRequiredBackendModules(
     module.backendDependencies
   );
-
   if (missingBackendModule.length > 0) {
     modulesWithMissingBackendModules.push({
       moduleName: module.moduleName,
       backendModules: missingBackendModule,
     });
   }
-
   if (installedAndRequiredModules.length > 0) {
     modulesWithWrongBackendModulesVersion.push({
       moduleName: module.moduleName,
@@ -127,53 +89,58 @@ function getInstalledAndRequiredBackendModules(
   const requiredModules = Object.keys(requiredBackendModules).map((key) => {
     return { uuid: key, version: requiredBackendModules[key] };
   });
-
-  const installedAndRequiredBackendModules = requiredModules.filter(
-    (requiredModule) => {
-      return installedBackendModules.find((installedModule) => {
-        return requiredModule.uuid === installedModule.uuid;
-      });
-    }
-  );
-
-  return installedAndRequiredBackendModules;
+  return requiredModules.filter((requiredModule) => {
+    return installedBackendModules.find((installedModule) => {
+      return requiredModule.uuid === installedModule.uuid;
+    });
+  });
 }
 
 function getMisMatchedBackendModules(
-  installedAndRequiredBackendModules: Array<BackendModule>
+  installedAndRequiredBackendModules: BackendModule[]
 ) {
-  const misMatchedBackendModules: Array<MismatchingModules> = [];
-
-  for (const backendModule of installedAndRequiredBackendModules) {
-    const requiredVersion = backendModule.version;
-    const moduleName = backendModule.uuid;
-    const installedVersion = installedBackendModules
-      .filter((m) => m.uuid === moduleName)
-      .shift()?.version;
+  let misMatchedBackendModules: BackendModule[] = [];
+  for (let uuid in installedAndRequiredBackendModules) {
+    const installedVersion = installedBackendModules[uuid].version;
+    const requiredVersion = installedAndRequiredBackendModules[uuid].version;
+    const moduleName = installedAndRequiredBackendModules[uuid].uuid;
 
     if (!isVersionInstalled(requiredVersion, installedVersion)) {
       misMatchedBackendModules.push({
         uuid: moduleName,
         requiredVersion: requiredVersion,
-        installedVersion: installedVersion,
+        version: installedVersion,
       });
     }
   }
-
   return misMatchedBackendModules;
 }
 
-function isVersionInstalled(
-  requiredVersion: string,
-  installedVersion?: string
-) {
+function isVersionInstalled(requiredVersion: string, installedVersion: string) {
   return semver.eq(
-    semver.coerce(requiredVersion) || "",
-    semver.coerce(installedVersion) || ""
+    // @ts-ignore
+    semver.coerce(requiredVersion),
+    semver.coerce(installedVersion)
   );
 }
 
-export {
-  modulesWithMissingBackendModules,
-  modulesWithWrongBackendModulesVersion,
-};
+export interface UnresolvedBackendDependencies {
+  modulesWithMissingBackendModules: MissingBackendModules[];
+  modulesWithWrongBackendModulesVersion: MissingBackendModules[];
+}
+
+export interface BackendModule {
+  uuid: string;
+  version: string;
+  requiredVersion?: string;
+}
+
+export interface MissingBackendModules {
+  moduleName: string;
+  backendModules: BackendModule[];
+}
+
+export interface Module {
+  moduleName: string;
+  backendDependencies: Record<string, string>;
+}

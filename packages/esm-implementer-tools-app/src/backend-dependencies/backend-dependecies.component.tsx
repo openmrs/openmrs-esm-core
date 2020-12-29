@@ -1,113 +1,107 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import style from "./backend-dependencies-style.css";
 import {
+  DataTable,
+  Table,
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableBody,
+  TableCell,
+  TableContainer,
+} from "carbon-components-react";
+import {
+  FrontendModule,
+  ModuleDiagnosticsProps,
+  parseUnresolvedDeps,
+} from "./helpers/backend-dependecies-helper";
+
+export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
   modulesWithMissingBackendModules,
   modulesWithWrongBackendModulesVersion,
-} from "./openmrs-backend-dependencies";
-import style from "./backend-dependencies-style.css";
+  setHasAlert,
+}) => {
+  const [unresolvedDeps, setUnresolvedDeps] = useState<Array<FrontendModule>>(
+    []
+  );
 
-export default function BackendModule(props: BackendModulesProps) {
   useEffect(() => {
     if (
-      modulesWithMissingBackendModules.length ||
-      modulesWithWrongBackendModulesVersion.length
-    ) {
-      props.setHasAlert(true);
-    }
+      !modulesWithMissingBackendModules.length &&
+      !modulesWithWrongBackendModulesVersion.length
+    )
+      return;
+
+    setUnresolvedDeps(
+      parseUnresolvedDeps(
+        modulesWithWrongBackendModulesVersion,
+        modulesWithMissingBackendModules
+      )
+    );
+    setHasAlert(true);
   }, [modulesWithMissingBackendModules, modulesWithWrongBackendModulesVersion]);
 
+  const headers = [
+    {
+      key: "name",
+      header: "Module Name",
+    },
+    {
+      key: "installedVersion",
+      header: "Installed Version",
+    },
+    {
+      key: "requiredVersion",
+      header: "Required Version",
+    },
+  ];
   return (
     <div className={style.panel}>
-      <div className={style}>
-        <h4>Missing openmrs backend modules</h4>
-
-        <table className={style.backendtable}>
-          <tbody>
-            {Object.keys(modulesWithMissingBackendModules).map((key) => {
-              return (
-                <Fragment key={key}>
-                  {modulesWithMissingBackendModules[key].backendModules.length >
-                    0 && (
-                    <>
-                      <tr>
-                        <td colSpan={3}>
-                          <b>
-                            {modulesWithMissingBackendModules[key].moduleName}
-                          </b>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <b>Module Name</b>
-                        </td>
-                        <td>
-                          <b>Version</b>
-                        </td>
-                      </tr>
-                      {modulesWithMissingBackendModules[key].backendModules.map(
-                        (module: any) => {
-                          return (
-                            <tr key={module.uuid}>
-                              <td>{module.uuid}</td>
-                              <td>{module.version}</td>
-                            </tr>
-                          );
-                        }
-                      )}
-                    </>
-                  )}
-                </Fragment>
-              );
-            })}
-          </tbody>
-        </table>
-
-        <h4>Modules with wrong versions installed</h4>
-        <table className={style.backendtable}>
-          <tbody>
-            {Object.keys(modulesWithWrongBackendModulesVersion).map((key) => {
-              return (
-                <Fragment key={key}>
-                  {modulesWithWrongBackendModulesVersion[key].backendModules
-                    .length > 0 && (
-                    <>
-                      <tr>
-                        <td colSpan={3}>
-                          <b>
-                            {
-                              modulesWithWrongBackendModulesVersion[key]
-                                .moduleName
-                            }
-                          </b>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Module Name</td>
-                        <td>Installed Version</td>
-                        <td>Required Version</td>
-                      </tr>
-                      {modulesWithWrongBackendModulesVersion[
-                        key
-                      ].backendModules.map((module: any) => {
-                        return (
-                          <tr key={module.uuid}>
-                            <td>{module.uuid}</td>
-                            <td>{module.installedVersion}</td>
-                            <td>{module.requiredVersion}</td>
-                          </tr>
-                        );
-                      })}
-                    </>
-                  )}
-                </Fragment>
-              );
-            })}
-          </tbody>
-        </table>
+      <div>
+        <DataTable rows={[]} headers={headers}>
+          {({ headers, getTableProps, getHeaderProps }) => (
+            <TableContainer title={""}>
+              <Table {...getTableProps()}>
+                <TableHead>
+                  <TableRow>
+                    {headers.map((header) => (
+                      <TableHeader {...getHeaderProps({ header })}>
+                        {header.header}
+                      </TableHeader>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {unresolvedDeps.map((esm, index) => (
+                    <Fragment key={esm.name}>
+                      <TableRow>
+                        <TableCell>
+                          <strong>{esm.name}</strong>
+                        </TableCell>
+                        <TableCell></TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                      {esm.unresolvedDeps.map((dep) => (
+                        <TableRow key={dep.name}>
+                          <TableCell>{dep.name}</TableCell>
+                          <TableCell>
+                            {dep.type === "missing" ? (
+                              <span style={{ color: "red" }}>Missing</span>
+                            ) : (
+                              dep.installedVersion
+                            )}
+                          </TableCell>
+                          <TableCell>{dep.requiredVersion}</TableCell>
+                        </TableRow>
+                      ))}
+                    </Fragment>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </DataTable>
       </div>
     </div>
   );
-}
-
-type BackendModulesProps = {
-  setHasAlert(value: boolean): void;
 };
