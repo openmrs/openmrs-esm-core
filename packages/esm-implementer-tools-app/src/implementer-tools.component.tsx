@@ -73,9 +73,7 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
     };
 
     showToast({
-      description: (
-        <span>Found modules with unresolved backend dependencies.</span>
-      ),
+      description: "Found modules with unresolved backend dependencies.",
       action: (
         <NotificationActionButton onClick={showModuleDiagnostics}>
           View

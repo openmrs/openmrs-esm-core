@@ -54,14 +54,14 @@ export default function Popup(props: DevToolsPopupProps) {
           <Configuration setHasAlert={setConfigHasAlert} />
         ) : (
           <ModuleDiagnostics
-          setHasAlert={setDiagnosticsHasAlert}
-          modulesWithMissingBackendModules={
-            props.modulesWithMissingBackendModules
-          }
-          modulesWithWrongBackendModulesVersion={
-            props.modulesWithWrongBackendModulesVersion
-          }
-        />
+            setHasAlert={setDiagnosticsHasAlert}
+            modulesWithMissingBackendModules={
+              props.modulesWithMissingBackendModules
+            }
+            modulesWithWrongBackendModulesVersion={
+              props.modulesWithWrongBackendModulesVersion
+            }
+          />
         )}
       </div>
     </div>
