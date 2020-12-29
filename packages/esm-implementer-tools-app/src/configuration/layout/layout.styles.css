@@ -10,6 +10,6 @@
   border-left: 2px solid #c0c0c0;
 }
 
-.subtreeContainer {
-  margin-left: 4em;
+.subtreeCell {
+  left: -6em;
 }

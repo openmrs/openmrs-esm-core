@@ -14,20 +14,44 @@
   flex: 0 1 auto;
 }
 
+.downloadLink {
+  text-decoration: none;
+  color: inherit;
+}
+
 .mainContent {
   background-color: #f0f0f0;
   margin-top: 72px;
   width: 100%;
+  display: flex;
   overflow-y: auto;
 }
 
-.halfWidth {
-  width: 50%;
+.configTreePane {
+  height: calc(50vh - 114px);
+  width: 55%;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
-.downloadLink {
-  text-decoration: none;
-  color: inherit;
+.descriptionPane {
+  height: calc(50vh - 114px);
+  width: 45%;
+  background-color: #e0e0e0;
+  color: #424242;
+  padding: 1em;
+  font-size: 12pt;
+  overflow-wrap: break-word;
+  overflow-y: scroll;
+}
+
+.configTreePane :global(.bx--text-input-wrapper) {
+  min-width: 8em;
+}
+
+.fullWidthAccordion :global(.bx--accordion__content) {
+  padding-right: 0;
 }
 
 .valueEditorInput {

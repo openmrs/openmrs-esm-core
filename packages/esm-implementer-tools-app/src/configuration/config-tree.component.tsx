@@ -22,6 +22,7 @@ export function ConfigTree({ config }: ConfigTreeProps) {
                 <AccordionItem
                   open
                   title={<h4 className={styles.moduleName}>{moduleName}</h4>}
+                  className={styles.fullWidthAccordion}
                 >
                   <div key={`${moduleName}-config`}>
                     <ConfigTreeForModule

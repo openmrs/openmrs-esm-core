@@ -4,8 +4,11 @@ import { Close16, Save16 } from "@carbon/icons-react";
 import { ConfigValueDescriptor } from "./editable-value.component";
 import { ValueEditorField } from "./value-editors/value-editor-field";
 import styles from "./configuration.styles.css";
+import { Type } from "@openmrs/esm-config";
 
 export type CustomValueType = "add" | "remove" | "order" | "configure";
+
+export type ValueType = CustomValueType | Type;
 
 interface ValueEditorProps {
   element: ConfigValueDescriptor;

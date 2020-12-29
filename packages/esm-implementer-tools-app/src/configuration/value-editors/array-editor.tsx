@@ -33,7 +33,11 @@ export function ArrayEditor({
             <StructuredListRow>
               <StructuredListCell>
                 <ValueEditorField
-                  element={{ _value: value, _source: "idk", _default: "" }}
+                  element={{
+                    ...element._elements,
+                    _value: value,
+                    _source: element._source,
+                  }}
                   valueType={(element._elements?._type as Type) ?? Type.Object}
                   value={value}
                   onChange={(newValue) => {
@@ -43,7 +47,7 @@ export function ArrayEditor({
                   }}
                 />
               </StructuredListCell>
-              <StructuredListCell>
+              <StructuredListCell className={styles.buttonCell}>
                 <Button
                   renderIcon={TrashCan16}
                   size="small"
@@ -52,16 +56,16 @@ export function ArrayEditor({
                   hasIconOnly
                   onClick={() => {
                     const newValueArray = cloneDeep(valueArray);
-                    newValueArray.splice(i);
+                    newValueArray.splice(i, 1);
                     setValue(newValueArray);
-                    return null;
                   }}
                 />
               </StructuredListCell>
             </StructuredListRow>
           ))}
           <StructuredListRow>
-            <StructuredListCell className={styles.addButtonCell}>
+            <StructuredListCell></StructuredListCell>
+            <StructuredListCell className={styles.buttonCell}>
               <Button
                 renderIcon={Add16}
                 size="small"
@@ -69,7 +73,11 @@ export function ArrayEditor({
                 hasIconOnly
                 onClick={() => {
                   const newValueArray = cloneDeep(valueArray);
-                  newValueArray.push(null);
+                  const newValue =
+                    (element._elements?._type ?? Type.Object) == Type.Object
+                      ? {}
+                      : null;
+                  newValueArray.push(newValue);
                   setValue(newValueArray);
                 }}
               />

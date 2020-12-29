@@ -5,7 +5,7 @@ import styles from "./description.styles.css";
 export const Description = connect("activeItemDescription")(
   ({ activeItemDescription }) => {
     return (
-      <div className={styles.container}>
+      <div>
         {activeItemDescription ? (
           <>
             <p className={styles.path}>

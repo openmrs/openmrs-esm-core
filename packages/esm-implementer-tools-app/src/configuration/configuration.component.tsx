@@ -84,10 +84,12 @@ export default function Configuration(props: ConfigurationProps) {
         </Button>
       </div>
       <div className={styles.mainContent}>
-        <div className={styles.halfWidth}>
+        <div className={styles.configTreePane}>
           <ConfigTree config={config} />
         </div>
-        <Description />
+        <div className={styles.descriptionPane}>
+          <Description />
+        </div>
       </div>
     </>
   );

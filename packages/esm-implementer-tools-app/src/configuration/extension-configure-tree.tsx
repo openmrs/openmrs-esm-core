@@ -16,7 +16,11 @@ export function ExtensionConfigureTree({
   return (
     <EditableValue
       path={[moduleName, slotName, "configure"]}
-      element={{ _value: config ?? {}, _source: "", _default: {} }}
+      element={
+        config && Object.keys(config).length
+          ? { _value: config, _source: "", _default: {} }
+          : { _value: undefined, _source: "default", _default: {} }
+      }
     />
   );
 }

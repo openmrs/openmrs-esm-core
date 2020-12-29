@@ -3,16 +3,17 @@ import { Checkbox, NumberInput, TextInput } from "carbon-components-react";
 import { uniqueId } from "lodash-es";
 import { Type } from "@openmrs/esm-config";
 import { ConfigValueDescriptor } from "../editable-value.component";
-import { CustomValueType } from "../value-editor";
+import { ValueType } from "../value-editor";
 import { ArrayEditor } from "./array-editor";
 import { ConceptSearchBox } from "./concept-search";
 import { ExtensionSlotAdd } from "./extension-slot-add";
 import { ExtensionSlotRemove } from "./extension-slot-remove";
+import { ObjectEditor } from "./object-editor";
 
 export interface ValueEditorFieldProps {
   element: ConfigValueDescriptor;
   path?: String[];
-  valueType?: CustomValueType | Type;
+  valueType?: ValueType;
   value: any;
   onChange: (value: any) => void;
 }
@@ -50,12 +51,10 @@ export function ValueEditorField({
       value={value}
       onChange={
         // e.target.value not working properly right now: https://github.com/carbon-design-system/carbon/issues/7457
-        (e) => onChange((e as any).imaginaryTarget.value)
+        (e) => onChange(Number((e as any).imaginaryTarget.value))
       }
     ></NumberInput>
-  ) : valueType === Type.Object ? (
-    <div>Todo</div>
-  ) : valueType === Type.String ? (
+  ) : valueType === Type.String || valueType === Type.UUID ? (
     <TextInput
       id={id}
       value={value}
@@ -79,11 +78,6 @@ export function ValueEditorField({
       }}
     />
   ) : (
-    <TextInput
-      id={id}
-      value={value}
-      labelText=""
-      onChange={(e) => onChange(e.target.value)}
-    ></TextInput>
+    <ObjectEditor element={element} valueObject={value} setValue={onChange} />
   );
 }

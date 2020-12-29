@@ -43,13 +43,15 @@ export function Subtree({
         <StructuredListCell className={styles.labelCell}>
           {label}
         </StructuredListCell>
+        <StructuredListCell />
       </StructuredListRow>
-      <StructuredListRow>
-        <StructuredListWrapper
-          className={`${styles.structuredList} ${styles.subtreeContainer}`}
-        >
-          <StructuredListBody>{children}</StructuredListBody>
-        </StructuredListWrapper>
+      <StructuredListRow className={styles.structuredListRow}>
+        <StructuredListCell />
+        <StructuredListCell className={styles.subtreeCell}>
+          <StructuredListWrapper className={styles.structuredList}>
+            <StructuredListBody>{children}</StructuredListBody>
+          </StructuredListWrapper>
+        </StructuredListCell>
       </StructuredListRow>
     </>
   );
