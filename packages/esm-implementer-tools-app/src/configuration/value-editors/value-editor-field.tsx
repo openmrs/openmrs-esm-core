@@ -9,6 +9,7 @@ import { ConceptSearchBox } from "./concept-search";
 import { ExtensionSlotAdd } from "./extension-slot-add";
 import { ExtensionSlotRemove } from "./extension-slot-remove";
 import { ObjectEditor } from "./object-editor";
+import { ExtensionSlotOrder } from "./extension-slot-order";
 
 export interface ValueEditorFieldProps {
   element: ConfigValueDescriptor;
@@ -62,21 +63,23 @@ export function ValueEditorField({
       onChange={(e) => onChange(e.target.value)}
     ></TextInput>
   ) : valueType === "add" ? (
-    <ExtensionSlotAdd
-      value={value ?? element._value}
-      setValue={(value) => {
-        onChange(value);
-      }}
-    />
+    <ExtensionSlotAdd value={value ?? element._value} setValue={onChange} />
   ) : valueType === "remove" && path ? (
     <ExtensionSlotRemove
       slotName={path[2]}
       slotModuleName={path[0]}
       value={value ?? element._value}
-      setValue={(value) => {
-        onChange(value);
-      }}
+      setValue={onChange}
     />
+  ) : valueType === "order" && path ? (
+    <ExtensionSlotOrder
+      slotName={path[2]}
+      slotModuleName={path[0]}
+      value={value ?? element._value}
+      setValue={onChange}
+    />
+  ) : valueType === "configure" && path ? (
+    <>Todo</>
   ) : (
     <ObjectEditor element={element} valueObject={value} setValue={onChange} />
   );

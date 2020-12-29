@@ -6,6 +6,7 @@ export interface DisplayValueProps {
 }
 
 export function DisplayValue({ value }: DisplayValueProps) {
+  // TODO: Make this show the concept name for ConceptUUID type values
   return (
     <>
       {Array.isArray(value)
