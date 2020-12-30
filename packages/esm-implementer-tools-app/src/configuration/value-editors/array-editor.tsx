@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Button,
   StructuredListBody,
@@ -11,7 +11,8 @@ import { Add16, TrashCan16 } from "@carbon/icons-react";
 import { ValueEditorField } from "./value-editor-field";
 import { ConfigValueDescriptor } from "../editable-value.component";
 import { Type } from "@openmrs/esm-config";
-import { cloneDeep } from "lodash-es";
+import cloneDeep from "lodash-es/cloneDeep";
+import uniqueId from "lodash-es/uniqueId";
 import styles from "./array-editor.styles.css";
 
 interface ArrayEditorProps {
@@ -25,12 +26,13 @@ export function ArrayEditor({
   valueArray,
   setValue,
 }: ArrayEditorProps) {
+  const arrayKey = useMemo(() => uniqueId("array-editor-"), []);
   return (
     <Tile className={styles.arrayEditor}>
       <StructuredListWrapper>
         <StructuredListBody>
           {valueArray.map((value, i) => (
-            <StructuredListRow>
+            <StructuredListRow key={`${arrayKey}-${i}`}>
               <StructuredListCell>
                 <ValueEditorField
                   element={{
@@ -50,7 +52,7 @@ export function ArrayEditor({
               <StructuredListCell className={styles.buttonCell}>
                 <Button
                   renderIcon={TrashCan16}
-                  size="small"
+                  size="sm"
                   kind="secondary"
                   iconDescription="Remove"
                   hasIconOnly
@@ -68,7 +70,7 @@ export function ArrayEditor({
             <StructuredListCell className={styles.buttonCell}>
               <Button
                 renderIcon={Add16}
-                size="small"
+                size="sm"
                 iconDescription="Add"
                 hasIconOnly
                 onClick={() => {

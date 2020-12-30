@@ -1,4 +1,3 @@
-import { Type } from "@openmrs/esm-config";
 import React from "react";
 
 export interface DisplayValueProps {

@@ -55,7 +55,10 @@ export default function EditableValue({
 
   useEffect(() => {
     const update = (state: ImplementerToolsStore) => {
-      if (isEqual(state.configPathBeingEdited, path)) {
+      if (
+        state.configPathBeingEdited &&
+        isEqual(state.configPathBeingEdited, path)
+      ) {
         focusOnConfigPathBeingEdited();
       }
     };
@@ -123,7 +126,7 @@ export default function EditableValue({
               <Button
                 style={{ marginLeft: "1em" }}
                 renderIcon={Reset16}
-                size="small"
+                size="sm"
                 kind="tertiary"
                 iconDescription="Reset to default"
                 hasIconOnly

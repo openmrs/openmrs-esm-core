@@ -1,6 +1,4 @@
 import React from "react";
-import { getGlobalStore } from "@openmrs/esm-api";
-import { Provider } from "unistore/react";
 import styles from "./configuration.styles.css";
 import { ConfigTreeForModule } from "./config-tree-for-module.component";
 import { Accordion, AccordionItem } from "carbon-components-react";
@@ -23,6 +21,7 @@ export function ConfigTree({ config }: ConfigTreeProps) {
                   open
                   title={<h4 className={styles.moduleName}>{moduleName}</h4>}
                   className={styles.fullWidthAccordion}
+                  key={`accordion-${moduleName}`}
                 >
                   <div key={`${moduleName}-config`}>
                     <ConfigTreeForModule

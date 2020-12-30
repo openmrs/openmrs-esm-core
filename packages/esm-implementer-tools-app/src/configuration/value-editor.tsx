@@ -51,13 +51,13 @@ export function ValueEditor({
         element={element}
         path={path}
         value={tmpValue}
-        onChange={(v) => setTmpValue(v)}
+        onChange={setTmpValue}
         valueType={valueType}
       />
       <div className={styles.valueEditorButtons}>
         <Button
           renderIcon={Save16}
-          size="small"
+          size="sm"
           kind="primary"
           iconDescription="Save"
           hasIconOnly
@@ -65,7 +65,7 @@ export function ValueEditor({
         />
         <Button
           renderIcon={Close16}
-          size="small"
+          size="sm"
           kind="secondary"
           iconDescription="Cancel"
           hasIconOnly

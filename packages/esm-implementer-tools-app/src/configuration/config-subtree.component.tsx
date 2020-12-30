@@ -1,14 +1,7 @@
 import React from "react";
 import EditableValue from "./editable-value.component";
-import styles from "./configuration.styles.css";
 import { getStore } from "../store";
-import { isEqual } from "lodash-es";
-import {
-  StructuredListBody,
-  StructuredListCell,
-  StructuredListRow,
-  StructuredListWrapper,
-} from "carbon-components-react";
+import isEqual from "lodash-es/isEqual";
 import { Subtree } from "./layout/subtree.component";
 
 export interface ConfigSubtreeProps {
@@ -49,24 +42,23 @@ export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
         const isLeaf =
           value.hasOwnProperty("_value") || value.hasOwnProperty("_type");
         return (
-          <>
-            <Subtree
-              label={key}
-              leaf={isLeaf}
-              onMouseEnter={() =>
-                setActiveItemDescriptionOnMouseEnter(thisPath, key, value)
-              }
-              onMouseLeave={() =>
-                removeActiveItemDescriptionOnMouseLeave(thisPath)
-              }
-            >
-              {isLeaf ? (
-                <EditableValue path={thisPath} element={value} />
-              ) : (
-                <ConfigSubtree config={value} path={thisPath} />
-              )}
-            </Subtree>
-          </>
+          <Subtree
+            label={key}
+            leaf={isLeaf}
+            onMouseEnter={() =>
+              setActiveItemDescriptionOnMouseEnter(thisPath, key, value)
+            }
+            onMouseLeave={() =>
+              removeActiveItemDescriptionOnMouseLeave(thisPath)
+            }
+            key={`subtree-${thisPath.join(".")}`}
+          >
+            {isLeaf ? (
+              <EditableValue path={thisPath} element={value} />
+            ) : (
+              <ConfigSubtree config={value} path={thisPath} />
+            )}
+          </Subtree>
         );
       })}
     </>

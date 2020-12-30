@@ -6,21 +6,12 @@ import {
   ExtensionStore,
 } from "@openmrs/esm-extensions";
 import { Provider, connect } from "unistore/react";
-import styles from "./configuration.styles.css";
 import EditableValue from "./editable-value.component";
-import { ConfigSubtree } from "./config-subtree.component";
 import { getGlobalStore } from "@openmrs/esm-api";
 import { getStore } from "../store";
 import { isEqual } from "lodash-es";
 import { ExtensionConfigureTree } from "./extension-configure-tree";
-import {
-  StructuredListBody,
-  StructuredListCell,
-  StructuredListRow,
-  StructuredListWrapper,
-} from "carbon-components-react";
 import { Subtree } from "./layout/subtree.component";
-import { TreeContainer } from "./layout/tree-container.component";
 
 interface ExtensionsSlotsConfigTreeProps {
   config: { [key: string]: any };
@@ -56,10 +47,8 @@ const ExtensionSlotsConfigTreeImpl = connect(
 });
 
 export function ExtensionSlotsConfigTree(props) {
-  const store = React.useMemo(() => getGlobalStore("extensions"), []);
-
   return (
-    <Provider store={store}>
+    <Provider store={extensionStore}>
       <ExtensionSlotsConfigTreeImpl {...props} />
     </Provider>
   );
