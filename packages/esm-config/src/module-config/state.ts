@@ -4,7 +4,7 @@ import { Config, ConfigObject, ConfigSchema, ProvidedConfig } from "../types";
 
 /*
  * Internal store
- *   A store of the inputs
+ *   A store of the inputs and internal state
  */
 
 export interface ConfigInternalStore {
@@ -16,6 +16,8 @@ export interface ConfigInternalStore {
   schemas: Record<string, ConfigSchema>;
   // A flag to keep track of whether the import map config has been loaded
   importMapConfigLoaded: boolean;
+  // Whether to use dev defaults or not
+  devDefaultsAreOn: boolean;
 }
 
 export const configInternalStore = createGlobalStore<ConfigInternalStore>(
@@ -25,8 +27,27 @@ export const configInternalStore = createGlobalStore<ConfigInternalStore>(
     importMapConfig: {},
     schemas: {},
     importMapConfigLoaded: false,
+    devDefaultsAreOn: getAreDevDefaultsOn(),
   }
 );
+
+let lastValueOfDevDefaultsAreOn = getAreDevDefaultsOn();
+configInternalStore.subscribe((state) => {
+  if (state.devDefaultsAreOn != lastValueOfDevDefaultsAreOn) {
+    setAreDevDefaultsOn(state.devDefaultsAreOn);
+    lastValueOfDevDefaultsAreOn = state.devDefaultsAreOn;
+  }
+});
+
+function setAreDevDefaultsOn(value: boolean): void {
+  localStorage.setItem("openmrs:configAreDevDefaultsOn", JSON.stringify(value));
+}
+
+function getAreDevDefaultsOn(): boolean {
+  return JSON.parse(
+    localStorage.getItem("openmrs:configAreDevDefaultsOn") || "false"
+  );
+}
 
 /*
  * Output configs

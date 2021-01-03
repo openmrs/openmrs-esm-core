@@ -1,13 +1,4 @@
-import {
-  assocPath,
-  dissocPath,
-  clone,
-  map,
-  reduce,
-  mergeDeepRight,
-  prop,
-} from "ramda";
-import { invalidateConfigCache } from "./config-cache";
+import { clone, map, reduce, mergeDeepRight, prop } from "ramda";
 import {
   Config,
   ConfigObject,
@@ -27,9 +18,23 @@ import {
 import {
   ConfigInternalStore,
   configInternalStore,
+  ConfigStore,
   getConfigStore,
+  implementerToolsConfigStore,
   temporaryConfigStore,
 } from "./state";
+
+/*
+ * Set up stores and subscriptions so that inputs get processed appropriately.
+ */
+
+loadConfigs();
+
+computeModuleConfig(configInternalStore.getState());
+configInternalStore.subscribe(computeModuleConfig);
+
+computeImplementerToolsConfig(configInternalStore.getState());
+configInternalStore.subscribe(computeImplementerToolsConfig);
 
 function computeModuleConfig(state: ConfigInternalStore) {
   if (state.importMapConfigLoaded) {
@@ -41,9 +46,12 @@ function computeModuleConfig(state: ConfigInternalStore) {
   }
 }
 
-loadConfigs();
-computeModuleConfig(configInternalStore.getState());
-configInternalStore.subscribe(computeModuleConfig);
+function computeImplementerToolsConfig(state: ConfigInternalStore) {
+  if (state.importMapConfigLoaded) {
+    const config = getImplementerToolsConfig();
+    implementerToolsConfigStore.setState(config);
+  }
+}
 
 /*
  * API
@@ -64,9 +72,32 @@ export function provide(config: Config, sourceName = "provided") {
   });
 }
 
-export async function getConfig(moduleName: string): Promise<ConfigObject> {
-  await loadConfigs();
-  return getConfigForModule(moduleName);
+/**
+ * A promise-based way to access the config as soon as it is fully loaded
+ * from the import-map. If it is already loaded, resolves the config in its
+ * present state.
+ *
+ * In general you should use the Unistore-based API provided by
+ * `getConfigStore`, which allows creating a subscription so that you always
+ * have the latest config. If using React, then just use `useConfig`.
+ *
+ * This is a useful function if you need to get the config in the course
+ * of the one-time execution of a function.
+ *
+ * @param moduleName The name of the module for which to look up the config
+ */
+export function getConfig(moduleName: string): Promise<Config> {
+  return new Promise<Config>((resolve) => {
+    const store = getConfigStore(moduleName);
+    function update(state: ConfigStore) {
+      if (state.loaded && state.config) {
+        resolve(state.config);
+        unsubscribe && unsubscribe();
+      }
+    }
+    update(store.getState());
+    const unsubscribe = store.subscribe(update);
+  });
 }
 
 /**
@@ -83,7 +114,7 @@ export async function getConfig(moduleName: string): Promise<ConfigObject> {
  * @param slotName The name of the extension slot where the extension is mounted
  * @param extensionId The ID of the extension in its slot
  */
-export async function getExtensionConfig(
+async function getExtensionConfig(
   slotModuleName: string,
   extensionModuleName: string,
   slotName: string,
@@ -126,10 +157,7 @@ export function processConfig(
   return config;
 }
 
-/**
- * @internal
- */
-export async function getImplementerToolsConfig(): Promise<object> {
+async function getImplementerToolsConfig(): Promise<object> {
   const state = configInternalStore.getState();
   let result = getSchemaWithValuesAndSources(clone(state.schemas));
   await loadConfigs();
@@ -164,23 +192,6 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
   } else {
     return { _value: config, _source: source };
   }
-}
-
-/**
- * @internal
- */
-export function setAreDevDefaultsOn(value: boolean): void {
-  localStorage.setItem("openmrsConfigAreDevDefaultsOn", JSON.stringify(value));
-  invalidateConfigCache();
-}
-
-/**
- * @internal
- */
-export function getAreDevDefaultsOn(): boolean {
-  return JSON.parse(
-    localStorage.getItem("openmrsConfigAreDevDefaultsOn") || "false"
-  );
 }
 
 /**
@@ -290,6 +301,34 @@ async function loadConfigs() {
   return await getImportMapConfigPromise;
 }
 
+// Get config file from import map
+async function getImportMapConfigFile(): Promise<void> {
+  let importMapConfigExists: boolean;
+
+  try {
+    System.resolve("config-file");
+    importMapConfigExists = true;
+  } catch {
+    importMapConfigExists = false;
+    configInternalStore.setState({
+      importMapConfigLoaded: true,
+    });
+  }
+
+  if (importMapConfigExists) {
+    try {
+      const configFileModule = await System.import("config-file");
+      configInternalStore.setState({
+        importMapConfig: configFileModule.default,
+        importMapConfigLoaded: true,
+      });
+    } catch (e) {
+      console.error(`Problem importing config-file ${e}`);
+      throw e;
+    }
+  }
+}
+
 function validateConfigSchema(
   moduleName: string,
   schema: ConfigSchema,
@@ -364,34 +403,6 @@ function validateConfigSchema(
           `\n\nIf you're the maintainer: the 'elements' key only works with '_type' equal to 'Array' or 'Object'. ` +
           `Received ${JSON.stringify(valueType)}`
       );
-    }
-  }
-}
-
-// Get config file from import map
-async function getImportMapConfigFile(): Promise<void> {
-  let importMapConfigExists: boolean;
-
-  try {
-    System.resolve("config-file");
-    importMapConfigExists = true;
-  } catch {
-    importMapConfigExists = false;
-    configInternalStore.setState({
-      importMapConfigLoaded: true,
-    });
-  }
-
-  if (importMapConfigExists) {
-    try {
-      const configFileModule = await System.import("config-file");
-      configInternalStore.setState({
-        importMapConfig: configFileModule.default,
-        importMapConfigLoaded: true,
-      });
-    } catch (e) {
-      console.error(`Problem importing config-file ${e}`);
-      throw e;
     }
   }
 }
@@ -544,6 +555,7 @@ function runValidators(
 // Recursively fill in the config with values from the schema.
 const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   const config = clone(inputConfig);
+  const devDefaultsAreOn = configInternalStore.getState().devDefaultsAreOn;
 
   for (const key of Object.keys(schema)) {
     const schemaPart = schema[key] as ConfigSchema;
@@ -557,7 +569,7 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
       // a property `_default`.
       if (!config.hasOwnProperty(key)) {
         const devDefault = schemaPart["_devDefault"] || schemaPart["_default"];
-        (config[key] as any) = getAreDevDefaultsOn()
+        (config[key] as any) = devDefaultsAreOn
           ? devDefault
           : schemaPart["_default"];
       }
