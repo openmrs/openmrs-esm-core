@@ -22,7 +22,7 @@ createGlobalStore("implementer-tools", {
 export const getStore = () =>
   getGlobalStore<ImplementerToolsStore>("implementer-tools");
 
-let lastValueOfIsOpen = false;
+let lastValueOfIsOpen = getIsImplementerToolsOpen();
 getStore().subscribe((state) => {
   if (state.isOpen != lastValueOfIsOpen) {
     setIsImplementerToolsOpen(state.isOpen);

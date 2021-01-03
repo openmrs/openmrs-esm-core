@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Tabs, Tab } from "carbon-components-react";
+import { Button, ContentSwitcher, Switch } from "carbon-components-react";
 import { Close16 } from "@carbon/icons-react";
 import styles from "./popup.styles.css";
 import Configuration from "../configuration/configuration.component";
@@ -9,7 +9,7 @@ import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-d
 export default function Popup(props: DevToolsPopupProps) {
   const [configHasAlert, setConfigHasAlert] = useState(false);
   const [diagnosticsHasAlert, setDiagnosticsHasAlert] = useState(false);
-  const { visibleTabIndex = 0 } = props;
+  const [activeTab, setActiveTab] = useState(0);
 
   useEffect(() => {
     props.setHasAlert(configHasAlert || diagnosticsHasAlert);
@@ -17,20 +17,42 @@ export default function Popup(props: DevToolsPopupProps) {
 
   return (
     <div className={styles.popup}>
-      <div className={styles.topBar} />
-      <Tabs selected={visibleTabIndex}>
-        <Tab
-          id="configuration-tab"
-          label="Configuration"
-          style={{ position: "fixed" }}
-        >
+      <div className={styles.topBar}>
+        <div className={styles.tabs}>
+          <ContentSwitcher
+            onChange={(c) => {
+              setActiveTab((c as any).index);
+            }}
+          >
+            <Switch
+              name="configuration-tab"
+              text="Configuration"
+              onClick={() => {}}
+              onKeyDown={() => {}}
+            />
+            <Switch
+              name="backend-modules-tab"
+              text="Backend Modules"
+              onClick={() => {}}
+              onKeyDown={() => {}}
+            />
+          </ContentSwitcher>
+        </div>
+        <div>
+          <Button
+            className={styles.closeButton}
+            kind="secondary"
+            renderIcon={Close16}
+            iconDescription="Close"
+            onClick={props.close}
+            hasIconOnly
+          />
+        </div>
+      </div>
+      <div className={styles.content}>
+        {activeTab == 0 ? (
           <Configuration setHasAlert={setConfigHasAlert} />
-        </Tab>
-        <Tab
-          id="backend-modules-tab"
-          label="Backend Modules"
-          style={{ position: "fixed", marginLeft: "160px" }}
-        >
+        ) : (
           <ModuleDiagnostics
             setHasAlert={setDiagnosticsHasAlert}
             modulesWithMissingBackendModules={
@@ -40,17 +62,7 @@ export default function Popup(props: DevToolsPopupProps) {
               props.modulesWithWrongBackendModulesVersion
             }
           />
-        </Tab>
-      </Tabs>
-      <div className={styles.farRight}>
-        <Button
-          className={styles.closeButton}
-          kind="secondary"
-          renderIcon={Close16}
-          iconDescription="Close"
-          onClick={props.close}
-          hasIconOnly
-        />
+        )}
       </div>
     </div>
   );

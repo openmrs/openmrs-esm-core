@@ -12,7 +12,6 @@ interface ConceptSearchBoxProps {
 }
 
 export function ConceptSearchBox({ setConcept }: ConceptSearchBoxProps) {
-  const [conceptName, setConceptName] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [activeConceptUuid, setActiveConceptUuid] = useState<any>("");
@@ -34,16 +33,6 @@ export function ConceptSearchBox({ setConcept }: ConceptSearchBoxProps) {
   const handleSearchTermChange = debounce((searchTerm) => {
     setSearchTerm(searchTerm);
   }, searchTimeoutInMs);
-
-  useEffect(() => {
-    if (activeConceptUuid) {
-      const conceptString = activeConceptUuid;
-
-      fetchConceptByUuid(conceptString).then(({ data }) => {
-        setConceptName(data.name.display);
-      });
-    }
-  }, [activeConceptUuid]);
 
   useEffect(() => {
     const ac = new AbortController();

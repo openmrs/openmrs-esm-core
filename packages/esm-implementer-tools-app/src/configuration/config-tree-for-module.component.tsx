@@ -1,8 +1,8 @@
 import React from "react";
 import { ExtensionSlotsConfigTree } from "./extension-slots-config-tree";
 import { ConfigSubtree } from "./config-subtree.component";
-import { pickBy } from "lodash-es";
-import styles from "./configuration.styles.css";
+import pickBy from "lodash-es/pickBy";
+import { TreeContainer } from "./layout/tree-container.component";
 
 export interface ConfigTreeForModuleProps {
   config: Record<string, any>;
@@ -14,7 +14,7 @@ export function ConfigTreeForModule({
   moduleName,
 }: ConfigTreeForModuleProps) {
   return (
-    <div className={styles.topLevelConfig}>
+    <TreeContainer>
       <ExtensionSlotsConfigTree
         config={config.extensions}
         moduleName={moduleName}
@@ -23,6 +23,6 @@ export function ConfigTreeForModule({
         config={pickBy(config, (v, key) => key !== "extensions")}
         path={[moduleName]}
       />
-    </div>
+    </TreeContainer>
   );
 }

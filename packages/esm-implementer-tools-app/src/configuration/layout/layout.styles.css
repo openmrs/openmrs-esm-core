@@ -1,0 +1,15 @@
+.labelCell {
+  width: 12em;
+}
+
+.structuredList {
+  margin-bottom: 1em;
+}
+
+.structuredListRow {
+  border-left: 2px solid #c0c0c0;
+}
+
+.subtreeCell {
+  left: -6em;
+}

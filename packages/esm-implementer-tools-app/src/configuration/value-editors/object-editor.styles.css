@@ -1,0 +1,15 @@
+.objectEditor :global(.bx--structured-list-td) {
+  padding: 0.25rem 3rem 0.25rem 1rem;
+}
+
+.objectEditor :global(.bx--structured-list) {
+  margin-bottom: 0.25rem;
+}
+
+.buttonCell {
+  text-align: right;
+}
+
+/* .valueCell {
+  display: inline-flex;
+} */

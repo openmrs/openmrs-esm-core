@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import isEqual from "lodash-es/isEqual";
+import { Reset16 } from "@carbon/icons-react";
 import {
   setTemporaryConfigValue,
   ConfigValue,
   Validator,
   Type,
+  Config,
+  unsetTemporaryConfigValue,
 } from "@openmrs/esm-config";
 import styles from "./editable-value.styles.css";
 import { ValueEditor, CustomValueType } from "./value-editor";
 import { getStore, ImplementerToolsStore } from "../store";
+import { Button } from "carbon-components-react";
+import { DisplayValue } from "./display-value";
 
 export interface EditableValueProps {
   path: string[];
@@ -19,8 +24,9 @@ export interface EditableValueProps {
 export interface ConfigValueDescriptor {
   _value: ConfigValue;
   _source: string;
-  _default: ConfigValue;
+  _default?: ConfigValue;
   _description?: string;
+  _elements?: Config | ConfigValueDescriptor;
   _validators?: Array<Validator>;
   _type?: Type;
 }
@@ -33,7 +39,6 @@ export default function EditableValue({
   const [valueString, setValueString] = useState<string>();
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const store = getStore();
   const activeConfigRef = useRef<HTMLButtonElement>(null);
 
   const closeEditor = () => {
@@ -50,15 +55,20 @@ export default function EditableValue({
 
   useEffect(() => {
     const update = (state: ImplementerToolsStore) => {
-      if (isEqual(state.configPathBeingEdited, path)) {
+      if (
+        state.configPathBeingEdited &&
+        isEqual(state.configPathBeingEdited, path)
+      ) {
         focusOnConfigPathBeingEdited();
       }
     };
+    const store = getStore();
     update(store.getState());
     return store.subscribe(update);
-  }, [store]);
+  }, []);
 
   useEffect(() => {
+    const store = getStore();
     const state = store.getState();
     if (editing && !isEqual(state.configPathBeingEdited, path)) {
       store.setState({
@@ -74,7 +84,7 @@ export default function EditableValue({
     if (!editing && isEqual(state.configPathBeingEdited, path)) {
       store.setState({ configPathBeingEdited: null });
     }
-  }, [editing, store]);
+  }, [editing]);
 
   return (
     <>
@@ -84,6 +94,7 @@ export default function EditableValue({
             <ValueEditor
               element={element}
               customType={customType}
+              path={path}
               handleClose={closeEditor}
               handleSave={(val) => {
                 try {
@@ -99,17 +110,32 @@ export default function EditableValue({
             />
           </>
         ) : (
-          <button
-            className={`${styles.secretButton} ${
-              element._source == "temporary config"
-                ? styles.overriddenValue
-                : ""
-            }`}
-            onClick={() => setEditing(true)}
-            ref={activeConfigRef}
-          >
-            {valueString ?? JSON.stringify(element._value) ?? "none"}
-          </button>
+          <>
+            <button
+              className={`${styles.secretButton} ${
+                element._source == "temporary config"
+                  ? styles.overriddenValue
+                  : ""
+              }`}
+              onClick={() => setEditing(true)}
+              ref={activeConfigRef}
+            >
+              <DisplayValue value={element._value} />
+            </button>
+            {element._source == "temporary config" ? (
+              <Button
+                style={{ marginLeft: "1em" }}
+                renderIcon={Reset16}
+                size="sm"
+                kind="tertiary"
+                iconDescription="Reset to default"
+                hasIconOnly
+                onClick={() => {
+                  unsetTemporaryConfigValue(path);
+                }}
+              />
+            ) : null}
+          </>
         )}
         {error && <div className={styles.error}>{error}</div>}
       </div>
