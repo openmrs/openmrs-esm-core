@@ -1,4 +1,4 @@
-import { createGlobalStore, getGlobalStore } from "@openmrs/esm-api";
+import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
 import { createUseStore } from "@openmrs/esm-react-utils";
 import { Store } from "unistore";
 

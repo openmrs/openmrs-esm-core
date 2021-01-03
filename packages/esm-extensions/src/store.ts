@@ -1,4 +1,4 @@
-import { createGlobalStore } from "@openmrs/esm-api";
+import { createGlobalStore } from "@openmrs/esm-state";
 
 export interface ExtensionDefinition {
   name: string;

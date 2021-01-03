@@ -1,16 +1,17 @@
 {
-  "name": "@openmrs/esm-extensions",
+  "name": "@openmrs/esm-state",
   "version": "3.1.9",
   "license": "MPL-2.0",
-  "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
-  "browser": "dist/openmrs-esm-extensions.js",
+  "description": "Frontend stores & state management for OpenMRS",
+  "browser": "dist/openmrs-esm-state.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
     "typescript": "tsc",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "format": "prettier --write src/**"
   },
   "keywords": [
     "openmrs",
@@ -32,19 +33,8 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "path-to-regexp": "6.1.0",
-    "systemjs-webpack-interop": "^2.1.2"
-  },
-  "peerDependencies": {
-    "@openmrs/esm-config": "3.x",
-    "@openmrs/esm-state": "3.x",
-    "single-spa": "4.x"
-  },
-  "devDependencies": {
-    "@openmrs/esm-api": "^3.1.9",
-    "@openmrs/esm-config": "^3.1.9",
-    "@openmrs/esm-state": "^3.1.9",
-    "single-spa": "^4.4.1"
+    "systemjs-webpack-interop": "^2.1.2",
+    "unistore": "^3.5.2"
   },
   "publishConfig": {
     "access": "public"

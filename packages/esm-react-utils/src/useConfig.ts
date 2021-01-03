@@ -1,15 +1,18 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
-  getConfig,
-  configCache,
-  configCacheNotifier,
-  getExtensionConfig,
+  getConfigStore,
+  getExtensionConfigStore,
+  ConfigStore,
 } from "@openmrs/esm-config";
 import { ModuleNameContext } from "./ModuleNameContext";
 import { ExtensionContext } from "./ExtensionContext";
 import { useForceUpdate } from "./useForceUpdate";
+import { ConfigObject } from "@openmrs/esm-config/src/types";
+import isEqual from "lodash-es/isEqual";
 
 let error: Error | undefined;
+let promises: Record<string, Promise<ConfigObject>> = {};
+let configs: Record<string, ConfigObject> = {};
 
 /**
  * Use this React Hook to obtain your module's configuration.
@@ -39,42 +42,39 @@ export function useConfig() {
 
   const cacheId = moduleName || `${attachedExtensionSlotName}-${extensionId}`;
 
-  function getConfigAndSetCache(lookupName: string) {
-    const getConfigPromise = moduleName
-      ? getConfig(lookupName)
-      : getExtensionConfig(
-          lookupName,
-          extensionModuleName,
-          attachedExtensionSlotName,
-          extensionId
-        );
-    return getConfigPromise
-      .then((res) => {
-        configCache[cacheId] = res;
-        forceUpdate();
-      })
-      .catch((err) => {
-        error = err;
-      });
-  }
-
-  useEffect(() => {
-    const sub = configCacheNotifier.subscribe(() => {
-      getConfigAndSetCache(moduleName || extensionSlotModuleName);
-    });
-    return () => sub.unsubscribe();
-  }, [moduleName, extensionSlotModuleName]);
-
   if (error) {
     // Suspense will just keep calling useConfig if the thrown promise rejects.
     // So we check ahead of time and avoid creating a new promise.
     throw error;
   }
 
-  if (!configCache[cacheId]) {
+  if (!configs[cacheId]) {
+    if (!promises[cacheId]) {
+      promises[cacheId] = new Promise((resolve, reject) => {
+        const store = moduleName
+          ? getConfigStore(moduleName)
+          : getExtensionConfigStore(
+              extensionSlotModuleName,
+              extensionModuleName,
+              attachedExtensionSlotName,
+              extensionId
+            );
+        function update(state: ConfigStore) {
+          if (state.loaded && state.config) {
+            if (!isEqual(state.config, configs[cacheId])) {
+              configs[cacheId] = state.config;
+              resolve(state.config);
+              unsubscribe && unsubscribe();
+            }
+          }
+        }
+        update(store.getState());
+        const unsubscribe = store.subscribe(update);
+      });
+    }
     // React will prevent the client component from rendering until the promise resolves
-    throw getConfigAndSetCache(moduleName || extensionSlotModuleName);
+    throw promises[cacheId];
   } else {
-    return configCache[cacheId];
+    return configs[cacheId];
   }
 }

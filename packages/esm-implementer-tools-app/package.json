@@ -49,6 +49,7 @@
     "@openmrs/esm-error-handling": "3.x",
     "@openmrs/esm-extensions": "3.x",
     "@openmrs/esm-react-utils": "3.x",
+    "@openmrs/esm-state": "3.x",
     "@openmrs/esm-styleguide": "3.x",
     "react": "16.x",
     "react-dom": "16.x",

@@ -8,7 +8,14 @@ import {
   prop,
 } from "ramda";
 import { invalidateConfigCache } from "./config-cache";
-import { Validator } from "../validators/validator";
+import {
+  Config,
+  ConfigObject,
+  ConfigSchema,
+  ExtensionSlotConfig,
+  ExtensionSlotConfigObject,
+  Type,
+} from "../types";
 import {
   isArray,
   isBoolean,
@@ -17,19 +24,26 @@ import {
   isObject,
   isString,
 } from "../validators/type-validators";
+import {
+  ConfigInternalStore,
+  configInternalStore,
+  getConfigStore,
+  temporaryConfigStore,
+} from "./state";
 
-// The input configs
-type ProvidedConfig = {
-  source: string;
-  config: Config;
-};
-let _providedConfigs: ProvidedConfig[] = [];
-let _importMapConfig: Config = {};
-let _temporaryConfig: Config = {};
-updateTemporaryConfigValueFromLocalStorage();
+function computeModuleConfig(state: ConfigInternalStore) {
+  if (state.importMapConfigLoaded) {
+    for (let moduleName of Object.keys(state.schemas)) {
+      const config = getConfigForModule(moduleName);
+      const moduleStore = getConfigStore(moduleName);
+      moduleStore.setState({ loaded: true, config });
+    }
+  }
+}
 
-// An object with module names for keys and schemas for values.
-const _schemas: Record<string, ConfigSchema> = {};
+loadConfigs();
+computeModuleConfig(configInternalStore.getState());
+configInternalStore.subscribe(computeModuleConfig);
 
 /*
  * API
@@ -37,11 +51,17 @@ const _schemas: Record<string, ConfigSchema> = {};
 
 export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
-  _schemas[moduleName] = schema;
+  const state = configInternalStore.getState();
+  configInternalStore.setState({
+    schemas: { ...state.schemas, [moduleName]: schema },
+  });
 }
 
 export function provide(config: Config, sourceName = "provided") {
-  _providedConfigs.push({ source: sourceName, config });
+  const state = configInternalStore.getState();
+  configInternalStore.setState({
+    providedConfigs: [...state.providedConfigs, { source: sourceName, config }],
+  });
 }
 
 export async function getConfig(moduleName: string): Promise<ConfigObject> {
@@ -81,7 +101,7 @@ export async function getExtensionConfig(
     getProvidedConfigs()
   );
   const extensionConfig = mergeConfigs([extensionModuleConfig, configOverride]);
-  const schema = _schemas[extensionModuleName]; // TODO: validate that a schema exists for the module
+  const schema = configInternalStore.getState().schemas[extensionModuleName]; // TODO: validate that a schema exists for the module
   validateConfig(schema, extensionConfig, extensionModuleName);
   const config = setDefaults(schema, extensionConfig);
   delete config.extensions;
@@ -110,12 +130,13 @@ export function processConfig(
  * @internal
  */
 export async function getImplementerToolsConfig(): Promise<object> {
-  let result = getSchemaWithValuesAndSources(clone(_schemas));
+  const state = configInternalStore.getState();
+  let result = getSchemaWithValuesAndSources(clone(state.schemas));
   await loadConfigs();
   const configsAndSources = [
-    ..._providedConfigs.map((c) => [c.config, c.source]),
-    [_importMapConfig, "config-file"],
-    [_temporaryConfig, "temporary config"],
+    ...state.providedConfigs.map((c) => [c.config, c.source]),
+    [state.importMapConfig, "config-file"],
+    [temporaryConfigStore.getState(), "temporary config"],
   ] as Array<[Config, string]>;
   for (let [config, source] of configsAndSources) {
     result = mergeConfigs([result, createValuesAndSourcesTree(config, source)]);
@@ -160,48 +181,6 @@ export function getAreDevDefaultsOn(): boolean {
   return JSON.parse(
     localStorage.getItem("openmrsConfigAreDevDefaultsOn") || "false"
   );
-}
-
-/**
- * @internal
- */
-export function getTemporaryConfig(): Config {
-  return _temporaryConfig;
-}
-
-/**
- * @internal
- */
-export function setTemporaryConfigValue(path: string[], value: any): void {
-  const current = getTemporaryConfig();
-  _temporaryConfig = assocPath(path, value, current);
-  localStorage.setItem(
-    "openmrsTemporaryConfig",
-    JSON.stringify(_temporaryConfig)
-  );
-  invalidateConfigCache();
-}
-
-/**
- * @internal
- */
-export function unsetTemporaryConfigValue(path: string[]): void {
-  const current = getTemporaryConfig();
-  _temporaryConfig = dissocPath(path, current);
-  localStorage.setItem(
-    "openmrsTemporaryConfig",
-    JSON.stringify(_temporaryConfig)
-  );
-  invalidateConfigCache();
-}
-
-/**
- * @internal
- */
-export function clearTemporaryConfig(): void {
-  _temporaryConfig = {};
-  localStorage.removeItem("openmrsTemporaryConfig");
-  invalidateConfigCache();
 }
 
 /**
@@ -291,10 +270,11 @@ function validateExtensionSlotConfig(
  */
 
 function getProvidedConfigs(): Config[] {
+  const state = configInternalStore.getState();
   return [
-    ..._providedConfigs.map((c) => c.config),
-    _importMapConfig,
-    _temporaryConfig,
+    ...state.providedConfigs.map((c) => c.config),
+    state.importMapConfig,
+    temporaryConfigStore.getState(),
   ];
 }
 
@@ -388,7 +368,7 @@ function validateConfigSchema(
   }
 }
 
-// Get config file from import map and append it to `configs`
+// Get config file from import map
 async function getImportMapConfigFile(): Promise<void> {
   let importMapConfigExists: boolean;
 
@@ -397,12 +377,18 @@ async function getImportMapConfigFile(): Promise<void> {
     importMapConfigExists = true;
   } catch {
     importMapConfigExists = false;
+    configInternalStore.setState({
+      importMapConfigLoaded: true,
+    });
   }
 
   if (importMapConfigExists) {
     try {
       const configFileModule = await System.import("config-file");
-      _importMapConfig = configFileModule.default;
+      configInternalStore.setState({
+        importMapConfig: configFileModule.default,
+        importMapConfigLoaded: true,
+      });
     } catch (e) {
       console.error(`Problem importing config-file ${e}`);
       throw e;
@@ -411,11 +397,12 @@ async function getImportMapConfigFile(): Promise<void> {
 }
 
 function getConfigForModule(moduleName: string): ConfigObject {
-  if (!_schemas.hasOwnProperty(moduleName)) {
+  const state = configInternalStore.getState();
+  if (!state.schemas.hasOwnProperty(moduleName)) {
     throw Error("No config schema has been defined for " + moduleName);
   }
 
-  const schema = _schemas[moduleName];
+  const schema = state.schemas[moduleName];
   const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
   validateConfig(schema, inputConfig, moduleName);
   const config = setDefaults(schema, inputConfig);
@@ -604,18 +591,6 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   return config;
 };
 
-function updateTemporaryConfigValueFromLocalStorage() {
-  try {
-    _temporaryConfig = JSON.parse(
-      localStorage.getItem("openmrsTemporaryConfig") || "{}"
-    );
-  } catch (e) {
-    console.error(
-      "Failed to parse temporary config in localStorage key 'openmrsTemporaryConfig'. Try clearing or fixing the value."
-    );
-  }
-}
-
 function hasObjectSchema(
   elementsSchema: Object | undefined
 ): elementsSchema is ConfigSchema {
@@ -629,74 +604,4 @@ function hasObjectSchema(
 
 function isOrdinaryObject(value) {
   return typeof value === "object" && !Array.isArray(value) && value !== null;
-}
-
-/*
- * Package-scoped functions
- */
-
-export function clearAll() {
-  getImportMapConfigPromise = undefined;
-  _providedConfigs.length = 0;
-  _importMapConfig = {};
-  _temporaryConfig = {};
-  for (var member in _schemas) delete _schemas[member];
-}
-
-/*
- * Types
- */
-
-// Full-powered typing for Config and Schema trees depends on being able to
-// have types like `string not "_default"`. There is an experimental PR
-// for this feature, https://github.com/microsoft/TypeScript/pull/29317
-// But it is not likely to be merged any time terribly soon. (Nov 11, 2020)
-export interface ConfigSchema {
-  [key: string]: ConfigSchema | ConfigValue;
-  _type?: Type;
-  _validators?: Array<Validator>;
-  _elements?: ConfigSchema;
-}
-
-export interface Config extends Object {
-  [moduleName: string]: { [key: string]: any };
-}
-
-export interface ConfigObject extends Object {
-  [key: string]: any;
-}
-
-export type ConfigValue =
-  | string
-  | number
-  | boolean
-  | void
-  | Array<any>
-  | object;
-
-export enum Type {
-  Array = "Array",
-  Boolean = "Boolean",
-  ConceptUuid = "ConceptUuid",
-  Number = "Number",
-  Object = "Object",
-  String = "String",
-  UUID = "UUID",
-}
-
-export interface ExtensionSlotConfig {
-  add?: string[];
-  remove?: string[];
-  order?: string[];
-  configure?: ExtensionSlotConfigureValueObject;
-}
-
-export interface ExtensionSlotConfigureValueObject {
-  [key: string]: object;
-}
-
-export interface ExtensionSlotConfigObject {
-  add?: string[];
-  remove?: string[];
-  order?: string[];
 }

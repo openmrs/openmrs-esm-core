@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "lodash-es": "^4.17.20",
     "single-spa-react": "^2.13.0",
     "systemjs-webpack-interop": "^2.1.2"
   },

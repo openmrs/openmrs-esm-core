@@ -32,6 +32,7 @@
     "@openmrs/esm-error-handling": "^3.1.9",
     "@openmrs/esm-extensions": "^3.1.9",
     "@openmrs/esm-react-utils": "^3.1.9",
+    "@openmrs/esm-state": "^3.1.9",
     "@openmrs/esm-styleguide": "^3.1.9",
     "carbon-components": "^10.19.0",
     "carbon-icons": "^7.0.7",

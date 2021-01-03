@@ -1,3 +1,5 @@
+import { Validator, ValidatorFunction } from "../types";
+
 export function validator(
   validationFunction: ValidatorFunction,
   message: string
@@ -8,7 +10,3 @@ export function validator(
     }
   };
 }
-
-type ValidatorFunction = (value: any) => boolean;
-
-export type Validator = (value: any) => void | string;
