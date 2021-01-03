@@ -1,7 +1,5 @@
 # openmrs-esm-devtools
 
-[![Build Status](https://travis-ci.org/openmrs/openmrs-esm-devtools.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-esm-devtools)
-
 An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
 
 ## What is this?
