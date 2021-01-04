@@ -1,7 +1,5 @@
 # openmrs-esm-implementer-tools-app
 
-[![Build Status](https://travis-ci.org/openmrs/openmrs-implementer-tools-app.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-esm-implementer-tools-app)
-
 An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
 
 ## What is this?
