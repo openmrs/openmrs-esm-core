@@ -41,8 +41,8 @@
   padding: 0 1em;
 }
 
-:global(.bx--content-switcher-btn:first-child),
-:global(.bx--content-switcher-btn:last-child) {
+.topBar :global(.bx--content-switcher-btn:first-child),
+.topBar :global(.bx--content-switcher-btn:last-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
