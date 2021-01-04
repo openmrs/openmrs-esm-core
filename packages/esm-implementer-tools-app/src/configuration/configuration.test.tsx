@@ -115,12 +115,13 @@ describe(`<Configuration />`, () => {
       </Provider>
     );
   }
+
   it(`renders without dying`, async () => {
     renderConfiguration();
     await screen.findByText("Dev Config");
-    screen.findByText("UI Editor");
-    screen.findByText("Clear Temporary Config");
-    screen.findByText("Download Temporary Config");
+    screen.getByText("UI Editor");
+    screen.getByText("Clear Temporary Config");
+    screen.getByText("Download Temporary Config");
   });
 
   it("displays correct boolean value and editor", async () => {
