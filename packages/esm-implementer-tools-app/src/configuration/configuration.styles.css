@@ -2,8 +2,6 @@
   position: fixed;
   width: 100%;
   background-color: #e0e0e0;
-  display: flex;
-  gap: 4em;
   padding: 0.5em 1.5em;
   border-bottom: 1px solid #a0a0a0;
   border-top: 1px solid #c0c0c0;
@@ -12,6 +10,11 @@
 
 .tools > div {
   flex: 0 1 auto;
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
 }
 
 .downloadLink {

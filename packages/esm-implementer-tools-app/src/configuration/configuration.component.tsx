@@ -6,8 +6,8 @@ import {
   clearTemporaryConfig,
   getTemporaryConfig,
 } from "@openmrs/esm-config";
-import { Toggle, Button } from "carbon-components-react";
-import { Download16 } from "@carbon/icons-react";
+import { Button, Column, Grid, Row, Toggle } from "carbon-components-react";
+import { Download16, TrashCan16 } from "@carbon/icons-react";
 import styles from "./configuration.styles.css";
 import { ConfigTree } from "./config-tree.component";
 import {
@@ -43,43 +43,60 @@ export default function Configuration(props: ConfigurationProps) {
   return (
     <>
       <div className={styles.tools}>
-        <Toggle
-          id="devConfigSwitch"
-          labelText="Dev Config"
-          onToggle={() => {
-            setAreDevDefaultsOn(!isDevConfigActive);
-            setIsDevConfigActive(!isDevConfigActive);
-          }}
-          toggled={isDevConfigActive}
-        />
-        <Toggle
-          id={"uiEditorSwitch"}
-          labelText="UI Editor"
-          toggled={isUIEditorActive}
-          onToggle={() => {
-            setIsUIEditorActive(!isUIEditorActive);
-            setIsUIEditorEnabled(!isUIEditorActive);
-          }}
-        />
-        <Button
-          size="sm"
-          kind="secondary"
-          onClick={() => {
-            clearTemporaryConfig();
-            updateConfig();
-          }}
-        >
-          Clear Temporary Config
-        </Button>
-        <Button size="sm" kind="secondary" renderIcon={Download16}>
-          <a
-            className={styles.downloadLink}
-            download="temporary_config.json"
-            href={window.URL.createObjectURL(tempConfigObjUrl)}
-          >
-            Download Temporary Config
-          </a>
-        </Button>
+        <Grid style={{ margin: "0.25rem", padding: 0 }}>
+          <Row>
+            <Column sm={1} md={1}>
+              <Toggle
+                id="devConfigSwitch"
+                labelText="Dev Config"
+                onToggle={() => {
+                  setAreDevDefaultsOn(!isDevConfigActive);
+                  setIsDevConfigActive(!isDevConfigActive);
+                }}
+                toggled={isDevConfigActive}
+              />
+            </Column>
+            <Column sm={1} md={1} className={styles.actionButton}>
+              <Toggle
+                id={"uiEditorSwitch"}
+                labelText="UI Editor"
+                toggled={isUIEditorActive}
+                onToggle={() => {
+                  setIsUIEditorActive(!isUIEditorActive);
+                  setIsUIEditorEnabled(!isUIEditorActive);
+                }}
+              />
+            </Column>
+            <Column sm={1} md={2} className={styles.actionButton}>
+              <Button
+                kind="danger"
+                iconDescription="Clear temporary config"
+                renderIcon={TrashCan16}
+                onClick={() => {
+                  clearTemporaryConfig();
+                  updateConfig();
+                }}
+              >
+                Clear Temporary Config
+              </Button>
+            </Column>
+            <Column sm={1} md={2} className={styles.actionButton}>
+              <Button
+                kind="secondary"
+                iconDescription="Download temporary config"
+                renderIcon={Download16}
+              >
+                <a
+                  className={styles.downloadLink}
+                  download="temporary_config.json"
+                  href={window.URL.createObjectURL(tempConfigObjUrl)}
+                >
+                  Download Temporary Config
+                </a>
+              </Button>
+            </Column>
+          </Row>
+        </Grid>
       </div>
       <div className={styles.mainContent}>
         <div className={styles.configTreePane}>

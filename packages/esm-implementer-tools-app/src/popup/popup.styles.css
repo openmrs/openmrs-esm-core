@@ -28,7 +28,6 @@
 
 .topBar {
   position: fixed;
-  background-color: #d0d0d0;
   width: 100%;
   height: 42px;
   display: flex;
@@ -40,4 +39,12 @@
 .closeButton {
   min-height: 3em;
   padding: 0 1em;
+}
+
+.topBar :global(.bx--content-switcher-btn:first-child),
+.topBar :global(.bx--content-switcher-btn:last-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
