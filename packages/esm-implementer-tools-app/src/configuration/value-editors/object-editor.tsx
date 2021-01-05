@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
-  Button,
   StructuredListBody,
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
   Tile,
 } from "carbon-components-react";
-import { Add16, TrashCan16 } from "@carbon/icons-react";
 import { ValueEditorField } from "./value-editor-field";
 import { ConfigValueDescriptor } from "../editable-value.component";
 import { Type } from "@openmrs/esm-config";
-import { cloneDeep } from "lodash-es";
+import cloneDeep from "lodash-es/cloneDeep";
 import styles from "./object-editor.styles.css";
 
 interface ObjectEditorProps {

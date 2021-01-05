@@ -35,10 +35,7 @@ function PopupHandler() {
     modulesWithWrongBackendModulesVersion,
     setModulesWithWrongBackendModulesVersion,
   ] = useState<Array<MissingBackendModules>>([]);
-  const { isOpen, isUIEditorEnabled } = useStore([
-    "isOpen",
-    "isUIEditorEnabled",
-  ]);
+  const { isOpen, isUIEditorEnabled } = useStore();
 
   function togglePopup() {
     getStore().setState({ isOpen: !isOpen });

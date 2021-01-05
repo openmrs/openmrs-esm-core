@@ -1,27 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Store, BoundAction } from "unistore";
 
-export type Reducer = Function | Array<string> | Object;
 export type Actions = Function | { [key: string]: Function };
-
-function runReducer<T>(state: T, reducer: Reducer) {
-  if (typeof reducer === "function") {
-    return reducer(state);
-  }
-  const out = {};
-  if (typeof reducer === "string") {
-    out[reducer] = state[reducer];
-  } else if (Array.isArray(reducer)) {
-    for (let i of reducer) {
-      out[i] = state[i];
-    }
-  } else if (reducer) {
-    for (let i in reducer) {
-      out[i] = state[reducer[i]];
-    }
-  }
-  return out;
-}
+export type BoundActions = { [key: string]: BoundAction };
 
 function bindActions<T>(store: Store<T>, actions: Actions) {
   if (typeof actions == "function") {
@@ -35,15 +16,9 @@ function bindActions<T>(store: Store<T>, actions: Actions) {
 }
 
 export function createUseStore<T>(store: Store<T>) {
-  return function useStore(
-    reducer: Reducer,
-    actions?: Actions
-  ): T & { [key: string]: BoundAction } {
-    const [state, set] = useState(runReducer(store.getState(), reducer));
-    useEffect(
-      () => store.subscribe((state) => set(runReducer(state, reducer))),
-      []
-    );
+  return function useStore(actions?: Actions): T & BoundActions {
+    const [state, set] = useState(store.getState());
+    useEffect(() => store.subscribe((state) => set(state)), []);
     let boundActions = {};
     if (actions) {
       boundActions = useMemo(() => bindActions(store, actions), [
@@ -51,6 +26,6 @@ export function createUseStore<T>(store: Store<T>) {
         actions,
       ]);
     }
-    return { ...state, ...boundActions };
+    return { ...state, ...(boundActions as BoundActions) };
   };
 }

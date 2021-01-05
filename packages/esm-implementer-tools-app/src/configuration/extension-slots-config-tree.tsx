@@ -1,26 +1,23 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ExtensionSlotConfig } from "@openmrs/esm-config";
-import {
-  ExtensionSlotInfo,
-  extensionStore,
-  ExtensionStore,
-} from "@openmrs/esm-extensions";
+import { extensionStore } from "@openmrs/esm-extensions";
 import { useExtensionStore } from "@openmrs/esm-react-utils";
-import { Provider, connect } from "unistore/react";
 import EditableValue from "./editable-value.component";
 import { getStore } from "../store";
-import { isEqual } from "lodash-es";
+import isEqual from "lodash-es/isEqual";
 import { ExtensionConfigureTree } from "./extension-configure-tree";
 import { Subtree } from "./layout/subtree.component";
 
 interface ExtensionSlotsConfigTreeProps {
   config: { [key: string]: any };
   moduleName: string;
-  slots: Record<string, ExtensionSlotInfo>;
 }
 
-export function ExtensionSlotsConfigTree({ config, moduleName }: ExtensionSlotsConfigTreeProps) { 
-  const slots = useExtensionStore("slots");
+export function ExtensionSlotsConfigTree({
+  config,
+  moduleName,
+}: ExtensionSlotsConfigTreeProps) {
+  const { slots } = useExtensionStore();
 
   const extensionSlotNames = useMemo(
     () =>
@@ -38,7 +35,7 @@ export function ExtensionSlotsConfigTree({ config, moduleName }: ExtensionSlotsC
       ))}
     </Subtree>
   ) : null;
-};
+}
 
 interface ExtensionSlotConfigProps {
   config: ExtensionSlotConfig;

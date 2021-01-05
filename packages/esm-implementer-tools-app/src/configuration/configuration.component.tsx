@@ -24,10 +24,7 @@ const actions = {
 };
 
 export function Configuration({ setHasAlert }: ConfigurationProps) {
-  const { isUIEditorEnabled, toggleIsUIEditorEnabled } = useStore(
-    ["isUIEditorEnabled"],
-    actions
-  );
+  const { isUIEditorEnabled, toggleIsUIEditorEnabled } = useStore(actions);
   const [config, setConfig] = useState({});
   const [isDevConfigActive, setIsDevConfigActive] = useState(
     getAreDevDefaultsOn()
@@ -50,7 +47,6 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
   useEffect(updateConfig, []);
 
   return (
-<<<<<<< HEAD
     <>
       <div className={styles.tools}>
         <Grid style={{ margin: "0.25rem", padding: 0 }}>
@@ -70,11 +66,8 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
               <Toggle
                 id={"uiEditorSwitch"}
                 labelText="UI Editor"
-                toggled={isUIEditorActive}
-                onToggle={() => {
-                  setIsUIEditorActive(!isUIEditorActive);
-                  setIsUIEditorEnabled(!isUIEditorActive);
-                }}
+                toggled={isUIEditorEnabled}
+                onToggle={toggleIsUIEditorEnabled}
               />
             </Column>
             <Column sm={1} md={2} className={styles.actionButton}>
@@ -117,53 +110,5 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
         </div>
       </div>
     </>
-=======
-<>
-<div className={styles.tools}>
-            <Toggle
-              id="devConfigSwitch"
-              labelText="Dev Config"
-              onToggle={() => {
-                setAreDevDefaultsOn(!isDevConfigActive);
-                setIsDevConfigActive(!isDevConfigActive);
-              }}
-              toggled={isDevConfigActive}
-            />
-            <Toggle
-              id={"uiEditorSwitch"}
-              labelText="UI Editor"
-              toggled={isUIEditorEnabled}
-              onToggle={toggleIsUIEditorEnabled}
-            />
-            <Button
-              small
-              kind="secondary"
-              onClick={() => {
-                clearTemporaryConfig();
-                updateConfig();
-              }}
-            >
-              Clear Temporary Config
-            </Button>
-            <Button small kind="secondary" renderIcon={Download16}>
-              <a
-                className={styles.downloadLink}
-                download="temporary_config.json"
-                href={window.URL.createObjectURL(tempConfigObjUrl)}
-              >
-                Download Temporary Config
-              </a>
-            </Button>
-            </div>
-      <div className={styles.mainContent}>
-        <div className={styles.configTreePane}>
-          <ConfigTree config={config} />
-        </div>
-        <div className={styles.descriptionPane}>
-          <Description />
-        </div>
-      </div>
-    </>
->>>>>>> c4338a5... Make the UI Editor work via portals
   );
 }

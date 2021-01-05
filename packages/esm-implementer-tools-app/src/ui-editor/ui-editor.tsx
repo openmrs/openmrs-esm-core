@@ -5,7 +5,7 @@ import { ExtensionOverlay } from "./extension-overlay.component";
 import { useExtensionStore } from "@openmrs/esm-react-utils";
 
 export function UiEditor() {
-  const { slots, extensions } = useExtensionStore(["slots", "extensions"]);
+  const { slots, extensions } = useExtensionStore();
 
   return (
     <>
