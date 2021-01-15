@@ -10,20 +10,26 @@ import { Button, Column, Grid, Row, Toggle } from "carbon-components-react";
 import { Download16, TrashCan16 } from "@carbon/icons-react";
 import styles from "./configuration.styles.css";
 import { ConfigTree } from "./config-tree.component";
-import {
-  getIsUIEditorEnabled,
-  setIsUIEditorEnabled,
-} from "@openmrs/esm-extensions";
+import { getStore, ImplementerToolsStore, useStore } from "../store";
 import { Description } from "./description.component";
 
-export default function Configuration(props: ConfigurationProps) {
+export type ConfigurationProps = {
+  setHasAlert(value: boolean): void;
+};
+
+const actions = {
+  toggleIsUIEditorEnabled({ isUIEditorEnabled }: ImplementerToolsStore) {
+    return { isUIEditorEnabled: !isUIEditorEnabled };
+  },
+};
+
+export function Configuration({ setHasAlert }: ConfigurationProps) {
+  const { isUIEditorEnabled, toggleIsUIEditorEnabled } = useStore(actions);
   const [config, setConfig] = useState({});
   const [isDevConfigActive, setIsDevConfigActive] = useState(
     getAreDevDefaultsOn()
   );
-  const [isUIEditorActive, setIsUIEditorActive] = useState(
-    getIsUIEditorEnabled()
-  );
+  const store = getStore();
   const tempConfig = getTemporaryConfig();
   const tempConfigObjUrl = new Blob(
     [JSON.stringify(tempConfig, undefined, 2)],
@@ -60,11 +66,8 @@ export default function Configuration(props: ConfigurationProps) {
               <Toggle
                 id={"uiEditorSwitch"}
                 labelText="UI Editor"
-                toggled={isUIEditorActive}
-                onToggle={() => {
-                  setIsUIEditorActive(!isUIEditorActive);
-                  setIsUIEditorEnabled(!isUIEditorActive);
-                }}
+                toggled={isUIEditorEnabled}
+                onToggle={toggleIsUIEditorEnabled}
               />
             </Column>
             <Column sm={1} md={2} className={styles.actionButton}>
@@ -109,7 +112,3 @@ export default function Configuration(props: ConfigurationProps) {
     </>
   );
 }
-
-type ConfigurationProps = {
-  setHasAlert(value: boolean): void;
-};

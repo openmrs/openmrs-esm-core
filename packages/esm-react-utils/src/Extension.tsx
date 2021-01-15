@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { TooltipIcon } from "carbon-components-react";
-import { renderExtension, getIsUIEditorEnabled } from "@openmrs/esm-extensions";
+import { renderExtension } from "@openmrs/esm-extensions";
 import { ExtensionContext } from "./ExtensionContext";
 
 export interface ExtensionProps {
@@ -42,15 +41,15 @@ export const Extension: React.FC<ExtensionProps> = ({ state }) => {
     attachedExtensionSlotName,
     extensionSlotModuleName,
     extensionId,
+    ref.current,
   ]);
 
-  return getIsUIEditorEnabled() ? (
-    <TooltipIcon tooltipText={extensionId} align="center" direction="top">
-      <div>
-        <slot ref={ref} />
-      </div>
-    </TooltipIcon>
-  ) : (
-    <slot ref={ref} />
+  return (
+    // The extension is rendered into the `<slot>`. It is surrounded by a
+    // `<div>` with relative positioning in order to allow the UI Editor
+    // to absolutely position elements within it.
+    <div style={{ position: "relative" }}>
+      <slot ref={ref} />
+    </div>
   );
 };

@@ -1,9 +1,12 @@
 import { createGlobalStore, getGlobalStore } from "@openmrs/esm-api";
+import { createUseStore } from "@openmrs/esm-react-utils";
+import { Store } from "unistore";
 
 export interface ImplementerToolsStore {
   activeItemDescription?: ActiveItemDescription;
   configPathBeingEdited: null | string[];
   isOpen: boolean;
+  isUIEditorEnabled: boolean;
 }
 
 export interface ActiveItemDescription {
@@ -13,29 +16,56 @@ export interface ActiveItemDescription {
   source?: string;
 }
 
-createGlobalStore("implementer-tools", {
-  activeItemDescription: null,
-  configPathBeingEdited: null,
-  isOpen: getIsImplementerToolsOpen(),
-});
+const store: Store<ImplementerToolsStore> = createGlobalStore(
+  "implementer-tools",
+  {
+    activeItemDescription: undefined,
+    configPathBeingEdited: null,
+    isOpen: getIsImplementerToolsOpen(),
+    isUIEditorEnabled: getIsUIEditorEnabled(),
+  }
+);
 
 export const getStore = () =>
   getGlobalStore<ImplementerToolsStore>("implementer-tools");
 
+export const useStore = createUseStore<ImplementerToolsStore>(store);
+
 let lastValueOfIsOpen = getIsImplementerToolsOpen();
+let lastValueOfIsUiEditorEnabled = getIsUIEditorEnabled();
 getStore().subscribe((state) => {
   if (state.isOpen != lastValueOfIsOpen) {
     setIsImplementerToolsOpen(state.isOpen);
     lastValueOfIsOpen = state.isOpen;
   }
+  if (state.isUIEditorEnabled != lastValueOfIsUiEditorEnabled) {
+    setIsUIEditorEnabled(state.isUIEditorEnabled);
+    lastValueOfIsUiEditorEnabled = state.isUIEditorEnabled;
+  }
 });
 
-function setIsImplementerToolsOpen(value: boolean): void {
-  localStorage.setItem("openmrsImplementerToolsAreOpen", JSON.stringify(value));
+function getIsImplementerToolsOpen(): boolean {
+  return (
+    JSON.parse(
+      localStorage.getItem("openmrs:openmrsImplementerToolsAreOpen") || "false"
+    ) ?? false
+  );
 }
 
-function getIsImplementerToolsOpen(): boolean {
-  return JSON.parse(
-    localStorage.getItem("openmrsImplementerToolsAreOpen") || "false"
+function setIsImplementerToolsOpen(value: boolean): void {
+  localStorage.setItem(
+    "openmrs:openmrsImplementerToolsAreOpen",
+    JSON.stringify(value)
   );
+}
+
+function getIsUIEditorEnabled(): boolean {
+  return (
+    JSON.parse(localStorage.getItem("openmrs:isUIEditorEnabled") || "false") ??
+    false
+  );
+}
+
+function setIsUIEditorEnabled(enabled: boolean) {
+  localStorage.setItem("openmrs:isUIEditorEnabled", JSON.stringify(enabled));
 }

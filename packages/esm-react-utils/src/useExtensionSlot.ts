@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { MutableRefObject, useContext, useEffect, useState } from "react";
 import {
   registerExtensionSlot,
   unregisterExtensionSlot,
@@ -7,7 +7,10 @@ import {
 } from "@openmrs/esm-extensions";
 import { ModuleNameContext } from "./ModuleNameContext";
 
-export function useExtensionSlot(actualExtensionSlotName: string) {
+export function useExtensionSlot(
+  actualExtensionSlotName: string,
+  ref: MutableRefObject<HTMLElement | null>
+) {
   const extensionSlotModuleName = useContext(ModuleNameContext);
 
   if (!extensionSlotModuleName) {
@@ -22,10 +25,19 @@ export function useExtensionSlot(actualExtensionSlotName: string) {
   ] = useState<[string | undefined, Array<string>]>([undefined, []]);
 
   useEffect(() => {
-    registerExtensionSlot(extensionSlotModuleName, actualExtensionSlotName);
-    return () =>
-      unregisterExtensionSlot(extensionSlotModuleName, actualExtensionSlotName);
-  }, []);
+    if (ref.current) {
+      registerExtensionSlot(
+        extensionSlotModuleName,
+        actualExtensionSlotName,
+        ref.current
+      );
+      return () =>
+        unregisterExtensionSlot(
+          extensionSlotModuleName,
+          actualExtensionSlotName
+        );
+    }
+  }, [ref.current]);
 
   useEffect(() => {
     const update = (state: ExtensionStore) => {

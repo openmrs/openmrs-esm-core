@@ -9,9 +9,21 @@ export interface ExtensionRegistration extends ExtensionDefinition {
   moduleName: string;
 }
 
+export interface ExtensionInfo extends ExtensionRegistration {
+  /**
+   * The instances where the extension has been rendered using `renderExtension`,
+   * indexed by slotModuleName and actualExtensionSlotName
+   */
+  instances: Record<string, Record<string, ExtensionInstance>>;
+}
+
+export interface ExtensionInstance {
+  domElement: HTMLElement;
+}
+
 export interface ExtensionStore {
   slots: Record<string, ExtensionSlotInfo>;
-  extensions: Record<string, ExtensionRegistration>;
+  extensions: Record<string, ExtensionInfo>;
 }
 
 export interface ExtensionSlotInstance {
@@ -39,6 +51,10 @@ export interface ExtensionSlotInstance {
    * The number of active registrations on the instance.
    */
   registered: number;
+  /**
+   * The dom element at which the slot is mounted
+   */
+  domElement: HTMLElement | null;
 }
 
 export interface ExtensionSlotInfo {

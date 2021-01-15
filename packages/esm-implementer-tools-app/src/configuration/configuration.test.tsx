@@ -13,8 +13,7 @@ import {
   setTemporaryConfigValue,
   Type,
 } from "@openmrs/esm-config";
-import { Provider } from "unistore/react";
-import Configuration from "./configuration.component";
+import { Configuration } from "./configuration.component";
 import { getStore } from "../store";
 import {
   performConceptSearch,
@@ -109,11 +108,7 @@ describe(`<Configuration />`, () => {
   });
 
   function renderConfiguration() {
-    render(
-      <Provider store={getStore()}>
-        <Configuration setHasAlert={() => {}} />
-      </Provider>
-    );
+    render(<Configuration setHasAlert={() => {}} />);
   }
 
   it(`renders without dying`, async () => {

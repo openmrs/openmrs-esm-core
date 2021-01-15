@@ -15,6 +15,7 @@ function createNewExtensionSlotInstance(): ExtensionSlotInstance {
     idOrder: [],
     removedIds: [],
     registered: 1,
+    domElement: null,
   };
 }
 
@@ -48,6 +49,7 @@ export const registerExtension: (
       name,
       load,
       moduleName,
+      instances: {},
     };
   }
 );
@@ -204,10 +206,12 @@ function getUpdatedExtensionSlotInfoForUnregistration(
  *
  * @param moduleName The name of the module that contains the extension slot
  * @param actualExtensionSlotName The extension slot name that is actually used
+ * @param domElement The HTML element of the extension slot
  */
 export function registerExtensionSlot(
   moduleName: string,
-  actualExtensionSlotName: string
+  actualExtensionSlotName: string,
+  domElement: HTMLElement
 ) {
   updateExtensionStore(async (state) => {
     const slotName =
@@ -224,7 +228,16 @@ export function registerExtensionSlot(
       ...state,
       slots: {
         ...state.slots,
-        [slotName]: updatedSlot,
+        [slotName]: {
+          ...updatedSlot,
+          instances: {
+            ...updatedSlot.instances,
+            [moduleName]: {
+              ...updatedSlot.instances[moduleName],
+              domElement,
+            },
+          },
+        },
       },
     };
   });
@@ -266,20 +279,6 @@ export function getExtensionSlotsForModule(moduleName: string) {
   return Object.keys(state.slots).filter(
     (name) => moduleName in state.slots[name].instances
   );
-}
-
-const uiEditorSettingKey = "openmrs:isUIEditorEnabled";
-
-export function getIsUIEditorEnabled(): boolean {
-  try {
-    return JSON.parse(localStorage.getItem(uiEditorSettingKey) ?? "false");
-  } catch {
-    return false;
-  }
-}
-
-export function setIsUIEditorEnabled(enabled: boolean) {
-  localStorage.setItem(uiEditorSettingKey, JSON.stringify(enabled));
 }
 
 /**

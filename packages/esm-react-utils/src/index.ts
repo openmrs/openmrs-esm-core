@@ -1,4 +1,5 @@
 export * from "./ConfigurableLink";
+export * from "./createUseStore";
 export * from "./Extension";
 export * from "./ExtensionSlot";
 export * from "./getLifecycle";
@@ -7,6 +8,7 @@ export * from "./openmrsRootDecorator";
 export * from "./openmrsExtensionDecorator";
 export * from "./useConfig";
 export * from "./useCurrentPatient";
+export * from "./useExtensionStore";
 export * from "./useForceUpdate";
 export * from "./useNavigationContext";
 export * from "./UserHasAccess";
