@@ -6,7 +6,6 @@ import {
 } from "@openmrs/esm-config";
 import { ModuleNameContext } from "./ModuleNameContext";
 import { ExtensionContext } from "./ExtensionContext";
-import { useForceUpdate } from "./useForceUpdate";
 import { ConfigObject } from "@openmrs/esm-config/src/types";
 import isEqual from "lodash-es/isEqual";
 
@@ -23,14 +22,11 @@ export function useConfig() {
   // found.
   const {
     extensionId,
-    extensionModuleName,
     attachedExtensionSlotName,
     extensionSlotModuleName,
   } = useContext(ExtensionContext);
 
   const moduleName = useContext(ModuleNameContext);
-
-  const forceUpdate = useForceUpdate();
 
   if (!moduleName && !extensionId) {
     throw Error(
@@ -55,7 +51,6 @@ export function useConfig() {
           ? getConfigStore(moduleName)
           : getExtensionConfigStore(
               extensionSlotModuleName,
-              extensionModuleName,
               attachedExtensionSlotName,
               extensionId
             );

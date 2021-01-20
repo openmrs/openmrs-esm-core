@@ -1,5 +1,5 @@
 import React from "react";
-import { getStore } from "../store";
+import { implementerToolsStore } from "../store";
 
 interface ConfigEditButtonProps {
   configPath: string[];
@@ -8,11 +8,10 @@ interface ConfigEditButtonProps {
 export default function ConfigEditButton({
   configPath,
 }: ConfigEditButtonProps) {
-  const store = getStore();
   return (
     <button
       onClick={() => {
-        store.setState({ configPathBeingEdited: configPath });
+        implementerToolsStore.setState({ configPathBeingEdited: configPath });
       }}
     >
       Edit

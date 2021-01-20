@@ -18,11 +18,14 @@ export interface ExtensionInfo extends ExtensionRegistration {
 }
 
 export interface ExtensionInstance {
+  id: string;
   domElement: HTMLElement;
 }
 
 export interface ExtensionStore {
+  /** Slots indexed by name */
   slots: Record<string, ExtensionSlotInfo>;
+  /** Extensions indexed by name */
   extensions: Record<string, ExtensionInfo>;
 }
 

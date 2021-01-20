@@ -3,10 +3,10 @@ import { ExtensionSlotConfig } from "@openmrs/esm-config";
 import { extensionStore } from "@openmrs/esm-extensions";
 import { useExtensionStore } from "@openmrs/esm-react-utils";
 import EditableValue from "./editable-value.component";
-import { getStore } from "../store";
 import isEqual from "lodash-es/isEqual";
 import { ExtensionConfigureTree } from "./extension-configure-tree";
 import { Subtree } from "./layout/subtree.component";
+import { implementerToolsStore } from "../store";
 
 interface ExtensionSlotsConfigTreeProps {
   config: { [key: string]: any };
@@ -46,7 +46,6 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   const [assignedExtensions, setAssignedExtensions] = useState<Array<string>>(
     []
   );
-  const store = getStore();
   const moduleName = path[0];
   const slotName = path[2];
 
@@ -61,8 +60,8 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   }, []);
 
   function setActiveExtensionSlotOnMouseEnter(moduleName, slotName) {
-    if (!store.getState().configPathBeingEdited) {
-      store.setState({
+    if (!implementerToolsStore.getState().configPathBeingEdited) {
+      implementerToolsStore.setState({
         activeItemDescription: {
           path: [moduleName, slotName],
           value: assignedExtensions,
@@ -77,8 +76,8 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
     key,
     value
   ) {
-    if (!store.getState().configPathBeingEdited) {
-      store.setState({
+    if (!implementerToolsStore.getState().configPathBeingEdited) {
+      implementerToolsStore.setState({
         activeItemDescription: {
           path: [moduleName, slotName, key],
           source: value?._source,
@@ -96,12 +95,12 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   }
 
   function removeActiveItemDescriptionOnMouseLeave(thisPath) {
-    const state = store.getState();
+    const state = implementerToolsStore.getState();
     if (
       isEqual(state.activeItemDescription?.path, thisPath) &&
       !isEqual(state.configPathBeingEdited, thisPath)
     ) {
-      store.setState({ activeItemDescription: undefined });
+      implementerToolsStore.setState({ activeItemDescription: undefined });
     }
   }
 

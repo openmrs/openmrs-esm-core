@@ -1,22 +1,15 @@
-import React from "react";
+import { createGlobalStore } from "./openmrs-esm-state.mock";
 
-let areDevDefaultsOn = false;
-
-export const getImplementerToolsConfig = jest.fn().mockResolvedValue({});
-
-export const getAreDevDefaultsOn = jest
-  .fn()
-  .mockImplementation(() => areDevDefaultsOn);
-
-export const setAreDevDefaultsOn = jest.fn().mockImplementation((val) => {
-  areDevDefaultsOn = val;
+export const configInternalStore = createGlobalStore("config-internal", {
+  devDefaultsAreOn: false,
 });
 
-export const getTemporaryConfig = jest.fn().mockReturnValue({});
+export const implementerToolsConfigStore = createGlobalStore(
+  "implementer-tools-config",
+  {}
+);
 
-export const setTemporaryConfigValue = jest.fn();
-
-export const ModuleNameContext = React.createContext("fake-module-config");
+export const temporaryConfigStore = createGlobalStore("temporary-config", {});
 
 export enum Type {
   Array = "Array",

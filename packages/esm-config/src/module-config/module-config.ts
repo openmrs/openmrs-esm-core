@@ -16,10 +16,13 @@ import {
   isString,
 } from "../validators/type-validators";
 import {
+  ConfigExtensionStore,
   ConfigInternalStore,
   configInternalStore,
   ConfigStore,
+  configExtensionStore,
   getConfigStore,
+  getExtensionConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
 } from "./state";
@@ -32,9 +35,32 @@ loadConfigs();
 
 computeModuleConfig(configInternalStore.getState());
 configInternalStore.subscribe(computeModuleConfig);
+temporaryConfigStore.subscribe(() =>
+  computeModuleConfig(configInternalStore.getState())
+);
 
 computeImplementerToolsConfig(configInternalStore.getState());
 configInternalStore.subscribe(computeImplementerToolsConfig);
+temporaryConfigStore.subscribe(() =>
+  computeImplementerToolsConfig(configInternalStore.getState())
+);
+
+computeExtensionConfigs(
+  configInternalStore.getState(),
+  configExtensionStore.getState()
+);
+configInternalStore.subscribe((configState) =>
+  computeExtensionConfigs(configState, configExtensionStore.getState())
+);
+configExtensionStore.subscribe((extensionState) =>
+  computeExtensionConfigs(configInternalStore.getState(), extensionState)
+);
+temporaryConfigStore.subscribe(() =>
+  computeExtensionConfigs(
+    configInternalStore.getState(),
+    configExtensionStore.getState()
+  )
+);
 
 function computeModuleConfig(state: ConfigInternalStore) {
   if (state.importMapConfigLoaded) {
@@ -50,6 +76,28 @@ function computeImplementerToolsConfig(state: ConfigInternalStore) {
   if (state.importMapConfigLoaded) {
     const config = getImplementerToolsConfig();
     implementerToolsConfigStore.setState(config);
+  }
+}
+
+function computeExtensionConfigs(
+  configState: ConfigInternalStore,
+  extensionState: ConfigExtensionStore
+) {
+  if (configState.importMapConfigLoaded) {
+    for (let extension of extensionState.mountedExtensions) {
+      const extensionStore = getExtensionConfigStore(
+        extension.slotModuleName,
+        extension.slotName,
+        extension.extensionId
+      );
+      const config = getExtensionConfig(
+        extension.slotModuleName,
+        extension.extensionModuleName,
+        extension.slotName,
+        extension.extensionId
+      );
+      extensionStore.setState({ loaded: true, config });
+    }
   }
 }
 
@@ -79,7 +127,7 @@ export function provide(config: Config, sourceName = "provided") {
  *
  * In general you should use the Unistore-based API provided by
  * `getConfigStore`, which allows creating a subscription so that you always
- * have the latest config. If using React, then just use `useConfig`.
+ * have the latest config. If using React, just use `useConfig`.
  *
  * This is a useful function if you need to get the config in the course
  * of the one-time execution of a function.
@@ -101,26 +149,41 @@ export function getConfig(moduleName: string): Promise<Config> {
 }
 
 /**
+ * Validate and interpolate defaults for `providedConfig` according to `schema`
+ *
+ * @param schema  a configuration schema
+ * @param providedConfig  an object of config values (without the top-level module name)
+ * @param keyPathContext  a dot-deparated string which helps the user figure out where
+ *     the provided config came from
+ */
+export function processConfig(
+  schema: ConfigSchema,
+  providedConfig: ConfigObject,
+  keyPathContext: string
+) {
+  validateConfig(schema, providedConfig, keyPathContext);
+  const config = setDefaults(schema, providedConfig);
+  return config;
+}
+
+/**
  * Returns the configuration for an extension. This configuration is specific
  * to the slot in which it is mounted, and its ID within that slot.
  *
  * The schema for that configuration is the schema for the module in which the
  * extension is defined.
  *
- * *If writing an extension in React, do not use this. Just use the `useExtensionConfig` hook.*
- *
  * @param slotModuleName The name of the module which defines the extension slot
  * @param extensionModuleName The name of the module which defines the extension (and therefore the config schema)
  * @param slotName The name of the extension slot where the extension is mounted
  * @param extensionId The ID of the extension in its slot
  */
-async function getExtensionConfig(
+function getExtensionConfig(
   slotModuleName: string,
   extensionModuleName: string,
   slotName: string,
   extensionId: string
 ) {
-  await loadConfigs();
   const slotModuleConfig = mergeConfigsFor(
     slotModuleName,
     getProvidedConfigs()
@@ -139,28 +202,10 @@ async function getExtensionConfig(
   return config;
 }
 
-/**
- * Validate and interpolate defaults for `providedConfig` according to `schema`
- *
- * @param schema  a configuration schema
- * @param providedConfig  an object of config values (without the top-level module name)
- * @param keyPathContext  a dot-deparated string which helps the user figure out where
- *     the provided config came from
- */
-export function processConfig(
-  schema: ConfigSchema,
-  providedConfig: ConfigObject,
-  keyPathContext: string
-) {
-  validateConfig(schema, providedConfig, keyPathContext);
-  const config = setDefaults(schema, providedConfig);
-  return config;
-}
-
-async function getImplementerToolsConfig(): Promise<object> {
+function getImplementerToolsConfig(): Record<string, Config> {
   const state = configInternalStore.getState();
   let result = getSchemaWithValuesAndSources(clone(state.schemas));
-  await loadConfigs();
+  loadConfigs();
   const configsAndSources = [
     ...state.providedConfigs.map((c) => [c.config, c.source]),
     [state.importMapConfig, "config-file"],

@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import isEqual from "lodash-es/isEqual";
+import set from "lodash-es/set";
+import unset from "lodash-es/unset";
 import { Reset16 } from "@carbon/icons-react";
 import {
-  setTemporaryConfigValue,
   ConfigValue,
   Validator,
   Type,
   Config,
-  unsetTemporaryConfigValue,
+  temporaryConfigStore,
 } from "@openmrs/esm-config";
 import styles from "./editable-value.styles.css";
 import { ValueEditor, CustomValueType } from "./value-editor";
-import { getStore, ImplementerToolsStore } from "../store";
+import { implementerToolsStore, ImplementerToolsStore } from "../store";
 import { Button } from "carbon-components-react";
 import { DisplayValue } from "./display-value";
 
@@ -62,16 +63,14 @@ export default function EditableValue({
         focusOnConfigPathBeingEdited();
       }
     };
-    const store = getStore();
-    update(store.getState());
-    return store.subscribe(update);
+    update(implementerToolsStore.getState());
+    return implementerToolsStore.subscribe(update);
   }, []);
 
   useEffect(() => {
-    const store = getStore();
-    const state = store.getState();
+    const state = implementerToolsStore.getState();
     if (editing && !isEqual(state.configPathBeingEdited, path)) {
-      store.setState({
+      implementerToolsStore.setState({
         configPathBeingEdited: path,
         activeItemDescription: {
           path: path,
@@ -82,7 +81,7 @@ export default function EditableValue({
       });
     }
     if (!editing && isEqual(state.configPathBeingEdited, path)) {
-      store.setState({ configPathBeingEdited: null });
+      implementerToolsStore.setState({ configPathBeingEdited: null });
     }
   }, [editing]);
 
@@ -99,7 +98,12 @@ export default function EditableValue({
               handleSave={(val) => {
                 try {
                   const result = JSON.parse(val);
-                  setTemporaryConfigValue(path, result);
+                  const tempConfigUpdate = set(
+                    temporaryConfigStore.getState(),
+                    path,
+                    result
+                  );
+                  temporaryConfigStore.setState(tempConfigUpdate);
                   setValueString(val);
                   closeEditor();
                 } catch (e) {
@@ -131,7 +135,9 @@ export default function EditableValue({
                 iconDescription="Reset to default"
                 hasIconOnly
                 onClick={() => {
-                  unsetTemporaryConfigValue(path);
+                  temporaryConfigStore.setState(
+                    unset(temporaryConfigStore.getState(), path)
+                  );
                 }}
               />
             ) : null}

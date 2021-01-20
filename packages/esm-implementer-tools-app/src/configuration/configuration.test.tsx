@@ -9,19 +9,16 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
-  getImplementerToolsConfig,
-  setTemporaryConfigValue,
+  implementerToolsConfigStore,
+  temporaryConfigStore,
   Type,
 } from "@openmrs/esm-config";
 import { Configuration } from "./configuration.component";
-import { getStore } from "../store";
 import {
   performConceptSearch,
   fetchConceptByUuid,
 } from "./value-editors/concept-search.resource";
 
-const mockGetImplementerToolsConfig = getImplementerToolsConfig as jest.Mock;
-const mockSetTemporaryConfigValue = setTemporaryConfigValue as jest.Mock;
 const mockPerformConceptSearch = performConceptSearch as jest.Mock;
 const mockFetchConceptByUuid = fetchConceptByUuid as jest.Mock;
 jest.mock("./value-editors/concept-search.resource", () => ({
@@ -101,8 +98,8 @@ const mockImplToolsConfig = {
 
 describe(`<Configuration />`, () => {
   afterEach(() => {
-    mockGetImplementerToolsConfig.mockReset();
-    mockSetTemporaryConfigValue.mockReset();
+    implementerToolsConfigStore.setState({});
+    temporaryConfigStore.setState({});
     mockPerformConceptSearch.mockReset();
     mockFetchConceptByUuid.mockReset();
   });
@@ -120,7 +117,7 @@ describe(`<Configuration />`, () => {
   });
 
   it("displays correct boolean value and editor", async () => {
-    mockGetImplementerToolsConfig.mockResolvedValue({
+    implementerToolsConfigStore.setState({
       "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
     });
     renderConfiguration();
@@ -135,10 +132,12 @@ describe(`<Configuration />`, () => {
       const editor = await row.findByRole("checkbox");
       fireEvent.click(editor);
       fireEvent.click(row.getByText("Save"));
-      expect(mockSetTemporaryConfigValue).toHaveBeenCalledWith(
-        ["@openmrs/mario", "hasHat"],
-        true
-      );
+      // The mocked temporaryConfigStore.getState seems to be producing something
+      // that doesn't work right, causing the `set` call and consequently this
+      // `setState` call not to work either.
+      expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
+        "@openmrs/mario": { hasHat: true },
+      });
     }
   });
 

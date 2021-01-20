@@ -2,11 +2,11 @@ import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
 import { equals } from "ramda";
 import { Config, ConfigObject, ConfigSchema, ProvidedConfig } from "../types";
 
-/*
+/**
  * Internal store
  *   A store of the inputs and internal state
+ * @internal
  */
-
 export interface ConfigInternalStore {
   /** Configs added using the `provide` function */
   providedConfigs: Array<ProvidedConfig>;
@@ -20,6 +20,9 @@ export interface ConfigInternalStore {
   devDefaultsAreOn: boolean;
 }
 
+/**
+ * @internal
+ */
 export const configInternalStore = createGlobalStore<ConfigInternalStore>(
   "config-internal",
   {
@@ -53,10 +56,65 @@ function getAreDevDefaultsOn(): boolean {
   }
 }
 
-/*
- * Output configs
+/**
+ * Temporary config
+ *   LocalStorage-based config used by the implementer tools
+ * @internal
  */
 
+export const temporaryConfigStore = createGlobalStore<Config>(
+  "temporary-config",
+  getTemporaryConfig()
+);
+
+temporaryConfigStore.subscribe((state) => {
+  setTemporaryConfig(state);
+});
+
+function setTemporaryConfig(value: Config) {
+  localStorage.setItem("openmrs:temporaryConfig", JSON.stringify(value));
+}
+
+function getTemporaryConfig(): Config {
+  try {
+    return JSON.parse(localStorage.getItem("openmrs:temporaryConfig") || "{}");
+  } catch (e) {
+    return {};
+  }
+}
+
+/**
+ * Config-side extension store
+ *   Just what esm-config needs to know about extension state. This
+ *   is to avoid having esm-config depend on esm-extensions, which would
+ *   create a circular dependency.
+ * @internal
+ */
+export interface ConfigExtensionStore {
+  mountedExtensions: Array<ConfigExtensionStoreElement>;
+}
+
+/**
+ * @internal
+ */
+export interface ConfigExtensionStoreElement {
+  slotModuleName: string;
+  extensionModuleName: string;
+  slotName: string;
+  extensionId: string;
+}
+
+/**
+ * @internal
+ */
+export const configExtensionStore = createGlobalStore<ConfigExtensionStore>(
+  "config-extensions",
+  { mountedExtensions: [] }
+);
+
+/**
+ * Output configs
+ */
 export interface ConfigStore {
   config: ConfigObject | null;
   loaded: boolean;
@@ -80,7 +138,6 @@ export function getConfigStore(moduleName: string) {
 // A store for each extension's config
 export function getExtensionConfigStore(
   extensionSlotModuleName: string,
-  extensionModuleName: string,
   attachedExtensionSlotName: string,
   extensionId: string
 ) {
@@ -95,33 +152,3 @@ export const implementerToolsConfigStore = createGlobalStore<Config>(
   "config-implementer-tools",
   {}
 );
-
-/*
- * Temporary config
- *   LocalStorage-based config used by the implementer tools
- */
-
-export const temporaryConfigStore = createGlobalStore<Config>(
-  "temporary-config",
-  getTemporaryConfig()
-);
-
-let lastValueOfTemporaryConfig = getTemporaryConfig();
-temporaryConfigStore.subscribe((state) => {
-  if (equals(state, lastValueOfTemporaryConfig)) {
-    setTemporaryConfig(state);
-    lastValueOfTemporaryConfig = state;
-  }
-});
-
-function setTemporaryConfig(value: Config) {
-  localStorage.setItem("openmrs:temporaryConfig", JSON.stringify(value));
-}
-
-function getTemporaryConfig(): Config {
-  try {
-    return JSON.parse(localStorage.getItem("openmrs:temporaryConfig") || "{}");
-  } catch (e) {
-    return {};
-  }
-}

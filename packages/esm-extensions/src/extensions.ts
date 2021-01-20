@@ -1,9 +1,14 @@
-import { getExtensionSlotConfig } from "@openmrs/esm-config";
+import {
+  getExtensionSlotConfig,
+  configExtensionStore,
+  ConfigExtensionStoreElement,
+} from "@openmrs/esm-config";
 import { getActualRouteProps } from "./route";
 import {
   ExtensionRegistration,
   ExtensionSlotInfo,
   ExtensionSlotInstance,
+  ExtensionStore,
   extensionStore,
   updateExtensionStore,
 } from "./store";
@@ -376,4 +381,34 @@ export async function getUpdatedExtensionSlotInfo(
   }
 
   return extensionSlot;
+}
+
+/**
+ * esm-config maintains its own store of the extension information it needs
+ * to generate extension configs. We keep it updated based on what's in
+ * `extensionStore`.
+ */
+
+updateConfigExtensionStore(extensionStore.getState());
+extensionStore.subscribe(updateConfigExtensionStore);
+
+function updateConfigExtensionStore(extensionState: ExtensionStore) {
+  const configExtensionRecords: Array<ConfigExtensionStoreElement> = [];
+  for (let extensionInfo of Object.values(extensionState.extensions)) {
+    for (let [slotModuleName, extensionBySlot] of Object.entries(
+      extensionInfo.instances
+    )) {
+      for (let [actualSlotName, extensionInstance] of Object.entries(
+        extensionBySlot
+      )) {
+        configExtensionRecords.push({
+          slotModuleName,
+          extensionModuleName: extensionInfo.moduleName,
+          slotName: actualSlotName,
+          extensionId: extensionInstance.id,
+        });
+      }
+    }
+  }
+  configExtensionStore.setState({ mountedExtensions: configExtensionRecords });
 }

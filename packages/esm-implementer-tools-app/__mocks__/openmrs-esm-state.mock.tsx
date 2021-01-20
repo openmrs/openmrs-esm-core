@@ -1,3 +1,23 @@
+// import merge from 'lodash-es/merge';
+
+// let stores = {};
+
+// export const createGlobalStore = jest.fn().mockImplementation((name, value) => {
+//   stores[name] = value;
+// });
+
+// export const getGlobalStore = jest.fn().mockImplementation((name, defaultValue) => ({
+//   getState: () => stores[name] ?? defaultValue,
+//   setState: (val) => {
+//     stores[name] = merge(stores[name], val);
+//   },
+//   subscribe: (updateFcn) => {
+//     updateFcn(stores[name]);
+//     return () => {};
+//   },
+//   unsubscribe: () => {},
+// }));
+
 import createStore, { Store } from "unistore";
 
 interface StoreEntity {
@@ -32,7 +52,7 @@ export function createGlobalStore<TState>(
       active: true,
     };
 
-    return store;
+    return instrumentedStore(store);
   }
 }
 
@@ -48,8 +68,17 @@ export function getGlobalStore<TState = any>(
       value: store,
       active: false,
     };
-    return store;
+    return instrumentedStore(store);
   }
 
   return available.value;
+}
+
+function instrumentedStore<T>(store: Store<T>) {
+  return ({
+    getState: jest.spyOn(store, "getState"),
+    setState: jest.spyOn(store, "setState"),
+    subscribe: jest.spyOn(store, "subscribe"),
+    unsubscribe: jest.spyOn(store, "unsubscribe"),
+  } as any) as Store<T>;
 }

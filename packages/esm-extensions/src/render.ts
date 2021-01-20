@@ -69,9 +69,8 @@ export function renderExtension(
             "instances",
             extensionSlotModuleName,
             actualExtensionSlotName,
-            "domElement",
           ],
-          domElement
+          { domElement, id: extensionId }
         )
       );
     } else {
