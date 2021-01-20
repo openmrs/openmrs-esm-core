@@ -3,7 +3,6 @@ import { ExtensionSlotConfig } from "@openmrs/esm-config";
 import { extensionStore } from "@openmrs/esm-extensions";
 import { useExtensionStore } from "@openmrs/esm-react-utils";
 import EditableValue from "./editable-value.component";
-import { getGlobalStore } from "@openmrs/esm-state";
 import { getStore } from "../store";
 import isEqual from "lodash-es/isEqual";
 import { ExtensionConfigureTree } from "./extension-configure-tree";

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import {
   getConfigStore,
   getExtensionConfigStore,
@@ -11,8 +11,8 @@ import { ConfigObject } from "@openmrs/esm-config/src/types";
 import isEqual from "lodash-es/isEqual";
 
 let error: Error | undefined;
-let promises: Record<string, Promise<ConfigObject>> = {};
-let configs: Record<string, ConfigObject> = {};
+const promises: Record<string, Promise<ConfigObject>> = {};
+const configs: Record<string, ConfigObject> = {};
 
 /**
  * Use this React Hook to obtain your module's configuration.

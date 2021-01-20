@@ -36,9 +36,9 @@ export type ConfigValue =
   | object;
 
 export interface ExtensionSlotConfig {
-  add?: string[];
-  remove?: string[];
-  order?: string[];
+  add?: Array<string>;
+  remove?: Array<string>;
+  order?: Array<string>;
   configure?: ExtensionSlotConfigureValueObject;
 }
 
@@ -47,9 +47,9 @@ export interface ExtensionSlotConfigureValueObject {
 }
 
 export interface ExtensionSlotConfigObject {
-  add?: string[];
-  remove?: string[];
-  order?: string[];
+  add?: Array<string>;
+  remove?: Array<string>;
+  order?: Array<string>;
 }
 
 export type ProvidedConfig = {

@@ -8,15 +8,15 @@ import { Config, ConfigObject, ConfigSchema, ProvidedConfig } from "../types";
  */
 
 export interface ConfigInternalStore {
-  // Configs added using the `provide` function
+  /** Configs added using the `provide` function */
   providedConfigs: Array<ProvidedConfig>;
-  // A config file provided as `config-file` in the import map
+  /** A config file provided as `config-file` in the import map */
   importMapConfig: Config;
-  // An object with module names for keys and schemas for values.
+  /** An object with module names for keys and schemas for values */
   schemas: Record<string, ConfigSchema>;
-  // A flag to keep track of whether the import map config has been loaded
+  /** A flag to keep track of whether the import map config has been loaded */
   importMapConfigLoaded: boolean;
-  // Whether to use dev defaults or not
+  /** Whether to use dev defaults or not */
   devDefaultsAreOn: boolean;
 }
 
@@ -39,14 +39,18 @@ configInternalStore.subscribe((state) => {
   }
 });
 
-function setAreDevDefaultsOn(value: boolean): void {
+function setAreDevDefaultsOn(value: boolean) {
   localStorage.setItem("openmrs:configAreDevDefaultsOn", JSON.stringify(value));
 }
 
 function getAreDevDefaultsOn(): boolean {
-  return JSON.parse(
-    localStorage.getItem("openmrs:configAreDevDefaultsOn") || "false"
-  );
+  try {
+    return JSON.parse(
+      localStorage.getItem("openmrs:configAreDevDefaultsOn") || "false"
+    );
+  } catch (e) {
+    return false;
+  }
 }
 
 /*
@@ -110,10 +114,14 @@ temporaryConfigStore.subscribe((state) => {
   }
 });
 
-function setTemporaryConfig(value: Config): void {
+function setTemporaryConfig(value: Config) {
   localStorage.setItem("openmrs:temporaryConfig", JSON.stringify(value));
 }
 
 function getTemporaryConfig(): Config {
-  return JSON.parse(localStorage.getItem("openmrs:temporaryConfig") || "{}");
+  try {
+    return JSON.parse(localStorage.getItem("openmrs:temporaryConfig") || "{}");
+  } catch (e) {
+    return {};
+  }
 }
