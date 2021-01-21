@@ -23,15 +23,23 @@ import {
   configExtensionStore,
   getConfigStore,
   getExtensionConfigStore,
+  getExtensionSlotsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
 } from "./state";
 
+// Immediately load the config files from the import map.
+loadConfigs();
+
 /*
  * Set up stores and subscriptions so that inputs get processed appropriately.
+ *
+ * There are *input* stores and *output* stores. The *input* stores
+ * are configInternalStore, temporaryConfigStore, and configExtensionStore. The
+ * output stores are set in the `compute...` functions. This code sets up the
+ * subscriptions so that when an input store changes, the correct set of
+ * output stores are updated.
  */
-
-loadConfigs();
 
 computeModuleConfig(configInternalStore.getState());
 configInternalStore.subscribe(computeModuleConfig);
@@ -43,6 +51,12 @@ computeImplementerToolsConfig(configInternalStore.getState());
 configInternalStore.subscribe(computeImplementerToolsConfig);
 temporaryConfigStore.subscribe(() =>
   computeImplementerToolsConfig(configInternalStore.getState())
+);
+
+computeExtensionSlotConfigs(configInternalStore.getState());
+configInternalStore.subscribe(computeExtensionSlotConfigs);
+temporaryConfigStore.subscribe(() =>
+  computeExtensionSlotConfigs(configInternalStore.getState())
 );
 
 computeExtensionConfigs(
@@ -68,6 +82,16 @@ function computeModuleConfig(state: ConfigInternalStore) {
       const config = getConfigForModule(moduleName);
       const moduleStore = getConfigStore(moduleName);
       moduleStore.setState({ loaded: true, config });
+    }
+  }
+}
+
+function computeExtensionSlotConfigs(state: ConfigInternalStore) {
+  if (state.importMapConfigLoaded) {
+    for (let moduleName of Object.keys(state.schemas)) {
+      const extensionSlotConfigs = getExtensionSlotConfigs(moduleName);
+      const moduleStore = getExtensionSlotsConfigStore(moduleName);
+      moduleStore.setState({ loaded: true, extensionSlotConfigs });
     }
   }
 }
@@ -239,29 +263,23 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
   }
 }
 
-/**
- * @internal
- *
- * This function as written does not make sense. Its name and parameters
- * suggest that it corresponds to a particular ExtensionSlot, but its
- * return value is an object containing all extension slot configs. In its
- * implementation it does some partial validation.
- *
- * It should be fixed to either do what one would expect from a function called
- * `getExtensionSlotConfig`, or become a proper implementation of something called
- * `getAllExtensionSlotConfigs`.
- */
-export async function getExtensionSlotConfig(
-  slotName: string,
+function getExtensionSlotConfigs(
   moduleName: string
-): Promise<ExtensionSlotConfigObject> {
-  await loadConfigs();
+): Record<string, ExtensionSlotConfigObject> {
   const moduleConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
-  const allExtensionSlotConfigs: Record<string, ExtensionSlotConfig> =
+  const configBySlot: Record<string, ExtensionSlotConfig> =
     moduleConfig?.extensions ?? {};
-  const config = allExtensionSlotConfigs[slotName] || {};
-  validateExtensionSlotConfig(config, moduleName, slotName);
-  return config;
+  validateAllExtensionSlotConfigs(configBySlot, moduleName);
+  return configBySlot;
+}
+
+function validateAllExtensionSlotConfigs(
+  configBySlot: Record<string, ExtensionSlotConfig>,
+  moduleName: string
+) {
+  for (let [slotName, config] of Object.entries(configBySlot)) {
+    validateExtensionSlotConfig(config, moduleName, slotName);
+  }
 }
 
 function validateExtensionSlotConfig(

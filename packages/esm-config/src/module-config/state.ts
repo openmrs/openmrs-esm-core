@@ -1,6 +1,11 @@
 import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
-import { equals } from "ramda";
-import { Config, ConfigObject, ConfigSchema, ProvidedConfig } from "../types";
+import {
+  Config,
+  ConfigObject,
+  ConfigSchema,
+  ExtensionSlotConfigObject,
+  ProvidedConfig,
+} from "../types";
 
 /**
  * Internal store
@@ -114,6 +119,8 @@ export const configExtensionStore = createGlobalStore<ConfigExtensionStore>(
 
 /**
  * Output configs
+ *
+ * Each module has its own stores for its config and its extension slots' configs.
  */
 export interface ConfigStore {
   config: ConfigObject | null;
@@ -127,11 +134,32 @@ function initializeConfigStore() {
   };
 }
 
-// We use a store for each module's config, named `config-${moduleName}`
 export function getConfigStore(moduleName: string) {
+  // We use a store for each module's config, named `config-${moduleName}`
   return getGlobalStore<ConfigStore>(
     `config-${moduleName}`,
     initializeConfigStore()
+  );
+}
+
+export interface ExtensionSlotConfigsStore {
+  /** Configs for each extension slot in the module, indexed by slot name */
+  extensionSlotConfigs: Record<string, ExtensionSlotConfigObject>;
+  loaded: boolean;
+}
+
+function initializeExtensionSlotConfigsStore() {
+  return {
+    extensionSlotConfigs: {},
+    loaded: false,
+  };
+}
+
+export function getExtensionSlotsConfigStore(moduleName: string) {
+  // We use a store for each module's config, named `config-${moduleName}`
+  return getGlobalStore<ExtensionSlotConfigsStore>(
+    `config-${moduleName}-extension-slots`,
+    initializeExtensionSlotConfigsStore()
   );
 }
 

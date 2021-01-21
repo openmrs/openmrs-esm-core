@@ -1,14 +1,9 @@
-import {
-  getExtensionSlotConfig,
-  configExtensionStore,
-  ConfigExtensionStoreElement,
-} from "@openmrs/esm-config";
+import { getExtensionSlotsConfigStore } from "@openmrs/esm-config";
 import { getActualRouteProps } from "./route";
 import {
   ExtensionRegistration,
   ExtensionSlotInfo,
   ExtensionSlotInstance,
-  ExtensionStore,
   extensionStore,
   updateExtensionStore,
 } from "./store";
@@ -206,9 +201,6 @@ function getUpdatedExtensionSlotInfoForUnregistration(
 }
 
 /**
- * This is only used to inform tooling about the extension slot. Extension slots
- * do not have to be registered to mount extensions.
- *
  * @param moduleName The name of the module that contains the extension slot
  * @param actualExtensionSlotName The extension slot name that is actually used
  * @param domElement The HTML element of the extension slot
@@ -317,10 +309,10 @@ export async function getUpdatedExtensionSlotInfo(
 
   if (instance) {
     const originalInstance = instance;
-    const config = await getExtensionSlotConfig(
-      actualExtensionSlotName,
-      moduleName
-    );
+    const config =
+      getExtensionSlotsConfigStore(moduleName).getState().extensionSlotConfigs[
+        actualExtensionSlotName
+      ] ?? {};
 
     if (Array.isArray(config.add)) {
       config.add.forEach((extensionId) => {
@@ -381,34 +373,4 @@ export async function getUpdatedExtensionSlotInfo(
   }
 
   return extensionSlot;
-}
-
-/**
- * esm-config maintains its own store of the extension information it needs
- * to generate extension configs. We keep it updated based on what's in
- * `extensionStore`.
- */
-
-updateConfigExtensionStore(extensionStore.getState());
-extensionStore.subscribe(updateConfigExtensionStore);
-
-function updateConfigExtensionStore(extensionState: ExtensionStore) {
-  const configExtensionRecords: Array<ConfigExtensionStoreElement> = [];
-  for (let extensionInfo of Object.values(extensionState.extensions)) {
-    for (let [slotModuleName, extensionBySlot] of Object.entries(
-      extensionInfo.instances
-    )) {
-      for (let [actualSlotName, extensionInstance] of Object.entries(
-        extensionBySlot
-      )) {
-        configExtensionRecords.push({
-          slotModuleName,
-          extensionModuleName: extensionInfo.moduleName,
-          slotName: actualSlotName,
-          extensionId: extensionInstance.id,
-        });
-      }
-    }
-  }
-  configExtensionStore.setState({ mountedExtensions: configExtensionRecords });
 }
