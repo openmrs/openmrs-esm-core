@@ -18,9 +18,10 @@ function setupPaths(config: SpaConfig) {
   window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
 
-function runSpa() {
+function runSpa(config: SpaConfig) {
+  const { configUrls = [] } = config;
   const { run } = require("./run");
-  return run();
+  return run(configUrls);
 }
 
 /**
@@ -30,5 +31,5 @@ function runSpa() {
 export function initializeSpa(config: SpaConfig) {
   setupPaths(config);
   wireSpaPaths();
-  return runSpa();
+  return runSpa(config);
 }

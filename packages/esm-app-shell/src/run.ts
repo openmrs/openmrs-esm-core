@@ -1,5 +1,6 @@
 import { start } from "single-spa";
 import { createAppState, setupApiModule } from "@openmrs/esm-api";
+import { Config, provide } from "@openmrs/esm-config";
 import { setupI18n } from "./locale";
 import { registerApp } from "./apps";
 import { sharedDependencies } from "./dependencies";
@@ -44,6 +45,15 @@ async function setupApps(modules: Array<[string, System.Module]>) {
     registerApp(appName, appExports);
   }
   window.installedModules = modules;
+}
+
+/**
+ * Loads the provided configurations and sets them in the system.
+ */
+async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
+  for (const config of configs) {
+    provide(config.value, config.name);
+  }
 }
 
 /**
@@ -93,9 +103,30 @@ function clearDevOverrides() {
   location.reload();
 }
 
-export function run() {
+function createConfigLoader(configUrls: Array<string>) {
+  const loadingConfigs = Promise.all(
+    configUrls.map((configUrl) =>
+      fetch(configUrl)
+        .then((res) => res.json())
+        .then((config) => ({
+          name: configUrl,
+          value: config,
+        }))
+    )
+  );
+  return () => loadingConfigs.then(loadConfigs);
+}
+
+export function run(configUrls: Array<string>) {
+  const provideConfigs = createConfigLoader(configUrls);
+
   registerModules(sharedDependencies);
   setupApiModule();
   createAppState({});
-  return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
+
+  return loadApps()
+    .then(setupApps)
+    .then(provideConfigs)
+    .then(runShell)
+    .catch(handleInitFailure);
 }
