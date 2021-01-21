@@ -112,6 +112,13 @@ function createConfigLoader(configUrls: Array<string>) {
           name: configUrl,
           value: config,
         }))
+        .catch((err) => {
+          console.error(`Loading the config from "${configUrl}" failed.`, err);
+          return {
+            name: configUrl,
+            value: {},
+          };
+        })
     )
   );
   return () => loadingConfigs.then(loadConfigs);

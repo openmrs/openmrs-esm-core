@@ -10,6 +10,7 @@ export interface BuildArgs {
   spaPath: string;
   fresh: boolean;
   apiUrl: string;
+  configUrls: Array<string>;
 }
 
 export async function runBuild(args: BuildArgs) {
@@ -18,6 +19,7 @@ export async function runBuild(args: BuildArgs) {
     importmap: args.importmap,
     env: "production",
     apiUrl: args.apiUrl,
+    configUrls: args.configUrls,
     spaPath: args.spaPath,
   });
 

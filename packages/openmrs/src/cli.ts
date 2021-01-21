@@ -48,6 +48,12 @@ yargs.command(
         "api-url",
         "The URL of the API. Can be a path if the API is on the same target server."
       )
+      .array("config-url")
+      .default("config-url", [])
+      .describe(
+        "config-url",
+        "The URL to a valid frontend configuration. Can be used multiple times."
+      )
       .boolean("run-project")
       .default("run-project", false)
       .describe(
@@ -70,6 +76,7 @@ yargs.command(
     runCommand("runDebug", {
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
+      configUrls: args["config-url"],
       ...args,
       importmap: await mergeImportmap(
         getImportmap(args.importmap, args.port),
@@ -105,6 +112,12 @@ yargs.command(
         "api-url",
         "The URL of the API. Can be a path if the API is on the same target server."
       )
+      .array("config-url")
+      .default("config-url", [])
+      .describe(
+        "config-url",
+        "The URL to a valid frontend configuration. Can be used multiple times."
+      )
       .string("importmap")
       .default("importmap", "importmap.json")
       .describe(
@@ -115,6 +128,7 @@ yargs.command(
     runCommand("runBuild", {
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
+      configUrls: args["config-url"],
       ...args,
       importmap: getImportmap(args.importmap),
       target: resolve(process.cwd(), args.target),
