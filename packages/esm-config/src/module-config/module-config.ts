@@ -1,3 +1,4 @@
+import "systemjs/dist/system";
 import { clone, map, reduce, mergeDeepRight, prop } from "ramda";
 import {
   Config,
@@ -27,6 +28,10 @@ import {
   implementerToolsConfigStore,
   temporaryConfigStore,
 } from "./state";
+
+// window.importMapOverrides.getCurrentPageMap().then((m) => {
+//   console.log("got overrides current page map ", m);
+// })
 
 // Immediately load the config files from the import map.
 loadConfigs();
@@ -367,16 +372,23 @@ async function loadConfigs() {
 // Get config file from import map
 async function getImportMapConfigFile(): Promise<void> {
   let importMapConfigExists: boolean;
+  console.log("called getImportMapConfigFile");
 
-  try {
-    System.resolve("config-file");
-    importMapConfigExists = true;
-  } catch {
-    importMapConfigExists = false;
-    configInternalStore.setState({
-      importMapConfigLoaded: true,
-    });
+  if (typeof System !== "undefined") {
+    try {
+      System.resolve("config-file");
+      importMapConfigExists = true;
+    } catch {
+      importMapConfigExists = false;
+      configInternalStore.setState({
+        importMapConfigLoaded: true,
+      });
+    }
+  } else {
+    throw new Error("SystemJS not loaded at esm-config load time");
   }
+
+  console.log("import map config exists: ", importMapConfigExists);
 
   if (importMapConfigExists) {
     try {
@@ -385,6 +397,7 @@ async function getImportMapConfigFile(): Promise<void> {
         importMapConfig: configFileModule.default,
         importMapConfigLoaded: true,
       });
+      console.log("loaded config file", configFileModule.default);
     } catch (e) {
       console.error(`Problem importing config-file ${e}`);
       throw e;

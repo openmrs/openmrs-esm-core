@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { ExtensionSlotConfig } from "@openmrs/esm-config";
+import {
+  ExtensionSlotConfig,
+  ExtensionSlotConfigureValueObject,
+} from "@openmrs/esm-config";
 import { extensionStore } from "@openmrs/esm-extensions";
 import { useExtensionStore } from "@openmrs/esm-react-utils";
 import EditableValue from "./editable-value.component";
@@ -11,6 +14,23 @@ import { implementerToolsStore } from "../store";
 interface ExtensionSlotsConfigTreeProps {
   config: { [key: string]: any };
   moduleName: string;
+}
+
+interface ExtensionSlotImplementerToolsConfig {
+  add?: ExtensionSlotConfigValueDescriptor;
+  remove?: ExtensionSlotConfigValueDescriptor;
+  order?: ExtensionSlotConfigValueDescriptor;
+  configure?: ExtensionConfigureDescriptor;
+}
+
+interface ExtensionSlotConfigValueDescriptor {
+  _value: Array<string>;
+  _source: string;
+}
+
+interface ExtensionConfigureDescriptor {
+  _value: ExtensionSlotConfigureValueObject;
+  _source: string;
 }
 
 export function ExtensionSlotsConfigTree({
@@ -38,7 +58,7 @@ export function ExtensionSlotsConfigTree({
 }
 
 interface ExtensionSlotConfigProps {
-  config: ExtensionSlotConfig;
+  config: ExtensionSlotImplementerToolsConfig;
   path: string[];
 }
 
@@ -136,23 +156,17 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
             <ExtensionConfigureTree
               moduleName={moduleName}
               slotName={slotName}
-              config={config?.configure}
+              config={config?.configure?._value}
             />
           ) : (
             <EditableValue
               path={path.concat([key])}
               element={
-                config?.[key]
-                  ? {
-                      _value: config?.[key],
-                      _source: "",
-                      _default: [],
-                    }
-                  : {
-                      _value: undefined,
-                      _source: "default",
-                      _default: [],
-                    }
+                config?.[key] ?? {
+                  _value: undefined,
+                  _source: "default",
+                  _default: [],
+                }
               }
               customType={key}
             />

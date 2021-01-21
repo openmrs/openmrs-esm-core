@@ -123,6 +123,9 @@ export default function EditableValue({
               }`}
               onClick={() => setEditing(true)}
               ref={activeConfigRef}
+              onMouseEnter={() => {
+                console.log(element);
+              }}
             >
               <DisplayValue value={element._value} />
             </button>
