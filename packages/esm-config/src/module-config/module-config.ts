@@ -29,12 +29,72 @@ import {
   temporaryConfigStore,
 } from "./state";
 
-// window.importMapOverrides.getCurrentPageMap().then((m) => {
-//   console.log("got overrides current page map ", m);
-// })
+/*
+ * Config loading. We load config files from the import-map as soon as they are available.
+ * We wait at least 200ms before attempting the first load because System.import exhibits
+ * some very weird behavior otherwise.
+ */
 
-// Immediately load the config files from the import map.
-loadConfigs();
+let didInitialCheck = false;
+function checkForFile() {
+  setTimeout(() => {
+    if (!didInitialCheck && typeof System !== "undefined" && typeof window.importMapOverrides !== "undefined") {
+      window.importMapOverrides.getCurrentPageMap().then(loadConfigs);
+      didInitialCheck = true;
+    } else {
+      checkForFile();
+    }
+  }, 200);
+}
+checkForFile();
+
+window.addEventListener(
+  "import-map-overrides:change",
+  loadConfigs
+);
+
+// We cache the Promise that loads the import mapped config file
+// so that we can be sure to only call it once
+let getImportMapConfigPromise;
+
+async function loadConfigs() {
+  if (!getImportMapConfigPromise) {
+    getImportMapConfigPromise = getImportMapConfigFile();
+  }
+
+  return await getImportMapConfigPromise;
+}
+
+async function getImportMapConfigFile(): Promise<void> {
+  let importMapConfigExists: boolean;
+
+  if (typeof System !== "undefined") {
+    try {
+      System.resolve("config-file");
+      importMapConfigExists = true;
+    } catch {
+      importMapConfigExists = false;
+      configInternalStore.setState({
+        importMapConfigLoaded: true,
+      });
+    }
+  } else {
+    throw new Error("SystemJS not loaded at getImportMapConfigFile call time");
+  }
+
+  if (importMapConfigExists) {
+    try {
+      const configFileModule = await System.import("config-file");
+      configInternalStore.setState({
+        importMapConfig: configFileModule.default,
+        importMapConfigLoaded: true,
+      });
+    } catch (e) {
+      console.error(`Problem importing config-file ${e}`);
+      throw e;
+    }
+  }
+}
 
 /*
  * Set up stores and subscriptions so that inputs get processed appropriately.
@@ -234,7 +294,6 @@ function getExtensionConfig(
 function getImplementerToolsConfig(): Record<string, Config> {
   const state = configInternalStore.getState();
   let result = getSchemaWithValuesAndSources(clone(state.schemas));
-  loadConfigs();
   const configsAndSources = [
     ...state.providedConfigs.map((c) => [c.config, c.source]),
     [state.importMapConfig, "config-file"],
@@ -355,54 +414,6 @@ function getProvidedConfigs(): Config[] {
     state.importMapConfig,
     temporaryConfigStore.getState(),
   ];
-}
-
-// We cache the Promise that loads the import mapped config file
-// so that we can be sure to only call it once
-let getImportMapConfigPromise;
-
-async function loadConfigs() {
-  if (!getImportMapConfigPromise) {
-    getImportMapConfigPromise = getImportMapConfigFile();
-  }
-
-  return await getImportMapConfigPromise;
-}
-
-// Get config file from import map
-async function getImportMapConfigFile(): Promise<void> {
-  let importMapConfigExists: boolean;
-  console.log("called getImportMapConfigFile");
-
-  if (typeof System !== "undefined") {
-    try {
-      System.resolve("config-file");
-      importMapConfigExists = true;
-    } catch {
-      importMapConfigExists = false;
-      configInternalStore.setState({
-        importMapConfigLoaded: true,
-      });
-    }
-  } else {
-    throw new Error("SystemJS not loaded at esm-config load time");
-  }
-
-  console.log("import map config exists: ", importMapConfigExists);
-
-  if (importMapConfigExists) {
-    try {
-      const configFileModule = await System.import("config-file");
-      configInternalStore.setState({
-        importMapConfig: configFileModule.default,
-        importMapConfigLoaded: true,
-      });
-      console.log("loaded config file", configFileModule.default);
-    } catch (e) {
-      console.error(`Problem importing config-file ${e}`);
-      throw e;
-    }
-  }
 }
 
 function validateConfigSchema(

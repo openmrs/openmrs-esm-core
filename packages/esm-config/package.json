@@ -38,7 +38,8 @@
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
-    "single-spa": "4.x"
+    "single-spa": "4.x",
+    "systemjs": "6.x"
   },
   "devDependencies": {
     "@types/ramda": "^0.26.44",

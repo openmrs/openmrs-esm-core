@@ -39,7 +39,6 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
     configActions
   );
   const config = useStore(implementerToolsConfigStore);
-  console.log(config);
   const tempConfig = useStore(temporaryConfigStore);
   const tempConfigObjUrl = new Blob(
     [JSON.stringify(tempConfig, undefined, 2)],

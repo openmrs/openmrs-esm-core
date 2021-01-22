@@ -70,6 +70,9 @@ export function useConfig() {
     // React will prevent the client component from rendering until the promise resolves
     throw promises[cacheId];
   } else {
+    if (!moduleName) {
+      console.log("returning extension config for", extensionSlotModuleName, attachedExtensionSlotName, extensionId, JSON.stringify(configs[cacheId]))
+    }
     return configs[cacheId];
   }
 }
