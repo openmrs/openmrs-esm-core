@@ -7,6 +7,16 @@ const Breadcrumbs: React.FC = () => {
   const path = location.pathname;
   const breadcrumbs = getBreadcrumbsFor(path);
 
+  if (breadcrumbs.length > 4) {
+    breadcrumbs.splice(1, breadcrumbs.length - 3, {
+      ...breadcrumbs[1],
+      settings: {
+        ...breadcrumbs[1].settings,
+        title: "...",
+      },
+    });
+  }
+
   return (
     <Breadcrumb>
       {breadcrumbs.map((bc) => (
