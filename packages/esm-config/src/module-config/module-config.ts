@@ -30,15 +30,26 @@ import {
 } from "./state";
 
 /*
- * Config loading. We load config files from the import-map as soon as they are available.
- * We wait at least 200ms before attempting the first load because System.import exhibits
- * some very weird behavior otherwise.
+ * Config loading
+ *
+ *
+ * We wait for SystemJS and window.importMapOverrides to be loaded before calling
+ * `loadConfigs`. We actually wait quite a while longer--we wait 200ms before the
+ * first attempt, because otherwise System.import exhibits some very weird
+ * behavior.
+ *
+ * TODO: Create minimal reproduction of this buggy SystemJS behavior and create
+ * an issue on that repository, and add the link to that issue to this comment.
  */
 
 let didInitialCheck = false;
 function checkForFile() {
   setTimeout(() => {
-    if (!didInitialCheck && typeof System !== "undefined" && typeof window.importMapOverrides !== "undefined") {
+    if (
+      !didInitialCheck &&
+      typeof System !== "undefined" &&
+      typeof window.importMapOverrides !== "undefined"
+    ) {
       window.importMapOverrides.getCurrentPageMap().then(loadConfigs);
       didInitialCheck = true;
     } else {
@@ -48,10 +59,7 @@ function checkForFile() {
 }
 checkForFile();
 
-window.addEventListener(
-  "import-map-overrides:change",
-  loadConfigs
-);
+window.addEventListener("import-map-overrides:change", loadConfigs);
 
 // We cache the Promise that loads the import mapped config file
 // so that we can be sure to only call it once
@@ -192,6 +200,7 @@ function computeExtensionConfigs(
 
 /*
  * API
+ *
  */
 
 export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
@@ -254,6 +263,11 @@ export function processConfig(
   const config = setDefaults(schema, providedConfig);
   return config;
 }
+
+/*
+ * Helper functions
+ *
+ */
 
 /**
  * Returns the configuration for an extension. This configuration is specific
@@ -402,10 +416,6 @@ function validateExtensionSlotConfig(
     }
   }
 }
-
-/*
- * Helper functions
- */
 
 function getProvidedConfigs(): Config[] {
   const state = configInternalStore.getState();
