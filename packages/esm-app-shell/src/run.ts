@@ -2,9 +2,10 @@ import { start } from "single-spa";
 import { createAppState, setupApiModule } from "@openmrs/esm-api";
 import { Config, provide } from "@openmrs/esm-config";
 import { setupI18n } from "./locale";
-import { registerApp } from "./apps";
+import { registerApp, tryRegisterExtension } from "./apps";
 import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
+import { appName, getCoreExtensions } from "./ui";
 
 const allowedSuffixes = ["-app", "-widgets"];
 
@@ -34,6 +35,17 @@ function loadApps() {
 }
 
 /**
+ * Registers the extensions already coming from the app shell itself.
+ */
+function registerCoreExtensions() {
+  const extensions = getCoreExtensions();
+
+  for (const extension of extensions) {
+    tryRegisterExtension(appName, extension);
+  }
+}
+
+/**
  * Sets up the microfrontends (apps). Uses the defined export
  * from the root modules of the apps, which should export a
  * special function called "setupOpenMRS".
@@ -44,6 +56,7 @@ async function setupApps(modules: Array<[string, System.Module]>) {
   for (const [appName, appExports] of modules) {
     registerApp(appName, appExports);
   }
+
   window.installedModules = modules;
 }
 
@@ -130,6 +143,7 @@ export function run(configUrls: Array<string>) {
   registerModules(sharedDependencies);
   setupApiModule();
   createAppState({});
+  registerCoreExtensions();
 
   return loadApps()
     .then(setupApps)
