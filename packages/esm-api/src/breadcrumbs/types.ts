@@ -4,11 +4,12 @@ export interface BreadcrumbSettings {
    */
   path: string;
   /**
-   * Gets a custom matching function to know if the breadcrumb should be selected.
+   * A string or RegEx that determines whether the breadcrumb should be displayed.
+   * It is tested against the current location's path.
+   * 
+   * If `matcher` is a string, it can contain route parameters. e.g. `/foo/:bar`.
    *
-   * In case of a missing matcher it uses the path to regexp result of the given path.
-   *
-   * In case of a string it uses the path to regexp result of the given matcher.
+   * Can be omitted; the value of `path` is used as the default value.
    */
   matcher?: string | RegExp;
   /**
