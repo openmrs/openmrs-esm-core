@@ -6,7 +6,7 @@ export interface BreadcrumbSettings {
   /**
    * A string or RegEx that determines whether the breadcrumb should be displayed.
    * It is tested against the current location's path.
-   * 
+   *
    * If `matcher` is a string, it can contain route parameters. e.g. `/foo/:bar`.
    *
    * Can be omitted; the value of `path` is used as the default value.
