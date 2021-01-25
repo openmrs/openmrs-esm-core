@@ -6,6 +6,7 @@ export interface WebpackOptions {
   importmap?: ImportmapDeclaration;
   apiUrl?: string;
   spaPath?: string;
+  configUrls?: Array<string>;
   env?: string;
 }
 
@@ -22,6 +23,10 @@ export function loadConfig(options: WebpackOptions = {}) {
 
   if (typeof options.apiUrl === "string") {
     variables.OMRS_API_URL = options.apiUrl;
+  }
+
+  if (Array.isArray(options.configUrls)) {
+    variables.OMRS_CONFIG_URLS = options.configUrls.join(";");
   }
 
   if (typeof options.env === "string") {

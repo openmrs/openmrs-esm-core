@@ -24,6 +24,11 @@ const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL || "importmap.json";
+const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
+  .split(";")
+  .filter((url) => url.length > 0)
+  .map((url) => JSON.stringify(url))
+  .join(", ");
 
 module.exports = {
   entry: resolve(__dirname, "src/index.ts"),
@@ -31,7 +36,6 @@ module.exports = {
     filename: "openmrs.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "window",
-    publicPath: `${openmrsPublicPath}/`,
   },
   devServer: {
     compress: true,
@@ -119,6 +123,7 @@ module.exports = {
         openmrsImportmapDef,
         openmrsImportmapUrl,
         openmrsEnvironment,
+        openmrsConfigUrls,
       },
     }),
     new CopyWebpackPlugin({

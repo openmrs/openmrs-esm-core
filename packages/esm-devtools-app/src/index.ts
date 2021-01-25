@@ -7,13 +7,15 @@ declare global {
 }
 
 function setupOpenMRS() {
+  const options = {
+    featureName: "devtools",
+    moduleName: "@openmrs/esm-devtools-app",
+  };
+
   return {
     lifecycle: getAsyncLifecycle(
       () => import("./devtools/devtools.component"),
-      {
-        featureName: "devtools",
-        moduleName: "@openmrs/esm-devtools-app",
-      }
+      options
     ),
     activate: () =>
       window.spaEnv === "development" ||

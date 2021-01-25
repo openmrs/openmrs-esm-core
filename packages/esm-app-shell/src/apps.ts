@@ -1,6 +1,5 @@
 import {
   attach,
-  ExtensionDefinition,
   PageDefinition,
   registerExtension,
 } from "@openmrs/esm-extensions";
@@ -73,7 +72,7 @@ export function registerApp(appName: string, appExports: System.Module) {
   }
 }
 
-function tryRegisterExtension(
+export function tryRegisterExtension(
   appName: string,
   ext: Partial<AppExtensionDefinition>
 ) {

@@ -1,9 +1,11 @@
 import { start } from "single-spa";
 import { createAppState, setupApiModule } from "@openmrs/esm-api";
+import { Config, provide } from "@openmrs/esm-config";
 import { setupI18n } from "./locale";
-import { registerApp } from "./apps";
+import { registerApp, tryRegisterExtension } from "./apps";
 import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
+import { appName, getCoreExtensions } from "./ui";
 
 const allowedSuffixes = ["-app", "-widgets"];
 
@@ -33,6 +35,17 @@ function loadApps() {
 }
 
 /**
+ * Registers the extensions already coming from the app shell itself.
+ */
+function registerCoreExtensions() {
+  const extensions = getCoreExtensions();
+
+  for (const extension of extensions) {
+    tryRegisterExtension(appName, extension);
+  }
+}
+
+/**
  * Sets up the microfrontends (apps). Uses the defined export
  * from the root modules of the apps, which should export a
  * special function called "setupOpenMRS".
@@ -43,7 +56,17 @@ async function setupApps(modules: Array<[string, System.Module]>) {
   for (const [appName, appExports] of modules) {
     registerApp(appName, appExports);
   }
+
   window.installedModules = modules;
+}
+
+/**
+ * Loads the provided configurations and sets them in the system.
+ */
+async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
+  for (const config of configs) {
+    provide(config.value, config.name);
+  }
 }
 
 /**
@@ -93,9 +116,38 @@ function clearDevOverrides() {
   location.reload();
 }
 
-export function run() {
+function createConfigLoader(configUrls: Array<string>) {
+  const loadingConfigs = Promise.all(
+    configUrls.map((configUrl) =>
+      fetch(configUrl)
+        .then((res) => res.json())
+        .then((config) => ({
+          name: configUrl,
+          value: config,
+        }))
+        .catch((err) => {
+          console.error(`Loading the config from "${configUrl}" failed.`, err);
+          return {
+            name: configUrl,
+            value: {},
+          };
+        })
+    )
+  );
+  return () => loadingConfigs.then(loadConfigs);
+}
+
+export function run(configUrls: Array<string>) {
+  const provideConfigs = createConfigLoader(configUrls);
+
   registerModules(sharedDependencies);
   setupApiModule();
   createAppState({});
-  return loadApps().then(setupApps).then(runShell).catch(handleInitFailure);
+  registerCoreExtensions();
+
+  return loadApps()
+    .then(setupApps)
+    .then(provideConfigs)
+    .then(runShell)
+    .catch(handleInitFailure);
 }

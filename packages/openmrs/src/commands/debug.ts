@@ -7,6 +7,7 @@ export interface DebugArgs {
   importmap: ImportmapDeclaration;
   spaPath: string;
   apiUrl: string;
+  configUrls: Array<string>;
 }
 
 export function runDebug(args: DebugArgs) {
@@ -18,6 +19,7 @@ export function runDebug(args: DebugArgs) {
     backend: args.backend,
     apiUrl: args.apiUrl,
     spaPath: args.spaPath,
+    configUrls: args.configUrls,
     env: "development",
   });
 

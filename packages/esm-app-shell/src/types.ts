@@ -32,6 +32,10 @@ export interface SpaConfig {
    * @default production
    */
   env?: SpaEnvironment;
+  /**
+   * URLs of configurations to load in the system.
+   */
+  configUrls?: Array<string>;
 }
 
 export interface Activator {
