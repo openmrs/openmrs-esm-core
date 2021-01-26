@@ -115,6 +115,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
+      publicPath: openmrsPublicPath,
       template: resolve(__dirname, "src/index.ejs"),
       templateParameters: {
         openmrsApiUrl,
