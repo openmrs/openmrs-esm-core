@@ -5,9 +5,10 @@ declare var __webpack_public_path__: string;
 
 function wireSpaPaths() {
   const baseElement = document.createElement("base");
-  baseElement.href = window.getOpenmrsSpaBase();
+  const baseHref = window.getOpenmrsSpaBase();
+  baseElement.href = baseHref;
   document.head.appendChild(baseElement);
-  __webpack_public_path__ = window.spaBase;
+  __webpack_public_path__ = baseHref;
 }
 
 function setupPaths(config: SpaConfig) {

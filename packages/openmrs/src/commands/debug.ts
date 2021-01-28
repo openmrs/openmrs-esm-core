@@ -30,7 +30,7 @@ export function runDebug(args: DebugArgs) {
     ...config.devServer,
     port,
     host,
-    publicPath: config.output.publicPath,
+    publicPath: args.spaPath,
     stats: { colors: true },
   };
 
