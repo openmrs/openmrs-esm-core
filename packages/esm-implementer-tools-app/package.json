@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-implementer-tools-app",
-  "version": "3.1.7",
+  "version": "3.1.8",
   "license": "MPL-2.0",
   "description": "The admin interface for OpenMRS Frontend",
   "browser": "dist/openmrs-esm-implementer-tools-app.js",
@@ -55,9 +55,9 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-api": "^3.1.7",
-    "@openmrs/esm-react-utils": "^3.1.7",
-    "@openmrs/esm-styleguide": "^3.1.7",
+    "@openmrs/esm-api": "^3.1.8",
+    "@openmrs/esm-react-utils": "^3.1.8",
+    "@openmrs/esm-styleguide": "^3.1.8",
     "@types/carbon-components-react": "^7.24.0",
     "@types/semver": "^7.3.4",
     "identity-obj-proxy": "^3.0.0",
