@@ -21,6 +21,7 @@ storiesOf("OpenMRS Styleguide", module).add("Logos", () => {
     {
       "With Colors": "color",
       "Mono / Grey": "mono",
+      Grey: "grey",
     },
     "color"
   );
