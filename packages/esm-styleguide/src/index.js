@@ -12,5 +12,6 @@ import "./button-icons/button-icons.css";
 import "./toasts/toasts.css";
 import "./responsive-breakpoints/responsive-breakpoints.js";
 import "./forms/forms.css";
+import "./carbon-overrides.css";
 
 export * from "./toasts/toasts";
