@@ -5627,6 +5627,11 @@ cookie@0.4.0:
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
   integrity sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
 
+cookie@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.1.tgz#afd713fe26ebd21ba95ceb61f9a8116e50a537d1"
+  integrity sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==
+
 copy-concurrently@^1.0.0:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/copy-concurrently/-/copy-concurrently-1.0.5.tgz#92297398cae34937fcafd6ec8139c18051f0b5e0"
@@ -8584,10 +8589,12 @@ import-local@^3.0.2:
     pkg-dir "^4.2.0"
     resolve-cwd "^3.0.0"
 
-import-map-overrides@^1.15.2:
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/import-map-overrides/-/import-map-overrides-1.17.1.tgz#79e422f267c04bf4c2649fd69782c4c0b5e71db5"
-  integrity sha512-FEgmhKo7LpsZWQ87Isjhsiz4pIfzgyQIvQ3YdffrSfg7uwcyPcujR51hHsyW2+AHjczVyLowbZGk59ZQTZxlww==
+import-map-overrides@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/import-map-overrides/-/import-map-overrides-2.3.0.tgz#e99c562628a547523abb19de2fb8204092bdebec"
+  integrity sha512-YhZfhiWolLDJgJFg+VVDZiVuG9a2OHPy406P1L9Kjx3ksP8iJmuB71z78SCaiYOowvkHYdD+Iup+DAaRIv45Hg==
+  dependencies:
+    cookie "^0.4.1"
 
 imurmurhash@^0.1.4:
   version "0.1.4"

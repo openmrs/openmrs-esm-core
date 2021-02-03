@@ -40,7 +40,7 @@
     "i18next-browser-languagedetector": "^4.3.1",
     "i18next-http-backend": "^1.0.21",
     "i18next-icu": "^1.4.2",
-    "import-map-overrides": "^1.15.2",
+    "import-map-overrides": "^2.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.7.0",

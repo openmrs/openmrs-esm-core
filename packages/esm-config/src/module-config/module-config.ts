@@ -1,4 +1,4 @@
-import "systemjs/dist/system";
+// import "systemjs/dist/system";
 import { clone, map, reduce, mergeDeepRight, prop } from "ramda";
 import {
   Config,
@@ -41,9 +41,8 @@ import {
  * TODO: Create minimal reproduction of this buggy SystemJS behavior and create
  * an issue on that repository, and add the link to that issue to this comment.
  */
-
 let didInitialCheck = false;
-function checkForFile() {
+function checkForImportMapConfigFile() {
   setTimeout(() => {
     if (
       !didInitialCheck &&
@@ -53,11 +52,19 @@ function checkForFile() {
       window.importMapOverrides.getCurrentPageMap().then(loadConfigs);
       didInitialCheck = true;
     } else {
-      checkForFile();
+      checkForImportMapConfigFile();
     }
   }, 200);
 }
-checkForFile();
+checkForImportMapConfigFile();
+
+// // This should work, but doesn't
+// // See explanation: https://github.com/joeldenning/import-map-overrides/issues/48#issuecomment-769477901
+// window.addEventListener("import-map-overrides:init", () => {
+//   (System as any).prepareImport().then(() => {
+//     loadConfigs()
+//   });
+// });
 
 window.addEventListener("import-map-overrides:change", loadConfigs);
 
@@ -90,6 +97,8 @@ async function getImportMapConfigFile(): Promise<void> {
     throw new Error("SystemJS not loaded at getImportMapConfigFile call time");
   }
 
+  // console.log("exists", importMapConfigExists);
+
   if (importMapConfigExists) {
     try {
       const configFileModule = await System.import("config-file");
@@ -104,16 +113,26 @@ async function getImportMapConfigFile(): Promise<void> {
   }
 }
 
-/*
+/**
+ * Store setup
+ *
+ *
  * Set up stores and subscriptions so that inputs get processed appropriately.
  *
  * There are *input* stores and *output* stores. The *input* stores
  * are configInternalStore, temporaryConfigStore, and configExtensionStore. The
- * output stores are set in the `compute...` functions. This code sets up the
- * subscriptions so that when an input store changes, the correct set of
- * output stores are updated.
+ * output stores are set in the `compute...` functions. They are the module
+ * config stores, the extension slot config stores (by module), the extension
+ * config stores, and the implementer tools config store.
+ *
+ * This code sets up the subscriptions so that when an input store changes,
+ * the correct set of output stores are updated.
+ *
+ * NB: You will notice that none of the `compute...` functions below explicitly
+ * take `temporaryConfigStore` state as an input. They do make use of
+ * `temporaryConfigStore`, however it is obtained in `getProvidedConfigs`.
+ * It would probably be better to make the functions pure.
  */
-
 computeModuleConfig(configInternalStore.getState());
 configInternalStore.subscribe(computeModuleConfig);
 temporaryConfigStore.subscribe(() =>
@@ -172,7 +191,7 @@ function computeExtensionSlotConfigs(state: ConfigInternalStore) {
 function computeImplementerToolsConfig(state: ConfigInternalStore) {
   if (state.importMapConfigLoaded) {
     const config = getImplementerToolsConfig();
-    implementerToolsConfigStore.setState(config);
+    implementerToolsConfigStore.setState({ config });
   }
 }
 
@@ -228,7 +247,7 @@ export function provide(config: Config, sourceName = "provided") {
  * have the latest config. If using React, just use `useConfig`.
  *
  * This is a useful function if you need to get the config in the course
- * of the one-time execution of a function.
+ * of the execution of a function.
  *
  * @param moduleName The name of the module for which to look up the config
  */
@@ -311,7 +330,7 @@ function getImplementerToolsConfig(): Record<string, Config> {
   const configsAndSources = [
     ...state.providedConfigs.map((c) => [c.config, c.source]),
     [state.importMapConfig, "config-file"],
-    [temporaryConfigStore.getState(), "temporary config"],
+    [temporaryConfigStore.getState().config, "temporary config"],
   ] as Array<[Config, string]>;
   for (let [config, source] of configsAndSources) {
     result = mergeConfigs([result, createValuesAndSourcesTree(config, source)]);
@@ -322,11 +341,14 @@ function getImplementerToolsConfig(): Record<string, Config> {
 function getSchemaWithValuesAndSources(schema) {
   if (schema.hasOwnProperty("_default")) {
     return { ...schema, _value: schema._default, _source: "default" };
-  } else {
+  } else if (isOrdinaryObject(schema)) {
     return Object.keys(schema).reduce((obj, key) => {
       obj[key] = getSchemaWithValuesAndSources(schema[key]);
       return obj;
     }, {});
+  } else {
+    // Schema is bad; error will have been logged during schema validation
+    return {};
   }
 }
 
@@ -422,7 +444,7 @@ function getProvidedConfigs(): Config[] {
   return [
     ...state.providedConfigs.map((c) => c.config),
     state.importMapConfig,
-    temporaryConfigStore.getState(),
+    temporaryConfigStore.getState().config,
   ];
 }
 
@@ -713,4 +735,10 @@ function hasObjectSchema(
 
 function isOrdinaryObject(value) {
   return typeof value === "object" && !Array.isArray(value) && value !== null;
+}
+
+/** @internal for testing */
+export function resetAll() {
+  getImportMapConfigPromise = undefined;
+  return loadConfigs();
 }

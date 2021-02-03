@@ -27,6 +27,8 @@ interface StoreEntity {
 
 const availableStores: Record<string, StoreEntity> = {};
 
+export const mockStores = availableStores;
+
 export function createGlobalStore<TState>(
   name: string,
   initialState: TState
@@ -71,7 +73,7 @@ export function getGlobalStore<TState = any>(
     return instrumentedStore(store);
   }
 
-  return available.value;
+  return instrumentedStore(available.value);
 }
 
 function instrumentedStore<T>(store: Store<T>) {
