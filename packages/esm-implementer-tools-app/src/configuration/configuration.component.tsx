@@ -38,8 +38,9 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
     configInternalStore,
     configActions
   );
-  const config = useStore(implementerToolsConfigStore);
-  const tempConfig = useStore(temporaryConfigStore);
+  const { config } = useStore(implementerToolsConfigStore);
+  const tempConfigStore = useStore(temporaryConfigStore);
+  const tempConfig = tempConfigStore.config;
   const tempConfigObjUrl = new Blob(
     [JSON.stringify(tempConfig, undefined, 2)],
     {
@@ -74,7 +75,7 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
                 iconDescription="Clear temporary config"
                 renderIcon={TrashCan16}
                 onClick={() => {
-                  temporaryConfigStore.setState({});
+                  temporaryConfigStore.setState({ config: {} });
                 }}
               >
                 Clear Temporary Config

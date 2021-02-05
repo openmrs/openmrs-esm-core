@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import isEqual from "lodash-es/isEqual";
-import set from "lodash-es/set";
 import unset from "lodash-es/unset";
+import cloneDeep from "lodash-es/cloneDeep";
 import { Reset16 } from "@carbon/icons-react";
 import {
   ConfigValue,
@@ -99,8 +99,8 @@ export default function EditableValue({
                 try {
                   const result = JSON.parse(val);
                   const tempConfigUpdate = set(
-                    temporaryConfigStore.getState(),
-                    path,
+                    cloneDeep(temporaryConfigStore.getState()),
+                    ["config", ...path],
                     result
                   );
                   temporaryConfigStore.setState(tempConfigUpdate);
@@ -136,7 +136,7 @@ export default function EditableValue({
                 hasIconOnly
                 onClick={() => {
                   temporaryConfigStore.setState(
-                    unset(temporaryConfigStore.getState(), path)
+                    unset(temporaryConfigStore.getState(), ["config", ...path])
                   );
                 }}
               />
@@ -147,4 +147,15 @@ export default function EditableValue({
       </div>
     </>
   );
+}
+
+// A substitute for the lodash.set function, which seems to be broken,
+// at least within Jest.
+function set<T>(obj: T, path: Array<string>, value: any): T {
+  if (path.length > 1) {
+    obj[path[0]] = set(obj[path[0]] ?? {}, path.slice(1), value);
+  } else {
+    obj[path[0]] = value;
+  }
+  return obj;
 }

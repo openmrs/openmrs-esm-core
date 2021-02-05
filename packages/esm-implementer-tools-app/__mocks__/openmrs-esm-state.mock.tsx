@@ -1,29 +1,13 @@
-// import merge from 'lodash-es/merge';
-
-// let stores = {};
-
-// export const createGlobalStore = jest.fn().mockImplementation((name, value) => {
-//   stores[name] = value;
-// });
-
-// export const getGlobalStore = jest.fn().mockImplementation((name, defaultValue) => ({
-//   getState: () => stores[name] ?? defaultValue,
-//   setState: (val) => {
-//     stores[name] = merge(stores[name], val);
-//   },
-//   subscribe: (updateFcn) => {
-//     updateFcn(stores[name]);
-//     return () => {};
-//   },
-//   unsubscribe: () => {},
-// }));
-
 import createStore, { Store } from "unistore";
 
 interface StoreEntity {
   value: Store<any>;
   active: boolean;
 }
+
+export type MockedStore<T> = Store<T> & { resetMock: () => void };
+
+const initialStates: Record<string, any> = {};
 
 const availableStores: Record<string, StoreEntity> = {};
 
@@ -48,13 +32,14 @@ export function createGlobalStore<TState>(
     return available.value;
   } else {
     const store = createStore(initialState);
+    initialStates[name] = initialState;
 
     availableStores[name] = {
       value: store,
       active: true,
     };
 
-    return instrumentedStore(store);
+    return instrumentedStore(name, store);
   }
 }
 
@@ -66,21 +51,23 @@ export function getGlobalStore<TState = any>(
 
   if (!available) {
     const store = createStore(fallbackState);
+    initialStates[name] = fallbackState;
     availableStores[name] = {
       value: store,
       active: false,
     };
-    return instrumentedStore(store);
+    return instrumentedStore(name, store);
   }
 
-  return instrumentedStore(available.value);
+  return instrumentedStore(name, available.value);
 }
 
-function instrumentedStore<T>(store: Store<T>) {
+function instrumentedStore<T>(name: string, store: Store<T>) {
   return ({
     getState: jest.spyOn(store, "getState"),
     setState: jest.spyOn(store, "setState"),
     subscribe: jest.spyOn(store, "subscribe"),
     unsubscribe: jest.spyOn(store, "unsubscribe"),
-  } as any) as Store<T>;
+    resetMock: () => store.setState(initialStates[name]),
+  } as any) as MockedStore<T>;
 }

@@ -98,8 +98,8 @@ const mockImplToolsConfig = {
 
 describe(`<Configuration />`, () => {
   afterEach(() => {
-    implementerToolsConfigStore.setState({});
-    temporaryConfigStore.setState({});
+    implementerToolsConfigStore.setState({ config: {} });
+    temporaryConfigStore.setState({ config: {} });
     mockPerformConceptSearch.mockReset();
     mockFetchConceptByUuid.mockReset();
   });
@@ -118,7 +118,9 @@ describe(`<Configuration />`, () => {
 
   it("displays correct boolean value and editor", async () => {
     implementerToolsConfigStore.setState({
-      "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+      config: {
+        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+      },
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("hasHat")).closest(
@@ -136,7 +138,7 @@ describe(`<Configuration />`, () => {
       // that doesn't work right, causing the `set` call and consequently this
       // `setState` call not to work either.
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
-        "@openmrs/mario": { hasHat: true },
+        config: { "@openmrs/mario": { hasHat: true } },
       });
     }
   });
@@ -152,8 +154,10 @@ describe(`<Configuration />`, () => {
     mockFetchConceptByUuid.mockResolvedValue({
       data: { name: { display: "Fedora" } },
     });
-    mockGetImplementerToolsConfig.mockResolvedValue({
-      "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+    implementerToolsConfigStore.setState({
+      config: {
+        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+      },
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("hatUuid")).closest(
@@ -170,16 +174,19 @@ describe(`<Configuration />`, () => {
       const targetConcept = await row.findByText("Fedora");
       userEvent.click(targetConcept);
       userEvent.click(row.getByText("Save"));
-      expect(mockSetTemporaryConfigValue).toHaveBeenCalledWith(
-        ["@openmrs/mario", "hatUuid"],
-        "61523693-72e2-456d-8c64-8c5293febeb6"
-      );
+      expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
+        config: {
+          "@openmrs/mario": { hatUuid: "61523693-72e2-456d-8c64-8c5293febeb6" },
+        },
+      });
     }
   });
 
   it("displays correct number value and editor", async () => {
-    mockGetImplementerToolsConfig.mockResolvedValue({
-      "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+    implementerToolsConfigStore.setState({
+      config: {
+        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+      },
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("numberFingers")).closest(
@@ -196,16 +203,17 @@ describe(`<Configuration />`, () => {
       userEvent.clear(editor);
       userEvent.type(editor, "11");
       userEvent.click(row.getByText("Save"));
-      expect(mockSetTemporaryConfigValue).toHaveBeenCalledWith(
-        ["@openmrs/mario", "numberFingers"],
-        11
-      );
+      expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
+        config: { "@openmrs/mario": { numberFingers: 11 } },
+      });
     }
   });
 
   it("displays correct string value and editor", async () => {
-    mockGetImplementerToolsConfig.mockResolvedValue({
-      "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+    implementerToolsConfigStore.setState({
+      config: {
+        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+      },
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("nemesisName")).closest(
@@ -220,16 +228,17 @@ describe(`<Configuration />`, () => {
       userEvent.clear(editor);
       userEvent.type(editor, "Bowser");
       userEvent.click(row.getByText("Save"));
-      expect(mockSetTemporaryConfigValue).toHaveBeenCalledWith(
-        ["@openmrs/mario", "nemesisName"],
-        "Bowser"
-      );
+      expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
+        config: { "@openmrs/mario": { nemesisName: "Bowser" } },
+      });
     }
   });
 
   it("displays correct UUID value and editor", async () => {
-    mockGetImplementerToolsConfig.mockResolvedValue({
-      "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+    implementerToolsConfigStore.setState({
+      config: {
+        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+      },
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("mustacheUuid")).closest(
@@ -245,16 +254,17 @@ describe(`<Configuration />`, () => {
       const newUuid = "34f03796-f0e2-4f64-9e9a-28fb49a94baf";
       userEvent.type(editor, newUuid);
       userEvent.click(row.getByText("Save"));
-      expect(mockSetTemporaryConfigValue).toHaveBeenCalledWith(
-        ["@openmrs/mario", "mustacheUuid"],
-        newUuid
-      );
+      expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
+        config: { "@openmrs/mario": { mustacheUuid: newUuid } },
+      });
     }
   });
 
   it("renders an array editor for simple arrays that behaves correctly", async () => {
-    mockGetImplementerToolsConfig.mockResolvedValue({
-      "@openmrs/luigi": mockImplToolsConfig["@openmrs/luigi"],
+    implementerToolsConfigStore.setState({
+      config: {
+        "@openmrs/luigi": mockImplToolsConfig["@openmrs/luigi"],
+      },
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("favoriteNumbers")).closest(
