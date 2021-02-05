@@ -1,15 +1,21 @@
 import React from "react";
-import { render, cleanup, screen } from "@testing-library/react";
+import { render, cleanup, screen, waitFor } from "@testing-library/react";
 import {
-  clearAll,
+  reloadImportMapConfig,
   defineConfigSchema,
-  setTemporaryConfigValue,
-  clearConfigCache,
+  temporaryConfigStore,
   provide,
+  configInternalStore,
+  ConfigInternalStore,
 } from "@openmrs/esm-config";
+import { MockedStore } from "../__mocks__/openmrs-esm-state.mock";
 import { ModuleNameContext } from "./ModuleNameContext";
 import { useConfig } from "./useConfig";
 import { ExtensionContext } from "./ExtensionContext";
+
+const mockConfigInternalStore = configInternalStore as MockedStore<
+  ConfigInternalStore
+>;
 
 function RenderConfig(props) {
   const config = useConfig();
@@ -17,10 +23,14 @@ function RenderConfig(props) {
   return <button>{config[props.configKey]}</button>;
 }
 
+function clearConfig() {
+  mockConfigInternalStore.resetMock();
+  reloadImportMapConfig();
+}
+
 describe(`useConfig in root context`, () => {
-  afterEach(clearAll);
+  afterEach(clearConfig);
   afterEach(cleanup);
-  afterEach(clearConfigCache);
 
   it(`can return config as a react hook`, async () => {
     defineConfigSchema("foo-module", {
@@ -37,7 +47,9 @@ describe(`useConfig in root context`, () => {
       </React.Suspense>
     );
 
-    expect(await screen.findByText("The first thing")).toBeTruthy();
+    await waitFor(() =>
+      expect(screen.findByText("The first thing")).toBeTruthy()
+    );
   });
 
   it(`can handle multiple calls to useConfig from different modules`, async () => {
@@ -61,7 +73,7 @@ describe(`useConfig in root context`, () => {
       </React.Suspense>
     );
 
-    expect(await screen.findByText("foo thing")).toBeTruthy();
+    await waitFor(() => expect(screen.findByText("foo thing")).toBeTruthy());
 
     await cleanup();
 
@@ -73,7 +85,7 @@ describe(`useConfig in root context`, () => {
       </React.Suspense>
     );
 
-    expect(await screen.findByText("bar thing")).toBeTruthy();
+    await waitFor(() => expect(screen.findByText("bar thing")).toBeTruthy());
   });
 
   it("updates with a new value when the temporary config is updated", async () => {
@@ -91,18 +103,21 @@ describe(`useConfig in root context`, () => {
       </React.Suspense>
     );
 
-    expect(await screen.findByText("The first thing")).toBeTruthy();
+    await waitFor(() =>
+      expect(screen.findByText("The first thing")).toBeTruthy()
+    );
 
-    setTemporaryConfigValue(["foo-module", "thing"], "A new thing");
+    temporaryConfigStore.setState({
+      config: { "foo-module": { thing: "A new thing" } },
+    });
 
-    expect(await screen.findByText("A new thing")).toBeTruthy();
+    await waitFor(() => expect(screen.findByText("A new thing")).toBeTruthy());
   });
 });
 
 describe(`useConfig in an extension`, () => {
-  afterEach(clearAll);
+  afterEach(clearConfig);
   afterEach(cleanup);
-  afterEach(clearConfigCache);
 
   it(`can return extension config as a react hook`, async () => {
     defineConfigSchema("ext-module", {
@@ -127,7 +142,7 @@ describe(`useConfig in an extension`, () => {
       </React.Suspense>
     );
 
-    expect(await screen.findByText("The basics")).toBeTruthy();
+    await waitFor(() => expect(screen.findByText("The basics")).toBeTruthy());
   });
 
   it(`can handle multiple extensions`, async () => {
@@ -170,8 +185,8 @@ describe(`useConfig in an extension`, () => {
       </React.Suspense>
     );
 
-    expect(await screen.findByText("first thing")).toBeTruthy();
-    expect(await screen.findByText("second thing")).toBeTruthy();
+    await waitFor(() => expect(screen.findByText("first thing")).toBeTruthy());
+    await waitFor(() => expect(screen.findByText("second thing")).toBeTruthy());
   });
 
   it("can handle multiple extension slots", async () => {
@@ -220,8 +235,12 @@ describe(`useConfig in an extension`, () => {
       </React.Suspense>
     );
 
-    expect(await screen.findByText("old extension thing")).toBeTruthy();
-    expect(await screen.findByText("a different thing")).toBeTruthy();
+    await waitFor(() =>
+      expect(screen.findByText("old extension thing")).toBeTruthy()
+    );
+    await waitFor(() =>
+      expect(screen.findByText("a different thing")).toBeTruthy()
+    );
   });
 
   it("updates with a new value when the temporary config is updated", async () => {
@@ -247,24 +266,32 @@ describe(`useConfig in an extension`, () => {
       </React.Suspense>
     );
 
-    expect(await screen.findByText("The first thing")).toBeTruthy();
-
-    setTemporaryConfigValue(["ext-module", "thing"], "A new thing");
-
-    expect(await screen.findByText("A new thing")).toBeTruthy();
-
-    setTemporaryConfigValue(
-      [
-        "slot-module",
-        "extensions",
-        "fooSlot",
-        "configure",
-        "barExt#id1",
-        "thing",
-      ],
-      "Yet another thing"
+    await waitFor(() =>
+      expect(screen.findByText("The first thing")).toBeTruthy()
     );
 
-    expect(await screen.findByText("Yet another thing")).toBeTruthy();
+    const newConfig = { "ext-module": { thing: "A new thing" } };
+    temporaryConfigStore.setState({ config: newConfig });
+
+    await waitFor(() => expect(screen.findByText("A new thing")).toBeTruthy());
+
+    const newConfig2 = {
+      "slot-module": {
+        extensions: {
+          fooSlot: {
+            configure: {
+              "barExt#id1": {
+                thing: "Yet another thing",
+              },
+            },
+          },
+        },
+      },
+    };
+    temporaryConfigStore.setState({ config: newConfig2 });
+
+    await waitFor(() =>
+      expect(screen.findByText("Yet another thing")).toBeTruthy()
+    );
   });
 });

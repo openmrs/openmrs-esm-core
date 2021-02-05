@@ -44,7 +44,7 @@ async function resetAll() {
       delete mockStores[storeName];
     }
   }
-  await Config.resetAll();
+  await Config.reloadImportMapConfig();
 }
 
 describe("defineConfigSchema", () => {
@@ -727,7 +727,7 @@ describe("resolveImportMapConfig", () => {
     const testConfig = importableConfig({ "foo-module": { foo: "bar" } });
     (<any>window).System.resolve.mockReturnValue(true);
     (<any>window).System.import.mockResolvedValue(testConfig);
-    await Config.resetAll();
+    await Config.reloadImportMapConfig();
     Config.defineConfigSchema("foo-module", { foo: { _default: "qux" } });
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toBe("bar");
@@ -737,7 +737,7 @@ describe("resolveImportMapConfig", () => {
     const importedConfig = importableConfig({ "foo-module": { foo: "bar" } });
     (<any>window).System.resolve.mockReturnValue(true);
     (<any>window).System.import.mockResolvedValue(importedConfig);
-    await Config.resetAll();
+    await Config.reloadImportMapConfig();
     Config.defineConfigSchema("foo-module", { foo: { _default: "qux" } });
     const providedConfig = { "foo-module": { foo: "baz" } };
     Config.provide(providedConfig);

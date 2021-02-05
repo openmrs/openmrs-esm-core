@@ -1,5 +1,4 @@
 export * from "./module-config/module-config";
-export * from "./module-config/config-cache";
 export * from "./module-config/state";
 export * from "./navigation/navigate";
 export * from "./navigation/interpolate-string";

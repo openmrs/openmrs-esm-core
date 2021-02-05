@@ -1,5 +1,5 @@
 // import "systemjs/dist/system";
-import { clone, map, reduce, mergeDeepRight, prop, filter } from "ramda";
+import { clone, map, reduce, mergeDeepRight, prop } from "ramda";
 import {
   Config,
   ConfigObject,
@@ -741,7 +741,7 @@ function isOrdinaryObject(value) {
 }
 
 /** @internal for testing */
-export function resetAll() {
+export function reloadImportMapConfig() {
   getImportMapConfigPromise = undefined;
   return loadConfigs();
 }
