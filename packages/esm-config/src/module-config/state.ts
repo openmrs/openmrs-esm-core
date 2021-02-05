@@ -40,7 +40,6 @@ export const configInternalStore = createGlobalStore<ConfigInternalStore>(
   "config-internal",
   configInternalStoreInitialValue
 );
-(window as any).configInternalStore = configInternalStore; // DEBUG CODE
 
 let lastValueOfDevDefaultsAreOn = getAreDevDefaultsOn();
 configInternalStore.subscribe((state) => {
@@ -147,7 +146,6 @@ export function getConfigStore(moduleName: string) {
     initializeConfigStore()
   );
 }
-(window as any).getConfigStore = getConfigStore; // DEBUG CODE
 
 export interface ExtensionSlotConfigsStore {
   /** Configs for each extension slot in the module, indexed by slot name */

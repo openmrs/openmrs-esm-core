@@ -1,4 +1,3 @@
-// import "systemjs/dist/system";
 import { clone, map, reduce, mergeDeepRight, prop } from "ramda";
 import {
   Config,
@@ -38,8 +37,7 @@ import {
  * first attempt, because otherwise System.import exhibits some very weird
  * behavior.
  *
- * TODO: Create minimal reproduction of this buggy SystemJS behavior and create
- * an issue on that repository, and add the link to that issue to this comment.
+ * TODO: Investigate further, per this comment: https://github.com/joeldenning/import-map-overrides/issues/48#issuecomment-769477901
  */
 let didInitialCheck = false;
 function checkForImportMapConfigFile() {

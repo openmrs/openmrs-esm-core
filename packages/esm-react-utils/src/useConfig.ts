@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import {
   getConfigStore,
   getExtensionConfigStore,
@@ -6,9 +6,7 @@ import {
 } from "@openmrs/esm-config";
 import { ModuleNameContext } from "./ModuleNameContext";
 import { ExtensionContext } from "./ExtensionContext";
-import { ConfigObject } from "@openmrs/esm-config/src/types";
-import isEqual from "lodash-es/isEqual";
-import cloneDeep from "lodash-es/cloneDeep";
+import { ConfigObject } from "@openmrs/esm-config";
 import { useForceUpdate } from "./useForceUpdate";
 
 let error: Error | undefined;
