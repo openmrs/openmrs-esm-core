@@ -1,5 +1,5 @@
 // import "systemjs/dist/system";
-import { clone, map, reduce, mergeDeepRight, prop } from "ramda";
+import { clone, map, reduce, mergeDeepRight, prop, filter } from "ramda";
 import {
   Config,
   ConfigObject,
@@ -58,14 +58,6 @@ function checkForImportMapConfigFile() {
 }
 checkForImportMapConfigFile();
 
-// // This should work, but doesn't
-// // See explanation: https://github.com/joeldenning/import-map-overrides/issues/48#issuecomment-769477901
-// window.addEventListener("import-map-overrides:init", () => {
-//   (System as any).prepareImport().then(() => {
-//     loadConfigs()
-//   });
-// });
-
 window.addEventListener("import-map-overrides:change", loadConfigs);
 
 // We cache the Promise that loads the import mapped config file
@@ -96,8 +88,6 @@ async function getImportMapConfigFile(): Promise<void> {
   } else {
     throw new Error("SystemJS not loaded at getImportMapConfigFile call time");
   }
-
-  // console.log("exists", importMapConfigExists);
 
   if (importMapConfigExists) {
     try {
@@ -180,8 +170,10 @@ function computeModuleConfig(state: ConfigInternalStore) {
 
 function computeExtensionSlotConfigs(state: ConfigInternalStore) {
   if (state.importMapConfigLoaded) {
-    for (let moduleName of Object.keys(state.schemas)) {
-      const extensionSlotConfigs = getExtensionSlotConfigs(moduleName);
+    const slotConfigsByModule = getExtensionSlotConfigs();
+    for (let [moduleName, extensionSlotConfigs] of Object.entries(
+      slotConfigsByModule
+    )) {
       const moduleStore = getExtensionSlotsConfigStore(moduleName);
       moduleStore.setState({ loaded: true, extensionSlotConfigs });
     }
@@ -363,22 +355,33 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
   }
 }
 
-function getExtensionSlotConfigs(
-  moduleName: string
-): Record<string, ExtensionSlotConfigObject> {
-  const moduleConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
-  const configBySlot: Record<string, ExtensionSlotConfig> =
-    moduleConfig?.extensions ?? {};
-  validateAllExtensionSlotConfigs(configBySlot, moduleName);
-  return configBySlot;
+function getExtensionSlotConfigs(): Record<
+  string,
+  Record<string, ExtensionSlotConfigObject>
+> {
+  const allConfigs = mergeConfigs(getProvidedConfigs());
+  const slotConfigPerModule: Record<
+    string,
+    Record<string, ExtensionSlotConfig>
+  > = Object.keys(allConfigs).reduce((obj, key) => {
+    if (allConfigs[key]?.extensions) {
+      obj[key] = allConfigs[key]?.extensions;
+    }
+    return obj;
+  }, {});
+  validateAllExtensionSlotConfigs(slotConfigPerModule);
+  return slotConfigPerModule;
 }
 
 function validateAllExtensionSlotConfigs(
-  configBySlot: Record<string, ExtensionSlotConfig>,
-  moduleName: string
+  slotConfigPerModule: Record<string, Record<string, ExtensionSlotConfig>>
 ) {
-  for (let [slotName, config] of Object.entries(configBySlot)) {
-    validateExtensionSlotConfig(config, moduleName, slotName);
+  for (let [moduleName, configBySlotName] of Object.entries(
+    slotConfigPerModule
+  )) {
+    for (let [slotName, config] of Object.entries(configBySlotName)) {
+      validateExtensionSlotConfig(config, moduleName, slotName);
+    }
   }
 }
 

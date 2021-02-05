@@ -193,7 +193,6 @@ describe("getConfig", () => {
     Config.defineConfigSchema("foo-module", { foo: { _default: "qux" } });
     const testConfig = { "foo-module": { foo: "bar" } };
     Config.provide(testConfig);
-    console.log(configInternalStore.getState());
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toBe("bar");
     expect(console.error).not.toHaveBeenCalled();
@@ -895,7 +894,6 @@ describe("extension slot config", () => {
         },
       },
     });
-    console.log(getExtensionSlotsConfigStore("foo-module").getState());
     const config = getExtensionSlotsConfigStore("foo-module").getState()
       .extensionSlotConfigs["fooSlot"];
     expect(config).toStrictEqual({
