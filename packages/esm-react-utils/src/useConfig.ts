@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import {
   getConfigStore,
   getExtensionConfigStore,
@@ -8,6 +8,8 @@ import { ModuleNameContext } from "./ModuleNameContext";
 import { ExtensionContext } from "./ExtensionContext";
 import { ConfigObject } from "@openmrs/esm-config/src/types";
 import isEqual from "lodash-es/isEqual";
+import cloneDeep from "lodash-es/cloneDeep";
+import { useForceUpdate } from "./useForceUpdate";
 
 let error: Error | undefined;
 const promises: Record<string, Promise<ConfigObject>> = {};
@@ -26,6 +28,8 @@ export function useConfig() {
     extensionSlotModuleName,
   } = useContext(ExtensionContext);
 
+  const forceUpdate = useForceUpdate();
+
   const moduleName = useContext(ModuleNameContext);
 
   if (!moduleName && !extensionId) {
@@ -36,7 +40,33 @@ export function useConfig() {
     );
   }
 
+  const store = useMemo(
+    () =>
+      moduleName
+        ? getConfigStore(moduleName)
+        : getExtensionConfigStore(
+            extensionSlotModuleName,
+            attachedExtensionSlotName,
+            extensionId
+          ),
+    [
+      moduleName,
+      extensionSlotModuleName,
+      attachedExtensionSlotName,
+      extensionId,
+    ]
+  );
+
   const cacheId = moduleName || `${attachedExtensionSlotName}-${extensionId}`;
+
+  useEffect(() => {
+    return store.subscribe((state) => {
+      if (state.loaded && state.config) {
+        configs[cacheId] = state.config;
+        forceUpdate();
+      }
+    });
+  }, [store]);
 
   if (error) {
     // Suspense will just keep calling useConfig if the thrown promise rejects.
@@ -47,20 +77,11 @@ export function useConfig() {
   if (!configs[cacheId]) {
     if (!promises[cacheId]) {
       promises[cacheId] = new Promise((resolve, reject) => {
-        const store = moduleName
-          ? getConfigStore(moduleName)
-          : getExtensionConfigStore(
-              extensionSlotModuleName,
-              attachedExtensionSlotName,
-              extensionId
-            );
         function update(state: ConfigStore) {
           if (state.loaded && state.config) {
-            if (!isEqual(state.config, configs[cacheId])) {
-              configs[cacheId] = state.config;
-              resolve(state.config);
-              unsubscribe && unsubscribe();
-            }
+            configs[cacheId] = state.config;
+            resolve(state.config);
+            unsubscribe && unsubscribe();
           }
         }
         update(store.getState());
