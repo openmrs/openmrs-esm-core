@@ -27,3 +27,8 @@ export const useExtensionStore = (actions) => {
   const state = extensionStore.getState();
   return { ...state, ...actions };
 };
+
+export const useStore = (store: Store<any>, actions) => {
+  const state = store.getState();
+  return { ...state, ...actions };
+};

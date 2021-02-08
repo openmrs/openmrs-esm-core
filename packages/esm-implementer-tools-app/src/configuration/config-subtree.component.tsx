@@ -1,6 +1,6 @@
 import React from "react";
 import EditableValue from "./editable-value.component";
-import { getStore } from "../store";
+import { implementerToolsStore } from "../store";
 import isEqual from "lodash-es/isEqual";
 import { Subtree } from "./layout/subtree.component";
 
@@ -10,11 +10,9 @@ export interface ConfigSubtreeProps {
 }
 
 export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
-  const store = getStore();
-
   function setActiveItemDescriptionOnMouseEnter(thisPath, key, value) {
-    if (!store.getState().configPathBeingEdited) {
-      store.setState({
+    if (!implementerToolsStore.getState().configPathBeingEdited) {
+      implementerToolsStore.setState({
         activeItemDescription: {
           path: thisPath,
           source: value._source,
@@ -26,12 +24,12 @@ export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
   }
 
   function removeActiveItemDescriptionOnMouseLeave(thisPath) {
-    const state = store.getState();
+    const state = implementerToolsStore.getState();
     if (
       isEqual(state.activeItemDescription?.path, thisPath) &&
       !isEqual(state.configPathBeingEdited, thisPath)
     ) {
-      store.setState({ activeItemDescription: undefined });
+      implementerToolsStore.setState({ activeItemDescription: undefined });
     }
   }
 

@@ -12,3 +12,4 @@ export * from "./useExtensionStore";
 export * from "./useForceUpdate";
 export * from "./useNavigationContext";
 export * from "./UserHasAccess";
+export * from "./useStore";

@@ -1,13 +1,12 @@
 {
-  "name": "@openmrs/esm-config",
+  "name": "@openmrs/esm-state",
   "version": "3.1.9",
   "license": "MPL-2.0",
-  "description": "A configuration library for the OpenMRS Single-Spa framework.",
-  "browser": "dist/openmrs-esm-module-config.js",
+  "description": "Frontend stores & state management for OpenMRS",
+  "browser": "dist/openmrs-esm-state.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "document": "./document.sh",
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
     "typescript": "tsc",
@@ -34,20 +33,8 @@
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "ramda": "^0.26.1",
-    "systemjs-webpack-interop": "^2.1.2"
-  },
-  "peerDependencies": {
-    "@openmrs/esm-state": "3.x",
-    "single-spa": "4.x",
-    "systemjs": "6.x"
-  },
-  "devDependencies": {
-    "@openmrs/esm-state": "^3.1.9",
-    "@types/ramda": "^0.26.44",
-    "@types/systemjs": "^6.1.0",
-    "babel-plugin-ramda": "^2.0.0",
-    "single-spa": "^4.4.1"
+    "systemjs-webpack-interop": "^2.1.2",
+    "unistore": "^3.5.2"
   },
   "publishConfig": {
     "access": "public"

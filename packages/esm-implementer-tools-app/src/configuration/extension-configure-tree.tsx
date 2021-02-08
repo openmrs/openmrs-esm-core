@@ -21,6 +21,7 @@ export function ExtensionConfigureTree({
           ? { _value: config, _source: "", _default: {} }
           : { _value: undefined, _source: "default", _default: {} }
       }
+      customType="configure"
     />
   );
 }

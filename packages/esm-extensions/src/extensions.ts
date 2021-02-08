@@ -1,4 +1,4 @@
-import { getExtensionSlotConfig } from "@openmrs/esm-config";
+import { getExtensionSlotsConfigStore } from "@openmrs/esm-config";
 import { getActualRouteProps } from "./route";
 import {
   ExtensionRegistration,
@@ -201,9 +201,6 @@ function getUpdatedExtensionSlotInfoForUnregistration(
 }
 
 /**
- * This is only used to inform tooling about the extension slot. Extension slots
- * do not have to be registered to mount extensions.
- *
  * @param moduleName The name of the module that contains the extension slot
  * @param actualExtensionSlotName The extension slot name that is actually used
  * @param domElement The HTML element of the extension slot
@@ -312,10 +309,10 @@ export async function getUpdatedExtensionSlotInfo(
 
   if (instance) {
     const originalInstance = instance;
-    const config = await getExtensionSlotConfig(
-      actualExtensionSlotName,
-      moduleName
-    );
+    const config =
+      getExtensionSlotsConfigStore(moduleName).getState().extensionSlotConfigs[
+        actualExtensionSlotName
+      ] ?? {};
 
     if (Array.isArray(config.add)) {
       config.add.forEach((extensionId) => {

@@ -1,16 +1,36 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { ExtensionSlotConfig } from "@openmrs/esm-config";
+import {
+  ExtensionSlotConfig,
+  ExtensionSlotConfigureValueObject,
+} from "@openmrs/esm-config";
 import { extensionStore } from "@openmrs/esm-extensions";
 import { useExtensionStore } from "@openmrs/esm-react-utils";
 import EditableValue from "./editable-value.component";
-import { getStore } from "../store";
 import isEqual from "lodash-es/isEqual";
 import { ExtensionConfigureTree } from "./extension-configure-tree";
 import { Subtree } from "./layout/subtree.component";
+import { implementerToolsStore } from "../store";
 
 interface ExtensionSlotsConfigTreeProps {
   config: { [key: string]: any };
   moduleName: string;
+}
+
+interface ExtensionSlotImplementerToolsConfig {
+  add?: ExtensionSlotConfigValueDescriptor;
+  remove?: ExtensionSlotConfigValueDescriptor;
+  order?: ExtensionSlotConfigValueDescriptor;
+  configure?: ExtensionConfigureDescriptor;
+}
+
+interface ExtensionSlotConfigValueDescriptor {
+  _value: Array<string>;
+  _source: string;
+}
+
+interface ExtensionConfigureDescriptor {
+  _value: ExtensionSlotConfigureValueObject;
+  _source: string;
 }
 
 export function ExtensionSlotsConfigTree({
@@ -38,7 +58,7 @@ export function ExtensionSlotsConfigTree({
 }
 
 interface ExtensionSlotConfigProps {
-  config: ExtensionSlotConfig;
+  config: ExtensionSlotImplementerToolsConfig;
   path: string[];
 }
 
@@ -46,7 +66,6 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   const [assignedExtensions, setAssignedExtensions] = useState<Array<string>>(
     []
   );
-  const store = getStore();
   const moduleName = path[0];
   const slotName = path[2];
 
@@ -61,8 +80,8 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   }, []);
 
   function setActiveExtensionSlotOnMouseEnter(moduleName, slotName) {
-    if (!store.getState().configPathBeingEdited) {
-      store.setState({
+    if (!implementerToolsStore.getState().configPathBeingEdited) {
+      implementerToolsStore.setState({
         activeItemDescription: {
           path: [moduleName, slotName],
           value: assignedExtensions,
@@ -77,8 +96,8 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
     key,
     value
   ) {
-    if (!store.getState().configPathBeingEdited) {
-      store.setState({
+    if (!implementerToolsStore.getState().configPathBeingEdited) {
+      implementerToolsStore.setState({
         activeItemDescription: {
           path: [moduleName, slotName, key],
           source: value?._source,
@@ -96,12 +115,12 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   }
 
   function removeActiveItemDescriptionOnMouseLeave(thisPath) {
-    const state = store.getState();
+    const state = implementerToolsStore.getState();
     if (
       isEqual(state.activeItemDescription?.path, thisPath) &&
       !isEqual(state.configPathBeingEdited, thisPath)
     ) {
-      store.setState({ activeItemDescription: undefined });
+      implementerToolsStore.setState({ activeItemDescription: undefined });
     }
   }
 
@@ -137,23 +156,17 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
             <ExtensionConfigureTree
               moduleName={moduleName}
               slotName={slotName}
-              config={config?.configure}
+              config={config?.configure?._value}
             />
           ) : (
             <EditableValue
               path={path.concat([key])}
               element={
-                config?.[key]
-                  ? {
-                      _value: config?.[key],
-                      _source: "",
-                      _default: [],
-                    }
-                  : {
-                      _value: undefined,
-                      _source: "default",
-                      _default: [],
-                    }
+                config?.[key] ?? {
+                  _value: undefined,
+                  _source: "default",
+                  _default: [],
+                }
               }
               customType={key}
             />

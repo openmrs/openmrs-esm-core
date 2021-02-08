@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Provider } from "unistore/react";
-import { UserHasAccess } from "@openmrs/esm-react-utils";
+import { UserHasAccess, useStore } from "@openmrs/esm-react-utils";
 import Popup from "./popup/popup.component";
 import styles from "./implementer-tools.styles.css";
 import { showToast } from "@openmrs/esm-styleguide";
@@ -9,17 +9,13 @@ import {
   MissingBackendModules,
 } from "./backend-dependencies/openmrs-backend-dependencies";
 import { NotificationActionButton } from "carbon-components-react/lib/components/Notification";
-import { getStore, useStore } from "./store";
 import { UiEditor } from "./ui-editor/ui-editor";
+import { implementerToolsStore } from "./store";
 
 export default function ImplementerTools() {
-  const store = getStore();
-
   return (
     <UserHasAccess privilege="coreapps.systemAdministration">
-      <Provider store={store}>
-        <PopupHandler />
-      </Provider>
+      <PopupHandler />
     </UserHasAccess>
   );
 }
@@ -35,10 +31,10 @@ function PopupHandler() {
     modulesWithWrongBackendModulesVersion,
     setModulesWithWrongBackendModulesVersion,
   ] = useState<Array<MissingBackendModules>>([]);
-  const { isOpen, isUIEditorEnabled } = useStore();
+  const { isOpen, isUIEditorEnabled } = useStore(implementerToolsStore);
 
   function togglePopup() {
-    getStore().setState({ isOpen: !isOpen });
+    implementerToolsStore.setState({ isOpen: !isOpen });
   }
 
   // loading missing modules

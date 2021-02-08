@@ -45,6 +45,7 @@
   "devDependencies": {
     "@openmrs/esm-config": "^3.1.9",
     "@openmrs/esm-error-handling": "^3.1.9",
+    "@openmrs/esm-state": "^3.1.9",
     "@types/fhir": "0.0.31",
     "rxjs": "^6.5.3"
   },

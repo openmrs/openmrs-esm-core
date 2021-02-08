@@ -1,5 +1,4 @@
-import { createGlobalStore, getGlobalStore } from "@openmrs/esm-api";
-import { createUseStore } from "@openmrs/esm-react-utils";
+import { createGlobalStore } from "@openmrs/esm-state";
 import { Store } from "unistore";
 
 export interface ImplementerToolsStore {
@@ -16,7 +15,7 @@ export interface ActiveItemDescription {
   source?: string;
 }
 
-const store: Store<ImplementerToolsStore> = createGlobalStore(
+export const implementerToolsStore: Store<ImplementerToolsStore> = createGlobalStore(
   "implementer-tools",
   {
     activeItemDescription: undefined,
@@ -26,14 +25,9 @@ const store: Store<ImplementerToolsStore> = createGlobalStore(
   }
 );
 
-export const getStore = () =>
-  getGlobalStore<ImplementerToolsStore>("implementer-tools");
-
-export const useStore = createUseStore<ImplementerToolsStore>(store);
-
 let lastValueOfIsOpen = getIsImplementerToolsOpen();
 let lastValueOfIsUiEditorEnabled = getIsUIEditorEnabled();
-getStore().subscribe((state) => {
+implementerToolsStore.subscribe((state) => {
   if (state.isOpen != lastValueOfIsOpen) {
     setIsImplementerToolsOpen(state.isOpen);
     lastValueOfIsOpen = state.isOpen;

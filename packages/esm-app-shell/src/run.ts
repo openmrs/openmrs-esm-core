@@ -1,5 +1,6 @@
 import { start } from "single-spa";
-import { createAppState, setupApiModule } from "@openmrs/esm-api";
+import { setupApiModule } from "@openmrs/esm-api";
+import { createAppState } from "@openmrs/esm-state";
 import { Config, provide } from "@openmrs/esm-config";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";

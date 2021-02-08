@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import {
-  getImplementerToolsConfig,
-  getAreDevDefaultsOn,
-  setAreDevDefaultsOn,
-  clearTemporaryConfig,
-  getTemporaryConfig,
+  ConfigInternalStore,
+  configInternalStore,
+  implementerToolsConfigStore,
+  temporaryConfigStore,
 } from "@openmrs/esm-config";
 import { Button, Column, Grid, Row, Toggle } from "carbon-components-react";
 import { Download16, TrashCan16 } from "@carbon/icons-react";
 import styles from "./configuration.styles.css";
 import { ConfigTree } from "./config-tree.component";
-import { getStore, ImplementerToolsStore, useStore } from "../store";
+import { implementerToolsStore, ImplementerToolsStore } from "../store";
 import { Description } from "./description.component";
+import { useStore } from "@openmrs/esm-react-utils";
 
 export type ConfigurationProps = {
   setHasAlert(value: boolean): void;
@@ -23,28 +23,30 @@ const actions = {
   },
 };
 
+const configActions = {
+  toggleDevDefaults({ devDefaultsAreOn }: ConfigInternalStore) {
+    return { devDefaultsAreOn: !devDefaultsAreOn };
+  },
+};
+
 export function Configuration({ setHasAlert }: ConfigurationProps) {
-  const { isUIEditorEnabled, toggleIsUIEditorEnabled } = useStore(actions);
-  const [config, setConfig] = useState({});
-  const [isDevConfigActive, setIsDevConfigActive] = useState(
-    getAreDevDefaultsOn()
+  const { isUIEditorEnabled, toggleIsUIEditorEnabled } = useStore(
+    implementerToolsStore,
+    actions
   );
-  const store = getStore();
-  const tempConfig = getTemporaryConfig();
+  const { devDefaultsAreOn, toggleDevDefaults } = useStore(
+    configInternalStore,
+    configActions
+  );
+  const { config } = useStore(implementerToolsConfigStore);
+  const tempConfigStore = useStore(temporaryConfigStore);
+  const tempConfig = tempConfigStore.config;
   const tempConfigObjUrl = new Blob(
     [JSON.stringify(tempConfig, undefined, 2)],
     {
       type: "application/json",
     }
   );
-
-  const updateConfig = () => {
-    getImplementerToolsConfig().then((res) => {
-      setConfig(res);
-    });
-  };
-
-  useEffect(updateConfig, []);
 
   return (
     <>
@@ -55,11 +57,8 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
               <Toggle
                 id="devConfigSwitch"
                 labelText="Dev Config"
-                onToggle={() => {
-                  setAreDevDefaultsOn(!isDevConfigActive);
-                  setIsDevConfigActive(!isDevConfigActive);
-                }}
-                toggled={isDevConfigActive}
+                onToggle={toggleDevDefaults}
+                toggled={devDefaultsAreOn}
               />
             </Column>
             <Column sm={1} md={1} className={styles.actionButton}>
@@ -76,8 +75,7 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
                 iconDescription="Clear temporary config"
                 renderIcon={TrashCan16}
                 onClick={() => {
-                  clearTemporaryConfig();
-                  updateConfig();
+                  temporaryConfigStore.setState({ config: {} });
                 }}
               >
                 Clear Temporary Config

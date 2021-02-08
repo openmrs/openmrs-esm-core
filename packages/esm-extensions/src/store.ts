@@ -1,4 +1,8 @@
-import { createGlobalStore } from "@openmrs/esm-api";
+import {
+  configExtensionStore,
+  ConfigExtensionStoreElement,
+} from "@openmrs/esm-config";
+import { createGlobalStore } from "@openmrs/esm-state";
 
 export interface ExtensionDefinition {
   name: string;
@@ -18,11 +22,14 @@ export interface ExtensionInfo extends ExtensionRegistration {
 }
 
 export interface ExtensionInstance {
+  id: string;
   domElement: HTMLElement;
 }
 
 export interface ExtensionStore {
+  /** Slots indexed by name */
   slots: Record<string, ExtensionSlotInfo>;
+  /** Extensions indexed by name */
   extensions: Record<string, ExtensionInfo>;
 }
 
@@ -107,4 +114,34 @@ export function updateExtensionStore<U extends keyof ExtensionStore>(
       extensionStore.setState(newState);
     }
   });
+}
+
+/**
+ * esm-config maintains its own store of the extension information it needs
+ * to generate extension configs. We keep it updated based on what's in
+ * `extensionStore`.
+ */
+
+updateConfigExtensionStore(extensionStore.getState());
+extensionStore.subscribe(updateConfigExtensionStore);
+
+function updateConfigExtensionStore(extensionState: ExtensionStore) {
+  const configExtensionRecords: Array<ConfigExtensionStoreElement> = [];
+  for (let extensionInfo of Object.values(extensionState.extensions)) {
+    for (let [slotModuleName, extensionBySlot] of Object.entries(
+      extensionInfo.instances
+    )) {
+      for (let [actualSlotName, extensionInstance] of Object.entries(
+        extensionBySlot
+      )) {
+        configExtensionRecords.push({
+          slotModuleName,
+          extensionModuleName: extensionInfo.moduleName,
+          slotName: actualSlotName,
+          extensionId: extensionInstance.id,
+        });
+      }
+    }
+  }
+  configExtensionStore.setState({ mountedExtensions: configExtensionRecords });
 }
