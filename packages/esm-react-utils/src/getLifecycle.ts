@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import singleSpaReact from "single-spa-react";
-import { openmrsExtensionDecorator } from "./openmrsExtensionDecorator";
 import {
   openmrsRootDecorator,
   RootDecoratorOptions,
@@ -33,7 +32,7 @@ export function getExtensionLifecycle<T>(
   return singleSpaReact({
     React,
     ReactDOM,
-    rootComponent: openmrsExtensionDecorator(options)(Root),
+    rootComponent: openmrsRootDecorator(options)(Root),
   });
 }
 

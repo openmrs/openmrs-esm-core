@@ -15,7 +15,7 @@ export function useExtensionSlot(
 
   if (!extensionSlotModuleName) {
     throw Error(
-      "ModuleNameContext has not been provided. This should come from openmrs-react-root-decorator"
+      "ModuleNameContext has not been provided. This should come from @openmrs/esm-react-utils."
     );
   }
 

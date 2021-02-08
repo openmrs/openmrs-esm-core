@@ -6,6 +6,7 @@ export const sharedDependencies = {
   "react-i18next": () => require("react-i18next"),
   "single-spa": () => require("single-spa"),
   "@openmrs/esm-api": () => require("@openmrs/esm-api"),
+  "@openmrs/esm-app-shell": () => ({}),
   "@openmrs/esm-config": () => require("@openmrs/esm-config"),
   "@openmrs/esm-module-config": () => require("@openmrs/esm-config"),
   "@openmrs/esm-context": () => require("@openmrs/esm-react-utils"),
