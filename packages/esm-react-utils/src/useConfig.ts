@@ -4,14 +4,17 @@ import {
   getExtensionConfigStore,
   ConfigStore,
 } from "@openmrs/esm-config";
-import { ModuleNameContext } from "./ModuleNameContext";
-import { ExtensionContext } from "./ExtensionContext";
+import { ComponentContext } from "./ComponentContext";
 import { ConfigObject } from "@openmrs/esm-config";
 import { useForceUpdate } from "./useForceUpdate";
 
 let error: Error | undefined;
 const promises: Record<string, Promise<ConfigObject>> = {};
 const configs: Record<string, ConfigObject> = {};
+
+const errorMessage = `No ComponentContext has been provided.
+This should come from "openmrsComponentDecorator".
+Usually this is already applied when using "get[Async]Lifecycle".`;
 
 /**
  * Use this React Hook to obtain your module's configuration.
@@ -20,42 +23,28 @@ export function useConfig() {
   // This hook uses the extension config if an ExtensionContext is
   // found, and uses the normal config if the ModuleNameContext is
   // found.
-  const {
-    extensionId,
-    attachedExtensionSlotName,
-    extensionSlotModuleName,
-  } = useContext(ExtensionContext);
-
+  const { moduleName, extension } = useContext(ComponentContext);
   const forceUpdate = useForceUpdate();
 
-  const moduleName = useContext(ModuleNameContext);
-
-  if (!moduleName && !extensionId) {
-    throw Error(
-      "Neither ModuleNameContext nor ExtensionCotext were provided. " +
-        "They should come from `openmrsRootDecorator` or `openmrsExtensionDecorator` respectively. " +
-        "These usually come from `get[Async]RootLifecycle` or `get[Async]ExtensionLifecycle`, respectively."
-    );
+  if (!moduleName && !extension) {
+    throw Error(errorMessage);
   }
 
   const store = useMemo(
     () =>
-      moduleName
+      !extension
         ? getConfigStore(moduleName)
         : getExtensionConfigStore(
-            extensionSlotModuleName,
-            attachedExtensionSlotName,
-            extensionId
+            extension.extensionSlotModuleName,
+            extension.attachedExtensionSlotName,
+            extension.extensionId
           ),
-    [
-      moduleName,
-      extensionSlotModuleName,
-      attachedExtensionSlotName,
-      extensionId,
-    ]
+    [moduleName, extension]
   );
 
-  const cacheId = moduleName || `${attachedExtensionSlotName}-${extensionId}`;
+  const cacheId = extension
+    ? `${extension.attachedExtensionSlotName}-${extension.extensionId}`
+    : moduleName;
 
   useEffect(() => {
     return store.subscribe((state) => {
@@ -74,7 +63,7 @@ export function useConfig() {
 
   if (!configs[cacheId]) {
     if (!promises[cacheId]) {
-      promises[cacheId] = new Promise((resolve, reject) => {
+      promises[cacheId] = new Promise((resolve) => {
         function update(state: ConfigStore) {
           if (state.loaded && state.config) {
             configs[cacheId] = state.config;
@@ -82,10 +71,12 @@ export function useConfig() {
             unsubscribe && unsubscribe();
           }
         }
+
         update(store.getState());
         const unsubscribe = store.subscribe(update);
       });
     }
+
     // React will prevent the client component from rendering until the promise resolves
     throw promises[cacheId];
   } else {

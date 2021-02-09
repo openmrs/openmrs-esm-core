@@ -5,13 +5,14 @@ import {
   extensionStore,
   ExtensionStore,
 } from "@openmrs/esm-extensions";
-import { ModuleNameContext } from "./ModuleNameContext";
+import { ComponentContext } from "./ComponentContext";
 
 export function useExtensionSlot(
   actualExtensionSlotName: string,
   ref: MutableRefObject<HTMLElement | null>
 ) {
-  const extensionSlotModuleName = useContext(ModuleNameContext);
+  const { moduleName } = useContext(ComponentContext);
+  const extensionSlotModuleName = moduleName;
 
   if (!extensionSlotModuleName) {
     throw Error(

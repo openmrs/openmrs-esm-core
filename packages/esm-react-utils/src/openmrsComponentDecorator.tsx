@@ -1,7 +1,11 @@
 import React from "react";
 import _i18n from "i18next";
 import { I18nextProvider } from "react-i18next";
-import { ModuleNameContext } from "./ModuleNameContext";
+import {
+  ComponentConfig,
+  ComponentContext,
+  ExtensionData,
+} from "./ComponentContext";
 
 const i18n = (_i18n as any).default || _i18n;
 
@@ -31,15 +35,13 @@ const I18nextLoadNamespace: React.FC<I18nextLoadNamespaceProps> = (props) => {
   if (!i18n.hasLoadedNamespace(props.ns)) {
     const timeoutId = setTimeout(() => {
       console.warn(
-        `openmrsRootDecorator: the React suspense promise for i18next.loadNamespaces(['${props.ns}']) did not resolve nor reject after three seconds. This could mean you have multiple versions of i18next and haven't made i18next a webpack external in all projects.`
+        `openmrsComponentDecorator: the React suspense promise for i18next.loadNamespaces(['${props.ns}']) did not resolve nor reject after three seconds. This could mean you have multiple versions of i18next and haven't made i18next a webpack external in all projects.`
       );
     }, 3000);
 
     throw i18n
       .loadNamespaces([props.ns])
-      .then(() => {
-        clearTimeout(timeoutId);
-      })
+      .then(() => clearTimeout(timeoutId))
       .catch((err) => {
         clearTimeout(timeoutId);
         loadNamespaceErrRef.current = err;
@@ -49,69 +51,53 @@ const I18nextLoadNamespace: React.FC<I18nextLoadNamespaceProps> = (props) => {
   return <>{props.children}</>;
 };
 
-export interface RootDecoratorOptions {
+export interface ComponentDecoratorOptions {
   moduleName: string;
   featureName: string;
   disableTranslations?: boolean;
   strictMode?: boolean;
 }
 
-export function openmrsRootDecorator(userOpts: RootDecoratorOptions) {
+export interface OpenmrsReactComponentProps {
+  _extensionContext?: ExtensionData;
+}
+
+export interface OpenmrsReactComponentState {
+  caughtError: any;
+  caughtErrorInfo: any;
+  config: ComponentConfig;
+}
+
+export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
   if (
     typeof userOpts !== "object" ||
     typeof userOpts.featureName !== "string" ||
     typeof userOpts.moduleName !== "string"
   ) {
-    throw new Error(
-      "openmrsRootDecorator should be called with an opts object that has " +
-        "1. a featureName string that will be displayed to users, and 2. a moduleName string. " +
-        "The moduleName string will be used to look up configuration. " +
-        "e.g. openmrsRootDecorator({featureName: 'nice feature', moduleName: '@openmrs/esm-nice-feature' })"
-    );
+    throw new Error("Invalid options");
   }
 
   const opts = Object.assign({}, defaultOpts, userOpts);
 
   return function decorateComponent(Comp: React.ComponentType) {
-    return class OpenmrsReactRoot extends React.Component {
-      static displayName = `OpenmrsReactRoot(${opts.featureName})`;
+    return class OpenmrsReactComponent extends React.Component<
+      OpenmrsReactComponentProps,
+      OpenmrsReactComponentState
+    > {
+      static displayName = `OpenmrsReactComponent(${opts.featureName})`;
 
-      state = {
-        caughtError: null,
-        caughtErrorInfo: null,
-      };
-
-      render() {
-        if (this.state.caughtError) {
-          // TO-DO have a UX designed for when a catastrophic error occurs
-          return null;
-        } else {
-          const content = (
-            <ModuleNameContext.Provider value={opts.moduleName}>
-              <React.Suspense fallback={null}>
-                {opts.disableTranslations ? (
-                  <Comp {...this.props} />
-                ) : (
-                  <I18nextLoadNamespace
-                    ns={opts.moduleName}
-                    forceUpdate={() => this.forceUpdate()}
-                  >
-                    <I18nextProvider i18n={i18n} defaultNS={opts.moduleName}>
-                      <Comp {...this.props} />
-                    </I18nextProvider>
-                  </I18nextLoadNamespace>
-                )}
-              </React.Suspense>
-            </ModuleNameContext.Provider>
-          );
-
-          if (opts.strictMode || !React.StrictMode) {
-            return content;
-          } else {
-            return <React.StrictMode>{content}</React.StrictMode>;
-          }
-        }
+      constructor(props: OpenmrsReactComponentProps) {
+        super(props);
+        this.state = {
+          caughtError: null,
+          caughtErrorInfo: null,
+          config: {
+            moduleName: opts.moduleName,
+            extension: props._extensionContext,
+          },
+        };
       }
+
       componentDidCatch(err: any, info: any) {
         if (info && info.componentStack) {
           err.extra = Object.assign(err.extra || {}, {
@@ -129,6 +115,38 @@ export function openmrsRootDecorator(userOpts: RootDecoratorOptions) {
           caughtError: err,
           caughtErrorInfo: info,
         });
+      }
+
+      render() {
+        if (this.state.caughtError) {
+          // TO-DO have a UX designed for when a catastrophic error occurs
+          return null;
+        } else {
+          const content = (
+            <ComponentContext.Provider value={this.state.config}>
+              <React.Suspense fallback={null}>
+                {opts.disableTranslations ? (
+                  <Comp {...this.props} />
+                ) : (
+                  <I18nextLoadNamespace
+                    ns={opts.moduleName}
+                    forceUpdate={() => this.forceUpdate()}
+                  >
+                    <I18nextProvider i18n={i18n} defaultNS={opts.moduleName}>
+                      <Comp {...this.props} />
+                    </I18nextProvider>
+                  </I18nextLoadNamespace>
+                )}
+              </React.Suspense>
+            </ComponentContext.Provider>
+          );
+
+          if (opts.strictMode || !React.StrictMode) {
+            return content;
+          } else {
+            return <React.StrictMode>{content}</React.StrictMode>;
+          }
+        }
       }
     };
   };
