@@ -30,15 +30,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@openmrs/esm-api": "^3.1.9",
-    "@openmrs/esm-config": "^3.1.9",
-    "@openmrs/esm-error-handling": "^3.1.9",
-    "@openmrs/esm-extensions": "^3.1.9",
-    "@openmrs/esm-react-utils": "^3.1.9",
-    "@openmrs/esm-state": "^3.1.9",
-    "@openmrs/esm-styleguide": "^3.1.9",
+    "@openmrs/esm-framework": "^3.1.9",
     "carbon-components": "^10.19.0",
     "carbon-icons": "^7.0.7",
+    "dayjs": "^1.10.4",
     "i18next": "^19.6.0",
     "i18next-browser-languagedetector": "^4.3.1",
     "i18next-http-backend": "^1.0.21",
