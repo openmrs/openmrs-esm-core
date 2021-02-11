@@ -33,6 +33,9 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "ramda": "^0.26.1",
     "systemjs-webpack-interop": "^2.1.2"
@@ -48,8 +51,5 @@
     "@types/systemjs": "^6.1.0",
     "babel-plugin-ramda": "^2.0.0",
     "single-spa": "^4.4.1"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

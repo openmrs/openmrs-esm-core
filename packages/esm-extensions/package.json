@@ -31,11 +31,15 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "path-to-regexp": "6.1.0",
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
+    "@openmrs/esm-api": "3.x",
     "@openmrs/esm-config": "3.x",
     "@openmrs/esm-state": "3.x",
     "single-spa": "4.x"
@@ -45,8 +49,5 @@
     "@openmrs/esm-config": "^3.1.9",
     "@openmrs/esm-state": "^3.1.9",
     "single-spa": "^4.4.1"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

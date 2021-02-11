@@ -1,5 +1,8 @@
 import React from "react";
-import { Breadcrumb, BreadcrumbItem } from "carbon-components-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+} from "carbon-components-react/es/components/Breadcrumb";
 import { getBreadcrumbsFor } from "@openmrs/esm-api";
 import { ConfigurableLink } from "@openmrs/esm-react-utils";
 

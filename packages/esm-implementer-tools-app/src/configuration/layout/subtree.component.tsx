@@ -4,7 +4,7 @@ import {
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-} from "carbon-components-react";
+} from "carbon-components-react/es/components/StructuredList";
 import styles from "./layout.styles.css";
 
 export interface SubtreeProps {

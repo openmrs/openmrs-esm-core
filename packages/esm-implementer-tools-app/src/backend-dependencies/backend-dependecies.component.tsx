@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import style from "./backend-dependencies-style.css";
-import {
-  DataTable,
+import DataTable, {
   Table,
   TableHead,
   TableRow,
@@ -9,7 +8,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-} from "carbon-components-react";
+} from "carbon-components-react/es/components/DataTable";
 import {
   FrontendModule,
   ModuleDiagnosticsProps,

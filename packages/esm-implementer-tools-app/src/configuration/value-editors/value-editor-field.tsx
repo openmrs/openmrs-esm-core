@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Checkbox, NumberInput, TextInput } from "carbon-components-react";
 import uniqueId from "lodash-es/uniqueId";
+import Checkbox from "carbon-components-react/es/components/Checkbox";
+import NumberInput from "carbon-components-react/es/components/NumberInput";
+import TextInput from "carbon-components-react/es/components/TextInput";
 import { Type } from "@openmrs/esm-config";
 import { ConfigValueDescriptor } from "../editable-value.component";
 import { ValueType } from "../value-editor";
@@ -13,7 +15,7 @@ import { ExtensionSlotOrder } from "./extension-slot-order";
 
 export interface ValueEditorFieldProps {
   element: ConfigValueDescriptor;
-  path?: String[];
+  path?: Array<string>;
   valueType?: ValueType;
   value: any;
   onChange: (value: any) => void;

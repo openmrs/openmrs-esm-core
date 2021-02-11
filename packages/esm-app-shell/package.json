@@ -26,6 +26,9 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@openmrs/esm-api": "^3.1.9",
     "@openmrs/esm-config": "^3.1.9",
@@ -52,8 +55,5 @@
   "devDependencies": {
     "@types/systemjs": "^6.1.0",
     "css-modules-typescript-loader": "^4.0.1"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
