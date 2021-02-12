@@ -1,14 +1,8 @@
 import React from "react";
 
-export const ExtensionContext = React.createContext({
-  extensionSlotName: "",
-  extensionId: "",
-  extensionModuleName: "",
-});
+export const ComponentContext = React.createContext(null);
 
-export const ModuleNameContext = React.createContext(null);
-
-export const openmrsRootDecorator = jest
+export const openmrsComponentDecorator = jest
   .fn()
   .mockImplementation(() => (component) => component);
 

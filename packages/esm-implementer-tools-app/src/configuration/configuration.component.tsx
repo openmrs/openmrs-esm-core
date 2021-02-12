@@ -66,7 +66,7 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
             </Column>
             <Column sm={1} md={1} className={styles.actionButton}>
               <Toggle
-                id={"uiEditorSwitch"}
+                id="uiEditorSwitch"
                 labelText="UI Editor"
                 toggled={isUIEditorEnabled}
                 onToggle={toggleIsUIEditorEnabled}

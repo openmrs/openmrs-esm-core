@@ -675,9 +675,12 @@ function runValidators(
 // Recursively fill in the config with values from the schema.
 const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   const config = clone(inputConfig);
+  console.log('input config', inputConfig);
   const devDefaultsAreOn = configInternalStore.getState().devDefaultsAreOn;
+  console.log('devdefaults', devDefaultsAreOn);
 
   for (const key of Object.keys(schema)) {
+    try {
     const schemaPart = schema[key] as ConfigSchema;
     // The `schemaPart &&` clause of this `if` statement will only fail
     // if the schema is very invalid. It is there to prevent the app from
@@ -719,6 +722,9 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
         config[key] = setDefaults(schemaPart, configPart);
       }
     }
+  } catch (err) {
+    console.log('Found the bug ...', err);
+  }
   }
   return config;
 };

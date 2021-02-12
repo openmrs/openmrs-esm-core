@@ -24,3 +24,8 @@ export function getAsyncLifecycle<T>(
   return () =>
     lazy().then(({ default: Component }) => getLifecycle(Component, options));
 }
+
+/**
+ * @deprecated Use getAsyncLifecycle instead.
+ */
+export const getAsyncExtensionLifecycle = getAsyncLifecycle;

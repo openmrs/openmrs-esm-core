@@ -24,7 +24,7 @@ describe("openmrs-component-decorator", () => {
     // TO-DO assert the UX for broken react app is showing
   });
 
-  it("provides ModuleNameContext", () => {
+  it("provides ComponentContext", () => {
     const DecoratedComp = openmrsComponentDecorator(opts)(CompWithConfig);
     render(<DecoratedComp />);
   });

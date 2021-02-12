@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Close16 from "@carbon/icons-react/es/close/16";
+import Button from "carbon-components-react/es/components/Button";
+import ContentSwitcher from "carbon-components-react/es/components/ContentSwitcher";
+import Switch from "carbon-components-react/es/components/Switch";
 import styles from "./popup.styles.css";
-import { Button, ContentSwitcher, Switch } from "carbon-components-react";
 import { Configuration } from "../configuration/configuration.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependecies.component";
 import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-dependencies";
+
+interface DevToolsPopupProps {
+  close(): void;
+  setHasAlert(value: boolean): void;
+  modulesWithMissingBackendModules: Array<MissingBackendModules>;
+  modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
+  visibleTabIndex?: number;
+}
 
 export default function Popup(props: DevToolsPopupProps) {
   const [configHasAlert, setConfigHasAlert] = useState(false);
@@ -67,11 +77,3 @@ export default function Popup(props: DevToolsPopupProps) {
     </div>
   );
 }
-
-type DevToolsPopupProps = {
-  close(): void;
-  setHasAlert(value: boolean): void;
-  modulesWithMissingBackendModules: Array<MissingBackendModules>;
-  modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
-  visibleTabIndex?: number;
-};

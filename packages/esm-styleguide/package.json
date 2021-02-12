@@ -37,8 +37,7 @@
     "access": "public"
   },
   "dependencies": {
-    "carbon-components-react": "^7.22.0",
-    "kremling": "^2.0.1",
+    "carbon-components-react": "^7.25.0",
     "lodash-es": "^4.17.15",
     "systemjs-webpack-interop": "^2.1.2"
   },
