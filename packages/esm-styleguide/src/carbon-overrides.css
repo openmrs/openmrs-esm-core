@@ -1,3 +1,45 @@
-.bx--data-table td {
+.bx--data-table,
+.bx--data-table-header,
+.bx--table-toolbar,
+.bx--data-table tbody,
+.bx--data-table tbody td {
+  background: transparent;
+}
+
+.bx--data-table-container {
   background: white;
+  position: relative;
+}
+
+.bx--table-toolbar {
+  position: absolute;
+  top: 2px;
+}
+
+.bx--data-table-header {
+  padding: 0.75rem;
+}
+
+.bx--data-table-header::after {
+  content: "";
+  display: block;
+  width: 2rem;
+  padding-top: 0.188rem;
+  border-bottom: 0.375rem solid #007d79;
+}
+
+.bx--data-table-header__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #525252;
+}
+
+.bx--data-table thead,
+.bx--data-table tr,
+.bx--data-table td,
+.bx--data-table--sort th,
+.bx--data-table--sort th .bx--table-sort__flex {
+  height: 2rem;
+  min-height: unset;
+  color: #525252;
 }
