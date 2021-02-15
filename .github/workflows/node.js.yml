@@ -146,6 +146,27 @@ jobs:
           data: '{ "service":"${{ env.ESM_NAME }}","url":"https://spa-modules.nyc3.digitaloceanspaces.com/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/${{ env.JS_NAME }}" }'
           customHeaders: '{ "Accept": "application/json", "Content-Type": "application/json" }'
 
+  pre_release:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    if: ${{ github.event_name == 'push' }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npx lerna bootstrap
+      - run: npx lerna run build
+      - run: npm run ci:prerelease
+      - run: npm run ci:prepublish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
   release:
     runs-on: ubuntu-latest
 
@@ -159,7 +180,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "14.x"
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
       - run: npx lerna bootstrap
       - run: npx lerna run build
       - run: npm run ci:publish
