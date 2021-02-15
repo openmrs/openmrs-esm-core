@@ -15,7 +15,7 @@
     "ci:publish": "lerna publish from-package --yes",
     "ci:prepublish": "lerna publish from-package --no-git-reset --yes --dist-tag next",
     "ci:release": "lerna version --no-git-tag-version",
-    "ci:prerelease": "lerna version prerelease --no-git-tag-version",
+    "ci:prerelease": "lerna version prerelease --no-git-tag-version --yes",
     "verify": "lerna run lint && lerna run test && lerna run typescript",
     "prettier": "prettier \"packages/**/src/**/*\" --write"
   },
