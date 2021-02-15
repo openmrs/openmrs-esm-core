@@ -163,6 +163,7 @@ jobs:
       - run: npx lerna bootstrap
       - run: npx lerna run build
       - run: npm run ci:prerelease
+      - run: git add . && git commit -m "Prerelease version" --no-verify
       - run: npm run ci:prepublish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
