@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-app-shell",
-  "version": "3.1.9",
+  "version": "3.1.10",
   "license": "MPL-2.0",
   "main": "dist/openmrs.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@openmrs/esm-framework": "^3.1.9",
+    "@openmrs/esm-framework": "^3.1.10",
     "carbon-components": "^10.19.0",
     "carbon-icons": "^7.0.7",
     "dayjs": "^1.10.4",
