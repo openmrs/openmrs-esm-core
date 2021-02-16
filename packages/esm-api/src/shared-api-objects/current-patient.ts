@@ -2,6 +2,8 @@ import { ReplaySubject, Observable } from "rxjs";
 import { fhir } from "../fhir";
 import { mergeAll, filter, map } from "rxjs/operators";
 import { FetchResponse } from "../types";
+import { openmrsFetch } from "../openmrs-fetch";
+import { getConfig } from "@openmrs/esm-config";
 
 let currentPatientUuid: string;
 const currentPatientUuidSubject = new ReplaySubject<PatientUuid>(1);
@@ -30,6 +32,29 @@ window.addEventListener("single-spa:routing-event", () => {
 function getPatientUuidFromUrl() {
   const match = /\/patient\/([a-zA-Z0-9\-]+)\/?/.exec(location.pathname);
   return match && match[1];
+}
+
+export async function fetchPatientPhotoUrl(
+  patientUuid: string,
+  abortController: AbortController
+): Promise<PhotoUrl> {
+  const { concepts } = await getConfig("@openmrs/esm-patient-registration-app");
+  if (concepts && concepts.patientPhotoUuid) {
+    const { data } = await openmrsFetch(
+      `/ws/rest/v1/obs?patient=${patientUuid}&concept=${concepts.patientPhotoUuid}&v=full`,
+      {
+        method: "GET",
+        signal: abortController.signal,
+      }
+    );
+    if (data.results.length) {
+      return data.results[0].value.links.uri;
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
 }
 
 function getCurrentPatient(): Observable<fhir.Patient>;
@@ -73,3 +98,4 @@ interface OnlyThePatient extends CurrentPatientOptions {
 }
 
 export type PatientUuid = string | null;
+export type PhotoUrl = string | null;

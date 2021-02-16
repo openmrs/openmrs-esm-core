@@ -40,6 +40,7 @@ module.exports = {
   devServer: {
     compress: true,
     open: true,
+    publicPath: openmrsPublicPath,
     openPage: `${openmrsPublicPath}/`.substr(1),
     historyApiFallback: {
       rewrites: [
