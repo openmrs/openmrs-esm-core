@@ -10,7 +10,7 @@ const { peerDependencies } = require("./package.json");
 module.exports = {
   entry: [
     resolve(__dirname, "src/set-public-path.js"),
-    resolve(__dirname, "src/index.js"),
+    resolve(__dirname, "src/index.ts"),
   ],
   output: {
     libraryTarget: "system",
