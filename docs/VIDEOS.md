@@ -16,6 +16,7 @@ These are videos below 5 minutes showing small dedicated things.
 - [Breadcrumbs](https://youtu.be/Rq4QGSF9r2M)
 - [Extensions](https://youtu.be/crdEL91oBGs)
 - [Internationalization](https://youtu.be/1pLUi47BIBo)
+- [How to see UX & component guidance in Zeplin designs](https://www.youtube.com/watch?v=SjluEGDH4LU&feature=youtu.be&ab_channel=OpenMRS)
 
 ## Tutorials
 

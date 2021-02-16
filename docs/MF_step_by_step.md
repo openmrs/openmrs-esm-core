@@ -16,4 +16,3 @@
 - make sure you are using a relatively recent version of node, LTE is 14.x.x, you can type node -version to find your current version.
 - I would recommend using n to manage your node version: see https://www.npmjs.com/package/n
 
-8. 
