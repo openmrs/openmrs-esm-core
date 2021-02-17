@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode, useRef } from "react";
 import { getExtensionRegistration } from "@openmrs/esm-extensions";
-import { ExtensionContext } from "./ExtensionContext";
+import { ComponentContext } from "./ComponentContext";
 import { Extension } from "./Extension";
 import { useExtensionSlot } from "./useExtensionSlot";
 
@@ -36,18 +36,20 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
         return (
           attachedExtensionSlotName &&
           extensionRegistration && (
-            <ExtensionContext.Provider
+            <ComponentContext.Provider
               key={extensionId}
               value={{
-                actualExtensionSlotName,
-                attachedExtensionSlotName,
-                extensionSlotModuleName,
-                extensionId,
-                extensionModuleName: extensionRegistration.moduleName,
+                moduleName: extensionRegistration.moduleName,
+                extension: {
+                  actualExtensionSlotName,
+                  attachedExtensionSlotName,
+                  extensionSlotModuleName,
+                  extensionId,
+                },
               }}
             >
               {children ?? <Extension state={state} />}
-            </ExtensionContext.Provider>
+            </ComponentContext.Provider>
           )
         );
       })}

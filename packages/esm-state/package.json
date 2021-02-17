@@ -32,11 +32,11 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "systemjs-webpack-interop": "^2.1.2",
     "unistore": "^3.5.2"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

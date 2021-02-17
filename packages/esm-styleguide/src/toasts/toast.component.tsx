@@ -1,5 +1,4 @@
 import React from "react";
-import { maybe } from "kremling";
 import { InlineNotification } from "carbon-components-react/es/components/Notification";
 
 const defaultOptions = {
@@ -52,21 +51,18 @@ export const Toast: React.FC<ToastProps> = ({
   }, [waitingForTime]);
 
   React.useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsMounting(false);
-    }, 20);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
+    const timeoutId = setTimeout(() => setIsMounting(false), 20);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
     <div
-      className={maybe("omrs-toast-closing", isClosing).maybe(
-        "omrs-toast-mounting",
-        isMounting
-      )}
+      className={[
+        isClosing && "omrs-toast-closing",
+        isMounting && "omrs-toast-mounting",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       onMouseEnter={() => setWaitingForTime(false)}
       onMouseLeave={() => setWaitingForTime(true)}
     >

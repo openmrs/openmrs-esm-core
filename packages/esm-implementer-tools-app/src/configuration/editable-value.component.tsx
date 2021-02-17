@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import isEqual from "lodash-es/isEqual";
 import unset from "lodash-es/unset";
 import cloneDeep from "lodash-es/cloneDeep";
-import { Reset16 } from "@carbon/icons-react";
+import Reset16 from "@carbon/icons-react/es/reset/16";
+import Button from "carbon-components-react/es/components/Button";
+import styles from "./editable-value.styles.css";
 import {
   ConfigValue,
   Validator,
@@ -10,14 +12,12 @@ import {
   Config,
   temporaryConfigStore,
 } from "@openmrs/esm-config";
-import styles from "./editable-value.styles.css";
 import { ValueEditor, CustomValueType } from "./value-editor";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
-import { Button } from "carbon-components-react";
 import { DisplayValue } from "./display-value";
 
 export interface EditableValueProps {
-  path: string[];
+  path: Array<string>;
   element: ConfigValueDescriptor;
   customType?: CustomValueType;
 }

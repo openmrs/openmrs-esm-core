@@ -33,6 +33,9 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "lodash-es": "^4.17.20",
     "single-spa-react": "^2.13.0",
@@ -45,6 +48,7 @@
     "@openmrs/esm-extensions": "3.x",
     "i18next": "19.x",
     "react": "16.x",
+    "react-dom": "16.x",
     "react-i18next": "11.x"
   },
   "devDependencies": {
@@ -57,9 +61,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.7.0",
-    "rxjs": "^6.5.3"
-  },
-  "publishConfig": {
-    "access": "public"
+    "rxjs": "^6.5.3",
+    "unistore": "^3.5.2"
   }
 }

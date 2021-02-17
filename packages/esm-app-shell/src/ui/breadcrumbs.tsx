@@ -1,7 +1,9 @@
 import React from "react";
-import { Breadcrumb, BreadcrumbItem } from "carbon-components-react";
-import { getBreadcrumbsFor } from "@openmrs/esm-api";
-import { ConfigurableLink } from "@openmrs/esm-react-utils";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+} from "carbon-components-react/es/components/Breadcrumb";
+import { getBreadcrumbsFor, ConfigurableLink } from "@openmrs/esm-framework";
 
 function getPath(path: string, params: Array<string>) {
   const parts = [...params];

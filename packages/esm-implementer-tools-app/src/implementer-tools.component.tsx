@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Provider } from "unistore/react";
 import { UserHasAccess, useStore } from "@openmrs/esm-react-utils";
+import { showToast } from "@openmrs/esm-styleguide";
 import Popup from "./popup/popup.component";
 import styles from "./implementer-tools.styles.css";
-import { showToast } from "@openmrs/esm-styleguide";
 import {
   checkModules,
   MissingBackendModules,
 } from "./backend-dependencies/openmrs-backend-dependencies";
-import { NotificationActionButton } from "carbon-components-react/lib/components/Notification";
+import { NotificationActionButton } from "carbon-components-react/es/components/Notification";
 import { UiEditor } from "./ui-editor/ui-editor";
 import { implementerToolsStore } from "./store";
 

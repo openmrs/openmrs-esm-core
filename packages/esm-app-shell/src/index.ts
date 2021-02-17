@@ -1,4 +1,4 @@
-import "./style";
+import "./style.css";
 import type { SpaConfig } from "./types";
 
 declare var __webpack_public_path__: string;

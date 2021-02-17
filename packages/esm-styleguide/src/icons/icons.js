@@ -1,4 +1,3 @@
-import "./icons.css";
 import iconVisibility from "./svgs/visibility_24px_rounded.svg";
 import iconMenu from "./svgs/menu_24px_rounded.svg";
 import iconSearch from "./svgs/search_24px_rounded.svg";

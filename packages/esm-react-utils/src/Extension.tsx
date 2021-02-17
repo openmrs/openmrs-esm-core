@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { renderExtension } from "@openmrs/esm-extensions";
-import { ExtensionContext } from "./ExtensionContext";
+import { ComponentContext } from "./ComponentContext";
 
 export interface ExtensionProps {
   state?: Record<string, any>;
@@ -16,33 +16,21 @@ export interface ExtensionProps {
  */
 export const Extension: React.FC<ExtensionProps> = ({ state }) => {
   const ref = React.useRef<HTMLSlotElement>(null);
-  const {
-    actualExtensionSlotName,
-    attachedExtensionSlotName,
-    extensionSlotModuleName,
-    extensionId,
-  } = useContext(ExtensionContext);
-  // TODO: handle error if Extension not wrapped in ExtensionSlot
+  const { extension } = useContext(ComponentContext);
 
   React.useEffect(() => {
-    if (ref.current) {
+    if (ref.current && extension) {
       return renderExtension(
         ref.current,
-        actualExtensionSlotName,
-        attachedExtensionSlotName,
-        extensionSlotModuleName,
-        extensionId,
+        extension.actualExtensionSlotName,
+        extension.attachedExtensionSlotName,
+        extension.extensionSlotModuleName,
+        extension.extensionId,
         undefined,
         state
       );
     }
-  }, [
-    actualExtensionSlotName,
-    attachedExtensionSlotName,
-    extensionSlotModuleName,
-    extensionId,
-    ref.current,
-  ]);
+  }, [extension, ref.current]);
 
   return (
     // The extension is rendered into the `<slot>`. It is surrounded by a

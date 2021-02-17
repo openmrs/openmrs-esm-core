@@ -1,4 +1,4 @@
-import { getAsyncExtensionLifecycle } from "@openmrs/esm-react-utils";
+import { getAsyncLifecycle } from "@openmrs/esm-react-utils";
 
 export const appName = "@openmrs/esm-app-shell";
 
@@ -12,7 +12,7 @@ export function getCoreExtensions() {
     {
       id: "breadcrumbs-widget",
       slot: "breadcrumbs",
-      load: getAsyncExtensionLifecycle(() => import("./breadcrumbs"), options),
+      load: getAsyncLifecycle(() => import("./breadcrumbs"), options),
     },
   ];
 }

@@ -1,6 +1,9 @@
 const { resolve } = require("path");
+
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 const { peerDependencies } = require("./package.json");
 
@@ -60,6 +63,11 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({ filename: "openmrs-esm-styleguide.css" }),
+    new MiniCssExtractPlugin({
+      filename: "openmrs-esm-styleguide.css",
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: "static",
+    }),
   ],
 };

@@ -2,6 +2,8 @@ const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 const { DefinePlugin } = require("webpack");
 const { resolve } = require("path");
@@ -40,6 +42,7 @@ module.exports = {
   devServer: {
     compress: true,
     open: true,
+    publicPath: openmrsPublicPath,
     openPage: `${openmrsPublicPath}/`.substr(1),
     historyApiFallback: {
       rewrites: [
@@ -130,9 +133,14 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [{ from: resolve(__dirname, "src/assets") }],
     }),
-    new MiniCssExtractPlugin({ filename: "openmrs.css" }),
+    new MiniCssExtractPlugin({
+      filename: "openmrs.css",
+    }),
     new DefinePlugin({
       "process.env.BUILD_VERSION": JSON.stringify(`${version}-${timestamp}`),
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: "static",
     }),
   ],
 };

@@ -9,9 +9,8 @@ import {
   ConfigInternalStore,
 } from "@openmrs/esm-config";
 import { MockedStore } from "../__mocks__/openmrs-esm-state.mock";
-import { ModuleNameContext } from "./ModuleNameContext";
 import { useConfig } from "./useConfig";
-import { ExtensionContext } from "./ExtensionContext";
+import { ComponentContext } from "./ComponentContext";
 
 const mockConfigInternalStore = configInternalStore as MockedStore<
   ConfigInternalStore
@@ -41,9 +40,9 @@ describe(`useConfig in root context`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ModuleNameContext.Provider value="foo-module">
+        <ComponentContext.Provider value={{ moduleName: "foo-module" }}>
           <RenderConfig configKey="thing" />
-        </ModuleNameContext.Provider>
+        </ComponentContext.Provider>
       </React.Suspense>
     );
 
@@ -67,9 +66,9 @@ describe(`useConfig in root context`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ModuleNameContext.Provider value="foo-module">
+        <ComponentContext.Provider value={{ moduleName: "foo-module" }}>
           <RenderConfig configKey="thing" />
-        </ModuleNameContext.Provider>
+        </ComponentContext.Provider>
       </React.Suspense>
     );
 
@@ -79,9 +78,9 @@ describe(`useConfig in root context`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ModuleNameContext.Provider value="bar-module">
+        <ComponentContext.Provider value={{ moduleName: "bar-module" }}>
           <RenderConfig configKey="thing" />
-        </ModuleNameContext.Provider>
+        </ComponentContext.Provider>
       </React.Suspense>
     );
 
@@ -97,9 +96,9 @@ describe(`useConfig in root context`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ModuleNameContext.Provider value="foo-module">
+        <ComponentContext.Provider value={{ moduleName: "foo-module" }}>
           <RenderConfig configKey="thing" />
-        </ModuleNameContext.Provider>
+        </ComponentContext.Provider>
       </React.Suspense>
     );
 
@@ -128,17 +127,20 @@ describe(`useConfig in an extension`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ExtensionContext.Provider
+        <ComponentContext.Provider
           value={{
-            extensionModuleName: "ext-module",
-            actualExtensionSlotName: "fooSlot",
-            attachedExtensionSlotName: "fooSlot",
-            extensionSlotModuleName: "slot-mod",
-            extensionId: "barExt#id1",
+            moduleName: "",
+            extension: {
+              extensionModuleName: "ext-module",
+              actualExtensionSlotName: "fooSlot",
+              attachedExtensionSlotName: "fooSlot",
+              extensionSlotModuleName: "slot-mod",
+              extensionId: "barExt#id1",
+            },
           }}
         >
           <RenderConfig configKey="thing" />
-        </ExtensionContext.Provider>
+        </ComponentContext.Provider>
       </React.Suspense>
     );
 
@@ -160,28 +162,34 @@ describe(`useConfig in an extension`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ExtensionContext.Provider
+        <ComponentContext.Provider
           value={{
-            actualExtensionSlotName: "fooSlot",
-            attachedExtensionSlotName: "fooSlot",
-            extensionSlotModuleName: "slot-mod",
-            extensionModuleName: "first-module",
-            extensionId: "fooExt#id1",
+            moduleName: "",
+            extension: {
+              actualExtensionSlotName: "fooSlot",
+              attachedExtensionSlotName: "fooSlot",
+              extensionSlotModuleName: "slot-mod",
+              extensionModuleName: "first-module",
+              extensionId: "fooExt#id1",
+            },
           }}
         >
           <RenderConfig configKey="thing" />
-        </ExtensionContext.Provider>
-        <ExtensionContext.Provider
+        </ComponentContext.Provider>
+        <ComponentContext.Provider
           value={{
-            actualExtensionSlotName: "fooSlot",
-            attachedExtensionSlotName: "fooSlot",
-            extensionSlotModuleName: "slot-mod",
-            extensionModuleName: "second-module",
-            extensionId: "barExt",
+            moduleName: "",
+            extension: {
+              actualExtensionSlotName: "fooSlot",
+              attachedExtensionSlotName: "fooSlot",
+              extensionSlotModuleName: "slot-mod",
+              extensionModuleName: "second-module",
+              extensionId: "barExt",
+            },
           }}
         >
           <RenderConfig configKey="thing" />
-        </ExtensionContext.Provider>
+        </ComponentContext.Provider>
       </React.Suspense>
     );
 
@@ -210,28 +218,34 @@ describe(`useConfig in an extension`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ExtensionContext.Provider
+        <ComponentContext.Provider
           value={{
-            actualExtensionSlotName: "slot1",
-            attachedExtensionSlotName: "slot1",
-            extensionSlotModuleName: "slot-1-module",
-            extensionModuleName: "extension-module",
-            extensionId: "fooExt",
+            moduleName: "",
+            extension: {
+              actualExtensionSlotName: "slot1",
+              attachedExtensionSlotName: "slot1",
+              extensionSlotModuleName: "slot-1-module",
+              extensionModuleName: "extension-module",
+              extensionId: "fooExt",
+            },
           }}
         >
           <RenderConfig configKey="thing" />
-        </ExtensionContext.Provider>
-        <ExtensionContext.Provider
+        </ComponentContext.Provider>
+        <ComponentContext.Provider
           value={{
-            actualExtensionSlotName: "slot2",
-            attachedExtensionSlotName: "slot2",
-            extensionSlotModuleName: "slot-2-module",
-            extensionModuleName: "extension-module",
-            extensionId: "fooExt",
+            moduleName: "",
+            extension: {
+              actualExtensionSlotName: "slot2",
+              attachedExtensionSlotName: "slot2",
+              extensionSlotModuleName: "slot-2-module",
+              extensionModuleName: "extension-module",
+              extensionId: "fooExt",
+            },
           }}
         >
           <RenderConfig configKey="thing" />
-        </ExtensionContext.Provider>
+        </ComponentContext.Provider>
       </React.Suspense>
     );
 
@@ -252,17 +266,20 @@ describe(`useConfig in an extension`, () => {
 
     render(
       <React.Suspense fallback={<div>Suspense!</div>}>
-        <ExtensionContext.Provider
+        <ComponentContext.Provider
           value={{
-            actualExtensionSlotName: "fooSlot",
-            attachedExtensionSlotName: "fooSlot",
-            extensionSlotModuleName: "slot-module",
-            extensionModuleName: "ext-module",
-            extensionId: "barExt#id1",
+            moduleName: "",
+            extension: {
+              actualExtensionSlotName: "fooSlot",
+              attachedExtensionSlotName: "fooSlot",
+              extensionSlotModuleName: "slot-module",
+              extensionModuleName: "ext-module",
+              extensionId: "barExt#id1",
+            },
           }}
         >
           <RenderConfig configKey="thing" />
-        </ExtensionContext.Provider>
+        </ComponentContext.Provider>
       </React.Suspense>
     );
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Button, ButtonSet } from "carbon-components-react";
-import { Close16, Save16 } from "@carbon/icons-react";
+import Close16 from "@carbon/icons-react/es/close/16";
+import Save16 from "@carbon/icons-react/es/save/16";
+import Button from "carbon-components-react/es/components/Button";
+import { Type } from "@openmrs/esm-config";
 import { ConfigValueDescriptor } from "./editable-value.component";
 import { ValueEditorField } from "./value-editors/value-editor-field";
 import styles from "./configuration.styles.css";
-import { Type } from "@openmrs/esm-config";
 
 export type CustomValueType = "add" | "remove" | "order" | "configure";
 
@@ -13,7 +14,7 @@ export type ValueType = CustomValueType | Type;
 interface ValueEditorProps {
   element: ConfigValueDescriptor;
   customType?: CustomValueType;
-  path: String[];
+  path: Array<string>;
   handleSave: (val: string) => void;
   handleClose: () => void;
 }

@@ -440,7 +440,7 @@ function validateExtensionSlotConfig(
   }
 }
 
-function getProvidedConfigs(): Config[] {
+function getProvidedConfigs(): Array<Config> {
   const state = configInternalStore.getState();
   return [
     ...state.providedConfigs.map((c) => c.config),
@@ -543,7 +543,7 @@ function getConfigForModule(moduleName: string): ConfigObject {
 
 function mergeConfigsFor(
   moduleName: string,
-  allConfigs: Config[]
+  allConfigs: Array<Config>
 ): ConfigObject {
   const allConfigsForModule = map(prop(moduleName), allConfigs).filter(
     (item) => item !== undefined && item !== null
@@ -552,7 +552,7 @@ function mergeConfigsFor(
   return mergeConfigs(allConfigsForModule);
 }
 
-function mergeConfigs(configs: Config[]) {
+function mergeConfigs(configs: Array<Config>) {
   const mergeDeepAll = reduce(mergeDeepRight, {});
   return mergeDeepAll(configs);
 }
@@ -563,7 +563,7 @@ function mergeConfigs(configs: Config[]) {
 const validateConfig = (
   schema: ConfigSchema,
   config: ConfigObject,
-  keyPath: string = ""
+  keyPath = ""
 ) => {
   for (const key of Object.keys(config)) {
     const value = config[key];
@@ -624,6 +624,7 @@ function validateArray(
       validateConfig(arraySchema._elements, value[i], `${keyPath}[${i}]`);
     }
   }
+
   for (let i = 0; i < value.length; i++) {
     checkType(`${keyPath}[${i}]`, arraySchema._elements?._type, value[i]);
     runValidators(
@@ -651,13 +652,14 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
 
 function runValidators(
   keyPath: string,
-  validators: Function[] | undefined,
+  validators: Array<Function> | undefined,
   value: any
 ) {
   if (validators) {
     try {
       for (let validator of validators) {
         const validatorResult = validator(value);
+
         if (typeof validatorResult === "string") {
           const valueString =
             typeof value === "object" ? JSON.stringify(value) : value;
@@ -667,7 +669,7 @@ function runValidators(
         }
       }
     } catch (e) {
-      console.error("Skipping invalid validator at " + keyPath);
+      console.error(`Skipping invalid validator at "${keyPath}".`);
     }
   }
 }
@@ -677,8 +679,14 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   const config = clone(inputConfig);
   const devDefaultsAreOn = configInternalStore.getState().devDefaultsAreOn;
 
+  if (!schema) {
+    return config;
+  }
+
   for (const key of Object.keys(schema)) {
+    const configPart = config[key];
     const schemaPart = schema[key] as ConfigSchema;
+
     // The `schemaPart &&` clause of this `if` statement will only fail
     // if the schema is very invalid. It is there to prevent the app from
     // crashing completely, though it will produce unexpected behavior.
@@ -689,23 +697,26 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
       // a property `_default`.
       if (!config.hasOwnProperty(key)) {
         const devDefault = schemaPart["_devDefault"] || schemaPart["_default"];
+
         (config[key] as any) = devDefaultsAreOn
           ? devDefault
           : schemaPart["_default"];
       }
+
       // We also check if it is an object or array with object elements, in which case we recurse
       const elements = schemaPart._elements;
-      if (hasObjectSchema(elements)) {
-        if (schemaPart._type == Type.Array) {
-          const configWithDefaults = config[key].map((conf: Config) =>
+
+      if (configPart && hasObjectSchema(elements)) {
+        if (schemaPart._type === Type.Array) {
+          const configWithDefaults = configPart.map((conf: Config) =>
             setDefaults(elements, conf)
           );
           config[key] = configWithDefaults;
-        } else if (schemaPart._type == Type.Object) {
-          for (let objectKey of Object.keys(config[key])) {
-            config[key][objectKey] = setDefaults(
+        } else if (schemaPart._type === Type.Object) {
+          for (let objectKey of Object.keys(configPart)) {
+            configPart[objectKey] = setDefaults(
               elements,
-              config[key][objectKey]
+              configPart[objectKey]
             );
           }
         }
@@ -714,12 +725,14 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
       // Since schemaPart has no property "_default", if it's an ordinary object
       // (unlike, importantly, the validators array), we assume it is a parent config property.
       // We recurse to config[key] and schema[key]. Default config[key] to {}.
-      const configPart = config.hasOwnProperty(key) ? config[key] : {};
-      if (isOrdinaryObject(configPart)) {
-        config[key] = setDefaults(schemaPart, configPart);
+      const selectedConfigPart = config.hasOwnProperty(key) ? configPart : {};
+
+      if (isOrdinaryObject(selectedConfigPart)) {
+        config[key] = setDefaults(schemaPart, selectedConfigPart);
       }
     }
   }
+
   return config;
 };
 
@@ -727,7 +740,7 @@ function hasObjectSchema(
   elementsSchema: Object | undefined
 ): elementsSchema is ConfigSchema {
   return (
-    elementsSchema != null &&
+    !!elementsSchema &&
     Object.keys(elementsSchema).filter(
       (e) => !["_default", "_validators"].includes(e)
     ).length > 0

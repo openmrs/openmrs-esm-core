@@ -2,7 +2,7 @@ import {
   attach,
   PageDefinition,
   registerExtension,
-} from "@openmrs/esm-extensions";
+} from "@openmrs/esm-framework";
 import { registerApplication } from "single-spa";
 import { routePrefix, routeRegex } from "./helpers";
 import type { Activator, ActivatorDefinition } from "./types";

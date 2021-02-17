@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import TrashCan16 from "@carbon/icons-react/es/trash-can/16";
+import Download16 from "@carbon/icons-react/es/download/16";
+import Button from "carbon-components-react/es/components/Button";
+import Toggle from "carbon-components-react/es/components/Toggle";
+import styles from "./configuration.styles.css";
 import {
   ConfigInternalStore,
   configInternalStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
 } from "@openmrs/esm-config";
-import { Button, Column, Grid, Row, Toggle } from "carbon-components-react";
-import { Download16, TrashCan16 } from "@carbon/icons-react";
-import styles from "./configuration.styles.css";
-import { ConfigTree } from "./config-tree.component";
-import { implementerToolsStore, ImplementerToolsStore } from "../store";
-import { Description } from "./description.component";
 import { useStore } from "@openmrs/esm-react-utils";
+import { Column, Grid, Row } from "carbon-components-react/es/components/Grid";
+import { ConfigTree } from "./config-tree.component";
+import { Description } from "./description.component";
+import { implementerToolsStore, ImplementerToolsStore } from "../store";
 
 export type ConfigurationProps = {
   setHasAlert(value: boolean): void;
@@ -63,7 +66,7 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
             </Column>
             <Column sm={1} md={1} className={styles.actionButton}>
               <Toggle
-                id={"uiEditorSwitch"}
+                id="uiEditorSwitch"
                 labelText="UI Editor"
                 toggled={isUIEditorEnabled}
                 onToggle={toggleIsUIEditorEnabled}

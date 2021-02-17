@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
+import cloneDeep from "lodash-es/cloneDeep";
+import uniqueId from "lodash-es/uniqueId";
+import Add16 from "@carbon/icons-react/es/add/16";
+import TrashCan16 from "@carbon/icons-react/es/trash-can/16";
+import Button from "carbon-components-react/es/components/Button";
+import styles from "./array-editor.styles.css";
+import { Type } from "@openmrs/esm-config";
+import { Tile } from "carbon-components-react/es/components/Tile";
 import {
-  Button,
   StructuredListBody,
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-  Tile,
-} from "carbon-components-react";
-import { Add16, TrashCan16 } from "@carbon/icons-react";
+} from "carbon-components-react/es/components/StructuredList";
 import { ValueEditorField } from "./value-editor-field";
 import { ConfigValueDescriptor } from "../editable-value.component";
-import { Type } from "@openmrs/esm-config";
-import cloneDeep from "lodash-es/cloneDeep";
-import uniqueId from "lodash-es/uniqueId";
-import styles from "./array-editor.styles.css";
 
 interface ArrayEditorProps {
   element: ConfigValueDescriptor;

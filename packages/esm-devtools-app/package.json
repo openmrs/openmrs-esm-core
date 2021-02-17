@@ -34,22 +34,38 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "systemjs-webpack-interop": "^2.0.0"
   },
   "peerDependencies": {
+    "@openmrs/esm-api": "3.x",
+    "@openmrs/esm-config": "3.x",
+    "@openmrs/esm-error-handling": "3.x",
+    "@openmrs/esm-extensions": "3.x",
     "@openmrs/esm-react-utils": "3.x",
-    "react": "16.x"
+    "@openmrs/esm-state": "3.x",
+    "@openmrs/esm-styleguide": "3.x",
+    "carbon-components": "^10.19.0",
+    "carbon-icons": "^7.0.7",
+    "react": "16.x",
+    "react-dom": "16.x",
+    "rxjs": "6.x"
   },
   "devDependencies": {
     "@openmrs/esm-api": "^3.1.9",
     "@openmrs/esm-config": "^3.1.9",
+    "@openmrs/esm-error-handling": "^3.1.9",
+    "@openmrs/esm-extensions": "^3.1.9",
     "@openmrs/esm-react-utils": "^3.1.9",
+    "@openmrs/esm-state": "^3.1.9",
+    "@openmrs/esm-styleguide": "^3.1.9",
+    "carbon-components": "^10.19.0",
+    "carbon-icons": "^7.0.7",
     "identity-obj-proxy": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

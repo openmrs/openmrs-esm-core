@@ -2,46 +2,30 @@ import React from "react";
 import ReactDOM from "react-dom";
 import singleSpaReact from "single-spa-react";
 import {
-  openmrsRootDecorator,
-  RootDecoratorOptions,
-} from "./openmrsRootDecorator";
+  openmrsComponentDecorator,
+  ComponentDecoratorOptions,
+} from "./openmrsComponentDecorator";
 
-export function getRootedLifecycle<T>(
-  Root: React.ComponentType<T>,
-  options: RootDecoratorOptions
+export function getLifecycle<T>(
+  Component: React.ComponentType<T>,
+  options: ComponentDecoratorOptions
 ) {
   return singleSpaReact({
     React,
     ReactDOM,
-    rootComponent: openmrsRootDecorator(options)(Root),
+    rootComponent: openmrsComponentDecorator(options)(Component),
   });
 }
 
 export function getAsyncLifecycle<T>(
-  lazyRoot: () => Promise<{ default: React.ComponentType<T> }>,
-  options: RootDecoratorOptions
+  lazy: () => Promise<{ default: React.ComponentType<T> }>,
+  options: ComponentDecoratorOptions
 ) {
   return () =>
-    lazyRoot().then(({ default: Root }) => getRootedLifecycle(Root, options));
+    lazy().then(({ default: Component }) => getLifecycle(Component, options));
 }
 
-export function getExtensionLifecycle<T>(
-  Root: React.ComponentType<T>,
-  options: RootDecoratorOptions
-) {
-  return singleSpaReact({
-    React,
-    ReactDOM,
-    rootComponent: openmrsRootDecorator(options)(Root),
-  });
-}
-
-export function getAsyncExtensionLifecycle<T>(
-  lazyExtension: () => Promise<{ default: React.ComponentType<T> }>,
-  options: RootDecoratorOptions
-) {
-  return () =>
-    lazyExtension().then(({ default: Root }) =>
-      getExtensionLifecycle(Root, options)
-    );
-}
+/**
+ * @deprecated Use getAsyncLifecycle instead.
+ */
+export const getAsyncExtensionLifecycle = getAsyncLifecycle;

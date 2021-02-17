@@ -5,15 +5,13 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
-const { peerDependencies } = require("./package.json");
-
 module.exports = {
   entry: [
     resolve(__dirname, "src/set-public-path.ts"),
     resolve(__dirname, "src/index.ts"),
   ],
   output: {
-    filename: "openmrs-esm-extensions.js",
+    filename: "openmrs-esm-framework.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
   },
@@ -27,14 +25,13 @@ module.exports = {
       },
       {
         test: /\.m?(js|ts|tsx)$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules|bower_components)/,
         use: "babel-loader",
       },
     ],
   },
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
-    modules: ["node_modules", resolve(__dirname, "node_modules")],
   },
   plugins: [
     new CleanWebpackPlugin(),
@@ -43,7 +40,6 @@ module.exports = {
       analyzerMode: "static",
     }),
   ],
-  externals: Object.keys(peerDependencies),
   devServer: {
     disableHostCheck: true,
     headers: {

@@ -32,6 +32,9 @@
     "url": "https://github.com/openmrs/openmrs-esm-core/issues"
   },
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "fhir.js": "0.0.22",
     "lodash-es": "^4.17.15",
@@ -48,8 +51,5 @@
     "@openmrs/esm-state": "^3.1.9",
     "@types/fhir": "0.0.31",
     "rxjs": "^6.5.3"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

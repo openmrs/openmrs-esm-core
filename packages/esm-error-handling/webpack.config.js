@@ -1,8 +1,11 @@
 const { resolve } = require("path");
+
 const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
-const { peerDependencies } = require('./package.json');
+const { peerDependencies } = require("./package.json");
 
 module.exports = {
   entry: [
@@ -40,7 +43,13 @@ module.exports = {
     disableHostCheck: true,
   },
   externals: Object.keys(peerDependencies),
-  plugins: [new ForkTsCheckerWebpackPlugin(), new CleanWebpackPlugin()],
+  plugins: [
+    new ForkTsCheckerWebpackPlugin(),
+    new CleanWebpackPlugin(),
+    new BundleAnalyzerPlugin({
+      analyzerMode: "static",
+    }),
+  ],
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
   },

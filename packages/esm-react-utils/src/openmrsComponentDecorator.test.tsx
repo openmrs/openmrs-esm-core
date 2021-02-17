@@ -1,9 +1,9 @@
-import React, { ComponentType } from "react";
+import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { openmrsRootDecorator } from "./openmrsRootDecorator";
-import { ModuleNameContext } from "./ModuleNameContext";
+import { openmrsComponentDecorator } from "./openmrsComponentDecorator";
+import { ComponentContext } from "./ComponentContext";
 
-describe("openmrs-react-root-decorator", () => {
+describe("openmrs-component-decorator", () => {
   const opts = {
     featureName: "Test",
     throwErrorsToConsole: false,
@@ -11,7 +11,7 @@ describe("openmrs-react-root-decorator", () => {
   };
 
   it("renders a component", () => {
-    const DecoratedComp = openmrsRootDecorator(opts)(CompThatWorks);
+    const DecoratedComp = openmrsComponentDecorator(opts)(CompThatWorks);
     render(<DecoratedComp />);
     waitFor(() => {
       expect(screen.getByText("The button")).toBeTruthy();
@@ -19,13 +19,13 @@ describe("openmrs-react-root-decorator", () => {
   });
 
   it("catches any errors in the component tree and renders a ui explaining something bad happened", () => {
-    const DecoratedComp = openmrsRootDecorator(opts)(CompThatThrows);
+    const DecoratedComp = openmrsComponentDecorator(opts)(CompThatThrows);
     render(<DecoratedComp />);
     // TO-DO assert the UX for broken react app is showing
   });
 
-  it("provides ModuleNameContext", () => {
-    const DecoratedComp = openmrsRootDecorator(opts)(CompWithConfig);
+  it("provides ComponentContext", () => {
+    const DecoratedComp = openmrsComponentDecorator(opts)(CompWithConfig);
     render(<DecoratedComp />);
   });
 });
@@ -39,6 +39,6 @@ let CompThatThrows = function () {
 };
 
 function CompWithConfig() {
-  const moduleName = React.useContext(ModuleNameContext);
+  const { moduleName } = React.useContext(ComponentContext);
   return <div>{moduleName}</div>;
 }
