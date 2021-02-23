@@ -47,13 +47,7 @@
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "3.x",
-    "@openmrs/esm-config": "3.x",
-    "@openmrs/esm-error-handling": "3.x",
-    "@openmrs/esm-extensions": "3.x",
-    "@openmrs/esm-react-utils": "3.x",
-    "@openmrs/esm-state": "3.x",
-    "@openmrs/esm-styleguide": "3.x",
+    "@openmrs/esm-framework": "3.x",
     "carbon-components": "^10.19.0",
     "carbon-icons": "^7.0.7",
     "react": "16.x",
@@ -61,13 +55,7 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-api": "^3.1.10",
-    "@openmrs/esm-config": "^3.1.10",
-    "@openmrs/esm-error-handling": "^3.1.10",
-    "@openmrs/esm-extensions": "^3.1.10",
-    "@openmrs/esm-react-utils": "^3.1.10",
-    "@openmrs/esm-state": "^3.1.10",
-    "@openmrs/esm-styleguide": "^3.1.10",
+    "@openmrs/esm-framework": "^3.1.10",
     "@types/carbon-components-react": "^7.24.0",
     "@types/semver": "^7.3.4",
     "identity-obj-proxy": "^3.0.0",
