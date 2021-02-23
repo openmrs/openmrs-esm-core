@@ -4980,26 +4980,6 @@ capture-exit@^2.0.0:
   dependencies:
     rsvp "^4.8.4"
 
-carbon-components-react@^7.22.0:
-  version "7.24.0"
-  resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.24.0.tgz#e8aaccb8541076b7fcc21b8e6edb928236b3b25f"
-  integrity sha512-Oic0qA6IuioVYpV1/qhNGJk37SGEV3CNq9pkZabA/pDHKRmKosuS4s2BsIMEjp8PDU/FzmGiZwz7VhJsv+1DQw==
-  dependencies:
-    "@carbon/icons-react" "^10.21.0"
-    classnames "2.2.6"
-    downshift "5.2.1"
-    flatpickr "4.6.1"
-    invariant "^2.2.3"
-    lodash.debounce "^4.0.8"
-    lodash.findlast "^4.5.0"
-    lodash.isequal "^4.5.0"
-    lodash.omit "^4.5.0"
-    lodash.throttle "^4.1.1"
-    react-is "^16.8.6"
-    use-resize-observer "^6.0.0"
-    warning "^3.0.0"
-    window-or-global "^1.0.1"
-
 carbon-components-react@^7.25.0:
   version "7.25.0"
   resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.25.0.tgz#60e9e4104ab00f630fe5717f956725b65687f0c6"
@@ -10283,11 +10263,6 @@ klona@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.4.tgz#7bb1e3affb0cb8624547ef7e8f6708ea2e39dfc0"
   integrity sha512-ZRbnvdg/NxqzC7L9Uyqzf4psi1OM4Cuc+sJAkQPjO6XkQIJTNbfK2Rsmbw8fx1p2mkZdp2FZYo2+LwXYY/uwIA==
-
-kremling@^2.0.1:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/kremling/-/kremling-2.0.4.tgz#3887dd67df560e049d3d062eaf8b65cdff934dfd"
-  integrity sha512-Jo3XoFJu4ZqYsARXnGNpqZdilKIO77UbOVbLd6D8vmbpAmlUFixqiKYmNvuhYClwIbKp8aOjIAnAVF6LGRX+IQ==
 
 language-subtag-registry@~0.3.2:
   version "0.3.20"
