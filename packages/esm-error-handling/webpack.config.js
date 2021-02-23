@@ -1,13 +1,11 @@
-const { resolve } = require("path");
-
-const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const { resolve } = require("path");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const { peerDependencies } = require("./package.json");
 
-module.exports = {
+module.exports = (env) => ({
   entry: [
     resolve(__dirname, "src/set-public-path.ts"),
     resolve(__dirname, "src/index.ts"),
@@ -47,10 +45,10 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin(),
     new CleanWebpackPlugin(),
     new BundleAnalyzerPlugin({
-      analyzerMode: "static",
+      analyzerMode: env && env.analyze ? "static" : "disabled",
     }),
   ],
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],
   },
-};
+});

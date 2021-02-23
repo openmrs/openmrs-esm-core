@@ -1,13 +1,11 @@
-const { resolve } = require("path");
-
-const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const { resolve } = require("path");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const { peerDependencies } = require("./package.json");
 
-module.exports = {
+module.exports = env => ({
   entry: [
     resolve(__dirname, "src/set-public-path.js"),
     resolve(__dirname, "src/index.ts"),
@@ -67,7 +65,7 @@ module.exports = {
       filename: "openmrs-esm-styleguide.css",
     }),
     new BundleAnalyzerPlugin({
-      analyzerMode: "static",
+      analyzerMode: env && env.analyze ? "static" : "disabled",
     }),
   ],
-};
+});

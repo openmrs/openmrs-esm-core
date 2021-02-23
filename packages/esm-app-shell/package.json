@@ -8,6 +8,7 @@
     "test": "jest --passWithNoTests",
     "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json\" NODE_ENV=\"development\" webpack-dev-server --mode development",
     "build": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json\" NODE_ENV=\"production\" webpack --mode production",
+    "analyze": "webpack --mode=production --env.analyze=true",
     "watch": "webpack-dev-server --mode development",
     "lint": "eslint src --ext ts,tsx"
   },

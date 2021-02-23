@@ -11,6 +11,7 @@
     "start:storybook": "start-storybook --port 7000",
     "build:storybook": "build-storybook",
     "build": "webpack --mode=production",
+    "analyze": "webpack --mode=production --env.analyze=true",
     "lint": "eslint src"
   },
   "keywords": [

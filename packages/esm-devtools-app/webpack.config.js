@@ -1,20 +1,18 @@
-const path = require("path");
-
-const CleanWebpackPlugin = require("clean-webpack-plugin").CleanWebpackPlugin;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const { resolve } = require("path");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const { peerDependencies } = require("./package.json");
 
-module.exports = {
+module.exports = (env) => ({
   entry: [
-    path.resolve(__dirname, "src/set-public-path.ts"),
-    path.resolve(__dirname, "src/index.ts"),
+    resolve(__dirname, "src/set-public-path.ts"),
+    resolve(__dirname, "src/index.ts"),
   ],
   output: {
     filename: "openmrs-esm-devtools-app.js",
-    path: path.resolve(__dirname, "dist"),
+    path: resolve(__dirname, "dist"),
     libraryTarget: "system",
     jsonpFunction: "webpackJsonp_openmrs_esm_devtools",
   },
@@ -56,7 +54,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
     new BundleAnalyzerPlugin({
-      analyzerMode: "static",
+      analyzerMode: env && env.analyze ? "static" : "disabled",
     }),
   ],
   externals: Object.keys(peerDependencies),
@@ -66,4 +64,4 @@ module.exports = {
       "Access-Control-Allow-Origin": "*",
     },
   },
-};
+});
