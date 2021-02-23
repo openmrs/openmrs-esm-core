@@ -8,7 +8,7 @@ import {
 import { Tile } from "carbon-components-react/es/components/Tile";
 import { ValueEditorField } from "./value-editor-field";
 import { ConfigValueDescriptor } from "../editable-value.component";
-import { Type } from "@openmrs/esm-config";
+import { Type } from "@openmrs/esm-framework";
 import cloneDeep from "lodash-es/cloneDeep";
 import styles from "./object-editor.styles.css";
 

@@ -127,6 +127,7 @@ extensionStore.subscribe(updateConfigExtensionStore);
 
 function updateConfigExtensionStore(extensionState: ExtensionStore) {
   const configExtensionRecords: Array<ConfigExtensionStoreElement> = [];
+
   for (let extensionInfo of Object.values(extensionState.extensions)) {
     for (let [slotModuleName, extensionBySlot] of Object.entries(
       extensionInfo.instances

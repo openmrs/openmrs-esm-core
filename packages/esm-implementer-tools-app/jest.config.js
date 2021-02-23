@@ -10,14 +10,7 @@ module.exports = {
     "\\.(css)$": "identity-obj-proxy",
     "^@carbon/icons-react/es/(.*)$": "@carbon/icons-react/lib/$1",
     "^carbon-components-react/es/(.*)$": "carbon-components-react/lib/$1",
-    "@openmrs/esm-api": "<rootDir>/__mocks__/openmrs-esm-api.mock.tsx",
-    "@openmrs/esm-config": "<rootDir>/__mocks__/openmrs-esm-config.mock.tsx",
-    "@openmrs/esm-extensions":
-      "<rootDir>/__mocks__/openmrs-esm-extensions.mock.tsx",
-    "@openmrs/esm-state": "<rootDir>/__mocks__/openmrs-esm-state.mock.tsx",
-    "@openmrs/esm-styleguide":
-      "<rootDir>/__mocks__/openmrs-esm-styleguide.mock.tsx",
-    "@openmrs/esm-react-utils":
-      "<rootDir>/__mocks__/openmrs-esm-react-utils.mock.tsx",
+    "@openmrs/esm-framework":
+      "<rootDir>/__mocks__/openmrs-esm-framework.mock.tsx",
   },
 };

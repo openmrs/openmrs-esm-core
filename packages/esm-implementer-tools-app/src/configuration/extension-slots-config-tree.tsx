@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  ExtensionSlotConfig,
-  ExtensionSlotConfigureValueObject,
-} from "@openmrs/esm-config";
-import { extensionStore } from "@openmrs/esm-extensions";
-import { useExtensionStore } from "@openmrs/esm-react-utils";
 import EditableValue from "./editable-value.component";
 import isEqual from "lodash-es/isEqual";
+import {
+  extensionStore,
+  useExtensionStore,
+  ExtensionSlotConfigureValueObject,
+} from "@openmrs/esm-framework";
 import { ExtensionConfigureTree } from "./extension-configure-tree";
 import { Subtree } from "./layout/subtree.component";
 import { implementerToolsStore } from "../store";

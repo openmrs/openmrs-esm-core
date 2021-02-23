@@ -1,3 +1,4 @@
+import React from "react";
 import createStore, { Store } from "unistore";
 
 interface StoreEntity {
@@ -71,3 +72,71 @@ function instrumentedStore<T>(name: string, store: Store<T>) {
     resetMock: () => store.setState(initialStates[name]),
   } as any) as MockedStore<T>;
 }
+
+export const configInternalStore = createGlobalStore("config-internal", {
+  devDefaultsAreOn: false,
+});
+
+export const implementerToolsConfigStore = createGlobalStore(
+  "implementer-tools-config",
+  {}
+);
+
+export const temporaryConfigStore = createGlobalStore("temporary-config", {});
+
+export enum Type {
+  Array = "Array",
+  Boolean = "Boolean",
+  ConceptUuid = "ConceptUuid",
+  Number = "Number",
+  Object = "Object",
+  String = "String",
+  UUID = "UUID",
+}
+
+export function openmrsFetch() {
+  return new Promise(() => {});
+}
+
+export const setIsUIEditorEnabled = (boolean): void => {};
+
+let state = { slots: {}, extensions: {} };
+
+export const extensionStore = {
+  getState: () => state,
+  setState: (val) => {
+    state = { ...state, ...val };
+  },
+  subscribe: (updateFcn) => {
+    updateFcn(state);
+    return () => {};
+  },
+  unsubscribe: () => {},
+};
+
+export const ComponentContext = React.createContext(null);
+
+export const openmrsComponentDecorator = jest
+  .fn()
+  .mockImplementation(() => (component) => component);
+
+export const UserHasAccess = jest.fn().mockImplementation((props: any) => {
+  return props.children;
+});
+
+export const createUseStore = (store: Store<any>) => (actions) => {
+  const state = store.getState();
+  return { ...state, ...actions };
+};
+
+export const useExtensionStore = (actions) => {
+  const state = extensionStore.getState();
+  return { ...state, ...actions };
+};
+
+export const useStore = (store: Store<any>, actions) => {
+  const state = store.getState();
+  return { ...state, ...actions };
+};
+
+export const showToast = jest.fn();

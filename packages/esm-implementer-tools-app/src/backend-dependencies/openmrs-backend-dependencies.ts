@@ -1,5 +1,5 @@
-import { openmrsFetch } from "@openmrs/esm-api";
 import * as semver from "semver";
+import { openmrsFetch } from "@openmrs/esm-framework";
 import difference from "lodash-es/difference";
 
 const installedBackendModules: Array<Record<string, string>> = [];

@@ -144,9 +144,9 @@ function createConfigLoader(configUrls: Array<string>) {
 export function run(configUrls: Array<string>) {
   const provideConfigs = createConfigLoader(configUrls);
 
+  createAppState({});
   registerModules(sharedDependencies);
   setupApiModule();
-  createAppState({});
   registerCoreExtensions();
 
   return loadApps()

@@ -42,11 +42,20 @@ interface LegacyAppExtensionDefinition {
 type AppExtensionDefinition = ModernAppExtensionDefinition &
   LegacyAppExtensionDefinition;
 
+function trySetup(appName: string, setup: () => any): any {
+  try {
+    return setup();
+  } catch (error) {
+    console.error(`Error when trying to set up the module`, appName, error);
+    return undefined;
+  }
+}
+
 export function registerApp(appName: string, appExports: System.Module) {
   const setup = appExports.setupOpenMRS;
 
   if (typeof setup === "function") {
-    const result = setup();
+    const result = trySetup(appName, setup);
 
     if (result && typeof result === "object") {
       const availableExtensions: Array<Partial<AppExtensionDefinition>> =

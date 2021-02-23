@@ -9,8 +9,8 @@ import {
   configInternalStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
-} from "@openmrs/esm-config";
-import { useStore } from "@openmrs/esm-react-utils";
+  useStore,
+} from "@openmrs/esm-framework";
 import { Column, Grid, Row } from "carbon-components-react/es/components/Grid";
 import { ConfigTree } from "./config-tree.component";
 import { Description } from "./description.component";

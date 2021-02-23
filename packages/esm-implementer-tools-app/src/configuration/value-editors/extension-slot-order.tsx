@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ExtensionStore, extensionStore } from "@openmrs/esm-extensions";
+import { ExtensionStore, extensionStore } from "@openmrs/esm-framework";
 
 export function ExtensionSlotOrder({
   slotName,

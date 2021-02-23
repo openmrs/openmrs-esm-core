@@ -9,3 +9,11 @@ export const openmrsComponentDecorator = jest
 export function UserHasAccess(props: any) {
   return props.children;
 }
+
+export const getImplementerToolsConfig = jest.fn().mockResolvedValue({});
+
+export const ModuleNameContext = React.createContext("fake-module-config");
+
+export function openmrsFetch() {
+  return new Promise(() => {});
+}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { UserHasAccess, useStore } from "@openmrs/esm-react-utils";
-import { showToast } from "@openmrs/esm-styleguide";
+import { UserHasAccess, showToast, useStore } from "@openmrs/esm-framework";
 import Popup from "./popup/popup.component";
 import styles from "./implementer-tools.styles.css";
 import {

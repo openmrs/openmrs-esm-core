@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles.css";
 import { Portal } from "./portal";
 import { ExtensionOverlay } from "./extension-overlay.component";
-import { useExtensionStore } from "@openmrs/esm-react-utils";
+import { useExtensionStore } from "@openmrs/esm-framework";
 
 export function UiEditor() {
   const { slots, extensions } = useExtensionStore();

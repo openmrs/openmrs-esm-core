@@ -1,7 +1,7 @@
-import { useStore } from "@openmrs/esm-react-utils";
 import React from "react";
-import { implementerToolsStore } from "../store";
 import styles from "./description.styles.css";
+import { useStore } from "@openmrs/esm-framework";
+import { implementerToolsStore } from "../store";
 
 export function Description() {
   const { activeItemDescription } = useStore(implementerToolsStore);

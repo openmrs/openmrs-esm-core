@@ -1,6 +1,6 @@
-import { ExtensionSlotConfigureValueObject } from "@openmrs/esm-config";
 import React from "react";
 import EditableValue from "./editable-value.component";
+import { ExtensionSlotConfigureValueObject } from "@openmrs/esm-framework";
 
 export interface ExtensionConfigureTreeProps {
   moduleName: string;

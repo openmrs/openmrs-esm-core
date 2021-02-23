@@ -1,4 +1,4 @@
-import { openmrsFetch } from "@openmrs/esm-api";
+import { openmrsFetch } from "@openmrs/esm-framework";
 
 export function fetchConceptByUuid(conceptUuid: string) {
   return openmrsFetch(`/ws/rest/v1/concept/${conceptUuid}`, {

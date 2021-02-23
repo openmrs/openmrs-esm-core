@@ -5,7 +5,7 @@ import Add16 from "@carbon/icons-react/es/add/16";
 import TrashCan16 from "@carbon/icons-react/es/trash-can/16";
 import Button from "carbon-components-react/es/components/Button";
 import styles from "./array-editor.styles.css";
-import { Type } from "@openmrs/esm-config";
+import { Type } from "@openmrs/esm-framework";
 import { Tile } from "carbon-components-react/es/components/Tile";
 import {
   StructuredListBody,

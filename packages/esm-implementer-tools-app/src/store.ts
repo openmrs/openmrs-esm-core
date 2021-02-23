@@ -1,4 +1,4 @@
-import { createGlobalStore } from "@openmrs/esm-state";
+import { createGlobalStore } from "@openmrs/esm-framework";
 import { Store } from "unistore";
 
 export interface ImplementerToolsStore {

@@ -1,4 +1,4 @@
-import { getAsyncLifecycle } from "@openmrs/esm-react-utils";
+import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
 declare global {
   interface Window {

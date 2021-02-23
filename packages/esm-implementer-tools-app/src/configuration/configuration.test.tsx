@@ -1,18 +1,12 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import {
-  fireEvent,
-  render,
-  screen,
-  waitForElementToBeRemoved,
-  within,
-} from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
   implementerToolsConfigStore,
   temporaryConfigStore,
   Type,
-} from "@openmrs/esm-config";
+} from "@openmrs/esm-framework";
 import { Configuration } from "./configuration.component";
 import {
   performConceptSearch,

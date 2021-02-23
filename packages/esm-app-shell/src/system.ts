@@ -14,10 +14,13 @@ import type { ModuleResolver } from "./types";
 export function loadModules(modules: Array<string>) {
   return Promise.all(
     modules.map((name) =>
-      System.import(name).then((value): [string, System.Module] => [
-        name,
-        value,
-      ])
+      System.import(name).then(
+        (value): [string, System.Module] => [name, value],
+        (error): [string, System.Module] => {
+          console.error("Failed to load module", name, error);
+          return [name, {}];
+        }
+      )
     )
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Close16 from "@carbon/icons-react/es/close/16";
 import Save16 from "@carbon/icons-react/es/save/16";
 import Button from "carbon-components-react/es/components/Button";
-import { Type } from "@openmrs/esm-config";
+import { Type } from "@openmrs/esm-framework";
 import { ConfigValueDescriptor } from "./editable-value.component";
 import { ValueEditorField } from "./value-editors/value-editor-field";
 import styles from "./configuration.styles.css";
