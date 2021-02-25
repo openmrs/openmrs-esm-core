@@ -2,7 +2,6 @@
   position: fixed;
   width: 100%;
   background-color: #e0e0e0;
-  padding: 0.5em 1.5em;
   border-bottom: 1px solid #a0a0a0;
   border-top: 1px solid #c0c0c0;
   z-index: 2;
@@ -24,14 +23,12 @@
 
 .mainContent {
   background-color: #f0f0f0;
-  margin-top: 72px;
   width: 100%;
   display: flex;
   overflow-y: auto;
 }
 
 .configTreePane {
-  height: calc(50vh - 114px);
   width: 55%;
   overflow-wrap: break-word;
   overflow-x: hidden;
@@ -39,7 +36,6 @@
 }
 
 .descriptionPane {
-  height: calc(50vh - 114px);
   width: 45%;
   background-color: #e0e0e0;
   color: #424242;
@@ -55,6 +51,12 @@
 
 .fullWidthAccordion :global(.bx--accordion__content) {
   padding-right: 0;
+}
+
+.toggleToolbarButton {
+  position: absolute;
+  left: 97vw;
+  top: -2px;
 }
 
 .valueEditorInput {

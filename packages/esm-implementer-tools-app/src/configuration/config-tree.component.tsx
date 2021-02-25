@@ -25,8 +25,7 @@ export function ConfigTree({ config }: ConfigTreeProps) {
               return Object.keys(moduleConfig).length ||
                 slotsByModule[moduleName] ? (
                 <AccordionItem
-                  open
-                  title={<h4 className={styles.moduleName}>{moduleName}</h4>}
+                  title={<h6 className={styles.moduleName}>{moduleName}</h6>}
                   className={styles.fullWidthAccordion}
                   key={`accordion-${moduleName}`}
                 >
