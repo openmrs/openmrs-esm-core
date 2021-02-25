@@ -25,6 +25,11 @@ The following common libraries have been developed. They may also be used indepe
 - [@openmrs/esm-extensions](packages/esm-extensions)
 - [@openmrs/esm-react-utils](packages/esm-react-utils)
 - [@openmrs/esm-styleguide](packages/esm-styleguide)
+- [@openmrs/esm-utils](packages/esm-utils)
+
+All libraries are aggregated in the `@openmrs/esm-framework` package:
+
+- [@openmrs/esm-framework](packages/esm-framework)
 
 ### Microfrontends
 

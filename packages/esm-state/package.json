@@ -36,6 +36,8 @@
   "publishConfig": {
     "access": "public"
   },
+  "devDependencies": {},
+  "peerDependencies": {},
   "dependencies": {
     "systemjs-webpack-interop": "^2.1.2",
     "unistore": "^3.5.2"

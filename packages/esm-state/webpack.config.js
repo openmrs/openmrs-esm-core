@@ -3,7 +3,9 @@ const { resolve } = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
-module.exports = env => ({
+const { peerDependencies } = require("./package.json");
+
+module.exports = (env) => ({
   entry: [
     resolve(__dirname, "src/set-public-path.ts"),
     resolve(__dirname, "src/index.ts"),
@@ -28,6 +30,7 @@ module.exports = env => ({
       },
     ],
   },
+  externals: Object.keys(peerDependencies),
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
   },

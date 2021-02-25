@@ -5,4 +5,5 @@ export * from "@openmrs/esm-extensions";
 export * from "@openmrs/esm-react-utils";
 export * from "@openmrs/esm-state";
 export * from "@openmrs/esm-styleguide";
+export * from "@openmrs/esm-utils";
 export * from "./types";

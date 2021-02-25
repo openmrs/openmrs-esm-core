@@ -11,7 +11,7 @@ module.exports = (env) => ({
     resolve(__dirname, "src/index.ts"),
   ],
   output: {
-    filename: "openmrs-esm-api.js",
+    filename: "openmrs-esm-utils.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
   },
@@ -30,6 +30,7 @@ module.exports = (env) => ({
       },
     ],
   },
+  externals: Object.keys(peerDependencies),
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
   },
@@ -40,7 +41,6 @@ module.exports = (env) => ({
       analyzerMode: env && env.analyze ? "static" : "disabled",
     }),
   ],
-  externals: Object.keys(peerDependencies),
   devServer: {
     disableHostCheck: true,
     headers: {

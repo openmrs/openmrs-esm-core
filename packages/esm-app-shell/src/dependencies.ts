@@ -18,6 +18,7 @@ export const sharedDependencies = {
   "@openmrs/esm-extension-manager": () => require("@openmrs/esm-framework"),
   "@openmrs/esm-state": () => require("@openmrs/esm-framework"),
   "@openmrs/esm-styleguide": () => require("@openmrs/esm-framework"),
+  "@openmrs/esm-utils": () => require("@openmrs/esm-utils"),
   "carbon-components": () => require("carbon-components"),
   "carbon-icons": () => require("carbon-icons"),
   rxjs: () => require("rxjs"),
