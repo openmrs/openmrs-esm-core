@@ -38,6 +38,11 @@ export function registerModule(name: string, resolve: ModuleResolver) {
         return content.then((innerContent) => _exports(innerContent));
       } else {
         _exports(content);
+
+        if (typeof content === "function") {
+          _exports("__esModule", true);
+          _exports("default", content);
+        }
       }
     },
   }));
