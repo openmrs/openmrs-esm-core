@@ -1,0 +1,8 @@
+.label {
+  color: var(--omrs-color-ink-medium-contrast);
+  text-transform: capitalize;
+}
+
+.root:not(:last-of-type) {
+  margin-right: 0.75rem;
+}

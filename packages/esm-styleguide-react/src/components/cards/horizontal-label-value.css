@@ -1,0 +1,10 @@
+.root sup {
+  line-height: 0;
+  margin: 0.25rem;
+}
+
+.root {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+}
