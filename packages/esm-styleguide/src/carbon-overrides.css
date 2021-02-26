@@ -43,3 +43,24 @@
   min-height: unset;
   color: #525252;
 }
+
+.bx--btn--primary{
+  background-color: #007d79;
+}
+.bx--btn--primary:hover{
+  background-color: #007d79;
+}
+.bx--btn--tertiary{
+  border-color: #007d79;
+  color: #007d79;
+}
+.bx--btn--tertiary:hover{
+  background-color: #007d79;
+  color: white;
+}
+.bx--btn--ghost{
+  color: #007d79;
+}
+.bx--btn--ghost:hover{
+  color: #007d79;
+}
