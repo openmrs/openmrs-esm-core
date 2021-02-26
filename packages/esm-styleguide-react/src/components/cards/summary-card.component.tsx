@@ -24,7 +24,7 @@ export default function SummaryCard(props: SummaryCardProps) {
             <button
               className={`omrs-unstyled ${styles.addBtn}`}
               onClick={() =>
-                props.showComponent(props.addComponent, props.name)
+                props.showComponent?.(props.addComponent, props.name)
               }
             >
               <Trans i18nKey="add">Add</Trans>
@@ -36,7 +36,7 @@ export default function SummaryCard(props: SummaryCardProps) {
             <button
               className={`omrs-unstyled ${styles.editBtn}`}
               onClick={() =>
-                props.showComponent(props.editComponent, props.name)
+                props.showComponent?.(props.editComponent, props.name)
               }
             >
               <Trans i18nKey="edit">Edit</Trans>

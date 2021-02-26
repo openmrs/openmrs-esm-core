@@ -1,3 +1,5 @@
+import "./declarations.d";
+
 export { default as SummaryCard } from "./components/cards/summary-card.component";
 export { default as SummaryCardRow } from "./components/cards/summary-card-row.component";
 export { default as SummaryCardFooter } from "./components/cards/summary-card-footer.component";
