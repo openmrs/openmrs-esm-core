@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditableValue from "./editable-value.component";
 import isEqual from "lodash-es/isEqual";
 import {
@@ -37,6 +37,7 @@ export function ExtensionSlotsConfigTree({
   moduleName,
 }: ExtensionSlotsConfigTreeProps) {
   const { slotsByModule } = useStore(implementerToolsStore);
+
   const extensionSlotNames = slotsByModule[moduleName] ?? [];
 
   return extensionSlotNames.length ? (

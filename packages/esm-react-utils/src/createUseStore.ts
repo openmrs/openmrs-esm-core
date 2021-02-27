@@ -19,7 +19,10 @@ function bindActions<T>(store: Store<T>, actions: Actions) {
 }
 
 export function createUseStore<T>(store: Store<T>) {
-  function useStore(actions?: Actions): T & BoundActions {
+  function useStore(): T;
+  function useStore(actions: Actions): T & BoundActions;
+  function useStore(actions?: Actions): T & BoundActions;
+  function useStore(actions?: Actions) {
     const [state, set] = useState(store.getState());
     useEffect(() => store.subscribe((state) => set(state)), []);
     let boundActions: BoundActions = {};
