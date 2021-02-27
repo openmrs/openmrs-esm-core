@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditableValue from "./editable-value.component";
 import isEqual from "lodash-es/isEqual";
 import {
   extensionStore,
-  useExtensionStore,
   ExtensionSlotConfigureValueObject,
+  useStore,
 } from "@openmrs/esm-framework";
 import { ExtensionConfigureTree } from "./extension-configure-tree";
 import { Subtree } from "./layout/subtree.component";
@@ -36,13 +36,9 @@ export function ExtensionSlotsConfigTree({
   config,
   moduleName,
 }: ExtensionSlotsConfigTreeProps) {
-  const { slots } = useExtensionStore();
+  const { slotsByModule } = useStore(implementerToolsStore);
 
-  const extensionSlotNames = useMemo(
-    () =>
-      Object.keys(slots).filter((name) => moduleName in slots[name].instances),
-    [slots]
-  );
+  const extensionSlotNames = slotsByModule[moduleName] ?? [];
 
   return extensionSlotNames.length ? (
     <Subtree label={"extension slots"} leaf={false}>
