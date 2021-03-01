@@ -4,12 +4,16 @@ import Accordion, {
   AccordionItem,
 } from "carbon-components-react/es/components/Accordion";
 import { ConfigTreeForModule } from "./config-tree-for-module.component";
+import { useStore } from "@openmrs/esm-framework";
+import { implementerToolsStore } from "../store";
 
 export interface ConfigTreeProps {
   config: Record<string, any>;
 }
 
 export function ConfigTree({ config }: ConfigTreeProps) {
+  const { slotsByModule } = useStore(implementerToolsStore);
+
   return (
     <div>
       <Accordion align="start">
@@ -18,10 +22,10 @@ export function ConfigTree({ config }: ConfigTreeProps) {
             .sort()
             .map((moduleName) => {
               const moduleConfig = config[moduleName];
-              return Object.keys(moduleConfig).length ? (
+              return Object.keys(moduleConfig).length ||
+                slotsByModule[moduleName] ? (
                 <AccordionItem
-                  open
-                  title={<h4 className={styles.moduleName}>{moduleName}</h4>}
+                  title={<h6 className={styles.moduleName}>{moduleName}</h6>}
                   className={styles.fullWidthAccordion}
                   key={`accordion-${moduleName}`}
                 >
