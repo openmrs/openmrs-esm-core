@@ -2,6 +2,8 @@
 
 [![npm: openmrs/esm-module-config](https://img.shields.io/npm/v/@openmrs/esm-config)](https://www.npmjs.com/package/@openmrs/esm-config)
 
+[API Docs](docs/API.md)
+
 ## What is this?
 
 This is the configuration library for
@@ -16,8 +18,7 @@ implementers.
 - [What does an OpenMRS frontend configuration file look like?](#what-does-an-openmrs-frontend-configuration-file-look-like)
 - [How do I configure my OpenMRS implementation?](#how-do-i-configure-my-openmrs-implementation)
 - [I'm developing an ESM module. How do I make it configurable?](#im-developing-an-esm-module-how-do-i-make-it-configurable)
-- [Reference: Schema definition](#schema-reference)
-- [Reference: API](#api)
+- [Schema Reference](#schema-reference)
 - [Contributing & Development](#contributing--development)
 
 <!-- tocstop -->
@@ -91,14 +92,13 @@ To do this you need to create a (simple) custom module, which you will add to yo
 import map. Its name in the import map should be suffixed with `-app`.
 This will ensure it is loaded.
 
-You add your configuration
-files to this module, import them, and `provide` them to
-esm-config.
+You add your configuration files to this module, import them, and
+`provide` them to the framework.
 
 Example code:
 
 ```js
-import { provide } from "@openmrs/esm-config";
+import { provide } from "@openmrs/esm-framework";
 
 import myOrgConfig from "./org-config.json";
 import myOrgLocalConfig from "./org-local-config.json";
@@ -117,13 +117,13 @@ You can break up your configuration files into hierarchies, or per module, or pe
 
 ## I'm developing an ESM module. How do I make it configurable?
 
-You should use this module, esm-config, to make your modules configurable.
+You should use this part of the OpenMRS Frontend Framework to modules configurable.
 
-Start with `npm install --save-dev @openmrs/esm-config`. This is a runtime
+Start with `npm install --save-dev @openmrs/esm-framework`. This is a runtime
 dependency, so you should also include it in `peerDependencies`.
 
 The main task is to create a config schema for your module. The config schema
-is what tells `esm-config` what configuration files should look like,
+is what tells the framework what configuration files should look like,
 including defaults and validations.
 
 ### Designing a schema
@@ -164,7 +164,7 @@ We must provide defaults for all of the values—in OpenMRS Frontend 3.0, all
 configuration is optional. All modules should do something reasonable out of the box.
 
 ```js
-import { defineConfigSchema, Type } from "@openmrs/esm-config"
+import { defineConfigSchema, Type } from "@openmrs/esm-framework"
 
 defineConfigSchema("@openmrs/esm-hologram-doctor", {
   hologram: {
@@ -352,7 +352,7 @@ The config is fetched asynchronously using `getConfig(moduleName)`. Continuing t
 above example, we would have something like
 
 ```js
-import { getConfig } from "@openmrs/esm-config"
+import { getConfig } from "@openmrs/esm-framework"
 
 async function doctorGreeting() {
   const config = await getConfig("@openmrs/esm-hologram-doctor")
@@ -380,7 +380,7 @@ export default openmrsRootDecorator({
 You can then get the config tree as an object using the `useConfig` React hook.
 
 ```js
-import { useConfig } from "@openmrs/esm-config"
+import { useConfig } from "@openmrs/esm-framework"
 
 export default function DoctorGreeting() {
   const config = useConfig()
@@ -424,7 +424,7 @@ Can be used anywhere within the schema structure.
 An array of validator objects.
 
 Some common validators are
-provided: [API / validators](#const-validators).
+provided: [API / validators](docs/API.md#const-validators).
 
 Custom validators should
 be created with the [validator](#validator) function.
@@ -436,332 +436,6 @@ Can be used anywhere within the schema structure.
 Only valid alongside `_type: Type.Array` or `_type: Type.Object`. A `_default`
 must also be provided at this level. Value should be an object which is
 a schema for the values contained in the array or object.
-
-## API
-
-<!-- API -->
-
-### Variables
-
-* [ModuleNameContext](README.md#const-modulenamecontext)
-
-### Navigation Functions
-
-* [ConfigurableLink](README.md#configurablelink)
-* [interpolateString](README.md#interpolatestring)
-* [navigate](README.md#navigate)
-
-### Other Functions
-
-* [defineConfigSchema](README.md#defineconfigschema)
-* [getConfig](README.md#getconfig)
-* [processConfig](README.md#processconfig)
-* [provide](README.md#provide)
-* [useConfig](README.md#useconfig)
-* [validator](README.md#validator)
-
-### Object literals
-
-* [validators](README.md#const-validators)
-
-## Variables
-
-### `Const` ModuleNameContext
-
-• **ModuleNameContext**: *Context‹null | string›* = React.createContext<string | null>(null)
-
-*Defined in [react-hook/react-hook.tsx:4](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/react-hook/react-hook.tsx#L4)*
-
-## Navigation Functions
-
-###  ConfigurableLink
-
-▸ **ConfigurableLink**(`__namedParameters`: object): *Element‹›*
-
-*Defined in [navigation/react-configurable-link.tsx:13](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/react-configurable-link.tsx#L13)*
-
-A React link component which calls [navigate](README.md#navigate) when clicked
-
-**Parameters:**
-
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`children` | any | Inline elements within the link |
-`otherProps` | otherProps | Any other valid props for an <a> tag except `href` and `onClick` |
-`to` | string | The target path or URL. Supports interpolation. See [navigate](README.md#navigate) |
-
-**Returns:** *Element‹›*
-
-___
-
-###  interpolateString
-
-▸ **interpolateString**(`template`: string, `params`: object): *string*
-
-*Defined in [navigation/interpolate-string.ts:38](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/interpolate-string.ts#L38)*
-
-Interpolates values of `params` into the `template` string.
-
-Useful for additional template parameters in URLs.
-
-Example usage:
-```js
-navigate({
- to: interpolateString(
-   config.links.patientChart,
-   { patientUuid: patient.uuid }
- )
-});
-```
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`template` | string | With optional params wrapped in `${ }` |
-`params` | object | Values to interpolate into the string template |
-
-**Returns:** *string*
-
-___
-
-###  navigate
-
-▸ **navigate**(`__namedParameters`: object): *void*
-
-*Defined in [navigation/navigate.ts:24](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/navigation/navigate.ts#L24)*
-
-Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
-
-Example usage:
-```js
-const config = getConfig();
-const submitHandler = () => {
-  navigate({ to: config.links.submitSuccess });
-};
-```
-
-**Parameters:**
-
-▪ **__namedParameters**: *object*
-
-Name | Type | Description |
------- | ------ | ------ |
-`to` | string | The target path or URL. Supports templating with 'openmrsBase' and 'openmrsSpaBase'. For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home` for implementations using the standard OpenMRS and SPA base paths. |
-
-**Returns:** *void*
-
-___
-
-## Other Functions
-
-###  defineConfigSchema
-
-▸ **defineConfigSchema**(`moduleName`: string, `schema`: ConfigSchema): *void*
-
-*Defined in [module-config/module-config.ts:20](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L20)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`moduleName` | string |
-`schema` | ConfigSchema |
-
-**Returns:** *void*
-
-___
-
-###  getConfig
-
-▸ **getConfig**(`moduleName`: string): *Promise‹ConfigObject›*
-
-*Defined in [module-config/module-config.ts:29](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L29)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`moduleName` | string |
-
-**Returns:** *Promise‹ConfigObject›*
-
-___
-
-###  processConfig
-
-▸ **processConfig**(`schema`: ConfigSchema, `providedConfig`: ConfigObject, `keyPathContext`: string): *Config*
-
-*Defined in [module-config/module-config.ts:42](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L42)*
-
-Validate and interpolate defaults for `providedConfig` according to `schema`
-
-**Parameters:**
-
-Name | Type | Description |
------- | ------ | ------ |
-`schema` | ConfigSchema | a configuration schema |
-`providedConfig` | ConfigObject | an object of config values (without the top-level module name) |
-`keyPathContext` | string | a dot-deparated string which helps the user figure out where     the provided config came from  |
-
-**Returns:** *Config*
-
-___
-
-###  provide
-
-▸ **provide**(`config`: Config, `sourceName`: string): *void*
-
-*Defined in [module-config/module-config.ts:25](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/module-config/module-config.ts#L25)*
-
-**Parameters:**
-
-Name | Type | Default |
------- | ------ | ------ |
-`config` | Config | - |
-`sourceName` | string | "provided" |
-
-**Returns:** *void*
-
-___
-
-###  useConfig
-
-▸ **useConfig**(): *any*
-
-*Defined in [react-hook/react-hook.tsx:8](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/react-hook/react-hook.tsx#L8)*
-
-**Returns:** *any*
-
-___
-
-###  validator
-
-▸ **validator**(`validationFunction`: ValidatorFunction, `message`: string): *Validator*
-
-*Defined in [validators/validator.ts:1](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validator.ts#L1)*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`validationFunction` | ValidatorFunction |
-`message` | string |
-
-**Returns:** *Validator*
-
-## Object literals
-
-### `Const` validators
-
-### ▪ **validators**: *object*
-
-*Defined in [validators/validators.ts:66](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L66)*
-
-###  isBoolean
-
-• **isBoolean**: *function*
-
-*Defined in [validators/validators.ts:69](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L69)*
-
-#### Type declaration:
-
-▸ (`value`: any): *void | string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | any |
-
-###  isNumber
-
-• **isNumber**: *function*
-
-*Defined in [validators/validators.ts:68](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L68)*
-
-#### Type declaration:
-
-▸ (`value`: any): *void | string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | any |
-
-###  isObject
-
-• **isObject**: *function*
-
-*Defined in [validators/validators.ts:71](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L71)*
-
-#### Type declaration:
-
-▸ (`value`: any): *void | string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | any |
-
-###  isString
-
-• **isString**: *function*
-
-*Defined in [validators/validators.ts:67](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L67)*
-
-#### Type declaration:
-
-▸ (`value`: any): *void | string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | any |
-
-###  isUrl
-
-• **isUrl**: *function*
-
-*Defined in [validators/validators.ts:72](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L72)*
-
-#### Type declaration:
-
-▸ (`value`: any): *void | string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | any |
-
-###  isUrlWithTemplateParameters
-
-• **isUrlWithTemplateParameters**: *isUrlWithTemplateParameters*
-
-*Defined in [validators/validators.ts:73](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L73)*
-
-###  isUuid
-
-• **isUuid**: *function*
-
-*Defined in [validators/validators.ts:70](https://github.com/openmrs/openmrs-esm-module-config/blob/master/src/validators/validators.ts#L70)*
-
-#### Type declaration:
-
-▸ (`value`: any): *void | string*
-
-**Parameters:**
-
-Name | Type |
------- | ------ |
-`value` | any |
-<!-- ENDAPI -->
 
 ## Contributing & Development
 

@@ -1,7 +1,7 @@
 {
-  "mode": "library",
-  "out": "docs/typedoc",
-  "excludeNotExported": true,
+  "out": "docs",
   "readme": "none",
-  "stripInternal": true
+  "excludeInternal": true,
+  "gitRevision": "master",
+  "entryDocument": "API.md"
 }
