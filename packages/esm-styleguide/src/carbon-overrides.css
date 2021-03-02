@@ -44,23 +44,33 @@
   color: #525252;
 }
 
-.bx--btn--primary{
+.bx--btn--primary,
+.bx--btn--primary:hover,
+.bx--btn--primary:active,
+.bx--btn--tertiary:hover,
+.bx--btn--tertiary:active,
+.bx--btn--tertiary:focus{
   background-color: #007d79;
 }
-.bx--btn--primary:hover{
-  background-color: #007d79;
+
+.bx--btn--tertiary,
+.bx--btn--ghost,
+.bx--btn--ghost:hover,
+.bx--btn--ghost:active
+{
+  color: #007d79;
 }
-.bx--btn--tertiary{
+
+.bx--btn--tertiary,
+.bx--btn--primary:focus,
+.bx--btn--tertiary:focus,
+.bx--btn--ghost:focus
+{
   border-color: #007d79;
-  color: #007d79;
 }
-.bx--btn--tertiary:hover{
-  background-color: #007d79;
-  color: white;
-}
-.bx--btn--ghost{
-  color: #007d79;
-}
-.bx--btn--ghost:hover{
-  color: #007d79;
+
+.bx--btn--tertiary:hover,
+.bx--btn--tertiary:active,
+.bx--btn--tertiary:focus{
+  color: #ffffff;
 }
