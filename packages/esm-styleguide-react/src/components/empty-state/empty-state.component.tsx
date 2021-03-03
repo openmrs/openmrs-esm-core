@@ -6,7 +6,11 @@ import { Trans, useTranslation } from "react-i18next";
 import EmptyDataIllustration from "./empty-data-illustration.component";
 import styles from "./empty-state.scss";
 
-const EmptyState: React.FC<EmptyStateProps> = props => {
+/**
+ * Component for rendering empty state of the enclosing component
+ * @param props
+ */
+export const EmptyState: React.FC<EmptyStateProps> = props => {
   const { t } = useTranslation();
 
   return (
@@ -22,19 +26,29 @@ const EmptyState: React.FC<EmptyStateProps> = props => {
           patient
         </Trans>
       </p>
-      <p className={styles.action}>
-        <Link onClick={() => props.launchForm?.()}>
-          {t("record", "Record")} {props.displayText.toLowerCase()}
-        </Link>
-      </p>
+      {props.launchForm && (
+        <p className={styles.action}>
+          <Link onClick={() => props.launchForm?.()}>
+            {t("record", "Record")} {props.displayText.toLowerCase()}
+          </Link>
+        </p>
+      )}
     </Tile>
   );
 };
 
-export default EmptyState;
-
-type EmptyStateProps = {
+export interface EmptyStateProps {
+  /**
+   * The state title
+   */
   headerTitle: string;
+  /**
+   * Domain name for empty state
+   */
   displayText: string;
+  /**
+   * Optional callback for rendering the form that records new entries
+   * @default null
+   */
   launchForm?: Function;
-};
+}

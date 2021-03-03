@@ -5,7 +5,10 @@ import { useTranslation } from "react-i18next";
 
 import styles from "./error-state.scss";
 
-const ErrorState: React.FC<ErrorStateProps> = ({ error, headerTitle }) => {
+export const ErrorState: React.FC<ErrorStateProps> = ({
+  error,
+  headerTitle
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -20,9 +23,13 @@ const ErrorState: React.FC<ErrorStateProps> = ({ error, headerTitle }) => {
   );
 };
 
-export default ErrorState;
-
-type ErrorStateProps = {
+export interface ErrorStateProps {
+  /**
+   * Error object
+   */
   error: any;
+  /**
+   * Error state title
+   */
   headerTitle: string;
-};
+}

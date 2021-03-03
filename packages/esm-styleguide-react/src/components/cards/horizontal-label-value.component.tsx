@@ -28,7 +28,7 @@ HorizontalLabelValue.defaultProps = {
   specialKey: false
 };
 
-type HorizontalLabelValueProps = {
+export interface HorizontalLabelValueProps {
   label: string;
   value: React.ReactNode;
   valueStyles?: React.CSSProperties;
@@ -36,4 +36,4 @@ type HorizontalLabelValueProps = {
   specialKey: boolean;
   labelClassName?: string;
   valueClassName?: string;
-};
+}

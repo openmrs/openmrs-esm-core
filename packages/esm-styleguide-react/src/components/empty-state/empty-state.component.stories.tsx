@@ -1,11 +1,18 @@
 import React from "react";
-import EmptyState from "./empty-state.component";
+import { EmptyStateProps, EmptyState } from "./empty-state.component";
+import { Story, Meta } from "@storybook/react/types-6-0";
 import "@openmrs/esm-styleguide/src/style.css";
+
 export default {
   component: EmptyState,
-  title: "EmptyState"
-};
+  title: "EmptyState",
+  argTypes: {}
+} as Meta;
 
-export const Default = () => (
-  <EmptyState headerTitle="Diagnosis" displayText="diagnosis" />
-);
+const Template: Story<EmptyStateProps> = args => <EmptyState {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+  headerTitle: "Diagnosis",
+  displayText: "diagnosis"
+};

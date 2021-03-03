@@ -29,7 +29,7 @@ export function createGlobalStore<TState>(
 
     availableStores[name] = {
       value: store,
-      active: true,
+      active: true
     };
 
     return store;
@@ -46,7 +46,7 @@ export function getGlobalStore<TState = any>(
     const store = createStore(fallbackState);
     availableStores[name] = {
       value: store,
-      active: false,
+      active: false
     };
     return store;
   }
