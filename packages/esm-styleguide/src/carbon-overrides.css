@@ -49,28 +49,42 @@
 .bx--btn--primary:active,
 .bx--btn--tertiary:hover,
 .bx--btn--tertiary:active,
-.bx--btn--tertiary:focus{
+.bx--btn--tertiary:focus {
   background-color: #007d79;
 }
 
-.bx--btn--tertiary,
-.bx--btn--ghost,
-.bx--btn--ghost:hover,
-.bx--btn--ghost:active
-{
+.bx--btn--tertiary {
   color: #007d79;
 }
 
 .bx--btn--tertiary,
 .bx--btn--primary:focus,
-.bx--btn--tertiary:focus,
-.bx--btn--ghost:focus
-{
+.bx--btn--tertiary:focus {
   border-color: #007d79;
 }
 
 .bx--btn--tertiary:hover,
 .bx--btn--tertiary:active,
-.bx--btn--tertiary:focus{
+.bx--btn--tertiary:focus {
   color: #ffffff;
+}
+
+/* UI Shell header */
+
+.bx--header {
+  background-color: #005d5d;
+  border-bottom: #004144;
+}
+
+.bx--header__action:hover {
+  background-color: #004144;
+}
+
+.bx--header-panel {
+  background-color: #004144;
+}
+
+.bx--header__action--active {
+  background-color: #004144;
+  border-color: #004144;
 }
