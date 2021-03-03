@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { ExtensionStore, extensionStore } from "@openmrs/esm-framework";
+import React from "react";
+import { useStore } from "@openmrs/esm-framework";
+import { implementerToolsStore } from "../../store";
 
 export function ExtensionSlotOrder({
   slotName,
@@ -7,19 +8,7 @@ export function ExtensionSlotOrder({
   value,
   setValue,
 }) {
-  const [attachedExtensions, setAttachedExtensions] = useState<Array<string>>(
-    []
-  );
-
-  useEffect(() => {
-    function update(state: ExtensionStore) {
-      setAttachedExtensions(
-        state.slots[slotName].instances[slotModuleName].assignedIds
-      );
-    }
-    update(extensionStore.getState());
-    return extensionStore.subscribe(update);
-  }, []);
+  const { extensionIdBySlotByModule } = useStore(implementerToolsStore);
 
   return <div>Todo: compose array with extension lookup</div>;
 }

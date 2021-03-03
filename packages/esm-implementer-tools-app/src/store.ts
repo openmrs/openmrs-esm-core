@@ -1,6 +1,6 @@
 import { createGlobalStore, extensionStore } from "@openmrs/esm-framework";
 import { Store } from "unistore";
-import cloneDeep from "lodash-es/cloneDeep";
+import merge from "lodash-es/merge";
 
 export interface ImplementerToolsStore {
   activeItemDescription?: ActiveItemDescription;
@@ -8,7 +8,7 @@ export interface ImplementerToolsStore {
   isOpen: boolean;
   isConfigToolbarOpen: boolean;
   isUIEditorEnabled: boolean;
-  slotsByModule: Record<string, Array<string>>;
+  extensionIdBySlotByModule: Record<string, Record<string, Array<string>>>;
 }
 
 export interface ActiveItemDescription {
@@ -26,26 +26,31 @@ export const implementerToolsStore: Store<ImplementerToolsStore> = createGlobalS
     isOpen: getIsImplementerToolsOpen(),
     isConfigToolbarOpen: getIsConfigToolbarOpen(),
     isUIEditorEnabled: getIsUIEditorEnabled(),
-    slotsByModule: {},
+    extensionIdBySlotByModule: {},
   }
 );
 
-/* Set up subscriptions for list of slots */
+/* Set up subscriptions for module-slot-extension cache.
+ * This cache exists so that implementer tools doesn't "forget" about
+ * slots & extensions that are no longer mounted.
+ */
 
 extensionStore.subscribe((state) => {
-  const slotsByModule = cloneDeep(
-    implementerToolsStore.getState().slotsByModule
-  );
+  const newValue = {};
   for (let [slotName, slot] of Object.entries(state.slots)) {
-    for (let moduleName of Object.keys(slot.instances)) {
-      if (!(slotsByModule[moduleName] ?? []).includes(slotName)) {
-        slotsByModule[moduleName] = (slotsByModule[moduleName] ?? []).concat([
-          slotName,
-        ]);
+    for (let [moduleName, instance] of Object.entries(slot.instances)) {
+      if (!newValue[moduleName]) {
+        newValue[moduleName] = {};
       }
+      newValue[moduleName][slotName] = instance.assignedIds;
     }
   }
-  implementerToolsStore.setState({ slotsByModule });
+  implementerToolsStore.setState({
+    extensionIdBySlotByModule: merge(
+      implementerToolsStore.getState().extensionIdBySlotByModule,
+      newValue
+    ),
+  });
 });
 
 /* Set up localStorage-serialized state elements */

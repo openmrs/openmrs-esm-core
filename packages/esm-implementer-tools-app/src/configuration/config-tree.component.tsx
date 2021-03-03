@@ -12,7 +12,7 @@ export interface ConfigTreeProps {
 }
 
 export function ConfigTree({ config }: ConfigTreeProps) {
-  const { slotsByModule } = useStore(implementerToolsStore);
+  const { extensionIdBySlotByModule } = useStore(implementerToolsStore);
 
   return (
     <div>
@@ -23,7 +23,7 @@ export function ConfigTree({ config }: ConfigTreeProps) {
             .map((moduleName) => {
               const moduleConfig = config[moduleName];
               return Object.keys(moduleConfig).length ||
-                slotsByModule[moduleName] ? (
+                extensionIdBySlotByModule[moduleName] ? (
                 <AccordionItem
                   title={<h6 className={styles.moduleName}>{moduleName}</h6>}
                   className={styles.fullWidthAccordion}
