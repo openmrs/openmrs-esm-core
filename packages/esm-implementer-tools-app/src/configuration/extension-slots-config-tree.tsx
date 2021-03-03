@@ -36,9 +36,11 @@ export function ExtensionSlotsConfigTree({
   config,
   moduleName,
 }: ExtensionSlotsConfigTreeProps) {
-  const { slotsByModule } = useStore(implementerToolsStore);
+  const { extensionIdBySlotByModule } = useStore(implementerToolsStore);
 
-  const extensionSlotNames = slotsByModule[moduleName] ?? [];
+  const extensionSlotNames = Object.keys(
+    extensionIdBySlotByModule[moduleName] || {}
+  );
 
   return extensionSlotNames.length ? (
     <Subtree label={"extension slots"} leaf={false}>
