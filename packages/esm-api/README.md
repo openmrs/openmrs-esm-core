@@ -2,6 +2,12 @@
 
 An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
 
+## Contents
+
+<!-- toc -->
+
+<!-- tocstop -->
+
 ## What is this?
 
 openmrs-esm-api is an [in-browser javascript module](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0002-modules.md) that exports functions that interact with the OpenMRS API.

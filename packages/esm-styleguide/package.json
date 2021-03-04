@@ -7,6 +7,7 @@
   "main": "src/index.ts",
   "source": true,
   "scripts": {
+    "document": "../../document.sh esm-styleguide",
     "test": "jest --passWithNoTests",
     "start:storybook": "start-storybook --port 7000",
     "build:storybook": "build-storybook",
