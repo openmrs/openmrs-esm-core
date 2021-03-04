@@ -2,6 +2,14 @@
 
 An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
 
+## Contents
+
+<!-- toc -->
+
+- [What is this?](#what-is-this)
+
+<!-- tocstop -->
+
 ## What is this?
 
 openmrs-esm-utils is an [in-browser javascript module](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0002-modules.md)

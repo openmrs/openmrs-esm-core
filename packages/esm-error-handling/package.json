@@ -7,6 +7,7 @@
   "main": "src/index.ts",
   "source": true,
   "scripts": {
+    "document": "../../document.sh esm-error-handling",
     "test": "jest --passWithNoTests",
     "build": "webpack --mode=production",
     "analyze": "webpack --mode=production --env.analyze=true",
