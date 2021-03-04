@@ -12,7 +12,7 @@ touch docs/API.md
 
 npx typedoc src/index.ts
 
-# Link back to README at the top; note this now works on Mac too thanks to the '' argument
+# Link back to README at the top; the '' argument is for Mac support
 sed -i '' "s/^@openmrs\/$1$/[Back to README.md](..\/README.md)/" "docs/API.md"
 
 echo Generating TOC
