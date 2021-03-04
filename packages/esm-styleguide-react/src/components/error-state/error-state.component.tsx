@@ -1,35 +1,39 @@
 import React from "react";
 
 import { Tile } from "carbon-components-react";
-import { useTranslation } from "react-i18next";
-
 import styles from "./error-state.scss";
 
 export const ErrorState: React.FC<ErrorStateProps> = ({
   error,
-  headerTitle
+  status,
+  headerText,
+  message
 }) => {
-  const { t } = useTranslation();
-
   return (
     <Tile light className={styles.tile}>
-      <h1 className={styles.heading}>{headerTitle}</h1>
+      <h1 className={styles.heading}>{headerText}</h1>
       <p className={styles.errorMessage}>
-        {t("error", "Error")} {`${error.response.status}: `}
-        {error.response.statusText}
+        {`${error} ${status}: ${message}`}
       </p>
-      <p className={styles.errorCopy}>{t("errorCopy")}</p>
     </Tile>
   );
 };
 
 export interface ErrorStateProps {
   /**
-   * Error object
+   * Error header text
    */
-  error: any;
+  headerText: string;
   /**
-   * Error state title
+   * Error title
    */
-  headerTitle: string;
+  error: string;
+  /**
+   * Error status
+   */
+  status: string;
+  /**
+   * Error message
+   */
+  message: string;
 }

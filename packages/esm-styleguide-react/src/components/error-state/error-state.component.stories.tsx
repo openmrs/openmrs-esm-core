@@ -13,11 +13,8 @@ const Template: Story<ErrorStateProps> = args => <ErrorState {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  error: {
-    response: {
-      status: "500",
-      statusText: "Internal Server Error"
-    }
-  },
-  headerTitle: "Vitals"
+  error: "Error",
+  headerText: "Vitals",
+  status: "500",
+  message: "Internal Server Error"
 };

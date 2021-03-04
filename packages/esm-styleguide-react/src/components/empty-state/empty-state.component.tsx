@@ -1,8 +1,6 @@
 import React from "react";
 
 import { Link, Tile } from "carbon-components-react";
-import { Trans, useTranslation } from "react-i18next";
-
 import EmptyDataIllustration from "./empty-data-illustration.component";
 import styles from "./empty-state.scss";
 
@@ -11,25 +9,18 @@ import styles from "./empty-state.scss";
  * @param props
  */
 export const EmptyState: React.FC<EmptyStateProps> = props => {
-  const { t } = useTranslation();
 
   return (
     <Tile light className={styles.tile}>
       <h1 className={styles.heading}>{props.headerTitle}</h1>
       <EmptyDataIllustration />
       <p className={styles.content}>
-        <Trans
-          i18nKey="emptyStateText"
-          values={{ displayText: props.displayText.toLowerCase() }}
-        >
-          There are no {props.displayText.toLowerCase()} to display for this
-          patient
-        </Trans>
+        {props.message}
       </p>
       {props.launchForm && (
         <p className={styles.action}>
           <Link onClick={() => props.launchForm?.()}>
-            {t("record", "Record")} {props.displayText.toLowerCase()}
+            {props.launchFormText}
           </Link>
         </p>
       )}
@@ -39,16 +30,20 @@ export const EmptyState: React.FC<EmptyStateProps> = props => {
 
 export interface EmptyStateProps {
   /**
-   * The state title
+   * Empty state title
    */
   headerTitle: string;
   /**
-   * Domain name for empty state
+   * Empty state message
    */
-  displayText: string;
+  message: string;
   /**
    * Optional callback for rendering the form that records new entries
    * @default null
    */
   launchForm?: Function;
+  /**
+   * Text to render for the launch-form widget
+   */
+  launchFormText?: string;
 }
