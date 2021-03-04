@@ -6,6 +6,8 @@ An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+
 
 <!-- toc -->
 
+- [What is this?](#what-is-this)
+
 <!-- tocstop -->
 
 ## What is this?

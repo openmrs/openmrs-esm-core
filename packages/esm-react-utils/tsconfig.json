@@ -19,5 +19,6 @@
       "es2018"
     ]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.*"]
 }

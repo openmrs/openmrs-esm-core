@@ -6,6 +6,14 @@ An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+
 
 <!-- toc -->
 
+- [What is this?](#what-is-this)
+- [How do I use it?](#how-do-i-use-it)
+- [Contributing / Development](#contributing--development)
+- [API](#api)
+- [createGlobalStore](#createglobalstore)
+- [getGlobalStore](#getglobalstore)
+- [getAppState](#getappstate)
+
 <!-- tocstop -->
 
 ## What is this?

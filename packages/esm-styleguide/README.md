@@ -11,6 +11,8 @@ Nuanced overrides of Carbon are specifically highlighted in [/src/carbon-overrid
 
 <!-- toc -->
 
+- [Contributing / Development](#contributing--development)
+
 <!-- tocstop -->
 
 ## Contributing / Development

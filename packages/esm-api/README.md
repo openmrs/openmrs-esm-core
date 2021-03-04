@@ -6,6 +6,16 @@ An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+
 
 <!-- toc -->
 
+- [What is this?](#what-is-this)
+- [How do I use it?](#how-do-i-use-it)
+- [Contributing / Development](#contributing--development)
+- [API](#api)
+- [openmrsFetch(url, init): Promise](#openmrsfetchurl-init-promise)
+- [openmrsObservableFetch(url, init): Observable](#openmrsobservablefetchurl-init-observable)
+- [fhir](#fhir)
+- [getCurrentUser(): Observable](#getcurrentuser-observable)
+- [refetchCurrentUser(): Observable](#refetchcurrentuser-observable)
+
 <!-- tocstop -->
 
 ## What is this?
