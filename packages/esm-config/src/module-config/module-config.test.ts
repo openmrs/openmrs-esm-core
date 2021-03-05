@@ -19,16 +19,10 @@ import {
 } from "./state";
 import { Type } from "../types";
 
-const mockConfigInternalStore = configInternalStore as MockedStore<
-  ConfigInternalStore
->;
+const mockConfigInternalStore = configInternalStore as MockedStore<ConfigInternalStore>;
 const mockTemporaryConfigStore = temporaryConfigStore as MockedStore<object>;
-const mockImplementerToolsConfigStore = implementerToolsConfigStore as MockedStore<
-  ImplementerToolsConfigStore
->;
-const mockConfigExtensionStore = configExtensionStore as MockedStore<
-  ConfigExtensionStore
->;
+const mockImplementerToolsConfigStore = implementerToolsConfigStore as MockedStore<ImplementerToolsConfigStore>;
+const mockConfigExtensionStore = configExtensionStore as MockedStore<ConfigExtensionStore>;
 
 async function resetAll() {
   mockConfigInternalStore.resetMock();
