@@ -76,7 +76,7 @@ export function runProject(
 
 export async function mergeImportmap(
   decl: ImportmapDeclaration,
-  imports: Record<string, string>
+  imports: Record<string, string> | false
 ) {
   if (imports && Object.keys(imports).length > 0) {
     if (decl.type === "url") {
