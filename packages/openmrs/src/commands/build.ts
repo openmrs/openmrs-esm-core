@@ -37,7 +37,7 @@ export async function runBuild(args: BuildArgs) {
     },
   });
 
-  return await new Promise((resolve, reject) => {
+  return await new Promise<void>((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {
         reject(err);

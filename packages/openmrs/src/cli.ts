@@ -80,7 +80,7 @@ yargs.command(
       ...args,
       importmap: await mergeImportmap(
         getImportmap(args.importmap, args.port),
-        (args["run-project"] || args.runProject) &&
+        (args["run-project"] || (args.runProject as boolean)) &&
           runProject(args.port, args["shared-dependencies"])
       ),
     })
