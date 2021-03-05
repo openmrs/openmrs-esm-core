@@ -7,14 +7,12 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
   error,
   status,
   headerText,
-  message
+  message,
 }) => {
   return (
     <Tile light className={styles.tile}>
       <h1 className={styles.heading}>{headerText}</h1>
-      <p className={styles.errorMessage}>
-        {`${error} ${status}: ${message}`}
-      </p>
+      <p className={styles.errorMessage}>{`${error} ${status}: ${message}`}</p>
     </Tile>
   );
 };

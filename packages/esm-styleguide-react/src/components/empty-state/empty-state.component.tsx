@@ -8,15 +8,12 @@ import styles from "./empty-state.scss";
  * Component for rendering empty state of the enclosing component
  * @param props
  */
-export const EmptyState: React.FC<EmptyStateProps> = props => {
-
+export const EmptyState: React.FC<EmptyStateProps> = (props) => {
   return (
     <Tile light className={styles.tile}>
       <h1 className={styles.heading}>{props.headerTitle}</h1>
       <EmptyDataIllustration />
-      <p className={styles.content}>
-        {props.message}
-      </p>
+      <p className={styles.content}>{props.message}</p>
       {props.launchForm && (
         <p className={styles.action}>
           <Link onClick={() => props.launchForm?.()}>

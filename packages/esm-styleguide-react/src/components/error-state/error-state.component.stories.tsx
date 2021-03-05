@@ -6,15 +6,15 @@ import "@openmrs/esm-styleguide/src/style.css";
 export default {
   component: ErrorState,
   title: "ErrorState",
-  argTypes: {}
+  argTypes: {},
 } as Meta;
 
-const Template: Story<ErrorStateProps> = args => <ErrorState {...args} />;
+const Template: Story<ErrorStateProps> = (args) => <ErrorState {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   error: "Error",
   headerText: "Vitals",
   status: "500",
-  message: "Internal Server Error"
+  message: "Internal Server Error",
 };

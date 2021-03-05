@@ -6,13 +6,13 @@ import "@openmrs/esm-styleguide/src/style.css";
 export default {
   component: EmptyState,
   title: "EmptyState",
-  argTypes: {}
+  argTypes: {},
 };
 
-const Template: Story<EmptyStateProps> = args => <EmptyState {...args} />;
+const Template: Story<EmptyStateProps> = (args) => <EmptyState {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   headerTitle: "Diagnosis",
-  message: "There are no diagnosis to display for this patient"
+  message: "There are no diagnosis to display for this patient",
 };
