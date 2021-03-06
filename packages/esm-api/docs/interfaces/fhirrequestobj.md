@@ -16,7 +16,7 @@
 
 • **headers**: [*FetchHeaders*](fetchheaders.md)
 
-Defined in: [packages/esm-api/src/fhir.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L41)
+Defined in: [packages/esm-api/src/fhir.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L47)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **method**: *string*
 
-Defined in: [packages/esm-api/src/fhir.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L40)
+Defined in: [packages/esm-api/src/fhir.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L46)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **url**: *string*
 
-Defined in: [packages/esm-api/src/fhir.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L39)
+Defined in: [packages/esm-api/src/fhir.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L45)
