@@ -32,6 +32,11 @@ function getPatientUuidFromUrl() {
   return match && match[1];
 }
 
+/**
+ * @param opts
+ *
+ * @category API Object
+ */
 function getCurrentPatient(): Observable<fhir.Patient>;
 function getCurrentPatient(
   opts: PatientWithFullResponse
@@ -50,12 +55,18 @@ function getCurrentPatient(
 
 export { getCurrentPatient };
 
+/**
+ * @category API Object
+ */
 export function refetchCurrentPatient() {
   currentPatientSubject.next(
     fhir.read<fhir.Patient>({ type: "Patient", patient: currentPatientUuid })
   );
 }
 
+/**
+ * @category API Object
+ */
 export function getCurrentPatientUuid(): Observable<PatientUuid> {
   return currentPatientUuidSubject.asObservable();
 }

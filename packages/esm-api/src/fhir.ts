@@ -35,6 +35,8 @@ const openmrsFhirAdapter = {
  * that can be used to call FHIR-compliant OpenMRS APIs. See
  * [the docs for fhir.js](https://github.com/FHIR/fhir.js) for more info
  * and example usage.
+ *
+ * @category API
  */
 export const fhir: FhirClient = makeFhir(
   { baseUrl: fhirBaseUrl },

@@ -29,27 +29,38 @@
 - [CurrentPatient](API.md#currentpatient)
 - [PatientUuid](API.md#patientuuid)
 
-### Variables
+### API Variables
+
+- [fhir](API.md#fhir)
+
+### Other Variables
 
 - [backendDependencies](API.md#backenddependencies)
-- [fhir](API.md#fhir)
 - [fhirBaseUrl](API.md#fhirbaseurl)
 - [sessionEndpoint](API.md#sessionendpoint)
 
-### Functions
+### API Functions
+
+- [openmrsFetch](API.md#openmrsfetch)
+- [openmrsObservableFetch](API.md#openmrsobservablefetch)
+
+### API Object Functions
 
 - [getCurrentPatient](API.md#getcurrentpatient)
 - [getCurrentPatientUuid](API.md#getcurrentpatientuuid)
 - [getCurrentUser](API.md#getcurrentuser)
-- [getNewWorkspaceItem](API.md#getnewworkspaceitem)
-- [makeUrl](API.md#makeurl)
-- [newWorkspaceItem](API.md#newworkspaceitem)
-- [openmrsFetch](API.md#openmrsfetch)
-- [openmrsObservableFetch](API.md#openmrsobservablefetch)
 - [refetchCurrentPatient](API.md#refetchcurrentpatient)
 - [refetchCurrentUser](API.md#refetchcurrentuser)
-- [setupApiModule](API.md#setupapimodule)
+
+### Other Functions
+
+- [makeUrl](API.md#makeurl)
 - [userHasAccess](API.md#userhasaccess)
+
+### Workspace Functions
+
+- [getNewWorkspaceItem](API.md#getnewworkspaceitem)
+- [newWorkspaceItem](API.md#newworkspaceitem)
 
 ## Type aliases
 
@@ -57,7 +68,7 @@
 
 Ƭ **CurrentPatient**: fhir.Patient \| [*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L63)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L74)
 
 ___
 
@@ -65,9 +76,24 @@ ___
 
 Ƭ **PatientUuid**: *string* \| *null*
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L75)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L86)
 
-## Variables
+## API Variables
+
+### fhir
+
+• `Const` **fhir**: FhirClient
+
+The `fhir` object is [an instance of fhir.js](https://github.com/FHIR/fhir.js)
+that can be used to call FHIR-compliant OpenMRS APIs. See
+[the docs for fhir.js](https://github.com/FHIR/fhir.js) for more info
+and example usage.
+
+Defined in: [packages/esm-api/src/fhir.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L41)
+
+___
+
+## Other Variables
 
 ### backendDependencies
 
@@ -81,19 +107,6 @@ Name | Type |
 `webservices.rest` | *string* |
 
 Defined in: [packages/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-backend-dependencies.ts#L1)
-
-___
-
-### fhir
-
-• `Const` **fhir**: FhirClient
-
-The `fhir` object is [an instance of fhir.js](https://github.com/FHIR/fhir.js)
-that can be used to call FHIR-compliant OpenMRS APIs. See
-[the docs for fhir.js](https://github.com/FHIR/fhir.js) for more info
-and example usage.
-
-Defined in: [packages/esm-api/src/fhir.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L39)
 
 ___
 
@@ -111,158 +124,7 @@ ___
 
 Defined in: [packages/esm-api/src/openmrs-fetch.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L6)
 
-## Functions
-
-### getCurrentPatient
-
-▸ **getCurrentPatient**(): *Observable*<fhir.Patient\>
-
-**Returns:** *Observable*<fhir.Patient\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L35)
-
-▸ **getCurrentPatient**(`opts`: PatientWithFullResponse): *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>\>
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`opts` | PatientWithFullResponse |
-
-**Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L36)
-
-▸ **getCurrentPatient**(`opts`: OnlyThePatient): *Observable*<fhir.Patient\>
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`opts` | OnlyThePatient |
-
-**Returns:** *Observable*<fhir.Patient\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L39)
-
-___
-
-### getCurrentPatientUuid
-
-▸ **getCurrentPatientUuid**(): *Observable*<[*PatientUuid*](API.md#patientuuid)\>
-
-**Returns:** *Observable*<[*PatientUuid*](API.md#patientuuid)\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L59)
-
-___
-
-### getCurrentUser
-
-▸ **getCurrentUser**(): *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
-
-The getCurrentUser function returns an observable that produces
-**zero or more values, over time**. It will produce zero values
-by default if the user is not logged in. And it will provide a
-first value when the logged in user is fetched from the server.
-Subsequent values will be produced whenever the user object is
-updated.
-
-**Returns:** *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
-
-An Observable that produces zero or more values (as
-  described above). The values produced will be a user object (if
-  `includeAuthStatus` is set to `false`) or an object with a session
-  and authenticated property (if `includeAuthStatus` is set to `true`).
-
-#### Example
-
-```js
-import { getCurrentUser } from '@openmrs/esm-api'
-const subscription = getCurrentUser().subscribe(
-  user => console.log(user)
-)
-subscription.unsubscribe()
-getCurrentUser({includeAuthStatus: true}).subscribe(
-  data => console.log(data.authenticated)
-)
-```
-
-#### Be sure to unsubscribe when your component unmounts
-
-Otherwise your code will continue getting updates to the user object
-even after the UI component is gone from the screen. This is a memory
-leak and source of bugs.
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L54)
-
-▸ **getCurrentUser**(`opts`: [*CurrentUserWithResponseOption*](interfaces/currentuserwithresponseoption.md)): *Observable*<[*UnauthenticatedUser*](interfaces/unauthenticateduser.md)\>
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`opts` | [*CurrentUserWithResponseOption*](interfaces/currentuserwithresponseoption.md) |
-
-**Returns:** *Observable*<[*UnauthenticatedUser*](interfaces/unauthenticateduser.md)\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L55)
-
-▸ **getCurrentUser**(`opts`: [*CurrentUserWithoutResponseOption*](interfaces/currentuserwithoutresponseoption.md)): *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`opts` | [*CurrentUserWithoutResponseOption*](interfaces/currentuserwithoutresponseoption.md) |
-
-**Returns:** *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L58)
-
-___
-
-### getNewWorkspaceItem
-
-▸ **getNewWorkspaceItem**(): *Observable*<[*WorkspaceItem*](interfaces/workspaceitem.md)\>
-
-**Returns:** *Observable*<[*WorkspaceItem*](interfaces/workspaceitem.md)\>
-
-Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L9)
-
-___
-
-### makeUrl
-
-▸ **makeUrl**(`path`: *string*): *string*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`path` | *string* |
-
-**Returns:** *string*
-
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L8)
-
-___
-
-### newWorkspaceItem
-
-▸ **newWorkspaceItem**(`item`: [*WorkspaceItem*](interfaces/workspaceitem.md)): *void*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`item` | [*WorkspaceItem*](interfaces/workspaceitem.md) |
-
-**Returns:** *void*
-
-Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L5)
-
-___
+## API Functions
 
 ### openmrsFetch
 
@@ -323,7 +185,7 @@ It is best practice to cancel your network requests when the user
 navigates away from a page while the request is pending request, to
 free up memory and network resources and to prevent race conditions.
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L60)
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L61)
 
 ___
 
@@ -370,7 +232,118 @@ subscription.unsubscribe()
 
 To cancel the network request, simply call `subscription.unsubscribe();`
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:223](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L223)
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:226](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L226)
+
+___
+
+## API Object Functions
+
+### getCurrentPatient
+
+▸ **getCurrentPatient**(): *Observable*<fhir.Patient\>
+
+**Returns:** *Observable*<fhir.Patient\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L40)
+
+▸ **getCurrentPatient**(`opts`: PatientWithFullResponse): *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`opts` | PatientWithFullResponse |
+
+**Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L41)
+
+▸ **getCurrentPatient**(`opts`: OnlyThePatient): *Observable*<fhir.Patient\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`opts` | OnlyThePatient |
+
+**Returns:** *Observable*<fhir.Patient\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L44)
+
+___
+
+### getCurrentPatientUuid
+
+▸ **getCurrentPatientUuid**(): *Observable*<[*PatientUuid*](API.md#patientuuid)\>
+
+**Returns:** *Observable*<[*PatientUuid*](API.md#patientuuid)\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L70)
+
+___
+
+### getCurrentUser
+
+▸ **getCurrentUser**(): *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
+
+The getCurrentUser function returns an observable that produces
+**zero or more values, over time**. It will produce zero values
+by default if the user is not logged in. And it will provide a
+first value when the logged in user is fetched from the server.
+Subsequent values will be produced whenever the user object is
+updated.
+
+**Returns:** *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
+
+An Observable that produces zero or more values (as
+  described above). The values produced will be a user object (if
+  `includeAuthStatus` is set to `false`) or an object with a session
+  and authenticated property (if `includeAuthStatus` is set to `true`).
+
+#### Example
+
+```js
+import { getCurrentUser } from '@openmrs/esm-api'
+const subscription = getCurrentUser().subscribe(
+  user => console.log(user)
+)
+subscription.unsubscribe()
+getCurrentUser({includeAuthStatus: true}).subscribe(
+  data => console.log(data.authenticated)
+)
+```
+
+#### Be sure to unsubscribe when your component unmounts
+
+Otherwise your code will continue getting updates to the user object
+even after the UI component is gone from the screen. This is a memory
+leak and source of bugs.
+
+Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L56)
+
+▸ **getCurrentUser**(`opts`: [*CurrentUserWithResponseOption*](interfaces/currentuserwithresponseoption.md)): *Observable*<[*UnauthenticatedUser*](interfaces/unauthenticateduser.md)\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`opts` | [*CurrentUserWithResponseOption*](interfaces/currentuserwithresponseoption.md) |
+
+**Returns:** *Observable*<[*UnauthenticatedUser*](interfaces/unauthenticateduser.md)\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L57)
+
+▸ **getCurrentUser**(`opts`: [*CurrentUserWithoutResponseOption*](interfaces/currentuserwithoutresponseoption.md)): *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`opts` | [*CurrentUserWithoutResponseOption*](interfaces/currentuserwithoutresponseoption.md) |
+
+**Returns:** *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L60)
 
 ___
 
@@ -380,7 +353,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L53)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L61)
 
 ___
 
@@ -402,17 +375,25 @@ import { refetchCurrentUser } from '@openmrs/esm-api'
 refetchCurrentUser()
 ```
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L112)
+Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L116)
 
 ___
 
-### setupApiModule
+## Other Functions
 
-▸ **setupApiModule**(): *void*
+### makeUrl
 
-**Returns:** *void*
+▸ **makeUrl**(`path`: *string*): *string*
 
-Defined in: [packages/esm-api/src/setup.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/setup.ts#L4)
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`path` | *string* |
+
+**Returns:** *string*
+
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L8)
 
 ___
 
@@ -429,4 +410,32 @@ Name | Type |
 
 **Returns:** *undefined* \| [*Privilege*](interfaces/privilege.md)
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L117)
+Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L121)
+
+___
+
+## Workspace Functions
+
+### getNewWorkspaceItem
+
+▸ **getNewWorkspaceItem**(): *Observable*<[*WorkspaceItem*](interfaces/workspaceitem.md)\>
+
+**Returns:** *Observable*<[*WorkspaceItem*](interfaces/workspaceitem.md)\>
+
+Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L19)
+
+___
+
+### newWorkspaceItem
+
+▸ **newWorkspaceItem**(`item`: [*WorkspaceItem*](interfaces/workspaceitem.md)): *void*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`item` | [*WorkspaceItem*](interfaces/workspaceitem.md) |
+
+**Returns:** *void*
+
+Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L10)

@@ -56,6 +56,7 @@ export function makeUrl(path: string) {
  * navigates away from a page while the request is pending request, to
  * free up memory and network resources and to prevent race conditions.
  *
+ * @category API
  */
 export function openmrsFetch<T = any>(
   path: string,
@@ -219,6 +220,8 @@ export function openmrsFetch<T = any>(
  * #### Cancellation
  *
  * To cancel the network request, simply call `subscription.unsubscribe();`
+ *
+ * @category API
  */
 export function openmrsObservableFetch<T>(
   url: string,
