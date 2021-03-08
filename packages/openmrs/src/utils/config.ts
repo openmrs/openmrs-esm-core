@@ -47,5 +47,11 @@ export function loadConfig(options: WebpackOptions = {}) {
 
   setEnvVariables(variables);
 
-  return require("@openmrs/esm-app-shell/webpack.config.js");
+  const config = require("@openmrs/esm-app-shell/webpack.config.js");
+
+  if (typeof config === 'function') {
+    return config({});
+  }
+
+  return config;
 }
