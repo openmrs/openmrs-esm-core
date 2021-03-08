@@ -1,4 +1,5 @@
 export * from "@openmrs/esm-api";
+export * from "@openmrs/esm-breadcrumbs";
 export * from "@openmrs/esm-config";
 export * from "@openmrs/esm-error-handling";
 export * from "@openmrs/esm-extensions";

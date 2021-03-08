@@ -32,7 +32,7 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .map((url) => JSON.stringify(url))
   .join(", ");
 
-module.exports = {
+module.exports = (env) => ({
   entry: resolve(__dirname, "src/index.ts"),
   output: {
     filename: "openmrs.js",
@@ -140,7 +140,7 @@ module.exports = {
       "process.env.BUILD_VERSION": JSON.stringify(`${version}-${timestamp}`),
     }),
     new BundleAnalyzerPlugin({
-      analyzerMode: "static",
+      analyzerMode: env && env.analyze ? "static" : "disabled",
     }),
   ],
-};
+});

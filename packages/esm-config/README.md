@@ -6,10 +6,9 @@
 
 ## What is this?
 
-This is the configuration library for
-[OpenMRS Microfrontends](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
-It makes configurability easier for developers and configuring easier for
-implementers.
+This is the configuration library for [OpenMRS Microfrontends](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
+
+It makes configurability easier for developers and configuring easier for implementers.
 
 ## Contents
 

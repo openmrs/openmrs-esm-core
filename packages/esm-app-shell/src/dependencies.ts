@@ -8,6 +8,7 @@ export const sharedDependencies = {
   "single-spa": () => require("single-spa"),
   "@openmrs/esm-api": () => require("@openmrs/esm-framework"),
   "@openmrs/esm-app-shell": () => ({}),
+  "@openmrs/esm-breadcrumbs": () => require("@openmrs/esm-framework"),
   "@openmrs/esm-config": () => require("@openmrs/esm-framework"),
   "@openmrs/esm-module-config": () => require("@openmrs/esm-framework"),
   "@openmrs/esm-context": () => require("@openmrs/esm-framework"),

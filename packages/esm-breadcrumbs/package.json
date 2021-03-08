@@ -1,13 +1,13 @@
 {
-  "name": "@openmrs/esm-extensions",
+  "name": "@openmrs/esm-breadcrumbs",
   "version": "3.1.10",
   "license": "MPL-2.0",
-  "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
-  "browser": "dist/openmrs-esm-extensions.js",
+  "description": "The javascript module for breadcrumb registration",
+  "browser": "dist/openmrs-esm-breadcrumbs.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "document": "../../document.sh esm-extensions",
+    "document": "../../document.sh esm-breadcrumbs",
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
     "analyze": "webpack --mode=production --env.analyze=true",
@@ -37,18 +37,13 @@
     "access": "public"
   },
   "dependencies": {
+    "path-to-regexp": "6.1.0",
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "3.x",
-    "@openmrs/esm-config": "3.x",
-    "@openmrs/esm-state": "3.x",
-    "single-spa": "4.x"
+    "@openmrs/esm-state": "3.x"
   },
   "devDependencies": {
-    "@openmrs/esm-api": "^3.1.10",
-    "@openmrs/esm-config": "^3.1.10",
-    "@openmrs/esm-state": "^3.1.10",
-    "single-spa": "^4.4.1"
+    "@openmrs/esm-state": "^3.1.10"
   }
 }

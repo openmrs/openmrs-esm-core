@@ -12,8 +12,7 @@
     "build": "webpack --mode=production",
     "analyze": "webpack --mode=production --env.analyze=true",
     "typescript": "tsc",
-    "lint": "eslint src --ext ts,tsx",
-    "format": "prettier --write src/**"
+    "lint": "eslint src --ext ts,tsx"
   },
   "keywords": [
     "openmrs",
@@ -40,8 +39,7 @@
   "dependencies": {
     "fhir.js": "0.0.22",
     "lodash-es": "^4.17.15",
-    "systemjs-webpack-interop": "^2.1.2",
-    "unistore": "^3.5.2"
+    "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
     "@openmrs/esm-config": "3.x",

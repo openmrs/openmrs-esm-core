@@ -10,6 +10,7 @@ export function getSharedDependencies() {
     "react-i18next",
     "single-spa",
     "@openmrs/esm-api",
+    "@openmrs/esm-breadcrumbs",
     "@openmrs/esm-config",
     "@openmrs/esm-module-config",
     "@openmrs/esm-context",
