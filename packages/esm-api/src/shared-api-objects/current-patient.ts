@@ -33,8 +33,6 @@ function getPatientUuidFromUrl() {
 }
 
 /**
- * @param opts
- *
  * @category API Object
  */
 function getCurrentPatient(): Observable<fhir.Patient>;
