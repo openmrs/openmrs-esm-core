@@ -17,10 +17,21 @@ function getMatcher(settings: BreadcrumbSettings) {
   }
 }
 
+/**
+ *
+ * @param breadcrumb
+ * @returns
+ * @category Breadcrumb
+ */
 export function registerBreadcrumb(breadcrumb: BreadcrumbSettings) {
   return registerBreadcrumbs([breadcrumb]);
 }
 
+/**
+ *
+ * @param breadcrumbs
+ * @category Breadcrumb
+ */
 export function registerBreadcrumbs(breadcrumbs: Array<BreadcrumbSettings>) {
   const prevBreadcrumbs = getBreadcrumbs();
   const newBreadcrumbs = breadcrumbs.map((settings) => ({
@@ -31,6 +42,11 @@ export function registerBreadcrumbs(breadcrumbs: Array<BreadcrumbSettings>) {
   store.setState(nextBreadcrumbs, true);
 }
 
+/**
+ *
+ * @returns
+ * @category Breadcrumb
+ */
 export function getBreadcrumbs() {
   return store.getState();
 }

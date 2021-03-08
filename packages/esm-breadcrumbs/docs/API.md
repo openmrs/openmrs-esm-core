@@ -9,7 +9,7 @@
 - [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)
 - [BreadcrumbSettings](interfaces/breadcrumbsettings.md)
 
-### Functions
+### Breadcrumb Functions
 
 - [filterBreadcrumbs](API.md#filterbreadcrumbs)
 - [getBreadcrumbs](API.md#getbreadcrumbs)
@@ -17,7 +17,7 @@
 - [registerBreadcrumb](API.md#registerbreadcrumb)
 - [registerBreadcrumbs](API.md#registerbreadcrumbs)
 
-## Functions
+## Breadcrumb Functions
 
 ### filterBreadcrumbs
 
@@ -32,7 +32,7 @@ Name | Type |
 
 **Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
 
-Defined in: [filter.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/filter.ts#L42)
+Defined in: [filter.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/filter.ts#L49)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 **Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
 
-Defined in: [db.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/db.ts#L34)
+Defined in: [db.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/db.ts#L50)
 
 ___
 
@@ -58,7 +58,7 @@ Name | Type |
 
 **Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
 
-Defined in: [filter.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/filter.ts#L65)
+Defined in: [filter.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/filter.ts#L78)
 
 ___
 
@@ -74,7 +74,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [db.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/db.ts#L20)
+Defined in: [db.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/db.ts#L26)
 
 ___
 
@@ -90,4 +90,4 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [db.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/db.ts#L24)
+Defined in: [db.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/db.ts#L35)

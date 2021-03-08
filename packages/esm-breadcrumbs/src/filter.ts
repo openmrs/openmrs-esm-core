@@ -39,6 +39,13 @@ function getNext(
   return undefined;
 }
 
+/**
+ *
+ * @param list
+ * @param path
+ * @returns
+ * @category Breadcrumb
+ */
 export function filterBreadcrumbs(
   list: Array<BreadcrumbRegistration>,
   path: string
@@ -62,6 +69,12 @@ export function filterBreadcrumbs(
   return [];
 }
 
+/**
+ *
+ * @param path
+ * @returns
+ * @category Breadcrumb
+ */
 export function getBreadcrumbsFor(path: string) {
   const breadcrumbs = getBreadcrumbs();
   return filterBreadcrumbs(breadcrumbs, path);
