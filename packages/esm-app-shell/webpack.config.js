@@ -32,7 +32,7 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .map((url) => JSON.stringify(url))
   .join(", ");
 
-module.exports = (env) => ({
+module.exports = (env, argv = {}) => ({
   entry: resolve(__dirname, "src/index.ts"),
   output: {
     filename: "openmrs.js",
@@ -60,7 +60,7 @@ module.exports = (env) => ({
       },
     ],
   },
-  mode: process.env.NODE_ENV || "production",
+  mode: argv.mode || process.env.NODE_ENV || "production",
   devtool: "sourcemap",
   module: {
     rules: [

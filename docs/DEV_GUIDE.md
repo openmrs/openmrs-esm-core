@@ -1,6 +1,6 @@
 # Developer Guide to Developing an MF and Creating a Distribution
 
-You can find the reference application (“refapp”) that is used for testing the latest bits and pieces at https://openmrs-spa.org/openmrs/spa.
+You can find the reference application ("refapp") that is used for testing the latest bits and pieces at https://openmrs-spa.org/openmrs/spa.
 
 ## Table of Contents
 
@@ -20,23 +20,30 @@ What is the general workflow?
 
 Clone the repository of interest (e.g. [openmrs-esm-patient chart](https://github.com/openmrs/openmrs-esm-patient-chart)):
 
-```
+```sh
 git clone https://github.com/openmrs/openmrs-esm-patient-chart
 ```
 
 Change to the cloned repository's directory and install its dependencies:
 
-```
+```sh
 cd openmrs-esm-patient-chart
 npm install
 ```
 
-Start a dev server:
+Start a dev server (more explanation below):
 
-```
+```sh
 npx openmrs debug --run-project
+npx openmrs debug --run-project --sources 'packages/esm-*-app/'
 npx openmrs@latest
 ```
+
+The first option starts the dev server for a local microfrontend. This triggers a dev server on the installed app shell and another dev server on the local microfrontend. Both will come together via the import-map making the process quite easy.
+
+Likewise, the second option could be utilized in a monorepo where multiple microfrontends should be debugged simultaneously. The `sources` option accepts a wildcard / glob pattern for the source directory.
+
+The last one just starts a local OpenMRS instance, which is great for demo purposes.
 
 Make changes to the code and when done, commit them upstream and make a pull request. The pull request is then reviewed and merged. The changes introduced will be automatically be deployed to the reference application.
 
@@ -54,7 +61,7 @@ There are multiple ways of achieving this.
 
 Start the first microfrontend using:
 
-```
+```sh
 npx openmrs debug
 ```
 
@@ -84,13 +91,13 @@ The process for creating a distribution with OpenMRS microfrontends is as follow
 
 Build your app shell using:
 
-```
+```sh
 npx openmrs build
 ```
 
 Assemble your selected microfrontends / modules:
 
-```
+```sh
 npx openmrs assemble
 ```
 
@@ -101,7 +108,7 @@ Choose a way of running the microfrontend:
 
 In both cases, there are multiple command line flags available that allow you can tweak to get the right setup. If in doubt, consult the documentation, or run the commands with the `--help` flag e.g.
 
-```
+```sh
 npx openmrs build --help
 ```
 

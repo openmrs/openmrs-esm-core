@@ -49,7 +49,7 @@ export function loadConfig(options: WebpackOptions = {}) {
 
   const config = require("@openmrs/esm-app-shell/webpack.config.js");
 
-  if (typeof config === 'function') {
+  if (typeof config === "function") {
     return config({});
   }
 

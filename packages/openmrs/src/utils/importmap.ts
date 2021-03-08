@@ -5,6 +5,8 @@ import { startWebpack } from "./webpack";
 import { getDependentModules, getMainBundle } from "./dependencies";
 import axios from "axios";
 
+import glob = require("glob");
+
 async function readImportmap(path: string) {
   if (path.startsWith("http://") || path.startsWith("https://")) {
     return await axios
@@ -35,43 +37,86 @@ export function checkImportmapJson(value: string) {
   }
 }
 
-export function runProject(
+async function matchAny(baseDir: string, patterns: Array<string>) {
+  const matches: Array<string> = [];
+  await Promise.all(
+    patterns.map(
+      (pattern) =>
+        new Promise<void>((resolve, reject) => {
+          glob(
+            pattern,
+            {
+              cwd: baseDir,
+            },
+            (err, files) => {
+              if (err) {
+                reject(err);
+              } else {
+                matches.push(...files);
+                resolve();
+              }
+            }
+          );
+        })
+    )
+  );
+  return matches;
+}
+
+export async function runProject(
   basePort: number,
-  sharedDependencies: Array<string>
-): Record<string, string> {
-  const projectFile = resolve(process.cwd(), "package.json");
-
-  if (!existsSync(projectFile)) {
-    logFail(`No "package.json" found in the current directory.`);
-    return process.exit(1);
-  }
-
-  const configPath = resolve(process.cwd(), "webpack.config.js");
-
-  if (!existsSync(configPath)) {
-    logFail(`No "webpack.config.json" found in the current directory.`);
-    return process.exit(1);
-  }
+  sharedDependencies: Array<string>,
+  sourceDirectoryPattern: string
+): Promise<Record<string, string>> {
+  const baseDir = process.cwd();
+  const sourceDirectories = await matchAny(baseDir, [sourceDirectoryPattern]);
+  const importMap = {};
 
   logInfo("Loading dynamic import map ...");
 
-  const project = require(projectFile);
-  const port = basePort + 1;
-  const bundle = getMainBundle(project);
-  const host = `http://localhost:${port}`;
-  const dependencies = getDependentModules(
-    process.cwd(),
-    host,
-    project.peerDependencies,
-    sharedDependencies
+  for (let i = 0; i < sourceDirectories.length; i++) {
+    const sourceDirectory = resolve(baseDir, sourceDirectories[i]);
+    const projectFile = resolve(sourceDirectory, "package.json");
+    const configPath = resolve(sourceDirectory, "webpack.config.js");
+
+    logInfo(`Looking in directory "${sourceDirectory}" ...`);
+
+    if (!existsSync(projectFile)) {
+      logFail(
+        `No "package.json" found in directory "${sourceDirectory}". Skipping ...`
+      );
+      continue;
+    }
+
+    if (!existsSync(configPath)) {
+      logFail(
+        `No "webpack.config.json" found in directory "${sourceDirectory}". Skipping ...`
+      );
+      continue;
+    }
+
+    const project = require(projectFile);
+    const port = basePort + i + 1;
+    const bundle = getMainBundle(project);
+    const host = `http://localhost:${port}`;
+    const dependencies = getDependentModules(
+      process.cwd(),
+      host,
+      project.peerDependencies,
+      sharedDependencies
+    );
+
+    startWebpack(configPath, port, sourceDirectory);
+
+    Object.assign(importMap, dependencies);
+    importMap[project.name] = `${host}/${bundle.name}`;
+  }
+
+  logInfo(
+    `Assembled dynamic import map (${Object.keys(importMap).join(", ")}).`
   );
 
-  startWebpack(configPath, port);
-
-  return {
-    ...dependencies,
-    [project.name]: `${host}/${bundle.name}`,
-  };
+  return importMap;
 }
 
 export async function mergeImportmap(
@@ -97,19 +142,21 @@ export async function mergeImportmap(
   return decl;
 }
 
-export function getImportmap(
+export async function getImportmap(
   value: string,
   basePort?: number
-): ImportmapDeclaration {
+): Promise<ImportmapDeclaration> {
   if (value === "@" && basePort) {
     logWarn(
       'Using the "@" import map is deprecated. Switch to use the "--run-project" flag.'
     );
 
+    const imports = await runProject(basePort, [], ".");
+
     return {
       type: "inline",
       value: JSON.stringify({
-        imports: runProject(basePort, []),
+        imports,
       }),
     };
   } else if (!/https?:\/\//.test(value)) {

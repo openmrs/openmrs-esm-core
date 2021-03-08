@@ -60,6 +60,12 @@ yargs.command(
         "run-project",
         "Runs the project in the current directory fusing it with the specified import map."
       )
+      .string("sources")
+      .default("sources", ".")
+      .describe(
+        "sources",
+        "Runs the projects from the provided source directories."
+      )
       .array("shared-dependencies")
       .default("shared-dependencies", [])
       .describe(
@@ -79,9 +85,13 @@ yargs.command(
       configUrls: args["config-url"],
       ...args,
       importmap: await mergeImportmap(
-        getImportmap(args.importmap, args.port),
+        await getImportmap(args.importmap, args.port),
         (args["run-project"] || (args.runProject as boolean)) &&
-          runProject(args.port, args["shared-dependencies"])
+          (await runProject(
+            args.port,
+            args["shared-dependencies"],
+            args.sources
+          ))
       ),
     })
 );
@@ -124,13 +134,13 @@ yargs.command(
         "importmap",
         "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
       ),
-  (args) =>
+  async (args) =>
     runCommand("runBuild", {
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
       configUrls: args["config-url"],
       ...args,
-      importmap: getImportmap(args.importmap),
+      importmap: await getImportmap(args.importmap),
       target: resolve(process.cwd(), args.target),
     })
 );
