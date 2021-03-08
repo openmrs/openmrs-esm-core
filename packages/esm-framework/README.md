@@ -6,6 +6,9 @@ An [OpenMRS Microfrontend library](https://wiki.openmrs.org/display/projects/Fro
 
 <!-- toc -->
 
+- [What is this?](#what-is-this)
+- [Contributing / Development](#contributing--development)
+
 <!-- tocstop -->
 
 ## What is this?

@@ -1,0 +1,35 @@
+[@openmrs/esm-framework](../API.md) / FHIRRequestObj
+
+# Interface: FHIRRequestObj
+
+## Table of contents
+
+### Properties
+
+- [headers](fhirrequestobj.md#headers)
+- [method](fhirrequestobj.md#method)
+- [url](fhirrequestobj.md#url)
+
+## Properties
+
+### headers
+
+• **headers**: [*FetchHeaders*](fetchheaders.md)
+
+Defined in: [packages/esm-api/src/fhir.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L41)
+
+___
+
+### method
+
+• **method**: *string*
+
+Defined in: [packages/esm-api/src/fhir.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L40)
+
+___
+
+### url
+
+• **url**: *string*
+
+Defined in: [packages/esm-api/src/fhir.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L39)
