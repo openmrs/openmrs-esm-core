@@ -10,8 +10,6 @@
 
 ### Interfaces
 
-- [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)
-- [BreadcrumbSettings](interfaces/breadcrumbsettings.md)
 - [CurrentUserOptions](interfaces/currentuseroptions.md)
 - [CurrentUserWithResponseOption](interfaces/currentuserwithresponseoption.md)
 - [CurrentUserWithoutResponseOption](interfaces/currentuserwithoutresponseoption.md)
@@ -40,9 +38,6 @@
 
 ### Functions
 
-- [filterBreadcrumbs](API.md#filterbreadcrumbs)
-- [getBreadcrumbs](API.md#getbreadcrumbs)
-- [getBreadcrumbsFor](API.md#getbreadcrumbsfor)
 - [getCurrentPatient](API.md#getcurrentpatient)
 - [getCurrentPatientUuid](API.md#getcurrentpatientuuid)
 - [getCurrentUser](API.md#getcurrentuser)
@@ -53,8 +48,6 @@
 - [openmrsObservableFetch](API.md#openmrsobservablefetch)
 - [refetchCurrentPatient](API.md#refetchcurrentpatient)
 - [refetchCurrentUser](API.md#refetchcurrentuser)
-- [registerBreadcrumb](API.md#registerbreadcrumb)
-- [registerBreadcrumbs](API.md#registerbreadcrumbs)
 - [setupApiModule](API.md#setupapimodule)
 - [userHasAccess](API.md#userhasaccess)
 
@@ -114,49 +107,6 @@ ___
 Defined in: [packages/esm-api/src/openmrs-fetch.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L6)
 
 ## Functions
-
-### filterBreadcrumbs
-
-▸ **filterBreadcrumbs**(`list`: [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[], `path`: *string*): [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`list` | [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[] |
-`path` | *string* |
-
-**Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
-
-Defined in: [packages/esm-api/src/breadcrumbs/filter.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/filter.ts#L42)
-
-___
-
-### getBreadcrumbs
-
-▸ **getBreadcrumbs**(): [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
-
-**Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
-
-Defined in: [packages/esm-api/src/breadcrumbs/db.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/db.ts#L34)
-
-___
-
-### getBreadcrumbsFor
-
-▸ **getBreadcrumbsFor**(`path`: *string*): [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`path` | *string* |
-
-**Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
-
-Defined in: [packages/esm-api/src/breadcrumbs/filter.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/filter.ts#L65)
-
-___
 
 ### getCurrentPatient
 
@@ -341,38 +291,6 @@ ___
 **Returns:** *void*
 
 Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L61)
-
-___
-
-### registerBreadcrumb
-
-▸ **registerBreadcrumb**(`breadcrumb`: [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md)): *void*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`breadcrumb` | [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md) |
-
-**Returns:** *void*
-
-Defined in: [packages/esm-api/src/breadcrumbs/db.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/db.ts#L20)
-
-___
-
-### registerBreadcrumbs
-
-▸ **registerBreadcrumbs**(`breadcrumbs`: [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md)[]): *void*
-
-#### Parameters:
-
-Name | Type |
-:------ | :------ |
-`breadcrumbs` | [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md)[] |
-
-**Returns:** *void*
-
-Defined in: [packages/esm-api/src/breadcrumbs/db.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/db.ts#L24)
 
 ___
 

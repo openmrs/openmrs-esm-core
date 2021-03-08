@@ -703,7 +703,7 @@ Name | Type |
 
 **Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
 
-Defined in: [packages/esm-api/src/breadcrumbs/filter.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/filter.ts#L42)
+Defined in: [packages/esm-breadcrumbs/src/filter.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/filter.ts#L42)
 
 ___
 
@@ -788,7 +788,7 @@ ___
 
 **Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
 
-Defined in: [packages/esm-api/src/breadcrumbs/db.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/db.ts#L34)
+Defined in: [packages/esm-breadcrumbs/src/db.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/db.ts#L34)
 
 ___
 
@@ -804,7 +804,7 @@ Name | Type |
 
 **Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
 
-Defined in: [packages/esm-api/src/breadcrumbs/filter.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/filter.ts#L65)
+Defined in: [packages/esm-breadcrumbs/src/filter.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/filter.ts#L65)
 
 ___
 
@@ -1317,7 +1317,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [packages/esm-api/src/breadcrumbs/db.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/db.ts#L20)
+Defined in: [packages/esm-breadcrumbs/src/db.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/db.ts#L20)
 
 ___
 
@@ -1333,7 +1333,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [packages/esm-api/src/breadcrumbs/db.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/breadcrumbs/db.ts#L24)
+Defined in: [packages/esm-breadcrumbs/src/db.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/db.ts#L24)
 
 ___
 
