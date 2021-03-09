@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Link, Tile } from "carbon-components-react";
-import EmptyDataIllustration from "./empty-data-illustration.component";
+import EmptyDataIllustration from "../../../../esm-styleguide/src/illustrations/empty-data-illustration.component";
 import styles from "./empty-state.scss";
 
 /**
