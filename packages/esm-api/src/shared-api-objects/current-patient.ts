@@ -3,27 +3,26 @@ import { fhir } from "../fhir";
 import { mergeAll, filter, map } from "rxjs/operators";
 import { FetchResponse } from "../types";
 
-let currentPatientUuid: string;
+let currentPatientUuid: string | null;
 const currentPatientUuidSubject = new ReplaySubject<PatientUuid>(1);
 const currentPatientSubject = new ReplaySubject<
   Promise<{ data: fhir.Patient }>
 >(1);
 
-window.addEventListener("single-spa:routing-event", () => {
-  const u = getPatientUuidFromUrl();
+// single-spa:before-routing-event happens *after* the URL is changed but
+// *before* the corresponding routing events (`popstate` etc) occur.
+window.addEventListener("single-spa:before-routing-event", () => {
+  const currentPatientUuid = getPatientUuidFromUrl();
 
-  if (u && u !== currentPatientUuid) {
-    currentPatientUuid = u;
-    currentPatientUuidSubject.next(u);
+  currentPatientUuidSubject.next(currentPatientUuid);
 
-    if (u) {
-      currentPatientSubject.next(
-        fhir.read<fhir.Patient>({
-          type: "Patient",
-          patient: currentPatientUuid,
-        })
-      );
-    }
+  if (currentPatientUuid) {
+    currentPatientSubject.next(
+      fhir.read<fhir.Patient>({
+        type: "Patient",
+        patient: currentPatientUuid,
+      })
+    );
   }
 });
 
@@ -57,9 +56,11 @@ export { getCurrentPatient };
  * @category API Object
  */
 export function refetchCurrentPatient() {
-  currentPatientSubject.next(
-    fhir.read<fhir.Patient>({ type: "Patient", patient: currentPatientUuid })
-  );
+  if (currentPatientUuid) {
+    currentPatientSubject.next(
+      fhir.read<fhir.Patient>({ type: "Patient", patient: currentPatientUuid })
+    );
+  }
 }
 
 /**
