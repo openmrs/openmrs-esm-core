@@ -5,8 +5,7 @@ module.exports = {
   setupFiles: ["<rootDir>/src/setup-tests.tsx"],
   moduleNameMapper: {
     "\\.(css)$": "identity-obj-proxy",
-    "@openmrs/esm-framework":
-      "@openmrs/esm-framework/mocks/openmrs-esm-framework.mock.tsx",
+    "@openmrs/esm-framework": "@openmrs/esm-framework/mock.tsx",
   },
   globals: {
     System: {
