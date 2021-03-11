@@ -21,7 +21,7 @@ describe("current patient", () => {
     );
 
     window.history.pushState({}, document.title, `/patient/12/chart`);
-    window.dispatchEvent(new CustomEvent("single-spa:routing-event"));
+    window.dispatchEvent(new CustomEvent("single-spa:before-routing-event"));
 
     return getCurrentPatient()
       .pipe(first())
@@ -42,7 +42,7 @@ describe("current patient", () => {
     );
 
     window.history.pushState({}, document.title, `/patient/34`);
-    window.dispatchEvent(new CustomEvent("single-spa:routing-event"));
+    window.dispatchEvent(new CustomEvent("single-spa:before-routing-event"));
 
     return getCurrentPatient()
       .pipe(first())
@@ -67,7 +67,7 @@ describe("current patient", () => {
       document.title,
       `/patient/34-asdsd-234243h342`
     );
-    window.dispatchEvent(new CustomEvent("single-spa:routing-event"));
+    window.dispatchEvent(new CustomEvent("single-spa:before-routing-event"));
 
     return getCurrentPatient()
       .pipe(first())

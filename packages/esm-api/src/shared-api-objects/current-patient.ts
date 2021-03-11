@@ -6,10 +6,12 @@ import { FetchResponse } from "../types";
 let currentPatientUuid: string | null;
 const currentPatientUuidSubject = new ReplaySubject<PatientUuid>(1);
 const currentPatientSubject = new ReplaySubject<
-  Promise<{ data: fhir.Patient } | null>
+  Promise<{ data: fhir.Patient }>
 >(1);
 
-window.addEventListener("single-spa:routing-event", () => {
+// single-spa:before-routing-event happens *after* the URL is changed but
+// *before* the corresponding routing events (`popstate` etc) occur.
+window.addEventListener("single-spa:before-routing-event", () => {
   const u = getPatientUuidFromUrl();
 
   currentPatientUuid = u;
@@ -41,9 +43,7 @@ function getCurrentPatient(opts: OnlyThePatient): Observable<fhir.Patient>;
 function getCurrentPatient(
   opts: CurrentPatientOptions = { includeConfig: false }
 ): Observable<CurrentPatient> {
-  const current = currentPatientSubject.asObservable();
-  const result = (current as Observable<Promise<{data: fhir.Patient}>>).pipe(
-    map((r) => (r ?? {})),
+  const result = currentPatientSubject.asObservable().pipe(
     mergeAll(),
     map((r) => (opts.includeConfig ? r : r.data)),
     filter(Boolean)

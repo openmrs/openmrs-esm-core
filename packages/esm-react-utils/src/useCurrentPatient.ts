@@ -40,7 +40,6 @@ export function useCurrentPatient(): [
     };
   }, []);
 
-  // console.log(JSON.stringify(state));
   return [state.isLoadingPatient, state.patient, state.patientUuid, state.err];
 }
 
