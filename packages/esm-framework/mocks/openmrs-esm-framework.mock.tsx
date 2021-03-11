@@ -1,5 +1,6 @@
 import React from "react";
 import createStore, { Store } from "unistore";
+import { never, of } from "rxjs";
 
 interface StoreEntity {
   value: Store<any>;
@@ -94,11 +95,46 @@ export enum Type {
   UUID = "UUID",
 }
 
-export function openmrsFetch() {
-  return new Promise(() => {});
-}
+export const validators = {
+  isBoolean: jest.fn(),
+  isString: jest.fn(),
+  isUuid: jest.fn(),
+  isObject: jest.fn(),
+};
+
+export const getConfig = jest.fn();
+
+export const useConfig = jest.fn();
+
+export function defineConfigSchema() {}
+
+export const createErrorHandler = () => jest.fn().mockReturnValue(never());
+
+export const switchTo = jest.fn();
+
+export const UserHasAccessReact = (props: any) => props.children;
+
+export const openmrsFetch = jest.fn(() => new Promise(() => {}));
+
+export const openmrsObservableFetch = jest.fn(() =>
+  of({ data: { entry: [] } })
+);
 
 export const setIsUIEditorEnabled = (boolean): void => {};
+
+export const useCurrentPatient = jest.fn(() => [false, null, null, null]);
+
+export const getCurrentPatient = jest.fn(() =>
+  jest.fn().mockReturnValue(never())
+);
+
+export const getCurrentPatientUuid = jest.fn();
+
+export const newWorkspaceItem = jest.fn();
+
+export const fhirBaseUrl = "/ws/fhir2/R4";
+
+export const ExtensionSlot = ({ children }) => <>{children}</>;
 
 let state = { slots: {}, extensions: {} };
 
