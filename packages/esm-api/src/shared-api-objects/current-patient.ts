@@ -1,4 +1,4 @@
-import { ReplaySubject, Observable, Subscribable, Subscription } from "rxjs";
+import { ReplaySubject, Observable } from "rxjs";
 import { fhir } from "../fhir";
 import { mergeAll, filter, map } from "rxjs/operators";
 import { FetchResponse } from "../types";
@@ -12,10 +12,9 @@ const currentPatientSubject = new ReplaySubject<
 // single-spa:before-routing-event happens *after* the URL is changed but
 // *before* the corresponding routing events (`popstate` etc) occur.
 window.addEventListener("single-spa:before-routing-event", () => {
-  const u = getPatientUuidFromUrl();
+  const currentPatientUuid = getPatientUuidFromUrl();
 
-  currentPatientUuid = u;
-  currentPatientUuidSubject.next(u);
+  currentPatientUuidSubject.next(currentPatientUuid);
 
   if (currentPatientUuid) {
     currentPatientSubject.next(
