@@ -17,5 +17,7 @@ npx typedoc src/index.ts
 sed -i.bak "s/^@openmrs\/$1$/[Back to README.md](..\/README.md)/" "docs/API.md"
 rm docs/API.md.bak
 
-echo Generating TOC
-npx markdown-toc -i --maxdepth 2 README.md
+if grep -q tocstop README.md; then
+  echo Generating TOC
+  npx markdown-toc -i --maxdepth 2 README.md
+fi
