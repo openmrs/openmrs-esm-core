@@ -1,4 +1,4 @@
-import { ReplaySubject, Observable } from "rxjs";
+import { ReplaySubject, Observable, Subscribable, Subscription } from "rxjs";
 import { fhir } from "../fhir";
 import { mergeAll, filter, map } from "rxjs/operators";
 import { FetchResponse } from "../types";
@@ -6,7 +6,7 @@ import { FetchResponse } from "../types";
 let currentPatientUuid: string | null;
 const currentPatientUuidSubject = new ReplaySubject<PatientUuid>(1);
 const currentPatientSubject = new ReplaySubject<
-  Promise<{ data: fhir.Patient }>
+  Promise<{ data: fhir.Patient } | null>
 >(1);
 
 window.addEventListener("single-spa:routing-event", () => {
@@ -22,8 +22,6 @@ window.addEventListener("single-spa:routing-event", () => {
         patient: currentPatientUuid,
       })
     );
-  } else {
-    currentPatientSubject.next(undefined);
   }
 });
 
@@ -43,7 +41,9 @@ function getCurrentPatient(opts: OnlyThePatient): Observable<fhir.Patient>;
 function getCurrentPatient(
   opts: CurrentPatientOptions = { includeConfig: false }
 ): Observable<CurrentPatient> {
-  const result = currentPatientSubject.asObservable().pipe(
+  const current = currentPatientSubject.asObservable();
+  const result = (current as Observable<Promise<{data: fhir.Patient}>>).pipe(
+    map((r) => (r ?? {})),
     mergeAll(),
     map((r) => (opts.includeConfig ? r : r.data)),
     filter(Boolean)

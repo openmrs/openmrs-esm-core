@@ -40,6 +40,7 @@ export function useCurrentPatient(): [
     };
   }, []);
 
+  // console.log(JSON.stringify(state));
   return [state.isLoadingPatient, state.patient, state.patientUuid, state.err];
 }
 
@@ -53,13 +54,13 @@ function reducer(
         ...state,
         patientUuid: action.uuid,
         patient: null,
-        isLoadingPatient: true,
+        isLoadingPatient: Boolean(action.uuid),
         err: null,
       };
     case ActionTypes.newPatient:
       return {
         ...state,
-        patient: action.patient,
+        patient: state.patientUuid ? action.patient : null,
         isLoadingPatient: false,
         err: null,
       };
