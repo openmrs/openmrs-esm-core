@@ -110,6 +110,10 @@ export function defineConfigSchema() {}
 
 export const createErrorHandler = () => jest.fn().mockReturnValue(never());
 
+export const reportError = jest.fn().mockImplementation((error) => {
+  throw error;
+});
+
 export const switchTo = jest.fn();
 
 export const UserHasAccessReact = (props: any) => props.children;
@@ -128,6 +132,15 @@ export const getCurrentPatient = jest.fn(() =>
   jest.fn().mockReturnValue(never())
 );
 
+export function getCurrentUser() {
+  return of({ authenticated: false });
+}
+
+export const navigate = jest.fn();
+
+export const interpolateString = jest.requireActual("@openmrs/esm-framework")
+  .interpolateString;
+
 export const getCurrentPatientUuid = jest.fn();
 
 export const newWorkspaceItem = jest.fn();
@@ -135,6 +148,14 @@ export const newWorkspaceItem = jest.fn();
 export const fhirBaseUrl = "/ws/fhir2/R4";
 
 export const ExtensionSlot = ({ children }) => <>{children}</>;
+
+export const Extension = jest.fn().mockImplementation((props: any) => <slot />);
+
+export const ConfigurableLink = jest
+  .fn()
+  .mockImplementation((to: string, children: React.ReactNode) => (
+    <a href={interpolateString(to)}>{children}</a>
+  ));
 
 let state = { slots: {}, extensions: {} };
 
