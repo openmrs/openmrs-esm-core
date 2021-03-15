@@ -22,7 +22,8 @@ These are videos below 5 minutes showing small dedicated things.
 
 These are more extensive videos with focus on showing how to develop new microfrontends.
 
-- [Tutorial on our Microfrontend Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_e7kvnx9t?st=702) 
+- [Part 1: Tutorial on our Microfrontend Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_e7kvnx9t?st=702) 
+- [Part 2: Practical Session on our MFE Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_iaq63mfd?st=282)
 
 ## Others
 
