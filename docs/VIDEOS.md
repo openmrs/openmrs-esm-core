@@ -22,10 +22,10 @@ These are videos below 5 minutes showing small dedicated things.
 
 These are more extensive videos with focus on showing how to develop new microfrontends.
 
-- [Part 1: Tutorial on our Microfrontend Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_e7kvnx9t?st=702) 
-- [Part 2: Practical Session on our MFE Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_iaq63mfd?st=282)
-   - [Repo with the practice tasks](https://github.com/openmrs/openmrs-esm-testresults/tree/feature/workshop)
-   - [Repo with the practice solutions](https://github.com/openmrs/openmrs-esm-testresults/tree/feature/workshop-solutions)
+- [Part 1: OpenMRS SPA Extensions: Tutorial on our Microfrontend Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_e7kvnx9t?st=702) 
+- [Part 2: OpenMRS SPA Extensions: Practical Session on our MFE Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_iaq63mfd?st=282)
+   - [Repo with SPA practice tasks](https://github.com/openmrs/openmrs-esm-testresults/tree/feature/workshop)
+   - [Repo with SPA practice solutions](https://github.com/openmrs/openmrs-esm-testresults/tree/feature/workshop-solutions)
 
 
 ## Others
