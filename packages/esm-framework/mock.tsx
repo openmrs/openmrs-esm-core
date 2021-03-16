@@ -126,7 +126,7 @@ export const openmrsObservableFetch = jest.fn(() =>
 
 export const setIsUIEditorEnabled = (boolean): void => {};
 
-export const useCurrentPatient = jest.fn(() => [false, null, null, null]);
+export const useCurrentPatient = jest.fn(() => [null, null, null, null]);
 
 export const getCurrentPatient = jest.fn(() =>
   jest.fn().mockReturnValue(never())
