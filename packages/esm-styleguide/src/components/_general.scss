@@ -1,0 +1,11 @@
+.omrs-app-error {
+  padding: 5em;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-top: 5px solid $danger;
+
+  p {
+    margin: 1.5em 0;
+  }
+}

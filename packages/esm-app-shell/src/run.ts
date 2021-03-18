@@ -90,24 +90,26 @@ function handleInitFailure(e: Error) {
   console.error(e);
 
   if (localStorage.getItem("openmrs:devtools")) {
-    renderDevResetButton();
-  } else {
-    renderApology();
+    clearDevOverrides();
   }
+
+  renderApology(e.message);
 }
 
-function renderApology() {
-  const msg = document.createTextNode(
-    "Sorry, something has gone as badly as possible"
-  );
-  document.body.appendChild(msg);
-}
+function renderApology(message: string) {
+  const template = document.querySelector<HTMLTemplateElement>("#app-error");
 
-function renderDevResetButton() {
-  const btn = document.createElement("button");
-  btn.addEventListener("click", clearDevOverrides);
-  btn.textContent = "Reset dev overrides";
-  document.body.appendChild(btn);
+  if (template) {
+    const fragment = template.content.cloneNode(true) as DocumentFragment;
+    const messageContainer = fragment.querySelector('[data-var="message"]');
+
+    if (messageContainer) {
+      messageContainer.textContent =
+        message || "No additional information available.";
+    }
+
+    document.body.appendChild(fragment);
+  }
 }
 
 function clearDevOverrides() {

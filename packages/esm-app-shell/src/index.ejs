@@ -27,22 +27,36 @@
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>
     <template id="loading-spinner">
-      <div class="bx--inline-loading" aria-live="assertive">
+      <div data-inline-loading="" class="bx--inline-loading" role="alert" aria-live="assertive">
         <div class="bx--inline-loading__animation">
-          <div aria-atomic="true" aria-labelledby="loading-id-77" aria-live="assertive" class="bx--loading bx--loading--small">
-            <label id="loading-id-77" class="bx--visually-hidden">
-              Active loading indicator
-            </label>
-            <svg class="bx--loading__svg" viewBox="0 0 100 100">
-              <title>
-                Active loading indicator
-              </title>
-              <circle class="bx--loading__background" cx="50%" cy="50%" r="42"></circle>
-              <circle class="bx--loading__stroke" cx="50%" cy="50%" r="42"></circle>
+          <div data-inline-loading-spinner="" class="bx--loading bx--loading--small">
+            <svg class="bx--loading__svg" viewBox="-75 -75 150 150">
+              <circle class="bx--loading__background" cx="0" cy="0" r="26.8125"></circle>
+              <circle class="bx--loading__stroke" cx="0" cy="0" r="26.8125"></circle>
             </svg>
           </div>
         </div>
-        <div class="bx--inline-loading__text">Loading...</div>
+        <p data-inline-loading-text-active="" class="bx--inline-loading__text">Loading ...</p>
+      </div>
+    </template>
+    <template id="app-error">
+      <div class="omrs-app-error">
+        <h1>Application Error</h1>
+        <p>Something went wrong. Please try reloading.</p>
+        <p>If the problem persists contact your system administrator.</p>
+        <button class="bx--btn bx--btn--primary" onclick="location.reload()">Reload</button>
+        <div class="bx--snippet bx--snippet--single" >
+          <div tabindex="0"  class="bx--snippet-container"
+            aria-label="Code Snippet Text">
+            <pre>
+              <code data-var="message"></code>
+            </pre>
+          </div>
+          <button data-copy-btn class="bx--copy-btn" type="button" tabindex="0" onclick="var r = document.createRange();r.selectNode(this.parentElement);getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand('copy');getSelection().removeAllRanges()">
+            <span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
+            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--snippet__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M14,5v9H5V5h9m0-1H5A1,1,0,0,0,4,5v9a1,1,0,0,0,1,1h9a1,1,0,0,0,1-1V5a1,1,0,0,0-1-1Z"></path><path d="M2,9H1V2A1,1,0,0,1,2,1H9V2H2Z"></path></svg>
+          </button>
+        </div>
       </div>
     </template>
     <script>
