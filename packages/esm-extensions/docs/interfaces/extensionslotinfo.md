@@ -25,7 +25,7 @@ This is essentially a complete history of `attach` calls to this specific slot.
 However, not all of these extension IDs should be rendered.
 `assignedIds` is the set defining those.
 
-Defined in: [store.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L82)
+Defined in: [store.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L80)
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 The mapping of modules / extension slot instances where the extension slot has been used.
 
-Defined in: [store.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L75)
+Defined in: [store.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L73)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 The name under which the extension slot has been registered.
 
-Defined in: [store.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L71)
+Defined in: [store.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L69)
 
 ## Methods
 
@@ -63,4 +63,4 @@ Name | Type | Description |
 
 **Returns:** *boolean*
 
-Defined in: [store.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L89)
+Defined in: [store.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L87)

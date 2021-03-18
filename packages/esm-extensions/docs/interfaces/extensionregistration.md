@@ -4,16 +4,15 @@
 
 ## Hierarchy
 
-* [*ExtensionDefinition*](extensiondefinition.md)
+* **ExtensionRegistration**
 
-  ↳ **ExtensionRegistration**
-
-  ↳↳ [*ExtensionInfo*](extensioninfo.md)
+  ↳ [*ExtensionInfo*](extensioninfo.md)
 
 ## Table of contents
 
 ### Properties
 
+- [meta](extensionregistration.md#meta)
 - [moduleName](extensionregistration.md#modulename)
 - [name](extensionregistration.md#name)
 
@@ -23,19 +22,25 @@
 
 ## Properties
 
+### meta
+
+• **meta**: *Record*<string, any\>
+
+Defined in: [store.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L11)
+
+___
+
 ### moduleName
 
 • **moduleName**: *string*
 
-Defined in: [store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L13)
+Defined in: [store.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L10)
 
 ___
 
 ### name
 
 • **name**: *string*
-
-Inherited from: [ExtensionDefinition](extensiondefinition.md).[name](extensiondefinition.md#name)
 
 Defined in: [store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L8)
 
@@ -46,7 +51,5 @@ Defined in: [store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master
 ▸ **load**(): *Promise*<any\>
 
 **Returns:** *Promise*<any\>
-
-Inherited from: [ExtensionDefinition](extensiondefinition.md)
 
 Defined in: [store.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L9)

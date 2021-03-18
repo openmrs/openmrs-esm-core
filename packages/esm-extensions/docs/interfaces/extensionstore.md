@@ -17,7 +17,7 @@
 
 Extensions indexed by name
 
-Defined in: [store.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L33)
+Defined in: [store.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L31)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 Slots indexed by name
 
-Defined in: [store.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L31)
+Defined in: [store.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L29)

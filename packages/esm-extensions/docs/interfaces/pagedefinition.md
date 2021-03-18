@@ -18,7 +18,7 @@
 
 • **route**: *string*
 
-Defined in: [store.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L93)
+Defined in: [store.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L91)
 
 ## Methods
 
@@ -28,4 +28,4 @@ Defined in: [store.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 **Returns:** *Promise*<any\>
 
-Defined in: [store.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L94)
+Defined in: [store.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L92)

@@ -23,7 +23,7 @@ A set of additional extension IDs which have been added to to this slot despite 
 explicitly `attach`ed to it.
 An example may be an extension which is added to the slot via the configuration.
 
-Defined in: [store.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L46)
+Defined in: [store.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L44)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 The set of extensions IDs which should be rendered into this slot at the current point in time.
 
-Defined in: [store.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L40)
+Defined in: [store.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L38)
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 The dom element at which the slot is mounted
 
-Defined in: [store.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L64)
+Defined in: [store.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L62)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 A set allowing explicit ordering of the `assignedIds`.
 
-Defined in: [store.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L56)
+Defined in: [store.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L54)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 The number of active registrations on the instance.
 
-Defined in: [store.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L60)
+Defined in: [store.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L58)
 
 ___
 
@@ -75,4 +75,4 @@ A set of extension IDs which have been removed/hidden from this slot, even thoug
 previously been `attach`ed/added to it.
 An example may be an extension which is removed from the slot via the configuration.
 
-Defined in: [store.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L52)
+Defined in: [store.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L50)

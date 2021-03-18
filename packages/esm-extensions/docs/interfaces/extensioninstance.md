@@ -15,7 +15,7 @@
 
 • **domElement**: HTMLElement
 
-Defined in: [store.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L26)
+Defined in: [store.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L24)
 
 ___
 
@@ -23,4 +23,4 @@ ___
 
 • **id**: *string*
 
-Defined in: [store.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L25)
+Defined in: [store.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L23)
