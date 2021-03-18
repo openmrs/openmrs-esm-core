@@ -42,13 +42,21 @@ export function getExtensionRegistration(
 export const registerExtension: (
   moduleName: string,
   name: string,
-  load: () => Promise<any>
+  load: () => Promise<any>,
+  meta?: Record<string, any>
 ) => void = extensionStore.action(
-  (state, moduleName: string, name: string, load: () => Promise<any>) => {
+  (
+    state,
+    moduleName: string,
+    name: string,
+    load: () => Promise<any>,
+    meta: Record<string, any> = {}
+  ) => {
     state.extensions[name] = {
       name,
       load,
       moduleName,
+      meta,
       instances: {},
     };
   }

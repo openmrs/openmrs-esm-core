@@ -32,6 +32,7 @@ interface ModernAppExtensionDefinition {
   id: string;
   slot: string;
   load(): Promise<any>;
+  meta?: Record<string, any>;
 }
 
 interface LegacyAppExtensionDefinition {
@@ -70,13 +71,15 @@ export function registerApp(appName: string, appExports: System.Module) {
         });
       }
 
-      for (const ext of availableExtensions) {
-        tryRegisterExtension(appName, ext);
-      }
+      availableExtensions.forEach((ext) => tryRegisterExtension(appName, ext));
 
-      for (const { route, load } of availablePages) {
-        registerApplication(appName, load, preprocessActivator(route));
-      }
+      availablePages.forEach(({ route, load }, index) => {
+        registerApplication(
+          `${appName}-page-${index}`,
+          load,
+          preprocessActivator(route)
+        );
+      });
     }
   }
 }
@@ -106,7 +109,7 @@ export function tryRegisterExtension(
     return;
   }
 
-  registerExtension(appName, name, ext.load);
+  registerExtension(appName, name, ext.load, ext.meta);
 
   if (slot) {
     attach(slot, name);
