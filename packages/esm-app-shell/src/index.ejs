@@ -26,6 +26,25 @@
   </head>
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>
+    <template id="loading-spinner">
+      <div class="bx--inline-loading" aria-live="assertive">
+        <div class="bx--inline-loading__animation">
+          <div aria-atomic="true" aria-labelledby="loading-id-77" aria-live="assertive" class="bx--loading bx--loading--small">
+            <label id="loading-id-77" class="bx--visually-hidden">
+              Active loading indicator
+            </label>
+            <svg class="bx--loading__svg" viewBox="0 0 100 100">
+              <title>
+                Active loading indicator
+              </title>
+              <circle class="bx--loading__background" cx="50%" cy="50%" r="42"></circle>
+              <circle class="bx--loading__stroke" cx="50%" cy="50%" r="42"></circle>
+            </svg>
+          </div>
+        </div>
+        <div class="bx--inline-loading__text">Loading...</div>
+      </div>
+    </template>
     <script>
       initializeSpa({
         apiUrl: "<%= openmrsApiUrl %>",

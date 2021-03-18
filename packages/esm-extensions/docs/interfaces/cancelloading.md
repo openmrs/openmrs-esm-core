@@ -8,4 +8,4 @@
 
 **Returns:** *void*
 
-Defined in: [render.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L14)
+Defined in: [render.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L15)

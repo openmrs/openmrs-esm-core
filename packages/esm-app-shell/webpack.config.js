@@ -74,7 +74,6 @@ module.exports = (env, argv = {}) => ({
         use: [
           { loader: require.resolve(MiniCssExtractPlugin.loader) },
           { loader: require.resolve("css-loader") },
-          { loader: require.resolve("postcss-loader") },
         ],
       },
       {

@@ -255,7 +255,7 @@ Name | Type |
 
 **Returns:** [*CancelLoading*](interfaces/cancelloading.md)
 
-Defined in: [render.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L23)
+Defined in: [render.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L24)
 
 ___
 

@@ -10,15 +10,15 @@ export function DisplayValue({ value }: DisplayValueProps) {
     <>
       {Array.isArray(value)
         ? typeof value[0] === "object"
-          ? value.map((v) => (
-              <div style={{ marginBottom: "1em" }}>
+          ? value.map((v, i) => (
+              <div key={`${v}-${i}`} style={{ marginBottom: "1em" }}>
                 <DisplayValue value={v} />
               </div>
             ))
           : value.join(", ")
         : typeof value === "object" && value !== null
-        ? Object.entries(value).map(([k, v]) => (
-            <div>
+        ? Object.entries(value).map(([k, v], i) => (
+            <div key={`${k}-${i}`}>
               {k}: <DisplayValue value={v} />
             </div>
           ))

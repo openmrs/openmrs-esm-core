@@ -19,7 +19,7 @@
 
 **Returns:** *void*
 
-Defined in: [packages/esm-extensions/src/render.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L8)
+Defined in: [packages/esm-extensions/src/render.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L9)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/esm-extensions/src/render.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L9)
+Defined in: [packages/esm-extensions/src/render.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L10)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/esm-extensions/src/render.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L10)
+Defined in: [packages/esm-extensions/src/render.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L11)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/esm-extensions/src/render.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L11)
+Defined in: [packages/esm-extensions/src/render.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L12)

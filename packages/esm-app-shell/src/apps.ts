@@ -30,7 +30,8 @@ function preprocessActivator(
 
 interface ModernAppExtensionDefinition {
   id: string;
-  slot: string;
+  slot?: string;
+  slots?: Array<string>;
   load(): Promise<any>;
   meta?: Record<string, any>;
 }
@@ -88,10 +89,10 @@ export function tryRegisterExtension(
   appName: string,
   ext: Partial<AppExtensionDefinition>
 ) {
-  const name = ext.id ?? ext.name;
-  const slot = ext.slot;
+  const id = ext.id ?? ext.name;
+  const slots = ext.slots || [ext.slot];
 
-  if (!name) {
+  if (!id) {
     console.warn(
       "A registered extension definition is missing an id and thus cannot be registered. " +
         "To fix this, ensure that you define the `id` (or alternatively the `name`) field inside the extension definition.",
@@ -109,9 +110,11 @@ export function tryRegisterExtension(
     return;
   }
 
-  registerExtension(appName, name, ext.load, ext.meta);
+  registerExtension(appName, id, ext.load, ext.meta);
 
-  if (slot) {
-    attach(slot, name);
+  for (const slot of slots) {
+    if (slot) {
+      attach(slot, id);
+    }
   }
 }

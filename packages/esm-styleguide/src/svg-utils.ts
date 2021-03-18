@@ -19,10 +19,13 @@ if (document.readyState === "complete") {
   window.addEventListener("load", appendContainer);
 }
 
-export function addSvg(htmlId, svgString) {
+export function addSvg(htmlId: string, svgString: string) {
   const domParser = new DOMParser();
   const dom = domParser.parseFromString(svgString, "text/html");
   const svgElement = dom.querySelector("svg");
-  svgElement.id = htmlId;
-  svgContainer.appendChild(svgElement);
+
+  if (svgElement) {
+    svgElement.id = htmlId;
+    svgContainer.appendChild(svgElement);
+  }
 }

@@ -1,14 +1,17 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const { resolve } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const { peerDependencies } = require("./package.json");
 
-module.exports = env => ({
+module.exports = (env) => ({
   entry: [
-    resolve(__dirname, "src/set-public-path.js"),
+    resolve(__dirname, "src/set-public-path.ts"),
     resolve(__dirname, "src/index.ts"),
+    resolve(__dirname, "src/_all.scss"),
   ],
   output: {
     libraryTarget: "system",
@@ -22,16 +25,12 @@ module.exports = env => ({
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.s?[ac]ss$/i,
         use: [
           { loader: MiniCssExtractPlugin.loader },
           "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: require("./postcss.config"),
-            },
-          },
+          { loader: require.resolve("postcss-loader") },
+          "sass-loader",
         ],
       },
       {
@@ -58,6 +57,17 @@ module.exports = env => ({
   resolve: {
     modules: ["node_modules"],
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+      }),
+      new CssMinimizerPlugin(),
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),

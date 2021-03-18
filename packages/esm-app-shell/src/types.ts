@@ -1,4 +1,4 @@
-import { SpaEnvironment } from "@openmrs/esm-framework";
+import type { SpaEnvironment } from "@openmrs/esm-framework";
 
 export interface SpaConfig {
   /**

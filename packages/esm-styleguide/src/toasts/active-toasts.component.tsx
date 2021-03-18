@@ -1,50 +1,46 @@
 import React from "react";
-import { Toast, ToastDescriptor } from "./toast.component";
+import { Subject } from "rxjs";
+import { Toast, ToastNotification } from "./toast.component";
 
-export default function ActiveToasts({ subject }) {
-  const [toasts, setToasts] = React.useState<Array<ToastDescriptor>>([]);
-  const [toastsClosing, setToastsClosing] = React.useState([]);
-  const closeToast = React.useCallback(
-    (toast) => {
-      if (!toastsClosing.some((t) => t === toast)) {
-        setToastsClosing(toastsClosing.concat(toast));
-      }
-    },
-    [toastsClosing]
-  );
+interface ActiveToastsProps {
+  subject: Subject<ToastNotification>;
+}
+
+const ActiveToasts: React.FC<ActiveToastsProps> = ({ subject }) => {
+  const [toasts, setToasts] = React.useState<Array<ToastNotification>>([]);
+
+  const closeToast = React.useCallback((toast) => {
+    setToasts((toasts) => toasts.filter((t) => t !== toast));
+  }, []);
 
   React.useEffect(() => {
     const subscription = subject.subscribe((toast) =>
-      setToasts([...toasts, toast])
+      setToasts((toasts) => [
+        ...toasts.filter(
+          (t) =>
+            t.title !== toast.title ||
+            t.kind !== toast.kind ||
+            t.description !== toast.description ||
+            t.action !== toast.action
+        ),
+        toast,
+      ])
     );
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [subject, toasts]);
+    return () => subscription.unsubscribe();
+  }, [subject]);
 
-  React.useEffect(() => {
-    if (toastsClosing.length > 0) {
-      const timeoutId = setTimeout(() => {
-        setToasts(
-          toasts.filter(
-            (toast) =>
-              !toastsClosing.some((toastClosing) => toastClosing === toast)
-          )
-        );
-        setToastsClosing([]);
-      }, 200);
+  return (
+    <>
+      {toasts.map((toast) => (
+        <Toast
+          key={toast.id}
+          toast={toast}
+          closeToast={() => closeToast(toast)}
+        />
+      ))}
+    </>
+  );
+};
 
-      return () => clearTimeout(timeoutId);
-    }
-  }, [toastsClosing, toasts]);
-
-  return toasts.map((toast) => (
-    <Toast
-      key={toast.id}
-      toast={toast}
-      isClosing={toastsClosing.some((t) => t === toast)}
-      closeToast={closeToast}
-    />
-  ));
-}
+export default ActiveToasts;

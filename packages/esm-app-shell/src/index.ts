@@ -1,4 +1,4 @@
-import "./style.css";
+import "@openmrs/esm-styleguide/dist/openmrs-esm-styleguide.css";
 import type { SpaConfig } from "./types";
 
 declare var __webpack_public_path__: string;

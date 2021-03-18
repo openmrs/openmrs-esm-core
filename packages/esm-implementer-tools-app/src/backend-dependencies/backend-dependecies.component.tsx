@@ -71,8 +71,8 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {unresolvedDeps.map((esm, index) => (
-                    <Fragment key={esm.name}>
+                  {unresolvedDeps.map((esm, i) => (
+                    <Fragment key={`${esm.name}-${i}`}>
                       <TableRow>
                         <TableCell>
                           <strong>{esm.name}</strong>
@@ -80,8 +80,8 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
                         <TableCell></TableCell>
                         <TableCell></TableCell>
                       </TableRow>
-                      {esm.unresolvedDeps.map((dep) => (
-                        <TableRow key={dep.name}>
+                      {esm.unresolvedDeps.map((dep, j) => (
+                        <TableRow key={`${dep.name}-${j}`}>
                           <TableCell>{dep.name}</TableCell>
                           <TableCell>
                             {dep.type === "missing" ? (

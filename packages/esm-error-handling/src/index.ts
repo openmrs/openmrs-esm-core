@@ -1,11 +1,13 @@
-import { showToast } from "@openmrs/esm-styleguide";
-
 export function handleApiError() {
   return (incomingResponseErr) => {
     setTimeout(() => {
       throw incomingResponseErr;
     });
   };
+}
+
+function showToast(detail: any) {
+  window.dispatchEvent(new CustomEvent("openmrs:show-toast", { detail }));
 }
 
 window.onerror = function () {

@@ -1,5 +1,6 @@
+import cloneDeep from "lodash-es/cloneDeep";
+import set from "lodash-es/set";
 import { mountRootParcel } from "single-spa";
-import { cloneDeep, set } from "lodash-es";
 import { getExtensionRegistration } from "./extensions";
 import { getActualRouteProps } from "./route";
 import { updateExtensionStore } from "./store";

@@ -29,7 +29,7 @@ export function ObjectEditor({
         <StructuredListBody>
           {Object.entries(element).map(([key, schema]) =>
             !key.startsWith("_") ? (
-              <StructuredListRow>
+              <StructuredListRow key={key}>
                 <StructuredListCell>
                   <ValueEditorField
                     element={{ _value: key, _source: element._source }}

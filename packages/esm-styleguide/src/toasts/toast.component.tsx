@@ -5,19 +5,21 @@ const defaultOptions = {
   millis: 4000,
 };
 
-interface ToastProps {
-  toast: ToastDescriptor;
-  closeToast: any;
-  isClosing: any;
+export interface ToastProps {
+  toast: ToastNotification;
+  closeToast(): void;
 }
 
 export interface ToastDescriptor {
-  id?: number;
   kind?: ToastType;
   title?: string;
   description: React.ReactNode;
   action?: React.ReactNode;
   millis?: number;
+}
+
+export interface ToastNotification extends ToastDescriptor {
+  id: number;
 }
 
 export type ToastType =
@@ -28,11 +30,7 @@ export type ToastType =
   | "warning"
   | "warning-alt";
 
-export const Toast: React.FC<ToastProps> = ({
-  toast,
-  closeToast,
-  isClosing,
-}) => {
+export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
   const {
     millis = defaultOptions.millis,
     title,
@@ -41,28 +39,16 @@ export const Toast: React.FC<ToastProps> = ({
     action,
   } = toast;
   const [waitingForTime, setWaitingForTime] = React.useState(true);
-  const [isMounting, setIsMounting] = React.useState(true);
 
   React.useEffect(() => {
     if (waitingForTime) {
-      const timeoutId = setTimeout(() => closeToast(toast), millis);
+      const timeoutId = setTimeout(closeToast, millis);
       return () => clearTimeout(timeoutId);
     }
   }, [waitingForTime]);
 
-  React.useEffect(() => {
-    const timeoutId = setTimeout(() => setIsMounting(false), 20);
-    return () => clearTimeout(timeoutId);
-  }, []);
-
   return (
     <div
-      className={[
-        isClosing && "omrs-toast-closing",
-        isMounting && "omrs-toast-mounting",
-      ]
-        .filter(Boolean)
-        .join(" ")}
       onMouseEnter={() => setWaitingForTime(false)}
       onMouseLeave={() => setWaitingForTime(true)}
     >

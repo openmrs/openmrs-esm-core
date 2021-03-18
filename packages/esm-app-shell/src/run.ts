@@ -1,9 +1,13 @@
 import { start } from "single-spa";
 import {
   setupApiModule,
+  renderLoadingSpinner,
   createAppState,
   Config,
   provide,
+  showToast,
+  renderToasts,
+  integrateBreakpoints,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -141,10 +145,34 @@ function createConfigLoader(configUrls: Array<string>) {
   return () => loadingConfigs.then(loadConfigs);
 }
 
+function registerShowToast() {
+  window.addEventListener("openmrs:show-toast", (ev: CustomEvent) => {
+    showToast(ev.detail);
+  });
+}
+
+function showToasts() {
+  const toastsContainer = document.createElement("div");
+  toastsContainer.className = "omrs-toasts-container";
+  document.body.appendChild(toastsContainer);
+  return renderToasts(toastsContainer);
+}
+
+function showLoadingSpinner() {
+  const spinnerContainer = document.createElement("div");
+  spinnerContainer.className = "omrs-spinner-page-center";
+  document.body.appendChild(spinnerContainer);
+  return renderLoadingSpinner(spinnerContainer);
+}
+
 export function run(configUrls: Array<string>) {
+  const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
+  integrateBreakpoints();
+  showToasts();
   createAppState({});
+  registerShowToast();
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
@@ -153,5 +181,6 @@ export function run(configUrls: Array<string>) {
     .then(setupApps)
     .then(provideConfigs)
     .then(runShell)
-    .catch(handleInitFailure);
+    .catch(handleInitFailure)
+    .then(closeLoading);
 }

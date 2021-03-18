@@ -25,7 +25,9 @@ export function Description() {
           {activeItemDescription.value ? <p>Value:</p> : null}
           <p className={styles.value}>
             {Array.isArray(activeItemDescription.value)
-              ? activeItemDescription.value.map((v) => <p key={v}>{v}</p>)
+              ? activeItemDescription.value.map((v, i) => (
+                  <p key={`${v}-${i}`}>{v}</p>
+                ))
               : activeItemDescription.value}
           </p>
         </>

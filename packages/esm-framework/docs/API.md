@@ -97,7 +97,6 @@
 - [implementerToolsConfigStore](API.md#implementertoolsconfigstore)
 - [sessionEndpoint](API.md#sessionendpoint)
 - [temporaryConfigStore](API.md#temporaryconfigstore)
-- [toastsSubject](API.md#toastssubject)
 - [validators](API.md#validators)
 
 ### API Functions
@@ -152,6 +151,7 @@
 - [getUpdatedExtensionSlotInfo](API.md#getupdatedextensionslotinfo)
 - [handleApiError](API.md#handleapierror)
 - [inRange](API.md#inrange)
+- [integrateBreakpoints](API.md#integratebreakpoints)
 - [isOmrsDateStrict](API.md#isomrsdatestrict)
 - [isOmrsDateToday](API.md#isomrsdatetoday)
 - [makeUrl](API.md#makeurl)
@@ -162,6 +162,8 @@
 - [registerExtension](API.md#registerextension)
 - [registerExtensionSlot](API.md#registerextensionslot)
 - [renderExtension](API.md#renderextension)
+- [renderLoadingSpinner](API.md#renderloadingspinner)
+- [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
 - [showToast](API.md#showtoast)
 - [switchTo](API.md#switchto)
@@ -465,14 +467,6 @@ ___
 • `Const` **temporaryConfigStore**: *Store*<TemporaryConfigStore\>
 
 Defined in: [packages/esm-config/src/module-config/state.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L75)
-
-___
-
-### toastsSubject
-
-• `Const` **toastsSubject**: *Subject*<unknown\>
-
-Defined in: [packages/esm-styleguide/src/toasts/toasts.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/toasts.tsx#L8)
 
 ___
 
@@ -959,7 +953,7 @@ ___
 
 **Returns:** (`incomingErr`: *any*) => *void*
 
-Defined in: [packages/esm-error-handling/src/index.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L28)
+Defined in: [packages/esm-error-handling/src/index.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L30)
 
 ___
 
@@ -1301,7 +1295,7 @@ ___
 
 **Returns:** (`incomingResponseErr`: *any*) => *void*
 
-Defined in: [packages/esm-error-handling/src/index.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L3)
+Defined in: [packages/esm-error-handling/src/index.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L1)
 
 ___
 
@@ -1321,6 +1315,16 @@ Name | Type | Description |
 **Returns:** [*Validator*](API.md#validator)
 
 Defined in: [packages/esm-config/src/validators/validators.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/validators/validators.ts#L9)
+
+___
+
+### integrateBreakpoints
+
+▸ **integrateBreakpoints**(): *void*
+
+**Returns:** *void*
+
+Defined in: [packages/esm-styleguide/src/breakpoints/index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/breakpoints/index.ts#L20)
 
 ___
 
@@ -1503,7 +1507,39 @@ Name | Type |
 
 **Returns:** [*CancelLoading*](interfaces/cancelloading.md)
 
-Defined in: [packages/esm-extensions/src/render.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L23)
+Defined in: [packages/esm-extensions/src/render.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L24)
+
+___
+
+### renderLoadingSpinner
+
+▸ **renderLoadingSpinner**(`target`: HTMLElement): *function*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`target` | HTMLElement |
+
+**Returns:** () => *any*
+
+Defined in: [packages/esm-styleguide/src/spinner/index.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/spinner/index.ts#L1)
+
+___
+
+### renderToasts
+
+▸ **renderToasts**(`target`: HTMLElement): *void*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`target` | HTMLElement |
+
+**Returns:** *void*
+
+Defined in: [packages/esm-styleguide/src/toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L11)
 
 ___
 
@@ -1519,7 +1555,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [packages/esm-error-handling/src/index.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L21)
+Defined in: [packages/esm-error-handling/src/index.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L23)
 
 ___
 
@@ -1535,7 +1571,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [packages/esm-styleguide/src/toasts/toasts.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/toasts.tsx#L27)
+Defined in: [packages/esm-styleguide/src/toasts/index.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L23)
 
 ___
 

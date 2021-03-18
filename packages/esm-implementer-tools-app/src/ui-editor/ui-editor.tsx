@@ -31,6 +31,7 @@ export function UiEditor() {
                   ([slotName, extensionInstance]) => {
                     return (
                       <ExtensionOverlay
+                        key={slotName}
                         extensionName={extensionName}
                         slotModuleName={slotModuleName}
                         slotName={slotName}

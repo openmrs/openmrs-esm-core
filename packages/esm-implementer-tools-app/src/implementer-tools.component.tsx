@@ -30,13 +30,14 @@ function PopupHandler() {
     setModulesWithWrongBackendModulesVersion,
   ] = useState<Array<MissingBackendModules>>([]);
   const { isOpen, isUIEditorEnabled } = useStore(implementerToolsStore);
+  const [shouldShowToast, setShouldShowToast] = useState(false);
 
   function togglePopup() {
     implementerToolsStore.setState({ isOpen: !isOpen });
   }
 
-  // loading missing modules
   useEffect(() => {
+    // loading missing modules
     checkModules().then(
       ({
         modulesWithMissingBackendModules,
@@ -50,34 +51,38 @@ function PopupHandler() {
     );
   }, []);
 
-  // displaying toast if modules are missing
   useEffect(() => {
-    if (
-      !(
-        modulesWithMissingBackendModules.length ||
-        modulesWithWrongBackendModulesVersion.length
-      )
-    )
-      return;
-
-    const showModuleDiagnostics = () => {
-      setVisibleTabIndex(1);
-      if (!isOpen) {
-        togglePopup();
-      }
-      return false;
-    };
-
-    showToast({
-      description: "Found modules with unresolved backend dependencies.",
-      action: (
-        <NotificationActionButton onClick={showModuleDiagnostics}>
-          View
-        </NotificationActionButton>
-      ),
-      kind: "error",
-    });
+    // displaying toast if modules are missing
+    setShouldShowToast(
+      modulesWithMissingBackendModules.length > 0 ||
+        modulesWithWrongBackendModulesVersion.length > 0
+    );
   }, [modulesWithMissingBackendModules, modulesWithWrongBackendModulesVersion]);
+
+  useEffect(() => {
+    // only show toast max. 1 time
+    if (shouldShowToast) {
+      const showModuleDiagnostics = () => {
+        setVisibleTabIndex(1);
+
+        if (!isOpen) {
+          togglePopup();
+        }
+
+        return false;
+      };
+
+      showToast({
+        description: "Found modules with unresolved backend dependencies.",
+        action: (
+          <NotificationActionButton onClick={showModuleDiagnostics}>
+            View
+          </NotificationActionButton>
+        ),
+        kind: "error",
+      });
+    }
+  }, [shouldShowToast]);
 
   return (
     <>
