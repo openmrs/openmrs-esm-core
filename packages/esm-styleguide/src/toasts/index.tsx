@@ -8,8 +8,10 @@ import isEmpty from "lodash-es/isEmpty";
 const toastsSubject = new Subject<ToastNotification>();
 let toastId = 0;
 
-export function renderToasts(target: HTMLElement) {
-  render(<ActiveToasts subject={toastsSubject} />, target);
+export function renderToasts(target: HTMLElement | null) {
+  if (target) {
+    render(<ActiveToasts subject={toastsSubject} />, target);
+  }
 }
 
 function isNotEmpty(description: React.ReactNode) {

@@ -11,6 +11,21 @@ function wireSpaPaths() {
   __webpack_public_path__ = baseHref;
 }
 
+function setupUtils() {
+  window.copyText = (source: HTMLElement) => {
+    const sel = window.getSelection();
+
+    if (sel) {
+      const r = document.createRange();
+      r.selectNode(source);
+      sel.removeAllRanges();
+      sel.addRange(r);
+      document.execCommand("copy");
+      sel.removeAllRanges();
+    }
+  };
+}
+
 function setupPaths(config: SpaConfig) {
   window.openmrsBase = config.apiUrl;
   window.spaBase = config.spaPath;
@@ -30,6 +45,7 @@ function runSpa(config: SpaConfig) {
  * @param config The global configuration to apply.
  */
 export function initializeSpa(config: SpaConfig) {
+  setupUtils();
   setupPaths(config);
   wireSpaPaths();
   return runSpa(config);

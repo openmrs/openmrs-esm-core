@@ -27,16 +27,18 @@
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>
     <template id="loading-spinner">
-      <div data-inline-loading="" class="bx--inline-loading" role="alert" aria-live="assertive">
-        <div class="bx--inline-loading__animation">
-          <div data-inline-loading-spinner="" class="bx--loading bx--loading--small">
-            <svg class="bx--loading__svg" viewBox="-75 -75 150 150">
-              <circle class="bx--loading__background" cx="0" cy="0" r="26.8125"></circle>
-              <circle class="bx--loading__stroke" cx="0" cy="0" r="26.8125"></circle>
-            </svg>
+      <div class="omrs-loading-spinner">
+        <div data-inline-loading="" class="bx--inline-loading" role="alert" aria-live="assertive">
+          <div class="bx--inline-loading__animation">
+            <div data-inline-loading-spinner="" class="bx--loading bx--loading--small">
+              <svg class="bx--loading__svg" viewBox="-75 -75 150 150">
+                <circle class="bx--loading__background" cx="0" cy="0" r="26.8125"></circle>
+                <circle class="bx--loading__stroke" cx="0" cy="0" r="26.8125"></circle>
+              </svg>
+            </div>
           </div>
+          <p data-inline-loading-text-active="" class="bx--inline-loading__text">Loading ...</p>
         </div>
-        <p data-inline-loading-text-active="" class="bx--inline-loading__text">Loading ...</p>
       </div>
     </template>
     <template id="app-error">
@@ -52,13 +54,14 @@
               <code data-var="message"></code>
             </pre>
           </div>
-          <button data-copy-btn class="bx--copy-btn" type="button" tabindex="0" onclick="var r = document.createRange();r.selectNode(this.parentElement);getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand('copy');getSelection().removeAllRanges()">
+          <button data-copy-btn class="bx--copy-btn" type="button" tabindex="0" onclick="copyText(this.parentElement)">
             <span class="bx--assistive-text bx--copy-btn__feedback">Copied!</span>
             <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--snippet__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M14,5v9H5V5h9m0-1H5A1,1,0,0,0,4,5v9a1,1,0,0,0,1,1h9a1,1,0,0,0,1-1V5a1,1,0,0,0-1-1Z"></path><path d="M2,9H1V2A1,1,0,0,1,2,1H9V2H2Z"></path></svg>
           </button>
         </div>
       </div>
     </template>
+    <div class="omrs-toasts-container"></div>
     <script>
       initializeSpa({
         apiUrl: "<%= openmrsApiUrl %>",

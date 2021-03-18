@@ -1,5 +1,6 @@
 declare global {
   interface Window {
+    copyText(source: HTMLElement): void;
     getOpenmrsSpaBase(): string;
     openmrsBase: string;
     spaBase: string;

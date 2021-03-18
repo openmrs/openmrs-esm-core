@@ -154,17 +154,11 @@ function registerShowToast() {
 }
 
 function showToasts() {
-  const toastsContainer = document.createElement("div");
-  toastsContainer.className = "omrs-toasts-container";
-  document.body.appendChild(toastsContainer);
-  return renderToasts(toastsContainer);
+  return renderToasts(document.querySelector(".omrs-toasts-container"));
 }
 
 function showLoadingSpinner() {
-  const spinnerContainer = document.createElement("div");
-  spinnerContainer.className = "omrs-spinner-page-center";
-  document.body.appendChild(spinnerContainer);
-  return renderLoadingSpinner(spinnerContainer);
+  return renderLoadingSpinner(document.body);
 }
 
 export function run(configUrls: Array<string>) {
