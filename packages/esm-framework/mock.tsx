@@ -138,8 +138,7 @@ export function getCurrentUser() {
 
 export const navigate = jest.fn();
 
-export const interpolateString = jest.requireActual("@openmrs/esm-framework")
-  .interpolateString;
+export const interpolateString = jest.fn();
 
 export const getCurrentPatientUuid = jest.fn();
 
@@ -153,8 +152,8 @@ export const Extension = jest.fn().mockImplementation((props: any) => <slot />);
 
 export const ConfigurableLink = jest
   .fn()
-  .mockImplementation((to: string, children: React.ReactNode) => (
-    <a href={interpolateString(to)}>{children}</a>
+  .mockImplementation((config: { to: string; children: React.ReactNode }) => (
+    <a href={interpolateString(config.to)}>{config.children}</a>
   ));
 
 let state = { slots: {}, extensions: {} };
