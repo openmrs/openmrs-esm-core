@@ -130,21 +130,15 @@ export function openmrsFetch<T = any>(
         return response;
       } else {
         // HTTP 200s - The request succeeded
-        return response
-          .json()
-          .then((data) => {
-            response.data = data;
-            return response;
-          })
-          .catch((err) => {
-            // Server responded with empty response data or invalid json
-            if (err instanceof SyntaxError) {
-              response.data = (null as unknown) as T;
-              return response;
-            } else {
-              throw err;
-            }
-          });
+        return response.text().then((responseText) => {
+          try {
+            response.data = JSON.parse(responseText);
+          } catch (err) {
+            // Server didn't respond with json, so just go with the response text string
+            response.data = responseText as any;
+          }
+          return response;
+        });
       }
     } else {
       /* HTTP response status is not in 200s. Usually this will mean

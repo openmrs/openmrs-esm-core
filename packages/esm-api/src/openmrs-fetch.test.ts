@@ -108,7 +108,7 @@ describe("openmrsFetch", () => {
       Promise.resolve({
         ok: true,
         status: 200,
-        json: () => Promise.resolve({ value: "hi" }),
+        text: () => Promise.resolve('{ "value": "hi" }'),
       })
     );
 
@@ -231,7 +231,7 @@ describe("openmrsObservableFetch", () => {
       Promise.resolve({
         ok: true,
         status: 200,
-        json: () => Promise.resolve({ value: "hi" }),
+        text: () => Promise.resolve('{"value": "hi"}'),
       })
     );
 
