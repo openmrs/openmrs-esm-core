@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
-
+const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const { resolve } = require("path");
 const { readFileSync } = require("fs");
@@ -140,6 +140,10 @@ module.exports = (env, argv = {}) => ({
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: env && env.analyze ? "static" : "disabled",
+    }),
+    new InjectManifest({
+      swSrc: "./src/service-worker.ts",
+      exclude: [/index\./, /importmap\.json/],
     }),
   ],
 });
