@@ -130,8 +130,14 @@ export function openmrsFetch<T = any>(
         return response;
       } else {
         // HTTP 200s - The request succeeded
-        return response.json().then((data) => {
-          response.data = data;
+        return response.text().then((responseText) => {
+          try {
+            if (responseText) {
+              response.data = JSON.parse(responseText);
+            }
+          } catch (err) {
+            // Server didn't respond with json
+          }
           return response;
         });
       }

@@ -12,6 +12,7 @@ const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
 const { version } = require("./package.json");
 
 const timestamp = getTimestamp();
+const production = "production";
 
 const openmrsApiUrl = removeTrailingSlash(
   process.env.OMRS_API_URL || "/openmrs"
@@ -32,114 +33,119 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .map((url) => JSON.stringify(url))
   .join(", ");
 
-module.exports = (env, argv = {}) => ({
-  entry: resolve(__dirname, "src/index.ts"),
-  output: {
-    filename: "openmrs.js",
-    path: resolve(__dirname, "dist"),
-    libraryTarget: "window",
-  },
-  devServer: {
-    compress: true,
-    open: true,
-    publicPath: openmrsPublicPath,
-    openPage: `${openmrsPublicPath}/`.substr(1),
-    historyApiFallback: {
-      rewrites: [
+module.exports = (env, argv = {}) => {
+  const mode = argv.mode || process.env.NODE_ENV || production;
+  const outDir = mode === production ? "dist" : "lib";
+
+  return {
+    entry: resolve(__dirname, "src/index.ts"),
+    output: {
+      filename: "openmrs.js",
+      path: resolve(__dirname, outDir),
+      libraryTarget: "window",
+    },
+    devServer: {
+      compress: true,
+      open: true,
+      publicPath: openmrsPublicPath,
+      openPage: `${openmrsPublicPath}/`.substr(1),
+      historyApiFallback: {
+        rewrites: [
+          {
+            from: new RegExp(`^${openmrsPublicPath}/`),
+            to: `${openmrsPublicPath}/index.html`,
+          },
+        ],
+      },
+      proxy: [
         {
-          from: new RegExp(`^${openmrsPublicPath}/`),
-          to: `${openmrsPublicPath}/index.html`,
+          context: [`${openmrsApiUrl}/**`, `!${openmrsPublicPath}/**`],
+          target: openmrsProxyTarget,
+          changeOrigin: true,
         },
       ],
     },
-    proxy: [
-      {
-        context: [`${openmrsApiUrl}/**`, `!${openmrsPublicPath}/**`],
-        target: openmrsProxyTarget,
-        changeOrigin: true,
-      },
-    ],
-  },
-  mode: argv.mode || process.env.NODE_ENV || "production",
-  devtool: "sourcemap",
-  module: {
-    rules: [
-      {
-        parser: {
-          system: false,
+    mode,
+    devtool: "sourcemap",
+    module: {
+      rules: [
+        {
+          parser: {
+            system: false,
+          },
         },
-      },
-      {
-        test: /\.css$/,
-        use: [
-          { loader: require.resolve(MiniCssExtractPlugin.loader) },
-          { loader: require.resolve("css-loader") },
-        ],
-      },
-      {
-        test: /\.(woff|woff2|png)?$/,
-        use: [{ loader: require.resolve("file-loader") }],
-      },
-      {
-        test: /\.(svg|html)$/,
-        use: [{ loader: require.resolve("raw-loader") }],
-      },
-      {
-        test: /\.(js|jsx)$/,
-        use: [
-          {
-            loader: require.resolve("babel-loader"),
-            options: JSON.parse(
-              readFileSync(resolve(__dirname, ".babelrc"), "utf8")
-            ),
-          },
-        ],
-      },
-      {
-        test: /\.(ts|tsx)?$/,
-        use: [
-          {
-            loader: require.resolve("ts-loader"),
-            options: {
-              allowTsInNodeModules: true,
+        {
+          test: /\.css$/,
+          use: [
+            { loader: require.resolve(MiniCssExtractPlugin.loader) },
+            { loader: require.resolve("css-loader") },
+          ],
+        },
+        {
+          test: /\.(woff|woff2|png)?$/,
+          use: [{ loader: require.resolve("file-loader") }],
+        },
+        {
+          test: /\.(svg|html)$/,
+          use: [{ loader: require.resolve("raw-loader") }],
+        },
+        {
+          test: /\.(js|jsx)$/,
+          use: [
+            {
+              loader: require.resolve("babel-loader"),
+              options: JSON.parse(
+                readFileSync(resolve(__dirname, ".babelrc"), "utf8")
+              ),
             },
-          },
-        ],
-      },
+          ],
+        },
+        {
+          test: /\.(ts|tsx)?$/,
+          use: [
+            {
+              loader: require.resolve("ts-loader"),
+              options: {
+                allowTsInNodeModules: true,
+              },
+            },
+          ],
+        },
+      ],
+    },
+    resolve: {
+      mainFields: ["module", "main"],
+      extensions: [".ts", ".tsx", ".js", ".jsx"],
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new HtmlWebpackPlugin({
+        inject: false,
+        hash: true,
+        publicPath: openmrsPublicPath,
+        template: resolve(__dirname, "src/index.ejs"),
+        templateParameters: {
+          openmrsApiUrl,
+          openmrsPublicPath,
+          openmrsFavicon,
+          openmrsImportmapDef,
+          openmrsImportmapUrl,
+          openmrsEnvironment,
+          openmrsConfigUrls,
+        },
+      }),
+      new CopyWebpackPlugin({
+        patterns: [{ from: resolve(__dirname, "src/assets") }],
+      }),
+      new MiniCssExtractPlugin({
+        filename: "openmrs.css",
+      }),
+      new DefinePlugin({
+        "process.env.BUILD_VERSION": JSON.stringify(`${version}-${timestamp}`),
+      }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: env && env.analyze ? "static" : "disabled",
+      }),
     ],
-  },
-  resolve: {
-    mainFields: ["module", "main"],
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: true,
-      publicPath: openmrsPublicPath,
-      template: resolve(__dirname, "src/index.ejs"),
-      templateParameters: {
-        openmrsApiUrl,
-        openmrsPublicPath,
-        openmrsFavicon,
-        openmrsImportmapDef,
-        openmrsImportmapUrl,
-        openmrsEnvironment,
-        openmrsConfigUrls,
-      },
-    }),
-    new CopyWebpackPlugin({
-      patterns: [{ from: resolve(__dirname, "src/assets") }],
-    }),
-    new MiniCssExtractPlugin({
-      filename: "openmrs.css",
-    }),
-    new DefinePlugin({
-      "process.env.BUILD_VERSION": JSON.stringify(`${version}-${timestamp}`),
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: env && env.analyze ? "static" : "disabled",
-    }),
-  ],
-});
+  };
+};

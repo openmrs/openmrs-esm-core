@@ -16,6 +16,14 @@ function getParams(path: string, matcher: RegExp) {
   if (match) {
     const [, ...params] = match;
     return params;
+  } else {
+    const segments = path.split("/");
+    segments.pop();
+
+    if (segments.length > 1) {
+      const newPath = segments.join("/");
+      return getParams(newPath, matcher);
+    }
   }
 
   return [];

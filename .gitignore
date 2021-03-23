@@ -61,6 +61,7 @@ typings/
 # next.js build output
 .next
 
+lib
 dist
 .DS_Store
 

@@ -97,6 +97,69 @@ yargs.command(
 );
 
 yargs.command(
+  "develop",
+  "Starts a new microfrontend development session with the OpenMRS app shell.",
+  (argv) =>
+    argv
+      .number("port")
+      .default("port", 8080)
+      .describe("port", "The port where the dev server should run.")
+      .number("host")
+      .default("host", "localhost")
+      .describe("host", "The host name or IP for the server to use.")
+      .string("backend")
+      .default("backend", "https://openmrs-spa.org/")
+      .describe("backend", "The backend to proxy API requests to.")
+      .string("spa-path")
+      .default("spa-path", "/openmrs/spa/")
+      .describe("spa-path", "The path of the application on the target server.")
+      .string("api-url")
+      .default("api-url", "/openmrs/")
+      .describe(
+        "api-url",
+        "The URL of the API. Can be a path if the API is on the same target server."
+      )
+      .boolean("open")
+      .default("open", true)
+      .describe("open", "Immediately opens the SPA page URL in the browser.")
+      .array("config-url")
+      .default("config-url", [])
+      .describe(
+        "config-url",
+        "The URL to a valid frontend configuration. Can be used multiple times."
+      )
+      .string("sources")
+      .default("sources", ".")
+      .describe(
+        "sources",
+        "Runs the projects from the provided source directories."
+      )
+      .array("shared-dependencies")
+      .default("shared-dependencies", [])
+      .describe(
+        "shared-dependencies",
+        "The additional shared dependencies besides the ones from the app shell."
+      )
+      .string("importmap")
+      .default("importmap", "importmap.json")
+      .describe(
+        "importmap",
+        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
+      ),
+  async (args) =>
+    runCommand("runDevelop", {
+      apiUrl: args["api-url"],
+      spaPath: args["spa-path"],
+      configUrls: args["config-url"],
+      ...args,
+      importmap: await mergeImportmap(
+        await getImportmap(args.importmap, args.port),
+        await runProject(args.port, args["shared-dependencies"], args.sources)
+      ),
+    })
+);
+
+yargs.command(
   "build",
   "Builds a new app shell using the provided configuration.",
   (argv) =>
