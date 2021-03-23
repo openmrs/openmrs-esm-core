@@ -45,7 +45,7 @@ Name | Type |
 
 **Returns:** [*OpenmrsFetchError*](openmrsfetcherror.md)
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:263](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L263)
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L269)
 
 ## Properties
 
@@ -69,7 +69,7 @@ ___
 
 • **response**: Response
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:277](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L277)
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:283](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L283)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 • **responseBody**: *null* \| *string* \| FetchResponseJson
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:278](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L278)
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:284](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L284)
 
 ___
 

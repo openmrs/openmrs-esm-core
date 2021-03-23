@@ -297,7 +297,7 @@ ___
 
 Ƭ **SpaEnvironment**: *production* \| *development* \| *test*
 
-Defined in: [packages/esm-framework/src/types.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-framework/src/types.ts#L15)
+Defined in: [packages/esm-framework/src/types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-framework/src/types.ts#L16)
 
 ___
 
@@ -592,7 +592,7 @@ subscription.unsubscribe()
 
 To cancel the network request, simply call `subscription.unsubscribe();`
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:226](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L226)
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L232)
 
 ___
 
@@ -1529,13 +1529,13 @@ ___
 
 ### renderToasts
 
-▸ **renderToasts**(`target`: HTMLElement): *void*
+▸ **renderToasts**(`target`: HTMLElement \| *null*): *void*
 
 #### Parameters:
 
 Name | Type |
 :------ | :------ |
-`target` | HTMLElement |
+`target` | HTMLElement \| *null* |
 
 **Returns:** *void*
 
@@ -1571,7 +1571,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [packages/esm-styleguide/src/toasts/index.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L23)
+Defined in: [packages/esm-styleguide/src/toasts/index.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L25)
 
 ___
 
