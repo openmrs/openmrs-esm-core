@@ -19,6 +19,7 @@
 - [toOmrsTimeString](API.md#toomrstimestring)
 - [toOmrsTimeString24](API.md#toomrstimestring24)
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
+- [translateFrom](API.md#translatefrom)
 
 ## Type aliases
 
@@ -190,3 +191,21 @@ Name | Type |
 **Returns:** *string*
 
 Defined in: [omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L105)
+
+___
+
+### translateFrom
+
+▸ **translateFrom**(`moduleName`: *string*, `key`: *string*, `fallback?`: *string*): *string*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`moduleName` | *string* |
+`key` | *string* |
+`fallback?` | *string* |
+
+**Returns:** *string*
+
+Defined in: [translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/translate.ts#L3)

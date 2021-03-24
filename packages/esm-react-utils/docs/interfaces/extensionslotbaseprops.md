@@ -6,26 +6,20 @@
 
 ### Properties
 
-- [children](extensionslotbaseprops.md#children)
 - [extensionSlotName](extensionslotbaseprops.md#extensionslotname)
 - [state](extensionslotbaseprops.md#state)
-- [style](extensionslotbaseprops.md#style)
+
+### Methods
+
+- [select](extensionslotbaseprops.md#select)
 
 ## Properties
-
-### children
-
-• `Optional` **children**: ReactNode
-
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L9)
-
-___
 
 ### extensionSlotName
 
 • **extensionSlotName**: *string*
 
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L8)
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L21)
 
 ___
 
@@ -33,12 +27,20 @@ ___
 
 • `Optional` **state**: *undefined* \| *Record*<string, any\>
 
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L10)
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L25)
 
-___
+## Methods
 
-### style
+### select
 
-• `Optional` **style**: *undefined* \| *CSSProperties*
+▸ `Optional`**select**(`extensions`: ExtensionRegistration[]): ExtensionRegistration[]
 
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L11)
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`extensions` | ExtensionRegistration[] |
+
+**Returns:** ExtensionRegistration[]
+
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L22)

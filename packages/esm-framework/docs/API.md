@@ -176,6 +176,7 @@
 - [toOmrsTimeString](API.md#toomrstimestring)
 - [toOmrsTimeString24](API.md#toomrstimestring24)
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
+- [translateFrom](API.md#translatefrom)
 - [unregisterExtensionSlot](API.md#unregisterextensionslot)
 - [updateExtensionStore](API.md#updateextensionstore)
 - [useConfig](API.md#useconfig)
@@ -238,15 +239,9 @@ ___
 
 ### ExtensionSlotProps
 
-Ƭ **ExtensionSlotProps**<T\>: [*ExtensionSlotBaseProps*](interfaces/extensionslotbaseprops.md) & T
+Ƭ **ExtensionSlotProps**: [*ExtensionSlotBaseProps*](interfaces/extensionslotbaseprops.md) & *React.HTMLAttributes*<HTMLDivElement\>
 
-#### Type parameters:
-
-Name | Default |
-:------ | :------ |
-`T` | {} |
-
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L15)
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L28)
 
 ___
 
@@ -405,7 +400,7 @@ ___
 
 • `Const` **ExtensionSlot**: *React.FC*<[*ExtensionSlotProps*](API.md#extensionslotprops)\>
 
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L17)
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L31)
 
 ___
 
@@ -1742,6 +1737,24 @@ Name | Type |
 **Returns:** *string*
 
 Defined in: [packages/esm-utils/src/omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L105)
+
+___
+
+### translateFrom
+
+▸ **translateFrom**(`moduleName`: *string*, `key`: *string*, `fallback?`: *string*): *string*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`moduleName` | *string* |
+`key` | *string* |
+`fallback?` | *string* |
+
+**Returns:** *string*
+
+Defined in: [packages/esm-utils/src/translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/translate.ts#L3)
 
 ___
 

@@ -69,15 +69,9 @@ ___
 
 ### ExtensionSlotProps
 
-Ƭ **ExtensionSlotProps**<T\>: [*ExtensionSlotBaseProps*](interfaces/extensionslotbaseprops.md) & T
+Ƭ **ExtensionSlotProps**: [*ExtensionSlotBaseProps*](interfaces/extensionslotbaseprops.md) & *React.HTMLAttributes*<HTMLDivElement\>
 
-#### Type parameters:
-
-Name | Default |
-:------ | :------ |
-`T` | {} |
-
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L15)
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L28)
 
 ## Navigation Variables
 
@@ -128,7 +122,7 @@ ___
 
 • `Const` **ExtensionSlot**: *React.FC*<[*ExtensionSlotProps*](API.md#extensionslotprops)\>
 
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L17)
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L31)
 
 ___
 
