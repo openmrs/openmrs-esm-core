@@ -16,6 +16,7 @@ export function getSharedDependencies() {
     "@openmrs/esm-context",
     "@openmrs/esm-react-utils",
     "@openmrs/esm-framework",
+    "@openmrs/esm-globals",
     "@openmrs/esm-error-handling",
     "@openmrs/esm-state",
     "@openmrs/esm-extensions",

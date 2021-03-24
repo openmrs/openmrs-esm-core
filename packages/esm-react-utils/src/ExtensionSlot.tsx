@@ -1,21 +1,36 @@
-import React, { CSSProperties, ReactNode, useRef } from "react";
-import { getExtensionRegistration } from "@openmrs/esm-extensions";
+import React, { useRef } from "react";
+import {
+  ExtensionRegistration,
+  getExtensionRegistration,
+} from "@openmrs/esm-extensions";
 import { ComponentContext } from "./ComponentContext";
 import { Extension } from "./Extension";
 import { useExtensionSlot } from "./useExtensionSlot";
 
-export interface ExtensionSlotBaseProps {
-  extensionSlotName: string;
-  children?: ReactNode;
-  state?: Record<string, any>;
-  style?: CSSProperties;
+function defaultSelect(extensions: Array<ExtensionRegistration>) {
+  return extensions;
 }
 
-// remainder of props are for the top-level <div>
-export type ExtensionSlotProps<T = {}> = ExtensionSlotBaseProps & T;
+function isValidExtension(
+  extension: ExtensionRegistration | undefined
+): extension is ExtensionRegistration {
+  return extension !== undefined;
+}
+
+export interface ExtensionSlotBaseProps {
+  extensionSlotName: string;
+  select?(
+    extensions: Array<ExtensionRegistration>
+  ): Array<ExtensionRegistration>;
+  state?: Record<string, any>;
+}
+
+export type ExtensionSlotProps = ExtensionSlotBaseProps &
+  React.HTMLAttributes<HTMLDivElement>;
 
 export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   extensionSlotName: actualExtensionSlotName,
+  select = defaultSelect,
   children,
   state,
   style,
@@ -27,32 +42,29 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
     extensionIdsToRender,
     extensionSlotModuleName,
   } = useExtensionSlot(actualExtensionSlotName, slotRef);
+  const extensions = select(
+    extensionIdsToRender.map(getExtensionRegistration).filter(isValidExtension)
+  );
 
   return (
     <div ref={slotRef} style={{ ...style, position: "relative" }} {...divProps}>
-      {extensionIdsToRender.map((extensionId) => {
-        const extensionRegistration = getExtensionRegistration(extensionId);
-
-        return (
-          attachedExtensionSlotName &&
-          extensionRegistration && (
-            <ComponentContext.Provider
-              key={extensionId}
-              value={{
-                moduleName: extensionRegistration.moduleName,
-                extension: {
-                  actualExtensionSlotName,
-                  attachedExtensionSlotName,
-                  extensionSlotModuleName,
-                  extensionId,
-                },
-              }}
-            >
-              {children ?? <Extension state={state} />}
-            </ComponentContext.Provider>
-          )
-        );
-      })}
+      {attachedExtensionSlotName &&
+        extensions.map((extensionRegistration) => (
+          <ComponentContext.Provider
+            key={extensionRegistration.name}
+            value={{
+              moduleName: extensionRegistration.moduleName,
+              extension: {
+                actualExtensionSlotName,
+                attachedExtensionSlotName,
+                extensionSlotModuleName,
+                extensionId: extensionRegistration.name,
+              },
+            }}
+          >
+            {children ?? <Extension state={state} />}
+          </ComponentContext.Provider>
+        ))}
     </div>
   );
 };

@@ -15,7 +15,7 @@ export interface ExtensionProps {
  * Usage of this component *must* have an ancestor `<ExtensionSlot>`.
  */
 export const Extension: React.FC<ExtensionProps> = ({ state }) => {
-  const ref = React.useRef<HTMLSlotElement>(null);
+  const ref = React.useRef<HTMLDivElement>(null);
   const { extension } = useContext(ComponentContext);
 
   React.useEffect(() => {
@@ -30,14 +30,12 @@ export const Extension: React.FC<ExtensionProps> = ({ state }) => {
         state
       );
     }
-  }, [extension, ref.current]);
+  }, [extension, ref.current, state]);
 
   return (
     // The extension is rendered into the `<slot>`. It is surrounded by a
     // `<div>` with relative positioning in order to allow the UI Editor
     // to absolutely position elements within it.
-    <div style={{ position: "relative" }}>
-      <slot ref={ref} />
-    </div>
+    <div style={{ position: "relative" }} ref={ref} />
   );
 };
