@@ -15,7 +15,7 @@
 
 ### matcher
 
-• `Optional` **matcher**: *undefined* \| *string* \| *RegExp*
+• `Optional` **matcher**: *string* \| *RegExp*
 
 A string or RegEx that determines whether the breadcrumb should be displayed.
 It is tested against the current location's path.
@@ -30,7 +30,7 @@ ___
 
 ### parent
 
-• `Optional` **parent**: *undefined* \| *string*
+• `Optional` **parent**: *string*
 
 The breadcrumb's parent breadcrumb. Supply the path of the breadcrumb here, e.g.,
 if we are currently in "/foo/bar", you could provide "/foo" to get the breadcrumb
@@ -55,7 +55,7 @@ ___
 
 ### title
 
-• **title**: *string*
+• **title**: *string* \| (`params`: *any*) => *string*
 
 The title of the breadcrumb.
 

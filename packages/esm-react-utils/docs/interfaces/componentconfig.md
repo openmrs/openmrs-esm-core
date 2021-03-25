@@ -13,7 +13,7 @@
 
 ### extension
 
-• `Optional` **extension**: *undefined* \| [*ExtensionData*](extensiondata.md)
+• `Optional` **extension**: [*ExtensionData*](extensiondata.md)
 
 Defined in: [packages/esm-react-utils/src/ComponentContext.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L12)
 

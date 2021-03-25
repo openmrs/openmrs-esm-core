@@ -25,7 +25,7 @@ ___
 
 ### componentClosed
 
-• `Optional` **componentClosed**: *undefined* \| Function
+• `Optional` **componentClosed**: Function
 
 Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L29)
 
@@ -57,6 +57,6 @@ ___
 
 ### validations
 
-• `Optional` **validations**: *undefined* \| Function
+• `Optional` **validations**: Function
 
 Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L27)

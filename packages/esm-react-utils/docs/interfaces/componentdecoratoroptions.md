@@ -15,7 +15,7 @@
 
 ### disableTranslations
 
-• `Optional` **disableTranslations**: *undefined* \| *boolean*
+• `Optional` **disableTranslations**: *boolean*
 
 Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L57)
 
@@ -39,6 +39,6 @@ ___
 
 ### strictMode
 
-• `Optional` **strictMode**: *undefined* \| *boolean*
+• `Optional` **strictMode**: *boolean*
 
 Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L58)

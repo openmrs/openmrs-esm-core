@@ -15,7 +15,7 @@
 
 ### add
 
-• `Optional` **add**: *undefined* \| *string*[]
+• `Optional` **add**: *string*[]
 
 Defined in: [packages/esm-config/src/types.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L39)
 
@@ -23,7 +23,7 @@ ___
 
 ### configure
 
-• `Optional` **configure**: *undefined* \| [*ExtensionSlotConfigureValueObject*](extensionslotconfigurevalueobject.md)
+• `Optional` **configure**: [*ExtensionSlotConfigureValueObject*](extensionslotconfigurevalueobject.md)
 
 Defined in: [packages/esm-config/src/types.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L42)
 
@@ -31,7 +31,7 @@ ___
 
 ### order
 
-• `Optional` **order**: *undefined* \| *string*[]
+• `Optional` **order**: *string*[]
 
 Defined in: [packages/esm-config/src/types.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L41)
 
@@ -39,6 +39,6 @@ ___
 
 ### remove
 
-• `Optional` **remove**: *undefined* \| *string*[]
+• `Optional` **remove**: *string*[]
 
 Defined in: [packages/esm-config/src/types.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L40)

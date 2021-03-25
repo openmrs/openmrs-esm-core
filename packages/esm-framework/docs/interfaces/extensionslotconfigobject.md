@@ -14,7 +14,7 @@
 
 ### add
 
-• `Optional` **add**: *undefined* \| *string*[]
+• `Optional` **add**: *string*[]
 
 Defined in: [packages/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L50)
 
@@ -22,7 +22,7 @@ ___
 
 ### order
 
-• `Optional` **order**: *undefined* \| *string*[]
+• `Optional` **order**: *string*[]
 
 Defined in: [packages/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L52)
 
@@ -30,6 +30,6 @@ ___
 
 ### remove
 
-• `Optional` **remove**: *undefined* \| *string*[]
+• `Optional` **remove**: *string*[]
 
 Defined in: [packages/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L51)

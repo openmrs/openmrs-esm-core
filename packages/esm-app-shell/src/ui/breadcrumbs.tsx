@@ -31,7 +31,7 @@ function getParams(path: string, matcher: RegExp) {
 
 const breadcrumbsStyle: React.CSSProperties = { padding: "1rem" };
 
-const Breadcrumbs: React.FC = () => {
+export const Breadcrumbs: React.FC = () => {
   const [path, setPath] = React.useState(location.pathname);
   const breadcrumbs = getBreadcrumbsFor(path);
   const currentBc = breadcrumbs[breadcrumbs.length - 1];
@@ -58,7 +58,9 @@ const Breadcrumbs: React.FC = () => {
       {breadcrumbs.map((bc) => (
         <BreadcrumbItem key={bc.settings.path}>
           <ConfigurableLink to={getPath(bc.settings.path, params)}>
-            {bc.settings.title}
+            {typeof bc.settings.title === "function"
+              ? bc.settings.title(params)
+              : bc.settings.title}
           </ConfigurableLink>
         </BreadcrumbItem>
       ))}

@@ -16,6 +16,7 @@
 ### Functions
 
 - [setupPaths](API.md#setuppaths)
+- [setupUtils](API.md#setuputils)
 
 ## Type aliases
 
@@ -40,3 +41,13 @@ Name | Type |
 **Returns:** *void*
 
 Defined in: [globals.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L3)
+
+___
+
+### setupUtils
+
+▸ **setupUtils**(): *void*
+
+**Returns:** *void*
+
+Defined in: [globals.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L11)

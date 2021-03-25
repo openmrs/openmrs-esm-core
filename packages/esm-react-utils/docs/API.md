@@ -21,6 +21,7 @@
 - [Actions](API.md#actions)
 - [BoundActions](API.md#boundactions)
 - [ExtensionSlotProps](API.md#extensionslotprops)
+- [LayoutType](API.md#layouttype)
 
 ### Navigation Variables
 
@@ -44,6 +45,7 @@
 - [useCurrentPatient](API.md#usecurrentpatient)
 - [useExtensionStore](API.md#useextensionstore)
 - [useForceUpdate](API.md#useforceupdate)
+- [useLayoutType](API.md#uselayouttype)
 - [useNavigationContext](API.md#usenavigationcontext)
 - [useStore](API.md#usestore)
 
@@ -72,6 +74,14 @@ ___
 Ƭ **ExtensionSlotProps**: [*ExtensionSlotBaseProps*](interfaces/extensionslotbaseprops.md) & *React.HTMLAttributes*<HTMLDivElement\>
 
 Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L28)
+
+___
+
+### LayoutType
+
+Ƭ **LayoutType**: *tablet* \| *phone* \| *desktop*
+
+Defined in: [packages/esm-react-utils/src/useLayoutType.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useLayoutType.ts#L3)
 
 ## Navigation Variables
 
@@ -306,6 +316,16 @@ ___
 **Returns:** () => *void*
 
 Defined in: [packages/esm-react-utils/src/useForceUpdate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useForceUpdate.ts#L3)
+
+___
+
+### useLayoutType
+
+▸ **useLayoutType**(): [*LayoutType*](API.md#layouttype)
+
+**Returns:** [*LayoutType*](API.md#layouttype)
+
+Defined in: [packages/esm-react-utils/src/useLayoutType.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useLayoutType.ts#L22)
 
 ___
 

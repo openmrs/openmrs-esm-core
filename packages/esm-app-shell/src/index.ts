@@ -1,5 +1,5 @@
-import { setupPaths, SpaConfig } from "@openmrs/esm-globals";
 import "@openmrs/esm-styleguide/dist/openmrs-esm-styleguide.css";
+import { setupPaths, setupUtils, SpaConfig } from "@openmrs/esm-framework";
 
 declare var __webpack_public_path__: string;
 
@@ -9,21 +9,6 @@ function wireSpaPaths() {
   baseElement.href = baseHref;
   document.head.appendChild(baseElement);
   __webpack_public_path__ = baseHref;
-}
-
-function setupUtils() {
-  window.copyText = (source: HTMLElement) => {
-    const sel = window.getSelection();
-
-    if (sel) {
-      const r = document.createRange();
-      r.selectNode(source);
-      sel.removeAllRanges();
-      sel.addRange(r);
-      document.execCommand("copy");
-      sel.removeAllRanges();
-    }
-  };
 }
 
 function registerServiceWorker() {

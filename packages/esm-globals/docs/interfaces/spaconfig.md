@@ -25,7 +25,7 @@ ___
 
 ### configUrls
 
-• `Optional` **configUrls**: *undefined* \| *string*[]
+• `Optional` **configUrls**: *string*[]
 
 URLs of configurations to load in the system.
 
@@ -35,7 +35,7 @@ ___
 
 ### env
 
-• `Optional` **env**: *undefined* \| *production* \| *development* \| *test*
+• `Optional` **env**: [*SpaEnvironment*](../API.md#spaenvironment)
 
 The environment to use.
 

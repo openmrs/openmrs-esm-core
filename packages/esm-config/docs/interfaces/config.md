@@ -35,13 +35,15 @@
 
 The initial value of Object.prototype.constructor is the standard built-in Object constructor.
 
+Inherited from: void
+
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:122
 
 ## Methods
 
 ### hasOwnProperty
 
-▸ **hasOwnProperty**(`v`: *string* \| *number* \| *symbol*): *boolean*
+▸ **hasOwnProperty**(`v`: PropertyKey): *boolean*
 
 Determines whether an object has a property with the specified name.
 
@@ -49,9 +51,11 @@ Determines whether an object has a property with the specified name.
 
 Name | Type | Description |
 :------ | :------ | :------ |
-`v` | *string* \| *number* \| *symbol* | A property name.    |
+`v` | PropertyKey | A property name.    |
 
 **Returns:** *boolean*
+
+Inherited from: void
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:137
 
@@ -71,13 +75,15 @@ Name | Type | Description |
 
 **Returns:** *boolean*
 
+Inherited from: void
+
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:143
 
 ___
 
 ### propertyIsEnumerable
 
-▸ **propertyIsEnumerable**(`v`: *string* \| *number* \| *symbol*): *boolean*
+▸ **propertyIsEnumerable**(`v`: PropertyKey): *boolean*
 
 Determines whether a specified property is enumerable.
 
@@ -85,9 +91,11 @@ Determines whether a specified property is enumerable.
 
 Name | Type | Description |
 :------ | :------ | :------ |
-`v` | *string* \| *number* \| *symbol* | A property name.    |
+`v` | PropertyKey | A property name.    |
 
 **Returns:** *boolean*
+
+Inherited from: void
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:149
 
@@ -101,6 +109,8 @@ Returns a date converted to a string using the current locale.
 
 **Returns:** *string*
 
+Inherited from: void
+
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:128
 
 ___
@@ -113,6 +123,8 @@ Returns a string representation of an object.
 
 **Returns:** *string*
 
+Inherited from: void
+
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:125
 
 ___
@@ -124,5 +136,7 @@ ___
 Returns the primitive value of the specified object.
 
 **Returns:** Object
+
+Inherited from: void
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:131

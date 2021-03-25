@@ -41,7 +41,7 @@
 
 Inherited from: [FetchResponse](fetchresponse.md).[body](fetchresponse.md#body)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2552
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2623
 
 ___
 
@@ -51,13 +51,13 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md).[bodyUsed](fetchresponse.md#bodyused)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2553
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2624
 
 ___
 
 ### data
 
-• **data**: [*UnauthenticatedUser*](unauthenticateduser.md) & { `user?`: *undefined* \| [*LoggedInUser*](loggedinuser.md)  }
+• **data**: [*UnauthenticatedUser*](unauthenticateduser.md) & { `user?`: [*LoggedInUser*](loggedinuser.md)  }
 
 Overrides: [FetchResponse](fetchresponse.md).[data](fetchresponse.md#data)
 
@@ -71,7 +71,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md).[headers](fetchresponse.md#headers)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12623
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12717
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md).[ok](fetchresponse.md#ok)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12624
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12718
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md).[redirected](fetchresponse.md#redirected)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12625
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12719
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md).[status](fetchresponse.md#status)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12626
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12720
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md).[statusText](fetchresponse.md#statustext)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12627
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12721
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md).[trailer](fetchresponse.md#trailer)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12628
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12722
 
 ___
 
@@ -131,7 +131,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md).[type](fetchresponse.md#type)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12629
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12723
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md).[url](fetchresponse.md#url)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12630
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12724
 
 ## Methods
 
@@ -153,7 +153,7 @@ Defined in: node_modules/typescript/lib/lib.dom.d.ts:12630
 
 Inherited from: [FetchResponse](fetchresponse.md)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2554
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2625
 
 ___
 
@@ -165,7 +165,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2555
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2626
 
 ___
 
@@ -177,7 +177,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12631
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12725
 
 ___
 
@@ -189,7 +189,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2556
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2627
 
 ___
 
@@ -201,7 +201,7 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2557
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2628
 
 ___
 
@@ -213,4 +213,4 @@ ___
 
 Inherited from: [FetchResponse](fetchresponse.md)
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2558
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2629

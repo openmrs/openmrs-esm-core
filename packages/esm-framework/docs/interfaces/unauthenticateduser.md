@@ -30,6 +30,6 @@ ___
 
 ### user
 
-• `Optional` **user**: *undefined* \| [*LoggedInUser*](loggedinuser.md)
+• `Optional` **user**: [*LoggedInUser*](loggedinuser.md)
 
 Defined in: [packages/esm-api/src/types/index.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L35)

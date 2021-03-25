@@ -308,7 +308,7 @@ ___
 
 Name | Type |
 :------ | :------ |
-`U` | *extensions* \| *slots* |
+`U` | keyof [*ExtensionStore*](interfaces/extensionstore.md) |
 
 #### Parameters:
 

@@ -12,6 +12,6 @@
 
 ### state
 
-• `Optional` **state**: *undefined* \| *Record*<string, any\>
+• `Optional` **state**: *Record*<string, any\>
 
 Defined in: [packages/esm-react-utils/src/Extension.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/Extension.tsx#L6)

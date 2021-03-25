@@ -70,6 +70,7 @@
 - [CurrentPatient](API.md#currentpatient)
 - [DateInput](API.md#dateinput)
 - [ExtensionSlotProps](API.md#extensionslotprops)
+- [LayoutType](API.md#layouttype)
 - [MaybeAsync](API.md#maybeasync)
 - [NavigationContextType](API.md#navigationcontexttype)
 - [PatientUuid](API.md#patientuuid)
@@ -167,6 +168,7 @@
 - [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
 - [setupPaths](API.md#setuppaths)
+- [setupUtils](API.md#setuputils)
 - [showToast](API.md#showtoast)
 - [switchTo](API.md#switchto)
 - [toDateObjectStrict](API.md#todateobjectstrict)
@@ -183,6 +185,7 @@
 - [useCurrentPatient](API.md#usecurrentpatient)
 - [useExtensionStore](API.md#useextensionstore)
 - [useForceUpdate](API.md#useforceupdate)
+- [useLayoutType](API.md#uselayouttype)
 - [useNavigationContext](API.md#usenavigationcontext)
 - [useStore](API.md#usestore)
 - [userHasAccess](API.md#userhasaccess)
@@ -242,6 +245,14 @@ ___
 Ƭ **ExtensionSlotProps**: [*ExtensionSlotBaseProps*](interfaces/extensionslotbaseprops.md) & *React.HTMLAttributes*<HTMLDivElement\>
 
 Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L28)
+
+___
+
+### LayoutType
+
+Ƭ **LayoutType**: *tablet* \| *phone* \| *desktop*
+
+Defined in: [packages/esm-react-utils/src/useLayoutType.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useLayoutType.ts#L3)
 
 ___
 
@@ -1572,6 +1583,16 @@ Defined in: [packages/esm-globals/src/globals.ts:3](https://github.com/openmrs/o
 
 ___
 
+### setupUtils
+
+▸ **setupUtils**(): *void*
+
+**Returns:** *void*
+
+Defined in: [packages/esm-globals/src/globals.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L11)
+
+___
+
 ### showToast
 
 ▸ **showToast**(`toast`: ToastDescriptor): *void*
@@ -1783,7 +1804,7 @@ ___
 
 Name | Type |
 :------ | :------ |
-`U` | *extensions* \| *slots* |
+`U` | keyof [*ExtensionStore*](interfaces/extensionstore.md) |
 
 #### Parameters:
 
@@ -1860,6 +1881,16 @@ ___
 **Returns:** () => *void*
 
 Defined in: [packages/esm-react-utils/src/useForceUpdate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useForceUpdate.ts#L3)
+
+___
+
+### useLayoutType
+
+▸ **useLayoutType**(): [*LayoutType*](API.md#layouttype)
+
+**Returns:** [*LayoutType*](API.md#layouttype)
+
+Defined in: [packages/esm-react-utils/src/useLayoutType.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useLayoutType.ts#L22)
 
 ___
 

@@ -24,7 +24,7 @@ export interface BreadcrumbSettings {
   /**
    * The title of the breadcrumb.
    */
-  title: string;
+  title: string | ((params: any) => string);
 }
 
 export interface BreadcrumbRegistration {

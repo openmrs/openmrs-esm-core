@@ -12,6 +12,6 @@
 
 ### \_extensionContext
 
-• `Optional` **\_extensionContext**: *undefined* \| [*ExtensionData*](extensiondata.md)
+• `Optional` **\_extensionContext**: [*ExtensionData*](extensiondata.md)
 
 Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L62)

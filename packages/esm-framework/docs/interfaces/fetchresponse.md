@@ -47,7 +47,9 @@ Name | Default |
 
 • `Readonly` **body**: *null* \| *ReadableStream*<Uint8Array\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2552
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2623
 
 ___
 
@@ -55,7 +57,9 @@ ___
 
 • `Readonly` **bodyUsed**: *boolean*
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2553
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2624
 
 ___
 
@@ -71,7 +75,9 @@ ___
 
 • `Readonly` **headers**: Headers
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12623
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12717
 
 ___
 
@@ -79,7 +85,9 @@ ___
 
 • `Readonly` **ok**: *boolean*
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12624
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12718
 
 ___
 
@@ -87,7 +95,9 @@ ___
 
 • `Readonly` **redirected**: *boolean*
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12625
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12719
 
 ___
 
@@ -95,7 +105,9 @@ ___
 
 • `Readonly` **status**: *number*
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12626
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12720
 
 ___
 
@@ -103,7 +115,9 @@ ___
 
 • `Readonly` **statusText**: *string*
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12627
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12721
 
 ___
 
@@ -111,7 +125,9 @@ ___
 
 • `Readonly` **trailer**: *Promise*<Headers\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12628
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12722
 
 ___
 
@@ -119,7 +135,9 @@ ___
 
 • `Readonly` **type**: ResponseType
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12629
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12723
 
 ___
 
@@ -127,7 +145,9 @@ ___
 
 • `Readonly` **url**: *string*
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12630
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12724
 
 ## Methods
 
@@ -137,7 +157,9 @@ Defined in: node_modules/typescript/lib/lib.dom.d.ts:12630
 
 **Returns:** *Promise*<ArrayBuffer\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2554
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2625
 
 ___
 
@@ -147,7 +169,9 @@ ___
 
 **Returns:** *Promise*<Blob\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2555
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2626
 
 ___
 
@@ -157,7 +181,9 @@ ___
 
 **Returns:** Response
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12631
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:12725
 
 ___
 
@@ -167,7 +193,9 @@ ___
 
 **Returns:** *Promise*<FormData\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2556
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2627
 
 ___
 
@@ -177,7 +205,9 @@ ___
 
 **Returns:** *Promise*<any\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2557
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2628
 
 ___
 
@@ -187,4 +217,6 @@ ___
 
 **Returns:** *Promise*<string\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2558
+Inherited from: void
+
+Defined in: node_modules/typescript/lib/lib.dom.d.ts:2629

@@ -1,4 +1,5 @@
 import React from "react";
+import type {} from "@openmrs/esm-globals";
 import createStore, { Store } from "unistore";
 import { never, of } from "rxjs";
 
@@ -196,16 +197,6 @@ export const useStore = (store: Store<any>, actions) => {
 };
 
 export const showToast = jest.fn();
-
-declare global {
-  interface Window {
-    openmrsBase: string;
-    spaBase: string;
-    spaEnv: any;
-    spaVersion?: string;
-    getOpenmrsSpaBase(): string;
-  }
-}
 
 export function setupPaths(config: any) {
   window.openmrsBase = config.apiUrl;
