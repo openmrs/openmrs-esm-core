@@ -24,10 +24,13 @@ function isNotEmpty(description: React.ReactNode) {
 
 export function showToast(toast: ToastDescriptor) {
   if (toast && isNotEmpty(toast.description)) {
-    toastsSubject.next({
-      ...toast,
-      id: toastId++,
-    });
+    setTimeout(() => {
+      // always use in subsequent cycle
+      toastsSubject.next({
+        ...toast,
+        id: toastId++,
+      });
+    }, 0);
   } else {
     console.error(
       `showToast must be called with an object having a 'description' property that is a non-empty string or object`

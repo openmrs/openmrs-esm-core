@@ -54,7 +54,9 @@ function PopupHandler() {
   useEffect(() => {
     // displaying toast if modules are missing
     setShouldShowToast(
-      modulesWithMissingBackendModules.length > 0 ||
+      (alreadyShowing) =>
+        alreadyShowing ||
+        modulesWithMissingBackendModules.length > 0 ||
         modulesWithWrongBackendModulesVersion.length > 0
     );
   }, [modulesWithMissingBackendModules, modulesWithWrongBackendModulesVersion]);
