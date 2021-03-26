@@ -15,7 +15,7 @@ const absoluteWbManifestUrls = wbManifest.map(({ url }) =>
   prefixWithSpaBase(url)
 );
 const omrsCachePrefix = "omrs";
-const omrsCacheName = `${omrsCachePrefix}-cache`;
+const omrsCacheName = `${omrsCachePrefix}-spa-cache-v1`;
 const omrsNetworkFirst = new NetworkFirst({ cacheName: omrsCacheName });
 
 setCacheNameDetails({ prefix: omrsCachePrefix });
