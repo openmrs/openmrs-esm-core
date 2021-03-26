@@ -2,6 +2,7 @@ import { PrecacheEntry } from "workbox-precaching/_types";
 import { registerRoute } from "workbox-routing";
 import { NetworkFirst } from "workbox-strategies";
 import { setCacheNameDetails } from "workbox-core";
+import { distinct } from "./helpers";
 
 declare global {
   interface Window {
@@ -11,8 +12,8 @@ declare global {
 
 const indexPath = prefixWithSpaBase("index.html");
 const wbManifest = self.__WB_MANIFEST;
-const absoluteWbManifestUrls = wbManifest.map(({ url }) =>
-  prefixWithSpaBase(url)
+const absoluteWbManifestUrls = distinct(
+  wbManifest.map(({ url }) => prefixWithSpaBase(url))
 );
 const omrsCachePrefix = "omrs";
 const omrsCacheName = `${omrsCachePrefix}-spa-cache-v1`;
