@@ -34,6 +34,16 @@ function setupPaths(config: SpaConfig) {
   window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
 
+function registerServiceWorker() {
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register(
+        `${window.getOpenmrsSpaBase()}service-worker.js`
+      );
+    });
+  }
+}
+
 function runSpa(config: SpaConfig) {
   const { configUrls = [] } = config;
   const { run } = require("./run");
@@ -48,5 +58,6 @@ export function initializeSpa(config: SpaConfig) {
   setupUtils();
   setupPaths(config);
   wireSpaPaths();
+  registerServiceWorker();
   return runSpa(config);
 }

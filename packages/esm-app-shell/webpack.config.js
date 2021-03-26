@@ -4,7 +4,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
-
+const WebpackPwaManifest = require("webpack-pwa-manifest");
+const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const { resolve } = require("path");
 const { readFileSync } = require("fs");
@@ -119,9 +120,22 @@ module.exports = (env, argv = {}) => {
     },
     plugins: [
       new CleanWebpackPlugin(),
+      new WebpackPwaManifest({
+        name: "OpenMRS",
+        short_name: "OpenMRS",
+        description:
+          "Open source Health IT by and for the entire planet, starting with the developing world.",
+        background_color: "#ffffff",
+        theme_color: "#000000",
+        icons: [
+          {
+            src: resolve(__dirname, "src/assets/logo-512.png"),
+            sizes: [96, 128, 144, 192, 256, 384, 512],
+          },
+        ],
+      }),
       new HtmlWebpackPlugin({
         inject: false,
-        hash: true,
         publicPath: openmrsPublicPath,
         template: resolve(__dirname, "src/index.ejs"),
         templateParameters: {
@@ -145,6 +159,14 @@ module.exports = (env, argv = {}) => {
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? "static" : "disabled",
+      }),
+      new InjectManifest({
+        swSrc: "./src/service-worker.ts",
+        maximumFileSizeToCacheInBytes:
+          mode === production ? undefined : Number.MAX_SAFE_INTEGER,
+        additionalManifestEntries: [
+          { url: openmrsImportmapUrl, revision: null },
+        ],
       }),
     ],
   };

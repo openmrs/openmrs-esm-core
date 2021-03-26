@@ -8,3 +8,7 @@ export function routeRegex(regex: RegExp, location: Location) {
   );
   return result;
 }
+
+export function distinct<T>(values: Array<T>) {
+  return values.filter((value, index, self) => self.indexOf(value) === index);
+}
