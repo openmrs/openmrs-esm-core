@@ -81,3 +81,23 @@
   background-color: #004144;
   border-color: #004144;
 }
+
+.bx--overflow-menu--flip {
+  &.bx--overflow-menu-options {
+    background-color: $openmrs-background-grey;
+    left: -6.025rem;
+    min-width: 12.5rem;
+    top: 3rem;
+  }
+}
+
+.bx--overflow-menu--flip {
+  &.bx--overflow-menu-options[data-floating-menu-direction="bottom"] {
+    &::after {
+      top: 0;
+      height: 0;
+      width: 0;
+      left: 0;
+    }
+  }
+}
