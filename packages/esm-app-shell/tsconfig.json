@@ -14,7 +14,8 @@
       "es2015.promise",
       "es2016.array.include",
       "es2018",
-      "esnext"
+      "esnext",
+      "WebWorker"
     ]
   },
   "include": ["src/**/*"]
