@@ -162,6 +162,9 @@ module.exports = (env, argv = {}) => {
         swSrc: "./src/service-worker.ts",
         maximumFileSizeToCacheInBytes:
           mode === "production" ? undefined : Number.MAX_SAFE_INTEGER,
+        additionalManifestEntries: [
+          { url: openmrsImportmapUrl, revision: null },
+        ],
       }),
     ],
   };
