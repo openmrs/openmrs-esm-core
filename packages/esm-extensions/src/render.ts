@@ -1,6 +1,6 @@
 import cloneDeep from "lodash-es/cloneDeep";
 import set from "lodash-es/set";
-import { mountRootParcel } from "single-spa";
+import { mountRootParcel, Parcel } from "single-spa";
 import { getExtensionRegistration } from "./extensions";
 import { getActualRouteProps } from "./route";
 import { updateExtensionStore } from "./store";
@@ -32,7 +32,7 @@ export function renderExtension(
 ): CancelLoading {
   const extensionName = extensionId.split("#")[0];
   const extensionRegistration = getExtensionRegistration(extensionId);
-  let active = true;
+  let active: boolean | Parcel = true;
 
   if (domElement) {
     if (extensionRegistration) {
@@ -50,16 +50,20 @@ export function renderExtension(
         },
       };
 
-      extensionRegistration.load().then(
-        ({ default: result, ...lifecycle }) =>
-          active &&
-          mountRootParcel(renderFunction(result ?? lifecycle) as any, {
-            ...additionalProps,
-            ...extensionContextProps,
-            ...routeProps,
-            domElement,
-          })
-      );
+      extensionRegistration.load().then(({ default: result, ...lifecycle }) => {
+        if (active) {
+          const parcel = mountRootParcel(
+            renderFunction(result ?? lifecycle) as any,
+            {
+              ...additionalProps,
+              ...extensionContextProps,
+              ...routeProps,
+              domElement,
+            }
+          );
+          active = parcel;
+        }
+      });
 
       updateExtensionStore((state) =>
         set(
@@ -82,6 +86,16 @@ export function renderExtension(
   }
 
   return () => {
-    active = false;
+    if (typeof active === "boolean") {
+      active = false;
+    } else {
+      const p = active;
+
+      if (p.getStatus() !== "MOUNTED") {
+        p.mountPromise.then(() => p.unmount());
+      } else {
+        p.unmount();
+      }
+    }
   };
 }

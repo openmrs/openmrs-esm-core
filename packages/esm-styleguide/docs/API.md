@@ -41,13 +41,13 @@ ___
 
 ### renderToasts
 
-▸ **renderToasts**(`target`: HTMLElement): *void*
+▸ **renderToasts**(`target`: HTMLElement \| *null*): *void*
 
 #### Parameters:
 
 Name | Type |
 :------ | :------ |
-`target` | HTMLElement |
+`target` | HTMLElement \| *null* |
 
 **Returns:** *void*
 
@@ -67,4 +67,4 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [toasts/index.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L23)
+Defined in: [toasts/index.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L25)

@@ -13,6 +13,7 @@ const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
 const { version } = require("./package.json");
 
 const timestamp = getTimestamp();
+const production = "production";
 
 const openmrsApiUrl = removeTrailingSlash(
   process.env.OMRS_API_URL || "/openmrs"
@@ -34,13 +35,14 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .join(", ");
 
 module.exports = (env, argv = {}) => {
-  const mode = argv.mode || process.env.NODE_ENV || "production";
+  const mode = argv.mode || process.env.NODE_ENV || production;
+  const outDir = mode === production ? "dist" : "lib";
 
   return {
     entry: resolve(__dirname, "src/index.ts"),
     output: {
       filename: "openmrs.js",
-      path: resolve(__dirname, "dist"),
+      path: resolve(__dirname, outDir),
       libraryTarget: "window",
     },
     devServer: {
@@ -161,7 +163,7 @@ module.exports = (env, argv = {}) => {
       new InjectManifest({
         swSrc: "./src/service-worker.ts",
         maximumFileSizeToCacheInBytes:
-          mode === "production" ? undefined : Number.MAX_SAFE_INTEGER,
+          mode === production ? undefined : Number.MAX_SAFE_INTEGER,
         additionalManifestEntries: [
           { url: openmrsImportmapUrl, revision: null },
         ],

@@ -5,3 +5,8 @@ export function trimEnd(text: string, chr: string) {
 
   return text;
 }
+
+export function removeTrailingSlash(path: string) {
+  const i = path.length - 1;
+  return path[i] === "/" ? removeTrailingSlash(path.substr(0, i)) : path;
+}
