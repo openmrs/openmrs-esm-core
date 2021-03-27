@@ -42,11 +42,13 @@
     "systemjs-webpack-interop": "^2.1.2"
   },
   "peerDependencies": {
+    "@openmrs/esm-globals": "3.x",
     "@openmrs/esm-state": "3.x",
     "single-spa": "4.x",
     "systemjs": "6.x"
   },
   "devDependencies": {
+    "@openmrs/esm-globals": "^3.1.10",
     "@openmrs/esm-state": "^3.1.10",
     "@types/ramda": "^0.26.44",
     "@types/systemjs": "^6.1.0",

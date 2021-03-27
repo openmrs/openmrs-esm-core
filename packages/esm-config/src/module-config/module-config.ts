@@ -27,6 +27,7 @@ import {
   implementerToolsConfigStore,
   temporaryConfigStore,
 } from "./state";
+import type {} from "@openmrs/esm-globals";
 
 /*
  * Config loading

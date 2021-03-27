@@ -1,11 +1,5 @@
 import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
-declare global {
-  interface Window {
-    spaEnv: "production" | "development" | "test";
-  }
-}
-
 function setupOpenMRS() {
   const options = {
     featureName: "devtools",
