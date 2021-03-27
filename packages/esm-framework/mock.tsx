@@ -196,3 +196,21 @@ export const useStore = (store: Store<any>, actions) => {
 };
 
 export const showToast = jest.fn();
+
+declare global {
+  interface Window {
+    openmrsBase: string;
+    spaBase: string;
+    spaEnv: any;
+    spaVersion?: string;
+    getOpenmrsSpaBase(): string;
+  }
+}
+
+export function setupPaths(config: any) {
+  window.openmrsBase = config.apiUrl;
+  window.spaBase = config.spaPath;
+  window.spaEnv = config.env || "production";
+  window.spaVersion = process.env.BUILD_VERSION;
+  window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
+}

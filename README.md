@@ -23,6 +23,7 @@ The following common libraries have been developed. They may also be used indepe
 - [@openmrs/esm-config](packages/esm-config)
 - [@openmrs/esm-error-handling](packages/esm-error-handling)
 - [@openmrs/esm-extensions](packages/esm-extensions)
+- [@openmrs/esm-globals](packages/esm-globals)
 - [@openmrs/esm-react-utils](packages/esm-react-utils)
 - [@openmrs/esm-styleguide](packages/esm-styleguide)
 - [@openmrs/esm-utils](packages/esm-utils)

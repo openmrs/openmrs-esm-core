@@ -7,9 +7,6 @@ set -o pipefail
 
 echo Generating new API docs
 
-mkdir -p docs
-touch docs/API.md
-
 npx typedoc src/index.ts
 
 # Link back to README at the top; the -i.bak and rm is to support both Mac & Linux.

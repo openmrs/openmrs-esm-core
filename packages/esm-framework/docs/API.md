@@ -57,6 +57,7 @@
 - [Person](interfaces/person.md)
 - [Privilege](interfaces/privilege.md)
 - [Role](interfaces/role.md)
+- [SpaConfig](interfaces/spaconfig.md)
 - [UnauthenticatedUser](interfaces/unauthenticateduser.md)
 - [UserHasAccessProps](interfaces/userhasaccessprops.md)
 - [WorkspaceItem](interfaces/workspaceitem.md)
@@ -165,6 +166,7 @@
 - [renderLoadingSpinner](API.md#renderloadingspinner)
 - [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
+- [setupPaths](API.md#setuppaths)
 - [showToast](API.md#showtoast)
 - [switchTo](API.md#switchto)
 - [toDateObjectStrict](API.md#todateobjectstrict)
@@ -297,7 +299,7 @@ ___
 
 Ƭ **SpaEnvironment**: *production* \| *development* \| *test*
 
-Defined in: [packages/esm-framework/src/types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-framework/src/types.ts#L16)
+Defined in: [packages/esm-globals/src/types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L16)
 
 ___
 
@@ -1015,7 +1017,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:215](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L215)
+Defined in: [packages/esm-config/src/module-config/module-config.ts:216](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L216)
 
 ___
 
@@ -1134,7 +1136,7 @@ Name | Type | Description |
 
 **Returns:** *Promise*<[*Config*](interfaces/config.md)\>
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L244)
+Defined in: [packages/esm-config/src/module-config/module-config.ts:245](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L245)
 
 ___
 
@@ -1411,7 +1413,7 @@ Name | Type | Description |
 
 **Returns:** [*Config*](interfaces/config.md)
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:266](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L266)
+Defined in: [packages/esm-config/src/module-config/module-config.ts:267](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L267)
 
 ___
 
@@ -1428,7 +1430,7 @@ Name | Type | Default value |
 
 **Returns:** *void*
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:223](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L223)
+Defined in: [packages/esm-config/src/module-config/module-config.ts:224](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L224)
 
 ___
 
@@ -1556,6 +1558,22 @@ Name | Type |
 **Returns:** *void*
 
 Defined in: [packages/esm-error-handling/src/index.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L23)
+
+___
+
+### setupPaths
+
+▸ **setupPaths**(`config`: [*SpaConfig*](interfaces/spaconfig.md)): *void*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`config` | [*SpaConfig*](interfaces/spaconfig.md) |
+
+**Returns:** *void*
+
+Defined in: [packages/esm-globals/src/globals.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L3)
 
 ___
 

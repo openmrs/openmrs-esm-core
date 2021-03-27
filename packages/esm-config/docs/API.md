@@ -259,7 +259,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:215](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L215)
+Defined in: [packages/esm-config/src/module-config/module-config.ts:216](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L216)
 
 ___
 
@@ -286,7 +286,7 @@ Name | Type | Description |
 
 **Returns:** *Promise*<[*Config*](interfaces/config.md)\>
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L244)
+Defined in: [packages/esm-config/src/module-config/module-config.ts:245](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L245)
 
 ___
 
@@ -375,7 +375,7 @@ Name | Type | Description |
 
 **Returns:** [*Config*](interfaces/config.md)
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:266](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L266)
+Defined in: [packages/esm-config/src/module-config/module-config.ts:267](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L267)
 
 ___
 
@@ -392,7 +392,7 @@ Name | Type | Default value |
 
 **Returns:** *void*
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:223](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L223)
+Defined in: [packages/esm-config/src/module-config/module-config.ts:224](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L224)
 
 ___
 

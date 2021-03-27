@@ -2,13 +2,7 @@
 
 An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
 
-## Contents
-
-<!-- toc -->
-
-- [What is this?](#what-is-this)
-
-<!-- tocstop -->
+[API Docs](docs/API.md)
 
 ## What is this?
 
