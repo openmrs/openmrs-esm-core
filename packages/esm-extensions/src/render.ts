@@ -1,5 +1,4 @@
-import cloneDeep from "lodash-es/cloneDeep";
-import set from "lodash-es/set";
+import { update } from "@openmrs/esm-state";
 import { mountRootParcel, Parcel } from "single-spa";
 import { getExtensionRegistration } from "./extensions";
 import { getActualRouteProps } from "./route";
@@ -66,8 +65,8 @@ export function renderExtension(
       });
 
       updateExtensionStore((state) =>
-        set(
-          cloneDeep(state),
+        update(
+          state,
           [
             "extensions",
             extensionName,
