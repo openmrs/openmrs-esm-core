@@ -4,6 +4,11 @@
 
 ## Table of contents
 
+### Enumerations
+
+- [VisitMode](enums/visitmode.md)
+- [VisitStatus](enums/visitstatus.md)
+
 ### Classes
 
 - [OpenmrsFetchError](classes/openmrsfetcherror.md)
@@ -14,23 +19,34 @@
 - [CurrentUserOptions](interfaces/currentuseroptions.md)
 - [CurrentUserWithResponseOption](interfaces/currentuserwithresponseoption.md)
 - [CurrentUserWithoutResponseOption](interfaces/currentuserwithoutresponseoption.md)
+- [FHIRCode](interfaces/fhircode.md)
 - [FHIRRequestObj](interfaces/fhirrequestobj.md)
+- [FHIRResource](interfaces/fhirresource.md)
 - [FetchHeaders](interfaces/fetchheaders.md)
 - [FetchResponse](interfaces/fetchresponse.md)
+- [Location](interfaces/location.md)
 - [LoggedInUser](interfaces/loggedinuser.md)
 - [LoggedInUserFetchResponse](interfaces/loggedinuserfetchresponse.md)
+- [NewVisitPayload](interfaces/newvisitpayload.md)
 - [OnlyThePatient](interfaces/onlythepatient.md)
+- [OpenmrsResource](interfaces/openmrsresource.md)
 - [PatientWithFullResponse](interfaces/patientwithfullresponse.md)
 - [Person](interfaces/person.md)
 - [Privilege](interfaces/privilege.md)
 - [Role](interfaces/role.md)
+- [SessionUser](interfaces/sessionuser.md)
 - [UnauthenticatedUser](interfaces/unauthenticateduser.md)
+- [User](interfaces/user.md)
+- [Visit](interfaces/visit.md)
+- [VisitItem](interfaces/visititem.md)
+- [VisitType](interfaces/visittype.md)
 - [WorkspaceItem](interfaces/workspaceitem.md)
 
 ### Type aliases
 
 - [CurrentPatient](API.md#currentpatient)
 - [PatientUuid](API.md#patientuuid)
+- [UpdateVisitPayload](API.md#updatevisitpayload)
 
 ### API Variables
 
@@ -40,6 +56,7 @@
 
 - [backendDependencies](API.md#backenddependencies)
 - [fhirBaseUrl](API.md#fhirbaseurl)
+- [getStartedVisit](API.md#getstartedvisit)
 - [sessionEndpoint](API.md#sessionendpoint)
 
 ### API Functions
@@ -58,7 +75,11 @@
 
 ### Other Functions
 
+- [getVisitsForPatient](API.md#getvisitsforpatient)
 - [makeUrl](API.md#makeurl)
+- [openVisitsNoteWorkspace](API.md#openvisitsnoteworkspace)
+- [saveVisit](API.md#savevisit)
+- [updateVisit](API.md#updatevisit)
 - [userHasAccess](API.md#userhasaccess)
 
 ### Workspace Functions
@@ -81,6 +102,14 @@ ___
 Ƭ **PatientUuid**: *string* \| *null*
 
 Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L20)
+
+___
+
+### UpdateVisitPayload
+
+Ƭ **UpdateVisitPayload**: [*NewVisitPayload*](interfaces/newvisitpayload.md) & {}
+
+Defined in: [packages/esm-api/src/types/visit-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L11)
 
 ## API Variables
 
@@ -119,6 +148,14 @@ ___
 • `Const` **fhirBaseUrl**: */ws/fhir2/R4*
 
 Defined in: [packages/esm-api/src/fhir.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L4)
+
+___
+
+### getStartedVisit
+
+• `Const` **getStartedVisit**: *BehaviorSubject*<*null* \| [*VisitItem*](interfaces/visititem.md)\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L84)
 
 ___
 
@@ -405,6 +442,24 @@ ___
 
 ## Other Functions
 
+### getVisitsForPatient
+
+▸ **getVisitsForPatient**(`patientUuid`: *string*, `abortController`: AbortController, `v?`: *string*): *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<{ `results`: [*Visit*](interfaces/visit.md)[]  }\>\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`patientUuid` | *string* |
+`abortController` | AbortController |
+`v?` | *string* |
+
+**Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<{ `results`: [*Visit*](interfaces/visit.md)[]  }\>\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L23)
+
+___
+
 ### makeUrl
 
 ▸ **makeUrl**(`path`: *string*): *string*
@@ -418,6 +473,58 @@ Name | Type |
 **Returns:** *string*
 
 Defined in: [packages/esm-api/src/openmrs-fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L8)
+
+___
+
+### openVisitsNoteWorkspace
+
+▸ **openVisitsNoteWorkspace**(`componentName`: *string*, `title`: *string*): *void*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`componentName` | *string* |
+`title` | *string* |
+
+**Returns:** *void*
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L12)
+
+___
+
+### saveVisit
+
+▸ **saveVisit**(`payload`: [*NewVisitPayload*](interfaces/newvisitpayload.md), `abortController`: AbortController): *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<any\>\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`payload` | [*NewVisitPayload*](interfaces/newvisitpayload.md) |
+`abortController` | AbortController |
+
+**Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<any\>\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L55)
+
+___
+
+### updateVisit
+
+▸ **updateVisit**(`uuid`: *string*, `payload`: [*UpdateVisitPayload*](API.md#updatevisitpayload), `abortController`: AbortController): *Observable*<any\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`uuid` | *string* |
+`payload` | [*UpdateVisitPayload*](API.md#updatevisitpayload) |
+`abortController` | AbortController |
+
+**Returns:** *Observable*<any\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L69)
 
 ___
 

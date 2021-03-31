@@ -22,4 +22,4 @@
 
 • `Optional` **includeAuthStatus**: *boolean*
 
-Defined in: [packages/esm-api/src/types/index.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L6)
+Defined in: [packages/esm-api/src/types/user-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L2)

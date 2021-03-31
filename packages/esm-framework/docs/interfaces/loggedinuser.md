@@ -28,7 +28,7 @@
 
 • **allowedLocales**: *string*[]
 
-Defined in: [packages/esm-api/src/types/index.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L28)
+Defined in: [packages/esm-api/src/types/user-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L24)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 • **display**: *string*
 
-Defined in: [packages/esm-api/src/types/index.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L19)
+Defined in: [packages/esm-api/src/types/user-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L15)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 • **locale**: *string*
 
-Defined in: [packages/esm-api/src/types/index.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L27)
+Defined in: [packages/esm-api/src/types/user-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L23)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • **person**: [*Person*](person.md)
 
-Defined in: [packages/esm-api/src/types/index.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L23)
+Defined in: [packages/esm-api/src/types/user-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L19)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 • **privileges**: [*Privilege*](privilege.md)[]
 
-Defined in: [packages/esm-api/src/types/index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L24)
+Defined in: [packages/esm-api/src/types/user-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L20)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 • **retired**: *boolean*
 
-Defined in: [packages/esm-api/src/types/index.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L26)
+Defined in: [packages/esm-api/src/types/user-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L22)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 • **roles**: [*Role*](role.md)[]
 
-Defined in: [packages/esm-api/src/types/index.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L25)
+Defined in: [packages/esm-api/src/types/user-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L21)
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 • **systemId**: *string*
 
-Defined in: [packages/esm-api/src/types/index.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L21)
+Defined in: [packages/esm-api/src/types/user-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L17)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 • **userProperties**: *any*
 
-Defined in: [packages/esm-api/src/types/index.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L22)
+Defined in: [packages/esm-api/src/types/user-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L18)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 • **username**: *string*
 
-Defined in: [packages/esm-api/src/types/index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L20)
+Defined in: [packages/esm-api/src/types/user-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L16)
 
 ___
 
@@ -108,4 +108,4 @@ ___
 
 • **uuid**: *string*
 
-Defined in: [packages/esm-api/src/types/index.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L18)
+Defined in: [packages/esm-api/src/types/user-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L14)

@@ -61,7 +61,7 @@ ___
 
 Overrides: [FetchResponse](fetchresponse.md).[data](fetchresponse.md#data)
 
-Defined in: [packages/esm-api/src/types/index.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L57)
+Defined in: [packages/esm-api/src/types/fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/fetch.ts#L8)
 
 ___
 

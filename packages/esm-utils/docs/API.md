@@ -10,8 +10,11 @@
 
 ### Functions
 
+- [age](API.md#age)
+- [daysIntoYear](API.md#daysintoyear)
 - [isOmrsDateStrict](API.md#isomrsdatestrict)
 - [isOmrsDateToday](API.md#isomrsdatetoday)
+- [isSameDay](API.md#issameday)
 - [toDateObjectStrict](API.md#todateobjectstrict)
 - [toOmrsDateFormat](API.md#toomrsdateformat)
 - [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
@@ -30,6 +33,46 @@
 Defined in: [omrs-dates.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L8)
 
 ## Functions
+
+### age
+
+▸ **age**(`dateString`: *string*): *string*
+
+Gets a human readable age represention of the provided date string.
+
+#### Parameters:
+
+Name | Type | Description |
+:------ | :------ | :------ |
+`dateString` | *string* | The stringified date.   |
+
+**Returns:** *string*
+
+A human-readable string version of the age.
+
+Defined in: [age-helpers.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/age-helpers.tsx#L37)
+
+___
+
+### daysIntoYear
+
+▸ **daysIntoYear**(`date`: Date): *number*
+
+Gets the number of days in the year of the given date.
+
+#### Parameters:
+
+Name | Type | Description |
+:------ | :------ | :------ |
+`date` | Date | The date to compute the days within the year.   |
+
+**Returns:** *number*
+
+The number of days.
+
+Defined in: [age-helpers.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/age-helpers.tsx#L6)
+
+___
 
 ### isOmrsDateStrict
 
@@ -63,6 +106,27 @@ Name | Type | Description |
 **Returns:** *boolean*
 
 Defined in: [omrs-dates.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L53)
+
+___
+
+### isSameDay
+
+▸ **isSameDay**(`firstDate`: Date, `secondDate`: Date): *boolean*
+
+Checks if two dates are representing the same day.
+
+#### Parameters:
+
+Name | Type | Description |
+:------ | :------ | :------ |
+`firstDate` | Date | The first date.   |
+`secondDate` | Date | The second date.   |
+
+**Returns:** *boolean*
+
+True if both are located on the same day.
+
+Defined in: [age-helpers.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/age-helpers.tsx#L23)
 
 ___
 

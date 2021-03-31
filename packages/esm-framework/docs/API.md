@@ -7,6 +7,8 @@
 ### Enumerations
 
 - [Type](enums/type.md)
+- [VisitMode](enums/visitmode.md)
+- [VisitStatus](enums/visitstatus.md)
 
 ### Classes
 
@@ -42,27 +44,37 @@
 - [ExtensionSlotInfo](interfaces/extensionslotinfo.md)
 - [ExtensionSlotInstance](interfaces/extensionslotinstance.md)
 - [ExtensionStore](interfaces/extensionstore.md)
+- [FHIRCode](interfaces/fhircode.md)
 - [FHIRRequestObj](interfaces/fhirrequestobj.md)
+- [FHIRResource](interfaces/fhirresource.md)
 - [FetchHeaders](interfaces/fetchheaders.md)
 - [FetchResponse](interfaces/fetchresponse.md)
 - [ImplementerToolsConfigStore](interfaces/implementertoolsconfigstore.md)
 - [ImportMap](interfaces/importmap.md)
 - [Lifecycle](interfaces/lifecycle.md)
+- [Location](interfaces/location.md)
 - [LoggedInUser](interfaces/loggedinuser.md)
 - [LoggedInUserFetchResponse](interfaces/loggedinuserfetchresponse.md)
 - [NavigateOptions](interfaces/navigateoptions.md)
 - [NavigationContext](interfaces/navigationcontext.md)
+- [NewVisitPayload](interfaces/newvisitpayload.md)
 - [OnlyThePatient](interfaces/onlythepatient.md)
 - [OpenmrsReactComponentProps](interfaces/openmrsreactcomponentprops.md)
 - [OpenmrsReactComponentState](interfaces/openmrsreactcomponentstate.md)
+- [OpenmrsResource](interfaces/openmrsresource.md)
 - [PageDefinition](interfaces/pagedefinition.md)
 - [PatientWithFullResponse](interfaces/patientwithfullresponse.md)
 - [Person](interfaces/person.md)
 - [Privilege](interfaces/privilege.md)
 - [Role](interfaces/role.md)
+- [SessionUser](interfaces/sessionuser.md)
 - [SpaConfig](interfaces/spaconfig.md)
 - [UnauthenticatedUser](interfaces/unauthenticateduser.md)
+- [User](interfaces/user.md)
 - [UserHasAccessProps](interfaces/userhasaccessprops.md)
+- [Visit](interfaces/visit.md)
+- [VisitItem](interfaces/visititem.md)
+- [VisitType](interfaces/visittype.md)
 - [WorkspaceItem](interfaces/workspaceitem.md)
 
 ### Type aliases
@@ -79,6 +91,7 @@
 - [PatientUuid](API.md#patientuuid)
 - [ProvidedConfig](API.md#providedconfig)
 - [SpaEnvironment](API.md#spaenvironment)
+- [UpdateVisitPayload](API.md#updatevisitpayload)
 - [Validator](API.md#validator)
 - [ValidatorFunction](API.md#validatorfunction)
 
@@ -99,6 +112,7 @@
 - [backendDependencies](API.md#backenddependencies)
 - [extensionStore](API.md#extensionstore)
 - [fhirBaseUrl](API.md#fhirbaseurl)
+- [getStartedVisit](API.md#getstartedvisit)
 - [implementerToolsConfigStore](API.md#implementertoolsconfigstore)
 - [sessionEndpoint](API.md#sessionendpoint)
 - [temporaryConfigStore](API.md#temporaryconfigstore)
@@ -135,11 +149,13 @@
 
 ### Other Functions
 
+- [age](API.md#age)
 - [attach](API.md#attach)
 - [createAppState](API.md#createappstate)
 - [createErrorHandler](API.md#createerrorhandler)
 - [createGlobalStore](API.md#createglobalstore)
 - [createUseStore](API.md#createusestore)
+- [daysIntoYear](API.md#daysintoyear)
 - [defineConfigSchema](API.md#defineconfigschema)
 - [detach](API.md#detach)
 - [getActualRouteProps](API.md#getactualrouteprops)
@@ -155,12 +171,15 @@
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
 - [getUpdatedExtensionSlotInfo](API.md#getupdatedextensionslotinfo)
+- [getVisitsForPatient](API.md#getvisitsforpatient)
 - [handleApiError](API.md#handleapierror)
 - [inRange](API.md#inrange)
 - [integrateBreakpoints](API.md#integratebreakpoints)
 - [isOmrsDateStrict](API.md#isomrsdatestrict)
 - [isOmrsDateToday](API.md#isomrsdatetoday)
+- [isSameDay](API.md#issameday)
 - [makeUrl](API.md#makeurl)
+- [openVisitsNoteWorkspace](API.md#openvisitsnoteworkspace)
 - [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
 - [processConfig](API.md#processconfig)
 - [provide](API.md#provide)
@@ -171,6 +190,7 @@
 - [renderLoadingSpinner](API.md#renderloadingspinner)
 - [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
+- [saveVisit](API.md#savevisit)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
 - [showToast](API.md#showtoast)
@@ -186,13 +206,17 @@
 - [unregisterExtensionSlot](API.md#unregisterextensionslot)
 - [update](API.md#update)
 - [updateExtensionStore](API.md#updateextensionstore)
+- [updateVisit](API.md#updatevisit)
 - [useConfig](API.md#useconfig)
 - [useCurrentPatient](API.md#usecurrentpatient)
+- [useExtension](API.md#useextension)
+- [useExtensionSlot](API.md#useextensionslot)
 - [useExtensionStore](API.md#useextensionstore)
 - [useForceUpdate](API.md#useforceupdate)
 - [useLayoutType](API.md#uselayouttype)
 - [useNavigationContext](API.md#usenavigationcontext)
 - [useStore](API.md#usestore)
+- [useVisit](API.md#usevisit)
 - [userHasAccess](API.md#userhasaccess)
 - [validator](API.md#validator)
 
@@ -314,6 +338,14 @@ Defined in: [packages/esm-globals/src/types.ts:16](https://github.com/openmrs/op
 
 ___
 
+### UpdateVisitPayload
+
+Ƭ **UpdateVisitPayload**: [*NewVisitPayload*](interfaces/newvisitpayload.md) & {}
+
+Defined in: [packages/esm-api/src/types/visit-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L11)
+
+___
+
 ### Validator
 
 Ƭ **Validator**: (`value`: *any*) => *void* \| *string*
@@ -408,7 +440,7 @@ Renders once for each extension attached to that extension slot.
 
 Usage of this component *must* have an ancestor `<ExtensionSlot>`.
 
-Defined in: [packages/esm-react-utils/src/Extension.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/Extension.tsx#L17)
+Defined in: [packages/esm-react-utils/src/Extension.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/Extension.tsx#L21)
 
 ___
 
@@ -456,6 +488,14 @@ ___
 • `Const` **fhirBaseUrl**: */ws/fhir2/R4*
 
 Defined in: [packages/esm-api/src/fhir.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L4)
+
+___
+
+### getStartedVisit
+
+• `Const` **getStartedVisit**: *BehaviorSubject*<*null* \| [*VisitItem*](interfaces/visititem.md)\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L84)
 
 ___
 
@@ -947,6 +987,26 @@ ___
 
 ## Other Functions
 
+### age
+
+▸ **age**(`dateString`: *string*): *string*
+
+Gets a human readable age represention of the provided date string.
+
+#### Parameters:
+
+Name | Type | Description |
+:------ | :------ | :------ |
+`dateString` | *string* | The stringified date.   |
+
+**Returns:** *string*
+
+A human-readable string version of the age.
+
+Defined in: [packages/esm-utils/src/age-helpers.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/age-helpers.tsx#L37)
+
+___
+
 ### attach
 
 ▸ **attach**(`extensionSlotName`: *string*, `extensionId`: *string*): *void*
@@ -1032,6 +1092,26 @@ Name | Type |
 **Returns:** () => T(`actions`: [*Actions*](API.md#actions)) => T & [*BoundActions*](API.md#boundactions)(`actions?`: [*Actions*](API.md#actions)) => T & [*BoundActions*](API.md#boundactions)
 
 Defined in: [packages/esm-react-utils/src/createUseStore.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/createUseStore.ts#L21)
+
+___
+
+### daysIntoYear
+
+▸ **daysIntoYear**(`date`: Date): *number*
+
+Gets the number of days in the year of the given date.
+
+#### Parameters:
+
+Name | Type | Description |
+:------ | :------ | :------ |
+`date` | Date | The date to compute the days within the year.   |
+
+**Returns:** *number*
+
+The number of days.
+
+Defined in: [packages/esm-utils/src/age-helpers.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/age-helpers.tsx#L6)
 
 ___
 
@@ -1322,6 +1402,24 @@ Defined in: [packages/esm-extensions/src/extensions.ts:311](https://github.com/o
 
 ___
 
+### getVisitsForPatient
+
+▸ **getVisitsForPatient**(`patientUuid`: *string*, `abortController`: AbortController, `v?`: *string*): *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<{ `results`: [*Visit*](interfaces/visit.md)[]  }\>\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`patientUuid` | *string* |
+`abortController` | AbortController |
+`v?` | *string* |
+
+**Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<{ `results`: [*Visit*](interfaces/visit.md)[]  }\>\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L23)
+
+___
+
 ### handleApiError
 
 ▸ **handleApiError**(): *function*
@@ -1396,6 +1494,27 @@ Defined in: [packages/esm-utils/src/omrs-dates.ts:53](https://github.com/openmrs
 
 ___
 
+### isSameDay
+
+▸ **isSameDay**(`firstDate`: Date, `secondDate`: Date): *boolean*
+
+Checks if two dates are representing the same day.
+
+#### Parameters:
+
+Name | Type | Description |
+:------ | :------ | :------ |
+`firstDate` | Date | The first date.   |
+`secondDate` | Date | The second date.   |
+
+**Returns:** *boolean*
+
+True if both are located on the same day.
+
+Defined in: [packages/esm-utils/src/age-helpers.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/age-helpers.tsx#L23)
+
+___
+
 ### makeUrl
 
 ▸ **makeUrl**(`path`: *string*): *string*
@@ -1409,6 +1528,23 @@ Name | Type |
 **Returns:** *string*
 
 Defined in: [packages/esm-api/src/openmrs-fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L8)
+
+___
+
+### openVisitsNoteWorkspace
+
+▸ **openVisitsNoteWorkspace**(`componentName`: *string*, `title`: *string*): *void*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`componentName` | *string* |
+`title` | *string* |
+
+**Returns:** *void*
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L12)
 
 ___
 
@@ -1589,6 +1725,23 @@ Name | Type |
 **Returns:** *void*
 
 Defined in: [packages/esm-error-handling/src/index.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L23)
+
+___
+
+### saveVisit
+
+▸ **saveVisit**(`payload`: [*NewVisitPayload*](interfaces/newvisitpayload.md), `abortController`: AbortController): *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<any\>\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`payload` | [*NewVisitPayload*](interfaces/newvisitpayload.md) |
+`abortController` | AbortController |
+
+**Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<any\>\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L55)
 
 ___
 
@@ -1867,6 +2020,24 @@ Defined in: [packages/esm-extensions/src/store.ts:104](https://github.com/openmr
 
 ___
 
+### updateVisit
+
+▸ **updateVisit**(`uuid`: *string*, `payload`: [*UpdateVisitPayload*](API.md#updatevisitpayload), `abortController`: AbortController): *Observable*<any\>
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`uuid` | *string* |
+`payload` | [*UpdateVisitPayload*](API.md#updatevisitpayload) |
+`abortController` | AbortController |
+
+**Returns:** *Observable*<any\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L69)
+
+___
+
 ### useConfig
 
 ▸ **useConfig**(): [*ConfigObject*](interfaces/configobject.md)
@@ -1892,6 +2063,51 @@ Name | Type |
 **Returns:** [*boolean*, NullablePatient, [*PatientUuid*](API.md#patientuuid), Error \| *null*]
 
 Defined in: [packages/esm-react-utils/src/useCurrentPatient.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useCurrentPatient.ts#L72)
+
+___
+
+### useExtension
+
+▸ **useExtension**<TRef\>(`state?`: *Record*<string, any\>): [*RefObject*<TRef\>, [*ExtensionData*](interfaces/extensiondata.md) \| *undefined*]
+
+#### Type parameters:
+
+Name | Type |
+:------ | :------ |
+`TRef` | HTMLElement |
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`state?` | *Record*<string, any\> |
+
+**Returns:** [*RefObject*<TRef\>, [*ExtensionData*](interfaces/extensiondata.md) \| *undefined*]
+
+Defined in: [packages/esm-react-utils/src/useExtension.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useExtension.ts#L5)
+
+___
+
+### useExtensionSlot
+
+▸ **useExtensionSlot**(`actualExtensionSlotName`: *string*, `ref`: *MutableRefObject*<HTMLElement \| *null*\>): *object*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`actualExtensionSlotName` | *string* |
+`ref` | *MutableRefObject*<HTMLElement \| *null*\> |
+
+**Returns:** *object*
+
+Name | Type |
+:------ | :------ |
+`attachedExtensionSlotName` | *undefined* \| *string* |
+`extensionIdsToRender` | *string*[] |
+`extensionSlotModuleName` | *string* |
+
+Defined in: [packages/esm-react-utils/src/useExtensionSlot.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useExtensionSlot.ts#L10)
 
 ___
 
@@ -2003,6 +2219,27 @@ Name | Type |
 **Returns:** T & [*BoundActions*](API.md#boundactions)
 
 Defined in: [packages/esm-react-utils/src/useStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useStore.ts#L5)
+
+___
+
+### useVisit
+
+▸ **useVisit**(`patientUuid`: *string*): *object*
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`patientUuid` | *string* |
+
+**Returns:** *object*
+
+Name | Type |
+:------ | :------ |
+`currentVisit` | *null* \| [*Visit*](interfaces/visit.md) |
+`error` | *null* |
+
+Defined in: [packages/esm-react-utils/src/useVisit.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useVisit.ts#L11)
 
 ___
 

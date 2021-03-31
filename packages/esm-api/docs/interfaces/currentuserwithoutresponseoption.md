@@ -22,4 +22,4 @@
 
 Overrides: [CurrentUserOptions](currentuseroptions.md).[includeAuthStatus](currentuseroptions.md#includeauthstatus)
 
-Defined in: [packages/esm-api/src/types/index.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L14)
+Defined in: [packages/esm-api/src/types/user-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L10)
