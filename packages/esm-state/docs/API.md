@@ -14,6 +14,7 @@
 - [createGlobalStore](API.md#createglobalstore)
 - [getAppState](API.md#getappstate)
 - [getGlobalStore](API.md#getglobalstore)
+- [update](API.md#update)
 
 ## Functions
 
@@ -86,3 +87,27 @@ Name | Type |
 **Returns:** *Store*<TState\>
 
 Defined in: [state.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L39)
+
+___
+
+### update
+
+▸ **update**<T\>(`obj`: T, `__namedParameters`: *string*[], `value`: *any*): T
+
+#### Type parameters:
+
+Name | Type |
+:------ | :------ |
+`T` | *Record*<string, any\> |
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`obj` | T |
+`__namedParameters` | *string*[] |
+`value` | *any* |
+
+**Returns:** T
+
+Defined in: [update.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/update.ts#L1)

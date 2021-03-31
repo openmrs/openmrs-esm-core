@@ -267,11 +267,17 @@ ___
 
 ### useCurrentPatient
 
-▸ **useCurrentPatient**(): [*boolean*, NullablePatient, PatientUuid, Error \| *null*]
+▸ **useCurrentPatient**(`patientUuid?`: PatientUuid): [*boolean*, NullablePatient, PatientUuid, Error \| *null*]
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`patientUuid` | PatientUuid |
 
 **Returns:** [*boolean*, NullablePatient, PatientUuid, Error \| *null*]
 
-Defined in: [packages/esm-react-utils/src/useCurrentPatient.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useCurrentPatient.ts#L12)
+Defined in: [packages/esm-react-utils/src/useCurrentPatient.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useCurrentPatient.ts#L72)
 
 ___
 
