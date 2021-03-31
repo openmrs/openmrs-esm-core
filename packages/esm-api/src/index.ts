@@ -5,6 +5,7 @@ export * from "./setup";
 
 export * from "./shared-api-objects/current-user";
 export * from "./shared-api-objects/current-patient";
+export * from "./shared-api-objects/visit-utils";
 
 export * from "./openmrs-backend-dependencies";
 export * from "./workspace/workspace.resource";
