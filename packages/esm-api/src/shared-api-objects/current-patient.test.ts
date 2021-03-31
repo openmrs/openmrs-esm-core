@@ -1,4 +1,4 @@
-import { getCurrentPatient } from "./current-patient";
+import { fetchCurrentPatient, getCurrentPatient } from "./current-patient";
 import { fhir } from "../fhir";
 import { first } from "rxjs/operators";
 
@@ -20,8 +20,7 @@ describe("current patient", () => {
       })
     );
 
-    window.history.pushState({}, document.title, `/patient/12/chart`);
-    window.dispatchEvent(new CustomEvent("single-spa:before-routing-event"));
+    fetchCurrentPatient("12");
 
     return getCurrentPatient()
       .pipe(first())
@@ -41,8 +40,7 @@ describe("current patient", () => {
       })
     );
 
-    window.history.pushState({}, document.title, `/patient/34`);
-    window.dispatchEvent(new CustomEvent("single-spa:before-routing-event"));
+    fetchCurrentPatient("34");
 
     return getCurrentPatient()
       .pipe(first())
@@ -62,12 +60,7 @@ describe("current patient", () => {
       })
     );
 
-    window.history.pushState(
-      {},
-      document.title,
-      `/patient/34-asdsd-234243h342`
-    );
-    window.dispatchEvent(new CustomEvent("single-spa:before-routing-event"));
+    fetchCurrentPatient("34-asdsd-234243h342");
 
     return getCurrentPatient()
       .pipe(first())

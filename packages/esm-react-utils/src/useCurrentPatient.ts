@@ -1,31 +1,78 @@
 import React from "react";
-import { createErrorHandler, reportError } from "@openmrs/esm-error-handling";
+import { reportError } from "@openmrs/esm-error-handling";
 import {
+  fetchCurrentPatient,
   getCurrentPatient,
-  getCurrentPatientUuid,
   PatientUuid,
 } from "@openmrs/esm-api";
+
+type NullablePatient = fhir.Patient | null;
+
+interface CurrentPatientState {
+  patient: NullablePatient;
+  isLoadingPatient: boolean;
+  err: Error | null;
+}
+
+interface NewPatient {
+  type: ActionTypes.newPatient;
+  patient: fhir.Patient;
+}
+
+interface PatientLoadError {
+  type: ActionTypes.patientLoadError;
+  err: Error | null;
+}
+
+type Action = NewPatient | PatientLoadError;
+
+enum ActionTypes {
+  newPatient = "newPatient",
+  patientLoadError = "patientLoadError",
+}
+
+const initialState: CurrentPatientState = {
+  patient: null,
+  isLoadingPatient: true,
+  err: null,
+};
+
+function getPatientUuidFromUrl(): PatientUuid {
+  const match = /\/patient\/([a-zA-Z0-9\-]+)\/?/.exec(location.pathname);
+  return match && match[1];
+}
+
+function reducer(
+  state: CurrentPatientState,
+  action: Action
+): CurrentPatientState {
+  switch (action.type) {
+    case ActionTypes.newPatient:
+      return {
+        ...state,
+        patient: action.patient,
+        isLoadingPatient: false,
+        err: null,
+      };
+    case ActionTypes.patientLoadError:
+      return {
+        ...state,
+        patient: null,
+        isLoadingPatient: false,
+        err: action.err,
+      };
+    default:
+      return state;
+  }
+}
 
 /* This React hook returns the current patient, as specified by the current route. It returns
  * all the information needed to render a loading state, error state, and normal/success state.
  */
-export function useCurrentPatient(): [
-  boolean,
-  NullablePatient,
-  PatientUuid,
-  Error | null
-] {
+export function useCurrentPatient(
+  patientUuid = getPatientUuidFromUrl()
+): [boolean, NullablePatient, PatientUuid, Error | null] {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-
-  React.useEffect(() => {
-    const sub = getCurrentPatientUuid().subscribe(
-      (uuid) => dispatch({ type: ActionTypes.newUuid, uuid }),
-      createErrorHandler()
-    );
-    return () => {
-      sub.unsubscribe();
-    };
-  }, []);
 
   React.useEffect(() => {
     const sub = getCurrentPatient().subscribe(
@@ -40,76 +87,9 @@ export function useCurrentPatient(): [
     };
   }, []);
 
-  return [state.isLoadingPatient, state.patient, state.patientUuid, state.err];
-}
+  React.useEffect(() => {
+    fetchCurrentPatient(patientUuid);
+  }, [patientUuid]);
 
-function reducer(
-  state: CurrentPatientState,
-  action: Action
-): CurrentPatientState {
-  switch (action.type) {
-    case ActionTypes.newUuid:
-      return {
-        ...state,
-        patientUuid: action.uuid,
-        patient: null,
-        isLoadingPatient: Boolean(action.uuid),
-        err: null,
-      };
-    case ActionTypes.newPatient:
-      return {
-        ...state,
-        patient: state.patientUuid ? action.patient : null,
-        isLoadingPatient: false,
-        err: null,
-      };
-    case ActionTypes.patientLoadError:
-      return {
-        ...state,
-        patient: null,
-        isLoadingPatient: false,
-        err: action.err,
-      };
-    default:
-      throw Error();
-  }
-}
-
-const initialState: CurrentPatientState = {
-  patientUuid: null,
-  patient: null,
-  isLoadingPatient: true,
-  err: null,
-};
-
-type NullablePatient = fhir.Patient | null;
-
-type CurrentPatientState = {
-  patientUuid: PatientUuid;
-  patient: NullablePatient;
-  isLoadingPatient: boolean;
-  err: Error | null;
-};
-
-type NewUuid = {
-  type: ActionTypes.newUuid;
-  uuid: PatientUuid;
-};
-
-type NewPatient = {
-  type: ActionTypes.newPatient;
-  patient: fhir.Patient;
-};
-
-type PatientLoadError = {
-  type: ActionTypes.patientLoadError;
-  err: Error | null;
-};
-
-type Action = NewUuid | NewPatient | PatientLoadError;
-
-enum ActionTypes {
-  newUuid = "newUuid",
-  newPatient = "newPatient",
-  patientLoadError = "patientLoadError",
+  return [state.isLoadingPatient, state.patient, patientUuid, state.err];
 }

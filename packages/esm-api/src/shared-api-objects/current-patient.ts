@@ -3,33 +3,25 @@ import { fhir } from "../fhir";
 import { mergeAll, filter, map } from "rxjs/operators";
 import { FetchResponse } from "../types";
 
-let currentPatientUuid: string | null;
-const currentPatientUuidSubject = new ReplaySubject<PatientUuid>(1);
+export type CurrentPatient = fhir.Patient | FetchResponse<fhir.Patient>;
+
+export interface CurrentPatientOptions {
+  includeConfig?: boolean;
+}
+
+export interface PatientWithFullResponse extends CurrentPatientOptions {
+  includeConfig: true;
+}
+
+export interface OnlyThePatient extends CurrentPatientOptions {
+  includeConfig: false;
+}
+
+export type PatientUuid = string | null;
+
 const currentPatientSubject = new ReplaySubject<
   Promise<{ data: fhir.Patient }>
 >(1);
-
-// single-spa:before-routing-event happens *after* the URL is changed but
-// *before* the corresponding routing events (`popstate` etc) occur.
-window.addEventListener("single-spa:before-routing-event", () => {
-  const currentPatientUuid = getPatientUuidFromUrl();
-
-  currentPatientUuidSubject.next(currentPatientUuid);
-
-  if (currentPatientUuid) {
-    currentPatientSubject.next(
-      fhir.read<fhir.Patient>({
-        type: "Patient",
-        patient: currentPatientUuid,
-      })
-    );
-  }
-});
-
-function getPatientUuidFromUrl() {
-  const match = /\/patient\/([a-zA-Z0-9\-]+)\/?/.exec(location.pathname);
-  return match && match[1];
-}
 
 /**
  * @category API Object
@@ -55,31 +47,31 @@ export { getCurrentPatient };
 /**
  * @category API Object
  */
-export function refetchCurrentPatient() {
-  if (currentPatientUuid) {
+export function fetchCurrentPatient(patientUuid: PatientUuid) {
+  if (patientUuid) {
     currentPatientSubject.next(
-      fhir.read<fhir.Patient>({ type: "Patient", patient: currentPatientUuid })
+      fhir.read<fhir.Patient>({ type: "Patient", patient: patientUuid })
     );
   }
 }
 
 /**
+ * @deprecated Remove soon.
+ */
+const currentPatientUuidSubject = new ReplaySubject<PatientUuid>(1);
+
+/**
  * @category API Object
+ * @deprecated Remove soon.
+ */
+export function refetchCurrentPatient() {
+  // nothing would happen here
+}
+
+/**
+ * @category API Object
+ * @deprecated Remove soon.
  */
 export function getCurrentPatientUuid(): Observable<PatientUuid> {
   return currentPatientUuidSubject.asObservable();
 }
-
-export type CurrentPatient = fhir.Patient | FetchResponse<fhir.Patient>;
-
-interface CurrentPatientOptions {
-  includeConfig?: boolean;
-}
-interface PatientWithFullResponse extends CurrentPatientOptions {
-  includeConfig: true;
-}
-interface OnlyThePatient extends CurrentPatientOptions {
-  includeConfig: false;
-}
-
-export type PatientUuid = string | null;

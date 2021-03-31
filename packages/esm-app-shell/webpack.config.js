@@ -161,7 +161,7 @@ module.exports = (env, argv = {}) => {
         analyzerMode: env && env.analyze ? "static" : "disabled",
       }),
       new InjectManifest({
-        swSrc: "./src/service-worker.ts",
+        swSrc: resolve(__dirname, "./src/service-worker.ts"),
         maximumFileSizeToCacheInBytes:
           mode === production ? undefined : Number.MAX_SAFE_INTEGER,
         additionalManifestEntries: [
