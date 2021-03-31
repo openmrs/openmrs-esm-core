@@ -7,6 +7,8 @@ export * from "./getLifecycle";
 export * from "./openmrsComponentDecorator";
 export * from "./useConfig";
 export * from "./useCurrentPatient";
+export * from "./useExtension";
+export * from "./useExtensionSlot";
 export * from "./useExtensionStore";
 export * from "./useForceUpdate";
 export * from "./useLayoutType";
