@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useMemo } from "react";
 import {
   ExtensionRegistration,
   getExtensionRegistration,
@@ -42,29 +42,35 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
     extensionIdsToRender,
     extensionSlotModuleName,
   } = useExtensionSlot(actualExtensionSlotName, slotRef);
-  const extensions = select(
-    extensionIdsToRender.map(getExtensionRegistration).filter(isValidExtension)
+  const extensions = useMemo(
+    () =>
+      attachedExtensionSlotName &&
+      select(
+        extensionIdsToRender
+          .map(getExtensionRegistration)
+          .filter(isValidExtension)
+      ).map((extensionRegistration) => (
+        <ComponentContext.Provider
+          key={extensionRegistration.name}
+          value={{
+            moduleName: extensionRegistration.moduleName,
+            extension: {
+              actualExtensionSlotName,
+              attachedExtensionSlotName,
+              extensionSlotModuleName,
+              extensionId: extensionRegistration.name,
+            },
+          }}
+        >
+          {children ?? <Extension state={state} />}
+        </ComponentContext.Provider>
+      )),
+    [select, extensionIdsToRender, attachedExtensionSlotName]
   );
 
   return (
     <div ref={slotRef} style={{ ...style, position: "relative" }} {...divProps}>
-      {attachedExtensionSlotName &&
-        extensions.map((extensionRegistration) => (
-          <ComponentContext.Provider
-            key={extensionRegistration.name}
-            value={{
-              moduleName: extensionRegistration.moduleName,
-              extension: {
-                actualExtensionSlotName,
-                attachedExtensionSlotName,
-                extensionSlotModuleName,
-                extensionId: extensionRegistration.name,
-              },
-            }}
-          >
-            {children ?? <Extension state={state} />}
-          </ComponentContext.Provider>
-        ))}
+      {extensions}
     </div>
   );
 };
