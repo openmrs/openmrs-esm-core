@@ -24,7 +24,9 @@ export function createUseStore<T>(store: Store<T>) {
   function useStore(actions?: Actions): T & BoundActions;
   function useStore(actions?: Actions) {
     const [state, set] = useState(store.getState());
-    useEffect(() => store.subscribe((state) => set(state)), []);
+    useEffect(() => {
+      store.subscribe((globalState) => set(globalState))
+    }, []);
     let boundActions: BoundActions = {};
 
     if (actions) {
