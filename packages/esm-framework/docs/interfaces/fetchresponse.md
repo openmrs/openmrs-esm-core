@@ -67,7 +67,7 @@ ___
 
 • **data**: T
 
-Defined in: [packages/esm-api/src/types/index.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L2)
+Defined in: [packages/esm-api/src/types/index.ts:2](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L2)
 
 ___
 

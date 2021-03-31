@@ -30,7 +30,7 @@
 The instances where the extension has been rendered using `renderExtension`,
 indexed by slotModuleName and actualExtensionSlotName
 
-Defined in: [store.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L19)
+Defined in: [store.ts:19](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L19)
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[meta](extensionregistration.md#meta)
 
-Defined in: [store.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L11)
+Defined in: [store.ts:11](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L11)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[moduleName](extensionregistration.md#modulename)
 
-Defined in: [store.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L10)
+Defined in: [store.ts:10](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L10)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[name](extensionregistration.md#name)
 
-Defined in: [store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L8)
+Defined in: [store.ts:8](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L8)
 
 ## Methods
 
@@ -72,4 +72,4 @@ Defined in: [store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master
 
 Inherited from: [ExtensionRegistration](extensionregistration.md)
 
-Defined in: [store.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L9)
+Defined in: [store.ts:9](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L9)

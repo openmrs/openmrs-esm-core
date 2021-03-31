@@ -14,4 +14,4 @@
 
 • **imports**: *Record*<string, string\>
 
-Defined in: [packages/esm-globals/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L19)
+Defined in: [packages/esm-globals/src/types.ts:19](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L19)

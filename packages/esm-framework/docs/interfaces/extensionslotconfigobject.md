@@ -16,7 +16,7 @@
 
 • `Optional` **add**: *string*[]
 
-Defined in: [packages/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L50)
+Defined in: [packages/esm-config/src/types.ts:50](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L50)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • `Optional` **order**: *string*[]
 
-Defined in: [packages/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L52)
+Defined in: [packages/esm-config/src/types.ts:52](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L52)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • `Optional` **remove**: *string*[]
 
-Defined in: [packages/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L51)
+Defined in: [packages/esm-config/src/types.ts:51](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L51)

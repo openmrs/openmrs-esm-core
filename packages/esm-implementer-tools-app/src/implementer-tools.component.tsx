@@ -9,7 +9,7 @@ import {
 import { NotificationActionButton } from "carbon-components-react/es/components/Notification";
 import { UiEditor } from "./ui-editor/ui-editor";
 import { implementerToolsStore } from "./store";
-
+import { Tools32 } from "@carbon/icons-react";
 export default function ImplementerTools() {
   return (
     <UserHasAccess privilege="coreapps.systemAdministration">
@@ -88,7 +88,7 @@ function PopupHandler() {
 
   return (
     <>
-      <button
+      <Tools32
         onClick={togglePopup}
         className={`${styles.popupTriggerButton} ${
           hasAlert ? styles.triggerButtonAlert : ""

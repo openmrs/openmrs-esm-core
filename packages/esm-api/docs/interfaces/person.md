@@ -16,7 +16,7 @@
 
 • **display**: *string*
 
-Defined in: [packages/esm-api/src/types/index.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L40)
+Defined in: [packages/esm-api/src/types/index.ts:40](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L40)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **links**: *any*[]
 
-Defined in: [packages/esm-api/src/types/index.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L41)
+Defined in: [packages/esm-api/src/types/index.ts:41](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L41)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **uuid**: *string*
 
-Defined in: [packages/esm-api/src/types/index.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L39)
+Defined in: [packages/esm-api/src/types/index.ts:39](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-api/src/types/index.ts#L39)

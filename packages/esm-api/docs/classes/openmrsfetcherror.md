@@ -47,7 +47,7 @@ Name | Type |
 
 Overrides: void
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L269)
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:269](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L269)
 
 ## Properties
 
@@ -75,7 +75,7 @@ ___
 
 • **response**: Response
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:283](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L283)
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:283](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L283)
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 • **responseBody**: *null* \| *string* \| FetchResponseJson
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:284](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L284)
+Defined in: [packages/esm-api/src/openmrs-fetch.ts:284](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L284)
 
 ___
 

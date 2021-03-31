@@ -18,7 +18,7 @@
 
 • **type**: [*NavigationContextType*](../API.md#navigationcontexttype)
 
-Defined in: [packages/esm-extensions/src/contexts.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L17)
+Defined in: [packages/esm-extensions/src/contexts.ts:17](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L17)
 
 ## Methods
 
@@ -41,4 +41,4 @@ Name | Type |
 
 **Returns:** *boolean*
 
-Defined in: [packages/esm-extensions/src/contexts.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L18)
+Defined in: [packages/esm-extensions/src/contexts.ts:18](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L18)

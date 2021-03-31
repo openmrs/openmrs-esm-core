@@ -20,7 +20,7 @@
 
 • `Optional` **\_elements**: [*ConfigSchema*](configschema.md)
 
-Defined in: [packages/esm-config/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L19)
+Defined in: [packages/esm-config/src/types.ts:19](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L19)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • `Optional` **\_type**: [*Type*](../enums/type.md)
 
-Defined in: [packages/esm-config/src/types.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L17)
+Defined in: [packages/esm-config/src/types.ts:17](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L17)
 
 ___
 
@@ -36,4 +36,4 @@ ___
 
 • `Optional` **\_validators**: [*Validator*](../API.md#validator)[]
 
-Defined in: [packages/esm-config/src/types.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L18)
+Defined in: [packages/esm-config/src/types.ts:18](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L18)

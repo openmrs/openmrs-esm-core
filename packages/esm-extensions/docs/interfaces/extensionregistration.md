@@ -26,7 +26,7 @@
 
 • **meta**: *Record*<string, any\>
 
-Defined in: [store.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L11)
+Defined in: [store.ts:11](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L11)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • **moduleName**: *string*
 
-Defined in: [store.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L10)
+Defined in: [store.ts:10](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L10)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • **name**: *string*
 
-Defined in: [store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L8)
+Defined in: [store.ts:8](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L8)
 
 ## Methods
 
@@ -52,4 +52,4 @@ Defined in: [store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master
 
 **Returns:** *Promise*<any\>
 
-Defined in: [store.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L9)
+Defined in: [store.ts:9](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L9)

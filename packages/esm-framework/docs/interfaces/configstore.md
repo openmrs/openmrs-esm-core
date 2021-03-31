@@ -19,7 +19,7 @@ Each module has its own stores for its config and its extension slots' configs.
 
 • **config**: *null* \| [*ConfigObject*](configobject.md)
 
-Defined in: [packages/esm-config/src/module-config/state.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L131)
+Defined in: [packages/esm-config/src/module-config/state.ts:131](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L131)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **loaded**: *boolean*
 
-Defined in: [packages/esm-config/src/module-config/state.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L132)
+Defined in: [packages/esm-config/src/module-config/state.ts:132](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L132)

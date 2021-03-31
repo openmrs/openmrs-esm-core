@@ -27,7 +27,7 @@
 
 Ƭ **DateInput**: *string* \| *number* \| Date
 
-Defined in: [omrs-dates.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L8)
+Defined in: [omrs-dates.ts:8](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L8)
 
 ## Functions
 
@@ -46,7 +46,7 @@ Name | Type |
 
 **Returns:** *boolean*
 
-Defined in: [omrs-dates.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L16)
+Defined in: [omrs-dates.ts:16](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L16)
 
 ___
 
@@ -62,7 +62,7 @@ Name | Type | Description |
 
 **Returns:** *boolean*
 
-Defined in: [omrs-dates.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L53)
+Defined in: [omrs-dates.ts:53](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L53)
 
 ___
 
@@ -80,7 +80,7 @@ Name | Type |
 
 **Returns:** Date \| *null*
 
-Defined in: [omrs-dates.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L60)
+Defined in: [omrs-dates.ts:60](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L60)
 
 ___
 
@@ -99,7 +99,7 @@ Name | Type | Default value |
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L112)
+Defined in: [omrs-dates.ts:112](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L112)
 
 ___
 
@@ -117,7 +117,7 @@ Name | Type |
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L98)
+Defined in: [omrs-dates.ts:98](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L98)
 
 ___
 
@@ -136,7 +136,7 @@ Name | Type | Default value |
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L71)
+Defined in: [omrs-dates.ts:71](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L71)
 
 ___
 
@@ -154,7 +154,7 @@ Name | Type |
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L91)
+Defined in: [omrs-dates.ts:91](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L91)
 
 ___
 
@@ -172,7 +172,7 @@ Name | Type |
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L84)
+Defined in: [omrs-dates.ts:84](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L84)
 
 ___
 
@@ -190,7 +190,7 @@ Name | Type |
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L105)
+Defined in: [omrs-dates.ts:105](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L105)
 
 ___
 
@@ -208,4 +208,4 @@ Name | Type |
 
 **Returns:** *string*
 
-Defined in: [translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/translate.ts#L3)
+Defined in: [translate.ts:3](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-utils/src/translate.ts#L3)

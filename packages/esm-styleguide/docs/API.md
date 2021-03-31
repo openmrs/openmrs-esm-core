@@ -19,7 +19,7 @@
 
 **Returns:** *void*
 
-Defined in: [breakpoints/index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/breakpoints/index.ts#L20)
+Defined in: [breakpoints/index.ts:20](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-styleguide/src/breakpoints/index.ts#L20)
 
 ___
 
@@ -35,7 +35,7 @@ Name | Type |
 
 **Returns:** () => *any*
 
-Defined in: [spinner/index.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/spinner/index.ts#L1)
+Defined in: [spinner/index.ts:1](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-styleguide/src/spinner/index.ts#L1)
 
 ___
 
@@ -51,7 +51,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L11)
+Defined in: [toasts/index.tsx:11](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L11)
 
 ___
 
@@ -67,4 +67,4 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [toasts/index.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L25)
+Defined in: [toasts/index.tsx:25](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-styleguide/src/toasts/index.tsx#L25)

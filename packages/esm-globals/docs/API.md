@@ -24,7 +24,7 @@
 
 Ƭ **SpaEnvironment**: *production* \| *development* \| *test*
 
-Defined in: [types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L16)
+Defined in: [types.ts:16](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L16)
 
 ## Functions
 
@@ -40,7 +40,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [globals.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L3)
+Defined in: [globals.ts:3](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L3)
 
 ___
 
@@ -50,4 +50,4 @@ ___
 
 **Returns:** *void*
 
-Defined in: [globals.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L11)
+Defined in: [globals.ts:11](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L11)

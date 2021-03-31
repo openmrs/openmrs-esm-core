@@ -14,6 +14,7 @@
 - [createGlobalStore](API.md#createglobalstore)
 - [getAppState](API.md#getappstate)
 - [getGlobalStore](API.md#getglobalstore)
+- [update](API.md#update)
 
 ## Functions
 
@@ -29,7 +30,7 @@ Name | Type |
 
 **Returns:** *Store*<[*AppState*](interfaces/appstate.md)\>
 
-Defined in: [state.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L59)
+Defined in: [state.ts:59](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L59)
 
 ___
 
@@ -52,7 +53,7 @@ Name | Type |
 
 **Returns:** *Store*<TState\>
 
-Defined in: [state.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L10)
+Defined in: [state.ts:10](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L10)
 
 ___
 
@@ -62,7 +63,7 @@ ___
 
 **Returns:** *Store*<[*AppState*](interfaces/appstate.md)\>
 
-Defined in: [state.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L63)
+Defined in: [state.ts:63](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L63)
 
 ___
 
@@ -85,4 +86,28 @@ Name | Type |
 
 **Returns:** *Store*<TState\>
 
-Defined in: [state.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L39)
+Defined in: [state.ts:39](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L39)
+
+___
+
+### update
+
+▸ **update**<T\>(`obj`: T, `__namedParameters`: *string*[], `value`: *any*): T
+
+#### Type parameters:
+
+Name | Type |
+:------ | :------ |
+`T` | *Record*<string, any\> |
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`obj` | T |
+`__namedParameters` | *string*[] |
+`value` | *any* |
+
+**Returns:** T
+
+Defined in: [update.ts:1](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-state/src/update.ts#L1)

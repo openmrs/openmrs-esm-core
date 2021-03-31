@@ -19,7 +19,7 @@
 
 • **extensionSlotName**: *string*
 
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L21)
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:21](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L21)
 
 ___
 
@@ -27,7 +27,7 @@ ___
 
 • `Optional` **state**: *Record*<string, any\>
 
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L25)
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:25](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L25)
 
 ## Methods
 
@@ -43,4 +43,4 @@ Name | Type |
 
 **Returns:** ExtensionRegistration[]
 
-Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L22)
+Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:22](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L22)

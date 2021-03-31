@@ -17,7 +17,7 @@
 
 • **actualExtensionSlotName**: *string*
 
-Defined in: [packages/esm-react-utils/src/ComponentContext.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L4)
+Defined in: [packages/esm-react-utils/src/ComponentContext.ts:4](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L4)
 
 ___
 
@@ -25,7 +25,7 @@ ___
 
 • **attachedExtensionSlotName**: *string*
 
-Defined in: [packages/esm-react-utils/src/ComponentContext.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L5)
+Defined in: [packages/esm-react-utils/src/ComponentContext.ts:5](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L5)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • **extensionId**: *string*
 
-Defined in: [packages/esm-react-utils/src/ComponentContext.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L7)
+Defined in: [packages/esm-react-utils/src/ComponentContext.ts:7](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L7)
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 • **extensionSlotModuleName**: *string*
 
-Defined in: [packages/esm-react-utils/src/ComponentContext.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L6)
+Defined in: [packages/esm-react-utils/src/ComponentContext.ts:6](https://github.com/nk183/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L6)
