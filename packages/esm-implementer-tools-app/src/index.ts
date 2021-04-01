@@ -1,15 +1,23 @@
 import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
 function setupOpenMRS() {
+  const moduleName = "@openmrs/esm-implementer-tools-app";
+  const options = {
+    featureName: "Implementer Tools",
+    moduleName,
+  };
+
   return {
-    lifecycle: getAsyncLifecycle(
-      () => import("./implementer-tools.component"),
+    extensions: [
       {
-        featureName: "Implementer Tools",
-        moduleName: "@openmrs/esm-implementer-tools-app",
-      }
-    ),
-    activate: () => true,
+        id: "implementer-tools-button",
+        slot: "top-nav-actions-slot",
+        load: getAsyncLifecycle(
+          () => import("./implementer-tools.component"),
+          options
+        ),
+      },
+    ],
   };
 }
 
