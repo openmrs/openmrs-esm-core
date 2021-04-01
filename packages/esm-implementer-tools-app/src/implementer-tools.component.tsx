@@ -10,7 +10,7 @@ import { NotificationActionButton } from "carbon-components-react/es/components/
 import { UiEditor } from "./ui-editor/ui-editor";
 import { implementerToolsStore } from "./store";
 import { HeaderGlobalAction } from "carbon-components-react/es/components/UIShell";
-import { Tools32 } from "@carbon/icons-react";
+import Tools32 from "@carbon/icons-react/es/tools/32";
 
 export default function ImplementerTools() {
   return (
