@@ -1,11 +1,8 @@
 .popupTriggerButton {
   z-index: 100000;
-  background-color: var(--omrs-color-interaction-minus-two);
-  height: 40px !important;
-  width: 40px !important;
-  bottom: 10px;
-  right: 8px;
-  position: fixed;
+  height: 25px !important;
+  width: 25px !important;
+  position: relative;
   border-radius: 2px;
 }
 

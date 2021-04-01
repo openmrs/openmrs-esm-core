@@ -8,11 +8,6 @@ function setupOpenMRS() {
   };
 
   return {
-    lifecycle: getAsyncLifecycle(
-      () => import("./implementer-tools.component"),
-      options
-    ),
-    activate: () => true,
     extensions: [
       {
         id: "implementer-tools-button",

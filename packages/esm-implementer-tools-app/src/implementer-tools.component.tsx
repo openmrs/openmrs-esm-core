@@ -9,6 +9,7 @@ import {
 import { NotificationActionButton } from "carbon-components-react/es/components/Notification";
 import { UiEditor } from "./ui-editor/ui-editor";
 import { implementerToolsStore } from "./store";
+import { HeaderGlobalAction } from "carbon-components-react/es/components/UIShell";
 import { Tools32 } from "@carbon/icons-react";
 
 export default function ImplementerTools() {
@@ -89,12 +90,18 @@ function PopupHandler() {
 
   return (
     <>
-      <Tools32
-        onClick={togglePopup}
-        className={`${styles.popupTriggerButton} ${
-          hasAlert ? styles.triggerButtonAlert : ""
-        }`}
-      />
+      <HeaderGlobalAction
+        aria-label="Implementer Tools"
+        aria-labelledby="Implementer Tools"
+        name="ImplementerToolsIcon"
+      >
+        <Tools32
+          onClick={togglePopup}
+          className={`${styles.popupTriggerButton} ${
+            hasAlert ? styles.triggerButtonAlert : ""
+          }`}
+        />
+      </HeaderGlobalAction>
       {isOpen ? (
         <Popup
           close={togglePopup}
