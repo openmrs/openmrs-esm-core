@@ -75,10 +75,14 @@
 
 ### Other Functions
 
+- [getLocations](API.md#getlocations)
+- [getVisitTypes](API.md#getvisittypes)
 - [getVisitsForPatient](API.md#getvisitsforpatient)
 - [makeUrl](API.md#makeurl)
 - [openVisitsNoteWorkspace](API.md#openvisitsnoteworkspace)
 - [saveVisit](API.md#savevisit)
+- [toLocationObject](API.md#tolocationobject)
+- [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
 - [userHasAccess](API.md#userhasaccess)
 
@@ -442,6 +446,26 @@ ___
 
 ## Other Functions
 
+### getLocations
+
+▸ **getLocations**(): *Observable*<[*Location*](interfaces/location.md)[]\>
+
+**Returns:** *Observable*<[*Location*](interfaces/location.md)[]\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/location.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/location.ts#L13)
+
+___
+
+### getVisitTypes
+
+▸ **getVisitTypes**(): *Observable*<[*VisitType*](interfaces/visittype.md)[]\>
+
+**Returns:** *Observable*<[*VisitType*](interfaces/visittype.md)[]\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-type.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-type.ts#L14)
+
+___
+
 ### getVisitsForPatient
 
 ▸ **getVisitsForPatient**(`patientUuid`: *string*, `abortController`: AbortController, `v?`: *string*): *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<{ `results`: [*Visit*](interfaces/visit.md)[]  }\>\>
@@ -507,6 +531,38 @@ Name | Type |
 **Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<any\>\>
 
 Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L55)
+
+___
+
+### toLocationObject
+
+▸ **toLocationObject**(`openmrsRestForm`: *any*): [*Location*](interfaces/location.md)
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`openmrsRestForm` | *any* |
+
+**Returns:** [*Location*](interfaces/location.md)
+
+Defined in: [packages/esm-api/src/shared-api-objects/location.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/location.ts#L6)
+
+___
+
+### toVisitTypeObject
+
+▸ **toVisitTypeObject**(`openmrsRestForm`: *any*): [*VisitType*](interfaces/visittype.md)
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`openmrsRestForm` | *any* |
+
+**Returns:** [*VisitType*](interfaces/visittype.md)
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-type.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-type.ts#L6)
 
 ___
 

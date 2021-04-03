@@ -48,9 +48,11 @@
 - [useExtensionStore](API.md#useextensionstore)
 - [useForceUpdate](API.md#useforceupdate)
 - [useLayoutType](API.md#uselayouttype)
+- [useLocations](API.md#uselocations)
 - [useNavigationContext](API.md#usenavigationcontext)
 - [useStore](API.md#usestore)
 - [useVisit](API.md#usevisit)
+- [useVisitTypes](API.md#usevisittypes)
 
 ## Type aliases
 
@@ -383,6 +385,16 @@ Defined in: [packages/esm-react-utils/src/useLayoutType.ts:22](https://github.co
 
 ___
 
+### useLocations
+
+▸ **useLocations**(): Location[]
+
+**Returns:** Location[]
+
+Defined in: [packages/esm-react-utils/src/useLocations.tsx:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useLocations.tsx#L4)
+
+___
+
 ### useNavigationContext
 
 ▸ **useNavigationContext**(`context`: NavigationContext): *void*
@@ -458,3 +470,13 @@ Name | Type |
 `error` | *null* |
 
 Defined in: [packages/esm-react-utils/src/useVisit.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useVisit.ts#L11)
+
+___
+
+### useVisitTypes
+
+▸ **useVisitTypes**(): VisitType[]
+
+**Returns:** VisitType[]
+
+Defined in: [packages/esm-react-utils/src/useVisitTypes.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useVisitTypes.ts#L4)

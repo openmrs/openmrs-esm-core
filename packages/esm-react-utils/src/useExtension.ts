@@ -20,7 +20,14 @@ export function useExtension<TRef extends HTMLElement>(
         state
       );
     }
-  }, [extension, ref.current, state]);
+  }, [
+    extension?.actualExtensionSlotName,
+    extension?.attachedExtensionSlotName,
+    extension?.extensionId,
+    extension?.extensionSlotModuleName,
+    ref.current,
+    state,
+  ]);
 
   return [ref, extension];
 }

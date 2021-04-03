@@ -170,7 +170,9 @@
 - [getExtensionSlotsForModule](API.md#getextensionslotsformodule)
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
+- [getLocations](API.md#getlocations)
 - [getUpdatedExtensionSlotInfo](API.md#getupdatedextensionslotinfo)
+- [getVisitTypes](API.md#getvisittypes)
 - [getVisitsForPatient](API.md#getvisitsforpatient)
 - [handleApiError](API.md#handleapierror)
 - [inRange](API.md#inrange)
@@ -196,12 +198,14 @@
 - [showToast](API.md#showtoast)
 - [switchTo](API.md#switchto)
 - [toDateObjectStrict](API.md#todateobjectstrict)
+- [toLocationObject](API.md#tolocationobject)
 - [toOmrsDateFormat](API.md#toomrsdateformat)
 - [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
 - [toOmrsIsoString](API.md#toomrsisostring)
 - [toOmrsTimeString](API.md#toomrstimestring)
 - [toOmrsTimeString24](API.md#toomrstimestring24)
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
+- [toVisitTypeObject](API.md#tovisittypeobject)
 - [translateFrom](API.md#translatefrom)
 - [unregisterExtensionSlot](API.md#unregisterextensionslot)
 - [update](API.md#update)
@@ -214,9 +218,11 @@
 - [useExtensionStore](API.md#useextensionstore)
 - [useForceUpdate](API.md#useforceupdate)
 - [useLayoutType](API.md#uselayouttype)
+- [useLocations](API.md#uselocations)
 - [useNavigationContext](API.md#usenavigationcontext)
 - [useStore](API.md#usestore)
 - [useVisit](API.md#usevisit)
+- [useVisitTypes](API.md#usevisittypes)
 - [userHasAccess](API.md#userhasaccess)
 - [validator](API.md#validator)
 
@@ -1379,6 +1385,16 @@ Defined in: [packages/esm-react-utils/src/getLifecycle.ts:9](https://github.com/
 
 ___
 
+### getLocations
+
+▸ **getLocations**(): *Observable*<[*Location*](interfaces/location.md)[]\>
+
+**Returns:** *Observable*<[*Location*](interfaces/location.md)[]\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/location.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/location.ts#L13)
+
+___
+
 ### getUpdatedExtensionSlotInfo
 
 ▸ **getUpdatedExtensionSlotInfo**(`actualExtensionSlotName`: *string*, `moduleName`: *string*, `extensionSlot`: [*ExtensionSlotInfo*](interfaces/extensionslotinfo.md)): *Promise*<[*ExtensionSlotInfo*](interfaces/extensionslotinfo.md)\>
@@ -1399,6 +1415,16 @@ Name | Type | Description |
 **Returns:** *Promise*<[*ExtensionSlotInfo*](interfaces/extensionslotinfo.md)\>
 
 Defined in: [packages/esm-extensions/src/extensions.ts:311](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L311)
+
+___
+
+### getVisitTypes
+
+▸ **getVisitTypes**(): *Observable*<[*VisitType*](interfaces/visittype.md)[]\>
+
+**Returns:** *Observable*<[*VisitType*](interfaces/visittype.md)[]\>
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-type.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-type.ts#L14)
 
 ___
 
@@ -1829,6 +1855,22 @@ Defined in: [packages/esm-utils/src/omrs-dates.ts:60](https://github.com/openmrs
 
 ___
 
+### toLocationObject
+
+▸ **toLocationObject**(`openmrsRestForm`: *any*): [*Location*](interfaces/location.md)
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`openmrsRestForm` | *any* |
+
+**Returns:** [*Location*](interfaces/location.md)
+
+Defined in: [packages/esm-api/src/shared-api-objects/location.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/location.ts#L6)
+
+___
+
 ### toOmrsDateFormat
 
 ▸ **toOmrsDateFormat**(`date`: [*DateInput*](API.md#dateinput), `format?`: *string*): *string*
@@ -1936,6 +1978,22 @@ Name | Type |
 **Returns:** *string*
 
 Defined in: [packages/esm-utils/src/omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L105)
+
+___
+
+### toVisitTypeObject
+
+▸ **toVisitTypeObject**(`openmrsRestForm`: *any*): [*VisitType*](interfaces/visittype.md)
+
+#### Parameters:
+
+Name | Type |
+:------ | :------ |
+`openmrsRestForm` | *any* |
+
+**Returns:** [*VisitType*](interfaces/visittype.md)
+
+Defined in: [packages/esm-api/src/shared-api-objects/visit-type.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-type.ts#L6)
 
 ___
 
@@ -2165,6 +2223,16 @@ Defined in: [packages/esm-react-utils/src/useLayoutType.ts:22](https://github.co
 
 ___
 
+### useLocations
+
+▸ **useLocations**(): [*Location*](interfaces/location.md)[]
+
+**Returns:** [*Location*](interfaces/location.md)[]
+
+Defined in: [packages/esm-react-utils/src/useLocations.tsx:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useLocations.tsx#L4)
+
+___
+
 ### useNavigationContext
 
 ▸ **useNavigationContext**(`context`: [*NavigationContext*](interfaces/navigationcontext.md)): *void*
@@ -2240,6 +2308,16 @@ Name | Type |
 `error` | *null* |
 
 Defined in: [packages/esm-react-utils/src/useVisit.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useVisit.ts#L11)
+
+___
+
+### useVisitTypes
+
+▸ **useVisitTypes**(): [*VisitType*](interfaces/visittype.md)[]
+
+**Returns:** [*VisitType*](interfaces/visittype.md)[]
+
+Defined in: [packages/esm-react-utils/src/useVisitTypes.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useVisitTypes.ts#L4)
 
 ___
 

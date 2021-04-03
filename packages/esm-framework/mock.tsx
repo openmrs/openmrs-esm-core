@@ -129,6 +129,18 @@ export const setIsUIEditorEnabled = (boolean): void => {};
 
 export const useCurrentPatient = jest.fn(() => [null, null, null, null]);
 
+export const useSessionUser = jest.fn(() => null);
+
+export const useLayoutType = jest.fn(() => "desktop");
+
+export const useExtensionSlot = jest.fn(() => ({
+  extensionSlotModuleName: "",
+  attachedExtensionSlotName: "",
+  extensionIdsToRender: [],
+}));
+
+export const useExtension = jest.fn(() => [React.createRef(), undefined]);
+
 export const getCurrentPatient = jest.fn(() =>
   jest.fn().mockReturnValue(never())
 );
