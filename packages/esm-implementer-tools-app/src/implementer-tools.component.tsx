@@ -94,6 +94,7 @@ function PopupHandler() {
         aria-label="Implementer Tools"
         aria-labelledby="Implementer Tools"
         name="ImplementerToolsIcon"
+        className={styles.toolStyles}
       >
         <Tools32
           onClick={togglePopup}
