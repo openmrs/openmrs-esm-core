@@ -17,6 +17,15 @@ function registerServiceWorker() {
       navigator.serviceWorker.register(
         `${window.getOpenmrsSpaBase()}service-worker.js`
       );
+
+      navigator.serviceWorker.ready.then((sw) => {
+        window.importMapOverrides.getCurrentPageMap().then((importMap) => {
+          sw.active?.postMessage({
+            type: "importMap",
+            importMap,
+          });
+        });
+      });
     });
   }
 }
