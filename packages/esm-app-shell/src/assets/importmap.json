@@ -9,6 +9,7 @@
     "@openmrs/esm-patient-registration-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-registration-app/2021-03-30_05df15f0b95e516334ad121bb98d62bfe23487db/openmrs-esm-patient-registration-app.js",
     "@openmrs/esm-implementer-tools-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-implementer-tools-app/2021-03-30_0d48020f7821ebc8c8a2ab476fb11ca29d38fd53/openmrs-esm-implementer-tools-app.js",
     "@openmrs/esm-drugorder-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-drugorder-app/2021-03-16_2358b433d663ebaf42390dc26c0a0ab80e489e6f/openmrs-esm-drugorder-app.js",
-    "@openmrs/esm-form-entry-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-form-entry-app/2021-02-19_c14c144972c49a0f7f8aa9dba6b0f3e0cfc17d3a/openmrs-esm-form-entry-app.js"
+    "@openmrs/esm-form-entry-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-form-entry-app/2021-02-19_c14c144972c49a0f7f8aa9dba6b0f3e0cfc17d3a/openmrs-esm-form-entry-app.js",
+    "@openmrs/esm-offline-demo-app":"http://localhost:8081/openmrs-esm-offline-demo-app.js"
   }
 }
