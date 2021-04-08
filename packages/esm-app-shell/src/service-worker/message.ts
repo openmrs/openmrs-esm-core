@@ -9,7 +9,7 @@ import { cacheImportMapReferences } from "./caching";
 export function handleMessage(event: ExtendableMessageEvent) {
   switch (event.data?.type?.toString() ?? "") {
     case "importMap":
-      onImportMap(event.data.importMap);
+      onImportMap(event.data?.importMap);
       break;
     default:
       console.warn(
@@ -20,7 +20,7 @@ export function handleMessage(event: ExtendableMessageEvent) {
   }
 }
 
-async function onImportMap(importMap: ImportMap) {
+async function onImportMap(importMap: ImportMap = { imports: {} }) {
   try {
     await cacheImportMapReferences(importMap);
   } catch (e) {
