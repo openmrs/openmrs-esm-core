@@ -1,5 +1,5 @@
 import { ImportMap } from "@openmrs/esm-globals";
-import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
+import { absoluteWbManifestUrls, omrsCacheName, wbManifest } from "./constants";
 import { fetchUrlsToCacheFromImportMap } from "./importMapUtils";
 
 /**
@@ -9,6 +9,7 @@ import { fetchUrlsToCacheFromImportMap } from "./importMapUtils";
  */
 export async function cacheImportMapReferences(importMap: ImportMap) {
   const urlsToCache = await fetchUrlsToCacheFromImportMap(importMap);
+  await invalidateObsoleteCacheEntries(urlsToCache);
   return await addToOmrsCache(urlsToCache);
 }
 
@@ -31,4 +32,14 @@ export async function addToOmrsCache(urls: Array<string>) {
 
   const cache = await caches.open(omrsCacheName);
   await cache.addAll(urls);
+}
+
+async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
+  const cache = await caches.open(omrsCacheName);
+  const cachedUrls = (await cache.keys()).map((x) => x.url);
+  const urlsToKeep = [...absoluteWbManifestUrls, ...newImportMapUrls];
+  const urlsToInvalidate = cachedUrls.filter(
+    (cachedUrl) => !urlsToKeep.includes(cachedUrl)
+  );
+  await Promise.all(urlsToInvalidate.map((url) => cache.delete(url)));
 }
