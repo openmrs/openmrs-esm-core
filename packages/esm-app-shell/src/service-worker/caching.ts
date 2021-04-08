@@ -1,10 +1,24 @@
-import { setCacheNameDetails } from "workbox-core";
+import { ImportMap } from "@openmrs/esm-globals";
+import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
+import { fetchUrlsToCacheFromImportMap } from "./importMapUtils";
 
-export const omrsCachePrefix = "omrs";
-export const omrsCacheName = `${omrsCachePrefix}-spa-cache-v1`;
+/**
+ * Attempts to resolve cacheable files from the specified import map (files are retrieved via convention)
+ * and, if successful, attempts to add them to the app cache.
+ * @param importMap An import map object from which cacheable files should be extracted.
+ */
+export async function cacheImportMapReferences(importMap: ImportMap) {
+  const urlsToCache = await fetchUrlsToCacheFromImportMap(importMap);
+  return await addToOmrsCache(urlsToCache);
+}
 
-// Initial Workbox setup. Renaming its default cache prefix prevents conflicts with other dev envs on localhost.
-setCacheNameDetails({ prefix: omrsCachePrefix });
+/**
+ * Adds all static app shell files to the cache.
+ * Only caches the "raw" app shell, not any MFs/any data coming from an import map.
+ */
+export function precacheAppShell() {
+  return addToOmrsCache(absoluteWbManifestUrls);
+}
 
 /**
  * Adds all of the given urls to the default app cache.

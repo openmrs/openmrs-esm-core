@@ -1,46 +1,18 @@
-import "./types";
-import { registerRoute } from "workbox-routing";
-import { NetworkFirst } from "workbox-strategies";
 import { setCacheNameDetails } from "workbox-core";
-import { distinct } from "../helpers";
-import { onMessage } from "./message";
-import { addToOmrsCache, omrsCacheName, omrsCachePrefix } from "./caching";
+import { handleMessage } from "./message";
+import { precacheAppShell } from "./caching";
+import { registerAllOmrsRoutes } from "./routing";
+import { omrsCachePrefix } from "./constants";
 
-self.addEventListener("message", onMessage);
-
-const indexPath = prefixWithSpaBase("index.html");
-const wbManifest = self.__WB_MANIFEST;
-const absoluteWbManifestUrls = distinct(
-  wbManifest.map(({ url }) => prefixWithSpaBase(url))
-);
-const omrsNetworkFirst = new NetworkFirst({ cacheName: omrsCacheName });
-
+// Initial Workbox setup. Renaming its default cache prefix prevents conflicts with other dev envs on localhost.
 setCacheNameDetails({ prefix: omrsCachePrefix });
 
+registerAllOmrsRoutes();
+
+self.addEventListener("message", handleMessage);
 self.addEventListener("install", (e) => {
-  e.waitUntil(addToOmrsCache(absoluteWbManifestUrls));
+  // The app shell files are special in the sense that they can immediately be cached during SW installation.
+  // They also don't change in between builds which makes them safe to cache once only.
+  // If they change *during* a build, the SW is updated as well which triggers a re-installation.
+  e.waitUntil(precacheAppShell());
 });
-
-registerRoute(
-  ({ url }) => absoluteWbManifestUrls.includes(url.href),
-  omrsNetworkFirst
-);
-
-registerRoute(/.*localhost:8081.*/, omrsNetworkFirst);
-
-registerRoute(
-  ({ request }) => request.mode === "navigate",
-  async (options) => {
-    try {
-      return await omrsNetworkFirst.handle(options);
-    } catch (e) {
-      const cache = await caches.open(omrsCacheName);
-      const response = await cache.match(indexPath);
-      return response ?? Response.error();
-    }
-  }
-);
-
-function prefixWithSpaBase(path: string) {
-  return new URL(path, self.location.href).href;
-}
