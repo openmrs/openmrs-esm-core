@@ -12,20 +12,22 @@ function wireSpaPaths() {
 }
 
 function registerServiceWorker() {
-  if ("serviceWorker" in navigator && navigator.onLine) {
+  if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register(
         `${window.getOpenmrsSpaBase()}service-worker.js`
       );
 
-      navigator.serviceWorker.ready.then((sw) => {
-        window.importMapOverrides.getCurrentPageMap().then((importMap) => {
-          sw.active?.postMessage({
-            type: "importMap",
-            importMap,
+      if (navigator.onLine) {
+        navigator.serviceWorker.ready.then((sw) => {
+          window.importMapOverrides.getCurrentPageMap().then((importMap) => {
+            sw.active?.postMessage({
+              type: "importMap",
+              importMap,
+            });
           });
         });
-      });
+      }
     });
   }
 }
