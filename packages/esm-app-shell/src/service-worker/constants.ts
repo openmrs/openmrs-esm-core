@@ -1,4 +1,4 @@
-import { distinct } from "../helpers";
+import uniq from "lodash-es/uniq";
 
 export const omrsCachePrefix = "omrs";
 export const omrsCacheName = `${omrsCachePrefix}-spa-cache-v1`;
@@ -6,7 +6,7 @@ export const omrsCacheName = `${omrsCachePrefix}-spa-cache-v1`;
 export const indexPath = prefixWithSpaBase("index.html");
 
 export const wbManifest = self.__WB_MANIFEST;
-export const absoluteWbManifestUrls = distinct(
+export const absoluteWbManifestUrls = uniq(
   wbManifest.map(({ url }) => prefixWithSpaBase(url))
 );
 

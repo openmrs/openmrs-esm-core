@@ -1,7 +1,7 @@
 import { ImportMap } from "@openmrs/esm-globals";
-import { flatten } from "../helpers";
 import { buildManifestSuffix } from "./constants";
 import { BuildManifest } from "./types";
+import flatten from "lodash-es/flatten";
 
 /**
  * Given an import map object, resolves the URLs of all cacheable files defined in the import map.
