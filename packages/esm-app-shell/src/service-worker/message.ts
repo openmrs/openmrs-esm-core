@@ -25,7 +25,7 @@ async function onImportMap(importMap: ImportMap = { imports: {} }) {
     await cacheImportMapReferences(importMap);
   } catch (e) {
     console.error(
-      "The Service Worker failed to cache the the specified import map. See the error for details.",
+      "The Service Worker failed to cache the specified import map. See the error for details.",
       e
     );
   }
