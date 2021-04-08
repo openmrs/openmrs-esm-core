@@ -1,5 +1,6 @@
 import { ImportMap } from "@openmrs/esm-globals";
 import { flatten } from "../helpers";
+import { buildManifestSuffix } from './constants';
 import { BuildManifest } from "./types";
 
 export async function fetchUrlsToCacheFromImportMap({
@@ -15,14 +16,12 @@ export async function fetchUrlsToCacheFromImportMap({
         : [];
     })
   );
-
+  
   return flatten(urlsToCache);
 }
 
 function getBuildManifestUrl(importMapAddress: string) {
-  const segments = importMapAddress.split("/");
-  segments[segments.length - 1] = "stats.json";
-  return segments.join("/");
+  return importMapAddress + buildManifestSuffix;
 }
 
 function tryFetchBuildManifest(
@@ -42,10 +41,11 @@ function getUrlsFromBuildManifests(
   // Using a try/catch here seems better to me than doing defensive checks on every field/type in the response.
   try {
     const results: Array<string> = [];
+    const baseUrlForFiles = getUrlOfFileParentDir(new URL(importMapAddress));
 
     for (const chunk of buildManifest.chunks ?? []) {
       for (const file of chunk.files ?? []) {
-        results.push(new URL(file, importMapAddress).toString());
+        results.push(new URL(file, baseUrlForFiles).toString());
       }
     }
 
@@ -53,4 +53,11 @@ function getUrlsFromBuildManifests(
   } catch (e) {
     return [];
   }
+}
+
+function getUrlOfFileParentDir(url: URL) {
+  const fullPath = url.origin + url.pathname; // Removes params + hash.
+  const parts = fullPath.split("/");
+  parts[parts.length - 1] = "";
+  return parts.join("/");
 }

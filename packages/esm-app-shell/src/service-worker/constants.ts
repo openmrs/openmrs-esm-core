@@ -10,6 +10,8 @@ export const absoluteWbManifestUrls = distinct(
   wbManifest.map(({ url }) => prefixWithSpaBase(url))
 );
 
+export const buildManifestSuffix = ".buildmanifest.json";
+
 function prefixWithSpaBase(path: string) {
   return new URL(path, self.location.href).href;
 }
