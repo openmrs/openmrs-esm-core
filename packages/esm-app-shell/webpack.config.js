@@ -162,6 +162,7 @@ module.exports = (env, argv = {}) => {
       }),
       new InjectManifest({
         swSrc: resolve(__dirname, "./src/service-worker/index.ts"),
+        swDest: "service-worker.js",
         maximumFileSizeToCacheInBytes:
           mode === production ? undefined : Number.MAX_SAFE_INTEGER,
         additionalManifestEntries: [
