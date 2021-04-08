@@ -12,7 +12,7 @@ function wireSpaPaths() {
 }
 
 function registerServiceWorker() {
-  if ("serviceWorker" in navigator) {
+  if ("serviceWorker" in navigator && navigator.onLine) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register(
         `${window.getOpenmrsSpaBase()}service-worker.js`
