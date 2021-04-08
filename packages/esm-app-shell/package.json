@@ -55,7 +55,6 @@
     "workbox-strategies": "^6.1.2"
   },
   "devDependencies": {
-    "@types/lodash-es": "^4.17.4",
     "@types/systemjs": "^6.1.0",
     "css-modules-typescript-loader": "^4.0.1",
     "webpack-pwa-manifest": "^4.3.0",
