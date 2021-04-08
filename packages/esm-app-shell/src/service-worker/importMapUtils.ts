@@ -1,8 +1,13 @@
 import { ImportMap } from "@openmrs/esm-globals";
 import { flatten } from "../helpers";
-import { buildManifestSuffix } from './constants';
+import { buildManifestSuffix } from "./constants";
 import { BuildManifest } from "./types";
 
+/**
+ * Given an import map object, resolves the URLs of all cacheable files defined in the import map.
+ * Resolving relies on a build manifest file existing in the same location as the file referenced
+ * in the import map.
+ */
 export async function fetchUrlsToCacheFromImportMap({
   imports = {},
 }: ImportMap) {
@@ -16,7 +21,7 @@ export async function fetchUrlsToCacheFromImportMap({
         : [];
     })
   );
-  
+
   return flatten(urlsToCache);
 }
 
