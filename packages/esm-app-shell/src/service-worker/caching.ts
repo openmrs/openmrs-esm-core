@@ -26,7 +26,7 @@ export function precacheAppShell() {
  * @param urls An array of URLs to be cached.
  */
 export async function addToOmrsCache(urls: Array<string>) {
-  if (urls.length == 0) {
+  if (urls.length === 0) {
     return;
   }
 
