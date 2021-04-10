@@ -1,7 +1,7 @@
 import { openmrsObservableFetch, SessionUser } from "@openmrs/esm-api";
 import { useState, useEffect } from "react";
 
-export default function useSessionUser() {
+export function useSessionUser() {
   const [sessionUser, setSessionUser] = useState<SessionUser | null>(null);
 
   useEffect(() => {
