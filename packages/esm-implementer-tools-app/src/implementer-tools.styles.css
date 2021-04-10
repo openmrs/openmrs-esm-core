@@ -9,3 +9,7 @@
 .triggerButtonAlert {
   background-color: var(--omrs-color-danger);
 }
+
+.toolStyles {
+  background-color: transparent;
+}

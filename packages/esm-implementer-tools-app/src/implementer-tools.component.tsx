@@ -10,7 +10,7 @@ import { NotificationActionButton } from "carbon-components-react/es/components/
 import { UiEditor } from "./ui-editor/ui-editor";
 import { implementerToolsStore } from "./store";
 import { HeaderGlobalAction } from "carbon-components-react/es/components/UIShell";
-import Tools32 from "@carbon/icons-react/es/tools/32";
+import Tools20 from "@carbon/icons-react/es/tools/20";
 
 export default function ImplementerTools() {
   return (
@@ -94,8 +94,9 @@ function PopupHandler() {
         aria-label="Implementer Tools"
         aria-labelledby="Implementer Tools"
         name="ImplementerToolsIcon"
+        className={styles.toolStyles}
       >
-        <Tools32
+        <Tools20
           onClick={togglePopup}
           className={`${styles.popupTriggerButton} ${
             hasAlert ? styles.triggerButtonAlert : ""
