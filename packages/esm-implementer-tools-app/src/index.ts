@@ -8,12 +8,21 @@ function setupOpenMRS() {
   };
 
   return {
+    pages: [
+      {
+        route: () => true,
+        load: getAsyncLifecycle(
+          () => import("./implementer-tools.component"),
+          options
+        ),
+      },
+    ],
     extensions: [
       {
         id: "implementer-tools-button",
         slot: "top-nav-actions-slot",
         load: getAsyncLifecycle(
-          () => import("./implementer-tools.component"),
+          () => import("./implementer-tools.button"),
           options
         ),
       },

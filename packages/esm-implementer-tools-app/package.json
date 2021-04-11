@@ -7,7 +7,7 @@
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "start": "openmrs debug --run-project",
+    "start": "openmrs develop",
     "serve": "webpack-dev-server --mode=development",
     "debug": "npm run serve",
     "test": "jest --config jest.config.js --passWithNoTests",

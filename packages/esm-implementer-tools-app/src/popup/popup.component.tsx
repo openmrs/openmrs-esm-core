@@ -7,10 +7,10 @@ import styles from "./popup.styles.css";
 import { Configuration } from "../configuration/configuration.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependecies.component";
 import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-dependencies";
+import { setHasAlert } from "../store";
 
 interface DevToolsPopupProps {
   close(): void;
-  setHasAlert(value: boolean): void;
   modulesWithMissingBackendModules: Array<MissingBackendModules>;
   modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
   visibleTabIndex?: number;
@@ -21,9 +21,10 @@ export default function Popup(props: DevToolsPopupProps) {
   const [diagnosticsHasAlert, setDiagnosticsHasAlert] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
-  useEffect(() => {
-    props.setHasAlert(configHasAlert || diagnosticsHasAlert);
-  }, [diagnosticsHasAlert, configHasAlert]);
+  useEffect(() => setHasAlert(configHasAlert || diagnosticsHasAlert), [
+    diagnosticsHasAlert,
+    configHasAlert,
+  ]);
 
   return (
     <div className={styles.popup}>

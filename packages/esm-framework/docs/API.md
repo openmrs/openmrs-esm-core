@@ -220,6 +220,7 @@
 - [useLayoutType](API.md#uselayouttype)
 - [useLocations](API.md#uselocations)
 - [useNavigationContext](API.md#usenavigationcontext)
+- [useSessionUser](API.md#usesessionuser)
 - [useStore](API.md#usestore)
 - [useVisit](API.md#usevisit)
 - [useVisitTypes](API.md#usevisittypes)
@@ -2246,6 +2247,16 @@ Name | Type |
 **Returns:** *void*
 
 Defined in: [packages/esm-react-utils/src/useNavigationContext.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useNavigationContext.ts#L7)
+
+___
+
+### useSessionUser
+
+▸ **useSessionUser**(): *null* \| [*SessionUser*](interfaces/sessionuser.md)
+
+**Returns:** *null* \| [*SessionUser*](interfaces/sessionuser.md)
+
+Defined in: [packages/esm-react-utils/src/useSessionUser.tsx:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useSessionUser.tsx#L4)
 
 ___
 
