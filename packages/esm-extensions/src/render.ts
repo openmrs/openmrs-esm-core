@@ -36,8 +36,8 @@ export function renderExtension(
   if (domElement) {
     if (extensionRegistration) {
       const routeProps = getActualRouteProps(
-        actualExtensionSlotName,
-        attachedExtensionSlotName
+        attachedExtensionSlotName,
+        actualExtensionSlotName
       );
       const extensionContextProps = {
         _extensionContext: {
