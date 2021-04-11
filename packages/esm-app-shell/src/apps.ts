@@ -54,7 +54,9 @@ function trySetup(appName: string, setup: () => any): any {
 }
 
 export function registerApp(appName: string, appExports: System.Module) {
-  const setup = appExports.setupOpenMRS;
+  const setup = navigator.onLine
+    ? appExports.setupOpenMRS
+    : appExports.setupOpenMRSOffline;
 
   if (typeof setup === "function") {
     const result = trySetup(appName, setup);
