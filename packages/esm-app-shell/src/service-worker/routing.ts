@@ -1,12 +1,16 @@
 import { registerRoute, setDefaultHandler } from "workbox-routing";
-import { NetworkOnly } from "workbox-strategies";
-import { indexPath, omrsCacheName } from "./constants";
+import { NetworkFirst, NetworkOnly } from "workbox-strategies";
+import { indexPath, omrsCacheName, sessionPath } from "./constants";
+import escapeRegExp from "lodash-es/escapeRegExp";
 
 /**
  * Registers required Workbox routes used by the service worker to provide offline functionality.
  */
 export function registerAllOmrsRoutes() {
   const networkOnly = new NetworkOnly();
+  const networkFirst = new NetworkFirst({ cacheName: omrsCacheName });
+
+  console.warn("Session Path: " + sessionPath);
 
   // Navigation requests are, when unresolvable via network (i.e. when offline), routed back
   // to the SPA's index (which should always be precached).
@@ -24,6 +28,11 @@ export function registerAllOmrsRoutes() {
       }
     }
   );
+
+  // Special handling for the login/session endpoint:
+  // The session results are cached whenever possible to allow seamless transitioning to offline
+  // while still retaining the current user's sign-in state.
+  registerRoute(new RegExp(`.*${escapeRegExp(sessionPath)}.*`), networkFirst);
 
   // Fallback: Try resolving the request using the network by default and by cache as a fallback.
   // The fallback handler does not add anything to the cache!

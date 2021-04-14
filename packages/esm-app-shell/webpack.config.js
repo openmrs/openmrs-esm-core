@@ -156,6 +156,7 @@ module.exports = (env, argv = {}) => {
       }),
       new DefinePlugin({
         "process.env.BUILD_VERSION": JSON.stringify(`${version}-${timestamp}`),
+        "process.env.OMRS_API_URL": JSON.stringify(openmrsApiUrl),
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? "static" : "disabled",
