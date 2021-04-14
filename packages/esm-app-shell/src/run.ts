@@ -56,8 +56,8 @@ function registerCoreExtensions() {
 /**
  * Sets up the microfrontends (apps). Uses the defined export
  * from the root modules of the apps, which should export a
- * special function called "setupOpenMRS".
- * This function returns an object that is used to feed Single
+ * special function(s) called "setupOpenMRS/setupOpenMRSOffline".
+ * These function return an object that is used to feed Single
  * SPA.
  */
 async function setupApps(modules: Array<[string, System.Module]>) {
