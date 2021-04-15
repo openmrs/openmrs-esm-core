@@ -12,7 +12,9 @@ const messageHandlers = {
   registerDynamicRoute,
 };
 
-async function onImportMapChanged({ importMap }: OnImportMapChangedMessage) {
+async function onImportMapChanged({
+  importMap = { imports: {} },
+}: OnImportMapChangedMessage) {
   await cacheImportMapReferences(importMap);
 }
 
