@@ -1,10 +1,7 @@
 import { ImportMap } from "@openmrs/esm-globals";
-import {
-  absoluteWbManifestUrls,
-  allKnownUrls,
-  omrsCacheName,
-} from "./constants";
+import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
 import { fetchUrlsToCacheFromImportMap } from "./importMapUtils";
+import { ServiceWorkerDb } from "./storage";
 
 /**
  * Attempts to resolve cacheable files from the specified import map (files are retrieved via convention)
@@ -41,9 +38,18 @@ export async function addToOmrsCache(urls: Array<string>) {
 async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
   const cache = await caches.open(omrsCacheName);
   const cachedUrls = (await cache.keys()).map((x) => x.url);
-  const urlsToKeep = [...allKnownUrls, ...newImportMapUrls];
+  const dynamicRoutes = await new ServiceWorkerDb().routes.toArray();
   const urlsToInvalidate = cachedUrls.filter(
-    (cachedUrl) => !urlsToKeep.includes(cachedUrl)
+    (cachedUrl) =>
+      !absoluteWbManifestUrls.includes(cachedUrl) &&
+      !newImportMapUrls.includes(cachedUrl) &&
+      !dynamicRoutes.some((route) => new RegExp(route.pattern).test(cachedUrl))
   );
+
+  console.info(
+    "Removing the following expired URLs from the cache: ",
+    urlsToInvalidate
+  );
+
   await Promise.all(urlsToInvalidate.map((url) => cache.delete(url)));
 }

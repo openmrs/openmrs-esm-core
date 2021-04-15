@@ -1,25 +1,35 @@
 import { cacheImportMapReferences } from "./caching";
+import { ServiceWorkerDb } from "./storage";
 import {
   MessageResult,
   OnImportMapChangedMessage,
-  SetOpenmrsPathsMessage,
+  RegisterDynamicRouteMessage,
 } from "./types";
+import escapeRegExp from "lodash-es/escapeRegExp";
 
 const messageHandlers = {
   onImportMapChanged,
-  setOmrsPaths,
+  addDynamicRoute: registerDynamicRoute,
 };
 
 async function onImportMapChanged({ importMap }: OnImportMapChangedMessage) {
   await cacheImportMapReferences(importMap);
 }
 
-function setOmrsPaths({
-  openmrsBase,
-  spaBase,
-  spaEnv,
-  spaVersion,
-}: SetOpenmrsPathsMessage) {}
+async function registerDynamicRoute({
+  pattern,
+  url,
+}: RegisterDynamicRouteMessage) {
+  let finalPattern = pattern;
+  if (!finalPattern && url) {
+    finalPattern = `^${escapeRegExp(url)}$`;
+  }
+
+  if (finalPattern) {
+    const db = new ServiceWorkerDb();
+    await db.dynamicRouteRegistrations.put({ pattern: finalPattern });
+  }
+}
 
 /**
  * Invoked when the service worker receives a message.

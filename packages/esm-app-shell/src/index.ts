@@ -37,6 +37,18 @@ function registerServiceWorker() {
         spaVersion: window.spaVersion,
       },
     });
+
+    // By default, cache the session endpoint.
+    // This ensures that a lot of user/session related functions also work offline.
+    const sessionPathUrl = new URL(
+      `${window.openmrsBase}/ws/rest/v1/session`,
+      window.location.origin
+    ).href;
+
+    wb.messageSW({
+      type: "registerDynamicRoute",
+      url: sessionPathUrl,
+    });
   }
 }
 

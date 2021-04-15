@@ -28,9 +28,7 @@ export interface OnImportMapChangedMessage {
   importMap: ImportMap;
 }
 
-export interface SetOpenmrsPathsMessage {
-  openmrsBase: string;
-  spaBase: string;
-  spaEnv: string;
-  spaVersion: string;
+export interface RegisterDynamicRouteMessage {
+  url?: string;
+  pattern?: string;
 }
