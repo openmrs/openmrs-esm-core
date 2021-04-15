@@ -1,3 +1,4 @@
+import { ImportMap } from "@openmrs/esm-globals";
 import { PrecacheEntry } from "workbox-precaching/_types";
 
 // Globals injected by Workbox at build time.
@@ -15,4 +16,19 @@ export interface BuildManifest {
   chunks?: Array<{
     files?: Array<string>;
   }>;
+}
+
+export interface MessageResult<T> {
+  success: boolean;
+  result?: T;
+  error?: string;
+}
+
+export interface OnImportMapChangedMessage {
+  importMap: ImportMap;
+}
+
+export interface RegisterDynamicRouteMessage {
+  url?: string;
+  pattern?: string;
 }

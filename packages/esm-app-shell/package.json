@@ -37,6 +37,7 @@
     "carbon-components": "^10.19.0",
     "carbon-icons": "^7.0.7",
     "dayjs": "^1.10.4",
+    "dexie": "^3.0.3",
     "i18next": "^19.6.0",
     "i18next-browser-languagedetector": "^4.3.1",
     "i18next-http-backend": "^1.0.21",
@@ -50,9 +51,10 @@
     "rxjs": "^6.5.3",
     "single-spa": "^4.4.1",
     "systemjs": "^6.8.3",
-    "workbox-core": "^6.1.2",
-    "workbox-routing": "^6.1.2",
-    "workbox-strategies": "^6.1.2"
+    "workbox-core": "^6.1.5",
+    "workbox-routing": "^6.1.5",
+    "workbox-strategies": "^6.1.5",
+    "workbox-window": "^6.1.5"
   },
   "devDependencies": {
     "@types/systemjs": "^6.1.0",
