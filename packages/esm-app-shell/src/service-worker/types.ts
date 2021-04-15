@@ -21,7 +21,7 @@ export interface BuildManifest {
 export interface MessageResult<T> {
   success: boolean;
   result?: T;
-  error?: Error;
+  error?: string;
 }
 
 export interface OnImportMapChangedMessage {

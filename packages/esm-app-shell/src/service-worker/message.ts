@@ -46,9 +46,7 @@ export async function handleMessage(event: ExtendableMessageEvent) {
 
   if (!handler) {
     fail(
-      new Error(
-        `Received an unknown message of type "${event.data?.type} which cannot be handled.`
-      )
+      `Received an unknown message of type "${event.data?.type} which cannot be handled.`
     );
     return;
   }
@@ -60,14 +58,14 @@ export async function handleMessage(event: ExtendableMessageEvent) {
       result,
     });
   } catch (e) {
-    fail(e);
+    fail(e?.message ?? e?.toString() ?? "Unknown error.");
   }
 
-  function fail(error: Error) {
+  function fail(error: string) {
     console.warn("Handling a message resulted in an error.", error);
     resolve({
       success: false,
-      error: error,
+      error,
     });
   }
 
