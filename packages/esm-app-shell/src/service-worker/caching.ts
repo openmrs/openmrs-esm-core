@@ -51,5 +51,13 @@ async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
     urlsToInvalidate
   );
 
+  // eslint-disable-next-line no-console
+  console.debug(
+    "The following URLs were known and not invalidated: ",
+    absoluteWbManifestUrls,
+    newImportMapUrls,
+    dynamicRoutes
+  );
+
   await Promise.all(urlsToInvalidate.map((url) => cache.delete(url)));
 }

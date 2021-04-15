@@ -1,5 +1,5 @@
 import { cacheImportMapReferences } from "./caching";
-import { ServiceWorkerDb } from "./storage";
+import { DynamicRouteRegistration, ServiceWorkerDb } from "./storage";
 import {
   MessageResult,
   OnImportMapChangedMessage,
@@ -26,8 +26,8 @@ async function registerDynamicRoute({
   }
 
   if (finalPattern) {
-    const db = new ServiceWorkerDb();
-    await db.dynamicRouteRegistrations.put({ pattern: finalPattern });
+    const registration: DynamicRouteRegistration = { pattern: finalPattern };
+    await new ServiceWorkerDb().dynamicRouteRegistrations.put(registration);
   }
 }
 
