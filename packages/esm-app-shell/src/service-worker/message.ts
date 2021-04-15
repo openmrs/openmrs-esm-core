@@ -9,7 +9,7 @@ import escapeRegExp from "lodash-es/escapeRegExp";
 
 const messageHandlers = {
   onImportMapChanged,
-  addDynamicRoute: registerDynamicRoute,
+  registerDynamicRoute,
 };
 
 async function onImportMapChanged({ importMap }: OnImportMapChangedMessage) {

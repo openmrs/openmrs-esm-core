@@ -28,16 +28,6 @@ function registerServiceWorker() {
       }
     });
 
-    wb.messageSW({
-      type: "setOmrsPaths",
-      paths: {
-        openmrsBase: window.openmrsBase,
-        spaBase: window.spaBase,
-        spaEnv: window.spaEnv,
-        spaVersion: window.spaVersion,
-      },
-    });
-
     // By default, cache the session endpoint.
     // This ensures that a lot of user/session related functions also work offline.
     const sessionPathUrl = new URL(
