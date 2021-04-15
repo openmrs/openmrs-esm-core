@@ -14,7 +14,7 @@ import { fetchUrlsToCacheFromImportMap } from "./importMapUtils";
 export async function cacheImportMapReferences(importMap: ImportMap) {
   const urlsToCache = await fetchUrlsToCacheFromImportMap(importMap);
   await invalidateObsoleteCacheEntries(urlsToCache);
-  return await addToOmrsCache(urlsToCache);
+  await addToOmrsCache(urlsToCache);
 }
 
 /**

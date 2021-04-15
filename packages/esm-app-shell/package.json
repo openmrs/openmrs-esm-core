@@ -50,9 +50,10 @@
     "rxjs": "^6.5.3",
     "single-spa": "^4.4.1",
     "systemjs": "^6.8.3",
-    "workbox-core": "^6.1.2",
-    "workbox-routing": "^6.1.2",
-    "workbox-strategies": "^6.1.2"
+    "workbox-core": "^6.1.5",
+    "workbox-routing": "^6.1.5",
+    "workbox-strategies": "^6.1.5",
+    "workbox-window": "^6.1.5"
   },
   "devDependencies": {
     "@types/systemjs": "^6.1.0",

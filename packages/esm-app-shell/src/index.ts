@@ -1,5 +1,6 @@
 import "@openmrs/esm-styleguide/dist/openmrs-esm-styleguide.css";
 import { setupPaths, setupUtils, SpaConfig } from "@openmrs/esm-framework";
+import { Workbox } from "workbox-window";
 
 declare var __webpack_public_path__: string;
 
@@ -13,21 +14,28 @@ function wireSpaPaths() {
 
 function registerServiceWorker() {
   if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register(
-        `${window.getOpenmrsSpaBase()}service-worker.js`
-      );
+    const wb = new Workbox(`${window.getOpenmrsSpaBase()}service-worker.js`);
+    wb.register();
 
+    window.addEventListener("load", () => {
       if (navigator.onLine) {
-        navigator.serviceWorker.ready.then((sw) => {
-          window.importMapOverrides.getCurrentPageMap().then((importMap) => {
-            sw.active?.postMessage({
-              type: "importMap",
-              importMap,
-            });
+        window.importMapOverrides.getCurrentPageMap().then((importMap) => {
+          wb.messageSW({
+            type: "onImportMapChanged",
+            importMap,
           });
         });
       }
+    });
+
+    wb.messageSW({
+      type: "setOmrsPaths",
+      paths: {
+        openmrsBase: window.openmrsBase,
+        spaBase: window.spaBase,
+        spaEnv: window.spaEnv,
+        spaVersion: window.spaVersion,
+      },
     });
   }
 }

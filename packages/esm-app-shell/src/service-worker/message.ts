@@ -1,32 +1,65 @@
-import { ImportMap } from "@openmrs/esm-globals";
 import { cacheImportMapReferences } from "./caching";
+import {
+  MessageResult,
+  OnImportMapChangedMessage,
+  SetOpenmrsPathsMessage,
+} from "./types";
 
-/**
- * The Service Worker's `message` event handler.
- * Matches the message's type/format to a specific handler.
- * @param event The event data containing the message dispatched to the Service Worker.
- */
-export function handleMessage(event: ExtendableMessageEvent) {
-  switch (event.data?.type?.toString() ?? "") {
-    case "importMap":
-      onImportMap(event.data?.importMap);
-      break;
-    default:
-      console.warn(
-        "The Service Worker received a message event with an unexpected format which cannot be handled.",
-        event
-      );
-      break;
-  }
+const messageHandlers = {
+  onImportMapChanged,
+  setOmrsPaths,
+};
+
+async function onImportMapChanged({ importMap }: OnImportMapChangedMessage) {
+  await cacheImportMapReferences(importMap);
 }
 
-async function onImportMap(importMap: ImportMap = { imports: {} }) {
-  try {
-    await cacheImportMapReferences(importMap);
-  } catch (e) {
-    console.error(
-      "The Service Worker failed to cache the specified import map. See the error for details.",
-      e
+function setOmrsPaths({
+  openmrsBase,
+  spaBase,
+  spaEnv,
+  spaVersion,
+}: SetOpenmrsPathsMessage) {}
+
+/**
+ * Invoked when the service worker receives a message.
+ * Matches the message to a handler, invokes that handler and dispatches the result returned
+ * by the handler back to the window.
+ *
+ * For this to work, the message needs to have a defined format.
+ * @param event The event data containing the message dispatched to the Service Worker.
+ */
+export async function handleMessage(event: ExtendableMessageEvent) {
+  const handler = messageHandlers[event.data?.type?.toString() ?? ""];
+
+  if (!handler) {
+    fail(
+      new Error(
+        `Received an unknown message of type "${event.data?.type} which cannot be handled.`
+      )
     );
+    return;
+  }
+
+  try {
+    const result = await handler(event.data);
+    resolve({
+      success: true,
+      result,
+    });
+  } catch (e) {
+    fail(e);
+  }
+
+  function fail(error: Error) {
+    console.warn("Handling a message resulted in an error.", error);
+    resolve({
+      success: false,
+      error: error,
+    });
+  }
+
+  function resolve<T>(result: MessageResult<T>) {
+    event.ports[0].postMessage(result ?? {});
   }
 }
