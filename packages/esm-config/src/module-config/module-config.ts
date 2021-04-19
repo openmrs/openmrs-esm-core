@@ -1,4 +1,4 @@
-import { clone, map, reduce, mergeDeepRight, prop } from "ramda";
+import { clone, reduce, mergeDeepRight } from "ramda";
 import {
   Config,
   ConfigObject,
@@ -40,29 +40,21 @@ import type {} from "@openmrs/esm-globals";
  *
  * TODO: Investigate further, per this comment: https://github.com/joeldenning/import-map-overrides/issues/48#issuecomment-769477901
  */
-let didInitialCheck = false;
-function checkForImportMapConfigFile() {
-  setTimeout(() => {
-    if (
-      !didInitialCheck &&
-      typeof System !== "undefined" &&
-      typeof window.importMapOverrides !== "undefined"
-    ) {
-      window.importMapOverrides.getCurrentPageMap().then(loadConfigs);
-      didInitialCheck = true;
-    } else {
-      checkForImportMapConfigFile();
-    }
-  }, 200);
-}
-checkForImportMapConfigFile();
+const checkImportMapInterval = setInterval(() => {
+  if (
+    typeof System !== "undefined" &&
+    typeof window.importMapOverrides !== "undefined"
+  ) {
+    clearInterval(checkImportMapInterval);
+    window.importMapOverrides.getCurrentPageMap().then(loadConfigs);
+  }
+}, 200);
 
 window.addEventListener("import-map-overrides:change", loadConfigs);
 
 // We cache the Promise that loads the import mapped config file
 // so that we can be sure to only call it once
 let getImportMapConfigPromise;
-
 async function loadConfigs() {
   if (!getImportMapConfigPromise) {
     getImportMapConfigPromise = getImportMapConfigFile();
@@ -72,33 +64,28 @@ async function loadConfigs() {
 }
 
 async function getImportMapConfigFile(): Promise<void> {
-  let importMapConfigExists: boolean;
-
-  if (typeof System !== "undefined") {
-    try {
-      System.resolve("config-file");
-      importMapConfigExists = true;
-    } catch {
-      importMapConfigExists = false;
-      configInternalStore.setState({
-        importMapConfigLoaded: true,
-      });
-    }
-  } else {
+  if (typeof System === "undefined") {
     throw new Error("SystemJS not loaded at getImportMapConfigFile call time");
   }
 
-  if (importMapConfigExists) {
-    try {
-      const configFileModule = await System.import("config-file");
-      configInternalStore.setState({
-        importMapConfig: configFileModule.default,
-        importMapConfigLoaded: true,
-      });
-    } catch (e) {
-      console.error(`Problem importing config-file ${e}`);
-      throw e;
-    }
+  try {
+    System.resolve("config-file");
+  } catch {
+    configInternalStore.setState({
+      importMapConfigLoaded: true,
+    });
+    return;
+  }
+
+  try {
+    const configFileModule = await System.import("config-file");
+    configInternalStore.setState({
+      importMapConfig: configFileModule.default,
+      importMapConfigLoaded: true,
+    });
+  } catch (e) {
+    console.error(`Problem importing config-file ${e}`);
+    throw e;
   }
 }
 
@@ -546,16 +533,16 @@ function mergeConfigsFor(
   moduleName: string,
   allConfigs: Array<Config>
 ): ConfigObject {
-  const allConfigsForModule = map(prop(moduleName), allConfigs).filter(
-    (item) => item !== undefined && item !== null
-  );
+  const allConfigsForModule = allConfigs
+    .map(({ [moduleName]: c }) => c)
+    .filter((c) => !!c);
 
   return mergeConfigs(allConfigsForModule);
 }
 
+const mergeDeepAll = reduce(mergeDeepRight);
 function mergeConfigs(configs: Array<Config>) {
-  const mergeDeepAll = reduce(mergeDeepRight, {});
-  return mergeDeepAll(configs);
+  return mergeDeepAll({}, configs) as Config;
 }
 
 // Recursively check the provided config tree to make sure that all
