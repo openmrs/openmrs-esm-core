@@ -29,7 +29,7 @@ export type ExtensionSlotProps = ExtensionSlotBaseProps &
   React.HTMLAttributes<HTMLDivElement>;
 
 export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
-  extensionSlotName: actualExtensionSlotName,
+  extensionSlotName,
   select = defaultSelect,
   children,
   state,
@@ -37,14 +37,12 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   ...divProps
 }: ExtensionSlotProps) => {
   const slotRef = useRef(null);
-  const {
-    attachedExtensionSlotName,
-    extensionIdsToRender,
-    extensionSlotModuleName,
-  } = useExtensionSlot(actualExtensionSlotName, slotRef);
+  const { extensionIdsToRender, extensionSlotModuleName } = useExtensionSlot(
+    extensionSlotName
+  );
   const extensions = useMemo(
     () =>
-      attachedExtensionSlotName &&
+      extensionSlotName &&
       select(
         extensionIdsToRender
           .map(getExtensionRegistration)
@@ -55,8 +53,7 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
           value={{
             moduleName: extensionRegistration.moduleName,
             extension: {
-              actualExtensionSlotName,
-              attachedExtensionSlotName,
+              extensionSlotName,
               extensionSlotModuleName,
               extensionId: extensionRegistration.name,
             },
@@ -65,11 +62,17 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
           {children ?? <Extension state={state} />}
         </ComponentContext.Provider>
       )),
-    [select, extensionIdsToRender, attachedExtensionSlotName]
+    [select, extensionIdsToRender, extensionSlotName]
   );
 
   return (
-    <div ref={slotRef} style={{ ...style, position: "relative" }} {...divProps}>
+    <div
+      ref={slotRef}
+      data-extension-slot-name={extensionSlotName}
+      data-extension-slot-module-name={extensionSlotModuleName}
+      style={{ ...style, position: "relative" }}
+      {...divProps}
+    >
       {extensions}
     </div>
   );

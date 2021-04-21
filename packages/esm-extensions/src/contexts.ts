@@ -1,16 +1,5 @@
 import { navigate } from "@openmrs/esm-config";
 
-const fallbackType: NavigationContextType = "link";
-const navigationContexts: Array<NavigationContext> = [
-  {
-    type: fallbackType,
-    handler(link) {
-      navigate({ to: link });
-      return true;
-    },
-  },
-];
-
 export type NavigationContextType = "workspace" | "dialog" | "link";
 
 export interface NavigationContext {
@@ -18,26 +7,22 @@ export interface NavigationContext {
   handler<T = any>(link: string, state: T): boolean;
 }
 
+/**
+ * @deprecated use `navigate` directly
+ */
 export function switchTo<T>(
-  type: NavigationContextType,
+  _type: NavigationContextType,
   link: string,
-  state?: T
+  _state?: T
 ) {
-  for (let i = navigationContexts.length; i--; ) {
-    const context = navigationContexts[i];
-
-    if (context.type === type && context.handler(link, state)) {
-      return;
-    }
-  }
-
-  switchTo(fallbackType, link, state);
+  navigate({ to: link });
 }
 
-export function pushNavigationContext(context: NavigationContext) {
-  navigationContexts.push(context);
+/**
+ * @deprecated don't use
+ */
+export function pushNavigationContext(_context: NavigationContext) {
   return () => {
-    const index = navigationContexts.indexOf(context);
-    navigationContexts.splice(index, 1);
+    //STUB - remove soon
   };
 }

@@ -12,8 +12,7 @@ export function useExtension<TRef extends HTMLElement>(
     if (ref.current && extension) {
       return renderExtension(
         ref.current,
-        extension.actualExtensionSlotName,
-        extension.attachedExtensionSlotName,
+        extension.extensionSlotName,
         extension.extensionSlotModuleName,
         extension.extensionId,
         undefined,
@@ -21,8 +20,7 @@ export function useExtension<TRef extends HTMLElement>(
       );
     }
   }, [
-    extension?.actualExtensionSlotName,
-    extension?.attachedExtensionSlotName,
+    extension?.extensionSlotName,
     extension?.extensionId,
     extension?.extensionSlotModuleName,
     ref.current,

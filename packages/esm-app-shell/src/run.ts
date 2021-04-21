@@ -56,8 +56,8 @@ function registerCoreExtensions() {
 /**
  * Sets up the microfrontends (apps). Uses the defined export
  * from the root modules of the apps, which should export a
- * special function(s) called "setupOpenMRS/setupOpenMRSOffline".
- * These function return an object that is used to feed Single
+ * special function called "setupOpenMRS".
+ * That function returns an object that is used to feed Single
  * SPA.
  */
 async function setupApps(modules: Array<[string, System.Module]>) {
@@ -78,12 +78,28 @@ async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
 }
 
 /**
+ * Invoked when the connectivity is changed.
+ */
+function connectivityChanged() {
+  // trigger single SPA re-evaluation
+  window.history.replaceState(undefined, document.title, undefined);
+  showToast({
+    description: `Connection: ${navigator.onLine ? "online" : "offline"}`,
+    title: "App",
+    kind: navigator.onLine ? "success" : "warning",
+  });
+}
+
+/**
  * Runs the shell by importing the translations and starting single SPA.
  */
 function runShell() {
+  window.addEventListener("offline", connectivityChanged);
+  window.addEventListener("online", connectivityChanged);
+
   return setupI18n()
     .catch((err) => console.error(`Failed to initialize translations`, err))
-    .then(start);
+    .then(() => start());
 }
 
 function handleInitFailure(e: Error) {

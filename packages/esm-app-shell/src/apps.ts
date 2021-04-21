@@ -1,5 +1,8 @@
 import {
+  AppExtensionDefinition,
   attach,
+  checkStatus,
+  getCustomProps,
   PageDefinition,
   registerExtension,
 } from "@openmrs/esm-framework";
@@ -28,22 +31,6 @@ function preprocessActivator(
   }
 }
 
-interface ModernAppExtensionDefinition {
-  id: string;
-  slot?: string;
-  slots?: Array<string>;
-  load(): Promise<any>;
-  meta?: Record<string, any>;
-}
-
-interface LegacyAppExtensionDefinition {
-  name: string;
-  load(): Promise<any>;
-}
-
-type AppExtensionDefinition = ModernAppExtensionDefinition &
-  LegacyAppExtensionDefinition;
-
 function trySetup(appName: string, setup: () => any): any {
   try {
     return setup();
@@ -54,9 +41,7 @@ function trySetup(appName: string, setup: () => any): any {
 }
 
 export function registerApp(appName: string, appExports: System.Module) {
-  const setup = navigator.onLine
-    ? appExports.setupOpenMRS
-    : appExports.setupOpenMRSOffline;
+  const setup = appExports.setupOpenMRS;
 
   if (typeof setup === "function") {
     const result = trySetup(appName, setup);
@@ -71,48 +56,65 @@ export function registerApp(appName: string, appExports: System.Module) {
         availablePages.push({
           load: result.lifecycle,
           route: result.activate,
+          offline: result.offline,
+          online: result.online,
         });
       }
 
-      availableExtensions.forEach((ext) => tryRegisterExtension(appName, ext));
+      availableExtensions.forEach((ext) => {
+        tryRegisterExtension(appName, ext);
+      });
 
-      availablePages.forEach(({ route, load }, index) => {
-        registerApplication(
-          `${appName}-page-${index}`,
-          load,
-          preprocessActivator(route)
-        );
+      availablePages.forEach((page, index) => {
+        tryRegisterPage(`${appName}-page-${index}`, page);
       });
     }
   }
 }
 
+export function tryRegisterPage(appName: string, page: PageDefinition) {
+  const { route, load, online, offline } = page;
+  const activityFn = preprocessActivator(route);
+  registerApplication(
+    appName,
+    load,
+    (location) => checkStatus(online, offline) && activityFn(location),
+    () => getCustomProps(online, offline)
+  );
+}
+
 export function tryRegisterExtension(
-  appName: string,
-  ext: Partial<AppExtensionDefinition>
+  moduleName: string,
+  extension: Partial<AppExtensionDefinition>
 ) {
-  const id = ext.id ?? ext.name;
-  const slots = ext.slots || [ext.slot];
+  const id = extension.id ?? extension.name;
+  const slots = extension.slots || [extension.slot];
 
   if (!id) {
     console.warn(
-      "A registered extension definition is missing an id and thus cannot be registered. " +
-        "To fix this, ensure that you define the `id` (or alternatively the `name`) field inside the extension definition.",
-      ext
+      `A registered extension definition is missing an id and thus cannot be registered.
+To fix this, ensure that you define the "id" (or alternatively the "name") field inside the extension definition.`,
+      extension
     );
     return;
   }
 
-  if (!ext.load) {
+  if (!extension.load) {
     console.warn(
-      "A registered extension definition is missing the loader and thus cannot be registered. " +
-        "To fix this, ensure that you define a `load` function inside the extension definition.",
-      ext
+      `A registered extension definition is missing the loader and thus cannot be registered. 
+To fix this, ensure that you define a "load" function inside the extension definition.`,
+      extension
     );
     return;
   }
 
-  registerExtension(appName, id, ext.load, ext.meta);
+  registerExtension(id, {
+    load: extension.load,
+    meta: extension.meta || {},
+    moduleName,
+    offline: extension.offline,
+    online: extension.online,
+  });
 
   for (const slot of slots) {
     if (slot) {

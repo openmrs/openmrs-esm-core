@@ -1,7 +1,7 @@
 import { update } from "@openmrs/esm-state";
 import { mountRootParcel, Parcel } from "single-spa";
 import { getExtensionRegistration } from "./extensions";
-import { getActualRouteProps } from "./route";
+import { checkStatus, getCustomProps } from "./helpers";
 import { updateExtensionStore } from "./store";
 
 export interface Lifecycle {
@@ -22,8 +22,7 @@ export interface CancelLoading {
  */
 export function renderExtension(
   domElement: HTMLElement,
-  actualExtensionSlotName: string,
-  attachedExtensionSlotName: string,
+  extensionSlotName: string,
   extensionSlotModuleName: string,
   extensionId: string,
   renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x,
@@ -34,29 +33,29 @@ export function renderExtension(
   let active: boolean | Parcel = true;
 
   if (domElement) {
-    if (extensionRegistration) {
-      const routeProps = getActualRouteProps(
-        attachedExtensionSlotName,
-        actualExtensionSlotName
+    if (!extensionRegistration) {
+      throw Error(
+        `Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`
       );
-      const extensionContextProps = {
-        _extensionContext: {
-          extensionId,
-          actualExtensionSlotName,
-          attachedExtensionSlotName,
-          extensionSlotModuleName,
-          extensionModuleName: extensionRegistration.moduleName,
-        },
-      };
+    }
 
-      extensionRegistration.load().then(({ default: result, ...lifecycle }) => {
+    const { load, online, offline, meta, moduleName } = extensionRegistration;
+
+    if (checkStatus(online, offline)) {
+      load().then(({ default: result, ...lifecycle }) => {
         if (active) {
           const parcel = mountRootParcel(
             renderFunction(result ?? lifecycle) as any,
             {
+              ...getCustomProps(online, offline),
               ...additionalProps,
-              ...extensionContextProps,
-              ...routeProps,
+              _meta: meta,
+              _extensionContext: {
+                extensionId,
+                extensionSlotName,
+                extensionSlotModuleName,
+                extensionModuleName: moduleName,
+              },
               domElement,
             }
           );
@@ -72,14 +71,10 @@ export function renderExtension(
             extensionName,
             "instances",
             extensionSlotModuleName,
-            actualExtensionSlotName,
+            extensionSlotName,
           ],
           { domElement, id: extensionId }
         )
-      );
-    } else {
-      throw Error(
-        `Couldn't find extension '${extensionName}' to attach to '${actualExtensionSlotName}'`
       );
     }
   }

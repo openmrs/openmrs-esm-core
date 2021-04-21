@@ -17,7 +17,7 @@ interface DevToolsPopupProps {
 }
 
 export default function Popup(props: DevToolsPopupProps) {
-  const [configHasAlert, setConfigHasAlert] = useState(false);
+  const [configHasAlert] = useState(false);
   const [diagnosticsHasAlert, setDiagnosticsHasAlert] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
@@ -62,7 +62,7 @@ export default function Popup(props: DevToolsPopupProps) {
       </div>
       <div className={styles.content}>
         {activeTab == 0 ? (
-          <Configuration setHasAlert={setConfigHasAlert} />
+          <Configuration />
         ) : (
           <ModuleDiagnostics
             setHasAlert={setDiagnosticsHasAlert}

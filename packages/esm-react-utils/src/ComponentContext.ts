@@ -1,8 +1,7 @@
 import React from "react";
 
 export interface ExtensionData {
-  actualExtensionSlotName: string;
-  attachedExtensionSlotName: string;
+  extensionSlotName: string;
   extensionSlotModuleName: string;
   extensionId: string;
 }

@@ -6,7 +6,7 @@ export interface ExtensionOverlayProps {
   extensionName: string;
   slotModuleName: string;
   slotName: string;
-  domElement: HTMLElement;
+  domElement: HTMLElement | null;
 }
 
 export function ExtensionOverlay({

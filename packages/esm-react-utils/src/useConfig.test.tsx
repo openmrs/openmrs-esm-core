@@ -127,11 +127,9 @@ describe(`useConfig in an extension`, () => {
       <React.Suspense fallback={<div>Suspense!</div>}>
         <ComponentContext.Provider
           value={{
-            moduleName: "",
+            moduleName: "ext-module",
             extension: {
-              extensionModuleName: "ext-module",
-              actualExtensionSlotName: "fooSlot",
-              attachedExtensionSlotName: "fooSlot",
+              extensionSlotName: "fooSlot",
               extensionSlotModuleName: "slot-mod",
               extensionId: "barExt#id1",
             },
@@ -162,12 +160,10 @@ describe(`useConfig in an extension`, () => {
       <React.Suspense fallback={<div>Suspense!</div>}>
         <ComponentContext.Provider
           value={{
-            moduleName: "",
+            moduleName: "first-module",
             extension: {
-              actualExtensionSlotName: "fooSlot",
-              attachedExtensionSlotName: "fooSlot",
+              extensionSlotName: "fooSlot",
               extensionSlotModuleName: "slot-mod",
-              extensionModuleName: "first-module",
               extensionId: "fooExt#id1",
             },
           }}
@@ -176,12 +172,10 @@ describe(`useConfig in an extension`, () => {
         </ComponentContext.Provider>
         <ComponentContext.Provider
           value={{
-            moduleName: "",
+            moduleName: "second-module",
             extension: {
-              actualExtensionSlotName: "fooSlot",
-              attachedExtensionSlotName: "fooSlot",
+              extensionSlotName: "fooSlot",
               extensionSlotModuleName: "slot-mod",
-              extensionModuleName: "second-module",
               extensionId: "barExt",
             },
           }}
@@ -218,12 +212,10 @@ describe(`useConfig in an extension`, () => {
       <React.Suspense fallback={<div>Suspense!</div>}>
         <ComponentContext.Provider
           value={{
-            moduleName: "",
+            moduleName: "extension-module",
             extension: {
-              actualExtensionSlotName: "slot1",
-              attachedExtensionSlotName: "slot1",
+              extensionSlotName: "slot1",
               extensionSlotModuleName: "slot-1-module",
-              extensionModuleName: "extension-module",
               extensionId: "fooExt",
             },
           }}
@@ -232,12 +224,10 @@ describe(`useConfig in an extension`, () => {
         </ComponentContext.Provider>
         <ComponentContext.Provider
           value={{
-            moduleName: "",
+            moduleName: "extension-module",
             extension: {
-              actualExtensionSlotName: "slot2",
-              attachedExtensionSlotName: "slot2",
+              extensionSlotName: "slot2",
               extensionSlotModuleName: "slot-2-module",
-              extensionModuleName: "extension-module",
               extensionId: "fooExt",
             },
           }}
@@ -266,12 +256,10 @@ describe(`useConfig in an extension`, () => {
       <React.Suspense fallback={<div>Suspense!</div>}>
         <ComponentContext.Provider
           value={{
-            moduleName: "",
+            moduleName: "ext-module",
             extension: {
-              actualExtensionSlotName: "fooSlot",
-              attachedExtensionSlotName: "fooSlot",
+              extensionSlotName: "fooSlot",
               extensionSlotModuleName: "slot-module",
-              extensionModuleName: "ext-module",
               extensionId: "barExt#id1",
             },
           }}

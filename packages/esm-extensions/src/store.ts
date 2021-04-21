@@ -9,19 +9,20 @@ export interface ExtensionRegistration {
   load(): Promise<any>;
   moduleName: string;
   meta: Record<string, any>;
+  online?: boolean | object;
+  offline?: boolean | object;
 }
 
 export interface ExtensionInfo extends ExtensionRegistration {
   /**
    * The instances where the extension has been rendered using `renderExtension`,
-   * indexed by slotModuleName and actualExtensionSlotName
+   * indexed by slotModuleName and slotName.
    */
   instances: Record<string, Record<string, ExtensionInstance>>;
 }
 
 export interface ExtensionInstance {
   id: string;
-  domElement: HTMLElement;
 }
 
 export interface ExtensionStore {
@@ -56,10 +57,6 @@ export interface ExtensionSlotInstance {
    * The number of active registrations on the instance.
    */
   registered: number;
-  /**
-   * The dom element at which the slot is mounted
-   */
-  domElement: HTMLElement | null;
 }
 
 export interface ExtensionSlotInfo {
@@ -78,18 +75,6 @@ export interface ExtensionSlotInfo {
    * `assignedIds` is the set defining those.
    */
   attachedIds: Array<string>;
-  /**
-   * Returns whether the given extension slot name corresponds to this ExtensionSlotInfo.
-   * @param actualExtensionSlotName The actual extension slot name into which the extensions might be rendered.
-   * For URL like extension slots, this should be the name where parameters have been replaced with actual values
-   * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
-   */
-  matches(actualExtensionSlotName: string): boolean;
-}
-
-export interface PageDefinition {
-  route: string;
-  load(): Promise<any>;
 }
 
 export const extensionStore = createGlobalStore<ExtensionStore>("extensions", {

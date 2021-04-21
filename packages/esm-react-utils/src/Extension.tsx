@@ -24,7 +24,13 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
   // The extension is rendered into the `<slot>`. It is surrounded by a
   // `<div>` with relative positioning in order to allow the UI Editor
   // to absolutely position elements within it.
-  const slot = <div style={{ position: "relative" }} ref={ref} />;
+  const slot = (
+    <div
+      ref={ref}
+      data-extension-id={extension?.extensionId}
+      style={{ position: "relative" }}
+    />
+  );
 
   return extension && wrap ? wrap(slot, extension) : slot;
 };

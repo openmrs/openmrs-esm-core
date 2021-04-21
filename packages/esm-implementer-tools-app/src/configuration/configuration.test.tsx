@@ -99,7 +99,7 @@ describe(`<Configuration />`, () => {
   });
 
   function renderConfiguration() {
-    render(<Configuration setHasAlert={() => {}} />);
+    render(<Configuration />);
   }
 
   it(`renders without dying`, async () => {
@@ -127,7 +127,7 @@ describe(`<Configuration />`, () => {
       fireEvent.click(valueButton);
       const editor = await row.findByRole("checkbox");
       fireEvent.click(editor);
-      fireEvent.click(row.getByText("Save"));
+      fireEvent.click(row.getByText("Save").parentElement as any);
       // The mocked temporaryConfigStore.getState seems to be producing something
       // that doesn't work right, causing the `set` call and consequently this
       // `setState` call not to work either.
@@ -167,7 +167,7 @@ describe(`<Configuration />`, () => {
       expect(mockPerformConceptSearch).toHaveBeenCalledWith("fed");
       const targetConcept = await row.findByText("Fedora");
       userEvent.click(targetConcept);
-      userEvent.click(row.getByText("Save"));
+      userEvent.click(row.getByText("Save").parentElement as any);
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
         config: {
           "@openmrs/mario": { hatUuid: "61523693-72e2-456d-8c64-8c5293febeb6" },
@@ -196,7 +196,7 @@ describe(`<Configuration />`, () => {
       expect(editor).toHaveAttribute("type", "number");
       userEvent.clear(editor);
       userEvent.type(editor, "11");
-      userEvent.click(row.getByText("Save"));
+      userEvent.click(row.getByText("Save").parentElement as any);
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
         config: { "@openmrs/mario": { numberFingers: 11 } },
       });
@@ -221,7 +221,7 @@ describe(`<Configuration />`, () => {
       const editor = await row.findByRole("textbox");
       userEvent.clear(editor);
       userEvent.type(editor, "Bowser");
-      userEvent.click(row.getByText("Save"));
+      userEvent.click(row.getByText("Save").parentElement as any);
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
         config: { "@openmrs/mario": { nemesisName: "Bowser" } },
       });
@@ -247,7 +247,7 @@ describe(`<Configuration />`, () => {
       userEvent.clear(editor);
       const newUuid = "34f03796-f0e2-4f64-9e9a-28fb49a94baf";
       userEvent.type(editor, newUuid);
-      userEvent.click(row.getByText("Save"));
+      userEvent.click(row.getByText("Save").parentElement as any);
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
         config: { "@openmrs/mario": { mustacheUuid: newUuid } },
       });

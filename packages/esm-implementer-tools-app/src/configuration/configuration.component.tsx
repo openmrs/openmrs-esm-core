@@ -18,10 +18,6 @@ import { ConfigTree } from "./config-tree.component";
 import { Description } from "./description.component";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
 
-export type ConfigurationProps = {
-  setHasAlert(value: boolean): void;
-};
-
 const actions = {
   toggleIsUIEditorEnabled({ isUIEditorEnabled }: ImplementerToolsStore) {
     return { isUIEditorEnabled: !isUIEditorEnabled };
@@ -37,7 +33,28 @@ const configActions = {
   },
 };
 
-export function Configuration({ setHasAlert }: ConfigurationProps) {
+interface OpenOrCloseButtonProps {
+  isConfigToolbarOpen: boolean;
+  toggleIsToolbarOpen(): void;
+}
+
+const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({
+  isConfigToolbarOpen,
+  toggleIsToolbarOpen,
+}) => (
+  <Button
+    hasIconOnly
+    renderIcon={isConfigToolbarOpen ? ChevronUp16 : ChevronDown16}
+    onClick={toggleIsToolbarOpen}
+    kind="ghost"
+    size="small"
+    iconDescription={`${isConfigToolbarOpen ? "Hide" : "Show"} toolbar`}
+  />
+);
+
+export interface ConfigurationProps {}
+
+export const Configuration: React.FC<ConfigurationProps> = () => {
   const {
     isUIEditorEnabled,
     toggleIsUIEditorEnabled,
@@ -135,17 +152,4 @@ export function Configuration({ setHasAlert }: ConfigurationProps) {
       </div>
     </>
   );
-}
-
-function OpenOrCloseButton({ isConfigToolbarOpen, toggleIsToolbarOpen }) {
-  return (
-    <Button
-      hasIconOnly
-      renderIcon={isConfigToolbarOpen ? ChevronUp16 : ChevronDown16}
-      onClick={toggleIsToolbarOpen}
-      kind="ghost"
-      size="small"
-      iconDescription={`${isConfigToolbarOpen ? "Hide" : "Show"} toolbar`}
-    ></Button>
-  );
-}
+};

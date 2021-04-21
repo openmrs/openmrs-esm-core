@@ -38,3 +38,28 @@ export interface SpaConfig {
    */
   configUrls?: Array<string>;
 }
+
+export interface ModernAppExtensionDefinition {
+  id: string;
+  slot?: string;
+  slots?: Array<string>;
+  load(): Promise<any>;
+  meta?: Record<string, any>;
+  online?: boolean | object;
+  offline?: boolean | object;
+}
+
+export interface LegacyAppExtensionDefinition {
+  name: string;
+  load(): Promise<any>;
+}
+
+export type AppExtensionDefinition = ModernAppExtensionDefinition &
+  LegacyAppExtensionDefinition;
+
+export interface PageDefinition {
+  route: string;
+  load(): Promise<any>;
+  online?: boolean | object;
+  offline?: boolean | object;
+}

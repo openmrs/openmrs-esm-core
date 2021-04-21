@@ -36,14 +36,14 @@ export function useConfig() {
         ? getConfigStore(moduleName)
         : getExtensionConfigStore(
             extension.extensionSlotModuleName,
-            extension.attachedExtensionSlotName,
+            extension.extensionSlotName,
             extension.extensionId
           ),
     [moduleName, extension]
   );
 
   const cacheId = extension
-    ? `${extension.attachedExtensionSlotName}-${extension.extensionId}`
+    ? `${extension.extensionSlotName}-${extension.extensionId}`
     : moduleName;
 
   useEffect(() => {

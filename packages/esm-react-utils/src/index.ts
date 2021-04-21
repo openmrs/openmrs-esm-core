@@ -5,6 +5,7 @@ export * from "./Extension";
 export * from "./ExtensionSlot";
 export * from "./getLifecycle";
 export * from "./openmrsComponentDecorator";
+export * from "./useAssignedExtensionIds";
 export * from "./useConfig";
 export * from "./useCurrentPatient";
 export * from "./useExtension";
