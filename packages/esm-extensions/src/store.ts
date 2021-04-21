@@ -4,11 +4,15 @@ import {
 } from "@openmrs/esm-config";
 import { createGlobalStore } from "@openmrs/esm-state";
 
+export interface ExtensionMeta {
+  [_: string]: any;
+}
+
 export interface ExtensionRegistration {
   name: string;
   load(): Promise<any>;
   moduleName: string;
-  meta: Record<string, any>;
+  meta: ExtensionMeta;
   online?: boolean | object;
   offline?: boolean | object;
 }
