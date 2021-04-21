@@ -17,7 +17,7 @@ Each module has its own stores for its config and its extension slots' configs.
 
 ### config
 
-• **config**: *null* \| [*ConfigObject*](configobject.md)
+• **config**: ``null`` \| [*ConfigObject*](configobject.md)
 
 Defined in: [packages/esm-config/src/module-config/state.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L131)
 

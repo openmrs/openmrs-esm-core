@@ -37,9 +37,9 @@ Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:25](https://github.c
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`extensions` | [*ExtensionRegistration*](extensionregistration.md)[] |
+| Name | Type |
+| :------ | :------ |
+| `extensions` | [*ExtensionRegistration*](extensionregistration.md)[] |
 
 **Returns:** [*ExtensionRegistration*](extensionregistration.md)[]
 

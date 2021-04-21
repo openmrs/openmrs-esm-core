@@ -41,6 +41,7 @@
 - [getAsyncLifecycle](API.md#getasynclifecycle)
 - [getLifecycle](API.md#getlifecycle)
 - [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
+- [useAssignedExtensionIds](API.md#useassignedextensionids)
 - [useConfig](API.md#useconfig)
 - [useCurrentPatient](API.md#usecurrentpatient)
 - [useExtension](API.md#useextension)
@@ -85,7 +86,7 @@ ___
 
 ### LayoutType
 
-Ƭ **LayoutType**: *tablet* \| *phone* \| *desktop*
+Ƭ **LayoutType**: ``"tablet"`` \| ``"phone"`` \| ``"desktop"``
 
 Defined in: [packages/esm-react-utils/src/useLayoutType.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useLayoutType.ts#L3)
 
@@ -115,7 +116,7 @@ ___
 
 Available to all components. Provided by `openmrsComponentDecorator`.
 
-Defined in: [packages/esm-react-utils/src/ComponentContext.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L18)
+Defined in: [packages/esm-react-utils/src/ComponentContext.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L17)
 
 ___
 
@@ -156,15 +157,15 @@ Defined in: [packages/esm-react-utils/src/UserHasAccess.tsx:8](https://github.co
 
 #### Type parameters:
 
-Name |
-:------ |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`store` | *Store*<T\> |
+| Name | Type |
+| :------ | :------ |
+| `store` | *Store*<T\> |
 
 **Returns:** () => T(`actions`: [*Actions*](API.md#actions)) => T & [*BoundActions*](API.md#boundactions)(`actions?`: [*Actions*](API.md#actions)) => T & [*BoundActions*](API.md#boundactions)
 
@@ -180,18 +181,18 @@ ___
 
 #### Type parameters:
 
-Name |
-:------ |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`lazy` | () => *Promise*<{ `default`: *React.ComponentType*<T\>  }\> |
-`options` | [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md) |
+| Name | Type |
+| :------ | :------ |
+| `lazy` | () => *Promise*<{ `default`: *React.ComponentType*<T\>  }\> |
+| `options` | [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md) |
 
-**Returns:** () => *Promise*<Lifecycles\>
+**Returns:** () => *Promise*<ReactAppOrParcel<any\>\>
 
 Defined in: [packages/esm-react-utils/src/getLifecycle.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/getLifecycle.ts#L31)
 
@@ -203,18 +204,18 @@ ___
 
 #### Type parameters:
 
-Name |
-:------ |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`lazy` | () => *Promise*<{ `default`: *React.ComponentType*<T\>  }\> |
-`options` | [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md) |
+| Name | Type |
+| :------ | :------ |
+| `lazy` | () => *Promise*<{ `default`: *React.ComponentType*<T\>  }\> |
+| `options` | [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md) |
 
-**Returns:** () => *Promise*<Lifecycles\>
+**Returns:** () => *Promise*<ReactAppOrParcel<any\>\>
 
 Defined in: [packages/esm-react-utils/src/getLifecycle.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/getLifecycle.ts#L20)
 
@@ -222,22 +223,22 @@ ___
 
 ### getLifecycle
 
-▸ **getLifecycle**<T\>(`Component`: *React.ComponentType*<T\>, `options`: [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md)): Lifecycles
+▸ **getLifecycle**<T\>(`Component`: *React.ComponentType*<T\>, `options`: [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md)): *ReactAppOrParcel*<any\>
 
 #### Type parameters:
 
-Name |
-:------ |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`Component` | *React.ComponentType*<T\> |
-`options` | [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md) |
+| Name | Type |
+| :------ | :------ |
+| `Component` | *React.ComponentType*<T\> |
+| `options` | [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md) |
 
-**Returns:** Lifecycles
+**Returns:** *ReactAppOrParcel*<any\>
 
 Defined in: [packages/esm-react-utils/src/getLifecycle.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/getLifecycle.ts#L9)
 
@@ -249,13 +250,30 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`userOpts` | [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md) |
+| Name | Type |
+| :------ | :------ |
+| `userOpts` | [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md) |
 
-**Returns:** (`Comp`: *ComponentType*<{}\>) => *typeof* OpenmrsReactComponent
+**Returns:** (`Comp`: *ComponentType*<{}\>) => *ComponentType*<any\>
 
 Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L71)
+
+___
+
+### useAssignedExtensionIds
+
+▸ **useAssignedExtensionIds**(`moduleName`: *string*, `slotName`: *string*): ExtensionInfo[]
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `moduleName` | *string* |
+| `slotName` | *string* |
+
+**Returns:** ExtensionInfo[]
+
+Defined in: [packages/esm-react-utils/src/useAssignedExtensionIds.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useAssignedExtensionIds.ts#L4)
 
 ___
 
@@ -273,15 +291,15 @@ ___
 
 ### useCurrentPatient
 
-▸ **useCurrentPatient**(`patientUuid?`: PatientUuid): [*boolean*, NullablePatient, PatientUuid, Error \| *null*]
+▸ **useCurrentPatient**(`patientUuid?`: PatientUuid): [*boolean*, NullablePatient, PatientUuid, Error \| ``null``]
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`patientUuid` | PatientUuid |
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | PatientUuid |
 
-**Returns:** [*boolean*, NullablePatient, PatientUuid, Error \| *null*]
+**Returns:** [*boolean*, NullablePatient, PatientUuid, Error \| ``null``]
 
 Defined in: [packages/esm-react-utils/src/useCurrentPatient.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useCurrentPatient.ts#L72)
 
@@ -293,15 +311,15 @@ ___
 
 #### Type parameters:
 
-Name | Type |
-:------ | :------ |
-`TRef` | HTMLElement |
+| Name | Type |
+| :------ | :------ |
+| `TRef` | HTMLElement |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`state?` | *Record*<string, any\> |
+| Name | Type |
+| :------ | :------ |
+| `state?` | *Record*<string, any\> |
 
 **Returns:** [*RefObject*<TRef\>, [*ExtensionData*](interfaces/extensiondata.md) \| *undefined*]
 
@@ -311,22 +329,20 @@ ___
 
 ### useExtensionSlot
 
-▸ **useExtensionSlot**(`actualExtensionSlotName`: *string*, `ref`: *MutableRefObject*<HTMLElement \| *null*\>): *object*
+▸ **useExtensionSlot**(`slotName`: *string*): *object*
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`actualExtensionSlotName` | *string* |
-`ref` | *MutableRefObject*<HTMLElement \| *null*\> |
+| Name | Type |
+| :------ | :------ |
+| `slotName` | *string* |
 
 **Returns:** *object*
 
-Name | Type |
-:------ | :------ |
-`attachedExtensionSlotName` | *undefined* \| *string* |
-`extensionIdsToRender` | *string*[] |
-`extensionSlotModuleName` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `extensionIdsToRender` | *string*[] |
+| `extensionSlotModuleName` | *string* |
 
 Defined in: [packages/esm-react-utils/src/useExtensionSlot.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useExtensionSlot.ts#L10)
 
@@ -344,9 +360,9 @@ Defined in: [packages/esm-react-utils/src/useExtensionStore.ts:4](https://github
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`actions` | [*Actions*](API.md#actions) |
+| Name | Type |
+| :------ | :------ |
+| `actions` | [*Actions*](API.md#actions) |
 
 **Returns:** T & [*BoundActions*](API.md#boundactions)
 
@@ -356,9 +372,9 @@ Defined in: [packages/esm-react-utils/src/useExtensionStore.ts:4](https://github
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`actions?` | [*Actions*](API.md#actions) |
+| Name | Type |
+| :------ | :------ |
+| `actions?` | [*Actions*](API.md#actions) |
 
 **Returns:** T & [*BoundActions*](API.md#boundactions)
 
@@ -402,9 +418,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`context` | NavigationContext |
+| Name | Type |
+| :------ | :------ |
+| `context` | NavigationContext |
 
 **Returns:** *void*
 
@@ -414,9 +430,9 @@ ___
 
 ### useSessionUser
 
-▸ **useSessionUser**(): *null* \| SessionUser
+▸ **useSessionUser**(): ``null`` \| SessionUser
 
-**Returns:** *null* \| SessionUser
+**Returns:** ``null`` \| SessionUser
 
 Defined in: [packages/esm-react-utils/src/useSessionUser.tsx:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useSessionUser.tsx#L4)
 
@@ -428,15 +444,15 @@ ___
 
 #### Type parameters:
 
-Name |
-:------ |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`store` | *Store*<T\> |
+| Name | Type |
+| :------ | :------ |
+| `store` | *Store*<T\> |
 
 **Returns:** T
 
@@ -446,16 +462,16 @@ Defined in: [packages/esm-react-utils/src/useStore.ts:4](https://github.com/open
 
 #### Type parameters:
 
-Name |
-:------ |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`store` | *Store*<T\> |
-`actions` | [*Actions*](API.md#actions) |
+| Name | Type |
+| :------ | :------ |
+| `store` | *Store*<T\> |
+| `actions` | [*Actions*](API.md#actions) |
 
 **Returns:** T & [*BoundActions*](API.md#boundactions)
 
@@ -469,16 +485,16 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`patientUuid` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | *string* |
 
 **Returns:** *object*
 
-Name | Type |
-:------ | :------ |
-`currentVisit` | *null* \| Visit |
-`error` | *null* |
+| Name | Type |
+| :------ | :------ |
+| `currentVisit` | ``null`` \| Visit |
+| `error` | ``null`` |
 
 Defined in: [packages/esm-react-utils/src/useVisit.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useVisit.ts#L11)
 

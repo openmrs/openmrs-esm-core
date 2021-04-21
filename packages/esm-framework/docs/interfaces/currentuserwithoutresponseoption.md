@@ -18,7 +18,7 @@
 
 ### includeAuthStatus
 
-• **includeAuthStatus**: *false*
+• **includeAuthStatus**: ``false``
 
 Overrides: [CurrentUserOptions](currentuseroptions.md).[includeAuthStatus](currentuseroptions.md#includeauthstatus)
 

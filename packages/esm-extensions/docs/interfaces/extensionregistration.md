@@ -15,6 +15,8 @@
 - [meta](extensionregistration.md#meta)
 - [moduleName](extensionregistration.md#modulename)
 - [name](extensionregistration.md#name)
+- [offline](extensionregistration.md#offline)
+- [online](extensionregistration.md#online)
 
 ### Methods
 
@@ -43,6 +45,22 @@ ___
 • **name**: *string*
 
 Defined in: [store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L8)
+
+___
+
+### offline
+
+• `Optional` **offline**: *boolean* \| *object*
+
+Defined in: [store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L13)
+
+___
+
+### online
+
+• `Optional` **online**: *boolean* \| *object*
+
+Defined in: [store.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L12)
 
 ## Methods
 

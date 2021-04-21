@@ -38,9 +38,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`err` | *any* |
+| Name | Type |
+| :------ | :------ |
+| `err` | *any* |
 
 **Returns:** *void*
 

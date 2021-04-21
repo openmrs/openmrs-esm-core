@@ -18,7 +18,7 @@
 
 • **type**: [*NavigationContextType*](../API.md#navigationcontexttype)
 
-Defined in: [contexts.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L17)
+Defined in: [contexts.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L6)
 
 ## Methods
 
@@ -28,17 +28,17 @@ Defined in: [contexts.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/ma
 
 #### Type parameters:
 
-Name | Default |
-:------ | :------ |
-`T` | *any* |
+| Name | Default |
+| :------ | :------ |
+| `T` | *any* |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`link` | *string* |
-`state` | T |
+| Name | Type |
+| :------ | :------ |
+| `link` | *string* |
+| `state` | T |
 
 **Returns:** *boolean*
 
-Defined in: [contexts.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L18)
+Defined in: [contexts.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L7)

@@ -24,9 +24,9 @@
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`initialState` | [*AppState*](interfaces/appstate.md) |
+| Name | Type |
+| :------ | :------ |
+| `initialState` | [*AppState*](interfaces/appstate.md) |
 
 **Returns:** *Store*<[*AppState*](interfaces/appstate.md)\>
 
@@ -40,16 +40,16 @@ ___
 
 #### Type parameters:
 
-Name |
-:------ |
-`TState` |
+| Name |
+| :------ |
+| `TState` |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`name` | *string* |
-`initialState` | TState |
+| Name | Type |
+| :------ | :------ |
+| `name` | *string* |
+| `initialState` | TState |
 
 **Returns:** *Store*<TState\>
 
@@ -73,16 +73,16 @@ ___
 
 #### Type parameters:
 
-Name | Default |
-:------ | :------ |
-`TState` | *any* |
+| Name | Default |
+| :------ | :------ |
+| `TState` | *any* |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`name` | *string* |
-`fallbackState?` | TState |
+| Name | Type |
+| :------ | :------ |
+| `name` | *string* |
+| `fallbackState?` | TState |
 
 **Returns:** *Store*<TState\>
 
@@ -96,17 +96,17 @@ ___
 
 #### Type parameters:
 
-Name | Type |
-:------ | :------ |
-`T` | *Record*<string, any\> |
+| Name | Type |
+| :------ | :------ |
+| `T` | *Record*<string, any\> |
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`obj` | T |
-`__namedParameters` | *string*[] |
-`value` | *any* |
+| Name | Type |
+| :------ | :------ |
+| `obj` | T |
+| `__namedParameters` | *string*[] |
+| `value` | *any* |
 
 **Returns:** T
 

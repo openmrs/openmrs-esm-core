@@ -24,15 +24,15 @@ Defined in: [packages/esm-react-utils/src/Extension.tsx:6](https://github.com/op
 
 ### wrap
 
-▸ `Optional`**wrap**(`slot`: ReactNode, `extension`: [*ExtensionData*](extensiondata.md)): *null* \| *ReactElement*<any, any\>
+▸ `Optional`**wrap**(`slot`: ReactNode, `extension`: [*ExtensionData*](extensiondata.md)): ``null`` \| *ReactElement*<any, any\>
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`slot` | ReactNode |
-`extension` | [*ExtensionData*](extensiondata.md) |
+| Name | Type |
+| :------ | :------ |
+| `slot` | ReactNode |
+| `extension` | [*ExtensionData*](extensiondata.md) |
 
-**Returns:** *null* \| *ReactElement*<any, any\>
+**Returns:** ``null`` \| *ReactElement*<any, any\>
 
 Defined in: [packages/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/Extension.tsx#L7)

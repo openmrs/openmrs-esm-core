@@ -103,7 +103,7 @@ ___
 
 ### PatientUuid
 
-Ƭ **PatientUuid**: *string* \| *null*
+Ƭ **PatientUuid**: *string* \| ``null``
 
 Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L20)
 
@@ -138,10 +138,10 @@ ___
 
 #### Type declaration:
 
-Name | Type |
-:------ | :------ |
-`fhir2` | *string* |
-`webservices.rest` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `fhir2` | *string* |
+| `webservices.rest` | *string* |
 
 Defined in: [packages/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-backend-dependencies.ts#L1)
 
@@ -149,7 +149,7 @@ ___
 
 ### fhirBaseUrl
 
-• `Const` **fhirBaseUrl**: */ws/fhir2/R4*
+• `Const` **fhirBaseUrl**: ``"/ws/fhir2/R4"``
 
 Defined in: [packages/esm-api/src/fhir.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/fhir.ts#L4)
 
@@ -157,7 +157,7 @@ ___
 
 ### getStartedVisit
 
-• `Const` **getStartedVisit**: *BehaviorSubject*<*null* \| [*VisitItem*](interfaces/visititem.md)\>
+• `Const` **getStartedVisit**: *BehaviorSubject*<``null`` \| [*VisitItem*](interfaces/visititem.md)\>
 
 Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L84)
 
@@ -165,7 +165,7 @@ ___
 
 ### sessionEndpoint
 
-• `Const` **sessionEndpoint**: */ws/rest/v1/session*= "/ws/rest/v1/session"
+• `Const` **sessionEndpoint**: ``"/ws/rest/v1/session"``= "/ws/rest/v1/session"
 
 Defined in: [packages/esm-api/src/openmrs-fetch.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L6)
 
@@ -182,16 +182,16 @@ request headers, authentication, authorization, and the API urls.
 
 #### Type parameters:
 
-Name | Default |
-:------ | :------ |
-`T` | *any* |
+| Name | Default |
+| :------ | :------ |
+| `T` | *any* |
 
 #### Parameters:
 
-Name | Type | Description |
-:------ | :------ | :------ |
-`path` | *string* | A string url to make the request to. Note that the   openmrs base url (by default `/openmrs`) will be automatically   prepended to the URL, so there is no need to include it.   |
-`fetchInit` | FetchConfig | A [fetch init object](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Syntax).   Note that the `body` property does not need to be `JSON.stringify()`ed   because openmrsFetch will do that for you.   |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `path` | *string* | - | A string url to make the request to. Note that the   openmrs base url (by default `/openmrs`) will be automatically   prepended to the URL, so there is no need to include it. |
+| `fetchInit` | FetchConfig | {} | A [fetch init object](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Syntax).   Note that the `body` property does not need to be `JSON.stringify()`ed   because openmrsFetch will do that for you. |
 
 **Returns:** *Promise*<[*FetchResponse*](interfaces/fetchresponse.md)<T\>\>
 
@@ -245,16 +245,16 @@ preferred or more convenient than a promise.
 
 #### Type parameters:
 
-Name |
-:------ |
-`T` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters:
 
-Name | Type | Description |
-:------ | :------ | :------ |
-`url` | *string* | See [openmrsFetch](API.md#openmrsfetch)   |
-`fetchInit` | FetchConfig | See [openmrsFetch](API.md#openmrsfetch)   |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `url` | *string* | - | See [openmrsFetch](API.md#openmrsfetch) |
+| `fetchInit` | FetchConfig | {} | See [openmrsFetch](API.md#openmrsfetch) |
 
 **Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<T\>\>
 
@@ -289,9 +289,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`patientUuid` | [*PatientUuid*](API.md#patientuuid) |
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | [*PatientUuid*](API.md#patientuuid) |
 
 **Returns:** *void*
 
@@ -311,9 +311,9 @@ Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:29](http
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`opts` | [*PatientWithFullResponse*](interfaces/patientwithfullresponse.md) |
+| Name | Type |
+| :------ | :------ |
+| `opts` | [*PatientWithFullResponse*](interfaces/patientwithfullresponse.md) |
 
 **Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>\>
 
@@ -323,9 +323,9 @@ Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:30](http
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`opts` | [*OnlyThePatient*](interfaces/onlythepatient.md) |
+| Name | Type |
+| :------ | :------ |
+| `opts` | [*OnlyThePatient*](interfaces/onlythepatient.md) |
 
 **Returns:** *Observable*<fhir.Patient\>
 
@@ -388,9 +388,9 @@ Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:56](https:/
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`opts` | [*CurrentUserWithResponseOption*](interfaces/currentuserwithresponseoption.md) |
+| Name | Type |
+| :------ | :------ |
+| `opts` | [*CurrentUserWithResponseOption*](interfaces/currentuserwithresponseoption.md) |
 
 **Returns:** *Observable*<[*UnauthenticatedUser*](interfaces/unauthenticateduser.md)\>
 
@@ -400,9 +400,9 @@ Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:57](https:/
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`opts` | [*CurrentUserWithoutResponseOption*](interfaces/currentuserwithoutresponseoption.md) |
+| Name | Type |
+| :------ | :------ |
+| `opts` | [*CurrentUserWithoutResponseOption*](interfaces/currentuserwithoutresponseoption.md) |
 
 **Returns:** *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
 
@@ -472,11 +472,11 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`patientUuid` | *string* |
-`abortController` | AbortController |
-`v?` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | *string* |
+| `abortController` | AbortController |
+| `v?` | *string* |
 
 **Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<{ `results`: [*Visit*](interfaces/visit.md)[]  }\>\>
 
@@ -490,9 +490,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`path` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `path` | *string* |
 
 **Returns:** *string*
 
@@ -506,10 +506,10 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`componentName` | *string* |
-`title` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `componentName` | *string* |
+| `title` | *string* |
 
 **Returns:** *void*
 
@@ -523,10 +523,10 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`payload` | [*NewVisitPayload*](interfaces/newvisitpayload.md) |
-`abortController` | AbortController |
+| Name | Type |
+| :------ | :------ |
+| `payload` | [*NewVisitPayload*](interfaces/newvisitpayload.md) |
+| `abortController` | AbortController |
 
 **Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<any\>\>
 
@@ -540,9 +540,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`openmrsRestForm` | *any* |
+| Name | Type |
+| :------ | :------ |
+| `openmrsRestForm` | *any* |
 
 **Returns:** [*Location*](interfaces/location.md)
 
@@ -556,9 +556,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`openmrsRestForm` | *any* |
+| Name | Type |
+| :------ | :------ |
+| `openmrsRestForm` | *any* |
 
 **Returns:** [*VisitType*](interfaces/visittype.md)
 
@@ -572,11 +572,11 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`uuid` | *string* |
-`payload` | [*UpdateVisitPayload*](API.md#updatevisitpayload) |
-`abortController` | AbortController |
+| Name | Type |
+| :------ | :------ |
+| `uuid` | *string* |
+| `payload` | [*UpdateVisitPayload*](API.md#updatevisitpayload) |
+| `abortController` | AbortController |
 
 **Returns:** *Observable*<any\>
 
@@ -590,10 +590,10 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`requiredPrivilege` | *string* |
-`user` | [*LoggedInUser*](interfaces/loggedinuser.md) |
+| Name | Type |
+| :------ | :------ |
+| `requiredPrivilege` | *string* |
+| `user` | [*LoggedInUser*](interfaces/loggedinuser.md) |
 
 **Returns:** *undefined* \| [*Privilege*](interfaces/privilege.md)
 
@@ -619,9 +619,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`item` | [*WorkspaceItem*](interfaces/workspaceitem.md) |
+| Name | Type |
+| :------ | :------ |
+| `item` | [*WorkspaceItem*](interfaces/workspaceitem.md) |
 
 **Returns:** *void*
 

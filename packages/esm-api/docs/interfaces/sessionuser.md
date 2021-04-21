@@ -38,10 +38,10 @@ ___
 
 #### Type declaration:
 
-Name | Type |
-:------ | :------ |
-`identifier` | *string* |
-`uuid` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `identifier` | *string* |
+| `uuid` | *string* |
 
 Defined in: [packages/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L13)
 

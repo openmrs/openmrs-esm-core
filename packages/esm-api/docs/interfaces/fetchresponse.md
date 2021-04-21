@@ -4,9 +4,9 @@
 
 ## Type parameters
 
-Name | Default |
-:------ | :------ |
-`T` | *any* |
+| Name | Default |
+| :------ | :------ |
+| `T` | *any* |
 
 ## Hierarchy
 
@@ -45,9 +45,9 @@ Name | Default |
 
 ### body
 
-• `Readonly` **body**: *null* \| *ReadableStream*<Uint8Array\>
+• `Readonly` **body**: ``null`` \| *ReadableStream*<Uint8Array\>
 
-Inherited from: void
+Inherited from: Response.body
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:2623
 
@@ -57,7 +57,7 @@ ___
 
 • `Readonly` **bodyUsed**: *boolean*
 
-Inherited from: void
+Inherited from: Response.bodyUsed
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:2624
 
@@ -75,7 +75,7 @@ ___
 
 • `Readonly` **headers**: Headers
 
-Inherited from: void
+Inherited from: Response.headers
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:12717
 
@@ -85,7 +85,7 @@ ___
 
 • `Readonly` **ok**: *boolean*
 
-Inherited from: void
+Inherited from: Response.ok
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:12718
 
@@ -95,7 +95,7 @@ ___
 
 • `Readonly` **redirected**: *boolean*
 
-Inherited from: void
+Inherited from: Response.redirected
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:12719
 
@@ -105,7 +105,7 @@ ___
 
 • `Readonly` **status**: *number*
 
-Inherited from: void
+Inherited from: Response.status
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:12720
 
@@ -115,7 +115,7 @@ ___
 
 • `Readonly` **statusText**: *string*
 
-Inherited from: void
+Inherited from: Response.statusText
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:12721
 
@@ -125,7 +125,7 @@ ___
 
 • `Readonly` **trailer**: *Promise*<Headers\>
 
-Inherited from: void
+Inherited from: Response.trailer
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:12722
 
@@ -135,7 +135,7 @@ ___
 
 • `Readonly` **type**: ResponseType
 
-Inherited from: void
+Inherited from: Response.type
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:12723
 
@@ -145,7 +145,7 @@ ___
 
 • `Readonly` **url**: *string*
 
-Inherited from: void
+Inherited from: Response.url
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:12724
 
@@ -157,7 +157,7 @@ Defined in: node_modules/typescript/lib/lib.dom.d.ts:12724
 
 **Returns:** *Promise*<ArrayBuffer\>
 
-Inherited from: void
+Inherited from: Response.arrayBuffer
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:2625
 
@@ -169,7 +169,7 @@ ___
 
 **Returns:** *Promise*<Blob\>
 
-Inherited from: void
+Inherited from: Response.blob
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:2626
 
@@ -181,7 +181,7 @@ ___
 
 **Returns:** Response
 
-Inherited from: void
+Inherited from: Response.clone
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:12725
 
@@ -193,7 +193,7 @@ ___
 
 **Returns:** *Promise*<FormData\>
 
-Inherited from: void
+Inherited from: Response.formData
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:2627
 
@@ -205,7 +205,7 @@ ___
 
 **Returns:** *Promise*<any\>
 
-Inherited from: void
+Inherited from: Response.json
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:2628
 
@@ -217,6 +217,6 @@ ___
 
 **Returns:** *Promise*<string\>
 
-Inherited from: void
+Inherited from: Response.text
 
 Defined in: node_modules/typescript/lib/lib.dom.d.ts:2629

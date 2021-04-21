@@ -29,9 +29,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`target` | HTMLElement |
+| Name | Type |
+| :------ | :------ |
+| `target` | HTMLElement |
 
 **Returns:** () => *any*
 
@@ -41,13 +41,13 @@ ___
 
 ### renderToasts
 
-▸ **renderToasts**(`target`: HTMLElement \| *null*): *void*
+▸ **renderToasts**(`target`: HTMLElement \| ``null``): *void*
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`target` | HTMLElement \| *null* |
+| Name | Type |
+| :------ | :------ |
+| `target` | HTMLElement \| ``null`` |
 
 **Returns:** *void*
 
@@ -61,9 +61,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`toast` | ToastDescriptor |
+| Name | Type |
+| :------ | :------ |
+| `toast` | ToastDescriptor |
 
 **Returns:** *void*
 

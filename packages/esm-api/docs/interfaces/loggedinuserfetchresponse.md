@@ -37,7 +37,7 @@
 
 ### body
 
-• `Readonly` **body**: *null* \| *ReadableStream*<Uint8Array\>
+• `Readonly` **body**: ``null`` \| *ReadableStream*<Uint8Array\>
 
 Inherited from: [FetchResponse](fetchresponse.md).[body](fetchresponse.md#body)
 

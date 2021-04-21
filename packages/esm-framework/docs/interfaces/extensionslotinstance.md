@@ -8,7 +8,6 @@
 
 - [addedIds](extensionslotinstance.md#addedids)
 - [assignedIds](extensionslotinstance.md#assignedids)
-- [domElement](extensionslotinstance.md#domelement)
 - [idOrder](extensionslotinstance.md#idorder)
 - [registered](extensionslotinstance.md#registered)
 - [removedIds](extensionslotinstance.md#removedids)
@@ -23,7 +22,7 @@ A set of additional extension IDs which have been added to to this slot despite 
 explicitly `attach`ed to it.
 An example may be an extension which is added to the slot via the configuration.
 
-Defined in: [packages/esm-extensions/src/store.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L44)
+Defined in: [packages/esm-extensions/src/store.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L45)
 
 ___
 
@@ -33,17 +32,7 @@ ___
 
 The set of extensions IDs which should be rendered into this slot at the current point in time.
 
-Defined in: [packages/esm-extensions/src/store.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L38)
-
-___
-
-### domElement
-
-• **domElement**: *null* \| HTMLElement
-
-The dom element at which the slot is mounted
-
-Defined in: [packages/esm-extensions/src/store.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L62)
+Defined in: [packages/esm-extensions/src/store.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L39)
 
 ___
 
@@ -53,7 +42,7 @@ ___
 
 A set allowing explicit ordering of the `assignedIds`.
 
-Defined in: [packages/esm-extensions/src/store.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L54)
+Defined in: [packages/esm-extensions/src/store.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L55)
 
 ___
 
@@ -63,7 +52,7 @@ ___
 
 The number of active registrations on the instance.
 
-Defined in: [packages/esm-extensions/src/store.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L58)
+Defined in: [packages/esm-extensions/src/store.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L59)
 
 ___
 
@@ -75,4 +64,4 @@ A set of extension IDs which have been removed/hidden from this slot, even thoug
 previously been `attach`ed/added to it.
 An example may be an extension which is removed from the slot via the configuration.
 
-Defined in: [packages/esm-extensions/src/store.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L50)
+Defined in: [packages/esm-extensions/src/store.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L51)

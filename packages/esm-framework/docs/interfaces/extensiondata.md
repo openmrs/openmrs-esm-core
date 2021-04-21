@@ -6,34 +6,17 @@
 
 ### Properties
 
-- [actualExtensionSlotName](extensiondata.md#actualextensionslotname)
-- [attachedExtensionSlotName](extensiondata.md#attachedextensionslotname)
 - [extensionId](extensiondata.md#extensionid)
 - [extensionSlotModuleName](extensiondata.md#extensionslotmodulename)
+- [extensionSlotName](extensiondata.md#extensionslotname)
 
 ## Properties
-
-### actualExtensionSlotName
-
-• **actualExtensionSlotName**: *string*
-
-Defined in: [packages/esm-react-utils/src/ComponentContext.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L4)
-
-___
-
-### attachedExtensionSlotName
-
-• **attachedExtensionSlotName**: *string*
-
-Defined in: [packages/esm-react-utils/src/ComponentContext.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L5)
-
-___
 
 ### extensionId
 
 • **extensionId**: *string*
 
-Defined in: [packages/esm-react-utils/src/ComponentContext.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L7)
+Defined in: [packages/esm-react-utils/src/ComponentContext.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L6)
 
 ___
 
@@ -41,4 +24,12 @@ ___
 
 • **extensionSlotModuleName**: *string*
 
-Defined in: [packages/esm-react-utils/src/ComponentContext.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L6)
+Defined in: [packages/esm-react-utils/src/ComponentContext.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L5)
+
+___
+
+### extensionSlotName
+
+• **extensionSlotName**: *string*
+
+Defined in: [packages/esm-react-utils/src/ComponentContext.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ComponentContext.ts#L4)

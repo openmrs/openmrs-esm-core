@@ -32,20 +32,20 @@
 
 ### constructor
 
-\+ **new OpenmrsFetchError**(`url`: *string*, `response`: Response, `responseBody`: *null* \| ResponseBody, `requestStacktrace`: Error): [*OpenmrsFetchError*](openmrsfetcherror.md)
+\+ **new OpenmrsFetchError**(`url`: *string*, `response`: Response, `responseBody`: ``null`` \| ResponseBody, `requestStacktrace`: Error): [*OpenmrsFetchError*](openmrsfetcherror.md)
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`url` | *string* |
-`response` | Response |
-`responseBody` | *null* \| ResponseBody |
-`requestStacktrace` | Error |
+| Name | Type |
+| :------ | :------ |
+| `url` | *string* |
+| `response` | Response |
+| `responseBody` | ``null`` \| ResponseBody |
+| `requestStacktrace` | Error |
 
 **Returns:** [*OpenmrsFetchError*](openmrsfetcherror.md)
 
-Overrides: void
+Overrides: Error.constructor
 
 Defined in: [packages/esm-api/src/openmrs-fetch.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L269)
 
@@ -55,7 +55,7 @@ Defined in: [packages/esm-api/src/openmrs-fetch.ts:269](https://github.com/openm
 
 • **message**: *string*
 
-Inherited from: void
+Inherited from: Error.message
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:974
 
@@ -65,7 +65,7 @@ ___
 
 • **name**: *string*
 
-Inherited from: void
+Inherited from: Error.name
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:973
 
@@ -81,7 +81,7 @@ ___
 
 ### responseBody
 
-• **responseBody**: *null* \| *string* \| FetchResponseJson
+• **responseBody**: ``null`` \| *string* \| FetchResponseJson
 
 Defined in: [packages/esm-api/src/openmrs-fetch.ts:284](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L284)
 
@@ -91,7 +91,7 @@ ___
 
 • `Optional` **stack**: *string*
 
-Inherited from: void
+Inherited from: Error.stack
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:975
 
@@ -111,16 +111,16 @@ Optional override for formatting stack traces
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`err` | Error |
-`stackTraces` | CallSite[] |
+| Name | Type |
+| :------ | :------ |
+| `err` | Error |
+| `stackTraces` | CallSite[] |
 
 **Returns:** *any*
 
 Defined in: node_modules/@types/node/globals.d.ts:11
 
-Inherited from: void
+Inherited from: Error.prepareStackTrace
 
 Defined in: node_modules/@types/node/globals.d.ts:11
 
@@ -130,7 +130,7 @@ ___
 
 ▪ `Static` **stackTraceLimit**: *number*
 
-Inherited from: void
+Inherited from: Error.stackTraceLimit
 
 Defined in: node_modules/@types/node/globals.d.ts:13
 
@@ -144,13 +144,13 @@ Create .stack property on a target object
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`targetObject` | *object* |
-`constructorOpt?` | Function |
+| Name | Type |
+| :------ | :------ |
+| `targetObject` | *object* |
+| `constructorOpt?` | Function |
 
 **Returns:** *void*
 
-Inherited from: void
+Inherited from: Error.captureStackTrace
 
 Defined in: node_modules/@types/node/globals.d.ts:4

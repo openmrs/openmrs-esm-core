@@ -35,7 +35,7 @@
 
 The initial value of Object.prototype.constructor is the standard built-in Object constructor.
 
-Inherited from: void
+Inherited from: Object.constructor
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:122
 
@@ -49,13 +49,13 @@ Determines whether an object has a property with the specified name.
 
 #### Parameters:
 
-Name | Type | Description |
-:------ | :------ | :------ |
-`v` | PropertyKey | A property name.    |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `v` | PropertyKey | A property name. |
 
 **Returns:** *boolean*
 
-Inherited from: void
+Inherited from: Object.hasOwnProperty
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:137
 
@@ -69,13 +69,13 @@ Determines whether an object exists in another object's prototype chain.
 
 #### Parameters:
 
-Name | Type | Description |
-:------ | :------ | :------ |
-`v` | Object | Another object whose prototype chain is to be checked.    |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `v` | Object | Another object whose prototype chain is to be checked. |
 
 **Returns:** *boolean*
 
-Inherited from: void
+Inherited from: Object.isPrototypeOf
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:143
 
@@ -89,13 +89,13 @@ Determines whether a specified property is enumerable.
 
 #### Parameters:
 
-Name | Type | Description |
-:------ | :------ | :------ |
-`v` | PropertyKey | A property name.    |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `v` | PropertyKey | A property name. |
 
 **Returns:** *boolean*
 
-Inherited from: void
+Inherited from: Object.propertyIsEnumerable
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:149
 
@@ -109,7 +109,7 @@ Returns a date converted to a string using the current locale.
 
 **Returns:** *string*
 
-Inherited from: void
+Inherited from: Object.toLocaleString
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:128
 
@@ -123,7 +123,7 @@ Returns a string representation of an object.
 
 **Returns:** *string*
 
-Inherited from: void
+Inherited from: Object.toString
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:125
 
@@ -137,6 +137,6 @@ Returns the primitive value of the specified object.
 
 **Returns:** Object
 
-Inherited from: void
+Inherited from: Object.valueOf
 
 Defined in: node_modules/typescript/lib/lib.es5.d.ts:131

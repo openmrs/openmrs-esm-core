@@ -7,10 +7,14 @@
 ### Interfaces
 
 - [ImportMap](interfaces/importmap.md)
+- [LegacyAppExtensionDefinition](interfaces/legacyappextensiondefinition.md)
+- [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md)
+- [PageDefinition](interfaces/pagedefinition.md)
 - [SpaConfig](interfaces/spaconfig.md)
 
 ### Type aliases
 
+- [AppExtensionDefinition](API.md#appextensiondefinition)
 - [SpaEnvironment](API.md#spaenvironment)
 
 ### Functions
@@ -20,9 +24,17 @@
 
 ## Type aliases
 
+### AppExtensionDefinition
+
+Ƭ **AppExtensionDefinition**: [*ModernAppExtensionDefinition*](interfaces/modernappextensiondefinition.md) & [*LegacyAppExtensionDefinition*](interfaces/legacyappextensiondefinition.md)
+
+Defined in: [types.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L57)
+
+___
+
 ### SpaEnvironment
 
-Ƭ **SpaEnvironment**: *production* \| *development* \| *test*
+Ƭ **SpaEnvironment**: ``"production"`` \| ``"development"`` \| ``"test"``
 
 Defined in: [types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L16)
 
@@ -34,9 +46,9 @@ Defined in: [types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`config` | [*SpaConfig*](interfaces/spaconfig.md) |
+| Name | Type |
+| :------ | :------ |
+| `config` | [*SpaConfig*](interfaces/spaconfig.md) |
 
 **Returns:** *void*
 

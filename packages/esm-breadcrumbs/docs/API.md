@@ -25,10 +25,10 @@
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`list` | [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[] |
-`path` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `list` | [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[] |
+| `path` | *string* |
 
 **Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
 
@@ -52,9 +52,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`path` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `path` | *string* |
 
 **Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
 
@@ -68,9 +68,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`breadcrumb` | [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md) |
+| Name | Type |
+| :------ | :------ |
+| `breadcrumb` | [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md) |
 
 **Returns:** *void*
 
@@ -84,9 +84,9 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`breadcrumbs` | [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md)[] |
+| Name | Type |
+| :------ | :------ |
+| `breadcrumbs` | [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md)[] |
 
 **Returns:** *void*
 

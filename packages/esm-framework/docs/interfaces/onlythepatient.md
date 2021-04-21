@@ -18,7 +18,7 @@
 
 ### includeConfig
 
-• **includeConfig**: *false*
+• **includeConfig**: ``false``
 
 Overrides: [CurrentPatientOptions](currentpatientoptions.md).[includeConfig](currentpatientoptions.md#includeconfig)
 

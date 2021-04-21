@@ -42,9 +42,9 @@ Gets a human readable age represention of the provided date string.
 
 #### Parameters:
 
-Name | Type | Description |
-:------ | :------ | :------ |
-`dateString` | *string* | The stringified date.   |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `dateString` | *string* | The stringified date. |
 
 **Returns:** *string*
 
@@ -62,9 +62,9 @@ Gets the number of days in the year of the given date.
 
 #### Parameters:
 
-Name | Type | Description |
-:------ | :------ | :------ |
-`date` | Date | The date to compute the days within the year.   |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | Date | The date to compute the days within the year. |
 
 **Returns:** *number*
 
@@ -83,9 +83,9 @@ The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`omrsPayloadString` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `omrsPayloadString` | *string* |
 
 **Returns:** *boolean*
 
@@ -99,9 +99,9 @@ ___
 
 #### Parameters:
 
-Name | Type | Description |
-:------ | :------ | :------ |
-`date` | [*DateInput*](API.md#dateinput) | Checks if the provided date is today.    |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | [*DateInput*](API.md#dateinput) | Checks if the provided date is today. |
 
 **Returns:** *boolean*
 
@@ -117,10 +117,10 @@ Checks if two dates are representing the same day.
 
 #### Parameters:
 
-Name | Type | Description |
-:------ | :------ | :------ |
-`firstDate` | Date | The first date.   |
-`secondDate` | Date | The second date.   |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `firstDate` | Date | The first date. |
+| `secondDate` | Date | The second date. |
 
 **Returns:** *boolean*
 
@@ -132,17 +132,17 @@ ___
 
 ### toDateObjectStrict
 
-▸ **toDateObjectStrict**(`omrsDateString`: *string*): Date \| *null*
+▸ **toDateObjectStrict**(`omrsDateString`: *string*): Date \| ``null``
 
 Converts the object to a date object if it is a valid ISO date time string.
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`omrsDateString` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `omrsDateString` | *string* |
 
-**Returns:** Date \| *null*
+**Returns:** Date \| ``null``
 
 Defined in: [omrs-dates.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L60)
 
@@ -156,10 +156,10 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 #### Parameters:
 
-Name | Type | Default value |
-:------ | :------ | :------ |
-`date` | [*DateInput*](API.md#dateinput) | - |
-`format` | *string* | "YYYY-MMM-DD" |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `date` | [*DateInput*](API.md#dateinput) | - |
+| `format` | *string* | "YYYY-MMM-DD" |
 
 **Returns:** *string*
 
@@ -175,9 +175,9 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`date` | [*DateInput*](API.md#dateinput) |
+| Name | Type |
+| :------ | :------ |
+| `date` | [*DateInput*](API.md#dateinput) |
 
 **Returns:** *string*
 
@@ -193,10 +193,10 @@ Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SS
 
 #### Parameters:
 
-Name | Type | Default value |
-:------ | :------ | :------ |
-`date` | [*DateInput*](API.md#dateinput) | - |
-`toUTC` | *boolean* | false |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `date` | [*DateInput*](API.md#dateinput) | - |
+| `toUTC` | *boolean* | false |
 
 **Returns:** *string*
 
@@ -212,9 +212,9 @@ Formats the input as a time string using the format "HH:mm A".
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`date` | [*DateInput*](API.md#dateinput) |
+| Name | Type |
+| :------ | :------ |
+| `date` | [*DateInput*](API.md#dateinput) |
 
 **Returns:** *string*
 
@@ -230,9 +230,9 @@ Formats the input as a time string using the format "HH:mm".
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`date` | [*DateInput*](API.md#dateinput) |
+| Name | Type |
+| :------ | :------ |
+| `date` | [*DateInput*](API.md#dateinput) |
 
 **Returns:** *string*
 
@@ -248,9 +248,9 @@ Formats the input as a date string using the format "DD-MMM".
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`date` | [*DateInput*](API.md#dateinput) |
+| Name | Type |
+| :------ | :------ |
+| `date` | [*DateInput*](API.md#dateinput) |
 
 **Returns:** *string*
 
@@ -264,11 +264,11 @@ ___
 
 #### Parameters:
 
-Name | Type |
-:------ | :------ |
-`moduleName` | *string* |
-`key` | *string* |
-`fallback?` | *string* |
+| Name | Type |
+| :------ | :------ |
+| `moduleName` | *string* |
+| `key` | *string* |
+| `fallback?` | *string* |
 
 **Returns:** *string*
 
