@@ -10,6 +10,7 @@ export * from "./useConfig";
 export * from "./useCurrentPatient";
 export * from "./useExtension";
 export * from "./useExtensionSlot";
+export * from "./useExtensionSlotMeta";
 export * from "./useExtensionStore";
 export * from "./useForceUpdate";
 export * from "./useLayoutType";

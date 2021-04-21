@@ -110,7 +110,7 @@ export function detach(extensionSlotName: string, extensionId: string) {
   });
 }
 
-function getAssignedIds(
+export function getAssignedIds(
   instance: ExtensionSlotInstance,
   attachedIds: Array<string>
 ) {
@@ -197,9 +197,9 @@ function getUpdatedExtensionSlotInfoForUnregistration(
  * @param slotName The extension slot name that is actually used
  */
 export function registerExtensionSlot(moduleName: string, slotName: string) {
-  updateExtensionStore(async (state) => {
+  updateExtensionStore((state) => {
     const existingSlot = state.slots[slotName];
-    const updatedSlot = await getUpdatedExtensionSlotInfoForRegistration(
+    const updatedSlot = getUpdatedExtensionSlotInfoForRegistration(
       existingSlot,
       slotName,
       moduleName
@@ -215,11 +215,11 @@ export function registerExtensionSlot(moduleName: string, slotName: string) {
 }
 
 export function unregisterExtensionSlot(moduleName: string, slotName: string) {
-  updateExtensionStore(async (state) => {
+  updateExtensionStore((state) => {
     const existingSlot = state.slots[slotName];
 
     if (existingSlot && moduleName in existingSlot.instances) {
-      const updatedSlot = await getUpdatedExtensionSlotInfoForUnregistration(
+      const updatedSlot = getUpdatedExtensionSlotInfoForUnregistration(
         existingSlot,
         slotName,
         moduleName
@@ -267,11 +267,11 @@ export const reset: () => void = extensionStore.action(() => {
  * @param moduleName The module name. Used for applying extension-specific config values to the result.
  * @param extensionSlot The extension slot information object.
  */
-export async function getUpdatedExtensionSlotInfo(
+export function getUpdatedExtensionSlotInfo(
   slotName: string,
   moduleName: string,
   extensionSlot: ExtensionSlotInfo
-): Promise<ExtensionSlotInfo> {
+): ExtensionSlotInfo {
   let instance = extensionSlot.instances[moduleName];
 
   if (instance) {
