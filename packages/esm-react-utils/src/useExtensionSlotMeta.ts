@@ -1,20 +1,15 @@
 import { useMemo } from "react";
-import { useExtensionStore } from "./useExtensionStore";
-import { useAssignedExtensionIds } from "./useAssignedExtensionIds";
+import { useConnectedExtensions } from "./useConnectedExtensions";
 
 /**
  * Extract meta data from all extension for a given extension slot.
  * @param extensionSlotName
  */
 export function useExtensionSlotMeta(extensionSlotName: string) {
-  const store = useExtensionStore();
-  const assignedIds = useAssignedExtensionIds(extensionSlotName);
+  const extensions = useConnectedExtensions(extensionSlotName);
 
   return useMemo(
-    () =>
-      Object.fromEntries(
-        assignedIds.map((id) => [id, store.extensions[id]?.meta])
-      ),
-    [assignedIds, store]
+    () => Object.fromEntries(extensions.map((ext) => [ext.name, ext.meta])),
+    [extensions]
   );
 }

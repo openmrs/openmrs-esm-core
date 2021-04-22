@@ -8,6 +8,7 @@ export * from "./openmrsComponentDecorator";
 export * from "./useAssignedExtensionIds";
 export * from "./useAttachedExtensionIds";
 export * from "./useConfig";
+export * from "./useConnectedExtensions";
 export * from "./useConnectivity";
 export * from "./useCurrentPatient";
 export * from "./useExtension";

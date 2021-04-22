@@ -1,6 +1,6 @@
 import { update } from "@openmrs/esm-state";
 import { mountRootParcel, Parcel } from "single-spa";
-import { getExtensionRegistration } from "./extensions";
+import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
 import { checkStatus, getCustomProps } from "./helpers";
 import { updateExtensionStore } from "./store";
 
@@ -28,7 +28,7 @@ export function renderExtension(
   renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x,
   additionalProps: Record<string, any> = {}
 ): CancelLoading {
-  const extensionName = extensionId.split("#")[0];
+  const extensionName = getExtensionNameFromId(extensionId);
   const extensionRegistration = getExtensionRegistration(extensionId);
   let active: boolean | Parcel = true;
 

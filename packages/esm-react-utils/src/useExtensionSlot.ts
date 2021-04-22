@@ -1,21 +1,10 @@
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect } from "react";
 import {
   registerExtensionSlot,
   unregisterExtensionSlot,
-  ExtensionRegistration,
-  checkStatusFor,
-  extensionStore,
-  getExtensionRegistrationFrom,
 } from "@openmrs/esm-extensions";
 import { ComponentContext } from "./ComponentContext";
-import { useAssignedExtensionIds } from "./useAssignedExtensionIds";
-import { useConnectivity } from "./useConnectivity";
-
-function isValidExtension(
-  extension: ExtensionRegistration | undefined
-): extension is ExtensionRegistration {
-  return extension !== undefined;
-}
+import { useConnectedExtensions } from "./useConnectedExtensions";
 
 export function useExtensionSlot(extensionSlotName: string) {
   const { moduleName } = useContext(ComponentContext);
@@ -26,21 +15,12 @@ export function useExtensionSlot(extensionSlotName: string) {
     );
   }
 
-  const online = useConnectivity();
-
   useEffect(() => {
     registerExtensionSlot(moduleName, extensionSlotName);
     return () => unregisterExtensionSlot(moduleName, extensionSlotName);
   }, []);
 
-  const extensionIdsToRender = useAssignedExtensionIds(extensionSlotName);
-  const extensions = useMemo(() => {
-    const state = extensionStore.getState();
-    return extensionIdsToRender
-      .map((m) => getExtensionRegistrationFrom(state, m))
-      .filter(isValidExtension)
-      .filter((m) => checkStatusFor(online, m.online, m.offline));
-  }, [extensionIdsToRender, online]);
+  const extensions = useConnectedExtensions(extensionSlotName);
 
   return {
     extensions,

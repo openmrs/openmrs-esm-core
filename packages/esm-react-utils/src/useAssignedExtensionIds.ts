@@ -5,7 +5,8 @@ import { useAttachedExtensionIds } from "./useAttachedExtensionIds";
 
 /**
  * Gets the assigned extension ids for a given extension slot name.
- * @param extensionSlotName
+ * Does not consider if offline or online.
+ * @param extensionSlotName The name of the slot to get the assigned IDs for.
  */
 export function useAssignedExtensionIds(extensionSlotName: string) {
   const config = useExtensionSlotConfig(extensionSlotName);

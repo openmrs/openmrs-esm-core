@@ -27,7 +27,7 @@ const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
-  process.env.OMRS_ESM_IMPORTMAP_URL || "importmap.json";
+  process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
 const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .split(";")
   .filter((url) => url.length > 0)

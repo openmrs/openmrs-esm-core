@@ -120,6 +120,27 @@ export function detach(extensionSlotName: string, extensionId: string) {
   });
 }
 
+export function detachAll(extensionSlotName: string) {
+  updateExtensionStore((state) => {
+    const existingSlot = state.slots[extensionSlotName];
+
+    if (existingSlot) {
+      return {
+        ...state,
+        slots: {
+          ...state.slots,
+          [extensionSlotName]: {
+            ...existingSlot,
+            attachedIds: [],
+          },
+        },
+      };
+    } else {
+      return state;
+    }
+  });
+}
+
 export function getAssignedIds(
   instance: ExtensionSlotInstance,
   attachedIds: Array<string>
@@ -255,8 +276,6 @@ export const reset: () => void = extensionStore.action(() => {
  * The returned information describe the extension itself, as well as the extension slot name(s)
  * with which it has been attached.
  * @param slotName The extension slot name for which matching extension info should be returned.
- * For URL like extension slots, this should be the name where parameters have been replaced with actual values
- * (e.g. `/mySlot/213da954-87a2-432d-91f6-a3c441851726`).
  * @param moduleName The module name. Used for applying extension-specific config values to the result.
  * @param extensionSlot The extension slot information object.
  */
