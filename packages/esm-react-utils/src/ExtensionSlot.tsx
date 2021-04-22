@@ -1,20 +1,11 @@
 import React, { useRef, useMemo } from "react";
-import {
-  ExtensionRegistration,
-  getExtensionRegistration,
-} from "@openmrs/esm-extensions";
+import { ExtensionRegistration } from "@openmrs/esm-extensions";
 import { ComponentContext } from "./ComponentContext";
 import { Extension } from "./Extension";
 import { useExtensionSlot } from "./useExtensionSlot";
 
 function defaultSelect(extensions: Array<ExtensionRegistration>) {
   return extensions;
-}
-
-function isValidExtension(
-  extension: ExtensionRegistration | undefined
-): extension is ExtensionRegistration {
-  return extension !== undefined;
 }
 
 export interface ExtensionSlotBaseProps {
@@ -37,32 +28,28 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   ...divProps
 }: ExtensionSlotProps) => {
   const slotRef = useRef(null);
-  const { extensionIdsToRender, extensionSlotModuleName } = useExtensionSlot(
+  const { extensions, extensionSlotModuleName } = useExtensionSlot(
     extensionSlotName
   );
-  const extensions = useMemo(
+  const content = useMemo(
     () =>
       extensionSlotName &&
-      select(
-        extensionIdsToRender
-          .map(getExtensionRegistration)
-          .filter(isValidExtension)
-      ).map((extensionRegistration) => (
+      select(extensions).map((extension) => (
         <ComponentContext.Provider
-          key={extensionRegistration.name}
+          key={extension.name}
           value={{
-            moduleName: extensionRegistration.moduleName,
+            moduleName: extension.moduleName,
             extension: {
+              extensionId: extension.name,
               extensionSlotName,
               extensionSlotModuleName,
-              extensionId: extensionRegistration.name,
             },
           }}
         >
           {children ?? <Extension state={state} />}
         </ComponentContext.Provider>
       )),
-    [select, extensionIdsToRender, extensionSlotName]
+    [select, extensions, extensionSlotName]
   );
 
   return (
@@ -73,7 +60,7 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
       style={{ ...style, position: "relative" }}
       {...divProps}
     >
-      {extensions}
+      {content}
     </div>
   );
 };

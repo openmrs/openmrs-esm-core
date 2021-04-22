@@ -26,9 +26,9 @@
 
 ### meta
 
-• **meta**: *Record*<string, any\>
+• **meta**: [*ExtensionMeta*](extensionmeta.md)
 
-Defined in: [store.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L11)
+Defined in: [store.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L15)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 • **moduleName**: *string*
 
-Defined in: [store.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L10)
+Defined in: [store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L14)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 • **name**: *string*
 
-Defined in: [store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L8)
+Defined in: [store.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L12)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • `Optional` **offline**: *boolean* \| *object*
 
-Defined in: [store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L13)
+Defined in: [store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L17)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 • `Optional` **online**: *boolean* \| *object*
 
-Defined in: [store.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L12)
+Defined in: [store.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L16)
 
 ## Methods
 
@@ -70,4 +70,4 @@ Defined in: [store.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 **Returns:** *Promise*<any\>
 
-Defined in: [store.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L9)
+Defined in: [store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L13)

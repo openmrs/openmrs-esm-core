@@ -1,6 +1,5 @@
-import { createGlobalStore, extensionStore } from "@openmrs/esm-framework";
+import { createGlobalStore } from "@openmrs/esm-framework";
 import { Store } from "unistore";
-import merge from "lodash-es/merge";
 
 export interface ImplementerToolsStore {
   activeItemDescription?: ActiveItemDescription;
@@ -10,7 +9,6 @@ export interface ImplementerToolsStore {
   openTabIndex: number;
   isConfigToolbarOpen: boolean;
   isUIEditorEnabled: boolean;
-  extensionIdBySlotByModule: Record<string, Record<string, Array<string>>>;
 }
 
 export interface ActiveItemDescription {
@@ -30,7 +28,6 @@ export const implementerToolsStore: Store<ImplementerToolsStore> = createGlobalS
     openTabIndex: 0,
     isConfigToolbarOpen: getIsConfigToolbarOpen(),
     isUIEditorEnabled: getIsUIEditorEnabled(),
-    extensionIdBySlotByModule: {},
   }
 );
 
@@ -51,31 +48,6 @@ export const showModuleDiagnostics = implementerToolsStore.action((state) => ({
   isOpen: true,
   openTabIndex: 1,
 }));
-
-/* Set up subscriptions for module-slot-extension cache.
- * This cache exists so that implementer tools doesn't "forget" about
- * slots & extensions that are no longer mounted.
- */
-
-extensionStore.subscribe((state) => {
-  const newValue = {};
-
-  for (let [slotName, slot] of Object.entries(state.slots)) {
-    for (let [moduleName, instance] of Object.entries(slot.instances)) {
-      if (!newValue[moduleName]) {
-        newValue[moduleName] = {};
-      }
-      newValue[moduleName][slotName] = instance.assignedIds;
-    }
-  }
-
-  implementerToolsStore.setState({
-    extensionIdBySlotByModule: merge(
-      implementerToolsStore.getState().extensionIdBySlotByModule,
-      newValue
-    ),
-  });
-});
 
 /* Set up localStorage-serialized state elements */
 

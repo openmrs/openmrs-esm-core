@@ -38,10 +38,6 @@ export interface ExtensionStore {
 
 export interface ExtensionSlotInstance {
   /**
-   * The set of extensions IDs which should be rendered into this slot at the current point in time.
-   */
-  assignedIds: Array<string>;
-  /**
    * A set of additional extension IDs which have been added to to this slot despite not being
    * explicitly `attach`ed to it.
    * An example may be an extension which is added to the slot via the configuration.
@@ -57,10 +53,6 @@ export interface ExtensionSlotInstance {
    * A set allowing explicit ordering of the `assignedIds`.
    */
   idOrder: Array<string>;
-  /**
-   * The number of active registrations on the instance.
-   */
-  registered: number;
 }
 
 export interface ExtensionSlotInfo {

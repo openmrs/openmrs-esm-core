@@ -1,13 +1,23 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import {
   registerExtensionSlot,
   unregisterExtensionSlot,
+  ExtensionRegistration,
+  checkStatusFor,
   extensionStore,
-  ExtensionStore,
+  getExtensionRegistrationFrom,
 } from "@openmrs/esm-extensions";
 import { ComponentContext } from "./ComponentContext";
+import { useAssignedExtensionIds } from "./useAssignedExtensionIds";
+import { useConnectivity } from "./useConnectivity";
 
-export function useExtensionSlot(slotName: string) {
+function isValidExtension(
+  extension: ExtensionRegistration | undefined
+): extension is ExtensionRegistration {
+  return extension !== undefined;
+}
+
+export function useExtensionSlot(extensionSlotName: string) {
   const { moduleName } = useContext(ComponentContext);
 
   if (!moduleName) {
@@ -16,35 +26,25 @@ export function useExtensionSlot(slotName: string) {
     );
   }
 
-  const [extensionIdsToRender, setState] = useState<Array<string>>([]);
+  const online = useConnectivity();
 
   useEffect(() => {
-    registerExtensionSlot(moduleName, slotName);
-    return () => unregisterExtensionSlot(moduleName, slotName);
+    registerExtensionSlot(moduleName, extensionSlotName);
+    return () => unregisterExtensionSlot(moduleName, extensionSlotName);
   }, []);
 
-  useEffect(() => {
-    const update = (state: ExtensionStore) => {
-      const slotInfo = state.slots[slotName];
-
-      if (slotInfo) {
-        const instance = slotInfo.instances[moduleName];
-
-        if (
-          instance &&
-          extensionIdsToRender.join(",") !== instance.assignedIds.join(",")
-        ) {
-          setState(instance.assignedIds);
-        }
-      }
-    };
-
-    update(extensionStore.getState());
-    return extensionStore.subscribe(update);
-  }, [extensionIdsToRender, moduleName]);
+  const extensionIdsToRender = useAssignedExtensionIds(extensionSlotName);
+  const extensions = useMemo(() => {
+    const state = extensionStore.getState();
+    return extensionIdsToRender
+      .map((m) => getExtensionRegistrationFrom(state, m))
+      .filter(isValidExtension)
+      .filter((m) => checkStatusFor(online, m.online, m.offline));
+  }, [extensionIdsToRender, online]);
 
   return {
+    extensions,
+    extensionSlotName,
     extensionSlotModuleName: moduleName,
-    extensionIdsToRender,
   };
 }

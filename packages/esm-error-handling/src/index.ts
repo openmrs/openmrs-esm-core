@@ -1,3 +1,5 @@
+import { dispatchShowToast } from "@openmrs/esm-globals";
+
 export function handleApiError() {
   return (incomingResponseErr) => {
     setTimeout(() => {
@@ -6,18 +8,13 @@ export function handleApiError() {
   };
 }
 
-function showToast(detail: any) {
-  window.dispatchEvent(new CustomEvent("openmrs:show-toast", { detail }));
-}
-
 window.onerror = function () {
-  showToast({ description: "Oops! An unexpected error occurred." });
-
+  dispatchShowToast({ description: "Oops! An unexpected error occurred." });
   return false;
 };
 
-window.onunhandledrejection = function (event) {
-  showToast({ description: `Oops! An unexpected error occurred.` });
+window.onunhandledrejection = function () {
+  dispatchShowToast({ description: "Oops! An unexpected error occurred." });
 };
 
 export function reportError(err) {

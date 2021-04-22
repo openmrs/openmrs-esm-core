@@ -1,7 +1,20 @@
 import React from "react";
 import MultiSelect from "carbon-components-react/es/components/MultiSelect";
-import { useStore } from "@openmrs/esm-framework";
-import { implementerToolsStore } from "../../store";
+import {
+  ExtensionStore,
+  getAssignedIds,
+  useExtensionStore,
+} from "@openmrs/esm-framework";
+
+function getExtensionIds(
+  store: ExtensionStore,
+  moduleName: string,
+  slotName: string
+) {
+  const slot = store.slots[slotName];
+  const instance = slot.instances[moduleName];
+  return getAssignedIds(instance, slot.attachedIds);
+}
 
 export function ExtensionSlotRemove({
   slotName,
@@ -9,14 +22,13 @@ export function ExtensionSlotRemove({
   value,
   setValue,
 }) {
-  const { extensionIdBySlotByModule } = useStore(implementerToolsStore);
+  const store = useExtensionStore();
+  const assignedIds = getExtensionIds(store, slotModuleName, slotName);
 
   return (
     <MultiSelect.Filterable
       id={`add-select`}
-      items={extensionIdBySlotByModule[slotModuleName][
-        slotName
-      ].map((name) => ({ id: name, label: name }))}
+      items={assignedIds.map((id) => ({ id, label: id }))}
       placeholder="Select extensions"
       onChange={(value) => setValue(value.selectedItems.map((v) => v.id))}
       initialSelectedItems={value}

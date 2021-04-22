@@ -7,9 +7,7 @@
 ### Properties
 
 - [addedIds](extensionslotinstance.md#addedids)
-- [assignedIds](extensionslotinstance.md#assignedids)
 - [idOrder](extensionslotinstance.md#idorder)
-- [registered](extensionslotinstance.md#registered)
 - [removedIds](extensionslotinstance.md#removedids)
 
 ## Properties
@@ -26,16 +24,6 @@ Defined in: [store.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 ___
 
-### assignedIds
-
-• **assignedIds**: *string*[]
-
-The set of extensions IDs which should be rendered into this slot at the current point in time.
-
-Defined in: [store.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L39)
-
-___
-
 ### idOrder
 
 • **idOrder**: *string*[]
@@ -43,16 +31,6 @@ ___
 A set allowing explicit ordering of the `assignedIds`.
 
 Defined in: [store.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L55)
-
-___
-
-### registered
-
-• **registered**: *number*
-
-The number of active registrations on the instance.
-
-Defined in: [store.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L59)
 
 ___
 

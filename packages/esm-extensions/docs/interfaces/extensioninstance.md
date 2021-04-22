@@ -14,4 +14,4 @@
 
 • **id**: *string*
 
-Defined in: [store.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L25)
+Defined in: [store.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L29)

@@ -1,9 +1,9 @@
 import { getExtensionSlotsConfigStore } from "@openmrs/esm-config";
 import {
-  ExtensionInfo,
   ExtensionRegistration,
   ExtensionSlotInfo,
   ExtensionSlotInstance,
+  ExtensionStore,
   extensionStore,
   updateExtensionStore,
 } from "./store";
@@ -11,10 +11,8 @@ import {
 function createNewExtensionSlotInstance(): ExtensionSlotInstance {
   return {
     addedIds: [],
-    assignedIds: [],
     idOrder: [],
     removedIds: [],
-    registered: 1,
   };
 }
 
@@ -28,12 +26,24 @@ function createNewExtensionSlotInfo(
   };
 }
 
+export function getExtensionNameFromId(extensionId: string) {
+  const [extensionName] = extensionId.split("#");
+  return extensionName;
+}
+
+export function getExtensionRegistrationFrom(
+  state: ExtensionStore,
+  extensionId: string
+): ExtensionRegistration | undefined {
+  const name = getExtensionNameFromId(extensionId);
+  return state.extensions[name];
+}
+
 export function getExtensionRegistration(
   extensionId: string
 ): ExtensionRegistration | undefined {
   const state = extensionStore.getState();
-  const extensionName = extensionId.split("#")[0];
-  return state.extensions[extensionName];
+  return getExtensionRegistrationFrom(state, extensionId);
 }
 
 export interface ExtensionDetails {
@@ -145,16 +155,7 @@ function getUpdatedExtensionSlotInfoForRegistration(
       },
     });
   } else if (moduleName in existingSlot.instances) {
-    return getUpdatedExtensionSlotInfo(slotName, moduleName, {
-      ...existingSlot,
-      instances: {
-        ...existingSlot.instances,
-        [moduleName]: {
-          ...existingSlot.instances[moduleName],
-          registered: existingSlot.instances[moduleName].registered + 1,
-        },
-      },
-    });
+    return getUpdatedExtensionSlotInfo(slotName, moduleName, existingSlot);
   } else {
     return getUpdatedExtensionSlotInfo(slotName, moduleName, {
       ...existingSlot,
@@ -173,23 +174,10 @@ function getUpdatedExtensionSlotInfoForUnregistration(
 ) {
   const { [moduleName]: existing, ...instances } = existingSlot.instances;
 
-  if (existing.registered > 1) {
-    return getUpdatedExtensionSlotInfo(extensionSlotName, moduleName, {
-      ...existingSlot,
-      instances: {
-        ...instances,
-        [moduleName]: {
-          ...existing,
-          registered: existing.registered - 1,
-        },
-      },
-    });
-  } else {
-    return getUpdatedExtensionSlotInfo(extensionSlotName, moduleName, {
-      ...existingSlot,
-      instances,
-    });
-  }
+  return getUpdatedExtensionSlotInfo(extensionSlotName, moduleName, {
+    ...existingSlot,
+    instances,
+  });
 }
 
 /**
@@ -204,13 +192,18 @@ export function registerExtensionSlot(moduleName: string, slotName: string) {
       slotName,
       moduleName
     );
-    return {
-      ...state,
-      slots: {
-        ...state.slots,
-        [slotName]: updatedSlot,
-      },
-    };
+
+    if (existingSlot !== updatedSlot) {
+      return {
+        ...state,
+        slots: {
+          ...state.slots,
+          [slotName]: updatedSlot,
+        },
+      };
+    }
+
+    return state;
   });
 }
 
@@ -320,20 +313,12 @@ export function getUpdatedExtensionSlotInfo(
       }
     }
 
-    const assignedIds = getAssignedIds(instance, extensionSlot.attachedIds);
-
-    if (
-      instance !== originalInstance ||
-      assignedIds.join(",") !== instance.assignedIds.join(",")
-    ) {
+    if (instance !== originalInstance) {
       return {
         ...extensionSlot,
         instances: {
           ...extensionSlot.instances,
-          [moduleName]: {
-            ...instance,
-            assignedIds,
-          },
+          [moduleName]: instance,
         },
       };
     }

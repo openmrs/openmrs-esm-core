@@ -8,6 +8,8 @@ import {
   showToast,
   renderToasts,
   integrateBreakpoints,
+  dispatchConnectivityChanged,
+  subscribeShowToast,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -81,12 +83,14 @@ async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
  * Invoked when the connectivity is changed.
  */
 function connectivityChanged() {
+  const online = navigator.onLine;
   // trigger single SPA re-evaluation
   window.history.replaceState(undefined, document.title, undefined);
+  dispatchConnectivityChanged(online);
   showToast({
-    description: `Connection: ${navigator.onLine ? "online" : "offline"}`,
+    description: `Connection: ${online ? "online" : "offline"}`,
     title: "App",
-    kind: navigator.onLine ? "success" : "warning",
+    kind: online ? "success" : "warning",
   });
 }
 
@@ -163,12 +167,6 @@ function createConfigLoader(configUrls: Array<string>) {
   return () => loadingConfigs.then(loadConfigs);
 }
 
-function registerShowToast() {
-  window.addEventListener("openmrs:show-toast", (ev: CustomEvent) => {
-    showToast(ev.detail);
-  });
-}
-
 function showToasts() {
   return renderToasts(document.querySelector(".omrs-toasts-container"));
 }
@@ -184,7 +182,7 @@ export function run(configUrls: Array<string>) {
   integrateBreakpoints();
   showToasts();
   createAppState({});
-  registerShowToast();
+  subscribeShowToast(showToast);
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();

@@ -32,17 +32,17 @@
 The instances where the extension has been rendered using `renderExtension`,
 indexed by slotModuleName and slotName.
 
-Defined in: [packages/esm-extensions/src/store.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L21)
+Defined in: [packages/esm-extensions/src/store.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L25)
 
 ___
 
 ### meta
 
-• **meta**: *Record*<string, any\>
+• **meta**: [*ExtensionMeta*](extensionmeta.md)
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[meta](extensionregistration.md#meta)
 
-Defined in: [packages/esm-extensions/src/store.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L11)
+Defined in: [packages/esm-extensions/src/store.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L15)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[moduleName](extensionregistration.md#modulename)
 
-Defined in: [packages/esm-extensions/src/store.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L10)
+Defined in: [packages/esm-extensions/src/store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L14)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[name](extensionregistration.md#name)
 
-Defined in: [packages/esm-extensions/src/store.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L8)
+Defined in: [packages/esm-extensions/src/store.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L12)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[offline](extensionregistration.md#offline)
 
-Defined in: [packages/esm-extensions/src/store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L13)
+Defined in: [packages/esm-extensions/src/store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L17)
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[online](extensionregistration.md#online)
 
-Defined in: [packages/esm-extensions/src/store.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L12)
+Defined in: [packages/esm-extensions/src/store.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L16)
 
 ## Methods
 
@@ -94,4 +94,4 @@ Defined in: [packages/esm-extensions/src/store.ts:12](https://github.com/openmrs
 
 Inherited from: [ExtensionRegistration](extensionregistration.md)
 
-Defined in: [packages/esm-extensions/src/store.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L9)
+Defined in: [packages/esm-extensions/src/store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L13)

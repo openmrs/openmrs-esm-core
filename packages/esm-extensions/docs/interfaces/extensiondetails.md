@@ -24,9 +24,9 @@
 
 **Returns:** *Promise*<any\>
 
-Defined in: [extensions.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L41)
+Defined in: [extensions.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L43)
 
-Defined in: [extensions.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L41)
+Defined in: [extensions.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L43)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • **meta**: *Record*<string, any\>
 
-Defined in: [extensions.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L42)
+Defined in: [extensions.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L44)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • **moduleName**: *string*
 
-Defined in: [extensions.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L40)
+Defined in: [extensions.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L42)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 • `Optional` **offline**: *boolean* \| *object*
 
-Defined in: [extensions.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L44)
+Defined in: [extensions.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L46)
 
 ___
 
@@ -58,4 +58,4 @@ ___
 
 • `Optional` **online**: *boolean* \| *object*
 
-Defined in: [extensions.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L43)
+Defined in: [extensions.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L45)

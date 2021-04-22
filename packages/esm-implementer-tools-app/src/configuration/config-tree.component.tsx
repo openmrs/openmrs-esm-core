@@ -4,15 +4,20 @@ import Accordion, {
   AccordionItem,
 } from "carbon-components-react/es/components/Accordion";
 import { ConfigTreeForModule } from "./config-tree-for-module.component";
-import { useStore } from "@openmrs/esm-framework";
-import { implementerToolsStore } from "../store";
+import { ExtensionStore, useExtensionStore } from "@openmrs/esm-framework";
+
+function hasSlot(store: ExtensionStore, moduleName: string) {
+  return Object.values(store.slots).some((slot) =>
+    Object.keys(slot.instances).includes(moduleName)
+  );
+}
 
 export interface ConfigTreeProps {
   config: Record<string, any>;
 }
 
 export function ConfigTree({ config }: ConfigTreeProps) {
-  const { extensionIdBySlotByModule } = useStore(implementerToolsStore);
+  const store = useExtensionStore();
 
   return (
     <div>
@@ -23,7 +28,7 @@ export function ConfigTree({ config }: ConfigTreeProps) {
             .map((moduleName) => {
               const moduleConfig = config[moduleName];
               return Object.keys(moduleConfig).length ||
-                extensionIdBySlotByModule[moduleName] ? (
+                hasSlot(store, moduleName) ? (
                 <AccordionItem
                   title={<h6 className={styles.moduleName}>{moduleName}</h6>}
                   className={styles.fullWidthAccordion}

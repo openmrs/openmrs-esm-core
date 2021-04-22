@@ -1,2 +1,3 @@
-export * from "./types";
+export * from "./events";
 export * from "./globals";
+export * from "./types";

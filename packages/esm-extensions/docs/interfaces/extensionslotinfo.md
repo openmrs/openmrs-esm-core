@@ -21,7 +21,7 @@ This is essentially a complete history of `attach` calls to this specific slot.
 However, not all of these extension IDs should be rendered.
 `assignedIds` is the set defining those.
 
-Defined in: [store.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L77)
+Defined in: [store.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L73)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 The mapping of modules / extension slot instances where the extension slot has been used.
 
-Defined in: [store.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L70)
+Defined in: [store.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L66)
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 The name under which the extension slot has been registered.
 
-Defined in: [store.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L66)
+Defined in: [store.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L62)
