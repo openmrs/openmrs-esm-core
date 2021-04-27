@@ -14,6 +14,7 @@
 - [createGlobalStore](API.md#createglobalstore)
 - [getAppState](API.md#getappstate)
 - [getGlobalStore](API.md#getglobalstore)
+- [subscribeTo](API.md#subscribeto)
 - [update](API.md#update)
 
 ## Functions
@@ -87,6 +88,31 @@ ___
 **Returns:** *Store*<TState\>
 
 Defined in: [state.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L39)
+
+___
+
+### subscribeTo
+
+▸ **subscribeTo**<T, U\>(`store`: *Store*<T\>, `select`: (`state`: T) => U, `handle`: (`subState`: U) => *void*): Unsubscribe
+
+#### Type parameters:
+
+| Name |
+| :------ |
+| `T` |
+| `U` |
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `store` | *Store*<T\> |
+| `select` | (`state`: T) => U |
+| `handle` | (`subState`: U) => *void* |
+
+**Returns:** Unsubscribe
+
+Defined in: [state.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L67)
 
 ___
 

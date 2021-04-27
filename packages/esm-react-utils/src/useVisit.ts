@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import {
   getVisitsForPatient,
@@ -9,10 +9,10 @@ import {
 } from "@openmrs/esm-api";
 
 export function useVisit(patientUuid: string) {
-  const [currentVisit, setCurrentVisit] = React.useState<Visit | null>(null);
-  const [error, setError] = React.useState(null);
+  const [currentVisit, setCurrentVisit] = useState<Visit | null>(null);
+  const [error, setError] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const abortController = new AbortController();
     const sub = getVisitsForPatient(patientUuid, abortController).subscribe(
       ({ data }) => {
@@ -21,6 +21,7 @@ export function useVisit(patientUuid: string) {
             dayjs(visit.startDatetime).format("DD-MM-YYYY") ===
             dayjs(new Date()).format("DD-MM-YYYY")
         );
+
         if (currentVisit) {
           getStartedVisit.next({
             mode: VisitMode.LOADING,
@@ -30,10 +31,10 @@ export function useVisit(patientUuid: string) {
           setCurrentVisit(currentVisit);
         }
       },
-      (error) => setError(error)
+      setError
     );
     return () => sub && sub.unsubscribe();
   }, [patientUuid]);
 
-  return { currentVisit: currentVisit, error: error };
+  return { currentVisit, error };
 }

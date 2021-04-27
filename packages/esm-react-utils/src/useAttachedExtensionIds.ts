@@ -10,9 +10,9 @@ const defaultArray: Array<string> = [];
  */
 export function useAttachedExtensionIds(extensionSlotName: string) {
   const select = useCallback(
-    (s: ExtensionStore) =>
-      s.slots[extensionSlotName]?.attachedIds || defaultArray,
+    (s: ExtensionStore) => s.slots[extensionSlotName]?.attachedIds,
     [extensionSlotName]
   );
-  return useStoreState(extensionStore, select);
+  const extensions = useStoreState(extensionStore, select);
+  return extensions || defaultArray;
 }

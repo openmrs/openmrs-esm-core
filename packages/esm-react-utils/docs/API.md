@@ -44,6 +44,8 @@
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
 - [useAttachedExtensionIds](API.md#useattachedextensionids)
 - [useConfig](API.md#useconfig)
+- [useConnectedExtensions](API.md#useconnectedextensions)
+- [useConnectivity](API.md#useconnectivity)
 - [useCurrentPatient](API.md#usecurrentpatient)
 - [useExtension](API.md#useextension)
 - [useExtensionSlot](API.md#useextensionslot)
@@ -54,7 +56,6 @@
 - [useLayoutType](API.md#uselayouttype)
 - [useLocations](API.md#uselocations)
 - [useNavigationContext](API.md#usenavigationcontext)
-- [useNavigatorOnline](API.md#usenavigatoronline)
 - [useSessionUser](API.md#usesessionuser)
 - [useStore](API.md#usestore)
 - [useStoreState](API.md#usestorestate)
@@ -270,16 +271,17 @@ ___
 ▸ **useAssignedExtensionIds**(`extensionSlotName`: *string*): *string*[]
 
 Gets the assigned extension ids for a given extension slot name.
+Does not consider if offline or online.
 
 #### Parameters:
 
-| Name | Type |
-| :------ | :------ |
-| `extensionSlotName` | *string* |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `extensionSlotName` | *string* | The name of the slot to get the assigned IDs for. |
 
 **Returns:** *string*[]
 
-Defined in: [packages/esm-react-utils/src/useAssignedExtensionIds.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useAssignedExtensionIds.ts#L10)
+Defined in: [packages/esm-react-utils/src/useAssignedExtensionIds.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useAssignedExtensionIds.ts#L11)
 
 ___
 
@@ -310,6 +312,35 @@ Use this React Hook to obtain your module's configuration.
 **Returns:** ConfigObject
 
 Defined in: [packages/esm-react-utils/src/useConfig.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useConfig.ts#L22)
+
+___
+
+### useConnectedExtensions
+
+▸ **useConnectedExtensions**(`extensionSlotName`: *string*): ExtensionRegistration[]
+
+Gets the assigned extension for a given extension slot name.
+Considers if offline or online.
+
+#### Parameters:
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `extensionSlotName` | *string* | The name of the slot to get the assigned extensions for. |
+
+**Returns:** ExtensionRegistration[]
+
+Defined in: [packages/esm-react-utils/src/useConnectedExtensions.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useConnectedExtensions.ts#L31)
+
+___
+
+### useConnectivity
+
+▸ **useConnectivity**(): *boolean*
+
+**Returns:** *boolean*
+
+Defined in: [packages/esm-react-utils/src/useConnectivity.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useConnectivity.ts#L4)
 
 ___
 
@@ -369,7 +400,7 @@ ___
 | `extensionSlotName` | *string* |
 | `extensions` | ExtensionRegistration[] |
 
-Defined in: [packages/esm-react-utils/src/useExtensionSlot.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useExtensionSlot.ts#L19)
+Defined in: [packages/esm-react-utils/src/useExtensionSlot.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useExtensionSlot.ts#L9)
 
 ___
 
@@ -385,7 +416,7 @@ ___
 
 **Returns:** ExtensionSlotConfigObject
 
-Defined in: [packages/esm-react-utils/src/useExtensionSlotConfig.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useExtensionSlotConfig.ts#L8)
+Defined in: [packages/esm-react-utils/src/useExtensionSlotConfig.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useExtensionSlotConfig.ts#L16)
 
 ___
 
@@ -403,7 +434,7 @@ Extract meta data from all extension for a given extension slot.
 
 **Returns:** *object*
 
-Defined in: [packages/esm-react-utils/src/useExtensionSlotMeta.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useExtensionSlotMeta.ts#L9)
+Defined in: [packages/esm-react-utils/src/useExtensionSlotMeta.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useExtensionSlotMeta.ts#L8)
 
 ___
 
@@ -475,6 +506,8 @@ ___
 
 ▸ **useNavigationContext**(`context`: NavigationContext): *void*
 
+**`deprecated`** Don't use this anymore.
+
 #### Parameters:
 
 | Name | Type |
@@ -483,17 +516,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/esm-react-utils/src/useNavigationContext.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useNavigationContext.ts#L7)
-
-___
-
-### useNavigatorOnline
-
-▸ **useNavigatorOnline**(): *boolean*
-
-**Returns:** *boolean*
-
-Defined in: [packages/esm-react-utils/src/useNavigatorOnline.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useNavigatorOnline.ts#L3)
+Defined in: [packages/esm-react-utils/src/useNavigationContext.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useNavigationContext.ts#L10)
 
 ___
 
@@ -568,7 +591,7 @@ ___
 
 **Returns:** U
 
-Defined in: [packages/esm-react-utils/src/useStoreState.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useStoreState.ts#L4)
+Defined in: [packages/esm-react-utils/src/useStoreState.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useStoreState.ts#L5)
 
 ___
 

@@ -24,9 +24,9 @@
 
 **Returns:** *Promise*<any\>
 
-Defined in: [packages/esm-extensions/src/extensions.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L43)
+Defined in: [packages/esm-extensions/src/extensions.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L51)
 
-Defined in: [packages/esm-extensions/src/extensions.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L43)
+Defined in: [packages/esm-extensions/src/extensions.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L51)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • **meta**: *Record*<string, any\>
 
-Defined in: [packages/esm-extensions/src/extensions.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L44)
+Defined in: [packages/esm-extensions/src/extensions.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L52)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • **moduleName**: *string*
 
-Defined in: [packages/esm-extensions/src/extensions.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L42)
+Defined in: [packages/esm-extensions/src/extensions.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L50)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 • `Optional` **offline**: *boolean* \| *object*
 
-Defined in: [packages/esm-extensions/src/extensions.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L46)
+Defined in: [packages/esm-extensions/src/extensions.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L54)
 
 ___
 
@@ -58,4 +58,4 @@ ___
 
 • `Optional` **online**: *boolean* \| *object*
 
-Defined in: [packages/esm-extensions/src/extensions.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L45)
+Defined in: [packages/esm-extensions/src/extensions.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L53)

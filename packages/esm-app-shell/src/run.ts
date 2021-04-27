@@ -9,7 +9,7 @@ import {
   renderToasts,
   integrateBreakpoints,
   dispatchConnectivityChanged,
-  subscribeShowToast,
+  subscribeToastShown,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -182,7 +182,7 @@ export function run(configUrls: Array<string>) {
   integrateBreakpoints();
   showToasts();
   createAppState({});
-  subscribeShowToast(showToast);
+  subscribeToastShown(showToast);
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();

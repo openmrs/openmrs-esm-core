@@ -63,3 +63,20 @@ export function createAppState(initialState: AppState) {
 export function getAppState() {
   return getGlobalStore<AppState>("app", {});
 }
+
+export function subscribeTo<T, U>(
+  store: Store<T>,
+  select: (state: T) => U,
+  handle: (subState: U) => void
+) {
+  let previous = select(store.getState());
+
+  return store.subscribe((state) => {
+    const current = select(state);
+
+    if (current !== previous) {
+      previous = current;
+      handle(current);
+    }
+  });
+}

@@ -19,6 +19,13 @@ export function subscribeConnectivityChanged(
     window.removeEventListener(connectivityChangedEventName, handler);
 }
 
+export function subscribeConnectivity(
+  cb: (ev: ConnectivityChangedEvent) => void
+) {
+  cb({ online: navigator.onLine });
+  return subscribeConnectivityChanged(cb);
+}
+
 export interface ShowToastEvent {
   kind?:
     | "error"
@@ -33,14 +40,14 @@ export interface ShowToastEvent {
   millis?: number;
 }
 
-const showToastEventName = "openmrs:show-toast";
+const toastShownEventName = "openmrs:toast-shown";
 
-export function dispatchShowToast(data: ShowToastEvent) {
-  window.dispatchEvent(new CustomEvent(showToastEventName, { detail: data }));
+export function dispatchToastShown(data: ShowToastEvent) {
+  window.dispatchEvent(new CustomEvent(toastShownEventName, { detail: data }));
 }
 
-export function subscribeShowToast(cb: (data: ShowToastEvent) => void) {
+export function subscribeToastShown(cb: (data: ShowToastEvent) => void) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
-  window.addEventListener(showToastEventName, handler);
-  return () => window.removeEventListener(showToastEventName, handler);
+  window.addEventListener(toastShownEventName, handler);
+  return () => window.removeEventListener(toastShownEventName, handler);
 }

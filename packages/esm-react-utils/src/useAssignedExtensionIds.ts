@@ -14,7 +14,7 @@ export function useAssignedExtensionIds(extensionSlotName: string) {
   const [assignedIds, setAssignedIds] = useState<Array<string>>([]);
 
   useEffect(() => {
-    const assignedIds = getAssignedIds(
+    const newAssignedIds = getAssignedIds(
       {
         addedIds: config.add || [],
         removedIds: config.remove || [],
@@ -22,7 +22,10 @@ export function useAssignedExtensionIds(extensionSlotName: string) {
       },
       attachedIds
     );
-    setAssignedIds(assignedIds);
+
+    if (newAssignedIds.join(",") !== assignedIds.join(",")) {
+      setAssignedIds(newAssignedIds);
+    }
   }, [attachedIds, config]);
 
   return assignedIds;

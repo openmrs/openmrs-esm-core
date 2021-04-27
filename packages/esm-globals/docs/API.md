@@ -6,10 +6,12 @@
 
 ### Interfaces
 
+- [ConnectivityChangedEvent](interfaces/connectivitychangedevent.md)
 - [ImportMap](interfaces/importmap.md)
 - [LegacyAppExtensionDefinition](interfaces/legacyappextensiondefinition.md)
 - [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md)
 - [PageDefinition](interfaces/pagedefinition.md)
+- [ShowToastEvent](interfaces/showtoastevent.md)
 - [SpaConfig](interfaces/spaconfig.md)
 
 ### Type aliases
@@ -19,8 +21,13 @@
 
 ### Functions
 
+- [dispatchConnectivityChanged](API.md#dispatchconnectivitychanged)
+- [dispatchToastShown](API.md#dispatchtoastshown)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
+- [subscribeConnectivity](API.md#subscribeconnectivity)
+- [subscribeConnectivityChanged](API.md#subscribeconnectivitychanged)
+- [subscribeToastShown](API.md#subscribetoastshown)
 
 ## Type aliases
 
@@ -39,6 +46,38 @@ ___
 Defined in: [types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L16)
 
 ## Functions
+
+### dispatchConnectivityChanged
+
+▸ **dispatchConnectivityChanged**(`online`: *boolean*): *void*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `online` | *boolean* |
+
+**Returns:** *void*
+
+Defined in: [events.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L7)
+
+___
+
+### dispatchToastShown
+
+▸ **dispatchToastShown**(`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)): *void*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [*ShowToastEvent*](interfaces/showtoastevent.md) |
+
+**Returns:** *void*
+
+Defined in: [events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L45)
+
+___
 
 ### setupPaths
 
@@ -63,3 +102,51 @@ ___
 **Returns:** *void*
 
 Defined in: [globals.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L11)
+
+___
+
+### subscribeConnectivity
+
+▸ **subscribeConnectivity**(`cb`: (`ev`: [*ConnectivityChangedEvent*](interfaces/connectivitychangedevent.md)) => *void*): *function*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`ev`: [*ConnectivityChangedEvent*](interfaces/connectivitychangedevent.md)) => *void* |
+
+**Returns:** () => *void*
+
+Defined in: [events.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L22)
+
+___
+
+### subscribeConnectivityChanged
+
+▸ **subscribeConnectivityChanged**(`cb`: (`ev`: [*ConnectivityChangedEvent*](interfaces/connectivitychangedevent.md)) => *void*): *function*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`ev`: [*ConnectivityChangedEvent*](interfaces/connectivitychangedevent.md)) => *void* |
+
+**Returns:** () => *void*
+
+Defined in: [events.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L13)
+
+___
+
+### subscribeToastShown
+
+▸ **subscribeToastShown**(`cb`: (`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)) => *void*): *function*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)) => *void* |
+
+**Returns:** () => *void*
+
+Defined in: [events.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L49)
