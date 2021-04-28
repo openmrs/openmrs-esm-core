@@ -25,6 +25,13 @@ export function getAsyncLifecycle<T>(
     lazy().then(({ default: Component }) => getLifecycle(Component, options));
 }
 
+export function getSyncLifecycle<T>(
+  Component: React.ComponentType<T>,
+  options: ComponentDecoratorOptions
+) {
+  return () => Promise.resolve(getLifecycle(Component, options));
+}
+
 /**
  * @deprecated Use getAsyncLifecycle instead.
  */

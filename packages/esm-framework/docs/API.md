@@ -186,6 +186,7 @@
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
 - [getLocations](API.md#getlocations)
+- [getSyncLifecycle](API.md#getsynclifecycle)
 - [getUpdatedExtensionSlotInfo](API.md#getupdatedextensionslotinfo)
 - [getVisitTypes](API.md#getvisittypes)
 - [getVisitsForPatient](API.md#getvisitsforpatient)
@@ -1321,7 +1322,7 @@ ___
 
 **Returns:** () => *Promise*<ReactAppOrParcel<any\>\>
 
-Defined in: [packages/esm-react-utils/src/getLifecycle.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/getLifecycle.ts#L31)
+Defined in: [packages/esm-react-utils/src/getLifecycle.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/getLifecycle.ts#L38)
 
 ___
 
@@ -1560,6 +1561,29 @@ ___
 **Returns:** *Observable*<[*Location*](interfaces/location.md)[]\>
 
 Defined in: [packages/esm-api/src/shared-api-objects/location.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/location.ts#L13)
+
+___
+
+### getSyncLifecycle
+
+▸ **getSyncLifecycle**<T\>(`Component`: *React.ComponentType*<T\>, `options`: [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md)): *function*
+
+#### Type parameters:
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `Component` | *React.ComponentType*<T\> |
+| `options` | [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md) |
+
+**Returns:** () => *Promise*<ReactAppOrParcel<any\>\>
+
+Defined in: [packages/esm-react-utils/src/getLifecycle.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/getLifecycle.ts#L28)
 
 ___
 
@@ -2376,13 +2400,23 @@ ___
 
 ### useConfig
 
-▸ **useConfig**(): [*ConfigObject*](interfaces/configobject.md)
+▸ **useConfig**(): *object*
 
 Use this React Hook to obtain your module's configuration.
 
-**Returns:** [*ConfigObject*](interfaces/configobject.md)
+**Returns:** *object*
 
-Defined in: [packages/esm-react-utils/src/useConfig.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useConfig.ts#L22)
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `constructor` | Function | The initial value of Object.prototype.constructor is the standard built-in Object constructor. |
+| `hasOwnProperty` | (`v`: PropertyKey) => *boolean* | - |
+| `isPrototypeOf` | (`v`: Object) => *boolean* | - |
+| `propertyIsEnumerable` | (`v`: PropertyKey) => *boolean* | - |
+| `toLocaleString` | () => *string* | - |
+| `toString` | () => *string* | - |
+| `valueOf` | () => Object | - |
+
+Defined in: [packages/esm-react-utils/src/useConfig.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useConfig.ts#L104)
 
 ___
 

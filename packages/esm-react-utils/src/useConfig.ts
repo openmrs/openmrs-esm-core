@@ -1,85 +1,125 @@
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import {
   getConfigStore,
   getExtensionConfigStore,
   ConfigStore,
 } from "@openmrs/esm-config";
-import { ComponentContext } from "./ComponentContext";
+import { ComponentContext, ExtensionData } from "./ComponentContext";
 import { ConfigObject } from "@openmrs/esm-config";
-import { useForceUpdate } from "./useForceUpdate";
+import { Store } from "unistore";
 
-let error: Error | undefined;
 const promises: Record<string, Promise<ConfigObject>> = {};
-const configs: Record<string, ConfigObject> = {};
+const defaultState = {};
+const errorMessage = `No ComponentContext has been provided. This should come from "openmrsComponentDecorator".
+Usually this is already applied when using "getAsyncLifecycle" or "getSyncLifecycle".`;
 
-const errorMessage = `No ComponentContext has been provided.
-This should come from "openmrsComponentDecorator".
-Usually this is already applied when using "get[Async]Lifecycle".`;
+function readInitialConfig(store: Store<ConfigStore> | undefined) {
+  if (!store) {
+    return undefined;
+  } else {
+    return () => {
+      const state = store.getState();
+
+      if (state.loaded && state.config) {
+        return state.config;
+      }
+
+      return undefined;
+    };
+  }
+}
+
+function createConfigPromise(store: Store<ConfigStore>) {
+  return new Promise<ConfigObject>((resolve) => {
+    const unsubscribe = store.subscribe((state) => {
+      if (state.loaded && state.config) {
+        resolve(state.config);
+        unsubscribe();
+      }
+    });
+  });
+}
+
+function useConfigStore(store: Store<ConfigStore> | undefined) {
+  const [state, setState] = useState(readInitialConfig(store));
+
+  useEffect(() => {
+    return store?.subscribe((state) => {
+      if (state.loaded && state.config) {
+        setState(state.config);
+      }
+    });
+  }, [store]);
+
+  return state;
+}
+
+function useExtensionConfig(extension: ExtensionData | undefined) {
+  const store = useMemo(
+    () =>
+      extension &&
+      getExtensionConfigStore(
+        extension.extensionSlotModuleName,
+        extension.extensionSlotName,
+        extension.extensionId
+      ),
+    [extension]
+  );
+  const state = useConfigStore(store);
+
+  if (!state && extension) {
+    const cacheId = `${extension.extensionSlotModuleName}-${extension.extensionSlotName}-${extension.extensionId}`;
+
+    if (!promises[cacheId] && store) {
+      promises[cacheId] = createConfigPromise(store);
+    }
+
+    // React will prevent the client component from rendering until the promise resolves
+    throw promises[cacheId];
+  }
+
+  return state || defaultState;
+}
+
+function useNormalConfig(moduleName: string) {
+  const store = useMemo(() => getConfigStore(moduleName), [moduleName]);
+  const cacheId = moduleName;
+  const state = useConfigStore(store);
+
+  if (!state) {
+    if (!promises[cacheId]) {
+      promises[cacheId] = createConfigPromise(store);
+    }
+
+    // React will prevent the client component from rendering until the promise resolves
+    throw promises[cacheId];
+  }
+
+  return state;
+}
 
 /**
  * Use this React Hook to obtain your module's configuration.
  */
 export function useConfig() {
-  // This hook uses the extension config if an ExtensionContext is
-  // found, and uses the normal config if the ModuleNameContext is
-  // found.
+  // This hook uses the config of the MF defining the component.
+  // If the component is used in an extension slot then the slot
+  // may override (part of) its configuration.
   const { moduleName, extension } = useContext(ComponentContext);
-  const forceUpdate = useForceUpdate();
 
   if (!moduleName && !extension) {
     throw Error(errorMessage);
   }
 
-  const store = useMemo(
-    () =>
-      !extension
-        ? getConfigStore(moduleName)
-        : getExtensionConfigStore(
-            extension.extensionSlotModuleName,
-            extension.extensionSlotName,
-            extension.extensionId
-          ),
-    [moduleName, extension]
+  const normalConfig = useNormalConfig(moduleName);
+  const extensionConfig = useExtensionConfig(extension);
+  const config = useMemo(
+    () => ({
+      ...normalConfig,
+      ...extensionConfig,
+    }),
+    [normalConfig, extensionConfig]
   );
 
-  const cacheId = extension
-    ? `${extension.extensionSlotName}-${extension.extensionId}`
-    : moduleName;
-
-  useEffect(() => {
-    return store.subscribe((state) => {
-      if (state.loaded && state.config) {
-        configs[cacheId] = state.config;
-        forceUpdate();
-      }
-    });
-  }, [store]);
-
-  if (error) {
-    // Suspense will just keep calling useConfig if the thrown promise rejects.
-    // So we check ahead of time and avoid creating a new promise.
-    throw error;
-  }
-
-  if (!configs[cacheId]) {
-    if (!promises[cacheId]) {
-      promises[cacheId] = new Promise((resolve) => {
-        function update(state: ConfigStore) {
-          if (state.loaded && state.config) {
-            configs[cacheId] = state.config;
-            resolve(state.config);
-            unsubscribe && unsubscribe();
-          }
-        }
-
-        update(store.getState());
-        const unsubscribe = store.subscribe(update);
-      });
-    }
-
-    // React will prevent the client component from rendering until the promise resolves
-    throw promises[cacheId];
-  } else {
-    return configs[cacheId];
-  }
+  return config;
 }
