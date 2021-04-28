@@ -65,22 +65,29 @@ export function registerApp(appName: string, appExports: System.Module) {
         tryRegisterExtension(appName, ext);
       });
 
-      availablePages.forEach((page, index) => {
-        tryRegisterPage(`${appName}-page-${index}`, page);
-      });
+      return () => {
+        availablePages.forEach((page, index) => {
+          tryRegisterPage(`${appName}-page-${index}`, page);
+        });
+      };
     }
   }
+
+  return () => {};
 }
 
 export function tryRegisterPage(appName: string, page: PageDefinition) {
   const { route, load, online, offline } = page;
-  const activityFn = preprocessActivator(route);
-  registerApplication(
-    appName,
-    load,
-    (location) => checkStatus(online, offline) && activityFn(location),
-    () => getCustomProps(online, offline)
-  );
+
+  if (checkStatus(online, offline)) {
+    const activityFn = preprocessActivator(route);
+    registerApplication(
+      appName,
+      load,
+      (location) => activityFn(location),
+      () => getCustomProps(online, offline)
+    );
+  }
 }
 
 export function tryRegisterExtension(
