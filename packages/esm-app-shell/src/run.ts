@@ -9,7 +9,6 @@ import {
   renderToasts,
   integrateBreakpoints,
   dispatchConnectivityChanged,
-  subscribeConnectivity,
   subscribeToastShown,
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
