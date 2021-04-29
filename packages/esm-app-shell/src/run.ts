@@ -15,7 +15,6 @@ import {
   subscribeConnectivity,
   getSynchronizationCallbacks,
   getCurrentUser,
-  LoggedInUser,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
