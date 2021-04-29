@@ -41,6 +41,7 @@ async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
   const dynamicRoutes = await new ServiceWorkerDb().dynamicRouteRegistrations.toArray();
   const urlsToInvalidate = cachedUrls.filter(
     (cachedUrl) =>
+      cachedUrl !== indexUrl &&
       !absoluteWbManifestUrls.includes(cachedUrl) &&
       !newImportMapUrls.includes(cachedUrl) &&
       !dynamicRoutes.some((route) => new RegExp(route.pattern).test(cachedUrl))
