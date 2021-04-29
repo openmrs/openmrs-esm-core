@@ -10,6 +10,8 @@ import {
   integrateBreakpoints,
   dispatchConnectivityChanged,
   subscribeToastShown,
+  registerOmrsServiceWorker,
+  messageOmrsServiceWorker,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -175,6 +177,51 @@ function showLoadingSpinner() {
   return renderLoadingSpinner(document.body);
 }
 
+async function setupServiceWorker() {
+  registerOmrsServiceWorker(`${window.getOpenmrsSpaBase()}service-worker.js`);
+
+  try {
+    await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
+alert("success");
+    showToast({
+      title: "You can now go offline",
+      description:
+        "The application is done preparing the offline mode. You can now use the website without an internet connection.",
+      kind: "info",
+    });
+  } catch (e) {
+    alert("error: " + JSON.stringify(e));
+    showToast({
+      title: "Offline Setup Error",
+      description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
+    });
+  }
+}
+
+async function precacheImportMap() {
+  const importMap = await window.importMapOverrides.getCurrentPageMap();
+  await messageOmrsServiceWorker({
+    type: "onImportMapChanged",
+    importMap,
+  });
+}
+
+async function precacheSharedApiEndpoints() {
+  await messageOmrsServiceWorker({ type: "clearDynamicRoutes" });
+
+  // By default, cache the session endpoint.
+  // This ensures that a lot of user/session related functions also work offline.
+  const sessionPathUrl = new URL(
+    `${window.openmrsBase}/ws/rest/v1/session`,
+    window.location.origin
+  ).href;
+
+  await messageOmrsServiceWorker({
+    type: "registerDynamicRoute",
+    url: sessionPathUrl,
+  });
+}
+
 export function run(configUrls: Array<string>) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
@@ -186,6 +233,7 @@ export function run(configUrls: Array<string>) {
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
+  setupServiceWorker();
 
   return loadApps()
     .then(setupApps)

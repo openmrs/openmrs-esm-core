@@ -40,8 +40,11 @@
   "devDependencies": {
   },
   "peerDependencies": {
+    "@openmrs/esm-globals": "3.x"
   },
   "dependencies": {
-    "systemjs-webpack-interop": "^2.1.2"
+    "@openmrs/esm-globals": "^3.1.10",
+    "systemjs-webpack-interop": "^2.1.2",
+    "workbox-window": "^6.1.5"
   }
 }
