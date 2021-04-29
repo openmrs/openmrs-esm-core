@@ -19,7 +19,7 @@ export async function cacheImportMapReferences(importMap: ImportMap) {
  * Only caches the "raw" app shell, not any MFs/any data coming from an import map.
  */
 export function precacheAppShell() {
-  return addToOmrsCache([...absoluteWbManifestUrls, indexUrl]);
+  return addToOmrsCache(absoluteWbManifestUrls);
 }
 
 /**
@@ -41,7 +41,6 @@ async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
   const dynamicRoutes = await new ServiceWorkerDb().dynamicRouteRegistrations.toArray();
   const urlsToInvalidate = cachedUrls.filter(
     (cachedUrl) =>
-      cachedUrl !== indexUrl &&
       !absoluteWbManifestUrls.includes(cachedUrl) &&
       !newImportMapUrls.includes(cachedUrl) &&
       !dynamicRoutes.some((route) => new RegExp(route.pattern).test(cachedUrl))
