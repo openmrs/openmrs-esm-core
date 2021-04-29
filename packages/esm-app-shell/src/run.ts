@@ -12,6 +12,10 @@ import {
   subscribeToastShown,
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
+  subscribeConnectivity,
+  getSynchronizationCallbacks,
+  getCurrentUser,
+  LoggedInUser,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -182,7 +186,7 @@ async function setupServiceWorker() {
 
   try {
     await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
-alert("success");
+
     showToast({
       title: "You can now go offline",
       description:
@@ -190,7 +194,6 @@ alert("success");
       kind: "info",
     });
   } catch (e) {
-    alert("error: " + JSON.stringify(e));
     showToast({
       title: "Offline Setup Error",
       description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
@@ -222,6 +225,45 @@ async function precacheSharedApiEndpoints() {
   });
 }
 
+function setupOfflineDataSynchronization() {
+  // Synchronizing data requires a logged in user.
+  let hasLoggedInUser = false;
+  let isOnline = false;
+
+  getCurrentUser({ includeAuthStatus: false }).subscribe((user) => {
+    hasLoggedInUser = !!user;
+    trySynchronize();
+  });
+
+  subscribeConnectivity(async ({ online }) => {
+    isOnline = online;
+    trySynchronize();
+  });
+
+  async function trySynchronize() {
+    const syncCallbacks = getSynchronizationCallbacks();
+    if (!isOnline || !hasLoggedInUser || syncCallbacks.length === 0) {
+      return;
+    }
+
+    showToast({
+      title: "Synchronizing Offline Changes",
+      description:
+        "Synchronizing the changes you have made offline. This may take a while...",
+      kind: "info",
+    });
+
+    await Promise.allSettled(syncCallbacks);
+
+    showToast({
+      title: "Offline Synchronization Finished",
+      description:
+        "Finished synchronizing the changes you have made while offline.",
+      kind: "success",
+    });
+  }
+}
+
 export function run(configUrls: Array<string>) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
@@ -234,6 +276,7 @@ export function run(configUrls: Array<string>) {
   setupApiModule();
   registerCoreExtensions();
   setupServiceWorker();
+  setupOfflineDataSynchronization();
 
   return loadApps()
     .then(setupApps)

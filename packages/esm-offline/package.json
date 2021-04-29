@@ -40,10 +40,13 @@
   "devDependencies": {
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "3.x"
+    "@openmrs/esm-globals": "3.x",
+    "@openmrs/esm-state": "3.x"
   },
   "dependencies": {
     "@openmrs/esm-globals": "^3.1.10",
+    "@openmrs/esm-state": "^3.1.10",
+    "lodash-es": "4.17.21",
     "systemjs-webpack-interop": "^2.1.2",
     "workbox-window": "^6.1.5"
   }
