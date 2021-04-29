@@ -182,22 +182,24 @@ function showLoadingSpinner() {
 }
 
 async function setupServiceWorker() {
-  registerOmrsServiceWorker(`${window.getOpenmrsSpaBase()}service-worker.js`);
+  if (navigator.onLine) {
+    registerOmrsServiceWorker(`${window.getOpenmrsSpaBase()}service-worker.js`);
 
-  try {
-    await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
+    try {
+      await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
 
-    showToast({
-      title: "You can now go offline",
-      description:
-        "The application is done preparing the offline mode. You can now use the website without an internet connection.",
-      kind: "info",
-    });
-  } catch (e) {
-    showToast({
-      title: "Offline Setup Error",
-      description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
-    });
+      showToast({
+        title: "You can now go offline",
+        description:
+          "The application is done preparing the offline mode. You can now use the website without an internet connection.",
+        kind: "info",
+      });
+    } catch (e) {
+      showToast({
+        title: "Offline Setup Error",
+        description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
+      });
+    }
   }
 }
 
