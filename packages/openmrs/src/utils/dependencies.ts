@@ -23,6 +23,7 @@ export function getSharedDependencies() {
     "@openmrs/esm-extension-manager",
     "@openmrs/esm-styleguide",
     "@openmrs/esm-utils",
+    "@openmrs/esm-offline",
     "carbon-components",
     "carbon-icons",
     "rxjs",

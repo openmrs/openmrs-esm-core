@@ -1,12 +1,13 @@
 {
-  "name": "@openmrs/esm-framework",
+  "name": "@openmrs/esm-offline",
   "version": "3.1.10",
   "license": "MPL-2.0",
-  "browser": "dist/openmrs-esm-framework.js",
+  "description": "Helper utilities for OpenMRS",
+  "browser": "dist/openmrs-esm-offline.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "document": "../../document.sh esm-framework",
+    "document": "../../document.sh esm-offline",
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
     "analyze": "webpack --mode=production --env.analyze=true",
@@ -16,11 +17,12 @@
   },
   "keywords": [
     "openmrs",
-    "framework",
-    "frontend",
-    "ui",
     "microfrontends"
   ],
+  "directories": {
+    "lib": "dist",
+    "src": "src"
+  },
   "browserslist": [
     "extends browserslist-config-openmrs"
   ],
@@ -35,17 +37,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "devDependencies": {
+  },
+  "peerDependencies": {
+  },
   "dependencies": {
-    "@openmrs/esm-api": "^3.1.10",
-    "@openmrs/esm-breadcrumbs": "^3.1.10",
-    "@openmrs/esm-config": "^3.1.10",
-    "@openmrs/esm-error-handling": "^3.1.10",
-    "@openmrs/esm-extensions": "^3.1.10",
-    "@openmrs/esm-globals": "^3.1.10",
-    "@openmrs/esm-react-utils": "^3.1.10",
-    "@openmrs/esm-state": "^3.1.10",
-    "@openmrs/esm-styleguide": "^3.1.10",
-    "@openmrs/esm-utils": "^3.1.10",
-    "@openmrs/esm-offline": "^3.1.10"
+    "systemjs-webpack-interop": "^2.1.2"
   }
 }
