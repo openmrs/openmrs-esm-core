@@ -1,5 +1,5 @@
 import { ImportMap } from "@openmrs/esm-globals";
-import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
+import { absoluteWbManifestUrls, indexUrl, omrsCacheName } from "./constants";
 import { fetchUrlsToCacheFromImportMap } from "./importMapUtils";
 import { ServiceWorkerDb } from "./storage";
 
@@ -19,7 +19,7 @@ export async function cacheImportMapReferences(importMap: ImportMap) {
  * Only caches the "raw" app shell, not any MFs/any data coming from an import map.
  */
 export function precacheAppShell() {
-  return addToOmrsCache(absoluteWbManifestUrls);
+  return addToOmrsCache([...absoluteWbManifestUrls, indexUrl]);
 }
 
 /**
