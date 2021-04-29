@@ -1,13 +1,13 @@
 {
-  "name": "@openmrs/esm-utils",
+  "name": "@openmrs/esm-offline",
   "version": "3.1.10",
   "license": "MPL-2.0",
   "description": "Helper utilities for OpenMRS",
-  "browser": "dist/openmrs-esm-utils.js",
+  "browser": "dist/openmrs-esm-offline.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "document": "../../document.sh esm-utils",
+    "document": "../../document.sh esm-offline",
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
     "analyze": "webpack --mode=production --env.analyze=true",
@@ -38,13 +38,18 @@
     "access": "public"
   },
   "devDependencies": {
-    "dayjs": "^1.10.4"
+    "@openmrs/esm-globals": "^3.1.10",
+    "@openmrs/esm-state": "^3.1.10",
+    "rxjs": "^6.5.3"
   },
   "peerDependencies": {
-    "dayjs": "1.x"
+    "@openmrs/esm-globals": "3.x",
+    "@openmrs/esm-state": "3.x",
+    "rxjs": "6.x"
   },
   "dependencies": {
-    "rxjs": "^6.5.3",
-    "systemjs-webpack-interop": "^2.1.2"
+    "lodash-es": "4.17.21",
+    "systemjs-webpack-interop": "^2.1.2",
+    "workbox-window": "^6.1.5"
   }
 }
