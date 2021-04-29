@@ -1,4 +1,4 @@
-import { start } from "single-spa";
+import { start, unregisterApplication, getAppNames } from "single-spa";
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -9,6 +9,7 @@ import {
   renderToasts,
   integrateBreakpoints,
   dispatchConnectivityChanged,
+  subscribeConnectivity,
   subscribeToastShown,
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
@@ -61,6 +62,13 @@ function registerCoreExtensions() {
 }
 
 /**
+ * Calls the provided registration function.
+ */
+function callRegister(registerFn: () => void) {
+  registerFn();
+}
+
+/**
  * Sets up the microfrontends (apps). Uses the defined export
  * from the root modules of the apps, which should export a
  * special function called "setupOpenMRS".
@@ -68,10 +76,14 @@ function registerCoreExtensions() {
  * SPA.
  */
 async function setupApps(modules: Array<[string, System.Module]>) {
-  for (const [appName, appExports] of modules) {
-    registerApp(appName, appExports);
-  }
-
+  const registerFns = modules.map(([appName, appExports]) =>
+    registerApp(appName, appExports)
+  );
+  subscribeConnectivity(async () => {
+    const appNames = getAppNames();
+    await Promise.all(appNames.map(unregisterApplication));
+    registerFns.forEach(callRegister);
+  });
   window.installedModules = modules;
 }
 
@@ -89,8 +101,6 @@ async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
  */
 function connectivityChanged() {
   const online = navigator.onLine;
-  // trigger single SPA re-evaluation
-  window.history.replaceState(undefined, document.title, undefined);
   dispatchConnectivityChanged(online);
   showToast({
     description: `Connection: ${online ? "online" : "offline"}`,
