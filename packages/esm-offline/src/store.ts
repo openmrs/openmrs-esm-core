@@ -20,4 +20,3 @@ export function registerSynchronizationCallback(cb: SynchronizeCallback) {
   };
   store.setState(update, true);
 }
-

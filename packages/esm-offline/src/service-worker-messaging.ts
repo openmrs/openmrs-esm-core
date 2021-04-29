@@ -13,7 +13,9 @@ export async function messageOmrsServiceWorker(
   return await sw.messageSW(message);
 }
 
-export interface OmrsServiceWorkerMessage<MessageTypeTypeIdentifier extends string> {
+export interface OmrsServiceWorkerMessage<
+  MessageTypeTypeIdentifier extends string
+> {
   type: MessageTypeTypeIdentifier;
 }
 
