@@ -22,4 +22,4 @@
 
 Overrides: [CurrentPatientOptions](currentpatientoptions.md).[includeConfig](currentpatientoptions.md#includeconfig)
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L17)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L15)

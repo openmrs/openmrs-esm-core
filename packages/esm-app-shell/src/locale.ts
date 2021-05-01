@@ -10,18 +10,6 @@ declare global {
   }
 }
 
-const languageChangeObserver = new MutationObserver(() => {
-  const reDetect: any = undefined;
-  window.i18next
-    .changeLanguage(reDetect)
-    .catch((e) => console.error("i18next failed to re-detect language", e));
-});
-
-languageChangeObserver.observe(document.documentElement, {
-  attributeFilter: ["lang"],
-  attributes: true,
-});
-
 function decodeHtmlEntity(html: string) {
   const textArea = document.createElement("textarea");
   textArea.innerHTML = html;
@@ -30,6 +18,18 @@ function decodeHtmlEntity(html: string) {
 
 export function setupI18n() {
   window.i18next = i18next.default || i18next;
+
+  const languageChangeObserver = new MutationObserver(() => {
+    const reDetect: any = undefined;
+    window.i18next
+      .changeLanguage(reDetect)
+      .catch((e) => console.error("i18next failed to re-detect language", e));
+  });
+
+  languageChangeObserver.observe(document.documentElement, {
+    attributeFilter: ["lang"],
+    attributes: true,
+  });
 
   return window.i18next
     .use(LanguageDetector)

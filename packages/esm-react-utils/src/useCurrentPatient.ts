@@ -1,10 +1,5 @@
 import React from "react";
-import { reportError } from "@openmrs/esm-error-handling";
-import {
-  fetchCurrentPatient,
-  getCurrentPatient,
-  PatientUuid,
-} from "@openmrs/esm-api";
+import { fetchCurrentPatient, PatientUuid } from "@openmrs/esm-api";
 
 type NullablePatient = fhir.Patient | null;
 
@@ -14,21 +9,26 @@ interface CurrentPatientState {
   err: Error | null;
 }
 
+interface LoadPatient {
+  type: ActionTypes.loadPatient;
+}
+
 interface NewPatient {
   type: ActionTypes.newPatient;
-  patient: fhir.Patient;
+  patient: NullablePatient;
 }
 
 interface PatientLoadError {
-  type: ActionTypes.patientLoadError;
+  type: ActionTypes.loadError;
   err: Error | null;
 }
 
-type Action = NewPatient | PatientLoadError;
+type Action = LoadPatient | NewPatient | PatientLoadError;
 
 enum ActionTypes {
+  loadPatient = "loadPatient",
   newPatient = "newPatient",
-  patientLoadError = "patientLoadError",
+  loadError = "patientLloadErroroadError",
 }
 
 const initialState: CurrentPatientState = {
@@ -47,6 +47,13 @@ function reducer(
   action: Action
 ): CurrentPatientState {
   switch (action.type) {
+    case ActionTypes.loadPatient:
+      return {
+        ...state,
+        patient: null,
+        isLoadingPatient: true,
+        err: null,
+      };
     case ActionTypes.newPatient:
       return {
         ...state,
@@ -54,7 +61,7 @@ function reducer(
         isLoadingPatient: false,
         err: null,
       };
-    case ActionTypes.patientLoadError:
+    case ActionTypes.loadError:
       return {
         ...state,
         patient: null,
@@ -75,20 +82,31 @@ export function useCurrentPatient(
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   React.useEffect(() => {
-    const sub = getCurrentPatient().subscribe(
-      (patient) => dispatch({ type: ActionTypes.newPatient, patient }),
-      (err) => {
-        dispatch({ type: ActionTypes.patientLoadError, err });
-        reportError(err);
-      }
-    );
-    return () => {
-      sub.unsubscribe();
-    };
-  }, []);
+    let active = true;
 
-  React.useEffect(() => {
-    fetchCurrentPatient(patientUuid);
+    if (patientUuid) {
+      fetchCurrentPatient(patientUuid).then(
+        (patient) =>
+          active &&
+          dispatch({
+            patient: patient.data,
+            type: ActionTypes.newPatient,
+          }),
+        (err) =>
+          active &&
+          dispatch({
+            err,
+            type: ActionTypes.loadError,
+          })
+      );
+      dispatch({ type: ActionTypes.loadPatient });
+    } else {
+      dispatch({ type: ActionTypes.newPatient, patient: null });
+    }
+
+    return () => {
+      active = false;
+    };
   }, [patientUuid]);
 
   return [state.isLoadingPatient, state.patient, patientUuid, state.err];

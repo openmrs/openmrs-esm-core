@@ -22,4 +22,4 @@
 
 • `Optional` **includeConfig**: *boolean*
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L9)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L7)

@@ -1,6 +1,5 @@
-import { fetchCurrentPatient, getCurrentPatient } from "./current-patient";
+import { fetchCurrentPatient } from "./current-patient";
 import { fhir } from "../fhir";
-import { first } from "rxjs/operators";
 
 jest.mock("../fhir", () => ({
   fhir: {
@@ -20,17 +19,12 @@ describe("current patient", () => {
       })
     );
 
-    fetchCurrentPatient("12");
-
-    return getCurrentPatient()
-      .pipe(first())
-      .toPromise()
-      .then(() => {
-        expect(fhir.read as jest.MockedFunction<any>).toHaveBeenCalledWith({
-          type: "Patient",
-          patient: "12",
-        });
+    return fetchCurrentPatient("12").then(() => {
+      expect(fhir.read as jest.MockedFunction<any>).toHaveBeenCalledWith({
+        type: "Patient",
+        patient: "12",
       });
+    });
   });
 
   it("fetches the correct patient from the patient home URL", () => {
@@ -40,17 +34,12 @@ describe("current patient", () => {
       })
     );
 
-    fetchCurrentPatient("34");
-
-    return getCurrentPatient()
-      .pipe(first())
-      .toPromise()
-      .then(() => {
-        expect(fhir.read as jest.MockedFunction<any>).toHaveBeenCalledWith({
-          type: "Patient",
-          patient: "34",
-        });
+    return fetchCurrentPatient("34").then(() => {
+      expect(fhir.read as jest.MockedFunction<any>).toHaveBeenCalledWith({
+        type: "Patient",
+        patient: "34",
       });
+    });
   });
 
   it("can handle dashes and alphanumeric characters in the patient uuid", () => {
@@ -60,16 +49,11 @@ describe("current patient", () => {
       })
     );
 
-    fetchCurrentPatient("34-asdsd-234243h342");
-
-    return getCurrentPatient()
-      .pipe(first())
-      .toPromise()
-      .then(() => {
-        expect(fhir.read as jest.MockedFunction<any>).toHaveBeenCalledWith({
-          type: "Patient",
-          patient: "34-asdsd-234243h342",
-        });
+    return fetchCurrentPatient("34-asdsd-234243h342").then(() => {
+      expect(fhir.read as jest.MockedFunction<any>).toHaveBeenCalledWith({
+        type: "Patient",
+        patient: "34-asdsd-234243h342",
       });
+    });
   });
 });

@@ -67,10 +67,7 @@
 ### API Object Functions
 
 - [fetchCurrentPatient](API.md#fetchcurrentpatient)
-- [getCurrentPatient](API.md#getcurrentpatient)
-- [getCurrentPatientUuid](API.md#getcurrentpatientuuid)
 - [getCurrentUser](API.md#getcurrentuser)
-- [refetchCurrentPatient](API.md#refetchcurrentpatient)
 - [refetchCurrentUser](API.md#refetchcurrentuser)
 
 ### Other Functions
@@ -97,7 +94,7 @@
 
 Ƭ **CurrentPatient**: fhir.Patient \| [*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L6)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L4)
 
 ___
 
@@ -105,7 +102,7 @@ ___
 
 Ƭ **PatientUuid**: *string* \| ``null``
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L20)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L18)
 
 ___
 
@@ -285,7 +282,7 @@ ___
 
 ### fetchCurrentPatient
 
-▸ **fetchCurrentPatient**(`patientUuid`: [*PatientUuid*](API.md#patientuuid)): *void*
+▸ **fetchCurrentPatient**(`patientUuid`: [*PatientUuid*](API.md#patientuuid)): *Promise*<{ `data`: Patient  }\> \| *Promise*<``null``\>
 
 #### Parameters:
 
@@ -293,55 +290,9 @@ ___
 | :------ | :------ |
 | `patientUuid` | [*PatientUuid*](API.md#patientuuid) |
 
-**Returns:** *void*
+**Returns:** *Promise*<{ `data`: Patient  }\> \| *Promise*<``null``\>
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L50)
-
-___
-
-### getCurrentPatient
-
-▸ **getCurrentPatient**(): *Observable*<fhir.Patient\>
-
-**Returns:** *Observable*<fhir.Patient\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L29)
-
-▸ **getCurrentPatient**(`opts`: [*PatientWithFullResponse*](interfaces/patientwithfullresponse.md)): *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>\>
-
-#### Parameters:
-
-| Name | Type |
-| :------ | :------ |
-| `opts` | [*PatientWithFullResponse*](interfaces/patientwithfullresponse.md) |
-
-**Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L30)
-
-▸ **getCurrentPatient**(`opts`: [*OnlyThePatient*](interfaces/onlythepatient.md)): *Observable*<fhir.Patient\>
-
-#### Parameters:
-
-| Name | Type |
-| :------ | :------ |
-| `opts` | [*OnlyThePatient*](interfaces/onlythepatient.md) |
-
-**Returns:** *Observable*<fhir.Patient\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L33)
-
-___
-
-### getCurrentPatientUuid
-
-▸ **getCurrentPatientUuid**(): *Observable*<[*PatientUuid*](API.md#patientuuid)\>
-
-**`deprecated`** Remove soon.
-
-**Returns:** *Observable*<[*PatientUuid*](API.md#patientuuid)\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L75)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L23)
 
 ___
 
@@ -407,18 +358,6 @@ Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:57](https:/
 **Returns:** *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
 
 Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L60)
-
-___
-
-### refetchCurrentPatient
-
-▸ **refetchCurrentPatient**(): *void*
-
-**`deprecated`** Remove soon.
-
-**Returns:** *void*
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L67)
 
 ___
 

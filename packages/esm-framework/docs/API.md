@@ -20,6 +20,7 @@
 - [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)
 - [BreadcrumbSettings](interfaces/breadcrumbsettings.md)
 - [CancelLoading](interfaces/cancelloading.md)
+- [ClearDynamicRoutesMessage](interfaces/cleardynamicroutesmessage.md)
 - [ComponentConfig](interfaces/componentconfig.md)
 - [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md)
 - [Config](interfaces/config.md)
@@ -63,6 +64,9 @@
 - [NavigateOptions](interfaces/navigateoptions.md)
 - [NavigationContext](interfaces/navigationcontext.md)
 - [NewVisitPayload](interfaces/newvisitpayload.md)
+- [OfflineStore](interfaces/offlinestore.md)
+- [OmrsServiceWorkerMessage](interfaces/omrsserviceworkermessage.md)
+- [OnImportMapChangedMessage](interfaces/onimportmapchangedmessage.md)
 - [OnlyThePatient](interfaces/onlythepatient.md)
 - [OpenmrsReactComponentProps](interfaces/openmrsreactcomponentprops.md)
 - [OpenmrsReactComponentState](interfaces/openmrsreactcomponentstate.md)
@@ -71,6 +75,7 @@
 - [PatientWithFullResponse](interfaces/patientwithfullresponse.md)
 - [Person](interfaces/person.md)
 - [Privilege](interfaces/privilege.md)
+- [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
 - [Role](interfaces/role.md)
 - [SessionUser](interfaces/sessionuser.md)
 - [ShowToastEvent](interfaces/showtoastevent.md)
@@ -92,12 +97,14 @@
 - [CurrentPatient](API.md#currentpatient)
 - [DateInput](API.md#dateinput)
 - [ExtensionSlotProps](API.md#extensionslotprops)
+- [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
 - [LayoutType](API.md#layouttype)
 - [MaybeAsync](API.md#maybeasync)
 - [NavigationContextType](API.md#navigationcontexttype)
 - [PatientUuid](API.md#patientuuid)
 - [ProvidedConfig](API.md#providedconfig)
 - [SpaEnvironment](API.md#spaenvironment)
+- [SynchronizeCallback](API.md#synchronizecallback)
 - [UpdateVisitPayload](API.md#updatevisitpayload)
 - [Validator](API.md#validator)
 - [ValidatorFunction](API.md#validatorfunction)
@@ -133,10 +140,7 @@
 ### API Object Functions
 
 - [fetchCurrentPatient](API.md#fetchcurrentpatient)
-- [getCurrentPatient](API.md#getcurrentpatient)
-- [getCurrentPatientUuid](API.md#getcurrentpatientuuid)
 - [getCurrentUser](API.md#getcurrentuser)
-- [refetchCurrentPatient](API.md#refetchcurrentpatient)
 - [refetchCurrentUser](API.md#refetchcurrentuser)
 
 ### Breadcrumb Functions
@@ -186,7 +190,9 @@
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
 - [getLocations](API.md#getlocations)
+- [getOmrsServiceWorker](API.md#getomrsserviceworker)
 - [getSyncLifecycle](API.md#getsynclifecycle)
+- [getSynchronizationCallbacks](API.md#getsynchronizationcallbacks)
 - [getUpdatedExtensionSlotInfo](API.md#getupdatedextensionslotinfo)
 - [getVisitTypes](API.md#getvisittypes)
 - [getVisitsForPatient](API.md#getvisitsforpatient)
@@ -197,6 +203,7 @@
 - [isOmrsDateToday](API.md#isomrsdatetoday)
 - [isSameDay](API.md#issameday)
 - [makeUrl](API.md#makeurl)
+- [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
 - [openVisitsNoteWorkspace](API.md#openvisitsnoteworkspace)
 - [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
 - [processConfig](API.md#processconfig)
@@ -204,6 +211,8 @@
 - [pushNavigationContext](API.md#pushnavigationcontext)
 - [registerExtension](API.md#registerextension)
 - [registerExtensionSlot](API.md#registerextensionslot)
+- [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
+- [registerSynchronizationCallback](API.md#registersynchronizationcallback)
 - [renderExtension](API.md#renderextension)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
 - [renderToasts](API.md#rendertoasts)
@@ -299,7 +308,7 @@ ___
 
 Ƭ **CurrentPatient**: fhir.Patient \| [*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L6)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L4)
 
 ___
 
@@ -316,6 +325,14 @@ ___
 Ƭ **ExtensionSlotProps**: [*ExtensionSlotBaseProps*](interfaces/extensionslotbaseprops.md) & *React.HTMLAttributes*<HTMLDivElement\>
 
 Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L19)
+
+___
+
+### KnownOmrsServiceWorkerMessages
+
+Ƭ **KnownOmrsServiceWorkerMessages**: [*OnImportMapChangedMessage*](interfaces/onimportmapchangedmessage.md) \| [*ClearDynamicRoutesMessage*](interfaces/cleardynamicroutesmessage.md) \| [*RegisterDynamicRouteMessage*](interfaces/registerdynamicroutemessage.md)
+
+Defined in: [packages/esm-offline/src/service-worker-messaging.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L36)
 
 ___
 
@@ -353,7 +370,7 @@ ___
 
 Ƭ **PatientUuid**: *string* \| ``null``
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L20)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L18)
 
 ___
 
@@ -377,6 +394,20 @@ ___
 Ƭ **SpaEnvironment**: ``"production"`` \| ``"development"`` \| ``"test"``
 
 Defined in: [packages/esm-globals/src/types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L16)
+
+___
+
+### SynchronizeCallback
+
+Ƭ **SynchronizeCallback**: () => *Promise*<void\>
+
+#### Type declaration:
+
+▸ (): *Promise*<void\>
+
+**Returns:** *Promise*<void\>
+
+Defined in: [packages/esm-offline/src/store.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/store.ts#L3)
 
 ___
 
@@ -695,7 +726,7 @@ ___
 
 ### fetchCurrentPatient
 
-▸ **fetchCurrentPatient**(`patientUuid`: [*PatientUuid*](API.md#patientuuid)): *void*
+▸ **fetchCurrentPatient**(`patientUuid`: [*PatientUuid*](API.md#patientuuid)): *Promise*<{ `data`: Patient  }\> \| *Promise*<``null``\>
 
 #### Parameters:
 
@@ -703,55 +734,9 @@ ___
 | :------ | :------ |
 | `patientUuid` | [*PatientUuid*](API.md#patientuuid) |
 
-**Returns:** *void*
+**Returns:** *Promise*<{ `data`: Patient  }\> \| *Promise*<``null``\>
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L50)
-
-___
-
-### getCurrentPatient
-
-▸ **getCurrentPatient**(): *Observable*<fhir.Patient\>
-
-**Returns:** *Observable*<fhir.Patient\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L29)
-
-▸ **getCurrentPatient**(`opts`: [*PatientWithFullResponse*](interfaces/patientwithfullresponse.md)): *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>\>
-
-#### Parameters:
-
-| Name | Type |
-| :------ | :------ |
-| `opts` | [*PatientWithFullResponse*](interfaces/patientwithfullresponse.md) |
-
-**Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<fhir.Patient\>\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L30)
-
-▸ **getCurrentPatient**(`opts`: [*OnlyThePatient*](interfaces/onlythepatient.md)): *Observable*<fhir.Patient\>
-
-#### Parameters:
-
-| Name | Type |
-| :------ | :------ |
-| `opts` | [*OnlyThePatient*](interfaces/onlythepatient.md) |
-
-**Returns:** *Observable*<fhir.Patient\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L33)
-
-___
-
-### getCurrentPatientUuid
-
-▸ **getCurrentPatientUuid**(): *Observable*<[*PatientUuid*](API.md#patientuuid)\>
-
-**`deprecated`** Remove soon.
-
-**Returns:** *Observable*<[*PatientUuid*](API.md#patientuuid)\>
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L75)
+Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L23)
 
 ___
 
@@ -817,18 +802,6 @@ Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:57](https:/
 **Returns:** *Observable*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
 
 Defined in: [packages/esm-api/src/shared-api-objects/current-user.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-user.ts#L60)
-
-___
-
-### refetchCurrentPatient
-
-▸ **refetchCurrentPatient**(): *void*
-
-**`deprecated`** Remove soon.
-
-**Returns:** *void*
-
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L67)
 
 ___
 
@@ -1564,6 +1537,23 @@ Defined in: [packages/esm-api/src/shared-api-objects/location.ts:13](https://git
 
 ___
 
+### getOmrsServiceWorker
+
+▸ **getOmrsServiceWorker**(): *Promise*<Workbox\>
+
+Returns a `Workbox` instance which allows interacting with the application's global Service Worker.
+
+**Warning:** The promise may never resolve if the Service Worker is never registered (which
+can, for example, happen when the browser is missing the required capabilities).
+
+**Returns:** *Promise*<Workbox\>
+
+A promise which will resolve once the application's Service Worker has been initialized.
+
+Defined in: [packages/esm-offline/src/service-worker.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker.ts#L49)
+
+___
+
 ### getSyncLifecycle
 
 ▸ **getSyncLifecycle**<T\>(`Component`: *React.ComponentType*<T\>, `options`: [*ComponentDecoratorOptions*](interfaces/componentdecoratoroptions.md)): *function*
@@ -1584,6 +1574,16 @@ ___
 **Returns:** () => *Promise*<ReactAppOrParcel<any\>\>
 
 Defined in: [packages/esm-react-utils/src/getLifecycle.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/getLifecycle.ts#L28)
+
+___
+
+### getSynchronizationCallbacks
+
+▸ **getSynchronizationCallbacks**(): [*SynchronizeCallback*](API.md#synchronizecallback)[]
+
+**Returns:** [*SynchronizeCallback*](API.md#synchronizecallback)[]
+
+Defined in: [packages/esm-offline/src/store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/store.ts#L13)
 
 ___
 
@@ -1749,6 +1749,26 @@ Defined in: [packages/esm-api/src/openmrs-fetch.ts:8](https://github.com/openmrs
 
 ___
 
+### messageOmrsServiceWorker
+
+▸ **messageOmrsServiceWorker**(`message`: [*KnownOmrsServiceWorkerMessages*](API.md#knownomrsserviceworkermessages)): *Promise*<any\>
+
+Sends the specified message to the application's service worker.
+
+#### Parameters:
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `message` | [*KnownOmrsServiceWorkerMessages*](API.md#knownomrsserviceworkermessages) | The message to be sent. |
+
+**Returns:** *Promise*<any\>
+
+A promise which completes when the message has been successfully processed by the Service Worker.
+
+Defined in: [packages/esm-offline/src/service-worker-messaging.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L9)
+
+___
+
 ### openVisitsNoteWorkspace
 
 ▸ **openVisitsNoteWorkspace**(`componentName`: *string*, `title`: *string*): *void*
@@ -1868,6 +1888,44 @@ ___
 **Returns:** *void*
 
 Defined in: [packages/esm-extensions/src/extensions.ts:208](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L208)
+
+___
+
+### registerOmrsServiceWorker
+
+▸ **registerOmrsServiceWorker**(`scriptUrl`: *string*, `registerOptions?`: *object*): *Workbox*
+
+If not yet registered, registers the application's global Service Worker.
+Throws if registration is not possible.
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `scriptUrl` | *string* |
+| `registerOptions?` | *object* |
+
+**Returns:** *Workbox*
+
+The registered Service Worker.
+
+Defined in: [packages/esm-offline/src/service-worker.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker.ts#L18)
+
+___
+
+### registerSynchronizationCallback
+
+▸ **registerSynchronizationCallback**(`cb`: [*SynchronizeCallback*](API.md#synchronizecallback)): *void*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | [*SynchronizeCallback*](API.md#synchronizecallback) |
+
+**Returns:** *void*
+
+Defined in: [packages/esm-offline/src/store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/store.ts#L17)
 
 ___
 
@@ -2461,7 +2519,7 @@ ___
 
 **Returns:** [*boolean*, NullablePatient, [*PatientUuid*](API.md#patientuuid), Error \| ``null``]
 
-Defined in: [packages/esm-react-utils/src/useCurrentPatient.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useCurrentPatient.ts#L72)
+Defined in: [packages/esm-react-utils/src/useCurrentPatient.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useCurrentPatient.ts#L79)
 
 ___
 

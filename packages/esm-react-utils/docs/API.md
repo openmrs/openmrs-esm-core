@@ -390,7 +390,7 @@ ___
 
 **Returns:** [*boolean*, NullablePatient, PatientUuid, Error \| ``null``]
 
-Defined in: [packages/esm-react-utils/src/useCurrentPatient.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useCurrentPatient.ts#L72)
+Defined in: [packages/esm-react-utils/src/useCurrentPatient.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/useCurrentPatient.ts#L79)
 
 ___
 
