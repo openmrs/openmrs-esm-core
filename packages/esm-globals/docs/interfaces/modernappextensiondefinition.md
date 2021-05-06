@@ -2,6 +2,12 @@
 
 # Interface: ModernAppExtensionDefinition
 
+## Hierarchy
+
+* [*ComponentDefinition*](componentdefinition.md)
+
+  ↳ **ModernAppExtensionDefinition**
+
 ## Table of contents
 
 ### Properties
@@ -10,6 +16,7 @@
 - [meta](modernappextensiondefinition.md#meta)
 - [offline](modernappextensiondefinition.md#offline)
 - [online](modernappextensiondefinition.md#online)
+- [resources](modernappextensiondefinition.md#resources)
 - [slot](modernappextensiondefinition.md#slot)
 - [slots](modernappextensiondefinition.md#slots)
 
@@ -23,7 +30,9 @@
 
 • **id**: *string*
 
-Defined in: [types.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L43)
+The ID of the extension to register.
+
+Defined in: [types.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L99)
 
 ___
 
@@ -31,7 +40,9 @@ ___
 
 • `Optional` **meta**: *Record*<string, any\>
 
-Defined in: [types.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L47)
+The meta data used for reflection by other components.
+
+Defined in: [types.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L111)
 
 ___
 
@@ -39,7 +50,11 @@ ___
 
 • `Optional` **offline**: *boolean* \| *object*
 
-Defined in: [types.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L49)
+Defines the offline support / properties of the component.
+
+Inherited from: [ComponentDefinition](componentdefinition.md).[offline](componentdefinition.md#offline)
+
+Defined in: [types.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L88)
 
 ___
 
@@ -47,7 +62,23 @@ ___
 
 • `Optional` **online**: *boolean* \| *object*
 
-Defined in: [types.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L48)
+Defines the online support / properties of the component.
+
+Inherited from: [ComponentDefinition](componentdefinition.md).[online](componentdefinition.md#online)
+
+Defined in: [types.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L84)
+
+___
+
+### resources
+
+• `Optional` **resources**: *Record*<string, [*ResourceLoader*](resourceloader.md)<any\>\>
+
+Defines resources that are loaded when the component should mount.
+
+Inherited from: [ComponentDefinition](componentdefinition.md).[resources](componentdefinition.md#resources)
+
+Defined in: [types.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L92)
 
 ___
 
@@ -55,7 +86,9 @@ ___
 
 • `Optional` **slot**: *string*
 
-Defined in: [types.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L44)
+The slot of the extension to optionally attach to.
+
+Defined in: [types.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L103)
 
 ___
 
@@ -63,7 +96,9 @@ ___
 
 • `Optional` **slots**: *string*[]
 
-Defined in: [types.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L45)
+The slots of the extension to optionally attach to.
+
+Defined in: [types.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L107)
 
 ## Methods
 
@@ -71,6 +106,10 @@ Defined in: [types.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 ▸ **load**(): *Promise*<any\>
 
+Defines a function to use for actually loading the component's lifecycle.
+
 **Returns:** *Promise*<any\>
 
-Defined in: [types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L46)
+Inherited from: [ComponentDefinition](componentdefinition.md)
+
+Defined in: [types.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L80)

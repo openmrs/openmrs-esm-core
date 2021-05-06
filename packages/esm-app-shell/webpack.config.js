@@ -42,9 +42,10 @@ module.exports = (env, argv = {}) => {
     entry: resolve(__dirname, "src/index.ts"),
     output: {
       filename: "openmrs.js",
+      chunkFilename: "[chunkhash].js",
       path: resolve(__dirname, outDir),
-      libraryTarget: "window",
     },
+    target: "web",
     devServer: {
       compress: true,
       open: true,
@@ -67,7 +68,7 @@ module.exports = (env, argv = {}) => {
       ],
     },
     mode,
-    devtool: "sourcemap",
+    devtool: mode === "production" ? "source-map" : "inline-source-map",
     module: {
       rules: [
         {
@@ -78,7 +79,9 @@ module.exports = (env, argv = {}) => {
         {
           test: /\.css$/,
           use: [
-            { loader: require.resolve(MiniCssExtractPlugin.loader) },
+            mode === "production"
+              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              : { loader: require.resolve("style-loader") },
             { loader: require.resolve("css-loader") },
           ],
         },
@@ -117,6 +120,7 @@ module.exports = (env, argv = {}) => {
     resolve: {
       mainFields: ["module", "main"],
       extensions: [".ts", ".tsx", ".js", ".jsx"],
+      fallback: { http: false, stream: false, https: false, zlib: false },
     },
     plugins: [
       new CleanWebpackPlugin(),
@@ -136,6 +140,7 @@ module.exports = (env, argv = {}) => {
       }),
       new HtmlWebpackPlugin({
         inject: false,
+        scriptLoading: "blocking",
         publicPath: openmrsPublicPath,
         template: resolve(__dirname, "src/index.ejs"),
         templateParameters: {
@@ -151,9 +156,10 @@ module.exports = (env, argv = {}) => {
       new CopyWebpackPlugin({
         patterns: [{ from: resolve(__dirname, "src/assets") }],
       }),
-      new MiniCssExtractPlugin({
-        filename: "openmrs.css",
-      }),
+      mode === "production" &&
+        new MiniCssExtractPlugin({
+          filename: "openmrs.css",
+        }),
       new DefinePlugin({
         "process.env.BUILD_VERSION": JSON.stringify(`${version}-${timestamp}`),
       }),
@@ -169,6 +175,6 @@ module.exports = (env, argv = {}) => {
           { url: openmrsImportmapUrl, revision: null },
         ],
       }),
-    ],
+    ].filter(Boolean),
   };
 };

@@ -13,7 +13,7 @@ module.exports = (env) => ({
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
   },
-  devtool: "sourcemap",
+  devtool: "source-map",
   module: {
     rules: [
       {

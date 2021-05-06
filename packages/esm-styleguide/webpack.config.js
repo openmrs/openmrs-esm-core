@@ -18,10 +18,9 @@ module.exports = (env) => ({
     filename: "openmrs-esm-styleguide.js",
     chunkFilename: "[name].js",
     path: resolve(__dirname, "dist"),
-    jsonpFunction: "webpackJsonp_openmrs_esm_styleguide",
   },
   mode: "production",
-  devtool: "sourcemap",
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -60,14 +59,7 @@ module.exports = (env) => ({
   },
   optimization: {
     minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-      }),
-      new CssMinimizerPlugin(),
-    ],
+    minimizer: [new CssMinimizerPlugin(), "..."],
   },
   plugins: [
     new CleanWebpackPlugin(),

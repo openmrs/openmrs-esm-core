@@ -5,7 +5,7 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 const { peerDependencies } = require("./package.json");
 
-module.exports = env => ({
+module.exports = (env) => ({
   entry: [
     resolve(__dirname, "src/set-public-path.ts"),
     resolve(__dirname, "src/index.ts"),
@@ -15,7 +15,7 @@ module.exports = env => ({
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
   },
-  devtool: "sourcemap",
+  devtool: "source-map",
   module: {
     rules: [
       {

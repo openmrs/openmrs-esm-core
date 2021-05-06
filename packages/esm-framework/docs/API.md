@@ -23,6 +23,7 @@
 - [ClearDynamicRoutesMessage](interfaces/cleardynamicroutesmessage.md)
 - [ComponentConfig](interfaces/componentconfig.md)
 - [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md)
+- [ComponentDefinition](interfaces/componentdefinition.md)
 - [Config](interfaces/config.md)
 - [ConfigObject](interfaces/configobject.md)
 - [ConfigSchema](interfaces/configschema.md)
@@ -76,6 +77,7 @@
 - [Person](interfaces/person.md)
 - [Privilege](interfaces/privilege.md)
 - [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
+- [ResourceLoader](interfaces/resourceloader.md)
 - [Role](interfaces/role.md)
 - [SessionUser](interfaces/sessionuser.md)
 - [ShowToastEvent](interfaces/showtoastevent.md)
@@ -282,7 +284,7 @@ ___
 
 Ƭ **AppExtensionDefinition**: [*ModernAppExtensionDefinition*](interfaces/modernappextensiondefinition.md) & [*LegacyAppExtensionDefinition*](interfaces/legacyappextensiondefinition.md)
 
-Defined in: [packages/esm-globals/src/types.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L57)
+Defined in: [packages/esm-globals/src/types.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L125)
 
 ___
 
@@ -393,7 +395,7 @@ ___
 
 Ƭ **SpaEnvironment**: ``"production"`` \| ``"development"`` \| ``"test"``
 
-Defined in: [packages/esm-globals/src/types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L16)
+Defined in: [packages/esm-globals/src/types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L46)
 
 ___
 

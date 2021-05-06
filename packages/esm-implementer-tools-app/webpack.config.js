@@ -15,7 +15,7 @@ module.exports = (env, argv = {}) => ({
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
   },
-  devtool: "sourcemap",
+  devtool: "source-map",
   mode: argv.mode || "development",
   module: {
     rules: [

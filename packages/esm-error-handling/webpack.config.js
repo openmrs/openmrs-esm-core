@@ -14,7 +14,6 @@ module.exports = (env) => ({
     filename: "openmrs-esm-error-handling.js",
     libraryTarget: "system",
     path: resolve(__dirname, "dist"),
-    jsonpFunction: "webpackJsonp_openmrs_esm_error_handling",
   },
   mode: "production",
   module: {
@@ -33,7 +32,7 @@ module.exports = (env) => ({
       },
     ],
   },
-  devtool: "sourcemap",
+  devtool: "source-map",
   devServer: {
     headers: {
       "Access-Control-Allow-Origin": "*",

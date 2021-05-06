@@ -14,10 +14,9 @@ module.exports = (env, argv = {}) => ({
     filename: "openmrs-esm-devtools-app.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
-    jsonpFunction: "webpackJsonp_openmrs_esm_devtools",
   },
   mode: argv.mode || "development",
-  devtool: "sourcemap",
+  devtool: "source-map",
   module: {
     rules: [
       {

@@ -43,14 +43,16 @@ function trySetup(appName: string, setup: () => any): any {
 
 function getLoader(
   load: () => Promise<any>,
-  resources?: Record<string, ResourceLoader>,
+  resources?: Record<string, ResourceLoader>
 ) {
-  if (typeof resources === 'object') {
+  if (typeof resources === "object") {
     const resourceKeys = Object.keys(resources);
 
     if (resourceKeys.length > 0) {
       return async () => {
-        const data = await Promise.all(resourceKeys.map(key => resources[key]()));
+        const data = await Promise.all(
+          resourceKeys.map((key) => resources[key]())
+        );
         const dataProps = resourceKeys.reduce((props, name, index) => {
           props[name] = data[index];
           return props;
@@ -61,13 +63,13 @@ function getLoader(
           mount(props) {
             return lifecycle.mount({
               ...dataProps,
-              ...props
+              ...props,
             });
           },
           update(props) {
             return lifecycle.update({
               ...dataProps,
-              ...props
+              ...props,
             });
           },
         };

@@ -6,11 +6,13 @@
 
 ### Interfaces
 
+- [ComponentDefinition](interfaces/componentdefinition.md)
 - [ConnectivityChangedEvent](interfaces/connectivitychangedevent.md)
 - [ImportMap](interfaces/importmap.md)
 - [LegacyAppExtensionDefinition](interfaces/legacyappextensiondefinition.md)
 - [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md)
 - [PageDefinition](interfaces/pagedefinition.md)
+- [ResourceLoader](interfaces/resourceloader.md)
 - [ShowToastEvent](interfaces/showtoastevent.md)
 - [SpaConfig](interfaces/spaconfig.md)
 
@@ -35,7 +37,7 @@
 
 Ƭ **AppExtensionDefinition**: [*ModernAppExtensionDefinition*](interfaces/modernappextensiondefinition.md) & [*LegacyAppExtensionDefinition*](interfaces/legacyappextensiondefinition.md)
 
-Defined in: [types.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L57)
+Defined in: [types.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L125)
 
 ___
 
@@ -43,7 +45,7 @@ ___
 
 Ƭ **SpaEnvironment**: ``"production"`` \| ``"development"`` \| ``"test"``
 
-Defined in: [types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L16)
+Defined in: [types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L46)
 
 ## Functions
 

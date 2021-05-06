@@ -7,12 +7,11 @@ const { peerDependencies } = require("./package.json");
 
 module.exports = (env) => ({
   entry: [resolve(__dirname, "src/index.ts")],
-  devtool: "sourcemap",
+  devtool: "source-map",
   output: {
     filename: "openmrs-esm-module-config.js",
     path: resolve(__dirname, "dist"),
     libraryTarget: "system",
-    jsonpFunction: "webpackJsonp_openmrs_esm_module_config",
   },
   module: {
     rules: [
