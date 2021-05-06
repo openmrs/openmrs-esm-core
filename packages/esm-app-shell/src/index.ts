@@ -21,9 +21,11 @@ function runSpa(config: SpaConfig) {
  * Initializes the OpenMRS Microfrontend App Shell.
  * @param config The global configuration to apply.
  */
-export function initializeSpa(config: SpaConfig) {
+function initializeSpa(config: SpaConfig) {
   setupUtils();
   setupPaths(config);
   wireSpaPaths();
   return runSpa(config);
 }
+
+window.initializeSpa = initializeSpa;

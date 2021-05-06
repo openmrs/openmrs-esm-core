@@ -5,6 +5,7 @@ import {
   getCustomProps,
   PageDefinition,
   registerExtension,
+  ResourceLoader,
 } from "@openmrs/esm-framework";
 import { registerApplication } from "single-spa";
 import { routePrefix, routeRegex } from "./helpers";
@@ -40,6 +41,43 @@ function trySetup(appName: string, setup: () => any): any {
   }
 }
 
+function getLoader(
+  load: () => Promise<any>,
+  resources?: Record<string, ResourceLoader>,
+) {
+  if (typeof resources === 'object') {
+    const resourceKeys = Object.keys(resources);
+
+    if (resourceKeys.length > 0) {
+      return async () => {
+        const data = await Promise.all(resourceKeys.map(key => resources[key]()));
+        const dataProps = resourceKeys.reduce((props, name, index) => {
+          props[name] = data[index];
+          return props;
+        }, {});
+        const lifecycle = await load();
+        return {
+          ...lifecycle,
+          mount(props) {
+            return lifecycle.mount({
+              ...dataProps,
+              ...props
+            });
+          },
+          update(props) {
+            return lifecycle.update({
+              ...dataProps,
+              ...props
+            });
+          },
+        };
+      };
+    }
+  }
+
+  return load;
+}
+
 export function registerApp(appName: string, appExports: System.Module) {
   const setup = appExports.setupOpenMRS;
 
@@ -54,7 +92,7 @@ export function registerApp(appName: string, appExports: System.Module) {
 
       if (typeof result.activate !== "undefined") {
         availablePages.push({
-          load: result.lifecycle,
+          load: getLoader(result.lifecycle, result.resources),
           route: result.activate,
           offline: result.offline,
           online: result.online,
@@ -77,13 +115,14 @@ export function registerApp(appName: string, appExports: System.Module) {
 }
 
 export function tryRegisterPage(appName: string, page: PageDefinition) {
-  const { route, load, online, offline } = page;
+  const { route, load, online, offline, resources } = page;
 
   if (checkStatus(online, offline)) {
     const activityFn = preprocessActivator(route);
+    const loader = getLoader(load, resources);
     registerApplication(
       appName,
-      load,
+      loader,
       (location) => activityFn(location),
       () => getCustomProps(online, offline)
     );
@@ -116,7 +155,7 @@ To fix this, ensure that you define a "load" function inside the extension defin
   }
 
   registerExtension(id, {
-    load: extension.load,
+    load: getLoader(extension.load, extension.resources),
     meta: extension.meta || {},
     moduleName,
     offline: extension.offline,

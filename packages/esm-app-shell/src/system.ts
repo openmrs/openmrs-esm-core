@@ -1,4 +1,4 @@
-import "import-map-overrides/dist/import-map-overrides";
+import "import-map-overrides";
 import "systemjs/dist/system";
 import "systemjs/dist/extras/amd";
 import "systemjs/dist/extras/named-exports";
