@@ -13,6 +13,8 @@ export function getCoreExtensions() {
       id: "breadcrumbs-widget",
       slot: "breadcrumbs-slot",
       load: getAsyncLifecycle(() => import("./breadcrumbs"), options),
+      online: true,
+      offline: true,
     },
   ];
 }
