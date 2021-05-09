@@ -41,8 +41,7 @@
   "dependencies": {
     "@carbon/charts": "^0.41.57",
     "carbon-components-react": "7.31.0",
-    "lodash-es": "^4.17.21",
-    "systemjs-webpack-interop": "^2.1.2"
+    "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
     "carbon-components": "10.x",

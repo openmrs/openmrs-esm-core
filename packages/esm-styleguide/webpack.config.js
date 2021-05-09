@@ -1,6 +1,6 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
+const SystemJSPublicPathWebpackPlugin = require("systemjs-webpack-interop/SystemJSPublicPathWebpackPlugin");
 const { resolve } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -9,7 +9,6 @@ const { peerDependencies } = require("./package.json");
 
 module.exports = (env) => ({
   entry: [
-    resolve(__dirname, "src/set-public-path.ts"),
     resolve(__dirname, "src/index.ts"),
     resolve(__dirname, "src/_all.scss"),
   ],
@@ -62,6 +61,7 @@ module.exports = (env) => ({
     minimizer: [new CssMinimizerPlugin(), "..."],
   },
   plugins: [
+    new SystemJSPublicPathWebpackPlugin(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "openmrs-esm-styleguide.css",

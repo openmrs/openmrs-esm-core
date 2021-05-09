@@ -53,9 +53,10 @@ module.exports = (env, argv = {}) => {
     target: "web",
     devServer: {
       compress: true,
-      open: true,
-      publicPath: openmrsPublicPath,
-      openPage: `${openmrsPublicPath}/`.substr(1),
+      open: [`${openmrsPublicPath}/`.substr(1)],
+      devMiddleware: {
+        publicPath: `${openmrsPublicPath}/`,
+      },
       historyApiFallback: {
         rewrites: [
           {
@@ -76,11 +77,6 @@ module.exports = (env, argv = {}) => {
     devtool: mode === "production" ? "source-map" : "inline-source-map",
     module: {
       rules: [
-        {
-          parser: {
-            system: false,
-          },
-        },
         {
           test: /\.css$/,
           use: [styleLoader, cssLoader],

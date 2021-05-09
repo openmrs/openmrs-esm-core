@@ -38,8 +38,7 @@
   },
   "dependencies": {
     "fhir.js": "0.0.22",
-    "lodash-es": "^4.17.21",
-    "systemjs-webpack-interop": "^2.1.2"
+    "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
     "@openmrs/esm-config": "3.x",

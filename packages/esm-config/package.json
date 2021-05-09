@@ -38,8 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "ramda": "^0.26.1",
-    "systemjs-webpack-interop": "^2.1.2"
+    "ramda": "^0.26.1"
   },
   "peerDependencies": {
     "@openmrs/esm-globals": "3.x",

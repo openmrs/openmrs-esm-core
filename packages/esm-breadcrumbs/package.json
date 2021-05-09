@@ -37,8 +37,7 @@
     "access": "public"
   },
   "dependencies": {
-    "path-to-regexp": "6.1.0",
-    "systemjs-webpack-interop": "^2.1.2"
+    "path-to-regexp": "6.1.0"
   },
   "peerDependencies": {
     "@openmrs/esm-state": "3.x"

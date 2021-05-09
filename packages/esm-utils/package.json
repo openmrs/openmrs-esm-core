@@ -44,7 +44,6 @@
     "dayjs": "1.x"
   },
   "dependencies": {
-    "rxjs": "^6.5.3",
-    "systemjs-webpack-interop": "^2.1.2"
+    "rxjs": "^6.5.3"
   }
 }

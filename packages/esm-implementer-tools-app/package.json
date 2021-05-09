@@ -44,8 +44,7 @@
     "carbon-components-react": "7.31.0",
     "lodash-es": "^4.17.21",
     "react-hooks-global-state": "^1.0.1",
-    "semver": "^7.3.2",
-    "systemjs-webpack-interop": "^2.1.2"
+    "semver": "^7.3.2"
   },
   "peerDependencies": {
     "@openmrs/esm-framework": "3.x",

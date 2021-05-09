@@ -40,8 +40,7 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "single-spa-react": "^4.1.1",
-    "systemjs-webpack-interop": "^2.1.2"
+    "single-spa-react": "^4.1.1"
   },
   "peerDependencies": {
     "@openmrs/esm-api": "3.x",

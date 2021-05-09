@@ -49,7 +49,6 @@
   },
   "dependencies": {
     "lodash-es": "4.17.21",
-    "systemjs-webpack-interop": "^2.1.2",
     "workbox-window": "^6.1.5"
   }
 }

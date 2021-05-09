@@ -38,9 +38,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "systemjs-webpack-interop": "^2.0.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "@openmrs/esm-framework": "3.x",
     "carbon-components": "10.x",

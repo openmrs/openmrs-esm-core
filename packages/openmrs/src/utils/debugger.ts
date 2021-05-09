@@ -26,8 +26,7 @@ function debug(configPath: string, port: number) {
   const options = {
     ...config.devServer,
     port,
-    contentBase: dirname(configPath),
-    stats: { colors: true },
+    static: dirname(configPath),
   };
 
   const server = new WebpackDevServer(webpack(config), options);

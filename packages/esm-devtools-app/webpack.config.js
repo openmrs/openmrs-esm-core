@@ -1,4 +1,5 @@
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const SystemJSPublicPathWebpackPlugin = require("systemjs-webpack-interop/SystemJSPublicPathWebpackPlugin");
 const { resolve } = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -6,10 +7,7 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { peerDependencies } = require("./package.json");
 
 module.exports = (env, argv = {}) => ({
-  entry: [
-    resolve(__dirname, "src/set-public-path.ts"),
-    resolve(__dirname, "src/index.ts"),
-  ],
+  entry: [resolve(__dirname, "src/index.ts")],
   output: {
     filename: "openmrs-esm-devtools-app.js",
     path: resolve(__dirname, "dist"),
@@ -19,11 +17,6 @@ module.exports = (env, argv = {}) => ({
   devtool: "source-map",
   module: {
     rules: [
-      {
-        parser: {
-          system: false,
-        },
-      },
       {
         test: /\.m?(js|ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
@@ -51,6 +44,7 @@ module.exports = (env, argv = {}) => ({
     extensions: [".ts", ".js", ".tsx", ".jsx"],
   },
   plugins: [
+    new SystemJSPublicPathWebpackPlugin(),
     new CleanWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
     new BundleAnalyzerPlugin({

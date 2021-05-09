@@ -1,28 +1,40 @@
+import * as dayjs from "dayjs";
+import * as i18next from "i18next";
+import * as react from "react";
+import * as reactDom from "react-dom";
+import * as reactRouterDom from "react-router-dom";
+import * as reactI18next from "react-i18next";
+import * as singleSpa from "single-spa";
+import * as openmrsEsmFramework from "@openmrs/esm-framework";
+import * as carbonComponents from "carbon-components";
+import * as carbonIcons from "carbon-icons";
+import * as rxjs from "rxjs";
+
 export const sharedDependencies = {
-  dayjs: () => require("dayjs"),
-  i18next: () => require("i18next"),
-  react: () => require("react"),
-  "react-dom": () => require("react-dom"),
-  "react-router-dom": () => require("react-router-dom"),
-  "react-i18next": () => require("react-i18next"),
-  "single-spa": () => require("single-spa"),
-  "@openmrs/esm-api": () => require("@openmrs/esm-framework"),
+  dayjs: () => dayjs,
+  i18next: () => i18next,
+  react: () => react,
+  "react-dom": () => reactDom,
+  "react-router-dom": () => reactRouterDom,
+  "react-i18next": () => reactI18next,
+  "single-spa": () => singleSpa,
+  "@openmrs/esm-api": () => openmrsEsmFramework,
   "@openmrs/esm-app-shell": () => ({}),
-  "@openmrs/esm-breadcrumbs": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-config": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-module-config": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-context": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-error-handling": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-extensions": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-extension-manager": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-framework": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-globals": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-react-utils": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-state": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-styleguide": () => require("@openmrs/esm-framework"),
-  "@openmrs/esm-utils": () => require("@openmrs/esm-utils"),
-  "@openmrs/esm-offline": () => require("@openmrs/esm-offline"),
-  "carbon-components": () => require("carbon-components"),
-  "carbon-icons": () => require("carbon-icons"),
-  rxjs: () => require("rxjs"),
+  "@openmrs/esm-breadcrumbs": () => openmrsEsmFramework,
+  "@openmrs/esm-config": () => openmrsEsmFramework,
+  "@openmrs/esm-module-config": () => openmrsEsmFramework,
+  "@openmrs/esm-context": () => openmrsEsmFramework,
+  "@openmrs/esm-error-handling": () => openmrsEsmFramework,
+  "@openmrs/esm-extensions": () => openmrsEsmFramework,
+  "@openmrs/esm-extension-manager": () => openmrsEsmFramework,
+  "@openmrs/esm-framework": () => openmrsEsmFramework,
+  "@openmrs/esm-globals": () => openmrsEsmFramework,
+  "@openmrs/esm-react-utils": () => openmrsEsmFramework,
+  "@openmrs/esm-state": () => openmrsEsmFramework,
+  "@openmrs/esm-styleguide": () => openmrsEsmFramework,
+  "@openmrs/esm-utils": () => openmrsEsmFramework,
+  "@openmrs/esm-offline": () => openmrsEsmFramework,
+  "carbon-components": () => carbonComponents,
+  "carbon-icons": () => carbonIcons,
+  rxjs: () => rxjs,
 };
