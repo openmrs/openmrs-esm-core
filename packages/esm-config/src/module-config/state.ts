@@ -185,9 +185,7 @@ export interface ImplementerToolsConfigStore {
   config: Config;
 }
 
-export const implementerToolsConfigStore = createGlobalStore<ImplementerToolsConfigStore>(
-  "config-implementer-tools",
-  {
+export const implementerToolsConfigStore =
+  createGlobalStore<ImplementerToolsConfigStore>("config-implementer-tools", {
     config: {},
-  }
-);
+  });

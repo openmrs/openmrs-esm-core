@@ -61,11 +61,14 @@
 - [Location](interfaces/location.md)
 - [LoggedInUser](interfaces/loggedinuser.md)
 - [LoggedInUserFetchResponse](interfaces/loggedinuserfetchresponse.md)
+- [MessageServiceWorkerResult](interfaces/messageserviceworkerresult.md)
 - [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md)
 - [NavigateOptions](interfaces/navigateoptions.md)
 - [NavigationContext](interfaces/navigationcontext.md)
+- [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)
 - [NewVisitPayload](interfaces/newvisitpayload.md)
 - [OfflineStore](interfaces/offlinestore.md)
+- [OmrsServiceWorkerEvent](interfaces/omrsserviceworkerevent.md)
 - [OmrsServiceWorkerMessage](interfaces/omrsserviceworkermessage.md)
 - [OnImportMapChangedMessage](interfaces/onimportmapchangedmessage.md)
 - [OnlyThePatient](interfaces/onlythepatient.md)
@@ -99,6 +102,7 @@
 - [CurrentPatient](API.md#currentpatient)
 - [DateInput](API.md#dateinput)
 - [ExtensionSlotProps](API.md#extensionslotprops)
+- [KnownOmrsServiceWorkerEvents](API.md#knownomrsserviceworkerevents)
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
 - [LayoutType](API.md#layouttype)
 - [MaybeAsync](API.md#maybeasync)
@@ -175,6 +179,7 @@
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
 - [dispatchConnectivityChanged](API.md#dispatchconnectivitychanged)
+- [dispatchNetworkRequestFailed](API.md#dispatchnetworkrequestfailed)
 - [dispatchToastShown](API.md#dispatchtoastshown)
 - [getAppState](API.md#getappstate)
 - [getAssignedIds](API.md#getassignedids)
@@ -225,6 +230,7 @@
 - [showToast](API.md#showtoast)
 - [subscribeConnectivity](API.md#subscribeconnectivity)
 - [subscribeConnectivityChanged](API.md#subscribeconnectivitychanged)
+- [subscribeNetworkRequestFailed](API.md#subscribenetworkrequestfailed)
 - [subscribeTo](API.md#subscribeto)
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [switchTo](API.md#switchto)
@@ -327,6 +333,14 @@ ___
 Ƭ **ExtensionSlotProps**: [*ExtensionSlotBaseProps*](interfaces/extensionslotbaseprops.md) & *React.HTMLAttributes*<HTMLDivElement\>
 
 Defined in: [packages/esm-react-utils/src/ExtensionSlot.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ExtensionSlot.tsx#L19)
+
+___
+
+### KnownOmrsServiceWorkerEvents
+
+Ƭ **KnownOmrsServiceWorkerEvents**: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)
+
+Defined in: [packages/esm-offline/src/service-worker-events.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-events.ts#L15)
 
 ___
 
@@ -1233,6 +1247,22 @@ Defined in: [packages/esm-globals/src/events.ts:7](https://github.com/openmrs/op
 
 ___
 
+### dispatchNetworkRequestFailed
+
+▸ **dispatchNetworkRequestFailed**(`data`: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)): *void*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md) |
+
+**Returns:** *void*
+
+Defined in: [packages/esm-offline/src/events.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/events.ts#L5)
+
+___
+
 ### dispatchToastShown
 
 ▸ **dispatchToastShown**(`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)): *void*
@@ -1753,7 +1783,7 @@ ___
 
 ### messageOmrsServiceWorker
 
-▸ **messageOmrsServiceWorker**(`message`: [*KnownOmrsServiceWorkerMessages*](API.md#knownomrsserviceworkermessages)): *Promise*<any\>
+▸ **messageOmrsServiceWorker**(`message`: [*KnownOmrsServiceWorkerMessages*](API.md#knownomrsserviceworkermessages)): *Promise*<[*MessageServiceWorkerResult*](interfaces/messageserviceworkerresult.md)<any\>\>
 
 Sends the specified message to the application's service worker.
 
@@ -1763,7 +1793,7 @@ Sends the specified message to the application's service worker.
 | :------ | :------ | :------ |
 | `message` | [*KnownOmrsServiceWorkerMessages*](API.md#knownomrsserviceworkermessages) | The message to be sent. |
 
-**Returns:** *Promise*<any\>
+**Returns:** *Promise*<[*MessageServiceWorkerResult*](interfaces/messageserviceworkerresult.md)<any\>\>
 
 A promise which completes when the message has been successfully processed by the Service Worker.
 
@@ -2092,6 +2122,22 @@ ___
 **Returns:** () => *void*
 
 Defined in: [packages/esm-globals/src/events.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L13)
+
+___
+
+### subscribeNetworkRequestFailed
+
+▸ **subscribeNetworkRequestFailed**(`cb`: (`data`: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)) => *void*): *function*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)) => *void* |
+
+**Returns:** () => *void*
+
+Defined in: [packages/esm-offline/src/events.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/events.ts#L11)
 
 ___
 

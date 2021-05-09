@@ -7,25 +7,39 @@
 ### Interfaces
 
 - [ClearDynamicRoutesMessage](interfaces/cleardynamicroutesmessage.md)
+- [MessageServiceWorkerResult](interfaces/messageserviceworkerresult.md)
+- [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)
 - [OfflineStore](interfaces/offlinestore.md)
+- [OmrsServiceWorkerEvent](interfaces/omrsserviceworkerevent.md)
 - [OmrsServiceWorkerMessage](interfaces/omrsserviceworkermessage.md)
 - [OnImportMapChangedMessage](interfaces/onimportmapchangedmessage.md)
 - [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
 
 ### Type aliases
 
+- [KnownOmrsServiceWorkerEvents](API.md#knownomrsserviceworkerevents)
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
 - [SynchronizeCallback](API.md#synchronizecallback)
 
 ### Functions
 
+- [dispatchNetworkRequestFailed](API.md#dispatchnetworkrequestfailed)
 - [getOmrsServiceWorker](API.md#getomrsserviceworker)
 - [getSynchronizationCallbacks](API.md#getsynchronizationcallbacks)
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
 - [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
 - [registerSynchronizationCallback](API.md#registersynchronizationcallback)
+- [subscribeNetworkRequestFailed](API.md#subscribenetworkrequestfailed)
 
 ## Type aliases
+
+### KnownOmrsServiceWorkerEvents
+
+Ƭ **KnownOmrsServiceWorkerEvents**: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)
+
+Defined in: [service-worker-events.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-events.ts#L15)
+
+___
 
 ### KnownOmrsServiceWorkerMessages
 
@@ -48,6 +62,22 @@ ___
 Defined in: [store.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/store.ts#L3)
 
 ## Functions
+
+### dispatchNetworkRequestFailed
+
+▸ **dispatchNetworkRequestFailed**(`data`: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)): *void*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md) |
+
+**Returns:** *void*
+
+Defined in: [events.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/events.ts#L5)
+
+___
 
 ### getOmrsServiceWorker
 
@@ -78,7 +108,7 @@ ___
 
 ### messageOmrsServiceWorker
 
-▸ **messageOmrsServiceWorker**(`message`: [*KnownOmrsServiceWorkerMessages*](API.md#knownomrsserviceworkermessages)): *Promise*<any\>
+▸ **messageOmrsServiceWorker**(`message`: [*KnownOmrsServiceWorkerMessages*](API.md#knownomrsserviceworkermessages)): *Promise*<[*MessageServiceWorkerResult*](interfaces/messageserviceworkerresult.md)<any\>\>
 
 Sends the specified message to the application's service worker.
 
@@ -88,7 +118,7 @@ Sends the specified message to the application's service worker.
 | :------ | :------ | :------ |
 | `message` | [*KnownOmrsServiceWorkerMessages*](API.md#knownomrsserviceworkermessages) | The message to be sent. |
 
-**Returns:** *Promise*<any\>
+**Returns:** *Promise*<[*MessageServiceWorkerResult*](interfaces/messageserviceworkerresult.md)<any\>\>
 
 A promise which completes when the message has been successfully processed by the Service Worker.
 
@@ -131,3 +161,19 @@ ___
 **Returns:** *void*
 
 Defined in: [store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/store.ts#L17)
+
+___
+
+### subscribeNetworkRequestFailed
+
+▸ **subscribeNetworkRequestFailed**(`cb`: (`data`: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)) => *void*): *function*
+
+#### Parameters:
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)) => *void* |
+
+**Returns:** () => *void*
+
+Defined in: [events.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/events.ts#L11)
