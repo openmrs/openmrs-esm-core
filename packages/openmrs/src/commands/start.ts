@@ -1,5 +1,5 @@
 import express from "express";
-import proxy from "http-proxy-middleware";
+import { createProxyMiddleware } from "http-proxy-middleware";
 import { resolve } from "path";
 import { logInfo, logWarn } from "../utils";
 
@@ -26,7 +26,7 @@ export function runStart(args: StartArgs) {
   app.use("/openmrs/spa", express.static(source));
   app.use(
     "/openmrs",
-    proxy([`/openmrs/**`, `!${spaPath}/**`], {
+    createProxyMiddleware([`/openmrs/**`, `!${spaPath}/**`], {
       target: args.backend,
       changeOrigin: true,
     })

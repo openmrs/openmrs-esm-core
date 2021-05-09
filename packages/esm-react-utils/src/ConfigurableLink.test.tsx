@@ -8,9 +8,8 @@ import { ConfigurableLink } from "./ConfigurableLink";
 jest.mock("@openmrs/esm-config");
 const mockNavigate = navigate as jest.Mock;
 
-const realInterpolate = jest.requireActual(
-  "@openmrs/esm-config"
-).interpolateUrl;
+const realInterpolate = jest.requireActual("@openmrs/esm-config")
+  .interpolateUrl;
 
 (interpolateUrl as jest.Mock).mockImplementation((...args) =>
   realInterpolate(...args)

@@ -1,5 +1,5 @@
 import express from "express";
-import proxy from "http-proxy-middleware";
+import { createProxyMiddleware } from "http-proxy-middleware";
 import { resolve } from "path";
 import { readFileSync } from "fs";
 import {
@@ -58,7 +58,7 @@ export function runDevelop(args: DevelopArgs) {
   app.use(spaPath, express.static(source));
   app.use(
     apiUrl,
-    proxy([`${apiUrl}/**`, `!${spaPath}/**`], {
+    createProxyMiddleware([`${apiUrl}/**`, `!${spaPath}/**`], {
       target: backend,
       changeOrigin: true,
     })

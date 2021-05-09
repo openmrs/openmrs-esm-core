@@ -38,8 +38,7 @@ export function registerAllOmrsRoutes() {
   // b) anything else (e.g. API requests) is not cached.
   setDefaultHandler(async (options) => {
     const db = new ServiceWorkerDb();
-    const allDynamicRouteRegistrations =
-      await db.dynamicRouteRegistrations.toArray();
+    const allDynamicRouteRegistrations = await db.dynamicRouteRegistrations.toArray();
     const hasMatchingDynamicRoute = allDynamicRouteRegistrations.some((route) =>
       new RegExp(route.pattern).test(options.url.href)
     );

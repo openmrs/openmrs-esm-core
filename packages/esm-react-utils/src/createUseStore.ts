@@ -28,10 +28,10 @@ export function createUseStore<T>(store: Store<T>) {
     let boundActions: BoundActions = {};
 
     if (actions) {
-      boundActions = useMemo(
-        () => bindActions(store, actions),
-        [store, actions]
-      );
+      boundActions = useMemo(() => bindActions(store, actions), [
+        store,
+        actions,
+      ]);
     }
 
     return { ...state, ...boundActions };

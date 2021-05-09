@@ -12,8 +12,7 @@ import { MockedStore } from "../__mocks__/openmrs-esm-state.mock";
 import { useConfig } from "./useConfig";
 import { ComponentContext } from "./ComponentContext";
 
-const mockConfigInternalStore =
-  configInternalStore as MockedStore<ConfigInternalStore>;
+const mockConfigInternalStore = configInternalStore as MockedStore<ConfigInternalStore>;
 
 function RenderConfig(props) {
   const config = useConfig();

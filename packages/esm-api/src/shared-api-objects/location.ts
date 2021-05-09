@@ -14,8 +14,9 @@ export function getLocations(): Observable<Array<Location>> {
   return openmrsObservableFetch<any>(`/ws/rest/v1/location`)
     .pipe(
       map((results) => {
-        const locations: Array<Location> =
-          results.data.results.map(toLocationObject);
+        const locations: Array<Location> = results.data.results.map(
+          toLocationObject
+        );
         return locations;
       })
     )

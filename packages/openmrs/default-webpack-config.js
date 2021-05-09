@@ -21,14 +21,14 @@ function makeIdent(name) {
 
 module.exports = (env, argv = {}) => {
   const root = process.cwd();
-  const { name, peerDependencies, main, types } = require(resolve(
+  const { name, peerDependencies, browser, main, types } = require(resolve(
     root,
     "package.json"
   ));
   const mode = argv.mode || process.env.NODE_ENV || "development";
-  const filename = basename(main);
-  const outDir = dirname(main);
-  const srcFile = resolve(root, types);
+  const filename = basename(browser || main);
+  const outDir = dirname(browser || main);
+  const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
 
   const cssLoader = {

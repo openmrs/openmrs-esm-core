@@ -19,13 +19,10 @@ import {
 } from "./state";
 import { Type } from "../types";
 
-const mockConfigInternalStore =
-  configInternalStore as MockedStore<ConfigInternalStore>;
+const mockConfigInternalStore = configInternalStore as MockedStore<ConfigInternalStore>;
 const mockTemporaryConfigStore = temporaryConfigStore as MockedStore<object>;
-const mockImplementerToolsConfigStore =
-  implementerToolsConfigStore as MockedStore<ImplementerToolsConfigStore>;
-const mockConfigExtensionStore =
-  configExtensionStore as MockedStore<ConfigExtensionStore>;
+const mockImplementerToolsConfigStore = implementerToolsConfigStore as MockedStore<ImplementerToolsConfigStore>;
+const mockConfigExtensionStore = configExtensionStore as MockedStore<ConfigExtensionStore>;
 
 async function resetAll() {
   mockConfigInternalStore.resetMock();
@@ -891,9 +888,8 @@ describe("extension slot config", () => {
         },
       },
     });
-    const config =
-      getExtensionSlotsConfigStore("foo-module").getState()
-        .extensionSlotConfigs["fooSlot"];
+    const config = getExtensionSlotsConfigStore("foo-module").getState()
+      .extensionSlotConfigs["fooSlot"];
     expect(config).toStrictEqual({
       add: ["bar", "baz"],
       remove: ["zap"],
@@ -931,9 +927,8 @@ describe("extension slot config", () => {
       },
     });
     await Config.getConfig("foo-module");
-    const extConfig =
-      getExtensionSlotsConfigStore("foo-module").getState()
-        .extensionSlotConfigs["fooSlot"];
+    const extConfig = getExtensionSlotsConfigStore("foo-module").getState()
+      .extensionSlotConfigs["fooSlot"];
     expect(extConfig).toStrictEqual({ remove: ["bar"] });
   });
 
