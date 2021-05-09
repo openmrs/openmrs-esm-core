@@ -3,6 +3,7 @@ import { registerRoute, setDefaultHandler } from "workbox-routing";
 import { NetworkFirst, NetworkOnly } from "workbox-strategies";
 import { indexUrl, omrsCacheName } from "./constants";
 import { ServiceWorkerDb } from "./storage";
+import { publishEvent } from "./event";
 
 /**
  * Registers required Workbox routes used by the service worker to provide offline functionality.
@@ -37,26 +38,49 @@ export function registerAllOmrsRoutes() {
   // b) anything else (e.g. API requests) is not cached.
   setDefaultHandler(async (options) => {
     const db = new ServiceWorkerDb();
-    const allDynamicRouteRegistrations = await db.dynamicRouteRegistrations.toArray();
+    const allDynamicRouteRegistrations =
+      await db.dynamicRouteRegistrations.toArray();
     const hasMatchingDynamicRoute = allDynamicRouteRegistrations.some((route) =>
       new RegExp(route.pattern).test(options.url.href)
     );
 
     if (hasMatchingDynamicRoute && options.request.method === "GET") {
-      return await networkFirst.handle(options);
+      return await handleCacheableGetRequest(options);
     } else {
-      return await handleUnknownRequest(options);
+      return await handleUncacheableRequest(options);
     }
   });
 
-  async function handleUnknownRequest(options: RouteHandlerCallbackOptions) {
+  async function handleCacheableGetRequest(
+    options: RouteHandlerCallbackOptions
+  ) {
+    return await networkFirst.handle(options);
+  }
+
+  async function handleUncacheableRequest(
+    options: RouteHandlerCallbackOptions
+  ) {
     try {
       return await networkOnly.handle(options);
     } catch (e) {
-      return (
-        (await caches.match(options.request, { cacheName: omrsCacheName })) ??
-        Response.error()
-      );
+      const cachedResponse = await caches.match(options.request, {
+        cacheName: omrsCacheName,
+      });
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      publishEvent({
+        type: "networkRequestFailed",
+        request: {
+          url: options.request.url,
+          method: options.request.method,
+          body: await options.request.text(),
+          headers: Object.fromEntries(Object.entries(options.request.headers)),
+        },
+      });
+
+      return Response.error();
     }
   }
 }

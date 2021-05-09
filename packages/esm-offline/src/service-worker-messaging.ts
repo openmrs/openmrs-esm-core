@@ -8,7 +8,7 @@ import { getOmrsServiceWorker } from "./service-worker";
  */
 export async function messageOmrsServiceWorker(
   message: KnownOmrsServiceWorkerMessages
-) {
+): Promise<MessageServiceWorkerResult<any>> {
   const sw = await getOmrsServiceWorker();
   return await sw.messageSW(message);
 }
@@ -37,3 +37,9 @@ export type KnownOmrsServiceWorkerMessages =
   | OnImportMapChangedMessage
   | ClearDynamicRoutesMessage
   | RegisterDynamicRouteMessage;
+
+export interface MessageServiceWorkerResult<T> {
+  success: boolean;
+  result?: T;
+  error?: string;
+}

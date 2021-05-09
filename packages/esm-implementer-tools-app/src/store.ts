@@ -18,9 +18,8 @@ export interface ActiveItemDescription {
   source?: string;
 }
 
-export const implementerToolsStore: Store<ImplementerToolsStore> = createGlobalStore(
-  "implementer-tools",
-  {
+export const implementerToolsStore: Store<ImplementerToolsStore> =
+  createGlobalStore("implementer-tools", {
     activeItemDescription: undefined,
     configPathBeingEdited: null,
     isOpen: getIsImplementerToolsOpen(),
@@ -28,8 +27,7 @@ export const implementerToolsStore: Store<ImplementerToolsStore> = createGlobalS
     openTabIndex: 0,
     isConfigToolbarOpen: getIsConfigToolbarOpen(),
     isUIEditorEnabled: getIsUIEditorEnabled(),
-  }
-);
+  });
 
 export const setHasAlert = implementerToolsStore.action(
   (state, value: boolean) => ({
