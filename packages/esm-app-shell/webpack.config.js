@@ -81,19 +81,9 @@ module.exports = (env, argv = {}) => {
             system: false,
           },
         },
-
         {
           test: /\.css$/,
           use: [styleLoader, cssLoader],
-        },
-
-        {
-          test: /\.s[ac]ss$/i,
-          use: [
-            styleLoader,
-            cssLoader,
-            { loader: require.resolve("sass-loader") },
-          ],
         },
         {
           test: /\.(woff|woff2|png)?$/,

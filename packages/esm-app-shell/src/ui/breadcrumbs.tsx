@@ -4,7 +4,6 @@ import {
   BreadcrumbItem,
 } from "carbon-components-react/es/components/Breadcrumb";
 import { getBreadcrumbsFor, ConfigurableLink } from "@openmrs/esm-framework";
-import styles from "./breadcrumbs.scss";
 
 function getPath(path: string, params: Array<string>) {
   const parts = [...params];
@@ -53,7 +52,7 @@ export const Breadcrumbs: React.FC = () => {
   }
 
   return (
-    <Breadcrumb className={styles.breadcrumbs}>
+    <Breadcrumb className="breadcrumbs-container">
       {breadcrumbs.map((bc) => (
         <BreadcrumbItem key={bc.settings.path}>
           <ConfigurableLink to={getPath(bc.settings.path, params)}>
