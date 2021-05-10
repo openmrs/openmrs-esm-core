@@ -10,7 +10,7 @@
 
 ## Hierarchy
 
-* *Response*
+- *Response*
 
   ↳ **FetchResponse**
 
@@ -67,7 +67,7 @@ ___
 
 • **data**: T
 
-Defined in: [packages/esm-api/src/types/fetch.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/fetch.ts#L4)
+Defined in: [packages/framework/esm-api/src/types/fetch.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L4)
 
 ___
 

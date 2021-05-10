@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* **CurrentUserOptions**
+- **CurrentUserOptions**
 
   ↳ [*CurrentUserWithResponseOption*](currentuserwithresponseoption.md)
 
@@ -22,4 +22,4 @@
 
 • `Optional` **includeAuthStatus**: *boolean*
 
-Defined in: [packages/esm-api/src/types/user-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L2)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L2)

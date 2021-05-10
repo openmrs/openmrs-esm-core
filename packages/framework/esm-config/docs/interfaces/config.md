@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* *Object*
+- *Object*
 
   ↳ **Config**
 
@@ -47,7 +47,7 @@ Defined in: node_modules/typescript/lib/lib.es5.d.ts:122
 
 Determines whether an object has a property with the specified name.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -67,7 +67,7 @@ ___
 
 Determines whether an object exists in another object's prototype chain.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -87,7 +87,7 @@ ___
 
 Determines whether a specified property is enumerable.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |

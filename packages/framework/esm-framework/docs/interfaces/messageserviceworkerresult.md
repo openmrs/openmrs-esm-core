@@ -22,7 +22,7 @@
 
 • `Optional` **error**: *string*
 
-Defined in: [packages/esm-offline/src/service-worker-messaging.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L44)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L44)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • `Optional` **result**: T
 
-Defined in: [packages/esm-offline/src/service-worker-messaging.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L43)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L43)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 • **success**: *boolean*
 
-Defined in: [packages/esm-offline/src/service-worker-messaging.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L42)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L42)

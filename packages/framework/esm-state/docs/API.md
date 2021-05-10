@@ -23,7 +23,7 @@
 
 ▸ **createAppState**(`initialState`: [*AppState*](interfaces/appstate.md)): *Store*<[*AppState*](interfaces/appstate.md)\>
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -31,7 +31,7 @@
 
 **Returns:** *Store*<[*AppState*](interfaces/appstate.md)\>
 
-Defined in: [state.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L59)
+Defined in: [state.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L59)
 
 ___
 
@@ -39,13 +39,13 @@ ___
 
 ▸ **createGlobalStore**<TState\>(`name`: *string*, `initialState`: TState): *Store*<TState\>
 
-#### Type parameters:
+#### Type parameters
 
 | Name |
 | :------ |
 | `TState` |
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -54,7 +54,7 @@ ___
 
 **Returns:** *Store*<TState\>
 
-Defined in: [state.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L10)
+Defined in: [state.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L10)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 **Returns:** *Store*<[*AppState*](interfaces/appstate.md)\>
 
-Defined in: [state.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L63)
+Defined in: [state.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L63)
 
 ___
 
@@ -72,13 +72,13 @@ ___
 
 ▸ **getGlobalStore**<TState\>(`name`: *string*, `fallbackState?`: TState): *Store*<TState\>
 
-#### Type parameters:
+#### Type parameters
 
 | Name | Default |
 | :------ | :------ |
 | `TState` | *any* |
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -87,7 +87,7 @@ ___
 
 **Returns:** *Store*<TState\>
 
-Defined in: [state.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L39)
+Defined in: [state.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L39)
 
 ___
 
@@ -95,14 +95,14 @@ ___
 
 ▸ **subscribeTo**<T, U\>(`store`: *Store*<T\>, `select`: (`state`: T) => U, `handle`: (`subState`: U) => *void*): Unsubscribe
 
-#### Type parameters:
+#### Type parameters
 
 | Name |
 | :------ |
 | `T` |
 | `U` |
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -112,7 +112,7 @@ ___
 
 **Returns:** Unsubscribe
 
-Defined in: [state.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/state.ts#L67)
+Defined in: [state.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L67)
 
 ___
 
@@ -120,13 +120,13 @@ ___
 
 ▸ **update**<T\>(`obj`: T, `__namedParameters`: *string*[], `value`: *any*): T
 
-#### Type parameters:
+#### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | *Record*<string, any\> |
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -136,4 +136,4 @@ ___
 
 **Returns:** T
 
-Defined in: [update.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-state/src/update.ts#L1)
+Defined in: [update.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/update.ts#L1)

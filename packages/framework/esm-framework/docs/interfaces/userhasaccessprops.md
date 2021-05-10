@@ -14,4 +14,4 @@
 
 • **privilege**: *string*
 
-Defined in: [packages/esm-react-utils/src/UserHasAccess.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/UserHasAccess.tsx#L5)
+Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L5)

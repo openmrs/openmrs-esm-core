@@ -30,7 +30,7 @@
 
 Ƭ **DateInput**: *string* \| *number* \| Date
 
-Defined in: [omrs-dates.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L8)
+Defined in: [omrs-dates.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L8)
 
 ## Functions
 
@@ -40,7 +40,7 @@ Defined in: [omrs-dates.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/m
 
 Gets a human readable age represention of the provided date string.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -50,7 +50,7 @@ Gets a human readable age represention of the provided date string.
 
 A human-readable string version of the age.
 
-Defined in: [age-helpers.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/age-helpers.tsx#L37)
+Defined in: [age-helpers.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L37)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 Gets the number of days in the year of the given date.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -70,7 +70,7 @@ Gets the number of days in the year of the given date.
 
 The number of days.
 
-Defined in: [age-helpers.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/age-helpers.tsx#L6)
+Defined in: [age-helpers.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L6)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 This function is STRICT on checking whether a date string is the openmrs format.
 The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -89,7 +89,7 @@ The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 **Returns:** *boolean*
 
-Defined in: [omrs-dates.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L16)
+Defined in: [omrs-dates.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L16)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 ▸ **isOmrsDateToday**(`date`: [*DateInput*](API.md#dateinput)): *boolean*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -105,7 +105,7 @@ ___
 
 **Returns:** *boolean*
 
-Defined in: [omrs-dates.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L53)
+Defined in: [omrs-dates.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L53)
 
 ___
 
@@ -115,7 +115,7 @@ ___
 
 Checks if two dates are representing the same day.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -126,7 +126,7 @@ Checks if two dates are representing the same day.
 
 True if both are located on the same day.
 
-Defined in: [age-helpers.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/age-helpers.tsx#L23)
+Defined in: [age-helpers.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L23)
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 Converts the object to a date object if it is a valid ISO date time string.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -144,7 +144,7 @@ Converts the object to a date object if it is a valid ISO date time string.
 
 **Returns:** Date \| ``null``
 
-Defined in: [omrs-dates.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L60)
+Defined in: [omrs-dates.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L60)
 
 ___
 
@@ -154,7 +154,7 @@ ___
 
 Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
@@ -163,7 +163,7 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L112)
+Defined in: [omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L112)
 
 ___
 
@@ -173,7 +173,7 @@ ___
 
 Formats the input as a date string using the format "DD - MMM - YYYY".
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -181,7 +181,7 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L98)
+Defined in: [omrs-dates.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L98)
 
 ___
 
@@ -191,7 +191,7 @@ ___
 
 Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
@@ -200,7 +200,7 @@ Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SS
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L71)
+Defined in: [omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L71)
 
 ___
 
@@ -210,7 +210,7 @@ ___
 
 Formats the input as a time string using the format "HH:mm A".
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -218,7 +218,7 @@ Formats the input as a time string using the format "HH:mm A".
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L91)
+Defined in: [omrs-dates.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L91)
 
 ___
 
@@ -228,7 +228,7 @@ ___
 
 Formats the input as a time string using the format "HH:mm".
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -236,7 +236,7 @@ Formats the input as a time string using the format "HH:mm".
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L84)
+Defined in: [omrs-dates.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L84)
 
 ___
 
@@ -246,7 +246,7 @@ ___
 
 Formats the input as a date string using the format "DD-MMM".
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -254,7 +254,7 @@ Formats the input as a date string using the format "DD-MMM".
 
 **Returns:** *string*
 
-Defined in: [omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/omrs-dates.ts#L105)
+Defined in: [omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L105)
 
 ___
 
@@ -262,7 +262,7 @@ ___
 
 ▸ **translateFrom**(`moduleName`: *string*, `key`: *string*, `fallback?`: *string*): *string*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -272,4 +272,4 @@ ___
 
 **Returns:** *string*
 
-Defined in: [translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-utils/src/translate.ts#L3)
+Defined in: [translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/translate.ts#L3)

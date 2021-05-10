@@ -17,7 +17,7 @@
 
 • `Optional` **disableTranslations**: *boolean*
 
-Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L57)
+Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L57)
 
 ___
 
@@ -25,7 +25,7 @@ ___
 
 • **featureName**: *string*
 
-Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L56)
+Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L56)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • **moduleName**: *string*
 
-Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L55)
+Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L55)
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 • `Optional` **strictMode**: *boolean*
 
-Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L58)
+Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L58)

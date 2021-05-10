@@ -51,8 +51,8 @@ jobs:
         run: |
           mkdir -p dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}
           mkdir -p dist/${{ env.ESM_NAME }}/latest
-          cp packages/esm-app-shell/dist/*.* dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
-          cp packages/esm-app-shell/dist/*.* dist/${{ env.ESM_NAME }}/latest/
+          cp packages/shell/esm-app-shell/dist/*.* dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
+          cp packages/shell/esm-app-shell/dist/*.* dist/${{ env.ESM_NAME }}/latest/
       - name: Publish to Digital Ocean
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -84,7 +84,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}
-          mv packages/esm-implementer-tools-app/dist/*.* dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
+          mv packages/apps/esm-implementer-tools-app/dist/*.* dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
       - name: Publish to Digital Ocean
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -125,7 +125,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}
-          mv packages/esm-devtools-app/dist/*.* dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
+          mv packages/apps/esm-devtools-app/dist/*.* dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
       - name: Publish to Digital Ocean
         uses: jakejarvis/s3-sync-action@master
         with:

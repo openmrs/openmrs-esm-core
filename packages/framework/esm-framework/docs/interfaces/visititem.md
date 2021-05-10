@@ -17,7 +17,7 @@
 
 • `Optional` **anythingElse**: *any*
 
-Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L90)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L90)
 
 ___
 
@@ -25,7 +25,7 @@ ___
 
 • **mode**: [*VisitMode*](../enums/visitmode.md)
 
-Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L87)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L87)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • **status**: [*VisitStatus*](../enums/visitstatus.md)
 
-Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L89)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L89)
 
 ___
 
@@ -41,4 +41,4 @@ ___
 
 • `Optional` **visitData**: [*Visit*](visit.md)
 
-Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L88)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L88)

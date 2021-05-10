@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* [*CurrentUserOptions*](currentuseroptions.md)
+- [*CurrentUserOptions*](currentuseroptions.md)
 
   ↳ **CurrentUserWithResponseOption**
 
@@ -22,4 +22,4 @@
 
 Overrides: [CurrentUserOptions](currentuseroptions.md).[includeAuthStatus](currentuseroptions.md#includeauthstatus)
 
-Defined in: [packages/esm-api/src/types/user-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L6)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L6)

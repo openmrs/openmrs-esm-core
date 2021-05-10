@@ -14,4 +14,4 @@
 
 **Returns:** *Promise*<T\>
 
-Defined in: [packages/esm-globals/src/types.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L72)
+Defined in: [packages/framework/esm-globals/src/types.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L72)

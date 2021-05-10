@@ -15,7 +15,7 @@
 
 • **matcher**: *RegExp*
 
-Defined in: [packages/esm-breadcrumbs/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/types.ts#L31)
+Defined in: [packages/framework/esm-breadcrumbs/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L31)
 
 ___
 
@@ -23,4 +23,4 @@ ___
 
 • **settings**: [*BreadcrumbSettings*](breadcrumbsettings.md)
 
-Defined in: [packages/esm-breadcrumbs/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-breadcrumbs/src/types.ts#L32)
+Defined in: [packages/framework/esm-breadcrumbs/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L32)

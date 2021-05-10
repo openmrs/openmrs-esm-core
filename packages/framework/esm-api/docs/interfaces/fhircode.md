@@ -15,7 +15,7 @@
 
 • **code**: *string*
 
-Defined in: [packages/esm-api/src/types/fhir-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/fhir-resource.ts#L27)
+Defined in: [packages/framework/esm-api/src/types/fhir-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fhir-resource.ts#L27)
 
 ___
 
@@ -23,4 +23,4 @@ ___
 
 • **system**: *string*
 
-Defined in: [packages/esm-api/src/types/fhir-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/fhir-resource.ts#L28)
+Defined in: [packages/framework/esm-api/src/types/fhir-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fhir-resource.ts#L28)

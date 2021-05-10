@@ -19,7 +19,7 @@
 
 • `Optional` **display**: *string*
 
-Defined in: [packages/esm-api/src/types/openmrs-resource.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L3)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L3)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **uuid**: *string*
 
-Defined in: [packages/esm-api/src/types/openmrs-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L2)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L2)

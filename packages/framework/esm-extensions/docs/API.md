@@ -55,13 +55,13 @@
 
 Ƭ **MaybeAsync**<T\>: T \| *Promise*<T\>
 
-#### Type parameters:
+#### Type parameters
 
 | Name |
 | :------ |
 | `T` |
 
-Defined in: [store.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L81)
+Defined in: [store.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L81)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 Ƭ **NavigationContextType**: ``"workspace"`` \| ``"dialog"`` \| ``"link"``
 
-Defined in: [contexts.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L3)
+Defined in: [contexts.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L3)
 
 ## Variables
 
@@ -77,7 +77,7 @@ Defined in: [contexts.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/mas
 
 • `Const` **extensionStore**: *Store*<[*ExtensionStore*](interfaces/extensionstore.md)\>
 
-Defined in: [store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L76)
+Defined in: [store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L76)
 
 ## Functions
 
@@ -85,7 +85,7 @@ Defined in: [store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 ▸ **attach**(`extensionSlotName`: *string*, `extensionId`: *string*): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -94,7 +94,7 @@ Defined in: [store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L70)
+Defined in: [extensions.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L70)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 ▸ **checkStatus**(`online?`: *boolean* \| *object*, `offline?`: *boolean* \| *object*): *boolean*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
@@ -111,7 +111,7 @@ ___
 
 **Returns:** *boolean*
 
-Defined in: [helpers.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/helpers.ts#L1)
+Defined in: [helpers.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/helpers.ts#L1)
 
 ___
 
@@ -119,7 +119,7 @@ ___
 
 ▸ **checkStatusFor**(`status`: *boolean*, `online?`: *boolean* \| *object*, `offline?`: *boolean* \| *object*): *boolean*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
@@ -129,7 +129,7 @@ ___
 
 **Returns:** *boolean*
 
-Defined in: [helpers.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/helpers.ts#L9)
+Defined in: [helpers.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/helpers.ts#L9)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 ▸ **detach**(`extensionSlotName`: *string*, `extensionId`: *string*): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -146,7 +146,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L100)
+Defined in: [extensions.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L100)
 
 ___
 
@@ -154,7 +154,7 @@ ___
 
 ▸ **detachAll**(`extensionSlotName`: *string*): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -162,7 +162,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L123)
+Defined in: [extensions.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L123)
 
 ___
 
@@ -170,7 +170,7 @@ ___
 
 ▸ **getAssignedIds**(`instance`: [*ExtensionSlotInstance*](interfaces/extensionslotinstance.md), `attachedIds`: *string*[]): *string*[]
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -179,7 +179,7 @@ ___
 
 **Returns:** *string*[]
 
-Defined in: [extensions.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L144)
+Defined in: [extensions.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L144)
 
 ___
 
@@ -187,7 +187,7 @@ ___
 
 ▸ **getCustomProps**(`online`: *boolean* \| *object* \| *undefined*, `offline`: *boolean* \| *object* \| *undefined*): *object*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -196,7 +196,7 @@ ___
 
 **Returns:** *object*
 
-Defined in: [helpers.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/helpers.ts#L17)
+Defined in: [helpers.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/helpers.ts#L17)
 
 ___
 
@@ -204,7 +204,7 @@ ___
 
 ▸ **getExtensionNameFromId**(`extensionId`: *string*): *string*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -212,7 +212,7 @@ ___
 
 **Returns:** *string*
 
-Defined in: [extensions.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L29)
+Defined in: [extensions.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L29)
 
 ___
 
@@ -220,7 +220,7 @@ ___
 
 ▸ **getExtensionRegistration**(`extensionId`: *string*): [*ExtensionRegistration*](interfaces/extensionregistration.md) \| *undefined*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -228,7 +228,7 @@ ___
 
 **Returns:** [*ExtensionRegistration*](interfaces/extensionregistration.md) \| *undefined*
 
-Defined in: [extensions.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L42)
+Defined in: [extensions.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L42)
 
 ___
 
@@ -236,7 +236,7 @@ ___
 
 ▸ **getExtensionRegistrationFrom**(`state`: [*ExtensionStore*](interfaces/extensionstore.md), `extensionId`: *string*): [*ExtensionRegistration*](interfaces/extensionregistration.md) \| *undefined*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -245,7 +245,7 @@ ___
 
 **Returns:** [*ExtensionRegistration*](interfaces/extensionregistration.md) \| *undefined*
 
-Defined in: [extensions.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L34)
+Defined in: [extensions.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L34)
 
 ___
 
@@ -253,7 +253,7 @@ ___
 
 ▸ **getExtensionSlotsForModule**(`moduleName`: *string*): *string*[]
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -261,7 +261,7 @@ ___
 
 **Returns:** *string*[]
 
-Defined in: [extensions.ts:255](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L255)
+Defined in: [extensions.ts:255](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L255)
 
 ___
 
@@ -274,7 +274,7 @@ the specified name.
 The returned information describe the extension itself, as well as the extension slot name(s)
 with which it has been attached.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -284,7 +284,7 @@ with which it has been attached.
 
 **Returns:** [*ExtensionSlotInfo*](interfaces/extensionslotinfo.md)
 
-Defined in: [extensions.ts:282](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L282)
+Defined in: [extensions.ts:282](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L282)
 
 ___
 
@@ -294,7 +294,7 @@ ___
 
 **`deprecated`** don't use
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -302,15 +302,15 @@ ___
 
 **Returns:** () => *void*
 
-Defined in: [contexts.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L24)
+Defined in: [contexts.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L24)
 
 ___
 
 ### registerExtension
 
-▸ `Const`**registerExtension**(`name`: *string*, `details`: [*ExtensionDetails*](interfaces/extensiondetails.md)): *void*
+▸ `Const` **registerExtension**(`name`: *string*, `details`: [*ExtensionDetails*](interfaces/extensiondetails.md)): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -319,7 +319,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L57)
+Defined in: [extensions.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L57)
 
 ___
 
@@ -327,7 +327,7 @@ ___
 
 ▸ **registerExtensionSlot**(`moduleName`: *string*, `slotName`: *string*): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -336,7 +336,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:208](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L208)
+Defined in: [extensions.ts:208](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L208)
 
 ___
 
@@ -348,7 +348,7 @@ Mounts into a DOM node (representing an extension slot)
 a lazy-loaded component from *any* microfrontend
 that registered an extension component for this slot.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
@@ -361,7 +361,7 @@ that registered an extension component for this slot.
 
 **Returns:** [*CancelLoading*](interfaces/cancelloading.md)
 
-Defined in: [render.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/render.ts#L23)
+Defined in: [render.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L23)
 
 ___
 
@@ -371,13 +371,13 @@ ___
 
 **`deprecated`** use `navigate` directly
 
-#### Type parameters:
+#### Type parameters
 
 | Name |
 | :------ |
 | `T` |
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -387,7 +387,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [contexts.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/contexts.ts#L13)
+Defined in: [contexts.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L13)
 
 ___
 
@@ -395,7 +395,7 @@ ___
 
 ▸ **unregisterExtensionSlot**(`moduleName`: *string*, `slotName`: *string*): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -404,7 +404,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:231](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L231)
+Defined in: [extensions.ts:231](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L231)
 
 ___
 
@@ -412,13 +412,13 @@ ___
 
 ▸ **updateExtensionStore**<U\>(`updater`: (`state`: [*ExtensionStore*](interfaces/extensionstore.md)) => [*MaybeAsync*](API.md#maybeasync)<Pick<[*ExtensionStore*](interfaces/extensionstore.md), U\>\>): *void*
 
-#### Type parameters:
+#### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `U` | keyof [*ExtensionStore*](interfaces/extensionstore.md) |
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -426,4 +426,4 @@ ___
 
 **Returns:** *void*
 
-Defined in: [store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/store.ts#L85)
+Defined in: [store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L85)

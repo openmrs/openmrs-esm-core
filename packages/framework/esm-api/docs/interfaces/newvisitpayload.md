@@ -18,7 +18,7 @@
 
 • **location**: *string*
 
-Defined in: [packages/esm-api/src/types/visit-resource.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L4)
+Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L4)
 
 ___
 
@@ -26,7 +26,7 @@ ___
 
 • `Optional` **patient**: *string*
 
-Defined in: [packages/esm-api/src/types/visit-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L5)
+Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L5)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • **startDatetime**: Date
 
-Defined in: [packages/esm-api/src/types/visit-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L6)
+Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L6)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • `Optional` **stopDatetime**: Date
 
-Defined in: [packages/esm-api/src/types/visit-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L8)
+Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L8)
 
 ___
 
@@ -50,4 +50,4 @@ ___
 
 • **visitType**: *string*
 
-Defined in: [packages/esm-api/src/types/visit-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L7)
+Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L7)

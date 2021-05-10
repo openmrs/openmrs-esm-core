@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* *AnchorHTMLAttributes*<HTMLAnchorElement\>
+- *AnchorHTMLAttributes*<HTMLAnchorElement\>
 
   ↳ **ConfigurableLinkProps**
 
@@ -1015,7 +1015,7 @@ ___
 
 • `Optional` **dangerouslySetInnerHTML**: *object*
 
-#### Type declaration:
+#### Type declaration
 
 | Name | Type |
 | :------ | :------ |
@@ -3029,7 +3029,7 @@ ___
 
 • **to**: *string*
 
-Defined in: [packages/esm-react-utils/src/ConfigurableLink.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/ConfigurableLink.tsx#L18)
+Defined in: [packages/framework/esm-react-utils/src/ConfigurableLink.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L18)
 
 ___
 

@@ -16,7 +16,7 @@
 
 • **display**: *string*
 
-Defined in: [packages/esm-api/src/types/user-resource.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L48)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L48)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **links**: *any*[]
 
-Defined in: [packages/esm-api/src/types/user-resource.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L49)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L49)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **uuid**: *string*
 
-Defined in: [packages/esm-api/src/types/user-resource.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L47)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L47)

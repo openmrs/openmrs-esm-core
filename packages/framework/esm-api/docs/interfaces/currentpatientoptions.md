@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* **CurrentPatientOptions**
+- **CurrentPatientOptions**
 
   ↳ [*PatientWithFullResponse*](patientwithfullresponse.md)
 
@@ -22,4 +22,4 @@
 
 • `Optional` **includeConfig**: *boolean*
 
-Defined in: [packages/esm-api/src/shared-api-objects/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/current-patient.ts#L7)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L7)

@@ -59,7 +59,7 @@
 
 Ƭ **ConfigValue**: *string* \| *number* \| *boolean* \| *void* \| *any*[] \| *object*
 
-Defined in: [packages/esm-config/src/types.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L30)
+Defined in: [packages/framework/esm-config/src/types.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L30)
 
 ___
 
@@ -67,14 +67,14 @@ ___
 
 Ƭ **ProvidedConfig**: *object*
 
-#### Type declaration:
+#### Type declaration
 
 | Name | Type |
 | :------ | :------ |
 | `config` | [*Config*](interfaces/config.md) |
 | `source` | *string* |
 
-Defined in: [packages/esm-config/src/types.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L55)
+Defined in: [packages/framework/esm-config/src/types.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L55)
 
 ___
 
@@ -82,11 +82,11 @@ ___
 
 Ƭ **Validator**: (`value`: *any*) => *void* \| *string*
 
-#### Type declaration:
+#### Type declaration
 
 ▸ (`value`: *any*): *void* \| *string*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -94,7 +94,7 @@ ___
 
 **Returns:** *void* \| *string*
 
-Defined in: [packages/esm-config/src/types.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L62)
+Defined in: [packages/framework/esm-config/src/types.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L62)
 
 ___
 
@@ -102,11 +102,11 @@ ___
 
 Ƭ **ValidatorFunction**: (`value`: *any*) => *boolean*
 
-#### Type declaration:
+#### Type declaration
 
 ▸ (`value`: *any*): *boolean*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -114,7 +114,7 @@ ___
 
 **Returns:** *boolean*
 
-Defined in: [packages/esm-config/src/types.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/types.ts#L60)
+Defined in: [packages/framework/esm-config/src/types.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L60)
 
 ## Variables
 
@@ -122,7 +122,7 @@ Defined in: [packages/esm-config/src/types.ts:60](https://github.com/openmrs/ope
 
 • `Const` **implementerToolsConfigStore**: *Store*<[*ImplementerToolsConfigStore*](interfaces/implementertoolsconfigstore.md)\>
 
-Defined in: [packages/esm-config/src/module-config/state.ts:188](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L188)
+Defined in: [packages/framework/esm-config/src/module-config/state.ts:188](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L188)
 
 ___
 
@@ -130,7 +130,7 @@ ___
 
 • `Const` **temporaryConfigStore**: *Store*<TemporaryConfigStore\>
 
-Defined in: [packages/esm-config/src/module-config/state.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L75)
+Defined in: [packages/framework/esm-config/src/module-config/state.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L75)
 
 ___
 
@@ -138,7 +138,7 @@ ___
 
 • `Const` **validators**: *object*
 
-#### Type declaration:
+#### Type declaration
 
 | Name | Type |
 | :------ | :------ |
@@ -146,7 +146,7 @@ ___
 | `isUrl` | [*Validator*](API.md#validator) |
 | `isUrlWithTemplateParameters` | (`allowedTemplateParameters`: *string*[]) => [*Validator*](API.md#validator) |
 
-Defined in: [packages/esm-config/src/validators/validators.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/validators/validators.ts#L57)
+Defined in: [packages/framework/esm-config/src/validators/validators.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L57)
 
 ## Navigation Functions
 
@@ -168,7 +168,7 @@ navigate({
 });
 ```
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -177,17 +177,17 @@ navigate({
 
 **Returns:** *string*
 
-Defined in: [packages/esm-config/src/navigation/interpolate-string.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/navigation/interpolate-string.ts#L38)
+Defined in: [packages/framework/esm-config/src/navigation/interpolate-string.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L38)
 
 ___
 
 ### isUrl
 
-▸ `Const`**isUrl**(`value`: *any*): *string* \| *void*
+▸ `Const` **isUrl**(`value`: *any*): *string* \| *void*
 
 Verifies that a string contains only the default URL template parameters.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -195,18 +195,18 @@ Verifies that a string contains only the default URL template parameters.
 
 **Returns:** *string* \| *void*
 
-Defined in: [packages/esm-config/src/validators/validators.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/validators/validators.ts#L55)
+Defined in: [packages/framework/esm-config/src/validators/validators.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L55)
 
 ___
 
 ### isUrlWithTemplateParameters
 
-▸ `Const`**isUrlWithTemplateParameters**(`allowedTemplateParameters`: *string*[]): [*Validator*](API.md#validator)
+▸ `Const` **isUrlWithTemplateParameters**(`allowedTemplateParameters`: *string*[]): [*Validator*](API.md#validator)
 
 Verifies that a string contains only the default URL template
 parameters, plus any specified in `allowedTemplateParameters`.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -214,7 +214,7 @@ parameters, plus any specified in `allowedTemplateParameters`.
 
 **Returns:** [*Validator*](API.md#validator)
 
-Defined in: [packages/esm-config/src/validators/validators.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/validators/validators.ts#L23)
+Defined in: [packages/framework/esm-config/src/validators/validators.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L23)
 
 ___
 
@@ -232,7 +232,7 @@ const submitHandler = () => {
 };
 ```
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -240,7 +240,7 @@ const submitHandler = () => {
 
 **Returns:** *void*
 
-Defined in: [packages/esm-config/src/navigation/navigate.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/navigation/navigate.ts#L29)
+Defined in: [packages/framework/esm-config/src/navigation/navigate.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L29)
 
 ___
 
@@ -250,7 +250,7 @@ ___
 
 ▸ **defineConfigSchema**(`moduleName`: *string*, `schema`: [*ConfigSchema*](interfaces/configschema.md)): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -259,7 +259,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:203](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L203)
+Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:203](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L203)
 
 ___
 
@@ -278,7 +278,7 @@ have the latest config. If using React, just use `useConfig`.
 This is a useful function if you need to get the config in the course
 of the execution of a function.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -286,7 +286,7 @@ of the execution of a function.
 
 **Returns:** *Promise*<[*Config*](interfaces/config.md)\>
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L232)
+Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L232)
 
 ___
 
@@ -294,7 +294,7 @@ ___
 
 ▸ **getConfigStore**(`moduleName`: *string*): *Store*<[*ConfigStore*](interfaces/configstore.md)\>
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -302,7 +302,7 @@ ___
 
 **Returns:** *Store*<[*ConfigStore*](interfaces/configstore.md)\>
 
-Defined in: [packages/esm-config/src/module-config/state.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L142)
+Defined in: [packages/framework/esm-config/src/module-config/state.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L142)
 
 ___
 
@@ -310,7 +310,7 @@ ___
 
 ▸ **getExtensionConfigStore**(`extensionSlotModuleName`: *string*, `attachedExtensionSlotName`: *string*, `extensionId`: *string*): *Store*<[*ConfigStore*](interfaces/configstore.md)\>
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -320,7 +320,7 @@ ___
 
 **Returns:** *Store*<[*ConfigStore*](interfaces/configstore.md)\>
 
-Defined in: [packages/esm-config/src/module-config/state.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L172)
+Defined in: [packages/framework/esm-config/src/module-config/state.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L172)
 
 ___
 
@@ -328,7 +328,7 @@ ___
 
 ▸ **getExtensionSlotsConfigStore**(`moduleName`: *string*): *Store*<[*ExtensionSlotConfigsStore*](interfaces/extensionslotconfigsstore.md)\>
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -336,17 +336,17 @@ ___
 
 **Returns:** *Store*<[*ExtensionSlotConfigsStore*](interfaces/extensionslotconfigsstore.md)\>
 
-Defined in: [packages/esm-config/src/module-config/state.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/state.ts#L163)
+Defined in: [packages/framework/esm-config/src/module-config/state.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L163)
 
 ___
 
 ### inRange
 
-▸ `Const`**inRange**(`min`: *number*, `max`: *number*): [*Validator*](API.md#validator)
+▸ `Const` **inRange**(`min`: *number*, `max`: *number*): [*Validator*](API.md#validator)
 
 Verifies that the value is between the provided minimum and maximum
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -355,7 +355,7 @@ Verifies that the value is between the provided minimum and maximum
 
 **Returns:** [*Validator*](API.md#validator)
 
-Defined in: [packages/esm-config/src/validators/validators.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/validators/validators.ts#L9)
+Defined in: [packages/framework/esm-config/src/validators/validators.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L9)
 
 ___
 
@@ -365,7 +365,7 @@ ___
 
 Validate and interpolate defaults for `providedConfig` according to `schema`
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -375,7 +375,7 @@ Validate and interpolate defaults for `providedConfig` according to `schema`
 
 **Returns:** [*Config*](interfaces/config.md)
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:254](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L254)
+Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:254](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L254)
 
 ___
 
@@ -383,7 +383,7 @@ ___
 
 ▸ **provide**(`config`: [*Config*](interfaces/config.md), `sourceName?`: *string*): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
@@ -392,7 +392,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/esm-config/src/module-config/module-config.ts:211](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/module-config/module-config.ts#L211)
+Defined in: [packages/framework/esm-config/src/module-config/module-config.ts:211](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L211)
 
 ___
 
@@ -400,7 +400,7 @@ ___
 
 ▸ **validator**(`validationFunction`: [*ValidatorFunction*](API.md#validatorfunction), `message`: *string*): [*Validator*](API.md#validator)
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -409,4 +409,4 @@ ___
 
 **Returns:** [*Validator*](API.md#validator)
 
-Defined in: [packages/esm-config/src/validators/validator.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-config/src/validators/validator.ts#L3)
+Defined in: [packages/framework/esm-config/src/validators/validator.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validator.ts#L3)

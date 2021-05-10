@@ -10,7 +10,7 @@
 
 ## Hierarchy
 
-* **OmrsServiceWorkerMessage**
+- **OmrsServiceWorkerMessage**
 
   ↳ [*OnImportMapChangedMessage*](onimportmapchangedmessage.md)
 
@@ -30,4 +30,4 @@
 
 • **type**: MessageTypeTypeIdentifier
 
-Defined in: [packages/esm-offline/src/service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L19)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L19)

@@ -18,7 +18,7 @@
 
 • `Optional` **action**: *any*
 
-Defined in: [events.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L39)
+Defined in: [events.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L39)
 
 ___
 
@@ -26,7 +26,7 @@ ___
 
 • **description**: *any*
 
-Defined in: [events.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L38)
+Defined in: [events.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L38)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • `Optional` **kind**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
 
-Defined in: [events.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L30)
+Defined in: [events.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L30)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • `Optional` **millis**: *number*
 
-Defined in: [events.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L40)
+Defined in: [events.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L40)
 
 ___
 
@@ -50,4 +50,4 @@ ___
 
 • `Optional` **title**: *string*
 
-Defined in: [events.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L37)
+Defined in: [events.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L37)

@@ -16,7 +16,7 @@
 
 • **display**: *string*
 
-Defined in: [packages/esm-api/src/types/visit-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L34)
+Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L34)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • `Optional` **name**: *string*
 
-Defined in: [packages/esm-api/src/types/visit-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L35)
+Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L35)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **uuid**: *string*
 
-Defined in: [packages/esm-api/src/types/visit-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/visit-resource.ts#L33)
+Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L33)

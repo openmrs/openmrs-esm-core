@@ -18,15 +18,15 @@
 
 • **load**: () => *Promise*<any\>
 
-#### Type declaration:
+#### Type declaration
 
 ▸ (): *Promise*<any\>
 
 **Returns:** *Promise*<any\>
 
-Defined in: [extensions.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L51)
+Defined in: [extensions.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L51)
 
-Defined in: [extensions.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L51)
+Defined in: [extensions.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L51)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • **meta**: *Record*<string, any\>
 
-Defined in: [extensions.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L52)
+Defined in: [extensions.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L52)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 • **moduleName**: *string*
 
-Defined in: [extensions.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L50)
+Defined in: [extensions.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L50)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 • `Optional` **offline**: *boolean* \| *object*
 
-Defined in: [extensions.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L54)
+Defined in: [extensions.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L54)
 
 ___
 
@@ -58,4 +58,4 @@ ___
 
 • `Optional` **online**: *boolean* \| *object*
 
-Defined in: [extensions.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-extensions/src/extensions.ts#L53)
+Defined in: [extensions.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L53)

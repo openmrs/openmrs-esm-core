@@ -15,7 +15,7 @@
 
 • **NOTSTARTED**: = "notStarted"
 
-Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L100)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L100)
 
 ___
 
@@ -23,4 +23,4 @@ ___
 
 • **ONGOING**: = "ongoing"
 
-Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L101)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L101)

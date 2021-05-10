@@ -18,7 +18,7 @@
 
 **Returns:** (`incomingErr`: *any*) => *void*
 
-Defined in: [index.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L27)
+Defined in: [index.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L27)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 **Returns:** (`incomingResponseErr`: *any*) => *void*
 
-Defined in: [index.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L3)
+Defined in: [index.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L3)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 ▸ **reportError**(`err`: *any*): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -44,4 +44,4 @@ ___
 
 **Returns:** *void*
 
-Defined in: [index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-error-handling/src/index.ts#L20)
+Defined in: [index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L20)

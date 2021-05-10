@@ -20,7 +20,7 @@
 
 • **allowedLocales**: *string*[]
 
-Defined in: [packages/esm-api/src/types/openmrs-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L8)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L8)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 • **authenticated**: *boolean*
 
-Defined in: [packages/esm-api/src/types/openmrs-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L9)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L9)
 
 ___
 
@@ -36,14 +36,14 @@ ___
 
 • **currentProvider**: *object*
 
-#### Type declaration:
+#### Type declaration
 
 | Name | Type |
 | :------ | :------ |
 | `identifier` | *string* |
 | `uuid` | *string* |
 
-Defined in: [packages/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L13)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 • **locale**: *string*
 
-Defined in: [packages/esm-api/src/types/openmrs-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L10)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L10)
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 • **sessionId**: *string*
 
-Defined in: [packages/esm-api/src/types/openmrs-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L11)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L11)
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 • **sessionLocation**: *any*
 
-Defined in: [packages/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L14)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
 ___
 
@@ -75,4 +75,4 @@ ___
 
 • **user**: [*User*](user.md)
 
-Defined in: [packages/esm-api/src/types/openmrs-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/openmrs-resource.ts#L12)
+Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L12)

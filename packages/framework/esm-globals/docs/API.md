@@ -37,7 +37,7 @@
 
 Ƭ **AppExtensionDefinition**: [*ModernAppExtensionDefinition*](interfaces/modernappextensiondefinition.md) & [*LegacyAppExtensionDefinition*](interfaces/legacyappextensiondefinition.md)
 
-Defined in: [types.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L125)
+Defined in: [types.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L125)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 Ƭ **SpaEnvironment**: ``"production"`` \| ``"development"`` \| ``"test"``
 
-Defined in: [types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L46)
+Defined in: [types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L46)
 
 ## Functions
 
@@ -53,7 +53,7 @@ Defined in: [types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 ▸ **dispatchConnectivityChanged**(`online`: *boolean*): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -61,7 +61,7 @@ Defined in: [types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 **Returns:** *void*
 
-Defined in: [events.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L7)
+Defined in: [events.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L7)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 ▸ **dispatchToastShown**(`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -77,7 +77,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L45)
+Defined in: [events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L45)
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 ▸ **setupPaths**(`config`: [*SpaConfig*](interfaces/spaconfig.md)): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -93,7 +93,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [globals.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L3)
+Defined in: [globals.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/globals.ts#L3)
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [globals.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/globals.ts#L11)
+Defined in: [globals.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/globals.ts#L11)
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 ▸ **subscribeConnectivity**(`cb`: (`ev`: [*ConnectivityChangedEvent*](interfaces/connectivitychangedevent.md)) => *void*): *function*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -119,7 +119,7 @@ ___
 
 **Returns:** () => *void*
 
-Defined in: [events.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L22)
+Defined in: [events.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L22)
 
 ___
 
@@ -127,7 +127,7 @@ ___
 
 ▸ **subscribeConnectivityChanged**(`cb`: (`ev`: [*ConnectivityChangedEvent*](interfaces/connectivitychangedevent.md)) => *void*): *function*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -135,7 +135,7 @@ ___
 
 **Returns:** () => *void*
 
-Defined in: [events.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L13)
+Defined in: [events.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L13)
 
 ___
 
@@ -143,7 +143,7 @@ ___
 
 ▸ **subscribeToastShown**(`cb`: (`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)) => *void*): *function*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -151,4 +151,4 @@ ___
 
 **Returns:** () => *void*
 
-Defined in: [events.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/events.ts#L49)
+Defined in: [events.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L49)

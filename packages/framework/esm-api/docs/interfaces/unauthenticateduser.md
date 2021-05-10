@@ -16,7 +16,7 @@
 
 • **authenticated**: *boolean*
 
-Defined in: [packages/esm-api/src/types/user-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L30)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L30)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **sessionId**: *string*
 
-Defined in: [packages/esm-api/src/types/user-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L29)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L29)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • `Optional` **user**: [*LoggedInUser*](loggedinuser.md)
 
-Defined in: [packages/esm-api/src/types/user-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/user-resource.ts#L31)
+Defined in: [packages/framework/esm-api/src/types/user-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L31)

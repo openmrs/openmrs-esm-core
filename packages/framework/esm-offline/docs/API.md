@@ -37,7 +37,7 @@
 
 Ƭ **KnownOmrsServiceWorkerEvents**: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)
 
-Defined in: [service-worker-events.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-events.ts#L15)
+Defined in: [service-worker-events.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L15)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 Ƭ **KnownOmrsServiceWorkerMessages**: [*OnImportMapChangedMessage*](interfaces/onimportmapchangedmessage.md) \| [*ClearDynamicRoutesMessage*](interfaces/cleardynamicroutesmessage.md) \| [*RegisterDynamicRouteMessage*](interfaces/registerdynamicroutemessage.md)
 
-Defined in: [service-worker-messaging.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L36)
+Defined in: [service-worker-messaging.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L36)
 
 ___
 
@@ -53,13 +53,13 @@ ___
 
 Ƭ **SynchronizeCallback**: () => *Promise*<void\>
 
-#### Type declaration:
+#### Type declaration
 
 ▸ (): *Promise*<void\>
 
 **Returns:** *Promise*<void\>
 
-Defined in: [store.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/store.ts#L3)
+Defined in: [store.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/store.ts#L3)
 
 ## Functions
 
@@ -67,7 +67,7 @@ Defined in: [store.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master
 
 ▸ **dispatchNetworkRequestFailed**(`data`: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -75,7 +75,7 @@ Defined in: [store.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master
 
 **Returns:** *void*
 
-Defined in: [events.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/events.ts#L5)
+Defined in: [events.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/events.ts#L5)
 
 ___
 
@@ -92,7 +92,7 @@ can, for example, happen when the browser is missing the required capabilities).
 
 A promise which will resolve once the application's Service Worker has been initialized.
 
-Defined in: [service-worker.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker.ts#L49)
+Defined in: [service-worker.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker.ts#L49)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 **Returns:** [*SynchronizeCallback*](API.md#synchronizecallback)[]
 
-Defined in: [store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/store.ts#L13)
+Defined in: [store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/store.ts#L13)
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 Sends the specified message to the application's service worker.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
@@ -122,7 +122,7 @@ Sends the specified message to the application's service worker.
 
 A promise which completes when the message has been successfully processed by the Service Worker.
 
-Defined in: [service-worker-messaging.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L9)
+Defined in: [service-worker-messaging.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L9)
 
 ___
 
@@ -133,7 +133,7 @@ ___
 If not yet registered, registers the application's global Service Worker.
 Throws if registration is not possible.
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -144,7 +144,7 @@ Throws if registration is not possible.
 
 The registered Service Worker.
 
-Defined in: [service-worker.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker.ts#L18)
+Defined in: [service-worker.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker.ts#L18)
 
 ___
 
@@ -152,7 +152,7 @@ ___
 
 ▸ **registerSynchronizationCallback**(`cb`: [*SynchronizeCallback*](API.md#synchronizecallback)): *void*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -160,7 +160,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/store.ts#L17)
+Defined in: [store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/store.ts#L17)
 
 ___
 
@@ -168,7 +168,7 @@ ___
 
 ▸ **subscribeNetworkRequestFailed**(`cb`: (`data`: [*NetworkRequestFailedEvent*](interfaces/networkrequestfailedevent.md)) => *void*): *function*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -176,4 +176,4 @@ ___
 
 **Returns:** () => *void*
 
-Defined in: [events.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/events.ts#L11)
+Defined in: [events.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/events.ts#L11)

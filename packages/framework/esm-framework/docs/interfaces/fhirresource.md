@@ -14,7 +14,7 @@
 
 • **resource**: *object*
 
-#### Type declaration:
+#### Type declaration
 
 | Name | Type |
 | :------ | :------ |
@@ -41,4 +41,4 @@
 | `valueQuantity` | *object* |
 | `valueQuantity.value` | *number* |
 
-Defined in: [packages/esm-api/src/types/fhir-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/types/fhir-resource.ts#L2)
+Defined in: [packages/framework/esm-api/src/types/fhir-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fhir-resource.ts#L2)

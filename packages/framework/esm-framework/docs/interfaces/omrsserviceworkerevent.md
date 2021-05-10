@@ -10,7 +10,7 @@
 
 ## Hierarchy
 
-* **OmrsServiceWorkerEvent**
+- **OmrsServiceWorkerEvent**
 
   ↳ [*NetworkRequestFailedEvent*](networkrequestfailedevent.md)
 
@@ -26,4 +26,4 @@
 
 • **type**: TypeIdentifier
 
-Defined in: [packages/esm-offline/src/service-worker-events.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-events.ts#L2)
+Defined in: [packages/framework/esm-offline/src/service-worker-events.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L2)

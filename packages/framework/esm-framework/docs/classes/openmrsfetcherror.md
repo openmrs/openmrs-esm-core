@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* *Error*
+- *Error*
 
   ↳ **OpenmrsFetchError**
 
@@ -34,7 +34,7 @@
 
 \+ **new OpenmrsFetchError**(`url`: *string*, `response`: Response, `responseBody`: ``null`` \| ResponseBody, `requestStacktrace`: Error): [*OpenmrsFetchError*](openmrsfetcherror.md)
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -47,7 +47,7 @@
 
 Overrides: Error.constructor
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L269)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L269)
 
 ## Properties
 
@@ -75,7 +75,7 @@ ___
 
 • **response**: Response
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:283](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L283)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:283](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L283)
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 • **responseBody**: ``null`` \| *string* \| FetchResponseJson
 
-Defined in: [packages/esm-api/src/openmrs-fetch.ts:284](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/openmrs-fetch.ts#L284)
+Defined in: [packages/framework/esm-api/src/openmrs-fetch.ts:284](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L284)
 
 ___
 
@@ -105,11 +105,11 @@ Optional override for formatting stack traces
 
 **`see`** https://v8.dev/docs/stack-trace-api#customizing-stack-traces
 
-#### Type declaration:
+#### Type declaration
 
 ▸ (`err`: Error, `stackTraces`: CallSite[]): *any*
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
@@ -138,11 +138,11 @@ Defined in: node_modules/@types/node/globals.d.ts:13
 
 ### captureStackTrace
 
-▸ `Static`**captureStackTrace**(`targetObject`: *object*, `constructorOpt?`: Function): *void*
+▸ `Static` **captureStackTrace**(`targetObject`: *object*, `constructorOpt?`: Function): *void*
 
 Create .stack property on a target object
 
-#### Parameters:
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |

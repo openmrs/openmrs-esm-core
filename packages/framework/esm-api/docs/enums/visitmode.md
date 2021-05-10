@@ -16,7 +16,7 @@
 
 • **EDITVISIT**: = "editVisit"
 
-Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L95)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L95)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **LOADING**: = "loadingVisit"
 
-Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L96)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L96)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **NEWVISIT**: = "startVisit"
 
-Defined in: [packages/esm-api/src/shared-api-objects/visit-utils.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/shared-api-objects/visit-utils.ts#L94)
+Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L94)

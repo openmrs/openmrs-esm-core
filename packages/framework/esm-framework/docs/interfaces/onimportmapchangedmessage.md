@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* [*OmrsServiceWorkerMessage*](omrsserviceworkermessage.md)<``"onImportMapChanged"``\>
+- [*OmrsServiceWorkerMessage*](omrsserviceworkermessage.md)<``"onImportMapChanged"``\>
 
   ↳ **OnImportMapChangedMessage**
 
@@ -21,7 +21,7 @@
 
 • **importMap**: [*ImportMap*](importmap.md)
 
-Defined in: [packages/esm-offline/src/service-worker-messaging.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L24)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L24)
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 Inherited from: [OmrsServiceWorkerMessage](omrsserviceworkermessage.md).[type](omrsserviceworkermessage.md#type)
 
-Defined in: [packages/esm-offline/src/service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-offline/src/service-worker-messaging.ts#L19)
+Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L19)

@@ -19,7 +19,7 @@
 
 • **component**: *any*
 
-Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L24)
+Defined in: [packages/framework/esm-api/src/workspace/workspace.resource.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/workspace/workspace.resource.tsx#L24)
 
 ___
 
@@ -27,7 +27,7 @@ ___
 
 • `Optional` **componentClosed**: Function
 
-Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L29)
+Defined in: [packages/framework/esm-api/src/workspace/workspace.resource.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/workspace/workspace.resource.tsx#L29)
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 • **inProgress**: *boolean*
 
-Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L28)
+Defined in: [packages/framework/esm-api/src/workspace/workspace.resource.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/workspace/workspace.resource.tsx#L28)
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 • **name**: *string*
 
-Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L25)
+Defined in: [packages/framework/esm-api/src/workspace/workspace.resource.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/workspace/workspace.resource.tsx#L25)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 • **props**: *any*
 
-Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L26)
+Defined in: [packages/framework/esm-api/src/workspace/workspace.resource.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/workspace/workspace.resource.tsx#L26)
 
 ___
 
@@ -59,4 +59,4 @@ ___
 
 • `Optional` **validations**: Function
 
-Defined in: [packages/esm-api/src/workspace/workspace.resource.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-api/src/workspace/workspace.resource.tsx#L27)
+Defined in: [packages/framework/esm-api/src/workspace/workspace.resource.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/workspace/workspace.resource.tsx#L27)

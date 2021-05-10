@@ -4,7 +4,7 @@
 
 ## Hierarchy
 
-* [*ComponentDefinition*](componentdefinition.md)
+- [*ComponentDefinition*](componentdefinition.md)
 
   ↳ **LegacyAppExtensionDefinition**
 
@@ -30,7 +30,7 @@
 
 The meta data used for reflection by other components.
 
-Defined in: [types.ts:122](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L122)
+Defined in: [types.ts:122](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L122)
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 The ID of the extension to register.
 
-Defined in: [types.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L118)
+Defined in: [types.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L118)
 
 ___
 
@@ -52,7 +52,7 @@ Defines the offline support / properties of the component.
 
 Inherited from: [ComponentDefinition](componentdefinition.md).[offline](componentdefinition.md#offline)
 
-Defined in: [types.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L88)
+Defined in: [types.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L88)
 
 ___
 
@@ -64,7 +64,7 @@ Defines the online support / properties of the component.
 
 Inherited from: [ComponentDefinition](componentdefinition.md).[online](componentdefinition.md#online)
 
-Defined in: [types.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L84)
+Defined in: [types.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L84)
 
 ___
 
@@ -76,7 +76,7 @@ Defines resources that are loaded when the component should mount.
 
 Inherited from: [ComponentDefinition](componentdefinition.md).[resources](componentdefinition.md#resources)
 
-Defined in: [types.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L92)
+Defined in: [types.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L92)
 
 ## Methods
 
@@ -90,4 +90,4 @@ Defines a function to use for actually loading the component's lifecycle.
 
 Inherited from: [ComponentDefinition](componentdefinition.md)
 
-Defined in: [types.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-globals/src/types.ts#L80)
+Defined in: [types.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L80)

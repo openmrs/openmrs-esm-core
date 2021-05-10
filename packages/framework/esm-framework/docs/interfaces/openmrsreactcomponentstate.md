@@ -16,7 +16,7 @@
 
 • **caughtError**: *any*
 
-Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L66)
+Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L66)
 
 ___
 
@@ -24,7 +24,7 @@ ___
 
 • **caughtErrorInfo**: *any*
 
-Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L67)
+Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L67)
 
 ___
 
@@ -32,4 +32,4 @@ ___
 
 • **config**: [*ComponentConfig*](componentconfig.md)
 
-Defined in: [packages/esm-react-utils/src/openmrsComponentDecorator.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/esm-react-utils/src/openmrsComponentDecorator.tsx#L68)
+Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L68)
