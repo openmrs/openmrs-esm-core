@@ -37,6 +37,11 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
 module.exports = (env, argv = {}) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? "dist" : "lib";
+  const styleLoader =
+    mode === "production"
+      ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+      : { loader: require.resolve("style-loader") };
+  const cssLoader = { loader: require.resolve("css-loader") };
 
   return {
     entry: resolve(__dirname, "src/index.ts"),
@@ -76,13 +81,18 @@ module.exports = (env, argv = {}) => {
             system: false,
           },
         },
+
         {
           test: /\.css$/,
+          use: [styleLoader, cssLoader],
+        },
+
+        {
+          test: /\.s[ac]ss$/i,
           use: [
-            mode === "production"
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
-              : { loader: require.resolve("style-loader") },
-            { loader: require.resolve("css-loader") },
+            styleLoader,
+            cssLoader,
+            { loader: require.resolve("sass-loader") },
           ],
         },
         {
