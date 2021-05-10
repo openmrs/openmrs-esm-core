@@ -1,5 +1,10 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/apps/*",
+    "packages/framework/*",
+    "packages/shell/*",
+    "packages/tooling/*"
+  ],
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "3.1.10",

@@ -1,0 +1,52 @@
+{
+  "name": "@openmrs/esm-extensions",
+  "version": "3.1.10",
+  "license": "MPL-2.0",
+  "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
+  "browser": "dist/openmrs-esm-extensions.js",
+  "main": "src/index.ts",
+  "source": true,
+  "scripts": {
+    "document": "../../../document.sh esm-extensions",
+    "test": "jest --config jest.config.js --passWithNoTests",
+    "build": "webpack --mode=production",
+    "analyze": "webpack --mode=production --env.analyze=true",
+    "typescript": "tsc",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
+  "directories": {
+    "lib": "dist",
+    "src": "src"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "@openmrs/esm-api": "3.x",
+    "@openmrs/esm-config": "3.x",
+    "@openmrs/esm-state": "3.x",
+    "single-spa": "5.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-api": "^3.1.10",
+    "@openmrs/esm-config": "^3.1.10",
+    "@openmrs/esm-state": "^3.1.10",
+    "single-spa": "^5.9.2"
+  }
+}
