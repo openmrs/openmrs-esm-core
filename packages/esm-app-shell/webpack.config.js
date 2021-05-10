@@ -39,7 +39,7 @@ const cssLoader = {
   options: {
     modules: {
       localIdentName:
-        "esm-patient-allergies__[name]__[local]___[hash:base64:5]",
+        "esm-patient-app-shell__[name]__[local]___[hash:base64:5]",
     },
   },
 };
@@ -97,7 +97,11 @@ module.exports = (env, argv = {}) => {
         },
         {
           test: /\.s[ac]ss$/i,
-          use: ["style-loader", cssLoader, "sass-loader"],
+          use: [
+            mode === "production"
+              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              : { loader: require.resolve("sass-loader") },
+          ],
         },
         {
           test: /\.(woff|woff2|png)?$/,
