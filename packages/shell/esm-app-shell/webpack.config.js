@@ -7,13 +7,14 @@ const BundleAnalyzerPlugin =
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin } = require("webpack");
-const { resolve } = require("path");
-const { readFileSync } = require("fs");
+const { resolve, dirname, basename } = require("path");
+const { readFileSync, readdirSync, statSync } = require("fs");
 const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
 const { version } = require("./package.json");
 
 const timestamp = getTimestamp();
 const production = "production";
+const allowedSuffixes = ["-app", "-widgets"];
 
 const openmrsApiUrl = removeTrailingSlash(
   process.env.OMRS_API_URL || "/openmrs"
@@ -25,6 +26,8 @@ const openmrsProxyTarget =
   process.env.OMRS_PROXY_TARGET || "https://openmrs-spa.org/";
 const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
+const openmrsCoreApps =
+  process.env.OMRS_ESM_CORE_APPS_DIR || resolve(__dirname, "../../apps");
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
@@ -42,6 +45,25 @@ module.exports = (env, argv = {}) => {
       ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
       : { loader: require.resolve("style-loader") };
   const cssLoader = { loader: require.resolve("css-loader") };
+  const appPatterns = [];
+  const coreImportmap = {
+    imports: {},
+  };
+
+  if (openmrsCoreApps && statSync(openmrsCoreApps).isDirectory()) {
+    readdirSync(openmrsCoreApps).forEach((dir) => {
+      const appDir = resolve(openmrsCoreApps, dir);
+      const { name, browser } = require(resolve(appDir, "package.json"));
+
+      if (allowedSuffixes.some((suffix) => name.endsWith(suffix))) {
+        appPatterns.push({
+          from: resolve(appDir, dirname(browser)),
+          to: dir,
+        });
+        coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
+      }
+    });
+  }
 
   return {
     entry: resolve(__dirname, "src/index.ts"),
@@ -147,10 +169,12 @@ module.exports = (env, argv = {}) => {
           openmrsImportmapUrl,
           openmrsEnvironment,
           openmrsConfigUrls,
+          openmrsCoreImportmap:
+            appPatterns.length > 0 && JSON.stringify(coreImportmap),
         },
       }),
       new CopyWebpackPlugin({
-        patterns: [{ from: resolve(__dirname, "src/assets") }],
+        patterns: [{ from: resolve(__dirname, "src/assets") }, ...appPatterns],
       }),
       mode === "production" &&
         new MiniCssExtractPlugin({

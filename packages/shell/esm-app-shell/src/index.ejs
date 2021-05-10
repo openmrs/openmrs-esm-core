@@ -23,6 +23,9 @@
     >
     <script type="systemjs-importmap" src="<%= openmrsImportmapUrl %>"></script>
 <% } %>
+<% if (openmrsCoreImportmap) { %>
+    <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
+<% } %>
   </head>
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>

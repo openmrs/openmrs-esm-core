@@ -73,7 +73,8 @@ jobs:
 
     needs: build
 
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ false }}
+    #if: ${{ github.event_name == 'push' }}
 
     steps:
       - name: Download Artifacts
@@ -114,7 +115,8 @@ jobs:
 
     needs: build
 
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ false }}
+    #if: ${{ github.event_name == 'push' }}
 
     steps:
       - name: Download Artifacts
