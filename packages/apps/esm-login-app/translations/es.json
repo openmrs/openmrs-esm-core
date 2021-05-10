@@ -1,0 +1,12 @@
+{
+  "login": "Iniciar sesión",
+  "password": "Contraseña",
+  "username": "Nombre de usuario",
+  "continue": "Seguir",
+  "errorMessage": "Nombre de usuario o contraseña incorrecta",
+  "welcome": "Bienvenido",
+  "match": "partido",
+  "selectYourLocation": "Seleccione su ubicación de la lista a continuación. Utilice la barra de búsqueda para buscar su ubicación.",
+  "searchForLocation": "Busque una ubicación.",
+  "confirm": "confirmar"
+}

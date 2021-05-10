@@ -1,0 +1,22 @@
+@import "../../root.scss";
+
+.link > div a:nth-child(1) {
+  height: 3rem;
+  padding: 1.5rem 0 1.5rem 1.2rem;
+  color: $ui-04;
+  @extend .productiveHeading01;
+  border-left: 0.25rem solid transparent;
+}
+
+.link > div a:nth-child(1):hover {
+  background-color: $ui-03;
+  color: $ui-05;
+  border-left-color: $brand-01;
+}
+
+.link > div a:nth-child(1):focus {
+  background-color: $ui-03;
+  outline: none;
+  color: $ui-05;
+  border-left-color: $brand-01;
+}

@@ -1,0 +1,10 @@
+{
+  "confirm": "Bestätigen",
+  "location": "Einsatzort",
+  "locationNotFound": "Kein Einsatzort gefunden",
+  "login": "Login",
+  "password": "Passwort",
+  "username": "Benutzername",
+  "welcome": "Willkommen",
+  "poweredBy": "Powered by"
+}

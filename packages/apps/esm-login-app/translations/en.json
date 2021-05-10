@@ -1,0 +1,10 @@
+{
+  "confirm": "Confirm",
+  "location": "Location",
+  "locationNotFound": "Sorry, no matching location was found.",
+  "login": "Log in",
+  "password": "Password",
+  "username": "Username",
+  "welcome": "Welcome",
+  "poweredBy": "Powered by"
+}

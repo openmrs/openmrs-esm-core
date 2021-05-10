@@ -1,0 +1,10 @@
+{
+  "confirm": "Vérifier",
+  "location": "Emplacement",
+  "locationNotFound": "Désolé, aucun emplacement n'a été trouvé",
+  "login": "S'identifier",
+  "password": "Mot de passe",
+  "username": "Nom d'utilisateur",
+  "welcome": "Bienvenu",
+  "poweredBy": "Propulsé par"
+}

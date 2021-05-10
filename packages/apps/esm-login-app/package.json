@@ -1,0 +1,62 @@
+{
+  "name": "@openmrs/esm-login-app",
+  "version": "3.1.10",
+  "license": "MPL-2.0",
+  "description": "The login microfrontend for the OpenMRS SPA",
+  "browser": "dist/openmrs-esm-login-app.js",
+  "main": "src/index.ts",
+  "source": true,
+  "scripts": {
+    "start": "openmrs develop",
+    "serve": "webpack serve --mode=development",
+    "debug": "npm run serve",
+    "test": "jest --config jest.config.js --passWithNoTests",
+    "build": "webpack --mode=production",
+    "analyze": "webpack --mode=production --env.analyze=true",
+    "typescript": "tsc",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "carbon-components-react": "7.31.0",
+    "@carbon/icons-react": "10.28.0",
+    "lodash-es": "^4.17.21"
+  },
+  "peerDependencies": {
+    "@openmrs/esm-framework": "3.x",
+    "carbon-components": "10.x",
+    "carbon-icons": "7.x",
+    "react": "16.x",
+    "react-dom": "16.x",
+    "react-router-dom": "5.x",
+    "rxjs": "6.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-framework": "^3.1.10",
+    "@types/carbon-components-react": "^7.24.0",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/semver": "^7.3.4",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.6.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rxjs": "^6.5.3"
+  }
+}

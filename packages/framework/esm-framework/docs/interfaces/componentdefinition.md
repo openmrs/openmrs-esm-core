@@ -32,7 +32,7 @@
 
 Defines the offline support / properties of the component.
 
-Defined in: [packages/framework/esm-globals/src/types.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L88)
+Defined in: [packages/framework/esm-globals/src/types.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L89)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 Defines the online support / properties of the component.
 
-Defined in: [packages/framework/esm-globals/src/types.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L84)
+Defined in: [packages/framework/esm-globals/src/types.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L85)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 Defines resources that are loaded when the component should mount.
 
-Defined in: [packages/framework/esm-globals/src/types.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L92)
+Defined in: [packages/framework/esm-globals/src/types.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L93)
 
 ## Methods
 
@@ -64,4 +64,4 @@ Defines a function to use for actually loading the component's lifecycle.
 
 **Returns:** *Promise*<any\>
 
-Defined in: [packages/framework/esm-globals/src/types.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L80)
+Defined in: [packages/framework/esm-globals/src/types.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L81)

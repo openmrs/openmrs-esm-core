@@ -32,7 +32,7 @@
 
 The ID of the extension to register.
 
-Defined in: [types.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L99)
+Defined in: [types.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L100)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 The meta data used for reflection by other components.
 
-Defined in: [types.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L111)
+Defined in: [types.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L112)
 
 ___
 
@@ -54,7 +54,7 @@ Defines the offline support / properties of the component.
 
 Inherited from: [ComponentDefinition](componentdefinition.md).[offline](componentdefinition.md#offline)
 
-Defined in: [types.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L88)
+Defined in: [types.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L89)
 
 ___
 
@@ -66,7 +66,7 @@ Defines the online support / properties of the component.
 
 Inherited from: [ComponentDefinition](componentdefinition.md).[online](componentdefinition.md#online)
 
-Defined in: [types.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L84)
+Defined in: [types.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L85)
 
 ___
 
@@ -78,7 +78,7 @@ Defines resources that are loaded when the component should mount.
 
 Inherited from: [ComponentDefinition](componentdefinition.md).[resources](componentdefinition.md#resources)
 
-Defined in: [types.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L92)
+Defined in: [types.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L93)
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 The slot of the extension to optionally attach to.
 
-Defined in: [types.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L103)
+Defined in: [types.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L104)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 The slots of the extension to optionally attach to.
 
-Defined in: [types.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L107)
+Defined in: [types.ts:108](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L108)
 
 ## Methods
 
@@ -112,4 +112,4 @@ Defines a function to use for actually loading the component's lifecycle.
 
 Inherited from: [ComponentDefinition](componentdefinition.md)
 
-Defined in: [types.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L80)
+Defined in: [types.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L81)

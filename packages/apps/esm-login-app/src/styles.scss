@@ -1,0 +1,130 @@
+@import "./root.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 23rem;
+  height: 27.5rem;
+  margin: 0 0 0.5rem;
+  padding: 2.5rem;
+  border-radius: 2px;
+  border: solid 1px var(--grey-2);
+  background-color: var(--color-white);
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.logo {
+  margin-bottom: 1rem;
+}
+
+.logo-img {
+  margin-bottom: 3rem;
+  max-width: 100%;
+}
+
+.icon-btn {
+  cursor: pointer;
+}
+
+.error-msg {
+  margin-top: 1rem;
+  color: var(--omrs-color-danger);
+}
+
+.powered-by-txt {
+  text-align: center;
+  color: var(--omrs-color-ink-low-contrast);
+}
+
+.need-help {
+  display: flex;
+  justify-content: center;
+  width: 23rem;
+}
+
+.need-help-txt {
+  @extend .bodyShort01;
+  color: $text-02;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.contact-administrator-need-help {
+  @extend .bodyShort01;
+  padding-left: 0.5rem;
+}
+
+.powered-by-logo {
+  height: 2.5625rem;
+  width: 8.5rem;
+}
+
+@media only screen and (min-width: 481px) {
+  .login-card {
+    padding: 2.5rem;
+    width: 23rem;
+  }
+
+  .container {
+    height: 100vh;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .login-card {
+    margin-top: 2.5%;
+    width: 23rem;
+    padding: 2.5rem;
+    border: none;
+  }
+
+  .container {
+    height: 100vh;
+  }
+}
+
+.card-content {
+  border: none;
+  padding: 0.625rem 0.25rem 0.625rem 1rem;
+  border-radius: 0;
+}
+
+.card {
+  width: 21.75rem;
+  margin: 0.5rem 1rem;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 18rem;
+}
+
+.continueButton {
+  margin-top: 1.5rem;
+  width: 18rem;
+}
+
+.inputStyle {
+  @extend .label01;
+  width: 18rem;
+  height: 3rem;
+}

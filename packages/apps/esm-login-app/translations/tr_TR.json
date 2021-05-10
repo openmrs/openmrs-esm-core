@@ -1,0 +1,10 @@
+{
+  "confirm": "Onayla",
+  "location": "Konum",
+  "locationNotFound": "Üzgünüz, konum bulunamadı",
+  "login": "Giriş",
+  "password": "Parola",
+  "username": "Kullanıcı Adı",
+  "welcome": "Hoş Geldiniz",
+  "poweredBy": "Destekleyen"
+}

@@ -19,7 +19,7 @@
 
 The base path or URL for the OpenMRS API / endpoints.
 
-Defined in: [types.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L56)
+Defined in: [types.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L57)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 URLs of configurations to load in the system.
 
-Defined in: [types.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L69)
+Defined in: [types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L70)
 
 ___
 
@@ -41,7 +41,7 @@ The environment to use.
 
 **`default`** production
 
-Defined in: [types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L65)
+Defined in: [types.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L66)
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 The base path for the SPA root path.
 
-Defined in: [types.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L60)
+Defined in: [types.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L61)

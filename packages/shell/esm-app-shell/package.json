@@ -57,6 +57,8 @@
     "workbox-window": "^6.1.5"
   },
   "devDependencies": {
+    "@openmrs/esm-login-app": "3.1.10",
+    "@openmrs/esm-primary-navigation-app": "3.1.10",
     "@openmrs/esm-devtools-app": "3.1.10",
     "@openmrs/esm-implementer-tools-app": "3.1.0",
     "webpack-pwa-manifest": "^4.3.0",

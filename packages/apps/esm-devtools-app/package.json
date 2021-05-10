@@ -20,10 +20,6 @@
     "openmrs",
     "microfrontends"
   ],
-  "directories": {
-    "lib": "dist",
-    "src": "src"
-  },
   "browserslist": [
     "extends browserslist-config-openmrs"
   ],

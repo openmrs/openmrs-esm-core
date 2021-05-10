@@ -1,0 +1,76 @@
+@import "../root.scss";
+
+.locationPickerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.location-card {
+  display: flex;
+  flex-direction: column;
+  width: 23rem;
+  background-color: $ui-background;
+  margin: 0;
+}
+
+.welcomeContainer {
+  margin: 1.5rem 1.5rem 1rem 1.5rem;
+  width: 20rem;
+}
+.welcomeTitle {
+  @extend .productiveHeading03;
+  text-transform: capitalize;
+}
+
+.welcomeMessage {
+  @extend .bodyLong01;
+  margin-top: 0.5rem;
+  color: $color-gray-70;
+}
+
+.searchResults {
+  background-color: $ui-01;
+  height: 2.5rem;
+  @extend .bodyShort02;
+  color: $color-gray-70;
+  padding: 1rem 1.5rem 0rem 1.5rem;
+}
+
+.locationResultsContainer {
+  display: flex;
+  background-color: $ui-01;
+  padding: 0rem 1.5rem 1.5rem 1.5rem;
+  height: 23.5rem;
+  width: 23rem;
+  overflow-y: scroll;
+}
+
+.locationRadioButton {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  @extend .bodyShort01;
+  color: $color-gray-70;
+  padding: 0.5rem 0rem;
+  text-align: left;
+  width: 18rem;
+}
+
+.locationNotFound {
+  @extend .bodyShort01;
+  padding: 1rem 0rem;
+  color: $color-gray-70;
+}
+
+.confirmButton {
+  width: 23rem;
+  padding: 1.5rem 1.5rem;
+}
+
+.confirmButton button {
+  width: 20rem;
+}

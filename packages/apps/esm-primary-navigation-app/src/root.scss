@@ -1,0 +1,33 @@
+@import "carbon-components/scss/globals/scss/typography.scss";
+
+$ui-background: #ffffff;
+$ui-03: #e0e0e0;
+$ui-04: #8d8d8d;
+$ui-05: #161616;
+$brand-01: #005d5d;
+$brand-02: #004144;
+$inverse-link: #78a9ff;
+$field-01: #f4f4f4;
+$labeldropdown: #c6c6c6;
+
+.productiveHeading01 {
+  @include carbon--type-style("productive-heading-01");
+}
+
+.productiveHeading02 {
+  @include carbon--type-style("productive-heading-02");
+}
+
+.bodyLong01 {
+  @include carbon--type-style("body-long-01");
+}
+
+.headerPanel {
+  min-height: fit-content;
+}
+
+.primaryNavContainer {
+  position: fixed;
+  top: 0;
+  z-index: 3;
+}

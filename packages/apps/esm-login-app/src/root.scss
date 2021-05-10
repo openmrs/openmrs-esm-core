@@ -1,0 +1,77 @@
+@import "~carbon-components/scss/globals/scss/vendor/@carbon/elements/scss/type/styles";
+@import "~carbon-components/src/globals/scss/vendor/@carbon/layout/scss/generated/spacing";
+@import "~carbon-components/src/globals/scss/vendor/@carbon/layout/scss/generated/layout";
+@import "carbon-components/scss/globals/scss/typography.scss";
+
+$ui-01: #f4f4f4;
+$ui-03: #e0e0e0;
+$ui-05: #161616;
+$ui-background: #ffffff;
+$color-gray-70: #525252;
+$color-blue-60-2: #0f62fe;
+$color-yellow-50: #feecae;
+$inverse-support-03: #f1c21b;
+$warning-background: #fff8e1;
+$openmrs-background-grey: #f4f4f4;
+$danger: #da1e28;
+$interactive-01: #0f62fe;
+$brand-teal-01: #007d79;
+$brand-01: #005d5d;
+$brand-02: #004144;
+$inverse-link: #78a9ff;
+
+.productiveHeading01 {
+  @include carbon--type-style("productive-heading-01");
+}
+
+.productiveHeading02 {
+  @include carbon--type-style("productive-heading-02");
+}
+
+.productiveHeading03 {
+  @include carbon--type-style("productive-heading-03");
+}
+
+.productiveHeading04 {
+  @include carbon--type-style("productive-heading-04");
+}
+
+.productiveHeading05 {
+  @include carbon--type-style("productive-heading-05");
+}
+
+.productiveHeading06 {
+  @include carbon--type-style("productive-heading-06");
+}
+
+.bodyShort01 {
+  @include carbon--type-style("body-short-01");
+}
+
+.bodyShort02 {
+  @include carbon--type-style("body-short-02");
+}
+
+.bodyLong01 {
+  @include carbon--type-style("body-long-01");
+}
+
+.bodyLong02 {
+  @include carbon--type-style("body-long-02");
+}
+
+.label01 {
+  @include carbon--type-style("label-01");
+}
+
+.helperText01 {
+  @include carbon--type-style("helper-text-01");
+}
+
+.text01 {
+  color: $text-01;
+}
+
+.text02 {
+  color: $text-02;
+}
