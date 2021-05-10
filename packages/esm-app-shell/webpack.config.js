@@ -34,6 +34,16 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .map((url) => JSON.stringify(url))
   .join(", ");
 
+const cssLoader = {
+  loader: "css-loader",
+  options: {
+    modules: {
+      localIdentName:
+        "esm-patient-allergies__[name]__[local]___[hash:base64:5]",
+    },
+  },
+};
+
 module.exports = (env, argv = {}) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? "dist" : "lib";
@@ -84,6 +94,10 @@ module.exports = (env, argv = {}) => {
               : { loader: require.resolve("style-loader") },
             { loader: require.resolve("css-loader") },
           ],
+        },
+        {
+          test: /\.s[ac]ss$/i,
+          use: ["style-loader", cssLoader, "sass-loader"],
         },
         {
           test: /\.(woff|woff2|png)?$/,
