@@ -126,7 +126,7 @@ export function openmrsFetch<T = any>(
          * We should not try to download the empty response as json. Instead,
          * we return null since there is no response body.
          */
-        response.data = (null as unknown) as T;
+        response.data = null as unknown as T;
         return response;
       } else {
         // HTTP 200s - The request succeeded
@@ -165,7 +165,7 @@ export function openmrsFetch<T = any>(
          * want it to remain in pending status while the navigation occurs.
          */
         return redirectAuthFailure.resolvePromise
-          ? ((Promise.resolve() as unknown) as Promise<FetchResponse>)
+          ? (Promise.resolve() as unknown as Promise<FetchResponse>)
           : new Promise<FetchResponse>(() => {});
       } else {
         // Attempt to download a response body, if it has one

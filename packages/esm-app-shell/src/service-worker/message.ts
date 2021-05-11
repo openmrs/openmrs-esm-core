@@ -1,11 +1,11 @@
 import { cacheImportMapReferences } from "./caching";
 import { DynamicRouteRegistration, ServiceWorkerDb } from "./storage";
+import escapeRegExp from "lodash-es/escapeRegExp";
 import {
-  MessageResult,
+  MessageServiceWorkerResult,
   OnImportMapChangedMessage,
   RegisterDynamicRouteMessage,
-} from "./types";
-import escapeRegExp from "lodash-es/escapeRegExp";
+} from "@openmrs/esm-offline";
 
 const messageHandlers = {
   onImportMapChanged,
@@ -72,7 +72,7 @@ export async function handleMessage(event: ExtendableMessageEvent) {
     });
   }
 
-  function resolve<T>(result: MessageResult<T>) {
+  function resolve<T>(result: MessageServiceWorkerResult<T>) {
     event.ports[0].postMessage(result ?? {});
   }
 }

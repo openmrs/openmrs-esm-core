@@ -28,9 +28,8 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   ...divProps
 }: ExtensionSlotProps) => {
   const slotRef = useRef(null);
-  const { extensions, extensionSlotModuleName } = useExtensionSlot(
-    extensionSlotName
-  );
+  const { extensions, extensionSlotModuleName } =
+    useExtensionSlot(extensionSlotName);
   const content = useMemo(
     () =>
       extensionSlotName &&
