@@ -1,7 +1,11 @@
 import { cacheImportMapReferences } from "./caching";
 import { DynamicRouteRegistration, ServiceWorkerDb } from "./storage";
 import escapeRegExp from "lodash-es/escapeRegExp";
-import { MessageServiceWorkerResult, OnImportMapChangedMessage, RegisterDynamicRouteMessage } from '@openmrs/esm-offline';
+import {
+  MessageServiceWorkerResult,
+  OnImportMapChangedMessage,
+  RegisterDynamicRouteMessage,
+} from "@openmrs/esm-offline";
 
 const messageHandlers = {
   onImportMapChanged,

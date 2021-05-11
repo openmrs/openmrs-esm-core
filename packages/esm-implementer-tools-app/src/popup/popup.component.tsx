@@ -21,10 +21,10 @@ export default function Popup(props: DevToolsPopupProps) {
   const [diagnosticsHasAlert, setDiagnosticsHasAlert] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
 
-  useEffect(() => setHasAlert(configHasAlert || diagnosticsHasAlert), [
-    diagnosticsHasAlert,
-    configHasAlert,
-  ]);
+  useEffect(
+    () => setHasAlert(configHasAlert || diagnosticsHasAlert),
+    [diagnosticsHasAlert, configHasAlert]
+  );
 
   return (
     <div className={styles.popup}>

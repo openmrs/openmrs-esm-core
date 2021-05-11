@@ -23,7 +23,7 @@ import { registerApp, tryRegisterExtension } from "./apps";
 import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import { appName, getCoreExtensions } from "./ui";
-import { Workbox } from 'workbox-window';
+import { Workbox } from "workbox-window";
 
 const allowedSuffixes = ["-app", "-widgets"];
 
@@ -193,7 +193,9 @@ function showLoadingSpinner() {
 }
 
 async function setupServiceWorker() {
-  const sw = await registerOmrsServiceWorker(`${window.getOpenmrsSpaBase()}service-worker.js`);
+  const sw = await registerOmrsServiceWorker(
+    `${window.getOpenmrsSpaBase()}service-worker.js`
+  );
   registerSwEvents(sw);
 
   if (navigator.onLine) {
@@ -216,13 +218,16 @@ async function setupServiceWorker() {
 }
 
 function registerSwEvents(sw: Workbox) {
-  sw.addEventListener("message", e => {
+  sw.addEventListener("message", (e) => {
     const event = e.data as KnownOmrsServiceWorkerEvents;
 
     if (event.type === "networkRequestFailed") {
       dispatchNetworkRequestFailed(event);
     } else {
-      console.warn(`Received an unknown service worker event of type ${event.type}.`, event);
+      console.warn(
+        `Received an unknown service worker event of type ${event.type}.`,
+        event
+      );
     }
   });
 }

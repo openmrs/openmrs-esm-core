@@ -38,7 +38,8 @@ export async function addToOmrsCache(urls: Array<string>) {
 async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
   const cache = await caches.open(omrsCacheName);
   const cachedUrls = (await cache.keys()).map((x) => x.url);
-  const dynamicRoutes = await new ServiceWorkerDb().dynamicRouteRegistrations.toArray();
+  const dynamicRoutes =
+    await new ServiceWorkerDb().dynamicRouteRegistrations.toArray();
   const urlsToInvalidate = cachedUrls.filter(
     (cachedUrl) =>
       !absoluteWbManifestUrls.includes(cachedUrl) &&

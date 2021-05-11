@@ -63,7 +63,9 @@ export function registerAllOmrsRoutes() {
     try {
       return await networkOnly.handle(options);
     } catch (e) {
-      const cachedResponse = await caches.match(options.request, { cacheName: omrsCacheName });
+      const cachedResponse = await caches.match(options.request, {
+        cacheName: omrsCacheName,
+      });
       if (cachedResponse) {
         return cachedResponse;
       }
