@@ -6,6 +6,7 @@ declare global {
   interface Window {
     __WB_MANIFEST: Array<PrecacheEntry>;
     __WB_DISABLE_DEV_LOGS: boolean;
+    clients: Clients;
   }
 }
 
@@ -17,19 +18,4 @@ export interface BuildManifest {
   chunks?: Array<{
     files?: Array<string>;
   }>;
-}
-
-export interface MessageResult<T> {
-  success: boolean;
-  result?: T;
-  error?: string;
-}
-
-export interface OnImportMapChangedMessage {
-  importMap: ImportMap;
-}
-
-export interface RegisterDynamicRouteMessage {
-  url?: string;
-  pattern?: string;
 }

@@ -15,12 +15,15 @@ import {
   subscribeConnectivity,
   getSynchronizationCallbacks,
   getCurrentUser,
+  KnownOmrsServiceWorkerEvents,
+  dispatchNetworkRequestFailed,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
 import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import { appName, getCoreExtensions } from "./ui";
+import { Workbox } from 'workbox-window';
 
 const allowedSuffixes = ["-app", "-widgets"];
 
@@ -190,9 +193,10 @@ function showLoadingSpinner() {
 }
 
 async function setupServiceWorker() {
-  if (navigator.onLine) {
-    registerOmrsServiceWorker(`${window.getOpenmrsSpaBase()}service-worker.js`);
+  const sw = await registerOmrsServiceWorker(`${window.getOpenmrsSpaBase()}service-worker.js`);
+  registerSwEvents(sw);
 
+  if (navigator.onLine) {
     try {
       await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
 
@@ -209,6 +213,18 @@ async function setupServiceWorker() {
       });
     }
   }
+}
+
+function registerSwEvents(sw: Workbox) {
+  sw.addEventListener("message", e => {
+    const event = e.data as KnownOmrsServiceWorkerEvents;
+
+    if (event.type === "networkRequestFailed") {
+      dispatchNetworkRequestFailed(event);
+    } else {
+      console.warn(`Received an unknown service worker event of type ${event.type}.`, event);
+    }
+  });
 }
 
 async function precacheImportMap() {
