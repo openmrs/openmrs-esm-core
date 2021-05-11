@@ -4,6 +4,8 @@ import { precacheAppShell } from "./caching";
 import { registerAllOmrsRoutes } from "./routing";
 import { omrsCachePrefix } from "./constants";
 
+self.__WB_DISABLE_DEV_LOGS = true;
+
 // Initial Workbox setup. Renaming its default cache prefix prevents conflicts with other dev envs on localhost.
 setCacheNameDetails({ prefix: omrsCachePrefix });
 

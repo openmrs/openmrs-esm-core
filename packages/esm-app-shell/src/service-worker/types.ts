@@ -5,6 +5,7 @@ import { PrecacheEntry } from "workbox-precaching/_types";
 declare global {
   interface Window {
     __WB_MANIFEST: Array<PrecacheEntry>;
+    __WB_DISABLE_DEV_LOGS: boolean;
   }
 }
 
