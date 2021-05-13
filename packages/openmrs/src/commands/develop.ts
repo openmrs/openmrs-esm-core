@@ -70,7 +70,7 @@ export function runDevelop(args: DevelopArgs) {
     logInfo(`SPA available at ${pageUrl}`);
 
     if (open) {
-      const open = require("opn");
+      const open = require("open");
 
       open(pageUrl, { wait: false }).catch(() => {
         logWarn(

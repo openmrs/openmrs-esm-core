@@ -38,7 +38,7 @@ export function runStart(args: StartArgs) {
     logInfo(`SPA available at ${pageUrl}`);
 
     if (args.open) {
-      const open = require("opn");
+      const open = require("open");
 
       open(pageUrl, { wait: false }).catch(() => {
         logWarn(
