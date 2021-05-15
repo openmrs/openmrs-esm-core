@@ -3,7 +3,7 @@ import {
   fireEvent,
   render,
   screen,
-  wait,
+  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import { of } from "rxjs";
@@ -68,7 +68,7 @@ describe(`<Root />`, () => {
     });
 
     it("does not render side menu button if desktop", async () => {
-      await wait(() =>
+      await waitFor(() =>
         expect(screen.queryAllByLabelText("Open menu")).toHaveLength(0)
       );
     });

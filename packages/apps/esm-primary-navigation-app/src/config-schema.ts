@@ -1,4 +1,4 @@
-import { Type } from "@openmrs/esm-framework";
+import { Type, validators } from "@openmrs/esm-framework";
 
 export const configSchema = {
   logo: {
@@ -17,6 +17,14 @@ export const configSchema = {
       _type: Type.String,
       _default: null,
       _description: "The organization name displayed when image is absent",
+    },
+  },
+  search: {
+    patientResultUrl: {
+      _default: "${openmrsSpaBase}/patient/${patientUuid}/chart",
+      _description:
+        "Where clicking a patient result takes the user. Accepts template parameter ${patientUuid}",
+      _validators: [validators.isUrlWithTemplateParameters(["patientUuid"])],
     },
   },
 };

@@ -82,6 +82,11 @@
   border-color: #004144;
 }
 
+/* side bar */
+.bx--side-nav {
+  z-index: 0;
+}
+
 .bx--overflow-menu--flip {
   &.bx--overflow-menu-options {
     background-color: $openmrs-background-grey;

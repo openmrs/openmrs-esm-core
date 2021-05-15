@@ -1,0 +1,43 @@
+@import "carbon-components/scss/globals/scss/typography.scss";
+
+.patientCharts {
+  text-decoration: none;
+}
+
+.container {
+  border-bottom: 0.063rem solid $ui-03;
+}
+
+.patientBanner {
+  display: flex;
+}
+
+.patientName {
+  @include carbon--type-style("productive-heading-03");
+  color: $text-01;
+}
+
+.patientAvatar {
+  width: 5rem;
+  height: 5rem;
+  margin: 1rem 1rem 1rem 0;
+  border-radius: 1px;
+}
+
+.patientInfo {
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  margin: 1rem 0;
+}
+
+.demographics {
+  @include carbon--type-style("body-short-02");
+  color: $text-02;
+  margin: 0.3rem 0;
+}
+
+.identifiers {
+  @include carbon--type-style("body-short-02");
+  color: $ui-04;
+}

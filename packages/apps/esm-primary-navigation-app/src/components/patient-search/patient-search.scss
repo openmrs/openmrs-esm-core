@@ -1,0 +1,88 @@
+@import "../../root.scss";
+@import "~@openmrs/esm-styleguide/src/vars";
+
+.searchResults {
+  margin-top: 3rem;
+  width: 100%;
+  padding: 1rem;
+  background: $ui-background;
+  min-height: 100vh;
+  position: relative;
+}
+
+.searchTerm {
+  @include carbon--type-style("productive-heading-03");
+  color: $text-01;
+  margin-top: 0.375rem;
+}
+
+.resultsText {
+  @include carbon--type-style("label-01");
+  color: $text-02;
+}
+
+.patientSearchInput {
+  background: transparent;
+  border: none;
+  caret-color: var(--omrs-color-interaction);
+  padding: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.patientSearchInput:focus {
+  outline: none;
+}
+
+.patientSearchInput::placeholder {
+  color: var(--omrs-color-ink-medium-contrast);
+}
+
+.helperText {
+  color: var(--omrs-color-ink-medium-contrast);
+  margin-left: 2.375rem;
+}
+
+.emptyResultText {
+  margin-top: 1rem;
+  margin-bottom: 0.313rem;
+  @include carbon--type-style("productive-heading-01");
+  color: $text-02;
+}
+
+.actionText {
+  @include carbon--type-style("body-long-01");
+  color: $text-02;
+  margin-bottom: 1rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 4.688rem 0 1.5rem;
+}
+
+.patientSearchInput {
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.patientSearchInput input {
+  width: 100vw;
+}
+
+.patientSearch {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: fit-content;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+
+.hidePatientSearch {
+  display: none;
+}
