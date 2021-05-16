@@ -37,6 +37,18 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .map((url) => JSON.stringify(url))
   .join(", ");
 
+function checkDirectory(dirName) {
+  if (dirName) {
+    try {
+      return statSync(dirName).isDirectory();
+    } catch {
+      return false;
+    }
+  }
+
+  return false;
+}
+
 module.exports = (env, argv = {}) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? "dist" : "lib";
@@ -50,7 +62,7 @@ module.exports = (env, argv = {}) => {
     imports: {},
   };
 
-  if (openmrsCoreApps && statSync(openmrsCoreApps).isDirectory()) {
+  if (checkDirectory(openmrsCoreApps)) {
     readdirSync(openmrsCoreApps).forEach((dir) => {
       const appDir = resolve(openmrsCoreApps, dir);
       const { name, browser } = require(resolve(appDir, "package.json"));
