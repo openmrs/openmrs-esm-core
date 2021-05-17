@@ -218,3 +218,7 @@ export function setupPaths(config: any) {
   window.spaVersion = process.env.BUILD_VERSION;
   window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
+
+export const attach = jest.fn();
+export const detach = jest.fn();
+export const detachAll = jest.fn();
