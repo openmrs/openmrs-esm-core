@@ -57,6 +57,7 @@
 - [useLayoutType](API.md#uselayouttype)
 - [useLocations](API.md#uselocations)
 - [useNavigationContext](API.md#usenavigationcontext)
+- [usePagination](API.md#usepagination)
 - [useSessionUser](API.md#usesessionuser)
 - [useStore](API.md#usestore)
 - [useStoreState](API.md#usestorestate)
@@ -551,6 +552,41 @@ ___
 **Returns:** *void*
 
 Defined in: [packages/framework/esm-react-utils/src/useNavigationContext.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useNavigationContext.ts#L10)
+
+___
+
+### usePagination
+
+▸ **usePagination**<T\>(`data?`: T[], `resultsPerPage?`: *number*): *object*
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `data` | T[] | [] |
+| `resultsPerPage` | *number* | - |
+
+**Returns:** *object*
+
+| Name | Type |
+| :------ | :------ |
+| `currentPage` | *number* |
+| `paginated` | *boolean* |
+| `results` | T[] |
+| `showNextButton` | *boolean* |
+| `showPreviousButton` | *boolean* |
+| `totalPages` | *number* |
+| `goTo` | (`page`: *number*) => *void* |
+| `goToNext` | () => *void* |
+| `goToPrevious` | () => *void* |
+
+Defined in: [packages/framework/esm-react-utils/src/usePagination.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/usePagination.ts#L5)
 
 ___
 
