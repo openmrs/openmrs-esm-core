@@ -284,7 +284,7 @@ function setupOfflineDataSynchronization() {
       kind: "info",
     });
 
-    await Promise.allSettled(syncCallbacks.map(cb => cb()));
+    await Promise.allSettled(syncCallbacks.map((cb) => cb()));
 
     showToast({
       title: "Offline Synchronization Finished",
