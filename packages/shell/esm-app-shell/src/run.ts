@@ -284,7 +284,7 @@ function setupOfflineDataSynchronization() {
       kind: "info",
     });
 
-    await Promise.allSettled(syncCallbacks);
+    await Promise.allSettled(syncCallbacks.map(cb => cb()));
 
     showToast({
       title: "Offline Synchronization Finished",
@@ -307,12 +307,12 @@ export function run(configUrls: Array<string>) {
   setupApiModule();
   registerCoreExtensions();
   setupServiceWorker();
-  setupOfflineDataSynchronization();
 
   return loadApps()
     .then(setupApps)
     .then(provideConfigs)
     .then(runShell)
     .catch(handleInitFailure)
-    .then(closeLoading);
+    .then(closeLoading)
+    .then(setupOfflineDataSynchronization);
 }
