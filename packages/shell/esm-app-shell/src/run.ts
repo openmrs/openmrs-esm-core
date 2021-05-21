@@ -107,7 +107,7 @@ function connectivityChanged() {
   const online = navigator.onLine;
   dispatchConnectivityChanged(online);
   showNotification({
-    type: "toast",
+    type: NotificationVariant.TOAST,
     description: `Connection: ${online ? "online" : "offline"}`,
     title: "App",
     kind: online ? "success" : "warning",
@@ -210,7 +210,7 @@ async function setupServiceWorker() {
       await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
 
       showNotification({
-        type: NotificationVariant,
+        type: NotificationVariant.INLINE,
         title: "You can now go offline",
         description:
           "The application is done preparing the offline mode. You can now use the website without an internet connection.",
@@ -218,7 +218,7 @@ async function setupServiceWorker() {
       });
     } catch (e) {
       showNotification({
-        type: "inline",
+        type: NotificationVariant.INLINE,
         title: "Offline Setup Error",
         description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
       });
@@ -287,7 +287,7 @@ function setupOfflineDataSynchronization() {
     }
 
     showNotification({
-      type: "inline",
+      type: NotificationVariant.INLINE,
       title: "Synchronizing Offline Changes",
       description:
         "Synchronizing the changes you have made offline. This may take a while...",
@@ -297,7 +297,7 @@ function setupOfflineDataSynchronization() {
     await Promise.allSettled(syncCallbacks.map((cb) => cb()));
 
     showNotification({
-      type: "inline",
+      type: NotificationVariant.INLINE,
       title: "Offline Synchronization Finished",
       description:
         "Finished synchronizing the changes you have made while offline.",

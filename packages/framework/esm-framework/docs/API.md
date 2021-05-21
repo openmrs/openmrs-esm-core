@@ -6,6 +6,7 @@
 
 ### Enumerations
 
+- [NotificationVariant](enums/notificationvariant.md)
 - [Type](enums/type.md)
 - [VisitMode](enums/visitmode.md)
 - [VisitStatus](enums/visitstatus.md)
@@ -221,8 +222,9 @@
 - [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
 - [registerSynchronizationCallback](API.md#registersynchronizationcallback)
 - [renderExtension](API.md#renderextension)
+- [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
-- [renderNotifications](API.md#rendernotifications)
+- [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
 - [saveVisit](API.md#savevisit)
 - [setupPaths](API.md#setuppaths)
@@ -1987,6 +1989,22 @@ Defined in: [packages/framework/esm-extensions/src/render.ts:23](https://github.
 
 ___
 
+### renderInlineNotifications
+
+▸ **renderInlineNotifications**(`target`: HTMLElement \| ``null``): *void*
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `target` | HTMLElement \| ``null`` |
+
+**Returns:** *void*
+
+Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L20)
+
+___
+
 ### renderLoadingSpinner
 
 ▸ **renderLoadingSpinner**(`target`: HTMLElement): *function*
@@ -2003,9 +2021,9 @@ Defined in: [packages/framework/esm-styleguide/src/spinner/index.ts:1](https://g
 
 ___
 
-### renderNotifications
+### renderToasts
 
-▸ **renderNotifications**(`target`: HTMLElement \| ``null``): *void*
+▸ **renderToasts**(`target`: HTMLElement \| ``null``): *void*
 
 #### Parameters
 
@@ -2015,7 +2033,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L14)
+Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L29)
 
 ___
 
@@ -2090,7 +2108,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L28)
+Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L43)
 
 ___
 

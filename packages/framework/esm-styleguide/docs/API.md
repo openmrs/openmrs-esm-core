@@ -4,11 +4,16 @@
 
 ## Table of contents
 
+### Enumerations
+
+- [NotificationVariant](enums/notificationvariant.md)
+
 ### Functions
 
 - [integrateBreakpoints](API.md#integratebreakpoints)
+- [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
-- [renderNotifications](API.md#rendernotifications)
+- [renderToasts](API.md#rendertoasts)
 - [showNotification](API.md#shownotification)
 
 ## Functions
@@ -20,6 +25,22 @@
 **Returns:** *void*
 
 Defined in: [breakpoints/index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/breakpoints/index.ts#L20)
+
+___
+
+### renderInlineNotifications
+
+▸ **renderInlineNotifications**(`target`: HTMLElement \| ``null``): *void*
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `target` | HTMLElement \| ``null`` |
+
+**Returns:** *void*
+
+Defined in: [notifications/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L20)
 
 ___
 
@@ -39,9 +60,9 @@ Defined in: [spinner/index.ts:1](https://github.com/openmrs/openmrs-esm-core/blo
 
 ___
 
-### renderNotifications
+### renderToasts
 
-▸ **renderNotifications**(`target`: HTMLElement \| ``null``): *void*
+▸ **renderToasts**(`target`: HTMLElement \| ``null``): *void*
 
 #### Parameters
 
@@ -51,7 +72,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [notifications/index.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L14)
+Defined in: [notifications/index.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L29)
 
 ___
 
@@ -67,4 +88,4 @@ ___
 
 **Returns:** *void*
 
-Defined in: [notifications/index.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L28)
+Defined in: [notifications/index.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L43)

@@ -13,8 +13,8 @@ const toastSubject = new Subject<CarbonNotification>();
 let notificationId = 0;
 
 export enum NotificationVariant {
-  INLINE,
-  TOAST,
+  INLINE = "inline",
+  TOAST = "toast",
 }
 
 export function renderInlineNotifications(target: HTMLElement | null) {
