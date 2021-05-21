@@ -27,7 +27,6 @@ export function subscribeConnectivity(
 }
 
 export interface ShowNotificationEvent {
-  type: string;
   description: any;
   kind?:
     | "error"
@@ -41,7 +40,21 @@ export interface ShowNotificationEvent {
   millis?: number;
 }
 
+export interface ShowToastEvent {
+  description: any;
+  kind?:
+    | "error"
+    | "info"
+    | "info-square"
+    | "success"
+    | "warning"
+    | "warning-alt";
+  title?: string;
+  millis?: number;
+}
+
 const notificationShownName = "openmrs:notification-shown";
+const toastShownName = "openmrs:toast-shown";
 
 export function dispatchNotificationShown(data: ShowNotificationEvent) {
   window.dispatchEvent(
@@ -55,4 +68,10 @@ export function subscribeNotificationShown(
   const handler = (ev: CustomEvent) => cb(ev.detail);
   window.addEventListener(notificationShownName, handler);
   return () => window.removeEventListener(notificationShownName, handler);
+}
+
+export function subscribeToastShown(cb: (data: ShowToastEvent) => void) {
+  const handler = (ev: CustomEvent) => cb(ev.detail);
+  window.addEventListener(toastShownName, handler);
+  return () => window.removeEventListener(toastShownName, handler);
 }

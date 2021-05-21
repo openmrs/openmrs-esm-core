@@ -10,7 +10,6 @@ export function handleApiError() {
 
 window.onerror = function () {
   dispatchNotificationShown({
-    type: "inline",
     description: "Oops! An unexpected error occurred.",
   });
   return false;
@@ -18,7 +17,6 @@ window.onerror = function () {
 
 window.onunhandledrejection = function () {
   dispatchNotificationShown({
-    type: "inline",
     description: "Oops! An unexpected error occurred.",
   });
 };

@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Enumerations
-
-- [NotificationVariant](enums/notificationvariant.md)
-
 ### Functions
 
 - [integrateBreakpoints](API.md#integratebreakpoints)
@@ -15,6 +11,7 @@
 - [renderLoadingSpinner](API.md#renderloadingspinner)
 - [renderToasts](API.md#rendertoasts)
 - [showNotification](API.md#shownotification)
+- [showToast](API.md#showtoast)
 
 ## Functions
 
@@ -40,7 +37,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [notifications/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L20)
+Defined in: [notifications/index.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L14)
 
 ___
 
@@ -72,7 +69,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [notifications/index.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L29)
+Defined in: [toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L11)
 
 ___
 
@@ -88,4 +85,20 @@ ___
 
 **Returns:** *void*
 
-Defined in: [notifications/index.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L43)
+Defined in: [notifications/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L31)
+
+___
+
+### showToast
+
+▸ **showToast**(`toast`: ToastDescriptor): *void*
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `toast` | ToastDescriptor |
+
+**Returns:** *void*
+
+Defined in: [toasts/index.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L25)

@@ -210,6 +210,7 @@ export const useStore = (store: Store<any>, actions) => {
 };
 
 export const showNotification = jest.fn();
+export const showToast = jest.fn();
 
 export function setupPaths(config: any) {
   window.openmrsBase = config.apiUrl;

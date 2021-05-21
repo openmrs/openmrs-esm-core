@@ -13,7 +13,6 @@ import {
 } from "./store";
 import { useBackendDependencies } from "./backend-dependencies/useBackendDependencies";
 import { NotificationActionButton } from "carbon-components-react";
-import { NotificationVariant } from "@openmrs/esm-styleguide/src/notifications";
 
 function PopupHandler() {
   const [
@@ -37,7 +36,6 @@ function PopupHandler() {
     // only show notification max. 1 time
     if (shouldShowNotification) {
       showNotification({
-        type: NotificationVariant.TOAST,
         description: "Found modules with unresolved backend dependencies.",
         action: (
           <NotificationActionButton onClick={showModuleDiagnostics}>

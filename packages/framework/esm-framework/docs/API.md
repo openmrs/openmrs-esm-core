@@ -6,7 +6,6 @@
 
 ### Enumerations
 
-- [NotificationVariant](enums/notificationvariant.md)
 - [Type](enums/type.md)
 - [VisitMode](enums/visitmode.md)
 - [VisitStatus](enums/visitstatus.md)
@@ -85,6 +84,7 @@
 - [Role](interfaces/role.md)
 - [SessionUser](interfaces/sessionuser.md)
 - [ShowNotificationEvent](interfaces/shownotificationevent.md)
+- [ShowToastEvent](interfaces/showtoastevent.md)
 - [SpaConfig](interfaces/spaconfig.md)
 - [UnauthenticatedUser](interfaces/unauthenticateduser.md)
 - [User](interfaces/user.md)
@@ -230,11 +230,13 @@
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
 - [showNotification](API.md#shownotification)
+- [showToast](API.md#showtoast)
 - [subscribeConnectivity](API.md#subscribeconnectivity)
 - [subscribeConnectivityChanged](API.md#subscribeconnectivitychanged)
 - [subscribeNetworkRequestFailed](API.md#subscribenetworkrequestfailed)
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
 - [subscribeTo](API.md#subscribeto)
+- [subscribeToastShown](API.md#subscribetoastshown)
 - [switchTo](API.md#switchto)
 - [toDateObjectStrict](API.md#todateobjectstrict)
 - [toLocationObject](API.md#tolocationobject)
@@ -1115,7 +1117,7 @@ ___
 
 **Returns:** (`incomingErr`: *any*) => *void*
 
-Defined in: [packages/framework/esm-error-handling/src/index.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L33)
+Defined in: [packages/framework/esm-error-handling/src/index.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L31)
 
 ___
 
@@ -1278,7 +1280,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/framework/esm-globals/src/events.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L46)
+Defined in: [packages/framework/esm-globals/src/events.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L59)
 
 ___
 
@@ -2001,7 +2003,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L20)
+Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L14)
 
 ___
 
@@ -2033,7 +2035,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L29)
+Defined in: [packages/framework/esm-styleguide/src/toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L11)
 
 ___
 
@@ -2049,7 +2051,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/framework/esm-error-handling/src/index.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L26)
+Defined in: [packages/framework/esm-error-handling/src/index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L24)
 
 ___
 
@@ -2108,7 +2110,23 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L43)
+Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L31)
+
+___
+
+### showToast
+
+▸ **showToast**(`toast`: ToastDescriptor): *void*
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `toast` | ToastDescriptor |
+
+**Returns:** *void*
+
+Defined in: [packages/framework/esm-styleguide/src/toasts/index.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L25)
 
 ___
 
@@ -2172,7 +2190,7 @@ ___
 
 **Returns:** () => *void*
 
-Defined in: [packages/framework/esm-globals/src/events.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L52)
+Defined in: [packages/framework/esm-globals/src/events.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L65)
 
 ___
 
@@ -2198,6 +2216,22 @@ ___
 **Returns:** Unsubscribe
 
 Defined in: [packages/framework/esm-state/src/state.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L67)
+
+___
+
+### subscribeToastShown
+
+▸ **subscribeToastShown**(`cb`: (`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)) => *void*): *function*
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)) => *void* |
+
+**Returns:** () => *void*
+
+Defined in: [packages/framework/esm-globals/src/events.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L73)
 
 ___
 

@@ -11,7 +11,6 @@
 - [kind](shownotificationevent.md#kind)
 - [millis](shownotificationevent.md#millis)
 - [title](shownotificationevent.md#title)
-- [type](shownotificationevent.md#type)
 
 ## Properties
 
@@ -19,7 +18,7 @@
 
 • `Optional` **action**: *any*
 
-Defined in: [events.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L40)
+Defined in: [events.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L39)
 
 ___
 
@@ -27,7 +26,7 @@ ___
 
 • **description**: *any*
 
-Defined in: [events.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L31)
+Defined in: [events.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L30)
 
 ___
 
@@ -35,7 +34,7 @@ ___
 
 • `Optional` **kind**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
 
-Defined in: [events.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L32)
+Defined in: [events.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L31)
 
 ___
 
@@ -43,7 +42,7 @@ ___
 
 • `Optional` **millis**: *number*
 
-Defined in: [events.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L41)
+Defined in: [events.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L40)
 
 ___
 
@@ -51,12 +50,4 @@ ___
 
 • `Optional` **title**: *string*
 
-Defined in: [events.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L39)
-
-___
-
-### type
-
-• **type**: *string*
-
-Defined in: [events.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L30)
+Defined in: [events.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L38)
