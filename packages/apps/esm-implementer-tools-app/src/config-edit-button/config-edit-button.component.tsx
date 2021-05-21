@@ -1,5 +1,6 @@
 import React from "react";
 import { implementerToolsStore } from "../store";
+import { useTranslation } from "react-i18next";
 
 interface ConfigEditButtonProps {
   configPath: string[];
@@ -8,13 +9,14 @@ interface ConfigEditButtonProps {
 export default function ConfigEditButton({
   configPath,
 }: ConfigEditButtonProps) {
+  const { t } = useTranslation();
   return (
     <button
       onClick={() => {
         implementerToolsStore.setState({ configPathBeingEdited: configPath });
       }}
     >
-      Edit
+      {t("edit", "Edit")}
     </button>
   );
 }

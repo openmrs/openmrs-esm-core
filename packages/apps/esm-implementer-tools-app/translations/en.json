@@ -1,0 +1,12 @@
+{
+  "backendModules": "Backend Modules",
+  "clearTemporaryConfig": "Clear Temporary Config",
+  "configuration": "Configuration",
+  "devConfig": "Dev Config",
+  "downloadTemporaryConfig": "Download Temporary Config",
+  "edit": "Edit",
+  "installedVersion": "Installed Version",
+  "missing": "Missing",
+  "requiredVersion": "Required Version",
+  "uiEditor": "UI Editor"
+}
