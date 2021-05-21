@@ -6,7 +6,7 @@ import {
   Config,
   provide,
   showNotification,
-  renderNotifications,
+  renderInlineNotifications,
   integrateBreakpoints,
   dispatchConnectivityChanged,
   subscribeNotificationShown,
@@ -17,6 +17,8 @@ import {
   getCurrentUser,
   KnownOmrsServiceWorkerEvents,
   dispatchNetworkRequestFailed,
+  renderToasts,
+  NotificationVariant,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -186,7 +188,11 @@ function createConfigLoader(configUrls: Array<string>) {
 }
 
 function showNotifications() {
-  return renderNotifications(document.querySelector(".omrs-toasts-container"));
+  renderInlineNotifications(
+    document.querySelector(".omrs-inline-notifications-container")
+  );
+  renderToasts(document.querySelector(".omrs-toasts-container"));
+  return;
 }
 
 function showLoadingSpinner() {
@@ -204,7 +210,7 @@ async function setupServiceWorker() {
       await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
 
       showNotification({
-        type: "inline",
+        type: NotificationVariant,
         title: "You can now go offline",
         description:
           "The application is done preparing the offline mode. You can now use the website without an internet connection.",

@@ -8,12 +8,27 @@ import {
 import ActiveNotifications from "./active-notifications.component";
 import isEmpty from "lodash-es/isEmpty";
 
-const notificationsSubject = new Subject<CarbonNotification>();
+const inlineNotificationsSubject = new Subject<CarbonNotification>();
+const toastSubject = new Subject<CarbonNotification>();
 let notificationId = 0;
 
-export function renderNotifications(target: HTMLElement | null) {
+export enum NotificationVariant {
+  INLINE,
+  TOAST,
+}
+
+export function renderInlineNotifications(target: HTMLElement | null) {
   if (target) {
-    render(<ActiveNotifications subject={notificationsSubject} />, target);
+    render(
+      <ActiveNotifications subject={inlineNotificationsSubject} />,
+      target
+    );
+  }
+}
+
+export function renderToasts(target: HTMLElement | null) {
+  if (target) {
+    render(<ActiveNotifications subject={toastSubject} />, target);
   }
 }
 
@@ -27,13 +42,29 @@ function isNotEmpty(description: React.ReactNode) {
 
 export function showNotification(notification: NotificationDescriptor) {
   if (notification && isNotEmpty(notification.description)) {
-    setTimeout(() => {
-      // always use in subsequent cycle
-      notificationsSubject.next({
-        ...notification,
-        id: notificationId++,
-      });
-    }, 0);
+    switch (notification.type) {
+      case NotificationVariant.INLINE:
+        setTimeout(() => {
+          // always use in subsequent cycle
+          inlineNotificationsSubject.next({
+            ...notification,
+            id: notificationId++,
+          });
+        }, 0);
+        break;
+
+      case NotificationVariant.TOAST:
+        setTimeout(() => {
+          // always use in subsequent cycle
+          toastSubject.next({
+            ...notification,
+            id: notificationId++,
+          });
+        }, 0);
+        break;
+      default:
+        break;
+    }
   } else {
     console.error(
       `showNotification must be called with an object having a 'description' property that is a non-empty string or object`

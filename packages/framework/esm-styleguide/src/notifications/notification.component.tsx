@@ -3,6 +3,7 @@ import {
   InlineNotification,
   ToastNotification,
 } from "carbon-components-react/lib/components/Notification";
+import { NotificationVariant } from "./index";
 
 const defaultOptions = {
   millis: 4000,
@@ -15,7 +16,7 @@ export interface NotificationProps {
 
 export interface NotificationDescriptor {
   description: React.ReactNode;
-  type: string;
+  type: NotificationVariant;
   action?: React.ReactNode;
   kind?: NotificationType;
   millis?: number;
@@ -60,7 +61,7 @@ export const Notification: React.FC<NotificationProps> = ({
       onMouseEnter={() => setWaitingForTime(false)}
       onMouseLeave={() => setWaitingForTime(true)}
     >
-      {type === "inline" ? (
+      {type === NotificationVariant.INLINE ? (
         <InlineNotification
           lowContrast
           actions={action}
@@ -69,7 +70,7 @@ export const Notification: React.FC<NotificationProps> = ({
           title={title || ""}
         />
       ) : null}
-      {type === "toast" ? (
+      {type === NotificationVariant.TOAST ? (
         <ToastNotification
           lowContrast
           kind={kind || "info"}
