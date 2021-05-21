@@ -19,7 +19,7 @@
     "verify": "lerna run lint && lerna run test && lerna run typescript",
     "prettier": "prettier \"packages/**/src/**/*\" --write",
     "prepare": "husky install",
-    "extract-translations": "lerna run extract-translations -- --config ../../tools/i18next-parser.config.js"
+    "extract-translations": "lerna run extract-translations -- --config ../../../tools/i18next-parser.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
