@@ -44,6 +44,7 @@
     "carbon-components": "10.x",
     "carbon-icons": "7.x",
     "react": "16.x",
+    "react-i18next": "11.x",
     "react-dom": "16.x",
     "react-router-dom": "5.x",
     "rxjs": "6.x"
