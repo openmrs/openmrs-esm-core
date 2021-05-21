@@ -8,7 +8,6 @@ import { Configuration } from "../configuration/configuration.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependecies.component";
 import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-dependencies";
 import { setHasAlert } from "../store";
-import { useTranslation } from "react-i18next";
 
 interface DevToolsPopupProps {
   close(): void;
@@ -18,7 +17,6 @@ interface DevToolsPopupProps {
 }
 
 export default function Popup(props: DevToolsPopupProps) {
-  const { t } = useTranslation();
   const [configHasAlert] = useState(false);
   const [diagnosticsHasAlert, setDiagnosticsHasAlert] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
@@ -39,13 +37,13 @@ export default function Popup(props: DevToolsPopupProps) {
           >
             <Switch
               name="configuration-tab"
-              text={t("configuration", "Configuration")}
+              text="Configuration"
               onClick={() => {}}
               onKeyDown={() => {}}
             />
             <Switch
               name="backend-modules-tab"
-              text={t("backendModules", "Backend Modules")}
+              text="Backend Modules"
               onClick={() => {}}
               onKeyDown={() => {}}
             />

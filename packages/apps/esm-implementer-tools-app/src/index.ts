@@ -30,12 +30,7 @@ function setupOpenMRS() {
   };
 }
 
-const importTranslation = require.context(
-  "../translations",
-  false,
-  /.json$/,
-  "lazy"
-);
+const importTranslation = () => Promise.resolve();
 
 export { setupOpenMRS, importTranslation };
 
