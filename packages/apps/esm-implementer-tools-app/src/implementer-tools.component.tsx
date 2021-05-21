@@ -1,6 +1,10 @@
 import React from "react";
 import Popup from "./popup/popup.component";
-import { showToast, UserHasAccess, useStore } from "@openmrs/esm-framework";
+import {
+  showNotification,
+  UserHasAccess,
+  useStore,
+} from "@openmrs/esm-framework";
 import { UiEditor } from "./ui-editor/ui-editor";
 import {
   implementerToolsStore,
@@ -15,11 +19,12 @@ function PopupHandler() {
     modulesWithMissingBackendModules,
     modulesWithWrongBackendModulesVersion,
   ] = useBackendDependencies();
-  const [shouldShowToast, setShouldShowToast] = React.useState(false);
+  const [shouldShowNotification, setShouldShowNotification] =
+    React.useState(false);
 
   React.useEffect(() => {
     // displaying toast if modules are missing
-    setShouldShowToast(
+    setShouldShowNotification(
       (alreadyShowing) =>
         alreadyShowing ||
         modulesWithMissingBackendModules.length > 0 ||
@@ -28,9 +33,10 @@ function PopupHandler() {
   }, [modulesWithMissingBackendModules, modulesWithWrongBackendModulesVersion]);
 
   React.useEffect(() => {
-    // only show toast max. 1 time
-    if (shouldShowToast) {
-      showToast({
+    // only show notification max. 1 time
+    if (shouldShowNotification) {
+      showNotification({
+        type: "toast",
         description: "Found modules with unresolved backend dependencies.",
         action: (
           <NotificationActionButton onClick={showModuleDiagnostics}>
@@ -40,7 +46,7 @@ function PopupHandler() {
         kind: "error",
       });
     }
-  }, [shouldShowToast]);
+  }, [shouldShowNotification]);
 
   const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(
     implementerToolsStore

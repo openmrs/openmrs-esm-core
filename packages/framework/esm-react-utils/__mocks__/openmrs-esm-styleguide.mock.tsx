@@ -1,5 +1,5 @@
-export const showToast = jest.fn();
+export const showNotification = jest.fn();
 
 beforeEach(() => {
-  showToast.mockReset();
+  showNotification.mockReset();
 });

@@ -1,4 +1,4 @@
-import { dispatchToastShown } from "@openmrs/esm-globals";
+import { dispatchNotificationShown } from "@openmrs/esm-globals";
 
 export function handleApiError() {
   return (incomingResponseErr) => {
@@ -9,12 +9,18 @@ export function handleApiError() {
 }
 
 window.onerror = function () {
-  dispatchToastShown({ description: "Oops! An unexpected error occurred." });
+  dispatchNotificationShown({
+    type: "inline",
+    description: "Oops! An unexpected error occurred.",
+  });
   return false;
 };
 
 window.onunhandledrejection = function () {
-  dispatchToastShown({ description: "Oops! An unexpected error occurred." });
+  dispatchNotificationShown({
+    type: "inline",
+    description: "Oops! An unexpected error occurred.",
+  });
 };
 
 export function reportError(err) {

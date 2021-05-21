@@ -8,8 +8,8 @@
 
 - [integrateBreakpoints](API.md#integratebreakpoints)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
-- [renderToasts](API.md#rendertoasts)
-- [showToast](API.md#showtoast)
+- [renderNotifications](API.md#rendernotifications)
+- [showNotification](API.md#shownotification)
 
 ## Functions
 
@@ -39,9 +39,9 @@ Defined in: [spinner/index.ts:1](https://github.com/openmrs/openmrs-esm-core/blo
 
 ___
 
-### renderToasts
+### renderNotifications
 
-▸ **renderToasts**(`target`: HTMLElement \| ``null``): *void*
+▸ **renderNotifications**(`target`: HTMLElement \| ``null``): *void*
 
 #### Parameters
 
@@ -51,20 +51,20 @@ ___
 
 **Returns:** *void*
 
-Defined in: [toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L11)
+Defined in: [notifications/index.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L14)
 
 ___
 
-### showToast
+### showNotification
 
-▸ **showToast**(`toast`: ToastDescriptor): *void*
+▸ **showNotification**(`notification`: NotificationDescriptor): *void*
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `toast` | ToastDescriptor |
+| `notification` | NotificationDescriptor |
 
 **Returns:** *void*
 
-Defined in: [toasts/index.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L25)
+Defined in: [notifications/index.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L28)

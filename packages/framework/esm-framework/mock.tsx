@@ -209,7 +209,7 @@ export const useStore = (store: Store<any>, actions) => {
   return { ...state, ...actions };
 };
 
-export const showToast = jest.fn();
+export const showNotification = jest.fn();
 
 export function setupPaths(config: any) {
   window.openmrsBase = config.apiUrl;

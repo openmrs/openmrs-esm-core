@@ -13,7 +13,7 @@
 - [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md)
 - [PageDefinition](interfaces/pagedefinition.md)
 - [ResourceLoader](interfaces/resourceloader.md)
-- [ShowToastEvent](interfaces/showtoastevent.md)
+- [ShowNotificationEvent](interfaces/shownotificationevent.md)
 - [SpaConfig](interfaces/spaconfig.md)
 
 ### Type aliases
@@ -24,12 +24,12 @@
 ### Functions
 
 - [dispatchConnectivityChanged](API.md#dispatchconnectivitychanged)
-- [dispatchToastShown](API.md#dispatchtoastshown)
+- [dispatchNotificationShown](API.md#dispatchnotificationshown)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
 - [subscribeConnectivity](API.md#subscribeconnectivity)
 - [subscribeConnectivityChanged](API.md#subscribeconnectivitychanged)
-- [subscribeToastShown](API.md#subscribetoastshown)
+- [subscribeNotificationShown](API.md#subscribenotificationshown)
 
 ## Type aliases
 
@@ -65,19 +65,19 @@ Defined in: [events.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 ___
 
-### dispatchToastShown
+### dispatchNotificationShown
 
-▸ **dispatchToastShown**(`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)): *void*
+▸ **dispatchNotificationShown**(`data`: [*ShowNotificationEvent*](interfaces/shownotificationevent.md)): *void*
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `data` | [*ShowToastEvent*](interfaces/showtoastevent.md) |
+| `data` | [*ShowNotificationEvent*](interfaces/shownotificationevent.md) |
 
 **Returns:** *void*
 
-Defined in: [events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L45)
+Defined in: [events.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L46)
 
 ___
 
@@ -139,16 +139,16 @@ Defined in: [events.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/mast
 
 ___
 
-### subscribeToastShown
+### subscribeNotificationShown
 
-▸ **subscribeToastShown**(`cb`: (`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)) => *void*): *function*
+▸ **subscribeNotificationShown**(`cb`: (`data`: [*ShowNotificationEvent*](interfaces/shownotificationevent.md)) => *void*): *function*
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)) => *void* |
+| `cb` | (`data`: [*ShowNotificationEvent*](interfaces/shownotificationevent.md)) => *void* |
 
 **Returns:** () => *void*
 
-Defined in: [events.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L49)
+Defined in: [events.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L52)

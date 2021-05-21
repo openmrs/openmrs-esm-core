@@ -5,11 +5,11 @@ import {
   createAppState,
   Config,
   provide,
-  showToast,
-  renderToasts,
+  showNotification,
+  renderNotifications,
   integrateBreakpoints,
   dispatchConnectivityChanged,
-  subscribeToastShown,
+  subscribeNotificationShown,
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
   subscribeConnectivity,
@@ -104,7 +104,8 @@ async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
 function connectivityChanged() {
   const online = navigator.onLine;
   dispatchConnectivityChanged(online);
-  showToast({
+  showNotification({
+    type: "toast",
     description: `Connection: ${online ? "online" : "offline"}`,
     title: "App",
     kind: online ? "success" : "warning",
@@ -184,8 +185,8 @@ function createConfigLoader(configUrls: Array<string>) {
   return () => loadingConfigs.then(loadConfigs);
 }
 
-function showToasts() {
-  return renderToasts(document.querySelector(".omrs-toasts-container"));
+function showNotifications() {
+  return renderNotifications(document.querySelector(".omrs-toasts-container"));
 }
 
 function showLoadingSpinner() {
@@ -202,14 +203,16 @@ async function setupServiceWorker() {
     try {
       await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
 
-      showToast({
+      showNotification({
+        type: "inline",
         title: "You can now go offline",
         description:
           "The application is done preparing the offline mode. You can now use the website without an internet connection.",
         kind: "info",
       });
     } catch (e) {
-      showToast({
+      showNotification({
+        type: "inline",
         title: "Offline Setup Error",
         description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
       });
@@ -277,7 +280,8 @@ function setupOfflineDataSynchronization() {
       return;
     }
 
-    showToast({
+    showNotification({
+      type: "inline",
       title: "Synchronizing Offline Changes",
       description:
         "Synchronizing the changes you have made offline. This may take a while...",
@@ -286,7 +290,8 @@ function setupOfflineDataSynchronization() {
 
     await Promise.allSettled(syncCallbacks.map((cb) => cb()));
 
-    showToast({
+    showNotification({
+      type: "inline",
       title: "Offline Synchronization Finished",
       description:
         "Finished synchronizing the changes you have made while offline.",
@@ -300,9 +305,9 @@ export function run(configUrls: Array<string>) {
   const provideConfigs = createConfigLoader(configUrls);
 
   integrateBreakpoints();
-  showToasts();
+  showNotifications();
   createAppState({});
-  subscribeToastShown(showToast);
+  subscribeNotificationShown(showNotification);
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
