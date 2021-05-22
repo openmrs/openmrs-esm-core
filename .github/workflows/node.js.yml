@@ -51,8 +51,8 @@ jobs:
         run: |
           mkdir -p dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}
           mkdir -p dist/${{ env.ESM_NAME }}/latest
-          cp -r packages/shell/esm-app-shell/dist/*.* dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
-          cp -r packages/shell/esm-app-shell/dist/*.* dist/${{ env.ESM_NAME }}/latest/
+          cp -r packages/shell/esm-app-shell/dist/ dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
+          cp -r packages/shell/esm-app-shell/dist/ dist/${{ env.ESM_NAME }}/latest/
       - name: Publish to Digital Ocean
         uses: jakejarvis/s3-sync-action@master
         with:
