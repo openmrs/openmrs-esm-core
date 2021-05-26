@@ -2,7 +2,7 @@ import React from "react";
 import { ToastNotification } from "carbon-components-react/es/components/Notification";
 
 const defaultOptions = {
-  millis: 4000,
+  millis: 5000,
 };
 
 export interface ToastProps {
@@ -13,6 +13,7 @@ export interface ToastProps {
 export interface ToastDescriptor {
   description: React.ReactNode;
   kind?: ToastType;
+  lowContrast?: boolean;
   title?: string;
   millis?: number;
 }
@@ -30,7 +31,13 @@ export type ToastType =
   | "warning-alt";
 
 export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
-  const { description, kind, title, millis = defaultOptions.millis } = toast;
+  const {
+    description,
+    kind,
+    lowContrast,
+    title,
+    millis = defaultOptions.millis,
+  } = toast;
   const [waitingForTime, setWaitingForTime] = React.useState(true);
 
   React.useEffect(() => {
@@ -46,8 +53,8 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
       onMouseLeave={() => setWaitingForTime(true)}
     >
       <ToastNotification
-        lowContrast
         kind={kind || "info"}
+        lowContrast={lowContrast ?? true}
         subtitle={description}
         title={title || ""}
         timeout={millis}
