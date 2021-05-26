@@ -1,5 +1,11 @@
 import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
+const importTranslation = () => Promise.resolve();
+
+const frontendDependencies = {
+  "@openmrs/esm-framework": "^3.1.10",
+};
+
 function setupOpenMRS() {
   const options = {
     featureName: "devtools",
@@ -17,6 +23,4 @@ function setupOpenMRS() {
   };
 }
 
-const importTranslation = () => Promise.resolve();
-
-export { importTranslation, setupOpenMRS };
+export { setupOpenMRS, importTranslation, frontendDependencies };

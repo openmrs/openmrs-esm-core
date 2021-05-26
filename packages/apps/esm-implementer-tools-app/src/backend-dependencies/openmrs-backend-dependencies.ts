@@ -1,5 +1,4 @@
-import * as semver from "semver";
-import { openmrsFetch } from "@openmrs/esm-framework";
+import { isVersionSatisfied, openmrsFetch } from "@openmrs/esm-framework";
 import difference from "lodash-es/difference";
 
 const installedBackendModules: Array<Record<string, string>> = [];
@@ -105,7 +104,7 @@ function getMisMatchedBackendModules(
     const requiredVersion = installedAndRequiredBackendModules[uuid].version;
     const moduleName = installedAndRequiredBackendModules[uuid].uuid;
 
-    if (!isVersionInstalled(requiredVersion, installedVersion)) {
+    if (!isVersionSatisfied(requiredVersion, installedVersion)) {
       misMatchedBackendModules.push({
         uuid: moduleName,
         requiredVersion: requiredVersion,
@@ -114,14 +113,6 @@ function getMisMatchedBackendModules(
     }
   }
   return misMatchedBackendModules;
-}
-
-function isVersionInstalled(requiredVersion: string, installedVersion: string) {
-  return semver.eq(
-    // @ts-ignore
-    semver.coerce(requiredVersion),
-    semver.coerce(installedVersion)
-  );
 }
 
 export interface UnresolvedBackendDependencies {

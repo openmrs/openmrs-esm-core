@@ -1,5 +1,25 @@
 import { MissingBackendModules } from "../openmrs-backend-dependencies";
 
+export interface ModuleDiagnosticsProps {
+  setHasAlert(value: boolean): void;
+  modulesWithMissingBackendModules: Array<MissingBackendModules>;
+  modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
+}
+
+export interface FrontendModule {
+  name: string;
+  unresolvedDeps: Array<UnresolvedBackendDependency>;
+}
+
+export type DeficiencyType = "missing" | "version-mismatch";
+
+export interface UnresolvedBackendDependency {
+  name: string;
+  requiredVersion?: string;
+  installedVersion?: string;
+  type: DeficiencyType;
+}
+
 export function parseUnresolvedDeps(
   modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>,
   modulesWithMissingBackendModules: Array<MissingBackendModules>
@@ -11,6 +31,7 @@ export function parseUnresolvedDeps(
     );
 
     let leavesForSimilarEsm: Array<UnresolvedBackendDependency> = [];
+
     if (similarEsm) {
       leavesForSimilarEsm = similarEsm.backendModules.map(
         (m) =>
@@ -47,24 +68,4 @@ export function parseUnresolvedDeps(
       return { name: m.moduleName, unresolvedDeps: leaves } as FrontendModule;
     });
   return [...unresolvedDeps1, ...unresolvedDeps2];
-}
-
-export type ModuleDiagnosticsProps = {
-  setHasAlert(value: boolean): void;
-  modulesWithMissingBackendModules: Array<MissingBackendModules>;
-  modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
-};
-
-export interface FrontendModule {
-  name: string;
-  unresolvedDeps: Array<UnresolvedBackendDependency>;
-}
-
-type DeficiencyType = "missing" | "version-mismatch";
-
-export interface UnresolvedBackendDependency {
-  name: string;
-  requiredVersion?: string;
-  installedVersion?: string;
-  type: DeficiencyType;
 }

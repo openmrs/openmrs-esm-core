@@ -14,6 +14,10 @@ const initialStates: Record<string, any> = {};
 
 const availableStores: Record<string, StoreEntity> = {};
 
+export function isVersionSatisfied() {
+  return true;
+}
+
 export const mockStores = availableStores;
 
 export function createGlobalStore<TState>(

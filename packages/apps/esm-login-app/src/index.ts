@@ -1,6 +1,5 @@
 import { getAsyncLifecycle, defineConfigSchema } from "@openmrs/esm-framework";
 import { configSchema } from "./config-schema";
-import { backendDependencies } from "./openmrs-backend-dependencies";
 
 const importTranslation = require.context(
   "../translations",
@@ -8,6 +7,15 @@ const importTranslation = require.context(
   /.json$/,
   "lazy"
 );
+
+const backendDependencies = {
+  "webservices.rest": "2.24.0",
+  appui: "1.10.0",
+};
+
+const frontendDependencies = {
+  "@openmrs/esm-framework": "^3.1.10",
+};
 
 const sharedOnlineOfflineProps = {
   online: {
@@ -59,4 +67,9 @@ function setupOpenMRS() {
   };
 }
 
-export { backendDependencies, importTranslation, setupOpenMRS };
+export {
+  setupOpenMRS,
+  importTranslation,
+  backendDependencies,
+  frontendDependencies,
+};

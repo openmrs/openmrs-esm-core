@@ -5,14 +5,20 @@ import {
 } from "./components/choose-locale/change-locale.resource";
 import { configSchema } from "./config-schema";
 
-const backendDependencies = { "webservices.rest": "^2.2.0" };
-
 const importTranslation = require.context(
   "../translations",
   false,
   /.json$/,
   "lazy"
 );
+
+const backendDependencies = {
+  "webservices.rest": "^2.2.0",
+};
+
+const frontendDependencies = {
+  "@openmrs/esm-framework": "^3.1.10",
+};
 
 const moduleName = "@openmrs/esm-primary-navigation-app";
 const options = {
@@ -69,4 +75,9 @@ function setupOpenMRS() {
   };
 }
 
-export { backendDependencies, importTranslation, setupOpenMRS };
+export {
+  setupOpenMRS,
+  importTranslation,
+  backendDependencies,
+  frontendDependencies,
+};

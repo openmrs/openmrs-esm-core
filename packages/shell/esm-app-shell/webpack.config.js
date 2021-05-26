@@ -11,6 +11,7 @@ const { resolve, dirname, basename } = require("path");
 const { readFileSync, readdirSync, statSync } = require("fs");
 const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
 const { version } = require("./package.json");
+const frameworkVersion = require("@openmrs/esm-framework/package.json").version;
 
 const timestamp = getTimestamp();
 const production = "production";
@@ -194,6 +195,7 @@ module.exports = (env, argv = {}) => {
         }),
       new DefinePlugin({
         "process.env.BUILD_VERSION": JSON.stringify(`${version}-${timestamp}`),
+        "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? "static" : "disabled",

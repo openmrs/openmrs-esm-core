@@ -3,6 +3,7 @@ import {
   attach,
   checkStatus,
   getCustomProps,
+  isVersionSatisfied,
   PageDefinition,
   registerExtension,
   ResourceLoader,
@@ -10,6 +11,10 @@ import {
 import { registerApplication } from "single-spa";
 import { routePrefix, routeRegex } from "./helpers";
 import type { Activator, ActivatorDefinition } from "./types";
+
+const providedDeps = {
+  "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
+};
 
 /**
  * Normalizes the activator function, i.e., if we receive a
@@ -80,10 +85,36 @@ function getLoader(
   return load;
 }
 
+function satisfiesDependencies(deps: Record<string, string>) {
+  for (const depName of Object.keys(deps)) {
+    const requiredDep = deps[depName];
+    const providedDep = providedDeps[depName];
+
+    if (!providedDep) {
+      console.warn(`Missing dependency "${depName}".`);
+      return false;
+    }
+
+    if (!isVersionSatisfied(requiredDep, providedDep)) {
+      console.warn(
+        `Unsatisfied dependency constraint for "${depName}". Available "${providedDep}", but required "${requiredDep}".`
+      );
+      return false;
+    }
+  }
+
+  return true;
+}
+
 export function registerApp(appName: string, appExports: System.Module) {
   const setup = appExports.setupOpenMRS;
+  const dependencies = appExports.frontendDependencies ?? {};
 
-  if (typeof setup === "function") {
+  if (!satisfiesDependencies(dependencies)) {
+    console.error(
+      `The MF "${appName}" failed to meet the requirements for its dependencies. It will be ignored.`
+    );
+  } else if (typeof setup === "function") {
     const result = trySetup(appName, setup);
 
     if (result && typeof result === "object") {
@@ -149,7 +180,7 @@ To fix this, ensure that you define the "id" (or alternatively the "name") field
 
   if (!extension.load) {
     console.warn(
-      `A registered extension definition is missing the loader and thus cannot be registered. 
+      `A registered extension definition is missing the loader and thus cannot be registered.
 To fix this, ensure that you define a "load" function inside the extension definition.`,
       extension
     );
