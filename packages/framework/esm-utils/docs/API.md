@@ -15,6 +15,7 @@
 - [isOmrsDateStrict](API.md#isomrsdatestrict)
 - [isOmrsDateToday](API.md#isomrsdatetoday)
 - [isSameDay](API.md#issameday)
+- [isVersionSatisfied](API.md#isversionsatisfied)
 - [toDateObjectStrict](API.md#todateobjectstrict)
 - [toOmrsDateFormat](API.md#toomrsdateformat)
 - [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
@@ -127,6 +128,23 @@ Checks if two dates are representing the same day.
 True if both are located on the same day.
 
 Defined in: [age-helpers.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L23)
+
+___
+
+### isVersionSatisfied
+
+▸ **isVersionSatisfied**(`requiredVersion`: *string*, `installedVersion`: *string*): *boolean*
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `requiredVersion` | *string* |
+| `installedVersion` | *string* |
+
+**Returns:** *boolean*
+
+Defined in: [version.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/version.ts#L3)
 
 ___
 
