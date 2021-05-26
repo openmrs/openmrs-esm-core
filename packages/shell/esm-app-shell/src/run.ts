@@ -5,10 +5,13 @@ import {
   createAppState,
   Config,
   provide,
+  showNotification,
   showToast,
+  renderInlineNotifications,
   renderToasts,
   integrateBreakpoints,
   dispatchConnectivityChanged,
+  subscribeNotificationShown,
   subscribeToastShown,
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
@@ -184,8 +187,16 @@ function createConfigLoader(configUrls: Array<string>) {
   return () => loadingConfigs.then(loadConfigs);
 }
 
+function showNotifications() {
+  renderInlineNotifications(
+    document.querySelector(".omrs-inline-notifications-container")
+  );
+  return;
+}
+
 function showToasts() {
-  return renderToasts(document.querySelector(".omrs-toasts-container"));
+  renderToasts(document.querySelector(".omrs-toasts-container"));
+  return;
 }
 
 function showLoadingSpinner() {
@@ -202,14 +213,14 @@ async function setupServiceWorker() {
     try {
       await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
 
-      showToast({
+      showNotification({
         title: "You can now go offline",
         description:
           "The application is done preparing the offline mode. You can now use the website without an internet connection.",
         kind: "info",
       });
     } catch (e) {
-      showToast({
+      showNotification({
         title: "Offline Setup Error",
         description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
       });
@@ -277,7 +288,7 @@ function setupOfflineDataSynchronization() {
       return;
     }
 
-    showToast({
+    showNotification({
       title: "Synchronizing Offline Changes",
       description:
         "Synchronizing the changes you have made offline. This may take a while...",
@@ -286,7 +297,7 @@ function setupOfflineDataSynchronization() {
 
     await Promise.allSettled(syncCallbacks.map((cb) => cb()));
 
-    showToast({
+    showNotification({
       title: "Offline Synchronization Finished",
       description:
         "Finished synchronizing the changes you have made while offline.",
@@ -301,7 +312,9 @@ export function run(configUrls: Array<string>) {
 
   integrateBreakpoints();
   showToasts();
+  showNotifications();
   createAppState({});
+  subscribeNotificationShown(showNotification);
   subscribeToastShown(showToast);
   registerModules(sharedDependencies);
   setupApiModule();

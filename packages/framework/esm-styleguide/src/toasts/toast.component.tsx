@@ -1,24 +1,23 @@
 import React from "react";
-import { InlineNotification } from "carbon-components-react/es/components/Notification";
+import { ToastNotification } from "carbon-components-react/es/components/Notification";
 
 const defaultOptions = {
   millis: 4000,
 };
 
 export interface ToastProps {
-  toast: ToastNotification;
+  toast: ToastNotificationMeta;
   closeToast(): void;
 }
 
 export interface ToastDescriptor {
+  description: React.ReactNode;
   kind?: ToastType;
   title?: string;
-  description: React.ReactNode;
-  action?: React.ReactNode;
   millis?: number;
 }
 
-export interface ToastNotification extends ToastDescriptor {
+export interface ToastNotificationMeta extends ToastDescriptor {
   id: number;
 }
 
@@ -31,13 +30,7 @@ export type ToastType =
   | "warning-alt";
 
 export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
-  const {
-    millis = defaultOptions.millis,
-    title,
-    description,
-    kind,
-    action,
-  } = toast;
+  const { description, kind, title, millis = defaultOptions.millis } = toast;
   const [waitingForTime, setWaitingForTime] = React.useState(true);
 
   React.useEffect(() => {
@@ -52,11 +45,12 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
       onMouseEnter={() => setWaitingForTime(false)}
       onMouseLeave={() => setWaitingForTime(true)}
     >
-      <InlineNotification
+      <ToastNotification
+        lowContrast
         kind={kind || "info"}
         subtitle={description}
         title={title || ""}
-        actions={action}
+        timeout={millis}
       />
     </div>
   );

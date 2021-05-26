@@ -1,13 +1,13 @@
 import React from "react";
 import { Subject } from "rxjs";
-import { Toast, ToastNotification } from "./toast.component";
+import { Toast, ToastNotificationMeta } from "./toast.component";
 
 interface ActiveToastsProps {
-  subject: Subject<ToastNotification>;
+  subject: Subject<ToastNotificationMeta>;
 }
 
 const ActiveToasts: React.FC<ActiveToastsProps> = ({ subject }) => {
-  const [toasts, setToasts] = React.useState<Array<ToastNotification>>([]);
+  const [toasts, setToasts] = React.useState<Array<ToastNotificationMeta>>([]);
 
   const closeToast = React.useCallback((toast) => {
     setToasts((toasts) => toasts.filter((t) => t !== toast));
@@ -18,10 +18,9 @@ const ActiveToasts: React.FC<ActiveToastsProps> = ({ subject }) => {
       setToasts((toasts) => [
         ...toasts.filter(
           (t) =>
-            t.title !== toast.title ||
-            t.kind !== toast.kind ||
             t.description !== toast.description ||
-            t.action !== toast.action
+            t.kind !== toast.kind ||
+            t.title !== toast.title
         ),
         toast,
       ])

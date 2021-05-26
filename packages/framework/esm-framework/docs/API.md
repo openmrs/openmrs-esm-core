@@ -83,6 +83,7 @@
 - [ResourceLoader](interfaces/resourceloader.md)
 - [Role](interfaces/role.md)
 - [SessionUser](interfaces/sessionuser.md)
+- [ShowNotificationEvent](interfaces/shownotificationevent.md)
 - [ShowToastEvent](interfaces/showtoastevent.md)
 - [SpaConfig](interfaces/spaconfig.md)
 - [UnauthenticatedUser](interfaces/unauthenticateduser.md)
@@ -180,7 +181,7 @@
 - [detachAll](API.md#detachall)
 - [dispatchConnectivityChanged](API.md#dispatchconnectivitychanged)
 - [dispatchNetworkRequestFailed](API.md#dispatchnetworkrequestfailed)
-- [dispatchToastShown](API.md#dispatchtoastshown)
+- [dispatchNotificationShown](API.md#dispatchnotificationshown)
 - [getAppState](API.md#getappstate)
 - [getAssignedIds](API.md#getassignedids)
 - [getAsyncExtensionLifecycle](API.md#getasyncextensionlifecycle)
@@ -222,16 +223,19 @@
 - [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
 - [registerSynchronizationCallback](API.md#registersynchronizationcallback)
 - [renderExtension](API.md#renderextension)
+- [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
 - [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
 - [saveVisit](API.md#savevisit)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
+- [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
 - [subscribeConnectivity](API.md#subscribeconnectivity)
 - [subscribeConnectivityChanged](API.md#subscribeconnectivitychanged)
 - [subscribeNetworkRequestFailed](API.md#subscribenetworkrequestfailed)
+- [subscribeNotificationShown](API.md#subscribenotificationshown)
 - [subscribeTo](API.md#subscribeto)
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [switchTo](API.md#switchto)
@@ -1114,7 +1118,7 @@ ___
 
 **Returns:** (`incomingErr`: *any*) => *void*
 
-Defined in: [packages/framework/esm-error-handling/src/index.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L27)
+Defined in: [packages/framework/esm-error-handling/src/index.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L31)
 
 ___
 
@@ -1265,19 +1269,19 @@ Defined in: [packages/framework/esm-offline/src/events.ts:5](https://github.com/
 
 ___
 
-### dispatchToastShown
+### dispatchNotificationShown
 
-▸ **dispatchToastShown**(`data`: [*ShowToastEvent*](interfaces/showtoastevent.md)): *void*
+▸ **dispatchNotificationShown**(`data`: [*ShowNotificationEvent*](interfaces/shownotificationevent.md)): *void*
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `data` | [*ShowToastEvent*](interfaces/showtoastevent.md) |
+| `data` | [*ShowNotificationEvent*](interfaces/shownotificationevent.md) |
 
 **Returns:** *void*
 
-Defined in: [packages/framework/esm-globals/src/events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L45)
+Defined in: [packages/framework/esm-globals/src/events.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L59)
 
 ___
 
@@ -2005,6 +2009,22 @@ Defined in: [packages/framework/esm-extensions/src/render.ts:23](https://github.
 
 ___
 
+### renderInlineNotifications
+
+▸ **renderInlineNotifications**(`target`: HTMLElement \| ``null``): *void*
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `target` | HTMLElement \| ``null`` |
+
+**Returns:** *void*
+
+Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L14)
+
+___
+
 ### renderLoadingSpinner
 
 ▸ **renderLoadingSpinner**(`target`: HTMLElement): *function*
@@ -2049,7 +2069,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [packages/framework/esm-error-handling/src/index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L20)
+Defined in: [packages/framework/esm-error-handling/src/index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L24)
 
 ___
 
@@ -2093,6 +2113,22 @@ ___
 **Returns:** *void*
 
 Defined in: [packages/framework/esm-globals/src/globals.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/globals.ts#L11)
+
+___
+
+### showNotification
+
+▸ **showNotification**(`notification`: NotificationDescriptor): *void*
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `notification` | NotificationDescriptor |
+
+**Returns:** *void*
+
+Defined in: [packages/framework/esm-styleguide/src/notifications/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L31)
 
 ___
 
@@ -2160,6 +2196,22 @@ Defined in: [packages/framework/esm-offline/src/events.ts:11](https://github.com
 
 ___
 
+### subscribeNotificationShown
+
+▸ **subscribeNotificationShown**(`cb`: (`data`: [*ShowNotificationEvent*](interfaces/shownotificationevent.md)) => *void*): *function*
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [*ShowNotificationEvent*](interfaces/shownotificationevent.md)) => *void* |
+
+**Returns:** () => *void*
+
+Defined in: [packages/framework/esm-globals/src/events.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L65)
+
+___
+
 ### subscribeTo
 
 ▸ **subscribeTo**<T, U\>(`store`: *Store*<T\>, `select`: (`state`: T) => U, `handle`: (`subState`: U) => *void*): Unsubscribe
@@ -2197,7 +2249,7 @@ ___
 
 **Returns:** () => *void*
 
-Defined in: [packages/framework/esm-globals/src/events.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L49)
+Defined in: [packages/framework/esm-globals/src/events.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L73)
 
 ___
 

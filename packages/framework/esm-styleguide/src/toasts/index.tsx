@@ -1,11 +1,11 @@
 import React from "react";
 import { render } from "react-dom";
 import { Subject } from "rxjs";
-import { ToastDescriptor, ToastNotification } from "./toast.component";
+import { ToastDescriptor, ToastNotificationMeta } from "./toast.component";
 import ActiveToasts from "./active-toasts.component";
 import isEmpty from "lodash-es/isEmpty";
 
-const toastsSubject = new Subject<ToastNotification>();
+const toastsSubject = new Subject<ToastNotificationMeta>();
 let toastId = 0;
 
 export function renderToasts(target: HTMLElement | null) {

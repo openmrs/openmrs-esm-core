@@ -29,6 +29,7 @@
   </head>
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>
+    <div class="omrs-toasts-container"></div>
     <template id="loading-spinner">
       <div class="omrs-loading-spinner">
         <div data-inline-loading="" class="bx--inline-loading" role="alert" aria-live="assertive">
@@ -64,7 +65,7 @@
         </div>
       </div>
     </template>
-    <div class="omrs-toasts-container"></div>
+    <div class="omrs-inline-notifications-container"></div>
     <script>
       initializeSpa({
         apiUrl: "<%= openmrsApiUrl %>",

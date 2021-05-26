@@ -26,7 +26,8 @@ export function subscribeConnectivity(
   return subscribeConnectivityChanged(cb);
 }
 
-export interface ShowToastEvent {
+export interface ShowNotificationEvent {
+  description: any;
   kind?:
     | "error"
     | "info"
@@ -35,19 +36,42 @@ export interface ShowToastEvent {
     | "warning"
     | "warning-alt";
   title?: string;
-  description: any;
   action?: any;
   millis?: number;
 }
 
-const toastShownEventName = "openmrs:toast-shown";
+export interface ShowToastEvent {
+  description: any;
+  kind?:
+    | "error"
+    | "info"
+    | "info-square"
+    | "success"
+    | "warning"
+    | "warning-alt";
+  title?: string;
+  millis?: number;
+}
 
-export function dispatchToastShown(data: ShowToastEvent) {
-  window.dispatchEvent(new CustomEvent(toastShownEventName, { detail: data }));
+const notificationShownName = "openmrs:notification-shown";
+const toastShownName = "openmrs:toast-shown";
+
+export function dispatchNotificationShown(data: ShowNotificationEvent) {
+  window.dispatchEvent(
+    new CustomEvent(notificationShownName, { detail: data })
+  );
+}
+
+export function subscribeNotificationShown(
+  cb: (data: ShowNotificationEvent) => void
+) {
+  const handler = (ev: CustomEvent) => cb(ev.detail);
+  window.addEventListener(notificationShownName, handler);
+  return () => window.removeEventListener(notificationShownName, handler);
 }
 
 export function subscribeToastShown(cb: (data: ShowToastEvent) => void) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
-  window.addEventListener(toastShownEventName, handler);
-  return () => window.removeEventListener(toastShownEventName, handler);
+  window.addEventListener(toastShownName, handler);
+  return () => window.removeEventListener(toastShownName, handler);
 }
