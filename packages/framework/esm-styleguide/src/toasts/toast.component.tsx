@@ -13,7 +13,7 @@ export interface ToastProps {
 export interface ToastDescriptor {
   description: React.ReactNode;
   kind?: ToastType;
-  lowContrast?: boolean;
+  critical?: boolean;
   title?: string;
   millis?: number;
 }
@@ -34,10 +34,11 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
   const {
     description,
     kind,
-    lowContrast,
+    critical,
     title,
     millis = defaultOptions.millis,
   } = toast;
+
   const [waitingForTime, setWaitingForTime] = React.useState(true);
 
   React.useEffect(() => {
@@ -54,7 +55,7 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
     >
       <ToastNotification
         kind={kind || "info"}
-        lowContrast={lowContrast ?? true}
+        lowContrast={critical}
         subtitle={description}
         title={title || ""}
         timeout={millis}
