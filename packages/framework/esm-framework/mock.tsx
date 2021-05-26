@@ -209,6 +209,7 @@ export const useStore = (store: Store<any>, actions) => {
   return { ...state, ...actions };
 };
 
+export const showNotification = jest.fn();
 export const showToast = jest.fn();
 
 export function setupPaths(config: any) {
