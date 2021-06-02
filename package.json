@@ -13,8 +13,9 @@
     "packages/tooling/*"
   ],
   "scripts": {
-    "run:shell": "lerna run watch --scope @openmrs/esm-app-shell --stream",
+    "run:docs": "docsify serve docs",
     "run:omrs": "openmrs",
+    "run:shell": "lerna run watch --scope @openmrs/esm-app-shell --stream",
     "ci:publish": "lerna publish from-package --yes",
     "ci:prepublish": "lerna publish from-package --no-git-reset --yes --dist-tag next",
     "ci:release": "lerna version --no-git-tag-version",
@@ -43,8 +44,9 @@
     "copy-webpack-plugin": "^8.1.1",
     "cross-env": "7.0.2",
     "css-loader": "^5.2.4",
-    "cssnano": "^4.1.10",
     "css-minimizer-webpack-plugin": "^1.2.0",
+    "cssnano": "^4.1.10",
+    "docsify": "^4.12.1",
     "ejs": "^2.6.2",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.11.0",
