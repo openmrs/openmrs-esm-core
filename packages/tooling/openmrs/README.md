@@ -31,7 +31,7 @@ Example:
 npx openmrs
 ```
 
-### `debug`
+### `develop`
 
 > For developers and implementers.
 
@@ -41,7 +41,7 @@ Example:
 
 ```sh
 # run the command
-npx openmrs debug
+npx openmrs develop
 ```
 
 ### `build`
