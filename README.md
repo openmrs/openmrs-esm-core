@@ -1,5 +1,11 @@
 ![Node.js CI](https://github.com/openmrs/openmrs-esm-core/workflows/Node.js%20CI/badge.svg)
 
+Information for developers about the OpenMRS Frontend system can be found at the following link:
+
+**[OpenMRS Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/)**
+
+Below is the documentation for the OpenMRS Frontend Core.
+
 # OpenMRS Frontend Core
 
 This is a [Lerna](https://lerna.js.org/) project containing the core packages for the OpenMRS Frontend. These packages handle the "cross-cutting concerns" described in the [Domain Decomposition](https://wiki.openmrs.org/display/projects/MFE+Domain+Decomposition) document.

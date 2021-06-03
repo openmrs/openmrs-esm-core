@@ -1,25 +1,23 @@
 - Getting started
-  - [Prerequisites](getting_started/prerequisites.md)
-  - [Setup](getting_started/setup.md)
-  - [Making a “hello world” change]()
-  - [Writing a test]()
-  - [Contributing](getting_started/contributing.md)
-  - [Dev Ops and CI](getting_started/dev_ops_and_ci.md)
+  - [Prerequisite knowledge](getting_started/prerequisites)
+  - [Setup](getting_started/setup)
+  - [Contributing](getting_started/contributing)
+  - [Release and Deployment](getting_started/release_and_deployment)
+  - ~[Tour of a microfrontend]()~
 - Main concepts
-  - [Architecture overview]()  <!-- Import map etc -->
-  - [Map of the project]()
-  - [Creating a microfrontend]()
-  - [Creating a page]()
-  - [Using Carbon and the Styleguide]()
-  - [Translations]()
-  - [Extension system]()
-  - [Configuration system]()
-  - [Global state system]()
-  - [Build-time and runtime dependencies]()
+  - ~[Map of the project]()~
+  - ~[Creating a microfrontend]()~
+  - ~[Creating a page]()~
+  - ~[Using Carbon and the Styleguide]()~
+  - [Translations](main/translations)
+  - [Extension system](main/extensions)
+  - [Configuration system](main/config)
+  - ~[Global state system]()~
+  - ~[Build-time and runtime dependencies]()~
 - Advanced concepts
-  - [Working on esm-core]()
-  - [How translations work]()
-  - [Squad DevOps and CI]()
-  - [Offline mode]()
-  - [The App Shell and the Import Map]()
-  - [Advanced techniques with extensions and slots]()
+  - ~[Architecture Overview]()~  <!-- the app shell, the import map -->
+  - ~[Working on esm-core]()~
+  - [How translation works](advanced/translations)
+  - [Squad DevOps and CI](advanced/squad_devops)
+  - ~[Offline mode]()~
+  - ~[Advanced extensions and slots]()~

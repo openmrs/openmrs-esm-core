@@ -5,7 +5,7 @@ need for your implementation. However, it can be more fun and fruitful to
 collaborate, producing microfrontends that can be useful to various
 implementations and organizations.
 
-As such, there are lots of Microfrontends and architectural elements which are
+As such, there are lots of microfrontends and architectural elements which are
 managed by the OpenMRS community. If you're interested in contributing, you'll
 need to take the following steps.
 

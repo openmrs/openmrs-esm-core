@@ -15,13 +15,13 @@ Clone the repository of interest. For this example we'll use
 [openmrs-esm-patient chart](https://github.com/openmrs/openmrs-esm-patient-chart).
 Note that this is a [Lerna monorepo](https://github.com/lerna/lerna#readme).
 
-```sh
+```bash
 git clone https://github.com/openmrs/openmrs-esm-patient-chart
 ```
 
 Then change to the cloned repository's directory and install its dependencies.
 
-```sh
+```bash
 cd openmrs-esm-patient-chart
 npx lerna bootstrap  # in a non-Lerna repo, you would use `npm install` or `yarn`
 ```
@@ -29,7 +29,7 @@ npx lerna bootstrap  # in a non-Lerna repo, you would use `npm install` or `yarn
 Then you're ready to start a dev server! To work on the package
 `@openmrs/esm-patient-vitals-app`, we'll run
 
-```sh
+```bash
 npx openmrs develop --sources packages/esm-patient-vitals-app/
 ```
 
@@ -46,7 +46,7 @@ Try `npx openmrs develop --help`, for example.
 The `sources` option accepts a wildcard / glob pattern for the source directory.
 This means that you can simply do
 
-```sh
+```bash
 npx openmrs develop --sources packages/esm-*-app/
 ```
 
@@ -56,10 +56,14 @@ to run a local server with all the microfrontends matching the pattern.
 
 If you'd like to work on multiple microfrontends that aren't in a monorepo together,
 or if you'd like to run a microfrontend you are developing locally on a
-deployed server somewhere, you can use Import Map Overrides, a feature of the
-OpenMRS DevTools.
+deployed server somewhere, you can use Import Map Overrides,
+which is made available through the OpenMRS DevTools.
 
-To enable the OpenMRS DevTools, open your browser's JavaScript console and execute
+> If you'd like to understand how Import Map Overrides works, check out
+  [the documentation](https://github.com/joeldenning/import-map-overrides).
+  If you'd just like to use it, continue reading here.
+
+To use enable the OpenMRS DevTools, open your browser's JavaScript console and execute
 
 ```javascript
 localStorage.setItem('openmrs:devtools', true)
@@ -70,7 +74,7 @@ Clicking this box opens the OpenMRS DevTools.
 
 In the microfrontend you want to develop, run
 
-```sh
+```bash
 # if the OpenMRS frontend you're looking at uses HTTP (e.g. a local server)
 npm run serve
 # if the OpenMRS frontend you're looking at uses HTTPS (e.g. openmrs-spa.org)

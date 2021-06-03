@@ -32,6 +32,9 @@ the above documentation. The
 and the video-based [React JS Crash Course 2021](https://www.youtube.com/watch?v=w7ejDZ8SWv8)
 are good ones.
 
+Take your time. This is a lot of material. The better you understand it, the more
+easily you will be able to develop high-quality microfrontends (and other React applications).
+
 ## TypeScript
 
 You can get started with Typescript pretty quickly. If you're new to it,

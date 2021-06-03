@@ -5,6 +5,14 @@
     https://developers.google.com/style
   
   Please give it a read and write accordingly.
+
+  Canonical names:
+    - "microfrontend": any "-app" package
+    - "microfrontends": the packages or the generic architecture concept
+    - "Microfrontends": the OpenMRS framework for microfrontends
+    - "the openmrs-spa.org CI server": openmrs-spa.org
+    - "community-managed microfrontend": what it sounds like. Doesn't necessarily include
+        everything published to the `openmrs` NPM org.
   -->
 
 This documentation is intended to enable developers to develop and deploy
