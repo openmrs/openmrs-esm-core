@@ -15,6 +15,11 @@ export const configSchema = {
       _default: 8,
       _description: "The number of locations displayed on location picker",
     },
+    useLoginLocationTag: {
+      _type: Type.Boolean,
+      _default: true,
+      _description: "Whether to show location based on 'login location' tag",
+    },
   },
 
   links: {
