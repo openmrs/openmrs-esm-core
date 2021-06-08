@@ -31,7 +31,7 @@ export function searchLocationsFhir(
   abortController: AbortController
 ) {
   return openmrsFetch<LocationResponse>(
-    `${fhirBaseUrl}/Location?name=${location}`,
+    `${fhirBaseUrl}/Location?name=${location}&_tag=login location`,
     {
       method: "GET",
       signal: abortController.signal,
