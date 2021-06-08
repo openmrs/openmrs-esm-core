@@ -6,9 +6,10 @@
   - [Tour of a microfrontend](getting_started/tour)
 - Main concepts
   - ~[Map of the project]()~
-  - ~[Creating a microfrontend]()~
+  - [Creating a microfrontend](main/creating_a_microfrontend)
   - ~[Creating a page]()~
   - ~[Using Carbon and the Styleguide]()~
+  - [Retrieving and posting data](main/data)
   - [Translations](main/translations)
   - [Extension system](main/extensions)
   - [Configuration system](main/config)
@@ -16,7 +17,6 @@
   - [Build-time and runtime dependencies](main/deps)
 - Advanced concepts
   - ~[Architecture Overview]()~  <!-- the app shell, the import map -->
-  - ~[Working on esm-core]()~
   - [How translation works](advanced/translations)
   - [Squad DevOps and CI](advanced/squad_devops)
   - ~[Offline mode]()~
