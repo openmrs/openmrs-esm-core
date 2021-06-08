@@ -3,7 +3,7 @@
   - [Setup](getting_started/setup)
   - [Contributing](getting_started/contributing)
   - [Release and Deployment](getting_started/release_and_deployment)
-  - ~[Tour of a microfrontend]()~
+  - [Tour of a microfrontend](getting_started/tour)
 - Main concepts
   - ~[Map of the project]()~
   - ~[Creating a microfrontend]()~
@@ -13,7 +13,7 @@
   - [Extension system](main/extensions)
   - [Configuration system](main/config)
   - ~[Global state system]()~
-  - ~[Build-time and runtime dependencies]()~
+  - [Build-time and runtime dependencies](main/deps)
 - Advanced concepts
   - ~[Architecture Overview]()~  <!-- the app shell, the import map -->
   - ~[Working on esm-core]()~

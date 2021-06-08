@@ -12,45 +12,72 @@ not for running the backend or server.
 ## Working on a microfrontend
 
 Clone the repository of interest. For this example we'll use
-[openmrs-esm-patient chart](https://github.com/openmrs/openmrs-esm-patient-chart).
-Note that this is a [Lerna monorepo](https://github.com/lerna/lerna#readme).
+[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).
 
 ```bash
-git clone https://github.com/openmrs/openmrs-esm-patient-chart
+git clone https://github.com/openmrs/openmrs-esm-template-app.git
 ```
 
 Then change to the cloned repository's directory and install its dependencies.
 
 ```bash
 cd openmrs-esm-patient-chart
-npx lerna bootstrap  # in a non-Lerna repo, you would use `npm install` or `yarn`
+npm install
 ```
 
-Then you're ready to start a dev server! To work on the package
-`@openmrs/esm-patient-vitals-app`, we'll run
+Then you're ready to start a dev server! Simply run
+
+```bash
+npm run start
+```
+
+If you look at the `start` script in `package.json`, you'll see that this executes
+
+```bash
+npx openmrs develop  # the 'npx' is 'npm exec', which is implicit within `scripts`
+```
+
+> **For the curious**: This command runs two dev servers. One serves the
+*app shell*, which
+is installed as a dependency of the `openmrs` package.
+The other serves the microfrontend.
+They come together via the import map.
+
+You can usually run commands with `--help` to learn more about them.
+Try `npm run start -- --help` (or `npx openmrs develop --help`), for example.
+
+## Developing microfrontends in a Lerna monorepo
+
+In a [Lerna monorepo](https://github.com/lerna/lerna#readme), the commands are
+a bit different. As an example monorepo you can use
+[openmrs-esm-patient chart](https://github.com/openmrs/openmrs-esm-patient-chart).
+
+```bash
+git clone https://github.com/openmrs/openmrs-esm-patient-chart.git
+```
+
+To install dependencies, use the `lerna` executable.
+
+```bash
+cd openmrs-esm-patient-chart
+npx lerna bootstrap
+```
+
+And to start a dev server, use the `openmrs` executable directly.
+To work on the package `@openmrs/esm-patient-vitals-app`, run
 
 ```bash
 npx openmrs develop --sources packages/esm-patient-vitals-app/
 ```
 
-> **For the curious**: This command runs two dev servers. One serves the
-*app shell*, which
-is installed as a dependency of the `openmrs` package. The other serves the microfrontend.
-They come together via the import map.
-
-You can usually run commands with `--help` to learn more about them.
-Try `npx openmrs develop --help`, for example.
-
-## Developing multiple microfrontends in a Lerna monorepo
-
-The `sources` option accepts a wildcard / glob pattern for the source directory.
-This means that you can simply do
+To work on multiple packages at the same time, you can use a  wildcard / glob
+pattern for the `--sources` parameter. For example,
 
 ```bash
 npx openmrs develop --sources packages/esm-*-app/
 ```
 
-to run a local server with all the microfrontends matching the pattern.
+will run a local server with all the microfrontends matching the pattern.
 
 ## Import Map Overrides
 
