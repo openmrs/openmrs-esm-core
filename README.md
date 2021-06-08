@@ -4,7 +4,7 @@ Information for developers about the OpenMRS Frontend system can be found at the
 
 **[OpenMRS Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/)**
 
-Below is the documentation for the OpenMRS Frontend Core.
+Below is the documentation for this repository.
 
 # OpenMRS Frontend Core
 
@@ -18,54 +18,50 @@ You can find more documentation on these in the [docs](./docs) folder.
 
 This contains tooling and the app shell.
 
-- [openmrs](packages/openmrs)
-- [@openmrs/esm-app-shell](packages/esm-app-shell)
+- [openmrs](packages/tooling/openmrs)
+- [@openmrs/esm-app-shell](packages/shell/esm-app-shell)
 
-### Libraries
+### Framework
 
 The following common libraries have been developed. They may also be used independently of the app shell.
 
-- [@openmrs/esm-api](packages/esm-api)
-- [@openmrs/esm-config](packages/esm-config)
-- [@openmrs/esm-error-handling](packages/esm-error-handling)
-- [@openmrs/esm-extensions](packages/esm-extensions)
-- [@openmrs/esm-globals](packages/esm-globals)
-- [@openmrs/esm-react-utils](packages/esm-react-utils)
-- [@openmrs/esm-styleguide](packages/esm-styleguide)
-- [@openmrs/esm-utils](packages/esm-utils)
+- [@openmrs/esm-api](packages/framework/esm-api)
+- [@openmrs/esm-breadcrumbs](packages/framework/esm-breadcrumbs)
+- [@openmrs/esm-config](packages/framework/esm-config)
+- [@openmrs/esm-error-handling](packages/framework/esm-error-handling)
+- [@openmrs/esm-extensions](packages/framework/esm-extensions)
+- [@openmrs/esm-globals](packages/framework/esm-globals)
+- [@openmrs/esm-offline](packages/framework/esm-offline)
+- [@openmrs/esm-react-utils](packages/framework/esm-react-utils)
+- [@openmrs/esm-styleguide](packages/framework/esm-styleguide)
+- [@openmrs/esm-utils](packages/framework/esm-utils)
 
 All libraries are aggregated in the `@openmrs/esm-framework` package:
 
-- [@openmrs/esm-framework](packages/esm-framework)
+- [@openmrs/esm-framework](packages/framework/esm-framework)
 
 ### Microfrontends
 
-A set of microfrontends to provide core technical functionality for working with the application.
+A set of microfrontends provide the core technical functionality of the application.
 
-- [@openmrs/esm-devtools-app](packages/esm-devtools-app)
-- [@openmrs/esm-implementer-tools-app](packages/esm-implementer-tools-app)
+- [@openmrs/esm-devtools-app](packages/apps/esm-devtools-app)
+- [@openmrs/esm-implementer-tools-app](packages/apps/esm-implementer-tools-app)
+- [@openmrs/esm-login-app](packages/esm-login-app)
+- [@openmrs/esm-primary-navigation-app](packages/esm-primary-navigation-app)
 
-## Repository Development
+## Development
 
 ### Getting Started
 
-To install and setup the repository just use the following command:
+To set up the repository for development, run the following command:
 
 ```sh
 npx lerna bootstrap
 ```
 
-For working with the app shell you don't need to have the repository cloned. You can also just use the `openmrs` directly.
-
-```sh
-npx openmrs
-```
-
-This is a command line utility for running (or building) the app shell in isolation. In particular, it deals with everything that touches the development, distribution, and deployment of an app shell.
-
 ### Building
 
-For building the code just run
+To build all packages in the repository, run the following command:
 
 ```sh
 lerna run build
@@ -77,37 +73,49 @@ Verification of the existing packages can also be done in one step using `yarn`:
 yarn verify
 ```
 
-To run only the shell locally use `yarn`, too:
+### Running
+
+#### The app shell and the framework
 
 ```sh
 yarn run:shell
 ```
 
-### Incrementing Version
+#### The microfrontends in `apps`
 
-Run `yarn` to trigger Lerna's version mode. This will not create a new tag. Tags should be created on GitHub exclusively.
+```sh
+cd packages/apps/esm-[xyz]-app
+yarn start
+```
+
+<!-- The tooling? -->
+
+### Version and release
+
+If there are any new packages in the monorepo, first verify that their `package.json`
+contains a `publishConfig` section with `"access": "public"`. Or, if the package should
+not be published, the `package.json` should contain the entry `"private": true`.
+
+To increment the version, run the following command:
 
 ```sh
 yarn ci:release
 ```
 
-**Important**: Creating a tag on GitHub will trigger a new release.
+You will need to pick the next version number. We use minor changes (e.g. `3.2.0` → `3.3.0`)
+to indicate big new features and breaking changes, and patch changes (e.g. `3.2.0` → `3.2.1`)
+otherwise.
 
-### Creating a Release
+Note that this command will not create a new tag, nor publish the packages.
+After running it, make a PR or merge to `master` with the resulting changeset.
 
-First of all: **Not** every merge into `master` has to result in release. We should only release when we have gathered enough interesting changes in `master` to benefit from it.
+Once the version bump is merged, go to GitHub and
+[draft a new release](https://github.com/openmrs/openmrs-esm-core/releases/new). 
+The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title
+should just be the version number (e.g., `3.2.1`). The creation of the GitHub release
+will cause GitHub Actions to publish the packages, completing the release process.
 
-Now, let's say we have enough interesting changes accumulated in `master`.
-
-Please check:
-
-1. Do we have a unique version number that reflects the changes in `master` (changes as compared to the previous release)? We use minor changes to indicate big new features (requiring attention) and patch levels to indicate rather small fixes and improvements.
-2. If we have new packages in the monorepo - did we set `"private": true` if we don't want them to be published?
-3. Did we add a `publishConfig` section to the *package.json* of all new packages that should be published (i.e., `"private": false`)? This section should have a `"access": "public"` field.
-
-If we still need to have a version update run `yarn ci:release` (see section beforehand) and make a new PR / merge into `master` with the resulting changeset.
-
-**Don't** run `lerna publish` or any related command locally. Once merged into `master` go to GitHub and [draft a new release](https://github.com/openmrs/openmrs-esm-core/releases/new). The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title should just be the version number (e.g., `3.2.1`).
+> Don't run `npm publish`, `yarn publish`, or `lerna publish`. Use the above process.
 
 ## Possibilities
 

@@ -1,17 +1,9 @@
 # openmrs-esm-devtools
 
-An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
-
-## What is this?
-
 openmrs-esm-devtools is an in-browser javascript module that provides a UI for 
 developers writing frontend code.
 
 ![esm-devtools](https://user-images.githubusercontent.com/1031876/81030238-f5b9d500-8e3c-11ea-81b8-6c2a4938faf2.gif)
-
-## Contributing / Development
-
-[Setup local development environment for OpenMRS SPA](https://wiki.openmrs.org/display/projects/Setup+local+development+environment+for+OpenMRS+SPA)
 
 ## Purpose
 
