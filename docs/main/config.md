@@ -46,32 +46,52 @@ exports.default = {
 
 ## How do I configure my OpenMRS implementation?
 
-There are two methods for doing so.
+There are three methods for doing so.
 
-### The Simple Way
+### The recommended way
 
+You can pass configuration files to the build tool `npx openmrs build`.
+Run `npx openmrs build --help` for details. The files will be built into
+your application directly.
+
+All configs provided in this way will be merged, with subsequent arguments
+taking priority. You can break up your configuration files into hierarchies,
+or per module, or per groups of modules.
+
+### At runtime via the import map
+
+If, for whatever reason, you aren't able to provide your config files at
+application build time, you can provide a single config file at runtime
+using the import map.
 Upload your configuration file and add its URL to
 your import map as a module named **config-file**. If you are serving your
 microfrontends from your OpenMRS server, you can simply add your config
-file to your server's `frontend/` directory. Your import map will then look like
+file to your server's `frontend/` directory. Then your import map will
+have a line like the one shown below.
 
 ```json
 {
   "imports": {
-    "config-file": "/openmrs/frontend/config.js[on]"
+    "config-file": "/openmrs/spa/config.js[on]"
   }
 }
 ```
 
-### The Flexible Way
+Note that a config file provided in this way will always take priority over
+other config files (but not the temporary config provided by the Implementer
+Tools).
 
-You can also provide config files programmatically. This technique 
-allows you to have multiple configuration files, which will be
-merged together in an order that you specify.
+### A not recommended way
 
-To do this you need to create a (simple) custom module, which you will add to your
-import map. Its name in the import map should be suffixed with `-app`.
-This will ensure it is loaded.
+It's very unlikely that you'll need to do this, but you can provide config
+files programmatically. To do this you need to add a simple custom module to
+your distribution. Its name should be suffixed with `-app`.
+
+> If you think you need to use this mechanism, first ask in the
+> #microfrontends channel on Slack or in Teams. There's almost certainly
+> a better way.
+>
+> A microfrontend should absolutely never `provide` a config file.
 
 You add your configuration files to this module, import them, and
 `provide` them to the framework.
@@ -87,14 +107,6 @@ import myOrgLocalConfig from "./org-local-config.json";
 provide(myOrgConfig);
 provide(myOrgLocalConfig);
 ```
-
-All provided configs will be merged, with elements provided by later calls
-to provide taking priority. The import map config file, `config-file`, will
-also be merged, and will take the highest priority. In the above example,
-configuration elements in `org-local-config.json` will take priority over
-those in `org-config.json`.
-
-You can break up your configuration files into hierarchies, or per module, or per groups of modules.
 
 ## I'm developing an ESM module. How do I make it configurable?
 
@@ -418,12 +430,9 @@ Only valid alongside `_type: Type.Array` or `_type: Type.Object`. A `_default`
 must also be provided at this level. Value should be an object which is
 a schema for the values contained in the array or object.
 
-## Contributing & Development
+## The RFC
 
-PRs welcome! See
-[OpenMRS Microfrontends RFC-20](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0020-contributing-guidelines.md#contributing-guidelines)
-for guidelines about contributing.
-
-[Setup local development environment for OpenMRS SPA](https://wiki.openmrs.org/display/projects/Setup+local+development+environment+for+OpenMRS+SPA).
-
-Maintainer: Brandon Istenes (bistenes@pih.org)
+This package was established as the result of
+[RFC #14](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0014-configuration.md).
+This document provides the rationale and guiding principles of the configuration
+system.

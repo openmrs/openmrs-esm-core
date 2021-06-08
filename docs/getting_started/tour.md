@@ -3,7 +3,7 @@
 Let's explore the contents of
 [openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).
 
-## Config files
+## Tooling
 
 There are a number of configuration files at the project level. These
 can generally be treated as boilerplate. The important ones are
