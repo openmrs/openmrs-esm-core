@@ -18,7 +18,7 @@ export const configSchema = {
     useLoginLocationTag: {
       _type: Type.Boolean,
       _default: true,
-      _description: "Whether to show location based on 'login location' tag",
+      _description: "Whether to show only locations with the 'Login Location' tag. If false, shows all locations.",
     },
   },
 
