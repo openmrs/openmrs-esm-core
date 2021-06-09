@@ -63,19 +63,23 @@ export function registerAllOmrsRoutes() {
           return cachedResponse;
         }
 
+        const headers = {};
+        options.request.headers.forEach((value, key) => (headers[key] = value));
+
         publishEvent({
           type: "networkRequestFailed",
           request: {
             url: options.request.url,
             method: options.request.method,
             body: await requestClone.text(),
-            headers: Object.fromEntries(
-              Object.entries(options.request.headers)
-            ),
+            headers,
           },
         });
 
-        return new Response(undefined, { status: 204 });
+        const offlineResponse = createOfflineResponse(options.request.headers);
+        return new Response(offlineResponse.body, {
+          status: offlineResponse.status,
+        });
       }
     }
   };
@@ -84,4 +88,13 @@ export function registerAllOmrsRoutes() {
   for (const method of validMethods) {
     router.setDefaultHandler(defaultHandler, method);
   }
+}
+
+function createOfflineResponse(headers: Headers) {
+  const body = headers.get("x-omrs-offline-response-body");
+  const status = +(headers.get("x-omrs-offline-response-status") ?? "");
+  return {
+    body: body ?? undefined,
+    status: isNaN(status) || status < 200 || status > 599 ? 503 : status,
+  };
 }
