@@ -5,19 +5,19 @@
   - [Release and Deployment](getting_started/release_and_deployment)
   - [Tour of a microfrontend](getting_started/tour)
 - Main concepts
-  - ~[Map of the project]()~
+  - [~Map of the project~](main/map)
   - [Creating a microfrontend](main/creating_a_microfrontend)
-  - ~[Creating a page]()~
-  - ~[Using Carbon and the Styleguide]()~
+  - [~Creating a page~](main/creating_a_page)
+  - [~Using Carbon and the Styleguide~](main/carbon)
   - [Retrieving and posting data](main/data)
   - [Translations](main/translations)
   - [Extension system](main/extensions)
   - [Configuration system](main/config)
-  - ~[Global state system]()~
+  - [~Global state system~](main/state)
   - [Build-time and runtime dependencies](main/deps)
 - Advanced concepts
-  - ~[Architecture Overview]()~  <!-- the app shell, the import map -->
+  - [~Architecture Overview~](advanced/architecture)  <!-- the app shell, the import map -->
   - [How translation works](advanced/translations)
   - [Squad DevOps and CI](advanced/squad_devops)
-  - ~[Offline mode]()~
-  - ~[Advanced extensions and slots]()~
+  - [~Offline mode~](advanced/offline)
+  - [~Advanced extensions and slots~](advanced/extensions)
