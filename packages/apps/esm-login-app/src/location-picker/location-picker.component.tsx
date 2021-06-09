@@ -18,7 +18,11 @@ interface LocationPickerProps {
   currentUser: string;
   loginLocations: Array<LocationEntry>;
   onChangeLocation(locationUuid: string): void;
-  searchLocations(query: string): Promise<Array<LocationEntry>>;
+  searchLocations(
+    query: string,
+    ac: AbortController,
+    useLoginLocationTag: boolean
+  ): Promise<Array<LocationEntry>>;
   hideWelcomeMessage?: boolean;
   currentLocationUuid?: string;
   isLoginEnabled: boolean;
@@ -71,7 +75,11 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
     if (loginLocations.length > 100) {
       if (searchTerm) {
-        searchLocations(searchTerm).then((locationResult) => {
+        searchLocations(
+          searchTerm,
+          ac,
+          chooseLocation.useLoginLocationTag
+        ).then((locationResult) => {
           changeLocationData({
             locationResult,
           });

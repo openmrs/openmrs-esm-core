@@ -28,22 +28,27 @@ export function setSessionLocation(
 
 export function searchLocationsFhir(
   location: string,
-  abortController: AbortController
+  abortController: AbortController,
+  useLoginLocationTag: boolean
 ) {
-  return openmrsFetch<LocationResponse>(
-    `${fhirBaseUrl}/Location?name=${location}`,
-    {
-      method: "GET",
-      signal: abortController.signal,
-    }
-  );
+  const baseUrl = `${fhirBaseUrl}/Location?name=${location}`;
+  const url = useLoginLocationTag
+    ? baseUrl.concat("&_tag=login location")
+    : baseUrl;
+  return openmrsFetch<LocationResponse>(url, {
+    method: "GET",
+    signal: abortController.signal,
+  });
 }
 
 export function queryLocations(
   location: string,
-  abortController = new AbortController()
+  abortController = new AbortController(),
+  useLoginLocationTag: boolean
 ) {
-  return searchLocationsFhir(location, abortController).then(
-    (locs) => locs.data.entry
-  );
+  return searchLocationsFhir(
+    location,
+    abortController,
+    useLoginLocationTag
+  ).then((locs) => locs.data.entry);
 }

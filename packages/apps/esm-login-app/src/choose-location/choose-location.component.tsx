@@ -52,7 +52,9 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   React.useEffect(() => {
     if (isLoginEnabled) {
       const ac = new AbortController();
-      queryLocations("", ac).then((locations) => setLoginLocations(locations));
+      queryLocations("", ac, config.chooseLocation.useLoginLocationTag).then(
+        (locations) => setLoginLocations(locations)
+      );
       return () => ac.abort();
     }
   }, [isLoginEnabled]);
