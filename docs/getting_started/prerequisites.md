@@ -1,6 +1,6 @@
 # Prerequisites
 
-Before developing OpenMRS Microfrontends, you should be familiar with the following technologies.
+Before developing OpenMRS Frontend 3.0, you should be familiar with the following technologies.
 
 ## Javascript
 

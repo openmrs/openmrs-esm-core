@@ -21,7 +21,7 @@ git clone https://github.com/openmrs/openmrs-esm-template-app.git
 Then change to the cloned repository's directory and install its dependencies.
 
 ```bash
-cd openmrs-esm-patient-chart
+cd openmrs-esm-template-app
 npm install
 ```
 

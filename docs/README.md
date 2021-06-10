@@ -1,4 +1,4 @@
-# OpenMRS Microfrontend Developer Documentation
+# OpenMRS Frontend 3.0 for Developers
 
 <!--
   This documentation follows the Google developer documentation style guide:
@@ -9,7 +9,7 @@
   Canonical names:
     - "microfrontend": any "-app" package
     - "microfrontends": the packages or the generic architecture concept
-    - "OpenMRS Microfrontends": the OpenMRS framework for microfrontends
+    - "OpenMRS Frontend 3.0": the OpenMRS framework for microfrontends
     - "the openmrs-spa.org CI server": openmrs-spa.org
     - "community-managed microfrontend": what it sounds like. Doesn't necessarily include
         everything published to the `openmrs` NPM org.
