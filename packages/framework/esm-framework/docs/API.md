@@ -215,6 +215,7 @@
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
 - [openVisitsNoteWorkspace](API.md#openvisitsnoteworkspace)
 - [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
+- [patchXMLHttpRequest](API.md#patchxmlhttprequest)
 - [processConfig](API.md#processconfig)
 - [provide](API.md#provide)
 - [pushNavigationContext](API.md#pushnavigationcontext)
@@ -1854,6 +1855,16 @@ ___
 **Returns:** (`Comp`: *ComponentType*<{}\>) => *ComponentType*<any\>
 
 Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L71)
+
+___
+
+### patchXMLHttpRequest
+
+▸ **patchXMLHttpRequest**(): *void*
+
+**Returns:** *void*
+
+Defined in: [packages/framework/esm-offline/src/patches.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/patches.ts#L1)
 
 ___
 
