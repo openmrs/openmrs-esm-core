@@ -179,7 +179,7 @@ yargs.command(
       )
       .default("fresh", false)
       .string("build-config")
-      .describe("build-config", "Path to a frontend build/assemble config JSON")
+      .describe("build-config", "Path to a SPA build config JSON")
       .string("spa-path")
       .default("spa-path", "/openmrs/spa/")
       .describe("spa-path", "The path of the application on the target server.")
@@ -228,8 +228,8 @@ yargs.command(
       .default("registry", "https://registry.npmjs.org/")
       .describe("registry", "The NPM registry used for getting the packages.")
       .string("config")
-      .default("config", "frontend.json")
-      .describe("config", "Path to a frontend build/assemble config JSON.")
+      .default("config", "spa-build-config.json")
+      .describe("config", "Path to a SPA build config JSON.")
       .boolean("fresh")
       .describe(
         "fresh",
@@ -279,7 +279,7 @@ yargs.command(
 
 yargs
   .epilog(
-    "The frontend build/assemble config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` " +
+    "The SPA build config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` " +
       "commands. The keys used by `build` are `apiUrl`, `spaPath`, `configUrls`, and `importmap`, each of " +
       "which is equivalent to the corresponding command line argument. The keys used by `assemble` are:\n" +
       "  microfrontends  \tAn object which specifies which microfrontends to include. It should have package names " +
