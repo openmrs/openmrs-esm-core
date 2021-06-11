@@ -13,7 +13,7 @@
   - [Translations](main/translations)
   - [Extension system](main/extensions)
   - [Configuration system](main/config)
-  - [~Global state system~](main/state)
+  - [Managing state](main/state)
   - [Build-time and runtime dependencies](main/deps)
 - Advanced concepts
   - [~Architecture Overview~](advanced/architecture)  <!-- the app shell, the import map -->

@@ -10,7 +10,6 @@
 
 ### Functions
 
-- [createAppState](API.md#createappstate)
 - [createGlobalStore](API.md#createglobalstore)
 - [getAppState](API.md#getappstate)
 - [getGlobalStore](API.md#getglobalstore)
@@ -19,25 +18,11 @@
 
 ## Functions
 
-### createAppState
-
-▸ **createAppState**(`initialState`: [*AppState*](interfaces/appstate.md)): *Store*<[*AppState*](interfaces/appstate.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `initialState` | [*AppState*](interfaces/appstate.md) |
-
-**Returns:** *Store*<[*AppState*](interfaces/appstate.md)\>
-
-Defined in: [state.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L59)
-
-___
-
 ### createGlobalStore
 
 ▸ **createGlobalStore**<TState\>(`name`: *string*, `initialState`: TState): *Store*<TState\>
+
+Creates a Unistore [store](https://github.com/developit/unistore#store).
 
 #### Type parameters
 
@@ -47,14 +32,16 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `name` | *string* |
-| `initialState` | TState |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | *string* | A name by which the store can be looked up later.    Must be unique across the entire application. |
+| `initialState` | TState | An object which will be the initial state of the store. |
 
 **Returns:** *Store*<TState\>
 
-Defined in: [state.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L10)
+The newly created store.
+
+Defined in: [state.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L18)
 
 ___
 
@@ -64,13 +51,18 @@ ___
 
 **Returns:** *Store*<[*AppState*](interfaces/appstate.md)\>
 
-Defined in: [state.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L63)
+The [store](https://github.com/developit/unistore#store) named `app`.
+
+Defined in: [state.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L85)
 
 ___
 
 ### getGlobalStore
 
 ▸ **getGlobalStore**<TState\>(`name`: *string*, `fallbackState?`: TState): *Store*<TState\>
+
+Returns the existing [store](https://github.com/developit/unistore#store) named `name`,
+or creates a new store named `name` if none exists.
 
 #### Type parameters
 
@@ -80,14 +72,16 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `name` | *string* |
-| `fallbackState?` | TState |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | *string* | The name of the store to look up. |
+| `fallbackState?` | TState | The initial value of the new store if no store named `name` exists. |
 
 **Returns:** *Store*<TState\>
 
-Defined in: [state.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L39)
+The found or newly created store.
+
+Defined in: [state.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L55)
 
 ___
 
@@ -112,7 +106,7 @@ ___
 
 **Returns:** Unsubscribe
 
-Defined in: [state.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L67)
+Defined in: [state.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L89)
 
 ___
 

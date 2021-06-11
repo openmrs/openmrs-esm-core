@@ -16,6 +16,10 @@
 
   Other tips:
     - Use line breaks. Try and keep line length below 100 characters.
+    - Right now, it's okay to assume devs are using React. When possible,
+        please do include framework-agnostic examples. Keep in mind that at
+        some point in the future it may make sense to refactor these docs to
+        be less React-centric.
   -->
 
 This documentation is intended to enable developers to develop and deploy
@@ -34,6 +38,16 @@ and configuring. The Implementer Documentation is also Developer Documentation
 
 Once you've read that, click [Prerequisite knowledge](getting_started/prerequisites)
 here or in the left sidebar to begin, or check out some videos below.
+
+Note that this documentation tends to assume that the developer is using React,
+but this is not a requirement of OpenMRS Frontend 3.0. Indeed, the entire purpose
+of choosing a microfrontends-based architecture was to allow collaboration between
+different teams using different technologies. If you are developing
+microfrontends in a technology other than React, please tell us so in the
+[#microfrontends](https://openmrs.slack.com/archives/CHP5QAE5R) channel on Slack.
+We'd love to work with you to make the development experience as smooth as possible,
+and take the opportunity to expand OpenMRS Frontend 3.0 support for different
+frameworks.
 
 ## Videos
 
