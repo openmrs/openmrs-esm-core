@@ -11,10 +11,10 @@ can generally be treated as boilerplate. The important ones are
 - `.github/workflows`: Configures [GitHub Actions](https://docs.github.com/en/actions).
   See the [Actions panel](https://github.com/openmrs/openmrs-esm-template-app/actions).
 - `.husky`: Husky runs validations when committing.
-- `.babelrc`: Babel transpiles code to JavaScript that the browser can understand.
+- `.eslintrc`: ESLint is a linter for ECMAScript, a.k.a. JavaScript
+- `babel.config.json`: Babel transpiles code to JavaScript that the browser can understand.
   This allows us to write in TypeScript, JSX, and ES2020, even though browsers
   generally don't understand that.
-- `.eslintrc`: ESLint is a linter for ECMAScript, a.k.a. JavaScript
 - `jest.config.json`: Jest is the test runner. In this file you'll see that Jest is
   configured to use Babel (via babel-jest) to transform code so that Jest, like the
   browser, can understand it. The contents of `node_modules` are not transformed,
