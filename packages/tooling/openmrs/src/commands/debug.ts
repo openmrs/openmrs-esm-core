@@ -1,4 +1,4 @@
-import { ImportmapDeclaration, loadConfig, logInfo, logWarn } from "../utils";
+import { ImportmapDeclaration, loadWebpackConfig, logInfo, logWarn } from "../utils";
 
 export interface DebugArgs {
   port: number;
@@ -14,7 +14,7 @@ export function runDebug(args: DebugArgs) {
   const webpack = require("webpack");
   const WebpackDevServer = require("webpack-dev-server");
 
-  const config = loadConfig({
+  const config = loadWebpackConfig({
     importmap: args.importmap,
     backend: args.backend,
     apiUrl: args.apiUrl,

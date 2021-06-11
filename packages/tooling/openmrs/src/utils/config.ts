@@ -10,7 +10,7 @@ export interface WebpackOptions {
   env?: string;
 }
 
-export function loadConfig(options: WebpackOptions = {}) {
+export function loadWebpackConfig(options: WebpackOptions = {}) {
   const variables: Record<string, any> = {};
 
   if (typeof options.backend === "string") {

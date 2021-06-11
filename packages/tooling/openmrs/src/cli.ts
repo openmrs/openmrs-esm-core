@@ -163,7 +163,7 @@ yargs.command(
 
 yargs.command(
   "build",
-  "Builds a new app shell using the provided configuration.",
+  "Builds a new app shell.",
   (argv) =>
     argv
       .string("target")
@@ -178,6 +178,8 @@ yargs.command(
         "Determines if the output directory should be cleaned before the run."
       )
       .default("fresh", false)
+      .string("build-config")
+      .describe("build-config", "Path to a frontend build/assemble config JSON")
       .string("spa-path")
       .default("spa-path", "/openmrs/spa/")
       .describe("spa-path", "The path of the application on the target server.")
@@ -191,21 +193,22 @@ yargs.command(
       .default("config-url", [])
       .describe(
         "config-url",
-        "The URL to a valid frontend configuration. Can be used multiple times."
+        "The URL to a frontend configuration. Can be used multiple times. Resolved by the client during initialization."
       )
       .string("importmap")
       .default("importmap", "importmap.json")
       .describe(
         "importmap",
-        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
+        "The import map to use. Can be a path to an import map to be taken literally, an URL, or a fixed JSON object."
       ),
   async (args) =>
     runCommand("runBuild", {
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
       configUrls: args["config-url"],
+      buildConfig: args["build-config"],
       ...args,
-      importmap: await getImportmap(args.importmap),
+      importmap: args.importmap,
       target: resolve(process.cwd(), args.target),
     })
 );
@@ -225,10 +228,10 @@ yargs.command(
       .default("registry", "https://registry.npmjs.org/")
       .describe("registry", "The NPM registry used for getting the packages.")
       .string("config")
-      .default("config", "microfrontends.json")
+      .default("config", "frontend.json")
       .describe(
         "config",
-        "The configuration for gathering the list of microfrontends to include."
+        "Path to a frontend build/assemble config JSON."
       )
       .boolean("fresh")
       .describe(
@@ -279,6 +282,13 @@ yargs.command(
 
 yargs
   .epilog(
+    "The frontend build/assemble config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` " +
+    "commands. The keys used by `build` are `apiUrl`, `spaPath`, `configUrls`, and `importmap`, each of " +
+    "which is equivalent to the corresponding command line argument. The keys used by `assemble` are:\n" +
+    "  microfrontends  \tAn object which specifies which microfrontends to include. It should have package names " +
+    "for keys and versions for values.\n" +
+    "  publicUrl  \tThe URL at which the microfrontends will be made available. Can be relative to the importmap. " +
+    "Defaults to `.` (which means they will be colocated with the import map).\n\n" +
     "For more information visit https://github.com/openmrs/openmrs-esm-core."
   )
   .help()

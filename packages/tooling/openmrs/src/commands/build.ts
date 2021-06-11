@@ -1,26 +1,43 @@
-import { existsSync } from "fs";
-import { ImportmapDeclaration, loadConfig, logInfo } from "../utils";
+import { existsSync, readFileSync } from "fs";
+import { getImportmap, ImportmapDeclaration, loadWebpackConfig, logInfo } from "../utils";
 import rimraf from "rimraf";
 
 /* eslint-disable no-console */
 
 export interface BuildArgs {
   target: string;
-  importmap: ImportmapDeclaration;
+  importmap: string;
   spaPath: string;
   fresh: boolean;
   apiUrl: string;
   configUrls: Array<string>;
+  buildConfig?: string;
+}
+
+export interface BuildConfig {
+  apiUrl: string;
+  configUrls: Array<string>;
+  importmap: string;
+  spaPath: string;
+}
+
+function loadBuildConfig(buildConfigPath?: string): BuildConfig {
+  if (buildConfigPath) {
+    return JSON.parse(readFileSync(buildConfigPath, "utf8"));
+  } else {
+    return {} as BuildConfig;
+  }
 }
 
 export async function runBuild(args: BuildArgs) {
   const webpack = require("webpack");
-  const config = loadConfig({
-    importmap: args.importmap,
+  const buildConfig = loadBuildConfig(args.buildConfig)
+  const config = loadWebpackConfig({
+    importmap: await getImportmap(buildConfig.importmap || args.importmap),
     env: "production",
-    apiUrl: args.apiUrl,
-    configUrls: args.configUrls,
-    spaPath: args.spaPath,
+    apiUrl: buildConfig.apiUrl || args.apiUrl,
+    configUrls: buildConfig.configUrls || args.configUrls,
+    spaPath: buildConfig.spaPath || args.spaPath,
   });
 
   logInfo(`Running build process ...`);
