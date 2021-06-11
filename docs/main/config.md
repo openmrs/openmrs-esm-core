@@ -1,114 +1,15 @@
 # Configuration System
 
-A framework is provided to make configurability easier for developers and configuring easier for implementers.
+A framework is provided to make configurability easier for developers and
+configuring easier for implementers.
 
 [API Docs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/docs/API.md)
 
-## What does an OpenMRS frontend configuration file look like?
+For introduction to Frontend 3.0 config files and how to configure microfrontends,
+please see the the
+[Implementer Documentation](https://wiki.openmrs.org/display/projects/Frontend+3.0+Documentation+for+Implementers#Frontend3.0DocumentationforImplementers-Configuringtheapplication).
 
-OpenMRS frontend configuration files are JSON files containing module names as top-level elements. All configuration elements are optional. The available configuration elements for each module should be documented in the module's wiki page.
-
-Here's an example!
-
-```json
-{
-  "@openmrs/esm-login-app": {
-    "logo": {
-      "src": "https://pbs.twimg.com/media/C1w_czvWgAAWONL.jpg"
-    }
-  },
-  "@openmrs/esm-home-app": {
-    "buttons": {
-      "enabled": false
-    }
-  }
-}
-```
-
-Alternatively you can provide your config file as a Javascript file.
-It will look just about the same, but with some magic words at the beginning:
-
-```js
-exports = {};
-exports.default = {
-  "@openmrs/esm-login-app": {
-    logo: {
-      src: "https://pbs.twimg.com/media/C1w_czvWgAAWONL.jpg"
-    }
-  },
-  "@openmrs/esm-home-app": {
-    buttons: {
-      enabled: false
-    }
-  }
-}
-```
-
-## How do I configure my OpenMRS implementation?
-
-There are three methods for doing so.
-
-### The recommended way
-
-You can pass configuration files to the build tool `npx openmrs build`.
-Run `npx openmrs build --help` for details. The files will be built into
-your application directly.
-
-All configs provided in this way will be merged, with subsequent arguments
-taking priority. You can break up your configuration files into hierarchies,
-or per module, or per groups of modules.
-
-### At runtime via the import map
-
-If, for whatever reason, you aren't able to provide your config files at
-application build time, you can provide a single config file at runtime
-using the import map.
-Upload your configuration file and add its URL to
-your import map as a module named **config-file**. If you are serving your
-microfrontends from your OpenMRS server, you can simply add your config
-file to your server's `frontend/` directory. Then your import map will
-have a line like the one shown below.
-
-```json
-{
-  "imports": {
-    "config-file": "/openmrs/spa/config.js[on]"
-  }
-}
-```
-
-Note that a config file provided in this way will always take priority over
-other config files (but not the temporary config provided by the Implementer
-Tools).
-
-### A not recommended way
-
-It's very unlikely that you'll need to do this, but you can provide config
-files programmatically. To do this you need to add a simple custom module to
-your distribution. Its name should be suffixed with `-app`.
-
-> If you think you need to use this mechanism, first ask in the
-> #microfrontends channel on Slack or in Teams. There's almost certainly
-> a better way.
->
-> A microfrontend should absolutely never `provide` a config file.
-
-You add your configuration files to this module, import them, and
-`provide` them to the framework.
-
-Example code:
-
-```js
-import { provide } from "@openmrs/esm-framework";
-
-import myOrgConfig from "./org-config.json";
-import myOrgLocalConfig from "./org-local-config.json";
-
-provide(myOrgConfig);
-provide(myOrgLocalConfig);
-```
-
-## I'm developing an ESM module. How do I make it configurable?
+## How to make a microfrontend configurable
 
 You should use this part of the OpenMRS Frontend Framework to modules configurable.
 
