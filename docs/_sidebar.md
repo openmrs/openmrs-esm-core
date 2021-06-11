@@ -8,7 +8,7 @@
   - [~Map of the project~](main/map)
   - [Creating a microfrontend](main/creating_a_microfrontend)
   - [~Creating a page~](main/creating_a_page)
-  - [~Using Carbon and the Styleguide~](main/carbon)
+  - [Using Carbon and the Styleguide](main/carbon)
   - [Retrieving and posting data](main/data)
   - [Translations](main/translations)
   - [Extension system](main/extensions)
