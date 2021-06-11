@@ -1,11 +1,6 @@
 {
   "name": "@openmrs/esm-core",
   "private": true,
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && lerna run lint && lerna run test && lerna run typescript && lerna run document"
-    }
-  },
   "workspaces": [
     "packages/apps/*",
     "packages/framework/*",
@@ -21,7 +16,8 @@
     "ci:release": "lerna version --no-git-tag-version",
     "ci:prerelease": "lerna version prerelease --no-git-tag-version --yes",
     "verify": "lerna run lint && lerna run test && lerna run typescript",
-    "prettier": "prettier \"packages/**/src/**/*\" --write"
+    "prettier": "prettier \"packages/**/src/**/*\" --write",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
@@ -55,7 +51,7 @@
     "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.2.6",
     "html-webpack-plugin": "^5.3.1",
-    "husky": "^4.3.8",
+    "husky": "^6.0.0",
     "jest": "^26.4.2",
     "jest-cli": "^26.4.2",
     "lerna": "^3.20.2",

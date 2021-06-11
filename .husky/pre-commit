@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx pretty-quick --staged && lerna run lint && lerna run test && lerna run typescript && lerna run document
