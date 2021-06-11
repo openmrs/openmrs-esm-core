@@ -1,5 +1,10 @@
 import { existsSync, readFileSync } from "fs";
-import { getImportmap, ImportmapDeclaration, loadWebpackConfig, logInfo } from "../utils";
+import {
+  getImportmap,
+  ImportmapDeclaration,
+  loadWebpackConfig,
+  logInfo,
+} from "../utils";
 import rimraf from "rimraf";
 
 /* eslint-disable no-console */
@@ -31,7 +36,7 @@ function loadBuildConfig(buildConfigPath?: string): BuildConfig {
 
 export async function runBuild(args: BuildArgs) {
   const webpack = require("webpack");
-  const buildConfig = loadBuildConfig(args.buildConfig)
+  const buildConfig = loadBuildConfig(args.buildConfig);
   const config = loadWebpackConfig({
     importmap: await getImportmap(buildConfig.importmap || args.importmap),
     env: "production",

@@ -1,4 +1,9 @@
-import { ImportmapDeclaration, loadWebpackConfig, logInfo, logWarn } from "../utils";
+import {
+  ImportmapDeclaration,
+  loadWebpackConfig,
+  logInfo,
+  logWarn,
+} from "../utils";
 
 export interface DebugArgs {
   port: number;
