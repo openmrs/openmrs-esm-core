@@ -13,12 +13,6 @@ const ActiveNotifications: React.FC<ActiveNotificationProps> = ({
     Array<InlineNotificationMeta>
   >([]);
 
-  const closeNotification = React.useCallback((notification) => {
-    setNotifications((notifications) =>
-      notifications.filter((n) => n !== notification)
-    );
-  }, []);
-
   React.useEffect(() => {
     const subscription = subject.subscribe((notification) =>
       setNotifications((notifications) => [
@@ -39,11 +33,7 @@ const ActiveNotifications: React.FC<ActiveNotificationProps> = ({
   return (
     <>
       {notifications.map((notification) => (
-        <Notification
-          key={notification.id}
-          notification={notification}
-          closeNotification={() => closeNotification(notification)}
-        />
+        <Notification key={notification.id} notification={notification} />
       ))}
     </>
   );

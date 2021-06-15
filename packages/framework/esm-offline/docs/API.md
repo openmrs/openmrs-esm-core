@@ -27,6 +27,7 @@
 - [getOmrsServiceWorker](API.md#getomrsserviceworker)
 - [getSynchronizationCallbacks](API.md#getsynchronizationcallbacks)
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
+- [patchXMLHttpRequest](API.md#patchxmlhttprequest)
 - [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
 - [registerSynchronizationCallback](API.md#registersynchronizationcallback)
 - [subscribeNetworkRequestFailed](API.md#subscribenetworkrequestfailed)
@@ -123,6 +124,16 @@ Sends the specified message to the application's service worker.
 A promise which completes when the message has been successfully processed by the Service Worker.
 
 Defined in: [service-worker-messaging.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L9)
+
+___
+
+### patchXMLHttpRequest
+
+▸ **patchXMLHttpRequest**(): *void*
+
+**Returns:** *void*
+
+Defined in: [patches.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/patches.ts#L1)
 
 ___
 

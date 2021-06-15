@@ -108,6 +108,7 @@ function connectivityChanged() {
   const online = navigator.onLine;
   dispatchConnectivityChanged(online);
   showToast({
+    critical: true,
     description: `Connection: ${online ? "online" : "offline"}`,
     title: "App",
     kind: online ? "success" : "warning",
@@ -221,6 +222,7 @@ async function setupServiceWorker() {
       });
     } catch (e) {
       showNotification({
+        critical: true,
         title: "Offline Setup Error",
         description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
       });
