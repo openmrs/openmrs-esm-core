@@ -1,6 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+set -e  # die on error
+
 npx pretty-quick --staged
 lerna run lint
 lerna run test
