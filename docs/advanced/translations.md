@@ -1,6 +1,6 @@
 # How translation works
 
-There are three places in frontend code that relate to translation/i18n. They are
+There are three places in frontend code that relate to translation/i18n. They are:
 
 - The app shell, in [locale.ts](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/shell/esm-app-shell/src/locale.ts).
   This sets up i18next and react-i18next.
@@ -11,5 +11,4 @@ There are three places in frontend code that relate to translation/i18n. They ar
   This component provides the connection between the i18next "backend"
   (still on the client side, despite the name) and the microfrontend it wraps.
 - The microfrontend, which uses the `t` function or `<Trans>` component from react-i18next
-  to produce rendered content.
-
+  to produce rendered content. Upon each commit, [i18next-parser](https://github.com/i18next/i18next-parser) parses the microfrontend code and automatically extracts translation keys and strings into locale-specific translation files found in the `translations` directory of a microfrontend.

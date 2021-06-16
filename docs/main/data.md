@@ -10,7 +10,7 @@ documented [here](https://rest.openmrs.org/).
 Endpoints from the FHIR Module should always be preferred, when they are
 available. FHIR is an interoperability standard which OpenMRS supports.
 
-Some data is available using higher-level functions or React Hooks provided
+Some data is available using higher-level functions or custom React Hooks provided
 by `@openmrs/esm-framework`.  These should be used when available.
 
 All of this functionality (React hooks excepted) is provided by the
@@ -72,7 +72,9 @@ in a [`useEffect` hook](https://reactjs.org/docs/hooks-effect.html):
 ```typescript
 useEffect(() => {
   const abortController = new AbortController();
-  someFetchFunction(abortController).then(setResult);
+  someFetchFunction(abortController)
+    .then(setResult)
+    .catch(setError);
   return () => abortController.abort();
 }, []);
 ```

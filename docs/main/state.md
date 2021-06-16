@@ -80,6 +80,6 @@ import { bookStore } from "./bookStore";
 bookStore.setState({ books: ["A History of Global Health"] });
 ```
 
-See [the Unistore docs](https://github.com/developit/unistore#unistore) for more
+See the [Unistore docs](https://github.com/developit/unistore#unistore) for more
 information about stores.
 

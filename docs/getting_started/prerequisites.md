@@ -5,7 +5,7 @@ Before developing OpenMRS Frontend 3.0, you should be familiar with the followin
 ## Javascript
 
 Knowing Javascript is prerequisite to everything else. Consider 
-[Introduction to Javascript](https://www.codecademy.com/learn/introduction-to-javascript).
+[Introduction to Javascript](https://www.codecademy.com/learn/introduction-to-javascript) and [The Modern JavaScript Tutorial](https://javascript.info/).
 
 ## JavaScript Tooling
 
@@ -43,7 +43,7 @@ please read [TypeScript in 5 Minutes](https://www.typescriptlang.org/docs/handbo
 ## Git
 
 It is imperative that you keep your code in a version control system. OpenMRS uses
-[Git](https://git-scm.com/). You should know the basics of using git and GitHub.
+[Git](https://git-scm.com/). You should know the basics of using Git and GitHub.
 The website [Learn Git Branching](https://learngitbranching.js.org/) and the video
-[Git and GitHub for Begineers](https://www.youtube.com/watch?v=RGOj5yH7evk)
+[Git and GitHub for Beginners](https://www.youtube.com/watch?v=RGOj5yH7evk)
 are excellent resources.
