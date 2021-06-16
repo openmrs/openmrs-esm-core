@@ -46,8 +46,8 @@ A set of microfrontends provide the core technical functionality of the applicat
 
 - [@openmrs/esm-devtools-app](packages/apps/esm-devtools-app)
 - [@openmrs/esm-implementer-tools-app](packages/apps/esm-implementer-tools-app)
-- [@openmrs/esm-login-app](packages/esm-login-app)
-- [@openmrs/esm-primary-navigation-app](packages/esm-primary-navigation-app)
+- [@openmrs/esm-login-app](packages/apps/esm-login-app)
+- [@openmrs/esm-primary-navigation-app](packages/apps/esm-primary-navigation-app)
 
 ## Development
 
