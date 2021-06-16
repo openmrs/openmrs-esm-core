@@ -1,5 +1,6 @@
-# openmrs-esm-state
+# openmrs-esm-globals
 
-An [OpenMRS Microfrontend](https://wiki.openmrs.org/display/projects/Frontend+-+SPA+and+Microfrontends).
+openmrs-esm-globals provides events, variables, and types which are used
+throughout the rest of openmrs-esm-core.
 
 [API Docs](docs/API.md)

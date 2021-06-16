@@ -153,7 +153,7 @@ colorPicker: {
 ```
 
 For convenience, some common validators are provided out of the box. See the
-[API / validators](docs/API.md#validators).
+[API / validators](../../packages/framework/esm-config/docs/API.md#validators).
 
 #### Arrays
 
@@ -261,7 +261,7 @@ the defaults for configuration elements for which no values have been provided.
 
 A React Hook is provided to hide the asynchronicity of config loading. The
 `moduleName`provided to the
-[`openmrsComponentDecorator` in esm-react-utils](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/esm-react-utils)
+[`openmrsComponentDecorator` in esm-react-utils](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/framework/esm-react-utils)
 is used to look up the configuration elsewhere in the application.
 
 ```js
@@ -301,7 +301,7 @@ the element, but this may change in future versions.
 
 #### `_type`
 
-One of the values from [the `Type` enum](docs/enums/type.md). Used for validation and to help the
+One of the values from [the `Type` enum](../../packages/framework/esm-config/docs/enums/type.md). Used for validation and to help the
 implementer tools work with the element.
 
 Should always appear alongside `_default`.
@@ -318,10 +318,10 @@ Can be used anywhere within the schema structure.
 An array of validator objects.
 
 Some common validators are
-provided: [API / validators](docs/API.md#const-validators).
+provided: [API / validators](../../packages/framework/esm-config/docs/API.md#const-validators).
 
 Custom validators should
-be created with the [validator](docs/API.md#validator) function.
+be created with the [validator](../../packages/framework/esm-config/docs/API.md#validator) function.
 
 Can be used anywhere within the schema structure.
 

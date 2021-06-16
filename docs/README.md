@@ -36,12 +36,12 @@ if you haven't already. It provides a high-level
 introduction to the project and all of the relevant links.
 
 You should first read the
-[Implementer Documentation](https://wiki.openmrs.org/display/projects/Frontend+Documentation+for+Implementers),
+[Implementer Documentation](https://wiki.openmrs.org/display/projects/Frontend+3.0+Documentation+for+Implementers),
 which provides some conceptual orientation as well as instructions for deployment
 and configuring. The Implementer Documentation is also Developer Documentation
 (but not vice-versa).
 
-Once you've read that, click [Prerequisite knowledge](getting_started/prerequisites)
+Once you've read that, click [Prerequisite knowledge](getting_started/prerequisites.md)
 here or in the left sidebar to begin, or check out some videos below.
 
 Note that this documentation tends to assume that the developer is using React,
