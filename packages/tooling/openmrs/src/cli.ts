@@ -184,7 +184,7 @@ yargs.command(
       .default("spa-path", "/openmrs/spa/")
       .describe("spa-path", "The path of the application on the target server.")
       .string("api-url")
-      .default("api-url", "/openmrs/spa/")
+      .default("api-url", "/openmrs/")
       .describe(
         "api-url",
         "The URL of the API. Can be a path if the API is on the same target server."

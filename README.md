@@ -33,6 +33,7 @@ The following common libraries have been developed. They may also be used indepe
 - [@openmrs/esm-globals](packages/framework/esm-globals)
 - [@openmrs/esm-offline](packages/framework/esm-offline)
 - [@openmrs/esm-react-utils](packages/framework/esm-react-utils)
+- [@openmrs/esm-state](packages/framework/esm-state)
 - [@openmrs/esm-styleguide](packages/framework/esm-styleguide)
 - [@openmrs/esm-utils](packages/framework/esm-utils)
 
@@ -53,10 +54,11 @@ A set of microfrontends provide the core technical functionality of the applicat
 
 ### Getting Started
 
-To set up the repository for development, run the following command:
+To set up the repository for development, run the following commands:
 
 ```sh
-npx lerna bootstrap
+yarn install
+yarn setup
 ```
 
 ### Building

@@ -25,4 +25,9 @@ describe("Version utilities", () => {
     const result = isVersionSatisfied("^1.2.3", "1.3.0-alpha.1");
     expect(result).toBe(true);
   });
+
+  it("Is not satisfied if version equals same prerelease", () => {
+    const result = isVersionSatisfied("^3.1.10", "3.1.10-pre.284");
+    expect(result).toBe(false);
+  });
 });

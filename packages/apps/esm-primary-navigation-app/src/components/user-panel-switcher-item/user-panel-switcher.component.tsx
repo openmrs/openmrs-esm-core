@@ -1,10 +1,10 @@
+import React from "react";
 import UserAvatarFilledAlt20 from "@carbon/icons-react/es/user--avatar--filled--alt/20";
 import Switcher from "carbon-components-react/lib/components/UIShell/Switcher";
 import SwitcherDivider from "carbon-components-react/lib/components/UIShell/SwitcherDivider";
-import React from "react";
-import { LoggedInUser } from "../../types";
-import Logout from "../logout/logout.component";
 import styles from "./user-panel-switcher.component.scss";
+import Logout from "../logout/logout.component";
+import { LoggedInUser } from "@openmrs/esm-framework";
 
 export interface UserPanelSwitcherItemProps {
   user: LoggedInUser;

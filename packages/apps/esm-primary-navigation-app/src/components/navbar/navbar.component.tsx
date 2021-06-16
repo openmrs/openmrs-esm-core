@@ -8,7 +8,6 @@ import Logo from "../logo/logo.component";
 import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
 import styles from "./navbar.component.scss";
 import { isDesktop } from "../../utils";
-import { useLayoutType, navigate, ExtensionSlot } from "@openmrs/esm-framework";
 import {
   HeaderContainer,
   Header,
@@ -17,7 +16,13 @@ import {
   HeaderGlobalBar,
   HeaderGlobalAction,
 } from "carbon-components-react/es/components/UIShell";
-import { LoggedInUser, UserSession } from "../../types";
+import {
+  LoggedInUser,
+  useLayoutType,
+  navigate,
+  ExtensionSlot,
+} from "@openmrs/esm-framework";
+import { UserSession } from "../../types";
 
 const HeaderLink: any = HeaderName;
 

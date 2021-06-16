@@ -9,28 +9,31 @@
 - [ClearDynamicRoutesMessage](interfaces/cleardynamicroutesmessage.md)
 - [MessageServiceWorkerResult](interfaces/messageserviceworkerresult.md)
 - [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)
-- [OfflineStore](interfaces/offlinestore.md)
 - [OmrsServiceWorkerEvent](interfaces/omrsserviceworkerevent.md)
 - [OmrsServiceWorkerMessage](interfaces/omrsserviceworkermessage.md)
 - [OnImportMapChangedMessage](interfaces/onimportmapchangedmessage.md)
 - [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
+- [SyncProcessOptions](interfaces/syncprocessoptions.md)
 
 ### Type aliases
 
 - [KnownOmrsServiceWorkerEvents](API.md#knownomrsserviceworkerevents)
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
-- [SynchronizeCallback](API.md#synchronizecallback)
 
 ### Functions
 
 - [dispatchNetworkRequestFailed](API.md#dispatchnetworkrequestfailed)
 - [getOmrsServiceWorker](API.md#getomrsserviceworker)
-- [getSynchronizationCallbacks](API.md#getsynchronizationcallbacks)
+- [getSynchronizationItems](API.md#getsynchronizationitems)
+- [getSynchronizationItemsFor](API.md#getsynchronizationitemsfor)
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
 - [patchXMLHttpRequest](API.md#patchxmlhttprequest)
+- [queueSynchronizationItem](API.md#queuesynchronizationitem)
+- [queueSynchronizationItemFor](API.md#queuesynchronizationitemfor)
 - [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
-- [registerSynchronizationCallback](API.md#registersynchronizationcallback)
+- [setupOfflineSync](API.md#setupofflinesync)
 - [subscribeNetworkRequestFailed](API.md#subscribenetworkrequestfailed)
+- [triggerSynchronization](API.md#triggersynchronization)
 
 ## Type aliases
 
@@ -47,20 +50,6 @@ ___
 Ƭ **KnownOmrsServiceWorkerMessages**: [*OnImportMapChangedMessage*](interfaces/onimportmapchangedmessage.md) \| [*ClearDynamicRoutesMessage*](interfaces/cleardynamicroutesmessage.md) \| [*RegisterDynamicRouteMessage*](interfaces/registerdynamicroutemessage.md)
 
 Defined in: [service-worker-messaging.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L36)
-
-___
-
-### SynchronizeCallback
-
-Ƭ **SynchronizeCallback**: () => *Promise*<void\>
-
-#### Type declaration
-
-▸ (): *Promise*<void\>
-
-**Returns:** *Promise*<void\>
-
-Defined in: [store.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/store.ts#L3)
 
 ## Functions
 
@@ -97,13 +86,48 @@ Defined in: [service-worker.ts:49](https://github.com/openmrs/openmrs-esm-core/b
 
 ___
 
-### getSynchronizationCallbacks
+### getSynchronizationItems
 
-▸ **getSynchronizationCallbacks**(): [*SynchronizeCallback*](API.md#synchronizecallback)[]
+▸ **getSynchronizationItems**<T\>(`type`: *string*): *Promise*<T[]\>
 
-**Returns:** [*SynchronizeCallback*](API.md#synchronizecallback)[]
+#### Type parameters
 
-Defined in: [store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/store.ts#L13)
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `type` | *string* |
+
+**Returns:** *Promise*<T[]\>
+
+Defined in: [sync.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L92)
+
+___
+
+### getSynchronizationItemsFor
+
+▸ **getSynchronizationItemsFor**<T\>(`userId`: *string*, `type`: *string*): *Promise*<T[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `userId` | *string* |
+| `type` | *string* |
+
+**Returns:** *Promise*<T[]\>
+
+Defined in: [sync.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L78)
 
 ___
 
@@ -137,6 +161,53 @@ Defined in: [patches.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/mast
 
 ___
 
+### queueSynchronizationItem
+
+▸ **queueSynchronizationItem**<T\>(`type`: *string*, `content`: T): *Promise*<number\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `type` | *string* |
+| `content` | T |
+
+**Returns:** *Promise*<number\>
+
+Defined in: [sync.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L73)
+
+___
+
+### queueSynchronizationItemFor
+
+▸ **queueSynchronizationItemFor**<T\>(`userId`: *string*, `type`: *string*, `content`: T): *Promise*<number\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `userId` | *string* |
+| `type` | *string* |
+| `content` | T |
+
+**Returns:** *Promise*<number\>
+
+Defined in: [sync.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L60)
+
+___
+
 ### registerOmrsServiceWorker
 
 ▸ **registerOmrsServiceWorker**(`scriptUrl`: *string*, `registerOptions?`: *object*): *Workbox*
@@ -159,19 +230,27 @@ Defined in: [service-worker.ts:18](https://github.com/openmrs/openmrs-esm-core/b
 
 ___
 
-### registerSynchronizationCallback
+### setupOfflineSync
 
-▸ **registerSynchronizationCallback**(`cb`: [*SynchronizeCallback*](API.md#synchronizecallback)): *void*
+▸ **setupOfflineSync**<T\>(`type`: *string*, `dependsOn`: *string*[], `process`: (`item`: T, `options`: [*SyncProcessOptions*](interfaces/syncprocessoptions.md)<T\>) => *Promise*<void\>): *void*
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | [*SynchronizeCallback*](API.md#synchronizecallback) |
+| `type` | *string* |
+| `dependsOn` | *string*[] |
+| `process` | (`item`: T, `options`: [*SyncProcessOptions*](interfaces/syncprocessoptions.md)<T\>) => *Promise*<void\> |
 
 **Returns:** *void*
 
-Defined in: [store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/store.ts#L17)
+Defined in: [sync.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L132)
 
 ___
 
@@ -188,3 +267,13 @@ ___
 **Returns:** () => *void*
 
 Defined in: [events.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/events.ts#L11)
+
+___
+
+### triggerSynchronization
+
+▸ **triggerSynchronization**(): *Promise*<AbortController\>
+
+**Returns:** *Promise*<AbortController\>
+
+Defined in: [sync.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L97)

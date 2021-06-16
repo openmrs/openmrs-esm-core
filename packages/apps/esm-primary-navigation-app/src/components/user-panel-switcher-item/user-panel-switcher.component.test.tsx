@@ -9,7 +9,7 @@ describe("<UserPanelSwitcher/>", () => {
   beforeEach(() => {
     render(
       <UserPanelSwitcher
-        user={mockLoggedInUser}
+        user={mockLoggedInUser as any}
         onLogout={mockLogout}
         isLogoutEnabled={true}
       />

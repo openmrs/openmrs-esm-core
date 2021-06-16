@@ -73,6 +73,7 @@
 ### Other Functions
 
 - [getLocations](API.md#getlocations)
+- [getLoggedInUser](API.md#getloggedinuser)
 - [getVisitTypes](API.md#getvisittypes)
 - [getVisitsForPatient](API.md#getvisitsforpatient)
 - [makeUrl](API.md#makeurl)
@@ -392,6 +393,16 @@ ___
 **Returns:** *Observable*<[*Location*](interfaces/location.md)[]\>
 
 Defined in: [packages/framework/esm-api/src/shared-api-objects/location.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/location.ts#L13)
+
+___
+
+### getLoggedInUser
+
+▸ **getLoggedInUser**(): *Promise*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
+
+**Returns:** *Promise*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
+
+Defined in: [packages/framework/esm-api/src/shared-api-objects/current-user.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L125)
 
 ___
 

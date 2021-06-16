@@ -67,7 +67,6 @@
 - [NavigationContext](interfaces/navigationcontext.md)
 - [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)
 - [NewVisitPayload](interfaces/newvisitpayload.md)
-- [OfflineStore](interfaces/offlinestore.md)
 - [OmrsServiceWorkerEvent](interfaces/omrsserviceworkerevent.md)
 - [OmrsServiceWorkerMessage](interfaces/omrsserviceworkermessage.md)
 - [OnImportMapChangedMessage](interfaces/onimportmapchangedmessage.md)
@@ -86,6 +85,7 @@
 - [ShowNotificationEvent](interfaces/shownotificationevent.md)
 - [ShowToastEvent](interfaces/showtoastevent.md)
 - [SpaConfig](interfaces/spaconfig.md)
+- [SyncProcessOptions](interfaces/syncprocessoptions.md)
 - [UnauthenticatedUser](interfaces/unauthenticateduser.md)
 - [User](interfaces/user.md)
 - [UserHasAccessProps](interfaces/userhasaccessprops.md)
@@ -111,7 +111,6 @@
 - [PatientUuid](API.md#patientuuid)
 - [ProvidedConfig](API.md#providedconfig)
 - [SpaEnvironment](API.md#spaenvironment)
-- [SynchronizeCallback](API.md#synchronizecallback)
 - [UpdateVisitPayload](API.md#updatevisitpayload)
 - [Validator](API.md#validator)
 - [ValidatorFunction](API.md#validatorfunction)
@@ -197,9 +196,11 @@
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
 - [getLocations](API.md#getlocations)
+- [getLoggedInUser](API.md#getloggedinuser)
 - [getOmrsServiceWorker](API.md#getomrsserviceworker)
 - [getSyncLifecycle](API.md#getsynclifecycle)
-- [getSynchronizationCallbacks](API.md#getsynchronizationcallbacks)
+- [getSynchronizationItems](API.md#getsynchronizationitems)
+- [getSynchronizationItemsFor](API.md#getsynchronizationitemsfor)
 - [getUpdatedExtensionSlotInfo](API.md#getupdatedextensionslotinfo)
 - [getVisitTypes](API.md#getvisittypes)
 - [getVisitsForPatient](API.md#getvisitsforpatient)
@@ -218,16 +219,18 @@
 - [processConfig](API.md#processconfig)
 - [provide](API.md#provide)
 - [pushNavigationContext](API.md#pushnavigationcontext)
+- [queueSynchronizationItem](API.md#queuesynchronizationitem)
+- [queueSynchronizationItemFor](API.md#queuesynchronizationitemfor)
 - [registerExtension](API.md#registerextension)
 - [registerExtensionSlot](API.md#registerextensionslot)
 - [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
-- [registerSynchronizationCallback](API.md#registersynchronizationcallback)
 - [renderExtension](API.md#renderextension)
 - [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
 - [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
 - [saveVisit](API.md#savevisit)
+- [setupOfflineSync](API.md#setupofflinesync)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
 - [showNotification](API.md#shownotification)
@@ -249,6 +252,7 @@
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [translateFrom](API.md#translatefrom)
+- [triggerSynchronization](API.md#triggersynchronization)
 - [unregisterExtensionSlot](API.md#unregisterextensionslot)
 - [update](API.md#update)
 - [updateExtensionStore](API.md#updateextensionstore)
@@ -416,20 +420,6 @@ ___
 Ƭ **SpaEnvironment**: ``"production"`` \| ``"development"`` \| ``"test"``
 
 Defined in: [packages/framework/esm-globals/src/types.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L47)
-
-___
-
-### SynchronizeCallback
-
-Ƭ **SynchronizeCallback**: () => *Promise*<void\>
-
-#### Type declaration
-
-▸ (): *Promise*<void\>
-
-**Returns:** *Promise*<void\>
-
-Defined in: [packages/framework/esm-offline/src/store.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/store.ts#L3)
 
 ___
 
@@ -1570,6 +1560,16 @@ Defined in: [packages/framework/esm-api/src/shared-api-objects/location.ts:13](h
 
 ___
 
+### getLoggedInUser
+
+▸ **getLoggedInUser**(): *Promise*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
+
+**Returns:** *Promise*<[*LoggedInUser*](interfaces/loggedinuser.md)\>
+
+Defined in: [packages/framework/esm-api/src/shared-api-objects/current-user.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L125)
+
+___
+
 ### getOmrsServiceWorker
 
 ▸ **getOmrsServiceWorker**(): *Promise*<Workbox\>
@@ -1610,13 +1610,48 @@ Defined in: [packages/framework/esm-react-utils/src/getLifecycle.ts:28](https://
 
 ___
 
-### getSynchronizationCallbacks
+### getSynchronizationItems
 
-▸ **getSynchronizationCallbacks**(): [*SynchronizeCallback*](API.md#synchronizecallback)[]
+▸ **getSynchronizationItems**<T\>(`type`: *string*): *Promise*<T[]\>
 
-**Returns:** [*SynchronizeCallback*](API.md#synchronizecallback)[]
+#### Type parameters
 
-Defined in: [packages/framework/esm-offline/src/store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/store.ts#L13)
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `type` | *string* |
+
+**Returns:** *Promise*<T[]\>
+
+Defined in: [packages/framework/esm-offline/src/sync.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L92)
+
+___
+
+### getSynchronizationItemsFor
+
+▸ **getSynchronizationItemsFor**<T\>(`userId`: *string*, `type`: *string*): *Promise*<T[]\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `userId` | *string* |
+| `type` | *string* |
+
+**Returns:** *Promise*<T[]\>
+
+Defined in: [packages/framework/esm-offline/src/sync.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L78)
 
 ___
 
@@ -1917,6 +1952,53 @@ Defined in: [packages/framework/esm-extensions/src/contexts.ts:24](https://githu
 
 ___
 
+### queueSynchronizationItem
+
+▸ **queueSynchronizationItem**<T\>(`type`: *string*, `content`: T): *Promise*<number\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `type` | *string* |
+| `content` | T |
+
+**Returns:** *Promise*<number\>
+
+Defined in: [packages/framework/esm-offline/src/sync.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L73)
+
+___
+
+### queueSynchronizationItemFor
+
+▸ **queueSynchronizationItemFor**<T\>(`userId`: *string*, `type`: *string*, `content`: T): *Promise*<number\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `userId` | *string* |
+| `type` | *string* |
+| `content` | T |
+
+**Returns:** *Promise*<number\>
+
+Defined in: [packages/framework/esm-offline/src/sync.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L60)
+
+___
+
 ### registerExtension
 
 ▸ `Const` **registerExtension**(`name`: *string*, `details`: [*ExtensionDetails*](interfaces/extensiondetails.md)): *void*
@@ -1970,22 +2052,6 @@ Throws if registration is not possible.
 The registered Service Worker.
 
 Defined in: [packages/framework/esm-offline/src/service-worker.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker.ts#L18)
-
-___
-
-### registerSynchronizationCallback
-
-▸ **registerSynchronizationCallback**(`cb`: [*SynchronizeCallback*](API.md#synchronizecallback)): *void*
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `cb` | [*SynchronizeCallback*](API.md#synchronizecallback) |
-
-**Returns:** *void*
-
-Defined in: [packages/framework/esm-offline/src/store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/store.ts#L17)
 
 ___
 
@@ -2092,6 +2158,30 @@ ___
 **Returns:** *Observable*<[*FetchResponse*](interfaces/fetchresponse.md)<any\>\>
 
 Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L55)
+
+___
+
+### setupOfflineSync
+
+▸ **setupOfflineSync**<T\>(`type`: *string*, `dependsOn`: *string*[], `process`: (`item`: T, `options`: [*SyncProcessOptions*](interfaces/syncprocessoptions.md)<T\>) => *Promise*<void\>): *void*
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `type` | *string* |
+| `dependsOn` | *string*[] |
+| `process` | (`item`: T, `options`: [*SyncProcessOptions*](interfaces/syncprocessoptions.md)<T\>) => *Promise*<void\> |
+
+**Returns:** *void*
+
+Defined in: [packages/framework/esm-offline/src/sync.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L132)
 
 ___
 
@@ -2459,6 +2549,16 @@ ___
 **Returns:** *string*
 
 Defined in: [packages/framework/esm-utils/src/translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/translate.ts#L3)
+
+___
+
+### triggerSynchronization
+
+▸ **triggerSynchronization**(): *Promise*<AbortController\>
+
+**Returns:** *Promise*<AbortController\>
+
+Defined in: [packages/framework/esm-offline/src/sync.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L97)
 
 ___
 

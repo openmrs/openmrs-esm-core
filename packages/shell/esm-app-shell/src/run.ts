@@ -16,10 +16,10 @@ import {
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
   subscribeConnectivity,
-  getSynchronizationCallbacks,
   getCurrentUser,
   KnownOmrsServiceWorkerEvents,
   dispatchNetworkRequestFailed,
+  triggerSynchronization,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -275,37 +275,18 @@ function setupOfflineDataSynchronization() {
   let isOnline = false;
 
   getCurrentUser({ includeAuthStatus: false }).subscribe((user) => {
-    hasLoggedInUser = !!user;
-    trySynchronize();
+    if (isOnline && !hasLoggedInUser && user) {
+      hasLoggedInUser = !!user;
+      triggerSynchronization();
+    }
   });
 
   subscribeConnectivity(async ({ online }) => {
-    isOnline = online;
-    trySynchronize();
-  });
-
-  async function trySynchronize() {
-    const syncCallbacks = getSynchronizationCallbacks();
-    if (!isOnline || !hasLoggedInUser || syncCallbacks.length === 0) {
-      return;
+    if (online && !isOnline && hasLoggedInUser) {
+      isOnline = online;
+      triggerSynchronization();
     }
-
-    showNotification({
-      title: "Synchronizing Offline Changes",
-      description:
-        "Synchronizing the changes you have made offline. This may take a while...",
-      kind: "info",
-    });
-
-    await Promise.allSettled(syncCallbacks.map((cb) => cb()));
-
-    showNotification({
-      title: "Offline Synchronization Finished",
-      description:
-        "Finished synchronizing the changes you have made while offline.",
-      kind: "success",
-    });
-  }
+  });
 }
 
 export function run(configUrls: Array<string>) {

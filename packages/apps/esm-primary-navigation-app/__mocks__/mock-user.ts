@@ -1,5 +1,3 @@
-import { LoggedInUser } from "../src/types";
-
 export const mockUser = {
   authenticated: true,
   user: {
@@ -15,7 +13,7 @@ export const mockUser = {
   },
 };
 
-export const mockLoggedInUser: LoggedInUser = {
+export const mockLoggedInUser = {
   uuid: "uuid",
   username: "Dr Healther Morgan",
   userProperties: {},

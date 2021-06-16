@@ -121,3 +121,9 @@ export function refetchCurrentUser() {
 export function userHasAccess(requiredPrivilege: string, user: LoggedInUser) {
   return userHasPrivilege(requiredPrivilege, user) || isSuperUser(user);
 }
+
+export function getLoggedInUser() {
+  return getCurrentUser({
+    includeAuthStatus: false,
+  }).toPromise();
+}

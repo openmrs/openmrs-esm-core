@@ -14,7 +14,7 @@ const backendDependencies = {
 };
 
 const frontendDependencies = {
-  "@openmrs/esm-framework": "^3.1.10",
+  "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
 };
 
 const sharedOnlineOfflineProps = {

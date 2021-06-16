@@ -37,16 +37,21 @@
     "access": "public"
   },
   "devDependencies": {
+    "@openmrs/esm-api": "^3.1.10",
     "@openmrs/esm-globals": "^3.1.10",
     "@openmrs/esm-state": "^3.1.10",
+    "@openmrs/esm-styleguide": "^3.1.10",
     "rxjs": "^6.5.3"
   },
   "peerDependencies": {
+    "@openmrs/esm-api": "3.x",
     "@openmrs/esm-globals": "3.x",
     "@openmrs/esm-state": "3.x",
+    "@openmrs/esm-styleguide": "3.x",
     "rxjs": "6.x"
   },
   "dependencies": {
+    "dexie": "^3.0.3",
     "lodash-es": "4.17.21",
     "workbox-window": "^6.1.5"
   }

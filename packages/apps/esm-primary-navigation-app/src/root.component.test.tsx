@@ -45,7 +45,7 @@ jest.mock("./utils", () => ({
 
 describe(`<Root />`, () => {
   beforeEach(() => {
-    render(<Root syncUserPropertiesChangesOnLoad={false} />);
+    render(<Root />);
   });
 
   it("should display navbar with title", async () => {
