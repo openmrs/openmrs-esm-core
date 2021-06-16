@@ -288,7 +288,7 @@ defaults for configuration elements for which no values have been provided.
 
 #### Support in other frameworks (Angular, Vue, Svelte, etc.)
 
-This hasn't been implemented yet, but we would like to implement it! See [Contributing](/getting_started/contributing).
+This hasn't been implemented yet, but we would like to implement it! See [Contributing](../getting_started/contributing).
 
 ## Schema Reference
 

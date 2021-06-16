@@ -2,7 +2,7 @@
 
 ## Prerequisities
 
-You must have git, node, and npm installed. See [prerequisites](getting_started/prerequisites).
+You must have git, node, and npm installed. See [prerequisites](getting_started/prerequisites.md).
 Consider using [nvm](https://github.com/nvm-sh/nvm#node-version-manager---)
 to ensure you're using the latest node.
 

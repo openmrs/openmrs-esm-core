@@ -7,7 +7,7 @@ interface guidelines, and a community of contributors.
 
 OpenMRS 3.0 uses Carbon to create a unified UI. Third party Design Systems like Carbon 
 are kept professionally maintained by another community which reduces work for OpenMRS 
-contributors. (More details in the [Why Use a Style Guide or a Design System](/main/carbon?id=why-use-a-style-guide-or-a-design-system) section below.
+contributors. (More details in the [Why Use a Style Guide or a Design System](#why-use-a-style-guide-or-a-design-system) section below.
 
 ## How to Use Carbon in OpenMRS 3.0
 * See [Getting Started with Carbon](https://www.carbondesignsystem.com/developing/get-started/)
