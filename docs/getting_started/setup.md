@@ -113,7 +113,7 @@ npm run serve --https
 
 The protocol of the application must match the protocol of the locally-served microfrontend.
 
-This command will serve the microfrontend and tell you the port where it is serving it at,
+This command will serve the microfrontend and tell you the port where it is serving,
 as well as showing you the filenames that are being served. You can then use
 the import map overrides panel to override the existing import map
 entry, or add your microfrontend as a new entry.
