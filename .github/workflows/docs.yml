@@ -8,7 +8,7 @@ on:
   schedule:
     - cron: "0 9 * * *"
     
-
+jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
