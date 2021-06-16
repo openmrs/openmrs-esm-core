@@ -15,4 +15,5 @@ jobs:
     - uses: actions/checkout@master
     - uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
-        max-depth: 3  # exclude the API docs
+        max-depth: 4  # exclude the API docs
+        use-quiet-mode: 'yes'
