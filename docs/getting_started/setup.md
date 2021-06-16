@@ -1,8 +1,8 @@
 # Setup
 
-## Prerequsities
+## Prerequisities
 
-You must have git, node, and npm installed. See [prerequisites](./prerequisites).
+You must have git, node, and npm installed. See [prerequisites](getting_started/prerequisites).
 Consider using [nvm](https://github.com/nvm-sh/nvm#node-version-manager---)
 to ensure you're using the latest node.
 
@@ -87,16 +87,16 @@ deployed server somewhere, you can use Import Map Overrides,
 which is made available through the OpenMRS DevTools.
 
 > If you'd like to understand how Import Map Overrides works, check out
-  [the documentation](https://github.com/joeldenning/import-map-overrides).
+  the [documentation](https://github.com/joeldenning/import-map-overrides).
   If you'd just like to use it, continue reading here.
 
-To use enable the OpenMRS DevTools, open your browser's JavaScript console and execute
+To enable the OpenMRS DevTools, open your browser's JavaScript console and execute
 
 ```javascript
 localStorage.setItem('openmrs:devtools', true)
 ```
 
-After refreshing the page, a little box appear should in the lower-right hand corner of the page.
+After refreshing the page, a little box should appear in the lower-right hand corner of the page.
 Clicking this box opens the OpenMRS DevTools.
 
 In the microfrontend you want to develop, run
@@ -113,7 +113,7 @@ npm run serve --https
 
 The protocol of the application must match the protocol of the locally-served microfrontend.
 
-This command will serve the microfrontend and tell you the port where it is serving,
+This command will serve the microfrontend and tell you the port where it is serving it at,
 as well as showing you the filenames that are being served. You can then use
 the import map overrides panel to override the existing import map
 entry, or add your microfrontend as a new entry.
@@ -138,5 +138,5 @@ You can also simply type `8080` and Import Map Overrides will infer the URL abov
 If you're using import map overrides on a server that uses HTTPS, you must use `serve` with the
 `--https` flag. Your browser will probably complain about the certificate.
 You will need to convince it
-that there is no security risk. In Chrome, the "allow insecure localhost" flag
+that there is no security risk. In Chrome, enabling the "allow insecure localhost" flag
 (chrome://flags/#allow-insecure-localhost) can help.

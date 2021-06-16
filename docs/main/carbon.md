@@ -7,27 +7,26 @@ interface guidelines, and a community of contributors.
 
 OpenMRS 3.0 uses Carbon to create a unified UI. Third party Design Systems like Carbon 
 are kept professionally maintained by another community which reduces work for OpenMRS 
-contributors. (More details below in the section *Why use a Style Guide or a Design System?*)
+contributors. (More details in the [Why Use a Style Guide or a Design System](/main/carbon?id=why-use-a-style-guide-or-a-design-system) section below.
 
 ## How to Use Carbon in OpenMRS 3.0
 * See [Getting Started with Carbon](https://www.carbondesignsystem.com/developing/get-started/)
-  for first steps, dev resources, and a react-specific tutorial. 
-* More Carbon resources are availble on [GitHub here](https://github.com/carbon-design-system/carbon).
+  for first steps, dev resources, and a React-specific tutorial. 
+* More Carbon resources are available on [GitHub here](https://github.com/carbon-design-system/carbon).
 
 ## How to Use Zeplin
-**Zeplin** is a webapp tool that helps designs be handed over to developers. OpenMRS uses Zeplin for two purposes:
+**Zeplin** is a design collaboration tool that facilitates prototyping between UI designers and frontend developers. OpenMRS uses Zeplin for two purposes:
 1. *Design Handover*: To share designs as community assets.
 2. *Style Guide*: To clearly communicate the OpenMRS 3.0 frontend components, spacing 
     and layout, color palette, and text styles (since Carbon Design doesn't
     automatically customize all these for us). 
 
 ### To see the designs anytime
-To see the designs without needing Zeplin account access:
-[Desktop](https://zpl.io/agmBNlR) | [Tablet](https://zpl.io/VKev8wP) 
+You can see the designs without creating a Zeplin account by accessing the [Desktop](https://zpl.io/agmBNlR) and [Tablet](https://zpl.io/VKev8wP) screens.
 
 ### To use the designs and the styleguide
 
-First, watch this video for Devs on how to use Zeplin:
+First, watch this video guide for Developers on how to use Zeplin:
 [![How to see UX & component guidance in Zeplin designs](https://img.youtube.com/vi/SjluEGDH4LU/0.jpg)](https://www.youtube.com/watch?v=SjluEGDH4LU&feature=youtu.be&ab_channel=OpenMRS "OpenMRS 3.0: Zeplin Intro for New OpenMRS Devs")
 
 To use the designs as a developer, you'll need to request Zeplin access from an OpenMRS
@@ -57,5 +56,5 @@ are structured. Style Guides like Bootstrap and Material typically don’t provi
 kind of detail. We wanted a Style Guide that would also link to code you'll use in 
 your actual code base. 
 
-You can learn more about 
-[why we specifically chose Carbon Design as our Design System here](https://wiki.openmrs.org/x/uAwGDg). 
+Learn more about [Why we chose Carbon](https://wiki.openmrs.org/x/uAwGDg) as our design system.
+
