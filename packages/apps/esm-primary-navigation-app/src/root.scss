@@ -23,11 +23,9 @@ $labeldropdown: #c6c6c6;
 }
 
 .headerPanel {
-  min-height: fit-content;
+  height: max-content;
 }
 
-.primaryNavContainer {
-  position: fixed;
-  top: 0;
-  z-index: 3;
+.primaryNavContainer header {
+  z-index: 3 !important
 }
