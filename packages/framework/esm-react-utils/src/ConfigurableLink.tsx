@@ -13,6 +13,9 @@ function handleClick(event: MouseEvent, to: string) {
   }
 }
 
+/**
+ * @noInheritDoc
+ */
 export interface ConfigurableLinkProps
   extends AnchorHTMLAttributes<HTMLAnchorElement> {
   to: string;
