@@ -1,5 +1,6 @@
 import { getExtensionSlotsConfigStore } from "@openmrs/esm-config";
 import {
+  ExtensionInfo,
   ExtensionRegistration,
   ExtensionSlotInfo,
   ExtensionSlotInstance,
@@ -52,6 +53,7 @@ export interface ExtensionDetails {
   meta: Record<string, any>;
   online?: boolean | object;
   offline?: boolean | object;
+  order?: number;
 }
 
 export const registerExtension: (
@@ -141,17 +143,30 @@ export function detachAll(extensionSlotName: string) {
   });
 }
 
+function getOrder(
+  configuredOrder: number,
+  extension: Partial<ExtensionRegistration> = {}
+) {
+  if (configuredOrder === -1) {
+    const { order = -1 } = extension;
+    return order;
+  }
+
+  return configuredOrder;
+}
+
 export function getAssignedIds(
   instance: ExtensionSlotInstance,
   attachedIds: Array<string>
 ) {
   const { addedIds, removedIds, idOrder } = instance;
+  const { extensions } = extensionStore.getState();
 
   return [...attachedIds, ...addedIds]
     .filter((m) => !removedIds.includes(m))
     .sort((a, b) => {
-      const ai = idOrder.indexOf(a);
-      const bi = idOrder.indexOf(b);
+      const ai = getOrder(idOrder.indexOf(a), extensions[a]);
+      const bi = getOrder(idOrder.indexOf(b), extensions[b]);
 
       if (bi === -1) {
         return -1;

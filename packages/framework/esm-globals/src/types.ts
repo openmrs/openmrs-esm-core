@@ -93,7 +93,19 @@ export interface ComponentDefinition {
   resources?: Record<string, ResourceLoader>;
 }
 
-export interface ModernAppExtensionDefinition extends ComponentDefinition {
+export interface ExtensionComponentDefinition extends ComponentDefinition {
+  /**
+   * The meta data used for reflection by other components.
+   */
+  meta?: Record<string, any>;
+  /**
+   * Specifies a preferred order number, if any.
+   */
+  order?: number;
+}
+
+export interface ModernAppExtensionDefinition
+  extends ExtensionComponentDefinition {
   /**
    * The ID of the extension to register.
    */
@@ -106,21 +118,14 @@ export interface ModernAppExtensionDefinition extends ComponentDefinition {
    * The slots of the extension to optionally attach to.
    */
   slots?: Array<string>;
-  /**
-   * The meta data used for reflection by other components.
-   */
-  meta?: Record<string, any>;
 }
 
-export interface LegacyAppExtensionDefinition extends ComponentDefinition {
+export interface LegacyAppExtensionDefinition
+  extends ExtensionComponentDefinition {
   /**
    * The ID of the extension to register.
    */
   name: string;
-  /**
-   * The meta data used for reflection by other components.
-   */
-  meta?: Record<string, any>;
 }
 
 export type AppExtensionDefinition = ModernAppExtensionDefinition &

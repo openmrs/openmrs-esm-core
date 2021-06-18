@@ -13,6 +13,7 @@ export interface ExtensionRegistration {
   load(): Promise<any>;
   moduleName: string;
   meta: ExtensionMeta;
+  order?: number;
   online?: boolean | object;
   offline?: boolean | object;
 }

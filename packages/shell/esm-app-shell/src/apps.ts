@@ -190,6 +190,7 @@ To fix this, ensure that you define a "load" function inside the extension defin
   registerExtension(id, {
     load: getLoader(extension.load, extension.resources),
     meta: extension.meta || {},
+    order: extension.order,
     moduleName,
     offline: extension.offline,
     online: extension.online,
