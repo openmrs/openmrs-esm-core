@@ -37,12 +37,15 @@
 }
 
 .bx--btn--primary,
-.bx--btn--primary:hover,
 .bx--btn--primary:active,
 .bx--btn--tertiary:hover,
 .bx--btn--tertiary:active,
 .bx--btn--tertiary:focus {
   background-color: #007d79;
+}
+
+.bx--btn--primary:hover {
+  background-color: #005d5d;
 }
 
 .bx--btn--tertiary {
