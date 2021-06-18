@@ -172,7 +172,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     <div className={styles["locationPickerContainer"]}>
       <form onSubmit={handleSubmit}>
         <div className={`${styles["location-card"]}`}>
-          <div className={styles["welcomeContainer"]}>
+          <div>
             <p className={styles["welcomeTitle"]}>
               {t("welcome", "Welcome")} {currentUser}
             </p>
@@ -183,18 +183,17 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
               )}
             </p>
           </div>
-          <div>
-            <Search
-              labelText="Search for location"
-              id="search-1"
-              placeholder={t("searchForLocation", "Search for a location")}
-              onChange={(ev) => search(ev.target.value)}
-              autoFocus={true}
-              name="searchForLocation"
-            />
-          </div>
+          <Search
+            className={styles["searchBox"]}
+            labelText="Search for location"
+            id="search-1"
+            placeholder={t("searchForLocation", "Search for a location")}
+            onChange={(ev) => search(ev.target.value)}
+            autoFocus={true}
+            name="searchForLocation"
+          />
           <div className={styles["searchResults"]}>
-            <p>
+            <p className={styles["resultsCount"]}>
               {searchTerm
                 ? `${locationData.locationResult.length} ${
                     locationData.locationResult.length === 1
@@ -205,37 +204,39 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                     locationData.locationResult.length
                   } ${t("locations", "locations")}`}
             </p>
-          </div>
-          <div className={styles["locationResultsContainer"]}>
-            {!isEmpty(locationData.locationResult) && (
-              <RadioButtonGroup
-                valueSelected={locationData.activeLocation}
-                orientation="vertical"
-                name={locationData.activeLocation}
-                onChange={(ev) => {
-                  changeLocationData({ activeLocation: ev.toString() });
-                }}
-              >
-                {locationData.locationResult.slice(0, pageSize).map((entry) => (
-                  <RadioButton
-                    className={styles["locationRadioButton"]}
-                    key={entry.resource.id}
-                    id={entry.resource.name}
-                    labelText={entry.resource.name}
-                    value={entry.resource.id}
-                  />
-                ))}
-              </RadioButtonGroup>
-            )}
-            {locationData.locationResult.length === 0 && (
-              <p className={styles["locationNotFound"]}>
-                <Trans i18nKey="locationNotFound">
-                  Sorry, no matching location was found
-                </Trans>
-              </p>
-            )}
-            <div className={styles["center"]}>
-              <p className={styles["error-msg"]} />
+            <div className={styles["locationResultsContainer"]}>
+              {!isEmpty(locationData.locationResult) && (
+                <RadioButtonGroup
+                  valueSelected={locationData.activeLocation}
+                  orientation="vertical"
+                  name={locationData.activeLocation}
+                  onChange={(ev) => {
+                    changeLocationData({ activeLocation: ev.toString() });
+                  }}
+                >
+                  {locationData.locationResult
+                    .slice(0, pageSize)
+                    .map((entry) => (
+                      <RadioButton
+                        className={styles["locationRadioButton"]}
+                        key={entry.resource.id}
+                        id={entry.resource.name}
+                        labelText={entry.resource.name}
+                        value={entry.resource.id}
+                      />
+                    ))}
+                </RadioButtonGroup>
+              )}
+              {locationData.locationResult.length === 0 && (
+                <p className={styles["locationNotFound"]}>
+                  <Trans i18nKey="locationNotFound">
+                    Sorry, no matching location was found
+                  </Trans>
+                </p>
+              )}
+              <div className={styles["center"]}>
+                <p className={styles["error-msg"]} />
+              </div>
             </div>
           </div>
           <div className={styles["confirmButton"]}>
