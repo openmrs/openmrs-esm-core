@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import {
   getImportmap,
   ImportmapDeclaration,
@@ -16,6 +16,7 @@ export interface BuildArgs {
   fresh: boolean;
   apiUrl: string;
   configUrls: Array<string>;
+  createDefaultConfig: boolean;
   buildConfig?: string;
 }
 
@@ -59,7 +60,7 @@ export async function runBuild(args: BuildArgs) {
     },
   });
 
-  return await new Promise<void>((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {
         reject(err);
@@ -75,4 +76,8 @@ export async function runBuild(args: BuildArgs) {
       }
     });
   });
+
+  if (args.createDefaultConfig) {
+    writeFileSync(args.target + "/config.json", "{}");
+  }
 }

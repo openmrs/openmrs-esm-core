@@ -190,7 +190,10 @@ yargs.command(
         "The URL of the API. Can be a path if the API is on the same target server."
       )
       .array("config-url")
-      .default("config-url", [])
+      .default("config-url", ["config.json"])
+      .boolean("no-default-config")
+      .describe("no-default-config", "By default, a blank 'config.json' file is created, corresponding to the default `config-url`. This flag supresses it.")
+      .default("no-default-config", false)
       .describe(
         "config-url",
         "The URL to a frontend configuration. Can be used multiple times. Resolved by the client during initialization."
@@ -207,6 +210,7 @@ yargs.command(
       spaPath: args["spa-path"],
       configUrls: args["config-url"],
       buildConfig: args["build-config"],
+      createDefaultConfig: !args["no-default-config"],
       ...args,
       importmap: args.importmap,
       target: resolve(process.cwd(), args.target),
