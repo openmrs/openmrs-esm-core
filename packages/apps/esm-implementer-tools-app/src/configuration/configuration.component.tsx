@@ -83,7 +83,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
 
   const confirmAndPostConfig = () => {
     // confirmPostConfig();
-    // const currentConfig = 
+    // const currentConfig =
     // const newConfig = merge(currentConfig, tempConfig);
     const newConfig = tempConfig;
     openmrsFetch(interpolateUrl(implToolsOwnConfig.configPostUrl), {
@@ -91,12 +91,12 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
       body: newConfig,
       headers: {
         "Content-Type": "application/json",
-      }
-    }).then(res => {
+      },
+    }).then((res) => {
       temporaryConfigStore.setState({ config: {} });
       // forceReloadConfig();
     });
-  }
+  };
 
   return (
     <>
@@ -147,7 +147,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   </a>
                 </Button>
               </Column>
-              { implToolsOwnConfig.allowConfigPost ?
+              {implToolsOwnConfig.allowConfigPost ? (
                 <Column sm={1} md={2} className={styles.actionButton}>
                   <Button
                     kind="secondary"
@@ -157,7 +157,8 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   >
                     Save Config to Server
                   </Button>
-                </Column> : null }
+                </Column>
+              ) : null}
             </Row>
           </Grid>
         ) : null}

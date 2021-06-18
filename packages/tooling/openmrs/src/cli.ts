@@ -192,7 +192,10 @@ yargs.command(
       .array("config-url")
       .default("config-url", ["config.json"])
       .boolean("no-default-config")
-      .describe("no-default-config", "By default, a blank 'config.json' file is created, corresponding to the default `config-url`. This flag supresses it.")
+      .describe(
+        "no-default-config",
+        "By default, a blank 'config.json' file is created, corresponding to the default `config-url`. This flag supresses it."
+      )
       .default("no-default-config", false)
       .describe(
         "config-url",
