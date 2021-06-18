@@ -1,4 +1,9 @@
-import { Type } from "../../../framework/esm-config/src";
+import { Type } from "@openmrs/esm-framework";
+
+export interface ImplementerToolsOwnConfig {
+  allowConfigPost: boolean;
+  configPostUrl: string;
+}
 
 export const configSchema = {
   allowConfigPost: {
@@ -12,9 +17,4 @@ export const configSchema = {
     _description:
       "The URL to post the config to when 'Save Config to Server' is clicked.",
   },
-};
-
-export type ImplementerToolsOwnConfig = {
-  allowConfigPost: boolean;
-  configPostUrl: string;
 };

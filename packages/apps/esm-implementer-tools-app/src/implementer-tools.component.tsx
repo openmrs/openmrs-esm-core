@@ -5,6 +5,7 @@ import {
   UserHasAccess,
   useStore,
 } from "@openmrs/esm-framework";
+import { NotificationActionButton } from "carbon-components-react/es/components/Notification/";
 import { UiEditor } from "./ui-editor/ui-editor";
 import {
   implementerToolsStore,
@@ -12,7 +13,6 @@ import {
   togglePopup,
 } from "./store";
 import { useBackendDependencies } from "./backend-dependencies/useBackendDependencies";
-import { NotificationActionButton } from "carbon-components-react";
 
 function PopupHandler() {
   const [
