@@ -1,4 +1,5 @@
-import { getAsyncLifecycle } from "@openmrs/esm-framework";
+import { defineConfigSchema, getAsyncLifecycle } from "@openmrs/esm-framework";
+import { configSchema } from "./config-schema";
 
 const importTranslation = () => Promise.resolve();
 
@@ -12,6 +13,8 @@ function setupOpenMRS() {
     featureName: "Implementer Tools",
     moduleName,
   };
+
+  defineConfigSchema(moduleName, configSchema);
 
   return {
     pages: [

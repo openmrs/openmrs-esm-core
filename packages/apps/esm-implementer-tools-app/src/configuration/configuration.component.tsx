@@ -1,6 +1,7 @@
 import React from "react";
 import TrashCan16 from "@carbon/icons-react/es/trash-can/16";
 import Download16 from "@carbon/icons-react/es/download/16";
+import Save16 from "@carbon/icons-react/es/save/16";
 import ChevronDown16 from "@carbon/icons-react/es/chevron--down/16";
 import ChevronUp16 from "@carbon/icons-react/es/chevron--up/16";
 import Button from "carbon-components-react/es/components/Button";
@@ -10,13 +11,17 @@ import {
   ConfigInternalStore,
   configInternalStore,
   implementerToolsConfigStore,
+  interpolateUrl,
+  openmrsFetch,
   temporaryConfigStore,
+  useConfig,
   useStore,
 } from "@openmrs/esm-framework";
 import { Column, Grid, Row } from "carbon-components-react/es/components/Grid";
 import { ConfigTree } from "./config-tree.component";
 import { Description } from "./description.component";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
+import { ImplementerToolsOwnConfig } from "../config-schema";
 
 const actions = {
   toggleIsUIEditorEnabled({ isUIEditorEnabled }: ImplementerToolsStore) {
@@ -65,7 +70,8 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
     configInternalStore,
     configActions
   );
-  const { config } = useStore(implementerToolsConfigStore);
+  const implToolsOwnConfig = useConfig() as ImplementerToolsOwnConfig;
+  const fullConfig = useStore(implementerToolsConfigStore).config;
   const tempConfigStore = useStore(temporaryConfigStore);
   const tempConfig = tempConfigStore.config;
   const tempConfigObjUrl = new Blob(
@@ -74,6 +80,23 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
       type: "application/json",
     }
   );
+
+  const confirmAndPostConfig = () => {
+    // confirmPostConfig();
+    // const currentConfig = 
+    // const newConfig = merge(currentConfig, tempConfig);
+    const newConfig = tempConfig;
+    openmrsFetch(interpolateUrl(implToolsOwnConfig.configPostUrl), {
+      method: "POST",
+      body: newConfig,
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }).then(res => {
+      temporaryConfigStore.setState({ config: {} });
+      // forceReloadConfig();
+    });
+  }
 
   return (
     <>
@@ -124,6 +147,17 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   </a>
                 </Button>
               </Column>
+              { implToolsOwnConfig.allowConfigPost ?
+                <Column sm={1} md={2} className={styles.actionButton}>
+                  <Button
+                    kind="secondary"
+                    iconDescription="Save Config to Server"
+                    renderIcon={Save16}
+                    onClick={confirmAndPostConfig}
+                  >
+                    Save Config to Server
+                  </Button>
+                </Column> : null }
             </Row>
           </Grid>
         ) : null}
@@ -144,7 +178,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
         }}
       >
         <div className={styles.configTreePane}>
-          <ConfigTree config={config} />
+          <ConfigTree config={fullConfig} />
         </div>
         <div className={styles.descriptionPane}>
           <Description />
