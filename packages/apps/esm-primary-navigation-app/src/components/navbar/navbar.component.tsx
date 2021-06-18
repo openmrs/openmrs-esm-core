@@ -82,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({
         >
           <Logo />
         </HeaderLink>
-        <HeaderGlobalBar>
+        <HeaderGlobalBar className={styles.headerGlobalBar}>
           <ExtensionSlot
             extensionSlotName="top-nav-actions-slot"
             className={styles.topNavActionSlot}
