@@ -6,9 +6,7 @@
 
 - **ComponentDefinition**
 
-  ↳ [*ModernAppExtensionDefinition*](modernappextensiondefinition.md)
-
-  ↳ [*LegacyAppExtensionDefinition*](legacyappextensiondefinition.md)
+  ↳ [*ExtensionComponentDefinition*](extensioncomponentdefinition.md)
 
   ↳ [*PageDefinition*](pagedefinition.md)
 

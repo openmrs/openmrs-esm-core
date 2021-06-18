@@ -61,7 +61,7 @@
 | :------ |
 | `T` |
 
-Defined in: [store.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L81)
+Defined in: [store.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L82)
 
 ___
 
@@ -77,7 +77,7 @@ Defined in: [contexts.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/mas
 
 • `Const` **extensionStore**: *Store*<[*ExtensionStore*](interfaces/extensionstore.md)\>
 
-Defined in: [store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L76)
+Defined in: [store.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L77)
 
 ## Functions
 
@@ -94,7 +94,7 @@ Defined in: [store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/maste
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L70)
+Defined in: [extensions.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L72)
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L100)
+Defined in: [extensions.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L102)
 
 ___
 
@@ -162,7 +162,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L123)
+Defined in: [extensions.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L125)
 
 ___
 
@@ -179,7 +179,7 @@ ___
 
 **Returns:** *string*[]
 
-Defined in: [extensions.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L144)
+Defined in: [extensions.ts:158](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L158)
 
 ___
 
@@ -212,7 +212,7 @@ ___
 
 **Returns:** *string*
 
-Defined in: [extensions.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L29)
+Defined in: [extensions.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L30)
 
 ___
 
@@ -228,7 +228,7 @@ ___
 
 **Returns:** [*ExtensionRegistration*](interfaces/extensionregistration.md) \| *undefined*
 
-Defined in: [extensions.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L42)
+Defined in: [extensions.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L43)
 
 ___
 
@@ -245,7 +245,7 @@ ___
 
 **Returns:** [*ExtensionRegistration*](interfaces/extensionregistration.md) \| *undefined*
 
-Defined in: [extensions.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L34)
+Defined in: [extensions.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L35)
 
 ___
 
@@ -261,7 +261,7 @@ ___
 
 **Returns:** *string*[]
 
-Defined in: [extensions.ts:255](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L255)
+Defined in: [extensions.ts:270](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L270)
 
 ___
 
@@ -284,7 +284,7 @@ with which it has been attached.
 
 **Returns:** [*ExtensionSlotInfo*](interfaces/extensionslotinfo.md)
 
-Defined in: [extensions.ts:282](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L282)
+Defined in: [extensions.ts:297](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L297)
 
 ___
 
@@ -319,7 +319,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L57)
+Defined in: [extensions.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L59)
 
 ___
 
@@ -336,7 +336,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:208](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L208)
+Defined in: [extensions.ts:223](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L223)
 
 ___
 
@@ -404,7 +404,7 @@ ___
 
 **Returns:** *void*
 
-Defined in: [extensions.ts:231](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L231)
+Defined in: [extensions.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L246)
 
 ___
 
@@ -426,4 +426,4 @@ ___
 
 **Returns:** *void*
 
-Defined in: [store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L85)
+Defined in: [store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L86)

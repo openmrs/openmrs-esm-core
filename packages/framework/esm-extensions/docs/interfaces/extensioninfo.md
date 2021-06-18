@@ -18,6 +18,7 @@
 - [name](extensioninfo.md#name)
 - [offline](extensioninfo.md#offline)
 - [online](extensioninfo.md#online)
+- [order](extensioninfo.md#order)
 
 ### Methods
 
@@ -32,7 +33,7 @@
 The instances where the extension has been rendered using `renderExtension`,
 indexed by slotModuleName and slotName.
 
-Defined in: [store.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L25)
+Defined in: [store.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L26)
 
 ___
 
@@ -72,7 +73,7 @@ ___
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[offline](extensionregistration.md#offline)
 
-Defined in: [store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L17)
+Defined in: [store.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L18)
 
 ___
 
@@ -81,6 +82,16 @@ ___
 • `Optional` **online**: *boolean* \| *object*
 
 Inherited from: [ExtensionRegistration](extensionregistration.md).[online](extensionregistration.md#online)
+
+Defined in: [store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L17)
+
+___
+
+### order
+
+• `Optional` **order**: *number*
+
+Inherited from: [ExtensionRegistration](extensionregistration.md).[order](extensionregistration.md#order)
 
 Defined in: [store.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L16)
 

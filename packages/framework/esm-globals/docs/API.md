@@ -8,6 +8,7 @@
 
 - [ComponentDefinition](interfaces/componentdefinition.md)
 - [ConnectivityChangedEvent](interfaces/connectivitychangedevent.md)
+- [ExtensionComponentDefinition](interfaces/extensioncomponentdefinition.md)
 - [ImportMap](interfaces/importmap.md)
 - [LegacyAppExtensionDefinition](interfaces/legacyappextensiondefinition.md)
 - [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md)
@@ -39,7 +40,7 @@
 
 Ƭ **AppExtensionDefinition**: [*ModernAppExtensionDefinition*](interfaces/modernappextensiondefinition.md) & [*LegacyAppExtensionDefinition*](interfaces/legacyappextensiondefinition.md)
 
-Defined in: [types.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L126)
+Defined in: [types.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L131)
 
 ___
 

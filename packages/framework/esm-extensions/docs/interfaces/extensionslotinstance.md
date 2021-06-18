@@ -20,7 +20,7 @@ A set of additional extension IDs which have been added to to this slot despite 
 explicitly `attach`ed to it.
 An example may be an extension which is added to the slot via the configuration.
 
-Defined in: [store.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L45)
+Defined in: [store.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L46)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 A set allowing explicit ordering of the `assignedIds`.
 
-Defined in: [store.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L55)
+Defined in: [store.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L56)
 
 ___
 
@@ -42,4 +42,4 @@ A set of extension IDs which have been removed/hidden from this slot, even thoug
 previously been `attach`ed/added to it.
 An example may be an extension which is removed from the slot via the configuration.
 
-Defined in: [store.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L51)
+Defined in: [store.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L52)

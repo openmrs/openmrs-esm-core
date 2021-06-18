@@ -65,7 +65,7 @@ ___
 
 The route of the page.
 
-Defined in: [types.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L133)
+Defined in: [types.ts:138](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L138)
 
 ## Methods
 
