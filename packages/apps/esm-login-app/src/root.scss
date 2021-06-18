@@ -64,6 +64,10 @@ $inverse-link: #78a9ff;
   @include carbon--type-style("label-01");
 }
 
+.caption01 {
+  @include carbon--type-style("caption-01");
+}
+
 .helperText01 {
   @include carbon--type-style("helper-text-01");
 }

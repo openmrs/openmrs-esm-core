@@ -119,6 +119,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
       <use xlinkHref="#omrs-logo-full-color"></use>
     </svg>
   );
+
   return (
     <div className={`canvas ${styles["container"]}`}>
       <div className={`omrs-card ${styles["login-card"]}`}>
@@ -212,7 +213,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
           </Button>
         </p>
       </div>
-      <div className="omrs-margin-top-32">
+      <div className={styles["footer"]}>
         <p className={styles["powered-by-txt"]}>
           {t("poweredBy", "Powered by")}
         </p>
