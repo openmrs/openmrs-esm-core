@@ -51,7 +51,7 @@ module.exports = (env) => ({
       "Access-Control-Allow-Origin": "*",
     },
   },
-  externals: Object.keys(peerDependencies),
+  externals: Object.keys(peerDependencies || {}),
   resolve: {
     modules: ["node_modules"],
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],

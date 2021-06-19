@@ -34,7 +34,7 @@ module.exports = (env) => ({
       analyzerMode: env && env.analyze ? "static" : "disabled",
     }),
   ],
-  externals: Object.keys(peerDependencies),
+  externals: Object.keys(peerDependencies || {}),
   devServer: {
     disableHostCheck: true,
     headers: {
