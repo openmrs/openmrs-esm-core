@@ -184,12 +184,12 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             </p>
           </div>
           <Search
+            autoFocus
             className={styles["searchBox"]}
-            labelText="Search for location"
+            labelText={t("searchForLocation", "Search for a location")}
             id="search-1"
             placeholder={t("searchForLocation", "Search for a location")}
             onChange={(ev) => search(ev.target.value)}
-            autoFocus={true}
             name="searchForLocation"
           />
           <div className={styles["searchResults"]}>
