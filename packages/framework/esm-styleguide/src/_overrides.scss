@@ -103,3 +103,14 @@
     }
   }
 }
+
+.bx--pagination-nav__page:not(.bx--pagination-nav__page--direction) {
+  &::after {
+    background-color: $brand-teal-01;
+  }
+}
+
+.bx--pagination-nav__page .bx--pagination-nav__page--active,
+.bx--pagination-nav__page:focus {
+  outline: 2px solid $brand-teal-01;
+}
