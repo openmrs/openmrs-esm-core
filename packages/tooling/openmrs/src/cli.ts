@@ -206,9 +206,10 @@ yargs.command(
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
       configUrls: args["config-url"],
-      buildConfig: args["build-config"],
       ...args,
       importmap: args.importmap,
+      buildConfig:
+        args["build-config"] && resolve(process.cwd(), args["build-config"]),
       target: resolve(process.cwd(), args.target),
     })
 );

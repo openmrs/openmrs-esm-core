@@ -7,7 +7,7 @@
     "openmrs": "./dist/cli.js"
   },
   "scripts": {
-    "start": "npm run watch",
+    "start": "./dist/cli.js",
     "test": "jest --passWithNoTests",
     "build": "tsc",
     "lint": "eslint src --ext ts,tsx"
