@@ -163,7 +163,9 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   };
 
   React.useEffect(() => {
-    locationData.locationResult.length < pageSize
+    locationData.locationResult.length < pageSize &&
+      setPageSize(locationData.locationResult.length);
+    chooseLocation.numberToShow > locationData.locationResult.length
       ? setPageSize(locationData.locationResult.length)
       : setPageSize(chooseLocation.numberToShow);
   }, [locationData.locationResult.length]);

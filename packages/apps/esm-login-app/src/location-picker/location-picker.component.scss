@@ -47,6 +47,11 @@
 .locationResultsContainer {
   display: flex;
   overflow-y: auto;
+  margin-top: 0.5rem;
+}
+
+:global(.omrs-breakpoint-gt-tablet) .locationResultsContainer {
+  height: 23rem;
 }
 
 .locationRadioButton {
