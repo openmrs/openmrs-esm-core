@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / ComponentDecoratorOptions
+[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / ComponentDecoratorOptions
 
 # Interface: ComponentDecoratorOptions
 
@@ -15,30 +15,38 @@
 
 ### disableTranslations
 
-• `Optional` **disableTranslations**: *boolean*
+• `Optional` **disableTranslations**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L57)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L57)
 
 ___
 
 ### featureName
 
-• **featureName**: *string*
+• **featureName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L56)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L56)
 
 ___
 
 ### moduleName
 
-• **moduleName**: *string*
+• **moduleName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L55)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L55)
 
 ___
 
 ### strictMode
 
-• `Optional` **strictMode**: *boolean*
+• `Optional` **strictMode**: `boolean`
 
-Defined in: [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L58)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L58)

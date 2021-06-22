@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / ExtensionData
+[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / ExtensionData
 
 # Interface: ExtensionData
 
@@ -14,22 +14,28 @@
 
 ### extensionId
 
-• **extensionId**: *string*
+• **extensionId**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L6)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ComponentContext.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L6)
 
 ___
 
 ### extensionSlotModuleName
 
-• **extensionSlotModuleName**: *string*
+• **extensionSlotModuleName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L5)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ComponentContext.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L5)
 
 ___
 
 ### extensionSlotName
 
-• **extensionSlotName**: *string*
+• **extensionSlotName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ComponentContext.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L4)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ComponentContext.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L4)

@@ -1,4 +1,4 @@
-[@openmrs/esm-extensions](../API.md) / Lifecycle
+[@openmrs/esm-extensions](../API.md) / [Exports](../modules.md) / Lifecycle
 
 # Interface: Lifecycle
 
@@ -15,38 +15,54 @@
 
 ### bootstrap
 
-▸ **bootstrap**(): *void*
+▸ **bootstrap**(): `void`
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [render.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L8)
+`void`
+
+#### Defined in
+
+[render.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L8)
 
 ___
 
 ### mount
 
-▸ **mount**(): *void*
+▸ **mount**(): `void`
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [render.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L9)
+`void`
+
+#### Defined in
+
+[render.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L9)
 
 ___
 
 ### unmount
 
-▸ **unmount**(): *void*
+▸ **unmount**(): `void`
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [render.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L10)
+`void`
+
+#### Defined in
+
+[render.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L10)
 
 ___
 
 ### update
 
-▸ `Optional` **update**(): *void*
+▸ `Optional` **update**(): `void`
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [render.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L11)
+`void`
+
+#### Defined in
+
+[render.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L11)

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / SpaConfig
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / SpaConfig
 
 # Interface: SpaConfig
 
@@ -15,40 +15,48 @@
 
 ### apiUrl
 
-• **apiUrl**: *string*
+• **apiUrl**: `string`
 
 The base path or URL for the OpenMRS API / endpoints.
 
-Defined in: [packages/framework/esm-globals/src/types.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L57)
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L57)
 
 ___
 
 ### configUrls
 
-• `Optional` **configUrls**: *string*[]
+• `Optional` **configUrls**: `string`[]
 
 URLs of configurations to load in the system.
 
-Defined in: [packages/framework/esm-globals/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L70)
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L70)
 
 ___
 
 ### env
 
-• `Optional` **env**: [*SpaEnvironment*](../API.md#spaenvironment)
+• `Optional` **env**: [SpaEnvironment](../modules.md#spaenvironment)
 
 The environment to use.
 
 **`default`** production
 
-Defined in: [packages/framework/esm-globals/src/types.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L66)
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L66)
 
 ___
 
 ### spaPath
 
-• **spaPath**: *string*
+• **spaPath**: `string`
 
 The base path for the SPA root path.
 
-Defined in: [packages/framework/esm-globals/src/types.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L61)
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L61)

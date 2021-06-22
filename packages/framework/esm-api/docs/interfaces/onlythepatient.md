@@ -1,10 +1,10 @@
-[@openmrs/esm-api](../API.md) / OnlyThePatient
+[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / OnlyThePatient
 
 # Interface: OnlyThePatient
 
 ## Hierarchy
 
-- [*CurrentPatientOptions*](currentpatientoptions.md)
+- [CurrentPatientOptions](currentpatientoptions.md)
 
   ↳ **OnlyThePatient**
 
@@ -20,6 +20,10 @@
 
 • **includeConfig**: ``false``
 
-Overrides: [CurrentPatientOptions](currentpatientoptions.md).[includeConfig](currentpatientoptions.md#includeconfig)
+#### Overrides
 
-Defined in: [packages/framework/esm-api/src/shared-api-objects/current-patient.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L15)
+[CurrentPatientOptions](currentpatientoptions.md).[includeConfig](currentpatientoptions.md#includeconfig)
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L15)

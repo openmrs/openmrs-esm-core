@@ -1,4 +1,4 @@
-[@openmrs/esm-extensions](../API.md) / NavigationContext
+[@openmrs/esm-extensions](../API.md) / [Exports](../modules.md) / NavigationContext
 
 # Interface: NavigationContext
 
@@ -16,29 +16,35 @@
 
 ### type
 
-• **type**: [*NavigationContextType*](../API.md#navigationcontexttype)
+• **type**: [NavigationContextType](../modules.md#navigationcontexttype)
 
-Defined in: [contexts.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L6)
+#### Defined in
+
+[contexts.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L6)
 
 ## Methods
 
 ### handler
 
-▸ **handler**<T\>(`link`: *string*, `state`: T): *boolean*
+▸ **handler**<T\>(`link`, `state`): `boolean`
 
 #### Type parameters
 
-| Name | Default |
+| Name | Type |
 | :------ | :------ |
-| `T` | *any* |
+| `T` | `T` = `any` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `link` | *string* |
-| `state` | T |
+| `link` | `string` |
+| `state` | `T` |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: [contexts.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L7)
+`boolean`
+
+#### Defined in
+
+[contexts.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L7)

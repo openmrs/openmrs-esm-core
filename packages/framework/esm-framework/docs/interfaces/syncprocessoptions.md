@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / SyncProcessOptions
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / SyncProcessOptions
 
 # Interface: SyncProcessOptions<T\>
 
@@ -21,30 +21,38 @@
 
 ### abort
 
-• **abort**: AbortController
+• **abort**: `AbortController`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L126)
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L126)
 
 ___
 
 ### index
 
-• **index**: *number*
+• **index**: `number`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L128)
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L128)
 
 ___
 
 ### items
 
-• **items**: [*number*, T][]
+• **items**: [`number`, `T`][]
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L129)
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L129)
 
 ___
 
 ### userId
 
-• **userId**: *string*
+• **userId**: `string`
 
-Defined in: [packages/framework/esm-offline/src/sync.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L127)
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L127)

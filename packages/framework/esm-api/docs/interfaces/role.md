@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / Role
+[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / Role
 
 # Interface: Role
 
@@ -14,22 +14,28 @@
 
 ### display
 
-• **display**: *string*
+• **display**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L48)
+#### Defined in
+
+[packages/framework/esm-api/src/types/user-resource.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L48)
 
 ___
 
 ### links
 
-• **links**: *any*[]
+• **links**: `any`[]
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L49)
+#### Defined in
+
+[packages/framework/esm-api/src/types/user-resource.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L49)
 
 ___
 
 ### uuid
 
-• **uuid**: *string*
+• **uuid**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L47)
+#### Defined in
+
+[packages/framework/esm-api/src/types/user-resource.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L47)

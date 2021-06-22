@@ -1,4 +1,4 @@
-[@openmrs/esm-config](../API.md) / ExtensionSlotConfig
+[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / ExtensionSlotConfig
 
 # Interface: ExtensionSlotConfig
 
@@ -15,30 +15,38 @@
 
 ### add
 
-• `Optional` **add**: *string*[]
+• `Optional` **add**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L39)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L39)
 
 ___
 
 ### configure
 
-• `Optional` **configure**: [*ExtensionSlotConfigureValueObject*](extensionslotconfigurevalueobject.md)
+• `Optional` **configure**: [ExtensionSlotConfigureValueObject](extensionslotconfigurevalueobject.md)
 
-Defined in: [packages/framework/esm-config/src/types.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L42)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L42)
 
 ___
 
 ### order
 
-• `Optional` **order**: *string*[]
+• `Optional` **order**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L41)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L41)
 
 ___
 
 ### remove
 
-• `Optional` **remove**: *string*[]
+• `Optional` **remove**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L40)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L40)

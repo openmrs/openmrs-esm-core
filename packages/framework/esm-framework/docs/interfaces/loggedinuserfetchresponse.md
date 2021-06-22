@@ -1,10 +1,10 @@
-[@openmrs/esm-framework](../API.md) / LoggedInUserFetchResponse
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / LoggedInUserFetchResponse
 
 # Interface: LoggedInUserFetchResponse
 
 ## Hierarchy
 
-- [*FetchResponse*](fetchresponse.md)
+- [FetchResponse](fetchresponse.md)
 
   ↳ **LoggedInUserFetchResponse**
 
@@ -37,180 +37,260 @@
 
 ### body
 
-• `Readonly` **body**: ``null`` \| *ReadableStream*<Uint8Array\>
+• `Readonly` **body**: ``null`` \| `ReadableStream`<Uint8Array\>
 
-Inherited from: [FetchResponse](fetchresponse.md).[body](fetchresponse.md#body)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2623
+[FetchResponse](fetchresponse.md).[body](fetchresponse.md#body)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2583
 
 ___
 
 ### bodyUsed
 
-• `Readonly` **bodyUsed**: *boolean*
+• `Readonly` **bodyUsed**: `boolean`
 
-Inherited from: [FetchResponse](fetchresponse.md).[bodyUsed](fetchresponse.md#bodyused)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2624
+[FetchResponse](fetchresponse.md).[bodyUsed](fetchresponse.md#bodyused)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2584
 
 ___
 
 ### data
 
-• **data**: [*UnauthenticatedUser*](unauthenticateduser.md) & { `user?`: [*LoggedInUser*](loggedinuser.md)  }
+• **data**: [UnauthenticatedUser](unauthenticateduser.md) & { `user?`: [LoggedInUser](loggedinuser.md)  }
 
-Overrides: [FetchResponse](fetchresponse.md).[data](fetchresponse.md#data)
+#### Overrides
 
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L8)
+[FetchResponse](fetchresponse.md).[data](fetchresponse.md#data)
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L8)
 
 ___
 
 ### headers
 
-• `Readonly` **headers**: Headers
+• `Readonly` **headers**: `Headers`
 
-Inherited from: [FetchResponse](fetchresponse.md).[headers](fetchresponse.md#headers)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12717
+[FetchResponse](fetchresponse.md).[headers](fetchresponse.md#headers)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12550
 
 ___
 
 ### ok
 
-• `Readonly` **ok**: *boolean*
+• `Readonly` **ok**: `boolean`
 
-Inherited from: [FetchResponse](fetchresponse.md).[ok](fetchresponse.md#ok)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12718
+[FetchResponse](fetchresponse.md).[ok](fetchresponse.md#ok)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12551
 
 ___
 
 ### redirected
 
-• `Readonly` **redirected**: *boolean*
+• `Readonly` **redirected**: `boolean`
 
-Inherited from: [FetchResponse](fetchresponse.md).[redirected](fetchresponse.md#redirected)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12719
+[FetchResponse](fetchresponse.md).[redirected](fetchresponse.md#redirected)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12552
 
 ___
 
 ### status
 
-• `Readonly` **status**: *number*
+• `Readonly` **status**: `number`
 
-Inherited from: [FetchResponse](fetchresponse.md).[status](fetchresponse.md#status)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12720
+[FetchResponse](fetchresponse.md).[status](fetchresponse.md#status)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12553
 
 ___
 
 ### statusText
 
-• `Readonly` **statusText**: *string*
+• `Readonly` **statusText**: `string`
 
-Inherited from: [FetchResponse](fetchresponse.md).[statusText](fetchresponse.md#statustext)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12721
+[FetchResponse](fetchresponse.md).[statusText](fetchresponse.md#statustext)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12554
 
 ___
 
 ### trailer
 
-• `Readonly` **trailer**: *Promise*<Headers\>
+• `Readonly` **trailer**: `Promise`<Headers\>
 
-Inherited from: [FetchResponse](fetchresponse.md).[trailer](fetchresponse.md#trailer)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12722
+[FetchResponse](fetchresponse.md).[trailer](fetchresponse.md#trailer)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12555
 
 ___
 
 ### type
 
-• `Readonly` **type**: ResponseType
+• `Readonly` **type**: `ResponseType`
 
-Inherited from: [FetchResponse](fetchresponse.md).[type](fetchresponse.md#type)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12723
+[FetchResponse](fetchresponse.md).[type](fetchresponse.md#type)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12556
 
 ___
 
 ### url
 
-• `Readonly` **url**: *string*
+• `Readonly` **url**: `string`
 
-Inherited from: [FetchResponse](fetchresponse.md).[url](fetchresponse.md#url)
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12724
+[FetchResponse](fetchresponse.md).[url](fetchresponse.md#url)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12557
 
 ## Methods
 
 ### arrayBuffer
 
-▸ **arrayBuffer**(): *Promise*<ArrayBuffer\>
+▸ **arrayBuffer**(): `Promise`<ArrayBuffer\>
 
-**Returns:** *Promise*<ArrayBuffer\>
+#### Returns
 
-Inherited from: [FetchResponse](fetchresponse.md)
+`Promise`<ArrayBuffer\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2625
+#### Inherited from
+
+[FetchResponse](fetchresponse.md).[arrayBuffer](fetchresponse.md#arraybuffer)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2585
 
 ___
 
 ### blob
 
-▸ **blob**(): *Promise*<Blob\>
+▸ **blob**(): `Promise`<Blob\>
 
-**Returns:** *Promise*<Blob\>
+#### Returns
 
-Inherited from: [FetchResponse](fetchresponse.md)
+`Promise`<Blob\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2626
+#### Inherited from
+
+[FetchResponse](fetchresponse.md).[blob](fetchresponse.md#blob)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2586
 
 ___
 
 ### clone
 
-▸ **clone**(): Response
+▸ **clone**(): `Response`
 
-**Returns:** Response
+#### Returns
 
-Inherited from: [FetchResponse](fetchresponse.md)
+`Response`
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12725
+#### Inherited from
+
+[FetchResponse](fetchresponse.md).[clone](fetchresponse.md#clone)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12558
 
 ___
 
 ### formData
 
-▸ **formData**(): *Promise*<FormData\>
+▸ **formData**(): `Promise`<FormData\>
 
-**Returns:** *Promise*<FormData\>
+#### Returns
 
-Inherited from: [FetchResponse](fetchresponse.md)
+`Promise`<FormData\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2627
+#### Inherited from
+
+[FetchResponse](fetchresponse.md).[formData](fetchresponse.md#formdata)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2587
 
 ___
 
 ### json
 
-▸ **json**(): *Promise*<any\>
+▸ **json**(): `Promise`<any\>
 
-**Returns:** *Promise*<any\>
+#### Returns
 
-Inherited from: [FetchResponse](fetchresponse.md)
+`Promise`<any\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2628
+#### Inherited from
+
+[FetchResponse](fetchresponse.md).[json](fetchresponse.md#json)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2588
 
 ___
 
 ### text
 
-▸ **text**(): *Promise*<string\>
+▸ **text**(): `Promise`<string\>
 
-**Returns:** *Promise*<string\>
+#### Returns
 
-Inherited from: [FetchResponse](fetchresponse.md)
+`Promise`<string\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2629
+#### Inherited from
+
+[FetchResponse](fetchresponse.md).[text](fetchresponse.md#text)
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2589

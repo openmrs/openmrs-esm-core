@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / ExtensionProps
+[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / ExtensionProps
 
 # Interface: ExtensionProps
 
@@ -16,23 +16,29 @@
 
 ### state
 
-• `Optional` **state**: *Record*<string, any\>
+• `Optional` **state**: `Record`<string, any\>
 
-Defined in: [packages/framework/esm-react-utils/src/Extension.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L6)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/Extension.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L6)
 
 ## Methods
 
 ### wrap
 
-▸ `Optional` **wrap**(`slot`: ReactNode, `extension`: [*ExtensionData*](extensiondata.md)): ``null`` \| *ReactElement*<any, any\>
+▸ `Optional` **wrap**(`slot`, `extension`): ``null`` \| `ReactElement`<any, any\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `slot` | ReactNode |
-| `extension` | [*ExtensionData*](extensiondata.md) |
+| `slot` | `ReactNode` |
+| `extension` | [ExtensionData](extensiondata.md) |
 
-**Returns:** ``null`` \| *ReactElement*<any, any\>
+#### Returns
 
-Defined in: [packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L7)
+``null`` \| `ReactElement`<any, any\>
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L7)

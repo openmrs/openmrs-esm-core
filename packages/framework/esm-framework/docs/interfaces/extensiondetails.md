@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / ExtensionDetails
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ExtensionDetails
 
 # Interface: ExtensionDetails
 
@@ -17,54 +17,66 @@
 
 ### load
 
-• **load**: () => *Promise*<any\>
+• **load**: () => `Promise`<any\>
 
 #### Type declaration
 
-▸ (): *Promise*<any\>
+▸ (): `Promise`<any\>
 
-**Returns:** *Promise*<any\>
+##### Returns
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L52)
+`Promise`<any\>
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L52)
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L52)
 
 ___
 
 ### meta
 
-• **meta**: *Record*<string, any\>
+• **meta**: `Record`<string, any\>
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L53)
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L53)
 
 ___
 
 ### moduleName
 
-• **moduleName**: *string*
+• **moduleName**: `string`
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L51)
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L51)
 
 ___
 
 ### offline
 
-• `Optional` **offline**: *boolean* \| *object*
+• `Optional` **offline**: `boolean` \| `object`
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L55)
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L55)
 
 ___
 
 ### online
 
-• `Optional` **online**: *boolean* \| *object*
+• `Optional` **online**: `boolean` \| `object`
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L54)
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L54)
 
 ___
 
 ### order
 
-• `Optional` **order**: *number*
+• `Optional` **order**: `number`
 
-Defined in: [packages/framework/esm-extensions/src/extensions.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L56)
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L56)

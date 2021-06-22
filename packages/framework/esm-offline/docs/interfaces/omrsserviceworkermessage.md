@@ -1,4 +1,4 @@
-[@openmrs/esm-offline](../API.md) / OmrsServiceWorkerMessage
+[@openmrs/esm-offline](../API.md) / [Exports](../modules.md) / OmrsServiceWorkerMessage
 
 # Interface: OmrsServiceWorkerMessage<MessageTypeTypeIdentifier\>
 
@@ -6,17 +6,17 @@
 
 | Name | Type |
 | :------ | :------ |
-| `MessageTypeTypeIdentifier` | *string* |
+| `MessageTypeTypeIdentifier` | `MessageTypeTypeIdentifier`: `string` |
 
 ## Hierarchy
 
 - **OmrsServiceWorkerMessage**
 
-  ↳ [*OnImportMapChangedMessage*](onimportmapchangedmessage.md)
+  ↳ [OnImportMapChangedMessage](onimportmapchangedmessage.md)
 
-  ↳ [*ClearDynamicRoutesMessage*](cleardynamicroutesmessage.md)
+  ↳ [ClearDynamicRoutesMessage](cleardynamicroutesmessage.md)
 
-  ↳ [*RegisterDynamicRouteMessage*](registerdynamicroutemessage.md)
+  ↳ [RegisterDynamicRouteMessage](registerdynamicroutemessage.md)
 
 ## Table of contents
 
@@ -28,6 +28,8 @@
 
 ### type
 
-• **type**: MessageTypeTypeIdentifier
+• **type**: `MessageTypeTypeIdentifier`
 
-Defined in: [service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L19)
+#### Defined in
+
+[service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L19)
