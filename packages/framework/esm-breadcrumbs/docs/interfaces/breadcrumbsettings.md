@@ -1,4 +1,4 @@
-[@openmrs/esm-breadcrumbs](../API.md) / [Exports](../modules.md) / BreadcrumbSettings
+[@openmrs/esm-breadcrumbs](../API.md) / BreadcrumbSettings
 
 # Interface: BreadcrumbSettings
 

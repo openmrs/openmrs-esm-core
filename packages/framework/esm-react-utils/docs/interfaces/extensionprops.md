@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / ExtensionProps
+[@openmrs/esm-react-utils](../API.md) / ExtensionProps
 
 # Interface: ExtensionProps
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / SessionUser
+[@openmrs/esm-framework](../API.md) / SessionUser
 
 # Interface: SessionUser
 

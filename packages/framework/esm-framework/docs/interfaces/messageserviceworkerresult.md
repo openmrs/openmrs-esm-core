@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / MessageServiceWorkerResult
+[@openmrs/esm-framework](../API.md) / MessageServiceWorkerResult
 
 # Interface: MessageServiceWorkerResult<T\>
 

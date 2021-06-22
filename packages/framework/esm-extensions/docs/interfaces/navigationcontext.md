@@ -1,4 +1,4 @@
-[@openmrs/esm-extensions](../API.md) / [Exports](../modules.md) / NavigationContext
+[@openmrs/esm-extensions](../API.md) / NavigationContext
 
 # Interface: NavigationContext
 
@@ -16,7 +16,7 @@
 
 ### type
 
-• **type**: [NavigationContextType](../modules.md#navigationcontexttype)
+• **type**: [NavigationContextType](../API.md#navigationcontexttype)
 
 #### Defined in
 

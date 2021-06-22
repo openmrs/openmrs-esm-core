@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / VisitMode
+[@openmrs/esm-framework](../API.md) / VisitMode
 
 # Enumeration: VisitMode
 

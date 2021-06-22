@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / UnauthenticatedUser
+[@openmrs/esm-framework](../API.md) / UnauthenticatedUser
 
 # Interface: UnauthenticatedUser
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / BreadcrumbRegistration
+[@openmrs/esm-framework](../API.md) / BreadcrumbRegistration
 
 # Interface: BreadcrumbRegistration
 

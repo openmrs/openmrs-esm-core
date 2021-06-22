@@ -1,4 +1,4 @@
-[@openmrs/esm-offline](../API.md) / [Exports](../modules.md) / NetworkRequestFailedEvent
+[@openmrs/esm-offline](../API.md) / NetworkRequestFailedEvent
 
 # Interface: NetworkRequestFailedEvent
 

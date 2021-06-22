@@ -1,4 +1,4 @@
-[@openmrs/esm-extensions](../API.md) / [Exports](../modules.md) / ExtensionStore
+[@openmrs/esm-extensions](../API.md) / ExtensionStore
 
 # Interface: ExtensionStore
 

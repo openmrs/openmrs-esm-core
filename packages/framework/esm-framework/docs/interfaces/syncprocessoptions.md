@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / SyncProcessOptions
+[@openmrs/esm-framework](../API.md) / SyncProcessOptions
 
 # Interface: SyncProcessOptions<T\>
 
@@ -13,6 +13,7 @@
 ### Properties
 
 - [abort](syncprocessoptions.md#abort)
+- [dependencies](syncprocessoptions.md#dependencies)
 - [index](syncprocessoptions.md#index)
 - [items](syncprocessoptions.md#items)
 - [userId](syncprocessoptions.md#userid)
@@ -25,7 +26,17 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L126)
+[packages/framework/esm-offline/src/sync.ts:146](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L146)
+
+___
+
+### dependencies
+
+• **dependencies**: `any`[]
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:150](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L150)
 
 ___
 
@@ -35,17 +46,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L128)
+[packages/framework/esm-offline/src/sync.ts:148](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L148)
 
 ___
 
 ### items
 
-• **items**: [`number`, `T`][]
+• **items**: `T`[]
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L129)
+[packages/framework/esm-offline/src/sync.ts:149](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L149)
 
 ___
 
@@ -55,4 +66,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L127)
+[packages/framework/esm-offline/src/sync.ts:147](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L147)

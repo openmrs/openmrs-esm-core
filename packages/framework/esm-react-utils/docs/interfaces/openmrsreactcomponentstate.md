@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / OpenmrsReactComponentState
+[@openmrs/esm-react-utils](../API.md) / OpenmrsReactComponentState
 
 # Interface: OpenmrsReactComponentState
 

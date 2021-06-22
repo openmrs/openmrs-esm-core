@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / OmrsServiceWorkerMessage
+[@openmrs/esm-framework](../API.md) / OmrsServiceWorkerMessage
 
 # Interface: OmrsServiceWorkerMessage<MessageTypeTypeIdentifier\>
 

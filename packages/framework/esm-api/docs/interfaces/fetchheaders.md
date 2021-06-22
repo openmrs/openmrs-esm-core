@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / FetchHeaders
+[@openmrs/esm-api](../API.md) / FetchHeaders
 
 # Interface: FetchHeaders
 

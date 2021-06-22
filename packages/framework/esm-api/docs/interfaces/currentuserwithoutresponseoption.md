@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / CurrentUserWithoutResponseOption
+[@openmrs/esm-api](../API.md) / CurrentUserWithoutResponseOption
 
 # Interface: CurrentUserWithoutResponseOption
 

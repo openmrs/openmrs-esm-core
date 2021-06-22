@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / OnlyThePatient
+[@openmrs/esm-api](../API.md) / OnlyThePatient
 
 # Interface: OnlyThePatient
 

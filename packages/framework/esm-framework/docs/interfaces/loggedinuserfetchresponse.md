@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / LoggedInUserFetchResponse
+[@openmrs/esm-framework](../API.md) / LoggedInUserFetchResponse
 
 # Interface: LoggedInUserFetchResponse
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / OpenmrsResource
 
 # Interface: OpenmrsResource
 

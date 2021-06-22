@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / LegacyAppExtensionDefinition
+[@openmrs/esm-framework](../API.md) / LegacyAppExtensionDefinition
 
 # Interface: LegacyAppExtensionDefinition
 

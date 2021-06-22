@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / OnImportMapChangedMessage
+[@openmrs/esm-framework](../API.md) / OnImportMapChangedMessage
 
 # Interface: OnImportMapChangedMessage
 

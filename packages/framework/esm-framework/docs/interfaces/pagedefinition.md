@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / PageDefinition
+[@openmrs/esm-framework](../API.md) / PageDefinition
 
 # Interface: PageDefinition
 

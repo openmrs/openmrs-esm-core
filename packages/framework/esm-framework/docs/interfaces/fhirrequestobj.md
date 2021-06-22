@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / FHIRRequestObj
+[@openmrs/esm-framework](../API.md) / FHIRRequestObj
 
 # Interface: FHIRRequestObj
 

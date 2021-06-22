@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / Location
+[@openmrs/esm-framework](../API.md) / Location
 
 # Interface: Location
 

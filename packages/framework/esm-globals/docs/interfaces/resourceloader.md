@@ -1,4 +1,4 @@
-[@openmrs/esm-globals](../API.md) / [Exports](../modules.md) / ResourceLoader
+[@openmrs/esm-globals](../API.md) / ResourceLoader
 
 # Interface: ResourceLoader<T\>
 

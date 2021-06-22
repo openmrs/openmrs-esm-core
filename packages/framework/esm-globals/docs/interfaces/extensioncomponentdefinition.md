@@ -1,4 +1,4 @@
-[@openmrs/esm-globals](../API.md) / [Exports](../modules.md) / ExtensionComponentDefinition
+[@openmrs/esm-globals](../API.md) / ExtensionComponentDefinition
 
 # Interface: ExtensionComponentDefinition
 

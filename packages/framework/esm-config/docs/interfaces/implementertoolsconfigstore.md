@@ -1,4 +1,4 @@
-[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / ImplementerToolsConfigStore
+[@openmrs/esm-config](../API.md) / ImplementerToolsConfigStore
 
 # Interface: ImplementerToolsConfigStore
 

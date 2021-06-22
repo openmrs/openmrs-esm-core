@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ComponentDecoratorOptions
+[@openmrs/esm-framework](../API.md) / ComponentDecoratorOptions
 
 # Interface: ComponentDecoratorOptions
 

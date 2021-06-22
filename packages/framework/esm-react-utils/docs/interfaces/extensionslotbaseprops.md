@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / ExtensionSlotBaseProps
+[@openmrs/esm-react-utils](../API.md) / ExtensionSlotBaseProps
 
 # Interface: ExtensionSlotBaseProps
 

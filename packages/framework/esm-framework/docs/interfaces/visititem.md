@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / VisitItem
+[@openmrs/esm-framework](../API.md) / VisitItem
 
 # Interface: VisitItem
 

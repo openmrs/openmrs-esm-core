@@ -1,3 +1,3 @@
-[@openmrs/esm-state](../API.md) / [Exports](../modules.md) / AppState
+[@openmrs/esm-state](../API.md) / AppState
 
 # Interface: AppState

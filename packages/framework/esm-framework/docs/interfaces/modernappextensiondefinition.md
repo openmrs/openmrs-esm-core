@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ModernAppExtensionDefinition
+[@openmrs/esm-framework](../API.md) / ModernAppExtensionDefinition
 
 # Interface: ModernAppExtensionDefinition
 

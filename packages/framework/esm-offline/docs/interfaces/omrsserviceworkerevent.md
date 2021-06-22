@@ -1,4 +1,4 @@
-[@openmrs/esm-offline](../API.md) / [Exports](../modules.md) / OmrsServiceWorkerEvent
+[@openmrs/esm-offline](../API.md) / OmrsServiceWorkerEvent
 
 # Interface: OmrsServiceWorkerEvent<TypeIdentifier\>
 

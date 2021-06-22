@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / PatientWithFullResponse
+[@openmrs/esm-api](../API.md) / PatientWithFullResponse
 
 # Interface: PatientWithFullResponse
 

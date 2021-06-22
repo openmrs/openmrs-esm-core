@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / FHIRCode
+[@openmrs/esm-framework](../API.md) / FHIRCode
 
 # Interface: FHIRCode
 

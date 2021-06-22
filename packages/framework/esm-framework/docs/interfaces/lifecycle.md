@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / Lifecycle
+[@openmrs/esm-framework](../API.md) / Lifecycle
 
 # Interface: Lifecycle
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / ConfigurableLinkProps
+[@openmrs/esm-react-utils](../API.md) / ConfigurableLinkProps
 
 # Interface: ConfigurableLinkProps
 

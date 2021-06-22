@@ -1,4 +1,4 @@
-[@openmrs/esm-globals](../API.md) / [Exports](../modules.md) / ShowToastEvent
+[@openmrs/esm-globals](../API.md) / ShowToastEvent
 
 # Interface: ShowToastEvent
 

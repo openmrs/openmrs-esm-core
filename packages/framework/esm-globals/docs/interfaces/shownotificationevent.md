@@ -1,4 +1,4 @@
-[@openmrs/esm-globals](../API.md) / [Exports](../modules.md) / ShowNotificationEvent
+[@openmrs/esm-globals](../API.md) / ShowNotificationEvent
 
 # Interface: ShowNotificationEvent
 

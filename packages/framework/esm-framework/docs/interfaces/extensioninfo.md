@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ExtensionInfo
+[@openmrs/esm-framework](../API.md) / ExtensionInfo
 
 # Interface: ExtensionInfo
 

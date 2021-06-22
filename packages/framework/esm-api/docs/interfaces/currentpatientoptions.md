@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / CurrentPatientOptions
+[@openmrs/esm-api](../API.md) / CurrentPatientOptions
 
 # Interface: CurrentPatientOptions
 

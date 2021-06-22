@@ -1,4 +1,4 @@
-[@openmrs/esm-globals](../API.md) / [Exports](../modules.md) / PageDefinition
+[@openmrs/esm-globals](../API.md) / PageDefinition
 
 # Interface: PageDefinition
 

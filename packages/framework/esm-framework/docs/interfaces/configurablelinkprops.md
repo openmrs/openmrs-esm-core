@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ConfigurableLinkProps
+[@openmrs/esm-framework](../API.md) / ConfigurableLinkProps
 
 # Interface: ConfigurableLinkProps
 

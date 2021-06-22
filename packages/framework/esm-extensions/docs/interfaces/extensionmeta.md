@@ -1,4 +1,4 @@
-[@openmrs/esm-extensions](../API.md) / [Exports](../modules.md) / ExtensionMeta
+[@openmrs/esm-extensions](../API.md) / ExtensionMeta
 
 # Interface: ExtensionMeta
 

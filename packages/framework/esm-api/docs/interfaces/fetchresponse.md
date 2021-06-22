@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / FetchResponse
+[@openmrs/esm-api](../API.md) / FetchResponse
 
 # Interface: FetchResponse<T\>
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / NavigateOptions
+[@openmrs/esm-framework](../API.md) / NavigateOptions
 
 # Interface: NavigateOptions
 

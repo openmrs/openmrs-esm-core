@@ -1,10 +1,10 @@
-[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / ConfigSchema
+[@openmrs/esm-config](../API.md) / ConfigSchema
 
 # Interface: ConfigSchema
 
 ## Indexable
 
-▪ [key: `string`]: [ConfigSchema](configschema.md) \| [ConfigValue](../modules.md#configvalue)
+▪ [key: `string`]: [ConfigSchema](configschema.md) \| [ConfigValue](../API.md#configvalue)
 
 ## Table of contents
 
@@ -38,7 +38,7 @@ ___
 
 ### \_validators
 
-• `Optional` **\_validators**: [Validator](../modules.md#validator)[]
+• `Optional` **\_validators**: [Validator](../API.md#validator)[]
 
 #### Defined in
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / UserHasAccessProps
+[@openmrs/esm-framework](../API.md) / UserHasAccessProps
 
 # Interface: UserHasAccessProps
 

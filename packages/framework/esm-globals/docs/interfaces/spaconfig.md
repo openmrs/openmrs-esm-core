@@ -1,4 +1,4 @@
-[@openmrs/esm-globals](../API.md) / [Exports](../modules.md) / SpaConfig
+[@openmrs/esm-globals](../API.md) / SpaConfig
 
 # Interface: SpaConfig
 
@@ -39,7 +39,7 @@ ___
 
 ### env
 
-• `Optional` **env**: [SpaEnvironment](../modules.md#spaenvironment)
+• `Optional` **env**: [SpaEnvironment](../API.md#spaenvironment)
 
 The environment to use.
 

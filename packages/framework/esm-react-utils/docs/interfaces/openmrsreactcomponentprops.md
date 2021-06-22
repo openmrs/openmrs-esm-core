@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / OpenmrsReactComponentProps
+[@openmrs/esm-react-utils](../API.md) / OpenmrsReactComponentProps
 
 # Interface: OpenmrsReactComponentProps
 

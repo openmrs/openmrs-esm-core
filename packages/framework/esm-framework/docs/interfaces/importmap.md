@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ImportMap
+[@openmrs/esm-framework](../API.md) / ImportMap
 
 # Interface: ImportMap
 

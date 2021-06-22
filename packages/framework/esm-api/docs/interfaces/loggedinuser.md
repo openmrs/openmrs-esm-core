@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / LoggedInUser
+[@openmrs/esm-api](../API.md) / LoggedInUser
 
 # Interface: LoggedInUser
 

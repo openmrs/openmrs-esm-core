@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ComponentDefinition
+[@openmrs/esm-framework](../API.md) / ComponentDefinition
 
 # Interface: ComponentDefinition
 

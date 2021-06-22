@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / ComponentConfig
+[@openmrs/esm-react-utils](../API.md) / ComponentConfig
 
 # Interface: ComponentConfig
 

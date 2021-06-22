@@ -1,4 +1,4 @@
-[@openmrs/esm-offline](../API.md) / [Exports](../modules.md) / OnImportMapChangedMessage
+[@openmrs/esm-offline](../API.md) / OnImportMapChangedMessage
 
 # Interface: OnImportMapChangedMessage
 

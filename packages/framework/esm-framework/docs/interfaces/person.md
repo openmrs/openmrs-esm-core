@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / Person
+[@openmrs/esm-framework](../API.md) / Person
 
 # Interface: Person
 

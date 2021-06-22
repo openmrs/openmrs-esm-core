@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / NewVisitPayload
+[@openmrs/esm-framework](../API.md) / NewVisitPayload
 
 # Interface: NewVisitPayload
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / CancelLoading
+[@openmrs/esm-framework](../API.md) / CancelLoading
 
 # Interface: CancelLoading
 

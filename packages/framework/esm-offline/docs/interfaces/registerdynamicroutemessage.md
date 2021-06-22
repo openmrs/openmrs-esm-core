@@ -1,4 +1,4 @@
-[@openmrs/esm-offline](../API.md) / [Exports](../modules.md) / RegisterDynamicRouteMessage
+[@openmrs/esm-offline](../API.md) / RegisterDynamicRouteMessage
 
 # Interface: RegisterDynamicRouteMessage
 

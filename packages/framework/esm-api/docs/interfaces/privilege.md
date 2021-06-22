@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / Privilege
+[@openmrs/esm-api](../API.md) / Privilege
 
 # Interface: Privilege
 

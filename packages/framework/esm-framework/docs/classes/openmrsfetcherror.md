@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / OpenmrsFetchError
+[@openmrs/esm-framework](../API.md) / OpenmrsFetchError
 
 # Class: OpenmrsFetchError
 

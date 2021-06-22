@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ExtensionSlotBaseProps
+[@openmrs/esm-framework](../API.md) / ExtensionSlotBaseProps
 
 # Interface: ExtensionSlotBaseProps
 

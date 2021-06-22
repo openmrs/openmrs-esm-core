@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / UserHasAccessProps
+[@openmrs/esm-react-utils](../API.md) / UserHasAccessProps
 
 # Interface: UserHasAccessProps
 

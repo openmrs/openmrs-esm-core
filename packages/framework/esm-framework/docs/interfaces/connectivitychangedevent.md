@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ConnectivityChangedEvent
+[@openmrs/esm-framework](../API.md) / ConnectivityChangedEvent
 
 # Interface: ConnectivityChangedEvent
 

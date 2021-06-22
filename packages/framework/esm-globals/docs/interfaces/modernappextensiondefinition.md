@@ -1,4 +1,4 @@
-[@openmrs/esm-globals](../API.md) / [Exports](../modules.md) / ModernAppExtensionDefinition
+[@openmrs/esm-globals](../API.md) / ModernAppExtensionDefinition
 
 # Interface: ModernAppExtensionDefinition
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / [Exports](../modules.md) / ExtensionData
+[@openmrs/esm-react-utils](../API.md) / ExtensionData
 
 # Interface: ExtensionData
 

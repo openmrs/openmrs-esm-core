@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / WorkspaceItem
+[@openmrs/esm-framework](../API.md) / WorkspaceItem
 
 # Interface: WorkspaceItem
 

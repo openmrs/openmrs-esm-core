@@ -1,4 +1,4 @@
-[@openmrs/esm-extensions](../API.md) / [Exports](../modules.md) / ExtensionSlotInfo
+[@openmrs/esm-extensions](../API.md) / ExtensionSlotInfo
 
 # Interface: ExtensionSlotInfo
 

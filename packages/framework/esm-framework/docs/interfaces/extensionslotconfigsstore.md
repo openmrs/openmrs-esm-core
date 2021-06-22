@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ExtensionSlotConfigsStore
+[@openmrs/esm-framework](../API.md) / ExtensionSlotConfigsStore
 
 # Interface: ExtensionSlotConfigsStore
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / VisitType
+[@openmrs/esm-api](../API.md) / VisitType
 
 # Interface: VisitType
 

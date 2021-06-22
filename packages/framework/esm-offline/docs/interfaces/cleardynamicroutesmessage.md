@@ -1,4 +1,4 @@
-[@openmrs/esm-offline](../API.md) / [Exports](../modules.md) / ClearDynamicRoutesMessage
+[@openmrs/esm-offline](../API.md) / ClearDynamicRoutesMessage
 
 # Interface: ClearDynamicRoutesMessage
 

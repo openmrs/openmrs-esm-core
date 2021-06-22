@@ -1,4 +1,4 @@
-[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / ConfigStore
+[@openmrs/esm-config](../API.md) / ConfigStore
 
 # Interface: ConfigStore
 

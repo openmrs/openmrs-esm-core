@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / FHIRResource
+[@openmrs/esm-api](../API.md) / FHIRResource
 
 # Interface: FHIRResource
 

@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / Role
+[@openmrs/esm-api](../API.md) / Role
 
 # Interface: Role
 

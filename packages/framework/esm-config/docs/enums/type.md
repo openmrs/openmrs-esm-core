@@ -1,4 +1,4 @@
-[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / Type
+[@openmrs/esm-config](../API.md) / Type
 
 # Enumeration: Type
 
