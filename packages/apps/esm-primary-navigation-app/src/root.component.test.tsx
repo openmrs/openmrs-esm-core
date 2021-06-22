@@ -17,6 +17,7 @@ const mockSessionObservable = of({ data: mockSession });
 
 jest.mock("@openmrs/esm-framework", () => ({
   openmrsFetch: jest.fn().mockResolvedValue({}),
+  useAssignedExtensionIds: jest.fn().mockResolvedValue([]),
   createErrorHandler: jest.fn(),
   openmrsObservableFetch: jest.fn(),
   getCurrentUser: jest.fn(() => mockUserObservable),
