@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / User
+[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / User
 
 # Interface: User
 
@@ -20,70 +20,88 @@
 
 ### display
 
-• **display**: *string*
+• **display**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L18)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L18)
 
 ___
 
 ### link
 
-• **link**: *string*[]
+• **link**: `string`[]
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L19)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L19)
 
 ___
 
 ### persion
 
-• **persion**: *any*
+• **persion**: `any`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L20)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L20)
 
 ___
 
 ### priviliges
 
-• **priviliges**: *any*
+• **priviliges**: `any`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L21)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L21)
 
 ___
 
 ### resourceVersion
 
-• **resourceVersion**: *any*
+• **resourceVersion**: `any`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L22)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L22)
 
 ___
 
 ### roles
 
-• **roles**: *any*[]
+• **roles**: `any`[]
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L23)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L23)
 
 ___
 
 ### userProperties
 
-• **userProperties**: *any*
+• **userProperties**: `any`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L24)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L24)
 
 ___
 
 ### username
 
-• **username**: *string*
+• **username**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L25)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L25)
 
 ___
 
 ### uuid
 
-• **uuid**: *string*
+• **uuid**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L26)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L26)

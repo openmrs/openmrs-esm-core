@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / CurrentPatientOptions
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / CurrentPatientOptions
 
 # Interface: CurrentPatientOptions
 
@@ -6,9 +6,9 @@
 
 - **CurrentPatientOptions**
 
-  ↳ [*PatientWithFullResponse*](patientwithfullresponse.md)
+  ↳ [PatientWithFullResponse](patientwithfullresponse.md)
 
-  ↳ [*OnlyThePatient*](onlythepatient.md)
+  ↳ [OnlyThePatient](onlythepatient.md)
 
 ## Table of contents
 
@@ -20,6 +20,8 @@
 
 ### includeConfig
 
-• `Optional` **includeConfig**: *boolean*
+• `Optional` **includeConfig**: `boolean`
 
-Defined in: [packages/framework/esm-api/src/shared-api-objects/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L7)
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L7)

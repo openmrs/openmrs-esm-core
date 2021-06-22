@@ -1,11 +1,17 @@
-[@openmrs/esm-extensions](../API.md) / CancelLoading
+[@openmrs/esm-extensions](../API.md) / [Exports](../modules.md) / CancelLoading
 
 # Interface: CancelLoading
 
 ## Callable
 
-▸ **CancelLoading**(): *void*
+### CancelLoading
 
-**Returns:** *void*
+▸ **CancelLoading**(): `void`
 
-Defined in: [render.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L14)
+#### Returns
+
+`void`
+
+#### Defined in
+
+[render.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L14)

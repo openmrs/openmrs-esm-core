@@ -1,10 +1,10 @@
-[@openmrs/esm-api](../API.md) / PatientWithFullResponse
+[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / PatientWithFullResponse
 
 # Interface: PatientWithFullResponse
 
 ## Hierarchy
 
-- [*CurrentPatientOptions*](currentpatientoptions.md)
+- [CurrentPatientOptions](currentpatientoptions.md)
 
   ↳ **PatientWithFullResponse**
 
@@ -20,6 +20,10 @@
 
 • **includeConfig**: ``true``
 
-Overrides: [CurrentPatientOptions](currentpatientoptions.md).[includeConfig](currentpatientoptions.md#includeconfig)
+#### Overrides
 
-Defined in: [packages/framework/esm-api/src/shared-api-objects/current-patient.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L11)
+[CurrentPatientOptions](currentpatientoptions.md).[includeConfig](currentpatientoptions.md#includeconfig)
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L11)

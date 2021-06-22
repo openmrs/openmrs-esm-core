@@ -1,10 +1,10 @@
-[@openmrs/esm-config](../API.md) / ConfigSchema
+[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / ConfigSchema
 
 # Interface: ConfigSchema
 
 ## Indexable
 
-▪ [key: *string*]: [*ConfigSchema*](configschema.md) \| [*ConfigValue*](../API.md#configvalue)
+▪ [key: `string`]: [ConfigSchema](configschema.md) \| [ConfigValue](../modules.md#configvalue)
 
 ## Table of contents
 
@@ -18,22 +18,28 @@
 
 ### \_elements
 
-• `Optional` **\_elements**: [*ConfigSchema*](configschema.md)
+• `Optional` **\_elements**: [ConfigSchema](configschema.md)
 
-Defined in: [packages/framework/esm-config/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L19)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L19)
 
 ___
 
 ### \_type
 
-• `Optional` **\_type**: [*Type*](../enums/type.md)
+• `Optional` **\_type**: [Type](../enums/type.md)
 
-Defined in: [packages/framework/esm-config/src/types.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L17)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L17)
 
 ___
 
 ### \_validators
 
-• `Optional` **\_validators**: [*Validator*](../API.md#validator)[]
+• `Optional` **\_validators**: [Validator](../modules.md#validator)[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L18)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L18)

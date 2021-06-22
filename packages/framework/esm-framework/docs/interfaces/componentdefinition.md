@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / ComponentDefinition
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ComponentDefinition
 
 # Interface: ComponentDefinition
 
@@ -6,9 +6,9 @@
 
 - **ComponentDefinition**
 
-  ↳ [*ExtensionComponentDefinition*](extensioncomponentdefinition.md)
+  ↳ [ExtensionComponentDefinition](extensioncomponentdefinition.md)
 
-  ↳ [*PageDefinition*](pagedefinition.md)
+  ↳ [PageDefinition](pagedefinition.md)
 
 ## Table of contents
 
@@ -26,40 +26,50 @@
 
 ### offline
 
-• `Optional` **offline**: *boolean* \| *object*
+• `Optional` **offline**: `boolean` \| `object`
 
 Defines the offline support / properties of the component.
 
-Defined in: [packages/framework/esm-globals/src/types.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L89)
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L89)
 
 ___
 
 ### online
 
-• `Optional` **online**: *boolean* \| *object*
+• `Optional` **online**: `boolean` \| `object`
 
 Defines the online support / properties of the component.
 
-Defined in: [packages/framework/esm-globals/src/types.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L85)
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L85)
 
 ___
 
 ### resources
 
-• `Optional` **resources**: *Record*<string, [*ResourceLoader*](resourceloader.md)<any\>\>
+• `Optional` **resources**: `Record`<string, [ResourceLoader](resourceloader.md)<any\>\>
 
 Defines resources that are loaded when the component should mount.
 
-Defined in: [packages/framework/esm-globals/src/types.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L93)
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L93)
 
 ## Methods
 
 ### load
 
-▸ **load**(): *Promise*<any\>
+▸ **load**(): `Promise`<any\>
 
 Defines a function to use for actually loading the component's lifecycle.
 
-**Returns:** *Promise*<any\>
+#### Returns
 
-Defined in: [packages/framework/esm-globals/src/types.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L81)
+`Promise`<any\>
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L81)

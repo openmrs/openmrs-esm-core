@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / ExtensionSlotConfigObject
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ExtensionSlotConfigObject
 
 # Interface: ExtensionSlotConfigObject
 
@@ -14,22 +14,28 @@
 
 ### add
 
-• `Optional` **add**: *string*[]
+• `Optional` **add**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L50)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L50)
 
 ___
 
 ### order
 
-• `Optional` **order**: *string*[]
+• `Optional` **order**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L52)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L52)
 
 ___
 
 ### remove
 
-• `Optional` **remove**: *string*[]
+• `Optional` **remove**: `string`[]
 
-Defined in: [packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L51)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L51)

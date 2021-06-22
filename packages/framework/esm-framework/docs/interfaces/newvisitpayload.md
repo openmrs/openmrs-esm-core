@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / NewVisitPayload
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / NewVisitPayload
 
 # Interface: NewVisitPayload
 
@@ -16,38 +16,48 @@
 
 ### location
 
-• **location**: *string*
+• **location**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L4)
+#### Defined in
+
+[packages/framework/esm-api/src/types/visit-resource.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L4)
 
 ___
 
 ### patient
 
-• `Optional` **patient**: *string*
+• `Optional` **patient**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L5)
+#### Defined in
+
+[packages/framework/esm-api/src/types/visit-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L5)
 
 ___
 
 ### startDatetime
 
-• **startDatetime**: Date
+• **startDatetime**: `Date`
 
-Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L6)
+#### Defined in
+
+[packages/framework/esm-api/src/types/visit-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L6)
 
 ___
 
 ### stopDatetime
 
-• `Optional` **stopDatetime**: Date
+• `Optional` **stopDatetime**: `Date`
 
-Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L8)
+#### Defined in
+
+[packages/framework/esm-api/src/types/visit-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L8)
 
 ___
 
 ### visitType
 
-• **visitType**: *string*
+• **visitType**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/visit-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L7)
+#### Defined in
+
+[packages/framework/esm-api/src/types/visit-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L7)

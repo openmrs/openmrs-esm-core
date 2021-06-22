@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / UserHasAccessProps
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / UserHasAccessProps
 
 # Interface: UserHasAccessProps
 
@@ -12,6 +12,8 @@
 
 ### privilege
 
-• **privilege**: *string*
+• **privilege**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/UserHasAccess.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L5)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L5)

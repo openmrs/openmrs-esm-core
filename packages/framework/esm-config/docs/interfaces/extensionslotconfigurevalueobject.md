@@ -1,7 +1,7 @@
-[@openmrs/esm-config](../API.md) / ExtensionSlotConfigureValueObject
+[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / ExtensionSlotConfigureValueObject
 
 # Interface: ExtensionSlotConfigureValueObject
 
 ## Indexable
 
-▪ [key: *string*]: *object*
+▪ [key: `string`]: `object`

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / UnauthenticatedUser
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / UnauthenticatedUser
 
 # Interface: UnauthenticatedUser
 
@@ -14,22 +14,28 @@
 
 ### authenticated
 
-• **authenticated**: *boolean*
+• **authenticated**: `boolean`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L30)
+#### Defined in
+
+[packages/framework/esm-api/src/types/user-resource.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L30)
 
 ___
 
 ### sessionId
 
-• **sessionId**: *string*
+• **sessionId**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L29)
+#### Defined in
+
+[packages/framework/esm-api/src/types/user-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L29)
 
 ___
 
 ### user
 
-• `Optional` **user**: [*LoggedInUser*](loggedinuser.md)
+• `Optional` **user**: [LoggedInUser](loggedinuser.md)
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L31)
+#### Defined in
+
+[packages/framework/esm-api/src/types/user-resource.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L31)

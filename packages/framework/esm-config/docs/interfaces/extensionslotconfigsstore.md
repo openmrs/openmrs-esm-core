@@ -1,4 +1,4 @@
-[@openmrs/esm-config](../API.md) / ExtensionSlotConfigsStore
+[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / ExtensionSlotConfigsStore
 
 # Interface: ExtensionSlotConfigsStore
 
@@ -13,16 +13,20 @@
 
 ### extensionSlotConfigs
 
-• **extensionSlotConfigs**: *Record*<string, [*ExtensionSlotConfigObject*](extensionslotconfigobject.md)\>
+• **extensionSlotConfigs**: `Record`<string, [ExtensionSlotConfigObject](extensionslotconfigobject.md)\>
 
 Configs for each extension slot in the module, indexed by slot name
 
-Defined in: [packages/framework/esm-config/src/module-config/state.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L152)
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/state.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L152)
 
 ___
 
 ### loaded
 
-• **loaded**: *boolean*
+• **loaded**: `boolean`
 
-Defined in: [packages/framework/esm-config/src/module-config/state.ts:153](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L153)
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/state.ts:153](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L153)

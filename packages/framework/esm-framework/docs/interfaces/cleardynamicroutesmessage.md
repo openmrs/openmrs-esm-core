@@ -1,10 +1,10 @@
-[@openmrs/esm-framework](../API.md) / ClearDynamicRoutesMessage
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ClearDynamicRoutesMessage
 
 # Interface: ClearDynamicRoutesMessage
 
 ## Hierarchy
 
-- [*OmrsServiceWorkerMessage*](omrsserviceworkermessage.md)<``"clearDynamicRoutes"``\>
+- [OmrsServiceWorkerMessage](omrsserviceworkermessage.md)<``"clearDynamicRoutes"``\>
 
   ↳ **ClearDynamicRoutesMessage**
 
@@ -20,6 +20,10 @@
 
 • **type**: ``"clearDynamicRoutes"``
 
-Inherited from: [OmrsServiceWorkerMessage](omrsserviceworkermessage.md).[type](omrsserviceworkermessage.md#type)
+#### Inherited from
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L19)
+[OmrsServiceWorkerMessage](omrsserviceworkermessage.md).[type](omrsserviceworkermessage.md#type)
+
+#### Defined in
+
+[packages/framework/esm-offline/src/service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L19)

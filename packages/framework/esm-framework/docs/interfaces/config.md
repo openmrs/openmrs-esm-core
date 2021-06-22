@@ -1,16 +1,16 @@
-[@openmrs/esm-framework](../API.md) / Config
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / Config
 
 # Interface: Config
 
 ## Hierarchy
 
-- *Object*
+- `Object`
 
   ↳ **Config**
 
 ## Indexable
 
-▪ [moduleName: *string*]: { [key: string]: *any*;  }
+▪ [moduleName: `string`]: { [key: string]: `any`;  }
 
 ## Table of contents
 
@@ -31,19 +31,23 @@
 
 ### constructor
 
-• **constructor**: Function
+• **constructor**: `Function`
 
 The initial value of Object.prototype.constructor is the standard built-in Object constructor.
 
-Inherited from: Object.constructor
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.es5.d.ts:122
+Object.constructor
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:122
 
 ## Methods
 
 ### hasOwnProperty
 
-▸ **hasOwnProperty**(`v`: PropertyKey): *boolean*
+▸ **hasOwnProperty**(`v`): `boolean`
 
 Determines whether an object has a property with the specified name.
 
@@ -51,19 +55,25 @@ Determines whether an object has a property with the specified name.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `v` | PropertyKey | A property name. |
+| `v` | `PropertyKey` | A property name. |
 
-**Returns:** *boolean*
+#### Returns
 
-Inherited from: Object.hasOwnProperty
+`boolean`
 
-Defined in: node_modules/typescript/lib/lib.es5.d.ts:137
+#### Inherited from
+
+Object.hasOwnProperty
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:137
 
 ___
 
 ### isPrototypeOf
 
-▸ **isPrototypeOf**(`v`: Object): *boolean*
+▸ **isPrototypeOf**(`v`): `boolean`
 
 Determines whether an object exists in another object's prototype chain.
 
@@ -71,19 +81,25 @@ Determines whether an object exists in another object's prototype chain.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `v` | Object | Another object whose prototype chain is to be checked. |
+| `v` | `Object` | Another object whose prototype chain is to be checked. |
 
-**Returns:** *boolean*
+#### Returns
 
-Inherited from: Object.isPrototypeOf
+`boolean`
 
-Defined in: node_modules/typescript/lib/lib.es5.d.ts:143
+#### Inherited from
+
+Object.isPrototypeOf
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:143
 
 ___
 
 ### propertyIsEnumerable
 
-▸ **propertyIsEnumerable**(`v`: PropertyKey): *boolean*
+▸ **propertyIsEnumerable**(`v`): `boolean`
 
 Determines whether a specified property is enumerable.
 
@@ -91,52 +107,76 @@ Determines whether a specified property is enumerable.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `v` | PropertyKey | A property name. |
+| `v` | `PropertyKey` | A property name. |
 
-**Returns:** *boolean*
+#### Returns
 
-Inherited from: Object.propertyIsEnumerable
+`boolean`
 
-Defined in: node_modules/typescript/lib/lib.es5.d.ts:149
+#### Inherited from
+
+Object.propertyIsEnumerable
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:149
 
 ___
 
 ### toLocaleString
 
-▸ **toLocaleString**(): *string*
+▸ **toLocaleString**(): `string`
 
 Returns a date converted to a string using the current locale.
 
-**Returns:** *string*
+#### Returns
 
-Inherited from: Object.toLocaleString
+`string`
 
-Defined in: node_modules/typescript/lib/lib.es5.d.ts:128
+#### Inherited from
+
+Object.toLocaleString
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:128
 
 ___
 
 ### toString
 
-▸ **toString**(): *string*
+▸ **toString**(): `string`
 
 Returns a string representation of an object.
 
-**Returns:** *string*
+#### Returns
 
-Inherited from: Object.toString
+`string`
 
-Defined in: node_modules/typescript/lib/lib.es5.d.ts:125
+#### Inherited from
+
+Object.toString
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:125
 
 ___
 
 ### valueOf
 
-▸ **valueOf**(): Object
+▸ **valueOf**(): `Object`
 
 Returns the primitive value of the specified object.
 
-**Returns:** Object
+#### Returns
 
-Inherited from: Object.valueOf
+`Object`
 
-Defined in: node_modules/typescript/lib/lib.es5.d.ts:131
+#### Inherited from
+
+Object.valueOf
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es5.d.ts:131

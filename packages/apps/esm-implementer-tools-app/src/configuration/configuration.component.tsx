@@ -17,6 +17,7 @@ import { Column, Grid, Row } from "carbon-components-react/es/components/Grid";
 import { ConfigTree } from "./config-tree.component";
 import { Description } from "./description.component";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
+import { useTranslation } from "react-i18next";
 
 const actions = {
   toggleIsUIEditorEnabled({ isUIEditorEnabled }: ImplementerToolsStore) {
@@ -55,6 +56,7 @@ const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({
 export interface ConfigurationProps {}
 
 export const Configuration: React.FC<ConfigurationProps> = () => {
+  const { t } = useTranslation();
   const {
     isUIEditorEnabled,
     toggleIsUIEditorEnabled,
@@ -84,7 +86,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               <Column sm={1} md={1}>
                 <Toggle
                   id="devConfigSwitch"
-                  labelText="Dev Config"
+                  labelText={t("devConfig", "Dev Config")}
                   onToggle={toggleDevDefaults}
                   toggled={devDefaultsAreOn}
                 />
@@ -92,7 +94,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               <Column sm={1} md={1} className={styles.actionButton}>
                 <Toggle
                   id="uiEditorSwitch"
-                  labelText="UI Editor"
+                  labelText={t("uiEditor", "UI Editor")}
                   toggled={isUIEditorEnabled}
                   onToggle={toggleIsUIEditorEnabled}
                 />
@@ -106,7 +108,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                     temporaryConfigStore.setState({ config: {} });
                   }}
                 >
-                  Clear Temporary Config
+                  {t("clearTemporaryConfig", "Clear Temporary Config")}
                 </Button>
               </Column>
               <Column sm={1} md={2} className={styles.actionButton}>
@@ -120,7 +122,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                     download="temporary_config.json"
                     href={window.URL.createObjectURL(tempConfigObjUrl)}
                   >
-                    Download Temporary Config
+                    {t("downloadTemporaryConfig", "Download Temporary Config")}
                   </a>
                 </Button>
               </Column>

@@ -1,4 +1,4 @@
-[@openmrs/esm-extensions](../API.md) / ExtensionInstance
+[@openmrs/esm-extensions](../API.md) / [Exports](../modules.md) / ExtensionInstance
 
 # Interface: ExtensionInstance
 
@@ -12,6 +12,8 @@
 
 ### id
 
-• **id**: *string*
+• **id**: `string`
 
-Defined in: [store.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L30)
+#### Defined in
+
+[store.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L30)
