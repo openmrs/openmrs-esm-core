@@ -123,7 +123,7 @@ export function userHasAccess(requiredPrivilege: string, user: LoggedInUser) {
 }
 
 export function getLoggedInUser() {
-  return new Promise((res, rej) => {
+  return new Promise<LoggedInUser>((res, rej) => {
     const sub = getCurrentUser().subscribe((user) => {
       res(user);
       sub.unsubscribe();
