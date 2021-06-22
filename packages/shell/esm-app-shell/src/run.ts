@@ -273,19 +273,26 @@ function setupOfflineDataSynchronization() {
   // Synchronizing data requires a logged in user.
   let hasLoggedInUser = false;
   let isOnline = false;
+  let syncing: AbortController | undefined;
+
+  const syncIfOnlineWithLoggedInUser = () => {
+    if (hasLoggedInUser && isOnline) {
+      syncing = new AbortController();
+      triggerSynchronization(syncing);
+    } else if (syncing) {
+      syncing.abort();
+      syncing = undefined;
+    }
+  };
 
   getCurrentUser({ includeAuthStatus: false }).subscribe((user) => {
-    if (isOnline && !hasLoggedInUser && user) {
-      hasLoggedInUser = !!user;
-      triggerSynchronization();
-    }
+    hasLoggedInUser = !!user;
+    syncIfOnlineWithLoggedInUser();
   });
 
   subscribeConnectivity(async ({ online }) => {
-    if (online && !isOnline && hasLoggedInUser) {
-      isOnline = online;
-      triggerSynchronization();
-    }
+    isOnline = online;
+    syncIfOnlineWithLoggedInUser();
   });
 }
 

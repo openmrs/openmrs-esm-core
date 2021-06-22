@@ -117,12 +117,11 @@ export async function getSynchronizationItems<T>(type: string) {
   return await getSynchronizationItemsFor<T>(userId, type);
 }
 
-export async function triggerSynchronization() {
+export async function triggerSynchronization(abort: AbortController) {
   const activeHandlers = await Promise.all(
     Object.keys(handlers).map((name) => handlers[name].canHandle())
   );
   const canSync = activeHandlers.some((active) => active);
-  const abort = new AbortController();
 
   if (canSync) {
     showNotification({
@@ -141,8 +140,6 @@ export async function triggerSynchronization() {
       kind: "success",
     });
   }
-
-  return abort;
 }
 
 export interface SyncProcessOptions<T> {
