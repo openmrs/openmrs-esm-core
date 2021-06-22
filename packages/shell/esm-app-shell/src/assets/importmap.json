@@ -1,12 +1,8 @@
 {
   "imports": {
-    "@openmrs/esm-patient-chart-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-chart-app/2021-05-06_13b665933b4c3a7adf65d83af1b2a6e9654a2f01/openmrs-esm-patient-chart-app.js",
     "@openmrs/esm-home-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-home-app/2021-05-05_04bf41050f5e5e52d312de43c5317dc8f2216b65/openmrs-esm-home-app.js",
-    "@openmrs/esm-primary-navigation-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-primary-navigation-app/2021-05-05_dbb417c7346ba274618d5550c7d5b920b6c05b0e/openmrs-esm-primary-navigation-app.js",
-    "@openmrs/esm-login-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-login-app/2021-05-06_5cac9e067c55bb7ca6d5596fb847cf053b4f5a3b/openmrs-esm-login-app.js",
-    "@openmrs/esm-devtools-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-devtools-app/2021-05-03_7a64aadff25879fbd553b040ce936dab58ed029d/openmrs-esm-devtools-app.js",
+    "@openmrs/esm-patient-chart-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-chart-app/2021-05-06_13b665933b4c3a7adf65d83af1b2a6e9654a2f01/openmrs-esm-patient-chart-app.js",
     "@openmrs/esm-patient-registration-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-registration-app/2021-05-06_b1ce90bc75d34fce06420b41469905b244e1fad4/openmrs-esm-patient-registration-app.js",
-    "@openmrs/esm-implementer-tools-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-implementer-tools-app/2021-05-03_7a64aadff25879fbd553b040ce936dab58ed029d/openmrs-esm-implementer-tools-app.js",
     "@openmrs/esm-patient-biometrics-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-biometrics-app/2021-05-06_13b665933b4c3a7adf65d83af1b2a6e9654a2f01/openmrs-esm-patient-biometrics-app.js",
     "@openmrs/esm-patient-banner-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-banner-app/2021-05-06_13b665933b4c3a7adf65d83af1b2a6e9654a2f01/openmrs-esm-patient-banner-app.js",
     "@openmrs/esm-patient-appointments-app": "https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/esm-patient-appointments-app/2021-05-06_13b665933b4c3a7adf65d83af1b2a6e9654a2f01/openmrs-esm-patient-appointments-app.js",

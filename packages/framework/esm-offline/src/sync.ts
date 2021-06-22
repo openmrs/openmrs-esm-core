@@ -6,12 +6,25 @@ interface SyncItem {
   userId: string;
   type: string;
   content: any;
+  descriptor: Partial<QueueItemDescriptor>;
+}
+
+export interface QueueItemDescriptor {
+  id: string;
+  dependencies: Array<{
+    id: string;
+    type: string;
+  }>;
+}
+
+interface SyncResultBag {
+  [type: string]: Record<string, any>;
 }
 
 interface SyncHandler {
   dependsOn: Array<string>;
   canHandle: () => Promise<boolean>;
-  handle: (abort: AbortController) => Promise<void>;
+  handle: (results: SyncResultBag, abort: AbortController) => Promise<void>;
 }
 
 class OfflineDb extends Dexie {
@@ -21,7 +34,7 @@ class OfflineDb extends Dexie {
     super("EsmOffline");
 
     this.version(1).stores({
-      syncQueue: "++id, userId, type",
+      syncQueue: "++id, [userId+type]",
     });
 
     this.syncQueue = this.table("syncQueue");
@@ -35,6 +48,7 @@ function runSynchronization(abort: AbortController) {
   const promises: Record<string, Promise<void>> = {};
   const queue = Object.entries(handlers);
   const maxIter = queue.length;
+  const results: SyncResultBag = {};
 
   // we try until the queue is depleted, but no more than queue.length tries.
   for (let iter = 0; iter < maxIter && queue.length > 0; iter++) {
@@ -43,7 +57,10 @@ function runSynchronization(abort: AbortController) {
       const deps = handler.dependsOn.map((dep) => promises[dep]);
 
       if (deps.every(Boolean)) {
-        promises[name] = Promise.all(deps).then(() => handler.handle(abort));
+        results[name] = {};
+        promises[name] = Promise.all(deps).then(() =>
+          handler.handle(results, abort)
+        );
         queue.splice(i, 1);
       }
     }
@@ -60,19 +77,25 @@ async function getUserId() {
 export async function queueSynchronizationItemFor<T>(
   userId: string,
   type: string,
-  content: T
+  content: T,
+  descriptor?: QueueItemDescriptor
 ) {
   const id = await db.syncQueue.add({
     type,
     content,
     userId,
+    descriptor: descriptor || {},
   });
   return id;
 }
 
-export async function queueSynchronizationItem<T>(type: string, content: T) {
+export async function queueSynchronizationItem<T>(
+  type: string,
+  content: T,
+  descriptor?: QueueItemDescriptor
+) {
   const userId = await getUserId();
-  return await queueSynchronizationItemFor(userId, type, content);
+  return await queueSynchronizationItemFor(userId, type, content, descriptor);
 }
 
 export async function getSynchronizationItemsFor<T>(
@@ -126,13 +149,14 @@ export interface SyncProcessOptions<T> {
   abort: AbortController;
   userId: string;
   index: number;
-  items: Array<[number, T]>;
+  items: Array<T>;
+  dependencies: Array<any>;
 }
 
 export function setupOfflineSync<T>(
   type: string,
   dependsOn: Array<string>,
-  process: (item: T, options: SyncProcessOptions<T>) => Promise<void>
+  process: (item: T, options: SyncProcessOptions<T>) => Promise<any>
 ) {
   const table = db.syncQueue;
 
@@ -143,24 +167,34 @@ export function setupOfflineSync<T>(
       const len = await table.where({ type, userId }).count();
       return len > 0;
     },
-    handle: async (abort: AbortController) => {
-      const items: Array<[number, T]> = [];
+    handle: async (results, abort) => {
+      const items: Array<[number, T, Partial<QueueItemDescriptor>]> = [];
+      const contents: Array<T> = [];
       const userId = await getUserId();
 
       await table.where({ type, userId }).each((item, cursor) => {
-        items.push([cursor.primaryKey, item.content]);
+        items.push([cursor.primaryKey, item.content, item.descriptor]);
+        contents.push(item.content);
       });
 
       for (let i = 0; i < items.length; i++) {
-        const [key, item] = items[i];
+        const [key, item, { id, dependencies = [] }] = items[i];
 
         try {
-          await process(item, {
+          const result = await process(item, {
             abort,
             index: i,
-            items,
+            items: contents,
             userId,
+            dependencies: dependencies.map(({ id, type }) =>
+              dependsOn.includes(type) ? results[type][id] : undefined
+            ),
           });
+
+          if (id !== undefined) {
+            results[type][id] = result;
+          }
+
           await table.delete(key);
         } catch {
           //TODO handle failure case

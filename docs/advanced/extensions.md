@@ -41,4 +41,21 @@ Generally, though this is either done at initialization time as a default, or ex
 
 ## Rendering
 
-(tbd)
+Extensions are rendered by following their exported lifecycle functions. The `getAsyncLifecycle` function from `@openmrs/esm-react-utils` is a convenience layer that already exports these lifecycle functions wired together with `single-spa-react`.
+
+In a nutshell:
+
+1. When the component should be rendered the `load` function is evaluated - in case of a `Promise` (via the asynchronously loaded `import` function) this first waits for the component to be available
+2. The component is placed into its lifecycle functions provided by `single-spa-react`
+3. The lifecycle functions `bootstrap`. `mount`. `unmount`, and `update` are exported
+
+These lifecycle functions are not magic - theoretically you could write them on your own, however, since the single-spa ecosystem already provides convenience wrappers such as `single-spa-react` for many frameworks we don't recommend it.
+
+To actually render also two more things need to be considered:
+
+1. Is the defined online or offline mode accepted?
+2. What properties should be passed on the component which is rendered?
+
+The answer to (1) is found in `navigator.onLine`. Only if `offline` was set to `true` or some object the component renders in offline mode. Likewise, if `online: false` was supplied the component will not render in online mode.
+
+The answer to (2) are the `meta` properties along with the extension's context (e.g., what slot it is rendered to) and its injected services. The injected services are defined via `online` or `offline`. In case of `true` no services are injected. In case of an object the provided key-value pairs are interpreted as services, which should be injected depending on the connectivity case.

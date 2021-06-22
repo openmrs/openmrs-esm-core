@@ -7,7 +7,6 @@ import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
 import Logo from "../logo/logo.component";
 import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
 import styles from "./navbar.component.scss";
-import { isDesktop } from "../../utils";
 import {
   HeaderContainer,
   Header,
@@ -21,7 +20,9 @@ import {
   useLayoutType,
   navigate,
   ExtensionSlot,
+  useAssignedExtensionIds,
 } from "@openmrs/esm-framework";
+import { isDesktop } from "../../utils";
 import { UserSession } from "../../types";
 
 const HeaderLink: any = HeaderName;
@@ -40,6 +41,8 @@ const Navbar: React.FC<NavbarProps> = ({
   session,
 }) => {
   const layout = useLayoutType();
+  const navMenuItems = useAssignedExtensionIds("nav-menu-slot");
+
   const [activeHeaderPanel, setActiveHeaderPanel] =
     React.useState<string>(null);
 
@@ -60,12 +63,17 @@ const Navbar: React.FC<NavbarProps> = ({
     setActiveHeaderPanel(null);
   }, []);
 
+  const showHamburger = React.useMemo(
+    () => !isDesktop(layout) && navMenuItems.length > 0,
+    [navMenuItems.length, layout]
+  );
+
   const render = React.useCallback(() => {
     const Icon = isActivePanel("appMenu") ? Close20 : Switcher20;
 
     return (
       <Header aria-label="OpenMRS">
-        {!isDesktop(layout) && (
+        {showHamburger && (
           <HeaderMenuButton
             aria-label="Open menu"
             isCollapsible
@@ -123,6 +131,7 @@ const Navbar: React.FC<NavbarProps> = ({
       </Header>
     );
   }, [
+    showHamburger,
     session,
     user,
     allowedLocales,
