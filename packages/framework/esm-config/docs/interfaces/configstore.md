@@ -1,4 +1,4 @@
-[@openmrs/esm-config](../API.md) / ConfigStore
+[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / ConfigStore
 
 # Interface: ConfigStore
 
@@ -17,14 +17,18 @@ Each module has its own stores for its config and its extension slots' configs.
 
 ### config
 
-• **config**: ``null`` \| [*ConfigObject*](configobject.md)
+• **config**: ``null`` \| [ConfigObject](configobject.md)
 
-Defined in: [packages/framework/esm-config/src/module-config/state.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L131)
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/state.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L131)
 
 ___
 
 ### loaded
 
-• **loaded**: *boolean*
+• **loaded**: `boolean`
 
-Defined in: [packages/framework/esm-config/src/module-config/state.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L132)
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/state.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L132)

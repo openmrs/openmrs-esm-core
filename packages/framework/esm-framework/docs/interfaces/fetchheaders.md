@@ -1,7 +1,7 @@
-[@openmrs/esm-framework](../API.md) / FetchHeaders
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / FetchHeaders
 
 # Interface: FetchHeaders
 
 ## Indexable
 
-▪ [key: *string*]: *string* \| ``null``
+▪ [key: `string`]: `string` \| ``null``

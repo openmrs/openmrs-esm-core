@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / Type
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / Type
 
 # Enumeration: Type
 
@@ -18,54 +18,68 @@
 
 ### Array
 
-• **Array**: = "Array"
+• **Array** = "Array"
 
-Defined in: [packages/framework/esm-config/src/types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L2)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L2)
 
 ___
 
 ### Boolean
 
-• **Boolean**: = "Boolean"
+• **Boolean** = "Boolean"
 
-Defined in: [packages/framework/esm-config/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L3)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L3)
 
 ___
 
 ### ConceptUuid
 
-• **ConceptUuid**: = "ConceptUuid"
+• **ConceptUuid** = "ConceptUuid"
 
-Defined in: [packages/framework/esm-config/src/types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L4)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L4)
 
 ___
 
 ### Number
 
-• **Number**: = "Number"
+• **Number** = "Number"
 
-Defined in: [packages/framework/esm-config/src/types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L5)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L5)
 
 ___
 
 ### Object
 
-• **Object**: = "Object"
+• **Object** = "Object"
 
-Defined in: [packages/framework/esm-config/src/types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L6)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L6)
 
 ___
 
 ### String
 
-• **String**: = "String"
+• **String** = "String"
 
-Defined in: [packages/framework/esm-config/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L7)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L7)
 
 ___
 
 ### UUID
 
-• **UUID**: = "UUID"
+• **UUID** = "UUID"
 
-Defined in: [packages/framework/esm-config/src/types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L8)
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L8)

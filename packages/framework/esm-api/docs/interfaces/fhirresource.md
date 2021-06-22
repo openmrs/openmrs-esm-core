@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / FHIRResource
+[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / FHIRResource
 
 # Interface: FHIRResource
 
@@ -12,33 +12,35 @@
 
 ### resource
 
-• **resource**: *object*
+• **resource**: `Object`
 
 #### Type declaration
 
 | Name | Type |
 | :------ | :------ |
-| `code` | *object* |
-| `code.coding` | [*FHIRCode*](fhircode.md)[] |
-| `effectiveDateTime` | Date |
-| `encounter` | *object* |
-| `encounter.reference` | *string* |
-| `encounter.type` | *string* |
-| `id` | *string* |
-| `issued` | Date |
-| `referenceRange` | *any* |
-| `resourceType` | *string* |
-| `status` | *string* |
-| `subject` | *object* |
-| `subject.display` | *string* |
-| `subject.identifier` | *object* |
-| `subject.identifier.id` | *string* |
-| `subject.identifier.system` | *string* |
-| `subject.identifier.use` | *string* |
-| `subject.identifier.value` | *string* |
-| `subject.reference` | *string* |
-| `subject.type` | *string* |
-| `valueQuantity` | *object* |
-| `valueQuantity.value` | *number* |
+| `code` | `Object` |
+| `code.coding` | [FHIRCode](fhircode.md)[] |
+| `effectiveDateTime` | `Date` |
+| `encounter` | `Object` |
+| `encounter.reference` | `string` |
+| `encounter.type` | `string` |
+| `id` | `string` |
+| `issued` | `Date` |
+| `referenceRange` | `any` |
+| `resourceType` | `string` |
+| `status` | `string` |
+| `subject` | `Object` |
+| `subject.display` | `string` |
+| `subject.identifier` | `Object` |
+| `subject.identifier.id` | `string` |
+| `subject.identifier.system` | `string` |
+| `subject.identifier.use` | `string` |
+| `subject.identifier.value` | `string` |
+| `subject.reference` | `string` |
+| `subject.type` | `string` |
+| `valueQuantity` | `Object` |
+| `valueQuantity.value` | `number` |
 
-Defined in: [packages/framework/esm-api/src/types/fhir-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fhir-resource.ts#L2)
+#### Defined in
+
+[packages/framework/esm-api/src/types/fhir-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fhir-resource.ts#L2)

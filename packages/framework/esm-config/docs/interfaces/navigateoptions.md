@@ -1,4 +1,4 @@
-[@openmrs/esm-config](../API.md) / NavigateOptions
+[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / NavigateOptions
 
 # Interface: NavigateOptions
 
@@ -12,6 +12,8 @@
 
 ### to
 
-• **to**: *string*
+• **to**: `string`
 
-Defined in: [packages/framework/esm-config/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L10)
+#### Defined in
+
+[packages/framework/esm-config/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L10)

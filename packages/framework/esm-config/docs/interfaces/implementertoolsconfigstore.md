@@ -1,4 +1,4 @@
-[@openmrs/esm-config](../API.md) / ImplementerToolsConfigStore
+[@openmrs/esm-config](../API.md) / [Exports](../modules.md) / ImplementerToolsConfigStore
 
 # Interface: ImplementerToolsConfigStore
 
@@ -12,6 +12,8 @@
 
 ### config
 
-• **config**: [*Config*](config.md)
+• **config**: [Config](config.md)
 
-Defined in: [packages/framework/esm-config/src/module-config/state.ts:185](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L185)
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/state.ts:185](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L185)

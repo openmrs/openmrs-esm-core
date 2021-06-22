@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / OmrsServiceWorkerEvent
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / OmrsServiceWorkerEvent
 
 # Interface: OmrsServiceWorkerEvent<TypeIdentifier\>
 
@@ -6,13 +6,13 @@
 
 | Name | Type |
 | :------ | :------ |
-| `TypeIdentifier` | *string* |
+| `TypeIdentifier` | `TypeIdentifier`: `string` |
 
 ## Hierarchy
 
 - **OmrsServiceWorkerEvent**
 
-  ↳ [*NetworkRequestFailedEvent*](networkrequestfailedevent.md)
+  ↳ [NetworkRequestFailedEvent](networkrequestfailedevent.md)
 
 ## Table of contents
 
@@ -24,6 +24,8 @@
 
 ### type
 
-• **type**: TypeIdentifier
+• **type**: `TypeIdentifier`
 
-Defined in: [packages/framework/esm-offline/src/service-worker-events.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L2)
+#### Defined in
+
+[packages/framework/esm-offline/src/service-worker-events.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L2)

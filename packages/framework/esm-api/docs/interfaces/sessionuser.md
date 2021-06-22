@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / SessionUser
+[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / SessionUser
 
 # Interface: SessionUser
 
@@ -18,61 +18,75 @@
 
 ### allowedLocales
 
-• **allowedLocales**: *string*[]
+• **allowedLocales**: `string`[]
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L8)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L8)
 
 ___
 
 ### authenticated
 
-• **authenticated**: *boolean*
+• **authenticated**: `boolean`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L9)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L9)
 
 ___
 
 ### currentProvider
 
-• **currentProvider**: *object*
+• **currentProvider**: `Object`
 
 #### Type declaration
 
 | Name | Type |
 | :------ | :------ |
-| `identifier` | *string* |
-| `uuid` | *string* |
+| `identifier` | `string` |
+| `uuid` | `string` |
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
 
 ___
 
 ### locale
 
-• **locale**: *string*
+• **locale**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L10)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L10)
 
 ___
 
 ### sessionId
 
-• **sessionId**: *string*
+• **sessionId**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L11)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L11)
 
 ___
 
 ### sessionLocation
 
-• **sessionLocation**: *any*
+• **sessionLocation**: `any`
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
 
 ___
 
 ### user
 
-• **user**: [*User*](user.md)
+• **user**: [User](user.md)
 
-Defined in: [packages/framework/esm-api/src/types/openmrs-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L12)
+#### Defined in
+
+[packages/framework/esm-api/src/types/openmrs-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L12)

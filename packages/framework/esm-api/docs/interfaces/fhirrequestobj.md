@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / FHIRRequestObj
+[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / FHIRRequestObj
 
 # Interface: FHIRRequestObj
 
@@ -14,22 +14,28 @@
 
 ### headers
 
-• **headers**: [*FetchHeaders*](fetchheaders.md)
+• **headers**: [FetchHeaders](fetchheaders.md)
 
-Defined in: [packages/framework/esm-api/src/fhir.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L49)
+#### Defined in
+
+[packages/framework/esm-api/src/fhir.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L49)
 
 ___
 
 ### method
 
-• **method**: *string*
+• **method**: `string`
 
-Defined in: [packages/framework/esm-api/src/fhir.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L48)
+#### Defined in
+
+[packages/framework/esm-api/src/fhir.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L48)
 
 ___
 
 ### url
 
-• **url**: *string*
+• **url**: `string`
 
-Defined in: [packages/framework/esm-api/src/fhir.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L47)
+#### Defined in
+
+[packages/framework/esm-api/src/fhir.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L47)

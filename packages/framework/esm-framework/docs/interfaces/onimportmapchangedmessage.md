@@ -1,10 +1,10 @@
-[@openmrs/esm-framework](../API.md) / OnImportMapChangedMessage
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / OnImportMapChangedMessage
 
 # Interface: OnImportMapChangedMessage
 
 ## Hierarchy
 
-- [*OmrsServiceWorkerMessage*](omrsserviceworkermessage.md)<``"onImportMapChanged"``\>
+- [OmrsServiceWorkerMessage](omrsserviceworkermessage.md)<``"onImportMapChanged"``\>
 
   ↳ **OnImportMapChangedMessage**
 
@@ -19,9 +19,11 @@
 
 ### importMap
 
-• **importMap**: [*ImportMap*](importmap.md)
+• **importMap**: [ImportMap](importmap.md)
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L24)
+#### Defined in
+
+[packages/framework/esm-offline/src/service-worker-messaging.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L24)
 
 ___
 
@@ -29,6 +31,10 @@ ___
 
 • **type**: ``"onImportMapChanged"``
 
-Inherited from: [OmrsServiceWorkerMessage](omrsserviceworkermessage.md).[type](omrsserviceworkermessage.md#type)
+#### Inherited from
 
-Defined in: [packages/framework/esm-offline/src/service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L19)
+[OmrsServiceWorkerMessage](omrsserviceworkermessage.md).[type](omrsserviceworkermessage.md#type)
+
+#### Defined in
+
+[packages/framework/esm-offline/src/service-worker-messaging.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L19)

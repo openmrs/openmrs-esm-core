@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / ShowNotificationEvent
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ShowNotificationEvent
 
 # Interface: ShowNotificationEvent
 
@@ -16,17 +16,21 @@
 
 ### action
 
-• `Optional` **action**: *any*
+• `Optional` **action**: `any`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L39)
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L39)
 
 ___
 
 ### description
 
-• **description**: *any*
+• **description**: `any`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L30)
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L30)
 
 ___
 
@@ -34,20 +38,26 @@ ___
 
 • `Optional` **kind**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
 
-Defined in: [packages/framework/esm-globals/src/events.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L31)
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L31)
 
 ___
 
 ### millis
 
-• `Optional` **millis**: *number*
+• `Optional` **millis**: `number`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L40)
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L40)
 
 ___
 
 ### title
 
-• `Optional` **title**: *string*
+• `Optional` **title**: `string`
 
-Defined in: [packages/framework/esm-globals/src/events.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L38)
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L38)

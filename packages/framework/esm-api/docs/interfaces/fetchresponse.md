@@ -1,20 +1,20 @@
-[@openmrs/esm-api](../API.md) / FetchResponse
+[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / FetchResponse
 
 # Interface: FetchResponse<T\>
 
 ## Type parameters
 
-| Name | Default |
+| Name | Type |
 | :------ | :------ |
-| `T` | *any* |
+| `T` | `T` = `any` |
 
 ## Hierarchy
 
-- *Response*
+- `Response`
 
   ↳ **FetchResponse**
 
-  ↳↳ [*LoggedInUserFetchResponse*](loggedinuserfetchresponse.md)
+  ↳↳ [LoggedInUserFetchResponse](loggedinuserfetchresponse.md)
 
 ## Table of contents
 
@@ -45,178 +45,256 @@
 
 ### body
 
-• `Readonly` **body**: ``null`` \| *ReadableStream*<Uint8Array\>
+• `Readonly` **body**: ``null`` \| `ReadableStream`<Uint8Array\>
 
-Inherited from: Response.body
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2623
+Response.body
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2583
 
 ___
 
 ### bodyUsed
 
-• `Readonly` **bodyUsed**: *boolean*
+• `Readonly` **bodyUsed**: `boolean`
 
-Inherited from: Response.bodyUsed
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2624
+Response.bodyUsed
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2584
 
 ___
 
 ### data
 
-• **data**: T
+• **data**: `T`
 
-Defined in: [packages/framework/esm-api/src/types/fetch.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L4)
+#### Defined in
+
+[packages/framework/esm-api/src/types/fetch.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L4)
 
 ___
 
 ### headers
 
-• `Readonly` **headers**: Headers
+• `Readonly` **headers**: `Headers`
 
-Inherited from: Response.headers
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12717
+Response.headers
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12550
 
 ___
 
 ### ok
 
-• `Readonly` **ok**: *boolean*
+• `Readonly` **ok**: `boolean`
 
-Inherited from: Response.ok
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12718
+Response.ok
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12551
 
 ___
 
 ### redirected
 
-• `Readonly` **redirected**: *boolean*
+• `Readonly` **redirected**: `boolean`
 
-Inherited from: Response.redirected
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12719
+Response.redirected
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12552
 
 ___
 
 ### status
 
-• `Readonly` **status**: *number*
+• `Readonly` **status**: `number`
 
-Inherited from: Response.status
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12720
+Response.status
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12553
 
 ___
 
 ### statusText
 
-• `Readonly` **statusText**: *string*
+• `Readonly` **statusText**: `string`
 
-Inherited from: Response.statusText
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12721
+Response.statusText
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12554
 
 ___
 
 ### trailer
 
-• `Readonly` **trailer**: *Promise*<Headers\>
+• `Readonly` **trailer**: `Promise`<Headers\>
 
-Inherited from: Response.trailer
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12722
+Response.trailer
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12555
 
 ___
 
 ### type
 
-• `Readonly` **type**: ResponseType
+• `Readonly` **type**: `ResponseType`
 
-Inherited from: Response.type
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12723
+Response.type
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12556
 
 ___
 
 ### url
 
-• `Readonly` **url**: *string*
+• `Readonly` **url**: `string`
 
-Inherited from: Response.url
+#### Inherited from
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12724
+Response.url
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12557
 
 ## Methods
 
 ### arrayBuffer
 
-▸ **arrayBuffer**(): *Promise*<ArrayBuffer\>
+▸ **arrayBuffer**(): `Promise`<ArrayBuffer\>
 
-**Returns:** *Promise*<ArrayBuffer\>
+#### Returns
 
-Inherited from: Response.arrayBuffer
+`Promise`<ArrayBuffer\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2625
+#### Inherited from
+
+Response.arrayBuffer
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2585
 
 ___
 
 ### blob
 
-▸ **blob**(): *Promise*<Blob\>
+▸ **blob**(): `Promise`<Blob\>
 
-**Returns:** *Promise*<Blob\>
+#### Returns
 
-Inherited from: Response.blob
+`Promise`<Blob\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2626
+#### Inherited from
+
+Response.blob
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2586
 
 ___
 
 ### clone
 
-▸ **clone**(): Response
+▸ **clone**(): `Response`
 
-**Returns:** Response
+#### Returns
 
-Inherited from: Response.clone
+`Response`
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:12725
+#### Inherited from
+
+Response.clone
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:12558
 
 ___
 
 ### formData
 
-▸ **formData**(): *Promise*<FormData\>
+▸ **formData**(): `Promise`<FormData\>
 
-**Returns:** *Promise*<FormData\>
+#### Returns
 
-Inherited from: Response.formData
+`Promise`<FormData\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2627
+#### Inherited from
+
+Response.formData
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2587
 
 ___
 
 ### json
 
-▸ **json**(): *Promise*<any\>
+▸ **json**(): `Promise`<any\>
 
-**Returns:** *Promise*<any\>
+#### Returns
 
-Inherited from: Response.json
+`Promise`<any\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2628
+#### Inherited from
+
+Response.json
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2588
 
 ___
 
 ### text
 
-▸ **text**(): *Promise*<string\>
+▸ **text**(): `Promise`<string\>
 
-**Returns:** *Promise*<string\>
+#### Returns
 
-Inherited from: Response.text
+`Promise`<string\>
 
-Defined in: node_modules/typescript/lib/lib.dom.d.ts:2629
+#### Inherited from
+
+Response.text
+
+#### Defined in
+
+node_modules/typescript/lib/lib.dom.d.ts:2589

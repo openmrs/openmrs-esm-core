@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / VisitStatus
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / VisitStatus
 
 # Enumeration: VisitStatus
 
@@ -13,14 +13,18 @@
 
 ### NOTSTARTED
 
-• **NOTSTARTED**: = "notStarted"
+• **NOTSTARTED** = "notStarted"
 
-Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L100)
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L100)
 
 ___
 
 ### ONGOING
 
-• **ONGOING**: = "ongoing"
+• **ONGOING** = "ongoing"
 
-Defined in: [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L101)
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L101)

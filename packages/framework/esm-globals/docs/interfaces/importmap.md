@@ -1,4 +1,4 @@
-[@openmrs/esm-globals](../API.md) / ImportMap
+[@openmrs/esm-globals](../API.md) / [Exports](../modules.md) / ImportMap
 
 # Interface: ImportMap
 
@@ -12,6 +12,8 @@
 
 ### imports
 
-• **imports**: *Record*<string, string\>
+• **imports**: `Record`<string, string\>
 
-Defined in: [types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L50)
+#### Defined in
+
+[types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L50)

@@ -1,4 +1,4 @@
-[@openmrs/esm-api](../API.md) / FHIRCode
+[@openmrs/esm-api](../API.md) / [Exports](../modules.md) / FHIRCode
 
 # Interface: FHIRCode
 
@@ -13,14 +13,18 @@
 
 ### code
 
-• **code**: *string*
+• **code**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/fhir-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fhir-resource.ts#L27)
+#### Defined in
+
+[packages/framework/esm-api/src/types/fhir-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fhir-resource.ts#L27)
 
 ___
 
 ### system
 
-• **system**: *string*
+• **system**: `string`
 
-Defined in: [packages/framework/esm-api/src/types/fhir-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fhir-resource.ts#L28)
+#### Defined in
+
+[packages/framework/esm-api/src/types/fhir-resource.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fhir-resource.ts#L28)

@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / ExtensionSlotBaseProps
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / ExtensionSlotBaseProps
 
 # Interface: ExtensionSlotBaseProps
 
@@ -17,30 +17,38 @@
 
 ### extensionSlotName
 
-• **extensionSlotName**: *string*
+• **extensionSlotName**: `string`
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L12)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L12)
 
 ___
 
 ### state
 
-• `Optional` **state**: *Record*<string, any\>
+• `Optional` **state**: `Record`<string, any\>
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L16)
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L16)
 
 ## Methods
 
 ### select
 
-▸ `Optional` **select**(`extensions`: [*ExtensionRegistration*](extensionregistration.md)[]): [*ExtensionRegistration*](extensionregistration.md)[]
+▸ `Optional` **select**(`extensions`): [ExtensionRegistration](extensionregistration.md)[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `extensions` | [*ExtensionRegistration*](extensionregistration.md)[] |
+| `extensions` | [ExtensionRegistration](extensionregistration.md)[] |
 
-**Returns:** [*ExtensionRegistration*](extensionregistration.md)[]
+#### Returns
 
-Defined in: [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L13)
+[ExtensionRegistration](extensionregistration.md)[]
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L13)

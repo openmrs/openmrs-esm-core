@@ -1,10 +1,10 @@
-[@openmrs/esm-framework](../API.md) / CurrentUserWithoutResponseOption
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / CurrentUserWithoutResponseOption
 
 # Interface: CurrentUserWithoutResponseOption
 
 ## Hierarchy
 
-- [*CurrentUserOptions*](currentuseroptions.md)
+- [CurrentUserOptions](currentuseroptions.md)
 
   ↳ **CurrentUserWithoutResponseOption**
 
@@ -20,6 +20,10 @@
 
 • **includeAuthStatus**: ``false``
 
-Overrides: [CurrentUserOptions](currentuseroptions.md).[includeAuthStatus](currentuseroptions.md#includeauthstatus)
+#### Overrides
 
-Defined in: [packages/framework/esm-api/src/types/user-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L10)
+[CurrentUserOptions](currentuseroptions.md).[includeAuthStatus](currentuseroptions.md#includeauthstatus)
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/user-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L10)

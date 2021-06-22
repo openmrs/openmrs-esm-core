@@ -1,10 +1,10 @@
-[@openmrs/esm-extensions](../API.md) / ExtensionInfo
+[@openmrs/esm-extensions](../API.md) / [Exports](../modules.md) / ExtensionInfo
 
 # Interface: ExtensionInfo
 
 ## Hierarchy
 
-- [*ExtensionRegistration*](extensionregistration.md)
+- [ExtensionRegistration](extensionregistration.md)
 
   ↳ **ExtensionInfo**
 
@@ -28,81 +28,113 @@
 
 ### instances
 
-• **instances**: *Record*<string, Record<string, [*ExtensionInstance*](extensioninstance.md)\>\>
+• **instances**: `Record`<string, Record<string, [ExtensionInstance](extensioninstance.md)\>\>
 
 The instances where the extension has been rendered using `renderExtension`,
 indexed by slotModuleName and slotName.
 
-Defined in: [store.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L26)
+#### Defined in
+
+[store.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L26)
 
 ___
 
 ### meta
 
-• **meta**: [*ExtensionMeta*](extensionmeta.md)
+• **meta**: [ExtensionMeta](extensionmeta.md)
 
-Inherited from: [ExtensionRegistration](extensionregistration.md).[meta](extensionregistration.md#meta)
+#### Inherited from
 
-Defined in: [store.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L15)
+[ExtensionRegistration](extensionregistration.md).[meta](extensionregistration.md#meta)
+
+#### Defined in
+
+[store.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L15)
 
 ___
 
 ### moduleName
 
-• **moduleName**: *string*
+• **moduleName**: `string`
 
-Inherited from: [ExtensionRegistration](extensionregistration.md).[moduleName](extensionregistration.md#modulename)
+#### Inherited from
 
-Defined in: [store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L14)
+[ExtensionRegistration](extensionregistration.md).[moduleName](extensionregistration.md#modulename)
+
+#### Defined in
+
+[store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L14)
 
 ___
 
 ### name
 
-• **name**: *string*
+• **name**: `string`
 
-Inherited from: [ExtensionRegistration](extensionregistration.md).[name](extensionregistration.md#name)
+#### Inherited from
 
-Defined in: [store.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L12)
+[ExtensionRegistration](extensionregistration.md).[name](extensionregistration.md#name)
+
+#### Defined in
+
+[store.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L12)
 
 ___
 
 ### offline
 
-• `Optional` **offline**: *boolean* \| *object*
+• `Optional` **offline**: `boolean` \| `object`
 
-Inherited from: [ExtensionRegistration](extensionregistration.md).[offline](extensionregistration.md#offline)
+#### Inherited from
 
-Defined in: [store.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L18)
+[ExtensionRegistration](extensionregistration.md).[offline](extensionregistration.md#offline)
+
+#### Defined in
+
+[store.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L18)
 
 ___
 
 ### online
 
-• `Optional` **online**: *boolean* \| *object*
+• `Optional` **online**: `boolean` \| `object`
 
-Inherited from: [ExtensionRegistration](extensionregistration.md).[online](extensionregistration.md#online)
+#### Inherited from
 
-Defined in: [store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L17)
+[ExtensionRegistration](extensionregistration.md).[online](extensionregistration.md#online)
+
+#### Defined in
+
+[store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L17)
 
 ___
 
 ### order
 
-• `Optional` **order**: *number*
+• `Optional` **order**: `number`
 
-Inherited from: [ExtensionRegistration](extensionregistration.md).[order](extensionregistration.md#order)
+#### Inherited from
 
-Defined in: [store.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L16)
+[ExtensionRegistration](extensionregistration.md).[order](extensionregistration.md#order)
+
+#### Defined in
+
+[store.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L16)
 
 ## Methods
 
 ### load
 
-▸ **load**(): *Promise*<any\>
+▸ **load**(): `Promise`<any\>
 
-**Returns:** *Promise*<any\>
+#### Returns
 
-Inherited from: [ExtensionRegistration](extensionregistration.md)
+`Promise`<any\>
 
-Defined in: [store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L13)
+#### Inherited from
+
+[ExtensionRegistration](extensionregistration.md).[load](extensionregistration.md#load)
+
+#### Defined in
+
+[store.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L13)

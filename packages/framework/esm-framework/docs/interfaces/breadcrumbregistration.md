@@ -1,4 +1,4 @@
-[@openmrs/esm-framework](../API.md) / BreadcrumbRegistration
+[@openmrs/esm-framework](../API.md) / [Exports](../modules.md) / BreadcrumbRegistration
 
 # Interface: BreadcrumbRegistration
 
@@ -13,14 +13,18 @@
 
 ### matcher
 
-• **matcher**: *RegExp*
+• **matcher**: `RegExp`
 
-Defined in: [packages/framework/esm-breadcrumbs/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L31)
+#### Defined in
+
+[packages/framework/esm-breadcrumbs/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L31)
 
 ___
 
 ### settings
 
-• **settings**: [*BreadcrumbSettings*](breadcrumbsettings.md)
+• **settings**: [BreadcrumbSettings](breadcrumbsettings.md)
 
-Defined in: [packages/framework/esm-breadcrumbs/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L32)
+#### Defined in
+
+[packages/framework/esm-breadcrumbs/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L32)
