@@ -4,3 +4,4 @@ export * from "./service-worker-events";
 export * from "./events";
 export * from "./patches";
 export * from "./sync";
+export * from "./uuid";
