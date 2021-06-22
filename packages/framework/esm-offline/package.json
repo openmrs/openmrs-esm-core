@@ -41,7 +41,9 @@
     "@openmrs/esm-globals": "^3.1.10",
     "@openmrs/esm-state": "^3.1.10",
     "@openmrs/esm-styleguide": "^3.1.10",
-    "rxjs": "^6.5.3"
+    "@types/uuid": "^8.3.0",
+    "rxjs": "^6.5.3",
+    "uuid": "^8.3.2"
   },
   "peerDependencies": {
     "@openmrs/esm-api": "3.x",
