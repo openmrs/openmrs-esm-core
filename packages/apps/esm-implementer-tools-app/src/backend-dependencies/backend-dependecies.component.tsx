@@ -14,12 +14,14 @@ import {
   ModuleDiagnosticsProps,
   parseUnresolvedDeps,
 } from "./helpers/backend-dependecies-helper";
+import { useTranslation } from "react-i18next";
 
 export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
   modulesWithMissingBackendModules,
   modulesWithWrongBackendModulesVersion,
   setHasAlert,
 }) => {
+  const { t } = useTranslation();
   const [unresolvedDeps, setUnresolvedDeps] = useState<Array<FrontendModule>>(
     []
   );
@@ -47,11 +49,11 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
     },
     {
       key: "installedVersion",
-      header: "Installed Version",
+      header: t("installedVersion", "Installed Version"),
     },
     {
       key: "requiredVersion",
-      header: "Required Version",
+      header: t("requiredVersion", "Required Version"),
     },
   ];
   return (
@@ -85,7 +87,9 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
                           <TableCell>{dep.name}</TableCell>
                           <TableCell>
                             {dep.type === "missing" ? (
-                              <span style={{ color: "red" }}>Missing</span>
+                              <span style={{ color: "red" }}>
+                                {t("missing", "Missing")}
+                              </span>
                             ) : (
                               dep.installedVersion
                             )}
