@@ -97,7 +97,7 @@ module.exports = (env, argv = {}) => {
     performance: {
       hints: mode === production && "warning",
     },
-    externals: Object.keys(peerDependencies),
+    externals: Object.keys(peerDependencies || {}),
     plugins: [
       new SystemJSPublicPathWebpackPlugin(),
       new ForkTsCheckerWebpackPlugin(),

@@ -1,4 +1,6 @@
 ![Node.js CI](https://github.com/openmrs/openmrs-esm-core/workflows/Node.js%20CI/badge.svg)
+![Check documentation](https://github.com/openmrs/openmrs-esm-core/actions/workflows/docs.yml/badge.svg)
+
 
 Information for developers about the OpenMRS Frontend system can be found at the following link:
 
