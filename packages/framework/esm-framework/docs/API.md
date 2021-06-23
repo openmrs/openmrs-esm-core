@@ -1989,7 +1989,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L115)
+[packages/framework/esm-offline/src/sync.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L127)
 
 ___
 
@@ -2016,7 +2016,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L101)
+[packages/framework/esm-offline/src/sync.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L113)
 
 ___
 
@@ -2465,7 +2465,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L92)
+[packages/framework/esm-offline/src/sync.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L104)
 
 ___
 
@@ -2726,7 +2726,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:153](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L153)
+[packages/framework/esm-offline/src/sync.ts:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L165)
 
 ___
 
@@ -3227,7 +3227,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L120)
+[packages/framework/esm-offline/src/sync.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L132)
 
 ___
 
