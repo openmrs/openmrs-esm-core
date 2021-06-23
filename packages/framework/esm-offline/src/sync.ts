@@ -80,12 +80,24 @@ export async function queueSynchronizationItemFor<T>(
   content: T,
   descriptor?: QueueItemDescriptor
 ) {
-  const id = await db.syncQueue.add({
+  const table = db.syncQueue;
+  const targetId = descriptor && descriptor.id;
+
+  if (targetId !== undefined) {
+    // in case of replacement (i.e., used same ID) we just remove the existing item
+    await table
+      .where({ type, userId })
+      .filter((item) => item?.descriptor.id === targetId)
+      .delete();
+  }
+
+  const id = await table.add({
     type,
     content,
     userId,
     descriptor: descriptor || {},
   });
+
   return id;
 }
 

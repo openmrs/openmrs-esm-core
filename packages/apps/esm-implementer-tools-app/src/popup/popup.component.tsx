@@ -4,11 +4,11 @@ import Button from "carbon-components-react/es/components/Button";
 import ContentSwitcher from "carbon-components-react/es/components/ContentSwitcher";
 import Switch from "carbon-components-react/es/components/Switch";
 import styles from "./popup.styles.css";
+import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
-import { ModuleDiagnostics } from "../backend-dependencies/backend-dependecies.component";
+import { ModuleDiagnostics } from "../backend-dependencies/backend-dependencies.component";
 import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-dependencies";
 import { setHasAlert } from "../store";
-import { useTranslation } from "react-i18next";
 
 interface DevToolsPopupProps {
   close(): void;
