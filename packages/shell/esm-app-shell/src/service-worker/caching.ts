@@ -41,7 +41,7 @@ export async function addToOmrsCache(urls: Array<string>) {
       console.warn(
         `Adding the following URLs to the cache failed. Retry attempt: ${attempt}.`,
         urls,
-        e,
+        e
       ),
   });
 }
