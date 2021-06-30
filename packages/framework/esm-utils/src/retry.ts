@@ -28,7 +28,7 @@ export interface RetryOptions {
  * defined by the options.
  *
  * If not configured otherwise, this function uses the following default options:
- * * Retries 3 times beyond the initial attempt.
+ * * Retries 5 times beyond the initial attempt.
  * * Uses an exponential backoff starting with an initial delay of 1000ms.
  * @param fn The function to be executed and retried on failure.
  * @param options Additional options which configure the retry behavior.
@@ -40,7 +40,7 @@ export async function retry<T>(
   options: RetryOptions = {}
 ) {
   let { shouldRetry, getDelay, onError } = options;
-  shouldRetry = shouldRetry ?? ((attempt) => limitAttempts(attempt, 3));
+  shouldRetry = shouldRetry ?? ((attempt) => limitAttempts(attempt, 5));
   getDelay = getDelay ?? ((attempt) => getExponentialDelay(attempt, 1000));
 
   let attempt = 0;
