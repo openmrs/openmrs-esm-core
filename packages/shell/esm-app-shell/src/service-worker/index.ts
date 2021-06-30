@@ -13,6 +13,8 @@ registerAllOmrsRoutes();
 
 self.addEventListener("message", handleMessage);
 self.addEventListener("install", (e) => {
+  self.skipWaiting();
+
   // The app shell files are special in the sense that they can immediately be cached during SW installation.
   // They also don't change in between builds which makes them safe to cache once only.
   // If they change *during* a build, the SW is updated as well which triggers a re-installation.
