@@ -1,4 +1,4 @@
-import { ImportMap } from "@openmrs/esm-framework";
+import { ImportMap } from "@openmrs/esm-globals";
 import { retry } from "@openmrs/esm-utils";
 import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
 import { fetchUrlsToCacheFromImportMap } from "./importMapUtils";
