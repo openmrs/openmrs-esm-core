@@ -1,5 +1,6 @@
 import { ImportMap } from "@openmrs/esm-globals";
-import { absoluteWbManifestUrls, indexUrl, omrsCacheName } from "./constants";
+import { retry } from "@openmrs/esm-utils";
+import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
 import { fetchUrlsToCacheFromImportMap } from "./importMapUtils";
 import { ServiceWorkerDb } from "./storage";
 
@@ -31,8 +32,19 @@ export async function addToOmrsCache(urls: Array<string>) {
     return;
   }
 
-  const cache = await caches.open(omrsCacheName);
-  await cache.addAll(urls);
+  const addToCache = async () => {
+    const cache = await caches.open(omrsCacheName);
+    await cache.addAll(urls);
+  };
+
+  await retry(addToCache, {
+    onError: (e, attempt) =>
+      console.warn(
+        `Adding the following URLs to the cache failed. Retry attempt: ${attempt}.`,
+        urls,
+        e
+      ),
+  });
 }
 
 async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {

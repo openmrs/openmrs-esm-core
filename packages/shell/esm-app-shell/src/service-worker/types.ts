@@ -1,4 +1,3 @@
-import { ImportMap } from "@openmrs/esm-globals";
 import { PrecacheEntry } from "workbox-precaching/_types";
 
 // Globals injected by Workbox at build time.
@@ -7,6 +6,7 @@ declare global {
     __WB_MANIFEST: Array<PrecacheEntry>;
     __WB_DISABLE_DEV_LOGS: boolean;
     clients: Clients;
+    skipWaiting(): void;
   }
 }
 
