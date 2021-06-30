@@ -1,12 +1,11 @@
 import React from "react";
-import Switcher20 from "@carbon/icons-react/lib/switcher/20";
-import Close20 from "@carbon/icons-react/lib/close/20";
-import UserAvatarFilledAlt20 from "@carbon/icons-react/es/user--avatar--filled--alt/20";
-import UserMenuPanel from "../navbar-header-panels/user-menu-panel.component";
-import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
-import Logo from "../logo/logo.component";
-import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
-import styles from "./navbar.component.scss";
+import {
+  LoggedInUser,
+  useLayoutType,
+  navigate,
+  ExtensionSlot,
+  useAssignedExtensionIds,
+} from "@openmrs/esm-framework";
 import {
   HeaderContainer,
   Header,
@@ -15,13 +14,14 @@ import {
   HeaderGlobalBar,
   HeaderGlobalAction,
 } from "carbon-components-react/es/components/UIShell";
-import {
-  LoggedInUser,
-  useLayoutType,
-  navigate,
-  ExtensionSlot,
-  useAssignedExtensionIds,
-} from "@openmrs/esm-framework";
+import Close20 from "@carbon/icons-react/lib/close/20";
+import Switcher20 from "@carbon/icons-react/lib/switcher/20";
+import UserAvatarFilledAlt20 from "@carbon/icons-react/es/user--avatar--filled--alt/20";
+import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
+import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
+import UserMenuPanel from "../navbar-header-panels/user-menu-panel.component";
+import Logo from "../logo/logo.component";
+import styles from "./navbar.component.scss";
 import { isDesktop } from "../../utils";
 import { UserSession } from "../../types";
 
@@ -69,8 +69,6 @@ const Navbar: React.FC<NavbarProps> = ({
   );
 
   const render = React.useCallback(() => {
-    const Icon = isActivePanel("appMenu") ? Close20 : Switcher20;
-
     return (
       <Header aria-label="OpenMRS">
         {showHamburger && (
@@ -103,7 +101,11 @@ const Navbar: React.FC<NavbarProps> = ({
             isActive={isActivePanel("userMenu")}
             onClick={() => togglePanel("userMenu")}
           >
-            <UserAvatarFilledAlt20 />
+            {isActivePanel("userMenu") ? (
+              <Close20 />
+            ) : (
+              <UserAvatarFilledAlt20 />
+            )}
           </HeaderGlobalAction>
           <HeaderGlobalAction
             aria-label="App Menu"
@@ -111,7 +113,7 @@ const Navbar: React.FC<NavbarProps> = ({
             aria-labelledby="App Menu"
             onClick={() => togglePanel("appMenu")}
           >
-            <Icon />
+            {isActivePanel("appMenu") ? <Close20 /> : <Switcher20 />}
           </HeaderGlobalAction>
         </HeaderGlobalBar>
         {!isDesktop(layout) && (
