@@ -1,2 +1,0 @@
-# openmrs-esm-styleguide-react
-
