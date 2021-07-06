@@ -10,10 +10,10 @@ let modalContainer: HTMLElement | null;
 const modalStack: Array<ModalInstance> = [];
 
 export function setupModalsContainer() {
+  modalContainer = document.querySelector<HTMLElement>(
+    ".omrs-modals-container"
+  );
   if (modalContainer) {
-    modalContainer = document.querySelector<HTMLElement>(
-      ".omrs-modals-container"
-    );
     renderModals();
   }
 }
@@ -29,7 +29,7 @@ function renderModals() {
 
   if (modalStack.length) {
     if (modalContainer.style.visibility === "hidden") {
-      addEventListener("keypress", handleEscKey);
+      addEventListener("keydown", handleEscKey);
       modalContainer.style.visibility = "";
     }
     modalStack.forEach((instance, index) => {
@@ -40,7 +40,7 @@ function renderModals() {
     });
   } else {
     modalContainer.style.visibility = "hidden";
-    removeEventListener("keypress", handleEscKey);
+    removeEventListener("keydown", handleEscKey);
   }
 }
 
@@ -53,8 +53,8 @@ function renderModals() {
  */
 export function showModal(
   extensionId: string,
-  props: Record<string, any>,
-  onClose: () => void
+  props: Record<string, any> = {},
+  onClose: () => void = () => {}
 ) {
   const container = document.createElement("div");
   const cleanup = renderExtension(
@@ -87,23 +87,7 @@ export function showModal(
   };
 
   modalStack.push(instance as ModalInstance);
+  renderModals();
 
   return instance.close;
 }
-
-// const Modal = ({ close, ...props }) => <div></div>;
-
-// const Test = () => {
-//   const open = React.useCallback(() => {
-//     showModal("my-mega-modal-3000", props);
-//   }, []);
-//   return <div></div>;
-// };
-
-// // index.ts
-
-// [
-//   {
-//     id: "my-mega-modal-3000",
-//   },
-// ];

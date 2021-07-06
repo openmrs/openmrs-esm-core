@@ -1,10 +1,17 @@
-.omrs-modal {
+.omrs-modals-container {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  display: grid;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9000;
-  justify-items: center;
-  align-items: center;
+
+  div {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    justify-items: center;
+    align-items: center;
+  }
 }
