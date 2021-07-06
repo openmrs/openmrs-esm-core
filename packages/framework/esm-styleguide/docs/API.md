@@ -10,6 +10,7 @@
 - [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
 - [renderToasts](API.md#rendertoasts)
+- [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
 
@@ -92,6 +93,32 @@ ___
 #### Defined in
 
 [toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L11)
+
+___
+
+### showModal
+
+▸ **showModal**(`handler`): () => `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | (`container`: `HTMLElement`) => `void` |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[modals/index.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L6)
 
 ___
 

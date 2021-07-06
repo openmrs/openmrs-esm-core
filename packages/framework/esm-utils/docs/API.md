@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [RetryOptions](interfaces/retryoptions.md)
+
 ### Type aliases
 
 - [DateInput](API.md#dateinput)
@@ -16,6 +20,7 @@
 - [isOmrsDateToday](API.md#isomrsdatetoday)
 - [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
+- [retry](API.md#retry)
 - [toDateObjectStrict](API.md#todateobjectstrict)
 - [toOmrsDateFormat](API.md#toomrsdateformat)
 - [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
@@ -171,6 +176,44 @@ ___
 #### Defined in
 
 [version.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/version.ts#L3)
+
+___
+
+### retry
+
+▸ **retry**<T\>(`fn`, `options?`): `Promise`<T\>
+
+Executes the specified function and retries executing on failure with a custom backoff strategy
+defined by the options.
+
+If not configured otherwise, this function uses the following default options:
+* Retries 5 times beyond the initial attempt.
+* Uses an exponential backoff starting with an initial delay of 1000ms.
+
+**`throws`** Rethrows the final error of running `fn` when the function stops retrying.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fn` | () => `Promise`<T\> | The function to be executed and retried on failure. |
+| `options` | [RetryOptions](interfaces/retryoptions.md) | Additional options which configure the retry behavior. |
+
+#### Returns
+
+`Promise`<T\>
+
+The result of successfully executing `fn`.
+
+#### Defined in
+
+[retry.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L38)
 
 ___
 

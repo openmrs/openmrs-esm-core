@@ -20,6 +20,7 @@ import {
   KnownOmrsServiceWorkerEvents,
   dispatchNetworkRequestFailed,
   triggerSynchronization,
+  setupModalsContainer,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -301,6 +302,7 @@ export function run(configUrls: Array<string>) {
   const provideConfigs = createConfigLoader(configUrls);
 
   integrateBreakpoints();
+  setupModalsContainer();
   showToasts();
   showNotifications();
   createAppState({});

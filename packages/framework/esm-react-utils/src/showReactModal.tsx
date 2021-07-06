@@ -13,14 +13,13 @@ export function withModalContext<T extends Record<string, any>>(
 }
 
 export function showReactModal(modal: React.ReactElement) {
-  const disposeFunction = showModal((container) => {
-    ReactDOM.render(
-      <modalContext.Provider value={disposeFunction}>
-        {modal}
-      </modalContext.Provider>,
-      container
-    );
-  });
-
-  return disposeFunction;
+  // const disposeFunction = showModal((container) => {
+  //   ReactDOM.render(
+  //     <modalContext.Provider value={disposeFunction}>
+  //       {modal}
+  //     </modalContext.Provider>,
+  //     container
+  //   );
+  // });
+  // return disposeFunction;
 }

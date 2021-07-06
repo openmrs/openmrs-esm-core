@@ -44,6 +44,7 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
+    "@openmrs/esm-extensions": "3.x",
     "carbon-components": "10.x",
     "carbon-icons": "7.x",
     "react": "16.x",
@@ -51,6 +52,7 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
+    "@openmrs/esm-extensions": "^3.1.10",
     "@pickra/copy-code-block": "^1.1.7",
     "@storybook/addon-a11y": "^5.2.1",
     "@storybook/addon-knobs": "^5.2.1",
