@@ -10,6 +10,7 @@
 - [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
 - [renderToasts](API.md#rendertoasts)
+- [setupModalsContainer](API.md#setupmodalscontainer)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
@@ -96,15 +97,31 @@ ___
 
 ___
 
+### setupModalsContainer
+
+▸ **setupModalsContainer**(): `void`
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[modals/index.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L12)
+
+___
+
 ### showModal
 
-▸ **showModal**(`handler`): () => `void`
+▸ **showModal**(`extensionId`, `props`, `onClose`): () => `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `handler` | (`container`: `HTMLElement`) => `void` |
+| `extensionId` | `string` |
+| `props` | `Record`<string, any\> |
+| `onClose` | () => `void` |
 
 #### Returns
 
@@ -118,7 +135,7 @@ ___
 
 #### Defined in
 
-[modals/index.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L6)
+[modals/index.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L54)
 
 ___
 
