@@ -113,7 +113,7 @@ ___
 
 ### showModal
 
-▸ **showModal**(`extensionId`, `props`, `onClose`): () => `void`
+▸ **showModal**(`extensionId`, `props?`, `onClose?`): () => `void`
 
 #### Parameters
 

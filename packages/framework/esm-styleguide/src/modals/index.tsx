@@ -1,4 +1,5 @@
 import { renderExtension } from "@openmrs/esm-extensions";
+import { createGlobalStore } from "@openmrs/esm-state";
 
 interface ModalInstance {
   container: HTMLElement;
@@ -6,25 +7,18 @@ interface ModalInstance {
   mounted: boolean;
 }
 
-let modalContainer: HTMLElement | null;
-const modalStack: Array<ModalInstance> = [];
-
-export function setupModalsContainer() {
-  modalContainer = document.querySelector<HTMLElement>(
-    ".omrs-modals-container"
-  );
-  if (modalContainer) {
-    renderModals();
-  }
+interface ModalState {
+  modalContainer: HTMLElement | null;
+  modalStack: Array<ModalInstance>;
 }
 
-function handleEscKey(e: KeyboardEvent) {
-  if (e.key === "Escape") {
-    modalStack[0]?.close();
-  }
-}
+const modalStore = createGlobalStore<ModalState>("globalModalState", {
+  modalContainer: null,
+  modalStack: [],
+});
 
-function renderModals() {
+// handling any modal state change here, updating the container
+modalStore.subscribe(({ modalStack, modalContainer }) => {
   if (!modalContainer) return;
 
   if (modalStack.length) {
@@ -41,6 +35,21 @@ function renderModals() {
   } else {
     modalContainer.style.visibility = "hidden";
     removeEventListener("keydown", handleEscKey);
+  }
+});
+
+export function renderModals(modalContainer: HTMLElement | null) {
+  if (modalContainer) {
+    modalStore.setState((s) => ({
+      ...s,
+      modalContainer,
+    }));
+  }
+}
+
+function handleEscKey(e: KeyboardEvent) {
+  if (e.key === "Escape") {
+    modalStore.getState().modalStack[0]?.close();
   }
 }
 
@@ -72,11 +81,10 @@ export function showModal(
   };
 
   const popFromStack = () => {
-    const index = modalStack.findIndex((x) => x === instance);
-    if (~index) {
-      modalStack.splice(index, 1);
-      renderModals();
-    }
+    modalStore.setState((state: ModalState) => ({
+      ...state,
+      modalStack: state.modalStack.filter((x) => x !== instance),
+    }));
   };
 
   instance.close = () => {
@@ -86,8 +94,10 @@ export function showModal(
     popFromStack();
   };
 
-  modalStack.push(instance as ModalInstance);
-  renderModals();
+  modalStore.setState((state: ModalState) => ({
+    ...state,
+    modalStack: [instance, ...state.modalStack],
+  }));
 
   return instance.close;
 }

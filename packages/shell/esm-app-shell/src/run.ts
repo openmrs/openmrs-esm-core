@@ -20,7 +20,7 @@ import {
   KnownOmrsServiceWorkerEvents,
   dispatchNetworkRequestFailed,
   triggerSynchronization,
-  setupModalsContainer,
+  renderModals,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -201,6 +201,11 @@ function showToasts() {
   return;
 }
 
+function showModals() {
+  renderModals(document.querySelector(".omrs-modals-container"));
+  return;
+}
+
 function showLoadingSpinner() {
   return renderLoadingSpinner(document.body);
 }
@@ -302,8 +307,8 @@ export function run(configUrls: Array<string>) {
   const provideConfigs = createConfigLoader(configUrls);
 
   integrateBreakpoints();
-  setupModalsContainer();
   showToasts();
+  showModals();
   showNotifications();
   createAppState({});
   subscribeNotificationShown(showNotification);

@@ -4,6 +4,7 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9000;
+  visibility: hidden;
 
   div {
     position: fixed;
