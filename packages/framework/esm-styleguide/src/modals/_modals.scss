@@ -6,10 +6,9 @@
   z-index: 9000;
   visibility: hidden;
 
-  div {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
+  > div {
+    width: 100%;
+    height: 100%;
 
     display: grid;
     justify-items: center;

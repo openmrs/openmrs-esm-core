@@ -17,29 +17,29 @@ const modalStore = createGlobalStore<ModalState>("globalModalState", {
   modalStack: [],
 });
 
-// handling any modal state change here, updating the container
-modalStore.subscribe(({ modalStack, modalContainer }) => {
-  if (!modalContainer) return;
-
-  if (modalStack.length) {
-    if (modalContainer.style.visibility === "hidden") {
-      addEventListener("keydown", handleEscKey);
-      modalContainer.style.visibility = "";
-    }
-    modalStack.forEach((instance, index) => {
-      instance.container.style.visibility = index ? "hidden" : "";
-      if (!instance.mounted) {
-        modalContainer?.append(instance.container);
-      }
-    });
-  } else {
-    modalContainer.style.visibility = "hidden";
-    removeEventListener("keydown", handleEscKey);
-  }
-});
-
 export function renderModals(modalContainer: HTMLElement | null) {
   if (modalContainer) {
+    // handling any modal state change here, updating the container
+    modalStore.subscribe(({ modalStack, modalContainer }) => {
+      if (!modalContainer) return;
+
+      if (modalStack.length) {
+        if (modalContainer.style.visibility === "hidden") {
+          addEventListener("keydown", handleEscKey);
+          modalContainer.style.visibility = "";
+        }
+        modalStack.forEach((instance, index) => {
+          instance.container.style.visibility = index ? "hidden" : "";
+          if (!instance.mounted) {
+            modalContainer?.append(instance.container);
+          }
+        });
+      } else {
+        modalContainer.style.visibility = "hidden";
+        removeEventListener("keydown", handleEscKey);
+      }
+    });
+
     modalStore.setState((s) => ({
       ...s,
       modalContainer,
