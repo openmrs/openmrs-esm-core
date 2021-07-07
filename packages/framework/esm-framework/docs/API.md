@@ -233,11 +233,11 @@
 - [renderExtension](API.md#renderextension)
 - [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
+- [renderModals](API.md#rendermodals)
 - [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
 - [retry](API.md#retry)
 - [saveVisit](API.md#savevisit)
-- [setupModalsContainer](API.md#setupmodalscontainer)
 - [setupOfflineSync](API.md#setupofflinesync)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
@@ -2645,6 +2645,26 @@ ___
 
 ___
 
+### renderModals
+
+▸ **renderModals**(`modalContainer`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `modalContainer` | `HTMLElement` \| ``null`` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/modals/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L41)
+
+___
+
 ### renderToasts
 
 ▸ **renderToasts**(`target`): `void`
@@ -2744,20 +2764,6 @@ ___
 
 ___
 
-### setupModalsContainer
-
-▸ **setupModalsContainer**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/modals/index.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L12)
-
-___
-
 ### setupOfflineSync
 
 ▸ **setupOfflineSync**<T\>(`type`, `dependsOn`, `process`): `void`
@@ -2844,7 +2850,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L54)
+[packages/framework/esm-styleguide/src/modals/index.tsx:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L63)
 
 ___
 

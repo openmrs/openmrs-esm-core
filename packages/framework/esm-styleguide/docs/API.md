@@ -9,8 +9,8 @@
 - [integrateBreakpoints](API.md#integratebreakpoints)
 - [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
+- [renderModals](API.md#rendermodals)
 - [renderToasts](API.md#rendertoasts)
-- [setupModalsContainer](API.md#setupmodalscontainer)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
@@ -77,6 +77,26 @@ ___
 
 ___
 
+### renderModals
+
+▸ **renderModals**(`modalContainer`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `modalContainer` | `HTMLElement` \| ``null`` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[modals/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L41)
+
+___
+
 ### renderToasts
 
 ▸ **renderToasts**(`target`): `void`
@@ -94,20 +114,6 @@ ___
 #### Defined in
 
 [toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L11)
-
-___
-
-### setupModalsContainer
-
-▸ **setupModalsContainer**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[modals/index.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L12)
 
 ___
 
@@ -135,7 +141,7 @@ ___
 
 #### Defined in
 
-[modals/index.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L54)
+[modals/index.tsx:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L63)
 
 ___
 
