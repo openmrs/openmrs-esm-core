@@ -44,7 +44,8 @@ export function subscribePrecacheStaticDependencies(
 ) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
   window.addEventListener(precacheStaticDependenciesEventName, handler);
-  return () => window.removeEventListener(precacheStaticDependenciesEventName, handler);
+  return () =>
+    window.removeEventListener(precacheStaticDependenciesEventName, handler);
 }
 
 export interface ShowNotificationEvent {
