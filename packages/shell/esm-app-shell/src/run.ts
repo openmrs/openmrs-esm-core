@@ -285,7 +285,7 @@ function setupOfflineSynchronization() {
 }
 
 function setupOfflineStaticDependencyPrecaching() {
-  const precacheDelay = 1000 * 60 * 1;
+  const precacheDelay = 1000 * 60 * 5;
   let lastPrecache: Date | null = null;
 
   subscribeOnlineAndLoginChange((online, hasLoggedInUser) => {
