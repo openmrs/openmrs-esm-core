@@ -13,6 +13,16 @@ export function useVisit(patientUuid: string) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const sub = getStartedVisit.subscribe((visit) => {
+      if (visit) {
+        setCurrentVisit(visit?.visitData ?? null);
+      }
+    });
+
+    return () => sub.unsubscribe();
+  }, [patientUuid]);
+
+  useEffect(() => {
     const abortController = new AbortController();
     const sub = getVisitsForPatient(patientUuid, abortController).subscribe(
       ({ data }) => {
@@ -28,7 +38,6 @@ export function useVisit(patientUuid: string) {
             visitData: currentVisit,
             status: VisitStatus.ONGOING,
           });
-          setCurrentVisit(currentVisit);
         }
       },
       setError
