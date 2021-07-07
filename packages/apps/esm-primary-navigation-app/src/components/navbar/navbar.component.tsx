@@ -15,11 +15,13 @@ import {
   HeaderGlobalAction,
 } from "carbon-components-react/es/components/UIShell";
 import Close20 from "@carbon/icons-react/lib/close/20";
+import Notification20 from "@carbon/icons-react/es/notification/20";
 import Switcher20 from "@carbon/icons-react/lib/switcher/20";
 import UserAvatarFilledAlt20 from "@carbon/icons-react/es/user--avatar--filled--alt/20";
 import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
-import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
 import UserMenuPanel from "../navbar-header-panels/user-menu-panel.component";
+import NotificationsMenuPanel from "../navbar-header-panels/notifications-menu-panel.component";
+import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
 import Logo from "../logo/logo.component";
 import styles from "./navbar.component.scss";
 import { isDesktop } from "../../utils";
@@ -92,7 +94,20 @@ const Navbar: React.FC<NavbarProps> = ({
           <ExtensionSlot
             extensionSlotName="top-nav-actions-slot"
             className={styles.topNavActionSlot}
+            state={{ isActive: isActivePanel("") }}
           />
+          <HeaderGlobalAction
+            aria-label="Notifications"
+            name="Notifications"
+            isActive={isActivePanel("notificationsMenu")}
+            onClick={() => togglePanel("notificationsMenu")}
+          >
+            {isActivePanel("notificationsMenu") ? (
+              <Close20 />
+            ) : (
+              <Notification20 />
+            )}
+          </HeaderGlobalAction>
           <HeaderGlobalAction
             aria-label="Users"
             aria-labelledby="Users Avatar Icon"
@@ -123,6 +138,7 @@ const Navbar: React.FC<NavbarProps> = ({
           />
         )}
         <AppMenuPanel expanded={isActivePanel("appMenu")} />
+        <NotificationsMenuPanel expanded={isActivePanel("notificationsMenu")} />
         <UserMenuPanel
           user={user}
           session={session}
