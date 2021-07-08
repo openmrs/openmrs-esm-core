@@ -93,7 +93,7 @@ ___
 
 #### Defined in
 
-[modals/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L41)
+[modals/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L20)
 
 ___
 
