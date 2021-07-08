@@ -9,7 +9,9 @@
 - [integrateBreakpoints](API.md#integratebreakpoints)
 - [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
+- [renderModals](API.md#rendermodals)
 - [renderToasts](API.md#rendertoasts)
+- [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
 
@@ -75,6 +77,26 @@ ___
 
 ___
 
+### renderModals
+
+▸ **renderModals**(`modalContainer`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `modalContainer` | `HTMLElement` \| ``null`` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[modals/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L20)
+
+___
+
 ### renderToasts
 
 ▸ **renderToasts**(`target`): `void`
@@ -92,6 +114,34 @@ ___
 #### Defined in
 
 [toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L11)
+
+___
+
+### showModal
+
+▸ **showModal**(`extensionId`, `props?`, `onClose?`): () => `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `extensionId` | `string` |
+| `props` | `Record`<string, any\> |
+| `onClose` | () => `void` |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[modals/index.tsx:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L63)
 
 ___
 

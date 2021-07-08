@@ -82,6 +82,7 @@
 - [QueueItemDescriptor](interfaces/queueitemdescriptor.md)
 - [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
 - [ResourceLoader](interfaces/resourceloader.md)
+- [RetryOptions](interfaces/retryoptions.md)
 - [Role](interfaces/role.md)
 - [SessionUser](interfaces/sessionuser.md)
 - [ShowNotificationEvent](interfaces/shownotificationevent.md)
@@ -232,12 +233,15 @@
 - [renderExtension](API.md#renderextension)
 - [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
+- [renderModals](API.md#rendermodals)
 - [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
+- [retry](API.md#retry)
 - [saveVisit](API.md#savevisit)
 - [setupOfflineSync](API.md#setupofflinesync)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
+- [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
 - [subscribeConnectivity](API.md#subscribeconnectivity)
@@ -466,7 +470,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L11)
+[packages/framework/esm-api/src/types/visit-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L12)
 
 ___
 
@@ -2641,6 +2645,26 @@ ___
 
 ___
 
+### renderModals
+
+▸ **renderModals**(`modalContainer`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `modalContainer` | `HTMLElement` \| ``null`` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/modals/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L20)
+
+___
+
 ### renderToasts
 
 ▸ **renderToasts**(`target`): `void`
@@ -2678,6 +2702,44 @@ ___
 #### Defined in
 
 [packages/framework/esm-error-handling/src/index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L24)
+
+___
+
+### retry
+
+▸ **retry**<T\>(`fn`, `options?`): `Promise`<T\>
+
+Executes the specified function and retries executing on failure with a custom backoff strategy
+defined by the options.
+
+If not configured otherwise, this function uses the following default options:
+* Retries 5 times beyond the initial attempt.
+* Uses an exponential backoff starting with an initial delay of 1000ms.
+
+**`throws`** Rethrows the final error of running `fn` when the function stops retrying.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fn` | () => `Promise`<T\> | The function to be executed and retried on failure. |
+| `options` | [RetryOptions](interfaces/retryoptions.md) | Additional options which configure the retry behavior. |
+
+#### Returns
+
+`Promise`<T\>
+
+The result of successfully executing `fn`.
+
+#### Defined in
+
+[packages/framework/esm-utils/src/retry.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L38)
 
 ___
 
@@ -2761,6 +2823,34 @@ ___
 #### Defined in
 
 [packages/framework/esm-globals/src/globals.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/globals.ts#L11)
+
+___
+
+### showModal
+
+▸ **showModal**(`extensionId`, `props?`, `onClose?`): () => `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `extensionId` | `string` |
+| `props` | `Record`<string, any\> |
+| `onClose` | () => `void` |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/modals/index.tsx:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L63)
 
 ___
 
