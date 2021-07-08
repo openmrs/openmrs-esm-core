@@ -21,6 +21,7 @@ import {
   dispatchNetworkRequestFailed,
   triggerSynchronization,
   renderModals,
+  dispatchPrecacheStaticDependencies,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -275,30 +276,50 @@ async function precacheSharedApiEndpoints() {
   });
 }
 
-function setupOfflineDataSynchronization() {
-  // Synchronizing data requires a logged in user.
-  let hasLoggedInUser = false;
-  let isOnline = false;
+function setupOfflineSynchronization() {
   let syncing: AbortController | undefined;
 
-  const syncIfOnlineWithLoggedInUser = () => {
-    if (hasLoggedInUser && isOnline) {
+  subscribeOnlineAndLoginChange((online, hasLoggedInUser) => {
+    if (hasLoggedInUser && online) {
       syncing = new AbortController();
       triggerSynchronization(syncing);
     } else if (syncing) {
       syncing.abort();
       syncing = undefined;
     }
-  };
+  });
+}
+
+function setupOfflineStaticDependencyPrecaching() {
+  const precacheDelay = 1000 * 60 * 5;
+  let lastPrecache: Date | null = null;
+
+  subscribeOnlineAndLoginChange((online, hasLoggedInUser) => {
+    const hasExceededPrecacheDelay =
+      !lastPrecache ||
+      new Date().getTime() - lastPrecache.getTime() > precacheDelay;
+
+    if (hasLoggedInUser && online && hasExceededPrecacheDelay) {
+      lastPrecache = new Date();
+      dispatchPrecacheStaticDependencies();
+    }
+  });
+}
+
+function subscribeOnlineAndLoginChange(
+  cb: (online: boolean, hasLoggedInUser: boolean) => void
+) {
+  let isOnline = false;
+  let hasLoggedInUser = false;
 
   getCurrentUser({ includeAuthStatus: false }).subscribe((user) => {
     hasLoggedInUser = !!user;
-    syncIfOnlineWithLoggedInUser();
+    cb(isOnline, hasLoggedInUser);
   });
 
-  subscribeConnectivity(async ({ online }) => {
+  subscribeConnectivity(({ online }) => {
     isOnline = online;
-    syncIfOnlineWithLoggedInUser();
+    cb(online, hasLoggedInUser);
   });
 }
 
@@ -324,5 +345,6 @@ export function run(configUrls: Array<string>) {
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(setupOfflineDataSynchronization);
+    .then(setupOfflineSynchronization)
+    .then(setupOfflineStaticDependencyPrecaching);
 }

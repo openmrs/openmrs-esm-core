@@ -26,6 +26,28 @@ export function subscribeConnectivity(
   return subscribeConnectivityChanged(cb);
 }
 
+export interface PrecacheStaticDependenciesEvent {}
+
+const precacheStaticDependenciesEventName =
+  "openmrs:precache-static-dependencies";
+
+export function dispatchPrecacheStaticDependencies(
+  data: PrecacheStaticDependenciesEvent = {}
+) {
+  window.dispatchEvent(
+    new CustomEvent(precacheStaticDependenciesEventName, { detail: data })
+  );
+}
+
+export function subscribePrecacheStaticDependencies(
+  cb: (data: PrecacheStaticDependenciesEvent) => void
+) {
+  const handler = (ev: CustomEvent) => cb(ev.detail);
+  window.addEventListener(precacheStaticDependenciesEventName, handler);
+  return () =>
+    window.removeEventListener(precacheStaticDependenciesEventName, handler);
+}
+
 export interface ShowNotificationEvent {
   description: any;
   kind?:
