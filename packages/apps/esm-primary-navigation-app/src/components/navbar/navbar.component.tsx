@@ -26,6 +26,7 @@ import Logo from "../logo/logo.component";
 import styles from "./navbar.component.scss";
 import { isDesktop } from "../../utils";
 import { UserSession } from "../../types";
+import OfflineBanner from "../offline-banner/offline-banner.component";
 
 const HeaderLink: any = HeaderName;
 
@@ -72,81 +73,86 @@ const Navbar: React.FC<NavbarProps> = ({
 
   const render = React.useCallback(() => {
     return (
-      <Header aria-label="OpenMRS">
-        {showHamburger && (
-          <HeaderMenuButton
-            aria-label="Open menu"
-            isCollapsible
-            onClick={() => togglePanel("sideMenu")}
-            isActive={isActivePanel("sideMenu")}
-          />
-        )}
-        <HeaderLink
-          prefix=""
-          onClick={() => {
-            navigate({ to: "${openmrsSpaBase}/home" });
-            hidePanel();
-          }}
-        >
-          <Logo />
-        </HeaderLink>
-        <HeaderGlobalBar className={styles.headerGlobalBar}>
-          <ExtensionSlot
-            extensionSlotName="top-nav-actions-slot"
-            className={styles.topNavActionSlot}
-            state={{ isActive: isActivePanel("") }}
-          />
-          <HeaderGlobalAction
-            aria-label="Notifications"
-            name="Notifications"
-            isActive={isActivePanel("notificationsMenu")}
-            onClick={() => togglePanel("notificationsMenu")}
+      <>
+        <OfflineBanner />
+        <Header aria-label="OpenMRS" style={{ top: "1.5rem" }}>
+          {showHamburger && (
+            <HeaderMenuButton
+              aria-label="Open menu"
+              isCollapsible
+              onClick={() => togglePanel("sideMenu")}
+              isActive={isActivePanel("sideMenu")}
+            />
+          )}
+          <HeaderLink
+            prefix=""
+            onClick={() => {
+              navigate({ to: "${openmrsSpaBase}/home" });
+              hidePanel();
+            }}
           >
-            {isActivePanel("notificationsMenu") ? (
-              <Close20 />
-            ) : (
-              <Notification20 />
-            )}
-          </HeaderGlobalAction>
-          <HeaderGlobalAction
-            aria-label="Users"
-            aria-labelledby="Users Avatar Icon"
-            style={{ padding: "12px" }}
-            name="Users"
-            isActive={isActivePanel("userMenu")}
-            onClick={() => togglePanel("userMenu")}
-          >
-            {isActivePanel("userMenu") ? (
-              <Close20 />
-            ) : (
-              <UserAvatarFilledAlt20 />
-            )}
-          </HeaderGlobalAction>
-          <HeaderGlobalAction
-            aria-label="App Menu"
-            isActive={isActivePanel("appMenu")}
-            aria-labelledby="App Menu"
-            onClick={() => togglePanel("appMenu")}
-          >
-            {isActivePanel("appMenu") ? <Close20 /> : <Switcher20 />}
-          </HeaderGlobalAction>
-        </HeaderGlobalBar>
-        {!isDesktop(layout) && (
-          <SideMenuPanel
-            hidePanel={hidePanel}
-            expanded={isActivePanel("sideMenu")}
+            <Logo />
+          </HeaderLink>
+          <HeaderGlobalBar className={styles.headerGlobalBar}>
+            <ExtensionSlot
+              extensionSlotName="top-nav-actions-slot"
+              className={styles.topNavActionSlot}
+              state={{ isActive: isActivePanel("") }}
+            />
+            <HeaderGlobalAction
+              aria-label="Notifications"
+              name="Notifications"
+              isActive={isActivePanel("notificationsMenu")}
+              onClick={() => togglePanel("notificationsMenu")}
+            >
+              {isActivePanel("notificationsMenu") ? (
+                <Close20 />
+              ) : (
+                <Notification20 />
+              )}
+            </HeaderGlobalAction>
+            <HeaderGlobalAction
+              aria-label="Users"
+              aria-labelledby="Users Avatar Icon"
+              style={{ padding: "12px" }}
+              name="Users"
+              isActive={isActivePanel("userMenu")}
+              onClick={() => togglePanel("userMenu")}
+            >
+              {isActivePanel("userMenu") ? (
+                <Close20 />
+              ) : (
+                <UserAvatarFilledAlt20 />
+              )}
+            </HeaderGlobalAction>
+            <HeaderGlobalAction
+              aria-label="App Menu"
+              isActive={isActivePanel("appMenu")}
+              aria-labelledby="App Menu"
+              onClick={() => togglePanel("appMenu")}
+            >
+              {isActivePanel("appMenu") ? <Close20 /> : <Switcher20 />}
+            </HeaderGlobalAction>
+          </HeaderGlobalBar>
+          {!isDesktop(layout) && (
+            <SideMenuPanel
+              hidePanel={hidePanel}
+              expanded={isActivePanel("sideMenu")}
+            />
+          )}
+          <AppMenuPanel expanded={isActivePanel("appMenu")} />
+          <NotificationsMenuPanel
+            expanded={isActivePanel("notificationsMenu")}
           />
-        )}
-        <AppMenuPanel expanded={isActivePanel("appMenu")} />
-        <NotificationsMenuPanel expanded={isActivePanel("notificationsMenu")} />
-        <UserMenuPanel
-          user={user}
-          session={session}
-          expanded={isActivePanel("userMenu")}
-          allowedLocales={allowedLocales}
-          onLogout={onLogout}
-        />
-      </Header>
+          <UserMenuPanel
+            user={user}
+            session={session}
+            expanded={isActivePanel("userMenu")}
+            allowedLocales={allowedLocales}
+            onLogout={onLogout}
+          />
+        </Header>
+      </>
     );
   }, [
     showHamburger,
