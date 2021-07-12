@@ -12,6 +12,7 @@ const NotificationsMenuPanel: React.FC<NotificationsMenuPanelProps> = ({
   expanded,
 }) => {
   const { t } = useTranslation();
+  const state = React.useMemo(() => ({ expanded }), [expanded]);
 
   return (
     <HeaderPanel
@@ -22,7 +23,7 @@ const NotificationsMenuPanel: React.FC<NotificationsMenuPanelProps> = ({
       <h1 className={styles.heading}>{t("notifications", "Notifications")}</h1>
       <ExtensionSlot
         extensionSlotName="notifications-nav-menu-slot"
-        state={{ expanded: expanded }}
+        state={state}
       />
     </HeaderPanel>
   );
