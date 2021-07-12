@@ -1,33 +1,17 @@
 import React from "react";
 import { InlineNotification } from "carbon-components-react/es/components/Notification";
+import { InlineNotificationMeta, removeNotificationFromStore } from "./state";
 
 export interface NotificationProps {
   notification: InlineNotificationMeta;
 }
 
-export interface NotificationDescriptor {
-  description: React.ReactNode;
-  action?: React.ReactNode;
-  kind?: InlineNotificationType;
-  critical?: boolean;
-  millis?: number;
-  title?: string;
-}
-
-export interface InlineNotificationMeta extends NotificationDescriptor {
-  id: number;
-}
-
-export type InlineNotificationType =
-  | "error"
-  | "info"
-  | "info-square"
-  | "success"
-  | "warning"
-  | "warning-alt";
-
 export const Notification: React.FC<NotificationProps> = ({ notification }) => {
   const { description, action, kind, critical, title } = notification;
+  const onClose = React.useCallback(
+    () => removeNotificationFromStore(notification.id),
+    [notification.id]
+  );
 
   return (
     <InlineNotification
@@ -36,6 +20,7 @@ export const Notification: React.FC<NotificationProps> = ({ notification }) => {
       lowContrast={critical}
       subtitle={description}
       title={title || ""}
+      onCloseButtonClick={onClose}
     />
   );
 };

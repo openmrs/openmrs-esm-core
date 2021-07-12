@@ -1,22 +1,14 @@
 import React from "react";
 import { render } from "react-dom";
-import { Subject } from "rxjs";
-import {
-  InlineNotificationMeta,
-  NotificationDescriptor,
-} from "./notification.component";
+import { addNotificationToStore, NotificationDescriptor } from "./state";
 import ActiveNotifications from "./active-notifications.component";
 import isEmpty from "lodash-es/isEmpty";
 
-const inlineNotificationsSubject = new Subject<InlineNotificationMeta>();
 let notificationId = 0;
 
 export function renderInlineNotifications(target: HTMLElement | null) {
   if (target) {
-    render(
-      <ActiveNotifications subject={inlineNotificationsSubject} />,
-      target
-    );
+    render(<ActiveNotifications />, target);
   }
 }
 
@@ -31,8 +23,7 @@ function isNotEmpty(description: React.ReactNode) {
 export function showNotification(notification: NotificationDescriptor) {
   if (notification && isNotEmpty(notification.description)) {
     setTimeout(() => {
-      // always use in subsequent cycle
-      inlineNotificationsSubject.next({
+      addNotificationToStore({
         ...notification,
         id: notificationId++,
       });

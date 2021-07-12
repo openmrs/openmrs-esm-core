@@ -1,16 +1,14 @@
 import React from "react";
 import { render } from "react-dom";
-import { Subject } from "rxjs";
-import { ToastDescriptor, ToastNotificationMeta } from "./toast.component";
+import { addToastToStore, ToastDescriptor } from "./state";
 import ActiveToasts from "./active-toasts.component";
 import isEmpty from "lodash-es/isEmpty";
 
-const toastsSubject = new Subject<ToastNotificationMeta>();
 let toastId = 0;
 
 export function renderToasts(target: HTMLElement | null) {
   if (target) {
-    render(<ActiveToasts subject={toastsSubject} />, target);
+    render(<ActiveToasts />, target);
   }
 }
 
@@ -26,7 +24,7 @@ export function showToast(toast: ToastDescriptor) {
   if (toast && isNotEmpty(toast.description)) {
     setTimeout(() => {
       // always use in subsequent cycle
-      toastsSubject.next({
+      addToastToStore({
         ...toast,
         id: toastId++,
       });

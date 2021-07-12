@@ -45,14 +45,15 @@
   },
   "peerDependencies": {
     "@openmrs/esm-extensions": "3.x",
+    "@openmrs/esm-state": "3.x",
     "carbon-components": "10.x",
     "carbon-icons": "7.x",
     "react": "16.x",
-    "react-dom": "16.x",
-    "rxjs": "6.x"
+    "react-dom": "16.x"
   },
   "devDependencies": {
     "@openmrs/esm-extensions": "^3.1.10",
+    "@openmrs/esm-state": "^3.1.10",
     "@pickra/copy-code-block": "^1.1.7",
     "@storybook/addon-a11y": "^5.2.1",
     "@storybook/addon-knobs": "^5.2.1",
@@ -61,7 +62,6 @@
     "carbon-icons": "7.0.7",
     "highlight.js": "^9.15.10",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "rxjs": "^6.5.3"
+    "react-dom": "^16.13.1"
   }
 }

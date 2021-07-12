@@ -11,16 +11,14 @@ interface ModalInstance {
 }
 
 interface ModalState {
-  modalContainer: HTMLElement | null;
   modalStack: Array<ModalInstance>;
 }
 
 const modalStore = createGlobalStore<ModalState>("globalModalState", {
-  modalContainer: null,
   modalStack: [],
 });
 
-function htmlToElement(html) {
+function htmlToElement(html: string) {
   const template = document.createElement("template");
   template.innerHTML = html;
   return template.content.firstChild as ChildNode;
@@ -47,65 +45,57 @@ function createModalFrame() {
   return { outer, contentContainer };
 }
 
-function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
-  if (!modalContainer) return;
-
-  if (modalStack.length) {
-    // spin up the container if it was hidden previously
-    if (!modalContainer.style.visibility) {
-      addEventListener("keydown", handleEscKey);
-      modalContainer.style.visibility = "unset";
-    }
-
-    modalStack.forEach((instance, index) => {
-      switch (instance.state) {
-        case "NEW":
-          const { outer, contentContainer } = createModalFrame();
-          instance.container = outer;
-          instance.cleanup = renderExtension(
-            contentContainer,
-            "",
-            "",
-            instance.extensionId,
-            undefined,
-            instance.props
-          );
-          instance.state = "MOUNTED";
-
-          modalContainer.prepend(instance.container);
-          instance.container.style.visibility = "unset";
-          break;
-        case "MOUNTED":
-          if (instance.container) {
-            instance.container.style.visibility = index ? "hidden" : "unset";
-          }
-          break;
-
-        case "TO_BE_DELETED":
-          instance.onClose();
-          instance.container?.remove();
-          setTimeout(() => {
-            modalStore.setState({
-              modalContainer,
-              modalStack: modalStack.filter((x) => x !== instance),
-            });
-          }, 0);
-          return;
-      }
-    });
-  } else {
-    modalContainer.style.removeProperty("visibility");
-    removeEventListener("keydown", handleEscKey);
-  }
-}
-
 export function renderModals(modalContainer: HTMLElement | null) {
   if (modalContainer) {
-    modalStore.subscribe(handleModalStateUpdate);
+    modalStore.subscribe(({ modalStack }: ModalState) => {
+      if (modalStack.length) {
+        // spin up the container if it was hidden previously
+        if (!modalContainer.style.visibility) {
+          addEventListener("keydown", handleEscKey);
+          modalContainer.style.visibility = "unset";
+        }
 
-    modalStore.setState({
-      ...modalStore.getState(),
-      modalContainer,
+        modalStack.forEach((instance, index) => {
+          switch (instance.state) {
+            case "NEW":
+              const { outer, contentContainer } = createModalFrame();
+              instance.container = outer;
+              instance.cleanup = renderExtension(
+                contentContainer,
+                "",
+                "",
+                instance.extensionId,
+                undefined,
+                instance.props
+              );
+              instance.state = "MOUNTED";
+
+              modalContainer.prepend(instance.container);
+              instance.container.style.visibility = "unset";
+              break;
+            case "MOUNTED":
+              if (instance.container) {
+                instance.container.style.visibility = index
+                  ? "hidden"
+                  : "unset";
+              }
+              break;
+
+            case "TO_BE_DELETED":
+              instance.onClose();
+              instance.container?.remove();
+              setTimeout(() => {
+                modalStore.setState({
+                  modalStack: modalStack.filter((x) => x !== instance),
+                });
+              }, 0);
+              return;
+          }
+        });
+      } else {
+        modalContainer.style.removeProperty("visibility");
+        removeEventListener("keydown", handleEscKey);
+      }
     });
   }
 }

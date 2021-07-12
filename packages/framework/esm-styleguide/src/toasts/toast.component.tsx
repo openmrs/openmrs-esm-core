@@ -1,5 +1,6 @@
 import React from "react";
 import { ToastNotification } from "carbon-components-react/es/components/Notification";
+import { ToastNotificationMeta, removeToastFromStore } from "./state";
 
 const defaultOptions = {
   millis: 5000,
@@ -7,30 +8,9 @@ const defaultOptions = {
 
 export interface ToastProps {
   toast: ToastNotificationMeta;
-  closeToast(): void;
 }
 
-export interface ToastDescriptor {
-  description: React.ReactNode;
-  kind?: ToastType;
-  critical?: boolean;
-  title?: string;
-  millis?: number;
-}
-
-export interface ToastNotificationMeta extends ToastDescriptor {
-  id: number;
-}
-
-export type ToastType =
-  | "error"
-  | "info"
-  | "info-square"
-  | "success"
-  | "warning"
-  | "warning-alt";
-
-export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
+export const Toast: React.FC<ToastProps> = ({ toast }) => {
   const {
     description,
     kind,
@@ -40,25 +20,29 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
   } = toast;
 
   const [waitingForTime, setWaitingForTime] = React.useState(true);
+  const onClose = React.useCallback(
+    () => removeToastFromStore(toast.id),
+    [toast.id]
+  );
+  const enter = React.useCallback(() => setWaitingForTime(false), []);
+  const leave = React.useCallback(() => setWaitingForTime(true), []);
 
   React.useEffect(() => {
     if (waitingForTime) {
-      const timeoutId = setTimeout(closeToast, millis);
+      const timeoutId = setTimeout(onClose, millis);
       return () => clearTimeout(timeoutId);
     }
-  }, [waitingForTime]);
+  }, [waitingForTime, onClose]);
 
   return (
-    <div
-      onMouseEnter={() => setWaitingForTime(false)}
-      onMouseLeave={() => setWaitingForTime(true)}
-    >
+    <div onMouseEnter={enter} onMouseLeave={leave}>
       <ToastNotification
         kind={kind || "info"}
         lowContrast={critical}
         subtitle={description}
         title={title || ""}
         timeout={millis}
+        onCloseButtonClick={onClose}
       />
     </div>
   );
