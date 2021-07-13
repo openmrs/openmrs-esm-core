@@ -16,6 +16,18 @@ function decodeHtmlEntity(html: string) {
   return textArea.value;
 }
 
+export function setUserLanguage(locale: string | undefined) {
+  if (locale) {
+    const htmlLang = document.documentElement.getAttribute("lang");
+
+    if (locale !== htmlLang) {
+      document.documentElement.setAttribute("lang", locale);
+    }
+  } else {
+    document.documentElement.removeAttribute("lang");
+  }
+}
+
 export function setupI18n() {
   window.i18next = i18next.default || i18next;
 

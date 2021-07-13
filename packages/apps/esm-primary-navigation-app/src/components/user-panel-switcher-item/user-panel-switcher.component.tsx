@@ -9,13 +9,11 @@ import { LoggedInUser } from "@openmrs/esm-framework";
 export interface UserPanelSwitcherItemProps {
   user: LoggedInUser;
   isLogoutEnabled: boolean;
-  onLogout(): void;
 }
 
 const UserPanelSwitcher: React.FC<UserPanelSwitcherItemProps> = ({
   user,
   isLogoutEnabled,
-  onLogout,
 }) => (
   <div className={styles.switcherContainer}>
     <Switcher aria-label="Switcher Container">
@@ -26,7 +24,7 @@ const UserPanelSwitcher: React.FC<UserPanelSwitcherItemProps> = ({
       <>
         <SwitcherDivider className={styles.divider} />
         <Switcher aria-label="Switcher Container">
-          <Logout onLogout={onLogout} />
+          <Logout />
         </Switcher>
       </>
     )}

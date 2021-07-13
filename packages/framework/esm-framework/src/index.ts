@@ -7,5 +7,6 @@ export * from "@openmrs/esm-globals";
 export * from "@openmrs/esm-react-utils";
 export * from "@openmrs/esm-state";
 export * from "@openmrs/esm-styleguide";
+export * from "@openmrs/esm-user";
 export * from "@openmrs/esm-utils";
 export * from "@openmrs/esm-offline";

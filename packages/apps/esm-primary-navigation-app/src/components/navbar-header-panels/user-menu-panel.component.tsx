@@ -1,22 +1,23 @@
 import React from "react";
-import { ExtensionSlot, LoggedInUser } from "@openmrs/esm-framework";
+import {
+  ExtensionSlot,
+  LoggedInUser,
+  CurrentUserSession,
+} from "@openmrs/esm-framework";
 import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
 import { HeaderPanelProps } from "carbon-components-react";
-import { UserSession } from "../../types";
 import styles from "../../root.scss";
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   user: LoggedInUser;
-  allowedLocales: any;
-  onLogout(): void;
-  session: UserSession;
+  allowedLocales: Array<string>;
+  session: CurrentUserSession;
 }
 
 const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
   expanded,
   user,
   allowedLocales,
-  onLogout,
   session,
 }) => {
   return (
@@ -29,11 +30,10 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
       <ExtensionSlot
         extensionSlotName="user-panel-slot"
         state={{
-          user: user,
-          allowedLocales: allowedLocales,
-          onLogout: onLogout,
+          user,
+          allowedLocales,
           referer: window.location.pathname,
-          currentLocation: session?.sessionLocation?.display,
+          currentLocation: session?.location?.display,
         }}
       />
     </HeaderPanel>

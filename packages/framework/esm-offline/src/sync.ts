@@ -1,6 +1,6 @@
 import Dexie, { Table } from "dexie";
 import { showNotification } from "@openmrs/esm-styleguide";
-import { getLoggedInUser } from "@openmrs/esm-api";
+import { getCurrentUser } from "@openmrs/esm-user";
 
 interface SyncItem {
   userId: string;
@@ -69,8 +69,8 @@ function runSynchronization(abort: AbortController) {
   return Promise.allSettled(Object.values(promises));
 }
 
-async function getUserId() {
-  const user = await getLoggedInUser();
+function getUserId() {
+  const user = getCurrentUser();
   return user?.uuid || "*";
 }
 
@@ -106,7 +106,7 @@ export async function queueSynchronizationItem<T>(
   content: T,
   descriptor?: QueueItemDescriptor
 ) {
-  const userId = await getUserId();
+  const userId = getUserId();
   return await queueSynchronizationItemFor(userId, type, content, descriptor);
 }
 
@@ -125,7 +125,7 @@ export async function getSynchronizationItemsFor<T>(
 }
 
 export async function getSynchronizationItems<T>(type: string) {
-  const userId = await getUserId();
+  const userId = getUserId();
   return await getSynchronizationItemsFor<T>(userId, type);
 }
 
@@ -172,14 +172,14 @@ export function setupOfflineSync<T>(
   handlers[type] = {
     dependsOn,
     canHandle: async () => {
-      const userId = await getUserId();
+      const userId = getUserId();
       const len = await table.where({ type, userId }).count();
       return len > 0;
     },
     handle: async (results, abort) => {
       const items: Array<[number, T, Partial<QueueItemDescriptor>]> = [];
       const contents: Array<T> = [];
-      const userId = await getUserId();
+      const userId = getUserId();
 
       await table.where({ type, userId }).each((item, cursor) => {
         items.push([cursor.primaryKey, item.content, item.descriptor]);

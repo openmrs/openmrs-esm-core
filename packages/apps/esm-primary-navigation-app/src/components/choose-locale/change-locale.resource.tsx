@@ -1,28 +1,13 @@
 import {
-  openmrsFetch,
   queueSynchronizationItemFor,
-  refetchCurrentUser,
+  updateCurrentUser,
 } from "@openmrs/esm-framework";
 import { userPropertyChange } from "../../constants";
 
-export type PostUserProperties = (
-  userUuid: string,
-  userProperties: any,
-  abortController?: AbortController
-) => Promise<any>;
+export type PostUserProperties = (userProperties: any) => Promise<void>;
 
-export async function postUserPropertiesOnline(
-  userUuid: string,
-  userProperties: any,
-  abortController: AbortController
-): Promise<any> {
-  await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
-    method: "POST",
-    body: { userProperties },
-    headers: { "Content-Type": "application/json" },
-    signal: abortController.signal,
-  });
-  refetchCurrentUser();
+export function postUserPropertiesOnline(userProperties: any) {
+  return updateCurrentUser(userProperties);
 }
 
 export function postUserPropertiesOffline(

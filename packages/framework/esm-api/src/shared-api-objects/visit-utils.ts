@@ -1,7 +1,6 @@
 import { Observable, BehaviorSubject } from "rxjs";
 import { take, map } from "rxjs/operators";
 import { openmrsObservableFetch } from "../openmrs-fetch";
-import { newWorkspaceItem } from "../workspace/workspace.resource";
 import {
   FetchResponse,
   NewVisitPayload,
@@ -9,15 +8,22 @@ import {
   Visit,
 } from "../types";
 
-export function openVisitsNoteWorkspace(componentName: string, title: string) {
-  newWorkspaceItem({
-    component: componentName,
-    name: title,
-    props: {},
-    inProgress: false,
-    validations: (workspaceTabs: Array<any>) =>
-      workspaceTabs.findIndex((tab) => tab.component === componentName),
-  });
+export interface VisitItem {
+  mode: VisitMode;
+  visitData?: Visit;
+  status: VisitStatus;
+  anythingElse?: any;
+}
+
+export enum VisitMode {
+  NEWVISIT = "startVisit",
+  EDITVISIT = "editVisit",
+  LOADING = "loadingVisit",
+}
+
+export enum VisitStatus {
+  NOTSTARTED = "notStarted",
+  ONGOING = "ongoing",
 }
 
 export function getVisitsForPatient(
@@ -82,21 +88,3 @@ export function updateVisit(
 }
 
 export const getStartedVisit = new BehaviorSubject<VisitItem | null>(null);
-
-export interface VisitItem {
-  mode: VisitMode;
-  visitData?: Visit;
-  status: VisitStatus;
-  anythingElse?: any;
-}
-
-export enum VisitMode {
-  NEWVISIT = "startVisit",
-  EDITVISIT = "editVisit",
-  LOADING = "loadingVisit",
-}
-
-export enum VisitStatus {
-  NOTSTARTED = "notStarted",
-  ONGOING = "ongoing",
-}

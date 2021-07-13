@@ -10,7 +10,7 @@ export interface SessionUser {
   locale: string;
   sessionId: string;
   user: User;
-  currentProvider: { uuid: string; identifier: string };
+  currentProvider: { uuid: string; display: string };
   sessionLocation: any | null;
 }
 

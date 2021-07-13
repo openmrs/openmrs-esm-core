@@ -1,31 +1,18 @@
 import React from "react";
-import { openmrsFetch, refetchCurrentUser } from "@openmrs/esm-framework";
 import styles from "./logout.component.scss";
 import Button from "carbon-components-react/es/components/Button";
+import { logoutUser } from "@openmrs/esm-framework";
 import { useTranslation } from "react-i18next";
 
-export interface LogoutProps {
-  onLogout(): void;
-}
+export interface LogoutProps {}
 
-const Logout: React.FC<LogoutProps> = ({ onLogout }) => {
+const Logout: React.FC<LogoutProps> = ({}) => {
   const { t } = useTranslation();
-  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
-
-  React.useEffect(() => {
-    const ac = new AbortController();
-    if (isLoggingOut) {
-      openmrsFetch("/ws/rest/v1/session", { method: "DELETE" })
-        .then(refetchCurrentUser)
-        .then(onLogout);
-    }
-    return () => ac.abort();
-  }, [isLoggingOut, onLogout]);
 
   return (
     <Button
       className={styles.logout}
-      onClick={() => setIsLoggingOut(true)}
+      onClick={logoutUser}
       aria-labelledby="Logout"
       role="button"
     >

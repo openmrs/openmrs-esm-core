@@ -5,14 +5,9 @@ export function useVisitTypes() {
   const [visitTypes, setVisitTypes] = useState<Array<VisitType>>([]);
 
   useEffect(() => {
-    const visitTypesSub = getVisitTypes().subscribe(
-      (visitTypes) => {
-        setVisitTypes(visitTypes);
-      },
-      (error) => console.error(error)
-    );
-
-    return () => visitTypesSub.unsubscribe();
+    const abort = new AbortController();
+    getVisitTypes(abort).then(setVisitTypes, console.error);
+    return () => abort.abort();
   }, []);
 
   return visitTypes;

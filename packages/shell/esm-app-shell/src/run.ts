@@ -16,14 +16,14 @@ import {
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
   subscribeConnectivity,
-  getCurrentUser,
+  subscribeCurrentUser,
   KnownOmrsServiceWorkerEvents,
   dispatchNetworkRequestFailed,
   triggerSynchronization,
   renderModals,
   dispatchPrecacheStaticDependencies,
 } from "@openmrs/esm-framework";
-import { setupI18n } from "./locale";
+import { setupI18n, setUserLanguage } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
 import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
@@ -312,8 +312,9 @@ function subscribeOnlineAndLoginChange(
   let isOnline = false;
   let hasLoggedInUser = false;
 
-  getCurrentUser({ includeAuthStatus: false }).subscribe((user) => {
+  subscribeCurrentUser((user) => {
     hasLoggedInUser = !!user;
+    setUserLanguage(user?.userProperties?.defaultLocale);
     cb(isOnline, hasLoggedInUser);
   });
 

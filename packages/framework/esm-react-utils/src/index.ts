@@ -10,6 +10,7 @@ export * from "./useAttachedExtensionIds";
 export * from "./useConfig";
 export * from "./useConnectedExtensions";
 export * from "./useConnectivity";
+export * from "./useCurrentUser";
 export * from "./useCurrentPatient";
 export * from "./useExtension";
 export * from "./useExtensionSlotConfig";

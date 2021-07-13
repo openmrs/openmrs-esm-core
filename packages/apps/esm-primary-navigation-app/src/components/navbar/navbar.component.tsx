@@ -5,6 +5,7 @@ import {
   navigate,
   ExtensionSlot,
   useAssignedExtensionIds,
+  CurrentUserSession,
 } from "@openmrs/esm-framework";
 import {
   HeaderContainer,
@@ -14,6 +15,7 @@ import {
   HeaderGlobalBar,
   HeaderGlobalAction,
 } from "carbon-components-react/es/components/UIShell";
+import { isDesktop } from "../../utils";
 import Close20 from "@carbon/icons-react/lib/close/20";
 import Notification20 from "@carbon/icons-react/es/notification/20";
 import Switcher20 from "@carbon/icons-react/lib/switcher/20";
@@ -24,24 +26,16 @@ import NotificationsMenuPanel from "../navbar-header-panels/notifications-menu-p
 import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
 import Logo from "../logo/logo.component";
 import styles from "./navbar.component.scss";
-import { isDesktop } from "../../utils";
-import { UserSession } from "../../types";
 
 const HeaderLink: any = HeaderName;
 
 export interface NavbarProps {
   user: LoggedInUser;
   allowedLocales: Array<string>;
-  onLogout(): void;
-  session: UserSession;
+  session: CurrentUserSession;
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  user,
-  onLogout,
-  allowedLocales,
-  session,
-}) => {
+const Navbar: React.FC<NavbarProps> = ({ user, allowedLocales, session }) => {
   const layout = useLayoutType();
   const navMenuItems = useAssignedExtensionIds("nav-menu-slot");
 
@@ -144,7 +138,6 @@ const Navbar: React.FC<NavbarProps> = ({
           session={session}
           expanded={isActivePanel("userMenu")}
           allowedLocales={allowedLocales}
-          onLogout={onLogout}
         />
       </Header>
     );

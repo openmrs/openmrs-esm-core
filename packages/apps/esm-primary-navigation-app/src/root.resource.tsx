@@ -1,36 +1,42 @@
 import {
-  CurrentUserWithResponseOption,
-  getCurrentUser,
   getSynchronizationItemsFor,
-  openmrsObservableFetch,
+  LoggedInUser,
 } from "@openmrs/esm-framework";
-import { mergeMap } from "rxjs/operators";
+import { useEffect, useState } from "react";
 import { userPropertyChange } from "./constants";
 
-export function getCurrentSession() {
-  return openmrsObservableFetch(`/ws/rest/v1/session`);
-}
-
 /**
- * Returns an observable producing the current user, but also applies any unsynchronized user property
- * changes to that user.
+ * Returns the given user with all unsynchronized user property changes.
  */
-export function getSynchronizedCurrentUser(
-  opts: CurrentUserWithResponseOption
-) {
-  return getCurrentUser(opts).pipe(
-    mergeMap(async (result) => {
-      const { user } = result;
+export function useSynchronizedCurrentUser(user: LoggedInUser): LoggedInUser {
+  const [changedUser, setChangedUser] = useState(user);
 
-      if (user) {
-        const allChanges = await getSynchronizationItemsFor<any>(
-          user.uuid,
-          userPropertyChange
-        );
-        Object.assign(user.userProperties, ...allChanges);
-      }
+  useEffect(() => {
+    let active = true;
 
-      return result;
-    })
-  );
+    if (user) {
+      getSynchronizationItemsFor<any>(user.uuid, userPropertyChange).then(
+        (allChanges) => {
+          const newUser = {
+            ...user,
+            userProperties: {
+              ...user.userProperties,
+            },
+          };
+          Object.assign(newUser.userProperties, ...allChanges);
+          if (active) {
+            setChangedUser(newUser);
+          }
+        }
+      );
+    } else {
+      setChangedUser(user);
+    }
+
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  return changedUser;
 }

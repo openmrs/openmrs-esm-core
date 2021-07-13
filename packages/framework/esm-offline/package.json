@@ -41,6 +41,7 @@
     "@openmrs/esm-globals": "^3.1.10",
     "@openmrs/esm-state": "^3.1.10",
     "@openmrs/esm-styleguide": "^3.1.10",
+    "@openmrs/esm-user": "^3.1.10",
     "@types/uuid": "^8.3.0",
     "rxjs": "^6.5.3",
     "uuid": "^8.3.2"
@@ -50,6 +51,7 @@
     "@openmrs/esm-globals": "3.x",
     "@openmrs/esm-state": "3.x",
     "@openmrs/esm-styleguide": "3.x",
+    "@openmrs/esm-user": "3.x",
     "rxjs": "6.x"
   },
   "dependencies": {

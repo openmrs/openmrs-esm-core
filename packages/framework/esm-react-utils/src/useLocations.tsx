@@ -5,15 +5,9 @@ export function useLocations() {
   const [locations, setLocations] = useState<Array<Location>>([]);
 
   useEffect(() => {
-    const locationSub = getLocations().subscribe(
-      (locations) => {
-        setLocations(locations);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-    return () => locationSub.unsubscribe();
+    const abort = new AbortController();
+    getLocations(abort).then(setLocations, console.error);
+    return () => abort.abort();
   }, []);
 
   return locations;

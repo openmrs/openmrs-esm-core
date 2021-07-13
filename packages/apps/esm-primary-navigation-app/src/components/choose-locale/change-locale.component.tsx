@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Select from "carbon-components-react/es/components/Select";
 import SelectItem from "carbon-components-react/es/components/SelectItem";
 import styles from "./change-locale.component.scss";
@@ -20,12 +20,18 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   const options = allowedLocales?.map((locale) => (
     <SelectItem text={locale} value={locale} key={locale} />
   ));
+  const selectLocale = useCallback(
+    (event) =>
+      setUserProps((props) => ({
+        ...props,
+        defaultLocale: event.target.value,
+      })),
+    []
+  );
 
   useEffect(() => {
     if (user.userProperties.defaultLocale !== userProps.defaultLocale) {
-      const ac = new AbortController();
-      postUserProperties(user.uuid, userProps, ac);
-      return () => ac.abort();
+      postUserProperties(userProps);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProps]);
@@ -37,9 +43,7 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
         id="selectLocale"
         invalidText="A valid value locale is required"
         labelText="Select locale"
-        onChange={(event) =>
-          setUserProps({ ...userProps, defaultLocale: event.target.value })
-        }
+        onChange={selectLocale}
         value={userProps.defaultLocale}
       >
         {options}

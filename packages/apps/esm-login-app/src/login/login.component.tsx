@@ -5,9 +5,7 @@ import Button from "carbon-components-react/es/components/Button";
 import TextInput from "carbon-components-react/es/components/TextInput";
 import { RouteComponentProps } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useConfig } from "@openmrs/esm-framework";
-import { performLogin } from "./login.resource";
-import { useCurrentUser } from "../CurrentUserContext";
+import { loginUser, useConfig, useCurrentUser } from "@openmrs/esm-framework";
 import type { StaticContext } from "react-router";
 
 const hidden: React.CSSProperties = {
@@ -90,9 +88,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
       }
 
       try {
-        const loginRes = await performLogin(username, password);
-        const authData = loginRes.data;
-        const valid = authData && authData.authenticated;
+        const valid = await loginUser(username, password);
 
         if (!valid) {
           throw new Error("Incorrect username or password");

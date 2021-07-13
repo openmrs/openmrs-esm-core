@@ -1,5 +1,4 @@
 import { defineConfigSchema, Type, validators } from "@openmrs/esm-config";
-import { refetchCurrentUser } from "./shared-api-objects/current-user";
 
 /**
  * @internal
@@ -35,6 +34,4 @@ export function setupApiModule() {
       },
     },
   });
-
-  refetchCurrentUser();
 }

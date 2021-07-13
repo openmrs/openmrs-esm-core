@@ -1,23 +1,19 @@
-import { Observable } from "rxjs";
-import { map, take } from "rxjs/operators";
-import { openmrsObservableFetch } from "../openmrs-fetch";
-import { Location } from "../types";
+import { openmrsFetch } from "../openmrs-fetch";
+import { Location, OpenmrsResource } from "../types";
 
-export function toLocationObject(openmrsRestForm: any): Location {
+export function toLocationObject(openmrsRestForm: OpenmrsResource): Location {
   return {
     uuid: openmrsRestForm.uuid,
     display: openmrsRestForm.display,
   };
 }
 
-export function getLocations(): Observable<Array<Location>> {
-  return openmrsObservableFetch<any>(`/ws/rest/v1/location`)
-    .pipe(
-      map((results) => {
-        const locations: Array<Location> =
-          results.data.results.map(toLocationObject);
-        return locations;
-      })
-    )
-    .pipe(take(1));
+interface OpenmrsLocationResponse {
+  results: Array<OpenmrsResource>;
+}
+
+export function getLocations(abort = new AbortController()) {
+  return openmrsFetch<OpenmrsLocationResponse>(`/ws/rest/v1/location`, {
+    signal: abort.signal,
+  }).then((res) => res.data.results.map(toLocationObject));
 }
