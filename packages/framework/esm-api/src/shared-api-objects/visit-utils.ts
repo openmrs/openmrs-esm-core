@@ -1,12 +1,5 @@
-import { Observable, BehaviorSubject } from "rxjs";
-import { take, map } from "rxjs/operators";
-import { openmrsObservableFetch } from "../openmrs-fetch";
-import {
-  FetchResponse,
-  NewVisitPayload,
-  UpdateVisitPayload,
-  Visit,
-} from "../types";
+import { openmrsFetch } from "../openmrs-fetch";
+import { NewVisitPayload, UpdateVisitPayload, Visit } from "../types";
 
 export interface VisitItem {
   mode: VisitMode;
@@ -26,65 +19,61 @@ export enum VisitStatus {
   ONGOING = "ongoing",
 }
 
+interface OpenmrsVisitResponse {
+  results: Array<Visit>;
+}
+
+const defaultView = [
+  "custom:(uuid,encounters:(uuid,encounterDatetime,",
+  "form:(uuid,name),location:ref,",
+  "encounterType:ref,encounterProviders:(uuid,display,",
+  "provider:(uuid,display))),patient:(uuid,uuid),",
+  "visitType:(uuid,name,display),attributes:(uuid,display,value),location:(uuid,name,display),startDatetime,",
+  "stopDatetime)",
+].join("");
+
 export function getVisitsForPatient(
   patientUuid: string,
-  abortController: AbortController,
-  v?: string
-): Observable<FetchResponse<{ results: Array<Visit> }>> {
-  const custom =
-    v ||
-    "custom:(uuid,encounters:(uuid,encounterDatetime," +
-      "form:(uuid,name),location:ref," +
-      "encounterType:ref,encounterProviders:(uuid,display," +
-      "provider:(uuid,display))),patient:(uuid,uuid)," +
-      "visitType:(uuid,name,display),attributes:(uuid,display,value),location:(uuid,name,display),startDatetime," +
-      "stopDatetime)";
-
-  return openmrsObservableFetch(
-    `/ws/rest/v1/visit?patient=${patientUuid}&v=${custom}`,
+  abort = new AbortController(),
+  v = defaultView
+) {
+  return openmrsFetch<OpenmrsVisitResponse>(
+    `/ws/rest/v1/visit?patient=${patientUuid}&v=${v}`,
     {
-      signal: abortController.signal,
+      signal: abort.signal,
       method: "GET",
       headers: {
         "Content-type": "application/json",
       },
     }
-  )
-    .pipe(take(1))
-    .pipe(
-      map((response: FetchResponse<{ results: Array<Visit> }>) => {
-        return response;
-      })
-    );
+  ).then((r) => r.data);
 }
 
 export function saveVisit(
   payload: NewVisitPayload,
-  abortController: AbortController
-): Observable<FetchResponse<any>> {
-  return openmrsObservableFetch(`/ws/rest/v1/visit`, {
-    signal: abortController.signal,
+  abort = new AbortController()
+) {
+  return openmrsFetch(`/ws/rest/v1/visit`, {
+    signal: abort.signal,
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
     body: payload,
-  });
+  }).then(() => {});
 }
 
 export function updateVisit(
-  uuid: string,
+  visitUuid: string,
   payload: UpdateVisitPayload,
-  abortController: AbortController
-): Observable<any> {
-  return openmrsObservableFetch(`/ws/rest/v1/visit/${uuid}`, {
-    signal: abortController.signal,
+  abort = new AbortController()
+) {
+  return openmrsFetch(`/ws/rest/v1/visit/${visitUuid}`, {
+    signal: abort.signal,
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
     body: payload,
-  });
+  }).then(() => {});
 }
-
-export const getStartedVisit = new BehaviorSubject<VisitItem | null>(null);

@@ -1,49 +1,25 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import {
-  getVisitsForPatient,
-  getStartedVisit,
-  VisitMode,
-  VisitStatus,
-  Visit,
-} from "@openmrs/esm-api";
+import { getVisitsForPatient, Visit } from "@openmrs/esm-api";
 
 export function useVisit(patientUuid: string) {
   const [currentVisit, setCurrentVisit] = useState<Visit | null>(null);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const sub = getStartedVisit.subscribe((visit) => {
-      if (visit) {
-        setCurrentVisit(visit?.visitData ?? null);
+    const ac = new AbortController();
+    getVisitsForPatient(patientUuid, ac).then(({ results }) => {
+      const currentVisit = results.find(
+        (visit) =>
+          dayjs(visit.startDatetime).format("DD-MM-YYYY") ===
+          dayjs(new Date()).format("DD-MM-YYYY")
+      );
+
+      if (currentVisit) {
+        setCurrentVisit(currentVisit);
       }
     });
-
-    return () => sub.unsubscribe();
+    return () => ac.abort();
   }, [patientUuid]);
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const sub = getVisitsForPatient(patientUuid, abortController).subscribe(
-      ({ data }) => {
-        const currentVisit = data.results.find(
-          (visit) =>
-            dayjs(visit.startDatetime).format("DD-MM-YYYY") ===
-            dayjs(new Date()).format("DD-MM-YYYY")
-        );
-
-        if (currentVisit) {
-          getStartedVisit.next({
-            mode: VisitMode.LOADING,
-            visitData: currentVisit,
-            status: VisitStatus.ONGOING,
-          });
-        }
-      },
-      setError
-    );
-    return () => sub && sub.unsubscribe();
-  }, [patientUuid]);
-
-  return { currentVisit, error };
+  return currentVisit;
 }
