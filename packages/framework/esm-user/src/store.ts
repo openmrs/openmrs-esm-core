@@ -14,6 +14,11 @@ export interface CurrentUserSession {
   locale: string;
   user: LoggedInUser;
   location?: {
+    uuid: string;
+    display: string;
+  };
+  provider: {
+    uuid: string;
     display: string;
   };
 }
@@ -64,7 +69,14 @@ function createNewSession(name: string, pass: string) {
 }
 
 function toSession(res: UnauthenticatedUser) {
-  const { user, sessionId, allowedLocals, locale, sessionLocation } = res;
+  const {
+    user,
+    sessionId,
+    allowedLocals,
+    locale,
+    sessionLocation,
+    currentProvider,
+  } = res;
   return (
     user && {
       sessionId,
@@ -72,6 +84,7 @@ function toSession(res: UnauthenticatedUser) {
       allowedLocals,
       locale,
       location: sessionLocation || undefined,
+      provider: currentProvider,
     }
   );
 }

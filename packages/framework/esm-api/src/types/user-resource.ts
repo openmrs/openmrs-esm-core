@@ -18,9 +18,13 @@ export interface UnauthenticatedUser {
   locale: string;
   allowedLocals: Array<string>;
   sessionLocation: null | {
+    uuid: string;
     display: string;
   };
-  currentProvider: Person;
+  currentProvider: {
+    uuid: string;
+    display: string;
+  };
 }
 
 export interface Person {
