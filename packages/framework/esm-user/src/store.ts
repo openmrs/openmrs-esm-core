@@ -5,6 +5,7 @@ import {
   createSession,
   deleteSession,
   updateUser,
+  setSessionLocation,
   UnauthenticatedUser,
 } from "@openmrs/esm-api";
 
@@ -125,6 +126,16 @@ export function updateCurrentUser(properties: any) {
     return updateUser(session.user.uuid, properties).then(
       refreshExistingSession
     );
+  }
+
+  return Promise.resolve();
+}
+
+export function updateCurrentUserLocation(locationUuid: string) {
+  const { session } = state.getState();
+
+  if (session) {
+    return setSessionLocation(locationUuid).then(refreshExistingSession);
   }
 
   return Promise.resolve();

@@ -13,6 +13,21 @@ export function getSession(abort = new AbortController()) {
 /**
  * @category API Object
  */
+export function setSessionLocation(
+  locationUuid: string,
+  abort = new AbortController()
+) {
+  return openmrsFetch(sessionEndpoint, {
+    method: "POST",
+    body: { sessionLocation: locationUuid },
+    headers: { "Content-Type": "application/json" },
+    signal: abort.signal,
+  }).then(() => {});
+}
+
+/**
+ * @category API Object
+ */
 export function createSession(token: string, abort = new AbortController()) {
   return openmrsFetch<UnauthenticatedUser>(sessionEndpoint, {
     signal: abort.signal,

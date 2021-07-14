@@ -2,8 +2,13 @@ import React from "react";
 import LoadingIcon from "../loading/loading.component";
 import LocationPicker from "../location-picker/location-picker.component";
 import { RouteComponentProps } from "react-router-dom";
-import { navigate, useConfig, useCurrentUser } from "@openmrs/esm-framework";
-import { setSessionLocation, queryLocations } from "./choose-location.resource";
+import {
+  navigate,
+  useConfig,
+  useCurrentUser,
+  updateCurrentUserLocation,
+} from "@openmrs/esm-framework";
+import { queryLocations } from "./choose-location.resource";
 import { LocationEntry } from "../types";
 import type { StaticContext } from "react-router";
 
@@ -31,7 +36,7 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   const changeLocation = React.useCallback(
     (locationUuid?: string) => {
       const sessionDefined = locationUuid
-        ? setSessionLocation(locationUuid, new AbortController())
+        ? updateCurrentUserLocation(locationUuid)
         : Promise.resolve();
 
       sessionDefined.then(() => {

@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 export interface LogoutProps {}
 
-const Logout: React.FC<LogoutProps> = ({}) => {
+const Logout: React.FC<LogoutProps> = () => {
   const { t } = useTranslation();
 
   return (

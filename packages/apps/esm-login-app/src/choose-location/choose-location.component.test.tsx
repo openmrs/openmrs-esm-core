@@ -10,14 +10,6 @@ const navigateMock = navigate as jest.Mock;
 
 const { config } = require("@openmrs/esm-framework");
 
-jest.mock("../CurrentUserContext", () => ({
-  useCurrentUser() {
-    return {
-      display: "Demo",
-    };
-  },
-}));
-
 jest.mock("./choose-location.resource.ts", () => ({
   queryLocations: jest.fn(() =>
     Promise.resolve([
@@ -29,7 +21,6 @@ jest.mock("./choose-location.resource.ts", () => ({
       },
     ])
   ),
-  setSessionLocation: jest.fn(() => Promise.resolve()),
 }));
 
 describe(`<ChooseLocation />`, () => {
