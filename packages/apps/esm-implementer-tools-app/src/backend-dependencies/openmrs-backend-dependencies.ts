@@ -100,9 +100,9 @@ function getMisMatchedBackendModules(
 ) {
   let misMatchedBackendModules: BackendModule[] = [];
   for (let uuid in installedAndRequiredBackendModules) {
-    const installedVersion = installedBackendModules[uuid].version;
     const requiredVersion = installedAndRequiredBackendModules[uuid].version;
     const moduleName = installedAndRequiredBackendModules[uuid].uuid;
+    const installedVersion = getInstalledVersion(moduleName);
 
     if (!isVersionSatisfied(requiredVersion, installedVersion)) {
       misMatchedBackendModules.push({
@@ -113,6 +113,17 @@ function getMisMatchedBackendModules(
     }
   }
   return misMatchedBackendModules;
+}
+
+function getInstalledVersion(moduleName: string) {
+  let installedVersion: string = "";
+  for (let idx in installedBackendModules) {
+    if (installedBackendModules[idx].uuid == moduleName) {
+      installedVersion = installedBackendModules[idx].version;
+      break;
+    }
+  }
+  return installedVersion;
 }
 
 export interface UnresolvedBackendDependencies {
