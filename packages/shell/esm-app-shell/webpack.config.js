@@ -53,10 +53,10 @@ function checkDirectory(dirName) {
 module.exports = (env, argv = {}) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? "dist" : "lib";
-  const styleLoader =
-    mode === "production"
-      ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
-      : { loader: require.resolve("style-loader") };
+  const isProd = mode === "production";
+  const styleLoader = isProd
+    ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+    : { loader: require.resolve("style-loader") };
   const cssLoader = { loader: require.resolve("css-loader") };
   const appPatterns = [];
   const coreImportmap = {
@@ -109,7 +109,7 @@ module.exports = (env, argv = {}) => {
       ],
     },
     mode,
-    devtool: mode === "production" ? "source-map" : "inline-source-map",
+    devtool: isProd ? "source-map" : "inline-source-map",
     module: {
       rules: [
         {
@@ -189,26 +189,28 @@ module.exports = (env, argv = {}) => {
       new CopyWebpackPlugin({
         patterns: [{ from: resolve(__dirname, "src/assets") }, ...appPatterns],
       }),
-      mode === "production" &&
+      isProd &&
         new MiniCssExtractPlugin({
           filename: "openmrs.css",
         }),
       new DefinePlugin({
         "process.env.BUILD_VERSION": JSON.stringify(`${version}-${timestamp}`),
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
+        "process.env.NODE_ENV": JSON.stringify(mode),
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? "static" : "disabled",
       }),
-      new InjectManifest({
-        swSrc: resolve(__dirname, "./src/service-worker/index.ts"),
-        swDest: "service-worker.js",
-        maximumFileSizeToCacheInBytes:
-          mode === production ? undefined : Number.MAX_SAFE_INTEGER,
-        additionalManifestEntries: [
-          { url: openmrsImportmapUrl, revision: null },
-        ],
-      }),
+      isProd &&
+        new InjectManifest({
+          swSrc: resolve(__dirname, "./src/service-worker/index.ts"),
+          swDest: "service-worker.js",
+          maximumFileSizeToCacheInBytes:
+            mode === production ? undefined : Number.MAX_SAFE_INTEGER,
+          additionalManifestEntries: [
+            { url: openmrsImportmapUrl, revision: null },
+          ],
+        }),
     ].filter(Boolean),
   };
 };

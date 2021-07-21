@@ -337,7 +337,10 @@ export function run(configUrls: Array<string>) {
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
-  setupServiceWorker();
+
+  if (process.env.NODE_ENV === "production") {
+    setupServiceWorker();
+  }
 
   return loadApps()
     .then(setupApps)

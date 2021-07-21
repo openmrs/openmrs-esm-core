@@ -11,6 +11,11 @@ import isEmpty from "lodash-es/isEmpty";
 const inlineNotificationsSubject = new Subject<InlineNotificationMeta>();
 let notificationId = 0;
 
+/**
+ * Starts a rendering host for inline notifications. Should only be used by the app shell.
+ * Under normal conditions there is no need to use this function.
+ * @param target The container target that hosts the inline notifications.
+ */
 export function renderInlineNotifications(target: HTMLElement | null) {
   if (target) {
     render(
@@ -28,6 +33,10 @@ function isNotEmpty(description: React.ReactNode) {
     : false;
 }
 
+/**
+ * Displays an inline notification in the UI.
+ * @param notification The description of the notification to display.
+ */
 export function showNotification(notification: NotificationDescriptor) {
   if (notification && isNotEmpty(notification.description)) {
     setTimeout(() => {

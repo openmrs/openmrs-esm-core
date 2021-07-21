@@ -20,7 +20,7 @@ const modalStore = createGlobalStore<ModalState>("globalModalState", {
   modalStack: [],
 });
 
-function htmlToElement(html) {
+function htmlToElement(html: string) {
   const template = document.createElement("template");
   template.innerHTML = html;
   return template.content.firstChild as ChildNode;
@@ -127,11 +127,11 @@ function handleEscKey(e: KeyboardEvent) {
 }
 
 /**
- *
- * @param extensionId
- * @param props
- * @param onClose
- * @returns
+ * Shows the provided extension component in a modal dialog.
+ * @param extensionId The id of the extension to show.
+ * @param props The optional props to provide to the extension.
+ * @param onClose The optional notification to receive when the modal is closed.
+ * @returns The dispose function to force closing the modal dialog.
  */
 export function showModal(
   extensionId: string,
@@ -161,6 +161,3 @@ export function showModal(
     });
   };
 }
-
-globalThis.showModal = showModal;
-globalThis.modalStore = modalStore;
