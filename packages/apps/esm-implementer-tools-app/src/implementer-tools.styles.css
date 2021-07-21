@@ -6,7 +6,7 @@
 }
 
 .triggerButtonAlert {
-  background-color: var(--omrs-color-danger);
+  color: var(--omrs-color-danger);
 }
 
 .toolStyles {
