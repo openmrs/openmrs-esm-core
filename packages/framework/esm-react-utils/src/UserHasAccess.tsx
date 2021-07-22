@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getCurrentUser, userHasAccess, LoggedInUser } from "@openmrs/esm-api";
 
 export interface UserHasAccessProps {
@@ -9,9 +9,9 @@ export const UserHasAccess: React.FC<UserHasAccessProps> = ({
   privilege,
   children,
 }) => {
-  const [user, setUser] = React.useState<LoggedInUser | null>(null);
+  const [user, setUser] = useState<LoggedInUser | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = getCurrentUser({
       includeAuthStatus: false,
     }).subscribe(setUser);

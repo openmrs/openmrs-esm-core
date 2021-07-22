@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -30,12 +30,12 @@ function getParams(path: string, matcher: RegExp) {
 }
 
 export const Breadcrumbs: React.FC = () => {
-  const [path, setPath] = React.useState(location.pathname);
+  const [path, setPath] = useState(location.pathname);
   const breadcrumbs = getBreadcrumbsFor(path);
   const currentBc = breadcrumbs[breadcrumbs.length - 1];
   const params = getParams(path, currentBc?.matcher);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handler = () => setPath(location.pathname);
     window.addEventListener("popstate", handler);
     return () => window.removeEventListener("popstate", handler);

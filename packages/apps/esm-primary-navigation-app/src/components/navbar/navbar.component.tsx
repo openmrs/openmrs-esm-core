@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   LoggedInUser,
   useLayoutType,
@@ -45,14 +45,14 @@ const Navbar: React.FC<NavbarProps> = ({
   const navMenuItems = useAssignedExtensionIds("nav-menu-slot");
 
   const [activeHeaderPanel, setActiveHeaderPanel] =
-    React.useState<string>(null);
+    useState<string>(null);
 
-  const isActivePanel = React.useCallback(
+  const isActivePanel = useCallback(
     (panelName: string) => activeHeaderPanel === panelName,
     [activeHeaderPanel]
   );
 
-  const togglePanel = React.useCallback(
+  const togglePanel = useCallback(
     (panelName: string) =>
       setActiveHeaderPanel((activeHeaderPanel) =>
         activeHeaderPanel === panelName ? null : panelName
@@ -60,16 +60,16 @@ const Navbar: React.FC<NavbarProps> = ({
     []
   );
 
-  const hidePanel = React.useCallback(() => {
+  const hidePanel = useCallback(() => {
     setActiveHeaderPanel(null);
   }, []);
 
-  const showHamburger = React.useMemo(
+  const showHamburger = useMemo(
     () => !isDesktop(layout) && navMenuItems.length > 0,
     [navMenuItems.length, layout]
   );
 
-  const render = React.useCallback(() => {
+  const render = useCallback(() => {
     return (
       <Header aria-label="OpenMRS">
         {showHamburger && (

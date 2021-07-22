@@ -1,38 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Popup from "./popup/popup.component";
+import { NotificationActionButton } from "carbon-components-react/es/components/Notification";
 import {
   showNotification,
   UserHasAccess,
   useStore,
 } from "@openmrs/esm-framework";
-import { UiEditor } from "./ui-editor/ui-editor";
 import {
   implementerToolsStore,
   showModuleDiagnostics,
   togglePopup,
 } from "./store";
+import { UiEditor } from "./ui-editor/ui-editor";
 import { useBackendDependencies } from "./backend-dependencies/useBackendDependencies";
-import { NotificationActionButton } from "carbon-components-react";
+import { hasInvalidDependencies } from "./backend-dependencies/openmrs-backend-dependencies";
 
 function PopupHandler() {
-  const [
-    modulesWithMissingBackendModules,
-    modulesWithWrongBackendModulesVersion,
-  ] = useBackendDependencies();
-  const [shouldShowNotification, setShouldShowNotification] =
-    React.useState(false);
+  const frontendModules = useBackendDependencies();
+  const [shouldShowNotification, setShouldShowNotification] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // displaying toast if modules are missing
     setShouldShowNotification(
       (alreadyShowing) =>
-        alreadyShowing ||
-        modulesWithMissingBackendModules.length > 0 ||
-        modulesWithWrongBackendModulesVersion.length > 0
+        alreadyShowing || hasInvalidDependencies(frontendModules)
     );
-  }, [modulesWithMissingBackendModules, modulesWithWrongBackendModulesVersion]);
+  }, [frontendModules]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // only show notification max. 1 time
     if (shouldShowNotification) {
       showNotification({
@@ -55,10 +50,7 @@ function PopupHandler() {
       {isOpen ? (
         <Popup
           close={togglePopup}
-          modulesWithMissingBackendModules={modulesWithMissingBackendModules}
-          modulesWithWrongBackendModulesVersion={
-            modulesWithWrongBackendModulesVersion
-          }
+          frontendModules={frontendModules}
           visibleTabIndex={openTabIndex}
         />
       ) : null}

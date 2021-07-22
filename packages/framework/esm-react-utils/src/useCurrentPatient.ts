@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useReducer } from "react";
 import { fetchCurrentPatient, PatientUuid } from "@openmrs/esm-api";
 
 type NullablePatient = fhir.Patient | null;
@@ -79,9 +79,9 @@ function reducer(
 export function useCurrentPatient(
   patientUuid = getPatientUuidFromUrl()
 ): [boolean, NullablePatient, PatientUuid, Error | null] {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let active = true;
 
     if (patientUuid) {

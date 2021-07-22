@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ToastNotification } from "carbon-components-react/es/components/Notification";
 
 const defaultOptions = {
@@ -39,9 +39,9 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
     millis = defaultOptions.millis,
   } = toast;
 
-  const [waitingForTime, setWaitingForTime] = React.useState(true);
+  const [waitingForTime, setWaitingForTime] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (waitingForTime) {
       const timeoutId = setTimeout(closeToast, millis);
       return () => clearTimeout(timeoutId);

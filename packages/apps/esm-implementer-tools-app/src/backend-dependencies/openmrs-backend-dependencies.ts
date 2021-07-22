@@ -1,63 +1,81 @@
 import { isVersionSatisfied, openmrsFetch } from "@openmrs/esm-framework";
 import difference from "lodash-es/difference";
 
-const installedBackendModules: Array<Record<string, string>> = [];
-const modulesWithMissingBackendModules: MissingBackendModules[] = [];
-const modulesWithWrongBackendModulesVersion: MissingBackendModules[] = [];
+export type ResolvedBackendModuleType = "missing" | "version-mismatch" | "okay";
 
-let memorizedUnresolvedsBackendDeps: UnresolvedBackendDependencies;
+export interface ResolvedBackendModule {
+  name: string;
+  requiredVersion: string;
+  installedVersion?: string;
+  type: ResolvedBackendModuleType;
+}
 
-async function initInstalledBackendModules() {
+export interface FrontendModule {
+  name: string;
+  dependencies: Array<ResolvedBackendModule>;
+}
+
+interface Module {
+  moduleName: string;
+  backendDependencies: Record<string, string>;
+}
+
+interface BackendModule {
+  uuid: string;
+  version: string;
+}
+
+let cachedFrontendModules: Array<FrontendModule>;
+
+async function initInstalledBackendModules(): Promise<Array<BackendModule>> {
   try {
     const response = await fetchInstalledBackendModules();
-    installedBackendModules.push(...response.data.results);
+    return response.data.results;
   } catch (err) {
-    setTimeout(() => {
-      throw err;
-    });
+    console.error(err);
   }
+
+  return [];
 }
 
-export async function checkModules(): Promise<UnresolvedBackendDependencies> {
-  if (memorizedUnresolvedsBackendDeps) return memorizedUnresolvedsBackendDeps;
+function checkIfModulesAreInstalled(
+  module: Module,
+  installedBackendModules: Array<BackendModule>
+): FrontendModule {
+  const dependencies: Array<ResolvedBackendModule> = [];
 
-  const modules = (window.installedModules ?? [])
-    .filter((module) => module[1].backendDependencies)
-    .map((module) => ({
-      backendDependencies: module[1].backendDependencies,
-      moduleName: module[0],
-    }));
-
-  await initInstalledBackendModules();
-  modules.forEach((module) => checkIfModulesAreInstalled(module));
-
-  memorizedUnresolvedsBackendDeps = {
-    modulesWithMissingBackendModules,
-    modulesWithWrongBackendModulesVersion,
-  };
-
-  return memorizedUnresolvedsBackendDeps;
-}
-
-function checkIfModulesAreInstalled(module: Module) {
   const missingBackendModule = getMissingBackendModules(
-    module.backendDependencies
+    module.backendDependencies,
+    installedBackendModules
   );
+
   const installedAndRequiredModules = getInstalledAndRequiredBackendModules(
-    module.backendDependencies
+    module.backendDependencies,
+    installedBackendModules
   );
-  if (missingBackendModule.length > 0) {
-    modulesWithMissingBackendModules.push({
-      moduleName: module.moduleName,
-      backendModules: missingBackendModule,
-    });
-  }
-  if (installedAndRequiredModules.length > 0) {
-    modulesWithWrongBackendModulesVersion.push({
-      moduleName: module.moduleName,
-      backendModules: getMisMatchedBackendModules(installedAndRequiredModules),
-    });
-  }
+
+  dependencies.push(
+    ...missingBackendModule.map((m) => ({
+      name: m.uuid,
+      requiredVersion: m.version,
+      type: "missing" as ResolvedBackendModuleType,
+    })),
+    ...installedAndRequiredModules.map((m) => {
+      const requiredVersion = m.version;
+      const installedVersion = getInstalledVersion(m, installedBackendModules);
+      return {
+        name: m.uuid,
+        requiredVersion,
+        installedVersion,
+        type: getResolvedModuleType(requiredVersion, installedVersion),
+      };
+    })
+  );
+
+  return {
+    name: module.moduleName,
+    dependencies,
+  };
 }
 
 function fetchInstalledBackendModules() {
@@ -67,27 +85,34 @@ function fetchInstalledBackendModules() {
 }
 
 function getMissingBackendModules(
-  requiredBackendModules: Record<string, string>
-) {
+  requiredBackendModules: Record<string, string>,
+  installedBackendModules: Array<BackendModule>
+): Array<BackendModule> {
   const requiredBackendModulesUuids = Object.keys(requiredBackendModules);
   const installedBackendModuleUuids = installedBackendModules.map(
     (res) => res.uuid
   );
+
   const missingModules = difference(
     requiredBackendModulesUuids,
     installedBackendModuleUuids
   );
-  return missingModules.map((key) => {
-    return { uuid: key, version: requiredBackendModules[key] };
-  });
+
+  return missingModules.map((key) => ({
+    uuid: key,
+    version: requiredBackendModules[key],
+  }));
 }
 
 function getInstalledAndRequiredBackendModules(
-  requiredBackendModules: Record<string, string>
-) {
-  const requiredModules = Object.keys(requiredBackendModules).map((key) => {
-    return { uuid: key, version: requiredBackendModules[key] };
-  });
+  requiredBackendModules: Record<string, string>,
+  installedBackendModules: Array<BackendModule>
+): Array<BackendModule> {
+  const requiredModules = Object.keys(requiredBackendModules).map((key) => ({
+    uuid: key,
+    version: requiredBackendModules[key],
+  }));
+
   return requiredModules.filter((requiredModule) => {
     return installedBackendModules.find((installedModule) => {
       return requiredModule.uuid === installedModule.uuid;
@@ -95,45 +120,47 @@ function getInstalledAndRequiredBackendModules(
   });
 }
 
-function getMisMatchedBackendModules(
-  installedAndRequiredBackendModules: BackendModule[]
+function getInstalledVersion(
+  installedAndRequiredBackendModule: BackendModule,
+  installedBackendModules: Array<BackendModule>
 ) {
-  let misMatchedBackendModules: BackendModule[] = [];
-  for (let uuid in installedAndRequiredBackendModules) {
-    const requiredVersion = installedAndRequiredBackendModules[uuid].version;
-    const moduleName = installedAndRequiredBackendModules[uuid].uuid;
-    const installedVersion =
-      installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ??
-      "";
+  const moduleName = installedAndRequiredBackendModule.uuid;
+  return (
+    installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ?? ""
+  );
+}
 
-    if (!isVersionSatisfied(requiredVersion, installedVersion)) {
-      misMatchedBackendModules.push({
-        uuid: moduleName,
-        requiredVersion: requiredVersion,
-        version: installedVersion,
-      });
-    }
+function getResolvedModuleType(
+  requiredVersion: string,
+  installedVersion: string
+): ResolvedBackendModuleType {
+  if (!isVersionSatisfied(requiredVersion, installedVersion)) {
+    return "version-mismatch";
   }
-  return misMatchedBackendModules;
+
+  return "okay";
 }
 
-export interface UnresolvedBackendDependencies {
-  modulesWithMissingBackendModules: MissingBackendModules[];
-  modulesWithWrongBackendModulesVersion: MissingBackendModules[];
+export async function checkModules(): Promise<Array<FrontendModule>> {
+  if (!cachedFrontendModules) {
+    const modules = (window.installedModules ?? [])
+      .filter((module) => module[1].backendDependencies)
+      .map((module) => ({
+        backendDependencies: module[1].backendDependencies,
+        moduleName: module[0],
+      }));
+
+    const installedBackendModules = await initInstalledBackendModules();
+    cachedFrontendModules = modules.map((m) =>
+      checkIfModulesAreInstalled(m, installedBackendModules)
+    );
+  }
+
+  return cachedFrontendModules;
 }
 
-export interface BackendModule {
-  uuid: string;
-  version: string;
-  requiredVersion?: string;
-}
-
-export interface MissingBackendModules {
-  moduleName: string;
-  backendModules: BackendModule[];
-}
-
-export interface Module {
-  moduleName: string;
-  backendDependencies: Record<string, string>;
+export function hasInvalidDependencies(frontendModules: Array<FrontendModule>) {
+  return frontendModules.some((m) =>
+    m.dependencies.some((n) => n.type !== "okay")
+  );
 }

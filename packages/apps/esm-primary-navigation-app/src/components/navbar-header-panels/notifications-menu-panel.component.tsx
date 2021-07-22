@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ExtensionSlot } from "@openmrs/esm-framework";
-import { HeaderPanel, HeaderPanelProps } from "carbon-components-react";
+import type { HeaderPanelProps } from "carbon-components-react";
+import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
 import styles from "./notifications-menu.component.panel.scss";
 
 interface NotificationsMenuPanelProps extends HeaderPanelProps {
@@ -12,7 +13,7 @@ const NotificationsMenuPanel: React.FC<NotificationsMenuPanelProps> = ({
   expanded,
 }) => {
   const { t } = useTranslation();
-  const state = React.useMemo(() => ({ expanded }), [expanded]);
+  const state = useMemo(() => ({ expanded }), [expanded]);
 
   return (
     <HeaderPanel

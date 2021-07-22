@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useMemo, useEffect } from "react";
 import { getCurrentUser } from "@openmrs/esm-framework";
 
 const CurrentUser = React.createContext<User>({
@@ -37,16 +37,16 @@ export interface LoggedInUser {
 }
 
 export function useCurrentUser() {
-  const value = React.useContext(CurrentUser);
+  const value = useContext(CurrentUser);
   return value.current;
 }
 
 export const CurrentUserContext: React.FC = ({ children }) => {
-  const [user, setUser] = React.useState<UserState>({
+  const [user, setUser] = useState<UserState>({
     current: undefined,
     loading: true,
   });
-  const value = React.useMemo(
+  const value = useMemo(
     () => ({
       current: user.current,
       setCurrent: (current: LoggedInUser) =>
@@ -58,7 +58,7 @@ export const CurrentUserContext: React.FC = ({ children }) => {
     [user]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const sub = getCurrentUser({
       includeAuthStatus: true,
     }).subscribe(({ user }) =>

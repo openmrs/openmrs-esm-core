@@ -7,13 +7,12 @@ import styles from "./popup.styles.css";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependencies.component";
-import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-dependencies";
+import { FrontendModule } from "../backend-dependencies/openmrs-backend-dependencies";
 import { setHasAlert } from "../store";
 
 interface DevToolsPopupProps {
   close(): void;
-  modulesWithMissingBackendModules: Array<MissingBackendModules>;
-  modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
+  frontendModules: Array<FrontendModule>;
   visibleTabIndex?: number;
 }
 
@@ -68,12 +67,7 @@ export default function Popup(props: DevToolsPopupProps) {
         ) : (
           <ModuleDiagnostics
             setHasAlert={setDiagnosticsHasAlert}
-            modulesWithMissingBackendModules={
-              props.modulesWithMissingBackendModules
-            }
-            modulesWithWrongBackendModulesVersion={
-              props.modulesWithWrongBackendModulesVersion
-            }
+            frontendModules={props.frontendModules}
           />
         )}
       </div>

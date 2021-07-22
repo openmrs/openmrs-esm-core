@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Subject } from "rxjs";
 import { InlineNotificationMeta, Notification } from "./notification.component";
 
@@ -9,11 +9,11 @@ interface ActiveNotificationProps {
 const ActiveNotifications: React.FC<ActiveNotificationProps> = ({
   subject,
 }) => {
-  const [notifications, setNotifications] = React.useState<
+  const [notifications, setNotifications] = useState<
     Array<InlineNotificationMeta>
   >([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = subject.subscribe((notification) =>
       setNotifications((notifications) => [
         ...notifications.filter(

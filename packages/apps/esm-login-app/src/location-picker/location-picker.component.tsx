@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import debounce from "lodash-es/debounce";
 import isEmpty from "lodash-es/isEmpty";
 import { Trans, useTranslation } from "react-i18next";
@@ -50,27 +50,25 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     );
     return isValidLocation ? userLocation : "";
   };
-  const [locationData, setLocationData] = React.useState<LocationDataState>({
+  const [locationData, setLocationData] = useState<LocationDataState>({
     activeLocation: getDefaultUserLoginLocation() ?? "",
     locationResult: loginLocations,
   });
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [pageSize, setPageSize] = React.useState<number>(
-    chooseLocation.numberToShow
-  );
-  const inputRef = React.useRef();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pageSize, setPageSize] = useState<number>(chooseLocation.numberToShow);
+  const inputRef = useRef();
 
   const searchTimeout = 300;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSubmitting) {
       onChangeLocation(locationData.activeLocation);
       setIsSubmitting(false);
     }
   }, [isSubmitting, locationData, onChangeLocation]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const ac = new AbortController();
 
     if (loginLocations.length > 100) {
@@ -126,7 +124,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     setIsSubmitting(true);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (locationData.activeLocation) {
       window.localStorage.setItem(
         `${userDefaultLoginLocation}${currentUser}`,
@@ -135,7 +133,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     }
   }, [locationData.activeLocation, currentUser]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (currentLocationUuid && hideWelcomeMessage) {
       setLocationData((prevState) => ({
         ...prevState,
@@ -147,7 +145,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     }
   }, [currentLocationUuid, hideWelcomeMessage]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSubmitting && inputRef.current) {
       let searchInput: HTMLInputElement = inputRef.current;
       searchInput.value = "";
@@ -162,7 +160,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     }));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     locationData.locationResult.length < pageSize &&
       setPageSize(locationData.locationResult.length);
     chooseLocation.numberToShow > locationData.locationResult.length

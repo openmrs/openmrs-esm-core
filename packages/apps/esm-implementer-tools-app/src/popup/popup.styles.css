@@ -33,6 +33,7 @@
   justify-content: space-between;
   border-bottom: 1px solid #a0a0a0;
   z-index: 2;
+  background: #e0e0e0;
 }
 
 .closeButton {

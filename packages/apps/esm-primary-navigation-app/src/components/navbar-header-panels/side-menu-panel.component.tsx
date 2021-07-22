@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { ExtensionSlot } from "@openmrs/esm-framework";
+import type { SideNavProps } from "carbon-components-react";
 import { SideNav } from "carbon-components-react/es/components/UIShell";
-import { SideNavProps } from "carbon-components-react";
 import styles from "./side-menu-panel.component.scss";
 
 interface SideMenuPanelProps extends SideNavProps {
@@ -12,7 +12,7 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({
   expanded,
   hidePanel,
 }) => {
-  const menuRef = React.useRef(null);
+  const menuRef = useRef(null);
   const current = menuRef?.current;
 
   useEffect(() => {

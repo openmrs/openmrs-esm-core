@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import styles from "../styles.scss";
 import ArrowRight24 from "@carbon/icons-react/es/arrow--right/24";
 import Button from "carbon-components-react/es/components/Button";
@@ -29,22 +29,22 @@ export interface LoginProps
 const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
   const config = useConfig();
   const user = useCurrentUser();
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [errorMessage, setErrorMessage] = React.useState("");
-  const [showPassword, setShowPassword] = React.useState(false);
-  const passwordInputRef = React.useRef<HTMLInputElement>(null);
-  const usernameInputRef = React.useRef<HTMLInputElement>(null);
-  const formRef = React.useRef<HTMLFormElement>(null);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
+  const usernameInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   const [t] = useTranslation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (user) {
       history.push("/login/location", location ? location.state : undefined);
     }
   }, [user, history, location]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const field = showPassword
       ? passwordInputRef.current
       : usernameInputRef.current;
@@ -54,7 +54,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
     }
   }, [showPassword]);
 
-  const continueLogin = React.useCallback(() => {
+  const continueLogin = useCallback(() => {
     const field = usernameInputRef.current;
 
     if (field.value.length > 0) {
@@ -64,22 +64,22 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
     }
   }, []);
 
-  const changeUsername = React.useCallback(
+  const changeUsername = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value),
     []
   );
 
-  const changePassword = React.useCallback(
+  const changePassword = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => setPassword(evt.target.value),
     []
   );
 
-  const resetUserNameAndPassword = React.useCallback(() => {
+  const resetUserNameAndPassword = useCallback(() => {
     setUsername("");
     setPassword("");
   }, []);
 
-  const handleSubmit = React.useCallback(
+  const handleSubmit = useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
       evt.stopPropagation();

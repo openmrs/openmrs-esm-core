@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./root.scss";
 import Navbar from "./components/navbar/navbar.component";
 import { BrowserRouter, Redirect } from "react-router-dom";
@@ -9,13 +9,13 @@ import { getCurrentSession, getSynchronizedCurrentUser } from "./root.resource";
 export interface RootProps {}
 
 const Root: React.FC<RootProps> = () => {
-  const [user, setUser] = React.useState<LoggedInUser | null | false>(null);
-  const [userSession, setUserSession] = React.useState<UserSession>(null);
-  const [allowedLocales, setAllowedLocales] = React.useState();
-  const logout = React.useCallback(() => setUser(false), []);
+  const [user, setUser] = useState<LoggedInUser | null | false>(null);
+  const [userSession, setUserSession] = useState<UserSession>(null);
+  const [allowedLocales, setAllowedLocales] = useState();
+  const logout = useCallback(() => setUser(false), []);
   const openmrsSpaBase = window["getOpenmrsSpaBase"]();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const currentUserSub = getSynchronizedCurrentUser({
       includeAuthStatus: true,
     }).subscribe((response) => {

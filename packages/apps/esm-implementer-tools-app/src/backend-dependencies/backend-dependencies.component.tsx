@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import DataTable, {
   Table,
@@ -11,55 +11,47 @@ import DataTable, {
 } from "carbon-components-react/es/components/DataTable";
 import {
   FrontendModule,
-  ModuleDiagnosticsProps,
-  parseUnresolvedDeps,
-} from "./helpers/backend-dependecies-helper";
+  hasInvalidDependencies,
+} from "./openmrs-backend-dependencies";
+
+export interface ModuleDiagnosticsProps {
+  setHasAlert(value: boolean): void;
+  frontendModules: Array<FrontendModule>;
+}
 
 export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
-  modulesWithMissingBackendModules,
-  modulesWithWrongBackendModulesVersion,
+  frontendModules,
   setHasAlert,
 }) => {
   const { t } = useTranslation();
-  const [unresolvedDeps, setUnresolvedDeps] = useState<Array<FrontendModule>>(
-    []
-  );
 
   useEffect(() => {
-    if (
-      !modulesWithMissingBackendModules.length &&
-      !modulesWithWrongBackendModulesVersion.length
-    )
-      return;
+    setHasAlert(hasInvalidDependencies(frontendModules));
+  }, [frontendModules]);
 
-    setUnresolvedDeps(
-      parseUnresolvedDeps(
-        modulesWithWrongBackendModulesVersion,
-        modulesWithMissingBackendModules
-      )
-    );
-    setHasAlert(true);
-  }, [modulesWithMissingBackendModules, modulesWithWrongBackendModulesVersion]);
+  const headers = useMemo(
+    () => [
+      {
+        key: "name",
+        header: t("moduleName", "Module Name"),
+      },
+      {
+        key: "installedVersion",
+        header: t("installedVersion", "Installed Version"),
+      },
+      {
+        key: "requiredVersion",
+        header: t("requiredVersion", "Required Version"),
+      },
+    ],
+    [t]
+  );
 
-  const headers = [
-    {
-      key: "name",
-      header: "Module Name",
-    },
-    {
-      key: "installedVersion",
-      header: t("installedVersion", "Installed Version"),
-    },
-    {
-      key: "requiredVersion",
-      header: t("requiredVersion", "Required Version"),
-    },
-  ];
   return (
     <div>
       <DataTable rows={[]} headers={headers}>
         {({ headers, getTableProps, getHeaderProps }) => (
-          <TableContainer title={""}>
+          <TableContainer title="">
             <Table {...getTableProps()}>
               <TableHead>
                 <TableRow>
@@ -71,8 +63,8 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {unresolvedDeps.map((esm, i) => (
-                  <Fragment key={`${esm.name}-${i}`}>
+                {frontendModules.map((esm) => (
+                  <Fragment key={esm.name}>
                     <TableRow>
                       <TableCell>
                         <strong>{esm.name}</strong>
@@ -80,16 +72,22 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
                       <TableCell></TableCell>
                       <TableCell></TableCell>
                     </TableRow>
-                    {esm.unresolvedDeps.map((dep, j) => (
-                      <TableRow key={`${dep.name}-${j}`}>
+                    {esm.dependencies.map((dep) => (
+                      <TableRow key={dep.name}>
                         <TableCell>{dep.name}</TableCell>
                         <TableCell>
                           {dep.type === "missing" ? (
                             <span style={{ color: "red" }}>
                               {t("missing", "Missing")}
                             </span>
+                          ) : dep.type === "version-mismatch" ? (
+                            <span style={{ color: "red" }}>
+                              {dep.installedVersion}
+                            </span>
                           ) : (
-                            dep.installedVersion
+                            <span style={{ color: "green" }}>
+                              {dep.installedVersion}
+                            </span>
                           )}
                         </TableCell>
                         <TableCell>{dep.requiredVersion}</TableCell>

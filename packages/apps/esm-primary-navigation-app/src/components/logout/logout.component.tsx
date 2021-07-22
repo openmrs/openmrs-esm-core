@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { openmrsFetch, refetchCurrentUser } from "@openmrs/esm-framework";
 import styles from "./logout.component.scss";
 import Button from "carbon-components-react/es/components/Button";
@@ -10,9 +10,9 @@ export interface LogoutProps {
 
 const Logout: React.FC<LogoutProps> = ({ onLogout }) => {
   const { t } = useTranslation();
-  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const ac = new AbortController();
     if (isLoggingOut) {
       openmrsFetch("/ws/rest/v1/session", { method: "DELETE" })

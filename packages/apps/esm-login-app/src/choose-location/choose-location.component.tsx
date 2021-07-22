@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import LoadingIcon from "../loading/loading.component";
 import LocationPicker from "../location-picker/location-picker.component";
 import { RouteComponentProps } from "react-router-dom";
@@ -26,10 +26,10 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   const config = useConfig();
   const user = useCurrentUser();
   const [loginLocations, setLoginLocations] =
-    React.useState<Array<LocationEntry>>(null);
-  const [isLoading, setIsLoading] = React.useState(true);
+    useState<Array<LocationEntry>>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const changeLocation = React.useCallback(
+  const changeLocation = useCallback(
     (locationUuid?: string) => {
       const sessionDefined = locationUuid
         ? setSessionLocation(locationUuid, new AbortController())
@@ -49,7 +49,7 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
     [referrer, config.links.loginSuccess, returnToUrl]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isLoginEnabled) {
       const ac = new AbortController();
       queryLocations("", ac, config.chooseLocation.useLoginLocationTag).then(
@@ -59,7 +59,7 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
     }
   }, [isLoginEnabled]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (loginLocations) {
       if (!config.chooseLocation.enabled || loginLocations.length < 2) {
         changeLocation(loginLocations[0]?.resource.id);
