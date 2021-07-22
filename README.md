@@ -14,8 +14,6 @@ This is a [Lerna](https://lerna.js.org/) project containing the core packages fo
 
 ## Available Packages
 
-You can find more documentation on these in the [docs](./docs) folder.
-
 ### Application
 
 This contains tooling and the app shell.
