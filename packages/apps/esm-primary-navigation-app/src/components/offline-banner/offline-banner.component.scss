@@ -1,0 +1,38 @@
+@import "~@openmrs/esm-styleguide/src/vars";
+
+.offlineBanner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--omrs-offline-banner-height);
+  background-color: #022b30;
+  color: white;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  z-index: 3;
+}
+
+.offlineIconContainer {
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.offlineNote {
+  font-weight: bold;
+}
+
+.offlineLastUpdatedContainer {
+  flex: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-right: 1rem;
+}
+
+.lastUpdatedNote {
+  color: $color-gray-30;
+  font-size: 0.75rem;
+}
