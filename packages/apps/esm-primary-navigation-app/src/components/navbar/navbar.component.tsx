@@ -74,7 +74,7 @@ const Navbar: React.FC<NavbarProps> = ({
     return (
       <>
         <OfflineBanner />
-        <Header aria-label="OpenMRS">
+        <Header className={styles.topNavHeader} aria-label="OpenMRS">
           {showHamburger && (
             <HeaderMenuButton
               aria-label="Open menu"

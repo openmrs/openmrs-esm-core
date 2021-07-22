@@ -2,13 +2,7 @@
   --omrs-sidenav-width: 16.25rem;
   --omrs-offline-banner-height: 0rem;
   --omrs-navbar-height: 3rem;
-  --omrs-topnav-height: calc(
-    var(--omrs-offline-banner-height) + var(--omrs-navbar-height)
-  );
-}
-
-.omrs-offline {
-  --omrs-offline-banner-height: 1.5rem;
+  --omrs-topnav-height: var(--omrs-navbar-height);
 }
 
 .omrs-main-content {
@@ -18,4 +12,15 @@
 
 body.omrs-sidenav-expanded .omrs-main-content {
   margin-left: var(--omrs-sidenav-width);
+}
+
+.omrs-offline {
+  --omrs-offline-banner-height: 1.5rem;
+  --omrs-topnav-height: 4.5rem;
+
+  .bx--side-nav,
+  .bx--header-panel--expanded,
+  .bx--side-nav__overlay {
+    top: var(--omrs-topnav-height);
+  }
 }

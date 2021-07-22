@@ -323,6 +323,17 @@ function subscribeOnlineAndLoginChange(
   });
 }
 
+function setupOfflineCssClasses() {
+  subscribeConnectivity(({ online }) => {
+    const body = document.querySelector("body")!;
+    if (online) {
+      body.classList.remove("omrs-offline");
+    } else {
+      body.classList.add("omrs-offline");
+    }
+  });
+}
+
 export function run(configUrls: Array<string>) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
@@ -344,6 +355,7 @@ export function run(configUrls: Array<string>) {
 
   return loadApps()
     .then(setupApps)
+    .then(setupOfflineCssClasses)
     .then(provideConfigs)
     .then(runShell)
     .catch(handleInitFailure)

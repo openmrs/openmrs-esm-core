@@ -48,7 +48,6 @@ function useLastUpdated() {
     localStorage.setItem("offline-last-updated", date.toISOString());
   };
 
-  // Best effort right now.
   React.useEffect(() => {
     let wasOnline: boolean | null = null;
 
