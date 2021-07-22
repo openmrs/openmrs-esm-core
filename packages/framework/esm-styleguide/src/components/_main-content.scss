@@ -1,6 +1,14 @@
 :root {
   --omrs-sidenav-width: 16.25rem;
-  --omrs-topnav-height: 3rem;
+  --omrs-offline-banner-height: 0rem;
+  --omrs-navbar-height: 3rem;
+  --omrs-topnav-height: calc(
+    var(--omrs-offline-banner-height) + var(--omrs-navbar-height)
+  );
+}
+
+.omrs-offline {
+  --omrs-offline-banner-height: 1.5rem;
 }
 
 .omrs-main-content {
