@@ -100,9 +100,11 @@ function getMisMatchedBackendModules(
 ) {
   let misMatchedBackendModules: BackendModule[] = [];
   for (let uuid in installedAndRequiredBackendModules) {
-    const installedVersion = installedBackendModules[uuid].version;
     const requiredVersion = installedAndRequiredBackendModules[uuid].version;
     const moduleName = installedAndRequiredBackendModules[uuid].uuid;
+    const installedVersion =
+      installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ??
+      "";
 
     if (!isVersionSatisfied(requiredVersion, installedVersion)) {
       misMatchedBackendModules.push({

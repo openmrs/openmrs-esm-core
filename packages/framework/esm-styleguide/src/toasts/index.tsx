@@ -8,6 +8,11 @@ import isEmpty from "lodash-es/isEmpty";
 const toastsSubject = new Subject<ToastNotificationMeta>();
 let toastId = 0;
 
+/**
+ * Starts a rendering host for toast notifications. Should only be used by the app shell.
+ * Under normal conditions there is no need to use this function.
+ * @param target The container target that hosts the toast notifications.
+ */
 export function renderToasts(target: HTMLElement | null) {
   if (target) {
     render(<ActiveToasts subject={toastsSubject} />, target);
@@ -22,6 +27,10 @@ function isNotEmpty(description: React.ReactNode) {
     : false;
 }
 
+/**
+ * Displays a toast notification in the UI.
+ * @param toast The description of the toast to display.
+ */
 export function showToast(toast: ToastDescriptor) {
   if (toast && isNotEmpty(toast.description)) {
     setTimeout(() => {

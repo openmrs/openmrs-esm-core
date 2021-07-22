@@ -15,7 +15,6 @@ import {
   HeaderGlobalAction,
 } from "carbon-components-react/es/components/UIShell";
 import Close20 from "@carbon/icons-react/lib/close/20";
-import Notification20 from "@carbon/icons-react/es/notification/20";
 import Switcher20 from "@carbon/icons-react/lib/switcher/20";
 import UserAvatarFilledAlt20 from "@carbon/icons-react/es/user--avatar--filled--alt/20";
 import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
@@ -75,7 +74,7 @@ const Navbar: React.FC<NavbarProps> = ({
     return (
       <>
         <OfflineBanner />
-        <Header aria-label="OpenMRS" style={{ top: "1.5rem" }}>
+        <Header aria-label="OpenMRS">
           {showHamburger && (
             <HeaderMenuButton
               aria-label="Open menu"
@@ -99,18 +98,13 @@ const Navbar: React.FC<NavbarProps> = ({
               className={styles.topNavActionSlot}
               state={{ isActive: isActivePanel("") }}
             />
-            <HeaderGlobalAction
-              aria-label="Notifications"
-              name="Notifications"
-              isActive={isActivePanel("notificationsMenu")}
-              onClick={() => togglePanel("notificationsMenu")}
-            >
-              {isActivePanel("notificationsMenu") ? (
-                <Close20 />
-              ) : (
-                <Notification20 />
-              )}
-            </HeaderGlobalAction>
+            <ExtensionSlot
+              extensionSlotName="notifications-menu-button-slot"
+              state={{
+                isActivePanel: isActivePanel,
+                togglePanel: togglePanel,
+              }}
+            />
             <HeaderGlobalAction
               aria-label="Users"
               aria-labelledby="Users Avatar Icon"

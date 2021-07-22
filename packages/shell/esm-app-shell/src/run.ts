@@ -20,6 +20,7 @@ import {
   KnownOmrsServiceWorkerEvents,
   dispatchNetworkRequestFailed,
   triggerSynchronization,
+  renderModals,
   dispatchPrecacheStaticDependencies,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
@@ -201,6 +202,11 @@ function showToasts() {
   return;
 }
 
+function showModals() {
+  renderModals(document.querySelector(".omrs-modals-container"));
+  return;
+}
+
 function showLoadingSpinner() {
   return renderLoadingSpinner(document.body);
 }
@@ -323,6 +329,7 @@ export function run(configUrls: Array<string>) {
 
   integrateBreakpoints();
   showToasts();
+  showModals();
   showNotifications();
   createAppState({});
   subscribeNotificationShown(showNotification);
@@ -330,7 +337,10 @@ export function run(configUrls: Array<string>) {
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
-  setupServiceWorker();
+
+  if (process.env.NODE_ENV === "production") {
+    setupServiceWorker();
+  }
 
   return loadApps()
     .then(setupApps)
