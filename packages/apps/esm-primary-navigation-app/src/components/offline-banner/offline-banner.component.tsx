@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./offline-banner.component.scss";
-import { ConnectionSignalOff16 } from "@carbon/icons-react";
-import { subscribeConnectivity } from "../../../../../framework/esm-globals/src";
+import ConnectionSignalOff16 from "@carbon/icons-react/es/connection-signal--off/16";
+import { subscribeConnectivity } from "@openmrs/esm-framework";
 
 export interface OfflineBannerProps {}
 
