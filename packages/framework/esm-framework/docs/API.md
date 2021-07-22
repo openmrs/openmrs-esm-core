@@ -78,6 +78,7 @@
 - [PageDefinition](interfaces/pagedefinition.md)
 - [PatientWithFullResponse](interfaces/patientwithfullresponse.md)
 - [Person](interfaces/person.md)
+- [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md)
 - [Privilege](interfaces/privilege.md)
 - [QueueItemDescriptor](interfaces/queueitemdescriptor.md)
 - [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
@@ -184,6 +185,7 @@
 - [dispatchConnectivityChanged](API.md#dispatchconnectivitychanged)
 - [dispatchNetworkRequestFailed](API.md#dispatchnetworkrequestfailed)
 - [dispatchNotificationShown](API.md#dispatchnotificationshown)
+- [dispatchPrecacheStaticDependencies](API.md#dispatchprecachestaticdependencies)
 - [generateOfflineUuid](API.md#generateofflineuuid)
 - [getAppState](API.md#getappstate)
 - [getAssignedIds](API.md#getassignedids)
@@ -248,6 +250,7 @@
 - [subscribeConnectivityChanged](API.md#subscribeconnectivitychanged)
 - [subscribeNetworkRequestFailed](API.md#subscribenetworkrequestfailed)
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
+- [subscribePrecacheStaticDependencies](API.md#subscribeprecachestaticdependencies)
 - [subscribeTo](API.md#subscribeto)
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [switchTo](API.md#switchto)
@@ -367,7 +370,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L19)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L54)
 
 ___
 
@@ -594,7 +597,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L22)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L57)
 
 ___
 
@@ -1510,7 +1513,27 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L59)
+[packages/framework/esm-globals/src/events.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L81)
+
+___
+
+### dispatchPrecacheStaticDependencies
+
+▸ **dispatchPrecacheStaticDependencies**(`data?`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L34)
 
 ___
 
@@ -2257,7 +2280,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/version.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/version.ts#L3)
+[packages/framework/esm-utils/src/version.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/version.ts#L21)
 
 ___
 
@@ -2603,11 +2626,14 @@ ___
 
 ▸ **renderInlineNotifications**(`target`): `void`
 
+Starts a rendering host for inline notifications. Should only be used by the app shell.
+Under normal conditions there is no need to use this function.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `target` | `HTMLElement` \| ``null`` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `target` | `HTMLElement` \| ``null`` | The container target that hosts the inline notifications. |
 
 #### Returns
 
@@ -2615,7 +2641,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/index.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L14)
+[packages/framework/esm-styleguide/src/notifications/index.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L19)
 
 ___
 
@@ -2661,7 +2687,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L20)
+[packages/framework/esm-styleguide/src/modals/index.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L102)
 
 ___
 
@@ -2669,11 +2695,14 @@ ___
 
 ▸ **renderToasts**(`target`): `void`
 
+Starts a rendering host for toast notifications. Should only be used by the app shell.
+Under normal conditions there is no need to use this function.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `target` | `HTMLElement` \| ``null`` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `target` | `HTMLElement` \| ``null`` | The container target that hosts the toast notifications. |
 
 #### Returns
 
@@ -2681,7 +2710,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L11)
+[packages/framework/esm-styleguide/src/toasts/index.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L16)
 
 ___
 
@@ -2830,17 +2859,21 @@ ___
 
 ▸ **showModal**(`extensionId`, `props?`, `onClose?`): () => `void`
 
+Shows the provided extension component in a modal dialog.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `extensionId` | `string` |
-| `props` | `Record`<string, any\> |
-| `onClose` | () => `void` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `extensionId` | `string` | The id of the extension to show. |
+| `props` | `Record`<string, any\> | The optional props to provide to the extension. |
+| `onClose` | () => `void` | The optional notification to receive when the modal is closed. |
 
 #### Returns
 
 `fn`
+
+The dispose function to force closing the modal dialog.
 
 ▸ (): `void`
 
@@ -2850,7 +2883,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L63)
+[packages/framework/esm-styleguide/src/modals/index.tsx:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L136)
 
 ___
 
@@ -2858,11 +2891,13 @@ ___
 
 ▸ **showNotification**(`notification`): `void`
 
+Displays an inline notification in the UI.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `notification` | `NotificationDescriptor` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `notification` | `NotificationDescriptor` | The description of the notification to display. |
 
 #### Returns
 
@@ -2870,7 +2905,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L31)
+[packages/framework/esm-styleguide/src/notifications/index.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L40)
 
 ___
 
@@ -2878,11 +2913,13 @@ ___
 
 ▸ **showToast**(`toast`): `void`
 
+Displays a toast notification in the UI.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `toast` | `ToastDescriptor` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `toast` | `ToastDescriptor` | The description of the toast to display. |
 
 #### Returns
 
@@ -2890,7 +2927,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/index.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L25)
+[packages/framework/esm-styleguide/src/toasts/index.tsx:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L34)
 
 ___
 
@@ -2994,7 +3031,33 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L65)
+[packages/framework/esm-globals/src/events.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L87)
+
+___
+
+### subscribePrecacheStaticDependencies
+
+▸ **subscribePrecacheStaticDependencies**(`cb`): () => `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md)) => `void` |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L42)
 
 ___
 
@@ -3049,7 +3112,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L73)
+[packages/framework/esm-globals/src/events.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L95)
 
 ___
 

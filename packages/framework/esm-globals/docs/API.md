@@ -13,6 +13,7 @@
 - [LegacyAppExtensionDefinition](interfaces/legacyappextensiondefinition.md)
 - [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md)
 - [PageDefinition](interfaces/pagedefinition.md)
+- [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md)
 - [ResourceLoader](interfaces/resourceloader.md)
 - [ShowNotificationEvent](interfaces/shownotificationevent.md)
 - [ShowToastEvent](interfaces/showtoastevent.md)
@@ -27,11 +28,13 @@
 
 - [dispatchConnectivityChanged](API.md#dispatchconnectivitychanged)
 - [dispatchNotificationShown](API.md#dispatchnotificationshown)
+- [dispatchPrecacheStaticDependencies](API.md#dispatchprecachestaticdependencies)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
 - [subscribeConnectivity](API.md#subscribeconnectivity)
 - [subscribeConnectivityChanged](API.md#subscribeconnectivitychanged)
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
+- [subscribePrecacheStaticDependencies](API.md#subscribeprecachestaticdependencies)
 - [subscribeToastShown](API.md#subscribetoastshown)
 
 ## Type aliases
@@ -92,7 +95,27 @@ ___
 
 #### Defined in
 
-[events.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L59)
+[events.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L81)
+
+___
+
+### dispatchPrecacheStaticDependencies
+
+▸ **dispatchPrecacheStaticDependencies**(`data?`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[events.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L34)
 
 ___
 
@@ -204,7 +227,33 @@ ___
 
 #### Defined in
 
-[events.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L65)
+[events.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L87)
+
+___
+
+### subscribePrecacheStaticDependencies
+
+▸ **subscribePrecacheStaticDependencies**(`cb`): () => `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md)) => `void` |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[events.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L42)
 
 ___
 
@@ -230,4 +279,4 @@ ___
 
 #### Defined in
 
-[events.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L73)
+[events.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L95)

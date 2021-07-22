@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[events.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L44)
+[events.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L66)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L45)
+[events.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L67)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[events.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L53)
+[events.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L75)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[events.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L52)
+[events.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L74)
