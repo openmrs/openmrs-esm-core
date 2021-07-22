@@ -44,8 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const layout = useLayoutType();
   const navMenuItems = useAssignedExtensionIds("nav-menu-slot");
 
-  const [activeHeaderPanel, setActiveHeaderPanel] =
-    useState<string>(null);
+  const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
 
   const isActivePanel = useCallback(
     (panelName: string) => activeHeaderPanel === panelName,

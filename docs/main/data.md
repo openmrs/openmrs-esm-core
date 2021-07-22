@@ -2,7 +2,7 @@
 
 Microfrontends interact with the OpenMRS server via the APIs exposed
 by its modules. In general, most of the endpoints we use are provided
-by the [FHIR Module](https://wiki.openmrs.org/display/projects/OpenMRS+FHIR+Module).
+by the [FHIR Module](https://wiki.openmrs.org/display/projects/OpenMRS+HL7+FHIR+Solutions).
 Most of the rest are provided by the
 [REST Module](https://wiki.openmrs.org/display/docs/REST+Module), which is
 documented [here](https://rest.openmrs.org/).
