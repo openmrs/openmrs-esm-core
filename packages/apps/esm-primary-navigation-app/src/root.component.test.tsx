@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  fireEvent,
-  render,
-  screen,
-  wait,
-} from "@testing-library/react";
+import { fireEvent, render, screen, wait } from "@testing-library/react";
 import { of } from "rxjs";
 import { isDesktop } from "./utils";
 import { mockUser } from "../__mocks__/mock-user";
