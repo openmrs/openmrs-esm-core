@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  fireEvent,
-  render,
-  screen,
-  wait,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { fireEvent, render, screen, wait } from "@testing-library/react";
 import { of } from "rxjs";
 import { isDesktop } from "./utils";
 import { mockUser } from "../__mocks__/mock-user";
@@ -29,6 +23,7 @@ jest.mock("@openmrs/esm-framework", () => ({
     logo: { src: null, alt: null, name: "Mock EMR" },
   })),
   refetchCurrentUser: jest.fn(),
+  subscribeConnectivity: jest.fn(),
 }));
 
 jest.mock("./root.resource", () => ({
