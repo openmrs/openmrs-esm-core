@@ -22,7 +22,10 @@ contributors. (More details in the [Why Use a Style Guide or a Design System](#w
     automatically customize all these for us). 
 
 ### To see the designs anytime
-You can see the designs without creating a Zeplin account by accessing the [Desktop](https://zpl.io/agmBNlR) and [Tablet](https://zpl.io/VKev8wP) screens.
+You can see the designs anytime (without creating a Zeplin account) by accessing these public links:
+* [Patient Chart designs](https://zpl.io/aNYmqeN)
+* [OHRI package designs](https://zpl.io/aMXW7e7)
+* [Offline Patient Follow-up designs](https://zpl.io/amRdKomv)
 
 ### To use the designs and the styleguide
 
@@ -31,10 +34,9 @@ First, watch this video guide for Developers on how to use Zeplin:
 
 To use the designs as a developer, you'll need to request Zeplin access from an OpenMRS
 admin; then, you can find them here:
-[Dev Desktop](https://app.zeplin.io/project/605a0def8c1a5c07401482c1) |
-[Dev Tablet](https://app.zeplin.io/project/5f7223cfda10f94d67cec6d0) 
+[OpenMRS Zeplin Project](https://app.zeplin.io/workspace/60d4d9bc220676b218e75ed2/projects?pid=60d59321e8100b0324762e05)
 
-Access the [OpenMRS Styleguide here](https://app.zeplin.io/project/5f7223cfda10f94d67cec6d0/styleguide/components).
+You can find re-useable shared components & more at the [OpenMRS Styleguide here](https://app.zeplin.io/project/60d5947dd636aebbd63dce4c/styleguide/components).
 
 ## Why use a Style Guide or a Design System?
 Users want a consistent, professional front-end UI. Without a style guide, 
