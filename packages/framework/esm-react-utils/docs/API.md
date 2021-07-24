@@ -44,6 +44,7 @@
 - [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
 - [useAttachedExtensionIds](API.md#useattachedextensionids)
+- [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useConfig](API.md#useconfig)
 - [useConnectedExtensions](API.md#useconnectedextensions)
 - [useConnectivity](API.md#useconnectivity)
@@ -437,6 +438,26 @@ Gets the assigned extension ids for the given slot.
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useAttachedExtensionIds.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useAttachedExtensionIds.ts#L11)
+
+___
+
+### useBodyScrollLock
+
+▸ **useBodyScrollLock**(`active`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `active` | `boolean` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useBodyScrollLock.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useBodyScrollLock.ts#L3)
 
 ___
 

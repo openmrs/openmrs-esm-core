@@ -271,6 +271,7 @@
 - [updateVisit](API.md#updatevisit)
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
 - [useAttachedExtensionIds](API.md#useattachedextensionids)
+- [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useConfig](API.md#useconfig)
 - [useConnectedExtensions](API.md#useconnectedextensions)
 - [useConnectivity](API.md#useconnectivity)
@@ -2687,7 +2688,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L102)
+[packages/framework/esm-styleguide/src/modals/index.tsx:107](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L107)
 
 ___
 
@@ -2883,7 +2884,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L136)
+[packages/framework/esm-styleguide/src/modals/index.tsx:141](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L141)
 
 ___
 
@@ -3523,6 +3524,26 @@ Gets the assigned extension ids for the given slot.
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useAttachedExtensionIds.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useAttachedExtensionIds.ts#L11)
+
+___
+
+### useBodyScrollLock
+
+▸ **useBodyScrollLock**(`active`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `active` | `boolean` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useBodyScrollLock.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useBodyScrollLock.ts#L3)
 
 ___
 
