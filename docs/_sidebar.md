@@ -5,9 +5,8 @@
   - [Release and Deployment](getting_started/release_and_deployment.md)
   - [Tour of a Microfrontend](getting_started/tour.md)
 - Main concepts
-  - [~Map of the project~]()
+  - [Map of the project](main/map.md)
   - [Creating a Microfrontend](main/creating_a_microfrontend.md)
-  - [~Creating a page~]()
   - [Using Carbon and the Styleguide](main/carbon.md)
   - [Retrieving and Posting Data](main/data.md)
   - [Translations](main/translations.md)
