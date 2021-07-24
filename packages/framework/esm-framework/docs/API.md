@@ -2688,7 +2688,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:107](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L107)
+[packages/framework/esm-styleguide/src/modals/index.tsx:109](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L109)
 
 ___
 
@@ -2884,7 +2884,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:141](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L141)
+[packages/framework/esm-styleguide/src/modals/index.tsx:163](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L163)
 
 ___
 
