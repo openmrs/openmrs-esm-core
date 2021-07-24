@@ -5,10 +5,6 @@
   border-radius: 2px;
 }
 
-.triggerButtonAlert {
-  color: var(--omrs-color-danger);
-}
-
 .toolStyles {
   background-color: transparent;
 }

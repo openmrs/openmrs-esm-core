@@ -5,7 +5,7 @@ interface ModalInstance {
   container?: HTMLElement;
   state: "NEW" | "MOUNTED" | "TO_BE_DELETED";
   onClose: () => void;
-  cleanup?: Function;
+  cleanup?: () => void;
   extensionId: string;
   props: Record<string, any>;
 }
@@ -36,7 +36,7 @@ function createModalFrame() {
   </button>`.trim()
   ) as HTMLButtonElement;
 
-  closeButton.addEventListener("click", () => closeHighestInstance());
+  closeButton.addEventListener("click", closeHighestInstance);
   const outer = document.createElement("div");
   outer.className = "bx--modal-container";
   const contentContainer = document.createElement("div");
@@ -47,6 +47,8 @@ function createModalFrame() {
   return { outer, contentContainer };
 }
 
+const original = window.getComputedStyle(document.body).overflow;
+
 function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
   if (!modalContainer) return;
 
@@ -54,6 +56,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
     // spin up the container if it was hidden previously
     if (!modalContainer.style.visibility) {
       addEventListener("keydown", handleEscKey);
+      document.body.style.overflow = "hidden";
       modalContainer.style.visibility = "unset";
     }
 
@@ -71,10 +74,10 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
             instance.props
           );
           instance.state = "MOUNTED";
-
-          modalContainer.prepend(instance.container);
-          instance.container.style.visibility = "unset";
+          modalContainer.prepend(outer);
+          outer.style.visibility = "unset";
           break;
+
         case "MOUNTED":
           if (instance.container) {
             instance.container.style.visibility = index ? "hidden" : "unset";
@@ -83,6 +86,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
 
         case "TO_BE_DELETED":
           instance.onClose();
+          instance.cleanup?.();
           instance.container?.remove();
           setTimeout(() => {
             modalStore.setState({
@@ -90,11 +94,12 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
               modalStack: modalStack.filter((x) => x !== instance),
             });
           }, 0);
-          return;
+          break;
       }
     });
   } else {
     modalContainer.style.removeProperty("visibility");
+    document.body.style.overflow = original;
     removeEventListener("keydown", handleEscKey);
   }
 }

@@ -7,6 +7,7 @@ export * from "./getLifecycle";
 export * from "./openmrsComponentDecorator";
 export * from "./useAssignedExtensionIds";
 export * from "./useAttachedExtensionIds";
+export * from "./useBodyScrollLock";
 export * from "./useConfig";
 export * from "./useConnectedExtensions";
 export * from "./useConnectivity";

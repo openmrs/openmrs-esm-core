@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import DataTable, {
   Table,
@@ -9,25 +9,16 @@ import DataTable, {
   TableCell,
   TableContainer,
 } from "carbon-components-react/es/components/DataTable";
-import {
-  FrontendModule,
-  hasInvalidDependencies,
-} from "./openmrs-backend-dependencies";
+import { FrontendModule } from "./openmrs-backend-dependencies";
 
 export interface ModuleDiagnosticsProps {
-  setHasAlert(value: boolean): void;
   frontendModules: Array<FrontendModule>;
 }
 
 export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
   frontendModules,
-  setHasAlert,
 }) => {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    setHasAlert(hasInvalidDependencies(frontendModules));
-  }, [frontendModules]);
 
   const headers = useMemo(
     () => [
