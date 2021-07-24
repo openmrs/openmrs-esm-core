@@ -20,3 +20,4 @@
   - [Squad DevOps and CI](advanced/squad_devops.md)
   - [Offline Mode](advanced/offline.md)
   - [Advanced Extensions and Slots](advanced/extensions.md)
+  - [Creating a Distribution](advanced/distribution.md)

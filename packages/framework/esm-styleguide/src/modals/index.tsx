@@ -1,9 +1,11 @@
 import { renderExtension } from "@openmrs/esm-extensions";
 import { createGlobalStore } from "@openmrs/esm-state";
 
+type ModalInstanceState = "NEW" | "MOUNTED" | "TO_BE_DELETED";
+
 interface ModalInstance {
   container?: HTMLElement;
-  state: "NEW" | "MOUNTED" | "TO_BE_DELETED";
+  state: ModalInstanceState;
   onClose: () => void;
   cleanup?: () => void;
   extensionId: string;
@@ -114,15 +116,35 @@ export function renderModals(modalContainer: HTMLElement | null) {
     });
   }
 }
+function openInstance(instance: ModalInstance) {
+  const state = modalStore.getState();
+  const modalStack = [instance, ...state.modalStack];
+
+  modalStore.setState({
+    ...state,
+    modalStack,
+  });
+}
+
+function closeInstance(instance: ModalInstance) {
+  const state = modalStore.getState();
+  const modalStack = state.modalStack.map(
+    (x): ModalInstance =>
+      x === instance ? { ...x, state: "TO_BE_DELETED" } : x
+  );
+  modalStore.setState({
+    ...state,
+    modalStack,
+  });
+}
 
 function closeHighestInstance() {
   const state = modalStore.getState();
-  modalStore.setState({
-    ...state,
-    modalStack: state.modalStack.map((instance, i) =>
-      i === 0 ? { ...instance, state: "TO_BE_DELETED" } : instance
-    ),
-  });
+  const [top] = state.modalStack;
+
+  if (top) {
+    closeInstance(top);
+  }
 }
 
 function handleEscKey(e: KeyboardEvent) {
@@ -143,26 +165,25 @@ export function showModal(
   props: Record<string, any> = {},
   onClose: () => void = () => {}
 ) {
-  const instance: ModalInstance = {
+  const close = () => {
+    const state = modalStore.getState();
+    const item = state.modalStack.find((m) => m.onClose === onClose);
+
+    if (item) {
+      closeInstance(item);
+    }
+  };
+
+  openInstance({
     state: "NEW",
     onClose,
     extensionId,
-    props,
-  };
-
-  const state = modalStore.getState();
-  modalStore.setState({
-    ...state,
-    modalStack: [instance, ...state.modalStack],
+    props: {
+      extensionId,
+      close,
+      ...props,
+    },
   });
 
-  return () => {
-    const state = modalStore.getState();
-    modalStore.setState({
-      ...state,
-      modalStack: state.modalStack.map((x) =>
-        x.onClose === instance.onClose ? { ...x, state: "TO_BE_DELETED" } : x
-      ),
-    });
-  };
+  return close;
 }
