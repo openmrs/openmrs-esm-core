@@ -93,6 +93,10 @@ export interface ComponentDefinition {
    */
   offline?: boolean | object;
   /**
+   * Defines the access role required for this component, if any.
+   */
+  role?: string;
+  /**
    * Defines resources that are loaded when the component should mount.
    */
   resources?: Record<string, ResourceLoader>;

@@ -9,7 +9,7 @@ import {
   ResourceLoader,
 } from "@openmrs/esm-framework";
 import { registerApplication } from "single-spa";
-import { routePrefix, routeRegex } from "./helpers";
+import { routePrefix, routeRegex, wrapLifecycle } from "./helpers";
 import type { Activator, ActivatorDefinition } from "./types";
 
 const providedDeps = {
@@ -48,8 +48,13 @@ function trySetup(appName: string, setup: () => any): any {
 
 function getLoader(
   load: () => Promise<any>,
-  resources?: Record<string, ResourceLoader>
+  resources?: Record<string, ResourceLoader>,
+  role?: string
 ) {
+  if (typeof role === "string") {
+    load = wrapLifecycle(load, role);
+  }
+
   if (typeof resources === "object") {
     const resourceKeys = Object.keys(resources);
 
@@ -129,6 +134,7 @@ export function registerApp(appName: string, appExports: System.Module) {
           route: result.activate,
           offline: result.offline,
           online: result.online,
+          role: result.role,
         });
       }
 
@@ -148,11 +154,11 @@ export function registerApp(appName: string, appExports: System.Module) {
 }
 
 export function tryRegisterPage(appName: string, page: PageDefinition) {
-  const { route, load, online, offline, resources } = page;
+  const { route, load, online, offline, resources, role } = page;
 
   if (checkStatus(online, offline)) {
     const activityFn = preprocessActivator(route);
-    const loader = getLoader(load, resources);
+    const loader = getLoader(load, resources, role);
     registerApplication(
       appName,
       loader,
@@ -188,7 +194,7 @@ To fix this, ensure that you define a "load" function inside the extension defin
   }
 
   registerExtension(id, {
-    load: getLoader(extension.load, extension.resources),
+    load: getLoader(extension.load, extension.resources, extension.role),
     meta: extension.meta || {},
     order: extension.order,
     moduleName,

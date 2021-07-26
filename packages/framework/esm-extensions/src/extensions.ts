@@ -1,6 +1,5 @@
 import { getExtensionSlotsConfigStore } from "@openmrs/esm-config";
 import {
-  ExtensionInfo,
   ExtensionRegistration,
   ExtensionSlotInfo,
   ExtensionSlotInstance,
