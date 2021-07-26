@@ -93,9 +93,9 @@ export interface ComponentDefinition {
    */
   offline?: boolean | object;
   /**
-   * Defines the access role required for this component, if any.
+   * Defines the access privilege required for this component, if any.
    */
-  role?: string;
+  privilege?: string;
   /**
    * Defines resources that are loaded when the component should mount.
    */

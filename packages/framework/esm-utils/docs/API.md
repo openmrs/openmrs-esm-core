@@ -6,7 +6,7 @@
 
 ### Interfaces
 
-- [RetryOptions](interfaces/retryoptions.md)
+- [RetryOptions](interfaces/RetryOptions.md)
 
 ### Type aliases
 
@@ -121,7 +121,7 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) | Checks if the provided date is today. |
+| `date` | [`DateInput`](API.md#dateinput) | Checks if the provided date is today. |
 
 #### Returns
 
@@ -181,7 +181,7 @@ ___
 
 ### retry
 
-▸ **retry**<T\>(`fn`, `options?`): `Promise`<T\>
+▸ **retry**<`T`\>(`fn`, `options?`): `Promise`<`T`\>
 
 Executes the specified function and retries executing on failure with a custom backoff strategy
 defined by the options.
@@ -202,12 +202,12 @@ If not configured otherwise, this function uses the following default options:
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `fn` | () => `Promise`<T\> | The function to be executed and retried on failure. |
-| `options` | [RetryOptions](interfaces/retryoptions.md) | Additional options which configure the retry behavior. |
+| `fn` | () => `Promise`<`T`\> | The function to be executed and retried on failure. |
+| `options` | [`RetryOptions`](interfaces/RetryOptions.md) | Additional options which configure the retry behavior. |
 
 #### Returns
 
-`Promise`<T\>
+`Promise`<`T`\>
 
 The result of successfully executing `fn`.
 
@@ -249,8 +249,8 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) | `undefined` |
-| `format` | `string` | "YYYY-MMM-DD" |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `format` | `string` | `"YYYY-MMM-DD"` |
 
 #### Returns
 
@@ -272,7 +272,7 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
 #### Returns
 
@@ -294,8 +294,8 @@ Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SS
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) | `undefined` |
-| `toUTC` | `boolean` | false |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `toUTC` | `boolean` | `false` |
 
 #### Returns
 
@@ -317,7 +317,7 @@ Formats the input as a time string using the format "HH:mm A".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
 #### Returns
 
@@ -339,7 +339,7 @@ Formats the input as a time string using the format "HH:mm".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
 #### Returns
 
@@ -361,7 +361,7 @@ Formats the input as a date string using the format "DD-MMM".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
 #### Returns
 

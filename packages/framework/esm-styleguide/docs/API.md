@@ -134,7 +134,7 @@ Shows the provided extension component in a modal dialog.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `extensionId` | `string` | The id of the extension to show. |
-| `props` | `Record`<string, any\> | The optional props to provide to the extension. |
+| `props` | `Record`<`string`, `any`\> | The optional props to provide to the extension. |
 | `onClose` | () => `void` | The optional notification to receive when the modal is closed. |
 
 #### Returns

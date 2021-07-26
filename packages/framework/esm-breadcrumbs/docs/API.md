@@ -6,8 +6,8 @@
 
 ### Interfaces
 
-- [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)
-- [BreadcrumbSettings](interfaces/breadcrumbsettings.md)
+- [BreadcrumbRegistration](interfaces/BreadcrumbRegistration.md)
+- [BreadcrumbSettings](interfaces/BreadcrumbSettings.md)
 
 ### Breadcrumb Functions
 
@@ -21,18 +21,18 @@
 
 ### filterBreadcrumbs
 
-▸ **filterBreadcrumbs**(`list`, `path`): [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+▸ **filterBreadcrumbs**(`list`, `path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `list` | [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[] |
+| `list` | [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[] |
 | `path` | `string` |
 
 #### Returns
 
-[BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Defined in
 
@@ -42,11 +42,11 @@ ___
 
 ### getBreadcrumbs
 
-▸ **getBreadcrumbs**(): [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+▸ **getBreadcrumbs**(): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Returns
 
-[BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Defined in
 
@@ -56,7 +56,7 @@ ___
 
 ### getBreadcrumbsFor
 
-▸ **getBreadcrumbsFor**(`path`): [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+▸ **getBreadcrumbsFor**(`path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Parameters
 
@@ -66,7 +66,7 @@ ___
 
 #### Returns
 
-[BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Defined in
 
@@ -82,7 +82,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumb` | [BreadcrumbSettings](interfaces/breadcrumbsettings.md) |
+| `breadcrumb` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md) |
 
 #### Returns
 
@@ -102,7 +102,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumbs` | [BreadcrumbSettings](interfaces/breadcrumbsettings.md)[] |
+| `breadcrumbs` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md)[] |
 
 #### Returns
 

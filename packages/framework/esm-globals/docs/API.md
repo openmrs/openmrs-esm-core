@@ -6,18 +6,18 @@
 
 ### Interfaces
 
-- [ComponentDefinition](interfaces/componentdefinition.md)
-- [ConnectivityChangedEvent](interfaces/connectivitychangedevent.md)
-- [ExtensionComponentDefinition](interfaces/extensioncomponentdefinition.md)
-- [ImportMap](interfaces/importmap.md)
-- [LegacyAppExtensionDefinition](interfaces/legacyappextensiondefinition.md)
-- [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md)
-- [PageDefinition](interfaces/pagedefinition.md)
-- [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md)
-- [ResourceLoader](interfaces/resourceloader.md)
-- [ShowNotificationEvent](interfaces/shownotificationevent.md)
-- [ShowToastEvent](interfaces/showtoastevent.md)
-- [SpaConfig](interfaces/spaconfig.md)
+- [ComponentDefinition](interfaces/ComponentDefinition.md)
+- [ConnectivityChangedEvent](interfaces/ConnectivityChangedEvent.md)
+- [ExtensionComponentDefinition](interfaces/ExtensionComponentDefinition.md)
+- [ImportMap](interfaces/ImportMap.md)
+- [LegacyAppExtensionDefinition](interfaces/LegacyAppExtensionDefinition.md)
+- [ModernAppExtensionDefinition](interfaces/ModernAppExtensionDefinition.md)
+- [PageDefinition](interfaces/PageDefinition.md)
+- [PrecacheStaticDependenciesEvent](interfaces/PrecacheStaticDependenciesEvent.md)
+- [ResourceLoader](interfaces/ResourceLoader.md)
+- [ShowNotificationEvent](interfaces/ShowNotificationEvent.md)
+- [ShowToastEvent](interfaces/ShowToastEvent.md)
+- [SpaConfig](interfaces/SpaConfig.md)
 
 ### Type aliases
 
@@ -41,11 +41,11 @@
 
 ### AppExtensionDefinition
 
-Ƭ **AppExtensionDefinition**: [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md) & [LegacyAppExtensionDefinition](interfaces/legacyappextensiondefinition.md)
+Ƭ **AppExtensionDefinition**: [`ModernAppExtensionDefinition`](interfaces/ModernAppExtensionDefinition.md) & [`LegacyAppExtensionDefinition`](interfaces/LegacyAppExtensionDefinition.md)
 
 #### Defined in
 
-[types.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L131)
+[types.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L140)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `data` | [ShowNotificationEvent](interfaces/shownotificationevent.md) |
+| `data` | [`ShowNotificationEvent`](interfaces/ShowNotificationEvent.md) |
 
 #### Returns
 
@@ -107,7 +107,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `data` | [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md) |
+| `data` | [`PrecacheStaticDependenciesEvent`](interfaces/PrecacheStaticDependenciesEvent.md) |
 
 #### Returns
 
@@ -127,7 +127,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `config` | [SpaConfig](interfaces/spaconfig.md) |
+| `config` | [`SpaConfig`](interfaces/SpaConfig.md) |
 
 #### Returns
 
@@ -161,7 +161,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`ev`: [ConnectivityChangedEvent](interfaces/connectivitychangedevent.md)) => `void` |
+| `cb` | (`ev`: [`ConnectivityChangedEvent`](interfaces/ConnectivityChangedEvent.md)) => `void` |
 
 #### Returns
 
@@ -187,7 +187,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`ev`: [ConnectivityChangedEvent](interfaces/connectivitychangedevent.md)) => `void` |
+| `cb` | (`ev`: [`ConnectivityChangedEvent`](interfaces/ConnectivityChangedEvent.md)) => `void` |
 
 #### Returns
 
@@ -213,7 +213,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [ShowNotificationEvent](interfaces/shownotificationevent.md)) => `void` |
+| `cb` | (`data`: [`ShowNotificationEvent`](interfaces/ShowNotificationEvent.md)) => `void` |
 
 #### Returns
 
@@ -239,7 +239,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md)) => `void` |
+| `cb` | (`data`: [`PrecacheStaticDependenciesEvent`](interfaces/PrecacheStaticDependenciesEvent.md)) => `void` |
 
 #### Returns
 
@@ -265,7 +265,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [ShowToastEvent](interfaces/showtoastevent.md)) => `void` |
+| `cb` | (`data`: [`ShowToastEvent`](interfaces/ShowToastEvent.md)) => `void` |
 
 #### Returns
 

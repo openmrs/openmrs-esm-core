@@ -6,7 +6,7 @@
 
 ### Interfaces
 
-- [AppState](interfaces/appstate.md)
+- [AppState](interfaces/AppState.md)
 
 ### Functions
 
@@ -20,7 +20,7 @@
 
 ### createGlobalStore
 
-▸ **createGlobalStore**<TState\>(`name`, `initialState`): `Store`<TState\>
+▸ **createGlobalStore**<`TState`\>(`name`, `initialState`): `Store`<`TState`\>
 
 Creates a Unistore [store](https://github.com/developit/unistore#store).
 
@@ -39,7 +39,7 @@ Creates a Unistore [store](https://github.com/developit/unistore#store).
 
 #### Returns
 
-`Store`<TState\>
+`Store`<`TState`\>
 
 The newly created store.
 
@@ -51,11 +51,11 @@ ___
 
 ### getAppState
 
-▸ **getAppState**(): `Store`<[AppState](interfaces/appstate.md)\>
+▸ **getAppState**(): `Store`<[`AppState`](interfaces/AppState.md)\>
 
 #### Returns
 
-`Store`<[AppState](interfaces/appstate.md)\>
+`Store`<[`AppState`](interfaces/AppState.md)\>
 
 The [store](https://github.com/developit/unistore#store) named `app`.
 
@@ -67,7 +67,7 @@ ___
 
 ### getGlobalStore
 
-▸ **getGlobalStore**<TState\>(`name`, `fallbackState?`): `Store`<TState\>
+▸ **getGlobalStore**<`TState`\>(`name`, `fallbackState?`): `Store`<`TState`\>
 
 Returns the existing [store](https://github.com/developit/unistore#store) named `name`,
 or creates a new store named `name` if none exists.
@@ -76,7 +76,7 @@ or creates a new store named `name` if none exists.
 
 | Name | Type |
 | :------ | :------ |
-| `TState` | `TState` = `any` |
+| `TState` | `any` |
 
 #### Parameters
 
@@ -87,7 +87,7 @@ or creates a new store named `name` if none exists.
 
 #### Returns
 
-`Store`<TState\>
+`Store`<`TState`\>
 
 The found or newly created store.
 
@@ -99,7 +99,7 @@ ___
 
 ### subscribeTo
 
-▸ **subscribeTo**<T, U\>(`store`, `select`, `handle`): `Unsubscribe`
+▸ **subscribeTo**<`T`, `U`\>(`store`, `select`, `handle`): `Unsubscribe`
 
 #### Type parameters
 
@@ -112,7 +112,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
+| `store` | `Store`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
 | `handle` | (`subState`: `U`) => `void` |
 
@@ -128,13 +128,13 @@ ___
 
 ### update
 
-▸ **update**<T\>(`obj`, `__namedParameters`, `value`): `T`
+▸ **update**<`T`\>(`obj`, `__namedParameters`, `value`): `T`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `T`: `Record`<string, any\> |
+| `T` | extends `Record`<`string`, `any`\> |
 
 #### Parameters
 

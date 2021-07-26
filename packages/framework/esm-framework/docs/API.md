@@ -6,97 +6,97 @@
 
 ### Enumerations
 
-- [Type](enums/type.md)
-- [VisitMode](enums/visitmode.md)
-- [VisitStatus](enums/visitstatus.md)
+- [Type](enums/Type.md)
+- [VisitMode](enums/VisitMode.md)
+- [VisitStatus](enums/VisitStatus.md)
 
 ### Classes
 
-- [OpenmrsFetchError](classes/openmrsfetcherror.md)
+- [OpenmrsFetchError](classes/OpenmrsFetchError.md)
 
 ### Interfaces
 
-- [AppState](interfaces/appstate.md)
-- [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)
-- [BreadcrumbSettings](interfaces/breadcrumbsettings.md)
-- [CancelLoading](interfaces/cancelloading.md)
-- [ClearDynamicRoutesMessage](interfaces/cleardynamicroutesmessage.md)
-- [ComponentConfig](interfaces/componentconfig.md)
-- [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md)
-- [ComponentDefinition](interfaces/componentdefinition.md)
-- [Config](interfaces/config.md)
-- [ConfigObject](interfaces/configobject.md)
-- [ConfigSchema](interfaces/configschema.md)
-- [ConfigStore](interfaces/configstore.md)
-- [ConfigurableLinkProps](interfaces/configurablelinkprops.md)
-- [ConnectivityChangedEvent](interfaces/connectivitychangedevent.md)
-- [CurrentPatientOptions](interfaces/currentpatientoptions.md)
-- [CurrentUserOptions](interfaces/currentuseroptions.md)
-- [CurrentUserWithResponseOption](interfaces/currentuserwithresponseoption.md)
-- [CurrentUserWithoutResponseOption](interfaces/currentuserwithoutresponseoption.md)
-- [ExtensionComponentDefinition](interfaces/extensioncomponentdefinition.md)
-- [ExtensionData](interfaces/extensiondata.md)
-- [ExtensionDetails](interfaces/extensiondetails.md)
-- [ExtensionInfo](interfaces/extensioninfo.md)
-- [ExtensionInstance](interfaces/extensioninstance.md)
-- [ExtensionMeta](interfaces/extensionmeta.md)
-- [ExtensionProps](interfaces/extensionprops.md)
-- [ExtensionRegistration](interfaces/extensionregistration.md)
-- [ExtensionSlotBaseProps](interfaces/extensionslotbaseprops.md)
-- [ExtensionSlotConfig](interfaces/extensionslotconfig.md)
-- [ExtensionSlotConfigObject](interfaces/extensionslotconfigobject.md)
-- [ExtensionSlotConfigsStore](interfaces/extensionslotconfigsstore.md)
-- [ExtensionSlotConfigureValueObject](interfaces/extensionslotconfigurevalueobject.md)
-- [ExtensionSlotInfo](interfaces/extensionslotinfo.md)
-- [ExtensionSlotInstance](interfaces/extensionslotinstance.md)
-- [ExtensionStore](interfaces/extensionstore.md)
-- [FHIRCode](interfaces/fhircode.md)
-- [FHIRRequestObj](interfaces/fhirrequestobj.md)
-- [FHIRResource](interfaces/fhirresource.md)
-- [FetchHeaders](interfaces/fetchheaders.md)
-- [FetchResponse](interfaces/fetchresponse.md)
-- [ImplementerToolsConfigStore](interfaces/implementertoolsconfigstore.md)
-- [ImportMap](interfaces/importmap.md)
-- [LegacyAppExtensionDefinition](interfaces/legacyappextensiondefinition.md)
-- [Lifecycle](interfaces/lifecycle.md)
-- [Location](interfaces/location.md)
-- [LoggedInUser](interfaces/loggedinuser.md)
-- [LoggedInUserFetchResponse](interfaces/loggedinuserfetchresponse.md)
-- [MessageServiceWorkerResult](interfaces/messageserviceworkerresult.md)
-- [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md)
-- [NavigateOptions](interfaces/navigateoptions.md)
-- [NavigationContext](interfaces/navigationcontext.md)
-- [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)
-- [NewVisitPayload](interfaces/newvisitpayload.md)
-- [OmrsServiceWorkerEvent](interfaces/omrsserviceworkerevent.md)
-- [OmrsServiceWorkerMessage](interfaces/omrsserviceworkermessage.md)
-- [OnImportMapChangedMessage](interfaces/onimportmapchangedmessage.md)
-- [OnlyThePatient](interfaces/onlythepatient.md)
-- [OpenmrsReactComponentProps](interfaces/openmrsreactcomponentprops.md)
-- [OpenmrsReactComponentState](interfaces/openmrsreactcomponentstate.md)
-- [OpenmrsResource](interfaces/openmrsresource.md)
-- [PageDefinition](interfaces/pagedefinition.md)
-- [PatientWithFullResponse](interfaces/patientwithfullresponse.md)
-- [Person](interfaces/person.md)
-- [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md)
-- [Privilege](interfaces/privilege.md)
-- [QueueItemDescriptor](interfaces/queueitemdescriptor.md)
-- [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
-- [ResourceLoader](interfaces/resourceloader.md)
-- [RetryOptions](interfaces/retryoptions.md)
-- [Role](interfaces/role.md)
-- [SessionUser](interfaces/sessionuser.md)
-- [ShowNotificationEvent](interfaces/shownotificationevent.md)
-- [ShowToastEvent](interfaces/showtoastevent.md)
-- [SpaConfig](interfaces/spaconfig.md)
-- [SyncProcessOptions](interfaces/syncprocessoptions.md)
-- [UnauthenticatedUser](interfaces/unauthenticateduser.md)
-- [User](interfaces/user.md)
-- [UserHasAccessProps](interfaces/userhasaccessprops.md)
-- [Visit](interfaces/visit.md)
-- [VisitItem](interfaces/visititem.md)
-- [VisitType](interfaces/visittype.md)
-- [WorkspaceItem](interfaces/workspaceitem.md)
+- [AppState](interfaces/AppState.md)
+- [BreadcrumbRegistration](interfaces/BreadcrumbRegistration.md)
+- [BreadcrumbSettings](interfaces/BreadcrumbSettings.md)
+- [CancelLoading](interfaces/CancelLoading.md)
+- [ClearDynamicRoutesMessage](interfaces/ClearDynamicRoutesMessage.md)
+- [ComponentConfig](interfaces/ComponentConfig.md)
+- [ComponentDecoratorOptions](interfaces/ComponentDecoratorOptions.md)
+- [ComponentDefinition](interfaces/ComponentDefinition.md)
+- [Config](interfaces/Config.md)
+- [ConfigObject](interfaces/ConfigObject.md)
+- [ConfigSchema](interfaces/ConfigSchema.md)
+- [ConfigStore](interfaces/ConfigStore.md)
+- [ConfigurableLinkProps](interfaces/ConfigurableLinkProps.md)
+- [ConnectivityChangedEvent](interfaces/ConnectivityChangedEvent.md)
+- [CurrentPatientOptions](interfaces/CurrentPatientOptions.md)
+- [CurrentUserOptions](interfaces/CurrentUserOptions.md)
+- [CurrentUserWithResponseOption](interfaces/CurrentUserWithResponseOption.md)
+- [CurrentUserWithoutResponseOption](interfaces/CurrentUserWithoutResponseOption.md)
+- [ExtensionComponentDefinition](interfaces/ExtensionComponentDefinition.md)
+- [ExtensionData](interfaces/ExtensionData.md)
+- [ExtensionDetails](interfaces/ExtensionDetails.md)
+- [ExtensionInfo](interfaces/ExtensionInfo.md)
+- [ExtensionInstance](interfaces/ExtensionInstance.md)
+- [ExtensionMeta](interfaces/ExtensionMeta.md)
+- [ExtensionProps](interfaces/ExtensionProps.md)
+- [ExtensionRegistration](interfaces/ExtensionRegistration.md)
+- [ExtensionSlotBaseProps](interfaces/ExtensionSlotBaseProps.md)
+- [ExtensionSlotConfig](interfaces/ExtensionSlotConfig.md)
+- [ExtensionSlotConfigObject](interfaces/ExtensionSlotConfigObject.md)
+- [ExtensionSlotConfigsStore](interfaces/ExtensionSlotConfigsStore.md)
+- [ExtensionSlotConfigureValueObject](interfaces/ExtensionSlotConfigureValueObject.md)
+- [ExtensionSlotInfo](interfaces/ExtensionSlotInfo.md)
+- [ExtensionSlotInstance](interfaces/ExtensionSlotInstance.md)
+- [ExtensionStore](interfaces/ExtensionStore.md)
+- [FHIRCode](interfaces/FHIRCode.md)
+- [FHIRRequestObj](interfaces/FHIRRequestObj.md)
+- [FHIRResource](interfaces/FHIRResource.md)
+- [FetchHeaders](interfaces/FetchHeaders.md)
+- [FetchResponse](interfaces/FetchResponse.md)
+- [ImplementerToolsConfigStore](interfaces/ImplementerToolsConfigStore.md)
+- [ImportMap](interfaces/ImportMap.md)
+- [LegacyAppExtensionDefinition](interfaces/LegacyAppExtensionDefinition.md)
+- [Lifecycle](interfaces/Lifecycle.md)
+- [Location](interfaces/Location.md)
+- [LoggedInUser](interfaces/LoggedInUser.md)
+- [LoggedInUserFetchResponse](interfaces/LoggedInUserFetchResponse.md)
+- [MessageServiceWorkerResult](interfaces/MessageServiceWorkerResult.md)
+- [ModernAppExtensionDefinition](interfaces/ModernAppExtensionDefinition.md)
+- [NavigateOptions](interfaces/NavigateOptions.md)
+- [NavigationContext](interfaces/NavigationContext.md)
+- [NetworkRequestFailedEvent](interfaces/NetworkRequestFailedEvent.md)
+- [NewVisitPayload](interfaces/NewVisitPayload.md)
+- [OmrsServiceWorkerEvent](interfaces/OmrsServiceWorkerEvent.md)
+- [OmrsServiceWorkerMessage](interfaces/OmrsServiceWorkerMessage.md)
+- [OnImportMapChangedMessage](interfaces/OnImportMapChangedMessage.md)
+- [OnlyThePatient](interfaces/OnlyThePatient.md)
+- [OpenmrsReactComponentProps](interfaces/OpenmrsReactComponentProps.md)
+- [OpenmrsReactComponentState](interfaces/OpenmrsReactComponentState.md)
+- [OpenmrsResource](interfaces/OpenmrsResource.md)
+- [PageDefinition](interfaces/PageDefinition.md)
+- [PatientWithFullResponse](interfaces/PatientWithFullResponse.md)
+- [Person](interfaces/Person.md)
+- [PrecacheStaticDependenciesEvent](interfaces/PrecacheStaticDependenciesEvent.md)
+- [Privilege](interfaces/Privilege.md)
+- [QueueItemDescriptor](interfaces/QueueItemDescriptor.md)
+- [RegisterDynamicRouteMessage](interfaces/RegisterDynamicRouteMessage.md)
+- [ResourceLoader](interfaces/ResourceLoader.md)
+- [RetryOptions](interfaces/RetryOptions.md)
+- [Role](interfaces/Role.md)
+- [SessionUser](interfaces/SessionUser.md)
+- [ShowNotificationEvent](interfaces/ShowNotificationEvent.md)
+- [ShowToastEvent](interfaces/ShowToastEvent.md)
+- [SpaConfig](interfaces/SpaConfig.md)
+- [SyncProcessOptions](interfaces/SyncProcessOptions.md)
+- [UnauthenticatedUser](interfaces/UnauthenticatedUser.md)
+- [User](interfaces/User.md)
+- [UserHasAccessProps](interfaces/UserHasAccessProps.md)
+- [Visit](interfaces/Visit.md)
+- [VisitItem](interfaces/VisitItem.md)
+- [VisitType](interfaces/VisitType.md)
+- [WorkspaceItem](interfaces/WorkspaceItem.md)
 
 ### Type aliases
 
@@ -313,11 +313,11 @@ ___
 
 ### AppExtensionDefinition
 
-Ƭ **AppExtensionDefinition**: [ModernAppExtensionDefinition](interfaces/modernappextensiondefinition.md) & [LegacyAppExtensionDefinition](interfaces/legacyappextensiondefinition.md)
+Ƭ **AppExtensionDefinition**: [`ModernAppExtensionDefinition`](interfaces/ModernAppExtensionDefinition.md) & [`LegacyAppExtensionDefinition`](interfaces/LegacyAppExtensionDefinition.md)
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L131)
+[packages/framework/esm-globals/src/types.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L140)
 
 ___
 
@@ -347,7 +347,7 @@ ___
 
 ### CurrentPatient
 
-Ƭ **CurrentPatient**: `fhir.Patient` \| [FetchResponse](interfaces/fetchresponse.md)<fhir.Patient\>
+Ƭ **CurrentPatient**: `fhir.Patient` \| [`FetchResponse`](interfaces/FetchResponse.md)<`fhir.Patient`\>
 
 #### Defined in
 
@@ -367,7 +367,7 @@ ___
 
 ### ExtensionSlotProps
 
-Ƭ **ExtensionSlotProps**: [ExtensionSlotBaseProps](interfaces/extensionslotbaseprops.md) & `React.HTMLAttributes`<HTMLDivElement\>
+Ƭ **ExtensionSlotProps**: [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `React.HTMLAttributes`<`HTMLDivElement`\>
 
 #### Defined in
 
@@ -377,7 +377,7 @@ ___
 
 ### KnownOmrsServiceWorkerEvents
 
-Ƭ **KnownOmrsServiceWorkerEvents**: [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)
+Ƭ **KnownOmrsServiceWorkerEvents**: [`NetworkRequestFailedEvent`](interfaces/NetworkRequestFailedEvent.md)
 
 #### Defined in
 
@@ -387,7 +387,7 @@ ___
 
 ### KnownOmrsServiceWorkerMessages
 
-Ƭ **KnownOmrsServiceWorkerMessages**: [OnImportMapChangedMessage](interfaces/onimportmapchangedmessage.md) \| [ClearDynamicRoutesMessage](interfaces/cleardynamicroutesmessage.md) \| [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
+Ƭ **KnownOmrsServiceWorkerMessages**: [`OnImportMapChangedMessage`](interfaces/OnImportMapChangedMessage.md) \| [`ClearDynamicRoutesMessage`](interfaces/ClearDynamicRoutesMessage.md) \| [`RegisterDynamicRouteMessage`](interfaces/RegisterDynamicRouteMessage.md)
 
 #### Defined in
 
@@ -407,7 +407,7 @@ ___
 
 ### MaybeAsync
 
-Ƭ **MaybeAsync**<T\>: `T` \| `Promise`<T\>
+Ƭ **MaybeAsync**<`T`\>: `T` \| `Promise`<`T`\>
 
 #### Type parameters
 
@@ -449,7 +449,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `config` | [Config](interfaces/config.md) |
+| `config` | [`Config`](interfaces/Config.md) |
 | `source` | `string` |
 
 #### Defined in
@@ -470,7 +470,7 @@ ___
 
 ### UpdateVisitPayload
 
-Ƭ **UpdateVisitPayload**: [NewVisitPayload](interfaces/newvisitpayload.md) & {}
+Ƭ **UpdateVisitPayload**: [`NewVisitPayload`](interfaces/NewVisitPayload.md) & {}
 
 #### Defined in
 
@@ -545,7 +545,7 @@ ___
 
 ### ConfigurableLink
 
-• `Const` **ConfigurableLink**: `React.FC`<[ConfigurableLinkProps](interfaces/configurablelinkprops.md)\>
+• `Const` **ConfigurableLink**: `React.FC`<[`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md)\>
 
 A React link component which calls [navigate](API.md#navigate) when clicked
 
@@ -565,7 +565,7 @@ ___
 
 ### ComponentContext
 
-• `Const` **ComponentContext**: `Context`<[ComponentConfig](interfaces/componentconfig.md)\>
+• `Const` **ComponentContext**: `Context`<[`ComponentConfig`](interfaces/ComponentConfig.md)\>
 
 Available to all components. Provided by `openmrsComponentDecorator`.
 
@@ -577,7 +577,7 @@ ___
 
 ### Extension
 
-• `Const` **Extension**: `React.FC`<[ExtensionProps](interfaces/extensionprops.md)\>
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
 
 Represents the position in the DOM where each extension within
 an extension slot is rendered.
@@ -594,7 +594,7 @@ ___
 
 ### ExtensionSlot
 
-• `Const` **ExtensionSlot**: `React.FC`<[ExtensionSlotProps](API.md#extensionslotprops)\>
+• `Const` **ExtensionSlot**: `React.FC`<[`ExtensionSlotProps`](API.md#extensionslotprops)\>
 
 #### Defined in
 
@@ -604,7 +604,7 @@ ___
 
 ### UserHasAccess
 
-• `Const` **UserHasAccess**: `React.FC`<[UserHasAccessProps](interfaces/userhasaccessprops.md)\>
+• `Const` **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
 
 #### Defined in
 
@@ -631,7 +631,7 @@ ___
 
 ### extensionStore
 
-• `Const` **extensionStore**: `Store`<[ExtensionStore](interfaces/extensionstore.md)\>
+• `Const` **extensionStore**: `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
 #### Defined in
 
@@ -651,7 +651,7 @@ ___
 
 ### getStartedVisit
 
-• `Const` **getStartedVisit**: `BehaviorSubject`<``null`` \| [VisitItem](interfaces/visititem.md)\>
+• `Const` **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
 
 #### Defined in
 
@@ -661,7 +661,7 @@ ___
 
 ### implementerToolsConfigStore
 
-• `Const` **implementerToolsConfigStore**: `Store`<[ImplementerToolsConfigStore](interfaces/implementertoolsconfigstore.md)\>
+• `Const` **implementerToolsConfigStore**: `Store`<[`ImplementerToolsConfigStore`](interfaces/ImplementerToolsConfigStore.md)\>
 
 #### Defined in
 
@@ -691,7 +691,7 @@ ___
 
 ### temporaryConfigStore
 
-• `Const` **temporaryConfigStore**: `Store`<TemporaryConfigStore\>
+• `Const` **temporaryConfigStore**: `Store`<`TemporaryConfigStore`\>
 
 #### Defined in
 
@@ -707,9 +707,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `inRange` | (`min`: `number`, `max`: `number`) => [Validator](API.md#validator) |
-| `isUrl` | [Validator](API.md#validator) |
-| `isUrlWithTemplateParameters` | (`allowedTemplateParameters`: `string`[]) => [Validator](API.md#validator) |
+| `inRange` | (`min`: `number`, `max`: `number`) => [`Validator`](API.md#validator) |
+| `isUrl` | [`Validator`](API.md#validator) |
+| `isUrlWithTemplateParameters` | (`allowedTemplateParameters`: `string`[]) => [`Validator`](API.md#validator) |
 
 #### Defined in
 
@@ -719,7 +719,7 @@ ___
 
 ### openmrsFetch
 
-▸ **openmrsFetch**<T\>(`path`, `fetchInit?`): `Promise`<[FetchResponse](interfaces/fetchresponse.md)<T\>\>
+▸ **openmrsFetch**<`T`\>(`path`, `fetchInit?`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
 The openmrsFetch function is a wrapper around the
 [browser's built-in fetch function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch),
@@ -730,7 +730,7 @@ request headers, authentication, authorization, and the API urls.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `T` = `any` |
+| `T` | `any` |
 
 #### Parameters
 
@@ -741,7 +741,7 @@ request headers, authentication, authorization, and the API urls.
 
 #### Returns
 
-`Promise`<[FetchResponse](interfaces/fetchresponse.md)<T\>\>
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
 A [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
   that resolves with a [Response object](https://developer.mozilla.org/en-US/docs/Web/API/Response).
@@ -786,7 +786,7 @@ ___
 
 ### openmrsObservableFetch
 
-▸ **openmrsObservableFetch**<T\>(`url`, `fetchInit?`): `Observable`<[FetchResponse](interfaces/fetchresponse.md)<T\>\>
+▸ **openmrsObservableFetch**<`T`\>(`url`, `fetchInit?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
 The openmrsObservableFetch function is a wrapper around openmrsFetch
 that returns an [Observable](https://rxjs-dev.firebaseapp.com/guide/observable)
@@ -808,7 +808,7 @@ preferred or more convenient than a promise.
 
 #### Returns
 
-`Observable`<[FetchResponse](interfaces/fetchresponse.md)<T\>\>
+`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
 An Observable that produces exactly one Response object.
 The response object is exactly the same as for [openmrsFetch](API.md#openmrsfetch).
@@ -845,7 +845,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `patientUuid` | [PatientUuid](API.md#patientuuid) |
+| `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
 
 #### Returns
 
@@ -859,7 +859,7 @@ ___
 
 ### getCurrentUser
 
-▸ **getCurrentUser**(): `Observable`<[LoggedInUser](interfaces/loggedinuser.md)\>
+▸ **getCurrentUser**(): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 The getCurrentUser function returns an observable that produces
 **zero or more values, over time**. It will produce zero values
@@ -870,7 +870,7 @@ updated.
 
 #### Returns
 
-`Observable`<[LoggedInUser](interfaces/loggedinuser.md)\>
+`Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 An Observable that produces zero or more values (as
   described above). The values produced will be a user object (if
@@ -900,33 +900,33 @@ leak and source of bugs.
 
 [packages/framework/esm-api/src/shared-api-objects/current-user.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L56)
 
-▸ **getCurrentUser**(`opts`): `Observable`<[UnauthenticatedUser](interfaces/unauthenticateduser.md)\>
+▸ **getCurrentUser**(`opts`): `Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `opts` | [CurrentUserWithResponseOption](interfaces/currentuserwithresponseoption.md) |
+| `opts` | [`CurrentUserWithResponseOption`](interfaces/CurrentUserWithResponseOption.md) |
 
 #### Returns
 
-`Observable`<[UnauthenticatedUser](interfaces/unauthenticateduser.md)\>
+`Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
 
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L57)
 
-▸ **getCurrentUser**(`opts`): `Observable`<[LoggedInUser](interfaces/loggedinuser.md)\>
+▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `opts` | [CurrentUserWithoutResponseOption](interfaces/currentuserwithoutresponseoption.md) |
+| `opts` | [`CurrentUserWithoutResponseOption`](interfaces/CurrentUserWithoutResponseOption.md) |
 
 #### Returns
 
-`Observable`<[LoggedInUser](interfaces/loggedinuser.md)\>
+`Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 #### Defined in
 
@@ -964,18 +964,18 @@ ___
 
 ### filterBreadcrumbs
 
-▸ **filterBreadcrumbs**(`list`, `path`): [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+▸ **filterBreadcrumbs**(`list`, `path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `list` | [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[] |
+| `list` | [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[] |
 | `path` | `string` |
 
 #### Returns
 
-[BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Defined in
 
@@ -985,11 +985,11 @@ ___
 
 ### getBreadcrumbs
 
-▸ **getBreadcrumbs**(): [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+▸ **getBreadcrumbs**(): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Returns
 
-[BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Defined in
 
@@ -999,7 +999,7 @@ ___
 
 ### getBreadcrumbsFor
 
-▸ **getBreadcrumbsFor**(`path`): [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+▸ **getBreadcrumbsFor**(`path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Parameters
 
@@ -1009,7 +1009,7 @@ ___
 
 #### Returns
 
-[BreadcrumbRegistration](interfaces/breadcrumbregistration.md)[]
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Defined in
 
@@ -1025,7 +1025,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumb` | [BreadcrumbSettings](interfaces/breadcrumbsettings.md) |
+| `breadcrumb` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md) |
 
 #### Returns
 
@@ -1045,7 +1045,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumbs` | [BreadcrumbSettings](interfaces/breadcrumbsettings.md)[] |
+| `breadcrumbs` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md)[] |
 
 #### Returns
 
@@ -1118,7 +1118,7 @@ ___
 
 ### isUrlWithTemplateParameters
 
-▸ `Const` **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [Validator](API.md#validator)
+▸ `Const` **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [`Validator`](API.md#validator)
 
 Verifies that a string contains only the default URL template
 parameters, plus any specified in `allowedTemplateParameters`.
@@ -1131,7 +1131,7 @@ parameters, plus any specified in `allowedTemplateParameters`.
 
 #### Returns
 
-[Validator](API.md#validator)
+[`Validator`](API.md#validator)
 
 #### Defined in
 
@@ -1157,7 +1157,7 @@ const submitHandler = () => {
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [NavigateOptions](interfaces/navigateoptions.md) |
+| `__namedParameters` | [`NavigateOptions`](interfaces/NavigateOptions.md) |
 
 #### Returns
 
@@ -1212,7 +1212,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L72)
+[packages/framework/esm-extensions/src/extensions.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L71)
 
 ___
 
@@ -1224,8 +1224,8 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `online` | `boolean` \| `object` | true |
-| `offline` | `boolean` \| `object` | false |
+| `online` | `boolean` \| `object` | `true` |
+| `offline` | `boolean` \| `object` | `false` |
 
 #### Returns
 
@@ -1246,8 +1246,8 @@ ___
 | Name | Type | Default value |
 | :------ | :------ | :------ |
 | `status` | `boolean` | `undefined` |
-| `online` | `boolean` \| `object` | true |
-| `offline` | `boolean` \| `object` | false |
+| `online` | `boolean` \| `object` | `true` |
+| `offline` | `boolean` \| `object` | `false` |
 
 #### Returns
 
@@ -1287,7 +1287,7 @@ ___
 
 ### createGlobalStore
 
-▸ **createGlobalStore**<TState\>(`name`, `initialState`): `Store`<TState\>
+▸ **createGlobalStore**<`TState`\>(`name`, `initialState`): `Store`<`TState`\>
 
 Creates a Unistore [store](https://github.com/developit/unistore#store).
 
@@ -1306,7 +1306,7 @@ Creates a Unistore [store](https://github.com/developit/unistore#store).
 
 #### Returns
 
-`Store`<TState\>
+`Store`<`TState`\>
 
 The newly created store.
 
@@ -1318,7 +1318,7 @@ ___
 
 ### createUseStore
 
-▸ **createUseStore**<T\>(`store`): () => `T`(`actions`: [Actions](API.md#actions)) => `T` & [BoundActions](API.md#boundactions)(`actions?`: [Actions](API.md#actions)) => `T` & [BoundActions](API.md#boundactions)
+▸ **createUseStore**<`T`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)(`actions?`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)
 
 #### Type parameters
 
@@ -1330,7 +1330,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
+| `store` | `Store`<`T`\> |
 
 #### Returns
 
@@ -1342,29 +1342,29 @@ ___
 
 `T`
 
-▸ (`actions`): `T` & [BoundActions](API.md#boundactions)
+▸ (`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [Actions](API.md#actions) |
+| `actions` | [`Actions`](API.md#actions) |
 
 ##### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
-▸ (`actions?`): `T` & [BoundActions](API.md#boundactions)
+▸ (`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [Actions](API.md#actions) |
+| `actions?` | [`Actions`](API.md#actions) |
 
 ##### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
@@ -1405,7 +1405,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `moduleName` | `string` |
-| `schema` | [ConfigSchema](interfaces/configschema.md) |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) |
 
 #### Returns
 
@@ -1434,7 +1434,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L102)
+[packages/framework/esm-extensions/src/extensions.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L101)
 
 ___
 
@@ -1454,7 +1454,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L125)
+[packages/framework/esm-extensions/src/extensions.ts:124](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L124)
 
 ___
 
@@ -1486,7 +1486,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `data` | [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md) |
+| `data` | [`NetworkRequestFailedEvent`](interfaces/NetworkRequestFailedEvent.md) |
 
 #### Returns
 
@@ -1506,7 +1506,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `data` | [ShowNotificationEvent](interfaces/shownotificationevent.md) |
+| `data` | [`ShowNotificationEvent`](interfaces/ShowNotificationEvent.md) |
 
 #### Returns
 
@@ -1526,7 +1526,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `data` | [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md) |
+| `data` | [`PrecacheStaticDependenciesEvent`](interfaces/PrecacheStaticDependenciesEvent.md) |
 
 #### Returns
 
@@ -1556,11 +1556,11 @@ ___
 
 ### getAppState
 
-▸ **getAppState**(): `Store`<[AppState](interfaces/appstate.md)\>
+▸ **getAppState**(): `Store`<[`AppState`](interfaces/AppState.md)\>
 
 #### Returns
 
-`Store`<[AppState](interfaces/appstate.md)\>
+`Store`<[`AppState`](interfaces/AppState.md)\>
 
 The [store](https://github.com/developit/unistore#store) named `app`.
 
@@ -1578,7 +1578,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `instance` | [ExtensionSlotInstance](interfaces/extensionslotinstance.md) |
+| `instance` | [`ExtensionSlotInstance`](interfaces/ExtensionSlotInstance.md) |
 | `attachedIds` | `string`[] |
 
 #### Returns
@@ -1587,13 +1587,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:158](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L158)
+[packages/framework/esm-extensions/src/extensions.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L157)
 
 ___
 
 ### getAsyncExtensionLifecycle
 
-▸ `Const` **getAsyncExtensionLifecycle**<T\>(`lazy`, `options`): () => `Promise`<ReactAppOrParcel<any\>\>
+▸ `Const` **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 **`deprecated`** Use getAsyncLifecycle instead.
 
@@ -1608,17 +1608,17 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `lazy` | () => `Promise`<`Object`\> |
-| `options` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
 `fn`
 
-▸ (): `Promise`<ReactAppOrParcel<any\>\>
+▸ (): `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 ##### Returns
 
-`Promise`<ReactAppOrParcel<any\>\>
+`Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Defined in
 
@@ -1628,7 +1628,7 @@ ___
 
 ### getAsyncLifecycle
 
-▸ **getAsyncLifecycle**<T\>(`lazy`, `options`): () => `Promise`<ReactAppOrParcel<any\>\>
+▸ **getAsyncLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Type parameters
 
@@ -1641,17 +1641,17 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `lazy` | () => `Promise`<`Object`\> |
-| `options` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
 `fn`
 
-▸ (): `Promise`<ReactAppOrParcel<any\>\>
+▸ (): `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 ##### Returns
 
-`Promise`<ReactAppOrParcel<any\>\>
+`Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Defined in
 
@@ -1661,7 +1661,7 @@ ___
 
 ### getConfig
 
-▸ **getConfig**(`moduleName`): `Promise`<[Config](interfaces/config.md)\>
+▸ **getConfig**(`moduleName`): `Promise`<[`Config`](interfaces/Config.md)\>
 
 A promise-based way to access the config as soon as it is fully loaded
 from the import-map. If it is already loaded, resolves the config in its
@@ -1682,7 +1682,7 @@ of the execution of a function.
 
 #### Returns
 
-`Promise`<[Config](interfaces/config.md)\>
+`Promise`<[`Config`](interfaces/Config.md)\>
 
 #### Defined in
 
@@ -1692,7 +1692,7 @@ ___
 
 ### getConfigStore
 
-▸ **getConfigStore**(`moduleName`): `Store`<[ConfigStore](interfaces/configstore.md)\>
+▸ **getConfigStore**(`moduleName`): `Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Parameters
 
@@ -1702,7 +1702,7 @@ ___
 
 #### Returns
 
-`Store`<[ConfigStore](interfaces/configstore.md)\>
+`Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Defined in
 
@@ -1733,7 +1733,7 @@ ___
 
 ### getExtensionConfigStore
 
-▸ **getExtensionConfigStore**(`extensionSlotModuleName`, `attachedExtensionSlotName`, `extensionId`): `Store`<[ConfigStore](interfaces/configstore.md)\>
+▸ **getExtensionConfigStore**(`extensionSlotModuleName`, `attachedExtensionSlotName`, `extensionId`): `Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Parameters
 
@@ -1745,7 +1745,7 @@ ___
 
 #### Returns
 
-`Store`<[ConfigStore](interfaces/configstore.md)\>
+`Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Defined in
 
@@ -1769,13 +1769,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L30)
+[packages/framework/esm-extensions/src/extensions.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L29)
 
 ___
 
 ### getExtensionRegistration
 
-▸ **getExtensionRegistration**(`extensionId`): [ExtensionRegistration](interfaces/extensionregistration.md) \| `undefined`
+▸ **getExtensionRegistration**(`extensionId`): [`ExtensionRegistration`](interfaces/ExtensionRegistration.md) \| `undefined`
 
 #### Parameters
 
@@ -1785,38 +1785,38 @@ ___
 
 #### Returns
 
-[ExtensionRegistration](interfaces/extensionregistration.md) \| `undefined`
+[`ExtensionRegistration`](interfaces/ExtensionRegistration.md) \| `undefined`
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L43)
+[packages/framework/esm-extensions/src/extensions.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L42)
 
 ___
 
 ### getExtensionRegistrationFrom
 
-▸ **getExtensionRegistrationFrom**(`state`, `extensionId`): [ExtensionRegistration](interfaces/extensionregistration.md) \| `undefined`
+▸ **getExtensionRegistrationFrom**(`state`, `extensionId`): [`ExtensionRegistration`](interfaces/ExtensionRegistration.md) \| `undefined`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `state` | [ExtensionStore](interfaces/extensionstore.md) |
+| `state` | [`ExtensionStore`](interfaces/ExtensionStore.md) |
 | `extensionId` | `string` |
 
 #### Returns
 
-[ExtensionRegistration](interfaces/extensionregistration.md) \| `undefined`
+[`ExtensionRegistration`](interfaces/ExtensionRegistration.md) \| `undefined`
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L35)
+[packages/framework/esm-extensions/src/extensions.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L34)
 
 ___
 
 ### getExtensionSlotsConfigStore
 
-▸ **getExtensionSlotsConfigStore**(`moduleName`): `Store`<[ExtensionSlotConfigsStore](interfaces/extensionslotconfigsstore.md)\>
+▸ **getExtensionSlotsConfigStore**(`moduleName`): `Store`<[`ExtensionSlotConfigsStore`](interfaces/ExtensionSlotConfigsStore.md)\>
 
 #### Parameters
 
@@ -1826,7 +1826,7 @@ ___
 
 #### Returns
 
-`Store`<[ExtensionSlotConfigsStore](interfaces/extensionslotconfigsstore.md)\>
+`Store`<[`ExtensionSlotConfigsStore`](interfaces/ExtensionSlotConfigsStore.md)\>
 
 #### Defined in
 
@@ -1850,13 +1850,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:270](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L270)
+[packages/framework/esm-extensions/src/extensions.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L269)
 
 ___
 
 ### getGlobalStore
 
-▸ **getGlobalStore**<TState\>(`name`, `fallbackState?`): `Store`<TState\>
+▸ **getGlobalStore**<`TState`\>(`name`, `fallbackState?`): `Store`<`TState`\>
 
 Returns the existing [store](https://github.com/developit/unistore#store) named `name`,
 or creates a new store named `name` if none exists.
@@ -1865,7 +1865,7 @@ or creates a new store named `name` if none exists.
 
 | Name | Type |
 | :------ | :------ |
-| `TState` | `TState` = `any` |
+| `TState` | `any` |
 
 #### Parameters
 
@@ -1876,7 +1876,7 @@ or creates a new store named `name` if none exists.
 
 #### Returns
 
-`Store`<TState\>
+`Store`<`TState`\>
 
 The found or newly created store.
 
@@ -1888,7 +1888,7 @@ ___
 
 ### getLifecycle
 
-▸ **getLifecycle**<T\>(`Component`, `options`): `ReactAppOrParcel`<any\>
+▸ **getLifecycle**<`T`\>(`Component`, `options`): `ReactAppOrParcel`<`any`\>
 
 #### Type parameters
 
@@ -1900,12 +1900,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Component` | `React.ComponentType`<T\> |
-| `options` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `Component` | `React.ComponentType`<`T`\> |
+| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
-`ReactAppOrParcel`<any\>
+`ReactAppOrParcel`<`any`\>
 
 #### Defined in
 
@@ -1915,11 +1915,11 @@ ___
 
 ### getLocations
 
-▸ **getLocations**(): `Observable`<[Location](interfaces/location.md)[]\>
+▸ **getLocations**(): `Observable`<[`Location`](interfaces/Location.md)[]\>
 
 #### Returns
 
-`Observable`<[Location](interfaces/location.md)[]\>
+`Observable`<[`Location`](interfaces/Location.md)[]\>
 
 #### Defined in
 
@@ -1929,11 +1929,11 @@ ___
 
 ### getLoggedInUser
 
-▸ **getLoggedInUser**(): `Promise`<[LoggedInUser](interfaces/loggedinuser.md)\>
+▸ **getLoggedInUser**(): `Promise`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 #### Returns
 
-`Promise`<[LoggedInUser](interfaces/loggedinuser.md)\>
+`Promise`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 #### Defined in
 
@@ -1943,7 +1943,7 @@ ___
 
 ### getOmrsServiceWorker
 
-▸ **getOmrsServiceWorker**(): `Promise`<Workbox\>
+▸ **getOmrsServiceWorker**(): `Promise`<`Workbox`\>
 
 Returns a `Workbox` instance which allows interacting with the application's global Service Worker.
 
@@ -1952,7 +1952,7 @@ can, for example, happen when the browser is missing the required capabilities).
 
 #### Returns
 
-`Promise`<Workbox\>
+`Promise`<`Workbox`\>
 
 A promise which will resolve once the application's Service Worker has been initialized.
 
@@ -1964,7 +1964,7 @@ ___
 
 ### getSyncLifecycle
 
-▸ **getSyncLifecycle**<T\>(`Component`, `options`): () => `Promise`<ReactAppOrParcel<any\>\>
+▸ **getSyncLifecycle**<`T`\>(`Component`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Type parameters
 
@@ -1976,18 +1976,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Component` | `React.ComponentType`<T\> |
-| `options` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `Component` | `React.ComponentType`<`T`\> |
+| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
 `fn`
 
-▸ (): `Promise`<ReactAppOrParcel<any\>\>
+▸ (): `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 ##### Returns
 
-`Promise`<ReactAppOrParcel<any\>\>
+`Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Defined in
 
@@ -1997,7 +1997,7 @@ ___
 
 ### getSynchronizationItems
 
-▸ **getSynchronizationItems**<T\>(`type`): `Promise`<T[]\>
+▸ **getSynchronizationItems**<`T`\>(`type`): `Promise`<`T`[]\>
 
 #### Type parameters
 
@@ -2013,7 +2013,7 @@ ___
 
 #### Returns
 
-`Promise`<T[]\>
+`Promise`<`T`[]\>
 
 #### Defined in
 
@@ -2023,7 +2023,7 @@ ___
 
 ### getSynchronizationItemsFor
 
-▸ **getSynchronizationItemsFor**<T\>(`userId`, `type`): `Promise`<T[]\>
+▸ **getSynchronizationItemsFor**<`T`\>(`userId`, `type`): `Promise`<`T`[]\>
 
 #### Type parameters
 
@@ -2040,7 +2040,7 @@ ___
 
 #### Returns
 
-`Promise`<T[]\>
+`Promise`<`T`[]\>
 
 #### Defined in
 
@@ -2050,7 +2050,7 @@ ___
 
 ### getUpdatedExtensionSlotInfo
 
-▸ **getUpdatedExtensionSlotInfo**(`slotName`, `moduleName`, `extensionSlot`): [ExtensionSlotInfo](interfaces/extensionslotinfo.md)
+▸ **getUpdatedExtensionSlotInfo**(`slotName`, `moduleName`, `extensionSlot`): [`ExtensionSlotInfo`](interfaces/ExtensionSlotInfo.md)
 
 Returns information describing all extensions which can be rendered into an extension slot with
 the specified name.
@@ -2063,25 +2063,25 @@ with which it has been attached.
 | :------ | :------ | :------ |
 | `slotName` | `string` | The extension slot name for which matching extension info should be returned. |
 | `moduleName` | `string` | The module name. Used for applying extension-specific config values to the result. |
-| `extensionSlot` | [ExtensionSlotInfo](interfaces/extensionslotinfo.md) | The extension slot information object. |
+| `extensionSlot` | [`ExtensionSlotInfo`](interfaces/ExtensionSlotInfo.md) | The extension slot information object. |
 
 #### Returns
 
-[ExtensionSlotInfo](interfaces/extensionslotinfo.md)
+[`ExtensionSlotInfo`](interfaces/ExtensionSlotInfo.md)
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:297](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L297)
+[packages/framework/esm-extensions/src/extensions.ts:296](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L296)
 
 ___
 
 ### getVisitTypes
 
-▸ **getVisitTypes**(): `Observable`<[VisitType](interfaces/visittype.md)[]\>
+▸ **getVisitTypes**(): `Observable`<[`VisitType`](interfaces/VisitType.md)[]\>
 
 #### Returns
 
-`Observable`<[VisitType](interfaces/visittype.md)[]\>
+`Observable`<[`VisitType`](interfaces/VisitType.md)[]\>
 
 #### Defined in
 
@@ -2091,7 +2091,7 @@ ___
 
 ### getVisitsForPatient
 
-▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Observable`<[FetchResponse](interfaces/fetchresponse.md)<`Object`\>\>
+▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`Object`\>\>
 
 #### Parameters
 
@@ -2103,7 +2103,7 @@ ___
 
 #### Returns
 
-`Observable`<[FetchResponse](interfaces/fetchresponse.md)<`Object`\>\>
+`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`Object`\>\>
 
 #### Defined in
 
@@ -2139,7 +2139,7 @@ ___
 
 ### inRange
 
-▸ `Const` **inRange**(`min`, `max`): [Validator](API.md#validator)
+▸ `Const` **inRange**(`min`, `max`): [`Validator`](API.md#validator)
 
 Verifies that the value is between the provided minimum and maximum
 
@@ -2152,7 +2152,7 @@ Verifies that the value is between the provided minimum and maximum
 
 #### Returns
 
-[Validator](API.md#validator)
+[`Validator`](API.md#validator)
 
 #### Defined in
 
@@ -2227,7 +2227,7 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) | Checks if the provided date is today. |
+| `date` | [`DateInput`](API.md#dateinput) | Checks if the provided date is today. |
 
 #### Returns
 
@@ -2307,7 +2307,7 @@ ___
 
 ### messageOmrsServiceWorker
 
-▸ **messageOmrsServiceWorker**(`message`): `Promise`<[MessageServiceWorkerResult](interfaces/messageserviceworkerresult.md)<any\>\>
+▸ **messageOmrsServiceWorker**(`message`): `Promise`<[`MessageServiceWorkerResult`](interfaces/MessageServiceWorkerResult.md)<`any`\>\>
 
 Sends the specified message to the application's service worker.
 
@@ -2315,11 +2315,11 @@ Sends the specified message to the application's service worker.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `message` | [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages) | The message to be sent. |
+| `message` | [`KnownOmrsServiceWorkerMessages`](API.md#knownomrsserviceworkermessages) | The message to be sent. |
 
 #### Returns
 
-`Promise`<[MessageServiceWorkerResult](interfaces/messageserviceworkerresult.md)<any\>\>
+`Promise`<[`MessageServiceWorkerResult`](interfaces/MessageServiceWorkerResult.md)<`any`\>\>
 
 A promise which completes when the message has been successfully processed by the Service Worker.
 
@@ -2352,19 +2352,19 @@ ___
 
 ### openmrsComponentDecorator
 
-▸ **openmrsComponentDecorator**(`userOpts`): (`Comp`: `ComponentType`<`Object`\>) => `ComponentType`<any\>
+▸ **openmrsComponentDecorator**(`userOpts`): (`Comp`: `ComponentType`<`Object`\>) => `ComponentType`<`any`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `userOpts` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `userOpts` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
 `fn`
 
-▸ (`Comp`): `ComponentType`<any\>
+▸ (`Comp`): `ComponentType`<`any`\>
 
 ##### Parameters
 
@@ -2374,7 +2374,7 @@ ___
 
 ##### Returns
 
-`ComponentType`<any\>
+`ComponentType`<`any`\>
 
 #### Defined in
 
@@ -2398,7 +2398,7 @@ ___
 
 ### processConfig
 
-▸ **processConfig**(`schema`, `providedConfig`, `keyPathContext`): [Config](interfaces/config.md)
+▸ **processConfig**(`schema`, `providedConfig`, `keyPathContext`): [`Config`](interfaces/Config.md)
 
 Validate and interpolate defaults for `providedConfig` according to `schema`
 
@@ -2406,13 +2406,13 @@ Validate and interpolate defaults for `providedConfig` according to `schema`
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `schema` | [ConfigSchema](interfaces/configschema.md) | a configuration schema |
-| `providedConfig` | [ConfigObject](interfaces/configobject.md) | an object of config values (without the top-level module name) |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | a configuration schema |
+| `providedConfig` | [`ConfigObject`](interfaces/ConfigObject.md) | an object of config values (without the top-level module name) |
 | `keyPathContext` | `string` | a dot-deparated string which helps the user figure out where     the provided config came from |
 
 #### Returns
 
-[Config](interfaces/config.md)
+[`Config`](interfaces/Config.md)
 
 #### Defined in
 
@@ -2428,8 +2428,8 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `config` | [Config](interfaces/config.md) | `undefined` |
-| `sourceName` | `string` | "provided" |
+| `config` | [`Config`](interfaces/Config.md) | `undefined` |
+| `sourceName` | `string` | `"provided"` |
 
 #### Returns
 
@@ -2451,7 +2451,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `_context` | [NavigationContext](interfaces/navigationcontext.md) |
+| `_context` | [`NavigationContext`](interfaces/NavigationContext.md) |
 
 #### Returns
 
@@ -2471,7 +2471,7 @@ ___
 
 ### queueSynchronizationItem
 
-▸ **queueSynchronizationItem**<T\>(`type`, `content`, `descriptor?`): `Promise`<number\>
+▸ **queueSynchronizationItem**<`T`\>(`type`, `content`, `descriptor?`): `Promise`<`number`\>
 
 #### Type parameters
 
@@ -2485,11 +2485,11 @@ ___
 | :------ | :------ |
 | `type` | `string` |
 | `content` | `T` |
-| `descriptor?` | [QueueItemDescriptor](interfaces/queueitemdescriptor.md) |
+| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) |
 
 #### Returns
 
-`Promise`<number\>
+`Promise`<`number`\>
 
 #### Defined in
 
@@ -2499,7 +2499,7 @@ ___
 
 ### queueSynchronizationItemFor
 
-▸ **queueSynchronizationItemFor**<T\>(`userId`, `type`, `content`, `descriptor?`): `Promise`<number\>
+▸ **queueSynchronizationItemFor**<`T`\>(`userId`, `type`, `content`, `descriptor?`): `Promise`<`number`\>
 
 #### Type parameters
 
@@ -2514,11 +2514,11 @@ ___
 | `userId` | `string` |
 | `type` | `string` |
 | `content` | `T` |
-| `descriptor?` | [QueueItemDescriptor](interfaces/queueitemdescriptor.md) |
+| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) |
 
 #### Returns
 
-`Promise`<number\>
+`Promise`<`number`\>
 
 #### Defined in
 
@@ -2535,7 +2535,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `name` | `string` |
-| `details` | [ExtensionDetails](interfaces/extensiondetails.md) |
+| `details` | [`ExtensionDetails`](interfaces/ExtensionDetails.md) |
 
 #### Returns
 
@@ -2543,7 +2543,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L59)
+[packages/framework/esm-extensions/src/extensions.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L58)
 
 ___
 
@@ -2564,7 +2564,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:223](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L223)
+[packages/framework/esm-extensions/src/extensions.ts:222](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L222)
 
 ___
 
@@ -2596,7 +2596,7 @@ ___
 
 ### renderExtension
 
-▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): [CancelLoading](interfaces/cancelloading.md)
+▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): [`CancelLoading`](interfaces/CancelLoading.md)
 
 Mounts into a DOM node (representing an extension slot)
 a lazy-loaded component from *any* microfrontend
@@ -2610,12 +2610,12 @@ that registered an extension component for this slot.
 | `extensionSlotName` | `string` |
 | `extensionSlotModuleName` | `string` |
 | `extensionId` | `string` |
-| `renderFunction` | (`lifecycle`: [Lifecycle](interfaces/lifecycle.md)) => [Lifecycle](interfaces/lifecycle.md) |
-| `additionalProps` | `Record`<string, any\> |
+| `renderFunction` | (`lifecycle`: [`Lifecycle`](interfaces/Lifecycle.md)) => [`Lifecycle`](interfaces/Lifecycle.md) |
+| `additionalProps` | `Record`<`string`, `any`\> |
 
 #### Returns
 
-[CancelLoading](interfaces/cancelloading.md)
+[`CancelLoading`](interfaces/CancelLoading.md)
 
 #### Defined in
 
@@ -2737,7 +2737,7 @@ ___
 
 ### retry
 
-▸ **retry**<T\>(`fn`, `options?`): `Promise`<T\>
+▸ **retry**<`T`\>(`fn`, `options?`): `Promise`<`T`\>
 
 Executes the specified function and retries executing on failure with a custom backoff strategy
 defined by the options.
@@ -2758,12 +2758,12 @@ If not configured otherwise, this function uses the following default options:
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `fn` | () => `Promise`<T\> | The function to be executed and retried on failure. |
-| `options` | [RetryOptions](interfaces/retryoptions.md) | Additional options which configure the retry behavior. |
+| `fn` | () => `Promise`<`T`\> | The function to be executed and retried on failure. |
+| `options` | [`RetryOptions`](interfaces/RetryOptions.md) | Additional options which configure the retry behavior. |
 
 #### Returns
 
-`Promise`<T\>
+`Promise`<`T`\>
 
 The result of successfully executing `fn`.
 
@@ -2775,18 +2775,18 @@ ___
 
 ### saveVisit
 
-▸ **saveVisit**(`payload`, `abortController`): `Observable`<[FetchResponse](interfaces/fetchresponse.md)<any\>\>
+▸ **saveVisit**(`payload`, `abortController`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `payload` | [NewVisitPayload](interfaces/newvisitpayload.md) |
+| `payload` | [`NewVisitPayload`](interfaces/NewVisitPayload.md) |
 | `abortController` | `AbortController` |
 
 #### Returns
 
-`Observable`<[FetchResponse](interfaces/fetchresponse.md)<any\>\>
+`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
 
 #### Defined in
 
@@ -2796,7 +2796,7 @@ ___
 
 ### setupOfflineSync
 
-▸ **setupOfflineSync**<T\>(`type`, `dependsOn`, `process`): `void`
+▸ **setupOfflineSync**<`T`\>(`type`, `dependsOn`, `process`): `void`
 
 #### Type parameters
 
@@ -2810,7 +2810,7 @@ ___
 | :------ | :------ |
 | `type` | `string` |
 | `dependsOn` | `string`[] |
-| `process` | (`item`: `T`, `options`: [SyncProcessOptions](interfaces/syncprocessoptions.md)<T\>) => `Promise`<any\> |
+| `process` | (`item`: `T`, `options`: [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\>) => `Promise`<`any`\> |
 
 #### Returns
 
@@ -2830,7 +2830,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `config` | [SpaConfig](interfaces/spaconfig.md) |
+| `config` | [`SpaConfig`](interfaces/SpaConfig.md) |
 
 #### Returns
 
@@ -2867,7 +2867,7 @@ Shows the provided extension component in a modal dialog.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `extensionId` | `string` | The id of the extension to show. |
-| `props` | `Record`<string, any\> | The optional props to provide to the extension. |
+| `props` | `Record`<`string`, `any`\> | The optional props to provide to the extension. |
 | `onClose` | () => `void` | The optional notification to receive when the modal is closed. |
 
 #### Returns
@@ -2940,7 +2940,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`ev`: [ConnectivityChangedEvent](interfaces/connectivitychangedevent.md)) => `void` |
+| `cb` | (`ev`: [`ConnectivityChangedEvent`](interfaces/ConnectivityChangedEvent.md)) => `void` |
 
 #### Returns
 
@@ -2966,7 +2966,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`ev`: [ConnectivityChangedEvent](interfaces/connectivitychangedevent.md)) => `void` |
+| `cb` | (`ev`: [`ConnectivityChangedEvent`](interfaces/ConnectivityChangedEvent.md)) => `void` |
 
 #### Returns
 
@@ -2992,7 +2992,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)) => `void` |
+| `cb` | (`data`: [`NetworkRequestFailedEvent`](interfaces/NetworkRequestFailedEvent.md)) => `void` |
 
 #### Returns
 
@@ -3018,7 +3018,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [ShowNotificationEvent](interfaces/shownotificationevent.md)) => `void` |
+| `cb` | (`data`: [`ShowNotificationEvent`](interfaces/ShowNotificationEvent.md)) => `void` |
 
 #### Returns
 
@@ -3044,7 +3044,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [PrecacheStaticDependenciesEvent](interfaces/precachestaticdependenciesevent.md)) => `void` |
+| `cb` | (`data`: [`PrecacheStaticDependenciesEvent`](interfaces/PrecacheStaticDependenciesEvent.md)) => `void` |
 
 #### Returns
 
@@ -3064,7 +3064,7 @@ ___
 
 ### subscribeTo
 
-▸ **subscribeTo**<T, U\>(`store`, `select`, `handle`): `Unsubscribe`
+▸ **subscribeTo**<`T`, `U`\>(`store`, `select`, `handle`): `Unsubscribe`
 
 #### Type parameters
 
@@ -3077,7 +3077,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
+| `store` | `Store`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
 | `handle` | (`subState`: `U`) => `void` |
 
@@ -3099,7 +3099,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [ShowToastEvent](interfaces/showtoastevent.md)) => `void` |
+| `cb` | (`data`: [`ShowToastEvent`](interfaces/ShowToastEvent.md)) => `void` |
 
 #### Returns
 
@@ -3119,7 +3119,7 @@ ___
 
 ### switchTo
 
-▸ **switchTo**<T\>(`_type`, `link`, `_state?`): `void`
+▸ **switchTo**<`T`\>(`_type`, `link`, `_state?`): `void`
 
 **`deprecated`** use `navigate` directly
 
@@ -3133,7 +3133,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `_type` | [NavigationContextType](API.md#navigationcontexttype) |
+| `_type` | [`NavigationContextType`](API.md#navigationcontexttype) |
 | `link` | `string` |
 | `_state?` | `T` |
 
@@ -3171,7 +3171,7 @@ ___
 
 ### toLocationObject
 
-▸ **toLocationObject**(`openmrsRestForm`): [Location](interfaces/location.md)
+▸ **toLocationObject**(`openmrsRestForm`): [`Location`](interfaces/Location.md)
 
 #### Parameters
 
@@ -3181,7 +3181,7 @@ ___
 
 #### Returns
 
-[Location](interfaces/location.md)
+[`Location`](interfaces/Location.md)
 
 #### Defined in
 
@@ -3199,8 +3199,8 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) | `undefined` |
-| `format` | `string` | "YYYY-MMM-DD" |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `format` | `string` | `"YYYY-MMM-DD"` |
 
 #### Returns
 
@@ -3222,7 +3222,7 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
 #### Returns
 
@@ -3244,8 +3244,8 @@ Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SS
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) | `undefined` |
-| `toUTC` | `boolean` | false |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `toUTC` | `boolean` | `false` |
 
 #### Returns
 
@@ -3267,7 +3267,7 @@ Formats the input as a time string using the format "HH:mm A".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
 #### Returns
 
@@ -3289,7 +3289,7 @@ Formats the input as a time string using the format "HH:mm".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
 #### Returns
 
@@ -3311,7 +3311,7 @@ Formats the input as a date string using the format "DD-MMM".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [DateInput](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
 #### Returns
 
@@ -3325,7 +3325,7 @@ ___
 
 ### toVisitTypeObject
 
-▸ **toVisitTypeObject**(`openmrsRestForm`): [VisitType](interfaces/visittype.md)
+▸ **toVisitTypeObject**(`openmrsRestForm`): [`VisitType`](interfaces/VisitType.md)
 
 #### Parameters
 
@@ -3335,7 +3335,7 @@ ___
 
 #### Returns
 
-[VisitType](interfaces/visittype.md)
+[`VisitType`](interfaces/VisitType.md)
 
 #### Defined in
 
@@ -3367,7 +3367,7 @@ ___
 
 ### triggerSynchronization
 
-▸ **triggerSynchronization**(`abort`): `Promise`<void\>
+▸ **triggerSynchronization**(`abort`): `Promise`<`void`\>
 
 #### Parameters
 
@@ -3377,7 +3377,7 @@ ___
 
 #### Returns
 
-`Promise`<void\>
+`Promise`<`void`\>
 
 #### Defined in
 
@@ -3402,19 +3402,19 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L246)
+[packages/framework/esm-extensions/src/extensions.ts:245](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L245)
 
 ___
 
 ### update
 
-▸ **update**<T\>(`obj`, `__namedParameters`, `value`): `T`
+▸ **update**<`T`\>(`obj`, `__namedParameters`, `value`): `T`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `T`: `Record`<string, any\> |
+| `T` | extends `Record`<`string`, `any`\> |
 
 #### Parameters
 
@@ -3436,19 +3436,19 @@ ___
 
 ### updateExtensionStore
 
-▸ **updateExtensionStore**<U\>(`updater`): `void`
+▸ **updateExtensionStore**<`U`\>(`updater`): `void`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `U` | `U`: keyof [ExtensionStore](interfaces/extensionstore.md) |
+| `U` | extends keyof [`ExtensionStore`](interfaces/ExtensionStore.md) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `updater` | (`state`: [ExtensionStore](interfaces/extensionstore.md)) => [MaybeAsync](API.md#maybeasync)<Pick<[ExtensionStore](interfaces/extensionstore.md), U\>\> |
+| `updater` | (`state`: [`ExtensionStore`](interfaces/ExtensionStore.md)) => [`MaybeAsync`](API.md#maybeasync)<`Pick`<[`ExtensionStore`](interfaces/ExtensionStore.md), `U`\>\> |
 
 #### Returns
 
@@ -3462,19 +3462,19 @@ ___
 
 ### updateVisit
 
-▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Observable`<any\>
+▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Observable`<`any`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `uuid` | `string` |
-| `payload` | [UpdateVisitPayload](API.md#updatevisitpayload) |
+| `payload` | [`UpdateVisitPayload`](API.md#updatevisitpayload) |
 | `abortController` | `AbortController` |
 
 #### Returns
 
-`Observable`<any\>
+`Observable`<`any`\>
 
 #### Defined in
 
@@ -3575,7 +3575,7 @@ ___
 
 ### useConnectedExtensions
 
-▸ **useConnectedExtensions**(`extensionSlotName`): [ExtensionRegistration](interfaces/extensionregistration.md)[]
+▸ **useConnectedExtensions**(`extensionSlotName`): [`ExtensionRegistration`](interfaces/ExtensionRegistration.md)[]
 
 Gets the assigned extension for a given extension slot name.
 Considers if offline or online.
@@ -3588,7 +3588,7 @@ Considers if offline or online.
 
 #### Returns
 
-[ExtensionRegistration](interfaces/extensionregistration.md)[]
+[`ExtensionRegistration`](interfaces/ExtensionRegistration.md)[]
 
 #### Defined in
 
@@ -3612,17 +3612,17 @@ ___
 
 ### useCurrentPatient
 
-▸ **useCurrentPatient**(`patientUuid?`): [`boolean`, `NullablePatient`, [PatientUuid](API.md#patientuuid), `Error` \| ``null``]
+▸ **useCurrentPatient**(`patientUuid?`): [`boolean`, `NullablePatient`, [`PatientUuid`](API.md#patientuuid), `Error` \| ``null``]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `patientUuid` | [PatientUuid](API.md#patientuuid) |
+| `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
 
 #### Returns
 
-[`boolean`, `NullablePatient`, [PatientUuid](API.md#patientuuid), `Error` \| ``null``]
+[`boolean`, `NullablePatient`, [`PatientUuid`](API.md#patientuuid), `Error` \| ``null``]
 
 #### Defined in
 
@@ -3632,23 +3632,23 @@ ___
 
 ### useExtension
 
-▸ **useExtension**<TRef\>(`state?`): [`RefObject`<TRef\>, [ExtensionData](interfaces/extensiondata.md) \| `undefined`]
+▸ **useExtension**<`TRef`\>(`state?`): [`RefObject`<`TRef`\>, [`ExtensionData`](interfaces/ExtensionData.md) \| `undefined`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TRef` | `TRef`: `HTMLElement` |
+| `TRef` | extends `HTMLElement` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `state?` | `Record`<string, any\> |
+| `state?` | `Record`<`string`, `any`\> |
 
 #### Returns
 
-[`RefObject`<TRef\>, [ExtensionData](interfaces/extensiondata.md) \| `undefined`]
+[`RefObject`<`TRef`\>, [`ExtensionData`](interfaces/ExtensionData.md) \| `undefined`]
 
 #### Defined in
 
@@ -3674,7 +3674,7 @@ ___
 | :------ | :------ |
 | `extensionSlotModuleName` | `string` |
 | `extensionSlotName` | `string` |
-| `extensions` | [ExtensionRegistration](interfaces/extensionregistration.md)[] |
+| `extensions` | [`ExtensionRegistration`](interfaces/ExtensionRegistration.md)[] |
 
 #### Defined in
 
@@ -3684,7 +3684,7 @@ ___
 
 ### useExtensionSlotConfig
 
-▸ **useExtensionSlotConfig**(`extensionSlotName`): [ExtensionSlotConfigObject](interfaces/extensionslotconfigobject.md)
+▸ **useExtensionSlotConfig**(`extensionSlotName`): [`ExtensionSlotConfigObject`](interfaces/ExtensionSlotConfigObject.md)
 
 #### Parameters
 
@@ -3694,7 +3694,7 @@ ___
 
 #### Returns
 
-[ExtensionSlotConfigObject](interfaces/extensionslotconfigobject.md)
+[`ExtensionSlotConfigObject`](interfaces/ExtensionSlotConfigObject.md)
 
 #### Defined in
 
@@ -3736,33 +3736,33 @@ ___
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
-▸ `Const` **useExtensionStore**(`actions`): `T` & [BoundActions](API.md#boundactions)
+▸ `Const` **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [Actions](API.md#actions) |
+| `actions` | [`Actions`](API.md#actions) |
 
 #### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
-▸ `Const` **useExtensionStore**(`actions?`): `T` & [BoundActions](API.md#boundactions)
+▸ `Const` **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [Actions](API.md#actions) |
+| `actions?` | [`Actions`](API.md#actions) |
 
 #### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
@@ -3792,11 +3792,11 @@ ___
 
 ### useLayoutType
 
-▸ **useLayoutType**(): [LayoutType](API.md#layouttype)
+▸ **useLayoutType**(): [`LayoutType`](API.md#layouttype)
 
 #### Returns
 
-[LayoutType](API.md#layouttype)
+[`LayoutType`](API.md#layouttype)
 
 #### Defined in
 
@@ -3806,11 +3806,11 @@ ___
 
 ### useLocations
 
-▸ **useLocations**(): [Location](interfaces/location.md)[]
+▸ **useLocations**(): [`Location`](interfaces/Location.md)[]
 
 #### Returns
 
-[Location](interfaces/location.md)[]
+[`Location`](interfaces/Location.md)[]
 
 #### Defined in
 
@@ -3828,7 +3828,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `context` | [NavigationContext](interfaces/navigationcontext.md) |
+| `context` | [`NavigationContext`](interfaces/NavigationContext.md) |
 
 #### Returns
 
@@ -3842,7 +3842,7 @@ ___
 
 ### usePagination
 
-▸ **usePagination**<T\>(`data?`, `resultsPerPage?`): `Object`
+▸ **usePagination**<`T`\>(`data?`, `resultsPerPage?`): `Object`
 
 #### Type parameters
 
@@ -3854,7 +3854,7 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `data` | `T`[] | [] |
+| `data` | `T`[] | `[]` |
 | `resultsPerPage` | `number` | `undefined` |
 
 #### Returns
@@ -3881,11 +3881,11 @@ ___
 
 ### useSessionUser
 
-▸ **useSessionUser**(): ``null`` \| [SessionUser](interfaces/sessionuser.md)
+▸ **useSessionUser**(): ``null`` \| [`SessionUser`](interfaces/SessionUser.md)
 
 #### Returns
 
-``null`` \| [SessionUser](interfaces/sessionuser.md)
+``null`` \| [`SessionUser`](interfaces/SessionUser.md)
 
 #### Defined in
 
@@ -3895,7 +3895,7 @@ ___
 
 ### useStore
 
-▸ **useStore**<T\>(`store`): `T`
+▸ **useStore**<`T`\>(`store`): `T`
 
 #### Type parameters
 
@@ -3907,7 +3907,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
+| `store` | `Store`<`T`\> |
 
 #### Returns
 
@@ -3917,7 +3917,7 @@ ___
 
 [packages/framework/esm-react-utils/src/useStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L4)
 
-▸ **useStore**<T\>(`store`, `actions`): `T` & [BoundActions](API.md#boundactions)
+▸ **useStore**<`T`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Type parameters
 
@@ -3929,12 +3929,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
-| `actions` | [Actions](API.md#actions) |
+| `store` | `Store`<`T`\> |
+| `actions` | [`Actions`](API.md#actions) |
 
 #### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
@@ -3944,7 +3944,7 @@ ___
 
 ### useStoreState
 
-▸ **useStoreState**<T, U\>(`store`, `select`): `U`
+▸ **useStoreState**<`T`, `U`\>(`store`, `select`): `U`
 
 #### Type parameters
 
@@ -3957,7 +3957,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
+| `store` | `Store`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
 
 #### Returns
@@ -3986,7 +3986,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `currentVisit` | ``null`` \| [Visit](interfaces/visit.md) |
+| `currentVisit` | ``null`` \| [`Visit`](interfaces/Visit.md) |
 | `error` | ``null`` |
 
 #### Defined in
@@ -3997,11 +3997,11 @@ ___
 
 ### useVisitTypes
 
-▸ **useVisitTypes**(): [VisitType](interfaces/visittype.md)[]
+▸ **useVisitTypes**(): [`VisitType`](interfaces/VisitType.md)[]
 
 #### Returns
 
-[VisitType](interfaces/visittype.md)[]
+[`VisitType`](interfaces/VisitType.md)[]
 
 #### Defined in
 
@@ -4011,18 +4011,18 @@ ___
 
 ### userHasAccess
 
-▸ **userHasAccess**(`requiredPrivilege`, `user`): `undefined` \| [Privilege](interfaces/privilege.md)
+▸ **userHasAccess**(`requiredPrivilege`, `user`): `undefined` \| [`Privilege`](interfaces/Privilege.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `requiredPrivilege` | `string` |
-| `user` | [LoggedInUser](interfaces/loggedinuser.md) |
+| `user` | [`LoggedInUser`](interfaces/LoggedInUser.md) |
 
 #### Returns
 
-`undefined` \| [Privilege](interfaces/privilege.md)
+`undefined` \| [`Privilege`](interfaces/Privilege.md)
 
 #### Defined in
 
@@ -4032,18 +4032,18 @@ ___
 
 ### validator
 
-▸ **validator**(`validationFunction`, `message`): [Validator](API.md#validator)
+▸ **validator**(`validationFunction`, `message`): [`Validator`](API.md#validator)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `validationFunction` | [ValidatorFunction](API.md#validatorfunction) |
+| `validationFunction` | [`ValidatorFunction`](API.md#validatorfunction) |
 | `message` | `string` |
 
 #### Returns
 
-[Validator](API.md#validator)
+[`Validator`](API.md#validator)
 
 #### Defined in
 
@@ -4055,11 +4055,11 @@ ___
 
 ### getNewWorkspaceItem
 
-▸ **getNewWorkspaceItem**(): `Observable`<[WorkspaceItem](interfaces/workspaceitem.md)\>
+▸ **getNewWorkspaceItem**(): `Observable`<[`WorkspaceItem`](interfaces/WorkspaceItem.md)\>
 
 #### Returns
 
-`Observable`<[WorkspaceItem](interfaces/workspaceitem.md)\>
+`Observable`<[`WorkspaceItem`](interfaces/WorkspaceItem.md)\>
 
 #### Defined in
 
@@ -4075,7 +4075,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `item` | [WorkspaceItem](interfaces/workspaceitem.md) |
+| `item` | [`WorkspaceItem`](interfaces/WorkspaceItem.md) |
 
 #### Returns
 

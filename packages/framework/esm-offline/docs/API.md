@@ -6,15 +6,15 @@
 
 ### Interfaces
 
-- [ClearDynamicRoutesMessage](interfaces/cleardynamicroutesmessage.md)
-- [MessageServiceWorkerResult](interfaces/messageserviceworkerresult.md)
-- [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)
-- [OmrsServiceWorkerEvent](interfaces/omrsserviceworkerevent.md)
-- [OmrsServiceWorkerMessage](interfaces/omrsserviceworkermessage.md)
-- [OnImportMapChangedMessage](interfaces/onimportmapchangedmessage.md)
-- [QueueItemDescriptor](interfaces/queueitemdescriptor.md)
-- [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
-- [SyncProcessOptions](interfaces/syncprocessoptions.md)
+- [ClearDynamicRoutesMessage](interfaces/ClearDynamicRoutesMessage.md)
+- [MessageServiceWorkerResult](interfaces/MessageServiceWorkerResult.md)
+- [NetworkRequestFailedEvent](interfaces/NetworkRequestFailedEvent.md)
+- [OmrsServiceWorkerEvent](interfaces/OmrsServiceWorkerEvent.md)
+- [OmrsServiceWorkerMessage](interfaces/OmrsServiceWorkerMessage.md)
+- [OnImportMapChangedMessage](interfaces/OnImportMapChangedMessage.md)
+- [QueueItemDescriptor](interfaces/QueueItemDescriptor.md)
+- [RegisterDynamicRouteMessage](interfaces/RegisterDynamicRouteMessage.md)
+- [SyncProcessOptions](interfaces/SyncProcessOptions.md)
 
 ### Type aliases
 
@@ -46,7 +46,7 @@
 
 ### KnownOmrsServiceWorkerEvents
 
-Ƭ **KnownOmrsServiceWorkerEvents**: [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)
+Ƭ **KnownOmrsServiceWorkerEvents**: [`NetworkRequestFailedEvent`](interfaces/NetworkRequestFailedEvent.md)
 
 #### Defined in
 
@@ -56,7 +56,7 @@ ___
 
 ### KnownOmrsServiceWorkerMessages
 
-Ƭ **KnownOmrsServiceWorkerMessages**: [OnImportMapChangedMessage](interfaces/onimportmapchangedmessage.md) \| [ClearDynamicRoutesMessage](interfaces/cleardynamicroutesmessage.md) \| [RegisterDynamicRouteMessage](interfaces/registerdynamicroutemessage.md)
+Ƭ **KnownOmrsServiceWorkerMessages**: [`OnImportMapChangedMessage`](interfaces/OnImportMapChangedMessage.md) \| [`ClearDynamicRoutesMessage`](interfaces/ClearDynamicRoutesMessage.md) \| [`RegisterDynamicRouteMessage`](interfaces/RegisterDynamicRouteMessage.md)
 
 #### Defined in
 
@@ -82,7 +82,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `data` | [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md) |
+| `data` | [`NetworkRequestFailedEvent`](interfaces/NetworkRequestFailedEvent.md) |
 
 #### Returns
 
@@ -112,7 +112,7 @@ ___
 
 ### getOmrsServiceWorker
 
-▸ **getOmrsServiceWorker**(): `Promise`<Workbox\>
+▸ **getOmrsServiceWorker**(): `Promise`<`Workbox`\>
 
 Returns a `Workbox` instance which allows interacting with the application's global Service Worker.
 
@@ -121,7 +121,7 @@ can, for example, happen when the browser is missing the required capabilities).
 
 #### Returns
 
-`Promise`<Workbox\>
+`Promise`<`Workbox`\>
 
 A promise which will resolve once the application's Service Worker has been initialized.
 
@@ -133,7 +133,7 @@ ___
 
 ### getSynchronizationItems
 
-▸ **getSynchronizationItems**<T\>(`type`): `Promise`<T[]\>
+▸ **getSynchronizationItems**<`T`\>(`type`): `Promise`<`T`[]\>
 
 #### Type parameters
 
@@ -149,7 +149,7 @@ ___
 
 #### Returns
 
-`Promise`<T[]\>
+`Promise`<`T`[]\>
 
 #### Defined in
 
@@ -159,7 +159,7 @@ ___
 
 ### getSynchronizationItemsFor
 
-▸ **getSynchronizationItemsFor**<T\>(`userId`, `type`): `Promise`<T[]\>
+▸ **getSynchronizationItemsFor**<`T`\>(`userId`, `type`): `Promise`<`T`[]\>
 
 #### Type parameters
 
@@ -176,7 +176,7 @@ ___
 
 #### Returns
 
-`Promise`<T[]\>
+`Promise`<`T`[]\>
 
 #### Defined in
 
@@ -208,7 +208,7 @@ ___
 
 ### messageOmrsServiceWorker
 
-▸ **messageOmrsServiceWorker**(`message`): `Promise`<[MessageServiceWorkerResult](interfaces/messageserviceworkerresult.md)<any\>\>
+▸ **messageOmrsServiceWorker**(`message`): `Promise`<[`MessageServiceWorkerResult`](interfaces/MessageServiceWorkerResult.md)<`any`\>\>
 
 Sends the specified message to the application's service worker.
 
@@ -216,11 +216,11 @@ Sends the specified message to the application's service worker.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `message` | [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages) | The message to be sent. |
+| `message` | [`KnownOmrsServiceWorkerMessages`](API.md#knownomrsserviceworkermessages) | The message to be sent. |
 
 #### Returns
 
-`Promise`<[MessageServiceWorkerResult](interfaces/messageserviceworkerresult.md)<any\>\>
+`Promise`<[`MessageServiceWorkerResult`](interfaces/MessageServiceWorkerResult.md)<`any`\>\>
 
 A promise which completes when the message has been successfully processed by the Service Worker.
 
@@ -246,7 +246,7 @@ ___
 
 ### queueSynchronizationItem
 
-▸ **queueSynchronizationItem**<T\>(`type`, `content`, `descriptor?`): `Promise`<number\>
+▸ **queueSynchronizationItem**<`T`\>(`type`, `content`, `descriptor?`): `Promise`<`number`\>
 
 #### Type parameters
 
@@ -260,11 +260,11 @@ ___
 | :------ | :------ |
 | `type` | `string` |
 | `content` | `T` |
-| `descriptor?` | [QueueItemDescriptor](interfaces/queueitemdescriptor.md) |
+| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) |
 
 #### Returns
 
-`Promise`<number\>
+`Promise`<`number`\>
 
 #### Defined in
 
@@ -274,7 +274,7 @@ ___
 
 ### queueSynchronizationItemFor
 
-▸ **queueSynchronizationItemFor**<T\>(`userId`, `type`, `content`, `descriptor?`): `Promise`<number\>
+▸ **queueSynchronizationItemFor**<`T`\>(`userId`, `type`, `content`, `descriptor?`): `Promise`<`number`\>
 
 #### Type parameters
 
@@ -289,11 +289,11 @@ ___
 | `userId` | `string` |
 | `type` | `string` |
 | `content` | `T` |
-| `descriptor?` | [QueueItemDescriptor](interfaces/queueitemdescriptor.md) |
+| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) |
 
 #### Returns
 
-`Promise`<number\>
+`Promise`<`number`\>
 
 #### Defined in
 
@@ -329,7 +329,7 @@ ___
 
 ### setupOfflineSync
 
-▸ **setupOfflineSync**<T\>(`type`, `dependsOn`, `process`): `void`
+▸ **setupOfflineSync**<`T`\>(`type`, `dependsOn`, `process`): `void`
 
 #### Type parameters
 
@@ -343,7 +343,7 @@ ___
 | :------ | :------ |
 | `type` | `string` |
 | `dependsOn` | `string`[] |
-| `process` | (`item`: `T`, `options`: [SyncProcessOptions](interfaces/syncprocessoptions.md)<T\>) => `Promise`<any\> |
+| `process` | (`item`: `T`, `options`: [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\>) => `Promise`<`any`\> |
 
 #### Returns
 
@@ -363,7 +363,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [NetworkRequestFailedEvent](interfaces/networkrequestfailedevent.md)) => `void` |
+| `cb` | (`data`: [`NetworkRequestFailedEvent`](interfaces/NetworkRequestFailedEvent.md)) => `void` |
 
 #### Returns
 
@@ -383,7 +383,7 @@ ___
 
 ### triggerSynchronization
 
-▸ **triggerSynchronization**(`abort`): `Promise`<void\>
+▸ **triggerSynchronization**(`abort`): `Promise`<`void`\>
 
 #### Parameters
 
@@ -393,7 +393,7 @@ ___
 
 #### Returns
 
-`Promise`<void\>
+`Promise`<`void`\>
 
 #### Defined in
 

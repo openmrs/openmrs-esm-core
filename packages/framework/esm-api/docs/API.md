@@ -6,41 +6,41 @@
 
 ### Enumerations
 
-- [VisitMode](enums/visitmode.md)
-- [VisitStatus](enums/visitstatus.md)
+- [VisitMode](enums/VisitMode.md)
+- [VisitStatus](enums/VisitStatus.md)
 
 ### Classes
 
-- [OpenmrsFetchError](classes/openmrsfetcherror.md)
+- [OpenmrsFetchError](classes/OpenmrsFetchError.md)
 
 ### Interfaces
 
-- [CurrentPatientOptions](interfaces/currentpatientoptions.md)
-- [CurrentUserOptions](interfaces/currentuseroptions.md)
-- [CurrentUserWithResponseOption](interfaces/currentuserwithresponseoption.md)
-- [CurrentUserWithoutResponseOption](interfaces/currentuserwithoutresponseoption.md)
-- [FHIRCode](interfaces/fhircode.md)
-- [FHIRRequestObj](interfaces/fhirrequestobj.md)
-- [FHIRResource](interfaces/fhirresource.md)
-- [FetchHeaders](interfaces/fetchheaders.md)
-- [FetchResponse](interfaces/fetchresponse.md)
-- [Location](interfaces/location.md)
-- [LoggedInUser](interfaces/loggedinuser.md)
-- [LoggedInUserFetchResponse](interfaces/loggedinuserfetchresponse.md)
-- [NewVisitPayload](interfaces/newvisitpayload.md)
-- [OnlyThePatient](interfaces/onlythepatient.md)
-- [OpenmrsResource](interfaces/openmrsresource.md)
-- [PatientWithFullResponse](interfaces/patientwithfullresponse.md)
-- [Person](interfaces/person.md)
-- [Privilege](interfaces/privilege.md)
-- [Role](interfaces/role.md)
-- [SessionUser](interfaces/sessionuser.md)
-- [UnauthenticatedUser](interfaces/unauthenticateduser.md)
-- [User](interfaces/user.md)
-- [Visit](interfaces/visit.md)
-- [VisitItem](interfaces/visititem.md)
-- [VisitType](interfaces/visittype.md)
-- [WorkspaceItem](interfaces/workspaceitem.md)
+- [CurrentPatientOptions](interfaces/CurrentPatientOptions.md)
+- [CurrentUserOptions](interfaces/CurrentUserOptions.md)
+- [CurrentUserWithResponseOption](interfaces/CurrentUserWithResponseOption.md)
+- [CurrentUserWithoutResponseOption](interfaces/CurrentUserWithoutResponseOption.md)
+- [FHIRCode](interfaces/FHIRCode.md)
+- [FHIRRequestObj](interfaces/FHIRRequestObj.md)
+- [FHIRResource](interfaces/FHIRResource.md)
+- [FetchHeaders](interfaces/FetchHeaders.md)
+- [FetchResponse](interfaces/FetchResponse.md)
+- [Location](interfaces/Location.md)
+- [LoggedInUser](interfaces/LoggedInUser.md)
+- [LoggedInUserFetchResponse](interfaces/LoggedInUserFetchResponse.md)
+- [NewVisitPayload](interfaces/NewVisitPayload.md)
+- [OnlyThePatient](interfaces/OnlyThePatient.md)
+- [OpenmrsResource](interfaces/OpenmrsResource.md)
+- [PatientWithFullResponse](interfaces/PatientWithFullResponse.md)
+- [Person](interfaces/Person.md)
+- [Privilege](interfaces/Privilege.md)
+- [Role](interfaces/Role.md)
+- [SessionUser](interfaces/SessionUser.md)
+- [UnauthenticatedUser](interfaces/UnauthenticatedUser.md)
+- [User](interfaces/User.md)
+- [Visit](interfaces/Visit.md)
+- [VisitItem](interfaces/VisitItem.md)
+- [VisitType](interfaces/VisitType.md)
+- [WorkspaceItem](interfaces/WorkspaceItem.md)
 
 ### Type aliases
 
@@ -93,7 +93,7 @@
 
 ### CurrentPatient
 
-Ƭ **CurrentPatient**: `fhir.Patient` \| [FetchResponse](interfaces/fetchresponse.md)<fhir.Patient\>
+Ƭ **CurrentPatient**: `fhir.Patient` \| [`FetchResponse`](interfaces/FetchResponse.md)<`fhir.Patient`\>
 
 #### Defined in
 
@@ -113,7 +113,7 @@ ___
 
 ### UpdateVisitPayload
 
-Ƭ **UpdateVisitPayload**: [NewVisitPayload](interfaces/newvisitpayload.md) & {}
+Ƭ **UpdateVisitPayload**: [`NewVisitPayload`](interfaces/NewVisitPayload.md) & {}
 
 #### Defined in
 
@@ -167,7 +167,7 @@ ___
 
 ### getStartedVisit
 
-• `Const` **getStartedVisit**: `BehaviorSubject`<``null`` \| [VisitItem](interfaces/visititem.md)\>
+• `Const` **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
 
 #### Defined in
 
@@ -187,7 +187,7 @@ ___
 
 ### openmrsFetch
 
-▸ **openmrsFetch**<T\>(`path`, `fetchInit?`): `Promise`<[FetchResponse](interfaces/fetchresponse.md)<T\>\>
+▸ **openmrsFetch**<`T`\>(`path`, `fetchInit?`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
 The openmrsFetch function is a wrapper around the
 [browser's built-in fetch function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch),
@@ -198,7 +198,7 @@ request headers, authentication, authorization, and the API urls.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `T` = `any` |
+| `T` | `any` |
 
 #### Parameters
 
@@ -209,7 +209,7 @@ request headers, authentication, authorization, and the API urls.
 
 #### Returns
 
-`Promise`<[FetchResponse](interfaces/fetchresponse.md)<T\>\>
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
 A [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
   that resolves with a [Response object](https://developer.mozilla.org/en-US/docs/Web/API/Response).
@@ -254,7 +254,7 @@ ___
 
 ### openmrsObservableFetch
 
-▸ **openmrsObservableFetch**<T\>(`url`, `fetchInit?`): `Observable`<[FetchResponse](interfaces/fetchresponse.md)<T\>\>
+▸ **openmrsObservableFetch**<`T`\>(`url`, `fetchInit?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
 The openmrsObservableFetch function is a wrapper around openmrsFetch
 that returns an [Observable](https://rxjs-dev.firebaseapp.com/guide/observable)
@@ -276,7 +276,7 @@ preferred or more convenient than a promise.
 
 #### Returns
 
-`Observable`<[FetchResponse](interfaces/fetchresponse.md)<T\>\>
+`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
 An Observable that produces exactly one Response object.
 The response object is exactly the same as for [openmrsFetch](API.md#openmrsfetch).
@@ -313,7 +313,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `patientUuid` | [PatientUuid](API.md#patientuuid) |
+| `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
 
 #### Returns
 
@@ -327,7 +327,7 @@ ___
 
 ### getCurrentUser
 
-▸ **getCurrentUser**(): `Observable`<[LoggedInUser](interfaces/loggedinuser.md)\>
+▸ **getCurrentUser**(): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 The getCurrentUser function returns an observable that produces
 **zero or more values, over time**. It will produce zero values
@@ -338,7 +338,7 @@ updated.
 
 #### Returns
 
-`Observable`<[LoggedInUser](interfaces/loggedinuser.md)\>
+`Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 An Observable that produces zero or more values (as
   described above). The values produced will be a user object (if
@@ -368,33 +368,33 @@ leak and source of bugs.
 
 [packages/framework/esm-api/src/shared-api-objects/current-user.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L56)
 
-▸ **getCurrentUser**(`opts`): `Observable`<[UnauthenticatedUser](interfaces/unauthenticateduser.md)\>
+▸ **getCurrentUser**(`opts`): `Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `opts` | [CurrentUserWithResponseOption](interfaces/currentuserwithresponseoption.md) |
+| `opts` | [`CurrentUserWithResponseOption`](interfaces/CurrentUserWithResponseOption.md) |
 
 #### Returns
 
-`Observable`<[UnauthenticatedUser](interfaces/unauthenticateduser.md)\>
+`Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
 
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L57)
 
-▸ **getCurrentUser**(`opts`): `Observable`<[LoggedInUser](interfaces/loggedinuser.md)\>
+▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `opts` | [CurrentUserWithoutResponseOption](interfaces/currentuserwithoutresponseoption.md) |
+| `opts` | [`CurrentUserWithoutResponseOption`](interfaces/CurrentUserWithoutResponseOption.md) |
 
 #### Returns
 
-`Observable`<[LoggedInUser](interfaces/loggedinuser.md)\>
+`Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 #### Defined in
 
@@ -432,11 +432,11 @@ ___
 
 ### getLocations
 
-▸ **getLocations**(): `Observable`<[Location](interfaces/location.md)[]\>
+▸ **getLocations**(): `Observable`<[`Location`](interfaces/Location.md)[]\>
 
 #### Returns
 
-`Observable`<[Location](interfaces/location.md)[]\>
+`Observable`<[`Location`](interfaces/Location.md)[]\>
 
 #### Defined in
 
@@ -446,11 +446,11 @@ ___
 
 ### getLoggedInUser
 
-▸ **getLoggedInUser**(): `Promise`<[LoggedInUser](interfaces/loggedinuser.md)\>
+▸ **getLoggedInUser**(): `Promise`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 #### Returns
 
-`Promise`<[LoggedInUser](interfaces/loggedinuser.md)\>
+`Promise`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
 #### Defined in
 
@@ -460,11 +460,11 @@ ___
 
 ### getVisitTypes
 
-▸ **getVisitTypes**(): `Observable`<[VisitType](interfaces/visittype.md)[]\>
+▸ **getVisitTypes**(): `Observable`<[`VisitType`](interfaces/VisitType.md)[]\>
 
 #### Returns
 
-`Observable`<[VisitType](interfaces/visittype.md)[]\>
+`Observable`<[`VisitType`](interfaces/VisitType.md)[]\>
 
 #### Defined in
 
@@ -474,7 +474,7 @@ ___
 
 ### getVisitsForPatient
 
-▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Observable`<[FetchResponse](interfaces/fetchresponse.md)<`Object`\>\>
+▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`Object`\>\>
 
 #### Parameters
 
@@ -486,7 +486,7 @@ ___
 
 #### Returns
 
-`Observable`<[FetchResponse](interfaces/fetchresponse.md)<`Object`\>\>
+`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`Object`\>\>
 
 #### Defined in
 
@@ -537,18 +537,18 @@ ___
 
 ### saveVisit
 
-▸ **saveVisit**(`payload`, `abortController`): `Observable`<[FetchResponse](interfaces/fetchresponse.md)<any\>\>
+▸ **saveVisit**(`payload`, `abortController`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `payload` | [NewVisitPayload](interfaces/newvisitpayload.md) |
+| `payload` | [`NewVisitPayload`](interfaces/NewVisitPayload.md) |
 | `abortController` | `AbortController` |
 
 #### Returns
 
-`Observable`<[FetchResponse](interfaces/fetchresponse.md)<any\>\>
+`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
 
 #### Defined in
 
@@ -558,7 +558,7 @@ ___
 
 ### toLocationObject
 
-▸ **toLocationObject**(`openmrsRestForm`): [Location](interfaces/location.md)
+▸ **toLocationObject**(`openmrsRestForm`): [`Location`](interfaces/Location.md)
 
 #### Parameters
 
@@ -568,7 +568,7 @@ ___
 
 #### Returns
 
-[Location](interfaces/location.md)
+[`Location`](interfaces/Location.md)
 
 #### Defined in
 
@@ -578,7 +578,7 @@ ___
 
 ### toVisitTypeObject
 
-▸ **toVisitTypeObject**(`openmrsRestForm`): [VisitType](interfaces/visittype.md)
+▸ **toVisitTypeObject**(`openmrsRestForm`): [`VisitType`](interfaces/VisitType.md)
 
 #### Parameters
 
@@ -588,7 +588,7 @@ ___
 
 #### Returns
 
-[VisitType](interfaces/visittype.md)
+[`VisitType`](interfaces/VisitType.md)
 
 #### Defined in
 
@@ -598,19 +598,19 @@ ___
 
 ### updateVisit
 
-▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Observable`<any\>
+▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Observable`<`any`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `uuid` | `string` |
-| `payload` | [UpdateVisitPayload](API.md#updatevisitpayload) |
+| `payload` | [`UpdateVisitPayload`](API.md#updatevisitpayload) |
 | `abortController` | `AbortController` |
 
 #### Returns
 
-`Observable`<any\>
+`Observable`<`any`\>
 
 #### Defined in
 
@@ -620,18 +620,18 @@ ___
 
 ### userHasAccess
 
-▸ **userHasAccess**(`requiredPrivilege`, `user`): `undefined` \| [Privilege](interfaces/privilege.md)
+▸ **userHasAccess**(`requiredPrivilege`, `user`): `undefined` \| [`Privilege`](interfaces/Privilege.md)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `requiredPrivilege` | `string` |
-| `user` | [LoggedInUser](interfaces/loggedinuser.md) |
+| `user` | [`LoggedInUser`](interfaces/LoggedInUser.md) |
 
 #### Returns
 
-`undefined` \| [Privilege](interfaces/privilege.md)
+`undefined` \| [`Privilege`](interfaces/Privilege.md)
 
 #### Defined in
 
@@ -643,11 +643,11 @@ ___
 
 ### getNewWorkspaceItem
 
-▸ **getNewWorkspaceItem**(): `Observable`<[WorkspaceItem](interfaces/workspaceitem.md)\>
+▸ **getNewWorkspaceItem**(): `Observable`<[`WorkspaceItem`](interfaces/WorkspaceItem.md)\>
 
 #### Returns
 
-`Observable`<[WorkspaceItem](interfaces/workspaceitem.md)\>
+`Observable`<[`WorkspaceItem`](interfaces/WorkspaceItem.md)\>
 
 #### Defined in
 
@@ -663,7 +663,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `item` | [WorkspaceItem](interfaces/workspaceitem.md) |
+| `item` | [`WorkspaceItem`](interfaces/WorkspaceItem.md) |
 
 #### Returns
 

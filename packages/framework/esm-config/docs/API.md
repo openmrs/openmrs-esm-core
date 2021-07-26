@@ -6,20 +6,20 @@
 
 ### Enumerations
 
-- [Type](enums/type.md)
+- [Type](enums/Type.md)
 
 ### Interfaces
 
-- [Config](interfaces/config.md)
-- [ConfigObject](interfaces/configobject.md)
-- [ConfigSchema](interfaces/configschema.md)
-- [ConfigStore](interfaces/configstore.md)
-- [ExtensionSlotConfig](interfaces/extensionslotconfig.md)
-- [ExtensionSlotConfigObject](interfaces/extensionslotconfigobject.md)
-- [ExtensionSlotConfigsStore](interfaces/extensionslotconfigsstore.md)
-- [ExtensionSlotConfigureValueObject](interfaces/extensionslotconfigurevalueobject.md)
-- [ImplementerToolsConfigStore](interfaces/implementertoolsconfigstore.md)
-- [NavigateOptions](interfaces/navigateoptions.md)
+- [Config](interfaces/Config.md)
+- [ConfigObject](interfaces/ConfigObject.md)
+- [ConfigSchema](interfaces/ConfigSchema.md)
+- [ConfigStore](interfaces/ConfigStore.md)
+- [ExtensionSlotConfig](interfaces/ExtensionSlotConfig.md)
+- [ExtensionSlotConfigObject](interfaces/ExtensionSlotConfigObject.md)
+- [ExtensionSlotConfigsStore](interfaces/ExtensionSlotConfigsStore.md)
+- [ExtensionSlotConfigureValueObject](interfaces/ExtensionSlotConfigureValueObject.md)
+- [ImplementerToolsConfigStore](interfaces/ImplementerToolsConfigStore.md)
+- [NavigateOptions](interfaces/NavigateOptions.md)
 
 ### Type aliases
 
@@ -73,7 +73,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `config` | [Config](interfaces/config.md) |
+| `config` | [`Config`](interfaces/Config.md) |
 | `source` | `string` |
 
 #### Defined in
@@ -132,7 +132,7 @@ ___
 
 ### implementerToolsConfigStore
 
-• `Const` **implementerToolsConfigStore**: `Store`<[ImplementerToolsConfigStore](interfaces/implementertoolsconfigstore.md)\>
+• `Const` **implementerToolsConfigStore**: `Store`<[`ImplementerToolsConfigStore`](interfaces/ImplementerToolsConfigStore.md)\>
 
 #### Defined in
 
@@ -142,7 +142,7 @@ ___
 
 ### temporaryConfigStore
 
-• `Const` **temporaryConfigStore**: `Store`<TemporaryConfigStore\>
+• `Const` **temporaryConfigStore**: `Store`<`TemporaryConfigStore`\>
 
 #### Defined in
 
@@ -158,9 +158,9 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `inRange` | (`min`: `number`, `max`: `number`) => [Validator](API.md#validator) |
-| `isUrl` | [Validator](API.md#validator) |
-| `isUrlWithTemplateParameters` | (`allowedTemplateParameters`: `string`[]) => [Validator](API.md#validator) |
+| `inRange` | (`min`: `number`, `max`: `number`) => [`Validator`](API.md#validator) |
+| `isUrl` | [`Validator`](API.md#validator) |
+| `isUrlWithTemplateParameters` | (`allowedTemplateParameters`: `string`[]) => [`Validator`](API.md#validator) |
 
 #### Defined in
 
@@ -227,7 +227,7 @@ ___
 
 ### isUrlWithTemplateParameters
 
-▸ `Const` **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [Validator](API.md#validator)
+▸ `Const` **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [`Validator`](API.md#validator)
 
 Verifies that a string contains only the default URL template
 parameters, plus any specified in `allowedTemplateParameters`.
@@ -240,7 +240,7 @@ parameters, plus any specified in `allowedTemplateParameters`.
 
 #### Returns
 
-[Validator](API.md#validator)
+[`Validator`](API.md#validator)
 
 #### Defined in
 
@@ -266,7 +266,7 @@ const submitHandler = () => {
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [NavigateOptions](interfaces/navigateoptions.md) |
+| `__namedParameters` | [`NavigateOptions`](interfaces/NavigateOptions.md) |
 
 #### Returns
 
@@ -289,7 +289,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `moduleName` | `string` |
-| `schema` | [ConfigSchema](interfaces/configschema.md) |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) |
 
 #### Returns
 
@@ -303,7 +303,7 @@ ___
 
 ### getConfig
 
-▸ **getConfig**(`moduleName`): `Promise`<[Config](interfaces/config.md)\>
+▸ **getConfig**(`moduleName`): `Promise`<[`Config`](interfaces/Config.md)\>
 
 A promise-based way to access the config as soon as it is fully loaded
 from the import-map. If it is already loaded, resolves the config in its
@@ -324,7 +324,7 @@ of the execution of a function.
 
 #### Returns
 
-`Promise`<[Config](interfaces/config.md)\>
+`Promise`<[`Config`](interfaces/Config.md)\>
 
 #### Defined in
 
@@ -334,7 +334,7 @@ ___
 
 ### getConfigStore
 
-▸ **getConfigStore**(`moduleName`): `Store`<[ConfigStore](interfaces/configstore.md)\>
+▸ **getConfigStore**(`moduleName`): `Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Parameters
 
@@ -344,7 +344,7 @@ ___
 
 #### Returns
 
-`Store`<[ConfigStore](interfaces/configstore.md)\>
+`Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Defined in
 
@@ -354,7 +354,7 @@ ___
 
 ### getExtensionConfigStore
 
-▸ **getExtensionConfigStore**(`extensionSlotModuleName`, `attachedExtensionSlotName`, `extensionId`): `Store`<[ConfigStore](interfaces/configstore.md)\>
+▸ **getExtensionConfigStore**(`extensionSlotModuleName`, `attachedExtensionSlotName`, `extensionId`): `Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Parameters
 
@@ -366,7 +366,7 @@ ___
 
 #### Returns
 
-`Store`<[ConfigStore](interfaces/configstore.md)\>
+`Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Defined in
 
@@ -376,7 +376,7 @@ ___
 
 ### getExtensionSlotsConfigStore
 
-▸ **getExtensionSlotsConfigStore**(`moduleName`): `Store`<[ExtensionSlotConfigsStore](interfaces/extensionslotconfigsstore.md)\>
+▸ **getExtensionSlotsConfigStore**(`moduleName`): `Store`<[`ExtensionSlotConfigsStore`](interfaces/ExtensionSlotConfigsStore.md)\>
 
 #### Parameters
 
@@ -386,7 +386,7 @@ ___
 
 #### Returns
 
-`Store`<[ExtensionSlotConfigsStore](interfaces/extensionslotconfigsstore.md)\>
+`Store`<[`ExtensionSlotConfigsStore`](interfaces/ExtensionSlotConfigsStore.md)\>
 
 #### Defined in
 
@@ -396,7 +396,7 @@ ___
 
 ### inRange
 
-▸ `Const` **inRange**(`min`, `max`): [Validator](API.md#validator)
+▸ `Const` **inRange**(`min`, `max`): [`Validator`](API.md#validator)
 
 Verifies that the value is between the provided minimum and maximum
 
@@ -409,7 +409,7 @@ Verifies that the value is between the provided minimum and maximum
 
 #### Returns
 
-[Validator](API.md#validator)
+[`Validator`](API.md#validator)
 
 #### Defined in
 
@@ -419,7 +419,7 @@ ___
 
 ### processConfig
 
-▸ **processConfig**(`schema`, `providedConfig`, `keyPathContext`): [Config](interfaces/config.md)
+▸ **processConfig**(`schema`, `providedConfig`, `keyPathContext`): [`Config`](interfaces/Config.md)
 
 Validate and interpolate defaults for `providedConfig` according to `schema`
 
@@ -427,13 +427,13 @@ Validate and interpolate defaults for `providedConfig` according to `schema`
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `schema` | [ConfigSchema](interfaces/configschema.md) | a configuration schema |
-| `providedConfig` | [ConfigObject](interfaces/configobject.md) | an object of config values (without the top-level module name) |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | a configuration schema |
+| `providedConfig` | [`ConfigObject`](interfaces/ConfigObject.md) | an object of config values (without the top-level module name) |
 | `keyPathContext` | `string` | a dot-deparated string which helps the user figure out where     the provided config came from |
 
 #### Returns
 
-[Config](interfaces/config.md)
+[`Config`](interfaces/Config.md)
 
 #### Defined in
 
@@ -449,8 +449,8 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `config` | [Config](interfaces/config.md) | `undefined` |
-| `sourceName` | `string` | "provided" |
+| `config` | [`Config`](interfaces/Config.md) | `undefined` |
+| `sourceName` | `string` | `"provided"` |
 
 #### Returns
 
@@ -464,18 +464,18 @@ ___
 
 ### validator
 
-▸ **validator**(`validationFunction`, `message`): [Validator](API.md#validator)
+▸ **validator**(`validationFunction`, `message`): [`Validator`](API.md#validator)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `validationFunction` | [ValidatorFunction](API.md#validatorfunction) |
+| `validationFunction` | [`ValidatorFunction`](API.md#validatorfunction) |
 | `message` | `string` |
 
 #### Returns
 
-[Validator](API.md#validator)
+[`Validator`](API.md#validator)
 
 #### Defined in
 

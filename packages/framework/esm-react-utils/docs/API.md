@@ -6,15 +6,15 @@
 
 ### Interfaces
 
-- [ComponentConfig](interfaces/componentconfig.md)
-- [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md)
-- [ConfigurableLinkProps](interfaces/configurablelinkprops.md)
-- [ExtensionData](interfaces/extensiondata.md)
-- [ExtensionProps](interfaces/extensionprops.md)
-- [ExtensionSlotBaseProps](interfaces/extensionslotbaseprops.md)
-- [OpenmrsReactComponentProps](interfaces/openmrsreactcomponentprops.md)
-- [OpenmrsReactComponentState](interfaces/openmrsreactcomponentstate.md)
-- [UserHasAccessProps](interfaces/userhasaccessprops.md)
+- [ComponentConfig](interfaces/ComponentConfig.md)
+- [ComponentDecoratorOptions](interfaces/ComponentDecoratorOptions.md)
+- [ConfigurableLinkProps](interfaces/ConfigurableLinkProps.md)
+- [ExtensionData](interfaces/ExtensionData.md)
+- [ExtensionProps](interfaces/ExtensionProps.md)
+- [ExtensionSlotBaseProps](interfaces/ExtensionSlotBaseProps.md)
+- [OpenmrsReactComponentProps](interfaces/OpenmrsReactComponentProps.md)
+- [OpenmrsReactComponentState](interfaces/OpenmrsReactComponentState.md)
+- [UserHasAccessProps](interfaces/UserHasAccessProps.md)
 
 ### Type aliases
 
@@ -93,7 +93,7 @@ ___
 
 ### ExtensionSlotProps
 
-Ƭ **ExtensionSlotProps**: [ExtensionSlotBaseProps](interfaces/extensionslotbaseprops.md) & `React.HTMLAttributes`<HTMLDivElement\>
+Ƭ **ExtensionSlotProps**: [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `React.HTMLAttributes`<`HTMLDivElement`\>
 
 #### Defined in
 
@@ -113,7 +113,7 @@ ___
 
 ### ConfigurableLink
 
-• `Const` **ConfigurableLink**: `React.FC`<[ConfigurableLinkProps](interfaces/configurablelinkprops.md)\>
+• `Const` **ConfigurableLink**: `React.FC`<[`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md)\>
 
 A React link component which calls [[navigate]] when clicked
 
@@ -133,7 +133,7 @@ ___
 
 ### ComponentContext
 
-• `Const` **ComponentContext**: `Context`<[ComponentConfig](interfaces/componentconfig.md)\>
+• `Const` **ComponentContext**: `Context`<[`ComponentConfig`](interfaces/ComponentConfig.md)\>
 
 Available to all components. Provided by `openmrsComponentDecorator`.
 
@@ -145,7 +145,7 @@ ___
 
 ### Extension
 
-• `Const` **Extension**: `React.FC`<[ExtensionProps](interfaces/extensionprops.md)\>
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
 
 Represents the position in the DOM where each extension within
 an extension slot is rendered.
@@ -162,7 +162,7 @@ ___
 
 ### ExtensionSlot
 
-• `Const` **ExtensionSlot**: `React.FC`<[ExtensionSlotProps](API.md#extensionslotprops)\>
+• `Const` **ExtensionSlot**: `React.FC`<[`ExtensionSlotProps`](API.md#extensionslotprops)\>
 
 #### Defined in
 
@@ -172,7 +172,7 @@ ___
 
 ### UserHasAccess
 
-• `Const` **UserHasAccess**: `React.FC`<[UserHasAccessProps](interfaces/userhasaccessprops.md)\>
+• `Const` **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
 
 #### Defined in
 
@@ -182,7 +182,7 @@ ___
 
 ### createUseStore
 
-▸ **createUseStore**<T\>(`store`): () => `T`(`actions`: [Actions](API.md#actions)) => `T` & [BoundActions](API.md#boundactions)(`actions?`: [Actions](API.md#actions)) => `T` & [BoundActions](API.md#boundactions)
+▸ **createUseStore**<`T`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)(`actions?`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)
 
 #### Type parameters
 
@@ -194,7 +194,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
+| `store` | `Store`<`T`\> |
 
 #### Returns
 
@@ -206,29 +206,29 @@ ___
 
 `T`
 
-▸ (`actions`): `T` & [BoundActions](API.md#boundactions)
+▸ (`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [Actions](API.md#actions) |
+| `actions` | [`Actions`](API.md#actions) |
 
 ##### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
-▸ (`actions?`): `T` & [BoundActions](API.md#boundactions)
+▸ (`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [Actions](API.md#actions) |
+| `actions?` | [`Actions`](API.md#actions) |
 
 ##### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
@@ -238,7 +238,7 @@ ___
 
 ### getAsyncExtensionLifecycle
 
-▸ `Const` **getAsyncExtensionLifecycle**<T\>(`lazy`, `options`): () => `Promise`<ReactAppOrParcel<any\>\>
+▸ `Const` **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 **`deprecated`** Use getAsyncLifecycle instead.
 
@@ -253,17 +253,17 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `lazy` | () => `Promise`<`Object`\> |
-| `options` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
 `fn`
 
-▸ (): `Promise`<ReactAppOrParcel<any\>\>
+▸ (): `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 ##### Returns
 
-`Promise`<ReactAppOrParcel<any\>\>
+`Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Defined in
 
@@ -273,7 +273,7 @@ ___
 
 ### getAsyncLifecycle
 
-▸ **getAsyncLifecycle**<T\>(`lazy`, `options`): () => `Promise`<ReactAppOrParcel<any\>\>
+▸ **getAsyncLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Type parameters
 
@@ -286,17 +286,17 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `lazy` | () => `Promise`<`Object`\> |
-| `options` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
 `fn`
 
-▸ (): `Promise`<ReactAppOrParcel<any\>\>
+▸ (): `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 ##### Returns
 
-`Promise`<ReactAppOrParcel<any\>\>
+`Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Defined in
 
@@ -306,7 +306,7 @@ ___
 
 ### getLifecycle
 
-▸ **getLifecycle**<T\>(`Component`, `options`): `ReactAppOrParcel`<any\>
+▸ **getLifecycle**<`T`\>(`Component`, `options`): `ReactAppOrParcel`<`any`\>
 
 #### Type parameters
 
@@ -318,12 +318,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Component` | `React.ComponentType`<T\> |
-| `options` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `Component` | `React.ComponentType`<`T`\> |
+| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
-`ReactAppOrParcel`<any\>
+`ReactAppOrParcel`<`any`\>
 
 #### Defined in
 
@@ -333,7 +333,7 @@ ___
 
 ### getSyncLifecycle
 
-▸ **getSyncLifecycle**<T\>(`Component`, `options`): () => `Promise`<ReactAppOrParcel<any\>\>
+▸ **getSyncLifecycle**<`T`\>(`Component`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Type parameters
 
@@ -345,18 +345,18 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Component` | `React.ComponentType`<T\> |
-| `options` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `Component` | `React.ComponentType`<`T`\> |
+| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
 `fn`
 
-▸ (): `Promise`<ReactAppOrParcel<any\>\>
+▸ (): `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 ##### Returns
 
-`Promise`<ReactAppOrParcel<any\>\>
+`Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Defined in
 
@@ -366,19 +366,19 @@ ___
 
 ### openmrsComponentDecorator
 
-▸ **openmrsComponentDecorator**(`userOpts`): (`Comp`: `ComponentType`<`Object`\>) => `ComponentType`<any\>
+▸ **openmrsComponentDecorator**(`userOpts`): (`Comp`: `ComponentType`<`Object`\>) => `ComponentType`<`any`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `userOpts` | [ComponentDecoratorOptions](interfaces/componentdecoratoroptions.md) |
+| `userOpts` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
 
 `fn`
 
-▸ (`Comp`): `ComponentType`<any\>
+▸ (`Comp`): `ComponentType`<`any`\>
 
 ##### Parameters
 
@@ -388,7 +388,7 @@ ___
 
 ##### Returns
 
-`ComponentType`<any\>
+`ComponentType`<`any`\>
 
 #### Defined in
 
@@ -546,23 +546,23 @@ ___
 
 ### useExtension
 
-▸ **useExtension**<TRef\>(`state?`): [`RefObject`<TRef\>, [ExtensionData](interfaces/extensiondata.md) \| `undefined`]
+▸ **useExtension**<`TRef`\>(`state?`): [`RefObject`<`TRef`\>, [`ExtensionData`](interfaces/ExtensionData.md) \| `undefined`]
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TRef` | `TRef`: `HTMLElement` |
+| `TRef` | extends `HTMLElement` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `state?` | `Record`<string, any\> |
+| `state?` | `Record`<`string`, `any`\> |
 
 #### Returns
 
-[`RefObject`<TRef\>, [ExtensionData](interfaces/extensiondata.md) \| `undefined`]
+[`RefObject`<`TRef`\>, [`ExtensionData`](interfaces/ExtensionData.md) \| `undefined`]
 
 #### Defined in
 
@@ -650,33 +650,33 @@ ___
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
-▸ `Const` **useExtensionStore**(`actions`): `T` & [BoundActions](API.md#boundactions)
+▸ `Const` **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [Actions](API.md#actions) |
+| `actions` | [`Actions`](API.md#actions) |
 
 #### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
-▸ `Const` **useExtensionStore**(`actions?`): `T` & [BoundActions](API.md#boundactions)
+▸ `Const` **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [Actions](API.md#actions) |
+| `actions?` | [`Actions`](API.md#actions) |
 
 #### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
@@ -706,11 +706,11 @@ ___
 
 ### useLayoutType
 
-▸ **useLayoutType**(): [LayoutType](API.md#layouttype)
+▸ **useLayoutType**(): [`LayoutType`](API.md#layouttype)
 
 #### Returns
 
-[LayoutType](API.md#layouttype)
+[`LayoutType`](API.md#layouttype)
 
 #### Defined in
 
@@ -756,7 +756,7 @@ ___
 
 ### usePagination
 
-▸ **usePagination**<T\>(`data?`, `resultsPerPage?`): `Object`
+▸ **usePagination**<`T`\>(`data?`, `resultsPerPage?`): `Object`
 
 #### Type parameters
 
@@ -768,7 +768,7 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `data` | `T`[] | [] |
+| `data` | `T`[] | `[]` |
 | `resultsPerPage` | `number` | `undefined` |
 
 #### Returns
@@ -809,7 +809,7 @@ ___
 
 ### useStore
 
-▸ **useStore**<T\>(`store`): `T`
+▸ **useStore**<`T`\>(`store`): `T`
 
 #### Type parameters
 
@@ -821,7 +821,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
+| `store` | `Store`<`T`\> |
 
 #### Returns
 
@@ -831,7 +831,7 @@ ___
 
 [packages/framework/esm-react-utils/src/useStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L4)
 
-▸ **useStore**<T\>(`store`, `actions`): `T` & [BoundActions](API.md#boundactions)
+▸ **useStore**<`T`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Type parameters
 
@@ -843,12 +843,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
-| `actions` | [Actions](API.md#actions) |
+| `store` | `Store`<`T`\> |
+| `actions` | [`Actions`](API.md#actions) |
 
 #### Returns
 
-`T` & [BoundActions](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
@@ -858,7 +858,7 @@ ___
 
 ### useStoreState
 
-▸ **useStoreState**<T, U\>(`store`, `select`): `U`
+▸ **useStoreState**<`T`, `U`\>(`store`, `select`): `U`
 
 #### Type parameters
 
@@ -871,7 +871,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<T\> |
+| `store` | `Store`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
 
 #### Returns

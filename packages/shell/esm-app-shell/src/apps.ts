@@ -134,7 +134,7 @@ export function registerApp(appName: string, appExports: System.Module) {
           route: result.activate,
           offline: result.offline,
           online: result.online,
-          role: result.role,
+          privilege: result.privilege,
         });
       }
 
@@ -154,11 +154,11 @@ export function registerApp(appName: string, appExports: System.Module) {
 }
 
 export function tryRegisterPage(appName: string, page: PageDefinition) {
-  const { route, load, online, offline, resources, role } = page;
+  const { route, load, online, offline, resources, privilege } = page;
 
   if (checkStatus(online, offline)) {
     const activityFn = preprocessActivator(route);
-    const loader = getLoader(load, resources, role);
+    const loader = getLoader(load, resources, privilege);
     registerApplication(
       appName,
       loader,
@@ -194,7 +194,7 @@ To fix this, ensure that you define a "load" function inside the extension defin
   }
 
   registerExtension(id, {
-    load: getLoader(extension.load, extension.resources, extension.role),
+    load: getLoader(extension.load, extension.resources, extension.privilege),
     meta: extension.meta || {},
     order: extension.order,
     moduleName,

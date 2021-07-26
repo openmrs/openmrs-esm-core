@@ -33,15 +33,19 @@ export function routeRegex(regex: RegExp, location: Location) {
 
 export function wrapLifecycle(
   load: () => Promise<any>,
-  role: string
+  requiredPrivilege: string
 ): () => Promise<any> {
-  return async () => {
-    const user = await getCurrentUser(userOpts).toPromise();
+  return () => {
+    return new Promise((resolve) => {
+      const sub = getCurrentUser(userOpts).subscribe((user) => {
+        sub.unsubscribe();
 
-    if (user && userHasAccess(role, user)) {
-      return await load();
-    }
+        if (user && userHasAccess(requiredPrivilege, user)) {
+          return resolve(load());
+        }
 
-    return emptyLifecycle;
+        return resolve(emptyLifecycle);
+      });
+    });
   };
 }
