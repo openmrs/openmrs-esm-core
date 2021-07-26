@@ -49,10 +49,10 @@ function trySetup(appName: string, setup: () => any): any {
 function getLoader(
   load: () => Promise<any>,
   resources?: Record<string, ResourceLoader>,
-  role?: string
+  privilege?: string
 ) {
-  if (typeof role === "string") {
-    load = wrapLifecycle(load, role);
+  if (typeof privilege === "string") {
+    load = wrapLifecycle(load, privilege);
   }
 
   if (typeof resources === "object") {

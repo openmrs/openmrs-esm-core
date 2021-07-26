@@ -20,8 +20,8 @@
 - [offline](ExtensionComponentDefinition.md#offline)
 - [online](ExtensionComponentDefinition.md#online)
 - [order](ExtensionComponentDefinition.md#order)
+- [privilege](ExtensionComponentDefinition.md#privilege)
 - [resources](ExtensionComponentDefinition.md#resources)
-- [role](ExtensionComponentDefinition.md#role)
 
 ### Methods
 
@@ -85,6 +85,22 @@ Specifies a preferred order number, if any.
 
 ___
 
+### privilege
+
+• `Optional` **privilege**: `string`
+
+Defines the access privilege required for this component, if any.
+
+#### Inherited from
+
+[ComponentDefinition](ComponentDefinition.md).[privilege](ComponentDefinition.md#privilege)
+
+#### Defined in
+
+[types.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L98)
+
+___
+
 ### resources
 
 • `Optional` **resources**: `Record`<`string`, [`ResourceLoader`](ResourceLoader.md)<`any`\>\>
@@ -98,22 +114,6 @@ Defines resources that are loaded when the component should mount.
 #### Defined in
 
 [types.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L102)
-
-___
-
-### role
-
-• `Optional` **role**: `string`
-
-Defines the access role required for this component, if any.
-
-#### Inherited from
-
-[ComponentDefinition](ComponentDefinition.md).[role](ComponentDefinition.md#role)
-
-#### Defined in
-
-[types.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L98)
 
 ## Methods
 

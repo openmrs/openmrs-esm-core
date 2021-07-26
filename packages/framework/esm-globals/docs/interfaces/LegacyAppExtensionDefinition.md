@@ -17,8 +17,8 @@
 - [offline](LegacyAppExtensionDefinition.md#offline)
 - [online](LegacyAppExtensionDefinition.md#online)
 - [order](LegacyAppExtensionDefinition.md#order)
+- [privilege](LegacyAppExtensionDefinition.md#privilege)
 - [resources](LegacyAppExtensionDefinition.md#resources)
-- [role](LegacyAppExtensionDefinition.md#role)
 
 ### Methods
 
@@ -102,6 +102,22 @@ Specifies a preferred order number, if any.
 
 ___
 
+### privilege
+
+• `Optional` **privilege**: `string`
+
+Defines the access privilege required for this component, if any.
+
+#### Inherited from
+
+[ExtensionComponentDefinition](ExtensionComponentDefinition.md).[privilege](ExtensionComponentDefinition.md#privilege)
+
+#### Defined in
+
+[types.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L98)
+
+___
+
 ### resources
 
 • `Optional` **resources**: `Record`<`string`, [`ResourceLoader`](ResourceLoader.md)<`any`\>\>
@@ -115,22 +131,6 @@ Defines resources that are loaded when the component should mount.
 #### Defined in
 
 [types.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L102)
-
-___
-
-### role
-
-• `Optional` **role**: `string`
-
-Defines the access role required for this component, if any.
-
-#### Inherited from
-
-[ExtensionComponentDefinition](ExtensionComponentDefinition.md).[role](ExtensionComponentDefinition.md#role)
-
-#### Defined in
-
-[types.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L98)
 
 ## Methods
 

@@ -14,8 +14,8 @@
 
 - [offline](PageDefinition.md#offline)
 - [online](PageDefinition.md#online)
+- [privilege](PageDefinition.md#privilege)
 - [resources](PageDefinition.md#resources)
-- [role](PageDefinition.md#role)
 - [route](PageDefinition.md#route)
 
 ### Methods
@@ -56,6 +56,22 @@ Defines the online support / properties of the component.
 
 ___
 
+### privilege
+
+• `Optional` **privilege**: `string`
+
+Defines the access privilege required for this component, if any.
+
+#### Inherited from
+
+[ComponentDefinition](ComponentDefinition.md).[privilege](ComponentDefinition.md#privilege)
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L98)
+
+___
+
 ### resources
 
 • `Optional` **resources**: `Record`<`string`, [`ResourceLoader`](ResourceLoader.md)<`any`\>\>
@@ -69,22 +85,6 @@ Defines resources that are loaded when the component should mount.
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L102)
-
-___
-
-### role
-
-• `Optional` **role**: `string`
-
-Defines the access role required for this component, if any.
-
-#### Inherited from
-
-[ComponentDefinition](ComponentDefinition.md).[role](ComponentDefinition.md#role)
-
-#### Defined in
-
-[packages/framework/esm-globals/src/types.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L98)
 
 ___
 

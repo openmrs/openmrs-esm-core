@@ -16,8 +16,8 @@
 
 - [offline](ComponentDefinition.md#offline)
 - [online](ComponentDefinition.md#online)
+- [privilege](ComponentDefinition.md#privilege)
 - [resources](ComponentDefinition.md#resources)
-- [role](ComponentDefinition.md#role)
 
 ### Methods
 
@@ -49,6 +49,18 @@ Defines the online support / properties of the component.
 
 ___
 
+### privilege
+
+• `Optional` **privilege**: `string`
+
+Defines the access privilege required for this component, if any.
+
+#### Defined in
+
+[types.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L98)
+
+___
+
 ### resources
 
 • `Optional` **resources**: `Record`<`string`, [`ResourceLoader`](ResourceLoader.md)<`any`\>\>
@@ -58,18 +70,6 @@ Defines resources that are loaded when the component should mount.
 #### Defined in
 
 [types.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L102)
-
-___
-
-### role
-
-• `Optional` **role**: `string`
-
-Defines the access role required for this component, if any.
-
-#### Defined in
-
-[types.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L98)
 
 ## Methods
 
