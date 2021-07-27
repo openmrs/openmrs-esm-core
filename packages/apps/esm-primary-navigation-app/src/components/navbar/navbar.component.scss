@@ -1,5 +1,6 @@
 .topNavActionSlot {
   display: flex;
+  z-index: 9999 !important;
 }
 
 .headerGlobalBar button {
