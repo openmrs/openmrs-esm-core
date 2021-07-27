@@ -25,17 +25,17 @@ This contains tooling and the app shell.
 
 The following common libraries have been developed. They may also be used independently of the app shell.
 
-- [@openmrs/esm-api](packages/framework/esm-api)
-- [@openmrs/esm-breadcrumbs](packages/framework/esm-breadcrumbs)
-- [@openmrs/esm-config](packages/framework/esm-config)
-- [@openmrs/esm-error-handling](packages/framework/esm-error-handling)
-- [@openmrs/esm-extensions](packages/framework/esm-extensions)
-- [@openmrs/esm-globals](packages/framework/esm-globals)
-- [@openmrs/esm-offline](packages/framework/esm-offline)
-- [@openmrs/esm-react-utils](packages/framework/esm-react-utils)
-- [@openmrs/esm-state](packages/framework/esm-state)
-- [@openmrs/esm-styleguide](packages/framework/esm-styleguide)
-- [@openmrs/esm-utils](packages/framework/esm-utils)
+- [@openmrs/esm-api](packages/framework/esm-api): helps make calls to the backend
+- [@openmrs/esm-breadcrumbs](packages/framework/esm-breadcrumbs): management of UI breadcrumbs
+- [@openmrs/esm-config](packages/framework/esm-config): validation and storage of frontend configuration
+- [@openmrs/esm-error-handling](packages/framework/esm-error-handling): handling of errors
+- [@openmrs/esm-extensions](packages/framework/esm-extensions): implementation of a frontend component extension system
+- [@openmrs/esm-globals](packages/framework/esm-globals): useful global variables and types
+- [@openmrs/esm-offline](packages/framework/esm-offline): provides offline functionality
+- [@openmrs/esm-react-utils](packages/framework/esm-react-utils): utilities for React components
+- [@openmrs/esm-state](packages/framework/esm-state): brings in state management
+- [@openmrs/esm-styleguide](packages/framework/esm-styleguide): styling and UI capabilities
+- [@openmrs/esm-utils](packages/framework/esm-utils): general utility and helper functions
 
 All libraries are aggregated in the `@openmrs/esm-framework` package:
 

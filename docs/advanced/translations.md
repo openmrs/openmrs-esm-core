@@ -12,3 +12,15 @@ There are three places in frontend code that relate to translation/i18n. They ar
   (still on the client side, despite the name) and the microfrontend it wraps.
 - The microfrontend, which uses the `t` function or `<Trans>` component from react-i18next
   to produce rendered content. Upon each commit, [i18next-parser](https://github.com/i18next/i18next-parser) parses the microfrontend code and automatically extracts translation keys and strings into locale-specific translation files found in the `translations` directory of a microfrontend.
+
+## Language Detection
+
+The identify the currently used language the following steps are performed:
+
+1. Looking at the site's current query string (`lng`)
+2. Looking at the user's language preference placed on the `html` tag, which is synced with the backend
+3. Looking at the site's language preference stored in `localStorage` (key `i18nextLng`)
+4. Looking at the browser's language preference via `navigator` (trying properties such as `languages`, `userLanguage`, `language`)
+5. Falling back to English ("en")
+
+In any case changing the language on the fly is as simple as changing the `lang` attribute on the site's `documentElement`.
