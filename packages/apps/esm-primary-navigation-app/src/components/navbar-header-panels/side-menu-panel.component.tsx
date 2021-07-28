@@ -5,7 +5,7 @@ import { SideNav } from "carbon-components-react/es/components/UIShell";
 import styles from "./side-menu-panel.component.scss";
 
 interface SideMenuPanelProps extends SideNavProps {
-  hidePanel: Function;
+  hidePanel: () => void;
 }
 
 const SideMenuPanel: React.FC<SideMenuPanelProps> = ({
@@ -13,18 +13,22 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({
   hidePanel,
 }) => {
   const menuRef = useRef(null);
-  const current = menuRef?.current;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (current && !current.contains(event.target)) {
+      if (menuRef?.current && !menuRef.current.contains(event.target)) {
         hidePanel();
       }
     };
 
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
-  }, [current, hidePanel]);
+  }, [menuRef, hidePanel]);
+
+  React.useEffect(() => {
+    window.addEventListener("popstate", hidePanel);
+    return window.addEventListener("popstate", hidePanel);
+  }, [hidePanel]);
 
   return (
     expanded && (
