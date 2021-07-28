@@ -78,7 +78,10 @@ const Navbar: React.FC<NavbarProps> = ({
             <HeaderMenuButton
               aria-label="Open menu"
               isCollapsible
-              onClick={() => togglePanel("sideMenu")}
+              onClick={(event) => {
+                togglePanel("sideMenu");
+                event.stopPropagation();
+              }}
               isActive={isActivePanel("sideMenu")}
             />
           )}
