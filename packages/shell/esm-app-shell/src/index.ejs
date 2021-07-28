@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>OpenMRS</title>
+    <title><%= openmrsPageTitle %></title>
     <link
       rel="shortcut icon"
       type="image/x-icon"
@@ -72,6 +72,7 @@
         apiUrl: "<%= openmrsApiUrl %>",
         spaPath: "<%= openmrsPublicPath %>",
         env: "<%= openmrsEnvironment %>",
+        offline: <%= openmrsOffline %>,
         configUrls: [<%= openmrsConfigUrls %>],
       });
     </script>
@@ -81,4 +82,3 @@
     <div id="single-spa-application:@openmrs/esm-login-app-page-0"></div>
   </body>
 </html>
- 

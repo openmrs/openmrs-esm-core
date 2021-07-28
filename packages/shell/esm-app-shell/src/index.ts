@@ -19,9 +19,9 @@ function wireSpaPaths() {
 }
 
 function runSpa(config: SpaConfig) {
-  const { configUrls = [] } = config;
+  const { configUrls = [], offline = true } = config;
   const { run } = require("./run");
-  return run(configUrls);
+  return run(configUrls, offline);
 }
 
 /**

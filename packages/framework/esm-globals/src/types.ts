@@ -68,6 +68,11 @@ export interface SpaConfig {
    * URLs of configurations to load in the system.
    */
   configUrls?: Array<string>;
+  /**
+   * Defines if offline should be supported by installing a service worker.
+   * @default true
+   */
+  offline?: boolean;
 }
 
 export interface ResourceLoader<T = any> {

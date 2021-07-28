@@ -25,7 +25,9 @@ const openmrsPublicPath = removeTrailingSlash(
 );
 const openmrsProxyTarget =
   process.env.OMRS_PROXY_TARGET || "https://openmrs-spa.org/";
+const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || "OpenMRS";
 const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
+const openmrsOffline = process.env.OMRS_OFFLINE !== "disable";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsCoreApps =
   process.env.OMRS_ESM_CORE_APPS_DIR || resolve(__dirname, "../../apps");
@@ -178,8 +180,10 @@ module.exports = (env, argv = {}) => {
           openmrsApiUrl,
           openmrsPublicPath,
           openmrsFavicon,
+          openmrsPageTitle,
           openmrsImportmapDef,
           openmrsImportmapUrl,
+          openmrsOffline,
           openmrsEnvironment,
           openmrsConfigUrls,
           openmrsCoreImportmap:
@@ -201,7 +205,7 @@ module.exports = (env, argv = {}) => {
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? "static" : "disabled",
       }),
-      isProd &&
+      openmrsOffline &&
         new InjectManifest({
           swSrc: resolve(__dirname, "./src/service-worker/index.ts"),
           swDest: "service-worker.js",

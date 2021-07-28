@@ -6,6 +6,8 @@ export interface WebpackOptions {
   importmap?: ImportmapDeclaration;
   apiUrl?: string;
   spaPath?: string;
+  pageTitle?: string;
+  supportOffline?: boolean;
   configUrls?: Array<string>;
   env?: string;
 }
@@ -23,6 +25,14 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
 
   if (typeof options.apiUrl === "string") {
     variables.OMRS_API_URL = options.apiUrl;
+  }
+
+  if (typeof options.pageTitle === "string") {
+    variables.OMRS_PAGE_TITLE = options.pageTitle;
+  }
+
+  if (typeof options.supportOffline === "boolean") {
+    variables.OMRS_OFFLINE = options.supportOffline ? "enable" : "disable";
   }
 
   if (Array.isArray(options.configUrls)) {

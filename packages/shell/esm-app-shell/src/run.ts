@@ -334,7 +334,7 @@ function setupOfflineCssClasses() {
   });
 }
 
-export function run(configUrls: Array<string>) {
+export function run(configUrls: Array<string>, offline: boolean) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
@@ -349,7 +349,7 @@ export function run(configUrls: Array<string>) {
   setupApiModule();
   registerCoreExtensions();
 
-  if (process.env.NODE_ENV === "production") {
+  if (offline) {
     setupServiceWorker();
   }
 
