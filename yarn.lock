@@ -2655,6 +2655,34 @@
   dependencies:
     "@octokit/openapi-types" "^9.1.0"
 
+"@openmrs/esm-app-shell@next":
+  version "3.1.10-pre.454"
+  resolved "https://registry.yarnpkg.com/@openmrs/esm-app-shell/-/esm-app-shell-3.1.10-pre.454.tgz#77fcd0747ae99a03f96b9c7d393a0a430e320380"
+  integrity sha512-oGskfvq4lRROoWPtphgJr4R1kEANnYx0f2kzuFOJ0dJcXD24K+5BH4D0vEkyHLgIzuspu0T6jkpaZ2gLeqP7Mg==
+  dependencies:
+    "@openmrs/esm-framework" "^3.1.10-pre.454"
+    carbon-components "10.31.0"
+    carbon-icons "7.0.7"
+    dayjs "^1.10.4"
+    dexie "^3.0.3"
+    i18next "^19.6.0"
+    i18next-browser-languagedetector "^4.3.1"
+    i18next-http-backend "^1.0.21"
+    i18next-icu "^1.4.2"
+    import-map-overrides "^2.3.0"
+    lodash-es "4.17.21"
+    react "^16.13.1"
+    react-dom "^16.13.1"
+    react-i18next "^11.7.0"
+    react-router-dom "^5.2.0"
+    rxjs "^6.5.3"
+    single-spa "^5.9.2"
+    systemjs "^6.8.3"
+    workbox-core "^6.1.5"
+    workbox-routing "^6.1.5"
+    workbox-strategies "^6.1.5"
+    workbox-window "^6.1.5"
+
 "@openmrs/esm-implementer-tools-app@3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@openmrs/esm-implementer-tools-app/-/esm-implementer-tools-app-3.1.0.tgz#b753bf8783f00afc63dc8cdff3a196914e3817db"

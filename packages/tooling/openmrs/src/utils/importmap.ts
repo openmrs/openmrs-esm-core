@@ -66,10 +66,10 @@ async function matchAny(baseDir: string, patterns: Array<string>) {
 export async function runProject(
   basePort: number,
   sharedDependencies: Array<string>,
-  sourceDirectoryPattern: string
+  sourceDirectoryPatterns: Array<string>
 ): Promise<Record<string, string>> {
   const baseDir = process.cwd();
-  const sourceDirectories = await matchAny(baseDir, [sourceDirectoryPattern]);
+  const sourceDirectories = await matchAny(baseDir, sourceDirectoryPatterns);
   const importMap = {};
 
   logInfo("Loading dynamic import map ...");
@@ -151,7 +151,7 @@ export async function getImportmap(
       'Using the "@" import map is deprecated. Switch to use the "--run-project" flag.'
     );
 
-    const imports = await runProject(basePort, [], ".");
+    const imports = await runProject(basePort, [], ["."]);
 
     return {
       type: "inline",

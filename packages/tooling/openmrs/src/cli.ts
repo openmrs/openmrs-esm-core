@@ -74,11 +74,11 @@ yargs.command(
         "run-project",
         "Runs the project in the current directory fusing it with the specified import map."
       )
-      .string("sources")
-      .default("sources", ".")
+      .array("sources")
+      .default("sources", ["."])
       .describe(
         "sources",
-        "Runs the projects from the provided source directories."
+        "Runs the projects from the provided source directories. Can be used multiple times."
       )
       .array("shared-dependencies")
       .default("shared-dependencies", [])
@@ -144,11 +144,11 @@ yargs.command(
         "config-url",
         "The URL to a valid frontend configuration. Can be used multiple times."
       )
-      .string("sources")
-      .default("sources", ".")
+      .array("sources")
+      .default("sources", ["."])
       .describe(
         "sources",
-        "Runs the projects from the provided source directories."
+        "Runs the projects from the provided source directories. Can be used multiple times."
       )
       .array("shared-dependencies")
       .default("shared-dependencies", [])
