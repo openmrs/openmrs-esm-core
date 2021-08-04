@@ -150,6 +150,7 @@ const Navbar: React.FC<NavbarProps> = ({
             expanded={isActivePanel("userMenu")}
             allowedLocales={allowedLocales}
             onLogout={onLogout}
+            hidePanel={hidePanel}
           />
         </Header>
       </>

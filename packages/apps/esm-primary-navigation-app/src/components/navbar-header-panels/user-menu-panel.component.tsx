@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { ExtensionSlot, LoggedInUser } from "@openmrs/esm-framework";
 import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
 import { HeaderPanelProps } from "carbon-components-react";
@@ -10,6 +10,7 @@ interface UserMenuPanelProps extends HeaderPanelProps {
   allowedLocales: any;
   onLogout(): void;
   session: UserSession;
+  hidePanel: () => void;
 }
 
 const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
@@ -18,9 +19,24 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
   allowedLocales,
   onLogout,
   session,
+  hidePanel,
 }) => {
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef?.current && !menuRef.current.contains(event.target)) {
+        hidePanel();
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [menuRef, hidePanel]);
+
   return (
     <HeaderPanel
+      ref={menuRef}
       className={styles.headerPanel}
       expanded={expanded}
       aria-label="Location"
