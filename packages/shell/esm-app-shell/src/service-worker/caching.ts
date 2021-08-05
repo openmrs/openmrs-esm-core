@@ -31,8 +31,38 @@ export async function addToOmrsCache(urls: Array<string>) {
     return;
   }
 
+  // The following doesn't simply use cache.addAll because it aborts on the first failure.
+  // We want to cache as much as possible and just because, e.g., one single MF cannot be cached
+  // we don't want the rest to fail.
+  // It further allows us to log more granularly *which* URL couldn't be cached, so debugging
+  // is easier.
   const cache = await caches.open(omrsCacheName);
-  await cache.addAll(urls);
+  const results = await Promise.all(
+    urls.map(async (url) => {
+      try {
+        await cache.add(url);
+        return { url, success: true };
+      } catch (e) {
+        return { url, success: false };
+      }
+    })
+  );
+
+  const cached = results.filter((r) => r.success);
+  const failedToCache = results.filter((r) => !r.success);
+  if (cached.length > 0) {
+    console.info(
+      `Successfully added ${cached.length} URLs to the OMRS cache. URLs: `,
+      cached.map((r) => r.url)
+    );
+  }
+
+  if (failedToCache.length > 0) {
+    console.error(
+      `Failed to cache ${failedToCache.length} URLs. URLs: `,
+      failedToCache.map((r) => r.url)
+    );
+  }
 }
 
 async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
