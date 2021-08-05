@@ -140,18 +140,25 @@ const Navbar: React.FC<NavbarProps> = ({
               expanded={isActivePanel("sideMenu")}
             />
           )}
-          <AppMenuPanel expanded={isActivePanel("appMenu")} />
+          {isActivePanel("appMenu") && (
+            <AppMenuPanel
+              expanded={isActivePanel("appMenu")}
+              hidePanel={hidePanel}
+            />
+          )}
           <NotificationsMenuPanel
             expanded={isActivePanel("notificationsMenu")}
           />
-          <UserMenuPanel
-            user={user}
-            session={session}
-            expanded={isActivePanel("userMenu")}
-            allowedLocales={allowedLocales}
-            onLogout={onLogout}
-            hidePanel={hidePanel}
-          />
+          {isActivePanel("userMenu") && (
+            <UserMenuPanel
+              user={user}
+              session={session}
+              expanded={isActivePanel("userMenu")}
+              allowedLocales={allowedLocales}
+              onLogout={onLogout}
+              hidePanel={hidePanel}
+            />
+          )}
         </Header>
       </>
     );
