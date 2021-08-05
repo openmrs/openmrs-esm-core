@@ -1,24 +1,8 @@
 @import "~carbon-components/scss/globals/scss/vendor/@carbon/elements/scss/type/styles";
 @import "~carbon-components/src/globals/scss/vendor/@carbon/layout/scss/generated/spacing";
 @import "~carbon-components/src/globals/scss/vendor/@carbon/layout/scss/generated/layout";
+@import "~@openmrs/esm-styleguide/src/vars";
 @import "carbon-components/scss/globals/scss/typography.scss";
-
-$ui-01: #f4f4f4;
-$ui-03: #e0e0e0;
-$ui-05: #161616;
-$ui-background: #ffffff;
-$color-gray-70: #525252;
-$color-blue-60-2: #0f62fe;
-$color-yellow-50: #feecae;
-$inverse-support-03: #f1c21b;
-$warning-background: #fff8e1;
-$openmrs-background-grey: #f4f4f4;
-$danger: #da1e28;
-$interactive-01: #0f62fe;
-$brand-teal-01: #007d79;
-$brand-01: #005d5d;
-$brand-02: #004144;
-$inverse-link: #78a9ff;
 
 .productiveHeading01 {
   @include carbon--type-style("productive-heading-01");
@@ -62,6 +46,10 @@ $inverse-link: #78a9ff;
 
 .label01 {
   @include carbon--type-style("label-01");
+}
+
+.caption01 {
+  @include carbon--type-style("caption-01");
 }
 
 .helperText01 {

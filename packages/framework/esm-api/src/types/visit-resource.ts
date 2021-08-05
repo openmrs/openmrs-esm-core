@@ -1,6 +1,7 @@
 import { OpenmrsResource } from "./openmrs-resource";
 
 export interface NewVisitPayload {
+  uuid?: string;
   location: string;
   patient?: string;
   startDatetime: Date;

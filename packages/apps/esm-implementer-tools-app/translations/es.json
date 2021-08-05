@@ -1,0 +1,13 @@
+{
+  "backendModules": "Módulos backend",
+  "clearTemporaryConfig": "Borrar configuración temporal",
+  "configuration": "Configuración",
+  "devConfig": "Configuración de desarrollo",
+  "downloadTemporaryConfig": "Descargar configuración temporal",
+  "edit": "Editar",
+  "installedVersion": "Versión instalada",
+  "missing": "Desaparecido",
+  "requiredVersion": "Versión requerida",
+  "uiEditor": "Editora de interfaz de usuario",
+  "implementerTools": "Herramientas de implementación"
+}

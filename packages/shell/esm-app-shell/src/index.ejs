@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>OpenMRS</title>
+    <title><%= openmrsPageTitle %></title>
     <link
       rel="shortcut icon"
       type="image/x-icon"
@@ -11,6 +11,9 @@
     >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="importmap-type" content="systemjs-importmap">
+<% if (openmrsCoreImportmap) { %>
+    <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
+<% } %>
     <%= htmlWebpackPlugin.tags.headTags %>
 <% if (openmrsImportmapDef) { %>
     <script type="systemjs-importmap"><%= openmrsImportmapDef %></script>
@@ -23,13 +26,12 @@
     >
     <script type="systemjs-importmap" src="<%= openmrsImportmapUrl %>"></script>
 <% } %>
-<% if (openmrsCoreImportmap) { %>
-    <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
-<% } %>
   </head>
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>
     <div class="omrs-toasts-container"></div>
+    <div class="omrs-inline-notifications-container"></div>
+    <div class="omrs-modals-container"></div>
     <template id="loading-spinner">
       <div class="omrs-loading-spinner">
         <div data-inline-loading="" class="bx--inline-loading" role="alert" aria-live="assertive">
@@ -65,15 +67,18 @@
         </div>
       </div>
     </template>
-    <div class="omrs-inline-notifications-container"></div>
     <script>
       initializeSpa({
         apiUrl: "<%= openmrsApiUrl %>",
         spaPath: "<%= openmrsPublicPath %>",
         env: "<%= openmrsEnvironment %>",
+        offline: <%= openmrsOffline %>,
         configUrls: [<%= openmrsConfigUrls %>],
       });
     </script>
+    <div id="single-spa-application:@openmrs/esm-primary-navigation-app-page-0"></div>
+    <div id="single-spa-application:@openmrs/esm-devtools-app-page-0"></div>
+    <div id="single-spa-application:@openmrs/esm-implementer-tools-app-page-0"></div>
+    <div id="single-spa-application:@openmrs/esm-login-app-page-0"></div>
   </body>
 </html>
- 

@@ -1,5 +1,9 @@
-import { openmrsFetch } from "@openmrs/esm-framework";
-import { PrimaryNavigationDb } from "../../offline";
+import {
+  openmrsFetch,
+  queueSynchronizationItemFor,
+  refetchCurrentUser,
+} from "@openmrs/esm-framework";
+import { userPropertyChange } from "../../constants";
 
 export type PostUserProperties = (
   userUuid: string,
@@ -7,23 +11,27 @@ export type PostUserProperties = (
   abortController?: AbortController
 ) => Promise<any>;
 
-export function postUserPropertiesOnline(
+export async function postUserPropertiesOnline(
   userUuid: string,
   userProperties: any,
-  abortController?: AbortController
+  abortController: AbortController
 ): Promise<any> {
-  return openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
+  await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
     method: "POST",
-    body: { userProperties: userProperties },
+    body: { userProperties },
     headers: { "Content-Type": "application/json" },
-    signal: abortController?.signal,
+    signal: abortController.signal,
   });
+  refetchCurrentUser();
 }
 
 export function postUserPropertiesOffline(
   userUuid: string,
   userProperties: any
 ): Promise<any> {
-  const db = new PrimaryNavigationDb();
-  return db.userPropertiesChanges.add({ userUuid, changes: userProperties });
+  return queueSynchronizationItemFor(
+    userUuid,
+    userPropertyChange,
+    userProperties
+  );
 }

@@ -48,7 +48,6 @@
     "@types/carbon-components-react": "^7.24.0",
     "carbon-components": "10.31.0",
     "carbon-icons": "7.0.7",
-    "identity-obj-proxy": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }

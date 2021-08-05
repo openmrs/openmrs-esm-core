@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import _i18n from "i18next";
 import { I18nextProvider } from "react-i18next";
 import {
@@ -21,12 +21,12 @@ interface I18nextLoadNamespaceProps {
 }
 
 const I18nextLoadNamespace: React.FC<I18nextLoadNamespaceProps> = (props) => {
-  React.useEffect(() => {
+  useEffect(() => {
     i18n.on("languageChanged", props.forceUpdate);
     return () => i18n.off("languageChanged", props.forceUpdate);
   }, [props.forceUpdate]);
 
-  const loadNamespaceErrRef = React.useRef(null);
+  const loadNamespaceErrRef = useRef(null);
 
   if (loadNamespaceErrRef.current) {
     throw loadNamespaceErrRef.current;

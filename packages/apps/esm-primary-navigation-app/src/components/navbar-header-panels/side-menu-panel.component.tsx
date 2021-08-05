@@ -1,30 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { ExtensionSlot } from "@openmrs/esm-framework";
+import type { SideNavProps } from "carbon-components-react";
 import { SideNav } from "carbon-components-react/es/components/UIShell";
-import { SideNavProps } from "carbon-components-react";
 import styles from "./side-menu-panel.component.scss";
 
 interface SideMenuPanelProps extends SideNavProps {
-  hidePanel: Function;
+  hidePanel: () => void;
 }
 
 const SideMenuPanel: React.FC<SideMenuPanelProps> = ({
   expanded,
   hidePanel,
 }) => {
-  const menuRef = React.useRef(null);
-  const current = menuRef?.current;
+  const menuRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (current && !current.contains(event.target)) {
+      if (menuRef?.current && !menuRef.current.contains(event.target)) {
         hidePanel();
       }
     };
 
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
-  }, [current, hidePanel]);
+  }, [menuRef, hidePanel]);
+
+  React.useEffect(() => {
+    window.addEventListener("popstate", hidePanel);
+    return window.addEventListener("popstate", hidePanel);
+  }, [hidePanel]);
 
   return (
     expanded && (

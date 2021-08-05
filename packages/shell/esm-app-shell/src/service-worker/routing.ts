@@ -1,5 +1,5 @@
 import { RouteHandlerCallbackOptions } from "workbox-core";
-import { registerRoute, setDefaultHandler } from "workbox-routing";
+import { registerRoute } from "workbox-routing";
 import { getOrCreateDefaultRouter } from "workbox-routing/utils/getOrCreateDefaultRouter";
 import { NetworkFirst, NetworkOnly } from "workbox-strategies";
 import { indexUrl, omrsCacheName } from "./constants";

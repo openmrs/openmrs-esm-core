@@ -68,6 +68,11 @@ export interface SpaConfig {
    * URLs of configurations to load in the system.
    */
   configUrls?: Array<string>;
+  /**
+   * Defines if offline should be supported by installing a service worker.
+   * @default true
+   */
+  offline?: boolean;
 }
 
 export interface ResourceLoader<T = any> {
@@ -88,12 +93,28 @@ export interface ComponentDefinition {
    */
   offline?: boolean | object;
   /**
+   * Defines the access privilege required for this component, if any.
+   */
+  privilege?: string;
+  /**
    * Defines resources that are loaded when the component should mount.
    */
   resources?: Record<string, ResourceLoader>;
 }
 
-export interface ModernAppExtensionDefinition extends ComponentDefinition {
+export interface ExtensionComponentDefinition extends ComponentDefinition {
+  /**
+   * The meta data used for reflection by other components.
+   */
+  meta?: Record<string, any>;
+  /**
+   * Specifies a preferred order number, if any.
+   */
+  order?: number;
+}
+
+export interface ModernAppExtensionDefinition
+  extends ExtensionComponentDefinition {
   /**
    * The ID of the extension to register.
    */
@@ -106,21 +127,14 @@ export interface ModernAppExtensionDefinition extends ComponentDefinition {
    * The slots of the extension to optionally attach to.
    */
   slots?: Array<string>;
-  /**
-   * The meta data used for reflection by other components.
-   */
-  meta?: Record<string, any>;
 }
 
-export interface LegacyAppExtensionDefinition extends ComponentDefinition {
+export interface LegacyAppExtensionDefinition
+  extends ExtensionComponentDefinition {
   /**
    * The ID of the extension to register.
    */
   name: string;
-  /**
-   * The meta data used for reflection by other components.
-   */
-  meta?: Record<string, any>;
 }
 
 export type AppExtensionDefinition = ModernAppExtensionDefinition &

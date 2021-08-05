@@ -2,10 +2,20 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const SystemJSPublicPathWebpackPlugin = require("systemjs-webpack-interop/SystemJSPublicPathWebpackPlugin");
 const { resolve, dirname, basename } = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { DefinePlugin } = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
 
 const production = "production";
+
+function getFrameworkVersion() {
+  try {
+    const { version } = require("@openmrs/esm-framework/package.json");
+    return `^${version}`;
+  } catch {
+    return "3.x";
+  }
+}
 
 function makeIdent(name) {
   if (name.indexOf("/") !== -1) {
@@ -30,6 +40,7 @@ module.exports = (env, argv = {}) => {
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
+  const frameworkVersion = getFrameworkVersion();
 
   const cssLoader = {
     loader: "css-loader",
@@ -86,13 +97,16 @@ module.exports = (env, argv = {}) => {
     performance: {
       hints: mode === production && "warning",
     },
-    externals: Object.keys(peerDependencies),
+    externals: Object.keys(peerDependencies || {}),
     plugins: [
       new SystemJSPublicPathWebpackPlugin(),
       new ForkTsCheckerWebpackPlugin(),
       new CleanWebpackPlugin(),
       new BundleAnalyzerPlugin({
         analyzerMode: env && env.analyze ? "server" : "disabled",
+      }),
+      new DefinePlugin({
+        "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new StatsWriterPlugin({
         filename: `${filename}.buildmanifest.json`,

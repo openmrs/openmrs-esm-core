@@ -1,9 +1,7 @@
 import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
-const importTranslation = () => Promise.resolve();
-
 const frontendDependencies = {
-  "@openmrs/esm-framework": "^3.1.10",
+  "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
 };
 
 function setupOpenMRS() {
@@ -36,4 +34,13 @@ function setupOpenMRS() {
   };
 }
 
+const importTranslation = require.context(
+  "../translations",
+  false,
+  /.json$/,
+  "lazy"
+);
+
 export { setupOpenMRS, importTranslation, frontendDependencies };
+
+export { default as ConfigEditButton } from "./config-edit-button/config-edit-button.component";

@@ -1,10 +1,11 @@
 import {
   CurrentUserWithResponseOption,
   getCurrentUser,
+  getSynchronizationItemsFor,
   openmrsObservableFetch,
 } from "@openmrs/esm-framework";
 import { mergeMap } from "rxjs/operators";
-import { PrimaryNavigationDb } from "./offline";
+import { userPropertyChange } from "./constants";
 
 export function getCurrentSession() {
   return openmrsObservableFetch(`/ws/rest/v1/session`);
@@ -18,17 +19,18 @@ export function getSynchronizedCurrentUser(
   opts: CurrentUserWithResponseOption
 ) {
   return getCurrentUser(opts).pipe(
-    mergeMap(async (user) => {
-      if (user.user) {
-        const db = new PrimaryNavigationDb();
-        const queuedChangeEntries = await db.userPropertiesChanges
-          .where({ userUuid: user.user.uuid })
-          .toArray();
-        const queuedChanges = queuedChangeEntries.map((entry) => entry.changes);
-        Object.assign(user.user.userProperties, ...queuedChanges);
+    mergeMap(async (result) => {
+      const { user } = result;
+
+      if (user) {
+        const allChanges = await getSynchronizationItemsFor<any>(
+          user.uuid,
+          userPropertyChange
+        );
+        Object.assign(user.userProperties, ...allChanges);
       }
 
-      return user;
+      return result;
     })
   );
 }

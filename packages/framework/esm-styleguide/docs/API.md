@@ -9,7 +9,9 @@
 - [integrateBreakpoints](API.md#integratebreakpoints)
 - [renderInlineNotifications](API.md#renderinlinenotifications)
 - [renderLoadingSpinner](API.md#renderloadingspinner)
+- [renderModals](API.md#rendermodals)
 - [renderToasts](API.md#rendertoasts)
+- [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
 
@@ -17,88 +19,180 @@
 
 ### integrateBreakpoints
 
-▸ **integrateBreakpoints**(): *void*
+▸ **integrateBreakpoints**(): `void`
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [breakpoints/index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/breakpoints/index.ts#L20)
+`void`
+
+#### Defined in
+
+[breakpoints/index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/breakpoints/index.ts#L20)
 
 ___
 
 ### renderInlineNotifications
 
-▸ **renderInlineNotifications**(`target`: HTMLElement \| ``null``): *void*
+▸ **renderInlineNotifications**(`target`): `void`
+
+Starts a rendering host for inline notifications. Should only be used by the app shell.
+Under normal conditions there is no need to use this function.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `target` | HTMLElement \| ``null`` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `target` | `HTMLElement` \| ``null`` | The container target that hosts the inline notifications. |
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [notifications/index.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L14)
+`void`
+
+#### Defined in
+
+[notifications/index.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L19)
 
 ___
 
 ### renderLoadingSpinner
 
-▸ **renderLoadingSpinner**(`target`: HTMLElement): *function*
+▸ **renderLoadingSpinner**(`target`): () => `any`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `target` | HTMLElement |
+| `target` | `HTMLElement` |
 
-**Returns:** () => *any*
+#### Returns
 
-Defined in: [spinner/index.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/spinner/index.ts#L1)
+`fn`
+
+▸ (): `any`
+
+##### Returns
+
+`any`
+
+#### Defined in
+
+[spinner/index.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/spinner/index.ts#L1)
+
+___
+
+### renderModals
+
+▸ **renderModals**(`modalContainer`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `modalContainer` | `HTMLElement` \| ``null`` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[modals/index.tsx:109](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L109)
 
 ___
 
 ### renderToasts
 
-▸ **renderToasts**(`target`: HTMLElement \| ``null``): *void*
+▸ **renderToasts**(`target`): `void`
+
+Starts a rendering host for toast notifications. Should only be used by the app shell.
+Under normal conditions there is no need to use this function.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `target` | HTMLElement \| ``null`` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `target` | `HTMLElement` \| ``null`` | The container target that hosts the toast notifications. |
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [toasts/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L11)
+`void`
+
+#### Defined in
+
+[toasts/index.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L16)
+
+___
+
+### showModal
+
+▸ **showModal**(`extensionId`, `props?`, `onClose?`): () => `void`
+
+Shows the provided extension component in a modal dialog.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `extensionId` | `string` | The id of the extension to show. |
+| `props` | `Record`<`string`, `any`\> | The optional props to provide to the extension. |
+| `onClose` | () => `void` | The optional notification to receive when the modal is closed. |
+
+#### Returns
+
+`fn`
+
+The dispose function to force closing the modal dialog.
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[modals/index.tsx:163](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L163)
 
 ___
 
 ### showNotification
 
-▸ **showNotification**(`notification`: NotificationDescriptor): *void*
+▸ **showNotification**(`notification`): `void`
+
+Displays an inline notification in the UI.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `notification` | NotificationDescriptor |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `notification` | `NotificationDescriptor` | The description of the notification to display. |
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [notifications/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L31)
+`void`
+
+#### Defined in
+
+[notifications/index.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L40)
 
 ___
 
 ### showToast
 
-▸ **showToast**(`toast`: ToastDescriptor): *void*
+▸ **showToast**(`toast`): `void`
+
+Displays a toast notification in the UI.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `toast` | ToastDescriptor |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `toast` | `ToastDescriptor` | The description of the toast to display. |
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [toasts/index.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L25)
+`void`
+
+#### Defined in
+
+[toasts/index.tsx:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L34)

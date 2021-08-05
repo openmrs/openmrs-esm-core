@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  fireEvent,
-  render,
-  screen,
-  wait,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { fireEvent, render, screen, wait } from "@testing-library/react";
 import { of } from "rxjs";
 import { isDesktop } from "./utils";
 import { mockUser } from "../__mocks__/mock-user";
@@ -17,6 +11,7 @@ const mockSessionObservable = of({ data: mockSession });
 
 jest.mock("@openmrs/esm-framework", () => ({
   openmrsFetch: jest.fn().mockResolvedValue({}),
+  useAssignedExtensionIds: jest.fn().mockResolvedValue([]),
   createErrorHandler: jest.fn(),
   openmrsObservableFetch: jest.fn(),
   getCurrentUser: jest.fn(() => mockUserObservable),
@@ -28,6 +23,7 @@ jest.mock("@openmrs/esm-framework", () => ({
     logo: { src: null, alt: null, name: "Mock EMR" },
   })),
   refetchCurrentUser: jest.fn(),
+  subscribeConnectivity: jest.fn(),
 }));
 
 jest.mock("./root.resource", () => ({
@@ -45,7 +41,7 @@ jest.mock("./utils", () => ({
 
 describe(`<Root />`, () => {
   beforeEach(() => {
-    render(<Root syncUserPropertiesChangesOnLoad={false} />);
+    render(<Root />);
   });
 
   it("should display navbar with title", async () => {

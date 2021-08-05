@@ -14,8 +14,13 @@
     - "community-managed microfrontend": what it sounds like. Doesn't necessarily include
         everything published to the `openmrs` NPM org.
 
-  Other tips:
+  Other notes:
     - Use line breaks. Try and keep line length below 100 characters.
+    - Links between different documentation pages must work in the GitHub UI
+        (in addition to Docsify). This means that they must be relative and
+        suffixed with `.md`.
+          Bad: `/main/state`
+          Good: `main/state.md` or `../main/state.md` or `./state.md`
     - Right now, it's okay to assume devs are using React. When possible,
         please do include framework-agnostic examples. Keep in mind that at
         some point in the future it may make sense to refactor these docs to
@@ -31,12 +36,12 @@ if you haven't already. It provides a high-level
 introduction to the project and all of the relevant links.
 
 You should first read the
-[Implementer Documentation](https://wiki.openmrs.org/display/projects/Frontend+Documentation+for+Implementers),
+[Implementer Documentation](https://wiki.openmrs.org/display/projects/Frontend+3.0+Documentation+for+Implementers),
 which provides some conceptual orientation as well as instructions for deployment
 and configuring. The Implementer Documentation is also Developer Documentation
 (but not vice-versa).
 
-Once you've read that, click [Prerequisite knowledge](getting_started/prerequisites)
+Once you've read that, click [Prerequisite knowledge](getting_started/prerequisites.md)
 here or in the left sidebar to begin, or check out some videos below.
 
 Note that this documentation tends to assume that the developer is using React,

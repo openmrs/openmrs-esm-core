@@ -14,7 +14,8 @@
     "build": "webpack --mode=production",
     "analyze": "webpack --mode=production --env.analyze=true",
     "typescript": "tsc",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "extract-translations": "i18next 'src/**/*.component.tsx'"
   },
   "keywords": [
     "openmrs",
@@ -36,7 +37,6 @@
   },
   "dependencies": {
     "carbon-components-react": "7.31.0",
-    "dexie": "^3.0.3",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
@@ -53,9 +53,6 @@
     "@openmrs/esm-framework": "^3.1.10",
     "@types/carbon-components-react": "^7.24.0",
     "@types/react-router-dom": "^5.1.7",
-    "@types/semver": "^7.3.4",
-    "fake-indexeddb": "^3.1.2",
-    "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

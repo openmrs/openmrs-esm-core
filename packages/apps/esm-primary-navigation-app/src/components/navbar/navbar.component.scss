@@ -1,3 +1,11 @@
 .topNavActionSlot {
   display: flex;
 }
+
+.headerGlobalBar button {
+  background-color: transparent;
+}
+
+.topNavHeader {
+  top: var(--omrs-offline-banner-height);
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import debounce from "lodash-es/debounce";
 import isEmpty from "lodash-es/isEmpty";
 import { Trans, useTranslation } from "react-i18next";
@@ -50,27 +50,25 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     );
     return isValidLocation ? userLocation : "";
   };
-  const [locationData, setLocationData] = React.useState<LocationDataState>({
+  const [locationData, setLocationData] = useState<LocationDataState>({
     activeLocation: getDefaultUserLoginLocation() ?? "",
     locationResult: loginLocations,
   });
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [pageSize, setPageSize] = React.useState<number>(
-    chooseLocation.numberToShow
-  );
-  const inputRef = React.useRef();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pageSize, setPageSize] = useState<number>(chooseLocation.numberToShow);
+  const inputRef = useRef();
 
   const searchTimeout = 300;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSubmitting) {
       onChangeLocation(locationData.activeLocation);
       setIsSubmitting(false);
     }
   }, [isSubmitting, locationData, onChangeLocation]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const ac = new AbortController();
 
     if (loginLocations.length > 100) {
@@ -126,7 +124,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     setIsSubmitting(true);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (locationData.activeLocation) {
       window.localStorage.setItem(
         `${userDefaultLoginLocation}${currentUser}`,
@@ -135,7 +133,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     }
   }, [locationData.activeLocation, currentUser]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (currentLocationUuid && hideWelcomeMessage) {
       setLocationData((prevState) => ({
         ...prevState,
@@ -147,7 +145,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     }
   }, [currentLocationUuid, hideWelcomeMessage]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSubmitting && inputRef.current) {
       let searchInput: HTMLInputElement = inputRef.current;
       searchInput.value = "";
@@ -162,8 +160,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     }));
   };
 
-  React.useEffect(() => {
-    locationData.locationResult.length < pageSize
+  useEffect(() => {
+    locationData.locationResult.length < pageSize &&
+      setPageSize(locationData.locationResult.length);
+    chooseLocation.numberToShow > locationData.locationResult.length
       ? setPageSize(locationData.locationResult.length)
       : setPageSize(chooseLocation.numberToShow);
   }, [locationData.locationResult.length]);
@@ -172,7 +172,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     <div className={styles["locationPickerContainer"]}>
       <form onSubmit={handleSubmit}>
         <div className={`${styles["location-card"]}`}>
-          <div className={styles["welcomeContainer"]}>
+          <div>
             <p className={styles["welcomeTitle"]}>
               {t("welcome", "Welcome")} {currentUser}
             </p>
@@ -183,18 +183,17 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
               )}
             </p>
           </div>
-          <div>
-            <Search
-              labelText="Search for location"
-              id="search-1"
-              placeholder={t("searchForLocation", "Search for a location")}
-              onChange={(ev) => search(ev.target.value)}
-              autoFocus={true}
-              name="searchForLocation"
-            />
-          </div>
+          <Search
+            autoFocus
+            className={styles["searchBox"]}
+            labelText={t("searchForLocation", "Search for a location")}
+            id="search-1"
+            placeholder={t("searchForLocation", "Search for a location")}
+            onChange={(ev) => search(ev.target.value)}
+            name="searchForLocation"
+          />
           <div className={styles["searchResults"]}>
-            <p>
+            <p className={styles["resultsCount"]}>
               {searchTerm
                 ? `${locationData.locationResult.length} ${
                     locationData.locationResult.length === 1
@@ -205,37 +204,39 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                     locationData.locationResult.length
                   } ${t("locations", "locations")}`}
             </p>
-          </div>
-          <div className={styles["locationResultsContainer"]}>
-            {!isEmpty(locationData.locationResult) && (
-              <RadioButtonGroup
-                valueSelected={locationData.activeLocation}
-                orientation="vertical"
-                name={locationData.activeLocation}
-                onChange={(ev) => {
-                  changeLocationData({ activeLocation: ev.toString() });
-                }}
-              >
-                {locationData.locationResult.slice(0, pageSize).map((entry) => (
-                  <RadioButton
-                    className={styles["locationRadioButton"]}
-                    key={entry.resource.id}
-                    id={entry.resource.name}
-                    labelText={entry.resource.name}
-                    value={entry.resource.id}
-                  />
-                ))}
-              </RadioButtonGroup>
-            )}
-            {locationData.locationResult.length === 0 && (
-              <p className={styles["locationNotFound"]}>
-                <Trans i18nKey="locationNotFound">
-                  Sorry, no matching location was found
-                </Trans>
-              </p>
-            )}
-            <div className={styles["center"]}>
-              <p className={styles["error-msg"]} />
+            <div className={styles["locationResultsContainer"]}>
+              {!isEmpty(locationData.locationResult) && (
+                <RadioButtonGroup
+                  valueSelected={locationData.activeLocation}
+                  orientation="vertical"
+                  name={locationData.activeLocation}
+                  onChange={(ev) => {
+                    changeLocationData({ activeLocation: ev.toString() });
+                  }}
+                >
+                  {locationData.locationResult
+                    .slice(0, pageSize)
+                    .map((entry) => (
+                      <RadioButton
+                        className={styles["locationRadioButton"]}
+                        key={entry.resource.id}
+                        id={entry.resource.name}
+                        labelText={entry.resource.name}
+                        value={entry.resource.id}
+                      />
+                    ))}
+                </RadioButtonGroup>
+              )}
+              {locationData.locationResult.length === 0 && (
+                <p className={styles["locationNotFound"]}>
+                  <Trans i18nKey="locationNotFound">
+                    Sorry, no matching location was found
+                  </Trans>
+                </p>
+              )}
+              <div className={styles["center"]}>
+                <p className={styles["error-msg"]} />
+              </div>
             </div>
           </div>
           <div className={styles["confirmButton"]}>

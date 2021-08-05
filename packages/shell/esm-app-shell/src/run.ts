@@ -16,10 +16,12 @@ import {
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
   subscribeConnectivity,
-  getSynchronizationCallbacks,
   getCurrentUser,
   KnownOmrsServiceWorkerEvents,
   dispatchNetworkRequestFailed,
+  triggerSynchronization,
+  renderModals,
+  dispatchPrecacheStaticDependencies,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
 import { registerApp, tryRegisterExtension } from "./apps";
@@ -200,6 +202,11 @@ function showToasts() {
   return;
 }
 
+function showModals() {
+  renderModals(document.querySelector(".omrs-modals-container"));
+  return;
+}
+
 function showLoadingSpinner() {
   return renderLoadingSpinner(document.body);
 }
@@ -269,51 +276,71 @@ async function precacheSharedApiEndpoints() {
   });
 }
 
-function setupOfflineDataSynchronization() {
-  // Synchronizing data requires a logged in user.
-  let hasLoggedInUser = false;
+function setupOfflineSynchronization() {
+  let syncing: AbortController | undefined;
+
+  subscribeOnlineAndLoginChange((online, hasLoggedInUser) => {
+    if (hasLoggedInUser && online) {
+      syncing = new AbortController();
+      triggerSynchronization(syncing);
+    } else if (syncing) {
+      syncing.abort();
+      syncing = undefined;
+    }
+  });
+}
+
+function setupOfflineStaticDependencyPrecaching() {
+  const precacheDelay = 1000 * 60 * 5;
+  let lastPrecache: Date | null = null;
+
+  subscribeOnlineAndLoginChange((online, hasLoggedInUser) => {
+    const hasExceededPrecacheDelay =
+      !lastPrecache ||
+      new Date().getTime() - lastPrecache.getTime() > precacheDelay;
+
+    if (hasLoggedInUser && online && hasExceededPrecacheDelay) {
+      lastPrecache = new Date();
+      dispatchPrecacheStaticDependencies();
+    }
+  });
+}
+
+function subscribeOnlineAndLoginChange(
+  cb: (online: boolean, hasLoggedInUser: boolean) => void
+) {
   let isOnline = false;
+  let hasLoggedInUser = false;
 
   getCurrentUser({ includeAuthStatus: false }).subscribe((user) => {
     hasLoggedInUser = !!user;
-    trySynchronize();
+    cb(isOnline, hasLoggedInUser);
   });
 
-  subscribeConnectivity(async ({ online }) => {
+  subscribeConnectivity(({ online }) => {
     isOnline = online;
-    trySynchronize();
+    cb(online, hasLoggedInUser);
   });
-
-  async function trySynchronize() {
-    const syncCallbacks = getSynchronizationCallbacks();
-    if (!isOnline || !hasLoggedInUser || syncCallbacks.length === 0) {
-      return;
-    }
-
-    showNotification({
-      title: "Synchronizing Offline Changes",
-      description:
-        "Synchronizing the changes you have made offline. This may take a while...",
-      kind: "info",
-    });
-
-    await Promise.allSettled(syncCallbacks.map((cb) => cb()));
-
-    showNotification({
-      title: "Offline Synchronization Finished",
-      description:
-        "Finished synchronizing the changes you have made while offline.",
-      kind: "success",
-    });
-  }
 }
 
-export function run(configUrls: Array<string>) {
+function setupOfflineCssClasses() {
+  subscribeConnectivity(({ online }) => {
+    const body = document.querySelector("body")!;
+    if (online) {
+      body.classList.remove("omrs-offline");
+    } else {
+      body.classList.add("omrs-offline");
+    }
+  });
+}
+
+export function run(configUrls: Array<string>, offline: boolean) {
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
   integrateBreakpoints();
   showToasts();
+  showModals();
   showNotifications();
   createAppState({});
   subscribeNotificationShown(showNotification);
@@ -321,13 +348,18 @@ export function run(configUrls: Array<string>) {
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
-  setupServiceWorker();
+
+  if (offline) {
+    setupServiceWorker();
+  }
 
   return loadApps()
     .then(setupApps)
+    .then(setupOfflineCssClasses)
     .then(provideConfigs)
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(setupOfflineDataSynchronization);
+    .then(setupOfflineSynchronization)
+    .then(setupOfflineStaticDependencyPrecaching);
 }

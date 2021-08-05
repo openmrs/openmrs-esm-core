@@ -1,30 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Close16 from "@carbon/icons-react/es/close/16";
 import Button from "carbon-components-react/es/components/Button";
 import ContentSwitcher from "carbon-components-react/es/components/ContentSwitcher";
 import Switch from "carbon-components-react/es/components/Switch";
 import styles from "./popup.styles.css";
+import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
-import { ModuleDiagnostics } from "../backend-dependencies/backend-dependecies.component";
-import { MissingBackendModules } from "../backend-dependencies/openmrs-backend-dependencies";
-import { setHasAlert } from "../store";
+import { ModuleDiagnostics } from "../backend-dependencies/backend-dependencies.component";
+import { FrontendModule } from "../backend-dependencies/openmrs-backend-dependencies";
 
 interface DevToolsPopupProps {
   close(): void;
-  modulesWithMissingBackendModules: Array<MissingBackendModules>;
-  modulesWithWrongBackendModulesVersion: Array<MissingBackendModules>;
+  frontendModules: Array<FrontendModule>;
   visibleTabIndex?: number;
 }
 
 export default function Popup(props: DevToolsPopupProps) {
-  const [configHasAlert] = useState(false);
-  const [diagnosticsHasAlert, setDiagnosticsHasAlert] = useState(false);
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(0);
-
-  useEffect(
-    () => setHasAlert(configHasAlert || diagnosticsHasAlert),
-    [diagnosticsHasAlert, configHasAlert]
-  );
 
   return (
     <div className={styles.popup}>
@@ -37,13 +30,13 @@ export default function Popup(props: DevToolsPopupProps) {
           >
             <Switch
               name="configuration-tab"
-              text="Configuration"
+              text={t("configuration", "Configuration")}
               onClick={() => {}}
               onKeyDown={() => {}}
             />
             <Switch
               name="backend-modules-tab"
-              text="Backend Modules"
+              text={t("backendModules", "Backend Modules")}
               onClick={() => {}}
               onKeyDown={() => {}}
             />
@@ -64,15 +57,7 @@ export default function Popup(props: DevToolsPopupProps) {
         {activeTab == 0 ? (
           <Configuration />
         ) : (
-          <ModuleDiagnostics
-            setHasAlert={setDiagnosticsHasAlert}
-            modulesWithMissingBackendModules={
-              props.modulesWithMissingBackendModules
-            }
-            modulesWithWrongBackendModulesVersion={
-              props.modulesWithWrongBackendModulesVersion
-            }
-          />
+          <ModuleDiagnostics frontendModules={props.frontendModules} />
         )}
       </div>
     </div>

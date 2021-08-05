@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styles from "./import-map.styles.css";
 
 export default function ImportMap(props: ImportMapProps) {
-  const importMapListRef = React.useRef<HTMLElement>(null);
+  const importMapListRef = useRef<HTMLElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener(
       "import-map-overrides:change",
       handleImportMapChange

@@ -6,7 +6,7 @@
 
 ### Interfaces
 
-- [AppState](interfaces/appstate.md)
+- [AppState](interfaces/AppState.md)
 
 ### Functions
 
@@ -20,7 +20,7 @@
 
 ### createGlobalStore
 
-▸ **createGlobalStore**<TState\>(`name`: *string*, `initialState`: TState): *Store*<TState\>
+▸ **createGlobalStore**<`TState`\>(`name`, `initialState`): `Store`<`TState`\>
 
 Creates a Unistore [store](https://github.com/developit/unistore#store).
 
@@ -34,60 +34,72 @@ Creates a Unistore [store](https://github.com/developit/unistore#store).
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `name` | *string* | A name by which the store can be looked up later.    Must be unique across the entire application. |
-| `initialState` | TState | An object which will be the initial state of the store. |
+| `name` | `string` | A name by which the store can be looked up later.    Must be unique across the entire application. |
+| `initialState` | `TState` | An object which will be the initial state of the store. |
 
-**Returns:** *Store*<TState\>
+#### Returns
+
+`Store`<`TState`\>
 
 The newly created store.
 
-Defined in: [state.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L18)
+#### Defined in
+
+[state.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L18)
 
 ___
 
 ### getAppState
 
-▸ **getAppState**(): *Store*<[*AppState*](interfaces/appstate.md)\>
+▸ **getAppState**(): `Store`<[`AppState`](interfaces/AppState.md)\>
 
-**Returns:** *Store*<[*AppState*](interfaces/appstate.md)\>
+#### Returns
+
+`Store`<[`AppState`](interfaces/AppState.md)\>
 
 The [store](https://github.com/developit/unistore#store) named `app`.
 
-Defined in: [state.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L85)
+#### Defined in
+
+[state.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L85)
 
 ___
 
 ### getGlobalStore
 
-▸ **getGlobalStore**<TState\>(`name`: *string*, `fallbackState?`: TState): *Store*<TState\>
+▸ **getGlobalStore**<`TState`\>(`name`, `fallbackState?`): `Store`<`TState`\>
 
 Returns the existing [store](https://github.com/developit/unistore#store) named `name`,
 or creates a new store named `name` if none exists.
 
 #### Type parameters
 
-| Name | Default |
+| Name | Type |
 | :------ | :------ |
-| `TState` | *any* |
+| `TState` | `any` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `name` | *string* | The name of the store to look up. |
-| `fallbackState?` | TState | The initial value of the new store if no store named `name` exists. |
+| `name` | `string` | The name of the store to look up. |
+| `fallbackState?` | `TState` | The initial value of the new store if no store named `name` exists. |
 
-**Returns:** *Store*<TState\>
+#### Returns
+
+`Store`<`TState`\>
 
 The found or newly created store.
 
-Defined in: [state.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L55)
+#### Defined in
+
+[state.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L55)
 
 ___
 
 ### subscribeTo
 
-▸ **subscribeTo**<T, U\>(`store`: *Store*<T\>, `select`: (`state`: T) => U, `handle`: (`subState`: U) => *void*): Unsubscribe
+▸ **subscribeTo**<`T`, `U`\>(`store`, `select`, `handle`): `Unsubscribe`
 
 #### Type parameters
 
@@ -100,34 +112,42 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | *Store*<T\> |
-| `select` | (`state`: T) => U |
-| `handle` | (`subState`: U) => *void* |
+| `store` | `Store`<`T`\> |
+| `select` | (`state`: `T`) => `U` |
+| `handle` | (`subState`: `U`) => `void` |
 
-**Returns:** Unsubscribe
+#### Returns
 
-Defined in: [state.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L89)
+`Unsubscribe`
+
+#### Defined in
+
+[state.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L89)
 
 ___
 
 ### update
 
-▸ **update**<T\>(`obj`: T, `__namedParameters`: *string*[], `value`: *any*): T
+▸ **update**<`T`\>(`obj`, `__namedParameters`, `value`): `T`
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `T` | *Record*<string, any\> |
+| `T` | extends `Record`<`string`, `any`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `obj` | T |
-| `__namedParameters` | *string*[] |
-| `value` | *any* |
+| `obj` | `T` |
+| `__namedParameters` | `string`[] |
+| `value` | `any` |
 
-**Returns:** T
+#### Returns
 
-Defined in: [update.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/update.ts#L1)
+`T`
+
+#### Defined in
+
+[update.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/update.ts#L1)

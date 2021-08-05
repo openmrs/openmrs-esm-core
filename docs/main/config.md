@@ -23,7 +23,7 @@ including defaults and validations.
 ### Designing a schema
 
 You'll probably start with some idea of what you want configs for your module
-to look like. Try and put yourself in the implementer's shoes an imagine what
+to look like. Try and put yourself in the implementer's shoes and imagine what
 features they will expect to be configurable, and what they might expect the
 configuration property to be called. Assume they don't know anything about
 the internal workings of your module.
@@ -111,7 +111,7 @@ You should provide validators for your configuration elements wherever possible.
 This reduces the probability that implementers using your module will have
 hard-to-debug runtime errors. It gives you, the module developer, the opportunity
 to provide implementers with very helpful explanations about why their configuration
-on't work.
+doesn't work.
 
 ```js
 robot: {
@@ -153,14 +153,14 @@ colorPicker: {
 ```
 
 For convenience, some common validators are provided out of the box. See the
-[API / validators](docs/API.md#validators).
+[API / validators](../../packages/framework/esm-config/docs/API.md#validators).
 
 #### Arrays
 
 You can accept and validate arrays, and arrays containing objects, in your
 configuration schema. This is configured with the `elements` parameter, used
 with `_type: Type.Array`. For example, a schema which would accept an array
-of strings up to 30 characters long:
+of strings up to 30 characters long would look like this:
 
 ```js
 virtualProvider: {
@@ -261,7 +261,7 @@ the defaults for configuration elements for which no values have been provided.
 
 A React Hook is provided to hide the asynchronicity of config loading. The
 `moduleName`provided to the
-[`openmrsComponentDecorator` in esm-react-utils](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/esm-react-utils)
+[`openmrsComponentDecorator` in esm-react-utils](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/framework/esm-react-utils)
 is used to look up the configuration elsewhere in the application.
 
 ```js
@@ -288,7 +288,7 @@ defaults for configuration elements for which no values have been provided.
 
 #### Support in other frameworks (Angular, Vue, Svelte, etc.)
 
-This hasn't been implemented yet, but we would like to implement it! See "Contributing"
+This hasn't been implemented yet, but we would like to implement it! See [Contributing](../getting_started/contributing.md).
 
 ## Schema Reference
 
@@ -301,7 +301,7 @@ the element, but this may change in future versions.
 
 #### `_type`
 
-One of the values from [the `Type` enum](docs/enums/type.md). Used for validation and to help the
+One of the values from [the `Type` enum](../../packages/framework/esm-config/docs/enums/type.md). Used for validation and to help the
 implementer tools work with the element.
 
 Should always appear alongside `_default`.
@@ -318,10 +318,10 @@ Can be used anywhere within the schema structure.
 An array of validator objects.
 
 Some common validators are
-provided: [API / validators](docs/API.md#const-validators).
+provided: [API / validators](../../packages/framework/esm-config/docs/API.md#const-validators).
 
 Custom validators should
-be created with the [validator](docs/API.md#validator) function.
+be created with the [validator](../../packages/framework/esm-config/docs/API.md#validator) function.
 
 Can be used anywhere within the schema structure.
 

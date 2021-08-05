@@ -23,7 +23,7 @@ module.exports = (env) => ({
       },
     ],
   },
-  externals: Object.keys(peerDependencies),
+  externals: Object.keys(peerDependencies || {}),
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
   },

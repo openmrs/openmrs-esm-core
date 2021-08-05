@@ -4,6 +4,10 @@
 
 ## Table of contents
 
+### Interfaces
+
+- [RetryOptions](interfaces/RetryOptions.md)
+
 ### Type aliases
 
 - [DateInput](API.md#dateinput)
@@ -16,6 +20,7 @@
 - [isOmrsDateToday](API.md#isomrsdatetoday)
 - [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
+- [retry](API.md#retry)
 - [toDateObjectStrict](API.md#todateobjectstrict)
 - [toOmrsDateFormat](API.md#toomrsdateformat)
 - [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
@@ -29,15 +34,17 @@
 
 ### DateInput
 
-Ƭ **DateInput**: *string* \| *number* \| Date
+Ƭ **DateInput**: `string` \| `number` \| `Date`
 
-Defined in: [omrs-dates.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L8)
+#### Defined in
+
+[omrs-dates.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L8)
 
 ## Functions
 
 ### age
 
-▸ **age**(`dateString`: *string*): *string*
+▸ **age**(`dateString`): `string`
 
 Gets a human readable age represention of the provided date string.
 
@@ -45,19 +52,23 @@ Gets a human readable age represention of the provided date string.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `dateString` | *string* | The stringified date. |
+| `dateString` | `string` | The stringified date. |
 
-**Returns:** *string*
+#### Returns
+
+`string`
 
 A human-readable string version of the age.
 
-Defined in: [age-helpers.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L37)
+#### Defined in
+
+[age-helpers.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L37)
 
 ___
 
 ### daysIntoYear
 
-▸ **daysIntoYear**(`date`: Date): *number*
+▸ **daysIntoYear**(`date`): `number`
 
 Gets the number of days in the year of the given date.
 
@@ -65,19 +76,23 @@ Gets the number of days in the year of the given date.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | Date | The date to compute the days within the year. |
+| `date` | `Date` | The date to compute the days within the year. |
 
-**Returns:** *number*
+#### Returns
+
+`number`
 
 The number of days.
 
-Defined in: [age-helpers.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L6)
+#### Defined in
+
+[age-helpers.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L6)
 
 ___
 
 ### isOmrsDateStrict
 
-▸ **isOmrsDateStrict**(`omrsPayloadString`: *string*): *boolean*
+▸ **isOmrsDateStrict**(`omrsPayloadString`): `boolean`
 
 This function is STRICT on checking whether a date string is the openmrs format.
 The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
@@ -86,33 +101,41 @@ The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 | Name | Type |
 | :------ | :------ |
-| `omrsPayloadString` | *string* |
+| `omrsPayloadString` | `string` |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: [omrs-dates.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L16)
+`boolean`
+
+#### Defined in
+
+[omrs-dates.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L16)
 
 ___
 
 ### isOmrsDateToday
 
-▸ **isOmrsDateToday**(`date`: [*DateInput*](API.md#dateinput)): *boolean*
+▸ **isOmrsDateToday**(`date`): `boolean`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | [*DateInput*](API.md#dateinput) | Checks if the provided date is today. |
+| `date` | [`DateInput`](API.md#dateinput) | Checks if the provided date is today. |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: [omrs-dates.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L53)
+`boolean`
+
+#### Defined in
+
+[omrs-dates.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L53)
 
 ___
 
 ### isSameDay
 
-▸ **isSameDay**(`firstDate`: Date, `secondDate`: Date): *boolean*
+▸ **isSameDay**(`firstDate`, `secondDate`): `boolean`
 
 Checks if two dates are representing the same day.
 
@@ -120,37 +143,83 @@ Checks if two dates are representing the same day.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `firstDate` | Date | The first date. |
-| `secondDate` | Date | The second date. |
+| `firstDate` | `Date` | The first date. |
+| `secondDate` | `Date` | The second date. |
 
-**Returns:** *boolean*
+#### Returns
+
+`boolean`
 
 True if both are located on the same day.
 
-Defined in: [age-helpers.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L23)
+#### Defined in
+
+[age-helpers.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L23)
 
 ___
 
 ### isVersionSatisfied
 
-▸ **isVersionSatisfied**(`requiredVersion`: *string*, `installedVersion`: *string*): *boolean*
+▸ **isVersionSatisfied**(`requiredVersion`, `installedVersion`): `boolean`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `requiredVersion` | *string* |
-| `installedVersion` | *string* |
+| `requiredVersion` | `string` |
+| `installedVersion` | `string` |
 
-**Returns:** *boolean*
+#### Returns
 
-Defined in: [version.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/version.ts#L3)
+`boolean`
+
+#### Defined in
+
+[version.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/version.ts#L21)
+
+___
+
+### retry
+
+▸ **retry**<`T`\>(`fn`, `options?`): `Promise`<`T`\>
+
+Executes the specified function and retries executing on failure with a custom backoff strategy
+defined by the options.
+
+If not configured otherwise, this function uses the following default options:
+* Retries 5 times beyond the initial attempt.
+* Uses an exponential backoff starting with an initial delay of 1000ms.
+
+**`throws`** Rethrows the final error of running `fn` when the function stops retrying.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `fn` | () => `Promise`<`T`\> | The function to be executed and retried on failure. |
+| `options` | [`RetryOptions`](interfaces/RetryOptions.md) | Additional options which configure the retry behavior. |
+
+#### Returns
+
+`Promise`<`T`\>
+
+The result of successfully executing `fn`.
+
+#### Defined in
+
+[retry.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L38)
 
 ___
 
 ### toDateObjectStrict
 
-▸ **toDateObjectStrict**(`omrsDateString`: *string*): Date \| ``null``
+▸ **toDateObjectStrict**(`omrsDateString`): `Date` \| ``null``
 
 Converts the object to a date object if it is a valid ISO date time string.
 
@@ -158,17 +227,21 @@ Converts the object to a date object if it is a valid ISO date time string.
 
 | Name | Type |
 | :------ | :------ |
-| `omrsDateString` | *string* |
+| `omrsDateString` | `string` |
 
-**Returns:** Date \| ``null``
+#### Returns
 
-Defined in: [omrs-dates.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L60)
+`Date` \| ``null``
+
+#### Defined in
+
+[omrs-dates.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L60)
 
 ___
 
 ### toOmrsDateFormat
 
-▸ **toOmrsDateFormat**(`date`: [*DateInput*](API.md#dateinput), `format?`: *string*): *string*
+▸ **toOmrsDateFormat**(`date`, `format?`): `string`
 
 Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
@@ -176,18 +249,22 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `date` | [*DateInput*](API.md#dateinput) | - |
-| `format` | *string* | "YYYY-MMM-DD" |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `format` | `string` | `"YYYY-MMM-DD"` |
 
-**Returns:** *string*
+#### Returns
 
-Defined in: [omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L112)
+`string`
+
+#### Defined in
+
+[omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L112)
 
 ___
 
 ### toOmrsDayDateFormat
 
-▸ **toOmrsDayDateFormat**(`date`: [*DateInput*](API.md#dateinput)): *string*
+▸ **toOmrsDayDateFormat**(`date`): `string`
 
 Formats the input as a date string using the format "DD - MMM - YYYY".
 
@@ -195,17 +272,21 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [*DateInput*](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
-**Returns:** *string*
+#### Returns
 
-Defined in: [omrs-dates.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L98)
+`string`
+
+#### Defined in
+
+[omrs-dates.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L98)
 
 ___
 
 ### toOmrsIsoString
 
-▸ **toOmrsIsoString**(`date`: [*DateInput*](API.md#dateinput), `toUTC?`: *boolean*): *string*
+▸ **toOmrsIsoString**(`date`, `toUTC?`): `string`
 
 Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
@@ -213,18 +294,22 @@ Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SS
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `date` | [*DateInput*](API.md#dateinput) | - |
-| `toUTC` | *boolean* | false |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `toUTC` | `boolean` | `false` |
 
-**Returns:** *string*
+#### Returns
 
-Defined in: [omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L71)
+`string`
+
+#### Defined in
+
+[omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L71)
 
 ___
 
 ### toOmrsTimeString
 
-▸ **toOmrsTimeString**(`date`: [*DateInput*](API.md#dateinput)): *string*
+▸ **toOmrsTimeString**(`date`): `string`
 
 Formats the input as a time string using the format "HH:mm A".
 
@@ -232,17 +317,21 @@ Formats the input as a time string using the format "HH:mm A".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [*DateInput*](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
-**Returns:** *string*
+#### Returns
 
-Defined in: [omrs-dates.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L91)
+`string`
+
+#### Defined in
+
+[omrs-dates.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L91)
 
 ___
 
 ### toOmrsTimeString24
 
-▸ **toOmrsTimeString24**(`date`: [*DateInput*](API.md#dateinput)): *string*
+▸ **toOmrsTimeString24**(`date`): `string`
 
 Formats the input as a time string using the format "HH:mm".
 
@@ -250,17 +339,21 @@ Formats the input as a time string using the format "HH:mm".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [*DateInput*](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
-**Returns:** *string*
+#### Returns
 
-Defined in: [omrs-dates.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L84)
+`string`
+
+#### Defined in
+
+[omrs-dates.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L84)
 
 ___
 
 ### toOmrsYearlessDateFormat
 
-▸ **toOmrsYearlessDateFormat**(`date`: [*DateInput*](API.md#dateinput)): *string*
+▸ **toOmrsYearlessDateFormat**(`date`): `string`
 
 Formats the input as a date string using the format "DD-MMM".
 
@@ -268,26 +361,34 @@ Formats the input as a date string using the format "DD-MMM".
 
 | Name | Type |
 | :------ | :------ |
-| `date` | [*DateInput*](API.md#dateinput) |
+| `date` | [`DateInput`](API.md#dateinput) |
 
-**Returns:** *string*
+#### Returns
 
-Defined in: [omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L105)
+`string`
+
+#### Defined in
+
+[omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L105)
 
 ___
 
 ### translateFrom
 
-▸ **translateFrom**(`moduleName`: *string*, `key`: *string*, `fallback?`: *string*): *string*
+▸ **translateFrom**(`moduleName`, `key`, `fallback?`): `string`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `moduleName` | *string* |
-| `key` | *string* |
-| `fallback?` | *string* |
+| `moduleName` | `string` |
+| `key` | `string` |
+| `fallback?` | `string` |
 
-**Returns:** *string*
+#### Returns
 
-Defined in: [translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/translate.ts#L3)
+`string`
+
+#### Defined in
+
+[translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/translate.ts#L3)

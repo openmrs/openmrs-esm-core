@@ -6,8 +6,8 @@
 
 ### Interfaces
 
-- [BreadcrumbRegistration](interfaces/breadcrumbregistration.md)
-- [BreadcrumbSettings](interfaces/breadcrumbsettings.md)
+- [BreadcrumbRegistration](interfaces/BreadcrumbRegistration.md)
+- [BreadcrumbSettings](interfaces/BreadcrumbSettings.md)
 
 ### Breadcrumb Functions
 
@@ -21,73 +21,93 @@
 
 ### filterBreadcrumbs
 
-▸ **filterBreadcrumbs**(`list`: [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[], `path`: *string*): [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
+▸ **filterBreadcrumbs**(`list`, `path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `list` | [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[] |
-| `path` | *string* |
+| `list` | [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[] |
+| `path` | `string` |
 
-**Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
+#### Returns
 
-Defined in: [filter.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/filter.ts#L49)
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
+
+#### Defined in
+
+[filter.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/filter.ts#L49)
 
 ___
 
 ### getBreadcrumbs
 
-▸ **getBreadcrumbs**(): [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
+▸ **getBreadcrumbs**(): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
-**Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
+#### Returns
 
-Defined in: [db.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L50)
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
+
+#### Defined in
+
+[db.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L50)
 
 ___
 
 ### getBreadcrumbsFor
 
-▸ **getBreadcrumbsFor**(`path`: *string*): [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
+▸ **getBreadcrumbsFor**(`path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `path` | *string* |
+| `path` | `string` |
 
-**Returns:** [*BreadcrumbRegistration*](interfaces/breadcrumbregistration.md)[]
+#### Returns
 
-Defined in: [filter.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/filter.ts#L78)
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
+
+#### Defined in
+
+[filter.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/filter.ts#L78)
 
 ___
 
 ### registerBreadcrumb
 
-▸ **registerBreadcrumb**(`breadcrumb`: [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md)): *void*
+▸ **registerBreadcrumb**(`breadcrumb`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumb` | [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md) |
+| `breadcrumb` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md) |
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [db.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L26)
+`void`
+
+#### Defined in
+
+[db.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L26)
 
 ___
 
 ### registerBreadcrumbs
 
-▸ **registerBreadcrumbs**(`breadcrumbs`: [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md)[]): *void*
+▸ **registerBreadcrumbs**(`breadcrumbs`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumbs` | [*BreadcrumbSettings*](interfaces/breadcrumbsettings.md)[] |
+| `breadcrumbs` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md)[] |
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [db.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L35)
+`void`
+
+#### Defined in
+
+[db.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L35)

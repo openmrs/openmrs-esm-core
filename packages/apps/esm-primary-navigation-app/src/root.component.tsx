@@ -1,34 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./root.scss";
 import Navbar from "./components/navbar/navbar.component";
 import { BrowserRouter, Redirect } from "react-router-dom";
-import { createErrorHandler } from "@openmrs/esm-framework";
-import { LoggedInUser, UserSession } from "./types";
+import { LoggedInUser, createErrorHandler } from "@openmrs/esm-framework";
+import { UserSession } from "./types";
 import { getCurrentSession, getSynchronizedCurrentUser } from "./root.resource";
-import { syncUserPropertiesChanges } from "./offline";
 
-export interface RootProps {
-  syncUserPropertiesChangesOnLoad: boolean;
-}
+export interface RootProps {}
 
-const Root: React.FC<RootProps> = ({ syncUserPropertiesChangesOnLoad }) => {
-  const [user, setUser] = React.useState<LoggedInUser | null | false>(null);
-  const [userSession, setUserSession] = React.useState<UserSession>(null);
-  const [allowedLocales, setAllowedLocales] = React.useState();
-  const logout = React.useCallback(() => setUser(false), []);
+const Root: React.FC<RootProps> = () => {
+  const [user, setUser] = useState<LoggedInUser | null | false>(null);
+  const [userSession, setUserSession] = useState<UserSession>(null);
+  const [allowedLocales, setAllowedLocales] = useState();
+  const logout = useCallback(() => setUser(false), []);
   const openmrsSpaBase = window["getOpenmrsSpaBase"]();
 
   useEffect(() => {
-    const abortController = new AbortController();
-
-    if (syncUserPropertiesChangesOnLoad && user) {
-      syncUserPropertiesChanges(user, abortController);
-    }
-
-    return () => abortController.abort();
-  }, [syncUserPropertiesChangesOnLoad, user]);
-
-  React.useEffect(() => {
     const currentUserSub = getSynchronizedCurrentUser({
       includeAuthStatus: true,
     }).subscribe((response) => {

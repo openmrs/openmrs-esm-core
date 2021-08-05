@@ -41,6 +41,12 @@ yargs.command(
       .string("backend")
       .default("backend", "https://openmrs-spa.org/")
       .describe("backend", "The backend to proxy API requests to.")
+      .boolean("support-offline")
+      .describe(
+        "support-offline",
+        "Determines if a service worker should be installed for offline support."
+      )
+      .default("support-offline", true)
       .string("spa-path")
       .default("spa-path", "/openmrs/spa/")
       .describe("spa-path", "The path of the application on the target server.")
@@ -49,6 +55,12 @@ yargs.command(
       .describe(
         "api-url",
         "The URL of the API. Can be a path if the API is on the same target server."
+      )
+      .string("page-title")
+      .default("page-title", "OpenMRS")
+      .describe(
+        "page-title",
+        "The title of the web app usually displayed in the browser tab."
       )
       .array("config-url")
       .default("config-url", [])
@@ -62,11 +74,11 @@ yargs.command(
         "run-project",
         "Runs the project in the current directory fusing it with the specified import map."
       )
-      .string("sources")
-      .default("sources", ".")
+      .array("sources")
+      .default("sources", ["."])
       .describe(
         "sources",
-        "Runs the projects from the provided source directories."
+        "Runs the projects from the provided source directories. Can be used multiple times."
       )
       .array("shared-dependencies")
       .default("shared-dependencies", [])
@@ -85,6 +97,8 @@ yargs.command(
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
       configUrls: args["config-url"],
+      pageTitle: args["page-title"],
+      supportOffline: args["support-offline"],
       ...args,
       importmap: await mergeImportmap(
         await getImportmap(args.importmap, args.port),
@@ -130,11 +144,11 @@ yargs.command(
         "config-url",
         "The URL to a valid frontend configuration. Can be used multiple times."
       )
-      .string("sources")
-      .default("sources", ".")
+      .array("sources")
+      .default("sources", ["."])
       .describe(
         "sources",
-        "Runs the projects from the provided source directories."
+        "Runs the projects from the provided source directories. Can be used multiple times."
       )
       .array("shared-dependencies")
       .default("shared-dependencies", [])
@@ -177,14 +191,25 @@ yargs.command(
         "fresh",
         "Determines if the output directory should be cleaned before the run."
       )
-      .default("fresh", false)
+      .boolean("support-offline")
+      .describe(
+        "support-offline",
+        "Determines if a service worker should be installed for offline support."
+      )
+      .default("support-offline", true)
       .string("build-config")
       .describe("build-config", "Path to a SPA build config JSON")
       .string("spa-path")
       .default("spa-path", "/openmrs/spa/")
       .describe("spa-path", "The path of the application on the target server.")
+      .string("page-title")
+      .default("page-title", "OpenMRS")
+      .describe(
+        "page-title",
+        "The title of the web app usually displayed in the browser tab."
+      )
       .string("api-url")
-      .default("api-url", "/openmrs/spa/")
+      .default("api-url", "/openmrs/")
       .describe(
         "api-url",
         "The URL of the API. Can be a path if the API is on the same target server."
@@ -206,9 +231,12 @@ yargs.command(
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
       configUrls: args["config-url"],
-      buildConfig: args["build-config"],
+      pageTitle: args["page-title"],
+      supportOffline: args["support-offline"],
       ...args,
       importmap: args.importmap,
+      buildConfig:
+        args["build-config"] && resolve(process.cwd(), args["build-config"]),
       target: resolve(process.cwd(), args.target),
     })
 );

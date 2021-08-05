@@ -9,12 +9,12 @@ const importTranslation = require.context(
 );
 
 const backendDependencies = {
-  "webservices.rest": "2.24.0",
-  appui: "1.10.0",
+  "webservices.rest": "^2.24.0",
+  appui: "^1.9.0",
 };
 
 const frontendDependencies = {
-  "@openmrs/esm-framework": "^3.1.10",
+  "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
 };
 
 const sharedOnlineOfflineProps = {

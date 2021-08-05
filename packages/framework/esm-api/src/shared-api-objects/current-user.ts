@@ -121,3 +121,12 @@ export function refetchCurrentUser() {
 export function userHasAccess(requiredPrivilege: string, user: LoggedInUser) {
   return userHasPrivilege(requiredPrivilege, user) || isSuperUser(user);
 }
+
+export function getLoggedInUser() {
+  return new Promise<LoggedInUser>((res, rej) => {
+    const sub = getCurrentUser().subscribe((user) => {
+      res(user);
+      sub.unsubscribe();
+    }, rej);
+  });
+}

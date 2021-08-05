@@ -1,9 +1,15 @@
-import { defineConfigSchema, getAsyncLifecycle } from "@openmrs/esm-framework";
+import {
+  defineConfigSchema,
+  getAsyncLifecycle,
+  setupOfflineSync,
+} from "@openmrs/esm-framework";
 import {
   postUserPropertiesOnline,
   postUserPropertiesOffline,
 } from "./components/choose-locale/change-locale.resource";
 import { configSchema } from "./config-schema";
+import { moduleName, userPropertyChange } from "./constants";
+import { syncUserLanguagePreference } from "./offline";
 
 const importTranslation = require.context(
   "../translations",
@@ -17,10 +23,9 @@ const backendDependencies = {
 };
 
 const frontendDependencies = {
-  "@openmrs/esm-framework": "^3.1.10",
+  "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
 };
 
-const moduleName = "@openmrs/esm-primary-navigation-app";
 const options = {
   featureName: "primary navigation",
   moduleName,
@@ -29,14 +34,16 @@ const options = {
 function setupOpenMRS() {
   defineConfigSchema(moduleName, configSchema);
 
+  setupOfflineSync(userPropertyChange, [], syncUserLanguagePreference);
+
   return {
     pages: [
       {
         load: getAsyncLifecycle(() => import("./root.component"), options),
         route: (location: Location) =>
           !location.pathname.startsWith(window.getOpenmrsSpaBase() + "login"),
-        online: { syncUserPropertiesChangesOnLoad: true },
-        offline: { syncUserPropertiesChangesOnLoad: false },
+        online: true,
+        offline: true,
       },
     ],
     extensions: [

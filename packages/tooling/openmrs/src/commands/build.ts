@@ -1,10 +1,5 @@
 import { existsSync, readFileSync } from "fs";
-import {
-  getImportmap,
-  ImportmapDeclaration,
-  loadWebpackConfig,
-  logInfo,
-} from "../utils";
+import { getImportmap, loadWebpackConfig, logInfo } from "../utils";
 import rimraf from "rimraf";
 
 /* eslint-disable no-console */
@@ -13,8 +8,10 @@ export interface BuildArgs {
   target: string;
   importmap: string;
   spaPath: string;
-  fresh: boolean;
+  fresh?: boolean;
   apiUrl: string;
+  pageTitle: string;
+  supportOffline?: boolean;
   configUrls: Array<string>;
   buildConfig?: string;
 }
@@ -22,6 +19,8 @@ export interface BuildArgs {
 export interface BuildConfig {
   apiUrl: string;
   configUrls: Array<string>;
+  pageTitle: string;
+  supportOffline?: boolean;
   importmap: string;
   spaPath: string;
 }
@@ -42,6 +41,8 @@ export async function runBuild(args: BuildArgs) {
     env: "production",
     apiUrl: buildConfig.apiUrl || args.apiUrl,
     configUrls: buildConfig.configUrls || args.configUrls,
+    pageTitle: buildConfig.pageTitle || args.pageTitle,
+    supportOffline: buildConfig.supportOffline ?? args.supportOffline,
     spaPath: buildConfig.spaPath || args.spaPath,
   });
 

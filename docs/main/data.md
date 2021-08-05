@@ -2,7 +2,7 @@
 
 Microfrontends interact with the OpenMRS server via the APIs exposed
 by its modules. In general, most of the endpoints we use are provided
-by the [FHIR Module](https://wiki.openmrs.org/display/projects/OpenMRS+FHIR+Module).
+by the [FHIR Module](https://wiki.openmrs.org/display/projects/OpenMRS+HL7+FHIR+Solutions).
 Most of the rest are provided by the
 [REST Module](https://wiki.openmrs.org/display/docs/REST+Module), which is
 documented [here](https://rest.openmrs.org/).
@@ -10,7 +10,7 @@ documented [here](https://rest.openmrs.org/).
 Endpoints from the FHIR Module should always be preferred, when they are
 available. FHIR is an interoperability standard which OpenMRS supports.
 
-Some data is available using higher-level functions or React Hooks provided
+Some data is available using higher-level functions or custom React Hooks provided
 by `@openmrs/esm-framework`.  These should be used when available.
 
 All of this functionality (React hooks excepted) is provided by the
@@ -72,7 +72,9 @@ in a [`useEffect` hook](https://reactjs.org/docs/hooks-effect.html):
 ```typescript
 useEffect(() => {
   const abortController = new AbortController();
-  someFetchFunction(abortController).then(setResult);
+  someFetchFunction(abortController)
+    .then(setResult)
+    .catch(setError);
   return () => abortController.abort();
 }, []);
 ```

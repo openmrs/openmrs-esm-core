@@ -14,34 +14,70 @@
 
 ### createErrorHandler
 
-▸ **createErrorHandler**(): *function*
+▸ **createErrorHandler**(): (`incomingErr`: `any`) => `void`
 
-**Returns:** (`incomingErr`: *any*) => *void*
+#### Returns
 
-Defined in: [index.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L31)
+`fn`
+
+▸ (`incomingErr`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `incomingErr` | `any` |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[index.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L31)
 
 ___
 
 ### handleApiError
 
-▸ **handleApiError**(): *function*
+▸ **handleApiError**(): (`incomingResponseErr`: `any`) => `void`
 
-**Returns:** (`incomingResponseErr`: *any*) => *void*
+#### Returns
 
-Defined in: [index.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L3)
+`fn`
+
+▸ (`incomingResponseErr`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `incomingResponseErr` | `any` |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[index.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L3)
 
 ___
 
 ### reportError
 
-▸ **reportError**(`err`: *any*): *void*
+▸ **reportError**(`err`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `err` | *any* |
+| `err` | `any` |
 
-**Returns:** *void*
+#### Returns
 
-Defined in: [index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L24)
+`void`
+
+#### Defined in
+
+[index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L24)

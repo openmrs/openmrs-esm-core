@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import Select from "carbon-components-react/es/components/Select";
 import SelectItem from "carbon-components-react/es/components/SelectItem";
 import styles from "./change-locale.component.scss";
-import { refetchCurrentUser } from "@openmrs/esm-framework";
-import { LoggedInUser } from "../../types";
+import { LoggedInUser } from "@openmrs/esm-framework";
 import { PostUserProperties } from "./change-locale.resource";
 
 export interface ChangeLocaleProps {
@@ -25,9 +24,7 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   useEffect(() => {
     if (user.userProperties.defaultLocale !== userProps.defaultLocale) {
       const ac = new AbortController();
-      postUserProperties(user.uuid, userProps, ac).then(() =>
-        refetchCurrentUser()
-      );
+      postUserProperties(user.uuid, userProps, ac);
       return () => ac.abort();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

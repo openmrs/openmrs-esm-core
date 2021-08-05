@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+set -e  # die on error
+
+npx pretty-quick --staged
+npx lerna run lint
+npx lerna run test
+npx lerna run typescript
+npx lerna run document

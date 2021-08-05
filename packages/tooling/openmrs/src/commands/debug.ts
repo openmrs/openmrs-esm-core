@@ -10,6 +10,8 @@ export interface DebugArgs {
   host: string;
   backend: string;
   importmap: ImportmapDeclaration;
+  pageTitle: string;
+  supportOffline?: boolean;
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
@@ -23,6 +25,7 @@ export function runDebug(args: DebugArgs) {
     importmap: args.importmap,
     backend: args.backend,
     apiUrl: args.apiUrl,
+    supportOffline: args.supportOffline,
     spaPath: args.spaPath,
     configUrls: args.configUrls,
     env: "development",

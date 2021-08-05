@@ -1,13 +1,8 @@
 .popupTriggerButton {
-  z-index: 100000;
   height: 25px !important;
   width: 25px !important;
   position: relative;
   border-radius: 2px;
-}
-
-.triggerButtonAlert {
-  background-color: var(--omrs-color-danger);
 }
 
 .toolStyles {

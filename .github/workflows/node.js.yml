@@ -163,8 +163,8 @@ jobs:
           node-version: "14.x"
           registry-url: "https://registry.npmjs.org"
       - run: npx lerna bootstrap
-      - run: npx lerna run build
       - run: npx lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --yes
+      - run: npx lerna run build
       - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
       - run: git add . && git commit -m "Prerelease version" --no-verify
       - run: npm run ci:prepublish

@@ -25,7 +25,7 @@ module.exports = (env) => ({
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
   },
-  externals: Object.keys(peerDependencies),
+  externals: Object.keys(peerDependencies || {}),
   plugins: [
     new CleanWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
