@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { ImportMap } from "@openmrs/esm-globals";
 import { retry } from "@openmrs/esm-utils";
 import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
@@ -32,19 +33,44 @@ export async function addToOmrsCache(urls: Array<string>) {
     return;
   }
 
-  const addToCache = async () => {
-    const cache = await caches.open(omrsCacheName);
-    await cache.addAll(urls);
-  };
+  // The following doesn't simply use cache.addAll because it aborts on the first failure.
+  // We want to cache as much as possible and just because, e.g., one single MF cannot be cached
+  // we don't want the rest to fail.
+  // It further allows us to log more granularly *which* URL couldn't be cached, so debugging
+  // is easier.
+  const cache = await caches.open(omrsCacheName);
+  const results = await Promise.all(
+    urls.map(async (url) => {
+      try {
+        await retry(() => cache.add(url), {
+          onError: (e, attempt) =>
+            console.debug(
+              `Failure attempt ${attempt} at caching "${url}". Error: `,
+              e
+            ),
+        });
+        return { url, success: true };
+      } catch (e) {
+        return { url, success: false };
+      }
+    })
+  );
 
-  await retry(addToCache, {
-    onError: (e, attempt) =>
-      console.warn(
-        `Adding the following URLs to the cache failed. Retry attempt: ${attempt}.`,
-        urls,
-        e
-      ),
-  });
+  const cached = results.filter((r) => r.success);
+  const failedToCache = results.filter((r) => !r.success);
+  if (cached.length > 0) {
+    console.debug(
+      `Successfully added ${cached.length} URLs to the OMRS cache. URLs: `,
+      cached.map((r) => r.url)
+    );
+  }
+
+  if (failedToCache.length > 0) {
+    console.error(
+      `Failed to cache ${failedToCache.length} URLs. URLs: `,
+      failedToCache.map((r) => r.url)
+    );
+  }
 }
 
 async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
