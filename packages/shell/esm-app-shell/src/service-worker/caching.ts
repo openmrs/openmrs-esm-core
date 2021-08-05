@@ -41,7 +41,13 @@ export async function addToOmrsCache(urls: Array<string>) {
   const results = await Promise.all(
     urls.map(async (url) => {
       try {
-        await retry(() => cache.add(url));
+        await retry(() => cache.add(url), {
+          onError: (e, attempt) =>
+            console.debug(
+              `Failure attempt ${attempt} at caching "${url}". Error: `,
+              e
+            ),
+        });
         return { url, success: true };
       } catch (e) {
         return { url, success: false };
@@ -52,7 +58,7 @@ export async function addToOmrsCache(urls: Array<string>) {
   const cached = results.filter((r) => r.success);
   const failedToCache = results.filter((r) => !r.success);
   if (cached.length > 0) {
-    console.info(
+    console.debug(
       `Successfully added ${cached.length} URLs to the OMRS cache. URLs: `,
       cached.map((r) => r.url)
     );
