@@ -66,22 +66,22 @@ module.exports = (env, argv = {}) => {
           test: /\.m?(js|ts|tsx)$/,
           exclude: /(node_modules|bower_components)/,
           use: {
-            loader: "babel-loader",
+            loader: require.resolve("babel-loader"),
           },
         },
         {
           test: /\.css$/,
-          use: ["style-loader", cssLoader],
+          use: [require.resolve("style-loader"), cssLoader],
         },
         {
           test: /\.s[ac]ss$/i,
-          use: ["style-loader", cssLoader, { loader: "sass-loader" }],
+          use: [require.resolve("style-loader"), cssLoader, { loader: require.resolve("sass-loader") }],
         },
         {
           test: /\.(png|jpe?g|gif|svg)$/i,
           use: [
             {
-              loader: "file-loader",
+              loader: require.resolve("file-loader"),
             },
           ],
         },

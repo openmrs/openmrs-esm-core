@@ -124,9 +124,11 @@ export async function runProject(
 
     if (typeof startup === "object") {
       // detected specialized startup command
-      exec(startup.command, {
+      const cp = exec(startup.command, {
         cwd: sourceDirectory,
       });
+      cp.stdout?.pipe(process.stdout);
+      cp.stderr?.pipe(process.stderr);
       // connect to either startup.url or a computed value based on startup.host
       importMap[project.name] =
         startup.url || `${startup.host}/${basename(project.browser)}`;

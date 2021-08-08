@@ -79,11 +79,44 @@ npx openmrs develop --sources packages/esm-*-app/
 
 will run a local server with all the microfrontends matching the pattern.
 
-## Import Map Overrides
+Alternatively, you can also specify the `--sources` argument multiple times, e.g.,
+
+```bash
+npx openmrs develop --sources packages/esm-form-entry-app/ --sources packages/esm-patient-chart-app
+```
+
+### Avoiding Webpack
+
+The previous approach using `openmrs develop` will implicitly use Webpack. If you want
+to use another bundler or build tool you can teach the `openmrs` tooling by adding a
+special section in the *package.json*.
+
+Consider the following example from the `@openmrs/esm-form-entry-app` package contained in
+the `openmrs-esm-patient-chart` monorepo:
+
+```json
+{
+  "scripts": {
+    "start": "openmrs develop",
+    "serve": "ng serve --port 4200 --live-reload true"
+  },
+  "openmrs:develop": {
+    "command": "npm run serve",
+    "url": "http://localhost:4200/openmrs-esm-form-entry-app.js"
+  },
+  // ...
+}
+```
+
+This one will use `ng serve --port 4200 --live-reload true` when `openmrs develop` is used.
+The URL `http://localhost:4200/openmrs-esm-form-entry-app.js` will be added to the import map
+used for debugging.
+
+## Import map overrides
 
 If you'd like to work on multiple microfrontends that aren't in a monorepo together,
 or if you'd like to run a microfrontend you are developing locally on a
-deployed server somewhere, you can use Import Map Overrides,
+deployed server somewhere, you can use import map overrides,
 which is made available through the OpenMRS DevTools.
 
 > If you'd like to understand how Import Map Overrides works, check out

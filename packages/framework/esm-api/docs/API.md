@@ -34,6 +34,7 @@
 - [Person](interfaces/Person.md)
 - [Privilege](interfaces/Privilege.md)
 - [Role](interfaces/Role.md)
+- [SessionLocation](interfaces/SessionLocation.md)
 - [SessionUser](interfaces/SessionUser.md)
 - [UnauthenticatedUser](interfaces/UnauthenticatedUser.md)
 - [User](interfaces/User.md)
@@ -74,11 +75,13 @@
 
 - [getLocations](API.md#getlocations)
 - [getLoggedInUser](API.md#getloggedinuser)
+- [getSessionLocation](API.md#getsessionlocation)
 - [getVisitTypes](API.md#getvisittypes)
 - [getVisitsForPatient](API.md#getvisitsforpatient)
 - [makeUrl](API.md#makeurl)
 - [openVisitsNoteWorkspace](API.md#openvisitsnoteworkspace)
 - [saveVisit](API.md#savevisit)
+- [setSessionLocation](API.md#setsessionlocation)
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
@@ -366,7 +369,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L56)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L57)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
 
@@ -382,7 +385,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L57)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L58)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
@@ -398,7 +401,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L60)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L61)
 
 ___
 
@@ -424,7 +427,7 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L116)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L118)
 
 ___
 
@@ -454,7 +457,21 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L125)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L127)
+
+___
+
+### getSessionLocation
+
+▸ **getSessionLocation**(): `Promise`<`undefined` \| [`SessionLocation`](interfaces/SessionLocation.md)\>
+
+#### Returns
+
+`Promise`<`undefined` \| [`SessionLocation`](interfaces/SessionLocation.md)\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L136)
 
 ___
 
@@ -556,6 +573,27 @@ ___
 
 ___
 
+### setSessionLocation
+
+▸ **setSessionLocation**(`locationUuid`, `abortController`): `Promise`<`any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `locationUuid` | `string` |
+| `abortController` | `AbortController` |
+
+#### Returns
+
+`Promise`<`any`\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:148](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L148)
+
+___
+
 ### toLocationObject
 
 ▸ **toLocationObject**(`openmrsRestForm`): [`Location`](interfaces/Location.md)
@@ -635,7 +673,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L121)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L123)
 
 ___
 
