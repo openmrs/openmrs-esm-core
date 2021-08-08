@@ -1,5 +1,6 @@
-import { resolve } from "path";
+import { basename, resolve } from "path";
 import { existsSync, readFileSync } from "fs";
+import { exec } from "child_process";
 import { logFail, logInfo, logWarn } from "./logger";
 import { startWebpack } from "./webpack";
 import { getDependentModules, getMainBundle } from "./dependencies";
@@ -63,6 +64,35 @@ async function matchAny(baseDir: string, patterns: Array<string>) {
   return matches;
 }
 
+const defaultConfigPath = resolve(
+  __dirname,
+  "..",
+  "..",
+  "default-webpack-config.js"
+);
+
+function runProjectWebpack(
+  configPath: string,
+  port: number,
+  project: any,
+  sharedDependencies: Array<string>,
+  sourceDirectory: string,
+  importMap: Record<string, string>
+) {
+  const bundle = getMainBundle(project);
+  const host = `http://localhost:${port}`;
+  const dependencies = getDependentModules(
+    process.cwd(),
+    host,
+    project.peerDependencies,
+    sharedDependencies
+  );
+
+  startWebpack(configPath, port, sourceDirectory);
+  Object.assign(importMap, dependencies);
+  importMap[project.name] = `${host}/${bundle.name}`;
+}
+
 export async function runProject(
   basePort: number,
   sharedDependencies: Array<string>,
@@ -78,6 +108,7 @@ export async function runProject(
     const sourceDirectory = resolve(baseDir, sourceDirectories[i]);
     const projectFile = resolve(sourceDirectory, "package.json");
     const configPath = resolve(sourceDirectory, "webpack.config.js");
+    const port = basePort + i + 1;
 
     logInfo(`Looking in directory "${sourceDirectory}" ...`);
 
@@ -88,28 +119,42 @@ export async function runProject(
       continue;
     }
 
-    if (!existsSync(configPath)) {
-      logFail(
-        `No "webpack.config.json" found in directory "${sourceDirectory}". Skipping ...`
-      );
-      continue;
-    }
-
     const project = require(projectFile);
-    const port = basePort + i + 1;
-    const bundle = getMainBundle(project);
-    const host = `http://localhost:${port}`;
-    const dependencies = getDependentModules(
-      process.cwd(),
-      host,
-      project.peerDependencies,
-      sharedDependencies
-    );
+    const startup = project["openmrs:develop"];
 
-    startWebpack(configPath, port, sourceDirectory);
+    if (typeof startup === "object") {
+      // detected specialized startup command
+      exec(startup.command, {
+        cwd: sourceDirectory,
+      });
+      // connect to either startup.url or a computed value based on startup.host
+      importMap[project.name] =
+        startup.url || `${startup.host}/${basename(project.browser)}`;
+    } else if (!existsSync(configPath)) {
+      // try to locate and run via default webpack
+      logWarn(
+        `No "webpack.config.json" found in directory "${sourceDirectory}". Trying to use default config ...`
+      );
 
-    Object.assign(importMap, dependencies);
-    importMap[project.name] = `${host}/${bundle.name}`;
+      runProjectWebpack(
+        defaultConfigPath,
+        port,
+        project,
+        sharedDependencies,
+        sourceDirectory,
+        importMap
+      );
+    } else {
+      // run via specialized webpack.config.js
+      runProjectWebpack(
+        configPath,
+        port,
+        project,
+        sharedDependencies,
+        sourceDirectory,
+        importMap
+      );
+    }
   }
 
   logInfo(

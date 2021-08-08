@@ -18,6 +18,8 @@ export function isVersionSatisfied() {
   return true;
 }
 
+export const setSessionLocation = jest.fn(() => Promise.resolve());
+
 export const mockStores = availableStores;
 
 export function createGlobalStore<TState>(

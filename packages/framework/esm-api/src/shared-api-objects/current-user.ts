@@ -8,6 +8,7 @@ import {
   UnauthenticatedUser,
   CurrentUserWithoutResponseOption,
   CurrentUserOptions,
+  SessionLocation,
 } from "../types";
 
 const userSubject = new ReplaySubject<Promise<LoggedInUserFetchResponse>>(1);
@@ -81,7 +82,8 @@ function setUserLanguage(sessionResponse: LoggedInUserFetchResponse) {
   if (sessionResponse?.data?.user?.userProperties?.defaultLocale) {
     const locale = sessionResponse.data.user.userProperties.defaultLocale;
     const htmlLang = document.documentElement.getAttribute("lang");
-    if (locale != htmlLang) {
+
+    if (locale !== htmlLang) {
       document.documentElement.setAttribute("lang", locale);
     }
   }
@@ -129,4 +131,31 @@ export function getLoggedInUser() {
       sub.unsubscribe();
     }, rej);
   });
+}
+
+export function getSessionLocation() {
+  return new Promise<SessionLocation | undefined>((res, rej) => {
+    const sub = getCurrentUser({ includeAuthStatus: true }).subscribe(
+      (user) => {
+        res(user.sessionLocation);
+        sub.unsubscribe();
+      },
+      rej
+    );
+  });
+}
+
+export async function setSessionLocation(
+  locationUuid: string,
+  abortController: AbortController
+): Promise<any> {
+  await openmrsFetch(sessionEndpoint, {
+    method: "POST",
+    body: { sessionLocation: locationUuid },
+    headers: {
+      "Content-Type": "application/json",
+    },
+    signal: abortController.signal,
+  });
+  refetchCurrentUser();
 }

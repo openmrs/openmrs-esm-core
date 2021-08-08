@@ -29,6 +29,13 @@ export interface UnauthenticatedUser {
   sessionId: string;
   authenticated: boolean;
   user?: LoggedInUser;
+  sessionLocation?: SessionLocation;
+}
+
+export interface SessionLocation {
+  uuid: string;
+  display: string;
+  links: Array<any>;
 }
 
 export interface Person {

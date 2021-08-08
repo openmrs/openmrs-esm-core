@@ -29,7 +29,6 @@ jest.mock("./choose-location.resource.ts", () => ({
       },
     ])
   ),
-  setSessionLocation: jest.fn(() => Promise.resolve()),
 }));
 
 describe(`<ChooseLocation />`, () => {

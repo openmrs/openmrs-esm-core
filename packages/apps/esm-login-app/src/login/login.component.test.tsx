@@ -2,8 +2,8 @@ import "@testing-library/jest-dom";
 import Login from "./login.component";
 import { useState } from "react";
 import { cleanup, wait } from "@testing-library/react";
+import { setSessionLocation } from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
-import { setSessionLocation } from "../choose-location/choose-location.resource";
 import { useCurrentUser } from "../CurrentUserContext";
 import renderWithRouter from "../test-helpers/render-with-router";
 import userEvent from "@testing-library/user-event";
@@ -15,11 +15,6 @@ jest.mock("./login.resource", () => ({
 }));
 
 const mockedSetSessionLocation = setSessionLocation as jest.Mock;
-
-jest.mock("../choose-location/choose-location.resource", () => ({
-  setSessionLocation: jest.fn(),
-}));
-
 const mockedUseCurrentUser = useCurrentUser as jest.Mock;
 
 jest.mock("../CurrentUserContext", () => ({

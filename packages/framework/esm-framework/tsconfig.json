@@ -6,6 +6,7 @@
     "jsx": "react",
     "strictNullChecks": true,
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "declaration": true,
     "declarationDir": "dist",
     "emitDeclarationOnly": true,

@@ -11,6 +11,8 @@ export function getCurrentUser() {
 
 export function defineConfigSchema() {}
 
+export const setSessionLocation = jest.fn(() => Promise.resolve());
+
 export const validators = {
   isBoolean: jest.fn(),
   isString: jest.fn(),

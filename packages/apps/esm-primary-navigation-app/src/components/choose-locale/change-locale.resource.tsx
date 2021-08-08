@@ -1,7 +1,8 @@
 import {
   openmrsFetch,
   queueSynchronizationItemFor,
-  refetchCurrentUser,
+  getSessionLocation,
+  setSessionLocation,
 } from "@openmrs/esm-framework";
 import { userPropertyChange } from "../../constants";
 
@@ -16,13 +17,19 @@ export async function postUserPropertiesOnline(
   userProperties: any,
   abortController: AbortController
 ): Promise<any> {
+  const sessionLocation = await getSessionLocation();
+  const locationUuid = sessionLocation?.uuid;
+
   await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
     method: "POST",
     body: { userProperties },
     headers: { "Content-Type": "application/json" },
     signal: abortController.signal,
   });
-  refetchCurrentUser();
+
+  if (locationUuid) {
+    await setSessionLocation(locationUuid, abortController);
+  }
 }
 
 export function postUserPropertiesOffline(
