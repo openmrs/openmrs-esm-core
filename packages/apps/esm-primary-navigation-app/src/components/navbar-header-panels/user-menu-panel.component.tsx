@@ -1,10 +1,9 @@
-import React, {  useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { ExtensionSlot, LoggedInUser } from "@openmrs/esm-framework";
 import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
 import { HeaderPanelProps } from "carbon-components-react";
 import { UserSession } from "../../types";
 import styles from "../../root.scss";
-import { useOnClickOutside } from "./useOnClickOutside.component";
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   user: LoggedInUser;
@@ -22,12 +21,26 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
   session,
   hidePanel,
 }) => {
-  const ref = useRef();
-  useOnClickOutside(ref, () => hidePanel());
+  const userMenuRef = useRef(null);
+
+  useEffect(() => {
+    if (expanded) {
+      const listener = (event: MouseEvent) => {
+        if (
+          userMenuRef?.current &&
+          !userMenuRef.current.contains(event.target)
+        ) {
+          hidePanel();
+        }
+      };
+      window.addEventListener("click", listener);
+      return () => window.removeEventListener("click", listener);
+    }
+  }, [userMenuRef?.current]);
 
   return (
     <HeaderPanel
-      ref={ref}
+      ref={userMenuRef}
       className={styles.headerPanel}
       expanded={expanded}
       aria-label="Location"

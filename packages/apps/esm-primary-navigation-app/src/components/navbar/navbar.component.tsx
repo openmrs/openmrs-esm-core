@@ -117,7 +117,10 @@ const Navbar: React.FC<NavbarProps> = ({
               style={{ padding: "12px" }}
               name="Users"
               isActive={isActivePanel("userMenu")}
-              onClick={() => togglePanel("userMenu")}
+              onClick={(event) => {
+                togglePanel("userMenu");
+                event.stopPropagation();
+              }}
             >
               {isActivePanel("userMenu") ? (
                 <Close20 />
@@ -129,7 +132,10 @@ const Navbar: React.FC<NavbarProps> = ({
               aria-label="App Menu"
               isActive={isActivePanel("appMenu")}
               aria-labelledby="App Menu"
-              onClick={() => togglePanel("appMenu")}
+              onClick={(event) => {
+                togglePanel("appMenu");
+                event.stopPropagation();
+              }}
             >
               {isActivePanel("appMenu") ? <Close20 /> : <Switcher20 />}
             </HeaderGlobalAction>
@@ -140,25 +146,21 @@ const Navbar: React.FC<NavbarProps> = ({
               expanded={isActivePanel("sideMenu")}
             />
           )}
-          {isActivePanel("appMenu") && (
-            <AppMenuPanel
-              expanded={isActivePanel("appMenu")}
-              hidePanel={hidePanel}
-            />
-          )}
+          <AppMenuPanel
+            expanded={isActivePanel("appMenu")}
+            hidePanel={hidePanel}
+          />
           <NotificationsMenuPanel
             expanded={isActivePanel("notificationsMenu")}
           />
-          {isActivePanel("userMenu") && (
-            <UserMenuPanel
-              user={user}
-              session={session}
-              expanded={isActivePanel("userMenu")}
-              allowedLocales={allowedLocales}
-              onLogout={onLogout}
-              hidePanel={hidePanel}
-            />
-          )}
+          <UserMenuPanel
+            user={user}
+            session={session}
+            expanded={isActivePanel("userMenu")}
+            allowedLocales={allowedLocales}
+            onLogout={onLogout}
+            hidePanel={hidePanel}
+          />
         </Header>
       </>
     );
