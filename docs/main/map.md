@@ -32,7 +32,7 @@ These microfrontends bring in domain-specific UI capabilities such as menu entri
 
 The backend is an OpenMRS server and its APIs. The frontend application and backend server do not have to be colocated. Since the frontend really just a set of static files, it can be served from anywhere. The specific setup is up to you.
 
-### The repos you should know
+## Repositories you should know
 The 3.x EMR Reference Application is made up of all the microfrontends found in the following repositories:
 
 - [openmrs-esm-core](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/apps): Microfrontends which are administrative or else integral to the application
