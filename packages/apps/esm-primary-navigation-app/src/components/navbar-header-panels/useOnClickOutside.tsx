@@ -21,6 +21,6 @@ function useOnClickOutside<T extends HTMLElement = HTMLElement>(
       return () => window.removeEventListener(`click`, listener);
     }
   }, [ref.current, handler, expanded]);
-};
+}
 
 export default useOnClickOutside;
