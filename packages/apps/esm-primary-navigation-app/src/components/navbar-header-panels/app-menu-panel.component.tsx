@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { ExtensionSlot } from "@openmrs/esm-framework";
 import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
 import styles from "./app-menu-panel.component.scss";
+import useOnClickOutside from "./useOnClickOutside";
 
 interface AppMenuProps {
   expanded: boolean;
@@ -11,17 +12,7 @@ interface AppMenuProps {
 const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
   const appMenuRef = useRef(null);
 
-  useEffect(() => {
-    if (expanded) {
-      const listener = (event: MouseEvent) => {
-        if (appMenuRef?.current && !appMenuRef.current.contains(event.target)) {
-          hidePanel();
-        }
-      };
-      window.addEventListener("click", listener);
-      return () => window.removeEventListener("click", listener);
-    }
-  }, [appMenuRef?.current]);
+  useOnClickOutside(appMenuRef, hidePanel, expanded);
 
   return (
     <HeaderPanel

@@ -4,6 +4,7 @@ import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
 import { HeaderPanelProps } from "carbon-components-react";
 import { UserSession } from "../../types";
 import styles from "../../root.scss";
+import useOnClickOutside from "./useOnClickOutside";
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   user: LoggedInUser;
@@ -23,20 +24,7 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
 }) => {
   const userMenuRef = useRef(null);
 
-  useEffect(() => {
-    if (expanded) {
-      const listener = (event: MouseEvent) => {
-        if (
-          userMenuRef?.current &&
-          !userMenuRef.current.contains(event.target)
-        ) {
-          hidePanel();
-        }
-      };
-      window.addEventListener("click", listener);
-      return () => window.removeEventListener("click", listener);
-    }
-  }, [userMenuRef?.current]);
+  useOnClickOutside(userMenuRef, hidePanel, expanded);
 
   return (
     <HeaderPanel
