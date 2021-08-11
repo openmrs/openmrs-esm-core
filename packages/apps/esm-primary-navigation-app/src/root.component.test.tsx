@@ -22,6 +22,10 @@ jest.mock("@openmrs/esm-framework", () => ({
   useConfig: jest.fn(() => ({
     logo: { src: null, alt: null, name: "Mock EMR" },
   })),
+  useOnClickOutside: jest.fn(() => {
+    const { useRef } = require("react");
+    return useRef();
+  }),
   refetchCurrentUser: jest.fn(),
   subscribeConnectivity: jest.fn(),
 }));

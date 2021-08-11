@@ -1,10 +1,13 @@
-import React, { useEffect, useRef } from "react";
-import { ExtensionSlot, LoggedInUser } from "@openmrs/esm-framework";
+import React from "react";
+import {
+  ExtensionSlot,
+  LoggedInUser,
+  useOnClickOutside,
+} from "@openmrs/esm-framework";
 import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
 import { HeaderPanelProps } from "carbon-components-react";
 import { UserSession } from "../../types";
 import styles from "../../root.scss";
-import useOnClickOutside from "./useOnClickOutside";
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   user: LoggedInUser;
@@ -22,9 +25,7 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
   session,
   hidePanel,
 }) => {
-  const userMenuRef = useRef(null);
-
-  useOnClickOutside(userMenuRef, hidePanel, expanded);
+  const userMenuRef = useOnClickOutside(hidePanel, expanded);
 
   return (
     <HeaderPanel

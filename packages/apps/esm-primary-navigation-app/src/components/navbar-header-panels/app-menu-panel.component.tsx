@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import { ExtensionSlot } from "@openmrs/esm-framework";
+import React from "react";
+import { ExtensionSlot, useOnClickOutside } from "@openmrs/esm-framework";
 import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
 import styles from "./app-menu-panel.component.scss";
-import useOnClickOutside from "./useOnClickOutside";
 
 interface AppMenuProps {
   expanded: boolean;
@@ -10,9 +9,7 @@ interface AppMenuProps {
 }
 
 const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
-  const appMenuRef = useRef(null);
-
-  useOnClickOutside(appMenuRef, hidePanel, expanded);
+  const appMenuRef = useOnClickOutside(hidePanel, expanded);
 
   return (
     <HeaderPanel
