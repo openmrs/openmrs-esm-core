@@ -288,6 +288,7 @@
 - [useLayoutType](API.md#uselayouttype)
 - [useLocations](API.md#uselocations)
 - [useNavigationContext](API.md#usenavigationcontext)
+- [useOnClickOutside](API.md#useonclickoutside)
 - [usePagination](API.md#usepagination)
 - [useSessionUser](API.md#usesessionuser)
 - [useStore](API.md#usestore)
@@ -3875,6 +3876,33 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useNavigationContext.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useNavigationContext.ts#L10)
+
+___
+
+### useOnClickOutside
+
+▸ **useOnClickOutside**<`T`\>(`handler`, `active?`): `MutableRefObject`<`undefined` \| `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `HTMLElement``HTMLElement` |
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `handler` | (`event`: `Event`) => `void` | `undefined` |
+| `active` | `boolean` | `true` |
+
+#### Returns
+
+`MutableRefObject`<`undefined` \| `T`\>
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOnClickOutside.tsx:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useOnClickOutside.tsx#L3)
 
 ___
 
