@@ -39,10 +39,17 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
   const [t] = useTranslation();
 
   useEffect(() => {
+
     if (user) {
       history.push("/login/location", location ? location.state : undefined);
     }
+    if (!location.hash) {
+      setShowPassword(false);
+      setUsername("");
+    }
+
   }, [user, history, location]);
+
 
   useEffect(() => {
     const field = showPassword
@@ -58,6 +65,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
     const field = usernameInputRef.current;
 
     if (field.value.length > 0) {
+      history.push("/login/#user");
       setShowPassword(true);
     } else {
       field.focus();
@@ -88,6 +96,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
         continueLogin();
         return false;
       }
+
 
       try {
         const loginRes = await performLogin(username, password);
@@ -196,6 +205,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
               >
                 {t("login", "Log in")}
               </Button>
+
             </div>
           )}
           <div className={styles["center"]}>
