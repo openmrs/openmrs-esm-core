@@ -11,11 +11,11 @@
 #omrs-logo-full-mono,
 #omrs-logo-partial-mono,
 #omrs-logo-icon-mono {
-  --logo-red: rgba(19, 19, 21, 0.6) !important;
-  --logo-orange: rgba(19, 19, 21, 0.6) !important;
-  --logo-purple: rgba(19, 19, 21, 0.6) !important;
-  --logo-green: rgba(19, 19, 21, 0.6) !important;
-  --logo-black: rgba(19, 19, 21, 0.6) !important;
+  --logo-red: rgba(19, 19, 21, 0.6);
+  --logo-orange: rgba(19, 19, 21, 0.6);
+  --logo-purple: rgba(19, 19, 21, 0.6);
+  --logo-green: rgba(19, 19, 21, 0.6);
+  --logo-black: rgba(19, 19, 21, 0.6);
 }
 
 #omrs-logo-full-grey,
@@ -26,4 +26,9 @@
   --logo-purple: #c6c6c6;
   --logo-green: #c6c6c6;
   --logo-black: #c6c6c6;
+}
+
+#omrs-logo-white {
+  --logo-grey: #c6c6c6;
+  --logo-white: #fff;
 }

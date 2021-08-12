@@ -3,6 +3,7 @@ import { useConfig } from "@openmrs/esm-framework";
 
 const Logo: React.FC = () => {
   const { logo } = useConfig();
+
   return (
     <>
       {logo?.src ? (
@@ -11,7 +12,7 @@ const Logo: React.FC = () => {
         logo.name
       ) : (
         <svg role="img" width={110} height={40}>
-          <use xlinkHref="#omrs-logo-partial-grey"></use>
+          <use xlinkHref="#omrs-logo-white"></use>
         </svg>
       )}
     </>
