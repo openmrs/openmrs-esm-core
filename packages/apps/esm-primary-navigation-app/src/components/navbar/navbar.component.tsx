@@ -101,8 +101,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <HeaderGlobalBar className={styles.headerGlobalBar}>
             <ExtensionSlot
               extensionSlotName="top-nav-actions-slot"
-              className={styles.topNavActionSlot}
-              state={{ isActive: isActivePanel("") }}
+              className={styles.topNavActionsSlot}
             />
             <ExtensionSlot
               extensionSlotName="notifications-menu-button-slot"
