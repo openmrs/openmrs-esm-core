@@ -113,7 +113,11 @@ const Navbar: React.FC<NavbarProps> = ({
             <HeaderGlobalAction
               aria-label="Users"
               aria-labelledby="Users Avatar Icon"
-              style={{ padding: "12px" }}
+              className={`${
+                isActivePanel("userMenu")
+                  ? styles.headerGlobalBarButton
+                  : styles.activePanel
+              }`}
               name="Users"
               isActive={isActivePanel("userMenu")}
               onClick={(event) => {
@@ -130,6 +134,11 @@ const Navbar: React.FC<NavbarProps> = ({
             <HeaderGlobalAction
               aria-label="App Menu"
               isActive={isActivePanel("appMenu")}
+              className={`${
+                isActivePanel("appMenu")
+                  ? styles.headerGlobalBarButton
+                  : styles.activePanel
+              }`}
               aria-labelledby="App Menu"
               onClick={(event) => {
                 togglePanel("appMenu");
