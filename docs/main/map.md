@@ -31,3 +31,12 @@ These microfrontends bring in domain-specific UI capabilities such as menu entri
 ### The backend
 
 The backend is an OpenMRS server and its APIs. The frontend application and backend server do not have to be colocated. Since the frontend really just a set of static files, it can be served from anywhere. The specific setup is up to you.
+
+## Repositories you should know
+The 3.x EMR Reference Application is made up of all the microfrontends found in the following repositories:
+
+- [openmrs-esm-core](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/apps): Microfrontends which are administrative or else integral to the application
+- [openmrs-esm-patient-management](https://github.com/openmrs/openmrs-esm-patient-management/tree/main/packages): Microfrontends which deal with creating, searching, and listing patients
+- [openmrs-esm-patient-chart](https://github.com/openmrs/openmrs-esm-patient-chart/tree/master/packages): The patient chart microfrontend and all its widgets
+- [openmrs-esm-home](https://github.com/openmrs/openmrs-esm-home/tree/master/packages): Microfrontends tied to the home page
+- [openmrs-rfc-frontend](https://github.com/openmrs/openmrs-rfc-frontend): A git repository that facilitates a democratic process where folks can propose changes to the frontend implementation via RFCs (Request For Comments). See, for example, the [Contributing Guidelines for Microfrontends](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0020-contributing-guidelines.md), which were established with RFC #20.

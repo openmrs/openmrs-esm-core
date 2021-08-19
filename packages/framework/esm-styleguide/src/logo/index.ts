@@ -18,4 +18,8 @@ export function setupLogo() {
   addSvg("omrs-logo-icon-color", iconLogo);
   addSvg("omrs-logo-icon-mono", iconLogo);
   addSvg("omrs-logo-icon-grey", iconLogo);
+
+  const whiteLogo = require("./openmrs-logo-white.svg").default;
+
+  addSvg("omrs-logo-white", whiteLogo);
 }

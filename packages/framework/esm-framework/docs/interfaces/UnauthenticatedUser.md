@@ -8,6 +8,7 @@
 
 - [authenticated](UnauthenticatedUser.md#authenticated)
 - [sessionId](UnauthenticatedUser.md#sessionid)
+- [sessionLocation](UnauthenticatedUser.md#sessionlocation)
 - [user](UnauthenticatedUser.md#user)
 
 ## Properties
@@ -29,6 +30,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/user-resource.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L29)
+
+___
+
+### sessionLocation
+
+• `Optional` **sessionLocation**: [`SessionLocation`](SessionLocation.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/user-resource.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L32)
 
 ___
 

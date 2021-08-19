@@ -12,20 +12,6 @@ export function getLoginLocations(): Observable<Object[]> {
   ).pipe(map(({ data }) => data["results"]));
 }
 
-export function setSessionLocation(
-  locationUuid: string,
-  abortController: AbortController
-): Promise<any> {
-  return openmrsFetch("/ws/rest/v1/session", {
-    method: "POST",
-    body: { sessionLocation: locationUuid },
-    headers: {
-      "Content-Type": "application/json",
-    },
-    signal: abortController.signal,
-  });
-}
-
 export function searchLocationsFhir(
   location: string,
   abortController: AbortController,

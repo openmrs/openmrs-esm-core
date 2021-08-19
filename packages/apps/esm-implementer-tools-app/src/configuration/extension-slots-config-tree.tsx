@@ -12,7 +12,7 @@ import { Subtree } from "./layout/subtree.component";
 import { implementerToolsStore } from "../store";
 
 interface ExtensionSlotsConfigTreeProps {
-  config: { [key: string]: any };
+  extensionsConfig: { [key: string]: any };
   moduleName: string;
 }
 
@@ -33,28 +33,16 @@ interface ExtensionConfigureDescriptor {
   _source: string;
 }
 
-function getSlots(store: ExtensionStore, moduleName: string) {
-  return Object.values(store.slots).filter((slot) =>
-    Object.keys(slot.instances).includes(moduleName)
-  );
-}
-
 export function ExtensionSlotsConfigTree({
-  config,
+  extensionsConfig,
   moduleName,
 }: ExtensionSlotsConfigTreeProps) {
-  const store = useExtensionStore();
-  const extensionSlotNames = useMemo(
-    () => getSlots(store, moduleName).map((m) => m.name),
-    [store, moduleName]
-  );
-
-  return extensionSlotNames.length ? (
+  return extensionsConfig && Object.keys(extensionsConfig).length ? (
     <Subtree label="extension slots" leaf={false}>
-      {extensionSlotNames.map((slotName) => (
+      {Object.keys(extensionsConfig).map((slotName) => (
         <ExtensionSlotConfigTree
           key={slotName}
-          config={config?.[slotName]}
+          config={extensionsConfig?.[slotName]}
           path={[moduleName, "extensions", slotName]}
         />
       ))}

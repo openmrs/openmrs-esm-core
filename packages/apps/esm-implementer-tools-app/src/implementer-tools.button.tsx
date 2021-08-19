@@ -1,24 +1,30 @@
 import React from "react";
-import Tools20 from "@carbon/icons-react/es/tools/20";
-import styles from "./implementer-tools.styles.css";
-import { UserHasAccess } from "@openmrs/esm-framework";
-import { togglePopup } from "./store";
-import { HeaderGlobalAction } from "carbon-components-react/es/components/UIShell";
 import { useTranslation } from "react-i18next";
+import Close20 from "@carbon/icons-react/lib/close/20";
+import Tools20 from "@carbon/icons-react/es/tools/20";
+import { HeaderGlobalAction } from "carbon-components-react/es/components/UIShell";
+import { UserHasAccess, useStore } from "@openmrs/esm-framework";
+import { implementerToolsStore, togglePopup } from "./store";
+import styles from "./implementer-tools.styles.css";
 
 const ImplementerToolsButton: React.FC = () => {
   const { t } = useTranslation();
+  const { isOpen } = useStore(implementerToolsStore);
 
   return (
     <UserHasAccess privilege="coreapps.systemAdministration">
       <HeaderGlobalAction
-        onClick={togglePopup}
         aria-label={t("implementerTools", "Implementer Tools")}
         aria-labelledby="Implementer Tools"
-        name="ImplementerToolsIcon"
         className={styles.toolStyles}
+        name="ImplementerToolsIcon"
+        onClick={togglePopup}
       >
-        <Tools20 className={styles.popupTriggerButton} />
+        {isOpen ? (
+          <Close20 />
+        ) : (
+          <Tools20 className={styles.popupTriggerButton} />
+        )}
       </HeaderGlobalAction>
     </UserHasAccess>
   );

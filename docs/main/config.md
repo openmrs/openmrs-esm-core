@@ -301,7 +301,7 @@ the element, but this may change in future versions.
 
 #### `_type`
 
-One of the values from [the `Type` enum](../../packages/framework/esm-config/docs/enums/type.md). Used for validation and to help the
+One of the values from [the `Type` enum](../../packages/framework/esm-config/docs/enums/Type.md). Used for validation and to help the
 implementer tools work with the element.
 
 Should always appear alongside `_default`.

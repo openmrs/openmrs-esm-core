@@ -2,8 +2,12 @@ import React, { useState, useCallback, useEffect } from "react";
 import LoadingIcon from "../loading/loading.component";
 import LocationPicker from "../location-picker/location-picker.component";
 import { RouteComponentProps } from "react-router-dom";
-import { navigate, useConfig } from "@openmrs/esm-framework";
-import { setSessionLocation, queryLocations } from "./choose-location.resource";
+import {
+  navigate,
+  useConfig,
+  setSessionLocation,
+} from "@openmrs/esm-framework";
+import { queryLocations } from "./choose-location.resource";
 import { useCurrentUser } from "../CurrentUserContext";
 import { LocationEntry } from "../types";
 import type { StaticContext } from "react-router";

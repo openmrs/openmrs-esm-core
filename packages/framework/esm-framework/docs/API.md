@@ -85,6 +85,7 @@
 - [ResourceLoader](interfaces/ResourceLoader.md)
 - [RetryOptions](interfaces/RetryOptions.md)
 - [Role](interfaces/Role.md)
+- [SessionLocation](interfaces/SessionLocation.md)
 - [SessionUser](interfaces/SessionUser.md)
 - [ShowNotificationEvent](interfaces/ShowNotificationEvent.md)
 - [ShowToastEvent](interfaces/ShowToastEvent.md)
@@ -205,6 +206,7 @@
 - [getLocations](API.md#getlocations)
 - [getLoggedInUser](API.md#getloggedinuser)
 - [getOmrsServiceWorker](API.md#getomrsserviceworker)
+- [getSessionLocation](API.md#getsessionlocation)
 - [getSyncLifecycle](API.md#getsynclifecycle)
 - [getSynchronizationItems](API.md#getsynchronizationitems)
 - [getSynchronizationItemsFor](API.md#getsynchronizationitemsfor)
@@ -240,6 +242,7 @@
 - [reportError](API.md#reporterror)
 - [retry](API.md#retry)
 - [saveVisit](API.md#savevisit)
+- [setSessionLocation](API.md#setsessionlocation)
 - [setupOfflineSync](API.md#setupofflinesync)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
@@ -285,6 +288,7 @@
 - [useLayoutType](API.md#uselayouttype)
 - [useLocations](API.md#uselocations)
 - [useNavigationContext](API.md#usenavigationcontext)
+- [useOnClickOutside](API.md#useonclickoutside)
 - [usePagination](API.md#usepagination)
 - [useSessionUser](API.md#usesessionuser)
 - [useStore](API.md#usestore)
@@ -898,7 +902,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L56)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L57)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
 
@@ -914,7 +918,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L57)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L58)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
@@ -930,7 +934,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L60)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L61)
 
 ___
 
@@ -956,7 +960,7 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L116)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L118)
 
 ___
 
@@ -1937,7 +1941,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L125)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L127)
 
 ___
 
@@ -1959,6 +1963,20 @@ A promise which will resolve once the application's Service Worker has been init
 #### Defined in
 
 [packages/framework/esm-offline/src/service-worker.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker.ts#L49)
+
+___
+
+### getSessionLocation
+
+▸ **getSessionLocation**(): `Promise`<`undefined` \| [`SessionLocation`](interfaces/SessionLocation.md)\>
+
+#### Returns
+
+`Promise`<`undefined` \| [`SessionLocation`](interfaces/SessionLocation.md)\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L136)
 
 ___
 
@@ -2791,6 +2809,27 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L55)
+
+___
+
+### setSessionLocation
+
+▸ **setSessionLocation**(`locationUuid`, `abortController`): `Promise`<`any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `locationUuid` | `string` |
+| `abortController` | `AbortController` |
+
+#### Returns
+
+`Promise`<`any`\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:148](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L148)
 
 ___
 
@@ -3840,6 +3879,33 @@ ___
 
 ___
 
+### useOnClickOutside
+
+▸ **useOnClickOutside**<`T`\>(`handler`, `active?`): `MutableRefObject`<`undefined` \| `T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `HTMLElement``HTMLElement` |
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `handler` | (`event`: `Event`) => `void` | `undefined` |
+| `active` | `boolean` | `true` |
+
+#### Returns
+
+`MutableRefObject`<`undefined` \| `T`\>
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOnClickOutside.tsx:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useOnClickOutside.tsx#L3)
+
+___
+
 ### usePagination
 
 ▸ **usePagination**<`T`\>(`data?`, `resultsPerPage?`): `Object`
@@ -4026,7 +4092,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L121)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L123)
 
 ___
 

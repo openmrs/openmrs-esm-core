@@ -16,7 +16,7 @@ export function ConfigTreeForModule({
   return (
     <TreeContainer>
       <ExtensionSlotsConfigTree
-        config={config.extensions}
+        extensionsConfig={config.extensions}
         moduleName={moduleName}
       />
       <ConfigSubtree

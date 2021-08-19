@@ -4,6 +4,7 @@
     "module": "esnext",
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "lib": [
       "dom",

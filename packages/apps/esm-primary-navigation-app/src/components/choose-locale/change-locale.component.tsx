@@ -40,6 +40,7 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
         onChange={(event) =>
           setUserProps({ ...userProps, defaultLocale: event.target.value })
         }
+        onClick={(event) => event.stopPropagation()}
         value={userProps.defaultLocale}
       >
         {options}

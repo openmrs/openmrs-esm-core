@@ -1,11 +1,16 @@
-.topNavActionSlot {
+@import "~@openmrs/esm-styleguide/src/vars";
+.topNavActionsSlot {
   display: flex;
 }
 
-.headerGlobalBar button {
-  background-color: transparent;
+.headerGlobalBarButton {
+  background-color: $brand-02;
 }
 
 .topNavHeader {
   top: var(--omrs-offline-banner-height);
+}
+
+.activePanel {
+  background-color: $brand-01;
 }
