@@ -7,14 +7,13 @@ import { Button } from "carbon-components-react";
 import Close16 from "@carbon/icons-react/es/close/16";
 import { ImplementerToolsStore, implementerToolsStore } from "../store";
 
-
 export function UiEditor() {
   const { slots, extensions } = useExtensionStore();
   const { isOpen: implementerToolsIsOpen } = useStore(implementerToolsStore);
 
   return (
     <>
-      { implementerToolsIsOpen ? null : <ExitButton /> }
+      {implementerToolsIsOpen ? null : <ExitButton />}
       {slots
         ? Object.entries(slots).map(([slotName, slotInfo]) =>
             Object.keys(slotInfo.instances).map((slotModuleName) => (
@@ -65,19 +64,21 @@ export function SlotOverlay({ slotName }) {
 const actions = {
   toggleIsUIEditorEnabled({ isUIEditorEnabled }: ImplementerToolsStore) {
     return { isUIEditorEnabled: !isUIEditorEnabled };
-  }
-}
+  },
+};
 
 export function ExitButton() {
   const { toggleIsUIEditorEnabled } = useStore(implementerToolsStore, actions);
-  return <Button
-    className={styles.exitButton}
-    kind="danger"
-    size="sm"
-    renderIcon={Close16}
-    iconDescription="Exit UI Editor"
-    tooltipPosition="left"
-    onClick={toggleIsUIEditorEnabled}
-    hasIconOnly
-  />
+  return (
+    <Button
+      className={styles.exitButton}
+      kind="danger"
+      size="sm"
+      renderIcon={Close16}
+      iconDescription="Exit UI Editor"
+      tooltipPosition="left"
+      onClick={toggleIsUIEditorEnabled}
+      hasIconOnly
+    />
+  );
 }
