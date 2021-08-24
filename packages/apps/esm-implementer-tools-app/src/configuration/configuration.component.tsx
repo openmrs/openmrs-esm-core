@@ -26,9 +26,10 @@ import { Description } from "./description.component";
 
 function isLeaf(configNode: Config) {
   return (
-    typeof configNode == "object" &&
-    !Array.isArray(configNode) &&
-    (configNode["_default"] || configNode["_type"])
+    configNode.hasOwnProperty("_default") ||
+    configNode["_type"] ||
+    configNode.hasOwnProperty("_value") ||
+    configNode.hasOwnProperty("_source")
   );
 }
 
@@ -138,7 +139,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               <Column sm={1} md={2}>
                 <TextInput
                   id="extensionSearch"
-                  labelText="Search extensions"
+                  labelText="Search configuration"
                   onChange={(e) => setFilterText(e.target.value)}
                 />
               </Column>
