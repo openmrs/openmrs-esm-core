@@ -3,7 +3,7 @@ import styles from "./styles.css";
 import { Portal } from "./portal";
 import { ExtensionOverlay } from "./extension-overlay.component";
 import { useExtensionStore, useStore } from "@openmrs/esm-framework";
-import { Button } from "carbon-components-react";
+import Button from 'carbon-components-react/es/components/Button';
 import Close16 from "@carbon/icons-react/es/close/16";
 import { ImplementerToolsStore, implementerToolsStore } from "../store";
 
