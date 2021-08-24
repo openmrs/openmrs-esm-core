@@ -117,6 +117,7 @@ export async function syncOfflinePatientData(patientUuid: string) {
     handlers.map(async ([identifier, handler]) => {
       try {
         await handler.onOfflinePatientAdded({ patientUuid });
+        // eslint-disable-next-line no-console
         console.debug(
           `Offline patient handler ${identifier} successfully synchronized patient data.`
         );

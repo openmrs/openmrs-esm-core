@@ -66,9 +66,12 @@ function setupOpenMRS() {
     ],
     extensions: [
       {
-        id: 'offline-tools-link',
-        slot: 'app-menu-slot',
-        load: getAsyncLifecycle(() => import('./offline-tools-link.component'), options),
+        id: "offline-tools-link",
+        slot: "app-menu-slot",
+        load: getAsyncLifecycle(
+          () => import("./offline-tools-link.component"),
+          options
+        ),
         online: true,
         offline: true,
       },
