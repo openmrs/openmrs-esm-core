@@ -110,8 +110,6 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
 
   const filteredConfig = useMemo(() => {
     function getRelatedBranches(inputTree: Config, filterText: string) {
-      console.log(inputTree);
-      console.log(Object.keys(inputTree));
       const result = {};
       for (let k of Object.keys(inputTree)) {
         if (k.includes(filterText)) {
