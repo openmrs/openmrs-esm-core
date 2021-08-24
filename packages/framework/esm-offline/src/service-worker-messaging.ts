@@ -10,7 +10,14 @@ export async function messageOmrsServiceWorker(
   message: KnownOmrsServiceWorkerMessages
 ): Promise<MessageServiceWorkerResult<any>> {
   const sw = await getOmrsServiceWorker();
-  return await sw.messageSW(message);
+  return sw
+    ? await sw.messageSW(message)
+    : {
+        success: false,
+        result: undefined,
+        error:
+          "No service worker has been registered. This is typically the case when the application has been built without offline-related features.",
+      };
 }
 
 export interface OmrsServiceWorkerMessage<

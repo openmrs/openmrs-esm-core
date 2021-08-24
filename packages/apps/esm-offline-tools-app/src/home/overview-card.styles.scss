@@ -1,0 +1,17 @@
+@import "../root.scss";
+
+.overviewCard {
+  border: 1px solid $ui-03;
+
+  .headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .contentContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-05;
+  }
+}

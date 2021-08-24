@@ -1,29 +1,23 @@
 import { Workbox } from "workbox-window";
-import { BehaviorSubject } from "rxjs";
-import { filter } from "rxjs/operators";
 
-const omrsServiceWorkerSubject = new BehaviorSubject<Workbox | null>(null);
-const omrsServiceWorkerPromise = omrsServiceWorkerSubject
-  .asObservable()
-  .pipe(filter(((x) => !!x) as (x) => x is Workbox))
-  .toPromise();
+let workboxRegistration: Promise<Workbox> | undefined = undefined;
 
 /**
  * If not yet registered, registers the application's global Service Worker.
  * Throws if registration is not possible.
  * @param scriptURL The service worker script associated with this instance.
  * @param [registerOptions] The service worker options associated with this instance.
- * @returns The registered Service Worker.
+ * @returns A promise which resolves to the registered {@link Workbox} instance which manages the SW.
  */
 export function registerOmrsServiceWorker(
   scriptUrl: string,
   registerOptions?: object
 ) {
-  if (omrsServiceWorkerSubject.value) {
+  if (workboxRegistration !== undefined) {
     console.warn(
       `The application's Service Worker has already been registered. The new service worker at ${scriptUrl} will not be registered.`
     );
-    return omrsServiceWorkerSubject.value;
+    return workboxRegistration;
   }
 
   if (!("serviceWorker" in navigator)) {
@@ -32,20 +26,19 @@ export function registerOmrsServiceWorker(
     );
   }
 
-  const newServiceWorker = new Workbox(scriptUrl, registerOptions);
-  newServiceWorker.register();
-  omrsServiceWorkerSubject.next(newServiceWorker);
-  omrsServiceWorkerSubject.complete();
-  return newServiceWorker;
+  const wb = new Workbox(scriptUrl, registerOptions);
+  workboxRegistration = wb.register().then(() => wb);
+  return workboxRegistration;
 }
 
 /**
- * Returns a `Workbox` instance which allows interacting with the application's global Service Worker.
+ * If a service worker has been registered, returns a promise that resolves to a {@link Workbox}
+ * instance which is used by the application to manage that service worker.
  *
- * **Warning:** The promise may never resolve if the Service Worker is never registered (which
- * can, for example, happen when the browser is missing the required capabilities).
- * @returns A promise which will resolve once the application's Service Worker has been initialized.
+ * If no service worker has been registered (e.g. when the application is built without offline specific features),
+ * returns a promise which immediately resolves to `undefined`.
+ * @returns A promise which either resolves to `undefined` or to the app's {@link Workbox} instance.
  */
-export function getOmrsServiceWorker(): Promise<Workbox> {
-  return omrsServiceWorkerPromise;
+export function getOmrsServiceWorker(): Promise<Workbox | undefined> {
+  return workboxRegistration ?? Promise.resolve(undefined);
 }
