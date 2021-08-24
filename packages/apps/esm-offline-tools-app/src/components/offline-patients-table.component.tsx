@@ -11,10 +11,9 @@ import {
   TableHeader,
   TableRow,
 } from "carbon-components-react";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useOfflinePatientDataStore } from "../hooks/offline-patient-data-hooks";
-import { usePatientsQuery } from "../hooks/use-offline-patient-with-data-query";
 
 export interface OfflinePatientsTableProps {
   isInteractive: boolean;
