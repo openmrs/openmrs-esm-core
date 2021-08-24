@@ -2,13 +2,18 @@ import React from "react";
 import styles from "./styles.css";
 import { Portal } from "./portal";
 import { ExtensionOverlay } from "./extension-overlay.component";
-import { useExtensionStore } from "@openmrs/esm-framework";
+import { useExtensionStore, useStore } from "@openmrs/esm-framework";
+import Button from 'carbon-components-react/es/components/Button';
+import Close16 from "@carbon/icons-react/es/close/16";
+import { ImplementerToolsStore, implementerToolsStore } from "../store";
 
 export function UiEditor() {
   const { slots, extensions } = useExtensionStore();
+  const { isOpen: implementerToolsIsOpen } = useStore(implementerToolsStore);
 
   return (
     <>
+      {implementerToolsIsOpen ? null : <ExitButton />}
       {slots
         ? Object.entries(slots).map(([slotName, slotInfo]) =>
             Object.keys(slotInfo.instances).map((slotModuleName) => (
@@ -53,5 +58,27 @@ export function SlotOverlay({ slotName }) {
       <div className={styles.slotOverlay}></div>
       <div className={styles.slotName}>{slotName}</div>
     </>
+  );
+}
+
+const actions = {
+  toggleIsUIEditorEnabled({ isUIEditorEnabled }: ImplementerToolsStore) {
+    return { isUIEditorEnabled: !isUIEditorEnabled };
+  },
+};
+
+export function ExitButton() {
+  const { toggleIsUIEditorEnabled } = useStore(implementerToolsStore, actions);
+  return (
+    <Button
+      className={styles.exitButton}
+      kind="danger"
+      size="sm"
+      renderIcon={Close16}
+      iconDescription="Exit UI Editor"
+      tooltipPosition="left"
+      onClick={toggleIsUIEditorEnabled}
+      hasIconOnly
+    />
   );
 }
