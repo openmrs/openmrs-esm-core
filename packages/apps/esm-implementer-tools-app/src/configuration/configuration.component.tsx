@@ -25,7 +25,12 @@ import styles from "./configuration.styles.css";
 import { Description } from "./description.component";
 
 function isLeaf(configNode: Config) {
-  return configNode.hasOwnProperty("_default") || configNode["_type"] || configNode.hasOwnProperty("_value") || configNode.hasOwnProperty("_source");
+  return (
+    configNode.hasOwnProperty("_default") ||
+    configNode["_type"] ||
+    configNode.hasOwnProperty("_value") ||
+    configNode.hasOwnProperty("_source")
+  );
 }
 
 const actions = {
