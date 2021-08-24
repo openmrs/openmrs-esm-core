@@ -5,3 +5,4 @@ export * from "./events";
 export * from "./patches";
 export * from "./sync";
 export * from "./uuid";
+export * from "./offline-patient-data";

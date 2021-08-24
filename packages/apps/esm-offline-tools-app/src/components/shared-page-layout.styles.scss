@@ -1,0 +1,6 @@
+@import "../root.scss";
+
+.pageHeader {
+  @extend .productiveHeading03;
+  margin: 0 0 $spacing-05 $spacing-05;
+}
