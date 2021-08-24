@@ -25,11 +25,7 @@ import styles from "./configuration.styles.css";
 import { Description } from "./description.component";
 
 function isLeaf(configNode: Config) {
-  return (
-    typeof configNode == "object" &&
-    !Array.isArray(configNode) &&
-    (configNode["_default"] || configNode["_type"])
-  );
+  return configNode.hasOwnProperty("_default") || configNode["_type"] || configNode.hasOwnProperty("_value") || configNode.hasOwnProperty("_source");
 }
 
 const actions = {
@@ -109,6 +105,8 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
 
   const filteredConfig = useMemo(() => {
     function getRelatedBranches(inputTree: Config, filterText: string) {
+      console.log(inputTree);
+      console.log(Object.keys(inputTree));
       const result = {};
       for (let k of Object.keys(inputTree)) {
         if (k.includes(filterText)) {
@@ -138,7 +136,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               <Column sm={1} md={2}>
                 <TextInput
                   id="extensionSearch"
-                  labelText="Search extensions"
+                  labelText="Search configuration"
                   onChange={(e) => setFilterText(e.target.value)}
                 />
               </Column>
