@@ -3,7 +3,7 @@
 
 set -e  # die on error
 
-npx pretty-quick --staged
+yarn prettier
 npx lerna run lint
 npx lerna run test
 npx lerna run typescript
