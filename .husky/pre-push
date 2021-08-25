@@ -3,8 +3,6 @@
 
 set -e  # die on error
 
-yarn prettier
-npx lerna run lint
-npx lerna run test
-npx lerna run typescript
-npx lerna run document
+npx lerna run lint --since master
+npx lerna run test --since master
+npx lerna run typescript --since master

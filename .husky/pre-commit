@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+set -e  # die on error
+
+npx pretty-quick --staged
+npx lerna run document --since master
