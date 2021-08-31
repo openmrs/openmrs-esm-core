@@ -9,6 +9,7 @@
 - [attachedIds](ExtensionSlotInfo.md#attachedids)
 - [instances](ExtensionSlotInfo.md#instances)
 - [name](ExtensionSlotInfo.md#name)
+- [props](ExtensionSlotInfo.md#props)
 
 ## Properties
 
@@ -48,3 +49,13 @@ The name under which the extension slot has been registered.
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L63)
+
+___
+
+### props
+
+• `Optional` **props**: `string` \| `object`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L76)

@@ -68,7 +68,11 @@ export const registerExtension: (
   }
 );
 
-export function attach(extensionSlotName: string, extensionId: string) {
+export function attach(
+  extensionSlotName: string,
+  extensionId: string,
+  props?: Record<string, any>
+) {
   updateExtensionStore((state) => {
     const existingSlot = state.slots[extensionSlotName];
 
@@ -80,6 +84,7 @@ export function attach(extensionSlotName: string, extensionId: string) {
           [extensionSlotName]: {
             ...createNewExtensionSlotInfo(extensionSlotName),
             attachedIds: [extensionId],
+            props,
           },
         },
       };
@@ -91,6 +96,7 @@ export function attach(extensionSlotName: string, extensionId: string) {
           [extensionSlotName]: {
             ...existingSlot,
             attachedIds: [...existingSlot.attachedIds, extensionId],
+            props,
           },
         },
       };

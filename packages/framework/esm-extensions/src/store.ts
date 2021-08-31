@@ -72,6 +72,8 @@ export interface ExtensionSlotInfo {
    * `assignedIds` is the set defining those.
    */
   attachedIds: Array<string>;
+  /* The props to attached extensions */
+  props?: Record<string, any>;
 }
 
 export const extensionStore = createGlobalStore<ExtensionStore>("extensions", {
