@@ -14,7 +14,7 @@ export type OmrsOfflineHttpHeaders = {
    * to receive any kind of data for this request), the service worker will return a response with
    * the status code defined in this header.
    */
-  "x-omrs-offline-response-status": `${number}`;
+  "x-omrs-offline-response-status"?: `${number}`;
   /**
    * Instructs the service worker to use a specific caching strategy for this request.
    * The supported values are:
@@ -23,7 +23,7 @@ export type OmrsOfflineHttpHeaders = {
    *   The service worker decides the strategy to be used.
    * * `network-first`: The service worker will make the request and cache its response.
    */
-  "x-omrs-offline-caching-strategy": "default" | "network-first";
+  "x-omrs-offline-caching-strategy"?: "default" | "network-first";
 };
 
 export type OmrsOfflineHttpHeaderNames = keyof OmrsOfflineHttpHeaders;
