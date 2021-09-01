@@ -83,9 +83,8 @@ async function shouldUseNetworkFirst(options: RouteHandlerCallbackOptions) {
 async function handleWithNetworkOnlyAndCacheFallback(
   options: RouteHandlerCallbackOptions
 ) {
-  // Clone to avoid errors when calling request.text() later.
   const { request } = options;
-  const requestClone = await request.clone();
+  const requestClone = await request.clone(); // Clone to avoid errors when calling request.text() later.
 
   try {
     return await networkOnly.handle(options);
