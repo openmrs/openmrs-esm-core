@@ -61,13 +61,16 @@ async function defaultHandler(options: RouteHandlerCallbackOptions) {
   }
 }
 
-async function shouldUseNetworkFirst(options: RouteHandlerCallbackOptions) {
-  if (options.request.method !== "GET") {
+async function shouldUseNetworkFirst({
+  request,
+  url,
+}: RouteHandlerCallbackOptions) {
+  if (request.method !== "GET") {
     // TODO: Evaluate whether this should take precedence over the custom strategy header below.
     return false;
   }
 
-  if (hasOmrsNetworkFirstHeader(options.request.headers)) {
+  if (hasOmrsNetworkFirstHeader(request.headers)) {
     return true;
   }
 
@@ -75,7 +78,7 @@ async function shouldUseNetworkFirst(options: RouteHandlerCallbackOptions) {
   const allDynamicRouteRegistrations =
     await db.dynamicRouteRegistrations.toArray();
   const hasMatchingDynamicRoute = allDynamicRouteRegistrations.some((route) =>
-    new RegExp(route.pattern).test(options.url.href)
+    new RegExp(route.pattern).test(url.href)
   );
   return hasMatchingDynamicRoute;
 }
