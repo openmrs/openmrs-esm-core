@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[service-worker-messaging.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L44)
+[service-worker-messaging.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L51)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[service-worker-messaging.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L43)
+[service-worker-messaging.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L50)
 
 ___
 
@@ -44,4 +44,4 @@ ___
 
 #### Defined in
 
-[service-worker-messaging.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L42)
+[service-worker-messaging.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L49)
