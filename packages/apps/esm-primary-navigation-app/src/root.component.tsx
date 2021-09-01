@@ -3,8 +3,8 @@ import styles from "./root.scss";
 import Navbar from "./components/navbar/navbar.component";
 import { BrowserRouter, Redirect } from "react-router-dom";
 import { LoggedInUser, createErrorHandler } from "@openmrs/esm-framework";
-import { UserSession } from "./types";
 import { getCurrentSession, getSynchronizedCurrentUser } from "./root.resource";
+import { UserSession } from "./types";
 
 export interface RootProps {}
 

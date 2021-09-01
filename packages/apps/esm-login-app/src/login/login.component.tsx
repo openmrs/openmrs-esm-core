@@ -32,17 +32,19 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [t] = useTranslation();
+  const showPassword = location.pathname === "/login/confirm";
 
   useEffect(() => {
     if (user) {
-      history.push("/login/location", location ? location.state : undefined);
+      history.push("/login/location", location.state);
+    } else if (!username && location.pathname === "/login/confirm") {
+      history.replace("/login", location.state);
     }
-  }, [user, history, location]);
+  }, [user, username, history, location]);
 
   useEffect(() => {
     const field = showPassword
@@ -58,11 +60,11 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
     const field = usernameInputRef.current;
 
     if (field.value.length > 0) {
-      setShowPassword(true);
+      history.push("/login/confirm", location.state);
     } else {
       field.focus();
     }
-  }, []);
+  }, [history]);
 
   const changeUsername = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value),
@@ -99,7 +101,6 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
         }
       } catch (error) {
         setErrorMessage(error.message);
-        setShowPassword(false);
         resetUserNameAndPassword();
       }
 

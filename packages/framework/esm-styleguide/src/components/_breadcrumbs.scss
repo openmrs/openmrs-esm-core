@@ -1,3 +1,7 @@
 .breadcrumbs-container {
   padding: 1rem;
+
+  nav ol li {
+    display: inline-flex;
+  }
 }
