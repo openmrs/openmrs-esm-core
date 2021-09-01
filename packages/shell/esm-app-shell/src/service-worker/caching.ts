@@ -2,7 +2,7 @@
 import { ImportMap } from "@openmrs/esm-globals";
 import { retry } from "@openmrs/esm-utils";
 import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
-import { fetchUrlsToCacheFromImportMap } from "./importMapUtils";
+import { fetchUrlsToCacheFromImportMap } from "./import-map-utils";
 import { ServiceWorkerDb } from "./storage";
 
 /**

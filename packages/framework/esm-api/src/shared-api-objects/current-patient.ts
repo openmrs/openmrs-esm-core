@@ -20,9 +20,16 @@ export type PatientUuid = string | null;
 /**
  * @category API Object
  */
-export function fetchCurrentPatient(patientUuid: PatientUuid) {
+export function fetchCurrentPatient(
+  patientUuid: PatientUuid,
+  contentOverrides?: Partial<Parameters<typeof fhir.read>[0]>
+) {
   if (patientUuid) {
-    return fhir.read<fhir.Patient>({ type: "Patient", patient: patientUuid });
+    return fhir.read<fhir.Patient>({
+      type: "Patient",
+      patient: patientUuid,
+      ...contentOverrides,
+    });
   }
 
   return Promise.resolve(null);

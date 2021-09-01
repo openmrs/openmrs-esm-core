@@ -1,3 +1,5 @@
+import { FetchHeaders } from "../openmrs-fetch";
+
 /*
 Originally taken from https://github.com/FHIR/fhir.js/blob/ec82ccfc125e05dbb645f47c100fe60f2c34bb73/src/fhir.d.ts
 Has been adapted to be even better - if we can get fhir.js to publish a good version to npm with better typedefs,
@@ -122,6 +124,7 @@ declare function Read<T extends fhir.DomainResource>(content: {
   type: ResourceName;
   id?: string;
   patient?: string;
+  headers?: FetchHeaders;
 }): Promise<{ data: T }>;
 
 declare function Patch(content: {
