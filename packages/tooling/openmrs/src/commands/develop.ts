@@ -38,10 +38,10 @@ export function runDevelop(args: DevelopArgs) {
     `
     <script>
         initializeSpa({
-        apiUrl: ${JSON.stringify(apiUrl)},
-        spaPath: ${JSON.stringify(spaPath)},
-        env: "development",
-        configUrls: ${JSON.stringify(configUrls)},
+          apiUrl: ${JSON.stringify(apiUrl)},
+          spaPath: ${JSON.stringify(spaPath)},
+          env: "development",
+          configUrls: ${JSON.stringify(configUrls)},
         });
     </script>
   `

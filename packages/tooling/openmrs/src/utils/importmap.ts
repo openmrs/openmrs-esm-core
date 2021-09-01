@@ -1,3 +1,4 @@
+import { URL } from "url";
 import { basename, resolve } from "path";
 import { existsSync, readFileSync } from "fs";
 import { exec } from "child_process";
@@ -13,7 +14,19 @@ async function readImportmap(path: string) {
     return await axios
       .get(path)
       .then((res) => res.data)
-      .then((m) => (typeof m !== "string" ? JSON.stringify(m) : m));
+      .then((m) => (typeof m === "string" ? JSON.parse(m) : m))
+      .then((m) => {
+        if (typeof m === "object" && "imports" in m) {
+          Object.keys(m.imports).forEach((key) => {
+            const url = m.imports[key];
+
+            if (typeof url === "string") {
+              m.imports[key] = new URL(url, path).href;
+            }
+          });
+        }
+      })
+      .then((m) => JSON.stringify(m));
   } else if (path === "importmap.json") {
     const path = require.resolve(
       "@openmrs/esm-app-shell/src/assets/importmap.json"
