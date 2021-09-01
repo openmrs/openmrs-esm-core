@@ -16,6 +16,8 @@ export function useVisit(patientUuid: string) {
     const sub = getStartedVisit.subscribe((visit) => {
       if (visit) {
         setCurrentVisit(visit?.visitData ?? null);
+      } else {
+        setCurrentVisit(null);
       }
     });
 
@@ -27,9 +29,7 @@ export function useVisit(patientUuid: string) {
     const sub = getVisitsForPatient(patientUuid, abortController).subscribe(
       ({ data }) => {
         const currentVisit = data.results.find(
-          (visit) =>
-            dayjs(visit.startDatetime).format("DD-MM-YYYY") ===
-            dayjs(new Date()).format("DD-MM-YYYY")
+          (visit) => visit.stopDatetime === null
         );
 
         if (currentVisit) {
