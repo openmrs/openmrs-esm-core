@@ -1,4 +1,5 @@
 export * from "./service-worker";
+export * from "./service-worker-http-headers";
 export * from "./service-worker-messaging";
 export * from "./service-worker-events";
 export * from "./events";
