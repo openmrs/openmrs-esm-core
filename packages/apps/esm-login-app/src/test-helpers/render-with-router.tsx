@@ -1,5 +1,5 @@
 import React from "react";
-import { Router } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { render } from "@testing-library/react";
 
@@ -8,13 +8,19 @@ export default function renderWithRouter(
   props,
   {
     route = "/",
-    history = createMemoryHistory({ initialEntries: [route] }),
+    routes = [route],
+    history = createMemoryHistory({ initialEntries: routes }),
+    routeParams = {},
   } = {}
 ) {
   return {
     ...render(
       <Router history={history}>
-        {<Component {...props} history={history} />}
+        <Route
+          path={route}
+          {...routeParams}
+          component={(routeProps) => <Component {...routeProps} {...props} />}
+        />
       </Router>
     ),
     history,

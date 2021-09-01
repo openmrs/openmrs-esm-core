@@ -46,10 +46,17 @@ describe(`<Login />`, () => {
   });
 
   it(`should return user focus to username input when input is invalid`, () => {
-    const wrapper = renderWithRouter(Login, {
-      loginLocations: loginLocations,
-      isLoginEnabled: true,
-    });
+    const wrapper = renderWithRouter(
+      Login,
+      {
+        loginLocations: loginLocations,
+        isLoginEnabled: true,
+      },
+      {
+        route: "/login",
+        routes: ["/login", "/login/confirm"],
+      }
+    );
 
     expect(
       wrapper.getByRole("textbox", { name: /username/i })
@@ -70,10 +77,17 @@ describe(`<Login />`, () => {
   it(`makes an API request when you submit the form`, async () => {
     mockedLogin.mockReturnValue(Promise.resolve({ some: "data" }));
 
-    const wrapper = renderWithRouter(Login, {
-      loginLocations: loginLocations,
-      isLoginEnabled: true,
-    });
+    const wrapper = renderWithRouter(
+      Login,
+      {
+        loginLocations: loginLocations,
+        isLoginEnabled: true,
+      },
+      {
+        route: "/login",
+        routes: ["/login", "/login/confirm"],
+      }
+    );
 
     expect(performLogin).not.toHaveBeenCalled();
     userEvent.type(
@@ -101,10 +115,20 @@ describe(`<Login />`, () => {
       return user;
     });
 
-    const wrapper = renderWithRouter(Login, {
-      loginLocations: loginLocations,
-      isLoginEnabled: true,
-    });
+    const wrapper = renderWithRouter(
+      Login,
+      {
+        loginLocations: loginLocations,
+        isLoginEnabled: true,
+      },
+      {
+        routeParams: {
+          path: "/login(/confirm)?",
+          exact: true,
+        },
+        routes: ["/login", "/login/confirm"],
+      }
+    );
 
     userEvent.type(
       wrapper.getByRole("textbox", { name: /Username/i }),
