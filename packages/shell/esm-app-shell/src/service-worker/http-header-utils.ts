@@ -1,18 +1,23 @@
 import {
+  omrsOfflineCachingStrategyHttpHeaderName,
   OmrsOfflineHttpHeaderNames,
   OmrsOfflineHttpHeaders,
+  omrsOfflineResponseBodyHttpHeaderName,
+  omrsOfflineResponseStatusHttpHeaderName,
 } from "@openmrs/esm-offline";
 
 export function parseOmrsOfflineResponseBodyHeader(headers: Headers) {
   // The ?? undefined here is important as getOmrsHeader returns null by default when the header
   // is missing. undefined is different than null in this case since we want the body to be missing
   // if the header is not there (null is not missing).
-  return getOmrsHeader(headers, "x-omrs-offline-response-body") ?? undefined;
+  return (
+    getOmrsHeader(headers, omrsOfflineResponseBodyHttpHeaderName) ?? undefined
+  );
 }
 
 export function parseOmrsOfflineResponseStatusHeader(headers: Headers) {
   const status = +(
-    getOmrsHeader(headers, "x-omrs-offline-response-status") ?? ""
+    getOmrsHeader(headers, omrsOfflineResponseStatusHttpHeaderName) ?? ""
   );
 
   // The Response API requires the status to be in the 200-599 range and throws otherwise.
@@ -20,7 +25,10 @@ export function parseOmrsOfflineResponseStatusHeader(headers: Headers) {
 }
 
 export function hasOmrsNetworkFirstHeader(headers: Headers) {
-  const header = getOmrsHeader(headers, "x-omrs-offline-caching-strategy");
+  const header = getOmrsHeader(
+    headers,
+    omrsOfflineCachingStrategyHttpHeaderName
+  );
   return header === "network-first";
 }
 
