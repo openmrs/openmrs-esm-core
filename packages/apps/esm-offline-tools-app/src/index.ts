@@ -28,15 +28,6 @@ function setupOpenMRS() {
     moduleName,
   };
 
-  registerOfflinePatientHandler("esm-offline-tools-app-1", {
-    displayName: "Offline tools",
-    onOfflinePatientAdded() {
-      return Promise.resolve();
-      // return new Promise((res) => setTimeout(res, 100000));
-      // return Promise.reject("Offline Tools Handler failed. :(");
-    },
-  });
-
   registerBreadcrumbs([
     {
       path: `${window.spaBase}${routes.offlineTools}`,
