@@ -14,8 +14,10 @@ import {
   HeaderGlobalBar,
   HeaderGlobalAction,
 } from "carbon-components-react/es/components/UIShell";
-import Close20 from "@carbon/icons-react/lib/close/20";
-import Switcher20 from "@carbon/icons-react/lib/switcher/20";
+import { isDesktop } from "../../utils";
+import { UserSession } from "../../types";
+import Close20 from "@carbon/icons-react/es/close/20";
+import Switcher20 from "@carbon/icons-react/es/switcher/20";
 import UserAvatarFilledAlt20 from "@carbon/icons-react/es/user--avatar--filled--alt/20";
 import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
 import UserMenuPanel from "../navbar-header-panels/user-menu-panel.component";
@@ -23,8 +25,6 @@ import NotificationsMenuPanel from "../navbar-header-panels/notifications-menu-p
 import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
 import Logo from "../logo/logo.component";
 import styles from "./navbar.component.scss";
-import { isDesktop } from "../../utils";
-import { UserSession } from "../../types";
 import OfflineBanner from "../offline-banner/offline-banner.component";
 
 const HeaderLink: any = HeaderName;

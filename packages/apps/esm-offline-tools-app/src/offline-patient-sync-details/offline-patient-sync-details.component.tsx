@@ -2,12 +2,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { RouteComponentProps } from "react-router-dom";
 import { OfflinePatientDataSyncStore } from "@openmrs/esm-framework";
-import SharedPageLayout from "../components/shared-page-layout.component";
+import { Tile } from "carbon-components-react/es/components/Tile";
 import { useOfflinePatientDataStore } from "../hooks/offline-patient-data-hooks";
-import styles from "./offline-patient-sync-details.styles.scss";
-import { Tile } from "carbon-components-react/lib/components/Tile";
 import CheckmarkFilled16 from "@carbon/icons-react/es/checkmark--filled/16";
 import WarningFilled16 from "@carbon/icons-react/es/warning--filled/16";
+import styles from "./offline-patient-sync-details.styles.scss";
+import SharedPageLayout from "../components/shared-page-layout.component";
 
 interface OfflinePatientSyncDetailsProps extends RouteComponentProps {}
 

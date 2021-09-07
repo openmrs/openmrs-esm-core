@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import Close20 from "@carbon/icons-react/lib/close/20";
+import Close20 from "@carbon/icons-react/es/close/20";
 import Tools20 from "@carbon/icons-react/es/tools/20";
 import { HeaderGlobalAction } from "carbon-components-react/es/components/UIShell";
 import { UserHasAccess, useStore } from "@openmrs/esm-framework";

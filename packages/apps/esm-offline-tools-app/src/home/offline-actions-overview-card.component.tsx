@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import HeaderedQuickInfo from "./headered-quick-info.component";
 import OverviewCard from "./overview-card.component";
-import type { TileProps } from "carbon-components-react/lib/components/Tile/Tile";
+import type { TileProps } from "carbon-components-react";
 
 export interface OfflineActionsOverviewCardProps extends TileProps {}
 
