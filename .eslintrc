@@ -1,4 +1,5 @@
 {
   "extends": ["ts-react-important-stuff", "plugin:prettier/recommended"],
-  "parser": "@babel/eslint-parser"
+  "parser": "@babel/eslint-parser",
+  "ignorePatterns": ["**/*.test.tsx"]
 }
