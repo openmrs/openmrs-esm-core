@@ -28,6 +28,10 @@ jest.mock("@openmrs/esm-framework", () => ({
   }),
   refetchCurrentUser: jest.fn(),
   subscribeConnectivity: jest.fn(),
+  navigate: jest.fn(),
+  ConfigurableLink: jest.fn(() => {
+    return <a href="#">Mock EMR</a>;
+  }),
 }));
 
 jest.mock("./root.resource", () => ({

@@ -2,9 +2,9 @@ import React, { useCallback, useMemo, useState } from "react";
 import {
   LoggedInUser,
   useLayoutType,
-  navigate,
   ExtensionSlot,
   useAssignedExtensionIds,
+  ConfigurableLink,
 } from "@openmrs/esm-framework";
 import {
   HeaderContainer,
@@ -26,8 +26,6 @@ import styles from "./navbar.component.scss";
 import { isDesktop } from "../../utils";
 import { UserSession } from "../../types";
 import OfflineBanner from "../offline-banner/offline-banner.component";
-
-const HeaderLink: any = HeaderName;
 
 export interface NavbarProps {
   user: LoggedInUser;
@@ -85,15 +83,12 @@ const Navbar: React.FC<NavbarProps> = ({
               isActive={isActivePanel("sideMenu")}
             />
           )}
-          <HeaderLink
-            prefix=""
-            onClick={() => {
-              navigate({ to: "${openmrsSpaBase}/home" });
-              hidePanel();
-            }}
+          <ConfigurableLink
+            className="bx--header__name"
+            to="${openmrsSpaBase}/home"
           >
             <Logo />
-          </HeaderLink>
+          </ConfigurableLink>
           <ExtensionSlot
             className={styles.dividerOverride}
             extensionSlotName="top-nav-info-slot"
