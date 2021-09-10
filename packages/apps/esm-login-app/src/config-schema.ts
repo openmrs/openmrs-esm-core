@@ -1,6 +1,27 @@
 import { validators, Type } from "@openmrs/esm-framework";
 
 export const configSchema = {
+  provider: {
+    type: {
+      _type: Type.String,
+      _default: "basic",
+      _description:
+        "Selects the login mechanism to use. Choices are 'basic' and 'oauth2'. " +
+        "For 'oauth2' you'll also need to set the 'loginUrl' and 'logoutUrl'.",
+    },
+    loginUrl: {
+      _type: Type.String,
+      _default: "${openmrsSpaBase}/login",
+      _description: "The URL to use for an OAuth2 login.",
+      _validators: [validators.isUrl],
+    },
+    logoutUrl: {
+      _type: Type.String,
+      _default: "${openmrsSpaBase}/logout",
+      _description: "The URL to use for an OAuth2 logout.",
+      _validators: [validators.isUrl],
+    },
+  },
   chooseLocation: {
     enabled: {
       _type: Type.Boolean,
@@ -22,7 +43,6 @@ export const configSchema = {
         "Whether to show only locations with the 'Login Location' tag. If false, shows all locations.",
     },
   },
-
   links: {
     loginSuccess: {
       _type: Type.String,
