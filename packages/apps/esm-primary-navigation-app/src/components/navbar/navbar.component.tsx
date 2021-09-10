@@ -10,10 +10,9 @@ import {
   HeaderContainer,
   Header,
   HeaderMenuButton,
-  HeaderName,
   HeaderGlobalBar,
   HeaderGlobalAction,
-} from "carbon-components-react/es/components/UIShell";
+} from "carbon-components-react";
 import { isDesktop } from "../../utils";
 import { UserSession } from "../../types";
 import Close20 from "@carbon/icons-react/es/close/20";

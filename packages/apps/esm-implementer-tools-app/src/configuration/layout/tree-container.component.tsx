@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import {
   StructuredListBody,
   StructuredListWrapper,
-} from "carbon-components-react/es/components/StructuredList";
+} from "carbon-components-react";
 import styles from "./layout.styles.css";
 
 export interface TreeContainerProps {

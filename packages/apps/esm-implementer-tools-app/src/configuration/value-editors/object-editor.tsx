@@ -4,8 +4,8 @@ import {
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-} from "carbon-components-react/es/components/StructuredList";
-import { Tile } from "carbon-components-react/es/components/Tile";
+  Tile,
+} from "carbon-components-react";
 import { ValueEditorField } from "./value-editor-field";
 import { ConfigValueDescriptor } from "../editable-value.component";
 import { Type } from "@openmrs/esm-framework";

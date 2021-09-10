@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { openmrsFetch, refetchCurrentUser } from "@openmrs/esm-framework";
 import styles from "./logout.component.scss";
-import Button from "carbon-components-react/es/components/Button";
+import { openmrsFetch, refetchCurrentUser } from "@openmrs/esm-framework";
+import { Button } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 
 export interface LogoutProps {

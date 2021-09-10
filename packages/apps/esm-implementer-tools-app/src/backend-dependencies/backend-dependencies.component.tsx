@@ -1,6 +1,7 @@
 import React, { Fragment, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import DataTable, {
+import {
+  DataTable,
   Table,
   TableHead,
   TableRow,
@@ -8,7 +9,7 @@ import DataTable, {
   TableBody,
   TableCell,
   TableContainer,
-} from "carbon-components-react/es/components/DataTable";
+} from "carbon-components-react";
 import { FrontendModule } from "./openmrs-backend-dependencies";
 
 export interface ModuleDiagnosticsProps {

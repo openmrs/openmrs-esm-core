@@ -1,7 +1,7 @@
 import React from "react";
-import { ExtensionSlot, useOnClickOutside } from "@openmrs/esm-framework";
-import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
 import styles from "./app-menu-panel.component.scss";
+import { ExtensionSlot, useOnClickOutside } from "@openmrs/esm-framework";
+import { HeaderPanel } from "carbon-components-react";
 
 interface AppMenuProps {
   expanded: boolean;

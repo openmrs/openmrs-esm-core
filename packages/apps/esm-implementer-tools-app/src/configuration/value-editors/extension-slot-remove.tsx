@@ -1,5 +1,5 @@
 import React from "react";
-import MultiSelect from "carbon-components-react/es/components/MultiSelect";
+import { MultiSelect } from "carbon-components-react";
 import {
   ExtensionStore,
   getAssignedIds,

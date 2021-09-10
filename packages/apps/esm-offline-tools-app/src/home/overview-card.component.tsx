@@ -1,10 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import { Tile } from "carbon-components-react/es/components/Tile";
-import type { TileProps } from "carbon-components-react";
+import { Tile, Button, TileProps } from "carbon-components-react";
 import styles from "./overview-card.styles.scss";
-import Button from "carbon-components-react/es/components/Button";
 import ArrowRight16 from "@carbon/icons-react/es/arrow--right/16";
 
 export interface OverviewCardProps extends TileProps {

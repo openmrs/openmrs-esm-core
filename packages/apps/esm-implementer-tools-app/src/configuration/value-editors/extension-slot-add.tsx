@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MultiSelect from "carbon-components-react/es/components/MultiSelect";
+import { MultiSelect } from "carbon-components-react";
 import { ExtensionStore, extensionStore } from "@openmrs/esm-framework";
 
 export function ExtensionSlotAdd({ value, setValue }) {

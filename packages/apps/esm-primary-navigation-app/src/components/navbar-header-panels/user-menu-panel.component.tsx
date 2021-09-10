@@ -1,13 +1,12 @@
 import React from "react";
+import styles from "../../root.scss";
 import {
   ExtensionSlot,
   LoggedInUser,
   useOnClickOutside,
 } from "@openmrs/esm-framework";
-import { HeaderPanel } from "carbon-components-react/es/components/UIShell";
-import { HeaderPanelProps } from "carbon-components-react";
+import { HeaderPanel, HeaderPanelProps } from "carbon-components-react";
 import { UserSession } from "../../types";
-import styles from "../../root.scss";
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   user: LoggedInUser;

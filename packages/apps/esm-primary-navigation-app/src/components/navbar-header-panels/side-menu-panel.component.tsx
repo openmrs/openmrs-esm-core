@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { ExtensionSlot } from "@openmrs/esm-framework";
-import type { SideNavProps } from "carbon-components-react";
-import { SideNav } from "carbon-components-react/es/components/UIShell";
 import styles from "./side-menu-panel.component.scss";
+import { ExtensionSlot } from "@openmrs/esm-framework";
+import { SideNav, SideNavProps } from "carbon-components-react";
 
 interface SideMenuPanelProps extends SideNavProps {
   hidePanel: () => void;

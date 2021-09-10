@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import uniqueId from "lodash-es/uniqueId";
-import Checkbox from "carbon-components-react/es/components/Checkbox";
-import NumberInput from "carbon-components-react/es/components/NumberInput";
-import TextInput from "carbon-components-react/es/components/TextInput";
+import { Checkbox } from "carbon-components-react";
+import { NumberInput } from "carbon-components-react";
+import { TextInput } from "carbon-components-react";
 import { Type } from "@openmrs/esm-framework";
 import { ConfigValueDescriptor } from "../editable-value.component";
 import { ValueType } from "../value-editor";

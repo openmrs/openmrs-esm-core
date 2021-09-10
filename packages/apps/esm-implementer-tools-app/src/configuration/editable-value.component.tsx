@@ -3,8 +3,8 @@ import isEqual from "lodash-es/isEqual";
 import unset from "lodash-es/unset";
 import cloneDeep from "lodash-es/cloneDeep";
 import Reset16 from "@carbon/icons-react/es/reset/16";
-import Button from "carbon-components-react/es/components/Button";
 import styles from "./editable-value.styles.css";
+import { Button } from "carbon-components-react";
 import {
   ConfigValue,
   Validator,

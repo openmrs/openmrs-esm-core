@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styles from "../styles.scss";
 import ArrowRight24 from "@carbon/icons-react/es/arrow--right/24";
-import Button from "carbon-components-react/es/components/Button";
-import TextInput from "carbon-components-react/es/components/TextInput";
+import { Button, TextInput } from "carbon-components-react";
 import { RouteComponentProps } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useConfig } from "@openmrs/esm-framework";

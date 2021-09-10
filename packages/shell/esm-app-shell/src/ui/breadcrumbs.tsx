@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-} from "carbon-components-react/es/components/Breadcrumb";
+import { Breadcrumb, BreadcrumbItem } from "carbon-components-react";
 import { getBreadcrumbsFor, ConfigurableLink } from "@openmrs/esm-framework";
 
 function getPath(path: string, params: Array<string>) {
