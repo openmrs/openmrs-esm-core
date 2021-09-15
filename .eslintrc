@@ -14,14 +14,16 @@
           {
             "name": "lodash-es",
             "message": "Import specific methods from `lodash-es`. e.g. `import map from 'lodash-es/map'`"
+          }
+        ],
+        "patterns": [
+          {
+            "group": ["carbon-components-react/lib/*"],
+            "message": "Import from `carbon-components-react`. e.g. `import { Toggle } from 'carbon-components-react'`"
           },
           {
-            "name": "carbon-components-react",
-            "message": "Import from packages within `carbon-components-react/es/components/`. e.g. `import Toggle from 'carbon-components-react/es/components/Toggle'`"
-          },
-          {
-            "name": "@carbon/icons-react",
-            "message": "Import from packages within `@carbon/icons-react/es`. e.g. `import ChevronUp16 from '@carbon/icons-react/es/chevron--up/16'`"
+            "group": ["@carbon/icons-react/lib/*"],
+            "message": "Import from `@carbon/icons-react/es`. e.g. `import ChevronUp16 from '@carbon/icons-react/es/chevron--up/16'`"
           }
         ]
       }
