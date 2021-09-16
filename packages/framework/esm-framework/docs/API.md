@@ -4046,7 +4046,7 @@ ___
 
 ### useOnClickOutside
 
-▸ **useOnClickOutside**<`T`\>(`handler`, `active?`): `MutableRefObject`<`undefined` \| `T`\>
+▸ **useOnClickOutside**<`T`\>(`handler`, `active?`): `RefObject`<`T`\>
 
 #### Type parameters
 
@@ -4063,7 +4063,7 @@ ___
 
 #### Returns
 
-`MutableRefObject`<`undefined` \| `T`\>
+`RefObject`<`T`\>
 
 #### Defined in
 
