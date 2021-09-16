@@ -33,10 +33,13 @@ function setupOpenMRS() {
   setupOffline();
   setupSynchronizingOfflineActionsNotifications();
 
-  setupOfflineSync("test", [], (...args) => {
-    console.log("Handler called.", args);
-    return Promise.reject("An error occured.");
-    // return new Promise((res) => setTimeout(res, 3000));
+  setupOfflineSync("test", [], async (...args) => {
+    await new Promise((res) => setTimeout(res, 500));
+    throw new Error("Server did not respond.");
+  });
+
+  setupOfflineSync("test", [], async (...args) => {
+    await new Promise((res) => setTimeout(res, 500));
   });
 
   registerBreadcrumbs([

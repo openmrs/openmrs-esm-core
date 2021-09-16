@@ -18,6 +18,7 @@ import {
   usePendingSyncItems,
   useSyncItemPatients,
 } from "../hooks/offline-actions";
+import NoActionsEmptyState from "./no-actions-empty-state.component";
 
 export interface OfflineActionsProps {
   canSynchronizeOfflineActions: boolean;
@@ -29,13 +30,9 @@ const OfflineActions: React.FC<OfflineActionsProps> = ({
   const { t } = useTranslation();
   const layout = useLayoutType();
   const syncStore = useStore(getOfflineSynchronizationStore());
-  const {
-    data: syncItems,
-    isValidating: isValidatingSyncItems,
-    mutate,
-  } = usePendingSyncItems();
-  const { data: syncItemPatients, isValidating: isValidatingSyncItemPatients } =
-    useSyncItemPatients(syncItems);
+  const { data: syncItems, mutate } = usePendingSyncItems();
+  const { data: syncItemPatients } = useSyncItemPatients(syncItems);
+  const isLoading = !syncItems || !syncItemPatients;
   const isSynchronizing = !!syncStore.synchronization;
 
   const synchronize = () => runSynchronization().finally(() => mutate());
@@ -75,13 +72,17 @@ const OfflineActions: React.FC<OfflineActionsProps> = ({
       <div className={styles.contentContainer}>
         <Tabs type="container">
           <Tab label={t("offineActionsPendingTab", "Pending")}>
-            <OfflineActionsTable
-              isLoading={isValidatingSyncItems || isValidatingSyncItemPatients}
-              data={getSyncItemsWithPatient(syncItems, syncItemPatients)}
-              disableEditing={isSynchronizing}
-              disableDelete={false}
-              onDelete={deleteSynchronizationItems}
-            />
+            {isLoading || syncItems?.length > 0 ? (
+              <OfflineActionsTable
+                isLoading={isLoading}
+                data={getSyncItemsWithPatient(syncItems, syncItemPatients)}
+                disableEditing={isSynchronizing}
+                disableDelete={false}
+                onDelete={deleteSynchronizationItems}
+              />
+            ) : (
+              <NoActionsEmptyState />
+            )}
           </Tab>
           <Tab label={t("offlineActionsUploadedTab", "Uploaded")}></Tab>
         </Tabs>
