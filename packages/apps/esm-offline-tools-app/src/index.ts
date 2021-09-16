@@ -66,7 +66,7 @@ function setupOpenMRS() {
     pages: [
       {
         load: getAsyncLifecycle(() => import("./root.component"), options),
-        route: /offline-tools.*/,
+        route: "offline-tools",
         online: {
           canSynchronizeOfflineActions: true,
         },

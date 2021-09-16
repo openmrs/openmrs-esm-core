@@ -20,9 +20,9 @@ export function setupSynchronizingOfflineActionsNotifications() {
       isNew = false;
       showNotification({
         description: <SynchronizingNotification />,
-        action: (
-          <NotificationActionButton>Cancel upload</NotificationActionButton>
-        ),
+        // action: (
+        //   <NotificationActionButton>Cancel upload</NotificationActionButton>
+        // ),
       });
     }
   };
