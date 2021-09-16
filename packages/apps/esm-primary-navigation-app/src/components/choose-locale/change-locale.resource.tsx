@@ -39,6 +39,9 @@ export function postUserPropertiesOffline(
   return queueSynchronizationItemFor(
     userUuid,
     userPropertyChange,
-    userProperties
+    userProperties,
+    {
+      displayName: "User Language Change",
+    }
   );
 }

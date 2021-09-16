@@ -14,6 +14,11 @@ const links = [
     translationKey: "navLinkPatients",
     translationDefaultValue: "Patients",
   },
+  {
+    to: routes.offlineToolsActions,
+    translationKey: "navLinkActions",
+    translationDefaultValue: "Actions",
+  },
 ];
 
 const OfflineToolsNavMenu: React.FC = () => {

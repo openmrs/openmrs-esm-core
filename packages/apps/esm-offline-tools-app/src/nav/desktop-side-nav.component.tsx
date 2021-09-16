@@ -4,8 +4,8 @@ import {
   ExtensionSlot,
   useLayoutType,
 } from "@openmrs/esm-framework";
+import { SideNav } from "carbon-components-react";
 import React, { useEffect } from "react";
-import { SideNav } from "carbon-components-react/es/components/UIShell";
 import styles from "./desktop-side-nav.styles.scss";
 
 const DesktopSideNav: React.FC = () => {

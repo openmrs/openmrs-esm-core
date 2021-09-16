@@ -1,6 +1,15 @@
 @import "../root.scss";
 
-.pageHeader {
-  @extend .productiveHeading03;
-  margin: 0 0 $spacing-05 $spacing-05;
+.pageHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 $spacing-05 $spacing-05 $spacing-05;
+
+  .pageHeader {
+    @extend .productiveHeading03;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }

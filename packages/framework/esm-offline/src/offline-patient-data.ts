@@ -39,6 +39,12 @@ export interface OfflinePatientDataSyncState {
    * A set of error messages associated with the identifers of the failed handlers.
    */
   readonly errors: Record<string, string>;
+  /**
+   * Aborts the process of downloading data.
+   * @returns `true` if the cancellation could be triggered (that is, if there were any syncing handlers);
+   *   `false` if not.
+   */
+  abort(): boolean;
 }
 
 export interface OfflinePatientDataSyncHandler {
@@ -62,9 +68,12 @@ export interface OfflinePatientArgs {
    * The UUID of the patient that should be made available offline.
    */
   patientUuid: string;
+  /**
+   * An {@link AbortSignal} which notifies about the cancellation of the operation.
+   */
+  signal: AbortSignal;
 }
 
-const storeName = "offline-patients";
 const store = createGlobalStore<OfflinePatientDataSyncStore>(
   "offline-patients",
   {
@@ -101,22 +110,31 @@ export function registerOfflinePatientHandler(
  */
 export async function syncOfflinePatientData(patientUuid: string) {
   const handlers = Object.entries(store.getState().handlers);
+  const handlerIdentifiers = handlers.map(([identifier]) => identifier);
   const syncedHandlers: Array<string> = [];
   const failedHandlers: Array<string> = [];
   const errors = {};
+  const abortController = new AbortController();
 
   await setPatientDataSyncState(patientUuid, {
     timestamp: new Date(),
-    syncingHandlers: handlers.map(([identifier]) => identifier),
+    syncingHandlers: handlerIdentifiers,
     syncedHandlers,
     failedHandlers,
     errors,
+    abort: () => {
+      abortController.abort();
+      return true;
+    },
   });
 
   await Promise.all(
     handlers.map(async ([identifier, handler]) => {
       try {
-        await handler.onOfflinePatientAdded({ patientUuid });
+        await handler.onOfflinePatientAdded({
+          patientUuid,
+          signal: abortController.signal,
+        });
         // eslint-disable-next-line no-console
         console.debug(
           `Offline patient handler ${identifier} successfully synchronized patient data.`
@@ -141,6 +159,7 @@ export async function syncOfflinePatientData(patientUuid: string) {
     syncedHandlers,
     failedHandlers,
     errors,
+    abort: () => false,
   });
 }
 
@@ -186,6 +205,7 @@ export async function loadPersistedPatientDataSyncState() {
     nextState[entry.patientUuid] = {
       ...entry.state,
       syncingHandlers: [],
+      abort: () => false,
     };
   }
 
@@ -209,8 +229,8 @@ class OfflinePatientDataDb extends Dexie {
 }
 
 type PersistedOfflinePatientDataSyncState = Omit<
-  OfflinePatientDataSyncState,
-  "syncingHandlers"
+  Omit<OfflinePatientDataSyncState, "syncingHandlers">,
+  "abort"
 >;
 
 interface OfflinePatientDataSyncStateEntry {

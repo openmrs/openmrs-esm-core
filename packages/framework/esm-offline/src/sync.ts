@@ -1,20 +1,28 @@
 import Dexie, { Table } from "dexie";
-import { showNotification } from "@openmrs/esm-styleguide";
 import { getLoggedInUser } from "@openmrs/esm-api";
+import { createGlobalStore } from "@openmrs/esm-state";
 
-interface SyncItem {
+export interface SyncItem {
+  id?: number;
   userId: string;
   type: string;
   content: any;
-  descriptor: Partial<QueueItemDescriptor>;
+  createdOn: Date;
+  descriptor: QueueItemDescriptor;
+  lastError?: {
+    name?: string;
+    message?: string;
+  };
 }
 
 export interface QueueItemDescriptor {
-  id: string;
-  dependencies: Array<{
+  id?: string;
+  dependencies?: Array<{
     id: string;
     type: string;
   }>;
+  patientUuid?: string;
+  displayName?: string;
 }
 
 interface SyncResultBag {
@@ -33,8 +41,8 @@ class OfflineDb extends Dexie {
   constructor() {
     super("EsmOffline");
 
-    this.version(1).stores({
-      syncQueue: "++id, [userId+type]",
+    this.version(3).stores({
+      syncQueue: "++id,userId,type,[userId+type]",
     });
 
     this.syncQueue = this.table("syncQueue");
@@ -44,29 +52,67 @@ class OfflineDb extends Dexie {
 const db = new OfflineDb();
 const handlers: Record<string, SyncHandler> = {};
 
-function runSynchronization(abort: AbortController) {
+export function getOfflineDb() {
+  return db;
+}
+
+export interface OfflineSynchronizationStore {
+  synchronization?: {
+    total: number;
+    pending: number;
+    synchronized: number;
+  };
+}
+
+const syncStore = createGlobalStore<OfflineSynchronizationStore>(
+  "offline-synchronization",
+  {}
+);
+
+export function getOfflineSynchronizationStore() {
+  return syncStore;
+}
+
+export async function runSynchronization(
+  abort: AbortController = new AbortController()
+) {
+  if (syncStore.getState().synchronization) {
+    return;
+  }
+
   const promises: Record<string, Promise<void>> = {};
   const queue = Object.entries(handlers);
   const maxIter = queue.length;
   const results: SyncResultBag = {};
 
-  // we try until the queue is depleted, but no more than queue.length tries.
-  for (let iter = 0; iter < maxIter && queue.length > 0; iter++) {
-    for (let i = queue.length; i--; ) {
-      const [name, handler] = queue[i];
-      const deps = handler.dependsOn.map((dep) => promises[dep]);
+  try {
+    syncStore.setState({
+      synchronization: {
+        total: -1,
+        pending: -1,
+        synchronized: -1,
+      },
+    });
 
-      if (deps.every(Boolean)) {
-        results[name] = {};
-        promises[name] = Promise.all(deps).then(() =>
-          handler.handle(results, abort)
-        );
-        queue.splice(i, 1);
+    // we try until the queue is depleted, but no more than queue.length tries.
+    for (let iter = 0; iter < maxIter && queue.length > 0; iter++) {
+      for (let i = queue.length; i--; ) {
+        const [name, handler] = queue[i];
+        const deps = handler.dependsOn.map((dep) => promises[dep]);
+
+        if (deps.every(Boolean)) {
+          results[name] = {};
+          await Promise.all(deps);
+          promises[name] = handler.handle(results, abort);
+          queue.splice(i, 1);
+        }
       }
     }
-  }
 
-  return Promise.allSettled(Object.values(promises));
+    await Promise.allSettled(Object.values(promises));
+  } finally {
+    syncStore.setState({ synchronization: undefined });
+  }
 }
 
 async function getUserId() {
@@ -96,6 +142,7 @@ export async function queueSynchronizationItemFor<T>(
     content,
     userId,
     descriptor: descriptor || {},
+    createdOn: new Date(),
   });
 
   return id;
@@ -129,31 +176,6 @@ export async function getSynchronizationItems<T>(type: string) {
   return await getSynchronizationItemsFor<T>(userId, type);
 }
 
-export async function triggerSynchronization(abort: AbortController) {
-  const activeHandlers = await Promise.all(
-    Object.keys(handlers).map((name) => handlers[name].canHandle())
-  );
-  const canSync = activeHandlers.some((active) => active);
-
-  if (canSync) {
-    showNotification({
-      title: "Synchronizing Offline Changes",
-      description:
-        "Synchronizing the changes you have made offline. This may take a while...",
-      kind: "info",
-    });
-
-    await runSynchronization(abort);
-
-    showNotification({
-      title: "Offline Synchronization Finished",
-      description:
-        "Finished synchronizing the changes you have made while offline.",
-      kind: "success",
-    });
-  }
-}
-
 export interface SyncProcessOptions<T> {
   abort: AbortController;
   userId: string;
@@ -177,7 +199,7 @@ export function setupOfflineSync<T>(
       return len > 0;
     },
     handle: async (results, abort) => {
-      const items: Array<[number, T, Partial<QueueItemDescriptor>]> = [];
+      const items: Array<[number, T, QueueItemDescriptor]> = [];
       const contents: Array<T> = [];
       const userId = await getUserId();
 
@@ -205,8 +227,13 @@ export function setupOfflineSync<T>(
           }
 
           await table.delete(key);
-        } catch {
-          //TODO handle failure case
+        } catch (e) {
+          await table.update(key, {
+            lastError: {
+              name: e?.name,
+              message: e?.message ?? e?.toString(),
+            },
+          });
         }
       }
     },

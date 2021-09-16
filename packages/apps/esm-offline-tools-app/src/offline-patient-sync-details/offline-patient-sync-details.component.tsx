@@ -2,7 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { RouteComponentProps } from "react-router-dom";
 import { OfflinePatientDataSyncStore } from "@openmrs/esm-framework";
-import { Tile } from "carbon-components-react/es/components/Tile";
+import { Tile } from "carbon-components-react";
 import { useOfflinePatientDataStore } from "../hooks/offline-patient-data-hooks";
 import CheckmarkFilled16 from "@carbon/icons-react/es/checkmark--filled/16";
 import WarningFilled16 from "@carbon/icons-react/es/warning--filled/16";

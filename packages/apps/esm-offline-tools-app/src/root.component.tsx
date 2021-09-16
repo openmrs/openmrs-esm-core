@@ -6,6 +6,7 @@ import DesktopSideNav from "./nav/desktop-side-nav.component";
 import OfflinePatients from "./offline-patients/offline-patients.component";
 import styles from "./root.styles.scss";
 import OfflinePatientSyncDetails from "./offline-patient-sync-details/offline-patient-sync-details.component";
+import OfflineActions from "./offline-actions/offline-actions.component";
 
 const Root: React.FC = () => {
   useEffect(() => {
@@ -15,7 +16,7 @@ const Root: React.FC = () => {
   return (
     <BrowserRouter basename={window.spaBase}>
       <DesktopSideNav />
-      <div className={"omrs-main-content " + styles.mainContentContainer}>
+      <div className={`omrs-main-content ${styles.mainContentContainer}`}>
         <Route exact path="/offline-tools" component={Home} />
         <Route
           exact
@@ -27,6 +28,7 @@ const Root: React.FC = () => {
           path="/offline-tools/patients/:patientUuid/offline-data"
           component={OfflinePatientSyncDetails}
         />
+        <Route exact path="/offline-tools/actions" component={OfflineActions} />
       </div>
     </BrowserRouter>
   );
