@@ -20,7 +20,6 @@
 - [redirected](LoggedInUserFetchResponse.md#redirected)
 - [status](LoggedInUserFetchResponse.md#status)
 - [statusText](LoggedInUserFetchResponse.md#statustext)
-- [trailer](LoggedInUserFetchResponse.md#trailer)
 - [type](LoggedInUserFetchResponse.md#type)
 - [url](LoggedInUserFetchResponse.md#url)
 
@@ -45,7 +44,7 @@
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2583
+node_modules/typescript/lib/lib.dom.d.ts:2444
 
 ___
 
@@ -59,13 +58,13 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2584
+node_modules/typescript/lib/lib.dom.d.ts:2445
 
 ___
 
 ### data
 
-• **data**: [`UnauthenticatedUser`](UnauthenticatedUser.md) & { `user?`: [`LoggedInUser`](LoggedInUser.md)  }
+• **data**: [`LoggedInUserData`](../API.md#loggedinuserdata)
 
 #### Overrides
 
@@ -73,7 +72,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L8)
+[packages/framework/esm-api/src/types/fetch.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L12)
 
 ___
 
@@ -87,7 +86,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12550
+node_modules/typescript/lib/lib.dom.d.ts:12143
 
 ___
 
@@ -101,7 +100,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12551
+node_modules/typescript/lib/lib.dom.d.ts:12144
 
 ___
 
@@ -115,7 +114,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12552
+node_modules/typescript/lib/lib.dom.d.ts:12145
 
 ___
 
@@ -129,7 +128,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12553
+node_modules/typescript/lib/lib.dom.d.ts:12146
 
 ___
 
@@ -143,21 +142,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12554
-
-___
-
-### trailer
-
-• `Readonly` **trailer**: `Promise`<`Headers`\>
-
-#### Inherited from
-
-[FetchResponse](FetchResponse.md).[trailer](FetchResponse.md#trailer)
-
-#### Defined in
-
-node_modules/typescript/lib/lib.dom.d.ts:12555
+node_modules/typescript/lib/lib.dom.d.ts:12147
 
 ___
 
@@ -171,7 +156,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12556
+node_modules/typescript/lib/lib.dom.d.ts:12148
 
 ___
 
@@ -185,7 +170,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12557
+node_modules/typescript/lib/lib.dom.d.ts:12149
 
 ## Methods
 
@@ -203,7 +188,7 @@ node_modules/typescript/lib/lib.dom.d.ts:12557
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2585
+node_modules/typescript/lib/lib.dom.d.ts:2446
 
 ___
 
@@ -221,7 +206,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2586
+node_modules/typescript/lib/lib.dom.d.ts:2447
 
 ___
 
@@ -239,7 +224,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12558
+node_modules/typescript/lib/lib.dom.d.ts:12150
 
 ___
 
@@ -257,7 +242,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2587
+node_modules/typescript/lib/lib.dom.d.ts:2448
 
 ___
 
@@ -275,7 +260,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2588
+node_modules/typescript/lib/lib.dom.d.ts:2449
 
 ___
 
@@ -293,4 +278,4 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2589
+node_modules/typescript/lib/lib.dom.d.ts:2450

@@ -46,6 +46,7 @@
 ### Type aliases
 
 - [CurrentPatient](API.md#currentpatient)
+- [LoggedInUserData](API.md#loggedinuserdata)
 - [PatientUuid](API.md#patientuuid)
 - [UpdateVisitPayload](API.md#updatevisitpayload)
 
@@ -101,6 +102,16 @@
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-patient.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L4)
+
+___
+
+### LoggedInUserData
+
+Ƭ **LoggedInUserData**: [`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md) & { `user?`: [`LoggedInUser`](interfaces/LoggedInUser.md)  }
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L7)
 
 ___
 
@@ -310,13 +321,14 @@ ___
 
 ### fetchCurrentPatient
 
-▸ **fetchCurrentPatient**(`patientUuid`): `Promise`<`Object`\> \| `Promise`<``null``\>
+▸ **fetchCurrentPatient**(`patientUuid`, `contentOverrides?`): `Promise`<`Object`\> \| `Promise`<``null``\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
+| `contentOverrides?` | `Partial`<`Parameters`<typeof `fhir.read`\>[``0``]\> |
 
 #### Returns
 
@@ -427,7 +439,7 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L118)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L116)
 
 ___
 
@@ -457,7 +469,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L127)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L134)
 
 ___
 
@@ -471,7 +483,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L136)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L143)
 
 ___
 
@@ -590,7 +602,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:148](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L148)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:155](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L155)
 
 ___
 
@@ -673,7 +685,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L123)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L130)
 
 ___
 

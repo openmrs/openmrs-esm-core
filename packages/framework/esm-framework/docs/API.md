@@ -115,6 +115,7 @@
 - [KnownOmrsServiceWorkerEvents](API.md#knownomrsserviceworkerevents)
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
 - [LayoutType](API.md#layouttype)
+- [LoggedInUserData](API.md#loggedinuserdata)
 - [MaybeAsync](API.md#maybeasync)
 - [NavigationContextType](API.md#navigationcontexttype)
 - [OmrsOfflineHttpHeaderNames](API.md#omrsofflinehttpheadernames)
@@ -419,6 +420,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useLayoutType.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLayoutType.ts#L3)
+
+___
+
+### LoggedInUserData
+
+Ƭ **LoggedInUserData**: [`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md) & { `user?`: [`LoggedInUser`](interfaces/LoggedInUser.md)  }
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L7)
 
 ___
 
@@ -1035,7 +1046,7 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L118)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L116)
 
 ___
 
@@ -2016,7 +2027,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L127)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L134)
 
 ___
 
@@ -2066,7 +2077,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L136)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L143)
 
 ___
 
@@ -2959,7 +2970,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:148](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L148)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:155](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L155)
 
 ___
 
@@ -4246,7 +4257,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L123)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L130)
 
 ___
 

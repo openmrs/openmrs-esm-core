@@ -64,7 +64,7 @@ ___
 
 ### data
 
-• **data**: [`UnauthenticatedUser`](UnauthenticatedUser.md) & { `user?`: [`LoggedInUser`](LoggedInUser.md)  }
+• **data**: [`LoggedInUserData`](../API.md#loggedinuserdata)
 
 #### Overrides
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L8)
+[packages/framework/esm-api/src/types/fetch.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L12)
 
 ___
 
