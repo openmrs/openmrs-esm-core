@@ -50,6 +50,7 @@ function setupOpenMRS() {
       {
         id: "default-user-panel",
         slot: "user-panel-slot",
+        order: 2,
         load: getAsyncLifecycle(
           () =>
             import(
@@ -57,16 +58,13 @@ function setupOpenMRS() {
             ),
           options
         ),
-        online: {
-          isLogoutEnabled: true,
-        },
-        offline: {
-          isLogoutEnabled: false,
-        },
+        online: true,
+        offline: true,
       },
       {
         id: "change-locale",
         slot: "user-panel-slot",
+        order: 0,
         load: getAsyncLifecycle(
           () => import("./components/choose-locale/change-locale.component"),
           options

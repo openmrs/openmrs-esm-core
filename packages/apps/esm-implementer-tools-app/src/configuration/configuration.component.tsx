@@ -12,10 +12,14 @@ import {
   useExtensionStore,
   useStore,
 } from "@openmrs/esm-framework";
-import { Button } from "carbon-components-react";
-import { Column, Grid, Row } from "carbon-components-react";
-import { TextInput } from "carbon-components-react";
-import { Toggle } from "carbon-components-react";
+import {
+  Button,
+  Column,
+  Grid,
+  Row,
+  TextInput,
+  Toggle,
+} from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
 import { ConfigTree } from "./config-tree.component";

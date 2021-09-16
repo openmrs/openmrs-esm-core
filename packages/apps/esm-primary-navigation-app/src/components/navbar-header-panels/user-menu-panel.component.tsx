@@ -28,7 +28,7 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
 
   return (
     <HeaderPanel
-      ref={userMenuRef}
+      ref={userMenuRef as any}
       className={styles.headerPanel}
       expanded={expanded}
       aria-label="Location"

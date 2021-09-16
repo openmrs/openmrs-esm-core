@@ -4,10 +4,10 @@ import uniqueId from "lodash-es/uniqueId";
 import Add16 from "@carbon/icons-react/es/add/16";
 import TrashCan16 from "@carbon/icons-react/es/trash-can/16";
 import styles from "./array-editor.styles.css";
-import { Button } from "carbon-components-react";
 import { Type } from "@openmrs/esm-framework";
-import { Tile } from "carbon-components-react";
 import {
+  Button,
+  Tile,
   StructuredListBody,
   StructuredListCell,
   StructuredListRow,

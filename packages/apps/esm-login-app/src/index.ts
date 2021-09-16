@@ -43,6 +43,11 @@ function setupOpenMRS() {
         route: "login",
         ...sharedOnlineOfflineProps,
       },
+      {
+        load: getAsyncLifecycle(() => import("./root.component"), options),
+        route: "logout",
+        ...sharedOnlineOfflineProps,
+      },
     ],
     extensions: [
       {
@@ -55,8 +60,19 @@ function setupOpenMRS() {
         ...sharedOnlineOfflineProps,
       },
       {
+        id: "logout-button",
+        slot: "user-panel-actions-slot",
+        load: getAsyncLifecycle(
+          () => import("./logout/logout.component"),
+          options
+        ),
+        online: true,
+        offline: false,
+      },
+      {
         id: "location-changer",
         slot: "user-panel-slot",
+        order: 1,
         load: getAsyncLifecycle(
           () => import("./change-location-link/change-location-link.component"),
           options

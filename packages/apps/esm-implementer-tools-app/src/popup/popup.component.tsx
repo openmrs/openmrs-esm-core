@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Close16 from "@carbon/icons-react/es/close/16";
-import { Button } from "carbon-components-react";
-import { ContentSwitcher } from "carbon-components-react";
-import { Switch } from "carbon-components-react";
 import styles from "./popup.styles.css";
+import { Button, ContentSwitcher, Switch } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependencies.component";

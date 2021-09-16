@@ -55,6 +55,13 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
     }
   }, [showPassword]);
 
+  useEffect(() => {
+    if (!user && config.provider.type === "oauth2") {
+      const loginUrl = config.provider.loginUrl;
+      window.location.href = loginUrl;
+    }
+  }, [config, user]);
+
   const continueLogin = useCallback(() => {
     const field = usernameInputRef.current;
 
@@ -120,111 +127,115 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
     </svg>
   );
 
-  return (
-    <div className={`canvas ${styles["container"]}`}>
-      <div className={`omrs-card ${styles["login-card"]}`}>
-        <div className={styles["center"]}>{logo}</div>
-        <form onSubmit={handleSubmit} ref={formRef}>
-          {!showPassword && (
-            <div className={styles["input-group"]}>
-              <TextInput
-                id="username"
-                type="text"
-                name="username"
-                labelText={t("username", "UserName")}
-                className={styles.inputStyle}
-                value={username}
-                onChange={changeUsername}
-                ref={usernameInputRef}
-                autoFocus
-                required
-              />
+  if (config.provider.type === "basic") {
+    return (
+      <div className={`canvas ${styles["container"]}`}>
+        <div className={`omrs-card ${styles["login-card"]}`}>
+          <div className={styles["center"]}>{logo}</div>
+          <form onSubmit={handleSubmit} ref={formRef}>
+            {!showPassword && (
+              <div className={styles["input-group"]}>
+                <TextInput
+                  id="username"
+                  type="text"
+                  name="username"
+                  labelText={t("username", "UserName")}
+                  className={styles.inputStyle}
+                  value={username}
+                  onChange={changeUsername}
+                  ref={usernameInputRef}
+                  autoFocus
+                  required
+                />
 
-              <input
-                id="password"
-                style={hidden}
-                type="password"
-                name="password"
-                value={password}
-                onChange={changePassword}
-              />
+                <input
+                  id="password"
+                  style={hidden}
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={changePassword}
+                />
 
-              <Button
-                className={styles.continueButton}
-                renderIcon={ArrowRight24}
-                type="submit"
-                iconDescription="Next"
-                onClick={continueLogin}
-                disabled={!isLoginEnabled}
-              >
-                {t("continue", "Continue")}
-              </Button>
+                <Button
+                  className={styles.continueButton}
+                  renderIcon={ArrowRight24}
+                  type="submit"
+                  iconDescription="Next"
+                  onClick={continueLogin}
+                  disabled={!isLoginEnabled}
+                >
+                  {t("continue", "Continue")}
+                </Button>
+              </div>
+            )}
+            {showPassword && (
+              <div className={styles["input-group"]}>
+                <input
+                  id="username"
+                  type="text"
+                  name="username"
+                  style={hidden}
+                  value={username}
+                  onChange={changeUsername}
+                  required
+                />
+
+                <TextInput.PasswordInput
+                  id="password"
+                  invalidText={t("A valid value is required")}
+                  labelText={t("password")}
+                  name="password"
+                  className={styles.inputStyle}
+                  value={password}
+                  onChange={changePassword}
+                  ref={passwordInputRef}
+                  required
+                  showPasswordLabel="Show password"
+                />
+
+                <Button
+                  aria-label="submit"
+                  type="submit"
+                  className={styles.continueButton}
+                  renderIcon={ArrowRight24}
+                  iconDescription="Next"
+                  disabled={!isLoginEnabled}
+                >
+                  {t("login", "Log in")}
+                </Button>
+              </div>
+            )}
+            <div className={styles["center"]}>
+              <p className={styles["error-msg"]}>
+                {t("errorMessage", errorMessage)}
+              </p>
             </div>
-          )}
-          {showPassword && (
-            <div className={styles["input-group"]}>
-              <input
-                id="username"
-                type="text"
-                name="username"
-                style={hidden}
-                value={username}
-                onChange={changeUsername}
-                required
-              />
-
-              <TextInput.PasswordInput
-                id="password"
-                invalidText={t("A valid value is required")}
-                labelText={t("password")}
-                name="password"
-                className={styles.inputStyle}
-                value={password}
-                onChange={changePassword}
-                ref={passwordInputRef}
-                required
-                showPasswordLabel="Show password"
-              />
-
-              <Button
-                aria-label="submit"
-                type="submit"
-                className={styles.continueButton}
-                renderIcon={ArrowRight24}
-                iconDescription="Next"
-                disabled={!isLoginEnabled}
-              >
-                {t("login", "Log in")}
-              </Button>
-            </div>
-          )}
-          <div className={styles["center"]}>
-            <p className={styles["error-msg"]}>
-              {t("errorMessage", errorMessage)}
-            </p>
+          </form>
+        </div>
+        <div className={styles["need-help"]}>
+          <p className={styles["need-help-txt"]}>
+            {t("needHelp", "Need help?")}
+            <Button kind="ghost">
+              {t("contactAdmin", "Contact the site administrator")}
+            </Button>
+          </p>
+        </div>
+        <div className={styles["footer"]}>
+          <p className={styles["powered-by-txt"]}>
+            {t("poweredBy", "Powered by")}
+          </p>
+          <div>
+            <svg role="img" className={styles["powered-by-logo"]}>
+              <use xlinkHref="#omrs-logo-partial-mono"></use>
+            </svg>
           </div>
-        </form>
-      </div>
-      <div className={styles["need-help"]}>
-        <p className={styles["need-help-txt"]}>
-          {t("needHelp", "Need help?")}
-          <Button kind="ghost">
-            {t("contactAdmin", "Contact the site administrator")}
-          </Button>
-        </p>
-      </div>
-      <div className={styles["footer"]}>
-        <p className={styles["powered-by-txt"]}>
-          {t("poweredBy", "Powered by")}
-        </p>
-        <div>
-          <svg role="img" className={styles["powered-by-logo"]}>
-            <use xlinkHref="#omrs-logo-partial-mono"></use>
-          </svg>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return null;
 };
 
 export default Login;

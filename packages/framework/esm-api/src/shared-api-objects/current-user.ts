@@ -2,7 +2,7 @@ import { Observable, ReplaySubject } from "rxjs";
 import { filter, map, tap, mergeAll } from "rxjs/operators";
 import { openmrsFetch, sessionEndpoint } from "../openmrs-fetch";
 import {
-  LoggedInUserFetchResponse,
+  LoggedInUserData,
   LoggedInUser,
   CurrentUserWithResponseOption,
   UnauthenticatedUser,
@@ -11,7 +11,7 @@ import {
   SessionLocation,
 } from "../types";
 
-const userSubject = new ReplaySubject<Promise<LoggedInUserFetchResponse>>(1);
+const userSubject = new ReplaySubject<Promise<LoggedInUserData>>(1);
 let lastFetchTimeMillis = 0;
 
 /**
@@ -71,16 +71,14 @@ function getCurrentUser(
   return userSubject.asObservable().pipe(
     mergeAll(),
     tap(setUserLanguage),
-    map((r: LoggedInUserFetchResponse) =>
-      opts.includeAuthStatus ? r.data : r.data.user
-    ),
+    map((r) => (opts.includeAuthStatus ? r : r.user)),
     filter(Boolean)
   ) as Observable<LoggedInUser | UnauthenticatedUser>;
 }
 
-function setUserLanguage(sessionResponse: LoggedInUserFetchResponse) {
-  if (sessionResponse?.data?.user?.userProperties?.defaultLocale) {
-    const locale = sessionResponse.data.user.userProperties.defaultLocale;
+function setUserLanguage(data: LoggedInUserData) {
+  if (data?.user?.userProperties?.defaultLocale) {
+    const locale = data.user.userProperties.defaultLocale;
     const htmlLang = document.documentElement.getAttribute("lang");
 
     if (locale !== htmlLang) {
@@ -117,7 +115,16 @@ export { getCurrentUser };
  */
 export function refetchCurrentUser() {
   lastFetchTimeMillis = Date.now();
-  userSubject.next(openmrsFetch(sessionEndpoint));
+  userSubject.next(
+    openmrsFetch(sessionEndpoint)
+      .then((res) =>
+        typeof res.data === "object" ? res.data : Promise.reject()
+      )
+      .catch(() => ({
+        sessionId: "",
+        authenticated: false,
+      }))
+  );
 }
 
 export function userHasAccess(requiredPrivilege: string, user: LoggedInUser) {

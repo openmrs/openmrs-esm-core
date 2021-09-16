@@ -13,7 +13,7 @@ const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
 
   return (
     <HeaderPanel
-      ref={appMenuRef}
+      ref={appMenuRef as any}
       className={styles.headerPanel}
       aria-label="App Menu Panel"
       expanded={expanded}
