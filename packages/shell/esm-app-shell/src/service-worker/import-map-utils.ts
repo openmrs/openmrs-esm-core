@@ -1,4 +1,4 @@
-import { ImportMap } from "@openmrs/esm-globals";
+import type { ImportMap } from "@openmrs/esm-globals";
 import { buildManifestSuffix } from "./constants";
 import { BuildManifest } from "./types";
 import flatten from "lodash-es/flatten";

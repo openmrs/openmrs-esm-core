@@ -1,4 +1,4 @@
-import { ImportMap } from "@openmrs/esm-globals";
+import type { ImportMap } from "@openmrs/esm-globals";
 import { getOmrsServiceWorker } from "./service-worker";
 
 /**

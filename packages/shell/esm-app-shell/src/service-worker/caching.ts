@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { ImportMap } from "@openmrs/esm-globals";
+import type { ImportMap } from "@openmrs/esm-globals";
 import { retry } from "@openmrs/esm-utils";
 import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
 import { fetchUrlsToCacheFromImportMap } from "./import-map-utils";

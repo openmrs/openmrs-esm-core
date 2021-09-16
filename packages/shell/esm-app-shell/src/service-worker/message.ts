@@ -1,7 +1,7 @@
+import escapeRegExp from "lodash-es/escapeRegExp";
 import { cacheImportMapReferences } from "./caching";
 import { DynamicRouteRegistration, ServiceWorkerDb } from "./storage";
-import escapeRegExp from "lodash-es/escapeRegExp";
-import {
+import type {
   MessageServiceWorkerResult,
   OnImportMapChangedMessage,
   RegisterDynamicRouteMessage,

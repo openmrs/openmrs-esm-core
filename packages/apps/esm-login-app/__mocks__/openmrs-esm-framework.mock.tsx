@@ -41,6 +41,11 @@ export const openmrsComponentDecorator = jest
   .mockImplementation(() => (f) => f);
 
 export const config = {
+  provider: {
+    type: "basic",
+    loginUrl: "",
+    logoutUrl: "",
+  },
   chooseLocation: {
     enabled: true,
     numberToShow: 3,

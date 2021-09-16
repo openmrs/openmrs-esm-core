@@ -1,4 +1,4 @@
-import { KnownOmrsServiceWorkerEvents } from "@openmrs/esm-offline";
+import type { KnownOmrsServiceWorkerEvents } from "@openmrs/esm-offline";
 
 export async function publishEvent(event: KnownOmrsServiceWorkerEvents) {
   const clients = await self.clients.matchAll({ type: "window" });
