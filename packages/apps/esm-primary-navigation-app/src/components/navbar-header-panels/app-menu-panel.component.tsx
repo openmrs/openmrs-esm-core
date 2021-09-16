@@ -9,7 +9,7 @@ interface AppMenuProps {
 }
 
 const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
-  const appMenuRef = useOnClickOutside(hidePanel, expanded);
+  const appMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel, expanded);
 
   return (
     <HeaderPanel

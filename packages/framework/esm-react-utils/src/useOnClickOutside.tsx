@@ -4,7 +4,7 @@ export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
   handler: (event: Event) => void,
   active = true
 ) {
-  const ref = useRef<T>();
+  const ref = useRef<T>(null);
 
   useEffect(() => {
     if (active) {

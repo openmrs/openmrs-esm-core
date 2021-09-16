@@ -24,7 +24,7 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
   session,
   hidePanel,
 }) => {
-  const userMenuRef = useOnClickOutside(hidePanel, expanded);
+  const userMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel, expanded);
 
   return (
     <HeaderPanel
