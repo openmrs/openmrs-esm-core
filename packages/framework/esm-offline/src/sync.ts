@@ -176,6 +176,10 @@ export async function getSynchronizationItems<T>(type: string) {
   return await getSynchronizationItemsFor<T>(userId, type);
 }
 
+export async function deleteSynchronizationItem(id: number) {
+  await db.syncQueue.delete(id);
+}
+
 export interface SyncProcessOptions<T> {
   abort: AbortController;
   userId: string;

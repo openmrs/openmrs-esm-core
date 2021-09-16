@@ -8,7 +8,11 @@ import styles from "./root.styles.scss";
 import OfflinePatientSyncDetails from "./offline-patient-sync-details/offline-patient-sync-details.component";
 import OfflineActions from "./offline-actions/offline-actions.component";
 
-const Root: React.FC = () => {
+export interface RootProps {
+  canSynchronizeOfflineActions: boolean;
+}
+
+const Root: React.FC<RootProps> = ({ canSynchronizeOfflineActions }) => {
   useEffect(() => {
     loadPersistedPatientDataSyncState();
   }, []);
@@ -28,7 +32,15 @@ const Root: React.FC = () => {
           path="/offline-tools/patients/:patientUuid/offline-data"
           component={OfflinePatientSyncDetails}
         />
-        <Route exact path="/offline-tools/actions" component={OfflineActions} />
+        <Route
+          exact
+          path="/offline-tools/actions"
+          render={() => (
+            <OfflineActions
+              canSynchronizeOfflineActions={canSynchronizeOfflineActions}
+            />
+          )}
+        />
       </div>
     </BrowserRouter>
   );

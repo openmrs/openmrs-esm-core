@@ -1,4 +1,5 @@
 import {
+  deleteSynchronizationItem,
   getOfflineSynchronizationStore,
   queueSynchronizationItem,
   runSynchronization,
@@ -18,7 +19,13 @@ import {
   useSyncItemPatients,
 } from "../hooks/offline-actions";
 
-const OfflineActions: React.FC = () => {
+export interface OfflineActionsProps {
+  canSynchronizeOfflineActions: boolean;
+}
+
+const OfflineActions: React.FC<OfflineActionsProps> = ({
+  canSynchronizeOfflineActions,
+}) => {
   const { t } = useTranslation();
   const layout = useLayoutType();
   const syncStore = useStore(getOfflineSynchronizationStore());
@@ -32,6 +39,10 @@ const OfflineActions: React.FC = () => {
   const isSynchronizing = !!syncStore.synchronization;
 
   const synchronize = () => runSynchronization().finally(() => mutate());
+  const deleteSynchronizationItems = async (ids: Array<number>) => {
+    await Promise.allSettled(ids.map((id) => deleteSynchronizationItem(id)));
+    mutate();
+  };
 
   const primaryActions = (
     <Button
@@ -49,7 +60,7 @@ const OfflineActions: React.FC = () => {
   return (
     <SharedPageLayout
       header={t("offlineActionsHeader", "Offline actions")}
-      primaryActions={primaryActions}
+      primaryActions={canSynchronizeOfflineActions ? primaryActions : undefined}
     >
       <button
         onClick={() => {
@@ -66,8 +77,10 @@ const OfflineActions: React.FC = () => {
           <Tab label={t("offineActionsPendingTab", "Pending")}>
             <OfflineActionsTable
               isLoading={isValidatingSyncItems || isValidatingSyncItemPatients}
-              isEditable={!isSynchronizing}
               data={getSyncItemsWithPatient(syncItems, syncItemPatients)}
+              disableEditing={isSynchronizing}
+              disableDelete={false}
+              onDelete={deleteSynchronizationItems}
             />
           </Tab>
           <Tab label={t("offlineActionsUploadedTab", "Uploaded")}></Tab>

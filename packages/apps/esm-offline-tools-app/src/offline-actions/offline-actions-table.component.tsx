@@ -29,8 +29,10 @@ import {
 
 export interface OfflineActionsTableProps {
   isLoading: boolean;
-  isEditable: boolean;
   data?: Array<SyncItemWithPatient>;
+  disableEditing: boolean;
+  disableDelete: boolean;
+  onDelete(syncItemIds: Array<number>): void;
 }
 
 export interface SyncItemWithPatient {
@@ -40,8 +42,10 @@ export interface SyncItemWithPatient {
 
 const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
   isLoading,
-  isEditable,
   data = [],
+  disableEditing,
+  disableDelete,
+  onDelete,
 }) => {
   const { t } = useTranslation();
   const [pageSize, setPageSize] = useState(10);
@@ -72,7 +76,7 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
     const patientName = getPatientName(syncItem);
 
     return {
-      id: syncItem.item.descriptor?.id ?? i.toString(),
+      id: syncItem.item.id.toString(),
       createdOn: syncItem.item.createdOn?.toLocaleDateString(),
       patient: {
         value: (
@@ -131,13 +135,8 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
                 className={styles.tablePrimaryAction}
                 kind="danger"
                 size={toolbarItemSize}
-                disabled={!isEditable}
-                // disabled={
-                //   removePatientsFromOfflinePatientListMutation.isFetching
-                // }
-                // onClick={() =>
-                //   handleRemovePatientsFromOfflineListClick(selectedRows)
-                // }
+                disabled={disableEditing || disableDelete}
+                onClick={() => onDelete(selectedRows.map((row) => +row.id))}
               >
                 {selectedRows.length === 1
                   ? t("offlineActionsTableDeleteAction", "Delete action")
@@ -154,7 +153,7 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
               <TableRow>
                 <TableSelectAll
                   {...getSelectionProps()}
-                  disabled={!isEditable}
+                  disabled={disableEditing}
                 />
                 {headers.map((header) => (
                   <TableHeader {...getHeaderProps({ header })} isSortable>
@@ -168,7 +167,7 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
                 <TableRow {...getRowProps({ row })}>
                   <TableSelectRow
                     {...getSelectionProps({ row })}
-                    disabled={!isEditable}
+                    disabled={disableEditing}
                   />
                   {row.cells.map((cell) => (
                     <TableCell key={cell.id}>
