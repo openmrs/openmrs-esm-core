@@ -6,12 +6,14 @@
  *
  * This approach is known as "svg sprites"
  */
-const svgContainer = document.createElement("div");
+
+let svgContainer: HTMLDivElement;
 const appendContainer = () => {
+  svgContainer = document.createElement("div");
+  svgContainer.id = "omrs-svgs-container";
+  svgContainer.style.display = "none";
   document.body.appendChild(svgContainer);
 };
-svgContainer.id = "omrs-svgs-container";
-svgContainer.style.display = "none";
 
 if (document.readyState === "complete") {
   appendContainer();
@@ -24,7 +26,7 @@ export function addSvg(htmlId: string, svgString: string) {
   const dom = domParser.parseFromString(svgString, "text/html");
   const svgElement = dom.querySelector("svg");
 
-  if (svgElement) {
+  if (svgContainer && svgElement) {
     svgElement.id = htmlId;
     svgContainer.appendChild(svgElement);
   }
