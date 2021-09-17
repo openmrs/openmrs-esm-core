@@ -6,7 +6,8 @@ import {
   useStore,
 } from "@openmrs/esm-framework";
 import { getI18n, useTranslation } from "react-i18next";
-import { NotificationActionButton } from "carbon-components-react";
+import { Loading, NotificationActionButton } from "carbon-components-react";
+import styles from "./synchronizing-notification.styles.scss";
 
 let showNewModalOnNextSynchronization = true;
 let currentSynchronizationIndex = 0;
@@ -61,28 +62,24 @@ function SynchronizingNotification({ mySynchronizationIndex }) {
     );
   }
 
-  if (isCanceled) {
-    return (
-      <>
-        {t(
-          "offlineActionsSynchronizationNotificationCanceling",
-          "Canceling..."
-        )}
-      </>
-    );
-  }
-
   return (
-    <>
-      {t(
-        "offlineActionsSynchronizationNotificationStatus",
-        "{current} / {total} actions",
-        {
-          current: synchronization.totalCount - synchronization.pendingCount,
-          total: synchronization.totalCount,
-        }
-      )}
-    </>
+    <div className={styles.notificationLoadingContainer}>
+      {isCanceled
+        ? t(
+            "offlineActionsSynchronizationNotificationCanceling",
+            "Canceling..."
+          )
+        : t(
+            "offlineActionsSynchronizationNotificationStatus",
+            "{current} / {total} actions",
+            {
+              current:
+                synchronization.totalCount - synchronization.pendingCount,
+              total: synchronization.totalCount,
+            }
+          )}
+      <Loading small withOverlay={false} />
+    </div>
   );
 }
 
