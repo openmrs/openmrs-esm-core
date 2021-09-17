@@ -170,7 +170,12 @@ yargs.command(
       ...args,
       importmap: await mergeImportmap(
         await getImportmap(args.importmap, args.port),
-        await runProject(args.port, args["shared-dependencies"], args.sources)
+        (args.sources[0] as string | boolean) !== false &&
+          (await runProject(
+            args.port,
+            args["shared-dependencies"],
+            args.sources
+          ))
       ),
     })
 );
@@ -295,13 +300,7 @@ yargs.command(
       .describe("backend", "The backend to proxy API requests to.")
       .boolean("open")
       .default("open", false)
-      .describe("open", "Immediately opens the SPA page URL in the browser.")
-      .string("importmap")
-      .default("importmap", "importmap.json")
-      .describe(
-        "importmap",
-        "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
-      ),
+      .describe("open", "Immediately opens the SPA page URL in the browser."),
   (args) => runCommand("runStart", { ...args })
 );
 

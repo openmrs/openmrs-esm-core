@@ -3,16 +3,16 @@ import cloneDeep from "lodash-es/cloneDeep";
 import uniqueId from "lodash-es/uniqueId";
 import Add16 from "@carbon/icons-react/es/add/16";
 import TrashCan16 from "@carbon/icons-react/es/trash-can/16";
-import Button from "carbon-components-react/es/components/Button";
 import styles from "./array-editor.styles.css";
 import { Type } from "@openmrs/esm-framework";
-import { Tile } from "carbon-components-react/es/components/Tile";
 import {
+  Button,
+  Tile,
   StructuredListBody,
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-} from "carbon-components-react/es/components/StructuredList";
+} from "carbon-components-react";
 import { ValueEditorField } from "./value-editor-field";
 import { ConfigValueDescriptor } from "../editable-value.component";
 

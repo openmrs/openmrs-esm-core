@@ -1,10 +1,10 @@
 import {
-  omrsOfflineCachingStrategyHttpHeaderName,
   OmrsOfflineHttpHeaderNames,
   OmrsOfflineHttpHeaders,
+  omrsOfflineCachingStrategyHttpHeaderName,
   omrsOfflineResponseBodyHttpHeaderName,
   omrsOfflineResponseStatusHttpHeaderName,
-} from "@openmrs/esm-offline";
+} from "@openmrs/esm-offline/src/service-worker-http-headers";
 
 export function parseOmrsOfflineResponseBodyHeader(headers: Headers) {
   // The ?? undefined here is important as getOmrsHeader returns null by default when the header

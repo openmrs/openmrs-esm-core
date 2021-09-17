@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./configuration.styles.css";
-import Accordion, {
-  AccordionItem,
-} from "carbon-components-react/es/components/Accordion";
+import { Accordion, AccordionItem } from "carbon-components-react";
 import { ConfigTreeForModule } from "./config-tree-for-module.component";
 
 export interface ConfigTreeProps {

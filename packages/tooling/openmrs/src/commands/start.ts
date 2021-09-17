@@ -13,6 +13,7 @@ export interface StartArgs {
 }
 
 export function runStart(args: StartArgs) {
+  const { backend, host, port, open } = args;
   const app = express();
   const source = resolve(
     require.resolve("@openmrs/esm-app-shell/package.json"),
@@ -21,23 +22,23 @@ export function runStart(args: StartArgs) {
   );
   const index = resolve(source, "index.html");
   const spaPath = "/openmrs/spa";
-  const pageUrl = `http://${args.host}:${args.port}${spaPath}`;
+  const pageUrl = `http://${host}:${port}${spaPath}`;
 
-  app.use("/openmrs/spa", express.static(source));
+  app.use(spaPath, express.static(source));
   app.use(
     "/openmrs",
     createProxyMiddleware([`/openmrs/**`, `!${spaPath}/**`], {
-      target: args.backend,
+      target: backend,
       changeOrigin: true,
     })
   );
   app.get("/*", (_, res) => res.sendFile(index));
 
-  app.listen(args.port, args.host, () => {
-    logInfo(`Listening at http://${args.host}:${args.port}`);
+  app.listen(port, host, () => {
+    logInfo(`Listening at http://${host}:${port}`);
     logInfo(`SPA available at ${pageUrl}`);
 
-    if (args.open) {
+    if (open) {
       const open = require("open");
 
       open(pageUrl, { wait: false }).catch(() => {

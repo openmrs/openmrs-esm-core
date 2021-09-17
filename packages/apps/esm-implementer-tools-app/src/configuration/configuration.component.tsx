@@ -12,17 +12,21 @@ import {
   useExtensionStore,
   useStore,
 } from "@openmrs/esm-framework";
-import Button from "carbon-components-react/es/components/Button";
-import { Column, Grid, Row } from "carbon-components-react/es/components/Grid";
-import TextInput from "carbon-components-react/es/components/TextInput";
-import Toggle from "carbon-components-react/es/components/Toggle";
-import cloneDeep from "lodash-es/cloneDeep";
-import isEmpty from "lodash-es/isEmpty";
+import {
+  Button,
+  Column,
+  Grid,
+  Row,
+  TextInput,
+  Toggle,
+} from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
 import { ConfigTree } from "./config-tree.component";
-import styles from "./configuration.styles.css";
 import { Description } from "./description.component";
+import cloneDeep from "lodash-es/cloneDeep";
+import isEmpty from "lodash-es/isEmpty";
+import styles from "./configuration.styles.css";
 
 function isLeaf(configNode: Config) {
   return (

@@ -28,7 +28,6 @@
 - [redirected](FetchResponse.md#redirected)
 - [status](FetchResponse.md#status)
 - [statusText](FetchResponse.md#statustext)
-- [trailer](FetchResponse.md#trailer)
 - [type](FetchResponse.md#type)
 - [url](FetchResponse.md#url)
 
@@ -53,7 +52,7 @@ Response.body
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2583
+node_modules/typescript/lib/lib.dom.d.ts:2444
 
 ___
 
@@ -67,7 +66,7 @@ Response.bodyUsed
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2584
+node_modules/typescript/lib/lib.dom.d.ts:2445
 
 ___
 
@@ -91,7 +90,7 @@ Response.headers
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12550
+node_modules/typescript/lib/lib.dom.d.ts:12143
 
 ___
 
@@ -105,7 +104,7 @@ Response.ok
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12551
+node_modules/typescript/lib/lib.dom.d.ts:12144
 
 ___
 
@@ -119,7 +118,7 @@ Response.redirected
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12552
+node_modules/typescript/lib/lib.dom.d.ts:12145
 
 ___
 
@@ -133,7 +132,7 @@ Response.status
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12553
+node_modules/typescript/lib/lib.dom.d.ts:12146
 
 ___
 
@@ -147,21 +146,7 @@ Response.statusText
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12554
-
-___
-
-### trailer
-
-• `Readonly` **trailer**: `Promise`<`Headers`\>
-
-#### Inherited from
-
-Response.trailer
-
-#### Defined in
-
-node_modules/typescript/lib/lib.dom.d.ts:12555
+node_modules/typescript/lib/lib.dom.d.ts:12147
 
 ___
 
@@ -175,7 +160,7 @@ Response.type
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12556
+node_modules/typescript/lib/lib.dom.d.ts:12148
 
 ___
 
@@ -189,7 +174,7 @@ Response.url
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12557
+node_modules/typescript/lib/lib.dom.d.ts:12149
 
 ## Methods
 
@@ -207,7 +192,7 @@ Response.arrayBuffer
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2585
+node_modules/typescript/lib/lib.dom.d.ts:2446
 
 ___
 
@@ -225,7 +210,7 @@ Response.blob
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2586
+node_modules/typescript/lib/lib.dom.d.ts:2447
 
 ___
 
@@ -243,7 +228,7 @@ Response.clone
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:12558
+node_modules/typescript/lib/lib.dom.d.ts:12150
 
 ___
 
@@ -261,7 +246,7 @@ Response.formData
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2587
+node_modules/typescript/lib/lib.dom.d.ts:2448
 
 ___
 
@@ -279,7 +264,7 @@ Response.json
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2588
+node_modules/typescript/lib/lib.dom.d.ts:2449
 
 ___
 
@@ -297,4 +282,4 @@ Response.text
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2589
+node_modules/typescript/lib/lib.dom.d.ts:2450

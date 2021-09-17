@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
-import { Button, Tile, TileProps } from "carbon-components-react";
+import { Tile, Button, TileProps } from "carbon-components-react";
 import styles from "./overview-card.styles.scss";
 import ArrowRight16 from "@carbon/icons-react/es/arrow--right/16";
 

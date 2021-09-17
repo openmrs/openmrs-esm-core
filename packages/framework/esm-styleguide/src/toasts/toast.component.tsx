@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ToastNotification } from "carbon-components-react/es/components/Notification";
+import { ToastNotification } from "carbon-components-react";
 
 const defaultOptions = {
   millis: 5000,

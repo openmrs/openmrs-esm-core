@@ -1,5 +1,5 @@
 import React from "react";
-import Loading from "carbon-components-react/es/components/Loading";
+import { Loading } from "carbon-components-react";
 import styles from "./loading.component.scss";
 
 const LoadingIcon: React.FC = () => (

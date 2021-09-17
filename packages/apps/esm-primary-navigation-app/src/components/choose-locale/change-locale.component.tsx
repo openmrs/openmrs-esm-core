@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Select from "carbon-components-react/es/components/Select";
-import SelectItem from "carbon-components-react/es/components/SelectItem";
 import styles from "./change-locale.component.scss";
+import { Select, SelectItem } from "carbon-components-react";
 import { LoggedInUser } from "@openmrs/esm-framework";
 import { PostUserProperties } from "./change-locale.resource";
 

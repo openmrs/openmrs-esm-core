@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Popup from "./popup/popup.component";
-import { NotificationActionButton } from "carbon-components-react/es/components/Notification";
+import { NotificationActionButton } from "carbon-components-react";
 import {
   showNotification,
   UserHasAccess,

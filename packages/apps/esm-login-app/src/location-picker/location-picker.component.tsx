@@ -2,13 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import debounce from "lodash-es/debounce";
 import isEmpty from "lodash-es/isEmpty";
 import { Trans, useTranslation } from "react-i18next";
+import {
+  Button,
+  Search,
+  RadioButton,
+  RadioButtonGroup,
+} from "carbon-components-react";
 import { LocationEntry } from "../types";
-import styles from "./location-picker.component.scss";
-import Search from "carbon-components-react/es/components/Search";
 import { createErrorHandler, useConfig } from "@openmrs/esm-framework";
-import RadioButtonGroup from "carbon-components-react/es/components/RadioButtonGroup";
-import RadioButton from "carbon-components-react/es/components/RadioButton";
-import Button from "carbon-components-react/es/components/Button";
+import styles from "./location-picker.component.scss";
 
 interface LocationDataState {
   activeLocation: string;
