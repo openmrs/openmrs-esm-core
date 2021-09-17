@@ -52,6 +52,9 @@ class OfflineDb extends Dexie {
 const db = new OfflineDb();
 const handlers: Record<string, SyncHandler> = {};
 
+/**
+ * @internal Temporarily added for esm-offline-tools-app. Please don't use elsewhere.
+ */
 export function getOfflineDb() {
   return db;
 }
