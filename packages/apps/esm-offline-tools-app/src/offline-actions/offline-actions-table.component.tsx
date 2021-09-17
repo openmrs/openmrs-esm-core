@@ -1,5 +1,5 @@
-import Button from "carbon-components-react/lib/components/Button";
 import {
+  Button,
   FilterRowsData,
   Table,
   TableBody,

@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import SharedPageLayout from "../components/shared-page-layout.component";
 import OfflineActionsTable from "./offline-actions-table.component";
 import styles from "./offline-actions.styles.scss";
-import Renew16 from "@carbon/icons-react/lib/renew/16";
+import Renew16 from "@carbon/icons-react/es/renew/16";
 import { Button, Tabs, Tab } from "carbon-components-react";
 import {
   usePendingSyncItems,
