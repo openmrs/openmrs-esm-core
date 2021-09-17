@@ -71,7 +71,7 @@ const OfflineActions: React.FC<OfflineActionsProps> = ({
       </button>
       <div className={styles.contentContainer}>
         <Tabs type="container">
-          <Tab label={t("offineActionsPendingTab", "Pending")}>
+          <Tab label={t("offlineActionsPendingTab", "Pending upload")}>
             {isLoading || syncItems?.length > 0 ? (
               <OfflineActionsTable
                 isLoading={isLoading}

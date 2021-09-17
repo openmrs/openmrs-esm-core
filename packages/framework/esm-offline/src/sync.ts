@@ -61,6 +61,7 @@ export interface OfflineSynchronizationStore {
     total: number;
     pending: number;
     synchronized: number;
+    abortController: AbortController;
   };
 }
 
@@ -73,9 +74,7 @@ export function getOfflineSynchronizationStore() {
   return syncStore;
 }
 
-export async function runSynchronization(
-  abort: AbortController = new AbortController()
-) {
+export async function runSynchronization() {
   if (syncStore.getState().synchronization) {
     return;
   }
@@ -84,6 +83,7 @@ export async function runSynchronization(
   const queue = Object.entries(handlers);
   const maxIter = queue.length;
   const results: SyncResultBag = {};
+  const abortController = new AbortController();
 
   try {
     syncStore.setState({
@@ -91,6 +91,7 @@ export async function runSynchronization(
         total: -1,
         pending: -1,
         synchronized: -1,
+        abortController,
       },
     });
 
@@ -103,7 +104,7 @@ export async function runSynchronization(
         if (deps.every(Boolean)) {
           results[name] = {};
           await Promise.all(deps);
-          promises[name] = handler.handle(results, abort);
+          promises[name] = handler.handle(results, abortController);
           queue.splice(i, 1);
         }
       }
