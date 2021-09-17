@@ -5,7 +5,7 @@ import {
   showNotification,
   useStore,
 } from "@openmrs/esm-framework";
-import { useTranslation } from "react-i18next";
+import { getI18n, useTranslation } from "react-i18next";
 import { NotificationActionButton } from "carbon-components-react";
 
 let showNewModalOnNextSynchronization = true;
@@ -23,6 +23,10 @@ export function setupSynchronizingOfflineActionsNotifications() {
       currentSynchronizationIndex++;
 
       showNotification({
+        title: getI18n().t(
+          "offlineActionsSynchronizationNotificationTitle",
+          "Uploading actions"
+        ),
         description: (
           <SynchronizingNotification
             mySynchronizationIndex={currentSynchronizationIndex}
@@ -44,6 +48,7 @@ export function setupSynchronizingOfflineActionsNotifications() {
 function SynchronizingNotification({ mySynchronizationIndex }) {
   const { t } = useTranslation();
   const synchronization = useMySynchronization(mySynchronizationIndex);
+  const isCanceled = useIsSyncCanceled(synchronization);
 
   if (!synchronization) {
     return (
@@ -56,31 +61,42 @@ function SynchronizingNotification({ mySynchronizationIndex }) {
     );
   }
 
+  if (isCanceled) {
+    return (
+      <>
+        {t(
+          "offlineActionsSynchronizationNotificationCanceling",
+          "Canceling..."
+        )}
+      </>
+    );
+  }
+
   return (
-    <>{t("offlineActionsSynchronizationNotificationUploading", "Uploading")}</>
+    <>
+      {t("offlineActionsSynchronizationNotificationUploading", "Uploading...")}
+    </>
   );
 }
 
 function CancelSynchronizationAction({ mySynchronizationIndex }) {
   const { t } = useTranslation();
   const synchronization = useMySynchronization(mySynchronizationIndex);
-  const { isCanceled, abort } = useCancelSyncController(synchronization);
+  const isCanceled = useIsSyncCanceled(synchronization);
 
   if (!synchronization) {
     return null;
   }
 
   return (
-    <NotificationActionButton onClick={abort} disabled={isCanceled}>
-      {isCanceled
-        ? t(
-            "offlineActionsSynchronizationNotificationCancelingUpload",
-            "Canceling..."
-          )
-        : t(
-            "offlineActionsSynchronizationNotificationCancelUpload",
-            "Cancel upload"
-          )}
+    <NotificationActionButton
+      onClick={() => synchronization?.abortController.abort()}
+      disabled={isCanceled}
+    >
+      {t(
+        "offlineActionsSynchronizationNotificationCancelUpload",
+        "Cancel upload"
+      )}
     </NotificationActionButton>
   );
 }
@@ -92,7 +108,7 @@ function useMySynchronization(mySynchronizationIndex: number) {
     : undefined;
 }
 
-function useCancelSyncController(
+function useIsSyncCanceled(
   synchronization?: OfflineSynchronizationStore["synchronization"]
 ) {
   const abortController = synchronization?.abortController;
@@ -107,8 +123,5 @@ function useCancelSyncController(
       abortController?.signal.removeEventListener("abort", onAborted);
   }, [abortController]);
 
-  return {
-    isCanceled,
-    abort: () => abortController?.abort(),
-  };
+  return isCanceled;
 }
