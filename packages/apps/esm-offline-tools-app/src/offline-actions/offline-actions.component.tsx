@@ -59,33 +59,18 @@ const OfflineActions: React.FC<OfflineActionsProps> = ({
       header={t("offlineActionsHeader", "Offline actions")}
       primaryActions={canSynchronizeOfflineActions ? primaryActions : undefined}
     >
-      <button
-        onClick={() => {
-          queueSynchronizationItem("test", "test-content", {
-            displayName: "Test Display Name",
-            patientUuid: "87d02366-ef24-4bf0-a8a9-23e55d87f703",
-          });
-        }}
-      >
-        Queue
-      </button>
       <div className={styles.contentContainer}>
-        <Tabs type="container">
-          <Tab label={t("offlineActionsPendingTab", "Pending upload")}>
-            {isLoading || syncItems?.length > 0 ? (
-              <OfflineActionsTable
-                isLoading={isLoading}
-                data={getSyncItemsWithPatient(syncItems, syncItemPatients)}
-                disableEditing={isSynchronizing}
-                disableDelete={false}
-                onDelete={deleteSynchronizationItems}
-              />
-            ) : (
-              <NoActionsEmptyState />
-            )}
-          </Tab>
-          <Tab label={t("offlineActionsUploadedTab", "Uploaded")}></Tab>
-        </Tabs>
+        {isLoading || syncItems?.length > 0 ? (
+          <OfflineActionsTable
+            isLoading={isLoading}
+            data={getSyncItemsWithPatient(syncItems, syncItemPatients)}
+            disableEditing={isSynchronizing}
+            disableDelete={false}
+            onDelete={deleteSynchronizationItems}
+          />
+        ) : (
+          <NoActionsEmptyState />
+        )}
       </div>
     </SharedPageLayout>
   );

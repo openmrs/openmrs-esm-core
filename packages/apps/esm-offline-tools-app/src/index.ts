@@ -33,15 +33,6 @@ function setupOpenMRS() {
   setupOffline();
   setupSynchronizingOfflineActionsNotifications();
 
-  setupOfflineSync("test", [], async (...args) => {
-    await new Promise((res) => setTimeout(res, 1500));
-    throw new Error("Server did not respond.");
-  });
-
-  // setupOfflineSync("test", [], async (...args) => {
-  //   await new Promise((res) => setTimeout(res, 500));
-  // });
-
   registerBreadcrumbs([
     {
       path: `${window.spaBase}${routes.offlineTools}`,
