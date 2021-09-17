@@ -25,7 +25,7 @@ export function setupSynchronizingOfflineActionsNotifications() {
       showNotification({
         title: getI18n().t(
           "offlineActionsSynchronizationNotificationTitle",
-          "Uploading actions"
+          "Upload"
         ),
         description: (
           <SynchronizingNotification
@@ -74,7 +74,14 @@ function SynchronizingNotification({ mySynchronizationIndex }) {
 
   return (
     <>
-      {t("offlineActionsSynchronizationNotificationUploading", "Uploading...")}
+      {t(
+        "offlineActionsSynchronizationNotificationStatus",
+        "{current} / {total} actions",
+        {
+          current: synchronization.totalCount - synchronization.pendingCount,
+          total: synchronization.totalCount,
+        }
+      )}
     </>
   );
 }

@@ -30,9 +30,9 @@ interface SyncResultBag {
 }
 
 interface SyncHandler {
+  type: string;
   dependsOn: Array<string>;
-  canHandle: () => Promise<boolean>;
-  handle: (results: SyncResultBag, abort: AbortController) => Promise<void>;
+  process<T>(item: T, options: SyncProcessOptions<T>): Promise<any>;
 }
 
 class OfflineDb extends Dexie {
@@ -58,9 +58,8 @@ export function getOfflineDb() {
 
 export interface OfflineSynchronizationStore {
   synchronization?: {
-    total: number;
-    pending: number;
-    synchronized: number;
+    totalCount: number;
+    pendingCount: number;
     abortController: AbortController;
   };
 }
@@ -79,33 +78,49 @@ export async function runSynchronization() {
     return;
   }
 
+  const totalCount = await db.syncQueue.count();
   const promises: Record<string, Promise<void>> = {};
-  const queue = Object.entries(handlers);
-  const maxIter = queue.length;
+  const handlerQueue = Object.entries(handlers);
+  const maxIter = handlerQueue.length;
   const results: SyncResultBag = {};
   const abortController = new AbortController();
+  const notifySyncProgress = () => {
+    const synchronization = syncStore.getState().synchronization!;
+
+    syncStore.setState({
+      synchronization: {
+        ...synchronization,
+        pendingCount: synchronization!.pendingCount - 1,
+      },
+    });
+  };
 
   try {
     syncStore.setState({
       synchronization: {
-        total: -1,
-        pending: -1,
-        synchronized: -1,
+        totalCount,
+        pendingCount: totalCount,
         abortController,
       },
     });
 
     // we try until the queue is depleted, but no more than queue.length tries.
-    for (let iter = 0; iter < maxIter && queue.length > 0; iter++) {
-      for (let i = queue.length; i--; ) {
-        const [name, handler] = queue[i];
+    for (let iter = 0; iter < maxIter && handlerQueue.length > 0; iter++) {
+      for (let i = handlerQueue.length; i--; ) {
+        const [name, handler] = handlerQueue[i];
         const deps = handler.dependsOn.map((dep) => promises[dep]);
 
         if (deps.every(Boolean)) {
           results[name] = {};
           await Promise.all(deps);
-          promises[name] = handler.handle(results, abortController);
-          queue.splice(i, 1);
+
+          promises[name] = processHandler(
+            handler,
+            results,
+            abortController,
+            notifySyncProgress
+          );
+          handlerQueue.splice(i, 1);
         }
       }
     }
@@ -113,6 +128,54 @@ export async function runSynchronization() {
     await Promise.allSettled(Object.values(promises));
   } finally {
     syncStore.setState({ synchronization: undefined });
+  }
+}
+
+async function processHandler<T>(
+  { type, dependsOn, process }: SyncHandler,
+  results: SyncResultBag,
+  abortController: AbortController,
+  notifySyncProgress: () => void
+) {
+  const table = db.syncQueue;
+  const items: Array<[number, T, QueueItemDescriptor]> = [];
+  const contents: Array<T> = [];
+  const userId = await getUserId();
+
+  await table.where({ type, userId }).each((item, cursor) => {
+    items.push([cursor.primaryKey, item.content, item.descriptor]);
+    contents.push(item.content);
+  });
+
+  for (let i = 0; i < items.length; i++) {
+    const [key, item, { id, dependencies = [] }] = items[i];
+
+    try {
+      const result = await process(item, {
+        abort: abortController,
+        index: i,
+        items: contents,
+        userId,
+        dependencies: dependencies.map(({ id, type }) =>
+          dependsOn.includes(type) ? results[type][id] : undefined
+        ),
+      });
+
+      if (id !== undefined) {
+        results[type][id] = result;
+      }
+
+      await table.delete(key);
+    } catch (e) {
+      await table.update(key, {
+        lastError: {
+          name: e?.name,
+          message: e?.message ?? e?.toString(),
+        },
+      });
+    } finally {
+      notifySyncProgress();
+    }
   }
 }
 
@@ -189,58 +252,14 @@ export interface SyncProcessOptions<T> {
   dependencies: Array<any>;
 }
 
-export function setupOfflineSync<T>(
+export function setupOfflineSync(
   type: string,
   dependsOn: Array<string>,
-  process: (item: T, options: SyncProcessOptions<T>) => Promise<any>
+  process: <T>(item: T, options: SyncProcessOptions<T>) => Promise<any>
 ) {
-  const table = db.syncQueue;
-
   handlers[type] = {
+    type,
     dependsOn,
-    canHandle: async () => {
-      const userId = await getUserId();
-      const len = await table.where({ type, userId }).count();
-      return len > 0;
-    },
-    handle: async (results, abort) => {
-      const items: Array<[number, T, QueueItemDescriptor]> = [];
-      const contents: Array<T> = [];
-      const userId = await getUserId();
-
-      await table.where({ type, userId }).each((item, cursor) => {
-        items.push([cursor.primaryKey, item.content, item.descriptor]);
-        contents.push(item.content);
-      });
-
-      for (let i = 0; i < items.length; i++) {
-        const [key, item, { id, dependencies = [] }] = items[i];
-
-        try {
-          const result = await process(item, {
-            abort,
-            index: i,
-            items: contents,
-            userId,
-            dependencies: dependencies.map(({ id, type }) =>
-              dependsOn.includes(type) ? results[type][id] : undefined
-            ),
-          });
-
-          if (id !== undefined) {
-            results[type][id] = result;
-          }
-
-          await table.delete(key);
-        } catch (e) {
-          await table.update(key, {
-            lastError: {
-              name: e?.name,
-              message: e?.message ?? e?.toString(),
-            },
-          });
-        }
-      }
-    },
+    process,
   };
 }
