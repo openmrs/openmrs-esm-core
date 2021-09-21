@@ -7,7 +7,7 @@
 - Main concepts
   - [Map of the project](main/map.md)
   - [Creating a Microfrontend](main/creating_a_microfrontend.md)
-  - [Using Carbon and the Styleguide](main/carbon.md)
+  - [Design Conventions & Styleguide](main/carbon.md)
   - [Retrieving and Posting Data](main/data.md)
   - [Translations](main/translations.md)
   - [Extension System](main/extensions.md)
