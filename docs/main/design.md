@@ -2,7 +2,8 @@
 
 ## Design Patterns in OpenMRS 3.x
 First, review these introduction materials that explain the patterns to follow to keep OpenMRS 3.x a consistent User Experience:
-👉 [3.x Design Patterns](https://scene.zeplin.io/project/61434fa756474d5545f65cf4) 👈
+
+👉  [**Click here to see the 3.x Design Patterns**](https://scene.zeplin.io/project/61434fa756474d5545f65cf4) 👈
 
 Key areas that all Developers and Project Managers/BA team members should be most familiar with are: 
 * [NavBar/Header](https://scene.zeplin.io/project/61434fa756474d5545f65cf4/screen/6143628f56474d5545f6fce0)
