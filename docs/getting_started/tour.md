@@ -3,7 +3,7 @@
 Let's explore the contents of
 [openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).
 
-## Tooling
+## Tooling 🧰
 
 There are a number of configuration files at the project level. These
 can generally be treated as boilerplate. The important ones are
@@ -31,7 +31,7 @@ can generally be treated as boilerplate. The important ones are
   line is usually all you'll need in the config file. If you need to add something,
   you can simply override the properties of that default object.
 
-## The package
+## The package 📂
 
 `package.json`, as you should be [aware](./prerequisites.md), defines dependencies and
 metadata for the microfrontend (which is a
@@ -46,7 +46,7 @@ to the [`package.json` docs](https://docs.npmjs.com/cli/v7/configuring-npm/packa
 - We use `dependencies`, `peerDependencies`, and `devDependencies`. For information
   about how we use them please see [Build-time and runtime dependencies](../main/deps.md).
 
-## The application
+## The application 💻
 
 Now open
 [`src/index.ts`](https://github.com/openmrs/openmrs-esm-template-app/blob/master/src/index.ts).
