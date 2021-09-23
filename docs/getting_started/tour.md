@@ -15,12 +15,16 @@ can generally be treated as boilerplate. The important ones are
 - `babel.config.json`: Babel transpiles code to JavaScript that the browser can understand.
   This allows us to write in TypeScript, JSX, and ES2020, even though browsers
   generally don't understand that.
-- `jest.config.json`: Jest is the test runner. In this file you'll see that Jest is
-  configured to use Babel (via babel-jest) to transform code so that Jest, like the
-  browser, can understand it. The contents of `node_modules` are not transformed,
-  except the `@openmrs` packages, so that tests can make use of the generic mock
-  for `@openmrs/esm-framework`. The `moduleNameMapper` entry transforms `import`
-  statements in the code, whether to mock them or make them understandable to Jest.
+- `jest.config.json`: Jest is the test runner. In this file you'll see:
+  - Jest is configured to use Babel (via babel-jest) to transform code so that Jest, like the
+    browser, can understand it. The contents of `node_modules` are not transformed,
+    except the `@openmrs` packages, so that tests can make use of the generic mock
+    for `@openmrs/esm-framework`.
+  - The `moduleNameMapper` entry transforms `import`
+    statements in the code, whether to mock them or make them understandable to Jest.
+    Default mocks are provided for everything in `@openmrs/esm-framework`. Note that many
+    of these mocked functions have no implementation or return `undefined`, which may
+    not work for your tests—you may have to override their implementations.
 - `prettier.config.js`: Prettier is an auto-formatter. This ensures that you never have
   to worry about correct indentation, optional punctuation, or line breaks. Configuration
   is optional.
