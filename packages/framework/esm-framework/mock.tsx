@@ -110,11 +110,33 @@ export const validators = {
   isObject: jest.fn(),
 };
 
-export const getConfig = jest.fn();
+let configSchema = {};
+function getDefaults(schema) {
+  let tmp = {};
+  for (let k of Object.keys(schema)) {
+    if (schema[k].hasOwnProperty("_default")) {
+      tmp[k] = schema[k]._default;
+    } else if (k.startsWith("_")) {
+      continue;
+    } else if (isOrdinaryObject(schema[k])) {
+      tmp[k] = getDefaults(schema[k]);
+    } else {
+      tmp[k] = schema[k];
+    }
+  }
+  return tmp;
+}
+function isOrdinaryObject(x) {
+  return !!x && x.constructor === Object;
+}
 
-export const useConfig = jest.fn();
+export const getConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
 
-export function defineConfigSchema() {}
+export const useConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
+
+export function defineConfigSchema(moduleName, schema) {
+  configSchema = schema;
+}
 
 export const createErrorHandler = () => jest.fn().mockReturnValue(never());
 
