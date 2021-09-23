@@ -1,4 +1,4 @@
-# Tour of a microfrontend
+# Tour of a frontend module
 
 Let's explore the contents of
 [openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).
@@ -34,12 +34,12 @@ can generally be treated as boilerplate. The important ones are
 ## The package 📂
 
 `package.json`, as you should be [aware](./prerequisites.md), defines dependencies and
-metadata for the microfrontend (which is a
+metadata for the frontend module (which is a
 [package](https://docs.npmjs.com/about-packages-and-modules)).
 
 Looking inside, we find a bunch of metadata. Most of it can be understood with reference
 to the [`package.json` docs](https://docs.npmjs.com/cli/v7/configuring-npm/package-json).
-- The `name` of our microfrontend ends in `-app` so that it will be recognized as a microfrontend
+- The `name` of our frontend module ends in `-app` so that it will be recognized as a frontend module
   by the app shell and the build tooling.
 - The `browser` entry is the entrypoint of the bundle.
 - The `main` entry is the entrypoint of the source code.

@@ -7,11 +7,11 @@
   Please give it a read and write accordingly.
 
   Canonical names:
-    - "microfrontend": any "-app" package
-    - "microfrontends": the packages or the generic architecture concept
-    - "OpenMRS Frontend 3.0": the OpenMRS framework for microfrontends
+    - "frontend module": any "-app" package
+    - "microfrontends": the generic architecture concept
+    - "OpenMRS Frontend 3.0": the OpenMRS framework for frontend modules
     - "the openmrs-spa.org CI server": openmrs-spa.org
-    - "community-managed microfrontend": what it sounds like. Doesn't necessarily include
+    - "community-managed frontend modules": what it sounds like. Doesn't necessarily include
         everything published to the `openmrs` NPM org.
 
   Other notes:
@@ -48,7 +48,7 @@ Note that this documentation tends to assume that the developer is using React,
 but this is not a requirement of OpenMRS Frontend 3.0. Indeed, the entire purpose
 of choosing a microfrontends-based architecture was to allow collaboration between
 different teams using different technologies. If you are developing
-microfrontends in a technology other than React, please tell us so in the
+frontend modules in a technology other than React, please tell us so in the
 [#microfrontends](https://openmrs.slack.com/archives/CHP5QAE5R) channel on Slack.
 We'd love to work with you to make the development experience as smooth as possible,
 and take the opportunity to expand OpenMRS Frontend 3.0 support for different
@@ -76,9 +76,9 @@ These are videos below 5 minutes showing small dedicated things.
 
 ### Tutorials
 
-These are more extensive videos with focus on showing how to develop new microfrontends.
+These are more extensive videos with focus on showing how to develop new frontend modules.
 
-- [Part 1: OpenMRS SPA Extensions Tutorial: About our Microfrontend Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_e7kvnx9t?st=702) 
+- [Part 1: OpenMRS SPA Extensions Tutorial: About our Frontend Module Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_e7kvnx9t?st=702) 
 - [Part 2: OpenMRS SPA Extensions Workshop: Practical Session on our MFE Architecture & How to Use Extensions](https://iu.mediaspace.kaltura.com/media/t/1_iaq63mfd?st=282)
    - [OMRS SPA Workshop practice tasks](https://github.com/openmrs/openmrs-esm-testresults/tree/feature/workshop)
    - [OMRS SPA Workshop practice solutions](https://github.com/openmrs/openmrs-esm-testresults/tree/feature/workshop-solutions)

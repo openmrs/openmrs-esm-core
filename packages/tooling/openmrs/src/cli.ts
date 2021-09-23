@@ -114,7 +114,7 @@ yargs.command(
 
 yargs.command(
   "develop",
-  "Starts a new microfrontend development session with the OpenMRS app shell.",
+  "Starts a new frontend module development session with the OpenMRS app shell.",
   (argv) =>
     argv
       .number("port")
@@ -273,7 +273,7 @@ yargs.command(
       .default("mode", "survey")
       .describe(
         "mode",
-        "The source of the microfrontends to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey."
+        "The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey."
       ),
   (args) =>
     runCommand("runAssemble", {
@@ -309,9 +309,9 @@ yargs
     "The SPA build config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` " +
       "commands. The keys used by `build` are `apiUrl`, `spaPath`, `configUrls`, and `importmap`, each of " +
       "which is equivalent to the corresponding command line argument. The keys used by `assemble` are:\n" +
-      "  microfrontends  \tAn object which specifies which microfrontends to include. It should have package names " +
+      "  frontendModules  \tAn object which specifies which frontend modules to include. It should have package names " +
       "for keys and versions for values.\n" +
-      "  publicUrl  \tThe URL at which the microfrontends will be made available. Can be relative to the importmap. " +
+      "  publicUrl  \tThe URL at which the frontend modules will be made available. Can be relative to the importmap. " +
       "Defaults to `.` (which means they will be colocated with the import map).\n\n" +
       "For more information visit https://github.com/openmrs/openmrs-esm-core."
   )

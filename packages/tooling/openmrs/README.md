@@ -1,6 +1,6 @@
 # openmrs
 
-The one stop CLI for using the OpenMRS 3.0 Microfrontend app.
+The one stop CLI for using the OpenMRS 3.0 Frontend app.
 
 ## Prerequisites
 
@@ -61,7 +61,7 @@ npx openmrs build
 
 > For implementers.
 
-Assembles an import map incl. assets to provide the microfrontend assets for a distribution.
+Assembles an import map incl. assets to provide the frontend module assets for a distribution.
 
 Example:
 

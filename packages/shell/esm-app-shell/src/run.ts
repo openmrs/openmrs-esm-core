@@ -33,7 +33,7 @@ import { Workbox } from "workbox-window";
 const allowedSuffixes = ["-app", "-widgets"];
 
 /**
- * Gets the microfrontend modules (apps). These are entries
+ * Gets the frontend modules (apps). These are entries
  * in the import maps that end with "-app".
  * @param maps The value of the "imports" property of the
  * import maps.
@@ -45,10 +45,10 @@ function getApps(maps: Record<string, string>) {
 }
 
 /**
- * Loads the microfrontends (apps and widgets). Should be done *after*
+ * Loads the frontend modules (apps and widgets). Should be done *after*
  * the import maps initialized, i.e., after modules loaded.
  *
- * By convention we call microfrontends registering activation functions
+ * By convention we call frontend modules registering activation functions
  * apps, and all others widgets. This is not enforced technically.
  */
 function loadApps() {
@@ -76,7 +76,7 @@ function callRegister(registerFn: () => void) {
 }
 
 /**
- * Sets up the microfrontends (apps). Uses the defined export
+ * Sets up the frontend modules (apps). Uses the defined export
  * from the root modules of the apps, which should export a
  * special function called "setupOpenMRS".
  * That function returns an object that is used to feed Single

@@ -34,7 +34,7 @@ interface NpmSearchResult {
 interface AssembleConfig {
   baseDir: string;
   publicUrl: string;
-  microfrontends: Record<string, string>;
+  frontendModules: Record<string, string>;
 }
 
 async function readConfig(
@@ -55,7 +55,7 @@ async function readConfig(
         ...JSON.parse(readFileSync(config, "utf8")),
       };
     case "survey":
-      logInfo(`Loading available microfrontends ...`);
+      logInfo(`Loading available frontend modules ...`);
 
       const packages = await axios
         .get<NpmSearchResult>(
@@ -76,7 +76,7 @@ async function readConfig(
         questions.push(
           {
             name: pckg.name,
-            message: `Include microfrontend "${pckg.name}"?`,
+            message: `Include frontend module "${pckg.name}"?`,
             default: false,
             type: "confirm",
           },

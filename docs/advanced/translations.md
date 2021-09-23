@@ -7,11 +7,11 @@ There are three places in frontend code that relate to translation/i18n. They ar
 - The [OpenMRS Component Decorator](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/docs/API.md#openmrscomponentdecorator).
   This decorator is generally wrapped around root components by
   [getLifecycle](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/docs/API.md#getasynclifecycle)/[getAsyncLifecycle](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/docs/API.md#getasynclifecycle)—
-  it is generally not used directly by microfrontends.
+  it is generally not used directly by frontend modules.
   This component provides the connection between the i18next "backend"
-  (still on the client side, despite the name) and the microfrontend it wraps.
-- The microfrontend, which uses the `t` function or `<Trans>` component from react-i18next
-  to produce rendered content. Upon each commit, [i18next-parser](https://github.com/i18next/i18next-parser) parses the microfrontend code and automatically extracts translation keys and strings into locale-specific translation files found in the `translations` directory of a microfrontend.
+  (still on the client side, despite the name) and the frontend module it wraps.
+- The frontend module, which uses the `t` function or `<Trans>` component from react-i18next
+  to produce rendered content. Upon each commit, [i18next-parser](https://github.com/i18next/i18next-parser) parses the frontend module code and automatically extracts translation keys and strings into locale-specific translation files found in the `translations` directory of a frontend module.
 
 ## Language Detection
 

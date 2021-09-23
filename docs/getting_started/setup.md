@@ -9,7 +9,7 @@ to ensure you're using the latest node.
 Note that as a frontend project, we use node for compiling and bundling frontend code,
 not for running the backend or server.
 
-## Working on a microfrontend
+## Working on a frontend module
 
 Clone the repository of interest. For this example we'll use
 [openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).
@@ -40,13 +40,13 @@ npx openmrs develop  # the 'npx' is 'npm exec', which is implicit within `script
 > **For the curious**: This command runs two dev servers. One serves the
 *app shell*, which
 is installed as a dependency of the `openmrs` package.
-The other serves the microfrontend.
+The other serves the frontend module.
 They come together via the import map.
 
 You can usually run commands with `--help` to learn more about them.
 Try `npm run start -- --help` (or `npx openmrs develop --help`), for example.
 
-## Developing microfrontends in a Lerna monorepo
+## Developing frontend modules in a Lerna monorepo
 
 In a [Lerna monorepo](https://github.com/lerna/lerna#readme), the commands are
 a bit different. As an example monorepo you can use
@@ -77,7 +77,7 @@ pattern for the `--sources` parameter. For example,
 npx openmrs develop --sources packages/esm-*-app/
 ```
 
-will run a local server with all the microfrontends matching the pattern.
+will run a local server with all the frontend modules matching the pattern.
 
 Alternatively, you can also specify the `--sources` argument multiple times, e.g.,
 
@@ -114,8 +114,8 @@ used for debugging.
 
 ## Import map overrides
 
-If you'd like to work on multiple microfrontends that aren't in a monorepo together,
-or if you'd like to run a microfrontend you are developing locally on a
+If you'd like to work on multiple frontend modules that aren't in a monorepo together,
+or if you'd like to run a frontend module you are developing locally on a
 deployed server somewhere, you can use import map overrides,
 which is made available through the OpenMRS DevTools.
 
@@ -132,7 +132,7 @@ localStorage.setItem('openmrs:devtools', true)
 After refreshing the page, a little box should appear in the lower-right hand corner of the page.
 Clicking this box opens the OpenMRS DevTools.
 
-In the microfrontend you want to develop, run
+In the frontend module you want to develop, run
 
 ```bash
 # if the OpenMRS frontend you're looking at uses HTTP (e.g. a local server)
@@ -144,12 +144,12 @@ npm run serve --https
 > Substitute `yarn serve` if the project uses Yarn, or `narn serve` if you use
   [narn](https://github.com/joeldenning/narn).
 
-The protocol of the application must match the protocol of the locally-served microfrontend.
+The protocol of the application must match the protocol of the locally-served frontend module.
 
-This command will serve the microfrontend and tell you the port where it is serving,
+This command will serve the frontend module and tell you the port where it is serving,
 as well as showing you the filenames that are being served. You can then use
 the import map overrides panel to override the existing import map
-entry, or add your microfrontend as a new entry.
+entry, or add your frontend module as a new entry.
 
 For example, if you run `yarn serve` in
 [esm-login-app](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/apps/esm-login-app),

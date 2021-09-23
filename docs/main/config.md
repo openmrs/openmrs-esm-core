@@ -5,11 +5,11 @@ configuring easier for implementers.
 
 [API Docs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/docs/API.md)
 
-For introduction to Frontend 3.0 config files and how to configure microfrontends,
+For introduction to Frontend 3.0 config files and how to configure frontend modules,
 please see the the
 [Implementer Documentation](https://wiki.openmrs.org/display/projects/Frontend+3.0+Documentation+for+Implementers#Frontend3.0DocumentationforImplementers-Configuringtheapplication).
 
-## How to make a microfrontend configurable
+## How to make a frontend module configurable
 
 You should use this part of the OpenMRS Frontend Framework to modules configurable.
 

@@ -1,13 +1,13 @@
-# Creating a microfrontend
+# Creating a frontend module
 
-New microfrontends can be created from the
+New frontend modules can be created from the
 [openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).
 You can fork that repository, or clone-and-copy it. Follow the instructions
-in the README to turn it into your own microfrontend.
+in the README to turn it into your own frontend module.
 
 ## The `index.ts` file
 
-All microfrontends have an `index.ts` as an
+All frontend modules have an `index.ts` as an
 [entry point](https://webpack.js.org/concepts/entry-points/).
 See the [example](https://github.com/openmrs/openmrs-esm-template-app/blob/master/src/index.ts)
 in openmrs-esm-template-app.
@@ -26,7 +26,7 @@ should only do the following four things:
 - define the [configuration schema](config.md)
 - register [breadcrumbs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/docs/API.md#registerbreadcrumbs)
 - set up [offline support](../advanced/offline.md)
-- return an object specifying the microfrontend's pages and extensions
+- return an object specifying the frontend module's pages and extensions
 
 #### The `setupOpenMRS` return object
 
@@ -43,11 +43,11 @@ Here is an example which uses all of the possible keys.
     pages: [
       {
         // load (required): tells the app shell how to load the
-        //   microfrontend content
+        //   frontend module content
         load: getAsyncLifecycle(() => import('./hello'), options),
         // route (required): a string, RegEx, function, or array of any of the
         //   above, which will be used to determine when to load the
-        //   microfrontend content. It will be matched against the URL path.
+        //   frontend module content. It will be matched against the URL path.
         route: 'hello',
         // `online`, `offline`, and `resources` are described in the offline
         //   support documentation. All are optional.
@@ -95,7 +95,7 @@ for reference. You could then add this as a page to the application:
 ### The `backendDependencies` object
 
 This is an object that tells the frontend application what OpenMRS server modules
-the microfrontend depends on, and what versions. If these dependencies are not
+the frontend module depends on, and what versions. If these dependencies are not
 met, administrators will be alerted.
 
 ### The `importTranslation` function
@@ -109,10 +109,10 @@ That directory must exist at that location relative to the `index.ts` file.
 
 ## Integrating into your application
 
-Once you've created a microfrontend, you'll want to integrate it into your
+Once you've created a frontend module, you'll want to integrate it into your
 application. There are two steps for doing so.
 
-First, publish your microfrontend package to NPM. See
+First, publish your frontend module package to NPM. See
 [Release and Deployment](../getting_started/release_and_deployment.md)
 for more information. At the end, your package should be visible on npm.js,
 like [`@openmrs/esm-login-app`](https://www.npmjs.com/package/@openmrs/esm-login-app).

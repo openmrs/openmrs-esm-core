@@ -17,7 +17,7 @@ export interface CancelLoading {
 
 /**
  * Mounts into a DOM node (representing an extension slot)
- * a lazy-loaded component from *any* microfrontend
+ * a lazy-loaded component from *any* frontend module
  * that registered an extension component for this slot.
  */
 export function renderExtension(
