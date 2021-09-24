@@ -98,7 +98,7 @@ async function readConfig(
       return {
         baseDir: process.cwd(),
         publicUrl: ".",
-        microfrontends: Object.keys(answers)
+        frontendModules: Object.keys(answers)
           .filter((m) => answers[m])
           .reduce((prev, curr) => {
             prev[curr] = answers[curr];
@@ -109,7 +109,7 @@ async function readConfig(
 
   return {
     baseDir: process.cwd(),
-    microfrontends: {},
+    frontendModules: {},
     publicUrl: ".",
   };
 }
@@ -179,7 +179,7 @@ export async function runAssemble(args: AssembleArgs) {
 
   logInfo(`Assembling the importmap ...`);
 
-  const { microfrontends = {}, publicUrl = "." } = config;
+  const { frontendModules = {}, publicUrl = "." } = config;
   const cacheDir = resolve(process.cwd(), ".cache");
 
   if (args.fresh && existsSync(args.target)) {
@@ -189,8 +189,8 @@ export async function runAssemble(args: AssembleArgs) {
   mkdirSync(args.target, { recursive: true });
 
   await Promise.all(
-    Object.keys(microfrontends).map(async (esmName) => {
-      const esmVersion = microfrontends[esmName];
+    Object.keys(frontendModules).map(async (esmName) => {
+      const esmVersion = frontendModules[esmName];
       const tgzFileName = await downloadPackage(
         cacheDir,
         esmName,
