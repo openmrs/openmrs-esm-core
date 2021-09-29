@@ -42,8 +42,7 @@
     "@openmrs/esm-state": "^3.1.10",
     "@openmrs/esm-styleguide": "^3.1.10",
     "@types/uuid": "^8.3.0",
-    "rxjs": "^6.5.3",
-    "uuid": "^8.3.2"
+    "rxjs": "^6.5.3"
   },
   "peerDependencies": {
     "@openmrs/esm-api": "3.x",
@@ -55,6 +54,7 @@
   "dependencies": {
     "dexie": "^3.0.3",
     "lodash-es": "4.17.21",
+    "uuid": "^8.3.2",
     "workbox-window": "^6.1.5"
   }
 }
