@@ -34,13 +34,14 @@ export function runDevelop(args: DevelopArgs) {
   );
   const index = resolve(source, "index.html");
   const indexContent = readFileSync(index, "utf8").replace(
-    `<script>.*</script>`,
+    RegExp("<script>[\\s\\S]+</script>"),
     `
     <script>
         initializeSpa({
           apiUrl: ${JSON.stringify(apiUrl)},
           spaPath: ${JSON.stringify(spaPath)},
           env: "development",
+          offline: true,
           configUrls: ${JSON.stringify(configUrls)},
         });
     </script>
@@ -55,7 +56,6 @@ export function runDevelop(args: DevelopArgs) {
       res.redirect(importmap.value);
     }
   });
-  app.use(spaPath, express.static(source));
   app.use(
     apiUrl,
     createProxyMiddleware([`${apiUrl}/**`, `!${spaPath}/**`], {
@@ -63,7 +63,10 @@ export function runDevelop(args: DevelopArgs) {
       changeOrigin: true,
     })
   );
-  app.get("/*", (_, res) => res.contentType("text/html").send(indexContent));
+  app.use(spaPath, express.static(source, { index: false }));
+  app.get(`${spaPath}/*`, (_, res) =>
+    res.contentType("text/html").send(indexContent)
+  );
 
   app.listen(port, host, () => {
     logInfo(`Listening at http://${host}:${port}`);
