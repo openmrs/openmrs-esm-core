@@ -20,7 +20,7 @@
         (in addition to Docsify). This means that they must be relative and
         suffixed with `.md`.
           Bad: `/main/state`
-          Good: `main/state.md` or `../main/state.md` or `./state.md`
+          Good: `../main/state.md`
     - Right now, it's okay to assume devs are using React. When possible,
         please do include framework-agnostic examples. Keep in mind that at
         some point in the future it may make sense to refactor these docs to
