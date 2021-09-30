@@ -33,9 +33,10 @@ export function runDevelop(args: DevelopArgs) {
     "lib"
   );
   const index = resolve(source, "index.html");
-  const indexContent = readFileSync(index, "utf8").replace(
-    RegExp("<script>[\\s\\S]+</script>"),
-    `
+  const indexContent = readFileSync(index, "utf8")
+    .replace(
+      RegExp("<script>[\\s\\S]+</script>"),
+      `
     <script>
         initializeSpa({
           apiUrl: ${JSON.stringify(apiUrl)},
@@ -46,7 +47,10 @@ export function runDevelop(args: DevelopArgs) {
         });
     </script>
   `
-  );
+    )
+    .replace(/href="\/openmrs\/spa/g, `href="${spaPath}`)
+    .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`);
+
   const pageUrl = `http://${host}:${port}${spaPath}/`;
 
   app.get(`${spaPath}/importmap.json`, (_, res) => {
