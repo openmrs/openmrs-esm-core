@@ -25,6 +25,7 @@ async function readImportmap(path: string) {
             }
           });
         }
+        return m;
       })
       .then((m) => JSON.stringify(m));
   } else if (path === "importmap.json") {
