@@ -26,7 +26,7 @@ The **microfrontends** are shipped in the ES Module format and usually thus just
 - are loaded indirectly via a special JSON called an "import map", and they
 - export a predefined set of functionality including a function called `setupOpenMRS`.
 
-These microfrontends bring in domain-specific UI capabilities such as menu entries, page content, or notifications. In many cases they also come with dedicted [offline](../advanced/offline.md) capabilities, which allow, e.g., registration or modifications of certain patients while not being connected.
+These microfrontends bring in domain-specific UI capabilities such as menu entries, page content, or notifications. In many cases they also come with dedicted [offline](advanced/offline.md) capabilities, which allow, e.g., registration or modifications of certain patients while not being connected.
 
 ### The backend
 
