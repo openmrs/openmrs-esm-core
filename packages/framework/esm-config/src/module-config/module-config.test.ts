@@ -830,7 +830,10 @@ describe("temporary config", () => {
     let config = await Config.getConfig("foo-module");
     expect(config).toStrictEqual({ foo: 3 });
     temporaryConfigStore.setState({
-      config: unset(temporaryConfigStore.getState(), ["foo-module", "foo"]),
+      config: unset(temporaryConfigStore.getState(), [
+        "foo-module",
+        "foo",
+      ]) as any,
     });
     config = await Config.getConfig("foo-module");
     expect(config).toStrictEqual({ foo: "baz" });

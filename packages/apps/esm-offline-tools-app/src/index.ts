@@ -1,9 +1,11 @@
 import {
   getAsyncLifecycle,
   registerBreadcrumbs,
-  registerOfflinePatientHandler,
+  setupOfflineSync,
 } from "@openmrs/esm-framework";
 import { routes } from "./constants";
+import { setupOffline } from "./offline";
+import { setupSynchronizingOfflineActionsNotifications } from "./offline-actions/synchronizing-notification";
 
 const importTranslation = require.context(
   "../translations",
@@ -28,6 +30,9 @@ function setupOpenMRS() {
     moduleName,
   };
 
+  setupOffline();
+  setupSynchronizingOfflineActionsNotifications();
+
   registerBreadcrumbs([
     {
       path: `${window.spaBase}${routes.offlineTools}`,
@@ -44,6 +49,11 @@ function setupOpenMRS() {
       title: "Offline data",
       parent: `${window.spaBase}${routes.offlineToolsPatients}`,
     },
+    {
+      path: `${window.spaBase}${routes.offlineToolsActions}`,
+      title: "Actions",
+      parent: `${window.spaBase}${routes.offlineTools}`,
+    },
   ]);
 
   return {
@@ -51,8 +61,12 @@ function setupOpenMRS() {
       {
         load: getAsyncLifecycle(() => import("./root.component"), options),
         route: "offline-tools",
-        online: true,
-        offline: true,
+        online: {
+          canSynchronizeOfflineActions: true,
+        },
+        offline: {
+          canSynchronizeOfflineActions: false,
+        },
       },
     ],
     extensions: [

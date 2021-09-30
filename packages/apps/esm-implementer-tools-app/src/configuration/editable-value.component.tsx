@@ -136,7 +136,10 @@ export default function EditableValue({
                 hasIconOnly
                 onClick={() => {
                   temporaryConfigStore.setState(
-                    unset(temporaryConfigStore.getState(), ["config", ...path])
+                    unset(temporaryConfigStore.getState(), [
+                      "config",
+                      ...path,
+                    ]) as any
                   );
                 }}
               />

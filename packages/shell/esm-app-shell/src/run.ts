@@ -19,7 +19,6 @@ import {
   getCurrentUser,
   KnownOmrsServiceWorkerEvents,
   dispatchNetworkRequestFailed,
-  triggerSynchronization,
   renderModals,
   dispatchPrecacheStaticDependencies,
 } from "@openmrs/esm-framework";
@@ -276,20 +275,6 @@ async function precacheSharedApiEndpoints() {
   });
 }
 
-function setupOfflineSynchronization() {
-  let syncing: AbortController | undefined;
-
-  subscribeOnlineAndLoginChange((online, hasLoggedInUser) => {
-    if (hasLoggedInUser && online) {
-      syncing = new AbortController();
-      triggerSynchronization(syncing);
-    } else if (syncing) {
-      syncing.abort();
-      syncing = undefined;
-    }
-  });
-}
-
 function setupOfflineStaticDependencyPrecaching() {
   const precacheDelay = 1000 * 60 * 5;
   let lastPrecache: Date | null = null;
@@ -360,6 +345,5 @@ export function run(configUrls: Array<string>, offline: boolean) {
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(setupOfflineSynchronization)
     .then(setupOfflineStaticDependencyPrecaching);
 }
