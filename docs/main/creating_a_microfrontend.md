@@ -25,7 +25,7 @@ should only do the following four things:
 
 - define the [configuration schema](config.md)
 - register [breadcrumbs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/docs/API.md#registerbreadcrumbs)
-- set up [offline support](advanced/offline.md)
+- set up [offline support](../advanced/offline.md)
 - return an object specifying the microfrontend's pages and extensions
 
 #### The `setupOpenMRS` return object
@@ -113,7 +113,7 @@ Once you've created a microfrontend, you'll want to integrate it into your
 application. There are two steps for doing so.
 
 First, publish your microfrontend package to NPM. See
-[Release and Deployment](getting_started/release_and_deployment.md)
+[Release and Deployment](../getting_started/release_and_deployment.md)
 for more information. At the end, your package should be visible on npm.js,
 like [`@openmrs/esm-login-app`](https://www.npmjs.com/package/@openmrs/esm-login-app).
 

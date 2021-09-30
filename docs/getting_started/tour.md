@@ -48,7 +48,7 @@ to the [`package.json` docs](https://docs.npmjs.com/cli/v7/configuring-npm/packa
 - The `browser` entry is the entrypoint of the bundle.
 - The `main` entry is the entrypoint of the source code.
 - We use `dependencies`, `peerDependencies`, and `devDependencies`. For information
-  about how we use them please see [Build-time and runtime dependencies](main/deps.md).
+  about how we use them please see [Build-time and runtime dependencies](../main/deps.md).
 
 ## The application 💻
 

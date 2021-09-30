@@ -16,12 +16,11 @@
 
   Other notes:
     - Use line breaks. Try and keep line length below 100 characters.
-    - Links between different documentation pages must work both in the GitHub UI and in Docsify
+    - Links between different documentation pages must work in the GitHub UI
         (in addition to Docsify). This means that they must be relative and
         suffixed with `.md`.
-          Bad: `/main/state` (doesn't work in GitHub UI)
-          Bad: `../main/state` (doesn't work in Docsify)
-          Good: `main/state.md` or `./state.md`
+          Bad: `/main/state`
+          Good: `main/state.md` or `../main/state.md` or `./state.md`
     - Right now, it's okay to assume devs are using React. When possible,
         please do include framework-agnostic examples. Keep in mind that at
         some point in the future it may make sense to refactor these docs to
