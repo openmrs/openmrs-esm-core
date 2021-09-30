@@ -5,11 +5,11 @@ In general, state in React apps should be
 Use the [State Hook](https://reactjs.org/docs/hooks-state.html) (or
 [Reducer Hook](https://reactjs.org/docs/hooks-reference.html#usereducer))
 and [Context](https://reactjs.org/docs/context.html) to pass state around within your
-microfrontend.
+frontend module.
 
 In some cases, you may need to manage state outside React, such as when you
 have separate React applications that need to share state.
-This can come up, for example, if you your microfrontend has multiple extensions
+This can come up, for example, if you your frontend module has multiple extensions
 that need to share state with each other.
 
 In these cases you can use the

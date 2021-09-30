@@ -3,10 +3,10 @@
   - [Setup](getting_started/setup.md)
   - [Contributing](getting_started/contributing.md)
   - [Release and Deployment](getting_started/release_and_deployment.md)
-  - [Tour of a Microfrontend](getting_started/tour.md)
+  - [Tour of a Frontend Module](getting_started/tour.md)
 - Main concepts
   - [Map of the project](main/map.md)
-  - [Creating a Microfrontend](main/creating_a_microfrontend.md)
+  - [Creating a Frontend Module](main/creating_a_microfrontend.md)
   - [Design Conventions & Styleguide](main/carbon.md)
   - [Retrieving and Posting Data](main/data.md)
   - [Translations](main/translations.md)

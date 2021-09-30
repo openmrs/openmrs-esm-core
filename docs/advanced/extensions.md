@@ -37,7 +37,7 @@ As a shorthand for (4) you could already specify a target slot via the `slot` pr
 attach('foo-slot', 'foo');
 ```
 
-Generally, though this is either done at initialization time as a default, or explicitly via a user-provided configuration. The only exception can be found with "dynamic" (or "special") slots. One example in this area is the workspace of the patient chart microfrontend.
+Generally, though this is either done at initialization time as a default, or explicitly via a user-provided configuration. The only exception can be found with "dynamic" (or "special") slots. One example in this area is the workspace of the patient chart frontend module.
 
 ## Rendering
 

@@ -34,7 +34,7 @@ interface NpmSearchResult {
 interface AssembleConfig {
   baseDir: string;
   publicUrl: string;
-  microfrontends: Record<string, string>;
+  frontendModules: Record<string, string>;
 }
 
 async function readConfig(
@@ -55,7 +55,7 @@ async function readConfig(
         ...JSON.parse(readFileSync(config, "utf8")),
       };
     case "survey":
-      logInfo(`Loading available microfrontends ...`);
+      logInfo(`Loading available frontend modules ...`);
 
       const packages = await axios
         .get<NpmSearchResult>(
@@ -76,7 +76,7 @@ async function readConfig(
         questions.push(
           {
             name: pckg.name,
-            message: `Include microfrontend "${pckg.name}"?`,
+            message: `Include frontend module "${pckg.name}"?`,
             default: false,
             type: "confirm",
           },
@@ -98,7 +98,7 @@ async function readConfig(
       return {
         baseDir: process.cwd(),
         publicUrl: ".",
-        microfrontends: Object.keys(answers)
+        frontendModules: Object.keys(answers)
           .filter((m) => answers[m])
           .reduce((prev, curr) => {
             prev[curr] = answers[curr];
@@ -109,7 +109,7 @@ async function readConfig(
 
   return {
     baseDir: process.cwd(),
-    microfrontends: {},
+    frontendModules: {},
     publicUrl: ".",
   };
 }
@@ -179,7 +179,7 @@ export async function runAssemble(args: AssembleArgs) {
 
   logInfo(`Assembling the importmap ...`);
 
-  const { microfrontends = {}, publicUrl = "." } = config;
+  const { frontendModules = {}, publicUrl = "." } = config;
   const cacheDir = resolve(process.cwd(), ".cache");
 
   if (args.fresh && existsSync(args.target)) {
@@ -189,8 +189,8 @@ export async function runAssemble(args: AssembleArgs) {
   mkdirSync(args.target, { recursive: true });
 
   await Promise.all(
-    Object.keys(microfrontends).map(async (esmName) => {
-      const esmVersion = microfrontends[esmName];
+    Object.keys(frontendModules).map(async (esmName) => {
+      const esmVersion = frontendModules[esmName];
       const tgzFileName = await downloadPackage(
         cacheDir,
         esmName,

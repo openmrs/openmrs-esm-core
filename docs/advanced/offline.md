@@ -5,8 +5,8 @@ The OpenMRS 3.0 SPA solution uses [Workbox](https://developers.google.com/web/to
 There are three facets that are unique to this approach:
 
 1. Each component (page / extension) can be marked as offline (or online) capable. By default every component is online capable, but not offline capable.
-2. Each microfrontend can declare certain (HTTP) calls to be cacheable.
-3. Each microfrontend can queue items to be processed when the application is back online.
+2. Each frontend module can declare certain (HTTP) calls to be cacheable.
+3. Each frontend module can queue items to be processed when the application is back online.
 
 ## Registration
 

@@ -41,9 +41,9 @@ All libraries are aggregated in the `@openmrs/esm-framework` package:
 
 - [@openmrs/esm-framework](packages/framework/esm-framework)
 
-### Microfrontends
+### Frontend modules
 
-A set of microfrontends provide the core technical functionality of the application.
+A set of frontend modules provide the core technical functionality of the application.
 
 - [@openmrs/esm-devtools-app](packages/apps/esm-devtools-app)
 - [@openmrs/esm-implementer-tools-app](packages/apps/esm-implementer-tools-app)
@@ -84,7 +84,7 @@ yarn verify
 yarn run:shell
 ```
 
-#### The microfrontends in `apps`
+#### The frontend modules in `apps`
 
 ```sh
 cd packages/apps/esm-[xyz]-app
