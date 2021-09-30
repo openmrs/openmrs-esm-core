@@ -1,4 +1,17 @@
-# Using Carbon and the Styleguide
+# Design Conventions: Patterns to Follow and How to Use Carbon and the Styleguide
+
+## Design Patterns in OpenMRS 3.x
+First, review these introduction materials that explain the patterns to follow to keep OpenMRS 3.x a consistent User Experience:
+
+👉  [**Click here to see the 3.x Design Patterns**](https://scene.zeplin.io/project/61434fa756474d5545f65cf4) 👈
+
+Key areas that all Developers and Project Managers/BA team members should be most familiar with are: 
+* [NavBar/Header](https://scene.zeplin.io/project/61434fa756474d5545f65cf4/screen/6143628f56474d5545f6fce0)
+* [Side Rail](https://scene.zeplin.io/project/61434fa756474d5545f65cf4/screen/614362c96abfb0557aa9e357)
+* [Workspace](https://scene.zeplin.io/project/61434fa756474d5545f65cf4/screen/614363d860459a20f7936333)
+* [Floating Action Button](https://scene.zeplin.io/project/61434fa756474d5545f65cf4/screen/6143627ab2bac050c2b9ba3a)
+* [Side Panel](https://scene.zeplin.io/project/61434fa756474d5545f65cf4/screen/614363d8b8582a2b4c3365a2)
+* [Data Tables](https://scene.zeplin.io/project/61434fa756474d5545f65cf4/screen/61436254475da3542a84b400)
 
 ## What is Carbon?
 **Carbon**, or [Carbon Design System](https://www.carbondesignsystem.com/), is an 

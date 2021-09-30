@@ -54,11 +54,11 @@ We'd love to work with you to make the development experience as smooth as possi
 and take the opportunity to expand OpenMRS Frontend 3.0 support for different
 frameworks.
 
-## Videos
+## Videos 🎥
 
 These videos are available to show how you can develop new frontend functionalities using the OpenMRS 3.0 setup.
 
-### Talks
+### Talks 
 
 These are videos which have been recorded for some talks and conference sessions.
 

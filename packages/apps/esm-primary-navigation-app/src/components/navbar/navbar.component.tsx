@@ -75,6 +75,7 @@ const Navbar: React.FC<NavbarProps> = ({
             <HeaderMenuButton
               aria-label="Open menu"
               isCollapsible
+              className={styles.headerMenuButton}
               onClick={(event) => {
                 togglePanel("sideMenu");
                 event.stopPropagation();
