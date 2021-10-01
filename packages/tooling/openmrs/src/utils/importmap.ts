@@ -250,3 +250,26 @@ export async function getImportmap(
     value,
   };
 }
+
+export function proxyImportmap(
+  decl: ImportmapDeclaration,
+  backend: string,
+  host: string,
+  port: number
+) {
+  if (decl.type != "inline") {
+    throw new Error(
+      "proxyImportMap called on non-inline import map. This is a programming error. Value: " +
+        decl.value
+    );
+  }
+  const importmap = JSON.parse(decl.value);
+  Object.keys(importmap.imports).forEach((key) => {
+    const url = importmap.imports[key];
+    if (url.startsWith(backend)) {
+      importmap.imports[key] = url.replace(backend, `http://${host}:${port}`);
+    }
+  });
+  decl.value = JSON.stringify(importmap);
+  return decl;
+}

@@ -3,7 +3,13 @@
 import * as yargs from "yargs";
 import { fork } from "child_process";
 import { resolve } from "path";
-import { getImportmap, mergeImportmap, runProject, trimEnd } from "./utils";
+import {
+  getImportmap,
+  mergeImportmap,
+  proxyImportmap,
+  runProject,
+  trimEnd,
+} from "./utils";
 
 import type * as commands from "./commands";
 
@@ -100,14 +106,19 @@ yargs.command(
       pageTitle: args["page-title"],
       supportOffline: args["support-offline"],
       ...args,
-      importmap: await mergeImportmap(
-        await getImportmap(args.importmap, args.port),
-        (args["run-project"] || (args.runProject as boolean)) &&
-          (await runProject(
-            args.port,
-            args["shared-dependencies"],
-            args.sources
-          ))
+      importmap: proxyImportmap(
+        await mergeImportmap(
+          await getImportmap(args.importmap, args.port),
+          (args["run-project"] || (args.runProject as boolean)) &&
+            (await runProject(
+              args.port,
+              args["shared-dependencies"],
+              args.sources
+            ))
+        ),
+        args.backend,
+        args.host,
+        args.port
       ),
     })
 );
@@ -168,14 +179,19 @@ yargs.command(
       spaPath: args["spa-path"],
       configUrls: args["config-url"],
       ...args,
-      importmap: await mergeImportmap(
-        await getImportmap(args.importmap, args.port),
-        (args.sources[0] as string | boolean) !== false &&
-          (await runProject(
-            args.port,
-            args["shared-dependencies"],
-            args.sources
-          ))
+      importmap: proxyImportmap(
+        await mergeImportmap(
+          await getImportmap(args.importmap, args.port),
+          (args.sources[0] as string | boolean) !== false &&
+            (await runProject(
+              args.port,
+              args["shared-dependencies"],
+              args.sources
+            ))
+        ),
+        args.backend,
+        args.host,
+        args.port
       ),
     })
 );
