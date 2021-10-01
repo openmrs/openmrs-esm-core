@@ -62,13 +62,10 @@ export function runDevelop(args: DevelopArgs) {
   });
   app.use(
     apiUrl,
-    createProxyMiddleware(
-      [`${apiUrl}/**`, `!${spaPath}/**!(.js|.woff2?|.css)`],
-      {
-        target: backend,
-        changeOrigin: true,
-      }
-    )
+    createProxyMiddleware([`${apiUrl}/**`, `!${spaPath}/**!(.js|.woff2?)`], {
+      target: backend,
+      changeOrigin: true,
+    })
   );
   app.use(spaPath, express.static(source, { index: false }));
   app.get(`${spaPath}/*`, (_, res) =>
