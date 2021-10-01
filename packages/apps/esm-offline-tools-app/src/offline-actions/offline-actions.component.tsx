@@ -3,6 +3,7 @@ import {
   getOfflineSynchronizationStore,
   queueSynchronizationItem,
   runSynchronization,
+  showModal,
   SyncItem,
   useLayoutType,
   useStore,
@@ -37,8 +38,28 @@ const OfflineActions: React.FC<OfflineActionsProps> = ({
 
   const synchronize = () => runSynchronization().finally(() => mutate());
   const deleteSynchronizationItems = async (ids: Array<number>) => {
-    await Promise.allSettled(ids.map((id) => deleteSynchronizationItem(id)));
-    mutate();
+    const closeModal = showModal("offline-tools-confirmation-modal", {
+      title: t(
+        "offlineActionsDeleteConfirmationModalTitle",
+        "Delete offline actions"
+      ),
+      children: t(
+        "offlineActionsDeleteConfirmationModalContent",
+        "Are you sure that you want to delete all selected offline actions? This cannot be undone!"
+      ),
+      confirmText: t(
+        "offlineActionsDeleteConfirmationModalConfirm",
+        "Delete forever"
+      ),
+      cancelText: t("offlineActionsDeleteConfirmationModalCancel", "Cancel"),
+      closeModal: () => closeModal(),
+      onConfirm: async () => {
+        await Promise.allSettled(
+          ids.map((id) => deleteSynchronizationItem(id))
+        );
+        mutate();
+      },
+    });
   };
 
   const primaryActions = (

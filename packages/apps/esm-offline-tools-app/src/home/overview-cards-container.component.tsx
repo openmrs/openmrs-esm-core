@@ -8,8 +8,9 @@ const OverviewCardsContainer: React.FC = () => {
   return (
     <div className={styles.overviewCardContainer}>
       <PatientsOverviewCard />
-      <FormsOverviewCard />
-      <OfflineActionsOverviewCard className={styles.offlineActionsCard} />
+      {/* <FormsOverviewCard /> */}{" "}
+      {/* TODO: <- Restore once offline tool forms are implemented. Commented out to avoid the (tbd) in the demo envs. */}
+      <OfflineActionsOverviewCard />
     </div>
   );
 };

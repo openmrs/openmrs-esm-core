@@ -92,6 +92,15 @@ function setupOpenMRS() {
         online: true,
         offline: true,
       },
+      {
+        id: "offline-tools-confirmation-modal",
+        load: getAsyncLifecycle(
+          () => import("./components/confirmation-modal.component"),
+          options
+        ),
+        online: true,
+        offline: true,
+      },
     ],
   };
 }
