@@ -10,6 +10,7 @@ export interface WebpackOptions {
   supportOffline?: boolean;
   configUrls?: Array<string>;
   env?: string;
+  coreAppsDir?: string;
 }
 
 export function loadWebpackConfig(options: WebpackOptions = {}) {
@@ -53,6 +54,10 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
         variables.OMRS_ESM_IMPORTMAP_URL = options.importmap.value;
         break;
     }
+  }
+
+  if (typeof options.coreAppsDir === "string") {
+    variables.OMRS_ESM_CORE_APPS_DIR = options.coreAppsDir;
   }
 
   setEnvVariables(variables);
