@@ -238,7 +238,7 @@ yargs.command(
       .default("download-coreapps", false)
       .describe(
         "download-coreapps",
-        "Allows automatically downloading the core app shell apps if they are not currently avaialble."
+        "Downloads and bundles the core apps. For cases where the core apps are not in the import map."
       ),
   async (args) =>
     runCommand("runBuild", {
