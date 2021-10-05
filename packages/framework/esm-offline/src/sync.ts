@@ -25,6 +25,11 @@ export interface QueueItemDescriptor {
   displayName?: string;
 }
 
+export type ProcessSyncItem<T> = (
+  item: T,
+  options: SyncProcessOptions<T>
+) => Promise<any>;
+
 interface SyncResultBag {
   [type: string]: Record<string, any>;
 }
@@ -32,7 +37,7 @@ interface SyncResultBag {
 interface SyncHandler {
   type: string;
   dependsOn: Array<string>;
-  process(item: unknown, options: SyncProcessOptions<unknown>): Promise<any>;
+  process: ProcessSyncItem<unknown>;
 }
 
 class OfflineDb extends Dexie {
@@ -258,7 +263,7 @@ export interface SyncProcessOptions<T> {
 export function setupOfflineSync<T>(
   type: string,
   dependsOn: Array<string>,
-  process: (item: T, options: SyncProcessOptions<T>) => Promise<any>
+  process: ProcessSyncItem<T>
 ) {
   handlers[type] = {
     type,
