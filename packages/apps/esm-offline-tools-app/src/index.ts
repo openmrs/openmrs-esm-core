@@ -1,8 +1,4 @@
-import {
-  getAsyncLifecycle,
-  registerBreadcrumbs,
-  setupOfflineSync,
-} from "@openmrs/esm-framework";
+import { getAsyncLifecycle, registerBreadcrumbs } from "@openmrs/esm-framework";
 import { routes } from "./constants";
 import { setupOffline } from "./offline";
 import { setupSynchronizingOfflineActionsNotifications } from "./offline-actions/synchronizing-notification";
@@ -88,6 +84,15 @@ function setupOpenMRS() {
             featureName: "nav-items",
             moduleName,
           }
+        ),
+        online: true,
+        offline: true,
+      },
+      {
+        id: "offline-tools-confirmation-modal",
+        load: getAsyncLifecycle(
+          () => import("./components/confirmation-modal.component"),
+          options
         ),
         online: true,
         offline: true,

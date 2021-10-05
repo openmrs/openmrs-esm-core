@@ -6,4 +6,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .emptyStateDescription {
+    @include carbon--type-style("body-long-01");
+    white-space: pre-line;
+    text-align: center;
+  }
 }

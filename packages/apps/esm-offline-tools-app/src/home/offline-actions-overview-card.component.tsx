@@ -36,13 +36,6 @@ const OfflineActionsOverviewCard: React.FC<OfflineActionsOverviewCardProps> = (
         isLoading={!data}
         content={<>{data?.length}</>}
       />
-      <HeaderedQuickInfo
-        header={t(
-          "homeOverviewCardOfflineActionsUploadedThisWeek",
-          "Uploaded this week"
-        )}
-        content="(tbd)"
-      />
     </OverviewCard>
   );
 };
