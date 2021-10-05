@@ -106,7 +106,9 @@ function loadCoreApps(registry: string) {
 
     if (apps.length > 0) {
       const cacheDir = resolve(process.cwd(), ".cache");
-      !existsSync(cacheDir) && mkdirSync(cacheDir, { recursive: true });
+      if (!existsSync(cacheDir)) {
+        mkdirSync(cacheDir, { recursive: true });
+      }
       const coreAppsDir =
         process.env.OMRS_ESM_CORE_APPS_DIR ??
         resolve(process.cwd(), ".cache", "apps");
