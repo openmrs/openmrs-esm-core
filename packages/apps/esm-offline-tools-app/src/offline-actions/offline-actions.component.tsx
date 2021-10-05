@@ -1,7 +1,6 @@
 import {
   deleteSynchronizationItem,
   getOfflineSynchronizationStore,
-  queueSynchronizationItem,
   runSynchronization,
   showModal,
   SyncItem,
