@@ -26,11 +26,23 @@ The **frontend modules** are shipped in the ES Module format and usually thus ju
 - are loaded indirectly via a special JSON called an "import map", and they
 - export a predefined set of functionality including a function called `setupOpenMRS`.
 
-These frontend modules bring in domain-specific UI capabilities such as menu entries, page content, or notifications. In many cases they also come with dedicted [offline](../advanced/offline.md) capabilities, which allow, e.g., registration or modifications of certain patients while not being connected.
+These frontend modules bring in domain-specific UI capabilities such as menu entries, page content, or notifications.
 
 ### The backend
 
 The backend is an OpenMRS server and its APIs. The frontend application and backend server do not have to be colocated. Since the frontend really just a set of static files, it can be served from anywhere. The specific setup is up to you.
+
+## Structure of the application
+
+The process of building an application, which is described in the
+[Implementer Documentation](https://wiki.openmrs.org/display/projects/Frontend+3.0+Documentation+for+Implementers),
+looks like this:
+
+![Distro Build Diagram](./distro_setup.png)
+
+The built application is then executed on the server like this:
+
+![Application Diagram](./application.png)
 
 ## Repositories you should know
 The 3.x EMR Reference Application is made up of all the frontend modules found in the following repositories:
