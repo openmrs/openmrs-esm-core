@@ -32,7 +32,7 @@ interface SyncResultBag {
 interface SyncHandler {
   type: string;
   dependsOn: Array<string>;
-  process<T>(item: T, options: SyncProcessOptions<T>): Promise<any>;
+  process(item: unknown, options: SyncProcessOptions<unknown>): Promise<any>;
 }
 
 class OfflineDb extends Dexie {
@@ -134,15 +134,15 @@ export async function runSynchronization() {
   }
 }
 
-async function processHandler<T>(
+async function processHandler(
   { type, dependsOn, process }: SyncHandler,
   results: SyncResultBag,
   abortController: AbortController,
   notifySyncProgress: () => void
 ) {
   const table = db.syncQueue;
-  const items: Array<[number, T, QueueItemDescriptor]> = [];
-  const contents: Array<T> = [];
+  const items: Array<[number, unknown, QueueItemDescriptor]> = [];
+  const contents: Array<unknown> = [];
   const userId = await getUserId();
 
   await table.where({ type, userId }).each((item, cursor) => {
@@ -255,10 +255,10 @@ export interface SyncProcessOptions<T> {
   dependencies: Array<any>;
 }
 
-export function setupOfflineSync(
+export function setupOfflineSync<T>(
   type: string,
   dependsOn: Array<string>,
-  process: <T>(item: T, options: SyncProcessOptions<T>) => Promise<any>
+  process: (item: T, options: SyncProcessOptions<T>) => Promise<any>
 ) {
   handlers[type] = {
     type,

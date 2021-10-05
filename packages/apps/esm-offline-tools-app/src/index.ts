@@ -1,8 +1,4 @@
-import {
-  getAsyncLifecycle,
-  registerBreadcrumbs,
-  setupOfflineSync,
-} from "@openmrs/esm-framework";
+import { getAsyncLifecycle, registerBreadcrumbs } from "@openmrs/esm-framework";
 import { routes } from "./constants";
 import { setupOffline } from "./offline";
 import { setupSynchronizingOfflineActionsNotifications } from "./offline-actions/synchronizing-notification";
