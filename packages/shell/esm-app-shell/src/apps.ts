@@ -142,7 +142,6 @@ export function registerApp(appName: string, appExports: System.Module) {
           privilege: result.privilege,
           order: result.order || 1,
         });
-        console.log(pages.length);
       }
 
       availableExtensions.forEach((ext) => {
