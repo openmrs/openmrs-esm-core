@@ -128,8 +128,11 @@ export function registerApp(appName: string, appExports: System.Module) {
       const availableExtensions: Array<Partial<AppExtensionDefinition>> =
         result.extensions ?? [];
 
+      result.pages?.forEach((p) => {
+        pages.push({ ...p, appName, order: p.order ?? 1 });
+      });
+
       if (typeof result.activate !== "undefined") {
-        console.log("pushing page for ", appName);
         pages.push({
           appName,
           load: getLoader(result.lifecycle, result.resources),
@@ -150,12 +153,25 @@ export function registerApp(appName: string, appExports: System.Module) {
 }
 
 export function finishRegisteringAllApps() {
-  console.log(pages);
-  pages
-    .sort((p) => p.order)
-    .forEach((page, index) => {
-      tryRegisterPage(`${page.appName}-page-${index}`, page);
-    });
+  pages.sort((p) => p.order);
+  // Create a div for each page. This ensures their DOM order.
+  // If we don't do this, Single-SPA 5 will create the DOM element only once
+  // the page becomes active, which makes it impossible to guarantee order.
+  let index = 0;
+  let lastAppName;
+  for (let page of pages) {
+    if (page.appName !== lastAppName) {
+      index = 0;
+      lastAppName = page.appName;
+    } else {
+      index++;
+    }
+    const name = `${page.appName}-page-${index}`;
+    const div = document.createElement("div");
+    div.id = `single-spa-application:${name}`;
+    document.body.appendChild(div);
+    tryRegisterPage(name, page);
+  }
 }
 
 export function tryRegisterPage(appName: string, page: PageDefinition) {
