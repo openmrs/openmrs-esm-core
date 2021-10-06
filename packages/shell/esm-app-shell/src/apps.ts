@@ -16,6 +16,8 @@ const providedDeps = {
   "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
 };
 
+const pages: Array<PageDefinition> = [];
+
 /**
  * Normalizes the activator function, i.e., if we receive a
  * string we'll prepend the SPA base (prefix). We'll also handle
@@ -126,31 +128,34 @@ export function registerApp(appName: string, appExports: System.Module) {
       const availableExtensions: Array<Partial<AppExtensionDefinition>> =
         result.extensions ?? [];
 
-      const availablePages: Array<PageDefinition> = result.pages ?? [];
-
       if (typeof result.activate !== "undefined") {
-        availablePages.push({
+        console.log("pushing page for ", appName);
+        pages.push({
+          appName,
           load: getLoader(result.lifecycle, result.resources),
           route: result.activate,
           offline: result.offline,
           online: result.online,
           privilege: result.privilege,
+          order: result.order || 1,
         });
+        console.log(pages.length);
       }
 
       availableExtensions.forEach((ext) => {
         tryRegisterExtension(appName, ext);
       });
-
-      return () => {
-        availablePages.forEach((page, index) => {
-          tryRegisterPage(`${appName}-page-${index}`, page);
-        });
-      };
     }
   }
+}
 
-  return () => {};
+export function finishRegisteringAllApps() {
+  console.log(pages);
+  pages
+    .sort((p) => p.order)
+    .forEach((page, index) => {
+      tryRegisterPage(`${page.appName}-page-${index}`, page);
+    });
 }
 
 export function tryRegisterPage(appName: string, page: PageDefinition) {

@@ -81,6 +81,10 @@ export interface ResourceLoader<T = any> {
 
 export interface ComponentDefinition {
   /**
+   * The module/app that defines the component
+   */
+  appName: string;
+  /**
    * Defines a function to use for actually loading the component's lifecycle.
    */
   load(): Promise<any>;
@@ -145,4 +149,8 @@ export interface PageDefinition extends ComponentDefinition {
    * The route of the page.
    */
   route: string;
+  /**
+   * The order in which to load the page. This determines DOM order.
+   */
+  order: number;
 }
