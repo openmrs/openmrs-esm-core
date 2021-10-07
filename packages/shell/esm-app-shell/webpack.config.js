@@ -216,5 +216,6 @@ module.exports = (env, argv = {}) => {
           ],
         }),
     ].filter(Boolean),
+    ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };
 };
