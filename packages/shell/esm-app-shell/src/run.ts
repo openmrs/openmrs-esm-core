@@ -23,7 +23,11 @@ import {
   dispatchPrecacheStaticDependencies,
 } from "@openmrs/esm-framework";
 import { setupI18n } from "./locale";
-import { registerApp, tryRegisterExtension } from "./apps";
+import {
+  finishRegisteringAllApps,
+  registerApp,
+  tryRegisterExtension,
+} from "./apps";
 import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import { appName, getCoreExtensions } from "./ui";
@@ -68,13 +72,6 @@ function registerCoreExtensions() {
 }
 
 /**
- * Calls the provided registration function.
- */
-function callRegister(registerFn: () => void) {
-  registerFn();
-}
-
-/**
  * Sets up the frontend modules (apps). Uses the defined export
  * from the root modules of the apps, which should export a
  * special function called "setupOpenMRS".
@@ -82,13 +79,11 @@ function callRegister(registerFn: () => void) {
  * SPA.
  */
 async function setupApps(modules: Array<[string, System.Module]>) {
-  const registerFns = modules.map(([appName, appExports]) =>
-    registerApp(appName, appExports)
-  );
+  modules.forEach(([appName, appExports]) => registerApp(appName, appExports));
   subscribeConnectivity(async () => {
     const appNames = getAppNames();
     await Promise.all(appNames.map(unregisterApplication));
-    registerFns.forEach(callRegister);
+    finishRegisteringAllApps();
   });
   window.installedModules = modules;
 }

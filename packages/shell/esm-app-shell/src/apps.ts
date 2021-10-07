@@ -16,6 +16,8 @@ const providedDeps = {
   "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
 };
 
+const pages: Array<PageDefinition> = [];
+
 /**
  * Normalizes the activator function, i.e., if we receive a
  * string we'll prepend the SPA base (prefix). We'll also handle
@@ -126,31 +128,49 @@ export function registerApp(appName: string, appExports: System.Module) {
       const availableExtensions: Array<Partial<AppExtensionDefinition>> =
         result.extensions ?? [];
 
-      const availablePages: Array<PageDefinition> = result.pages ?? [];
+      result.pages?.forEach((p) => {
+        pages.push({ ...p, appName, order: p.order ?? 1 });
+      });
 
       if (typeof result.activate !== "undefined") {
-        availablePages.push({
+        pages.push({
+          appName,
           load: getLoader(result.lifecycle, result.resources),
           route: result.activate,
           offline: result.offline,
           online: result.online,
           privilege: result.privilege,
+          order: result.order || 1,
         });
       }
 
       availableExtensions.forEach((ext) => {
         tryRegisterExtension(appName, ext);
       });
-
-      return () => {
-        availablePages.forEach((page, index) => {
-          tryRegisterPage(`${appName}-page-${index}`, page);
-        });
-      };
     }
   }
+}
 
-  return () => {};
+export function finishRegisteringAllApps() {
+  pages.sort((p) => p.order);
+  // Create a div for each page. This ensures their DOM order.
+  // If we don't do this, Single-SPA 5 will create the DOM element only once
+  // the page becomes active, which makes it impossible to guarantee order.
+  let index = 0;
+  let lastAppName;
+  for (let page of pages) {
+    if (page.appName !== lastAppName) {
+      index = 0;
+      lastAppName = page.appName;
+    } else {
+      index++;
+    }
+    const name = `${page.appName}-page-${index}`;
+    const div = document.createElement("div");
+    div.id = `single-spa-application:${name}`;
+    document.body.appendChild(div);
+    tryRegisterPage(name, page);
+  }
 }
 
 export function tryRegisterPage(appName: string, page: PageDefinition) {

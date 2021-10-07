@@ -44,6 +44,7 @@ function setupOpenMRS() {
           !location.pathname.startsWith(window.getOpenmrsSpaBase() + "login"),
         online: true,
         offline: true,
+        order: 0, // should be first DOM element
       },
     ],
     extensions: [
