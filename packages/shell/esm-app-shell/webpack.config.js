@@ -206,7 +206,6 @@ module.exports = (env, argv = {}) => {
         analyzerMode: env && env.analyze ? "static" : "disabled",
       }),
       openmrsOffline &&
-        isProd &&
         new InjectManifest({
           swSrc: resolve(__dirname, "./src/service-worker/index.ts"),
           swDest: "service-worker.js",
@@ -217,5 +216,6 @@ module.exports = (env, argv = {}) => {
           ],
         }),
     ].filter(Boolean),
+    ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };
 };
