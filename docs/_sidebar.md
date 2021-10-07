@@ -1,3 +1,6 @@
+<!-- markdown-link-check-disable -->
+<!-- Absolute links fail markdown-link-check. That's okay because this
+     file isn't meant to be viewed outside docsify. -->
 - Getting started
   - [Prerequisite Knowledge](/getting_started/prerequisites.md)
   - [Setup](/getting_started/setup.md)
@@ -21,3 +24,4 @@
   - [Offline Mode](/advanced/offline.md)
   - [Advanced Extensions and Slots](/advanced/extensions.md)
   - [Creating a Distribution](/advanced/distribution.md)
+<!-- markdown-link-check-enable-->
