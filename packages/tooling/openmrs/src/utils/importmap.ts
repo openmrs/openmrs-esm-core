@@ -25,6 +25,7 @@ async function readImportmap(path: string) {
             }
           });
         }
+        return m;
       })
       .then((m) => JSON.stringify(m));
   } else if (path === "importmap.json") {
@@ -179,11 +180,18 @@ export async function runProject(
   return importMap;
 }
 
+/**
+ * @param decl The initial import map declaration
+ * @param additionalImports New imports to add
+ * @returns The import map declaration with the new imports added in. If
+ *   there are new imports to add, and if the original import map declaration
+ *   had type "url", it is downloaded and resolved to one of type "inline".
+ */
 export async function mergeImportmap(
   decl: ImportmapDeclaration,
-  imports: Record<string, string> | false
+  additionalImports: Record<string, string> | false
 ) {
-  if (imports && Object.keys(imports).length > 0) {
+  if (additionalImports && Object.keys(additionalImports).length > 0) {
     if (decl.type === "url") {
       decl.type = "inline";
       decl.value = await readImportmap(decl.value);
@@ -194,7 +202,7 @@ export async function mergeImportmap(
     decl.value = JSON.stringify({
       imports: {
         ...map.imports,
-        ...imports,
+        ...additionalImports,
       },
     });
   }
@@ -248,4 +256,35 @@ export async function getImportmap(
     type: "url",
     value,
   };
+}
+
+/**
+ * @param decl An import map declaration of type "inline"
+ * @param backend The backend which is being proxied by the dev server
+ * @param host The dev server host
+ * @param port The dev server port
+ * @returns The same import map declaration but with all imports from
+ *   `backend` changed to import from `http://${host}:${port}`.
+ */
+export function proxyImportmap(
+  decl: ImportmapDeclaration,
+  backend: string,
+  host: string,
+  port: number
+) {
+  if (decl.type != "inline") {
+    throw new Error(
+      "proxyImportMap called on non-inline import map. This is a programming error. Value: " +
+        decl.value
+    );
+  }
+  const importmap = JSON.parse(decl.value);
+  Object.keys(importmap.imports).forEach((key) => {
+    const url = importmap.imports[key];
+    if (url.startsWith(backend)) {
+      importmap.imports[key] = url.replace(backend, `http://${host}:${port}`);
+    }
+  });
+  decl.value = JSON.stringify(importmap);
+  return decl;
 }

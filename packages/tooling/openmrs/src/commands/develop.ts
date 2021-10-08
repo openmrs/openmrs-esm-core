@@ -33,19 +33,24 @@ export function runDevelop(args: DevelopArgs) {
     "lib"
   );
   const index = resolve(source, "index.html");
-  const indexContent = readFileSync(index, "utf8").replace(
-    `<script>.*</script>`,
-    `
+  const indexContent = readFileSync(index, "utf8")
+    .replace(
+      RegExp("<script>[\\s\\S]+</script>"),
+      `
     <script>
         initializeSpa({
           apiUrl: ${JSON.stringify(apiUrl)},
           spaPath: ${JSON.stringify(spaPath)},
           env: "development",
+          offline: true,
           configUrls: ${JSON.stringify(configUrls)},
         });
     </script>
   `
-  );
+    )
+    .replace(/href="\/openmrs\/spa/g, `href="${spaPath}`)
+    .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`);
+
   const pageUrl = `http://${host}:${port}${spaPath}/`;
 
   app.get(`${spaPath}/importmap.json`, (_, res) => {
@@ -55,15 +60,17 @@ export function runDevelop(args: DevelopArgs) {
       res.redirect(importmap.value);
     }
   });
-  app.use(spaPath, express.static(source));
   app.use(
     apiUrl,
-    createProxyMiddleware([`${apiUrl}/**`, `!${spaPath}/**`], {
+    createProxyMiddleware([`${apiUrl}/**`, `!${spaPath}/**!(.js|.woff2?)`], {
       target: backend,
       changeOrigin: true,
     })
   );
-  app.get("/*", (_, res) => res.contentType("text/html").send(indexContent));
+  app.use(spaPath, express.static(source, { index: false }));
+  app.get(`${spaPath}/*`, (_, res) =>
+    res.contentType("text/html").send(indexContent)
+  );
 
   app.listen(port, host, () => {
     logInfo(`Listening at http://${host}:${port}`);
