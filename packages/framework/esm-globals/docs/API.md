@@ -45,7 +45,7 @@
 
 #### Defined in
 
-[types.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L140)
+[types.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L144)
 
 ___
 

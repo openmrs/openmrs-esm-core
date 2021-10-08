@@ -7,24 +7,46 @@
 ### Properties
 
 - [dependencies](QueueItemDescriptor.md#dependencies)
+- [displayName](QueueItemDescriptor.md#displayname)
 - [id](QueueItemDescriptor.md#id)
+- [patientUuid](QueueItemDescriptor.md#patientuuid)
 
 ## Properties
 
 ### dependencies
 
-• **dependencies**: { `id`: `string` ; `type`: `string`  }[]
+• `Optional` **dependencies**: { `id`: `string` ; `type`: `string`  }[]
 
 #### Defined in
 
-[sync.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L14)
+[sync.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L20)
+
+___
+
+### displayName
+
+• `Optional` **displayName**: `string`
+
+#### Defined in
+
+[sync.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L25)
 
 ___
 
 ### id
 
-• **id**: `string`
+• `Optional` **id**: `string`
 
 #### Defined in
 
-[sync.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L13)
+[sync.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L19)
+
+___
+
+### patientUuid
+
+• `Optional` **patientUuid**: `string`
+
+#### Defined in
+
+[sync.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L24)

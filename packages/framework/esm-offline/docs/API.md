@@ -13,11 +13,13 @@
 - [OfflinePatientDataSyncHandler](interfaces/OfflinePatientDataSyncHandler.md)
 - [OfflinePatientDataSyncState](interfaces/OfflinePatientDataSyncState.md)
 - [OfflinePatientDataSyncStore](interfaces/OfflinePatientDataSyncStore.md)
+- [OfflineSynchronizationStore](interfaces/OfflineSynchronizationStore.md)
 - [OmrsServiceWorkerEvent](interfaces/OmrsServiceWorkerEvent.md)
 - [OmrsServiceWorkerMessage](interfaces/OmrsServiceWorkerMessage.md)
 - [OnImportMapChangedMessage](interfaces/OnImportMapChangedMessage.md)
 - [QueueItemDescriptor](interfaces/QueueItemDescriptor.md)
 - [RegisterDynamicRouteMessage](interfaces/RegisterDynamicRouteMessage.md)
+- [SyncItem](interfaces/SyncItem.md)
 - [SyncProcessOptions](interfaces/SyncProcessOptions.md)
 
 ### Type aliases
@@ -26,6 +28,7 @@
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
 - [OmrsOfflineHttpHeaderNames](API.md#omrsofflinehttpheadernames)
 - [OmrsOfflineHttpHeaders](API.md#omrsofflinehttpheaders)
+- [ProcessSyncItem](API.md#processsyncitem)
 
 ### Variables
 
@@ -36,9 +39,11 @@
 
 ### Functions
 
+- [deleteSynchronizationItem](API.md#deletesynchronizationitem)
 - [dispatchNetworkRequestFailed](API.md#dispatchnetworkrequestfailed)
 - [generateOfflineUuid](API.md#generateofflineuuid)
 - [getOfflinePatientDataStore](API.md#getofflinepatientdatastore)
+- [getOfflineSynchronizationStore](API.md#getofflinesynchronizationstore)
 - [getOmrsServiceWorker](API.md#getomrsserviceworker)
 - [getSynchronizationItems](API.md#getsynchronizationitems)
 - [getSynchronizationItemsFor](API.md#getsynchronizationitemsfor)
@@ -50,10 +55,10 @@
 - [queueSynchronizationItemFor](API.md#queuesynchronizationitemfor)
 - [registerOfflinePatientHandler](API.md#registerofflinepatienthandler)
 - [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
+- [runSynchronization](API.md#runsynchronization)
 - [setupOfflineSync](API.md#setupofflinesync)
 - [subscribeNetworkRequestFailed](API.md#subscribenetworkrequestfailed)
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
-- [triggerSynchronization](API.md#triggersynchronization)
 
 ## Type aliases
 
@@ -106,6 +111,37 @@ HTTP requests with these headers are handled in a special way by the SPA's servi
 
 [service-worker-http-headers.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L12)
 
+___
+
+### ProcessSyncItem
+
+Ƭ **ProcessSyncItem**<`T`\>: (`item`: `T`, `options`: [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\>) => `Promise`<`any`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+▸ (`item`, `options`): `Promise`<`any`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `item` | `T` |
+| `options` | [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\> |
+
+##### Returns
+
+`Promise`<`any`\>
+
+#### Defined in
+
+[sync.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L28)
+
 ## Variables
 
 ### offlineUuidPrefix
@@ -147,6 +183,26 @@ ___
 [service-worker-http-headers.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L3)
 
 ## Functions
+
+### deleteSynchronizationItem
+
+▸ **deleteSynchronizationItem**(`id`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `number` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[sync.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L251)
+
+___
 
 ### dispatchNetworkRequestFailed
 
@@ -194,7 +250,21 @@ ___
 
 #### Defined in
 
-[offline-patient-data.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L76)
+[offline-patient-data.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L85)
+
+___
+
+### getOfflineSynchronizationStore
+
+▸ **getOfflineSynchronizationStore**(): `Store`<[`OfflineSynchronizationStore`](interfaces/OfflineSynchronizationStore.md)\>
+
+#### Returns
+
+`Store`<[`OfflineSynchronizationStore`](interfaces/OfflineSynchronizationStore.md)\>
+
+#### Defined in
+
+[sync.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L80)
 
 ___
 
@@ -242,7 +312,7 @@ ___
 
 #### Defined in
 
-[sync.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L127)
+[sync.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L246)
 
 ___
 
@@ -269,7 +339,7 @@ ___
 
 #### Defined in
 
-[sync.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L113)
+[sync.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L232)
 
 ___
 
@@ -305,7 +375,7 @@ ___
 
 #### Defined in
 
-[offline-patient-data.ts:180](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L180)
+[offline-patient-data.ts:199](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L199)
 
 ___
 
@@ -371,7 +441,7 @@ ___
 
 #### Defined in
 
-[sync.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L104)
+[sync.ts:223](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L223)
 
 ___
 
@@ -400,7 +470,7 @@ ___
 
 #### Defined in
 
-[sync.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L77)
+[sync.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L195)
 
 ___
 
@@ -426,7 +496,7 @@ Attempts to add the specified patient handler registration to the list of offlin
 
 #### Defined in
 
-[offline-patient-data.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L87)
+[offline-patient-data.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L96)
 
 ___
 
@@ -456,6 +526,20 @@ A promise which resolves to the registered {@link Workbox} instance which manage
 
 ___
 
+### runSynchronization
+
+▸ **runSynchronization**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[sync.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L84)
+
+___
+
 ### setupOfflineSync
 
 ▸ **setupOfflineSync**<`T`\>(`type`, `dependsOn`, `process`): `void`
@@ -472,7 +556,7 @@ ___
 | :------ | :------ |
 | `type` | `string` |
 | `dependsOn` | `string`[] |
-| `process` | (`item`: `T`, `options`: [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\>) => `Promise`<`any`\> |
+| `process` | [`ProcessSyncItem`](API.md#processsyncitem)<`T`\> |
 
 #### Returns
 
@@ -480,7 +564,7 @@ ___
 
 #### Defined in
 
-[sync.ts:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L165)
+[sync.ts:263](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L263)
 
 ___
 
@@ -530,24 +614,4 @@ A promise which resolves once all registered handlers have finished synchronizin
 
 #### Defined in
 
-[offline-patient-data.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L102)
-
-___
-
-### triggerSynchronization
-
-▸ **triggerSynchronization**(`abort`): `Promise`<`void`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `abort` | `AbortController` |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[sync.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L132)
+[offline-patient-data.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L111)

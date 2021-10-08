@@ -23,7 +23,7 @@ This is ideally translated.
 
 #### Defined in
 
-[offline-patient-data.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L49)
+[offline-patient-data.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L55)
 
 ## Methods
 
@@ -49,4 +49,4 @@ A promise which should resolve if all data could be cached and reject when there
 
 #### Defined in
 
-[offline-patient-data.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L57)
+[offline-patient-data.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L63)

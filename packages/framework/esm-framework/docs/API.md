@@ -72,6 +72,7 @@
 - [OfflinePatientDataSyncHandler](interfaces/OfflinePatientDataSyncHandler.md)
 - [OfflinePatientDataSyncState](interfaces/OfflinePatientDataSyncState.md)
 - [OfflinePatientDataSyncStore](interfaces/OfflinePatientDataSyncStore.md)
+- [OfflineSynchronizationStore](interfaces/OfflineSynchronizationStore.md)
 - [OmrsServiceWorkerEvent](interfaces/OmrsServiceWorkerEvent.md)
 - [OmrsServiceWorkerMessage](interfaces/OmrsServiceWorkerMessage.md)
 - [OnImportMapChangedMessage](interfaces/OnImportMapChangedMessage.md)
@@ -94,6 +95,7 @@
 - [ShowNotificationEvent](interfaces/ShowNotificationEvent.md)
 - [ShowToastEvent](interfaces/ShowToastEvent.md)
 - [SpaConfig](interfaces/SpaConfig.md)
+- [SyncItem](interfaces/SyncItem.md)
 - [SyncProcessOptions](interfaces/SyncProcessOptions.md)
 - [UnauthenticatedUser](interfaces/UnauthenticatedUser.md)
 - [User](interfaces/User.md)
@@ -121,6 +123,7 @@
 - [OmrsOfflineHttpHeaderNames](API.md#omrsofflinehttpheadernames)
 - [OmrsOfflineHttpHeaders](API.md#omrsofflinehttpheaders)
 - [PatientUuid](API.md#patientuuid)
+- [ProcessSyncItem](API.md#processsyncitem)
 - [ProvidedConfig](API.md#providedconfig)
 - [SpaEnvironment](API.md#spaenvironment)
 - [UpdateVisitPayload](API.md#updatevisitpayload)
@@ -191,6 +194,7 @@
 - [createUseStore](API.md#createusestore)
 - [daysIntoYear](API.md#daysintoyear)
 - [defineConfigSchema](API.md#defineconfigschema)
+- [deleteSynchronizationItem](API.md#deletesynchronizationitem)
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
 - [dispatchConnectivityChanged](API.md#dispatchconnectivitychanged)
@@ -216,6 +220,7 @@
 - [getLocations](API.md#getlocations)
 - [getLoggedInUser](API.md#getloggedinuser)
 - [getOfflinePatientDataStore](API.md#getofflinepatientdatastore)
+- [getOfflineSynchronizationStore](API.md#getofflinesynchronizationstore)
 - [getOmrsServiceWorker](API.md#getomrsserviceworker)
 - [getSessionLocation](API.md#getsessionlocation)
 - [getSyncLifecycle](API.md#getsynclifecycle)
@@ -254,6 +259,7 @@
 - [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
 - [retry](API.md#retry)
+- [runSynchronization](API.md#runsynchronization)
 - [saveVisit](API.md#savevisit)
 - [setSessionLocation](API.md#setsessionlocation)
 - [setupOfflineSync](API.md#setupofflinesync)
@@ -281,7 +287,6 @@
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [translateFrom](API.md#translatefrom)
-- [triggerSynchronization](API.md#triggersynchronization)
 - [unregisterExtensionSlot](API.md#unregisterextensionslot)
 - [update](API.md#update)
 - [updateExtensionStore](API.md#updateextensionstore)
@@ -335,7 +340,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L140)
+[packages/framework/esm-globals/src/types.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L144)
 
 ___
 
@@ -497,6 +502,37 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-patient.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L18)
+
+___
+
+### ProcessSyncItem
+
+Ƭ **ProcessSyncItem**<`T`\>: (`item`: `T`, `options`: [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\>) => `Promise`<`any`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+▸ (`item`, `options`): `Promise`<`any`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `item` | `T` |
+| `options` | [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\> |
+
+##### Returns
+
+`Promise`<`any`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L28)
 
 ___
 
@@ -1507,6 +1543,26 @@ ___
 
 ___
 
+### deleteSynchronizationItem
+
+▸ **deleteSynchronizationItem**(`id`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `id` | `number` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L251)
+
+___
+
 ### detach
 
 ▸ **detach**(`extensionSlotName`, `extensionId`): `void`
@@ -2041,7 +2097,21 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L76)
+[packages/framework/esm-offline/src/offline-patient-data.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L85)
+
+___
+
+### getOfflineSynchronizationStore
+
+▸ **getOfflineSynchronizationStore**(): `Store`<[`OfflineSynchronizationStore`](interfaces/OfflineSynchronizationStore.md)\>
+
+#### Returns
+
+`Store`<[`OfflineSynchronizationStore`](interfaces/OfflineSynchronizationStore.md)\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L80)
 
 ___
 
@@ -2136,7 +2206,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L127)
+[packages/framework/esm-offline/src/sync.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L246)
 
 ___
 
@@ -2163,7 +2233,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L113)
+[packages/framework/esm-offline/src/sync.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L232)
 
 ___
 
@@ -2414,7 +2484,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:180](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L180)
+[packages/framework/esm-offline/src/offline-patient-data.ts:199](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L199)
 
 ___
 
@@ -2626,7 +2696,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L104)
+[packages/framework/esm-offline/src/sync.ts:223](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L223)
 
 ___
 
@@ -2655,7 +2725,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L77)
+[packages/framework/esm-offline/src/sync.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L195)
 
 ___
 
@@ -2723,7 +2793,7 @@ Attempts to add the specified patient handler registration to the list of offlin
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L87)
+[packages/framework/esm-offline/src/offline-patient-data.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L96)
 
 ___
 
@@ -2932,6 +3002,20 @@ The result of successfully executing `fn`.
 
 ___
 
+### runSynchronization
+
+▸ **runSynchronization**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L84)
+
+___
+
 ### saveVisit
 
 ▸ **saveVisit**(`payload`, `abortController`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
@@ -2990,7 +3074,7 @@ ___
 | :------ | :------ |
 | `type` | `string` |
 | `dependsOn` | `string`[] |
-| `process` | (`item`: `T`, `options`: [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\>) => `Promise`<`any`\> |
+| `process` | [`ProcessSyncItem`](API.md#processsyncitem)<`T`\> |
 
 #### Returns
 
@@ -2998,7 +3082,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L165)
+[packages/framework/esm-offline/src/sync.ts:263](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L263)
 
 ___
 
@@ -3347,7 +3431,7 @@ A promise which resolves once all registered handlers have finished synchronizin
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L102)
+[packages/framework/esm-offline/src/offline-patient-data.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L111)
 
 ___
 
@@ -3566,26 +3650,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-utils/src/translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/translate.ts#L3)
-
-___
-
-### triggerSynchronization
-
-▸ **triggerSynchronization**(`abort`): `Promise`<`void`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `abort` | `AbortController` |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L132)
 
 ___
 

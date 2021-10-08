@@ -12,6 +12,10 @@
 - [syncingHandlers](OfflinePatientDataSyncState.md#syncinghandlers)
 - [timestamp](OfflinePatientDataSyncState.md#timestamp)
 
+### Methods
+
+- [abort](OfflinePatientDataSyncState.md#abort)
+
 ## Properties
 
 ### errors
@@ -74,3 +78,22 @@ The time when this state snapshot was initially created.
 #### Defined in
 
 [packages/framework/esm-offline/src/offline-patient-data.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L22)
+
+## Methods
+
+### abort
+
+▸ **abort**(): `boolean`
+
+Aborts the process of downloading data.
+
+#### Returns
+
+`boolean`
+
+`true` if the cancellation could be triggered (that is, if there were any syncing handlers);
+  `false` if not.
+
+#### Defined in
+
+[packages/framework/esm-offline/src/offline-patient-data.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L47)
