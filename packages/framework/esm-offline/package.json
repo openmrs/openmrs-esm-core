@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-offline",
-  "version": "3.1.10",
+  "version": "3.1.11",
   "license": "MPL-2.0",
   "description": "Helper utilities for OpenMRS",
   "browser": "dist/openmrs-esm-offline.js",
@@ -37,10 +37,10 @@
     "access": "public"
   },
   "devDependencies": {
-    "@openmrs/esm-api": "^3.1.10",
-    "@openmrs/esm-globals": "^3.1.10",
-    "@openmrs/esm-state": "^3.1.10",
-    "@openmrs/esm-styleguide": "^3.1.10",
+    "@openmrs/esm-api": "^3.1.11",
+    "@openmrs/esm-globals": "^3.1.11",
+    "@openmrs/esm-state": "^3.1.11",
+    "@openmrs/esm-styleguide": "^3.1.11",
     "@types/uuid": "^8.3.0",
     "rxjs": "^6.5.3"
   },

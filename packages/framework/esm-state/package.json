@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-state",
-  "version": "3.1.10",
+  "version": "3.1.11",
   "license": "MPL-2.0",
   "description": "Frontend stores & state management for OpenMRS",
   "browser": "dist/openmrs-esm-state.js",
@@ -36,8 +36,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {},
-  "peerDependencies": {},
   "dependencies": {
     "unistore": "^3.5.2"
   }

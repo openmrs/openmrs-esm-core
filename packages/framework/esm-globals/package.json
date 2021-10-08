@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-globals",
-  "version": "3.1.10",
+  "version": "3.1.11",
   "license": "MPL-2.0",
   "browser": "dist/openmrs-esm-globals.js",
   "main": "src/index.ts",
@@ -32,7 +32,5 @@
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {},
-  "peerDependencies": {}
+  }
 }
