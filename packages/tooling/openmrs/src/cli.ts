@@ -207,6 +207,9 @@ yargs.command(
         "target",
         "The target directory where the build artifacts will be stored."
       )
+      .string("registry")
+      .default("registry", "https://registry.npmjs.org/")
+      .describe("registry", "The NPM registry used for getting the packages.")
       .boolean("fresh")
       .describe(
         "fresh",
@@ -246,6 +249,12 @@ yargs.command(
       .describe(
         "importmap",
         "The import map to use. Can be a path to an import map to be taken literally, an URL, or a fixed JSON object."
+      )
+      .boolean("download-coreapps")
+      .default("download-coreapps", false)
+      .describe(
+        "download-coreapps",
+        "Downloads and bundles the core apps. For cases where the core apps are not in the import map."
       ),
   async (args) =>
     runCommand("runBuild", {
@@ -254,6 +263,7 @@ yargs.command(
       configUrls: args["config-url"],
       pageTitle: args["page-title"],
       supportOffline: args["support-offline"],
+      downloadCoreapps: args["download-coreapps"],
       ...args,
       importmap: args.importmap,
       buildConfig:
