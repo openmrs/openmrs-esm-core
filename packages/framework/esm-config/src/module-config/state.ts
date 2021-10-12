@@ -15,21 +15,15 @@ import {
 export interface ConfigInternalStore {
   /** Configs added using the `provide` function */
   providedConfigs: Array<ProvidedConfig>;
-  /** A config file provided as `config-file` in the import map */
-  importMapConfig: Config;
   /** An object with module names for keys and schemas for values */
   schemas: Record<string, ConfigSchema>;
-  /** A flag to keep track of whether the import map config has been loaded */
-  importMapConfigLoaded: boolean;
   /** Whether to use dev defaults or not */
   devDefaultsAreOn: boolean;
 }
 
 const configInternalStoreInitialValue = {
   providedConfigs: [],
-  importMapConfig: {},
   schemas: {},
-  importMapConfigLoaded: false,
   devDefaultsAreOn: getAreDevDefaultsOn(),
 };
 
