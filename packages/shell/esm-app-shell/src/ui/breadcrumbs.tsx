@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Breadcrumb, BreadcrumbItem } from "carbon-components-react";
-import { getBreadcrumbsFor, ConfigurableLink } from "@openmrs/esm-framework";
+import {
+  getBreadcrumbsFor,
+  ConfigurableLink,
+  BreadcrumbRegistration,
+} from "@openmrs/esm-framework";
 
 function getPath(path: string, params: Array<string>) {
   const parts = [...params];
@@ -25,6 +29,40 @@ function getParams(path: string, matcher: RegExp) {
 
   return [];
 }
+
+interface CustomBreadcrumbItemProps {
+  bc: BreadcrumbRegistration;
+  params: any;
+}
+
+export const CustomBreadcrumbItem: React.FC<CustomBreadcrumbItemProps> = ({
+  bc,
+  params,
+}) => {
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    if (typeof bc.settings.title === "function") {
+      if (bc.settings.title?.constructor?.name === "AsyncFunction") {
+        (bc.settings.title(params) as Promise<string>).then((res) =>
+          setTitle(res)
+        );
+      } else {
+        setTitle(bc.settings.title(params) as string);
+      }
+    } else {
+      setTitle(bc.settings.title);
+    }
+  }, [bc, params]);
+
+  return (
+    <BreadcrumbItem key={bc.settings.path}>
+      <ConfigurableLink to={getPath(bc.settings.path, params)}>
+        {title}
+      </ConfigurableLink>
+    </BreadcrumbItem>
+  );
+};
 
 export const Breadcrumbs: React.FC = () => {
   const [path, setPath] = useState(location.pathname);
@@ -51,13 +89,7 @@ export const Breadcrumbs: React.FC = () => {
   return (
     <Breadcrumb className="breadcrumbs-container">
       {breadcrumbs.map((bc) => (
-        <BreadcrumbItem key={bc.settings.path}>
-          <ConfigurableLink to={getPath(bc.settings.path, params)}>
-            {typeof bc.settings.title === "function"
-              ? bc.settings.title(params)
-              : bc.settings.title}
-          </ConfigurableLink>
-        </BreadcrumbItem>
+        <CustomBreadcrumbItem bc={bc} params={params} />
       ))}
     </Breadcrumb>
   );
