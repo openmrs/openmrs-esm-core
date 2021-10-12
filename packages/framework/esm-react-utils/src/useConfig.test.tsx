@@ -1,7 +1,6 @@
 import React from "react";
 import { render, cleanup, screen, waitFor } from "@testing-library/react";
 import {
-  reloadImportMapConfig,
   defineConfigSchema,
   temporaryConfigStore,
   provide,
@@ -23,7 +22,6 @@ function RenderConfig(props) {
 
 function clearConfig() {
   mockConfigInternalStore.resetMock();
-  reloadImportMapConfig();
 }
 
 describe(`useConfig in root context`, () => {
