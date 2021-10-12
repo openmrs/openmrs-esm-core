@@ -214,13 +214,6 @@ async function setupServiceWorker() {
   if (navigator.onLine) {
     try {
       await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
-
-      showNotification({
-        title: "You can now go offline",
-        description:
-          "The application is done preparing the offline mode. You can now use the website without an internet connection.",
-        kind: "info",
-      });
     } catch (e) {
       showNotification({
         critical: true,
