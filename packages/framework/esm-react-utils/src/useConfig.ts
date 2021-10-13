@@ -7,6 +7,9 @@ import {
 import { ComponentContext, ExtensionData } from "./ComponentContext";
 import { ConfigObject } from "@openmrs/esm-config";
 import { Store } from "unistore";
+import makeDebug from "debug";
+
+const debug = makeDebug("openmrs:useConfig");
 
 const promises: Record<string, Promise<ConfigObject>> = {};
 const defaultState = {};
@@ -74,6 +77,7 @@ function useExtensionConfig(extension: ExtensionData | undefined) {
       promises[cacheId] = createConfigPromise(store);
     }
 
+    debug(`useExtensionConfig throwing promise for ${cacheId}`);
     // React will prevent the client component from rendering until the promise resolves
     throw promises[cacheId];
   }
@@ -91,6 +95,7 @@ function useNormalConfig(moduleName: string) {
       promises[cacheId] = createConfigPromise(store);
     }
 
+    debug(`useNormalConfig throwing promise for ${cacheId}`);
     // React will prevent the client component from rendering until the promise resolves
     throw promises[cacheId];
   }
@@ -121,5 +126,9 @@ export function useConfig() {
     [normalConfig, extensionConfig]
   );
 
+  const configNameForDebugMessage =
+    moduleName ||
+    `${extension?.extensionSlotModuleName}-${extension?.extensionSlotName}-${extension?.extensionId}`;
+  debug(`useConfig returning config for ${configNameForDebugMessage}`);
   return config;
 }

@@ -10,6 +10,7 @@ import {
   openmrsComponentDecorator,
 } from "../../../esm-react-utils/src";
 import {
+  configInternalStore,
   defineConfigSchema,
   getExtensionSlotsConfigStore,
   provide,
@@ -18,18 +19,12 @@ import { render, screen, waitFor } from "@testing-library/react";
 
 describe("Interaction between configuration and extension systems", () => {
   test("Config should create new attachments", async () => {
-    extensionStore.subscribe((state) => {
-      console.log(state.slots);
-    });
-    getExtensionSlotsConfigStore("esm-flintstone").subscribe((state) =>
-      console.log(state)
-    );
     registerSimpleExtension("Fred", "esm-flintstone");
     registerSimpleExtension("Barney", "esm-rubble");
     registerExtensionSlot("esm-flintstone", "A slot");
     defineConfigSchema("esm-flintstone", {});
     provide({
-      Flintstone: {
+      "esm-flintstone": {
         extensions: {
           "A slot": {
             add: ["Fred", "Barney"],
@@ -40,9 +35,11 @@ describe("Interaction between configuration and extension systems", () => {
     const ASlot = openmrsComponentDecorator({
       moduleName: "esm-flintstone",
       featureName: "The Flintstones",
+      disableTranslations: true,
     })(() => <ExtensionSlot extensionSlotName="A slot"></ExtensionSlot>);
-    render(<ASlot></ASlot>);
-    await waitFor(() => expect(screen.getByText("Fred")).toBeVisible());
+    render(<ASlot />);
+    await waitFor(() => expect(screen.getByText("Fred")).toBeInTheDocument());
+    expect(screen.getByText("Barney")).toBeInTheDocument();
   });
 });
 
@@ -53,6 +50,7 @@ function registerSimpleExtension(name: string, moduleName: string) {
     load: getSyncLifecycle(SimpleComponent, {
       moduleName,
       featureName: moduleName,
+      disableTranslations: true,
     }),
     meta: {},
   });

@@ -7,5 +7,5 @@ module.exports = {
     "lodash-es": "lodash",
     "lodash-es/(.*)": "lodash/\1",
   },
-  setupFiles: ["<rootDir>/src/integration-tests/setup-tests.js"],
+  setupFilesAfterEnv: ["<rootDir>/src/integration-tests/setup-tests.ts"],
 };
