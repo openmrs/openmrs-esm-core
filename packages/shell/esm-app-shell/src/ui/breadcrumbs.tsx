@@ -31,33 +31,31 @@ function getParams(path: string, matcher: RegExp) {
 }
 
 interface CustomBreadcrumbItemProps {
-  bc: BreadcrumbRegistration;
+  breadcrumbRegistration: BreadcrumbRegistration;
   params: any;
 }
 
 export const CustomBreadcrumbItem: React.FC<CustomBreadcrumbItemProps> = ({
-  bc,
+  breadcrumbRegistration,
   params,
 }) => {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    if (typeof bc.settings.title === "function") {
-      if (bc.settings.title?.constructor?.name === "AsyncFunction") {
-        (bc.settings.title(params) as Promise<string>).then((res) =>
-          setTitle(res)
-        );
-      } else {
-        setTitle(bc.settings.title(params) as string);
-      }
+    if (typeof breadcrumbRegistration.settings.title === "function") {
+      Promise.resolve(breadcrumbRegistration.settings.title(params)).then(
+        (res) => setTitle(res)
+      );
     } else {
-      setTitle(bc.settings.title);
+      setTitle(breadcrumbRegistration.settings.title);
     }
-  }, [bc, params]);
+  }, [breadcrumbRegistration, params]);
 
   return (
-    <BreadcrumbItem key={bc.settings.path}>
-      <ConfigurableLink to={getPath(bc.settings.path, params)}>
+    <BreadcrumbItem key={breadcrumbRegistration.settings.path}>
+      <ConfigurableLink
+        to={getPath(breadcrumbRegistration.settings.path, params)}
+      >
         {title}
       </ConfigurableLink>
     </BreadcrumbItem>
@@ -89,7 +87,7 @@ export const Breadcrumbs: React.FC = () => {
   return (
     <Breadcrumb className="breadcrumbs-container">
       {breadcrumbs.map((bc) => (
-        <CustomBreadcrumbItem bc={bc} params={params} />
+        <CustomBreadcrumbItem breadcrumbRegistration={bc} params={params} />
       ))}
     </Breadcrumb>
   );
