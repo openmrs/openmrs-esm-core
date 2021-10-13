@@ -12,7 +12,6 @@ const importTranslation = require.context(
 
 const backendDependencies = {
   "webservices.rest": "^2.24.0",
-  appui: "^1.9.0",
 };
 
 const frontendDependencies = {
