@@ -41,7 +41,6 @@ async function resetAll() {
       delete mockStores[storeName];
     }
   }
-  await Config.reloadImportMapConfig();
 }
 
 describe("defineConfigSchema", () => {
@@ -710,45 +709,6 @@ describe("type validations", () => {
   });
 });
 
-describe("resolveImportMapConfig", () => {
-  beforeEach(() => {
-    (<any>window).System.resolve.mockImplementation(() => {
-      throw new Error("config.json not available in import map");
-    });
-    (<any>window).System.import.mockReset();
-  });
-
-  afterEach(resetAll);
-
-  it("gets config file from import map", async () => {
-    const testConfig = importableConfig({ "foo-module": { foo: "bar" } });
-    (<any>window).System.resolve.mockReturnValue(true);
-    (<any>window).System.import.mockResolvedValue(testConfig);
-    await Config.reloadImportMapConfig();
-    Config.defineConfigSchema("foo-module", { foo: { _default: "qux" } });
-    const config = await Config.getConfig("foo-module");
-    expect(config.foo).toBe("bar");
-  });
-
-  it("always puts config file from import map at highest priority", async () => {
-    const importedConfig = importableConfig({ "foo-module": { foo: "bar" } });
-    (<any>window).System.resolve.mockReturnValue(true);
-    (<any>window).System.import.mockResolvedValue(importedConfig);
-    await Config.reloadImportMapConfig();
-    Config.defineConfigSchema("foo-module", { foo: { _default: "qux" } });
-    const providedConfig = { "foo-module": { foo: "baz" } };
-    Config.provide(providedConfig);
-    const config = await Config.getConfig("foo-module");
-    expect(config.foo).toBe("bar");
-  });
-
-  it("does not 404 when no config file is in the import map", () => {
-    Config.defineConfigSchema("foo-module", { foo: { _default: "qux" } });
-    // this line below is actually all that the test requires, the rest is sanity checking
-    expect(() => Config.getConfig("foo-module")).not.toThrow();
-  });
-});
-
 describe("processConfig", () => {
   beforeEach(() => {
     console.error = jest.fn();
@@ -1073,5 +1033,3 @@ describe("extension config", () => {
     );
   });
 });
-
-const importableConfig = (configObject) => ({ default: configObject });

@@ -21,7 +21,7 @@ Each module has its own stores for its config and its extension slots' configs.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/state.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L131)
+[packages/framework/esm-config/src/module-config/state.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L125)
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/state.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L132)
+[packages/framework/esm-config/src/module-config/state.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L126)
