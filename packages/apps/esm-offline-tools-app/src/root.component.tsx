@@ -3,16 +3,10 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { loadPersistedPatientDataSyncState } from "@openmrs/esm-framework";
 import Home from "./home/home.component";
 import DesktopSideNav from "./nav/desktop-side-nav.component";
-import OfflinePatients from "./offline-patients/offline-patients.component";
 import styles from "./root.styles.scss";
-import OfflinePatientSyncDetails from "./offline-patient-sync-details/offline-patient-sync-details.component";
-import OfflineActions from "./offline-actions/offline-actions.component";
+import OfflineToolsPage from "./offline-tools-page/offline-tools-page.component";
 
-export interface RootProps {
-  canSynchronizeOfflineActions: boolean;
-}
-
-const Root: React.FC<RootProps> = ({ canSynchronizeOfflineActions }) => {
+const Root: React.FC = () => {
   useEffect(() => {
     loadPersistedPatientDataSyncState();
   }, []);
@@ -21,8 +15,9 @@ const Root: React.FC<RootProps> = ({ canSynchronizeOfflineActions }) => {
     <BrowserRouter basename={window.spaBase}>
       <DesktopSideNav />
       <div className={`omrs-main-content ${styles.mainContentContainer}`}>
-        <Route exact path="/offline-tools" component={Home} />
-        <Route
+        <Route path="/offline-tools" exact component={Home} />
+        <Route path="/offline-tools/:page" component={OfflineToolsPage} />
+        {/* <Route
           exact
           path="/offline-tools/patients"
           component={OfflinePatients}
@@ -40,7 +35,7 @@ const Root: React.FC<RootProps> = ({ canSynchronizeOfflineActions }) => {
               canSynchronizeOfflineActions={canSynchronizeOfflineActions}
             />
           )}
-        />
+        /> */}
       </div>
     </BrowserRouter>
   );

@@ -9,14 +9,16 @@ import WarningFilled16 from "@carbon/icons-react/es/warning--filled/16";
 import styles from "./offline-patient-sync-details.styles.scss";
 import SharedPageLayout from "../components/shared-page-layout.component";
 
-interface OfflinePatientSyncDetailsProps extends RouteComponentProps {}
+interface OfflinePatientSyncDetailsParams {
+  patientUuid: string;
+}
 
-const OfflinePatientSyncDetails: React.FC<OfflinePatientSyncDetailsProps> = ({
-  match,
-}) => {
+const OfflinePatientSyncDetails: React.FC<
+  RouteComponentProps<OfflinePatientSyncDetailsParams>
+> = ({ match }) => {
   const { t } = useTranslation();
   const store = useOfflinePatientDataStore();
-  const patientUuid: string = match.params["patientUuid"];
+  const patientUuid: string = match.params.patientUuid;
   const syncedHandlers = getHandlersForDisplay(
     store.offlinePatientDataSyncState[patientUuid]?.syncedHandlers ?? [],
     store

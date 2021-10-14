@@ -13,7 +13,7 @@ import SharedPageLayout from "../components/shared-page-layout.component";
 import OfflineActionsTable from "./offline-actions-table.component";
 import styles from "./offline-actions.styles.scss";
 import Renew16 from "@carbon/icons-react/es/renew/16";
-import { Button, Tabs, Tab } from "carbon-components-react";
+import { Button } from "carbon-components-react";
 import {
   usePendingSyncItems,
   useSyncItemPatients,
