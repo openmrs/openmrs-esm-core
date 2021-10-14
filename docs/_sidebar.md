@@ -15,7 +15,7 @@
   - [Translations](/main/translations.md)
   - [Extension System](/main/extensions.md)
   - [Configuration System](/main/config.md)
-  - [Managing State](/main/state.md)
+  - [Sharing State](/main/state.md)
   - [Build-Time and Runtime Dependencies](/main/deps.md)
 - Advanced concepts
   - [Architecture Overview](/advanced/architecture.md)
