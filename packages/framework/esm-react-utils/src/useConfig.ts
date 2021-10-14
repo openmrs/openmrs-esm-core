@@ -12,7 +12,6 @@ import makeDebug from "debug";
 const debug = makeDebug("openmrs:useConfig");
 
 const promises: Record<string, Promise<ConfigObject>> = {};
-const defaultState = {};
 const errorMessage = `No ComponentContext has been provided. This should come from "openmrsComponentDecorator".
 Usually this is already applied when using "getAsyncLifecycle" or "getSyncLifecycle".`;
 
@@ -49,6 +48,7 @@ function useConfigStore(store: Store<ConfigStore> | undefined) {
   useEffect(() => {
     return store?.subscribe((state) => {
       if (state.loaded && state.config) {
+        console.log(state.config);
         setState(state.config);
       }
     });
@@ -82,7 +82,7 @@ function useExtensionConfig(extension: ExtensionData | undefined) {
     throw promises[cacheId];
   }
 
-  return state || defaultState;
+  return state || {};
 }
 
 function useNormalConfig(moduleName: string) {
