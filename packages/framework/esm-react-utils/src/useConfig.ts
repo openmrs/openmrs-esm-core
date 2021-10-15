@@ -48,7 +48,6 @@ function useConfigStore(store: Store<ConfigStore> | undefined) {
   useEffect(() => {
     return store?.subscribe((state) => {
       if (state.loaded && state.config) {
-        console.log(state.config);
         setState(state.config);
       }
     });

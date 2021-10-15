@@ -5,6 +5,7 @@ import {
   registerExtensionSlot,
 } from "../../../esm-extensions";
 import {
+  Extension,
   ExtensionSlot,
   getSyncLifecycle,
   openmrsComponentDecorator,
@@ -14,16 +15,22 @@ import { defineConfigSchema, provide, Type } from "../../../esm-config/src";
 import { render, screen, waitFor } from "@testing-library/react";
 
 describe("Interaction between configuration and extension systems", () => {
-  test("Config should create new attachments", async () => {
+  test("Config should add, order, and remove extensions within slots", async () => {
     registerSimpleExtension("Fred", "esm-flintstone");
+    registerSimpleExtension("Wilma", "esm-flintstone");
     registerSimpleExtension("Barney", "esm-rubble");
+    registerSimpleExtension("Betty", "esm-rubble");
     registerExtensionSlot("esm-flintstone", "A slot");
+    attach("A slot", "Fred");
+    attach("A slot", "Wilma");
     defineConfigSchema("esm-flintstone", {});
     provide({
       "esm-flintstone": {
         extensions: {
           "A slot": {
-            add: ["Fred", "Barney"],
+            add: ["Barney", "Betty"],
+            order: ["Betty", "Wilma"],
+            remove: ["Fred"],
           },
         },
       },
@@ -32,26 +39,32 @@ describe("Interaction between configuration and extension systems", () => {
       moduleName: "esm-flintstone",
       featureName: "The Flintstones",
       disableTranslations: true,
-    })(() => <ExtensionSlot extensionSlotName="A slot" />);
+    })(() => <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />);
     render(<App />);
-    await waitFor(() => expect(screen.getByText("Fred")).toBeInTheDocument());
-    expect(screen.getByText("Barney")).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText("Betty")).toBeInTheDocument());
+    const slot = screen.getByTestId("slot");
+    const extensions = slot.childNodes;
+    screen.debug();
+    expect(extensions[0]).toHaveTextContent("Betty");
+    expect(extensions[1]).toHaveTextContent("Wilma");
+    expect(extensions[2]).toHaveTextContent("Barney");
+    expect(screen.queryByText("Fred")).not.toBeInTheDocument();
   });
 
   test("Extensions should recieve config from module and from 'configure' key", async () => {
     registerSimpleExtension("Wilma", "esm-flintstone", true);
     registerExtensionSlot("esm-flintstone", "Flintstone slot");
-    registerExtensionSlot("esm-dinosaurs", "Dino slot");
+    registerExtensionSlot("esm-flintstone", "Future slot");
     defineConfigSchema("esm-flintstone", {
       town: { _type: Type.String, _default: "Bedrock" },
     });
     attach("Flintstone slot", "Wilma");
-    attach("Dino slot", "Wilma");
+    attach("Future slot", "Wilma");
     provide({
       "esm-flintstone": {
         town: "Springfield",
         extensions: {
-          "Dino slot": {
+          "Future slot": {
             configure: {
               Wilma: {
                 town: "New New York",
@@ -71,15 +84,18 @@ describe("Interaction between configuration and extension systems", () => {
           data-testid="flintstone-slot"
           extensionSlotName="Flintstone slot"
         />
-        <ExtensionSlot data-testid="dino-slot" extensionSlotName="Dino slot" />
+        <ExtensionSlot
+          data-testid="future-slot"
+          extensionSlotName="Future slot"
+        />
       </>
     ));
     render(<App />);
     await screen.findAllByText(/.*Wilma.*/);
     const flintstoneWilma = screen.getByTestId("flintstone-slot");
     expect(flintstoneWilma).toHaveTextContent(/Wilma:.*Springfield/);
-    const dinoWilma = screen.getByTestId("dino-slot");
-    expect(dinoWilma).toHaveTextContent(/Wilma:.*New New York/);
+    const futureWilma = screen.getByTestId("future-slot");
+    expect(futureWilma).toHaveTextContent(/Wilma:.*New New York/);
   });
 });
 
