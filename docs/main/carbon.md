@@ -1,4 +1,4 @@
-# Design Conventions: Patterns to Follow and How to Use Carbon and the Styleguide
+# Design, Carbon, and the Styleguide
 
 ## Design Patterns in OpenMRS 3.x
 First, review these introduction materials that explain the patterns to follow to keep OpenMRS 3.x a consistent User Experience:

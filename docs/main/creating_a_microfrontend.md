@@ -1,4 +1,4 @@
-# Creating a frontend module
+# Creating a Frontend Module
 
 New frontend modules can be created from the
 [openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).

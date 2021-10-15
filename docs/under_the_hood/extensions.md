@@ -1,4 +1,4 @@
-# Advanced Extensions and Slots
+# How the Extension System Works
 
 For the extension system to work four things exist:
 

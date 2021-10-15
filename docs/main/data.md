@@ -1,4 +1,4 @@
-# Retrieving and posting data
+# Retrieving and Posting Data
 
 Frontend modules interact with the OpenMRS server via the APIs exposed
 by its modules. In general, most of the endpoints we use are provided
