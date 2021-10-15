@@ -1,7 +1,6 @@
 import React from "react";
 import {
   attach,
-  extensionStore,
   registerExtension,
   registerExtensionSlot,
 } from "../../../esm-extensions";
@@ -11,15 +10,8 @@ import {
   openmrsComponentDecorator,
   useConfig,
 } from "../../../esm-react-utils/src";
-import {
-  configInternalStore,
-  defineConfigSchema,
-  getExtensionSlotsConfigStore,
-  provide,
-  Type,
-} from "../../../esm-config/src";
+import { defineConfigSchema, provide, Type } from "../../../esm-config/src";
 import { render, screen, waitFor } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
 
 describe("Interaction between configuration and extension systems", () => {
   test("Config should create new attachments", async () => {
@@ -40,7 +32,7 @@ describe("Interaction between configuration and extension systems", () => {
       moduleName: "esm-flintstone",
       featureName: "The Flintstones",
       disableTranslations: true,
-    })(() => <ExtensionSlot extensionSlotName="A slot"/>);
+    })(() => <ExtensionSlot extensionSlotName="A slot" />);
     render(<App />);
     await waitFor(() => expect(screen.getByText("Fred")).toBeInTheDocument());
     expect(screen.getByText("Barney")).toBeInTheDocument();
@@ -50,55 +42,71 @@ describe("Interaction between configuration and extension systems", () => {
     registerSimpleExtension("Wilma", "esm-flintstone", true);
     registerExtensionSlot("esm-flintstone", "Flintstone slot");
     registerExtensionSlot("esm-dinosaurs", "Dino slot");
-    defineConfigSchema("esm-flintstone", { town: { _type: Type.String, _default: "Bedrock" } });
+    defineConfigSchema("esm-flintstone", {
+      town: { _type: Type.String, _default: "Bedrock" },
+    });
     attach("Flintstone slot", "Wilma");
     attach("Dino slot", "Wilma");
     provide({
       "esm-flintstone": {
         town: "Springfield",
-      },
-      "esm-dinosaurs": {
         extensions: {
-        "Dino slot": {
-          configure: {
-            Wilma: {
-              town: "Narnia"
-            }
-          }
+          "Dino slot": {
+            configure: {
+              Wilma: {
+                town: "New New York",
+              },
+            },
+          },
         },
-      },
       },
     });
     const App = openmrsComponentDecorator({
       moduleName: "esm-flintstone",
       featureName: "The Flintstones",
       disableTranslations: true,
-    })(() => <>
-      <ExtensionSlot data-testid="flintstone-slot" extensionSlotName="Flintstone slot" />
-      <ExtensionSlot data-testid="dino-slot" extensionSlotName="Dino slot" />
-      </>);
+    })(() => (
+      <>
+        <ExtensionSlot
+          data-testid="flintstone-slot"
+          extensionSlotName="Flintstone slot"
+        />
+        <ExtensionSlot data-testid="dino-slot" extensionSlotName="Dino slot" />
+      </>
+    ));
     render(<App />);
     await screen.findAllByText(/.*Wilma.*/);
     const flintstoneWilma = screen.getByTestId("flintstone-slot");
     expect(flintstoneWilma).toHaveTextContent(/Wilma:.*Springfield/);
     const dinoWilma = screen.getByTestId("dino-slot");
-    expect(dinoWilma).toHaveTextContent(/Wilma:.*Narnia/);
+    expect(dinoWilma).toHaveTextContent(/Wilma:.*New New York/);
   });
 });
 
-function registerSimpleExtension(name: string, moduleName: string, takesConfig: boolean = false) {
+function registerSimpleExtension(
+  name: string,
+  moduleName: string,
+  takesConfig: boolean = false
+) {
   const SimpleComponent = () => <div>{name}</div>;
   const ConfigurableComponent = () => {
     const config = useConfig();
-    return <div>{name}: {JSON.stringify(config)}</div>
-  }
+    return (
+      <div>
+        {name}: {JSON.stringify(config)}
+      </div>
+    );
+  };
   registerExtension(name, {
     moduleName,
-    load: getSyncLifecycle(takesConfig ? ConfigurableComponent : SimpleComponent, {
-      moduleName,
-      featureName: moduleName,
-      disableTranslations: true,
-    }),
+    load: getSyncLifecycle(
+      takesConfig ? ConfigurableComponent : SimpleComponent,
+      {
+        moduleName,
+        featureName: moduleName,
+        disableTranslations: true,
+      }
+    ),
     meta: {},
   });
 }

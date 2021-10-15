@@ -16,7 +16,8 @@ export interface ExtensionProps {
  *
  * Renders once for each extension attached to that extension slot.
  *
- * Usage of this component *must* have an ancestor `<ExtensionSlot>`.
+ * Usage of this component *must* have an ancestor `<ExtensionSlot>`,
+ * and *must* only be used once within that `<ExtensionSlot>`.
  */
 export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
   const [ref, extension] = useExtension<HTMLDivElement>(state);

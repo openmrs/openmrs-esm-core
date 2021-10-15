@@ -30,7 +30,8 @@ export function renderExtension(
 ): CancelLoading {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionRegistration = getExtensionRegistration(extensionId);
-  let active: boolean | Parcel = true;
+  let active: boolean = true;
+  let parcel: Parcel | null = null;
 
   if (domElement) {
     if (!extensionRegistration) {
@@ -44,22 +45,18 @@ export function renderExtension(
     if (checkStatus(online, offline)) {
       load().then(({ default: result, ...lifecycle }) => {
         if (active) {
-          const parcel = mountRootParcel(
-            renderFunction(result ?? lifecycle) as any,
-            {
-              ...getCustomProps(online, offline),
-              ...additionalProps,
-              _meta: meta,
-              _extensionContext: {
-                extensionId,
-                extensionSlotName,
-                extensionSlotModuleName,
-                extensionModuleName: moduleName,
-              },
-              domElement,
-            }
-          );
-          active = parcel;
+          parcel = mountRootParcel(renderFunction(result ?? lifecycle) as any, {
+            ...getCustomProps(online, offline),
+            ...additionalProps,
+            _meta: meta,
+            _extensionContext: {
+              extensionId,
+              extensionSlotName,
+              extensionSlotModuleName,
+              extensionModuleName: moduleName,
+            },
+            domElement,
+          });
         }
       });
 
@@ -80,15 +77,16 @@ export function renderExtension(
   }
 
   return () => {
-    if (typeof active === "boolean") {
-      active = false;
-    } else {
-      const p = active;
-
-      if (p.getStatus() !== "MOUNTED") {
-        p.mountPromise.then(() => p.unmount());
+    active = false;
+    if (parcel) {
+      if (parcel.getStatus() !== "MOUNTED") {
+        parcel.mountPromise.then(() => {
+          if (parcel) {
+            parcel.unmount();
+          }
+        });
       } else {
-        p.unmount();
+        parcel.unmount();
       }
     }
   };

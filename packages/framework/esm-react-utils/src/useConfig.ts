@@ -126,9 +126,9 @@ export function useConfig() {
     [normalConfig, extensionConfig]
   );
 
-  const configNameForDebugMessage =
-    moduleName ||
-    `${extension?.extensionSlotModuleName}-${extension?.extensionSlotName}-${extension?.extensionId}`;
-  debug(`useConfig returning config for ${configNameForDebugMessage}`);
+  const configNameForDebugMessage = extension
+    ? `${extension?.extensionSlotModuleName}-${extension?.extensionSlotName}-${extension?.extensionId}`
+    : moduleName;
+  debug(`Returning config for ${configNameForDebugMessage}`);
   return config;
 }
