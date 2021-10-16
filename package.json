@@ -45,7 +45,6 @@
     "css-loader": "^5.2.4",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "cssnano": "^4.1.10",
-    "debug": "^4.3.2",
     "docsify": "^4.12.1",
     "ejs": "^2.6.2",
     "eslint": "^7.10.0",
