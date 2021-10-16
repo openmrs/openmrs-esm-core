@@ -3838,7 +3838,7 @@ Use this React Hook to obtain your module's configuration.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConfig.ts:108](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConfig.ts#L108)
+[packages/framework/esm-react-utils/src/useConfig.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConfig.ts#L103)
 
 ___
 
