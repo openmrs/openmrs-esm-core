@@ -17,25 +17,6 @@ const Root: React.FC = () => {
       <div className={`omrs-main-content ${styles.mainContentContainer}`}>
         <Route path="/offline-tools" exact component={Home} />
         <Route path="/offline-tools/:page" component={OfflineToolsPage} />
-        {/* <Route
-          exact
-          path="/offline-tools/patients"
-          component={OfflinePatients}
-        />
-        <Route
-          exact
-          path="/offline-tools/patients/:patientUuid/offline-data"
-          component={OfflinePatientSyncDetails}
-        />
-        <Route
-          exact
-          path="/offline-tools/actions"
-          render={() => (
-            <OfflineActions
-              canSynchronizeOfflineActions={canSynchronizeOfflineActions}
-            />
-          )}
-        /> */}
       </div>
     </BrowserRouter>
   );
