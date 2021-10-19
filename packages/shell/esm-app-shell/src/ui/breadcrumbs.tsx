@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, BreadcrumbItem } from "carbon-components-react";
-import { getBreadcrumbsFor, ConfigurableLink } from "@openmrs/esm-framework";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  InlineLoading,
+} from "carbon-components-react";
+import {
+  getBreadcrumbsFor,
+  ConfigurableLink,
+  BreadcrumbRegistration,
+} from "@openmrs/esm-framework";
 
 function getPath(path: string, params: Array<string>) {
   const parts = [...params];
@@ -25,6 +33,38 @@ function getParams(path: string, matcher: RegExp) {
 
   return [];
 }
+
+interface CustomBreadcrumbItemProps {
+  breadcrumbRegistration: BreadcrumbRegistration;
+  params: any;
+}
+
+export const CustomBreadcrumbItem: React.FC<CustomBreadcrumbItemProps> = ({
+  breadcrumbRegistration,
+  params,
+}) => {
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    if (typeof breadcrumbRegistration.settings.title === "function") {
+      Promise.resolve(breadcrumbRegistration.settings.title(params)).then(
+        (res) => setTitle(res)
+      );
+    } else {
+      setTitle(breadcrumbRegistration.settings.title);
+    }
+  }, [breadcrumbRegistration, params]);
+
+  return (
+    <BreadcrumbItem key={breadcrumbRegistration.settings.path}>
+      <ConfigurableLink
+        to={getPath(breadcrumbRegistration.settings.path, params)}
+      >
+        {title ? title : <InlineLoading />}
+      </ConfigurableLink>
+    </BreadcrumbItem>
+  );
+};
 
 export const Breadcrumbs: React.FC = () => {
   const [path, setPath] = useState(location.pathname);
@@ -51,13 +91,7 @@ export const Breadcrumbs: React.FC = () => {
   return (
     <Breadcrumb className="breadcrumbs-container">
       {breadcrumbs.map((bc) => (
-        <BreadcrumbItem key={bc.settings.path}>
-          <ConfigurableLink to={getPath(bc.settings.path, params)}>
-            {typeof bc.settings.title === "function"
-              ? bc.settings.title(params)
-              : bc.settings.title}
-          </ConfigurableLink>
-        </BreadcrumbItem>
+        <CustomBreadcrumbItem breadcrumbRegistration={bc} params={params} />
       ))}
     </Breadcrumb>
   );
