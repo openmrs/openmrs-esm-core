@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Breadcrumb, BreadcrumbItem } from "carbon-components-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  InlineLoading,
+} from "carbon-components-react";
 import {
   getBreadcrumbsFor,
   ConfigurableLink,
@@ -56,7 +60,7 @@ export const CustomBreadcrumbItem: React.FC<CustomBreadcrumbItemProps> = ({
       <ConfigurableLink
         to={getPath(breadcrumbRegistration.settings.path, params)}
       >
-        {title}
+        {title ? title : <InlineLoading />}
       </ConfigurableLink>
     </BreadcrumbItem>
   );
