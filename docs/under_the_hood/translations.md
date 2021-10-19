@@ -1,4 +1,4 @@
-# How translation works
+# How Translation Works
 
 There are three places in frontend code that relate to translation/i18n. They are:
 

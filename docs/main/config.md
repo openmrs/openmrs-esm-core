@@ -1,4 +1,4 @@
-# Configuration System
+# Using the Configuration System
 
 A framework is provided to make configurability easier for developers and
 configuring easier for implementers.

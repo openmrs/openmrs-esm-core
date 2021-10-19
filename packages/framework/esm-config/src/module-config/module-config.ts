@@ -29,66 +29,6 @@ import {
 } from "./state";
 import type {} from "@openmrs/esm-globals";
 
-/*
- * Config loading
- *
- *
- * We wait for SystemJS and window.importMapOverrides to be loaded before calling
- * `loadConfigs`. We actually wait quite a while longer--we wait 200ms before the
- * first attempt, because otherwise System.import exhibits some very weird
- * behavior.
- *
- * TODO: Investigate further, per this comment: https://github.com/joeldenning/import-map-overrides/issues/48#issuecomment-769477901
- */
-const checkImportMapInterval = setInterval(() => {
-  if (
-    typeof System !== "undefined" &&
-    typeof window.importMapOverrides !== "undefined"
-  ) {
-    clearInterval(checkImportMapInterval);
-    window.importMapOverrides.getCurrentPageMap().then(loadConfigs);
-  }
-}, 200);
-
-window.addEventListener("import-map-overrides:change", loadConfigs);
-
-// We cache the Promise that loads the import mapped config file
-// so that we can be sure to only call it once
-let getImportMapConfigPromise;
-async function loadConfigs() {
-  if (!getImportMapConfigPromise) {
-    getImportMapConfigPromise = getImportMapConfigFile();
-  }
-
-  return await getImportMapConfigPromise;
-}
-
-async function getImportMapConfigFile(): Promise<void> {
-  if (typeof System === "undefined") {
-    throw new Error("SystemJS not loaded at getImportMapConfigFile call time");
-  }
-
-  try {
-    System.resolve("config-file");
-  } catch {
-    configInternalStore.setState({
-      importMapConfigLoaded: true,
-    });
-    return;
-  }
-
-  try {
-    const configFileModule = await System.import("config-file");
-    configInternalStore.setState({
-      importMapConfig: configFileModule.default,
-      importMapConfigLoaded: true,
-    });
-  } catch (e) {
-    console.error(`Problem importing config-file ${e}`);
-    throw e;
-  }
-}
-
 /**
  * Store setup
  *
@@ -145,53 +85,45 @@ temporaryConfigStore.subscribe(() =>
 );
 
 function computeModuleConfig(state: ConfigInternalStore) {
-  if (state.importMapConfigLoaded) {
-    for (let moduleName of Object.keys(state.schemas)) {
-      const config = getConfigForModule(moduleName);
-      const moduleStore = getConfigStore(moduleName);
-      moduleStore.setState({ loaded: true, config });
-    }
+  for (let moduleName of Object.keys(state.schemas)) {
+    const config = getConfigForModule(moduleName);
+    const moduleStore = getConfigStore(moduleName);
+    moduleStore.setState({ loaded: true, config });
   }
 }
 
 function computeExtensionSlotConfigs(state: ConfigInternalStore) {
-  if (state.importMapConfigLoaded) {
-    const slotConfigsByModule = getExtensionSlotConfigs();
-    for (let [moduleName, extensionSlotConfigs] of Object.entries(
-      slotConfigsByModule
-    )) {
-      const moduleStore = getExtensionSlotsConfigStore(moduleName);
-      moduleStore.setState({ loaded: true, extensionSlotConfigs });
-    }
+  const slotConfigsByModule = getExtensionSlotConfigs();
+  for (let [moduleName, extensionSlotConfigs] of Object.entries(
+    slotConfigsByModule
+  )) {
+    const moduleStore = getExtensionSlotsConfigStore(moduleName);
+    moduleStore.setState({ loaded: true, extensionSlotConfigs });
   }
 }
 
 function computeImplementerToolsConfig(state: ConfigInternalStore) {
-  if (state.importMapConfigLoaded) {
-    const config = getImplementerToolsConfig();
-    implementerToolsConfigStore.setState({ config });
-  }
+  const config = getImplementerToolsConfig();
+  implementerToolsConfigStore.setState({ config });
 }
 
 function computeExtensionConfigs(
   configState: ConfigInternalStore,
   extensionState: ConfigExtensionStore
 ) {
-  if (configState.importMapConfigLoaded) {
-    for (let extension of extensionState.mountedExtensions) {
-      const extensionStore = getExtensionConfigStore(
-        extension.slotModuleName,
-        extension.slotName,
-        extension.extensionId
-      );
-      const config = getExtensionConfig(
-        extension.slotModuleName,
-        extension.extensionModuleName,
-        extension.slotName,
-        extension.extensionId
-      );
-      extensionStore.setState({ loaded: true, config });
-    }
+  for (let extension of extensionState.mountedExtensions) {
+    const extensionStore = getExtensionConfigStore(
+      extension.slotModuleName,
+      extension.slotName,
+      extension.extensionId
+    );
+    const config = getExtensionConfig(
+      extension.slotModuleName,
+      extension.extensionModuleName,
+      extension.slotName,
+      extension.extensionId
+    );
+    extensionStore.setState({ loaded: true, config });
   }
 }
 
@@ -307,7 +239,6 @@ function getImplementerToolsConfig(): Record<string, Config> {
   let result = getSchemaWithValuesAndSources(clone(state.schemas));
   const configsAndSources = [
     ...state.providedConfigs.map((c) => [c.config, c.source]),
-    [state.importMapConfig, "config-file"],
     [temporaryConfigStore.getState().config, "temporary config"],
   ] as Array<[Config, string]>;
   for (let [config, source] of configsAndSources) {
@@ -432,7 +363,6 @@ function getProvidedConfigs(): Array<Config> {
   const state = configInternalStore.getState();
   return [
     ...state.providedConfigs.map((c) => c.config),
-    state.importMapConfig,
     temporaryConfigStore.getState().config,
   ];
 }
@@ -540,8 +470,8 @@ function mergeConfigsFor(
   return mergeConfigs(allConfigsForModule);
 }
 
-const mergeDeepAll = reduce(mergeDeepRight);
 function mergeConfigs(configs: Array<Config>) {
+  const mergeDeepAll = reduce(mergeDeepRight);
   return mergeDeepAll({}, configs) as Config;
 }
 
@@ -737,10 +667,4 @@ function hasObjectSchema(
 
 function isOrdinaryObject(value) {
   return typeof value === "object" && !Array.isArray(value) && value !== null;
-}
-
-/** @internal for testing */
-export function reloadImportMapConfig() {
-  getImportMapConfigPromise = undefined;
-  return loadConfigs();
 }

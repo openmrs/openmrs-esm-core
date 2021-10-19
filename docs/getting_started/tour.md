@@ -1,4 +1,4 @@
-# Tour of a frontend module
+# Tour of a Frontend Module
 
 Let's explore the contents of
 [openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).

@@ -15,6 +15,7 @@
         everything published to the `openmrs` NPM org.
 
   Other notes:
+    - Use Title Case for sidebar links and page titles.
     - Use line breaks. Try and keep line length below 100 characters.
     - Links between different documentation pages must work in the GitHub UI
         (in addition to Docsify). This means that they must be relative and

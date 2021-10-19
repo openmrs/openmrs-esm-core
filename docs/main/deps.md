@@ -1,4 +1,4 @@
-# Build-time and runtime dependencies
+# Build-time and Runtime Dependencies
 
 In a frontend modules architecture, different JavaScript applications
 come together on the client in a coordinated way. Each application

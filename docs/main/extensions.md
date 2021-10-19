@@ -1,4 +1,4 @@
-# Extension System
+# Using the Extension System
 
 The extension system makes it possible for frontend modules to
 insert UI elements into each other, and for these interactions

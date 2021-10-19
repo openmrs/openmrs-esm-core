@@ -1,4 +1,4 @@
-# Managing state
+# Sharing State between Frontend Modules
 
 In general, state in React apps should be
 [managed using React](https://kentcdodds.com/blog/application-state-management-with-react).

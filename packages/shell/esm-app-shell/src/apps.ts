@@ -152,7 +152,7 @@ export function registerApp(appName: string, appExports: System.Module) {
 }
 
 export function finishRegisteringAllApps() {
-  pages.sort((p) => p.order);
+  pages.sort((a, b) => a.order - b.order);
   // Create a div for each page. This ensures their DOM order.
   // If we don't do this, Single-SPA 5 will create the DOM element only once
   // the page becomes active, which makes it impossible to guarantee order.

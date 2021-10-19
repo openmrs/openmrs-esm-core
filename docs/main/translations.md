@@ -1,4 +1,4 @@
-# Translations
+# Using the Translation System
 
 We use i18next and react-i18next to internationalize frontend module content.
 

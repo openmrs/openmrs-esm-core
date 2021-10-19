@@ -1,4 +1,4 @@
-# Creating a frontend module
+# Creating a Frontend Module
 
 New frontend modules can be created from the
 [openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).
@@ -49,6 +49,12 @@ Here is an example which uses all of the possible keys.
         //   above, which will be used to determine when to load the
         //   frontend module content. It will be matched against the URL path.
         route: 'hello',
+        // order (optional): a number which specifies the order in which the
+        // page should be loaded in the application. The default is 1. This
+        // is generally only needed if you need to specify the DOM position
+        // of your page; for example, if it is a navbar and needs to be at the
+        // top, you might use order 0.
+        order: 2,
         // `online`, `offline`, and `resources` are described in the offline
         //   support documentation. All are optional.
         online: { allowSayingHelloBack: true },
