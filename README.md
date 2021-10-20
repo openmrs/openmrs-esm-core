@@ -101,10 +101,6 @@ yarn build
 
 ### Version and release
 
-#### Versions
-
-#### Release process
-
 To increment the version, run the following command:
 
 ```sh
