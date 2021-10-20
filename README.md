@@ -91,18 +91,24 @@ cd packages/apps/esm-[xyz]-app
 yarn start
 ```
 
-<!-- The tooling? -->
+#### The tooling
+
+```sh
+cd packages/tooling/openmrs
+yarn build
+./dist/cli.js
+```
 
 ### Version and release
 
-If there are any new packages in the monorepo, first verify that their `package.json`
-contains a `publishConfig` section with `"access": "public"`. Or, if the package should
-not be published, the `package.json` should contain the entry `"private": true`.
+#### Versions
+
+#### Release process
 
 To increment the version, run the following command:
 
 ```sh
-yarn ci:release
+yarn release
 ```
 
 You will need to pick the next version number. We use minor changes (e.g. `3.2.0` → `3.3.0`)
