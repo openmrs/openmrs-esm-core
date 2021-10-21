@@ -24,7 +24,7 @@ function setupOpenMRS() {
 }
 
 function nothing() {
-  const thisIs = "another test change";
+  const thisIs = "yet another test change";
 }
 
 export { setupOpenMRS, importTranslation, frontendDependencies };
