@@ -11,7 +11,7 @@
     "run:docs": "docsify serve docs",
     "run:omrs": "openmrs",
     "run:shell": "lerna run watch --scope @openmrs/esm-app-shell --stream",
-    "ci:publish-next": "lerna publish --canary --preid pre --no-git-reset --no-git-tag-version --dist-tag next --no-push --yes ",
+    "ci:publish-next": "lerna publish from-package --no-git-reset --dist-tag next --yes",
     "ci:publish": "lerna publish from-package --yes",
     "release": "lerna version --no-git-tag-version",
     "setup": "lerna bootstrap && lerna run build && lerna clean --yes && lerna bootstrap",

@@ -79,7 +79,10 @@ jobs:
           node-version: "14.x"
           registry-url: "https://registry.npmjs.org"
       - run: npx lerna bootstrap
+      - run: npx lerna version patch --no-git-tag-version --no-push --yes
+      - run: npx lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
       - run: npx lerna run build
+      - run: git add . && git commit -m "Prerelease version" --no-verify
       - run: npm run ci:publish-next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
