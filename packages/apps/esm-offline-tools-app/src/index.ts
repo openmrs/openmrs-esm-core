@@ -1,5 +1,10 @@
-import { getAsyncLifecycle, registerBreadcrumbs } from "@openmrs/esm-framework";
+import {
+  getAsyncLifecycle,
+  getSyncLifecycle,
+  registerBreadcrumbs,
+} from "@openmrs/esm-framework";
 import { routes } from "./constants";
+import OfflineToolsNavLink from "./nav/offline-tools-nav-link.component";
 import { setupOffline } from "./offline";
 import { setupSynchronizingOfflineActionsNotifications } from "./offline-actions/synchronizing-notification";
 
@@ -56,12 +61,8 @@ function setupOpenMRS() {
       {
         load: getAsyncLifecycle(() => import("./root.component"), options),
         route: "offline-tools",
-        online: {
-          canSynchronizeOfflineActions: true,
-        },
-        offline: {
-          canSynchronizeOfflineActions: false,
-        },
+        online: true,
+        offline: true,
       },
     ],
     extensions: [
@@ -69,7 +70,7 @@ function setupOpenMRS() {
         id: "offline-tools-link",
         slot: "app-menu-slot",
         load: getAsyncLifecycle(
-          () => import("./offline-tools-link.component"),
+          () => import("./offline-tools-app-menu-link.component"),
           options
         ),
         online: true,
@@ -95,6 +96,63 @@ function setupOpenMRS() {
         ),
         online: true,
         offline: true,
+      },
+      {
+        id: "offline-tools-page-offline-patients-link",
+        slot: "offline-tools-page-slot",
+        load: getSyncLifecycle(
+          () =>
+            OfflineToolsNavLink({
+              page: "patients",
+              title: "Offline patients",
+            }),
+          options
+        ),
+        meta: {
+          name: "patients",
+          slot: "offline-tools-page-offline-patients-slot",
+        },
+        online: true,
+        offline: true,
+      },
+      {
+        id: "offline-tools-page-offline-patients",
+        slot: "offline-tools-page-offline-patients-slot",
+        load: getAsyncLifecycle(
+          () => import("./offline-patients/offline-patients.component"),
+          options
+        ),
+        online: true,
+        offline: true,
+      },
+      {
+        id: "offline-tools-page-actions-link",
+        slot: "offline-tools-page-slot",
+        load: getSyncLifecycle(
+          () =>
+            OfflineToolsNavLink({ page: "actions", title: "Offline actions" }),
+          options
+        ),
+        meta: {
+          name: "actions",
+          slot: "offline-tools-page-actions-slot",
+        },
+        online: true,
+        offline: true,
+      },
+      {
+        id: "offline-tools-page-actions",
+        slot: "offline-tools-page-actions-slot",
+        load: getAsyncLifecycle(
+          () => import("./offline-actions/offline-actions.component"),
+          options
+        ),
+        online: {
+          canSynchronizeOfflineActions: true,
+        },
+        offline: {
+          canSynchronizeOfflineActions: false,
+        },
       },
     ],
   };

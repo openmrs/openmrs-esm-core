@@ -64,90 +64,6 @@ jobs:
           AWS_S3_ENDPOINT: ${{ secrets.DIGITAL_OCEAN_SPACES_ENDPOINT }}
           SOURCE_DIR: "dist"
 
-  deploy_implementer_tools:
-    runs-on: ubuntu-latest
-
-    env:
-      ESM_NAME: "@openmrs/esm-implementer-tools-app"
-      JS_NAME: "openmrs-esm-implementer-tools-app.js"
-
-    needs: build
-
-    if: ${{ false }}
-    #if: ${{ github.event_name == 'push' }}
-
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-      - name: Compute Timestamp
-        run: echo "TIMESTAMP=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-      - name: Prepare Directory
-        shell: bash
-        run: |
-          mkdir -p dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}
-          mv packages/apps/esm-implementer-tools-app/dist/*.* dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
-      - name: Publish to Digital Ocean
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl public-read --follow-symlinks --cache-control "max-age=31536000"
-        env:
-          AWS_S3_BUCKET: ${{ secrets.DIGITAL_OCEAN_SPACES_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.DIGITAL_OCEAN_SPACES_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.DIGITAL_OCEAN_SPACES_ACCESS_KEY }}
-          AWS_S3_ENDPOINT: ${{ secrets.DIGITAL_OCEAN_SPACES_ENDPOINT }}
-          SOURCE_DIR: "dist"
-      - name: Update Importmap
-        uses: fjogeleit/http-request-action@master
-        with:
-          url: http://${{ secrets.DEPLOYER_HOST }}/services?env=prod
-          method: "PATCH"
-          username: ${{ secrets.DEPLOYER_USERNAME }}
-          password: ${{ secrets.DEPLOYER_PASSWORD }}
-          data: '{ "service":"${{ env.ESM_NAME }}","url":"https://spa-modules.nyc3.digitaloceanspaces.com/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/${{ env.JS_NAME }}" }'
-          customHeaders: '{ "Accept": "application/json", "Content-Type": "application/json" }'
-
-  deploy_devtools:
-    runs-on: ubuntu-latest
-
-    env:
-      ESM_NAME: "@openmrs/esm-devtools-app"
-      JS_NAME: "openmrs-esm-devtools-app.js"
-
-    needs: build
-
-    if: ${{ false }}
-    #if: ${{ github.event_name == 'push' }}
-
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-      - name: Compute Timestamp
-        run: echo "TIMESTAMP=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-      - name: Prepare Directory
-        shell: bash
-        run: |
-          mkdir -p dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}
-          mv packages/apps/esm-devtools-app/dist/*.* dist/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/
-      - name: Publish to Digital Ocean
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl public-read --follow-symlinks --cache-control "max-age=31536000"
-        env:
-          AWS_S3_BUCKET: ${{ secrets.DIGITAL_OCEAN_SPACES_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.DIGITAL_OCEAN_SPACES_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.DIGITAL_OCEAN_SPACES_ACCESS_KEY }}
-          AWS_S3_ENDPOINT: ${{ secrets.DIGITAL_OCEAN_SPACES_ENDPOINT }}
-          SOURCE_DIR: "dist"
-      - name: Update Importmap
-        uses: fjogeleit/http-request-action@master
-        with:
-          url: http://${{ secrets.DEPLOYER_HOST }}/services?env=prod
-          method: "PATCH"
-          username: ${{ secrets.DEPLOYER_USERNAME }}
-          password: ${{ secrets.DEPLOYER_PASSWORD }}
-          data: '{ "service":"${{ env.ESM_NAME }}","url":"https://spa-modules.nyc3.digitaloceanspaces.com/${{ env.ESM_NAME }}/${{ env.TIMESTAMP }}_${{ github.sha }}/${{ env.JS_NAME }}" }'
-          customHeaders: '{ "Accept": "application/json", "Content-Type": "application/json" }'
-
   pre_release:
     runs-on: ubuntu-latest
 
@@ -163,11 +79,12 @@ jobs:
           node-version: "14.x"
           registry-url: "https://registry.npmjs.org"
       - run: npx lerna bootstrap
-      - run: npx lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --yes
+      - run: npx lerna version patch --no-git-tag-version --no-push --yes
+      - run: npx lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
       - run: npx lerna run build
       - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
       - run: git add . && git commit -m "Prerelease version" --no-verify
-      - run: npm run ci:prepublish
+      - run: npm run ci:publish-next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
