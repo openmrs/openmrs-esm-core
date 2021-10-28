@@ -53,6 +53,7 @@ export function runDevelop(args: DevelopArgs) {
 
   const pageUrl = `http://${host}:${port}${spaPath}/`;
 
+  // Always intercept importmap.json
   app.get(`${spaPath}/importmap.json`, (_, res) => {
     if (importmap.type === "inline") {
       res.contentType("application/json").send(importmap.value);
@@ -60,16 +61,24 @@ export function runDevelop(args: DevelopArgs) {
       res.redirect(importmap.value);
     }
   });
+
+  // Return static assets for any request for which we have one, except importmap.json
+  app.use(spaPath, express.static(source, { index: false }));
+
+  // If it's not importmap.json and there's no appropriate static asset, then
+  // return our custom `index.html` for all requests beginning with spaPath
+  // and not ending in `.js` or `.woff` or `.woff2`.
+  app.get(new RegExp(`^${spaPath}/(?!.*\.js$)(?!.*\.woff2?).*$`), (_, res) =>
+    res.contentType("text/html").send(indexContent)
+  );
+
+  // For all other requests beginning with `apiUrl`, proxy to the backend.
   app.use(
     apiUrl,
-    createProxyMiddleware([`${apiUrl}/**`, `!${spaPath}/**!(.js|.woff2?)`], {
+    createProxyMiddleware(`${apiUrl}/*`, {
       target: backend,
       changeOrigin: true,
     })
-  );
-  app.use(spaPath, express.static(source, { index: false }));
-  app.get(`${spaPath}/*`, (_, res) =>
-    res.contentType("text/html").send(indexContent)
   );
 
   app.listen(port, host, () => {
