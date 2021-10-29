@@ -251,3 +251,9 @@ export function setupPaths(config: any) {
 export const attach = jest.fn();
 export const detach = jest.fn();
 export const detachAll = jest.fn();
+
+export const usePagination = jest.fn().mockImplementation(() => ({
+  currentPage: 1,
+  goTo: () => {},
+  results: [],
+}));
