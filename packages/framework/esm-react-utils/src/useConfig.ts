@@ -9,7 +9,6 @@ import { ConfigObject } from "@openmrs/esm-config";
 import { Store } from "unistore";
 
 const promises: Record<string, Promise<ConfigObject>> = {};
-const defaultState = {};
 const errorMessage = `No ComponentContext has been provided. This should come from "openmrsComponentDecorator".
 Usually this is already applied when using "getAsyncLifecycle" or "getSyncLifecycle".`;
 
@@ -78,7 +77,7 @@ function useExtensionConfig(extension: ExtensionData | undefined) {
     throw promises[cacheId];
   }
 
-  return state || defaultState;
+  return state || {};
 }
 
 function useNormalConfig(moduleName: string) {
@@ -121,5 +120,8 @@ export function useConfig() {
     [normalConfig, extensionConfig]
   );
 
+  const configNameForDebugMessage = extension
+    ? `${extension?.extensionSlotModuleName}-${extension?.extensionSlotName}-${extension?.extensionId}`
+    : moduleName;
   return config;
 }

@@ -679,11 +679,12 @@ an extension slot is rendered.
 
 Renders once for each extension attached to that extension slot.
 
-Usage of this component *must* have an ancestor `<ExtensionSlot>`.
+Usage of this component *must* have an ancestor `<ExtensionSlot>`,
+and *must* only be used once within that `<ExtensionSlot>`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L21)
+[packages/framework/esm-react-utils/src/Extension.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L22)
 
 ___
 
@@ -3837,7 +3838,7 @@ Use this React Hook to obtain your module's configuration.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConfig.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConfig.ts#L104)
+[packages/framework/esm-react-utils/src/useConfig.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConfig.ts#L103)
 
 ___
 

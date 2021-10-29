@@ -122,7 +122,9 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
       render() {
         if (this.state.caughtError) {
           // TO-DO have a UX designed for when a catastrophic error occurs
-          return null;
+          return (
+            <div>An error has occurred. Please try reloading the page.</div>
+          );
         } else {
           const content = (
             <ComponentContext.Provider value={this.state.config}>
