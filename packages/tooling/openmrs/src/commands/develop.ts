@@ -75,7 +75,7 @@ export function runDevelop(args: DevelopArgs) {
   // For all other requests beginning with `apiUrl`, proxy to the backend.
   app.use(
     apiUrl,
-    createProxyMiddleware(`${apiUrl}/*`, {
+    createProxyMiddleware(`${apiUrl}/**`, {
       target: backend,
       changeOrigin: true,
     })
