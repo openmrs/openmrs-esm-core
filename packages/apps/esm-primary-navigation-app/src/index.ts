@@ -44,14 +44,14 @@ function setupOpenMRS() {
           !location.pathname.startsWith(window.getOpenmrsSpaBase() + "login"),
         online: true,
         offline: true,
-        order: 0, // should be first DOM element
+        order: 2,
       },
     ],
     extensions: [
       {
         id: "default-user-panel",
         slot: "user-panel-slot",
-        order: 2,
+        order: 0, // should be first DOM element
         load: getAsyncLifecycle(
           () =>
             import(
@@ -65,7 +65,7 @@ function setupOpenMRS() {
       {
         id: "change-locale",
         slot: "user-panel-slot",
-        order: 0,
+        order: 1,
         load: getAsyncLifecycle(
           () => import("./components/choose-locale/change-locale.component"),
           options
