@@ -257,3 +257,5 @@ export const usePagination = jest.fn().mockImplementation(() => ({
   goTo: () => {},
   results: [],
 }));
+
+export const useVisitTypes = jest.fn(() => []);
