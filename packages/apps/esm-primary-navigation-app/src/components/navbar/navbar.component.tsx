@@ -83,10 +83,7 @@ const Navbar: React.FC<NavbarProps> = ({
               isActive={isActivePanel("sideMenu")}
             />
           )}
-          <ConfigurableLink
-            className="bx--header__name"
-            to="${openmrsSpaBase}/home"
-          >
+          <ConfigurableLink to="${openmrsSpaBase}/home">
             <Logo />
           </ConfigurableLink>
           <ExtensionSlot
