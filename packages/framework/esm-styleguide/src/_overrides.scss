@@ -6,7 +6,7 @@
 }
 
 .bx--data-table-container {
-  background: white;
+  background: $ui-02;
   position: relative;
 }
 
@@ -16,14 +16,14 @@
 }
 
 .bx--data-table-header {
-  padding: 0.75rem;
+  padding: $spacing-04;
   text-align: start;
 }
 
 .bx--data-table-header__title {
-  font-size: 1rem;
+  font-size: $spacing-05;
   font-weight: 600;
-  color: #525252;
+  color: $text-02;
 }
 
 .bx--data-table thead,
@@ -31,9 +31,9 @@
 .bx--data-table td,
 .bx--data-table--sort th,
 .bx--data-table--sort th .bx--table-sort__flex {
-  height: 2rem;
+  height: $spacing-07;
   min-height: unset;
-  color: #525252;
+  color: $text-02;
 }
 
 .bx--btn--primary,
@@ -41,47 +41,47 @@
 .bx--btn--tertiary:hover,
 .bx--btn--tertiary:active,
 .bx--btn--tertiary:focus {
-  background-color: #007d79;
+  background-color: $brand-teal-01;
 }
 
 .bx--btn--primary:hover {
-  background-color: #005d5d;
+  background-color: $brand-01;
 }
 
 .bx--btn--tertiary {
-  color: #007d79;
+  color: $brand-teal-01;
 }
 
 .bx--btn--tertiary,
 .bx--btn--primary:focus,
 .bx--btn--tertiary:focus {
-  border-color: #007d79;
+  border-color: $brand-teal-01;
 }
 
 .bx--btn--tertiary:hover,
 .bx--btn--tertiary:active,
 .bx--btn--tertiary:focus {
-  color: #ffffff;
+  color: $ui-02;
 }
 
 /* UI Shell header */
 
 .bx--header {
-  background-color: #005d5d;
-  border-bottom: #004144;
+  background-color: $brand-01;
+  border-bottom: $brand-02;
 }
 
 .bx--header__action:hover {
-  background-color: #004144;
+  background-color: $brand-02;
 }
 
 .bx--header-panel {
-  background-color: #004144;
+  background-color: $brand-02;
 }
 
 .bx--header__action--active {
-  background-color: #004144;
-  border-color: #004144;
+  background-color: $brand-02;
+  border-color: $brand-02;
 }
 
 .bx--overflow-menu--flip {
@@ -89,7 +89,7 @@
     background-color: $openmrs-background-grey;
     left: -6.025rem;
     min-width: 12.5rem;
-    top: 3rem;
+    top: $spacing-09;
   }
 }
 
