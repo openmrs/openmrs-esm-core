@@ -244,6 +244,12 @@ yargs.command(
         "config-url",
         "The URL to a frontend configuration. Can be used multiple times. Resolved by the client during initialization."
       )
+      .array("config-path")
+      .default("config-path", [])
+      .describe(
+        "config-path",
+        "The path to a frontend configuration file. Can be used multiple times. The file is copied directly into the build directory."
+      )
       .string("importmap")
       .default("importmap", "importmap.json")
       .describe(
@@ -261,6 +267,7 @@ yargs.command(
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
       configUrls: args["config-url"],
+      configPaths: args["config-path"].map((p) => resolve(process.cwd(), p)),
       pageTitle: args["page-title"],
       supportOffline: args["support-offline"],
       downloadCoreapps: args["download-coreapps"],

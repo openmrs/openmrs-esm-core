@@ -1,4 +1,5 @@
 import {
+  copyFileSync,
   createReadStream,
   existsSync,
   mkdirSync,
@@ -10,7 +11,7 @@ import {
 } from "fs";
 import { getImportmap, loadWebpackConfig, logInfo, untar } from "../utils";
 import rimraf from "rimraf";
-import { resolve } from "path";
+import { basename, resolve } from "path";
 import { execSync } from "child_process";
 
 /* eslint-disable no-console */
@@ -26,12 +27,14 @@ export interface BuildArgs {
   supportOffline?: boolean;
   downloadCoreapps: boolean;
   configUrls: Array<string>;
+  configPaths: Array<string>;
   buildConfig?: string;
 }
 
 export interface BuildConfig {
   apiUrl: string;
   configUrls: Array<string>;
+  configPaths: Array<string>;
   pageTitle: string;
   supportOffline?: boolean;
   importmap: string;
@@ -136,9 +139,23 @@ function loadCoreApps(registry: string) {
   }
 }
 
+function addConfigFilesFromPaths(
+  configPaths: Array<string>,
+  targetDir: string
+) {
+  for (let configPath of configPaths) {
+    const realPath = resolve(configPath);
+    copyFileSync(realPath, targetDir + "/" + basename(configPath));
+  }
+}
+
 export async function runBuild(args: BuildArgs) {
   const webpack = require("webpack");
   const buildConfig = loadBuildConfig(args.buildConfig);
+  const configUrls = buildConfig.configUrls || args.configUrls;
+  for (let configPath of buildConfig.configPaths || args.configPaths) {
+    configUrls.push(basename(configPath));
+  }
   const coreAppsDir = args.downloadCoreapps
     ? loadCoreApps(args.registry)
     : undefined;
@@ -146,7 +163,7 @@ export async function runBuild(args: BuildArgs) {
     importmap: await getImportmap(buildConfig.importmap || args.importmap),
     env: "production",
     apiUrl: buildConfig.apiUrl || args.apiUrl,
-    configUrls: buildConfig.configUrls || args.configUrls,
+    configUrls: configUrls,
     pageTitle: buildConfig.pageTitle || args.pageTitle,
     supportOffline: buildConfig.supportOffline ?? args.supportOffline,
     spaPath: buildConfig.spaPath || args.spaPath,
@@ -176,6 +193,11 @@ export async function runBuild(args: BuildArgs) {
           stats.toString({
             colors: true,
           })
+        );
+
+        addConfigFilesFromPaths(
+          buildConfig.configPaths || args.configPaths,
+          args.target
         );
 
         logInfo(`Build finished.`);
