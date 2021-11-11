@@ -1,5 +1,10 @@
 import { SpaConfig } from "./types";
 
+/**
+ * Sets a few top-level constants on `window`, such as `openmrsBase`.
+ *
+ * @param config Supplies constants
+ */
 export function setupPaths(config: SpaConfig) {
   window.openmrsBase = config.apiUrl;
   window.spaBase = config.spaPath;

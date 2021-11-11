@@ -1,15 +1,8 @@
 import { update } from "@openmrs/esm-state";
-import { mountRootParcel, Parcel } from "single-spa";
+import { LifeCycles, mountRootParcel, Parcel } from "single-spa";
 import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
 import { checkStatus, getCustomProps } from "./helpers";
 import { updateExtensionStore } from "./store";
-
-export interface Lifecycle {
-  bootstrap(): void;
-  mount(): void;
-  unmount(): void;
-  update?(): void;
-}
 
 export interface CancelLoading {
   (): void;
@@ -25,7 +18,7 @@ export function renderExtension(
   extensionSlotName: string,
   extensionSlotModuleName: string,
   extensionId: string,
-  renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x,
+  renderFunction: (lifecycle: LifeCycles) => LifeCycles = (x) => x,
   additionalProps: Record<string, any> = {}
 ): CancelLoading {
   const extensionName = getExtensionNameFromId(extensionId);

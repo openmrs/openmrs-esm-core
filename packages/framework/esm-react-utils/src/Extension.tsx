@@ -1,6 +1,13 @@
 import React from "react";
-import { ExtensionData } from "./ComponentContext";
-import { useExtension } from "./useExtension";
+import { useContext, useRef, useEffect, useState } from "react";
+import {
+  checkStatus,
+  getExtensionRegistration,
+  renderExtension,
+} from "@openmrs/esm-extensions";
+import { ComponentContext, ExtensionData } from "./ComponentContext";
+import { LifecycleWithContext } from "./getLifecycle";
+import { useForceUpdate } from ".";
 
 export interface ExtensionProps {
   state?: Record<string, any>;
@@ -20,18 +27,67 @@ export interface ExtensionProps {
  * and *must* only be used once within that `<ExtensionSlot>`.
  */
 export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
-  const [ref, extension] = useExtension<HTMLDivElement>(state);
+  const slotRef = useRef(null);
+  const contentRef = useRef<any>(null);
+  const forceUpdate = useForceUpdate();
+  const { extension } = useContext(ComponentContext);
+  const [lifecycle, setLifecycle] =
+    useState<LifecycleWithContext<Record<string, any>>>();
+
+  useEffect(() => {
+    if (extension) {
+      const registration = getExtensionRegistration(extension?.extensionId);
+      if (
+        registration &&
+        checkStatus(registration.online, registration.offline)
+      ) {
+        registration.load().then(setLifecycle);
+      }
+    }
+  }, [extension]);
+
+  useEffect(() => {
+    if (extension && slotRef.current && lifecycle) {
+      if (lifecycle.framework == "react") {
+        console.log(lifecycle);
+        contentRef.current = lifecycle.lifecycleOpts.rootComponent;
+        forceUpdate();
+        return () => {
+          contentRef.current = null;
+        };
+      } else {
+        return renderExtension(
+          slotRef.current,
+          extension.extensionSlotName,
+          extension.extensionSlotModuleName,
+          extension.extensionId,
+          undefined,
+          state
+        );
+      }
+    }
+  }, [
+    extension?.extensionSlotName,
+    extension?.extensionId,
+    extension?.extensionSlotModuleName,
+    slotRef.current,
+    state,
+    lifecycle,
+  ]);
 
   // The extension is rendered into the `<slot>`. It is surrounded by a
   // `<div>` with relative positioning in order to allow the UI Editor
   // to absolutely position elements within it.
   const slot = (
     <div
-      ref={ref}
+      ref={slotRef}
       data-extension-id={extension?.extensionId}
       style={{ position: "relative" }}
-    />
+    >
+      {contentRef.current && <contentRef.current {...state} />}
+    </div>
   );
 
+  console.log(contentRef.current);
   return extension && wrap ? wrap(slot, extension) : slot;
 };

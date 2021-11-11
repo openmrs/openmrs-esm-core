@@ -1,20 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import singleSpaReact from "single-spa-react";
+import { LifeCycles } from "single-spa";
+import singleSpaReact, { SingleSpaReactOpts } from "single-spa-react";
 import {
   openmrsComponentDecorator,
   ComponentDecoratorOptions,
 } from "./openmrsComponentDecorator";
 
+export interface LifecycleWithContext<T> extends LifeCycles {
+  framework: "react";
+  lifecycleOpts: SingleSpaReactOpts<T>;
+}
+
 export function getLifecycle<T>(
   Component: React.ComponentType<T>,
   options: ComponentDecoratorOptions
-) {
-  return singleSpaReact({
+): LifecycleWithContext<T> {
+  const lifecycleOpts = {
     React,
     ReactDOM,
     rootComponent: openmrsComponentDecorator(options)(Component),
-  });
+  };
+  const lifecycle = singleSpaReact(lifecycleOpts);
+  return { ...lifecycle, framework: "react", lifecycleOpts };
 }
 
 export function getAsyncLifecycle<T>(
