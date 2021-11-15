@@ -340,8 +340,11 @@ yargs.command(
 yargs
   .epilog(
     "The SPA build config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` " +
-      "commands. The keys used by `build` are `apiUrl`, `spaPath`, `configUrls`, and `importmap`, each of " +
-      "which is equivalent to the corresponding command line argument. The keys used by `assemble` are:\n" +
+      "commands. The keys used by `build` are:\n" +
+      "  `apiUrl`, `spaPath`, `configPaths`, `configUrls`, `importmap`, `pageTitle`, and `supportOffline`;\n" +
+      "each of which is equivalent to the corresponding command line argument (see `openmrs build --help`). " +
+      "Multiple values provided to `configPaths` and `configUrls` shoud be comma-separated.\n" +
+      "The keys used by `assemble` are:\n" +
       "  frontendModules  \tAn object which specifies which frontend modules to include. It should have package names " +
       "for keys and versions for values.\n" +
       "  publicUrl  \tThe URL at which the frontend modules will be made available. Can be relative to the importmap. " +
