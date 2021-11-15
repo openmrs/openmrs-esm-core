@@ -3,6 +3,7 @@ import { useContext, useRef, useEffect, useState } from "react";
 import {
   checkStatus,
   getExtensionRegistration,
+  markExtensionRendered,
   renderExtension,
 } from "@openmrs/esm-extensions";
 import { ComponentContext, ExtensionData } from "./ComponentContext";
@@ -28,8 +29,9 @@ export interface ExtensionProps {
  */
 export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
   const slotRef = useRef(null);
-  const contentRef = useRef<any>(null);
-  const forceUpdate = useForceUpdate();
+  // const contentRef = useRef<any>(null);
+  // const forceUpdate = useForceUpdate();
+  const [contents, setContents] = useState<any>();
   const { extension } = useContext(ComponentContext);
   const [lifecycle, setLifecycle] =
     useState<LifecycleWithContext<Record<string, any>>>();
@@ -49,11 +51,18 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
   useEffect(() => {
     if (extension && slotRef.current && lifecycle) {
       if (lifecycle.framework == "react") {
-        console.log(lifecycle);
-        contentRef.current = lifecycle.lifecycleOpts.rootComponent;
-        forceUpdate();
+        // contentRef.current = lifecycle.lifecycleOpts.rootComponent;
+        // forceUpdate();
+        setContents({ a: lifecycle.lifecycleOpts.rootComponent });
+        markExtensionRendered(
+          extension.extensionId,
+          extension.extensionSlotModuleName,
+          extension.extensionSlotName,
+          slotRef
+        );
         return () => {
-          contentRef.current = null;
+          // contentRef.current = null;
+          setContents(null);
         };
       } else {
         return renderExtension(
@@ -84,10 +93,11 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
       data-extension-id={extension?.extensionId}
       style={{ position: "relative" }}
     >
-      {contentRef.current && <contentRef.current {...state} />}
+      {/* {contentRef.current && <contentRef.current {...state} />} */}
+      {contents && <contents.a {...state} />}
     </div>
   );
 
-  console.log(contentRef.current);
+  // console.log(contentRef.current);
   return extension && wrap ? wrap(slot, extension) : slot;
 };

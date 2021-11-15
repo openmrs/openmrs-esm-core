@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, Profiler } from "react";
 import { ExtensionRegistration } from "@openmrs/esm-extensions";
 import { ComponentContext } from "./ComponentContext";
 import { Extension } from "./Extension";
@@ -54,7 +54,7 @@ export interface ExtensionSlotBaseProps {
 export type ExtensionSlotProps = ExtensionSlotBaseProps &
   React.HTMLAttributes<HTMLDivElement>;
 
-export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
+const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   extensionSlotName,
   select = defaultSelect,
   children,
@@ -93,6 +93,10 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   );
 
   return (
+    // <Profiler id={`slot ${extensionSlotName}`} onRender={(...args) => {
+    //   // console.log(args)
+    // }
+    // }>
     <div
       ref={slotRef}
       data-extension-slot-name={extensionSlotName}
@@ -102,5 +106,8 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
     >
       {content}
     </div>
+    // </Profiler>
   );
 };
+
+export { ExtensionSlot };

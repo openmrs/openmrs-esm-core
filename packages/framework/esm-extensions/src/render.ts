@@ -53,18 +53,11 @@ export function renderExtension(
         }
       });
 
-      updateExtensionStore((state) =>
-        update(
-          state,
-          [
-            "extensions",
-            extensionName,
-            "instances",
-            extensionSlotModuleName,
-            extensionSlotName,
-          ],
-          { domElement, id: extensionId }
-        )
+      markExtensionRendered(
+        extensionId,
+        extensionSlotModuleName,
+        extensionSlotName,
+        domElement
       );
     }
   }
@@ -83,4 +76,26 @@ export function renderExtension(
       }
     }
   };
+}
+
+export function markExtensionRendered(
+  extensionId,
+  extensionSlotModuleName,
+  extensionSlotName,
+  domElement
+) {
+  const extensionName = getExtensionNameFromId(extensionId);
+  updateExtensionStore((state) =>
+    update(
+      state,
+      [
+        "extensions",
+        extensionName,
+        "instances",
+        extensionSlotModuleName,
+        extensionSlotName,
+      ],
+      { domElement, id: extensionId }
+    )
+  );
 }

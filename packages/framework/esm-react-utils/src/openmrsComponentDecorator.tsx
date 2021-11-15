@@ -127,24 +127,34 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
           );
         } else {
           const content = (
-            <ComponentContext.Provider value={this.state.config}>
-              <React.Suspense fallback={null}>
-                {opts.disableTranslations ? (
-                  <Comp {...this.props} />
+            <ComponentContext.Consumer>
+              {(existingComponentContext) =>
+                !existingComponentContext.moduleName ? (
+                  <ComponentContext.Provider value={this.state.config}>
+                    <React.Suspense fallback={null}>
+                      {opts.disableTranslations ? (
+                        <Comp {...this.props} />
+                      ) : (
+                        <I18nextLoadNamespace
+                          ns={opts.moduleName}
+                          forceUpdate={() => this.forceUpdate()}
+                        >
+                          <I18nextProvider
+                            i18n={i18n}
+                            defaultNS={opts.moduleName}
+                          >
+                            <Comp {...this.props} />
+                          </I18nextProvider>
+                        </I18nextLoadNamespace>
+                      )}
+                    </React.Suspense>
+                  </ComponentContext.Provider>
                 ) : (
-                  <I18nextLoadNamespace
-                    ns={opts.moduleName}
-                    forceUpdate={() => this.forceUpdate()}
-                  >
-                    <I18nextProvider i18n={i18n} defaultNS={opts.moduleName}>
-                      <Comp {...this.props} />
-                    </I18nextProvider>
-                  </I18nextLoadNamespace>
-                )}
-              </React.Suspense>
-            </ComponentContext.Provider>
+                  <Comp {...this.props} />
+                )
+              }
+            </ComponentContext.Consumer>
           );
-
           if (opts.strictMode || !React.StrictMode) {
             return content;
           } else {
