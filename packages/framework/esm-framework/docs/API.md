@@ -340,7 +340,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L144)
+[packages/framework/esm-globals/src/types.ts:150](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L150)
 
 ___
 
@@ -559,7 +559,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L47)
+[packages/framework/esm-globals/src/types.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L53)
 
 ___
 
@@ -3973,9 +3973,15 @@ ___
 
 ### useExtensionSlotMeta
 
-▸ **useExtensionSlotMeta**(`extensionSlotName`): `Object`
+▸ **useExtensionSlotMeta**<`T`\>(`extensionSlotName`): `Object`
 
 Extract meta data from all extension for a given extension slot.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | [`ExtensionMeta`](interfaces/ExtensionMeta.md) |
 
 #### Parameters
 
@@ -3989,7 +3995,7 @@ Extract meta data from all extension for a given extension slot.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L8)
+[packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L9)
 
 ___
 

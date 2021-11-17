@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L50)
+[types.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L56)

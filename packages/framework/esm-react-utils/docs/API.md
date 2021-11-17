@@ -620,9 +620,15 @@ ___
 
 ### useExtensionSlotMeta
 
-▸ **useExtensionSlotMeta**(`extensionSlotName`): `Object`
+▸ **useExtensionSlotMeta**<`T`\>(`extensionSlotName`): `Object`
 
 Extract meta data from all extension for a given extension slot.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `ExtensionMeta` |
 
 #### Parameters
 
@@ -636,7 +642,7 @@ Extract meta data from all extension for a given extension slot.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L8)
+[packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L9)
 
 ___
 

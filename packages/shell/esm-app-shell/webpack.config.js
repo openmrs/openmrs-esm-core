@@ -6,16 +6,18 @@ const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const { InjectManifest } = require("workbox-webpack-plugin");
-const { DefinePlugin } = require("webpack");
+const { DefinePlugin, container } = require("webpack");
 const { resolve, dirname, basename } = require("path");
 const { readFileSync, readdirSync, statSync } = require("fs");
 const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
-const { version } = require("./package.json");
+const { name, version, dependencies } = require("./package.json");
+const sharedDependencies = require("./dependencies.json");
 const frameworkVersion = require("@openmrs/esm-framework/package.json").version;
 
 const timestamp = getTimestamp();
 const production = "production";
 const allowedSuffixes = ["-app", "-widgets"];
+const { ModuleFederationPlugin } = container;
 
 const openmrsApiUrl = removeTrailingSlash(
   process.env.OMRS_API_URL || "/openmrs"
@@ -192,6 +194,20 @@ module.exports = (env, argv = {}) => {
       }),
       new CopyWebpackPlugin({
         patterns: [{ from: resolve(__dirname, "src/assets") }, ...appPatterns],
+      }),
+      new ModuleFederationPlugin({
+        name,
+        shared: sharedDependencies.reduce((obj, depName) => {
+          obj[depName] = {
+            requiredVersion: dependencies[depName],
+            singleton: true,
+            eager: true,
+            import: depName,
+            shareKey: depName,
+            shareScope: "default",
+          };
+          return obj;
+        }, {}),
       }),
       isProd &&
         new MiniCssExtractPlugin({
