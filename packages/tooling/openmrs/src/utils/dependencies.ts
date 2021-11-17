@@ -1,33 +1,7 @@
 import { basename, dirname } from "path";
 
 export function getSharedDependencies() {
-  return [
-    "i18next",
-    "dayjs",
-    "react",
-    "react-dom",
-    "react-router-dom",
-    "react-i18next",
-    "single-spa",
-    "@openmrs/esm-api",
-    "@openmrs/esm-breadcrumbs",
-    "@openmrs/esm-config",
-    "@openmrs/esm-module-config",
-    "@openmrs/esm-context",
-    "@openmrs/esm-react-utils",
-    "@openmrs/esm-framework",
-    "@openmrs/esm-globals",
-    "@openmrs/esm-error-handling",
-    "@openmrs/esm-state",
-    "@openmrs/esm-extensions",
-    "@openmrs/esm-extension-manager",
-    "@openmrs/esm-styleguide",
-    "@openmrs/esm-utils",
-    "@openmrs/esm-offline",
-    "carbon-components",
-    "carbon-icons",
-    "rxjs",
-  ];
+  return require("@openmrs/esm-app-shell/dependencies.json");
 }
 
 export function getMainBundle(project: any) {

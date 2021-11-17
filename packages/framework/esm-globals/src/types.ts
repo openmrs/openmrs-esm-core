@@ -41,7 +41,13 @@ declare global {
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
      */
     installedModules: Array<[string, any]>;
+    /**
+     * The remotes from Webpack Module Federation.
+     */
+    __remotes__: Record<string, string>;
   }
+  const __webpack_init_sharing__: any;
+  const __webpack_share_scopes__: any;
 }
 
 export type SpaEnvironment = "production" | "development" | "test";

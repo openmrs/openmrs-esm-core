@@ -1,12 +1,12 @@
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const SystemJSPublicPathWebpackPlugin = require("systemjs-webpack-interop/SystemJSPublicPathWebpackPlugin");
 const { resolve, dirname, basename } = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { DefinePlugin } = require("webpack");
+const { DefinePlugin, container } = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
 
 const production = "production";
+const { ModuleFederationPlugin } = container;
 
 function getFrameworkVersion() {
   try {
@@ -52,11 +52,12 @@ module.exports = (env, argv = {}) => {
   };
 
   return {
-    entry: [srcFile],
+    entry: {
+      [name]: "systemjs-webpack-interop/auto-public-path",
+    },
     output: {
-      filename,
       libraryTarget: "system",
-      publicPath: "",
+      publicPath: "auto",
       path: resolve(root, outDir),
     },
     target: "web",
@@ -75,7 +76,11 @@ module.exports = (env, argv = {}) => {
         },
         {
           test: /\.s[ac]ss$/i,
-          use: [require.resolve("style-loader"), cssLoader, { loader: require.resolve("sass-loader") }],
+          use: [
+            require.resolve("style-loader"),
+            cssLoader,
+            { loader: require.resolve("sass-loader") },
+          ],
         },
         {
           test: /\.(png|jpe?g|gif|svg)$/i,
@@ -97,9 +102,25 @@ module.exports = (env, argv = {}) => {
     performance: {
       hints: mode === production && "warning",
     },
-    externals: Object.keys(peerDependencies || {}),
     plugins: [
-      new SystemJSPublicPathWebpackPlugin(),
+      new ModuleFederationPlugin({
+        name,
+        library: { type: "system", name },
+        filename,
+        exposes: {
+          app: srcFile,
+        },
+        shared: Object.keys(peerDependencies).reduce((obj, depName) => {
+          obj[depName] = {
+            requiredVersion: peerDependencies[depName],
+            singleton: true,
+            import: depName,
+            shareKey: depName,
+            shareScope: "default",
+          };
+          return obj;
+        }, {}),
+      }),
       new ForkTsCheckerWebpackPlugin(),
       new CleanWebpackPlugin(),
       new BundleAnalyzerPlugin({
