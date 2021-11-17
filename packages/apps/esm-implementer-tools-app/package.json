@@ -38,12 +38,12 @@
   "dependencies": {
     "@carbon/icons-react": "10.28.0",
     "carbon-components-react": "7.31.0",
-    "lodash-es": "^4.17.21",
-    "react-hooks-global-state": "^1.0.1"
+    "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
     "@openmrs/esm-framework": "3.x",
     "carbon-components": "10.x",
+    "carbon-components-react": "7.x",
     "carbon-icons": "7.x",
     "react": "16.x",
     "react-dom": "16.x",
