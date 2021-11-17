@@ -1,19 +1,25 @@
 import { RouteHandlerCallbackOptions } from "workbox-core";
 import { registerRoute } from "workbox-routing";
 import { getOrCreateDefaultRouter } from "workbox-routing/utils/getOrCreateDefaultRouter";
-import { NetworkFirst, NetworkOnly } from "workbox-strategies";
+import { CacheOnly, NetworkFirst, NetworkOnly } from "workbox-strategies";
 import { indexUrl, omrsCacheName } from "./constants";
 import { ServiceWorkerDb } from "./storage";
 import { publishEvent } from "./event";
 import { validMethods } from "workbox-routing/utils/constants";
 import {
-  hasOmrsNetworkFirstHeader,
+  getOmrsHeader,
   headersToObject,
   parseOmrsOfflineResponseBodyHeader,
   parseOmrsOfflineResponseStatusHeader,
 } from "./http-header-utils";
+import {
+  OmrsOfflineCachingStrategy,
+  omrsOfflineCachingStrategyHttpHeaderName,
+} from "@openmrs/esm-offline/src/service-worker-http-headers";
+import uniq from "lodash-es/uniq";
 
 const networkOnly = new NetworkOnly();
+const cacheOnly = new CacheOnly({ cacheName: omrsCacheName });
 const networkFirst = new NetworkFirst({ cacheName: omrsCacheName });
 
 /**
@@ -53,53 +59,17 @@ async function navigationHandler(options: RouteHandlerCallbackOptions) {
 }
 
 async function defaultHandler(options: RouteHandlerCallbackOptions) {
-  const useNetworkFirst = await shouldUseNetworkFirst(options);
-  if (useNetworkFirst) {
-    return await networkFirst.handle(options);
-  } else {
-    return await handleWithNetworkOnlyAndCacheFallback(options);
-  }
-}
-
-async function shouldUseNetworkFirst({
-  request,
-  url,
-}: RouteHandlerCallbackOptions) {
-  if (request.method !== "GET") {
-    // TODO: Evaluate whether this should take precedence over the custom strategy header below.
-    return false;
-  }
-
-  if (hasOmrsNetworkFirstHeader(request.headers)) {
-    return true;
-  }
-
-  const db = new ServiceWorkerDb();
-  const allDynamicRouteRegistrations =
-    await db.dynamicRouteRegistrations.toArray();
-  const hasMatchingDynamicRoute = allDynamicRouteRegistrations.some((route) =>
-    new RegExp(route.pattern).test(url.href)
-  );
-  return hasMatchingDynamicRoute;
-}
-
-async function handleWithNetworkOnlyAndCacheFallback(
-  options: RouteHandlerCallbackOptions
-) {
   const { request } = options;
   const requestClone = await request.clone(); // Clone to avoid errors when calling request.text() later.
 
   try {
-    return await networkOnly.handle(options);
+    const handlerKey =
+      options.request.method === "GET"
+        ? await getHandlerKey(options)
+        : "default";
+    const handler = knownHandlers[handlerKey] ?? knownHandlers["default"];
+    return await handler(options);
   } catch (e) {
-    const cachedResponse = await caches.match(request, {
-      cacheName: omrsCacheName,
-    });
-
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-
     publishEvent({
       type: "networkRequestFailed",
       request: {
@@ -113,5 +83,59 @@ async function handleWithNetworkOnlyAndCacheFallback(
     return new Response(parseOmrsOfflineResponseBodyHeader(request.headers), {
       status: parseOmrsOfflineResponseStatusHeader(request.headers),
     });
+  }
+}
+
+const knownHandlers: Record<
+  OmrsOfflineCachingStrategy,
+  (options: RouteHandlerCallbackOptions) => Promise<Response>
+> = {
+  ["network-first"]: (options) => networkFirst.handle(options),
+  ["default"]: async (options: RouteHandlerCallbackOptions) => {
+    try {
+      return await networkOnly.handle(options);
+    } catch (e) {
+      return await cacheOnly.handle(options);
+    }
+  },
+};
+
+async function getHandlerKey({ request }: RouteHandlerCallbackOptions) {
+  return (
+    getHandlerKeyFromHeaders(request.headers) ??
+    (await getHandlerKeyFromDynamicRouteRegistrations(request.url)) ??
+    "default"
+  );
+}
+
+function getHandlerKeyFromHeaders(headers: Headers) {
+  return getOmrsHeader(headers, omrsOfflineCachingStrategyHttpHeaderName);
+}
+
+async function getHandlerKeyFromDynamicRouteRegistrations(url: string) {
+  const db = new ServiceWorkerDb();
+  const allDynamicRouteRegistrations =
+    await db.dynamicRouteRegistrations.toArray();
+  const strategies = uniq(
+    allDynamicRouteRegistrations
+      .filter((route) => new RegExp(route.pattern).test(url))
+      .map((route) => route.strategy ?? "network-first")
+  );
+
+  if (strategies.length <= 1) {
+    return strategies[0];
+  } else {
+    // Multiple routes can match the URL (multiple RegExps can match).
+    // In that case, prioritize the available strategies. When in doubt, cache the resource again.
+    const priorities: Array<OmrsOfflineCachingStrategy> = [
+      "network-first",
+      "default",
+    ];
+
+    return (
+      priorities.find((prioritizedStrategy) =>
+        strategies.some((strategy) => strategy === prioritizedStrategy)
+      ) ?? "default"
+    );
   }
 }

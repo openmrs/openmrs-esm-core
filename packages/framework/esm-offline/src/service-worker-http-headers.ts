@@ -5,6 +5,8 @@ export const omrsOfflineResponseStatusHttpHeaderName =
 export const omrsOfflineCachingStrategyHttpHeaderName =
   "x-omrs-offline-caching-strategy";
 
+export type OmrsOfflineCachingStrategy = "default" | "network-first";
+
 /**
  * Defines the keys of the custom headers which can be appended to an HTTP request.
  * HTTP requests with these headers are handled in a special way by the SPA's service worker.
@@ -30,7 +32,7 @@ export type OmrsOfflineHttpHeaders = {
    *   The service worker decides the strategy to be used.
    * * `network-first`: The service worker will make the request and cache its response.
    */
-  [omrsOfflineCachingStrategyHttpHeaderName]?: "default" | "network-first";
+  [omrsOfflineCachingStrategyHttpHeaderName]?: OmrsOfflineCachingStrategy;
 };
 
 export type OmrsOfflineHttpHeaderNames = keyof OmrsOfflineHttpHeaders;

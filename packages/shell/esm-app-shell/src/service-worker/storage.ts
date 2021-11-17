@@ -1,17 +1,27 @@
+import { OmrsOfflineCachingStrategy } from "@openmrs/esm-offline";
 import Dexie, { Table } from "dexie";
 
 /**
  * Contains information about dynamic route registrations.
- * Dynamic route registrations are routes which should be cached using a Network First approach,
+ * Dynamic route registrations are routes which should be kept in the cache,
  * but are not by default known by the Service Worker.
  * They are typically registerd by the the window/app at runtime as soon as they are known.
  */
 export interface DynamicRouteRegistration {
   /**
    * A regular expression which matches against a URL.
-   * If it matches, the URL should be cached.
+   * If it matches, the URL should be cached using the `strategy`.
    */
   pattern: string;
+  /**
+   * The caching strategy to be used for caching matching URLs.
+   * Due to historical reasons, this value might be missing.
+   * In such cases, `network-first` should be assumed (the historical default).
+   *
+   * * `default`: No explicit strategy should be applied. Matching requests should remain in the cache though.
+   * * `network-first`: Use the network-first strategy. Matching requests keep being added to the cache.
+   */
+  strategy?: OmrsOfflineCachingStrategy;
 }
 
 /**
