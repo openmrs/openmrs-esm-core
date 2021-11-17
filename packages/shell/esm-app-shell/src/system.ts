@@ -54,6 +54,10 @@ export function registerModule(name: string, resolve: ModuleResolver) {
         if (typeof content === "function") {
           _exports("__esModule", true);
           _exports("default", content);
+        } else if (typeof content === "object") {
+          if (!("default" in content)) {
+            _exports("default", content);
+          }
         }
       }
     },

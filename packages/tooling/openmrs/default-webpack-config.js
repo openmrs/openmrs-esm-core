@@ -57,7 +57,7 @@ module.exports = (env, argv = {}) => {
     },
     output: {
       libraryTarget: "system",
-      publicPath: "auto",
+      publicPath: "",
       path: resolve(root, outDir),
     },
     target: "web",
@@ -103,6 +103,14 @@ module.exports = (env, argv = {}) => {
       hints: mode === production && "warning",
     },
     plugins: [
+      new ForkTsCheckerWebpackPlugin(),
+      new CleanWebpackPlugin(),
+      new BundleAnalyzerPlugin({
+        analyzerMode: env && env.analyze ? "server" : "disabled",
+      }),
+      new DefinePlugin({
+        "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
+      }),
       new ModuleFederationPlugin({
         name,
         library: { type: "system", name },
@@ -120,14 +128,6 @@ module.exports = (env, argv = {}) => {
           };
           return obj;
         }, {}),
-      }),
-      new ForkTsCheckerWebpackPlugin(),
-      new CleanWebpackPlugin(),
-      new BundleAnalyzerPlugin({
-        analyzerMode: env && env.analyze ? "server" : "disabled",
-      }),
-      new DefinePlugin({
-        "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new StatsWriterPlugin({
         filename: `${filename}.buildmanifest.json`,
