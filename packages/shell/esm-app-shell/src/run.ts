@@ -248,8 +248,6 @@ async function precacheImportMap() {
 }
 
 async function precacheSharedApiEndpoints() {
-  await messageOmrsServiceWorker({ type: "clearDynamicRoutes" });
-
   // By default, cache the session endpoint.
   // This ensures that a lot of user/session related functions also work offline.
   const sessionPathUrl = new URL(
