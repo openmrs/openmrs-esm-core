@@ -45,7 +45,7 @@ export async function addToOmrsCache(urls: Array<string>) {
         await retry(() => cache.add(url), {
           onError: (e, attempt) =>
             console.debug(
-              `Failure attempt ${attempt} at caching "${url}". Error: `,
+              `[SW] Failure attempt ${attempt} at caching "${url}". Error: `,
               e
             ),
         });
@@ -60,14 +60,14 @@ export async function addToOmrsCache(urls: Array<string>) {
   const failedToCache = results.filter((r) => !r.success);
   if (cached.length > 0) {
     console.debug(
-      `Successfully added ${cached.length} URLs to the OMRS cache. URLs: `,
+      `[SW] Successfully added ${cached.length} URLs to the OMRS cache. URLs: `,
       cached.map((r) => r.url)
     );
   }
 
   if (failedToCache.length > 0) {
     console.error(
-      `Failed to cache ${failedToCache.length} URLs. URLs: `,
+      `[SW] Failed to cache ${failedToCache.length} URLs. URLs: `,
       failedToCache.map((r) => r.url)
     );
   }
@@ -86,13 +86,13 @@ async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
   );
 
   console.info(
-    "Removing the following expired URLs from the cache: ",
+    "[SW] Removing the following expired URLs from the cache: ",
     urlsToInvalidate
   );
 
   // eslint-disable-next-line no-console
   console.debug(
-    "The following URLs were known and not invalidated: ",
+    "[SW] The following URLs were known and not invalidated: ",
     absoluteWbManifestUrls,
     newImportMapUrls,
     dynamicRoutes

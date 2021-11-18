@@ -22,6 +22,24 @@ const networkOnly = new NetworkOnly();
 const cacheOnly = new CacheOnly({ cacheName: omrsCacheName });
 const networkFirst = new NetworkFirst({ cacheName: omrsCacheName });
 
+const defaultStrategy: OmrsOfflineCachingStrategy =
+  "network-only-or-cache-only";
+const knownStrategyHandlers: Record<
+  OmrsOfflineCachingStrategy,
+  (options: RouteHandlerCallbackOptions) => Promise<Response>
+> = {
+  ["network-first"]: (options) => networkFirst.handle(options),
+  ["network-only-or-cache-only"]: async (
+    options: RouteHandlerCallbackOptions
+  ) => {
+    try {
+      return await networkOnly.handle(options);
+    } catch (e) {
+      return await cacheOnly.handle(options);
+    }
+  },
+};
+
 /**
  * Registers required Workbox routes used by the service worker to provide offline functionality.
  */
@@ -61,15 +79,23 @@ async function navigationHandler(options: RouteHandlerCallbackOptions) {
 async function defaultHandler(options: RouteHandlerCallbackOptions) {
   const { request } = options;
   const requestClone = await request.clone(); // Clone to avoid errors when calling request.text() later.
+  const handlerKey =
+    options.request.method === "GET"
+      ? await getHandlerKey(options)
+      : defaultStrategy;
+  const handler =
+    knownStrategyHandlers[handlerKey] ?? knownStrategyHandlers[defaultStrategy];
 
   try {
-    const handlerKey =
-      options.request.method === "GET"
-        ? await getHandlerKey(options)
-        : "default";
-    const handler = knownHandlers[handlerKey] ?? knownHandlers["default"];
     return await handler(options);
   } catch (e) {
+    console.warn(
+      "[SW] Could not handle the request to %s (using handler %s).",
+      request.url,
+      handlerKey,
+      e
+    );
+
     publishEvent({
       type: "networkRequestFailed",
       request: {
@@ -86,27 +112,10 @@ async function defaultHandler(options: RouteHandlerCallbackOptions) {
   }
 }
 
-const knownHandlers: Record<
-  OmrsOfflineCachingStrategy,
-  (options: RouteHandlerCallbackOptions) => Promise<Response>
-> = {
-  ["network-first"]: (options) => networkFirst.handle(options),
-  ["network-only-or-cache-only"]: async (
-    options: RouteHandlerCallbackOptions
-  ) => {
-    try {
-      return await networkOnly.handle(options);
-    } catch (e) {
-      return await cacheOnly.handle(options);
-    }
-  },
-};
-
 async function getHandlerKey({ request }: RouteHandlerCallbackOptions) {
   return (
     getHandlerKeyFromHeaders(request.headers) ??
-    (await getHandlerKeyFromDynamicRouteRegistrations(request.url)) ??
-    "default"
+    (await getHandlerKeyFromDynamicRouteRegistrations(request.url))
   );
 }
 
@@ -137,7 +146,7 @@ async function getHandlerKeyFromDynamicRouteRegistrations(url: string) {
     return (
       priorities.find((prioritizedStrategy) =>
         strategies.some((strategy) => strategy === prioritizedStrategy)
-      ) ?? "default"
+      ) ?? defaultStrategy
     );
   }
 }
