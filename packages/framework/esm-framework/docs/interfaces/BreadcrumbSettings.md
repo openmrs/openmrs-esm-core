@@ -61,7 +61,7 @@ ___
 
 ### title
 
-• **title**: `string` \| (`params`: `any`) => `string` \| (`params`: `any`) => `Promise`<`string`\>
+• **title**: `string` \| (`params`: `any`) => `string`
 
 The title of the breadcrumb.
 

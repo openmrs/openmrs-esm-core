@@ -10,7 +10,6 @@ import * as carbonComponents from "carbon-components";
 import * as carbonIcons from "carbon-icons";
 import * as rxjs from "rxjs";
 
-// legacy way of dependency sharing - still done for backwards compatibility
 export const sharedDependencies = {
   dayjs: () => dayjs,
   i18next: () => i18next,

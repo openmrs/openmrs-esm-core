@@ -43,7 +43,6 @@
   "peerDependencies": {
     "@openmrs/esm-framework": "3.x",
     "carbon-components": "10.x",
-    "carbon-components-react": "7.x",
     "carbon-icons": "7.x",
     "react": "16.x",
     "react-dom": "16.x",

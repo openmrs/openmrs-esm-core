@@ -34,7 +34,7 @@ The module/app that defines the component
 
 #### Defined in
 
-[types.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L92)
+[types.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L86)
 
 ___
 
@@ -46,7 +46,7 @@ Defines the offline support / properties of the component.
 
 #### Defined in
 
-[types.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L104)
+[types.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L98)
 
 ___
 
@@ -58,7 +58,7 @@ Defines the online support / properties of the component.
 
 #### Defined in
 
-[types.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L100)
+[types.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L94)
 
 ___
 
@@ -70,7 +70,7 @@ Defines the access privilege required for this component, if any.
 
 #### Defined in
 
-[types.ts:108](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L108)
+[types.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L102)
 
 ___
 
@@ -82,7 +82,7 @@ Defines resources that are loaded when the component should mount.
 
 #### Defined in
 
-[types.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L112)
+[types.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L106)
 
 ## Methods
 
@@ -98,4 +98,4 @@ Defines a function to use for actually loading the component's lifecycle.
 
 #### Defined in
 
-[types.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L96)
+[types.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L90)
