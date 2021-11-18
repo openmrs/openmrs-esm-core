@@ -17,9 +17,6 @@ export interface DynamicRouteRegistration {
    * The caching strategy to be used for caching matching URLs.
    * Due to historical reasons, this value might be missing.
    * In such cases, `network-first` should be assumed (the historical default).
-   *
-   * * `default`: No explicit strategy should be applied. Matching requests should remain in the cache though.
-   * * `network-first`: Use the network-first strategy. Matching requests keep being added to the cache.
    */
   strategy?: OmrsOfflineCachingStrategy;
 }

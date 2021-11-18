@@ -91,7 +91,9 @@ const knownHandlers: Record<
   (options: RouteHandlerCallbackOptions) => Promise<Response>
 > = {
   ["network-first"]: (options) => networkFirst.handle(options),
-  ["default"]: async (options: RouteHandlerCallbackOptions) => {
+  ["network-only-or-cache-only"]: async (
+    options: RouteHandlerCallbackOptions
+  ) => {
     try {
       return await networkOnly.handle(options);
     } catch (e) {
@@ -129,7 +131,7 @@ async function getHandlerKeyFromDynamicRouteRegistrations(url: string) {
     // In that case, prioritize the available strategies. When in doubt, cache the resource again.
     const priorities: Array<OmrsOfflineCachingStrategy> = [
       "network-first",
-      "default",
+      "network-only-or-cache-only",
     ];
 
     return (
