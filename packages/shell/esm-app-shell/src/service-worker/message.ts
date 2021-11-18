@@ -70,7 +70,7 @@ export async function handleMessage(event: ExtendableMessageEvent) {
   }
 
   function fail(error: string) {
-    console.warn("Handling a message resulted in an error.", error);
+    console.warn("[SW] Handling a message resulted in an error.", error);
     resolve({
       success: false,
       error,
