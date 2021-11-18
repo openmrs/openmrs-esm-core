@@ -260,6 +260,7 @@ async function precacheSharedApiEndpoints() {
   await messageOmrsServiceWorker({
     type: "registerDynamicRoute",
     url: sessionPathUrl,
+    strategy: "network-first",
   });
 }
 

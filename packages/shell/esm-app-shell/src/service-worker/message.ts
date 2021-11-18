@@ -24,6 +24,7 @@ async function clearDynamicRoutes() {
 async function registerDynamicRoute({
   pattern,
   url,
+  strategy,
 }: RegisterDynamicRouteMessage) {
   let finalPattern = pattern;
   if (!finalPattern && url) {
@@ -31,7 +32,11 @@ async function registerDynamicRoute({
   }
 
   if (finalPattern) {
-    const registration: DynamicRouteRegistration = { pattern: finalPattern };
+    const registration: DynamicRouteRegistration = {
+      pattern: finalPattern,
+      strategy,
+    };
+
     await new ServiceWorkerDb().dynamicRouteRegistrations.put(registration);
   }
 }

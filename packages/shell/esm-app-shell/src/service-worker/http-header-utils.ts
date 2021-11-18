@@ -24,14 +24,6 @@ export function parseOmrsOfflineResponseStatusHeader(headers: Headers) {
   return isNaN(status) || status < 200 || status > 599 ? 503 : status;
 }
 
-export function hasOmrsNetworkFirstHeader(headers: Headers) {
-  const header = getOmrsHeader(
-    headers,
-    omrsOfflineCachingStrategyHttpHeaderName
-  );
-  return header === "network-first";
-}
-
 export function getOmrsHeader<T extends OmrsOfflineHttpHeaderNames>(
   headers: Headers,
   name: T

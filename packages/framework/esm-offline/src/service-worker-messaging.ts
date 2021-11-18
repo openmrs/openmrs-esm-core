@@ -1,4 +1,5 @@
 import type { ImportMap } from "@openmrs/esm-globals";
+import { OmrsOfflineCachingStrategy } from "./service-worker-http-headers";
 import { getOmrsServiceWorker } from "./service-worker";
 
 /**
@@ -38,6 +39,7 @@ export interface RegisterDynamicRouteMessage
   extends OmrsServiceWorkerMessage<"registerDynamicRoute"> {
   pattern?: string;
   url?: string;
+  strategy?: OmrsOfflineCachingStrategy;
 }
 
 export type KnownOmrsServiceWorkerMessages =
