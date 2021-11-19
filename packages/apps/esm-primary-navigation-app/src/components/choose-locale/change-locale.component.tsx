@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./change-locale.component.scss";
 import { Select, SelectItem } from "carbon-components-react";
-import { LoggedInUser } from "@openmrs/esm-framework";
+import { ExtensionSlot, LoggedInUser } from "@openmrs/esm-framework";
 import { PostUserProperties } from "./change-locale.resource";
 
 export interface ChangeLocaleProps {
@@ -30,7 +30,7 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   }, [userProps]);
 
   return (
-    <div className={`omrs-margin-12 ${styles.labelselect}`}>
+    <div className={`omrs-margin-12 ${styles.switcherContainer}`}>
       <Select
         name="selectLocale"
         id="selectLocale"
@@ -44,6 +44,7 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
       >
         {options}
       </Select>
+      <ExtensionSlot extensionSlotName="user-panel-actions-slot" />
     </div>
   );
 };
