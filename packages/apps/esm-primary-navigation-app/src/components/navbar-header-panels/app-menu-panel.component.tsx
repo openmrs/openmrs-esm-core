@@ -22,6 +22,10 @@ const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
         className={styles.menuLink}
         extensionSlotName="app-menu-slot"
       />
+      <ExtensionSlot
+        className={styles.menuLink}
+        extensionSlotName="app-menu-external-links-slot"
+      />
     </HeaderPanel>
   );
 };
