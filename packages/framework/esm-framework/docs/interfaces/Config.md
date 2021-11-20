@@ -41,7 +41,7 @@ Object.constructor
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:122
+node_modules/typescript/lib/lib.es5.d.ts:124
 
 ## Methods
 
@@ -67,7 +67,7 @@ Object.hasOwnProperty
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:137
+node_modules/typescript/lib/lib.es5.d.ts:139
 
 ___
 
@@ -93,7 +93,7 @@ Object.isPrototypeOf
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:143
+node_modules/typescript/lib/lib.es5.d.ts:145
 
 ___
 
@@ -119,7 +119,7 @@ Object.propertyIsEnumerable
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:149
+node_modules/typescript/lib/lib.es5.d.ts:151
 
 ___
 
@@ -139,7 +139,7 @@ Object.toLocaleString
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:128
+node_modules/typescript/lib/lib.es5.d.ts:130
 
 ___
 
@@ -159,7 +159,7 @@ Object.toString
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:125
+node_modules/typescript/lib/lib.es5.d.ts:127
 
 ___
 
@@ -179,4 +179,4 @@ Object.valueOf
 
 #### Defined in
 
-node_modules/typescript/lib/lib.es5.d.ts:131
+node_modules/typescript/lib/lib.es5.d.ts:133

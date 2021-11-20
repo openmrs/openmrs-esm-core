@@ -26,6 +26,7 @@
 
 - [KnownOmrsServiceWorkerEvents](API.md#knownomrsserviceworkerevents)
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
+- [OmrsOfflineCachingStrategy](API.md#omrsofflinecachingstrategy)
 - [OmrsOfflineHttpHeaderNames](API.md#omrsofflinehttpheadernames)
 - [OmrsOfflineHttpHeaders](API.md#omrsofflinehttpheaders)
 - [ProcessSyncItem](API.md#processsyncitem)
@@ -78,7 +79,22 @@ ___
 
 #### Defined in
 
-[service-worker-messaging.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L43)
+[service-worker-messaging.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L45)
+
+___
+
+### OmrsOfflineCachingStrategy
+
+Ƭ **OmrsOfflineCachingStrategy**: ``"network-only-or-cache-only"`` \| ``"network-first"``
+
+* `cache-or-network`: The default strategy, equal to the absence of this header.
+  The SW attempts to resolve the request via the network, but falls back to the cache if required.
+  The service worker decides the strategy to be used.
+* `network-first`: See https://developers.google.com/web/tools/workbox/modules/workbox-strategies#network_first_network_falling_back_to_cache.
+
+#### Defined in
+
+[service-worker-http-headers.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L16)
 
 ___
 
@@ -88,7 +104,7 @@ ___
 
 #### Defined in
 
-[service-worker-http-headers.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L36)
+[service-worker-http-headers.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L43)
 
 ___
 
@@ -103,13 +119,13 @@ HTTP requests with these headers are handled in a special way by the SPA's servi
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `x-omrs-offline-caching-strategy?` | ``"default"`` \| ``"network-first"`` | Instructs the service worker to use a specific caching strategy for this request. The supported values are:  * `default`: Equal to the absence of this header/an invalid value.   The service worker decides the strategy to be used. * `network-first`: The service worker will make the request and cache its response. |
+| `x-omrs-offline-caching-strategy?` | [`OmrsOfflineCachingStrategy`](API.md#omrsofflinecachingstrategy) | Instructs the service worker to use a specific caching strategy for this request. |
 | `x-omrs-offline-response-body?` | `string` | If the client is offline and the request cannot be read from the cache (i.e. if there is no way to receive any kind of data for this request), the service worker will return a response with the body in this header. |
 | `x-omrs-offline-response-status?` | \`${number}\` | If the client is offline and the request cannot be read from the cache (i.e. if there is no way to receive any kind of data for this request), the service worker will return a response with the status code defined in this header. |
 
 #### Defined in
 
-[service-worker-http-headers.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L12)
+[service-worker-http-headers.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L24)
 
 ___
 
@@ -399,7 +415,7 @@ A promise which completes when the message has been successfully processed by th
 
 #### Defined in
 
-[service-worker-messaging.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L9)
+[service-worker-messaging.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L10)
 
 ___
 

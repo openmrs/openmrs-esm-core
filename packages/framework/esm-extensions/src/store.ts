@@ -83,8 +83,8 @@ export type MaybeAsync<T> = T | Promise<T>;
 
 let storeUpdates: Promise<void> = Promise.resolve();
 
-export function updateExtensionStore<U extends keyof ExtensionStore>(
-  updater: (state: ExtensionStore) => MaybeAsync<Pick<ExtensionStore, U>>
+export function updateExtensionStore(
+  updater: (state: ExtensionStore) => MaybeAsync<ExtensionStore>
 ) {
   storeUpdates = storeUpdates.then(async () => {
     const state = extensionStore.getState();

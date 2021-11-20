@@ -13,6 +13,7 @@
 ### Properties
 
 - [pattern](RegisterDynamicRouteMessage.md#pattern)
+- [strategy](RegisterDynamicRouteMessage.md#strategy)
 - [type](RegisterDynamicRouteMessage.md#type)
 - [url](RegisterDynamicRouteMessage.md#url)
 
@@ -24,7 +25,17 @@
 
 #### Defined in
 
-[service-worker-messaging.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L39)
+[service-worker-messaging.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L40)
+
+___
+
+### strategy
+
+• `Optional` **strategy**: [`OmrsOfflineCachingStrategy`](../API.md#omrsofflinecachingstrategy)
+
+#### Defined in
+
+[service-worker-messaging.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L42)
 
 ___
 
@@ -38,7 +49,7 @@ ___
 
 #### Defined in
 
-[service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+[service-worker-messaging.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L27)
 
 ___
 
@@ -48,4 +59,4 @@ ___
 
 #### Defined in
 
-[service-worker-messaging.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L40)
+[service-worker-messaging.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L41)

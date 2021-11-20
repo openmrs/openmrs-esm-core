@@ -494,19 +494,13 @@ ___
 
 ### updateExtensionStore
 
-▸ **updateExtensionStore**<`U`\>(`updater`): `void`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `U` | extends keyof [`ExtensionStore`](interfaces/ExtensionStore.md) |
+▸ **updateExtensionStore**(`updater`): `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `updater` | (`state`: [`ExtensionStore`](interfaces/ExtensionStore.md)) => [`MaybeAsync`](API.md#maybeasync)<`Pick`<[`ExtensionStore`](interfaces/ExtensionStore.md), `U`\>\> |
+| `updater` | (`state`: [`ExtensionStore`](interfaces/ExtensionStore.md)) => [`MaybeAsync`](API.md#maybeasync)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
 
 #### Returns
 

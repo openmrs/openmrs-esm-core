@@ -32,4 +32,4 @@
 
 #### Defined in
 
-[service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+[service-worker-messaging.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L27)
