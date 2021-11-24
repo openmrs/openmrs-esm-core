@@ -1,16 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import HeaderedQuickInfo from "./headered-quick-info.component";
-import OverviewCard from "./overview-card.component";
-import type { TileProps } from "carbon-components-react";
+import HeaderedQuickInfo from "../components/headered-quick-info.component";
+import OverviewCard from "../components/overview-card.component";
 import { usePendingSyncItems } from "../hooks/offline-actions";
 import { routes } from "../constants";
 
-export interface OfflineActionsOverviewCardProps extends TileProps {}
-
-const OfflineActionsOverviewCard: React.FC<OfflineActionsOverviewCardProps> = (
-  props
-) => {
+const OfflineActionsOverviewCard: React.FC = () => {
   const { t } = useTranslation();
   const { data } = usePendingSyncItems();
 
@@ -18,7 +13,6 @@ const OfflineActionsOverviewCard: React.FC<OfflineActionsOverviewCardProps> = (
     <OverviewCard
       header={t("homeOverviewCardOfflineActionsHeader", "Offline actions")}
       viewLink={routes.offlineToolsActions}
-      {...props}
     >
       <HeaderedQuickInfo
         header={t(

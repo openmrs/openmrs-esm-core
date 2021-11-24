@@ -35,24 +35,24 @@ function setupOpenMRS() {
 
   registerBreadcrumbs([
     {
-      path: `${window.spaBase}${routes.offlineTools}`,
+      path: `${window.spaBase}/${routes.offlineTools}`,
       title: "Offline tools",
-      parent: `${window.spaBase}${routes.home}`,
+      parent: `${window.spaBase}/${routes.home}`,
     },
     {
-      path: `${window.spaBase}${routes.offlineToolsPatients}`,
+      path: `${window.spaBase}/${routes.offlineToolsPatients}`,
       title: "Offline patients",
-      parent: `${window.spaBase}${routes.offlineTools}`,
+      parent: `${window.spaBase}/${routes.offlineTools}`,
     },
     {
-      path: `${window.spaBase}${routes.offlineToolsPatientOfflineData}`,
+      path: `${window.spaBase}/${routes.offlineToolsPatientOfflineData}`,
       title: "Offline data",
-      parent: `${window.spaBase}${routes.offlineToolsPatients}`,
+      parent: `${window.spaBase}/${routes.offlineToolsPatients}`,
     },
     {
-      path: `${window.spaBase}${routes.offlineToolsActions}`,
+      path: `${window.spaBase}/${routes.offlineToolsActions}`,
       title: "Actions",
-      parent: `${window.spaBase}${routes.offlineTools}`,
+      parent: `${window.spaBase}/${routes.offlineTools}`,
     },
   ]);
 
@@ -92,6 +92,27 @@ function setupOpenMRS() {
         id: "offline-tools-confirmation-modal",
         load: getAsyncLifecycle(
           () => import("./components/confirmation-modal.component"),
+          options
+        ),
+        online: true,
+        offline: true,
+      },
+      {
+        id: "offline-tools-dashboard-patients-card",
+        slot: "offline-tools-dashboard-cards",
+        load: getAsyncLifecycle(
+          () => import("./offline-patients/patients-overview-card.component"),
+          options
+        ),
+        online: true,
+        offline: true,
+      },
+      {
+        id: "offline-tools-dashboard-actions-card",
+        slot: "offline-tools-dashboard-cards",
+        load: getAsyncLifecycle(
+          () =>
+            import("./offline-actions/offline-actions-overview-card.component"),
           options
         ),
         online: true,
