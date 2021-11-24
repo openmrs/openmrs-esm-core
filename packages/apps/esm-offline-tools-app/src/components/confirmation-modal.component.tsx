@@ -11,6 +11,16 @@ export interface ConfirmationModalProps {
   onCancel?(): void;
 }
 
+/**
+ * A confirmation modal provided globally by the offline tools.
+ * Used by extensions providing offline tools UI elements.
+ *
+ * The modal can be configured with the above props.
+ * Several design aspects (e.g. the color and the general content) are preconfigured to match the
+ * design linked below.
+ *
+ * Designs: https://zpl.io/2GPjjjW
+ */
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   title,
   confirmText,

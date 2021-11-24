@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useOfflinePatientDataStore } from "../hooks/offline-patient-data-hooks";
-import HeaderedQuickInfo from "./headered-quick-info.component";
-import OverviewCard from "./overview-card.component";
+import HeaderedQuickInfo from "../components/headered-quick-info.component";
+import OverviewCard from "../components/overview-card.component";
 import { routes } from "../constants";
 
 const PatientsOverviewCard: React.FC = () => {
