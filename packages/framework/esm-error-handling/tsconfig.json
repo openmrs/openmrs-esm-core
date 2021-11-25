@@ -2,6 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "module": "esnext",
+    "target": "es2015",
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "moduleResolution": "node",
@@ -14,8 +15,7 @@
       "es2016.array.include",
       "es2018"
     ],
-    "noEmit": true,
-    "target": "esnext"
+    "noEmit": true
   },
   "include": ["src/**/*", "__mocks__", "__mocks__"]
 }
