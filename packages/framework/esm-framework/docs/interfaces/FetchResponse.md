@@ -52,7 +52,7 @@ Response.body
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2402
+node_modules/typescript/lib/lib.dom.d.ts:2444
 
 ___
 
@@ -66,7 +66,7 @@ Response.bodyUsed
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2403
+node_modules/typescript/lib/lib.dom.d.ts:2445
 
 ___
 
@@ -90,7 +90,7 @@ Response.headers
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11136
+node_modules/typescript/lib/lib.dom.d.ts:12143
 
 ___
 
@@ -104,7 +104,7 @@ Response.ok
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11137
+node_modules/typescript/lib/lib.dom.d.ts:12144
 
 ___
 
@@ -118,7 +118,7 @@ Response.redirected
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11138
+node_modules/typescript/lib/lib.dom.d.ts:12145
 
 ___
 
@@ -132,7 +132,7 @@ Response.status
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11139
+node_modules/typescript/lib/lib.dom.d.ts:12146
 
 ___
 
@@ -146,7 +146,7 @@ Response.statusText
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11140
+node_modules/typescript/lib/lib.dom.d.ts:12147
 
 ___
 
@@ -160,7 +160,7 @@ Response.type
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11141
+node_modules/typescript/lib/lib.dom.d.ts:12148
 
 ___
 
@@ -174,7 +174,7 @@ Response.url
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11142
+node_modules/typescript/lib/lib.dom.d.ts:12149
 
 ## Methods
 
@@ -192,7 +192,7 @@ Response.arrayBuffer
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2404
+node_modules/typescript/lib/lib.dom.d.ts:2446
 
 ___
 
@@ -210,7 +210,7 @@ Response.blob
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2405
+node_modules/typescript/lib/lib.dom.d.ts:2447
 
 ___
 
@@ -228,7 +228,7 @@ Response.clone
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11143
+node_modules/typescript/lib/lib.dom.d.ts:12150
 
 ___
 
@@ -246,7 +246,7 @@ Response.formData
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2406
+node_modules/typescript/lib/lib.dom.d.ts:2448
 
 ___
 
@@ -264,7 +264,7 @@ Response.json
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2407
+node_modules/typescript/lib/lib.dom.d.ts:2449
 
 ___
 
@@ -282,4 +282,4 @@ Response.text
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2408
+node_modules/typescript/lib/lib.dom.d.ts:2450
