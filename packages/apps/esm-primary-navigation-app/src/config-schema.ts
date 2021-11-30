@@ -28,6 +28,11 @@ export const configSchema = {
     links: {
       _type: Type.Array,
       _elements: {
+        visible: {
+          _type: Type.Boolean,
+          _description: "Whether to show a link in the menu",
+          _default: true,
+        },
         title: {
           _type: Type.String,
           _description: "Title of the link",
@@ -39,16 +44,9 @@ export const configSchema = {
       },
       _default: [
         {
-          title: "Pharmacy",
-          redirect: "${openmrsSpaBase}/pharmacy",
-        },
-        {
-          title: "Laboratory",
-          redirect: "${openmrsSpaBase}/laboratory",
-        },
-        {
-          title: "Analytics",
-          redirect: "${openmrsSpaBase}/analytics",
+          visible: false,
+          title: "External link",
+          redirect: "/external-link",
         },
       ],
       _description: "The links to be showcased in the app menu",
