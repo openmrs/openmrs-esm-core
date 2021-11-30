@@ -2,6 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "module": "CommonJS",
+    "target": "es2015",
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "jsx": "react",

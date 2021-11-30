@@ -15,7 +15,7 @@ export default function OfflineToolsNavLink({
     <div key={page}>
       <ConfigurableLink
         to={
-          "${openmrsSpaBase}" + routes.offlineTools + (page ? `/${page}` : "")
+          "${openmrsSpaBase}/" + routes.offlineTools + (page ? `/${page}` : "")
         }
         className="bx--side-nav__link"
       >
