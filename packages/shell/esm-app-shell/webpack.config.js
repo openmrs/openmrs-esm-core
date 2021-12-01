@@ -122,11 +122,11 @@ module.exports = (env, argv = {}) => {
         },
         {
           test: /\.(woff|woff2|png)?$/,
-          use: [{ loader: require.resolve("file-loader") }],
+          type: "asset/resource",
         },
         {
           test: /\.(svg|html)$/,
-          use: [{ loader: require.resolve("raw-loader") }],
+          type: "asset/source",
         },
         {
           test: /\.(js|jsx)$/,
