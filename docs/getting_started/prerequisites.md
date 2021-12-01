@@ -26,11 +26,11 @@ Otherwise, you don't have to worry about Lerna.
 You should know everything from [React Main Concepts](https://reactjs.org/docs/hello-world.html),
 and sections 1-5 of [Hooks](https://reactjs.org/docs/hooks-intro.html).
 
-If you're new to React, please work through a tutorial in addition to reading
-the above documentation. The
-[Official React Tutorial](https://reactjs.org/tutorial/tutorial.html)
-and the video-based [React JS Crash Course 2021](https://www.youtube.com/watch?v=w7ejDZ8SWv8)
-are good ones.
+If you're new to React, use a tutorial or interactive learner's guide.
+The [Learn React Docs](https://beta.reactjs.org/learn) is an excellent resource.
+You can also try the
+[React Tutorial](https://reactjs.org/tutorial/tutorial.html)
+or the video-based [React JS Crash Course 2021](https://www.youtube.com/watch?v=w7ejDZ8SWv8).
 
 Take your time. This is a lot of material. The better you understand it, the more
 easily you will be able to develop high-quality frontend modules (and other React applications).
