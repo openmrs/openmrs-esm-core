@@ -37,11 +37,11 @@ module.exports = (env) => ({
       },
       {
         test: /\.(woff|woff2|png)?$/,
-        use: ["file-loader"],
+        type: "asset/resource",
       },
       {
         test: /\.(svg|html)$/,
-        use: ["raw-loader"],
+        type: "asset/source",
       },
     ],
   },
