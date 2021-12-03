@@ -139,7 +139,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
                   id="username"
                   type="text"
                   name="username"
-                  labelText={t("username", "UserName")}
+                  labelText={t("username", "Username")}
                   className={styles.inputStyle}
                   value={username}
                   onChange={changeUsername}
@@ -183,8 +183,11 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
 
                 <TextInput.PasswordInput
                   id="password"
-                  invalidText={t("A valid value is required")}
-                  labelText={t("password")}
+                  invalidText={t(
+                    "validValueRequired",
+                    "A valid value is required"
+                  )}
+                  labelText={t("password", "Password")}
                   name="password"
                   className={styles.inputStyle}
                   value={password}
