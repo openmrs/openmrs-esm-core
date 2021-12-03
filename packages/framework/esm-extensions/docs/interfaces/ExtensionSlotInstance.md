@@ -22,7 +22,7 @@ An example may be an extension which is added to the slot via the configuration.
 
 #### Defined in
 
-[store.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L46)
+[store.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L47)
 
 ___
 
@@ -34,7 +34,7 @@ A set allowing explicit ordering of the `assignedIds`.
 
 #### Defined in
 
-[store.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L56)
+[store.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L57)
 
 ___
 
@@ -48,4 +48,4 @@ An example may be an extension which is removed from the slot via the configurat
 
 #### Defined in
 
-[store.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L52)
+[store.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L53)
