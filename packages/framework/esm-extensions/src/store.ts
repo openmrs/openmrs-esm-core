@@ -1,3 +1,4 @@
+import isEqual from "lodash-es/isEqual";
 import {
   configExtensionStore,
   ConfigExtensionStoreElement,
@@ -124,5 +125,14 @@ function updateConfigExtensionStore(extensionState: ExtensionStore) {
       }
     }
   }
-  configExtensionStore.setState({ mountedExtensions: configExtensionRecords });
+  if (
+    !isEqual(
+      configExtensionStore.getState().mountedExtensions,
+      configExtensionRecords
+    )
+  ) {
+    configExtensionStore.setState({
+      mountedExtensions: configExtensionRecords,
+    });
+  }
 }

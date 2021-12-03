@@ -121,7 +121,8 @@ function computeExtensionConfigs(
       extension.slotModuleName,
       extension.extensionModuleName,
       extension.slotName,
-      extension.extensionId
+      extension.extensionId,
+      configState
     );
     extensionStore.setState({ loaded: true, config });
   }
@@ -214,7 +215,8 @@ function getExtensionConfig(
   slotModuleName: string,
   extensionModuleName: string,
   slotName: string,
-  extensionId: string
+  extensionId: string,
+  configState: ConfigInternalStore
 ) {
   const slotModuleConfig = mergeConfigsFor(
     slotModuleName,
@@ -227,7 +229,7 @@ function getExtensionConfig(
     getProvidedConfigs()
   );
   const extensionConfig = mergeConfigs([extensionModuleConfig, configOverride]);
-  const schema = configInternalStore.getState().schemas[extensionModuleName]; // TODO: validate that a schema exists for the module
+  const schema = configState.schemas[extensionModuleName]; // TODO: validate that a schema exists for the module
   validateConfig(schema, extensionConfig, extensionModuleName);
   const config = setDefaults(schema, extensionConfig);
   delete config.extensions;
