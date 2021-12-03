@@ -3,5 +3,6 @@
 
 set -e  # die on error
 
+yarn run extract-translations
 npx pretty-quick --staged
 npx lerna run document --since master
