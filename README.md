@@ -84,6 +84,8 @@ yarn verify
 yarn run:shell
 ```
 
+This requires node 17.2.0 or higher.
+
 #### The frontend modules in `apps`
 
 ```sh
