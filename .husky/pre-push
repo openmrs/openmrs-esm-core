@@ -4,4 +4,5 @@
 set -e  # die on error
 
 npx lerna run lint --since master
+npx lerna run test --since master
 npx lerna run typescript --since master
