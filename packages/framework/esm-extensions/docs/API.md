@@ -63,7 +63,7 @@
 
 #### Defined in
 
-[store.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L82)
+[store.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L83)
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 #### Defined in
 
-[store.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L77)
+[store.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L78)
 
 ## Functions
 
@@ -508,4 +508,4 @@ ___
 
 #### Defined in
 
-[store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L86)
+[store.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L87)

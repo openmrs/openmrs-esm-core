@@ -297,7 +297,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:135](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L135)
+[packages/framework/esm-config/src/module-config/module-config.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L172)
 
 ___
 
@@ -305,9 +305,8 @@ ___
 
 ▸ **getConfig**(`moduleName`): `Promise`<[`Config`](interfaces/Config.md)\>
 
-A promise-based way to access the config as soon as it is fully loaded
-from the import-map. If it is already loaded, resolves the config in its
-present state.
+A promise-based way to access the config as soon as it is fully loaded.
+If it is already loaded, resolves the config in its present state.
 
 In general you should use the Unistore-based API provided by
 `getConfigStore`, which allows creating a subscription so that you always
@@ -328,7 +327,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:164](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L164)
+[packages/framework/esm-config/src/module-config/module-config.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L200)
 
 ___
 
@@ -419,17 +418,18 @@ ___
 
 ### processConfig
 
-▸ **processConfig**(`schema`, `providedConfig`, `keyPathContext`): [`Config`](interfaces/Config.md)
+▸ **processConfig**(`schema`, `providedConfig`, `keyPathContext`, `devDefaultsAreOn?`): [`Config`](interfaces/Config.md)
 
 Validate and interpolate defaults for `providedConfig` according to `schema`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | a configuration schema |
-| `providedConfig` | [`ConfigObject`](interfaces/ConfigObject.md) | an object of config values (without the top-level module name) |
-| `keyPathContext` | `string` | a dot-deparated string which helps the user figure out where     the provided config came from |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | `undefined` | a configuration schema |
+| `providedConfig` | [`ConfigObject`](interfaces/ConfigObject.md) | `undefined` | an object of config values (without the top-level module name) |
+| `keyPathContext` | `string` | `undefined` | a dot-deparated string which helps the user figure out where     the provided config came from |
+| `devDefaultsAreOn` | `boolean` | `false` | - |
 
 #### Returns
 
@@ -437,7 +437,7 @@ Validate and interpolate defaults for `providedConfig` according to `schema`
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:186](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L186)
+[packages/framework/esm-config/src/module-config/module-config.ts:222](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L222)
 
 ___
 
@@ -458,7 +458,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L143)
+[packages/framework/esm-config/src/module-config/module-config.ts:180](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L180)
 
 ___
 

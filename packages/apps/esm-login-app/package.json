@@ -12,7 +12,7 @@
     "debug": "npm run serve",
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
-    "analyze": "webpack --mode=production --env.analyze=true",
+    "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx",
     "extract-translations": "i18next 'src/**/*.component.tsx'"

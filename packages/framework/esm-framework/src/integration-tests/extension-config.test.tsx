@@ -44,7 +44,6 @@ describe("Interaction between configuration and extension systems", () => {
     await waitFor(() => expect(screen.getByText("Betty")).toBeInTheDocument());
     const slot = screen.getByTestId("slot");
     const extensions = slot.childNodes;
-    screen.debug();
     expect(extensions[0]).toHaveTextContent("Betty");
     expect(extensions[1]).toHaveTextContent("Wilma");
     expect(extensions[2]).toHaveTextContent("Barney");

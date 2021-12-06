@@ -28,6 +28,7 @@ import {
   temporaryConfigStore,
 } from "./state";
 import type {} from "@openmrs/esm-globals";
+import { TemporaryConfigStore } from "..";
 
 /**
  * Store setup
@@ -44,56 +45,86 @@ import type {} from "@openmrs/esm-globals";
  * This code sets up the subscriptions so that when an input store changes,
  * the correct set of output stores are updated.
  *
- * NB: You will notice that none of the `compute...` functions below explicitly
- * take `temporaryConfigStore` state as an input. They do make use of
- * `temporaryConfigStore`, however it is obtained in `getProvidedConfigs`.
- * It would probably be better to make the functions pure.
+ * All `compute...` functions except `computeExtensionConfigs` are pure
+ * (or are supposed to be). `computeExtensionConfigs` calls `getGlobalStore`,
+ * which creates stores.
  */
-computeModuleConfig(configInternalStore.getState());
-configInternalStore.subscribe(computeModuleConfig);
-temporaryConfigStore.subscribe(() =>
-  computeModuleConfig(configInternalStore.getState())
+computeModuleConfig(
+  configInternalStore.getState(),
+  temporaryConfigStore.getState()
+);
+configInternalStore.subscribe((configState) =>
+  computeModuleConfig(configState, temporaryConfigStore.getState())
+);
+temporaryConfigStore.subscribe((tempConfigState) =>
+  computeModuleConfig(configInternalStore.getState(), tempConfigState)
 );
 
-computeImplementerToolsConfig(configInternalStore.getState());
-configInternalStore.subscribe(computeImplementerToolsConfig);
-temporaryConfigStore.subscribe(() =>
-  computeImplementerToolsConfig(configInternalStore.getState())
+computeImplementerToolsConfig(
+  configInternalStore.getState(),
+  temporaryConfigStore.getState()
+);
+configInternalStore.subscribe((configState) =>
+  computeImplementerToolsConfig(configState, temporaryConfigStore.getState())
+);
+temporaryConfigStore.subscribe((tempConfigState) =>
+  computeImplementerToolsConfig(configInternalStore.getState(), tempConfigState)
 );
 
-computeExtensionSlotConfigs(configInternalStore.getState());
-configInternalStore.subscribe(computeExtensionSlotConfigs);
-temporaryConfigStore.subscribe(() =>
-  computeExtensionSlotConfigs(configInternalStore.getState())
+computeExtensionSlotConfigs(
+  configInternalStore.getState(),
+  temporaryConfigStore.getState()
+);
+configInternalStore.subscribe((configState) =>
+  computeExtensionSlotConfigs(configState, temporaryConfigStore.getState())
+);
+temporaryConfigStore.subscribe((tempConfigState) =>
+  computeExtensionSlotConfigs(configInternalStore.getState(), tempConfigState)
 );
 
 computeExtensionConfigs(
   configInternalStore.getState(),
-  configExtensionStore.getState()
+  configExtensionStore.getState(),
+  temporaryConfigStore.getState()
 );
 configInternalStore.subscribe((configState) =>
-  computeExtensionConfigs(configState, configExtensionStore.getState())
+  computeExtensionConfigs(
+    configState,
+    configExtensionStore.getState(),
+    temporaryConfigStore.getState()
+  )
 );
 configExtensionStore.subscribe((extensionState) =>
-  computeExtensionConfigs(configInternalStore.getState(), extensionState)
-);
-temporaryConfigStore.subscribe(() =>
   computeExtensionConfigs(
     configInternalStore.getState(),
-    configExtensionStore.getState()
+    extensionState,
+    temporaryConfigStore.getState()
+  )
+);
+temporaryConfigStore.subscribe((tempConfigState) =>
+  computeExtensionConfigs(
+    configInternalStore.getState(),
+    configExtensionStore.getState(),
+    tempConfigState
   )
 );
 
-function computeModuleConfig(state: ConfigInternalStore) {
+function computeModuleConfig(
+  state: ConfigInternalStore,
+  tempState: TemporaryConfigStore
+) {
   for (let moduleName of Object.keys(state.schemas)) {
-    const config = getConfigForModule(moduleName);
+    const config = getConfigForModule(moduleName, state, tempState);
     const moduleStore = getConfigStore(moduleName);
     moduleStore.setState({ loaded: true, config });
   }
 }
 
-function computeExtensionSlotConfigs(state: ConfigInternalStore) {
-  const slotConfigsByModule = getExtensionSlotConfigs();
+function computeExtensionSlotConfigs(
+  state: ConfigInternalStore,
+  tempState: TemporaryConfigStore
+) {
+  const slotConfigsByModule = getExtensionSlotConfigs(state, tempState);
   for (let [moduleName, extensionSlotConfigs] of Object.entries(
     slotConfigsByModule
   )) {
@@ -102,14 +133,18 @@ function computeExtensionSlotConfigs(state: ConfigInternalStore) {
   }
 }
 
-function computeImplementerToolsConfig(state: ConfigInternalStore) {
-  const config = getImplementerToolsConfig();
+function computeImplementerToolsConfig(
+  state: ConfigInternalStore,
+  tempConfigState: TemporaryConfigStore
+) {
+  const config = getImplementerToolsConfig(state, tempConfigState);
   implementerToolsConfigStore.setState({ config });
 }
 
 function computeExtensionConfigs(
   configState: ConfigInternalStore,
-  extensionState: ConfigExtensionStore
+  extensionState: ConfigExtensionStore,
+  tempConfigState: TemporaryConfigStore
 ) {
   for (let extension of extensionState.mountedExtensions) {
     const extensionStore = getExtensionConfigStore(
@@ -121,7 +156,9 @@ function computeExtensionConfigs(
       extension.slotModuleName,
       extension.extensionModuleName,
       extension.slotName,
-      extension.extensionId
+      extension.extensionId,
+      configState,
+      tempConfigState
     );
     extensionStore.setState({ loaded: true, config });
   }
@@ -148,9 +185,8 @@ export function provide(config: Config, sourceName = "provided") {
 }
 
 /**
- * A promise-based way to access the config as soon as it is fully loaded
- * from the import-map. If it is already loaded, resolves the config in its
- * present state.
+ * A promise-based way to access the config as soon as it is fully loaded.
+ * If it is already loaded, resolves the config in its present state.
  *
  * In general you should use the Unistore-based API provided by
  * `getConfigStore`, which allows creating a subscription so that you always
@@ -186,10 +222,11 @@ export function getConfig(moduleName: string): Promise<Config> {
 export function processConfig(
   schema: ConfigSchema,
   providedConfig: ConfigObject,
-  keyPathContext: string
+  keyPathContext: string,
+  devDefaultsAreOn: boolean = false
 ) {
   validateConfig(schema, providedConfig, keyPathContext);
-  const config = setDefaults(schema, providedConfig);
+  const config = setDefaults(schema, providedConfig, devDefaultsAreOn);
   return config;
 }
 
@@ -214,32 +251,38 @@ function getExtensionConfig(
   slotModuleName: string,
   extensionModuleName: string,
   slotName: string,
-  extensionId: string
+  extensionId: string,
+  configState: ConfigInternalStore,
+  tempConfigState: TemporaryConfigStore
 ) {
-  const slotModuleConfig = mergeConfigsFor(
-    slotModuleName,
-    getProvidedConfigs()
-  );
+  const providedConfigs = getProvidedConfigs(configState, tempConfigState);
+  const slotModuleConfig = mergeConfigsFor(slotModuleName, providedConfigs);
   const configOverride =
     slotModuleConfig?.extensions?.[slotName]?.configure?.[extensionId] ?? {};
   const extensionModuleConfig = mergeConfigsFor(
     extensionModuleName,
-    getProvidedConfigs()
+    providedConfigs
   );
   const extensionConfig = mergeConfigs([extensionModuleConfig, configOverride]);
-  const schema = configInternalStore.getState().schemas[extensionModuleName]; // TODO: validate that a schema exists for the module
+  const schema = configState.schemas[extensionModuleName]; // TODO: validate that a schema exists for the module
   validateConfig(schema, extensionConfig, extensionModuleName);
-  const config = setDefaults(schema, extensionConfig);
+  const config = setDefaults(
+    schema,
+    extensionConfig,
+    configState.devDefaultsAreOn
+  );
   delete config.extensions;
   return config;
 }
 
-function getImplementerToolsConfig(): Record<string, Config> {
-  const state = configInternalStore.getState();
-  let result = getSchemaWithValuesAndSources(clone(state.schemas));
+function getImplementerToolsConfig(
+  configState: ConfigInternalStore,
+  tempConfigState: TemporaryConfigStore
+): Record<string, Config> {
+  let result = getSchemaWithValuesAndSources(clone(configState.schemas));
   const configsAndSources = [
-    ...state.providedConfigs.map((c) => [c.config, c.source]),
-    [temporaryConfigStore.getState().config, "temporary config"],
+    ...configState.providedConfigs.map((c) => [c.config, c.source]),
+    [tempConfigState.config, "temporary config"],
   ] as Array<[Config, string]>;
   for (let [config, source] of configsAndSources) {
     result = mergeConfigs([result, createValuesAndSourcesTree(config, source)]);
@@ -272,11 +315,13 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
   }
 }
 
-function getExtensionSlotConfigs(): Record<
-  string,
-  Record<string, ExtensionSlotConfigObject>
-> {
-  const allConfigs = mergeConfigs(getProvidedConfigs());
+function getExtensionSlotConfigs(
+  configState: ConfigInternalStore,
+  tempConfigState: TemporaryConfigStore
+): Record<string, Record<string, ExtensionSlotConfigObject>> {
+  const allConfigs = mergeConfigs(
+    getProvidedConfigs(configState, tempConfigState)
+  );
   const slotConfigPerModule: Record<
     string,
     Record<string, ExtensionSlotConfig>
@@ -359,11 +404,13 @@ function validateExtensionSlotConfig(
   }
 }
 
-function getProvidedConfigs(): Array<Config> {
-  const state = configInternalStore.getState();
+function getProvidedConfigs(
+  configState: ConfigInternalStore,
+  tempConfigState: TemporaryConfigStore
+): Array<Config> {
   return [
-    ...state.providedConfigs.map((c) => c.config),
-    temporaryConfigStore.getState().config,
+    ...configState.providedConfigs.map((c) => c.config),
+    tempConfigState.config,
   ];
 }
 
@@ -445,16 +492,22 @@ function validateConfigSchema(
   }
 }
 
-function getConfigForModule(moduleName: string): ConfigObject {
-  const state = configInternalStore.getState();
-  if (!state.schemas.hasOwnProperty(moduleName)) {
+function getConfigForModule(
+  moduleName: string,
+  configState: ConfigInternalStore,
+  tempConfigState: TemporaryConfigStore
+): ConfigObject {
+  if (!configState.schemas.hasOwnProperty(moduleName)) {
     throw Error("No config schema has been defined for " + moduleName);
   }
 
-  const schema = state.schemas[moduleName];
-  const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs());
+  const schema = configState.schemas[moduleName];
+  const inputConfig = mergeConfigsFor(
+    moduleName,
+    getProvidedConfigs(configState, tempConfigState)
+  );
   validateConfig(schema, inputConfig, moduleName);
-  const config = setDefaults(schema, inputConfig);
+  const config = setDefaults(schema, inputConfig, configState.devDefaultsAreOn);
   delete config.extensions;
   return config;
 }
@@ -593,9 +646,12 @@ function runValidators(
 }
 
 // Recursively fill in the config with values from the schema.
-const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
+const setDefaults = (
+  schema: ConfigSchema,
+  inputConfig: Config,
+  devDefaultsAreOn: boolean
+) => {
   const config = clone(inputConfig);
-  const devDefaultsAreOn = configInternalStore.getState().devDefaultsAreOn;
 
   if (!schema) {
     return config;
@@ -627,14 +683,15 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
       if (configPart && hasObjectSchema(elements)) {
         if (schemaPart._type === Type.Array) {
           const configWithDefaults = configPart.map((conf: Config) =>
-            setDefaults(elements, conf)
+            setDefaults(elements, conf, devDefaultsAreOn)
           );
           config[key] = configWithDefaults;
         } else if (schemaPart._type === Type.Object) {
           for (let objectKey of Object.keys(configPart)) {
             configPart[objectKey] = setDefaults(
               elements,
-              configPart[objectKey]
+              configPart[objectKey],
+              devDefaultsAreOn
             );
           }
         }
@@ -646,7 +703,11 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
       const selectedConfigPart = config.hasOwnProperty(key) ? configPart : {};
 
       if (isOrdinaryObject(selectedConfigPart)) {
-        config[key] = setDefaults(schemaPart, selectedConfigPart);
+        config[key] = setDefaults(
+          schemaPart,
+          selectedConfigPart,
+          devDefaultsAreOn
+        );
       }
     }
   }

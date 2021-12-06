@@ -23,7 +23,7 @@ However, not all of these extension IDs should be rendered.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L74)
+[packages/framework/esm-extensions/src/store.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L75)
 
 ___
 
@@ -35,7 +35,7 @@ The mapping of modules / extension slot instances where the extension slot has b
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L67)
+[packages/framework/esm-extensions/src/store.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L68)
 
 ___
 
@@ -47,4 +47,4 @@ The name under which the extension slot has been registered.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L63)
+[packages/framework/esm-extensions/src/store.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L64)
