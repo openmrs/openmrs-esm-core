@@ -6,6 +6,7 @@
 
 ### Properties
 
+- [critical](ShowToastEvent.md#critical)
 - [description](ShowToastEvent.md#description)
 - [kind](ShowToastEvent.md#kind)
 - [millis](ShowToastEvent.md#millis)
@@ -13,23 +14,33 @@
 
 ## Properties
 
-### description
+### critical
 
-• **description**: `any`
+• `Optional` **critical**: `boolean`
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L66)
+[packages/framework/esm-globals/src/events.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L71)
+
+___
+
+### description
+
+• **description**: `ReactNode`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L69)
 
 ___
 
 ### kind
 
-• `Optional` **kind**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
+• `Optional` **kind**: `AlertType`
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L67)
+[packages/framework/esm-globals/src/events.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L70)
 
 ___
 
@@ -39,7 +50,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L75)
+[packages/framework/esm-globals/src/events.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L73)
 
 ___
 
@@ -49,4 +60,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L74)
+[packages/framework/esm-globals/src/events.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L72)

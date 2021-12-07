@@ -8,16 +8,24 @@ export function handleApiError() {
   };
 }
 
-window.onerror = function () {
+window.onerror = function (message, source, error) {
+  console.error(
+    `Global error: ${message}.\nSource: ${source}.\nError: ${error}`
+  );
   dispatchNotificationShown({
-    description: "Oops! An unexpected error occurred.",
+    critical: true,
+    title: "Oops! An unexpected error occurred",
+    description: "Please find the error description in your browser console.",
   });
   return false;
 };
 
-window.onunhandledrejection = function () {
+window.onunhandledrejection = function (error) {
+  console.error(`Unhandled rejection error: ${error.reason}.`);
   dispatchNotificationShown({
-    description: "Oops! An unexpected error occurred.",
+    critical: true,
+    title: "Oops! An unhandled rejection occurred.",
+    description: "Please find the error description in your browser console.",
   });
 };
 

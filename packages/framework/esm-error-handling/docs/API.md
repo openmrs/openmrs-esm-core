@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[index.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L31)
+[index.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L39)
 
 ___
 
@@ -80,4 +80,4 @@ ___
 
 #### Defined in
 
-[index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L24)
+[index.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L32)

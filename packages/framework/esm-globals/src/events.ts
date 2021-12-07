@@ -48,29 +48,27 @@ export function subscribePrecacheStaticDependencies(
     window.removeEventListener(precacheStaticDependenciesEventName, handler);
 }
 
+type AlertType =
+  | "error"
+  | "info"
+  | "info-square"
+  | "success"
+  | "warning"
+  | "warning-alt";
+
 export interface ShowNotificationEvent {
-  description: any;
-  kind?:
-    | "error"
-    | "info"
-    | "info-square"
-    | "success"
-    | "warning"
-    | "warning-alt";
+  description: React.ReactNode;
+  kind?: AlertType;
+  critical?: boolean;
   title?: string;
-  action?: any;
+  action?: React.ReactNode;
   millis?: number;
 }
 
 export interface ShowToastEvent {
-  description: any;
-  kind?:
-    | "error"
-    | "info"
-    | "info-square"
-    | "success"
-    | "warning"
-    | "warning-alt";
+  description: React.ReactNode;
+  kind?: AlertType;
+  critical?: boolean;
   title?: string;
   millis?: number;
 }
