@@ -96,6 +96,49 @@ describe("Interaction between configuration and extension systems", () => {
     const futureWilma = screen.getByTestId("future-slot");
     expect(futureWilma).toHaveTextContent(/Wilma:.*New New York/);
   });
+
+  test("Should be possible to attach the same extension twice with different configurations", async () => {
+    registerSimpleExtension("pet", "esm-characters", true);
+    registerExtensionSlot("esm-flintstone", "Flintstone slot");
+    defineConfigSchema("esm-characters", {
+      name: { _type: Type.String, _default: "(no-name)" },
+    });
+    attach("Flintstone slot", "pet#Dino");
+    attach("Flintstone slot", "pet#BabyPuss");
+    provide({
+      "esm-flintstone": {
+        extensions: {
+          "Flintstone slot": {
+            configure: {
+              "pet#Dino": {
+                name: "Dino",
+              },
+              "pet#BabyPuss": {
+                name: "Baby Puss",
+              },
+            },
+          },
+        },
+      },
+    });
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-flintstone",
+      featureName: "The Flintstones",
+      disableTranslations: true,
+    })(() => (
+      <>
+        <ExtensionSlot
+          data-testid="flintstone-slot"
+          extensionSlotName="Flintstone slot"
+        />
+      </>
+    ));
+    render(<App />);
+    await screen.findAllByText(/.*Dino.*/);
+    const slot = screen.getByTestId("flintstone-slot");
+    expect(slot.firstChild).toHaveTextContent(/Dino/);
+    expect(slot.lastChild).toHaveTextContent(/Baby Puss/);
+  });
 });
 
 function registerSimpleExtension(
