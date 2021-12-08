@@ -39,6 +39,14 @@ attach('foo-slot', 'foo');
 
 Generally, though this is either done at initialization time as a default, or explicitly via a user-provided configuration. The only exception can be found with "dynamic" (or "special") slots. One example in this area is the workspace of the patient chart frontend module.
 
+## Extensions and Slots
+
+ An extension can be in any of the following four states with respect to an extension slot:
+ - _attached_ (set via code using `attach` and `detach`)
+ - _configured_ (set via configuration using: `add` and `remove`)
+ - _assigned_ (computed from attached and configured)
+ - _connected_ (computed from assigned using connectivity and online / offline)
+
 ## Rendering
 
 Extensions are rendered by following their exported lifecycle functions. The `getAsyncLifecycle` function from `@openmrs/esm-react-utils` is a convenience layer that already exports these lifecycle functions wired together with `single-spa-react`.
@@ -53,8 +61,8 @@ These lifecycle functions are not magic - theoretically you could write them on 
 
 To actually render also two more things need to be considered:
 
-1. Is the defined online or offline mode accepted?
-2. What properties should be passed on the component which is rendered?
+1. Does the extension render in offline or online mode, and which mode is the browser in?
+2. What properties should be passed to the component which is rendered?
 
 The answer to (1) is found in `navigator.onLine`. Only if `offline` was set to `true` or some object the component renders in offline mode. Likewise, if `online: false` was supplied the component will not render in online mode.
 

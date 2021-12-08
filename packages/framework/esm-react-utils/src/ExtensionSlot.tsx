@@ -1,12 +1,7 @@
 import React, { useRef, useMemo } from "react";
-import { ExtensionRegistration } from "@openmrs/esm-extensions";
 import { ComponentContext } from "./ComponentContext";
 import { Extension } from "./Extension";
 import { useExtensionSlot } from "./useExtensionSlot";
-
-function defaultSelect(extensions: Array<ExtensionRegistration>) {
-  return extensions;
-}
 
 function isShallowEqual(prevDeps: any, nextDeps: any) {
   if (prevDeps === nextDeps) {
@@ -45,9 +40,7 @@ function isShallowEqual(prevDeps: any, nextDeps: any) {
 
 export interface ExtensionSlotBaseProps {
   extensionSlotName: string;
-  select?(
-    extensions: Array<ExtensionRegistration>
-  ): Array<ExtensionRegistration>;
+  select?: <T>(extensions: Array<T>) => Array<T>;
   state?: Record<string, any>;
 }
 
@@ -56,7 +49,7 @@ export type ExtensionSlotProps = ExtensionSlotBaseProps &
 
 export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   extensionSlotName,
-  select = defaultSelect,
+  select = (e) => e,
   children,
   state,
   style,
@@ -76,11 +69,11 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
       extensionSlotName &&
       select(extensions).map((extension) => (
         <ComponentContext.Provider
-          key={extension.name}
+          key={extension.id}
           value={{
             moduleName: extension.moduleName,
             extension: {
-              extensionId: extension.name,
+              extensionId: extension.id,
               extensionSlotName,
               extensionSlotModuleName,
             },

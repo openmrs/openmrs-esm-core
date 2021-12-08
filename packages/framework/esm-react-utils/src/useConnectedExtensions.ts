@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import {
   checkStatusFor,
+  ExtensionMeta,
   ExtensionRegistration,
   extensionStore,
   getExtensionRegistrationFrom,
@@ -9,9 +10,9 @@ import { useAssignedExtensionIds } from "./useAssignedExtensionIds";
 import { useConnectivity } from "./useConnectivity";
 
 function isValidExtension(
-  extension: ExtensionRegistration | undefined
-): extension is ExtensionRegistration {
-  return extension !== undefined;
+  extension: ConnectedExtension | { id: string }
+): extension is ConnectedExtension {
+  return extension.hasOwnProperty("name");
 }
 
 /**
@@ -23,19 +24,25 @@ function isValidExtension(
  * - connected (computed from assigned using connectivity and online / offline)
  */
 
+export interface ConnectedExtension extends ExtensionRegistration {
+  id: string;
+}
+
 /**
  * Gets the assigned extension for a given extension slot name.
  * Considers if offline or online.
  * @param extensionSlotName The name of the slot to get the assigned extensions for.
  */
-export function useConnectedExtensions(extensionSlotName: string) {
+export function useConnectedExtensions(
+  extensionSlotName: string
+): Array<ConnectedExtension> {
   const online = useConnectivity();
   const extensionIdsToRender = useAssignedExtensionIds(extensionSlotName);
 
   const extensions = useMemo(() => {
     const state = extensionStore.getState();
     return extensionIdsToRender
-      .map((m) => getExtensionRegistrationFrom(state, m))
+      .map((id) => ({ id, ...getExtensionRegistrationFrom(state, id) }))
       .filter(isValidExtension)
       .filter((m) => checkStatusFor(online, m.online, m.offline));
   }, [extensionIdsToRender, online]);

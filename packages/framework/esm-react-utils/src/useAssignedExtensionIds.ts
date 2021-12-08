@@ -15,11 +15,8 @@ export function useAssignedExtensionIds(extensionSlotName: string) {
 
   useEffect(() => {
     const newAssignedIds = getAssignedIds(
-      {
-        addedIds: config.add || [],
-        removedIds: config.remove || [],
-        idOrder: config.order || [],
-      },
+      extensionSlotName,
+      config,
       attachedIds
     );
 

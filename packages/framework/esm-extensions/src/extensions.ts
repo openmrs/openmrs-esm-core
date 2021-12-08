@@ -1,4 +1,8 @@
-import { getExtensionSlotsConfigStore } from "@openmrs/esm-config";
+import {
+  ExtensionSlotConfigObject,
+  getExtensionSlotsConfigStore,
+} from "@openmrs/esm-config";
+import { ExtensionInfo } from ".";
 import {
   ExtensionRegistration,
   ExtensionSlotInfo,
@@ -143,29 +147,40 @@ export function detachAll(extensionSlotName: string) {
 }
 
 function getOrder(
-  configuredOrder: number,
-  extension: Partial<ExtensionRegistration> = {}
+  extensionId: string,
+  configuredOrder: Array<string>,
+  assignedOrder: Array<string>
 ) {
-  if (configuredOrder === -1) {
-    const { order = -1 } = extension;
-    return order;
+  const configuredIndex = configuredOrder.indexOf(extensionId);
+  if (configuredIndex !== -1) {
+    return configuredIndex;
+  } else {
+    const assignedIndex = assignedOrder.indexOf(extensionId);
+    if (assignedIndex !== -1) {
+      // extensions with no configured order should appear after those that
+      // do have a configured order
+      return 1000 + assignedIndex;
+    } else {
+      return -1;
+    }
   }
-
-  return configuredOrder;
 }
 
 export function getAssignedIds(
-  instance: ExtensionSlotInstance,
+  slotName: string,
+  config: ExtensionSlotConfigObject,
   attachedIds: Array<string>
 ) {
-  const { addedIds, removedIds, idOrder } = instance;
+  const addedIds = config.add || [];
+  const removedIds = config.remove || [];
+  const idOrder = config.order || [];
   const { extensions } = extensionStore.getState();
 
   return [...attachedIds, ...addedIds]
-    .filter((m) => !removedIds.includes(m))
-    .sort((a, b) => {
-      const ai = getOrder(idOrder.indexOf(a), extensions[a]);
-      const bi = getOrder(idOrder.indexOf(b), extensions[b]);
+    .filter((id) => !removedIds.includes(id))
+    .sort((idA, idB) => {
+      const ai = getOrder(idA, idOrder, attachedIds);
+      const bi = getOrder(idB, idOrder, attachedIds);
 
       if (bi === -1) {
         return -1;

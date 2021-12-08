@@ -3,6 +3,8 @@ import {
   attach,
   registerExtension,
   registerExtensionSlot,
+  updateExtensionStore,
+  ExtensionStore,
 } from "../../../esm-extensions";
 import {
   Extension,
@@ -15,6 +17,10 @@ import { defineConfigSchema, provide, Type } from "../../../esm-config/src";
 import { render, screen, waitFor } from "@testing-library/react";
 
 describe("Interaction between configuration and extension systems", () => {
+  beforeEach(() => {
+    updateExtensionStore(() => ({ slots: {}, extensions: {} }));
+  });
+
   test("Config should add, order, and remove extensions within slots", async () => {
     registerSimpleExtension("Fred", "esm-flintstone");
     registerSimpleExtension("Wilma", "esm-flintstone");
