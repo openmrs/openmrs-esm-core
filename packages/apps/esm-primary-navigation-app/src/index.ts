@@ -49,7 +49,7 @@ function setupOpenMRS() {
     ],
     extensions: [
       {
-        id: "default-user-panel",
+        name: "default-user-panel",
         slot: "user-panel-slot",
         order: 0, // should be first DOM element
         load: getAsyncLifecycle(
@@ -63,7 +63,7 @@ function setupOpenMRS() {
         offline: true,
       },
       {
-        id: "change-locale",
+        name: "change-locale",
         slot: "user-panel-slot",
         order: 1,
         load: getAsyncLifecycle(

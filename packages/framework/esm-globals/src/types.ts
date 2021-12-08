@@ -112,43 +112,20 @@ export interface ComponentDefinition {
   resources?: Record<string, ResourceLoader>;
 }
 
-export interface ExtensionComponentDefinition extends ComponentDefinition {
-  /**
-   * The meta data used for reflection by other components.
-   */
-  meta?: Record<string, any>;
-  /**
-   * Specifies a preferred order number, if any.
-   */
-  order?: number;
-}
-
-export interface ModernAppExtensionDefinition
-  extends ExtensionComponentDefinition {
-  /**
-   * The ID of the extension to register.
-   */
-  id: string;
-  /**
-   * The slot of the extension to optionally attach to.
-   */
-  slot?: string;
-  /**
-   * The slots of the extension to optionally attach to.
-   */
-  slots?: Array<string>;
-}
-
-export interface LegacyAppExtensionDefinition
-  extends ExtensionComponentDefinition {
-  /**
-   * The ID of the extension to register.
-   */
+export interface ExtensionDefinition extends ComponentDefinition {
+  /** The name of the extension being registered */
   name: string;
+  /** A slot to attach to */
+  slot?: string;
+  /** Slots to attach to */
+  slots?: Array<string>;
+  /** The meta data used for reflection by other components */
+  meta?: Record<string, any>;
+  /** Specifies the relative order in which the extension renders in a slot */
+  order?: number;
+  /** @deprecated A confusing way to specify the name of the extension */
+  id?: string;
 }
-
-export type AppExtensionDefinition = ModernAppExtensionDefinition &
-  LegacyAppExtensionDefinition;
 
 export interface PageDefinition extends ComponentDefinition {
   /**
