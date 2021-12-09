@@ -11,7 +11,7 @@ npx typedoc src/index.ts
 
 # Link back to README at the top; the -i.bak and rm is to support both Mac & Linux.
 # See https://stackoverflow.com/a/22084103/1464495
-sed -i.bak "s/^@openmrs\/esm-framework$/[Back to README.md](..\/README.md)/" "docs/API.md"
+sed -i.bak "s/^@openmrs\/$1$/[Back to README.md](..\/README.md)/" "docs/API.md"
 rm docs/API.md.bak
 
 if grep -q tocstop README.md; then
