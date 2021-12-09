@@ -4,9 +4,9 @@ export interface NewVisitPayload {
   uuid?: string;
   location: string;
   patient?: string;
-  startDatetime: Date;
+  startDatetime: string;
   visitType: string;
-  stopDatetime?: Date;
+  stopDatetime?: string;
 }
 
 export type UpdateVisitPayload = NewVisitPayload & {};
