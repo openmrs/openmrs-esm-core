@@ -7,5 +7,3 @@ All our frontend UI development is based on [Carbon Design System](https://www.c
 Please see the Developer Documentation page [Using Carbon and the Styleguide](https://openmrs.github.io/openmrs-esm-core/#/main/carbon).
 
 See also the [full, detailed styleguide in Zeplin here](https://app.zeplin.io/styleguide/60d5ecb9efdcd81256117e7d/components) (let us know if you require an invitation)
-
-[API Docs](docs/API.md)

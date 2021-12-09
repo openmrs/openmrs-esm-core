@@ -2,5 +2,3 @@
 
 openmrs-esm-globals provides events, variables, and types which are used
 throughout the rest of openmrs-esm-core.
-
-[API Docs](docs/API.md)

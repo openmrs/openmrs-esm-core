@@ -7,7 +7,6 @@
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "document": "../../../document.sh esm-offline",
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
     "analyze": "webpack --mode=production --env analyze=true",

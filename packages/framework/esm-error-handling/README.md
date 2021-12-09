@@ -2,5 +2,3 @@
 
 openmrs-esm-error-handling provides facilities for handling errors
 consistently across the application.
-
-[API Docs](docs/API.md)
