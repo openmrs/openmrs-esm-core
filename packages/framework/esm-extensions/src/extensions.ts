@@ -161,13 +161,14 @@ function getOrder(
   if (configuredIndex !== -1) {
     return configuredIndex;
   } else if (registeredOrderIndex !== undefined) {
-    return registeredOrderIndex;
+    // extensions that don't have a configured order should appear after those that do
+    return 1000 + registeredOrderIndex;
   } else {
     const assignedIndex = attachedOrder.indexOf(extensionId);
     if (assignedIndex !== -1) {
-      // extensions with no configured order should appear after those that
-      // do have a configured order
-      return 1000 + assignedIndex;
+      // extensions that have neither a configured nor registered order should appear
+      // after all others
+      return 2000 + assignedIndex;
     } else {
       return -1;
     }
