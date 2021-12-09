@@ -13,7 +13,8 @@
     "start": "node ./dist/cli.js",
     "test": "jest --passWithNoTests",
     "build": "tsc",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "version": "yarn add @openmrs/esm-app-shell@$npm_package_version --exact"
   },
   "repository": {
     "type": "git",
