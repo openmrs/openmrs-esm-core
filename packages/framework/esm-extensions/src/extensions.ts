@@ -146,16 +146,24 @@ export function detachAll(extensionSlotName: string) {
   });
 }
 
+/**
+ * Get an order index for the extension. This will
+ * come from either its configured order, its registered order
+ * parameter, or the order in which it happened to be attached.
+ */
 function getOrder(
   extensionId: string,
   configuredOrder: Array<string>,
-  assignedOrder: Array<string>
+  registeredOrderIndex: number | undefined,
+  attachedOrder: Array<string>
 ) {
   const configuredIndex = configuredOrder.indexOf(extensionId);
   if (configuredIndex !== -1) {
     return configuredIndex;
+  } else if (registeredOrderIndex !== undefined) {
+    return registeredOrderIndex;
   } else {
-    const assignedIndex = assignedOrder.indexOf(extensionId);
+    const assignedIndex = attachedOrder.indexOf(extensionId);
     if (assignedIndex !== -1) {
       // extensions with no configured order should appear after those that
       // do have a configured order
@@ -179,8 +187,8 @@ export function getAssignedIds(
   return [...attachedIds, ...addedIds]
     .filter((id) => !removedIds.includes(id))
     .sort((idA, idB) => {
-      const ai = getOrder(idA, idOrder, attachedIds);
-      const bi = getOrder(idB, idOrder, attachedIds);
+      const ai = getOrder(idA, idOrder, extensions[idA].order, attachedIds);
+      const bi = getOrder(idB, idOrder, extensions[idB].order, attachedIds);
 
       if (bi === -1) {
         return -1;
