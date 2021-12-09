@@ -2,8 +2,6 @@
 
 [![npm: openmrs/esm-module-config](https://img.shields.io/npm/v/@openmrs/esm-config)](https://www.npmjs.com/package/@openmrs/esm-config)
 
-[API Docs](docs/API.md)
-
 ## What is this?
 
 This is the configuration library for [OpenMRS Frontend 3.0](https://wiki.openmrs.org/display/projects/OpenMRS+3.0%3A+A+Frontend+Framework+that+enables+collaboration+and+better+User+Experience).

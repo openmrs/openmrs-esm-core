@@ -3,8 +3,6 @@
 A framework is provided to make configurability easier for developers and
 configuring easier for implementers.
 
-[API Docs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/docs/API.md)
-
 For introduction to Frontend 3.0 config files and how to configure frontend modules,
 please see the the
 [Implementer Documentation](https://wiki.openmrs.org/display/projects/3.x+Implementer+Documentation#Frontend3.0DocumentationforImplementers-Configuringtheapplication).
@@ -153,7 +151,7 @@ colorPicker: {
 ```
 
 For convenience, some common validators are provided out of the box. See the
-[API / validators](../../packages/framework/esm-config/docs/API.md#validators).
+[API / validators](../../packages/framework/esm-framework/docs/API.md#validators).
 
 #### Arrays
 
@@ -301,7 +299,7 @@ the element, but this may change in future versions.
 
 #### `_type`
 
-One of the values from [the `Type` enum](../../packages/framework/esm-config/docs/enums/Type.md). Used for validation and to help the
+One of the values from [the `Type` enum](../../packages/framework/esm-framework/docs/enums/Type.md). Used for validation and to help the
 implementer tools work with the element.
 
 Should always appear alongside `_default`.
@@ -318,10 +316,10 @@ Can be used anywhere within the schema structure.
 An array of validator objects.
 
 Some common validators are
-provided: [API / validators](../../packages/framework/esm-config/docs/API.md#const-validators).
+provided: [API / validators](../../packages/framework/esm-framework/docs/API.md#const-validators).
 
 Custom validators should
-be created with the [validator](../../packages/framework/esm-config/docs/API.md#validator) function.
+be created with the [validator](../../packages/framework/esm-framework/docs/API.md#validator) function.
 
 Can be used anywhere within the schema structure.
 
