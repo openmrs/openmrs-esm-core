@@ -24,7 +24,7 @@ window.onunhandledrejection = function (error) {
   console.error(`Unhandled rejection error: ${error.reason}.`);
   dispatchNotificationShown({
     critical: true,
-    title: "Oops! An unhandled rejection occurred.",
+    title: "Oops! An unexpected error occurred.",
     description: "Please find the error description in your browser console.",
   });
 };
