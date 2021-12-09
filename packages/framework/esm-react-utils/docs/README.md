@@ -1,7 +1,0 @@
-@openmrs/esm-react-utils / [Exports](modules.md)
-
-# openmrs-esm-react-utils
-
-`openmrs-esm-react-utils` brings extended support for React into the OpenMRS frontend.
-
-[API Docs](docs/API.md)
