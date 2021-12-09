@@ -35,7 +35,7 @@ The backend is an OpenMRS server and its APIs. The frontend application and back
 ## Structure of the application
 
 The process of building an application, which is described in the
-[Implementer Documentation](https://wiki.openmrs.org/display/projects/Frontend+3.0+Documentation+for+Implementers),
+[Implementer Documentation](https://wiki.openmrs.org/display/projects/3.x+Implementer+Documentation),
 looks like this:
 
 ![Distro Build Diagram](./distro_setup.png)

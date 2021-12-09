@@ -125,4 +125,4 @@ like [`@openmrs/esm-login-app`](https://www.npmjs.com/package/@openmrs/esm-login
 
 Then, you'll need to integrate this package into your application.
 Information about that can be found in the Implementer Documentation on
-[Deployment](https://wiki.openmrs.org/display/projects/Frontend+3.0+Documentation+for+Implementers).
+[Deployment](https://wiki.openmrs.org/display/projects/3.x+Implementer+Documentation).

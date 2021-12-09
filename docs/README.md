@@ -37,7 +37,7 @@ if you haven't already. It provides a high-level
 introduction to the project and all of the relevant links.
 
 You should first read the
-[Implementer Documentation](https://wiki.openmrs.org/display/projects/Frontend+3.0+Documentation+for+Implementers),
+[Implementer Documentation](https://wiki.openmrs.org/display/projects/3.x+Implementer+Documentation),
 which provides some conceptual orientation as well as instructions for deployment
 and configuring. The Implementer Documentation is also Developer Documentation
 (but not vice-versa).
