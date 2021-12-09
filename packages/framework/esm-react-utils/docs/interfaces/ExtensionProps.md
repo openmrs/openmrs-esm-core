@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / ExtensionProps
+[@openmrs/esm-react-utils](../README.md) / [Exports](../modules.md) / ExtensionProps
 
 # Interface: ExtensionProps
 
@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L6)
+[packages/framework/esm-react-utils/src/Extension.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/Extension.tsx#L6)
 
 ## Methods
 
@@ -41,4 +41,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L7)
+[packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/Extension.tsx#L7)

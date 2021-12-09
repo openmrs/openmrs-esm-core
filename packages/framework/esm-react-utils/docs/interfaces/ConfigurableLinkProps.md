@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / ConfigurableLinkProps
+[@openmrs/esm-react-utils](../README.md) / [Exports](../modules.md) / ConfigurableLinkProps
 
 # Interface: ConfigurableLinkProps
 
@@ -22,4 +22,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L21)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L21)

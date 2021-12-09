@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / ComponentConfig
+[@openmrs/esm-react-utils](../README.md) / [Exports](../modules.md) / ComponentConfig
 
 # Interface: ComponentConfig
 
@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ComponentContext.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L11)
+[packages/framework/esm-react-utils/src/ComponentContext.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/ComponentContext.ts#L11)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ComponentContext.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L10)
+[packages/framework/esm-react-utils/src/ComponentContext.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/ComponentContext.ts#L10)

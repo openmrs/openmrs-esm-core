@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / OpenmrsReactComponentState
+[@openmrs/esm-react-utils](../README.md) / [Exports](../modules.md) / OpenmrsReactComponentState
 
 # Interface: OpenmrsReactComponentState
 
@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L66)
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:66](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L66)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L67)
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L67)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L68)
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L68)

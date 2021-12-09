@@ -6,6 +6,9 @@ Information for developers about the OpenMRS Frontend system can be found at the
 
 **[OpenMRS Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/)**
 
+Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
+for `@openmrs/esm-framework`, which is contained in this repository.
+
 Below is the documentation for this repository.
 
 # OpenMRS Frontend Core

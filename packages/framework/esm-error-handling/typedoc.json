@@ -1,7 +1,0 @@
-{
-  "out": "docs",
-  "readme": "none",
-  "excludeInternal": true,
-  "gitRevision": "master",
-  "entryDocument": "API.md"
-}

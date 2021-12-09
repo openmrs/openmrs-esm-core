@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / ExtensionSlotBaseProps
+[@openmrs/esm-react-utils](../README.md) / [Exports](../modules.md) / ExtensionSlotBaseProps
 
 # Interface: ExtensionSlotBaseProps
 
@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L47)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L47)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L51)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:51](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L51)
 
 ## Methods
 
@@ -51,4 +51,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L48)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L48)

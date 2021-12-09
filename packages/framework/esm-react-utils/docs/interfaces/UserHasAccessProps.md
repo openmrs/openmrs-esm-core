@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / UserHasAccessProps
+[@openmrs/esm-react-utils](../README.md) / [Exports](../modules.md) / UserHasAccessProps
 
 # Interface: UserHasAccessProps
 
@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L5)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L5)

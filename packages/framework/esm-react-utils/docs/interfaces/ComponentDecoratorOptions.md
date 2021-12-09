@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / ComponentDecoratorOptions
+[@openmrs/esm-react-utils](../README.md) / [Exports](../modules.md) / ComponentDecoratorOptions
 
 # Interface: ComponentDecoratorOptions
 
@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L57)
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L57)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L56)
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:56](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L56)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L55)
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L55)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L58)
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L58)

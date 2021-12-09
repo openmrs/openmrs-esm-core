@@ -1,4 +1,4 @@
-[@openmrs/esm-react-utils](../API.md) / OpenmrsReactComponentProps
+[@openmrs/esm-react-utils](../README.md) / [Exports](../modules.md) / OpenmrsReactComponentProps
 
 # Interface: OpenmrsReactComponentProps
 
@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L62)
+[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:62](https://github.com/openmrs/openmrs-esm-core/blob/39d3e79/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L62)
