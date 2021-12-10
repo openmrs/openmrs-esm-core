@@ -50,7 +50,7 @@ function setupOpenMRS() {
     ],
     extensions: [
       {
-        id: "location-picker",
+        name: "location-picker",
         slot: "location-picker",
         load: getAsyncLifecycle(
           () => import("./location-picker/location-picker.component"),
@@ -59,7 +59,7 @@ function setupOpenMRS() {
         ...sharedOnlineOfflineProps,
       },
       {
-        id: "logout-button",
+        name: "logout-button",
         slot: "user-panel-actions-slot",
         load: getAsyncLifecycle(
           () => import("./logout/logout.component"),
@@ -69,7 +69,7 @@ function setupOpenMRS() {
         offline: false,
       },
       {
-        id: "location-changer",
+        name: "location-changer",
         slot: "user-panel-slot",
         order: 1,
         load: getAsyncLifecycle(

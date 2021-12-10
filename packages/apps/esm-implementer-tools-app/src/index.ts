@@ -23,7 +23,7 @@ function setupOpenMRS() {
     ],
     extensions: [
       {
-        id: "implementer-tools-button",
+        name: "implementer-tools-button",
         slot: "top-nav-actions-slot",
         load: getAsyncLifecycle(
           () => import("./implementer-tools.button"),

@@ -1,4 +1,8 @@
-import { getExtensionSlotsConfigStore } from "@openmrs/esm-config";
+import {
+  ExtensionSlotConfigObject,
+  getExtensionSlotsConfigStore,
+} from "@openmrs/esm-config";
+import { ExtensionInfo } from ".";
 import {
   ExtensionRegistration,
   ExtensionSlotInfo,
@@ -142,30 +146,60 @@ export function detachAll(extensionSlotName: string) {
   });
 }
 
+/**
+ * Get an order index for the extension. This will
+ * come from either its configured order, its registered order
+ * parameter, or the order in which it happened to be attached.
+ */
 function getOrder(
-  configuredOrder: number,
-  extension: Partial<ExtensionRegistration> = {}
+  extensionId: string,
+  configuredOrder: Array<string>,
+  registeredOrderIndex: number | undefined,
+  attachedOrder: Array<string>
 ) {
-  if (configuredOrder === -1) {
-    const { order = -1 } = extension;
-    return order;
+  const configuredIndex = configuredOrder.indexOf(extensionId);
+  if (configuredIndex !== -1) {
+    return configuredIndex;
+  } else if (registeredOrderIndex !== undefined) {
+    // extensions that don't have a configured order should appear after those that do
+    return 1000 + registeredOrderIndex;
+  } else {
+    const assignedIndex = attachedOrder.indexOf(extensionId);
+    if (assignedIndex !== -1) {
+      // extensions that have neither a configured nor registered order should appear
+      // after all others
+      return 2000 + assignedIndex;
+    } else {
+      return -1;
+    }
   }
-
-  return configuredOrder;
 }
 
 export function getAssignedIds(
-  instance: ExtensionSlotInstance,
+  slotName: string,
+  config: ExtensionSlotConfigObject,
   attachedIds: Array<string>
 ) {
-  const { addedIds, removedIds, idOrder } = instance;
+  const addedIds = config.add || [];
+  const removedIds = config.remove || [];
+  const idOrder = config.order || [];
   const { extensions } = extensionStore.getState();
 
   return [...attachedIds, ...addedIds]
-    .filter((m) => !removedIds.includes(m))
-    .sort((a, b) => {
-      const ai = getOrder(idOrder.indexOf(a), extensions[a]);
-      const bi = getOrder(idOrder.indexOf(b), extensions[b]);
+    .filter((id) => !removedIds.includes(id))
+    .sort((idA, idB) => {
+      const ai = getOrder(
+        idA,
+        idOrder,
+        extensions[getExtensionNameFromId(idA)].order,
+        attachedIds
+      );
+      const bi = getOrder(
+        idB,
+        idOrder,
+        extensions[getExtensionNameFromId(idB)].order,
+        attachedIds
+      );
 
       if (bi === -1) {
         return -1;

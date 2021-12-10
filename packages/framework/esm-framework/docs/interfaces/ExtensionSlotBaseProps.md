@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L47)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L43)
 
 ___
 
@@ -31,24 +31,24 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L51)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L45)
 
 ## Methods
 
 ### select
 
-▸ `Optional` **select**(`extensions`): [`ExtensionRegistration`](ExtensionRegistration.md)[]
+▸ `Optional` **select**(`extensions`): [`ConnectedExtension`](ConnectedExtension.md)[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `extensions` | [`ExtensionRegistration`](ExtensionRegistration.md)[] |
+| `extensions` | [`ConnectedExtension`](ConnectedExtension.md)[] |
 
 #### Returns
 
-[`ExtensionRegistration`](ExtensionRegistration.md)[]
+[`ConnectedExtension`](ConnectedExtension.md)[]
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L48)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L44)

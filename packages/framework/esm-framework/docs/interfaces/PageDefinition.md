@@ -82,7 +82,7 @@ The order in which to load the page. This determines DOM order.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:161](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L161)
+[packages/framework/esm-globals/src/types.ts:138](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L138)
 
 ___
 
@@ -126,7 +126,7 @@ The route of the page.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L157)
+[packages/framework/esm-globals/src/types.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L134)
 
 ## Methods
 

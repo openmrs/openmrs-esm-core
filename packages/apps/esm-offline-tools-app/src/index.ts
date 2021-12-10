@@ -67,7 +67,7 @@ function setupOpenMRS() {
     ],
     extensions: [
       {
-        id: "offline-tools-link",
+        name: "offline-tools-link",
         slot: "app-menu-slot",
         load: getAsyncLifecycle(
           () => import("./offline-tools-app-menu-link.component"),
@@ -77,7 +77,7 @@ function setupOpenMRS() {
         offline: true,
       },
       {
-        id: "offline-tools-nav-items",
+        name: "offline-tools-nav-items",
         load: getAsyncLifecycle(
           () => import("./nav/offline-tools-nav-menu.component"),
           {
@@ -89,7 +89,7 @@ function setupOpenMRS() {
         offline: true,
       },
       {
-        id: "offline-tools-confirmation-modal",
+        name: "offline-tools-confirmation-modal",
         load: getAsyncLifecycle(
           () => import("./components/confirmation-modal.component"),
           options
@@ -98,7 +98,7 @@ function setupOpenMRS() {
         offline: true,
       },
       {
-        id: "offline-tools-dashboard-patients-card",
+        name: "offline-tools-dashboard-patients-card",
         slot: "offline-tools-dashboard-cards",
         load: getAsyncLifecycle(
           () => import("./offline-patients/patients-overview-card.component"),
@@ -108,7 +108,7 @@ function setupOpenMRS() {
         offline: true,
       },
       {
-        id: "offline-tools-dashboard-actions-card",
+        name: "offline-tools-dashboard-actions-card",
         slot: "offline-tools-dashboard-cards",
         load: getAsyncLifecycle(
           () =>
@@ -119,7 +119,7 @@ function setupOpenMRS() {
         offline: true,
       },
       {
-        id: "offline-tools-page-offline-patients-link",
+        name: "offline-tools-page-offline-patients-link",
         slot: "offline-tools-page-slot",
         load: getSyncLifecycle(
           () =>
@@ -137,7 +137,7 @@ function setupOpenMRS() {
         offline: true,
       },
       {
-        id: "offline-tools-page-offline-patients",
+        name: "offline-tools-page-offline-patients",
         slot: "offline-tools-page-offline-patients-slot",
         load: getAsyncLifecycle(
           () => import("./offline-patients/offline-patients.component"),
@@ -147,7 +147,7 @@ function setupOpenMRS() {
         offline: true,
       },
       {
-        id: "offline-tools-page-actions-link",
+        name: "offline-tools-page-actions-link",
         slot: "offline-tools-page-slot",
         load: getSyncLifecycle(
           () =>
@@ -162,7 +162,7 @@ function setupOpenMRS() {
         offline: true,
       },
       {
-        id: "offline-tools-page-actions",
+        name: "offline-tools-page-actions",
         slot: "offline-tools-page-actions-slot",
         load: getAsyncLifecycle(
           () => import("./offline-actions/offline-actions.component"),

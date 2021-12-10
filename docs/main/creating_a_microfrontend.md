@@ -66,7 +66,7 @@ Here is an example which uses all of the possible keys.
     // documentation and the offline documentation.
     extensions: [
       {
-        id: 'greeting-bot',
+        name: 'greeting-bot',
         slot: 'bot-slot',
         load: getAsyncLifecycle(() => import('./greeting-bot'), options),
         online: true,

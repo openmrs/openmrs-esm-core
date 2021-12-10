@@ -6,7 +6,7 @@
 
 - **`ComponentDefinition`**
 
-  ↳ [`ExtensionComponentDefinition`](ExtensionComponentDefinition.md)
+  ↳ [`ExtensionDefinition`](ExtensionDefinition.md)
 
   ↳ [`PageDefinition`](PageDefinition.md)
 

@@ -1,5 +1,5 @@
 import {
-  AppExtensionDefinition,
+  ExtensionDefinition,
   attach,
   checkStatus,
   getCustomProps,
@@ -125,7 +125,7 @@ export function registerApp(appName: string, appExports: System.Module) {
     const result = trySetup(appName, setup);
 
     if (result && typeof result === "object") {
-      const availableExtensions: Array<Partial<AppExtensionDefinition>> =
+      const availableExtensions: Array<Partial<ExtensionDefinition>> =
         result.extensions ?? [];
 
       result.pages?.forEach((p) => {
@@ -190,15 +190,15 @@ export function tryRegisterPage(appName: string, page: PageDefinition) {
 
 export function tryRegisterExtension(
   moduleName: string,
-  extension: Partial<AppExtensionDefinition>
+  extension: Partial<ExtensionDefinition>
 ) {
-  const id = extension.id ?? extension.name;
+  const name = extension.name ?? extension.id;
   const slots = extension.slots || [extension.slot];
 
-  if (!id) {
+  if (!name) {
     console.warn(
-      `A registered extension definition is missing an id and thus cannot be registered.
-To fix this, ensure that you define the "id" (or alternatively the "name") field inside the extension definition.`,
+      `A registered extension definition is missing an name and thus cannot be registered.
+To fix this, ensure that you define the "name" (or alternatively the "id") field inside the extension definition.`,
       extension
     );
     return;
@@ -213,7 +213,7 @@ To fix this, ensure that you define a "load" function inside the extension defin
     return;
   }
 
-  registerExtension(id, {
+  registerExtension(name, {
     load: getLoader(extension.load, extension.resources, extension.privilege),
     meta: extension.meta || {},
     order: extension.order,
@@ -224,7 +224,7 @@ To fix this, ensure that you define a "load" function inside the extension defin
 
   for (const slot of slots) {
     if (slot) {
-      attach(slot, id);
+      attach(slot, name);
     }
   }
 }
