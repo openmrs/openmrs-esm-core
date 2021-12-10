@@ -184,7 +184,6 @@ export function getAssignedIds(
   const removedIds = config.remove || [];
   const idOrder = config.order || [];
   const { extensions } = extensionStore.getState();
-  console.log(extensions);
 
   return [...attachedIds, ...addedIds]
     .filter((id) => !removedIds.includes(id))
