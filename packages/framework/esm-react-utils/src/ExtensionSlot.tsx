@@ -1,4 +1,5 @@
 import React, { useRef, useMemo } from "react";
+import { ConnectedExtension } from "./useConnectedExtensions";
 import { ComponentContext } from "./ComponentContext";
 import { Extension } from "./Extension";
 import { useExtensionSlot } from "./useExtensionSlot";
@@ -40,7 +41,7 @@ function isShallowEqual(prevDeps: any, nextDeps: any) {
 
 export interface ExtensionSlotBaseProps {
   extensionSlotName: string;
-  select?: <T>(extensions: Array<T>) => Array<T>;
+  select?: (extensions: Array<ConnectedExtension>) => Array<ConnectedExtension>;
   state?: Record<string, any>;
 }
 
