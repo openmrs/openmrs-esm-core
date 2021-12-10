@@ -187,6 +187,21 @@ export function formatTime(date: Date) {
   });
 }
 
+export const DATETIME_FORMAT_YYYY_MMM_D: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+};
+
+export function formatDatetime(
+  date: Date,
+  options: Intl.DateTimeFormatOptions = DATETIME_FORMAT_YYYY_MMM_D
+) {
+  return date.toLocaleString(getLocale(), options);
+}
+
 function getLocale() {
   let language = window.i18next.language;
   language = language.replace("_", "-");

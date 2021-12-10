@@ -13,6 +13,7 @@ import {
   DATE_FORMAT_YYYY_MM_DD,
   DATE_FORMAT_YY_MM_DD,
   formatDate,
+  formatDatetime,
   formatTime,
 } from ".";
 
@@ -76,5 +77,12 @@ describe("Openmrs Dates", () => {
     expect(formatTime(testDate)).toMatch(/1:15 p.\sm./); // it's not a normal space between the 'p.' and 'm.'
     window.i18next = { language: "es-MX" };
     expect(formatTime(testDate)).toMatch(/13:15/);
+  });
+
+  xit("formats datetimes with respect to the locale [disabled because of https://github.com/Jimbly/timezone-mock/issues/53]", () => {
+    timezoneMock.register("US/Pacific");
+    const testDate = new Date("2022-02-09T13:15:33");
+    window.i18next = { language: "ht" };
+    expect(formatDatetime(testDate)).toEqual("9 feb. 2022 á 13:15");
   });
 });
