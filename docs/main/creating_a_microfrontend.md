@@ -24,7 +24,7 @@ the `setupOpenMRS` function for each of them. The `setupOpenMRS` function
 should only do the following four things:
 
 - define the [configuration schema](config.md)
-- register [breadcrumbs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/docs/API.md#registerbreadcrumbs)
+- register [breadcrumbs](breadcrumbs.md)
 - set up [offline support](offline.md)
 - return an object specifying the frontend module's pages and extensions
 
