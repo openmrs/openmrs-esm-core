@@ -5,6 +5,14 @@ import isToday from "dayjs/plugin/isToday";
 dayjs.extend(utc);
 dayjs.extend(isToday);
 
+declare global {
+  interface Window {
+    i18next: {
+      language: string;
+    };
+  }
+}
+
 export type DateInput = string | number | Date;
 
 const isoFormat = "YYYY-MM-DDTHH:mm:ss.SSSZZ";
@@ -111,4 +119,75 @@ export function toOmrsYearlessDateFormat(date: DateInput) {
  */
 export function toOmrsDateFormat(date: DateInput, format = "YYYY-MMM-DD") {
   return dayjs(date).format(format);
+}
+
+export const DATE_FORMAT_YYYY_MMM_D: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+};
+export const DATE_FORMAT_YYYY_MMM: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "short",
+};
+export const DATE_FORMAT_MMM_D: Intl.DateTimeFormatOptions = {
+  month: "short",
+  day: "numeric",
+};
+export const DATE_FORMAT_YYYY_MMMM_D: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
+export const DATE_FORMAT_YYYY_MM_DD: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+};
+export const DATE_FORMAT_YY_MM_DD: Intl.DateTimeFormatOptions = {
+  year: "2-digit",
+  month: "2-digit",
+  day: "2-digit",
+};
+
+/**
+ * Formats the input date according to the current locale and the
+ * given format. The default format has a 4-digit year and an
+ * abbreviated month name.
+ *
+ * Documentation for the `options` parameter, which is a
+ * DateTimeFormat object, can be found here:
+ * https://tc39.es/ecma402/#datetimeformat-objects
+ *
+ * @param date The date to be formatted
+ * @param options A DateTimeFormat object
+ */
+export function formatDate(
+  date: Date,
+  options: Intl.DateTimeFormatOptions = DATE_FORMAT_YYYY_MMM_D
+) {
+  return date.toLocaleDateString(getLocale(), options);
+}
+
+/**
+ * Formats the input as a time, according to the current locale.
+ * 12-hour or 24-hour clock depends on locale.
+ *
+ * @param date
+ */
+export function formatTime(date: Date) {
+  return date.toLocaleTimeString(getLocale(), {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function getLocale() {
+  let language = window.i18next.language;
+  language = language.replace("_", "-");
+  // hack for `ht` until https://unicode-org.atlassian.net/browse/CLDR-14956 is fixed
+  if (language === "ht") {
+    language = "fr-HT";
+  }
+  return language;
 }
