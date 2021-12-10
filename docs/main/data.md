@@ -15,11 +15,11 @@ by `@openmrs/esm-framework`.  These should be used when available.
 
 All of this functionality (React hooks excepted) is provided by the
 [`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/framework/esm-api)
-package, which is part of `@openmrs/esm-framework`. See its
-[API Docs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/docs/API.md).
+package, which is part of `@openmrs/esm-framework`.
 The React hooks are in
-[`@openmrs/esm-react-utils`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/docs/API.md),
-which is also part of `@openmrs/esm-framework`.
+[`@openmrs/esm-react-utils`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils),
+which is also part of `@openmrs/esm-framework`. See the
+[API Docs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md).
 
 ## FHIR
 
@@ -44,7 +44,7 @@ OpenMRS server.
 
 To use the [REST Web Services API](https://rest.openmrs.org/)
 or any other API of the OpenMRS server, use
-[`openmrsFetch`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/docs/API.md#openmrsfetch):
+[`openmrsFetch`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#openmrsfetch):
 
 ```typescript
 import { openmrsFetch } from '@openmrs/esm-framework'
@@ -83,8 +83,8 @@ useEffect(() => {
 
 Some API objects are made available via React hooks (or via framework-agnostic subscriptions).
 The hooks are in
-[`@openmrs/esm-react-utils`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/docs/API.md),
+`@openmrs/esm-react-utils`,
 and the subscription-yielding equivalents are in
-[`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/docs/API.md#api-object-functions).
-See for example [`useVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/docs/API.md#usevisittypes)
-and the corresponding [`getVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/docs/API.md#getvisittypes).
+[`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#api-object-functions).
+See for example [`useVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#usevisittypes)
+and the corresponding [`getVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/framework/API.md#getvisittypes).
