@@ -700,7 +700,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L133)
+[packages/framework/esm-utils/src/omrs-dates.ts:138](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L138)
 
 ___
 
@@ -710,7 +710,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L129)
+[packages/framework/esm-utils/src/omrs-dates.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L134)
 
 ___
 
@@ -720,7 +720,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L137)
+[packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L142)
 
 ___
 
@@ -730,7 +730,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:124](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L124)
+[packages/framework/esm-utils/src/omrs-dates.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L129)
 
 ___
 
@@ -740,7 +740,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L142)
+[packages/framework/esm-utils/src/omrs-dates.ts:147](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L147)
 
 ___
 
@@ -750,7 +750,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:147](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L147)
+[packages/framework/esm-utils/src/omrs-dates.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L152)
 
 ___
 
@@ -1794,7 +1794,7 @@ https://tc39.es/ecma402/#datetimeformat-objects
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L165)
+[packages/framework/esm-utils/src/omrs-dates.ts:170](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L170)
 
 ___
 
@@ -1817,7 +1817,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L178)
+[packages/framework/esm-utils/src/omrs-dates.ts:183](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L183)
 
 ___
 
@@ -3618,6 +3618,7 @@ ___
 
 ▸ **toOmrsDateFormat**(`date`, `format?`): `string`
 
+**`deprecated`** use `formatDate(date, DATE_FORMAT_YYYY_MMM_D)`
 Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 #### Parameters
@@ -3633,7 +3634,7 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L120)
+[packages/framework/esm-utils/src/omrs-dates.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L125)
 
 ___
 
@@ -3641,6 +3642,7 @@ ___
 
 ▸ **toOmrsDayDateFormat**(`date`): `string`
 
+**`deprecated`** use `formatDate(date, DATE_FORMAT_YYYY_MMM_D)`
 Formats the input as a date string using the format "DD - MMM - YYYY".
 
 #### Parameters
@@ -3655,7 +3657,7 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L106)
+[packages/framework/esm-utils/src/omrs-dates.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L109)
 
 ___
 
@@ -3686,6 +3688,7 @@ ___
 
 ▸ **toOmrsTimeString**(`date`): `string`
 
+**`deprecated`** use `formatTime`
 Formats the input as a time string using the format "HH:mm A".
 
 #### Parameters
@@ -3700,7 +3703,7 @@ Formats the input as a time string using the format "HH:mm A".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L99)
+[packages/framework/esm-utils/src/omrs-dates.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L101)
 
 ___
 
@@ -3708,6 +3711,7 @@ ___
 
 ▸ **toOmrsTimeString24**(`date`): `string`
 
+**`deprecated`** use `formatTime`
 Formats the input as a time string using the format "HH:mm".
 
 #### Parameters
@@ -3722,7 +3726,7 @@ Formats the input as a time string using the format "HH:mm".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L92)
+[packages/framework/esm-utils/src/omrs-dates.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L93)
 
 ___
 
@@ -3730,6 +3734,7 @@ ___
 
 ▸ **toOmrsYearlessDateFormat**(`date`): `string`
 
+**`deprecated`** use `formatDate(date, DATE_FORMAT_MMM_D)`
 Formats the input as a date string using the format "DD-MMM".
 
 #### Parameters
@@ -3744,7 +3749,7 @@ Formats the input as a date string using the format "DD-MMM".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L113)
+[packages/framework/esm-utils/src/omrs-dates.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L117)
 
 ___
 
