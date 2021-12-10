@@ -18,6 +18,7 @@
   - [Sharing State](/main/state.md)
   - [Offline Mode](/main/offline.md)
   - [Translations](/main/translations.md)
+  - [Breadcrumbs](/main/breadcrumbs.md)
   - [Creating a Distribution](/main/distribution.md)
 - Under the hood
   - [Architecture Overview](/under_the_hood/architecture.md)
