@@ -13,7 +13,8 @@
     "start": "node ./dist/cli.js",
     "test": "jest --passWithNoTests",
     "build": "tsc",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "version": "yarn add @openmrs/esm-app-shell@$npm_package_version --exact"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,7 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
-    "@openmrs/esm-app-shell": "^3.1.14",
+    "@openmrs/esm-app-shell": "3.1.14",
     "@types/react": "^16.9.46",
     "@types/systemjs": "^6.1.0",
     "autoprefixer": "^9.6.1",
