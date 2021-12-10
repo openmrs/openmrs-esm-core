@@ -2001,7 +2001,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:293](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L293)
+[packages/framework/esm-extensions/src/extensions.ts:304](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L304)
 
 ___
 
@@ -2265,7 +2265,7 @@ with which it has been attached.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L320)
+[packages/framework/esm-extensions/src/extensions.ts:331](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L331)
 
 ___
 
@@ -2773,7 +2773,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L246)
+[packages/framework/esm-extensions/src/extensions.ts:257](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L257)
 
 ___
 
@@ -3676,7 +3676,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L269)
+[packages/framework/esm-extensions/src/extensions.ts:280](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L280)
 
 ___
 
