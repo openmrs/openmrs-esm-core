@@ -184,12 +184,23 @@ export function getAssignedIds(
   const removedIds = config.remove || [];
   const idOrder = config.order || [];
   const { extensions } = extensionStore.getState();
+  console.log(extensions);
 
   return [...attachedIds, ...addedIds]
     .filter((id) => !removedIds.includes(id))
     .sort((idA, idB) => {
-      const ai = getOrder(idA, idOrder, extensions[idA].order, attachedIds);
-      const bi = getOrder(idB, idOrder, extensions[idB].order, attachedIds);
+      const ai = getOrder(
+        idA,
+        idOrder,
+        extensions[getExtensionNameFromId(idA)].order,
+        attachedIds
+      );
+      const bi = getOrder(
+        idB,
+        idOrder,
+        extensions[getExtensionNameFromId(idB)].order,
+        attachedIds
+      );
 
       if (bi === -1) {
         return -1;
