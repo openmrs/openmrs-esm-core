@@ -8,6 +8,8 @@
 
   ↳ [`ExtensionInfo`](ExtensionInfo.md)
 
+  ↳ [`ConnectedExtension`](ConnectedExtension.md)
+
 ## Table of contents
 
 ### Properties

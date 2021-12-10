@@ -29,13 +29,14 @@
 - [ConfigSchema](interfaces/ConfigSchema.md)
 - [ConfigStore](interfaces/ConfigStore.md)
 - [ConfigurableLinkProps](interfaces/ConfigurableLinkProps.md)
+- [ConnectedExtension](interfaces/ConnectedExtension.md)
 - [ConnectivityChangedEvent](interfaces/ConnectivityChangedEvent.md)
 - [CurrentPatientOptions](interfaces/CurrentPatientOptions.md)
 - [CurrentUserOptions](interfaces/CurrentUserOptions.md)
 - [CurrentUserWithResponseOption](interfaces/CurrentUserWithResponseOption.md)
 - [CurrentUserWithoutResponseOption](interfaces/CurrentUserWithoutResponseOption.md)
-- [ExtensionComponentDefinition](interfaces/ExtensionComponentDefinition.md)
 - [ExtensionData](interfaces/ExtensionData.md)
+- [ExtensionDefinition](interfaces/ExtensionDefinition.md)
 - [ExtensionDetails](interfaces/ExtensionDetails.md)
 - [ExtensionInfo](interfaces/ExtensionInfo.md)
 - [ExtensionInstance](interfaces/ExtensionInstance.md)
@@ -57,13 +58,11 @@
 - [FetchResponse](interfaces/FetchResponse.md)
 - [ImplementerToolsConfigStore](interfaces/ImplementerToolsConfigStore.md)
 - [ImportMap](interfaces/ImportMap.md)
-- [LegacyAppExtensionDefinition](interfaces/LegacyAppExtensionDefinition.md)
 - [Lifecycle](interfaces/Lifecycle.md)
 - [Location](interfaces/Location.md)
 - [LoggedInUser](interfaces/LoggedInUser.md)
 - [LoggedInUserFetchResponse](interfaces/LoggedInUserFetchResponse.md)
 - [MessageServiceWorkerResult](interfaces/MessageServiceWorkerResult.md)
-- [ModernAppExtensionDefinition](interfaces/ModernAppExtensionDefinition.md)
 - [NavigateOptions](interfaces/NavigateOptions.md)
 - [NavigationContext](interfaces/NavigationContext.md)
 - [NetworkRequestFailedEvent](interfaces/NetworkRequestFailedEvent.md)
@@ -108,7 +107,6 @@
 ### Type aliases
 
 - [Actions](API.md#actions)
-- [AppExtensionDefinition](API.md#appextensiondefinition)
 - [BoundActions](API.md#boundactions)
 - [ConfigValue](API.md#configvalue)
 - [CurrentPatient](API.md#currentpatient)
@@ -335,16 +333,6 @@
 
 ___
 
-### AppExtensionDefinition
-
-Ƭ **AppExtensionDefinition**: [`ModernAppExtensionDefinition`](interfaces/ModernAppExtensionDefinition.md) & [`LegacyAppExtensionDefinition`](interfaces/LegacyAppExtensionDefinition.md)
-
-#### Defined in
-
-[packages/framework/esm-globals/src/types.ts:150](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L150)
-
-___
-
 ### BoundActions
 
 Ƭ **BoundActions**: `Object`
@@ -395,7 +383,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L54)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L47)
 
 ___
 
@@ -710,7 +698,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L57)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L50)
 
 ___
 
@@ -1355,7 +1343,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L71)
+[packages/framework/esm-extensions/src/extensions.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L75)
 
 ___
 
@@ -1597,7 +1585,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L101)
+[packages/framework/esm-extensions/src/extensions.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L105)
 
 ___
 
@@ -1617,7 +1605,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:124](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L124)
+[packages/framework/esm-extensions/src/extensions.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L128)
 
 ___
 
@@ -1735,13 +1723,14 @@ ___
 
 ### getAssignedIds
 
-▸ **getAssignedIds**(`instance`, `attachedIds`): `string`[]
+▸ **getAssignedIds**(`slotName`, `config`, `attachedIds`): `string`[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `instance` | [`ExtensionSlotInstance`](interfaces/ExtensionSlotInstance.md) |
+| `slotName` | `string` |
+| `config` | [`ExtensionSlotConfigObject`](interfaces/ExtensionSlotConfigObject.md) |
 | `attachedIds` | `string`[] |
 
 #### Returns
@@ -1750,7 +1739,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L157)
+[packages/framework/esm-extensions/src/extensions.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L178)
 
 ___
 
@@ -1931,7 +1920,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L29)
+[packages/framework/esm-extensions/src/extensions.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L33)
 
 ___
 
@@ -1951,7 +1940,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L42)
+[packages/framework/esm-extensions/src/extensions.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L46)
 
 ___
 
@@ -1972,7 +1961,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L34)
+[packages/framework/esm-extensions/src/extensions.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L38)
 
 ___
 
@@ -2012,7 +2001,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L269)
+[packages/framework/esm-extensions/src/extensions.ts:293](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L293)
 
 ___
 
@@ -2276,7 +2265,7 @@ with which it has been attached.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:296](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L296)
+[packages/framework/esm-extensions/src/extensions.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L320)
 
 ___
 
@@ -2763,7 +2752,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L58)
+[packages/framework/esm-extensions/src/extensions.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L62)
 
 ___
 
@@ -2784,7 +2773,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:222](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L222)
+[packages/framework/esm-extensions/src/extensions.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L246)
 
 ___
 
@@ -3687,7 +3676,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:245](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L245)
+[packages/framework/esm-extensions/src/extensions.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L269)
 
 ___
 
@@ -3854,7 +3843,7 @@ ___
 
 ### useConnectedExtensions
 
-▸ **useConnectedExtensions**(`extensionSlotName`): [`ExtensionRegistration`](interfaces/ExtensionRegistration.md)[]
+▸ **useConnectedExtensions**(`extensionSlotName`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
 
 Gets the assigned extension for a given extension slot name.
 Considers if offline or online.
@@ -3867,11 +3856,11 @@ Considers if offline or online.
 
 #### Returns
 
-[`ExtensionRegistration`](interfaces/ExtensionRegistration.md)[]
+[`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L31)
+[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L36)
 
 ___
 
@@ -3953,7 +3942,7 @@ ___
 | :------ | :------ |
 | `extensionSlotModuleName` | `string` |
 | `extensionSlotName` | `string` |
-| `extensions` | [`ExtensionRegistration`](interfaces/ExtensionRegistration.md)[] |
+| `extensions` | [`ConnectedExtension`](interfaces/ConnectedExtension.md)[] |
 
 #### Defined in
 

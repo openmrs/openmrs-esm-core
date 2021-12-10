@@ -1,32 +1,32 @@
-[@openmrs/esm-framework](../API.md) / ExtensionComponentDefinition
+[@openmrs/esm-framework](../API.md) / ExtensionDefinition
 
-# Interface: ExtensionComponentDefinition
+# Interface: ExtensionDefinition
 
 ## Hierarchy
 
 - [`ComponentDefinition`](ComponentDefinition.md)
 
-  ↳ **`ExtensionComponentDefinition`**
-
-  ↳↳ [`ModernAppExtensionDefinition`](ModernAppExtensionDefinition.md)
-
-  ↳↳ [`LegacyAppExtensionDefinition`](LegacyAppExtensionDefinition.md)
+  ↳ **`ExtensionDefinition`**
 
 ## Table of contents
 
 ### Properties
 
-- [appName](ExtensionComponentDefinition.md#appname)
-- [meta](ExtensionComponentDefinition.md#meta)
-- [offline](ExtensionComponentDefinition.md#offline)
-- [online](ExtensionComponentDefinition.md#online)
-- [order](ExtensionComponentDefinition.md#order)
-- [privilege](ExtensionComponentDefinition.md#privilege)
-- [resources](ExtensionComponentDefinition.md#resources)
+- [appName](ExtensionDefinition.md#appname)
+- [id](ExtensionDefinition.md#id)
+- [meta](ExtensionDefinition.md#meta)
+- [name](ExtensionDefinition.md#name)
+- [offline](ExtensionDefinition.md#offline)
+- [online](ExtensionDefinition.md#online)
+- [order](ExtensionDefinition.md#order)
+- [privilege](ExtensionDefinition.md#privilege)
+- [resources](ExtensionDefinition.md#resources)
+- [slot](ExtensionDefinition.md#slot)
+- [slots](ExtensionDefinition.md#slots)
 
 ### Methods
 
-- [load](ExtensionComponentDefinition.md#load)
+- [load](ExtensionDefinition.md#load)
 
 ## Properties
 
@@ -46,15 +46,39 @@ The module/app that defines the component
 
 ___
 
+### id
+
+• `Optional` **id**: `string`
+
+**`deprecated`** A confusing way to specify the name of the extension
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L127)
+
+___
+
 ### meta
 
 • `Optional` **meta**: `Record`<`string`, `any`\>
 
-The meta data used for reflection by other components.
+The meta data used for reflection by other components
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:119](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L119)
+[packages/framework/esm-globals/src/types.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L123)
+
+___
+
+### name
+
+• **name**: `string`
+
+The name of the extension being registered
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L117)
 
 ___
 
@@ -94,11 +118,11 @@ ___
 
 • `Optional` **order**: `number`
 
-Specifies a preferred order number, if any.
+Specifies the relative order in which the extension renders in a slot
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L123)
+[packages/framework/esm-globals/src/types.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L125)
 
 ___
 
@@ -131,6 +155,30 @@ Defines resources that are loaded when the component should mount.
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L112)
+
+___
+
+### slot
+
+• `Optional` **slot**: `string`
+
+A slot to attach to
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:119](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L119)
+
+___
+
+### slots
+
+• `Optional` **slots**: `string`[]
+
+Slots to attach to
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L121)
 
 ## Methods
 
