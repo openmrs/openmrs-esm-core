@@ -87,4 +87,4 @@ The hooks are in
 and the subscription-yielding equivalents are in
 [`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#api-object-functions).
 See for example [`useVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#usevisittypes)
-and the corresponding [`getVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/framework/API.md#getvisittypes).
+and the corresponding [`getVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#getvisittypes).
