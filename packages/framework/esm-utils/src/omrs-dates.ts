@@ -87,6 +87,7 @@ export function toOmrsIsoString(date: DateInput, toUTC = false): string {
 }
 
 /**
+ * @deprecated use `formatTime`
  * Formats the input as a time string using the format "HH:mm".
  */
 export function toOmrsTimeString24(date: DateInput) {
@@ -94,6 +95,7 @@ export function toOmrsTimeString24(date: DateInput) {
 }
 
 /**
+ * @deprecated use `formatTime`
  * Formats the input as a time string using the format "HH:mm A".
  */
 export function toOmrsTimeString(date: DateInput) {
@@ -101,6 +103,7 @@ export function toOmrsTimeString(date: DateInput) {
 }
 
 /**
+ * @deprecated use `formatDate(date, DATE_FORMAT_YYYY_MMM_D)`
  * Formats the input as a date string using the format "DD - MMM - YYYY".
  */
 export function toOmrsDayDateFormat(date: DateInput) {
@@ -108,6 +111,7 @@ export function toOmrsDayDateFormat(date: DateInput) {
 }
 
 /**
+ * @deprecated use `formatDate(date, DATE_FORMAT_MMM_D)`
  * Formats the input as a date string using the format "DD-MMM".
  */
 export function toOmrsYearlessDateFormat(date: DateInput) {
@@ -115,6 +119,7 @@ export function toOmrsYearlessDateFormat(date: DateInput) {
 }
 
 /**
+ * @deprecated use `formatDate(date, DATE_FORMAT_YYYY_MMM_D)`
  * Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
  */
 export function toOmrsDateFormat(date: DateInput, format = "YYYY-MMM-DD") {
