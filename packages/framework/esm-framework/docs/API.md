@@ -114,6 +114,7 @@
 - [CurrentPatient](API.md#currentpatient)
 - [DateInput](API.md#dateinput)
 - [ExtensionSlotProps](API.md#extensionslotprops)
+- [FormatDateMode](API.md#formatdatemode)
 - [KnownOmrsServiceWorkerEvents](API.md#knownomrsserviceworkerevents)
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
 - [LayoutType](API.md#layouttype)
@@ -142,12 +143,6 @@
 ### Other Variables
 
 - [ComponentContext](API.md#componentcontext)
-- [DATE\_FORMAT\_MMM\_D](API.md#date_format_mmm_d)
-- [DATE\_FORMAT\_YYYY\_MMM](API.md#date_format_yyyy_mmm)
-- [DATE\_FORMAT\_YYYY\_MMMM\_D](API.md#date_format_yyyy_mmmm_d)
-- [DATE\_FORMAT\_YYYY\_MMM\_D](API.md#date_format_yyyy_mmm_d)
-- [DATE\_FORMAT\_YYYY\_MM\_DD](API.md#date_format_yyyy_mm_dd)
-- [DATE\_FORMAT\_YY\_MM\_DD](API.md#date_format_yy_mm_dd)
 - [Extension](API.md#extension)
 - [ExtensionSlot](API.md#extensionslot)
 - [UserHasAccess](API.md#userhasaccess)
@@ -209,6 +204,7 @@
 - [dispatchNotificationShown](API.md#dispatchnotificationshown)
 - [dispatchPrecacheStaticDependencies](API.md#dispatchprecachestaticdependencies)
 - [formatDate](API.md#formatdate)
+- [formatDatetime](API.md#formatdatetime)
 - [formatTime](API.md#formattime)
 - [generateOfflineUuid](API.md#generateofflineuuid)
 - [getAppState](API.md#getappstate)
@@ -404,6 +400,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L54)
+
+___
+
+### FormatDateMode
+
+Ƭ **FormatDateMode**: ``"standard"`` \| ``"no year"`` \| ``"no day"`` \| ``"wide"``
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L143)
 
 ___
 
@@ -691,66 +697,6 @@ Available to all components. Provided by `openmrsComponentDecorator`.
 #### Defined in
 
 [packages/framework/esm-react-utils/src/ComponentContext.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L17)
-
-___
-
-### DATE\_FORMAT\_MMM\_D
-
-• `Const` **DATE\_FORMAT\_MMM\_D**: `Intl.DateTimeFormatOptions`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:138](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L138)
-
-___
-
-### DATE\_FORMAT\_YYYY\_MMM
-
-• `Const` **DATE\_FORMAT\_YYYY\_MMM**: `Intl.DateTimeFormatOptions`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L134)
-
-___
-
-### DATE\_FORMAT\_YYYY\_MMMM\_D
-
-• `Const` **DATE\_FORMAT\_YYYY\_MMMM\_D**: `Intl.DateTimeFormatOptions`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L142)
-
-___
-
-### DATE\_FORMAT\_YYYY\_MMM\_D
-
-• `Const` **DATE\_FORMAT\_YYYY\_MMM\_D**: `Intl.DateTimeFormatOptions`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L129)
-
-___
-
-### DATE\_FORMAT\_YYYY\_MM\_DD
-
-• `Const` **DATE\_FORMAT\_YYYY\_MM\_DD**: `Intl.DateTimeFormatOptions`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:147](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L147)
-
-___
-
-### DATE\_FORMAT\_YY\_MM\_DD
-
-• `Const` **DATE\_FORMAT\_YY\_MM\_DD**: `Intl.DateTimeFormatOptions`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L152)
 
 ___
 
@@ -1771,22 +1717,22 @@ ___
 
 ### formatDate
 
-▸ **formatDate**(`date`, `options?`): `string`
+▸ **formatDate**(`date`, `mode?`): `string`
 
 Formats the input date according to the current locale and the
-given format. The default format has a 4-digit year and an
-abbreviated month name.
+given format mode.
 
-Documentation for the `options` parameter, which is a
-DateTimeFormat object, can be found here:
-https://tc39.es/ecma402/#datetimeformat-objects
+`standard`: "13 Dec 2021"
+`no year`:  "13 Dec"
+`no day`:   "Dec 2021"
+`wide`:     "13 — Dec — 2021"
 
 #### Parameters
 
-| Name | Type | Description |
+| Name | Type | Default value |
 | :------ | :------ | :------ |
-| `date` | `Date` | The date to be formatted |
-| `options` | `Intl.DateTimeFormatOptions` | A DateTimeFormat object |
+| `date` | `Date` | `undefined` |
+| `mode` | [`FormatDateMode`](API.md#formatdatemode) | `"standard"` |
 
 #### Returns
 
@@ -1794,7 +1740,36 @@ https://tc39.es/ecma402/#datetimeformat-objects
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:170](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L170)
+[packages/framework/esm-utils/src/omrs-dates.ts:154](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L154)
+
+___
+
+### formatDatetime
+
+▸ **formatDatetime**(`date`, `mode?`): `string`
+
+Formats the input into a string showing the date and time, according
+to the current locale. The `mode` parameter is as described for
+`formatDate`.
+
+This is created by concatenating the results of `formatDate`
+and `formatTime` with a comma and space. This agrees with the
+output of `Date.prototype.toLocaleString` for *most* locales.
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `date` | `Date` | `undefined` |
+| `mode` | [`FormatDateMode`](API.md#formatdatemode) | `"standard"` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:216](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L216)
 
 ___
 
@@ -1817,7 +1792,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:183](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L183)
+[packages/framework/esm-utils/src/omrs-dates.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L200)
 
 ___
 
@@ -3618,7 +3593,7 @@ ___
 
 ▸ **toOmrsDateFormat**(`date`, `format?`): `string`
 
-**`deprecated`** use `formatDate(date, DATE_FORMAT_YYYY_MMM_D)`
+**`deprecated`** use `formatDate(date)`
 Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 #### Parameters
@@ -3642,7 +3617,7 @@ ___
 
 ▸ **toOmrsDayDateFormat**(`date`): `string`
 
-**`deprecated`** use `formatDate(date, DATE_FORMAT_YYYY_MMM_D)`
+**`deprecated`** use `formatDate(date, "wide")`
 Formats the input as a date string using the format "DD - MMM - YYYY".
 
 #### Parameters
@@ -3734,7 +3709,7 @@ ___
 
 ▸ **toOmrsYearlessDateFormat**(`date`): `string`
 
-**`deprecated`** use `formatDate(date, DATE_FORMAT_MMM_D)`
+**`deprecated`** use `formatDate(date, "no year")`
 Formats the input as a date string using the format "DD-MMM".
 
 #### Parameters
