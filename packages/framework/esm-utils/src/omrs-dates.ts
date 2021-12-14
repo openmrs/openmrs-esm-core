@@ -177,10 +177,10 @@ export function formatDate(date: Date, mode: FormatDateMode = "standard") {
     let localeString = date.toLocaleDateString(locale, options);
     if (locale == "en-GB" && mode == "standard") {
       // Custom formatting for English. Use hyphens instead of spaces.
-      localeString = localeString.replaceAll(" ", "-");
+      localeString = localeString.replace(/ /g, "-");
     }
     if (mode == "wide") {
-      localeString = localeString.replaceAll(" ", " — "); // space-emdash-space
+      localeString = localeString.replace(/ /g, " — "); // space-emdash-space
       if (/ru.*/.test(locale)) {
         // Remove the extra em-dash that gets added between the year and the suffix 'r.'
         const len = localeString.length;
