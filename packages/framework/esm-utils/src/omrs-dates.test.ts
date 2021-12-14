@@ -90,9 +90,14 @@ describe("Openmrs Dates", () => {
   it("formats datetimes with respect to the locale", () => {
     timezoneMock.register("US/Pacific");
     const testDate = new Date("2022-02-09T13:15:33");
+    const todayDate = new Date();
+    todayDate.setHours(15);
+    todayDate.setMinutes(20);
     window.i18next = { language: "en" };
     expect(formatDatetime(testDate)).toEqual("09-Feb-2022, 01:15 PM");
+    expect(formatDatetime(todayDate)).toEqual("Today, 03:20 PM");
     window.i18next = { language: "ht" };
     expect(formatDatetime(testDate)).toEqual("09 févr. 2022, 13:15");
+    expect(formatDatetime(todayDate)).toEqual("Aujourd’hui, 15:20");
   });
 });
