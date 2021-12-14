@@ -103,7 +103,7 @@ export function toOmrsTimeString(date: DateInput) {
 }
 
 /**
- * @deprecated use `formatDate(date, DATE_FORMAT_YYYY_MMM_D)`
+ * @deprecated use `formatDate(date, "wide")`
  * Formats the input as a date string using the format "DD - MMM - YYYY".
  */
 export function toOmrsDayDateFormat(date: DateInput) {
@@ -111,7 +111,7 @@ export function toOmrsDayDateFormat(date: DateInput) {
 }
 
 /**
- * @deprecated use `formatDate(date, DATE_FORMAT_MMM_D)`
+ * @deprecated use `formatDate(date, "no year")`
  * Formats the input as a date string using the format "DD-MMM".
  */
 export function toOmrsYearlessDateFormat(date: DateInput) {
@@ -119,92 +119,109 @@ export function toOmrsYearlessDateFormat(date: DateInput) {
 }
 
 /**
- * @deprecated use `formatDate(date, DATE_FORMAT_YYYY_MMM_D)`
+ * @deprecated use `formatDate(date)`
  * Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
  */
 export function toOmrsDateFormat(date: DateInput, format = "YYYY-MMM-DD") {
   return dayjs(date).format(format);
 }
 
-export const DATE_FORMAT_YYYY_MMM_D: Intl.DateTimeFormatOptions = {
+const DATE_FORMAT_YYYY_MMM_DD = {
   year: "numeric",
   month: "short",
-  day: "numeric",
-};
-export const DATE_FORMAT_YYYY_MMM: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "short",
-};
-export const DATE_FORMAT_MMM_D: Intl.DateTimeFormatOptions = {
-  month: "short",
-  day: "numeric",
-};
-export const DATE_FORMAT_YYYY_MMMM_D: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-};
-export const DATE_FORMAT_YYYY_MM_DD: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "2-digit",
   day: "2-digit",
 };
-export const DATE_FORMAT_YY_MM_DD: Intl.DateTimeFormatOptions = {
-  year: "2-digit",
-  month: "2-digit",
+const DATE_FORMAT_YYYY_MMM = {
+  year: "numeric",
+  month: "short",
+};
+const DATE_FORMAT_MMM_DD = {
+  month: "short",
   day: "2-digit",
 };
 
+export type FormatDateMode = "standard" | "no year" | "no day" | "wide";
+
 /**
  * Formats the input date according to the current locale and the
- * given format. The default format has a 4-digit year and an
- * abbreviated month name.
+ * given format mode.
  *
- * Documentation for the `options` parameter, which is a
- * DateTimeFormat object, can be found here:
- * https://tc39.es/ecma402/#datetimeformat-objects
- *
- * @param date The date to be formatted
- * @param options A DateTimeFormat object
+ * `standard`: "13 Dec 2021"
+ * `no year`:  "13 Dec"
+ * `no day`:   "Dec 2021"
+ * `wide`:     "13 — Dec — 2021"
  */
-export function formatDate(
-  date: Date,
-  options: Intl.DateTimeFormatOptions = DATE_FORMAT_YYYY_MMM_D
-) {
-  return date.toLocaleDateString(getLocale(), options);
+export function formatDate(date: Date, mode: FormatDateMode = "standard") {
+  const options = (
+    {
+      standard: DATE_FORMAT_YYYY_MMM_DD,
+      wide: DATE_FORMAT_YYYY_MMM_DD,
+      "no year": DATE_FORMAT_MMM_DD,
+      "no day": DATE_FORMAT_YYYY_MMM,
+    } as Record<string, Intl.DateTimeFormatOptions>
+  )[mode];
+  let locale = getLocale();
+  if (dayjs(date).isToday()) {
+    // This produces the word "Today" in the language of `locale`
+    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
+    let localeString = rtf.format(0, "day");
+    localeString =
+      localeString[0].toLocaleUpperCase(locale) + localeString.slice(1);
+    return localeString;
+  } else {
+    if (locale == "en") {
+      // This locale override is here rather than in `getLocale`
+      // because Americans should see AM/PM for times.
+      locale = "en-GB";
+    }
+    let localeString = date.toLocaleDateString(locale, options);
+    if (locale == "en-GB" && mode == "standard") {
+      // Custom formatting for English. Use hyphens instead of spaces.
+      localeString = localeString.replaceAll(" ", "-");
+    }
+    if (mode == "wide") {
+      localeString = localeString.replaceAll(" ", " — "); // space-emdash-space
+      if (/ru.*/.test(locale)) {
+        // Remove the extra em-dash that gets added between the year and the suffix 'r.'
+        const len = localeString.length;
+        localeString =
+          localeString.slice(0, len - 5) +
+          localeString.slice(len - 5).replace(" — ", " ");
+      }
+    }
+    return localeString;
+  }
 }
 
 /**
  * Formats the input as a time, according to the current locale.
  * 12-hour or 24-hour clock depends on locale.
- *
- * @param date
  */
 export function formatTime(date: Date) {
   return date.toLocaleTimeString(getLocale(), {
-    hour: "numeric",
+    hour: "2-digit",
     minute: "2-digit",
   });
 }
 
-export const DATETIME_FORMAT_YYYY_MMM_D: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "short",
-  day: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-};
-
-export function formatDatetime(
-  date: Date,
-  options: Intl.DateTimeFormatOptions = DATETIME_FORMAT_YYYY_MMM_D
-) {
-  return date.toLocaleString(getLocale(), options);
+/**
+ * Formats the input into a string showing the date and time, according
+ * to the current locale. The `mode` parameter is as described for
+ * `formatDate`.
+ *
+ * This is created by concatenating the results of `formatDate`
+ * and `formatTime` with a comma and space. This agrees with the
+ * output of `Date.prototype.toLocaleString` for *most* locales.
+ */
+export function formatDatetime(date: Date, mode: FormatDateMode = "standard") {
+  const dateString = formatDate(date, mode);
+  const timeString = formatTime(date);
+  return `${dateString}, ${timeString}`;
 }
 
 function getLocale() {
   let language = window.i18next.language;
-  language = language.replace("_", "-");
+  language = language.replace("_", "-"); // just in case
   // hack for `ht` until https://unicode-org.atlassian.net/browse/CLDR-14956 is fixed
   if (language === "ht") {
     language = "fr-HT";
