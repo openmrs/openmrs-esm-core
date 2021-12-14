@@ -1,3 +1,8 @@
+/**
+ * @module
+ * @category Date and time
+ */
+import { i18n } from "i18next";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import isToday from "dayjs/plugin/isToday";
@@ -7,9 +12,7 @@ dayjs.extend(isToday);
 
 declare global {
   interface Window {
-    i18next: {
-      language: string;
-    };
+    i18next: i18n;
   }
 }
 
