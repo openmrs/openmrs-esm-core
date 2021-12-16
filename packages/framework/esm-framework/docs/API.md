@@ -245,6 +245,7 @@
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
 - [openVisitsNoteWorkspace](API.md#openvisitsnoteworkspace)
 - [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
+- [parseDate](API.md#parsedate)
 - [patchXMLHttpRequest](API.md#patchxmlhttprequest)
 - [processConfig](API.md#processconfig)
 - [provide](API.md#provide)
@@ -397,7 +398,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:146](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L146)
+[packages/framework/esm-utils/src/omrs-dates.ts:154](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L154)
 
 ___
 
@@ -1728,7 +1729,7 @@ given format mode.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L157)
+[packages/framework/esm-utils/src/omrs-dates.ts:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L165)
 
 ___
 
@@ -1757,7 +1758,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:219](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L219)
+[packages/framework/esm-utils/src/omrs-dates.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L227)
 
 ___
 
@@ -1780,7 +1781,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:203](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L203)
+[packages/framework/esm-utils/src/omrs-dates.ts:211](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L211)
 
 ___
 
@@ -2682,6 +2683,29 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L71)
+
+___
+
+### parseDate
+
+▸ **parseDate**(`dateString`): `Date`
+
+Utility function to parse an arbitrary string into a date.
+Uses `dayjs(dateString)`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dateString` | `string` |
+
+#### Returns
+
+`Date`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L136)
 
 ___
 
