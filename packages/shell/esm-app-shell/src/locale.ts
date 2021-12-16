@@ -73,6 +73,7 @@ export function setupI18n() {
       },
       detection: {
         order: ["querystring", "htmlTag", "localStorage", "navigator"],
+        lookupQuerystring: "lang",
       },
       fallbackLng: "en",
     });
