@@ -47,22 +47,15 @@ export function setupI18n() {
             callback(null, { status: 404, data: null });
           } else {
             System.import(decodeHtmlEntity(namespace))
-              .then((m) => {
-                if (typeof m.importTranslation !== "function") {
-                  throw Error(
-                    `Module ${namespace} does not export an importTranslation function`
-                  );
+              .then((value) => {
+                if ("init" in value && "get" in value) {
+                  return value
+                    .get("app")
+                    .then((factory) =>
+                      getImportPromise(factory(), namespace, language)
+                    );
                 }
-
-                const importPromise = m.importTranslation(`./${language}.json`);
-
-                if (!(importPromise instanceof Promise)) {
-                  throw Error(
-                    `Module ${namespace} exports an importTranslation function that does not return a promise. Did you forget to set require.context mode to 'lazy'?`
-                  );
-                }
-
-                return importPromise;
+                return getImportPromise(value, namespace, language);
               })
               .then(
                 (json) => callback(null, { status: 200, data: json }),
@@ -76,4 +69,22 @@ export function setupI18n() {
       },
       fallbackLng: "en",
     });
+}
+
+function getImportPromise(module, namespace, language) {
+  if (typeof module.importTranslation !== "function") {
+    throw Error(
+      `Module ${namespace} does not export an importTranslation function`
+    );
+  }
+
+  const importPromise = module.importTranslation(`./${language}.json`);
+
+  if (!(importPromise instanceof Promise)) {
+    throw Error(
+      `Module ${namespace} exports an importTranslation function that does not return a promise. Did you forget to set require.context mode to 'lazy'?`
+    );
+  }
+
+  return importPromise;
 }
