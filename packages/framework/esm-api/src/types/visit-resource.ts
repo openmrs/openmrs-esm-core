@@ -18,8 +18,8 @@ export interface Visit {
   patient?: OpenmrsResource;
   visitType: VisitType;
   location?: Location;
-  startDatetime: Date;
-  stopDatetime?: Date;
+  startDatetime: string;
+  stopDatetime?: string;
   attributes?: Array<OpenmrsResource>;
   [anythingElse: string]: any;
 }

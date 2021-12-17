@@ -74,7 +74,7 @@ ___
 
 ### startDatetime
 
-• **startDatetime**: `Date`
+• **startDatetime**: `string`
 
 #### Defined in
 
@@ -84,7 +84,7 @@ ___
 
 ### stopDatetime
 
-• `Optional` **stopDatetime**: `Date`
+• `Optional` **stopDatetime**: `string`
 
 #### Defined in
 
