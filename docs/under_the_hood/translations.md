@@ -17,7 +17,7 @@ There are three places in frontend code that relate to translation/i18n. They ar
 
 The identify the currently used language the following steps are performed:
 
-1. Looking at the site's current query string (`lng`)
+1. Looking at the site's current query string (`lang`)
 2. Looking at the user's language preference placed on the `html` tag, which is synced with the backend
 3. Looking at the site's language preference stored in `localStorage` (key `i18nextLng`)
 4. Looking at the browser's language preference via `navigator` (trying properties such as `languages`, `userLanguage`, `language`)
