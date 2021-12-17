@@ -13,6 +13,7 @@
   - [Design Conventions](/main/carbon.md)
   - [Dependencies](/main/deps.md)
   - [Retrieving and Posting Data](/main/data.md)
+  - [Dates](/main/dates.md)
   - [Extension System](/main/extensions.md)
   - [Configuration System](/main/config.md)
   - [Sharing State](/main/state.md)
