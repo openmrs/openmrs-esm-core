@@ -129,6 +129,14 @@ export function toOmrsDateFormat(date: DateInput, format = "YYYY-MMM-DD") {
   return dayjs(date).format(format);
 }
 
+/**
+ * Utility function to parse an arbitrary string into a date.
+ * Uses `dayjs(dateString)`.
+ */
+export function parseDate(dateString: string) {
+  return dayjs(dateString).toDate();
+}
+
 const DATE_FORMAT_YYYY_MMM_DD = {
   year: "numeric",
   month: "short",
