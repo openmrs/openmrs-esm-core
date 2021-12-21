@@ -37,14 +37,60 @@ If you have questions about FHIR support in OpenMRS, you can ask in the
 
 ## Other OpenMRS server APIs
 
-There are some administrative endpoints that will likely never have a proper
-representation in FHIR; e.g., managing encounter types. When no suitable
-FHIR endpoint is available you will want to use a different API of the
-OpenMRS server.
+Some administrative endpoints will likely never have a proper representation in FHIR (e.g., endpoints for managing encounter types). When no suitable FHIR endpoint is available, you will want to use a different OpenMRS server API. The [REST Web Services API](https://rest.openmrs.org/) is used widely across many of our frontend modules.
 
-To use the [REST Web Services API](https://rest.openmrs.org/)
-or any other API of the OpenMRS server, use
-[`openmrsFetch`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#openmrsfetch):
+We recommend using [SWR](https://swr.vercel.app/docs/data-fetching) based hooks and the [`openmrsFetch`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#openmrsfetch) fetcher function to retrieve data from the server. SWR offers a host of features that help us deliver an improved user experience.
+
+Here's an example of a custom SWR hook that retrieves visits data.
+
+```typescript
+import useSWR from 'swr';
+import { openmrsFetch, Visit } from '@openmrs/esm-framework';
+
+interface VisitData {
+  results: Array<Visit>;
+}
+
+/* Custom data fetching hook */ 
+export function useVisits() {
+  const url = `/ws/rest/v1/visit?includeInactive=false`;
+
+  const { data, error } = useSWR<{ data: VisitData }, Error>(url, openmrsFetch);
+
+  return {
+    visits: data,
+    isLoading: !data && !error,
+    isError: error,
+  };
+}
+```
+
+We can leverage this `useVisits` hook in our `visits` component as follows:
+
+```typescript
+const Visits = () => {
+  const { visits, isError, isLoading } = useVisits();
+
+  if (isLoading) {
+    return <DataTableSkeleton role="progressbar" />
+  }
+  if (isError) {
+    // render error state
+  }
+  if (visits?.length) {
+    // render visits
+  }
+  return (
+    // render empty state
+  )
+}
+
+export default Visits;
+```
+
+## Posting data to the server
+
+Here's an example that demonstrates posting session data to the server.
 
 ```typescript
 import { openmrsFetch } from '@openmrs/esm-framework'
@@ -61,7 +107,7 @@ openmrsFetch('/ws/rest/v1/session', {
 });
 ```
 
-It is best practice for requests to have an
+It is best practice for POST requests to have an
 [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort).
 You should ensure that `AbortController.abort()` is called when the component is unmounted
 if the request is not yet completed.
