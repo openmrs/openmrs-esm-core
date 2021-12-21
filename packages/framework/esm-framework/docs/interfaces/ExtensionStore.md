@@ -6,13 +6,13 @@
 
 ### Properties
 
-- [resultSlots](ExtensionStore.md#resultslots)
+- [slots](ExtensionStore.md#slots)
 
 ## Properties
 
-### resultSlots
+### slots
 
-• **resultSlots**: `Record`<`string`, [`ExtensionSlotState`](ExtensionSlotState.md)\>
+• **slots**: `Record`<`string`, [`ExtensionSlotState`](ExtensionSlotState.md)\>
 
 #### Defined in
 
