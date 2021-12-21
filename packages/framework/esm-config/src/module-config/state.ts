@@ -66,6 +66,7 @@ export interface TemporaryConfigStore {
   config: Config;
 }
 
+/** @internal */
 export const temporaryConfigStore = createGlobalStore<TemporaryConfigStore>(
   "temporary-config",
   { config: getTemporaryConfig() }
@@ -98,9 +99,7 @@ export interface ConfigExtensionStore {
   mountedExtensions: Array<ConfigExtensionStoreElement>;
 }
 
-/**
- * @internal
- */
+/** @internal */
 export interface ConfigExtensionStoreElement {
   slotModuleName: string;
   extensionModuleName: string;
@@ -108,9 +107,7 @@ export interface ConfigExtensionStoreElement {
   extensionId: string;
 }
 
-/**
- * @internal
- */
+/** @internal */
 export const configExtensionStore = createGlobalStore<ConfigExtensionStore>(
   "config-extensions",
   { mountedExtensions: [] }
@@ -120,6 +117,7 @@ export const configExtensionStore = createGlobalStore<ConfigExtensionStore>(
  * Output configs
  *
  * Each module has its own stores for its config and its extension slots' configs.
+ * @internal
  */
 export interface ConfigStore {
   config: ConfigObject | null;
@@ -133,6 +131,7 @@ function initializeConfigStore() {
   };
 }
 
+/** @internal */
 export function getConfigStore(moduleName: string) {
   // We use a store for each module's config, named `config-${moduleName}`
   return getGlobalStore<ConfigStore>(
@@ -141,27 +140,34 @@ export function getConfigStore(moduleName: string) {
   );
 }
 
-export interface ExtensionSlotConfigsStore {
-  /** Configs for each extension slot in the module, indexed by slot name */
+/**
+ * Configuration for a specific extension slot
+ * @internal
+ */
+export interface ExtensionSlotConfigStore {
   config: ExtensionSlotConfigObject;
   loaded: boolean;
 }
 
-function initializeExtensionSlotConfigsStore() {
+function initializeExtensionSlotConfigStore() {
   return {
     config: {},
     loaded: false,
   };
 }
 
+/** @internal */
 export function getExtensionSlotConfigStore(slotName: string) {
-  return getGlobalStore<ExtensionSlotConfigsStore>(
+  return getGlobalStore<ExtensionSlotConfigStore>(
     `config-extension-slots-${slotName}`,
-    initializeExtensionSlotConfigsStore()
+    initializeExtensionSlotConfigStore()
   );
 }
 
-// A store for each mounted extension's config
+/**
+ * A store for each mounted extension's config
+ * @internal
+ */
 export function getExtensionConfigStore(
   extensionSlotModuleName: string,
   attachedExtensionSlotName: string,
@@ -173,11 +179,15 @@ export function getExtensionConfigStore(
   );
 }
 
-// A store of the implementer tools output config
+/**
+ * A store of the implementer tools output config
+ * @internal
+ */
 export interface ImplementerToolsConfigStore {
   config: Config;
 }
 
+/** @internal */
 export const implementerToolsConfigStore =
   createGlobalStore<ImplementerToolsConfigStore>("config-implementer-tools", {
     config: {},
