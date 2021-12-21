@@ -5,6 +5,7 @@ export * from "./Extension";
 export * from "./ExtensionSlot";
 export * from "./getLifecycle";
 export * from "./openmrsComponentDecorator";
+export * from "./useAssignedExtensions";
 export * from "./useAssignedExtensionIds";
 export * from "./useBodyScrollLock";
 export * from "./useConfig";

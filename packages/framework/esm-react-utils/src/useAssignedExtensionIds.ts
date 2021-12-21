@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { extensionStore } from "@openmrs/esm-extensions";
+import { getExtensionStore } from "@openmrs/esm-extensions";
 import { isEqual } from "lodash";
 
 /**
@@ -13,7 +13,7 @@ export function useAssignedExtensionIds(slotName: string) {
   const [ids, setIds] = useState<Array<string>>([]);
 
   useEffect(() => {
-    return extensionStore.subscribe((state) => {
+    return getExtensionStore().subscribe((state) => {
       const newIds =
         state.resultSlots[slotName]?.assignedExtensions.map((e) => e.id) ?? [];
       if (!isEqual(newIds, ids)) {

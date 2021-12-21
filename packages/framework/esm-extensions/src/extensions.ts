@@ -11,9 +11,8 @@ import {
   ExtensionSlotConfigObject,
   getExtensionSlotConfigStore,
 } from "@openmrs/esm-config";
-import { omitBy } from "lodash";
 import {
-  extensionInternalStore,
+  getExtensionInternalStore,
   ExtensionSlotState,
   AssignedExtension,
   checkStatusFor,
@@ -23,9 +22,12 @@ import {
   ExtensionRegistration,
   ExtensionSlotInfo,
   ExtensionInternalStore,
-  extensionStore,
+  getExtensionStore,
   updateInternalExtensionStore,
 } from "./store";
+
+const extensionInternalStore = getExtensionInternalStore();
+const extensionStore = getExtensionStore();
 
 extensionInternalStore.subscribe((internalStore) => {
   const slots: Record<string, ExtensionSlotState> = {};

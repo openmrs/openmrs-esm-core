@@ -1,6 +1,6 @@
 import {
   ExtensionInternalStore,
-  extensionInternalStore,
+  getExtensionInternalStore,
 } from "@openmrs/esm-extensions";
 import { createUseStore } from "./createUseStore";
 
@@ -9,5 +9,5 @@ import { createUseStore } from "./createUseStore";
  * This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
  */
 export const useExtensionStore = createUseStore<ExtensionInternalStore>(
-  extensionInternalStore
+  getExtensionInternalStore()
 );

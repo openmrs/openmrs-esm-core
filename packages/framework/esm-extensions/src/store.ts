@@ -4,7 +4,7 @@ import {
   ConfigExtensionStoreElement,
   ExtensionSlotConfigObject,
 } from "@openmrs/esm-config";
-import { createGlobalStore } from "@openmrs/esm-state";
+import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
 
 export interface ExtensionMeta {
   [_: string]: any;
@@ -81,14 +81,20 @@ export interface ConnectedExtension {
   meta: ExtensionMeta;
 }
 
-/** @internal */
-export const extensionInternalStore = createGlobalStore<ExtensionInternalStore>(
+const extensionInternalStore = createGlobalStore<ExtensionInternalStore>(
   "extensionsInternal",
   {
     slots: {},
     extensions: {},
   }
 );
+
+/** @internal */
+export const getExtensionInternalStore = () =>
+  getGlobalStore<ExtensionInternalStore>("extensionsInternal", {
+    slots: {},
+    extensions: {},
+  });
 
 export type MaybeAsync<T> = T | Promise<T>;
 
@@ -108,9 +114,10 @@ export function updateInternalExtensionStore(
   });
 }
 
-export const extensionStore = createGlobalStore<ExtensionStore>("extensions", {
-  resultSlots: {},
-});
+export const getExtensionStore = () =>
+  getGlobalStore<ExtensionStore>("extensions", {
+    resultSlots: {},
+  });
 
 /**
  * esm-config maintains its own store of the extension information it needs

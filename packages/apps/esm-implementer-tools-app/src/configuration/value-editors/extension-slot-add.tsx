@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { MultiSelect } from "carbon-components-react";
 import {
   ExtensionInternalStore,
-  extensionInternalStore,
+  getExtensionInternalStore,
 } from "@openmrs/esm-framework";
+
+const extensionInternalStore = getExtensionInternalStore();
 
 export function ExtensionSlotAdd({ value, setValue }) {
   const [availableExtensions, setAvailableExtensions] = useState<Array<string>>(
