@@ -29,6 +29,7 @@ import {
 const extensionInternalStore = getExtensionInternalStore();
 const extensionStore = getExtensionStore();
 
+// Keep the output store updated
 extensionInternalStore.subscribe((internalStore) => {
   const slots: Record<string, ExtensionSlotState> = {};
   for (let [slotName, slot] of Object.entries(internalStore.slots)) {
@@ -53,6 +54,19 @@ function createNewExtensionSlotInfo(
   };
 }
 
+/**
+ * Given an extension ID, which is a string uniquely identifying
+ * an instance of an extension within an extension slot, this
+ * returns the extension name.
+ *
+ * @example
+ * ```js
+ * getExtensionNameFromId("foo#bar")
+ *  --> "foo"
+ * getExtensionNameFromId("baz")
+ *  --> "baz"
+ * ```
+ */
 export function getExtensionNameFromId(extensionId: string) {
   const [extensionName] = extensionId.split("#");
   return extensionName;
@@ -73,6 +87,12 @@ export function getExtensionRegistration(
   return getExtensionRegistrationFrom(state, extensionId);
 }
 
+/**
+ * Extensions must be registered in order to be rendered.
+ * This is handled by the app shell, when extensions are provided
+ * via the `setupOpenMRS` return object.
+ * @internal
+ */
 export const registerExtension: (
   extensionRegistration: ExtensionRegistration
 ) => void = extensionInternalStore.action(
@@ -288,6 +308,7 @@ function calculateAssignedIds(
  *
  * @param moduleName The name of the module that contains the extension slot
  * @param slotName The extension slot name that is actually used
+ * @internal
  */
 export const registerExtensionSlot: (
   moduleName: string,
@@ -324,24 +345,6 @@ export const registerExtensionSlot: (
       [slotName]: slot,
     },
   };
-});
-
-/**
- * Used by by extension slots at unmount time.
- */
-export const unregisterExtensionSlot: (
-  moduleName: string,
-  slotName: string
-) => void = extensionInternalStore.action((state, moduleName, slotName) => {
-  // if (!state.slots[slotName]) {
-  //   console.warn(`No extension slot named ${slotName} has been registered. Cannot unregister (in "unregisterExtensionSlot").`);
-  //   return state;
-  // }
-  // console.info("Unregistering", slotName);
-  // return {
-  //   ...state,
-  //   slots: omitBy(state.slots, (v, k) => k == slotName)
-  // };
 });
 
 /**

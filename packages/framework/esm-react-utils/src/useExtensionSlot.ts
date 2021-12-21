@@ -1,8 +1,5 @@
 import { useContext, useEffect } from "react";
-import {
-  registerExtensionSlot,
-  unregisterExtensionSlot,
-} from "@openmrs/esm-extensions";
+import { registerExtensionSlot } from "@openmrs/esm-extensions";
 import { ComponentContext } from "./ComponentContext";
 import { useConnectedExtensions } from "./useConnectedExtensions";
 
@@ -18,7 +15,6 @@ export function useExtensionSlot(slotName: string) {
 
   useEffect(() => {
     registerExtensionSlot(moduleName, slotName);
-    return () => unregisterExtensionSlot(moduleName, slotName);
   }, []);
 
   const extensions = useConnectedExtensions(slotName);

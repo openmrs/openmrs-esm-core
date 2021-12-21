@@ -53,7 +53,6 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
   const slot = (
     <div
       ref={ref}
-      data-extension-slot-name={extension?.extensionSlotName}
       data-extension-id={extension?.extensionId}
       style={{ position: "relative" }}
     />

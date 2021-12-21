@@ -89,13 +89,19 @@ const extensionInternalStore = createGlobalStore<ExtensionInternalStore>(
   }
 );
 
-/** @internal */
+/**
+ * This gets the extension system's internal store. It is subject
+ * to change radically and without warning. It should not be used
+ * outside esm-core.
+ * @internal
+ */
 export const getExtensionInternalStore = () =>
   getGlobalStore<ExtensionInternalStore>("extensionsInternal", {
     slots: {},
     extensions: {},
   });
 
+/** @internal */
 export type MaybeAsync<T> = T | Promise<T>;
 
 let storeUpdates: Promise<void> = Promise.resolve();
@@ -114,6 +120,11 @@ export function updateInternalExtensionStore(
   });
 }
 
+/**
+ * This returns a [store](https://github.com/developit/unistore#store)
+ * that modules can use to get information about the state of the
+ * extension system.
+ */
 export const getExtensionStore = () =>
   getGlobalStore<ExtensionStore>("extensions", {
     slots: {},
