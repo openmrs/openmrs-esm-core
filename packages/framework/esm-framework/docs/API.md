@@ -115,7 +115,6 @@
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
 - [LayoutType](API.md#layouttype)
 - [LoggedInUserData](API.md#loggedinuserdata)
-- [MaybeAsync](API.md#maybeasync)
 - [NavigationContextType](API.md#navigationcontexttype)
 - [OmrsOfflineCachingStrategy](API.md#omrsofflinecachingstrategy)
 - [OmrsOfflineHttpHeaderNames](API.md#omrsofflinehttpheadernames)
@@ -245,8 +244,6 @@
 - [pushNavigationContext](API.md#pushnavigationcontext)
 - [queueSynchronizationItem](API.md#queuesynchronizationitem)
 - [queueSynchronizationItemFor](API.md#queuesynchronizationitemfor)
-- [registerExtension](API.md#registerextension)
-- [registerExtensionSlot](API.md#registerextensionslot)
 - [registerOfflinePatientHandler](API.md#registerofflinepatienthandler)
 - [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
 - [renderExtension](API.md#renderextension)
@@ -284,7 +281,6 @@
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [translateFrom](API.md#translatefrom)
-- [unregisterExtensionSlot](API.md#unregisterextensionslot)
 - [update](API.md#update)
 - [updateVisit](API.md#updatevisit)
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
@@ -428,22 +424,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L7)
-
-___
-
-### MaybeAsync
-
-Ƭ **MaybeAsync**<`T`\>: `T` \| `Promise`<`T`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/store.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L99)
 
 ___
 
@@ -1342,7 +1322,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L106)
+[packages/framework/esm-extensions/src/extensions.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L126)
 
 ___
 
@@ -1586,7 +1566,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L137)
+[packages/framework/esm-extensions/src/extensions.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L157)
 
 ___
 
@@ -1608,7 +1588,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:161](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L161)
+[packages/framework/esm-extensions/src/extensions.ts:181](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L181)
 
 ___
 
@@ -1821,7 +1801,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L229)
+[packages/framework/esm-extensions/src/extensions.ts:249](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L249)
 
 ___
 
@@ -1945,7 +1925,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:219](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L219)
+[packages/framework/esm-extensions/src/extensions.ts:239](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L239)
 
 ___
 
@@ -1974,6 +1954,18 @@ ___
 
 ▸ **getExtensionNameFromId**(`extensionId`): `string`
 
+Given an extension ID, which is a string uniquely identifying
+an instance of an extension within an extension slot, this
+returns the extension name.
+
+**`example`**
+```js
+getExtensionNameFromId("foo#bar")
+ --> "foo"
+getExtensionNameFromId("baz")
+ --> "baz"
+```
+
 #### Parameters
 
 | Name | Type |
@@ -1986,7 +1978,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L56)
+[packages/framework/esm-extensions/src/extensions.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L70)
 
 ___
 
@@ -2006,7 +1998,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L69)
+[packages/framework/esm-extensions/src/extensions.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L83)
 
 ___
 
@@ -2027,7 +2019,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L61)
+[packages/framework/esm-extensions/src/extensions.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L75)
 
 ___
 
@@ -2035,13 +2027,17 @@ ___
 
 ▸ `Const` **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
+This returns a [store](https://github.com/developit/unistore#store)
+that modules can use to get information about the state of the
+extension system.
+
 #### Returns
 
 `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L117)
+[packages/framework/esm-extensions/src/store.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L128)
 
 ___
 
@@ -2768,49 +2764,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-offline/src/sync.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L195)
-
-___
-
-### registerExtension
-
-▸ `Const` **registerExtension**(`extensionRegistration`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `extensionRegistration` | [`ExtensionRegistration`](interfaces/ExtensionRegistration.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L76)
-
-___
-
-### registerExtensionSlot
-
-▸ `Const` **registerExtensionSlot**(`moduleName`, `slotName`): `void`
-
-Used by by extension slots at mount time.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `moduleName` | `string` | The name of the module that contains the extension slot |
-| `slotName` | `string` | The extension slot name that is actually used |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:292](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L292)
 
 ___
 
@@ -3698,29 +3651,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-utils/src/translate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/translate.ts#L3)
-
-___
-
-### unregisterExtensionSlot
-
-▸ `Const` **unregisterExtensionSlot**(`moduleName`, `slotName`): `void`
-
-Used by by extension slots at unmount time.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `moduleName` | `string` |
-| `slotName` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:332](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L332)
 
 ___
 
