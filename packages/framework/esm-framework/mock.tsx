@@ -198,12 +198,14 @@ export const ConfigurableLink = jest
     <a href={interpolateString(config.to)}>{config.children}</a>
   ));
 
-export const extensionStore = getGlobalStore("extensions", { resultSlots: {} });
+export const getExtensionStore = () =>
+  getGlobalStore("extensions", { resultSlots: {} });
 
-export const extensionInternalStore = getGlobalStore("extensions-internal", {
-  slots: {},
-  extensions: {},
-});
+export const getExtensionInternalStore = () =>
+  getGlobalStore("extensions-internal", {
+    slots: {},
+    extensions: {},
+  });
 
 export const ComponentContext = React.createContext(null);
 
@@ -220,9 +222,11 @@ export const createUseStore = (store: Store<any>) => (actions) => {
   return { ...state, ...actions };
 };
 
-export const useExtensionInternalStore = createUseStore(extensionInternalStore);
+export const useExtensionInternalStore = createUseStore(
+  getExtensionInternalStore()
+);
 
-export const useExtensionStore = createUseStore(extensionStore);
+export const useExtensionStore = createUseStore(getExtensionStore());
 
 export const useStore = (store: Store<any>, actions) => {
   const state = store.getState();
