@@ -1,10 +1,9 @@
-import { useContext, useCallback } from "react";
+import { useCallback } from "react";
 import {
   ExtensionSlotConfigObject,
   ExtensionSlotConfigsStore,
-  getExtensionSlotsConfigStore,
+  getExtensionSlotConfigStore,
 } from "@openmrs/esm-config";
-import { ComponentContext } from "./ComponentContext";
 import { useStoreState } from "./useStoreState";
 
 const defaultConfig: ExtensionSlotConfigObject = {
@@ -13,12 +12,12 @@ const defaultConfig: ExtensionSlotConfigObject = {
   remove: [],
 };
 
-export function useExtensionSlotConfig(extensionSlotName: string) {
-  const { moduleName } = useContext(ComponentContext);
-  const store = getExtensionSlotsConfigStore(moduleName);
+/** @internal */
+export function useExtensionSlotConfig(slotName: string) {
+  const store = getExtensionSlotConfigStore(slotName);
   const select = useCallback(
-    (s: ExtensionSlotConfigsStore) => s.extensionSlotConfigs[extensionSlotName],
-    [extensionSlotName]
+    (s: ExtensionSlotConfigsStore) => s.config,
+    [slotName]
   );
   const config = useStoreState(store, select);
   return config || defaultConfig;

@@ -1,4 +1,13 @@
-import { ExtensionStore, extensionStore } from "@openmrs/esm-extensions";
+import {
+  ExtensionInternalStore,
+  extensionInternalStore,
+} from "@openmrs/esm-extensions";
 import { createUseStore } from "./createUseStore";
 
-export const useExtensionStore = createUseStore<ExtensionStore>(extensionStore);
+/**
+ * The implementation of this will soon undergo a breaking change.
+ * This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
+ */
+export const useExtensionStore = createUseStore<ExtensionInternalStore>(
+  extensionInternalStore
+);

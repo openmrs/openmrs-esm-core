@@ -2,12 +2,9 @@ import React from "react";
 import {
   attach,
   registerExtension,
-  registerExtensionSlot,
-  updateExtensionStore,
-  ExtensionStore,
+  updateInternalExtensionStore,
 } from "../../../esm-extensions";
 import {
-  Extension,
   ExtensionSlot,
   getSyncLifecycle,
   openmrsComponentDecorator,
@@ -18,7 +15,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 
 describe("Interaction between configuration and extension systems", () => {
   beforeEach(() => {
-    updateExtensionStore(() => ({ slots: {}, extensions: {} }));
+    updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
   });
 
   test("Config should add, order, and remove extensions within slots", async () => {
@@ -26,7 +23,6 @@ describe("Interaction between configuration and extension systems", () => {
     registerSimpleExtension("Wilma", "esm-flintstone");
     registerSimpleExtension("Barney", "esm-rubble");
     registerSimpleExtension("Betty", "esm-rubble");
-    registerExtensionSlot("esm-flintstone", "A slot");
     attach("A slot", "Fred");
     attach("A slot", "Wilma");
     defineConfigSchema("esm-flintstone", {});
@@ -58,8 +54,6 @@ describe("Interaction between configuration and extension systems", () => {
 
   test("Extensions should recieve config from module and from 'configure' key", async () => {
     registerSimpleExtension("Wilma", "esm-flintstone", true);
-    registerExtensionSlot("esm-flintstone", "Flintstone slot");
-    registerExtensionSlot("esm-flintstone", "Future slot");
     defineConfigSchema("esm-flintstone", {
       town: { _type: Type.String, _default: "Bedrock" },
     });
@@ -105,7 +99,6 @@ describe("Interaction between configuration and extension systems", () => {
 
   test("Should be possible to attach the same extension twice with different configurations", async () => {
     registerSimpleExtension("pet", "esm-characters", true);
-    registerExtensionSlot("esm-flintstone", "Flintstone slot");
     defineConfigSchema("esm-characters", {
       name: { _type: Type.String, _default: "(no-name)" },
     });
@@ -161,7 +154,8 @@ function registerSimpleExtension(
       </div>
     );
   };
-  registerExtension(name, {
+  registerExtension({
+    name,
     moduleName,
     load: getSyncLifecycle(
       takesConfig ? ConfigurableComponent : SimpleComponent,

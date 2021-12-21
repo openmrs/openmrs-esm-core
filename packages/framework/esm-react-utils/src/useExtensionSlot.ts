@@ -6,7 +6,8 @@ import {
 import { ComponentContext } from "./ComponentContext";
 import { useConnectedExtensions } from "./useConnectedExtensions";
 
-export function useExtensionSlot(extensionSlotName: string) {
+/** @internal */
+export function useExtensionSlot(slotName: string) {
   const { moduleName } = useContext(ComponentContext);
 
   if (!moduleName) {
@@ -16,15 +17,15 @@ export function useExtensionSlot(extensionSlotName: string) {
   }
 
   useEffect(() => {
-    registerExtensionSlot(moduleName, extensionSlotName);
-    return () => unregisterExtensionSlot(moduleName, extensionSlotName);
+    registerExtensionSlot(moduleName, slotName);
+    return () => unregisterExtensionSlot(moduleName, slotName);
   }, []);
 
-  const extensions = useConnectedExtensions(extensionSlotName);
+  const extensions = useConnectedExtensions(slotName);
 
   return {
     extensions,
-    extensionSlotName,
+    extensionSlotName: slotName,
     extensionSlotModuleName: moduleName,
   };
 }

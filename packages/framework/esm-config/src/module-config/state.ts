@@ -143,21 +143,20 @@ export function getConfigStore(moduleName: string) {
 
 export interface ExtensionSlotConfigsStore {
   /** Configs for each extension slot in the module, indexed by slot name */
-  extensionSlotConfigs: Record<string, ExtensionSlotConfigObject>;
+  config: ExtensionSlotConfigObject;
   loaded: boolean;
 }
 
 function initializeExtensionSlotConfigsStore() {
   return {
-    extensionSlotConfigs: {},
+    config: {},
     loaded: false,
   };
 }
 
-export function getExtensionSlotsConfigStore(moduleName: string) {
-  // Each module gets one store for the configs of all the slots it contains
+export function getExtensionSlotConfigStore(slotName: string) {
   return getGlobalStore<ExtensionSlotConfigsStore>(
-    `config-extension-slots-${moduleName}`,
+    `config-extension-slots-${slotName}`,
     initializeExtensionSlotConfigsStore()
   );
 }
