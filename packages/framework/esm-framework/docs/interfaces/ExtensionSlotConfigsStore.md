@@ -6,14 +6,14 @@
 
 ### Properties
 
-- [extensionSlotConfigs](ExtensionSlotConfigsStore.md#extensionslotconfigs)
+- [config](ExtensionSlotConfigsStore.md#config)
 - [loaded](ExtensionSlotConfigsStore.md#loaded)
 
 ## Properties
 
-### extensionSlotConfigs
+### config
 
-• **extensionSlotConfigs**: `Record`<`string`, [`ExtensionSlotConfigObject`](ExtensionSlotConfigObject.md)\>
+• **config**: [`ExtensionSlotConfigObject`](ExtensionSlotConfigObject.md)
 
 Configs for each extension slot in the module, indexed by slot name
 

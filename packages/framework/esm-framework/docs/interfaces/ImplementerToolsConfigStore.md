@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/state.ts:179](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L179)
+[packages/framework/esm-config/src/module-config/state.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L178)

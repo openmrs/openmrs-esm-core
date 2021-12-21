@@ -16,9 +16,11 @@
 
 • `Optional` **add**: `string`[]
 
+Additional extension IDs to assign to this slot, in addition to those `attach`ed in code.
+
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L50)
+[packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L51)
 
 ___
 
@@ -26,9 +28,11 @@ ___
 
 • `Optional` **order**: `string`[]
 
+Overrides the default ordering of extensions.
+
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L52)
+[packages/framework/esm-config/src/types.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L55)
 
 ___
 
@@ -36,6 +40,8 @@ ___
 
 • `Optional` **remove**: `string`[]
 
+Extension IDs which were `attach`ed to the slot but which should not be assigned.
+
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L51)
+[packages/framework/esm-config/src/types.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L53)
