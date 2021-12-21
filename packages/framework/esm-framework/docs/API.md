@@ -28,7 +28,6 @@
 - [Config](interfaces/Config.md)
 - [ConfigObject](interfaces/ConfigObject.md)
 - [ConfigSchema](interfaces/ConfigSchema.md)
-- [ConfigStore](interfaces/ConfigStore.md)
 - [ConfigurableLinkProps](interfaces/ConfigurableLinkProps.md)
 - [ConnectedExtension](interfaces/ConnectedExtension.md)
 - [ConnectivityChangedEvent](interfaces/ConnectivityChangedEvent.md)
@@ -47,7 +46,6 @@
 - [ExtensionSlotBaseProps](interfaces/ExtensionSlotBaseProps.md)
 - [ExtensionSlotConfig](interfaces/ExtensionSlotConfig.md)
 - [ExtensionSlotConfigObject](interfaces/ExtensionSlotConfigObject.md)
-- [ExtensionSlotConfigsStore](interfaces/ExtensionSlotConfigsStore.md)
 - [ExtensionSlotConfigureValueObject](interfaces/ExtensionSlotConfigureValueObject.md)
 - [ExtensionSlotInfo](interfaces/ExtensionSlotInfo.md)
 - [ExtensionSlotState](interfaces/ExtensionSlotState.md)
@@ -57,7 +55,6 @@
 - [FHIRResource](interfaces/FHIRResource.md)
 - [FetchHeaders](interfaces/FetchHeaders.md)
 - [FetchResponse](interfaces/FetchResponse.md)
-- [ImplementerToolsConfigStore](interfaces/ImplementerToolsConfigStore.md)
 - [ImportMap](interfaces/ImportMap.md)
 - [Lifecycle](interfaces/Lifecycle.md)
 - [Location](interfaces/Location.md)
@@ -149,13 +146,11 @@
 - [extensionStore](API.md#extensionstore)
 - [fhirBaseUrl](API.md#fhirbaseurl)
 - [getStartedVisit](API.md#getstartedvisit)
-- [implementerToolsConfigStore](API.md#implementertoolsconfigstore)
 - [offlineUuidPrefix](API.md#offlineuuidprefix)
 - [omrsOfflineCachingStrategyHttpHeaderName](API.md#omrsofflinecachingstrategyhttpheadername)
 - [omrsOfflineResponseBodyHttpHeaderName](API.md#omrsofflineresponsebodyhttpheadername)
 - [omrsOfflineResponseStatusHttpHeaderName](API.md#omrsofflineresponsestatushttpheadername)
 - [sessionEndpoint](API.md#sessionendpoint)
-- [temporaryConfigStore](API.md#temporaryconfigstore)
 - [validators](API.md#validators)
 
 ### API Functions
@@ -211,14 +206,11 @@
 - [getAsyncExtensionLifecycle](API.md#getasyncextensionlifecycle)
 - [getAsyncLifecycle](API.md#getasynclifecycle)
 - [getConfig](API.md#getconfig)
-- [getConfigStore](API.md#getconfigstore)
 - [getConnectedExtensions](API.md#getconnectedextensions)
 - [getCustomProps](API.md#getcustomprops)
-- [getExtensionConfigStore](API.md#getextensionconfigstore)
 - [getExtensionNameFromId](API.md#getextensionnamefromid)
 - [getExtensionRegistration](API.md#getextensionregistration)
 - [getExtensionRegistrationFrom](API.md#getextensionregistrationfrom)
-- [getExtensionSlotConfigStore](API.md#getextensionslotconfigstore)
 - [getExtensionStore](API.md#getextensionstore)
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
@@ -773,16 +765,6 @@ ___
 
 ___
 
-### implementerToolsConfigStore
-
-• `Const` **implementerToolsConfigStore**: `Store`<[`ImplementerToolsConfigStore`](interfaces/ImplementerToolsConfigStore.md)\>
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/state.ts:181](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L181)
-
-___
-
 ### offlineUuidPrefix
 
 • `Const` **offlineUuidPrefix**: ``"OFFLINE+"``
@@ -830,16 +812,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/openmrs-fetch.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L6)
-
-___
-
-### temporaryConfigStore
-
-• `Const` **temporaryConfigStore**: `Store`<`TemporaryConfigStore`\>
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/state.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L69)
 
 ___
 
@@ -1951,26 +1923,6 @@ of the execution of a function.
 
 ___
 
-### getConfigStore
-
-▸ **getConfigStore**(`moduleName`): `Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `moduleName` | `string` |
-
-#### Returns
-
-`Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/state.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L136)
-
-___
-
 ### getConnectedExtensions
 
 ▸ **getConnectedExtensions**(`assignedExtensions`, `online?`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
@@ -2015,28 +1967,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-extensions/src/helpers.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/helpers.ts#L17)
-
-___
-
-### getExtensionConfigStore
-
-▸ **getExtensionConfigStore**(`extensionSlotModuleName`, `attachedExtensionSlotName`, `extensionId`): `Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `extensionSlotModuleName` | `string` |
-| `attachedExtensionSlotName` | `string` |
-| `extensionId` | `string` |
-
-#### Returns
-
-`Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/state.ts:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L165)
 
 ___
 
@@ -2098,26 +2028,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-extensions/src/extensions.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L61)
-
-___
-
-### getExtensionSlotConfigStore
-
-▸ **getExtensionSlotConfigStore**(`slotName`): `Store`<[`ExtensionSlotConfigsStore`](interfaces/ExtensionSlotConfigsStore.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `slotName` | `string` |
-
-#### Returns
-
-`Store`<[`ExtensionSlotConfigsStore`](interfaces/ExtensionSlotConfigsStore.md)\>
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/state.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L157)
 
 ___
 
