@@ -199,7 +199,7 @@ export const ConfigurableLink = jest
   ));
 
 export const getExtensionStore = () =>
-  getGlobalStore("extensions", { resultSlots: {} });
+  getGlobalStore("extensions", { slots: {} });
 
 export const getExtensionInternalStore = () =>
   getGlobalStore("extensions-internal", {

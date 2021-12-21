@@ -38,7 +38,7 @@ extensionInternalStore.subscribe((internalStore) => {
       slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
     }
   }
-  extensionStore.setState({ resultSlots: slots });
+  extensionStore.setState({ slots: slots });
 });
 
 function createNewExtensionSlotInfo(

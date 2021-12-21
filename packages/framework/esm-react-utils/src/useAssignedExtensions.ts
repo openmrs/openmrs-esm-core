@@ -12,8 +12,7 @@ export function useAssignedExtensions(slotName: string) {
 
   useEffect(() => {
     return getExtensionStore().subscribe((state) => {
-      const newExtensions =
-        state.resultSlots[slotName]?.assignedExtensions ?? [];
+      const newExtensions = state.slots[slotName]?.assignedExtensions ?? [];
       if (!isEqual(newExtensions, extensions)) {
         setExtensions(newExtensions);
       }

@@ -59,7 +59,7 @@ export interface ExtensionSlotInfo {
 }
 
 export interface ExtensionStore {
-  resultSlots: Record<string, ExtensionSlotState>;
+  slots: Record<string, ExtensionSlotState>;
 }
 
 export interface ExtensionSlotState {
@@ -116,7 +116,7 @@ export function updateInternalExtensionStore(
 
 export const getExtensionStore = () =>
   getGlobalStore<ExtensionStore>("extensions", {
-    resultSlots: {},
+    slots: {},
   });
 
 /**
