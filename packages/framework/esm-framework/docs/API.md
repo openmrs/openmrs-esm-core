@@ -146,6 +146,7 @@
 - [ExtensionSlot](API.md#extensionslot)
 - [UserHasAccess](API.md#userhasaccess)
 - [backendDependencies](API.md#backenddependencies)
+- [extensionStore](API.md#extensionstore)
 - [fhirBaseUrl](API.md#fhirbaseurl)
 - [getStartedVisit](API.md#getstartedvisit)
 - [implementerToolsConfigStore](API.md#implementertoolsconfigstore)
@@ -737,6 +738,18 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-backend-dependencies.ts#L1)
+
+___
+
+### extensionStore
+
+• `Const` **extensionStore**: `Store`<[`ExtensionInternalStore`](interfaces/ExtensionInternalStore.md)\>
+
+**`deprecated`** Use `getExtensionStore`. The structure of this store has also changed.
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/index.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/index.ts#L12)
 
 ___
 
