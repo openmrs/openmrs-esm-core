@@ -64,7 +64,7 @@ describe("Openmrs Dates", () => {
 
   it("formats dates with respect to the locale", () => {
     timezoneMock.register("UTC");
-    const testDate = new Date("2021-12-09");
+    const testDate = new Date("2021-12-09T13:15:33");
     window.i18next.language = "en";
     expect(formatDate(testDate)).toEqual("09-Dec-2021");
     expect(formatDate(testDate, "no day")).toEqual("Dec 2021");
@@ -79,6 +79,32 @@ describe("Openmrs Dates", () => {
     expect(formatDate(testDate)).toEqual("09 Des 2021");
     window.i18next.language = "ru";
     expect(formatDate(testDate, "wide")).toEqual("09 — дек. — 2021 г.");
+  });
+
+  it("respects the `time` option", () => {
+    timezoneMock.register("UTC");
+    const testDate = new Date("2021-12-09T13:15:33");
+    const today = new Date();
+    today.setHours(15);
+    today.setMinutes(22);
+    window.i18next.language = "en";
+    expect(formatDate(testDate)).toEqual("09-Dec-2021");
+    expect(formatDate(testDate, "standard", { time: true })).toEqual(
+      "09-Dec-2021, 01:15 PM"
+    );
+    expect(formatDate(testDate, "standard", { time: false })).toEqual(
+      "09-Dec-2021"
+    );
+    expect(formatDate(testDate, "standard", { time: "for today" })).toEqual(
+      "09-Dec-2021"
+    );
+    expect(formatDate(today, "standard", { time: true })).toEqual(
+      "Today, 03:22 PM"
+    );
+    expect(formatDate(today, "standard", { time: false })).toEqual("Today");
+    expect(formatDate(today, "standard", { time: "for today" })).toEqual(
+      "Today, 03:22 PM"
+    );
   });
 
   it("formats times with respect to the locale", () => {
