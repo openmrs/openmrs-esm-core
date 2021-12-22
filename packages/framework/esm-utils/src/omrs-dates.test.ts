@@ -49,15 +49,17 @@ describe("Openmrs Dates", () => {
 
   it("formats 'Today' with respect to the locale", () => {
     const testDate = new Date();
+    testDate.setHours(15);
+    testDate.setMinutes(22);
     window.i18next.language = "en";
-    expect(formatDate(testDate)).toEqual("Today");
-    expect(formatDate(testDate, "no day")).toEqual("Today");
-    expect(formatDate(testDate, "no year")).toEqual("Today");
-    expect(formatDate(testDate, "wide")).toEqual("Today");
+    expect(formatDate(testDate)).toEqual("Today, 03:22 PM");
+    expect(formatDate(testDate, "no day")).toEqual("Today, 03:22 PM");
+    expect(formatDate(testDate, "no year")).toEqual("Today, 03:22 PM");
+    expect(formatDate(testDate, "wide")).toEqual("Today, 03:22 PM");
     window.i18next.language = "sw";
-    expect(formatDate(testDate)).toEqual("Leo");
+    expect(formatDate(testDate)).toEqual("Leo, 15:22");
     window.i18next.language = "ru";
-    expect(formatDate(testDate)).toEqual("Сегодня");
+    expect(formatDate(testDate)).toEqual("Сегодня, 15:22");
   });
 
   it("formats dates with respect to the locale", () => {

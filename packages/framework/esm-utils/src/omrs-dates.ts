@@ -153,17 +153,40 @@ const DATE_FORMAT_MMM_DD = {
 
 export type FormatDateMode = "standard" | "no year" | "no day" | "wide";
 
+export type FormatDateOptions = {
+  /**
+   * Whether the time should be included in the output always (`true`),
+   * never (`false`), or only when the input date is today (`for today`).
+   */
+  time: true | false | "for today";
+};
+const defaultOptions: FormatDateOptions = {
+  time: "for today",
+};
+
 /**
  * Formats the input date according to the current locale and the
  * given format mode.
  *
- * `standard`: "13 Dec 2021"
- * `no year`:  "13 Dec"
- * `no day`:   "Dec 2021"
- * `wide`:     "13 — Dec — 2021"
+ * - `standard`: "13 Dec 2021"
+ * - `no year`:  "13 Dec"
+ * - `no day`:   "Dec 2021"
+ * - `wide`:     "13 — Dec — 2021"
+ *
+ * Regardless of the mode, if the date is today, then "Today" is produced
+ * (in the locale language).
+ *
+ * Can be used to format a date with time, also, by providing `options`.
+ * By default, the time is included only when the input date is today.
+ * The time is appended with a comma and a space. This agrees with the
+ * output of `Date.prototype.toLocaleString` for *most* locales.
  */
-export function formatDate(date: Date, mode: FormatDateMode = "standard") {
-  const options = (
+export function formatDate(
+  date: Date,
+  mode: FormatDateMode = "standard",
+  options: FormatDateOptions = defaultOptions
+) {
+  const formatterOptions = (
     {
       standard: DATE_FORMAT_YYYY_MMM_DD,
       wide: DATE_FORMAT_YYYY_MMM_DD,
@@ -172,20 +195,21 @@ export function formatDate(date: Date, mode: FormatDateMode = "standard") {
     } as Record<string, Intl.DateTimeFormatOptions>
   )[mode];
   let locale = getLocale();
-  if (dayjs(date).isToday()) {
+  let localeString: string;
+  const isToday = dayjs(date).isToday();
+  if (isToday) {
     // This produces the word "Today" in the language of `locale`
     const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
-    let localeString = rtf.format(0, "day");
+    localeString = rtf.format(0, "day");
     localeString =
       localeString[0].toLocaleUpperCase(locale) + localeString.slice(1);
-    return localeString;
   } else {
     if (locale == "en") {
       // This locale override is here rather than in `getLocale`
       // because Americans should see AM/PM for times.
       locale = "en-GB";
     }
-    let localeString = date.toLocaleDateString(locale, options);
+    localeString = date.toLocaleDateString(locale, formatterOptions);
     if (locale == "en-GB" && mode == "standard") {
       // Custom formatting for English. Use hyphens instead of spaces.
       localeString = localeString.replace(/ /g, "-");
@@ -200,8 +224,11 @@ export function formatDate(date: Date, mode: FormatDateMode = "standard") {
           localeString.slice(len - 5).replace(" — ", " ");
       }
     }
-    return localeString;
   }
+  if (options.time === true || (isToday && options.time === "for today")) {
+    localeString += `, ${formatTime(date)}`;
+  }
+  return localeString;
 }
 
 /**
@@ -225,9 +252,7 @@ export function formatTime(date: Date) {
  * output of `Date.prototype.toLocaleString` for *most* locales.
  */
 export function formatDatetime(date: Date, mode: FormatDateMode = "standard") {
-  const dateString = formatDate(date, mode);
-  const timeString = formatTime(date);
-  return `${dateString}, ${timeString}`;
+  return formatDate(date, mode, { time: true });
 }
 
 function getLocale() {
