@@ -61,7 +61,7 @@ jobs:
     env:
       ESM_NAME: "@openmrs/esm-app-shell"
 
-    needs: build
+    needs: pre_release
 
     if: ${{ github.event_name == 'push' }}
 
