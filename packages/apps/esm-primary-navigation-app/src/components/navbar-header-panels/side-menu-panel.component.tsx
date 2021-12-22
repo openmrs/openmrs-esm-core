@@ -38,6 +38,7 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({
         isChildOfHeader={expanded}
         className={styles.link}
       >
+        <ExtensionSlot extensionSlotName="global-nav-menu-slot" />
         <ExtensionSlot extensionSlotName="nav-menu-slot" />
       </SideNav>
     )
