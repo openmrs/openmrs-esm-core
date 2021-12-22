@@ -24,6 +24,30 @@ jobs:
       - run: npx lerna run typescript
       - run: npx lerna run test
       - run: npx lerna run build
+
+  pre_release:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    if: ${{ github.event_name == 'push' }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npx lerna bootstrap
+      - run: npx lerna version patch --no-git-tag-version --no-push --yes
+      - run: npx lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
+      - run: npx lerna run build
+      - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
+      - run: git add . && git commit -m "Prerelease version" --no-verify
+      - run: npm run ci:publish-next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -63,30 +87,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.DIGITAL_OCEAN_SPACES_ACCESS_KEY }}
           AWS_S3_ENDPOINT: ${{ secrets.DIGITAL_OCEAN_SPACES_ENDPOINT }}
           SOURCE_DIR: "dist"
-
-  pre_release:
-    runs-on: ubuntu-latest
-
-    needs: build
-
-    if: ${{ github.event_name == 'push' }}
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.x"
-          registry-url: "https://registry.npmjs.org"
-      - run: npx lerna bootstrap
-      - run: npx lerna version patch --no-git-tag-version --no-push --yes
-      - run: npx lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
-      - run: npx lerna run build
-      - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
-      - run: git add . && git commit -m "Prerelease version" --no-verify
-      - run: npm run ci:publish-next
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
   release:
     runs-on: ubuntu-latest
