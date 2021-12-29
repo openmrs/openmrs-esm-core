@@ -2,6 +2,7 @@ import React from "react";
 import type {} from "@openmrs/esm-globals";
 import createStore, { Store } from "unistore";
 import { never, of } from "rxjs";
+import dayjs from "dayjs";
 
 interface StoreEntity {
   value: Store<any>;
@@ -259,3 +260,28 @@ export const usePagination = jest.fn().mockImplementation(() => ({
 }));
 
 export const useVisitTypes = jest.fn(() => []);
+
+export const formatDate = jest.fn((date: Date, mode) => {
+  if (!mode || mode == "standard") {
+    return dayjs(date).format("DD-MMM-YYYY");
+  }
+  if (mode == "wide") {
+    return dayjs(date).format("DD - MMM - YYYY");
+  }
+  if (mode == "no day") {
+    return dayjs(date).format("MMM YYYY");
+  }
+  if (mode == "no year") {
+    return dayjs(date).format("DD MMM");
+  }
+  console.warn("Unknown formatDate mode: ", mode);
+  return dayjs(date).format("DD-MMM-YYYY");
+});
+
+export const formatTime = jest.fn((date: Date) => {
+  return dayjs(date).format("HH:mm");
+});
+
+export const formatDatetime = jest.fn((date: Date, mode) => {
+  return formatDate(date, mode) + " " + formatTime(date);
+});
