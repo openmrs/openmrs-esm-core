@@ -113,6 +113,7 @@
 - [DateInput](API.md#dateinput)
 - [ExtensionSlotProps](API.md#extensionslotprops)
 - [FormatDateMode](API.md#formatdatemode)
+- [FormatDateOptions](API.md#formatdateoptions)
 - [KnownOmrsServiceWorkerEvents](API.md#knownomrsserviceworkerevents)
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
 - [LayoutType](API.md#layouttype)
@@ -399,6 +400,22 @@ ___
 #### Defined in
 
 [packages/framework/esm-utils/src/omrs-dates.ts:154](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L154)
+
+___
+
+### FormatDateOptions
+
+Ƭ **FormatDateOptions**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `time` | `boolean` \| ``"for today"`` | Whether the time should be included in the output always (`true`), never (`false`), or only when the input date is today (`for today`). |
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:156](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L156)
 
 ___
 
@@ -1706,15 +1723,23 @@ ___
 
 ### formatDate
 
-▸ **formatDate**(`date`, `mode?`): `string`
+▸ **formatDate**(`date`, `mode?`, `options?`): `string`
 
 Formats the input date according to the current locale and the
 given format mode.
 
-`standard`: "13 Dec 2021"
-`no year`:  "13 Dec"
-`no day`:   "Dec 2021"
-`wide`:     "13 — Dec — 2021"
+- `standard`: "13 Dec 2021"
+- `no year`:  "13 Dec"
+- `no day`:   "Dec 2021"
+- `wide`:     "13 — Dec — 2021"
+
+Regardless of the mode, if the date is today, then "Today" is produced
+(in the locale language).
+
+Can be used to format a date with time, also, by providing `options`.
+By default, the time is included only when the input date is today.
+The time is appended with a comma and a space. This agrees with the
+output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Parameters
 
@@ -1722,6 +1747,7 @@ given format mode.
 | :------ | :------ | :------ |
 | `date` | `Date` | `undefined` |
 | `mode` | [`FormatDateMode`](API.md#formatdatemode) | `"standard"` |
+| `options` | [`FormatDateOptions`](API.md#formatdateoptions) | `undefined` |
 
 #### Returns
 
@@ -1729,7 +1755,7 @@ given format mode.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L165)
+[packages/framework/esm-utils/src/omrs-dates.ts:184](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L184)
 
 ___
 
@@ -1758,7 +1784,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L227)
+[packages/framework/esm-utils/src/omrs-dates.ts:254](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L254)
 
 ___
 
@@ -1781,7 +1807,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:211](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L211)
+[packages/framework/esm-utils/src/omrs-dates.ts:238](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L238)
 
 ___
 
