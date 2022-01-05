@@ -23,7 +23,7 @@ import {
   configExtensionStore,
   getConfigStore,
   getExtensionConfigStore,
-  getExtensionSlotsConfigStore,
+  getExtensionSlotConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
 } from "./state";
@@ -124,12 +124,10 @@ function computeExtensionSlotConfigs(
   state: ConfigInternalStore,
   tempState: TemporaryConfigStore
 ) {
-  const slotConfigsByModule = getExtensionSlotConfigs(state, tempState);
-  for (let [moduleName, extensionSlotConfigs] of Object.entries(
-    slotConfigsByModule
-  )) {
-    const moduleStore = getExtensionSlotsConfigStore(moduleName);
-    moduleStore.setState({ loaded: true, extensionSlotConfigs });
+  const slotConfigs = getExtensionSlotConfigs(state, tempState);
+  for (let [slotName, config] of Object.entries(slotConfigs)) {
+    const slotStore = getExtensionSlotConfigStore(slotName);
+    slotStore.setState({ loaded: true, config });
   }
 }
 
@@ -318,7 +316,7 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
 function getExtensionSlotConfigs(
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore
-): Record<string, Record<string, ExtensionSlotConfigObject>> {
+): Record<string, ExtensionSlotConfigObject> {
   const allConfigs = mergeConfigs(
     getProvidedConfigs(configState, tempConfigState)
   );
@@ -332,7 +330,11 @@ function getExtensionSlotConfigs(
     return obj;
   }, {});
   validateAllExtensionSlotConfigs(slotConfigPerModule);
-  return slotConfigPerModule;
+  const slotConfigs = Object.keys(slotConfigPerModule).reduce((obj, key) => {
+    obj = { ...obj, ...slotConfigPerModule[key] };
+    return obj;
+  }, {});
+  return slotConfigs;
 }
 
 function validateAllExtensionSlotConfigs(
