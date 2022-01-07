@@ -159,7 +159,13 @@ module.exports = (env, argv = {}) => {
     resolve: {
       mainFields: ["module", "main"],
       extensions: [".ts", ".tsx", ".js", ".jsx"],
-      fallback: { http: false, stream: false, https: false, zlib: false },
+      fallback: {
+        http: false,
+        stream: false,
+        https: false,
+        zlib: false,
+        url: false,
+      },
     },
     plugins: [
       new CleanWebpackPlugin(),
