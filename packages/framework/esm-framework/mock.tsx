@@ -35,10 +35,6 @@ export const openmrsObservableFetch = jest.fn(() =>
   of({ data: { entry: [] } })
 );
 
-export const getCurrentPatient = jest.fn(() =>
-  jest.fn().mockReturnValue(never())
-);
-
 export function getCurrentUser() {
   return of({ authenticated: false });
 }
@@ -235,8 +231,6 @@ export const useExtensionSlot = jest.fn(() => ({
   attachedExtensionSlotName: "",
   extensionIdsToRender: [],
 }));
-
-export const useExtension = jest.fn(() => [React.createRef(), undefined]);
 
 export const UserHasAccess = jest.fn().mockImplementation((props: any) => {
   return props.children;
