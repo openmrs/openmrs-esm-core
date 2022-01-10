@@ -12,12 +12,12 @@ import {
   ConfigInternalStore,
   configInternalStore,
   getExtensionConfigStore,
+  getExtensionSlotsConfigStore,
   ImplementerToolsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
 } from "./state";
 import { Type } from "../types";
-import { getExtensionSlotConfigStore } from "..";
 
 const mockConfigInternalStore =
   configInternalStore as MockedStore<ConfigInternalStore>;
@@ -854,7 +854,9 @@ describe("extension slot config", () => {
         },
       },
     });
-    const { config } = getExtensionSlotConfigStore("fooSlot").getState();
+    const config =
+      getExtensionSlotsConfigStore("foo-module").getState()
+        .extensionSlotConfigs["fooSlot"];
     expect(config).toStrictEqual({
       add: ["bar", "baz"],
       remove: ["zap"],
@@ -892,8 +894,10 @@ describe("extension slot config", () => {
       },
     });
     await Config.getConfig("foo-module");
-    const { config } = getExtensionSlotConfigStore("fooSlot").getState();
-    expect(config).toStrictEqual({ remove: ["bar"] });
+    const extConfig =
+      getExtensionSlotsConfigStore("foo-module").getState()
+        .extensionSlotConfigs["fooSlot"];
+    expect(extConfig).toStrictEqual({ remove: ["bar"] });
   });
 
   it("is included in implementerToolsConfigStore", async () => {

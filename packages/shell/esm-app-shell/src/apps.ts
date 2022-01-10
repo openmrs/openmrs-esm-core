@@ -213,8 +213,7 @@ To fix this, ensure that you define a "load" function inside the extension defin
     return;
   }
 
-  registerExtension({
-    name,
+  registerExtension(name, {
     load: getLoader(extension.load, extension.resources, extension.privilege),
     meta: extension.meta || {},
     order: extension.order,

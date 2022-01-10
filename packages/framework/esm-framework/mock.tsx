@@ -203,14 +203,7 @@ export const ExtensionSlot = ({ children }) => <>{children}</>;
 
 export const Extension = jest.fn().mockImplementation((props: any) => <slot />);
 
-export const getExtensionStore = () =>
-  getGlobalStore("extensions", { slots: {} });
-
-export const getExtensionInternalStore = () =>
-  getGlobalStore("extensions-internal", {
-    slots: {},
-    extensions: {},
-  });
+export const extensionStore = getGlobalStore("extensions", { slots: {} });
 
 /* esm-react-utils */
 
@@ -241,11 +234,10 @@ export const createUseStore = (store: Store<any>) => (actions) => {
   return { ...state, ...actions };
 };
 
-export const useExtensionInternalStore = createUseStore(
-  getExtensionInternalStore()
-);
-
-export const useExtensionStore = createUseStore(getExtensionStore());
+export const useExtensionStore = (actions) => {
+  const state = extensionStore.getState();
+  return { ...state, ...actions };
+};
 
 export const useStore = (store: Store<any>, actions) => {
   const state = store.getState();

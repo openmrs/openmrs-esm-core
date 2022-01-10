@@ -1,10 +1,12 @@
 import { useContext, useEffect } from "react";
-import { registerExtensionSlot } from "@openmrs/esm-extensions";
+import {
+  registerExtensionSlot,
+  unregisterExtensionSlot,
+} from "@openmrs/esm-extensions";
 import { ComponentContext } from "./ComponentContext";
 import { useConnectedExtensions } from "./useConnectedExtensions";
 
-/** @internal */
-export function useExtensionSlot(slotName: string) {
+export function useExtensionSlot(extensionSlotName: string) {
   const { moduleName } = useContext(ComponentContext);
 
   if (!moduleName) {
@@ -14,14 +16,15 @@ export function useExtensionSlot(slotName: string) {
   }
 
   useEffect(() => {
-    registerExtensionSlot(moduleName, slotName);
+    registerExtensionSlot(moduleName, extensionSlotName);
+    return () => unregisterExtensionSlot(moduleName, extensionSlotName);
   }, []);
 
-  const extensions = useConnectedExtensions(slotName);
+  const extensions = useConnectedExtensions(extensionSlotName);
 
   return {
     extensions,
-    extensionSlotName: slotName,
+    extensionSlotName,
     extensionSlotModuleName: moduleName,
   };
 }

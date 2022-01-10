@@ -71,17 +71,13 @@ module.exports = (env, argv = {}) => {
     readdirSync(openmrsCoreApps).forEach((dir) => {
       const appDir = resolve(openmrsCoreApps, dir);
       const { name, browser } = require(resolve(appDir, "package.json"));
-      const distDir = resolve(appDir, dirname(browser));
+
       if (allowedSuffixes.some((suffix) => name.endsWith(suffix))) {
-        if (checkDirectory(distDir)) {
-          appPatterns.push({
-            from: distDir,
-            to: dir,
-          });
-          coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
-        } else {
-          console.warn(`Not serving ${name} because couldn't find ${distDir}`);
-        }
+        appPatterns.push({
+          from: resolve(appDir, dirname(browser)),
+          to: dir,
+        });
+        coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
       }
     });
   }
