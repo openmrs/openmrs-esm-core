@@ -2,7 +2,7 @@ import { update } from "@openmrs/esm-state";
 import { mountRootParcel, Parcel } from "single-spa";
 import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
 import { checkStatus, getCustomProps } from "./helpers";
-import { updateInternalExtensionStore } from "./store";
+import { updateExtensionStore } from "./store";
 
 export interface Lifecycle {
   bootstrap(): void;
@@ -60,7 +60,7 @@ export function renderExtension(
         }
       });
 
-      updateInternalExtensionStore((state) =>
+      updateExtensionStore((state) =>
         update(
           state,
           [
@@ -74,10 +74,6 @@ export function renderExtension(
         )
       );
     }
-  } else {
-    console.warn(
-      `Tried to render ${extensionId} into ${extensionSlotName} but no DOM element was available.`
-    );
   }
 
   return () => {

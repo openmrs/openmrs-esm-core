@@ -1,7 +1,6 @@
-import { renderExtension } from "@openmrs/esm-extensions";
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { ComponentContext } from ".";
+import React from "react";
 import { ExtensionData } from "./ComponentContext";
+import { useExtension } from "./useExtension";
 
 export interface ExtensionProps {
   state?: Record<string, any>;
@@ -21,31 +20,7 @@ export interface ExtensionProps {
  * and *must* only be used once within that `<ExtensionSlot>`.
  */
 export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
-  const [domElement, setDomElement] = useState<HTMLDivElement>();
-  const { extension } = useContext(ComponentContext);
-
-  const ref = useCallback((node) => {
-    setDomElement(node);
-  }, []);
-
-  useEffect(() => {
-    if (domElement != null && extension) {
-      return renderExtension(
-        domElement,
-        extension.extensionSlotName,
-        extension.extensionSlotModuleName,
-        extension.extensionId,
-        undefined,
-        state
-      );
-    }
-  }, [
-    extension?.extensionSlotName,
-    extension?.extensionId,
-    extension?.extensionSlotModuleName,
-    state,
-    domElement,
-  ]);
+  const [ref, extension] = useExtension<HTMLDivElement>(state);
 
   // The extension is rendered into the `<slot>`. It is surrounded by a
   // `<div>` with relative positioning in order to allow the UI Editor

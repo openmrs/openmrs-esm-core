@@ -1,5 +1,5 @@
-import { ConnectedExtension } from "@openmrs/esm-extensions";
-import React, { useRef, useMemo, useContext } from "react";
+import React, { useRef, useMemo } from "react";
+import { ConnectedExtension } from "./useConnectedExtensions";
 import { ComponentContext } from "./ComponentContext";
 import { Extension } from "./Extension";
 import { useExtensionSlot } from "./useExtensionSlot";
@@ -72,7 +72,7 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
         <ComponentContext.Provider
           key={extension.id}
           value={{
-            moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
+            moduleName: extension.moduleName,
             extension: {
               extensionId: extension.id,
               extensionSlotName,

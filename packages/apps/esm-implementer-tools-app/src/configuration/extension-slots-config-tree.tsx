@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import EditableValue from "./editable-value.component";
 import isEqual from "lodash-es/isEqual";
 import {
+  extensionStore,
   ExtensionSlotConfigureValueObject,
-  useAssignedExtensions,
+  useExtensionStore,
+  ExtensionStore,
 } from "@openmrs/esm-framework";
 import { ExtensionConfigureTree } from "./extension-configure-tree";
 import { Subtree } from "./layout/subtree.component";
@@ -54,16 +56,28 @@ interface ExtensionSlotConfigProps {
 }
 
 function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
+  const [assignedExtensions, setAssignedExtensions] = useState<Array<string>>(
+    []
+  );
   const moduleName = path[0];
   const slotName = path[2];
-  const assignedExtensions = useAssignedExtensions(slotName);
+
+  useEffect(() => {
+    function update(state) {
+      setAssignedExtensions(
+        state.slots[slotName]?.instances?.[moduleName]?.assignedIds
+      );
+    }
+    update(extensionStore.getState());
+    return extensionStore.subscribe(update);
+  }, []);
 
   function setActiveExtensionSlotOnMouseEnter(moduleName, slotName) {
     if (!implementerToolsStore.getState().configPathBeingEdited) {
       implementerToolsStore.setState({
         activeItemDescription: {
           path: [moduleName, slotName],
-          value: assignedExtensions.map((e) => e.id),
+          value: assignedExtensions,
         },
       });
     }

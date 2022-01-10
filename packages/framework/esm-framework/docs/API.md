@@ -17,7 +17,6 @@
 ### Interfaces
 
 - [AppState](interfaces/AppState.md)
-- [AssignedExtension](interfaces/AssignedExtension.md)
 - [BreadcrumbRegistration](interfaces/BreadcrumbRegistration.md)
 - [BreadcrumbSettings](interfaces/BreadcrumbSettings.md)
 - [CancelLoading](interfaces/CancelLoading.md)
@@ -28,6 +27,7 @@
 - [Config](interfaces/Config.md)
 - [ConfigObject](interfaces/ConfigObject.md)
 - [ConfigSchema](interfaces/ConfigSchema.md)
+- [ConfigStore](interfaces/ConfigStore.md)
 - [ConfigurableLinkProps](interfaces/ConfigurableLinkProps.md)
 - [ConnectedExtension](interfaces/ConnectedExtension.md)
 - [ConnectivityChangedEvent](interfaces/ConnectivityChangedEvent.md)
@@ -37,24 +37,26 @@
 - [CurrentUserWithoutResponseOption](interfaces/CurrentUserWithoutResponseOption.md)
 - [ExtensionData](interfaces/ExtensionData.md)
 - [ExtensionDefinition](interfaces/ExtensionDefinition.md)
+- [ExtensionDetails](interfaces/ExtensionDetails.md)
 - [ExtensionInfo](interfaces/ExtensionInfo.md)
 - [ExtensionInstance](interfaces/ExtensionInstance.md)
-- [ExtensionInternalStore](interfaces/ExtensionInternalStore.md)
 - [ExtensionMeta](interfaces/ExtensionMeta.md)
 - [ExtensionProps](interfaces/ExtensionProps.md)
 - [ExtensionRegistration](interfaces/ExtensionRegistration.md)
 - [ExtensionSlotBaseProps](interfaces/ExtensionSlotBaseProps.md)
 - [ExtensionSlotConfig](interfaces/ExtensionSlotConfig.md)
 - [ExtensionSlotConfigObject](interfaces/ExtensionSlotConfigObject.md)
+- [ExtensionSlotConfigsStore](interfaces/ExtensionSlotConfigsStore.md)
 - [ExtensionSlotConfigureValueObject](interfaces/ExtensionSlotConfigureValueObject.md)
 - [ExtensionSlotInfo](interfaces/ExtensionSlotInfo.md)
-- [ExtensionSlotState](interfaces/ExtensionSlotState.md)
+- [ExtensionSlotInstance](interfaces/ExtensionSlotInstance.md)
 - [ExtensionStore](interfaces/ExtensionStore.md)
 - [FHIRCode](interfaces/FHIRCode.md)
 - [FHIRRequestObj](interfaces/FHIRRequestObj.md)
 - [FHIRResource](interfaces/FHIRResource.md)
 - [FetchHeaders](interfaces/FetchHeaders.md)
 - [FetchResponse](interfaces/FetchResponse.md)
+- [ImplementerToolsConfigStore](interfaces/ImplementerToolsConfigStore.md)
 - [ImportMap](interfaces/ImportMap.md)
 - [Lifecycle](interfaces/Lifecycle.md)
 - [Location](interfaces/Location.md)
@@ -116,6 +118,7 @@
 - [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
 - [LayoutType](API.md#layouttype)
 - [LoggedInUserData](API.md#loggedinuserdata)
+- [MaybeAsync](API.md#maybeasync)
 - [NavigationContextType](API.md#navigationcontexttype)
 - [OmrsOfflineCachingStrategy](API.md#omrsofflinecachingstrategy)
 - [OmrsOfflineHttpHeaderNames](API.md#omrsofflinehttpheadernames)
@@ -146,11 +149,13 @@
 - [extensionStore](API.md#extensionstore)
 - [fhirBaseUrl](API.md#fhirbaseurl)
 - [getStartedVisit](API.md#getstartedvisit)
+- [implementerToolsConfigStore](API.md#implementertoolsconfigstore)
 - [offlineUuidPrefix](API.md#offlineuuidprefix)
 - [omrsOfflineCachingStrategyHttpHeaderName](API.md#omrsofflinecachingstrategyhttpheadername)
 - [omrsOfflineResponseBodyHttpHeaderName](API.md#omrsofflineresponsebodyhttpheadername)
 - [omrsOfflineResponseStatusHttpHeaderName](API.md#omrsofflineresponsestatushttpheadername)
 - [sessionEndpoint](API.md#sessionendpoint)
+- [temporaryConfigStore](API.md#temporaryconfigstore)
 - [validators](API.md#validators)
 
 ### API Functions
@@ -202,16 +207,18 @@
 - [formatTime](API.md#formattime)
 - [generateOfflineUuid](API.md#generateofflineuuid)
 - [getAppState](API.md#getappstate)
-- [getAssignedExtensions](API.md#getassignedextensions)
+- [getAssignedIds](API.md#getassignedids)
 - [getAsyncExtensionLifecycle](API.md#getasyncextensionlifecycle)
 - [getAsyncLifecycle](API.md#getasynclifecycle)
 - [getConfig](API.md#getconfig)
-- [getConnectedExtensions](API.md#getconnectedextensions)
+- [getConfigStore](API.md#getconfigstore)
 - [getCustomProps](API.md#getcustomprops)
+- [getExtensionConfigStore](API.md#getextensionconfigstore)
 - [getExtensionNameFromId](API.md#getextensionnamefromid)
 - [getExtensionRegistration](API.md#getextensionregistration)
 - [getExtensionRegistrationFrom](API.md#getextensionregistrationfrom)
-- [getExtensionStore](API.md#getextensionstore)
+- [getExtensionSlotsConfigStore](API.md#getextensionslotsconfigstore)
+- [getExtensionSlotsForModule](API.md#getextensionslotsformodule)
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
 - [getLocations](API.md#getlocations)
@@ -223,6 +230,7 @@
 - [getSyncLifecycle](API.md#getsynclifecycle)
 - [getSynchronizationItems](API.md#getsynchronizationitems)
 - [getSynchronizationItemsFor](API.md#getsynchronizationitemsfor)
+- [getUpdatedExtensionSlotInfo](API.md#getupdatedextensionslotinfo)
 - [getVisitTypes](API.md#getvisittypes)
 - [getVisitsForPatient](API.md#getvisitsforpatient)
 - [handleApiError](API.md#handleapierror)
@@ -245,6 +253,8 @@
 - [pushNavigationContext](API.md#pushnavigationcontext)
 - [queueSynchronizationItem](API.md#queuesynchronizationitem)
 - [queueSynchronizationItemFor](API.md#queuesynchronizationitemfor)
+- [registerExtension](API.md#registerextension)
+- [registerExtensionSlot](API.md#registerextensionslot)
 - [registerOfflinePatientHandler](API.md#registerofflinepatienthandler)
 - [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
 - [renderExtension](API.md#renderextension)
@@ -282,15 +292,20 @@
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [translateFrom](API.md#translatefrom)
+- [unregisterExtensionSlot](API.md#unregisterextensionslot)
 - [update](API.md#update)
+- [updateExtensionStore](API.md#updateextensionstore)
 - [updateVisit](API.md#updatevisit)
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
-- [useAssignedExtensions](API.md#useassignedextensions)
+- [useAttachedExtensionIds](API.md#useattachedextensionids)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useConfig](API.md#useconfig)
 - [useConnectedExtensions](API.md#useconnectedextensions)
 - [useConnectivity](API.md#useconnectivity)
 - [useCurrentPatient](API.md#usecurrentpatient)
+- [useExtension](API.md#useextension)
+- [useExtensionSlot](API.md#useextensionslot)
+- [useExtensionSlotConfig](API.md#useextensionslotconfig)
 - [useExtensionSlotMeta](API.md#useextensionslotmeta)
 - [useExtensionStore](API.md#useextensionstore)
 - [useForceUpdate](API.md#useforceupdate)
@@ -444,6 +459,22 @@ ___
 
 ___
 
+### MaybeAsync
+
+Ƭ **MaybeAsync**<`T`\>: `T` \| `Promise`<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L83)
+
+___
+
 ### NavigationContextType
 
 Ƭ **NavigationContextType**: ``"workspace"`` \| ``"dialog"`` \| ``"link"``
@@ -554,7 +585,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L58)
+[packages/framework/esm-config/src/types.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L55)
 
 ___
 
@@ -598,7 +629,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L65)
+[packages/framework/esm-config/src/types.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L62)
 
 ___
 
@@ -622,7 +653,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L63)
+[packages/framework/esm-config/src/types.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L60)
 
 ## API Variables
 
@@ -689,7 +720,7 @@ and *must* only be used once within that `<ExtensionSlot>`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L23)
+[packages/framework/esm-react-utils/src/Extension.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L22)
 
 ___
 
@@ -732,13 +763,11 @@ ___
 
 ### extensionStore
 
-• `Const` **extensionStore**: `Store`<[`ExtensionInternalStore`](interfaces/ExtensionInternalStore.md)\>
-
-**`deprecated`** Use `getExtensionStore`. The structure of this store has also changed.
+• `Const` **extensionStore**: `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/index.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/index.ts#L12)
+[packages/framework/esm-extensions/src/store.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L78)
 
 ___
 
@@ -759,6 +788,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L84)
+
+___
+
+### implementerToolsConfigStore
+
+• `Const` **implementerToolsConfigStore**: `Store`<[`ImplementerToolsConfigStore`](interfaces/ImplementerToolsConfigStore.md)\>
+
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/state.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L182)
 
 ___
 
@@ -809,6 +848,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/openmrs-fetch.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L6)
+
+___
+
+### temporaryConfigStore
+
+• `Const` **temporaryConfigStore**: `Store`<`TemporaryConfigStore`\>
+
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/state.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L69)
 
 ___
 
@@ -1311,27 +1360,14 @@ ___
 
 ### attach
 
-▸ **attach**(`slotName`, `extensionId`): `void`
-
-Attach an extension to an extension slot.
-
-This will cause the extension to be rendered into the specified
-extension slot, unless it is removed by configuration. Using
-`attach` is an alternative to specifying the `slot` or `slots`
-in the extension declaration.
-
-It is particularly useful when creating a slot into which
-you want to render an existing extension. This enables you
-to do so without modifying the extension's declaration, which
-may be impractical or inappropriate, for example if you are
-writing a module for a specific implementation.
+▸ **attach**(`extensionSlotName`, `extensionId`): `void`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `slotName` | `string` | a name uniquely identifying the slot |
-| `extensionId` | `string` | an extension name, with an optional #-suffix    to distinguish it from other instances of the same extension    attached to the same slot. |
+| Name | Type |
+| :------ | :------ |
+| `extensionSlotName` | `string` |
+| `extensionId` | `string` |
 
 #### Returns
 
@@ -1339,7 +1375,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L126)
+[packages/framework/esm-extensions/src/extensions.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L75)
 
 ___
 
@@ -1540,7 +1576,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:170](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L170)
+[packages/framework/esm-config/src/module-config/module-config.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L172)
 
 ___
 
@@ -1568,8 +1604,6 @@ ___
 
 ▸ **detach**(`extensionSlotName`, `extensionId`): `void`
 
-Avoid using this. Extension attachments should be considered declarative.
-
 #### Parameters
 
 | Name | Type |
@@ -1583,15 +1617,13 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L157)
+[packages/framework/esm-extensions/src/extensions.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L105)
 
 ___
 
 ### detachAll
 
 ▸ **detachAll**(`extensionSlotName`): `void`
-
-Avoid using this. Extension attachments should be considered declarative.
 
 #### Parameters
 
@@ -1605,7 +1637,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:181](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L181)
+[packages/framework/esm-extensions/src/extensions.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L128)
 
 ___
 
@@ -1811,23 +1843,25 @@ The [store](https://github.com/developit/unistore#store) named `app`.
 
 ___
 
-### getAssignedExtensions
+### getAssignedIds
 
-▸ **getAssignedExtensions**(`slotName`): [`AssignedExtension`](interfaces/AssignedExtension.md)[]
+▸ **getAssignedIds**(`slotName`, `config`, `attachedIds`): `string`[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `slotName` | `string` |
+| `config` | [`ExtensionSlotConfigObject`](interfaces/ExtensionSlotConfigObject.md) |
+| `attachedIds` | `string`[] |
 
 #### Returns
 
-[`AssignedExtension`](interfaces/AssignedExtension.md)[]
+`string`[]
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:249](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L249)
+[packages/framework/esm-extensions/src/extensions.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L178)
 
 ___
 
@@ -1925,33 +1959,27 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:198](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L198)
+[packages/framework/esm-config/src/module-config/module-config.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L200)
 
 ___
 
-### getConnectedExtensions
+### getConfigStore
 
-▸ **getConnectedExtensions**(`assignedExtensions`, `online?`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
-
-Filters a list of extensions according to whether they support the
-current connectivity status.
+▸ **getConfigStore**(`moduleName`): `Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Parameters
 
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `assignedExtensions` | [`AssignedExtension`](interfaces/AssignedExtension.md)[] | `undefined` | The list of extensions to filter. |
-| `online` | `boolean` \| ``null`` | `null` | Whether the app is currently online. If `null`, uses `navigator.onLine`. |
+| Name | Type |
+| :------ | :------ |
+| `moduleName` | `string` |
 
 #### Returns
 
-[`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
-
-A list of extensions that should be rendered
+`Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:239](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L239)
+[packages/framework/esm-config/src/module-config/state.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L136)
 
 ___
 
@@ -1976,21 +2004,31 @@ ___
 
 ___
 
+### getExtensionConfigStore
+
+▸ **getExtensionConfigStore**(`extensionSlotModuleName`, `attachedExtensionSlotName`, `extensionId`): `Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `extensionSlotModuleName` | `string` |
+| `attachedExtensionSlotName` | `string` |
+| `extensionId` | `string` |
+
+#### Returns
+
+`Store`<[`ConfigStore`](interfaces/ConfigStore.md)\>
+
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/state.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L166)
+
+___
+
 ### getExtensionNameFromId
 
 ▸ **getExtensionNameFromId**(`extensionId`): `string`
-
-Given an extension ID, which is a string uniquely identifying
-an instance of an extension within an extension slot, this
-returns the extension name.
-
-**`example`**
-```js
-getExtensionNameFromId("foo#bar")
- --> "foo"
-getExtensionNameFromId("baz")
- --> "baz"
-```
 
 #### Parameters
 
@@ -2004,7 +2042,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L70)
+[packages/framework/esm-extensions/src/extensions.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L33)
 
 ___
 
@@ -2024,7 +2062,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L83)
+[packages/framework/esm-extensions/src/extensions.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L46)
 
 ___
 
@@ -2036,7 +2074,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `state` | [`ExtensionInternalStore`](interfaces/ExtensionInternalStore.md) |
+| `state` | [`ExtensionStore`](interfaces/ExtensionStore.md) |
 | `extensionId` | `string` |
 
 #### Returns
@@ -2045,25 +2083,47 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L75)
+[packages/framework/esm-extensions/src/extensions.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L38)
 
 ___
 
-### getExtensionStore
+### getExtensionSlotsConfigStore
 
-▸ `Const` **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
+▸ **getExtensionSlotsConfigStore**(`moduleName`): `Store`<[`ExtensionSlotConfigsStore`](interfaces/ExtensionSlotConfigsStore.md)\>
 
-This returns a [store](https://github.com/developit/unistore#store)
-that modules can use to get information about the state of the
-extension system.
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `moduleName` | `string` |
 
 #### Returns
 
-`Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
+`Store`<[`ExtensionSlotConfigsStore`](interfaces/ExtensionSlotConfigsStore.md)\>
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L128)
+[packages/framework/esm-config/src/module-config/state.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L157)
+
+___
+
+### getExtensionSlotsForModule
+
+▸ **getExtensionSlotsForModule**(`moduleName`): `string`[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `moduleName` | `string` |
+
+#### Returns
+
+`string`[]
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:303](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L303)
 
 ___
 
@@ -2301,6 +2361,33 @@ ___
 #### Defined in
 
 [packages/framework/esm-offline/src/sync.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L232)
+
+___
+
+### getUpdatedExtensionSlotInfo
+
+▸ **getUpdatedExtensionSlotInfo**(`slotName`, `moduleName`, `extensionSlot`): [`ExtensionSlotInfo`](interfaces/ExtensionSlotInfo.md)
+
+Returns information describing all extensions which can be rendered into an extension slot with
+the specified name.
+The returned information describe the extension itself, as well as the extension slot name(s)
+with which it has been attached.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `slotName` | `string` | The extension slot name for which matching extension info should be returned. |
+| `moduleName` | `string` | The module name. Used for applying extension-specific config values to the result. |
+| `extensionSlot` | [`ExtensionSlotInfo`](interfaces/ExtensionSlotInfo.md) | The extension slot information object. |
+
+#### Returns
+
+[`ExtensionSlotInfo`](interfaces/ExtensionSlotInfo.md)
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:330](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L330)
 
 ___
 
@@ -2683,7 +2770,7 @@ Validate and interpolate defaults for `providedConfig` according to `schema`
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L220)
+[packages/framework/esm-config/src/module-config/module-config.ts:222](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L222)
 
 ___
 
@@ -2704,7 +2791,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L178)
+[packages/framework/esm-config/src/module-config/module-config.ts:180](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L180)
 
 ___
 
@@ -2790,6 +2877,48 @@ ___
 #### Defined in
 
 [packages/framework/esm-offline/src/sync.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L195)
+
+___
+
+### registerExtension
+
+▸ `Const` **registerExtension**(`name`, `details`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `details` | [`ExtensionDetails`](interfaces/ExtensionDetails.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L62)
+
+___
+
+### registerExtensionSlot
+
+▸ **registerExtensionSlot**(`moduleName`, `slotName`): `void`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `moduleName` | `string` | The name of the module that contains the extension slot |
+| `slotName` | `string` | The extension slot name that is actually used |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:256](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L256)
 
 ___
 
@@ -3680,6 +3809,27 @@ ___
 
 ___
 
+### unregisterExtensionSlot
+
+▸ **unregisterExtensionSlot**(`moduleName`, `slotName`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `moduleName` | `string` |
+| `slotName` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:279](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L279)
+
+___
+
 ### update
 
 ▸ **update**<`T`\>(`obj`, `__namedParameters`, `value`): `T`
@@ -3708,6 +3858,26 @@ ___
 
 ___
 
+### updateExtensionStore
+
+▸ **updateExtensionStore**(`updater`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `updater` | (`state`: [`ExtensionStore`](interfaces/ExtensionStore.md)) => [`MaybeAsync`](API.md#maybeasync)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L87)
+
+___
+
 ### updateVisit
 
 ▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Observable`<`any`\>
@@ -3732,18 +3902,16 @@ ___
 
 ### useAssignedExtensionIds
 
-▸ **useAssignedExtensionIds**(`slotName`): `string`[]
+▸ **useAssignedExtensionIds**(`extensionSlotName`): `string`[]
 
 Gets the assigned extension ids for a given extension slot name.
 Does not consider if offline or online.
-
-**`deprecated`** Use `useAssignedExtensions`
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `slotName` | `string` | The name of the slot to get the assigned IDs for. |
+| `extensionSlotName` | `string` | The name of the slot to get the assigned IDs for. |
 
 #### Returns
 
@@ -3751,30 +3919,29 @@ Does not consider if offline or online.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts#L12)
+[packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts#L11)
 
 ___
 
-### useAssignedExtensions
+### useAttachedExtensionIds
 
-▸ **useAssignedExtensions**(`slotName`): [`AssignedExtension`](interfaces/AssignedExtension.md)[]
+▸ **useAttachedExtensionIds**(`extensionSlotName`): `string`[]
 
-Gets the assigned extensions for a given extension slot name.
-Does not consider if offline or online.
+Gets the assigned extension ids for the given slot.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `slotName` | `string` | The name of the slot to get the assigned extensions for. |
+| Name | Type |
+| :------ | :------ |
+| `extensionSlotName` | `string` |
 
 #### Returns
 
-[`AssignedExtension`](interfaces/AssignedExtension.md)[]
+`string`[]
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAssignedExtensions.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L10)
+[packages/framework/esm-react-utils/src/useAttachedExtensionIds.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useAttachedExtensionIds.ts#L11)
 
 ___
 
@@ -3826,7 +3993,7 @@ ___
 
 ### useConnectedExtensions
 
-▸ **useConnectedExtensions**(`slotName`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
+▸ **useConnectedExtensions**(`extensionSlotName`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
 
 Gets the assigned extension for a given extension slot name.
 Considers if offline or online.
@@ -3835,7 +4002,7 @@ Considers if offline or online.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `slotName` | `string` | The name of the slot to get the assigned extensions for. |
+| `extensionSlotName` | `string` | The name of the slot to get the assigned extensions for. |
 
 #### Returns
 
@@ -3843,7 +4010,7 @@ Considers if offline or online.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L14)
+[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L36)
 
 ___
 
@@ -3881,6 +4048,78 @@ ___
 
 ___
 
+### useExtension
+
+▸ **useExtension**<`TRef`\>(`state?`): [`RefObject`<`TRef`\>, [`ExtensionData`](interfaces/ExtensionData.md) \| `undefined`]
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `TRef` | extends `HTMLElement` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `state?` | `Record`<`string`, `any`\> |
+
+#### Returns
+
+[`RefObject`<`TRef`\>, [`ExtensionData`](interfaces/ExtensionData.md) \| `undefined`]
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useExtension.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtension.ts#L5)
+
+___
+
+### useExtensionSlot
+
+▸ **useExtensionSlot**(`extensionSlotName`): `Object`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `extensionSlotName` | `string` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `extensionSlotModuleName` | `string` |
+| `extensionSlotName` | `string` |
+| `extensions` | [`ConnectedExtension`](interfaces/ConnectedExtension.md)[] |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useExtensionSlot.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionSlot.ts#L9)
+
+___
+
+### useExtensionSlotConfig
+
+▸ **useExtensionSlotConfig**(`extensionSlotName`): [`ExtensionSlotConfigObject`](interfaces/ExtensionSlotConfigObject.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `extensionSlotName` | `string` |
+
+#### Returns
+
+[`ExtensionSlotConfigObject`](interfaces/ExtensionSlotConfigObject.md)
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useExtensionSlotConfig.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionSlotConfig.ts#L16)
+
+___
+
 ### useExtensionSlotMeta
 
 ▸ **useExtensionSlotMeta**<`T`\>(`extensionSlotName`): `Object`
@@ -3913,21 +4152,15 @@ ___
 
 ▸ `Const` **useExtensionStore**(): `T`
 
-The implementation of this will soon undergo a breaking change.
-This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
-
 #### Returns
 
 `T`
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L11)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
 ▸ `Const` **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
-
-The implementation of this will soon undergo a breaking change.
-This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Parameters
 
@@ -3941,12 +4174,9 @@ This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L11)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
 ▸ `Const` **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
-
-The implementation of this will soon undergo a breaking change.
-This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Parameters
 
@@ -3960,7 +4190,7 @@ This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L11)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
 ___
 

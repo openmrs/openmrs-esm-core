@@ -6,14 +6,29 @@
 
 ### Properties
 
+- [extensions](ExtensionStore.md#extensions)
 - [slots](ExtensionStore.md#slots)
 
 ## Properties
 
-### slots
+### extensions
 
-• **slots**: `Record`<`string`, [`ExtensionSlotState`](ExtensionSlotState.md)\>
+• **extensions**: `Record`<`string`, [`ExtensionInfo`](ExtensionInfo.md)\>
+
+Extensions indexed by name
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L62)
+[packages/framework/esm-extensions/src/store.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L38)
+
+___
+
+### slots
+
+• **slots**: `Record`<`string`, [`ExtensionSlotInfo`](ExtensionSlotInfo.md)\>
+
+Slots indexed by name
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L36)
