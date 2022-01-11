@@ -91,7 +91,8 @@ yarn run:shell
 
 ```sh
 cd packages/apps/esm-[xyz]-app
-yarn start
+yarn serve
+# Use with [Import Map Overrides](https://openmrs.github.io/openmrs-esm-core/#/getting_started/setup?id=import-map-overrides)
 ```
 
 #### The tooling

@@ -29,6 +29,10 @@ function makeIdent(name) {
   return name;
 }
 
+const overrides = {};
+const additionalPlugins = [];
+const additionalRules = [];
+
 module.exports = (env, argv = {}) => {
   const root = process.cwd();
   const { name, peerDependencies, browser, main, types } = require(resolve(
@@ -86,6 +90,7 @@ module.exports = (env, argv = {}) => {
           test: /\.(png|jpe?g|gif|svg)$/i,
           type: "asset/resource",
         },
+        ...additionalRules,
       ],
     },
     mode,
@@ -132,9 +137,29 @@ module.exports = (env, argv = {}) => {
           chunks: true,
         },
       }),
+      ...additionalPlugins,
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],
     },
+    ...overrides,
   };
 };
+
+/**
+ * Add properties to this object to override any top-level key
+ * of the webpack config.
+ */
+module.exports.overrides = overrides;
+
+/**
+ * Add any additional webpack plugins to this array. They will
+ * be appended to `plugins`.
+ */
+module.exports.additionalPlugins = additionalPlugins;
+
+/**
+ * Add any additional module resolution rules to this array.
+ * They will be appended to `module.rules`.
+ */
+module.exports.additionalRules = additionalRules;
