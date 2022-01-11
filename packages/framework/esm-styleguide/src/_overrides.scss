@@ -132,12 +132,12 @@
 
   &:focus,
   &:hover {
-    background-color: $interactive-01;
-    color: $ui-background;
+    background-color: $color-blue-10;
+    color: $interactive-01;
   }
 
   &.bx--content-switcher--selected {
-    background-color: #edf5ff;
+    background-color: $color-blue-10;
     border: 1px solid $interactive-01;
     color: $interactive-01;
   }
