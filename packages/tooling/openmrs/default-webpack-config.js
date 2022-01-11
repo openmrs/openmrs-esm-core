@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
+const { mergeWith, isArray } = require("lodash");
 
 const production = "production";
 const { ModuleFederationPlugin } = container;
@@ -30,8 +31,7 @@ function makeIdent(name) {
 }
 
 const overrides = {};
-const additionalPlugins = [];
-const additionalRules = [];
+const additionalConfig = {};
 
 module.exports = (env, argv = {}) => {
   const root = process.cwd();
@@ -55,7 +55,7 @@ module.exports = (env, argv = {}) => {
     },
   };
 
-  return {
+  const baseConfig = {
     entry: {
       [name]: "systemjs-webpack-interop/auto-public-path",
     },
@@ -90,7 +90,6 @@ module.exports = (env, argv = {}) => {
           test: /\.(png|jpe?g|gif|svg)$/i,
           type: "asset/resource",
         },
-        ...additionalRules,
       ],
     },
     mode,
@@ -137,29 +136,31 @@ module.exports = (env, argv = {}) => {
           chunks: true,
         },
       }),
-      ...additionalPlugins,
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],
     },
     ...overrides,
   };
+  return mergeWith(baseConfig, additionalConfig, mergeFunction);
 };
 
+function mergeFunction(objValue, srcValue) {
+  if (isArray(objValue)) {
+    return objValue.concat(srcValue);
+  }
+}
+
 /**
- * Add properties to this object to override any top-level key
+ * This object will be merged into the webpack config.
+ * Array values will be concatenated with the existing array.
+ * Make sure to modify this object and not reassign it.
+ */
+module.exports.additionalConfig = additionalConfig;
+
+/**
+ * The keys of this object will override the top-level keys
  * of the webpack config.
+ * Make sure to modify this object and not reassign it.
  */
 module.exports.overrides = overrides;
-
-/**
- * Add any additional webpack plugins to this array. They will
- * be appended to `plugins`.
- */
-module.exports.additionalPlugins = additionalPlugins;
-
-/**
- * Add any additional module resolution rules to this array.
- * They will be appended to `module.rules`.
- */
-module.exports.additionalRules = additionalRules;
