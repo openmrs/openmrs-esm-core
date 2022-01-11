@@ -180,6 +180,7 @@
 ### Navigation Functions
 
 - [interpolateString](API.md#interpolatestring)
+- [interpolateUrl](API.md#interpolateurl)
 - [isUrl](API.md#isurl)
 - [isUrlWithTemplateParameters](API.md#isurlwithtemplateparameters)
 - [navigate](API.md#navigate)
@@ -1253,7 +1254,32 @@ navigate({
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L38)
+[packages/framework/esm-config/src/navigation/interpolate-string.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L41)
+
+___
+
+### interpolateUrl
+
+▸ **interpolateUrl**(`template`): `string`
+
+Interpolates a string with openmrsBase and openmrsSpaBase.
+
+Useful for accepting `${openmrsBase}` or `${openmrsSpaBase}` template
+parameters in configurable URLs.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `template` | `string` | A string to interpolate |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-config/src/navigation/interpolate-string.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L14)
 
 ___
 

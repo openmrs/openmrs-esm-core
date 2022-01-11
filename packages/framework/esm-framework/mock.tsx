@@ -2,12 +2,14 @@ import React from "react";
 import type {} from "@openmrs/esm-globals";
 import createStore, { Store } from "unistore";
 import { never, of } from "rxjs";
+import { interpolateUrl } from "@openmrs/esm-config";
 export {
   parseDate,
   formatDate,
   formatDatetime,
   formatTime,
 } from "@openmrs/esm-utils";
+export { interpolateString, interpolateUrl } from "@openmrs/esm-config";
 
 window.i18next = { ...window.i18next, language: "en" };
 
@@ -176,12 +178,10 @@ export function defineConfigSchema(moduleName, schema) {
 
 export const navigate = jest.fn();
 
-export const interpolateString = jest.fn();
-
 export const ConfigurableLink = jest
   .fn()
   .mockImplementation((config: { to: string; children: React.ReactNode }) => (
-    <a href={interpolateString(config.to)}>{config.children}</a>
+    <a href={interpolateUrl(config.to)}>{config.children}</a>
   ));
 
 /* esm-error-handling */
