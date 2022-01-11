@@ -2668,16 +2668,6 @@
   dependencies:
     "@octokit/openapi-types" "^10.0.0"
 
-"@openmrs/esm-implementer-tools-app@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@openmrs/esm-implementer-tools-app/-/esm-implementer-tools-app-3.1.0.tgz#b753bf8783f00afc63dc8cdff3a196914e3817db"
-  integrity sha512-ID9tY37OlmEjqYDjPs/YzZeSfCSTL6Zac+QPgTHCs4NUxeSerGqlZAw8Q7GR9+PJvod+5GEIHch0gVF6oipLaA==
-  dependencies:
-    lodash-es "^4.17.15"
-    react-hooks-global-state "^1.0.1"
-    single-spa-react "^3.0.1"
-    systemjs-webpack-interop "^2.1.2"
-
 "@pickra/copy-code-block@^1.1.7":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@pickra/copy-code-block/-/copy-code-block-1.2.0.tgz#08b9d01d92dd5f4950e013b43e0730abb3add3db"
@@ -14313,11 +14303,6 @@ react-helmet-async@^1.0.2:
     react-fast-compare "^3.2.0"
     shallowequal "^1.1.0"
 
-react-hooks-global-state@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-hooks-global-state/-/react-hooks-global-state-1.0.2.tgz#37bbc3203a0be9f3ac0658abfd28dd7ce7ee166c"
-  integrity sha512-UcWz+VjcUUCQ7bXGmOhanGII3j22zyPSjwJnQWeycxFYj/etBxIbz9xziEm4sv5+OqGuS7bzvpx24XkCxgJ7Bg==
-
 react-hotkeys@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-hotkeys/-/react-hotkeys-2.0.0.tgz#a7719c7340cbba888b0e9184f806a9ec0ac2c53f"
@@ -15469,11 +15454,6 @@ simplebar@^4.2.3:
     lodash.throttle "^4.1.1"
     resize-observer-polyfill "^1.5.1"
 
-single-spa-react@^3.0.1:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/single-spa-react/-/single-spa-react-3.2.0.tgz#97bfcb03e418f7daa2b1bd05eab1c62632351d91"
-  integrity sha512-s8K7AuS26WvN9n81z1NBlnZIe/Hin423P8jYLuG/DCNTYo5JbJMS5+Cb/wQd4ikG6YqoedpV4cb7nAcxvlLyhg==
-
 single-spa-react@^4.1.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/single-spa-react/-/single-spa-react-4.3.1.tgz#7c787fe8f4da535ca46c10fae9bbace9c6567701"
@@ -16238,7 +16218,7 @@ symlink-or-copy@^1.1.8, symlink-or-copy@^1.2.0, symlink-or-copy@^1.3.1:
   resolved "https://registry.yarnpkg.com/symlink-or-copy/-/symlink-or-copy-1.3.1.tgz#9506dd64d8e98fa21dcbf4018d1eab23e77f71fe"
   integrity sha512-0K91MEXFpBUaywiwSSkmKjnGcasG/rVBXFLJz5DrgGabpYD6N+3yZrfD6uUIfpuTu65DZLHi7N8CizHc07BPZA==
 
-systemjs-webpack-interop@^2.1.2, systemjs-webpack-interop@^2.3.7:
+systemjs-webpack-interop@^2.3.7:
   version "2.3.7"
   resolved "https://registry.yarnpkg.com/systemjs-webpack-interop/-/systemjs-webpack-interop-2.3.7.tgz#b8ed2a81c371bab3160ac4801776ef61cf8c7959"
   integrity sha512-9wmhkleKWVjcGfHpc1/YvfADnvzpYMdr2/AM2e7FpMczPYEdluwM3AMXxHGzPUNbWfnSaerrmzqP4nDsTDvBxA==
