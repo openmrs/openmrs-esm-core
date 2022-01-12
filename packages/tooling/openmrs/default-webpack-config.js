@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
+const { mergeWith, isArray } = require("lodash");
 
 const production = "production";
 const { ModuleFederationPlugin } = container;
@@ -29,6 +30,9 @@ function makeIdent(name) {
   return name;
 }
 
+const overrides = {};
+const additionalConfig = {};
+
 module.exports = (env, argv = {}) => {
   const root = process.cwd();
   const { name, peerDependencies, browser, main, types } = require(resolve(
@@ -51,7 +55,7 @@ module.exports = (env, argv = {}) => {
     },
   };
 
-  return {
+  const baseConfig = {
     entry: {
       [name]: "systemjs-webpack-interop/auto-public-path",
     },
@@ -136,5 +140,27 @@ module.exports = (env, argv = {}) => {
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],
     },
+    ...overrides,
   };
+  return mergeWith(baseConfig, additionalConfig, mergeFunction);
 };
+
+function mergeFunction(objValue, srcValue) {
+  if (isArray(objValue)) {
+    return objValue.concat(srcValue);
+  }
+}
+
+/**
+ * This object will be merged into the webpack config.
+ * Array values will be concatenated with the existing array.
+ * Make sure to modify this object and not reassign it.
+ */
+module.exports.additionalConfig = additionalConfig;
+
+/**
+ * The keys of this object will override the top-level keys
+ * of the webpack config.
+ * Make sure to modify this object and not reassign it.
+ */
+module.exports.overrides = overrides;
