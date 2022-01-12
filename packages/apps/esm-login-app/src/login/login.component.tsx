@@ -4,7 +4,7 @@ import ArrowRight24 from "@carbon/icons-react/es/arrow--right/24";
 import { Button, TextInput } from "carbon-components-react";
 import { RouteComponentProps } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useConfig } from "@openmrs/esm-framework";
+import { useConfig, interpolateUrl } from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
 import { useCurrentUser } from "../CurrentUserContext";
 import type { StaticContext } from "react-router";
@@ -117,7 +117,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
 
   const logo = config.logo.src ? (
     <img
-      src={config.logo.src}
+      src={interpolateUrl(config.logo.src)}
       alt={config.logo.alt}
       className={styles["logo-img"]}
     />
