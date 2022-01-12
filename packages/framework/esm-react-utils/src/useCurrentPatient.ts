@@ -85,9 +85,7 @@ function reducer(
  * is not provided, the patient UUID is obtained from the current route, and
  * a route listener is set up to update the patient whenever the route changes.
  */
-export function useCurrentPatient(
-  patientUuid?: string
-): [boolean, NullablePatient, PatientUuid, Error | null] {
+export function useCurrentPatient(patientUuid?: string) {
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
     patientUuid: patientUuid ?? null,
@@ -145,10 +143,10 @@ export function useCurrentPatient(
   }, []);
 
   console.log(state);
-  return [
-    state.isLoadingPatient,
-    state.patient,
-    patientUuid ?? null,
-    state.err,
-  ];
+  return {
+    isLoading: state.isLoadingPatient,
+    patient: state.patient,
+    patientUuid: patientUuid ?? null,
+    error: state.err,
+  };
 }
