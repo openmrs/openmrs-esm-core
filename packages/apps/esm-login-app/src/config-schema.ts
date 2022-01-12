@@ -56,7 +56,8 @@ export const configSchema = {
       _type: Type.String,
       _default: null,
       _description:
-        "A path or URL to an image. Defaults to the OpenMRS SVG sprite.",
+        "A path or URL to an image. If null, will use the OpenMRS SVG sprite.",
+      _validators: [validators.isUrl],
     },
     alt: {
       _type: Type.String,
