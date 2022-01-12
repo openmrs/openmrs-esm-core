@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@openmrs/esm-devtools-app": "^3.1.14",
-    "@openmrs/esm-implementer-tools-app": "3.1.0",
+    "@openmrs/esm-implementer-tools-app": "^3.1.14",
     "@openmrs/esm-login-app": "^3.1.14",
     "@openmrs/esm-offline-tools-app": "^3.1.14",
     "@openmrs/esm-primary-navigation-app": "^3.1.14",
