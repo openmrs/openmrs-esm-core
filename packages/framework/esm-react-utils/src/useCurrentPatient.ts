@@ -134,12 +134,15 @@ export function useCurrentPatient(patientUuid?: string) {
   }, [state.isLoadingPatient, state.patientUuid]);
 
   useEffect(() => {
-    window.addEventListener("single-spa:routing-event", (evt) => {
+    const handleRouteUpdate = (evt) => {
       dispatch({
         type: ActionTypes.loadPatient,
         patientUuid: getPatientUuidFromUrl(),
       });
-    });
+    };
+    window.addEventListener("single-spa:routing-event", handleRouteUpdate);
+    return () =>
+      window.removeEventListener("single-spa:routing-event", handleRouteUpdate);
   }, []);
 
   console.log(state);
