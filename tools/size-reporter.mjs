@@ -5,7 +5,7 @@ import {
 
 await reportFileSizeImpact({
   ...readGitHubWorkflowEnv(),
-  buildCommand: "npm run build",
+  buildCommand: "npx lerna run build",
   installCommand: "echo 'Everything installed'",
   fileSizeReportModulePath: "./size-generator.mjs",
 });
