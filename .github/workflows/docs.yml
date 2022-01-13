@@ -7,13 +7,14 @@ on:
     branches: [master]
   schedule:
     - cron: "0 9 * * *"
-    
+
 jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@master
-    - uses: gaurav-nelson/github-action-markdown-link-check@v1
-      with:
-        max-depth: 4  # exclude the API docs
-        use-quiet-mode: 'yes'
+      - uses: actions/checkout@master
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          max-depth: 4 # exclude the API docs
+          use-quiet-mode: "yes"
