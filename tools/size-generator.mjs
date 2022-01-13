@@ -1,6 +1,6 @@
 import { generateFileSizeReport } from "@jsenv/file-size-impact";
 
-export const filesizeReport = await generateFileSizeReport({
+export const fileSizeReport = await generateFileSizeReport({
   log: process.argv.includes("--log"),
   projectDirectoryUrl: new URL("../", import.meta.url),
   manifestConfig: {
