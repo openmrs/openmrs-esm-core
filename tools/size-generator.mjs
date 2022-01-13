@@ -1,17 +1,24 @@
 import { generateFileSizeReport } from "@jsenv/file-size-impact";
 
+new URL("./", import.meta.url);
+
 export const filesizeReport = await generateFileSizeReport({
   log: process.argv.includes("--log"),
   projectDirectoryUrl: new URL("../", import.meta.url),
+  manifestConfig: {
+    "./packages/apps/*/dist/*.buildmanifest.json": true,
+    "./packages/shell/*/dist/*.buildmanifest.json": true,
+  },
   trackingConfig: {
-    dist: {
-      // all modules
+    // all modules
+    modules: {
       "./packages/apps/*/dist/*.js": true,
       "./packages/apps/*/dist/*.css": true,
       "./packages/apps/*/dist/*.map": false,
       "./packages/apps/*/dist/*.json": false,
-
-      // all apps (should be only app-shell)
+    },
+    // all apps (should be only app-shell)
+    apps: {
       "./packages/shell/*/dist/*.js": true,
       "./packages/shell/*/dist/*.css": true,
       "./packages/shell/*/dist/*.map": false,
