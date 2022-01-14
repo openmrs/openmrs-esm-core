@@ -1,5 +1,8 @@
 # Prerequisites
 
+If you haven't already done so: Please first see [the Implementer Documentation](https://wiki.openmrs.org/x/pQJiDQ), which provides some conceptual orientation as well as instructions for deployment and configuring.
+
+
 Before developing OpenMRS Frontend 3.0, you should be familiar with the following technologies.
 
 ## Javascript
