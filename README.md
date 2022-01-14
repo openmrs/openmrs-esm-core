@@ -1,13 +1,13 @@
-![Node.js CI](https://github.com/openmrs/openmrs-esm-core/workflows/Node.js%20CI/badge.svg)
-![Check documentation](https://github.com/openmrs/openmrs-esm-core/actions/workflows/docs.yml/badge.svg)
+:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/). You may find the [Map of the Project](https://openmrs.github.io/openmrs-esm-core/#/main/map) especially helpful. :teacher:	
 
-
-Information for developers about the OpenMRS Frontend system can be found at the following link:
-
-**[OpenMRS Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/)**
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
 for `@openmrs/esm-framework`, which is contained in this repository.
+
+
+![Node.js CI](https://github.com/openmrs/openmrs-esm-core/workflows/Node.js%20CI/badge.svg)
+![Check documentation](https://github.com/openmrs/openmrs-esm-core/actions/workflows/docs.yml/badge.svg)
+
 
 Below is the documentation for this repository.
 
