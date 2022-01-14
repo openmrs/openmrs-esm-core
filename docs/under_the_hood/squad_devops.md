@@ -12,3 +12,9 @@ Every time a GitHub release is created in a community-managed frontend module re
 are [here](https://ci.openmrs.org/browse/SM).
 
 Its CI and release process is the same as all other OpenMRS modules.
+
+## Docker Containers
+Dockerized containers of the 3.x Reference Application are available here: 
+* https://hub.docker.com/r/openmrs/openmrs-reference-application-3-frontend 
+* https://hub.docker.com/r/openmrs/openmrs-reference-application-3-backend
+* https://hub.docker.com/r/openmrs/openmrs-reference-application-3-gateway 
