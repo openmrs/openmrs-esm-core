@@ -42,20 +42,24 @@
 .bx--btn--tertiary:active,
 .bx--btn--tertiary:focus {
   background-color: $brand-teal-01;
+  background-color: var(--brand-teal-01);
 }
 
 .bx--btn--primary:hover {
   background-color: $brand-01;
+  background-color: var(--brand-01);
 }
 
 .bx--btn--tertiary {
   color: $brand-teal-01;
+  color: var(--brand-teal-01);
 }
 
 .bx--btn--tertiary,
 .bx--btn--primary:focus,
 .bx--btn--tertiary:focus {
   border-color: $brand-teal-01;
+  border-color: var(--brand-teal-01);
 }
 
 .bx--btn--tertiary:hover,
@@ -67,21 +71,27 @@
 /* UI Shell header */
 
 .bx--header {
-  background-color: $brand-01;
-  border-bottom: $brand-02;
+  // background-color: $brand-01;
+  background-color: var(--brand-01);
+  // border-bottom: $brand-02;
+  border-bottom: var(--brand-02);
 }
 
 .bx--header__action:hover {
   background-color: $brand-02;
+  background-color: var(--brand-02);
 }
 
 .bx--header-panel {
   background-color: $brand-02;
+  background-color: var(--$brand-02);
 }
 
 .bx--header__action--active {
   background-color: $brand-02;
+  background-color: var(--brand-02);
   border-color: $brand-02;
+  border-color: var(--brand-02);
 }
 
 .bx--overflow-menu--flip {

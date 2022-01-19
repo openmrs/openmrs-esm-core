@@ -6,6 +6,7 @@
 
 .headerGlobalBarButton {
   background-color: $brand-02;
+  background-color: var(--brand-02);
 }
 
 .topNavHeader {
@@ -14,6 +15,7 @@
 
 .activePanel {
   background-color: $brand-01;
+  background-color: var(--brand-01);
 }
 
 .headerMenuButton {
