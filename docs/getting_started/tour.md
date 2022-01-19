@@ -1,7 +1,13 @@
 # Tour of a Frontend Module
 
-Let's explore the contents of
-[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).
+
+## First: Open the ESM Template App :rotating_light:	
+Let's explore the contents of the esm-template-app:
+:point_right: :point_right: :point_right: **[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)** :point_left: :point_left: :point_left:
+
+
+The esm-template-app is a helpful resource - don't forget to look through this! 
+
 
 ## Tooling 🧰
 
