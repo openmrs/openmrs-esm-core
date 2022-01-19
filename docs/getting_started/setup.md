@@ -12,7 +12,7 @@ not for running the backend or server.
 ## Working on a frontend module
 
 Clone the repository of interest. For this example we'll use
-[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app).
+:sparkles:**[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)**.:sparkles:. 
 
 ```bash
 git clone https://github.com/openmrs/openmrs-esm-template-app.git
