@@ -20,17 +20,29 @@ $warning-background: #fff8e1;
 $openmrs-background-grey: #f4f4f4;
 $danger: #da1e28;
 $interactive-01: #0f62fe;
-$brand-teal-01: #007d79;
-$brand-01: #005d5d;
-$brand-02: #004144;
 $field-01: #f4f4f4;
 $grey-2: #e0e0e0;
 $labeldropdown: #c6c6c6;
 
+@mixin brand-01($property) {
+  #{$property}: #005d5d;
+  #{$property}: var(--brand-01);
+}
+
+@mixin brand-02($property) {
+  #{$property}: #004144;
+  #{$property}: var(--brand-02);
+}
+
+@mixin brand-03($property) {
+  #{$property}: #007d79;
+  #{$property}: var(--brand-03);
+}
+
 :root {
   --brand-01: #005d5d;
   --brand-02: #004144;
-  --brand-teal-01: #007d79;
+  --brand-03: #007d79;
 }
 
 $breakpoint-phone-min: 0px;
@@ -39,3 +51,8 @@ $breakpoint-tablet-min: 601px;
 $breakpoint-tablet-max: 1200px;
 $breakpoint-desktop-min: 1201px;
 $breakpoint-desktop-max: 99999999px;
+
+/* These color variables will be removed in a future release */
+$brand-teal-01: #007d79;
+$brand-01: #005d5d;
+$brand-02: #004144;

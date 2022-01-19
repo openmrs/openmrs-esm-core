@@ -41,25 +41,21 @@
 .bx--btn--tertiary:hover,
 .bx--btn--tertiary:active,
 .bx--btn--tertiary:focus {
-  background-color: $brand-teal-01;
-  background-color: var(--brand-teal-01);
+  @include brand-03(background-color);
 }
 
 .bx--btn--primary:hover {
-  background-color: $brand-01;
-  background-color: var(--brand-01);
+  @include brand-01(background-color);
 }
 
 .bx--btn--tertiary {
-  color: $brand-teal-01;
-  color: var(--brand-teal-01);
+  @include brand-03(color);
 }
 
 .bx--btn--tertiary,
 .bx--btn--primary:focus,
 .bx--btn--tertiary:focus {
-  border-color: $brand-teal-01;
-  border-color: var(--brand-teal-01);
+  @include brand-03(border-color);
 }
 
 .bx--btn--tertiary:hover,
@@ -71,27 +67,21 @@
 /* UI Shell header */
 
 .bx--header {
-  // background-color: $brand-01;
-  background-color: var(--brand-01);
-  // border-bottom: $brand-02;
-  border-bottom: var(--brand-02);
+  @include brand-01(background-color);
+  @include brand-02(border-bottom);
 }
 
 .bx--header__action:hover {
-  background-color: $brand-02;
-  background-color: var(--brand-02);
+  @include brand-02(background-color);
 }
 
 .bx--header-panel {
-  background-color: $brand-02;
-  background-color: var(--$brand-02);
+  @include brand-02(background-color);
 }
 
 .bx--header__action--active {
-  background-color: $brand-02;
-  background-color: var(--brand-02);
-  border-color: $brand-02;
-  border-color: var(--brand-02);
+  @include brand-02(background-color);
+  @include brand-02(border-color);
 }
 
 .bx--overflow-menu--flip {
@@ -116,13 +106,13 @@
 
 .bx--pagination-nav__page:not(.bx--pagination-nav__page--direction) {
   &::after {
-    background-color: $brand-teal-01;
+    @include brand-03(background-color);
   }
 }
 
 .bx--pagination-nav__page .bx--pagination-nav__page--active,
 .bx--pagination-nav__page:focus {
-  outline: 2px solid $brand-teal-01;
+  outline: 2px solid var(--brand-03);
 }
 
 /* Content Switcher */
@@ -168,16 +158,16 @@
 .bx--tabs--scrollable
   .bx--tabs--scrollable__nav-item--selected
   .bx--tabs--scrollable__nav-link:focus {
-  border-bottom: 2px solid $brand-teal-01;
+  border-bottom: 2px solid var(--brand-03);
 }
 
 .bx--tabs--scrollable.bx--tabs--scrollable--container
   .bx--tabs--scrollable__nav-item--selected
   .bx--tabs--scrollable__nav-link {
-  box-shadow: inset 0 2px 0 0 $brand-teal-01;
+  box-shadow: inset 0 2px 0 0 var(--brand-03);
 }
 
 .bx--tabs--scrollable .bx--tabs--scrollable__nav-link:active,
 .bx--tabs--scrollable .bx--tabs--scrollable__nav-link:focus {
-  outline: 2px solid $brand-teal-01;
+  outline: 2px solid var(--brand-03);
 }
