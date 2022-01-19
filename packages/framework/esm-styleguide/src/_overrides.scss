@@ -41,7 +41,7 @@
 .bx--btn--tertiary:hover,
 .bx--btn--tertiary:active,
 .bx--btn--tertiary:focus {
-  @include brand-03(background-color);
+  @include brand-light-01(background-color);
 }
 
 .bx--btn--primary:hover {
@@ -49,13 +49,13 @@
 }
 
 .bx--btn--tertiary {
-  @include brand-03(color);
+  @include brand-light-01(color);
 }
 
 .bx--btn--tertiary,
 .bx--btn--primary:focus,
 .bx--btn--tertiary:focus {
-  @include brand-03(border-color);
+  @include brand-light-01(border-color);
 }
 
 .bx--btn--tertiary:hover,
@@ -106,13 +106,13 @@
 
 .bx--pagination-nav__page:not(.bx--pagination-nav__page--direction) {
   &::after {
-    @include brand-03(background-color);
+    @include brand-light-01(background-color);
   }
 }
 
 .bx--pagination-nav__page .bx--pagination-nav__page--active,
 .bx--pagination-nav__page:focus {
-  outline: 2px solid var(--brand-03);
+  outline: 2px solid var(--brand-light-01);
 }
 
 /* Content Switcher */
@@ -158,16 +158,16 @@
 .bx--tabs--scrollable
   .bx--tabs--scrollable__nav-item--selected
   .bx--tabs--scrollable__nav-link:focus {
-  border-bottom: 2px solid var(--brand-03);
+  border-bottom: 2px solid var(--brand-light-01);
 }
 
 .bx--tabs--scrollable.bx--tabs--scrollable--container
   .bx--tabs--scrollable__nav-item--selected
   .bx--tabs--scrollable__nav-link {
-  box-shadow: inset 0 2px 0 0 var(--brand-03);
+  box-shadow: inset 0 2px 0 0 var(--brand-light-01);
 }
 
 .bx--tabs--scrollable .bx--tabs--scrollable__nav-link:active,
 .bx--tabs--scrollable .bx--tabs--scrollable__nav-link:focus {
-  outline: 2px solid var(--brand-03);
+  outline: 2px solid var(--brand-light-01);
 }
