@@ -13,7 +13,8 @@ not for running the backend or server.
 
 Clone the repository of interest. For this example we'll use
 :sparkles:**[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)**:sparkles:.
-Note that this repository is a good starting point for creating a new frontend module, and also contains
+
+> Note that this repository is a good starting point for creating a new frontend module, and also contains
 lots of information explaining the different pieces of frontend modules, along with the
 [Tour of a Frontend Module](./tour.md).
 
