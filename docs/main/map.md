@@ -14,11 +14,6 @@ There are four important pieces of the OpenMRS Frontend modules system:
 
 The frontend modules communicate with the **backend**, which is the OpenMRS server, using its APIs.
 
-### (Remember the esm-template-app)
-As we dive deeper, you might find it helpful to refer to the esm-template-app: 
-
-:point_right: :point_right: :point_right: **[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)** :point_left: :point_left: :point_left:
-
 ### The framework
 
 The **framework** is an NPM package called `@openmrs/esm-framework`, which is composed of multiple smaller libraries. These are documented in the
@@ -33,6 +28,15 @@ The **frontend modules** are shipped in the ES Module format and usually thus ju
 - export a predefined set of functionality including a function called `setupOpenMRS`.
 
 These frontend modules bring in domain-specific UI capabilities such as menu entries, page content, or notifications.
+
+#### Understanding frontend modules :brain:
+
+All the pieces of a frontend module are explained in
+[Tour of a Frontend Module](../getting_started/tour).
+
+Also see the
+**[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)**,
+which explains lots of things about frontend modules.
 
 ### The backend
 
