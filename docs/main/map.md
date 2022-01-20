@@ -32,7 +32,7 @@ These frontend modules bring in domain-specific UI capabilities such as menu ent
 #### Understanding frontend modules :brain:
 
 All the pieces of a frontend module are explained in
-[Tour of a Frontend Module](../getting_started/tour).
+[Tour of a Frontend Module](../getting_started/tour.md).
 
 Also see the
 **[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)**,
