@@ -4,6 +4,7 @@
 
 OpenMRS Frontend 3.0 uses a microfrontends architecture. We call our microfrontends "frontend modules." A frontend module is a self-contained piece of application. It has some UI, and some ideas about where in the application it should be rendered. Each frontend module can be configured, and some aspects of how frontend modules interact can be configured, too.
 
+
 There are four important pieces of the OpenMRS Frontend modules system:
 
 - The **app shell**, which is the "base" of the application and coordinates everything
@@ -27,6 +28,15 @@ The **frontend modules** are shipped in the ES Module format and usually thus ju
 - export a predefined set of functionality including a function called `setupOpenMRS`.
 
 These frontend modules bring in domain-specific UI capabilities such as menu entries, page content, or notifications.
+
+#### Understanding frontend modules :brain:
+
+All the pieces of a frontend module are explained in
+[Tour of a Frontend Module](../getting_started/tour).
+
+Also see the
+**[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)**,
+which explains lots of things about frontend modules.
 
 ### The backend
 
