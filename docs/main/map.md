@@ -44,9 +44,10 @@ The built application is then executed on the server like this:
 
 ![Application Diagram](./application.png)
 
-## Repositories you should know
+## Repositories you should know :octocat:	
 The 3.x EMR Reference Application is made up of all the frontend modules found in the following repositories:
 
+- :construction: [openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app): This repository provides a starting point for creating your own OpenMRS Microfrontend.
 - [openmrs-esm-core](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/apps): Frontend modules which are administrative or else integral to the application
 - [openmrs-esm-patient-management](https://github.com/openmrs/openmrs-esm-patient-management/tree/main/packages): Frontend modules which deal with creating, searching, and listing patients
 - [openmrs-esm-patient-chart](https://github.com/openmrs/openmrs-esm-patient-chart/tree/master/packages): The patient chart frontend module and all its widgets
