@@ -43,8 +43,8 @@
   },
   "peerDependencies": {
     "dayjs": "1.x",
-    "rxjs": "6.x",
-    "i18next": "19.x"
+    "i18next": "19.x",
+    "rxjs": "6.x"
   },
   "dependencies": {
     "semver": "^7.3.2"

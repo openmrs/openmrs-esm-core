@@ -10,8 +10,8 @@ function normalizeFullVersion(version: string) {
   const prerelease = idx >= 0;
 
   if (prerelease) {
-    const ver = normalizeOnlyVersion(version.substr(0, idx));
-    const pre = version.substr(idx + 1);
+    const ver = normalizeOnlyVersion(version.slice(0, idx));
+    const pre = version.slice(idx + 1);
     return `${ver}-${pre}`;
   }
 

@@ -3,7 +3,6 @@ import {
   attach,
   checkStatus,
   getCustomProps,
-  isVersionSatisfied,
   PageDefinition,
   registerExtension,
   ResourceLoader,
@@ -11,10 +10,6 @@ import {
 import { registerApplication } from "single-spa";
 import { routePrefix, routeRegex, wrapLifecycle } from "./helpers";
 import type { Activator, ActivatorDefinition } from "./types";
-
-const providedDeps = {
-  "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
-};
 
 const pages: Array<PageDefinition> = [];
 
@@ -92,36 +87,10 @@ function getLoader(
   return load;
 }
 
-function satisfiesDependencies(deps: Record<string, string>) {
-  for (const depName of Object.keys(deps)) {
-    const requiredDep = deps[depName];
-    const providedDep = providedDeps[depName];
-
-    if (!providedDep) {
-      console.warn(`Missing dependency "${depName}".`);
-      return false;
-    }
-
-    if (!isVersionSatisfied(requiredDep, providedDep)) {
-      console.warn(
-        `Unsatisfied dependency constraint for "${depName}". Available "${providedDep}", but required "${requiredDep}".`
-      );
-      return false;
-    }
-  }
-
-  return true;
-}
-
 export function registerApp(appName: string, appExports: System.Module) {
   const setup = appExports.setupOpenMRS;
-  const dependencies = appExports.frontendDependencies ?? {};
 
-  if (!satisfiesDependencies(dependencies)) {
-    console.error(
-      `The MF "${appName}" failed to meet the requirements for its dependencies. It will be ignored.`
-    );
-  } else if (typeof setup === "function") {
+  if (typeof setup === "function") {
     const result = trySetup(appName, setup);
 
     if (result && typeof result === "object") {
