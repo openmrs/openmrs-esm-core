@@ -19,10 +19,6 @@ const backendDependencies = {
   "webservices.rest": "^2.24.0",
 };
 
-const frontendDependencies = {
-  "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
-};
-
 function setupOpenMRS() {
   const moduleName = "@openmrs/esm-offline-tools-app";
   const options = {
@@ -179,9 +175,4 @@ function setupOpenMRS() {
   };
 }
 
-export {
-  setupOpenMRS,
-  importTranslation,
-  backendDependencies,
-  frontendDependencies,
-};
+export { setupOpenMRS, importTranslation, backendDependencies };

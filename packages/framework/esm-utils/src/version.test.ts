@@ -50,4 +50,16 @@ describe("Version utilities", () => {
     const result = isVersionSatisfied("^2.24.0", "2.24.0.7e24fb");
     expect(result).toBe(true);
   });
+
+  it("Is satisfied with major version caret specifier and pre", () => {
+    const result = isVersionSatisfied("^3", "3.1.14-pre.3");
+  });
+
+  it("Is satisfied with major version caret specifier and pre and a build number", () => {
+    const result = isVersionSatisfied("^3", "3.1.14.7e24fb-pre.3");
+  });
+
+  it("Is satisfied with major version caret specifier and a build number", () => {
+    const result = isVersionSatisfied("^3", "3.1.14.7e24fb");
+  });
 });

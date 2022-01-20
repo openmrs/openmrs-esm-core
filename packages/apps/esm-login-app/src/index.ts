@@ -12,10 +12,6 @@ const backendDependencies = {
   "webservices.rest": "^2.24.0",
 };
 
-const frontendDependencies = {
-  "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
-};
-
 const sharedOnlineOfflineProps = {
   online: {
     isLoginEnabled: true,
@@ -82,9 +78,4 @@ function setupOpenMRS() {
   };
 }
 
-export {
-  setupOpenMRS,
-  importTranslation,
-  backendDependencies,
-  frontendDependencies,
-};
+export { setupOpenMRS, importTranslation, backendDependencies };

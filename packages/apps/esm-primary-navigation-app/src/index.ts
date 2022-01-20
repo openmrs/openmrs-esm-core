@@ -22,10 +22,6 @@ const backendDependencies = {
   "webservices.rest": "^2.2.0",
 };
 
-const frontendDependencies = {
-  "@openmrs/esm-framework": process.env.FRAMEWORK_VERSION,
-};
-
 const options = {
   featureName: "primary navigation",
   moduleName,
@@ -81,9 +77,4 @@ function setupOpenMRS() {
   };
 }
 
-export {
-  setupOpenMRS,
-  importTranslation,
-  backendDependencies,
-  frontendDependencies,
-};
+export { setupOpenMRS, importTranslation, backendDependencies };
