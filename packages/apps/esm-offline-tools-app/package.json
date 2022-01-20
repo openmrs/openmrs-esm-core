@@ -42,7 +42,7 @@
     "swr": "^1.0.1"
   },
   "peerDependencies": {
-    "@openmrs/esm-framework": "3.x",
+    "@openmrs/esm-framework": ">=3.1.14-pre",
     "carbon-components": "10.x",
     "carbon-components-react": "7.x",
     "carbon-icons": "7.x",
