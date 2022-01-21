@@ -1,7 +1,7 @@
 # Creating a Frontend Module
 
 **New frontend modules can be created from the
-[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)**. :bulb:	
+[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)**. :point_left: 
 
 You can fork that repository, or clone-and-copy it. 
 Follow the instructions in the README to turn it into your own frontend module.
