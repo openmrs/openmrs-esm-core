@@ -216,9 +216,7 @@ async function setupServiceWorker() {
 async function triggerOfflineMode() {
   if (navigator.onLine) {
     try {
-      if (localStorage.getItem("CAN_GO_OFFLINE") === "true") {
-        await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
-      }
+      await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
     } catch (e) {
       showNotification({
         critical: true,
