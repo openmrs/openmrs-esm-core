@@ -20,10 +20,11 @@ export interface DevelopArgs {
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
+  addCookie: string;
 }
 
 export function runDevelop(args: DevelopArgs) {
-  const { backend, host, port, open, importmap, configUrls } = args;
+  const { backend, host, port, open, importmap, configUrls, addCookie } = args;
   const apiUrl = removeTrailingSlash(args.apiUrl);
   const spaPath = removeTrailingSlash(args.spaPath);
   const app = express();
@@ -100,6 +101,13 @@ export function runDevelop(args: DevelopArgs) {
       {
         target: backend,
         changeOrigin: true,
+        onProxyReq(proxyReq) {
+          if (addCookie) {
+            const origCookie = proxyReq.getHeader("cookie");
+            const newCookie = `${origCookie};${addCookie}`;
+            proxyReq.setHeader("cookie", newCookie);
+          }
+        },
       }
     )
   );

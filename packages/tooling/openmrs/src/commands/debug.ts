@@ -15,6 +15,7 @@ export interface DebugArgs {
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
+  addCookie: string;
 }
 
 export function runDebug(args: DebugArgs) {
@@ -28,6 +29,7 @@ export function runDebug(args: DebugArgs) {
     supportOffline: args.supportOffline,
     spaPath: args.spaPath,
     configUrls: args.configUrls,
+    addCookie: args.addCookie,
     env: "development",
   });
 

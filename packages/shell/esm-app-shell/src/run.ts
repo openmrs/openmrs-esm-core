@@ -210,10 +210,15 @@ async function setupServiceWorker() {
     `${window.getOpenmrsSpaBase()}service-worker.js`
   );
   registerSwEvents(sw);
+  await triggerOfflineMode();
+}
 
+async function triggerOfflineMode() {
   if (navigator.onLine) {
     try {
-      await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
+      if (localStorage.getItem("CAN_GO_OFFLINE") === "true") {
+        await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
+      }
     } catch (e) {
       showNotification({
         critical: true,

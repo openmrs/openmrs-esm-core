@@ -11,6 +11,7 @@ export interface WebpackOptions {
   configUrls?: Array<string>;
   env?: string;
   coreAppsDir?: string;
+  addCookie?: string;
 }
 
 export function loadWebpackConfig(options: WebpackOptions = {}) {
@@ -30,6 +31,10 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
 
   if (typeof options.pageTitle === "string") {
     variables.OMRS_PAGE_TITLE = options.pageTitle;
+  }
+
+  if (typeof options.addCookie === "string") {
+    variables.OMRS_ADD_COOKIE = options.addCookie;
   }
 
   if (typeof options.supportOffline === "boolean") {
