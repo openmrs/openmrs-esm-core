@@ -6,6 +6,7 @@ You must have git, node, npm, and yarn installed. The versions required are
 - The Node [Active LTS version](https://nodejs.org/en/about/releases/)
 - The latest stable version of NPM
 - The latest stable version of Yarn
+
 See [prerequisites](./prerequisites.md) if any of these technologies
 are unfamiliar to you.
 Consider using [nvm](https://github.com/nvm-sh/nvm#node-version-manager---)
@@ -43,7 +44,7 @@ This command will almost certainly run a "script" from the `package.json`
 file. Take a look at the `scripts` section of this file to find out what
 the command actually does.
 
-> :light: You run almost any command with `--help` to learn more about it.
+> :bulb: You run almost any command with `--help` to learn more about it.
 
 ## Import map overrides
 
