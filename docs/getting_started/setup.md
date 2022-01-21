@@ -69,12 +69,12 @@ In the frontend module you want to develop, run
 
 ```bash
 # if the OpenMRS frontend you're looking at uses HTTP (e.g. a local server)
-npm run serve
+yarn serve
 # if the OpenMRS frontend you're looking at uses HTTPS (e.g. openmrs-spa.org)
-npm run serve --https
+yarn serve --https
 ```
 
-> Substitute `yarn serve` if the project uses Yarn, or `narn serve` if you use
+> Substitute `npm run serve` if the project uses NPM, or `narn serve` if you use
   [narn](https://github.com/joeldenning/narn).
 
 The protocol of the application must match the protocol of the locally-served frontend module.
