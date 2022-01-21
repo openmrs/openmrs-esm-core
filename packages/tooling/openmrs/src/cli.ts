@@ -47,6 +47,9 @@ yargs.command(
       .string("backend")
       .default("backend", "https://openmrs-spa.org/")
       .describe("backend", "The backend to proxy API requests to.")
+      .string("add-cookie")
+      .default("add-cookie", "")
+      .describe("add-cookie", "Additional cookies to provide when proxying.")
       .boolean("support-offline")
       .describe(
         "support-offline",
@@ -105,6 +108,7 @@ yargs.command(
       configUrls: args["config-url"],
       pageTitle: args["page-title"],
       supportOffline: args["support-offline"],
+      addCookie: args["add-cookie"],
       ...args,
       importmap: proxyImportmap(
         await mergeImportmap(
@@ -137,6 +141,9 @@ yargs.command(
       .string("backend")
       .default("backend", "https://openmrs-spa.org/")
       .describe("backend", "The backend to proxy API requests to.")
+      .string("add-cookie")
+      .default("add-cookie", "")
+      .describe("add-cookie", "Additional cookies to provide when proxying.")
       .string("spa-path")
       .default("spa-path", "/openmrs/spa/")
       .describe("spa-path", "The path of the application on the target server.")
@@ -178,6 +185,7 @@ yargs.command(
       apiUrl: args["api-url"],
       spaPath: args["spa-path"],
       configUrls: args["config-url"],
+      addCookie: args["add-cookie"],
       ...args,
       importmap: proxyImportmap(
         await mergeImportmap(
@@ -331,10 +339,17 @@ yargs.command(
       .string("backend")
       .default("backend", "https://openmrs-spa.org/")
       .describe("backend", "The backend to proxy API requests to.")
+      .string("add-cookie")
+      .default("add-cookie", "")
+      .describe("add-cookie", "Additional cookies to provide when proxying.")
       .boolean("open")
       .default("open", false)
       .describe("open", "Immediately opens the SPA page URL in the browser."),
-  (args) => runCommand("runStart", { ...args })
+  (args) =>
+    runCommand("runStart", {
+      addCookie: args["add-cookie"],
+      ...args,
+    })
 );
 
 yargs

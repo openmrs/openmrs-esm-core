@@ -10,10 +10,11 @@ export interface StartArgs {
   host: string;
   open: boolean;
   backend: string;
+  addCookie: string;
 }
 
 export function runStart(args: StartArgs) {
-  const { backend, host, port, open } = args;
+  const { backend, host, port, open, addCookie } = args;
   const app = express();
   const source = resolve(
     require.resolve("@openmrs/esm-app-shell/package.json"),
@@ -30,6 +31,13 @@ export function runStart(args: StartArgs) {
     createProxyMiddleware([`/openmrs/**`, `!${spaPath}/**`], {
       target: backend,
       changeOrigin: true,
+      onProxyReq(proxyReq) {
+        if (addCookie) {
+          const origCookie = proxyReq.getHeader("cookie");
+          const newCookie = `${origCookie};${addCookie}`;
+          proxyReq.setHeader("cookie", newCookie);
+        }
+      },
     })
   );
   app.get("/*", (_, res) => res.sendFile(index));

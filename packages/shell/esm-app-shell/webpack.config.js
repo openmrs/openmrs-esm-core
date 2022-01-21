@@ -19,6 +19,7 @@ const production = "production";
 const allowedSuffixes = ["-app", "-widgets"];
 const { ModuleFederationPlugin } = container;
 
+const openmrsAddCookie = process.env.OMRS_ADD_COOKIE;
 const openmrsApiUrl = removeTrailingSlash(
   process.env.OMRS_API_URL || "/openmrs"
 );
@@ -92,7 +93,7 @@ module.exports = (env, argv = {}) => {
     target: "web",
     devServer: {
       compress: true,
-      open: [`${openmrsPublicPath}/`.substr(1)],
+      open: [`${openmrsPublicPath}/`.substring(1)],
       devMiddleware: {
         publicPath: `${openmrsPublicPath}/`,
       },
@@ -109,6 +110,13 @@ module.exports = (env, argv = {}) => {
           context: [`${openmrsApiUrl}/**`, `!${openmrsPublicPath}/**`],
           target: openmrsProxyTarget,
           changeOrigin: true,
+          onProxyReq(proxyReq) {
+            if (openmrsAddCookie) {
+              const origCookie = proxyReq.getHeader("cookie");
+              const newCookie = `${origCookie};${openmrsAddCookie}`;
+              proxyReq.setHeader("cookie", newCookie);
+            }
+          },
         },
       ],
     },
