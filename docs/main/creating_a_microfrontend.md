@@ -6,11 +6,6 @@
 You can fork that repository, or clone-and-copy it. 
 Follow the instructions in the README to turn it into your own frontend module.
 
-|Developer Quote|
-|------|
-|:thinking:	*"I was new to using the 3.x framework, but I was able to use the esm-template-app to set up a new microfrontend module within a few hours." :partying_face:*|
-</br>
-
 ## The `index.ts` file
 
 All frontend modules have an `index.ts` as an
