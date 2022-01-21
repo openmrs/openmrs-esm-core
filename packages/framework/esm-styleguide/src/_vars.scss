@@ -36,7 +36,7 @@ $labeldropdown: #c6c6c6;
 
 @mixin brand-03($property) {
   #{$property}: #007d79;
-  #{$property}: var(--brand-03;
+  #{$property}: var(--brand-03);
 }
 
 :root {
