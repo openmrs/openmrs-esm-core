@@ -105,7 +105,7 @@ like "button" or "tile" or "widget."
 
 :x: Bad slot names:
 - Patient address (too prescriptive about contents)
-- Vitals summary (again, too prescriptive)
+- homepage-widgets-slot (should be `Homepage widgets`)
 - Extra buttons (too vague)
 
 ### Styling
