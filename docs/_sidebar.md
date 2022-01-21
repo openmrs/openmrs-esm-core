@@ -23,6 +23,7 @@
   - [Creating a Distribution](/main/distribution.md)
 - Under the hood
   - [Architecture Overview](/under_the_hood/architecture.md)
+  - [Tooling](/under_the_hood/tooling.md)
   - [Translations](/under_the_hood/translations.md)
   - [Extensions System](/under_the_hood/extensions.md)
   - [Squad DevOps and CI](/under_the_hood/squad_devops.md)

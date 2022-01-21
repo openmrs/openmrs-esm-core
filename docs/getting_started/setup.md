@@ -2,11 +2,17 @@
 
 ## Prerequisities
 
-You must have git, node, and npm installed. See [prerequisites](./prerequisites.md).
-Consider using [nvm](https://github.com/nvm-sh/nvm#node-version-manager---)
-to ensure you're using the latest node.
+You must have git, node, npm, and yarn installed. The versions required are
+- The Node [Active LTS version](https://nodejs.org/en/about/releases/)
+- The latest stable version of NPM
+- The latest stable version of Yarn
 
-Note that as a frontend project, we use node for compiling and bundling frontend code,
+See [prerequisites](./prerequisites.md) if any of these technologies
+are unfamiliar to you.
+Consider using [nvm](https://github.com/nvm-sh/nvm#node-version-manager---)
+to manage your node version.
+
+Note that as a frontend project, we use Node for compiling and bundling frontend code,
 not for running the backend or server.
 
 ## Working on a frontend module
@@ -14,8 +20,9 @@ not for running the backend or server.
 Clone the repository of interest. For this example we'll use
 :sparkles:**[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app)**:sparkles:.
 
-> Note that this repository is a good starting point for creating a new frontend module, and also contains
-lots of information explaining the different pieces of frontend modules, along with the
+> Note that this repository is a good starting point for creating a new
+frontend module, and also contains lots of information explaining the
+different pieces of frontend modules, along with the
 [Tour of a Frontend Module](./tour.md).
 
 ```bash
@@ -26,95 +33,18 @@ Then change to the cloned repository's directory and install its dependencies.
 
 ```bash
 cd openmrs-esm-template-app
-npm install
+yarn
 ```
 
-Then you're ready to start a dev server! Simply run
+Then you're ready to start a dev server! The command to run will depend on
+the repository you checked out. Read the README for that repository to find
+out what command you should run.
 
-```bash
-npm run start
-```
+This command will almost certainly run a "script" from the `package.json`
+file. Take a look at the `scripts` section of this file to find out what
+the command actually does.
 
-If you look at the `start` script in `package.json`, you'll see that this executes
-
-```bash
-npx openmrs develop  # the 'npx' is 'npm exec', which is implicit within `scripts`
-```
-
-> **For the curious**: This command runs two dev servers. One serves the
-*app shell*, which
-is installed as a dependency of the `openmrs` package.
-The other serves the frontend module.
-They come together via the import map.
-
-You can usually run commands with `--help` to learn more about them.
-Try `npm run start -- --help` (or `npx openmrs develop --help`), for example.
-
-## Developing frontend modules in a Lerna monorepo
-
-In a [Lerna monorepo](https://github.com/lerna/lerna#readme), the commands are
-a bit different. As an example monorepo you can use
-[openmrs-esm-patient chart](https://github.com/openmrs/openmrs-esm-patient-chart).
-
-```bash
-git clone https://github.com/openmrs/openmrs-esm-patient-chart.git
-```
-
-To install dependencies, use the `lerna` executable.
-
-```bash
-cd openmrs-esm-patient-chart
-npx lerna bootstrap
-```
-
-And to start a dev server, use the `openmrs` executable directly.
-To work on the package `@openmrs/esm-patient-vitals-app`, run
-
-```bash
-npx openmrs develop --sources packages/esm-patient-vitals-app/
-```
-
-To work on multiple packages at the same time, you can use a  wildcard / glob
-pattern for the `--sources` parameter. For example,
-
-```bash
-npx openmrs develop --sources packages/esm-*-app/
-```
-
-will run a local server with all the frontend modules matching the pattern.
-
-Alternatively, you can also specify the `--sources` argument multiple times, e.g.,
-
-```bash
-npx openmrs develop --sources packages/esm-form-entry-app/ --sources packages/esm-patient-chart-app
-```
-
-### Avoiding Webpack
-
-The previous approach using `openmrs develop` will implicitly use Webpack. If you want
-to use another bundler or build tool you can teach the `openmrs` tooling by adding a
-special section in the *package.json*.
-
-Consider the following example from the `@openmrs/esm-form-entry-app` package contained in
-the `openmrs-esm-patient-chart` monorepo:
-
-```json
-{
-  "scripts": {
-    "start": "openmrs develop",
-    "serve": "ng serve --port 4200 --live-reload true"
-  },
-  "openmrs:develop": {
-    "command": "npm run serve",
-    "url": "http://localhost:4200/openmrs-esm-form-entry-app.js"
-  },
-  // ...
-}
-```
-
-This one will use `ng serve --port 4200 --live-reload true` when `openmrs develop` is used.
-The URL `http://localhost:4200/openmrs-esm-form-entry-app.js` will be added to the import map
-used for debugging.
+> :bulb: You run almost any command with `--help` to learn more about it.
 
 ## Import map overrides
 
@@ -140,12 +70,12 @@ In the frontend module you want to develop, run
 
 ```bash
 # if the OpenMRS frontend you're looking at uses HTTP (e.g. a local server)
-npm run serve
+yarn serve
 # if the OpenMRS frontend you're looking at uses HTTPS (e.g. openmrs-spa.org)
-npm run serve --https
+yarn serve --https
 ```
 
-> Substitute `yarn serve` if the project uses Yarn, or `narn serve` if you use
+> Substitute `npm run serve` if the project uses NPM, or `narn serve` if you use
   [narn](https://github.com/joeldenning/narn).
 
 The protocol of the application must match the protocol of the locally-served frontend module.
