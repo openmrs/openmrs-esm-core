@@ -34,15 +34,15 @@ $labeldropdown: #c6c6c6;
   #{$property}: var(--brand-02);
 }
 
-@mixin brand-light-01($property) {
+@mixin brand-03($property) {
   #{$property}: #007d79;
-  #{$property}: var(--brand-light-01);
+  #{$property}: var(--brand-03;
 }
 
 :root {
   --brand-01: #005d5d;
   --brand-02: #004144;
-  --brand-light-01: #007d79;
+  --brand-03: #007d79;
 }
 
 $breakpoint-phone-min: 0px;
