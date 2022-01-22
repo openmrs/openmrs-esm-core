@@ -78,7 +78,6 @@ function reducer(
  * all the information needed to render a loading state, error state, and normal/success state.
  *
  * @deprecated Use {@link usePatient} instead.
- * @ignore
  */
 export function useCurrentPatient(
   patientUuid = getPatientUuidFromUrl()
