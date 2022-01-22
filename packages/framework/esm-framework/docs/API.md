@@ -4071,7 +4071,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useCurrentPatient.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useCurrentPatient.ts#L83)
+[packages/framework/esm-react-utils/src/useCurrentPatient.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useCurrentPatient.ts#L82)
 
 ___
 
