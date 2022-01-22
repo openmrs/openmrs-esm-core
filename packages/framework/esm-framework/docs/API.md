@@ -4056,21 +4056,33 @@ ___
 
 ### useCurrentPatient
 
-▸ **useCurrentPatient**(`patientUuid?`): [`boolean`, `NullablePatient`, [`PatientUuid`](API.md#patientuuid), `Error` \| ``null``]
+▸ **useCurrentPatient**(`patientUuid?`): `Object`
+
+This React hook returns a patient object. If the `patientUuid` is provided
+as a parameter, then the patient for that UUID is returned. If the parameter
+is not provided, the patient UUID is obtained from the current route, and
+a route listener is set up to update the patient whenever the route changes.
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
+| `patientUuid?` | `string` |
 
 #### Returns
 
-[`boolean`, `NullablePatient`, [`PatientUuid`](API.md#patientuuid), `Error` \| ``null``]
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `error` | ``null`` \| `Error` |
+| `isLoading` | `boolean` |
+| `patient` | `NullablePatient` |
+| `patientUuid` | ``null`` \| `string` |
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useCurrentPatient.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useCurrentPatient.ts#L79)
+[packages/framework/esm-react-utils/src/useCurrentPatient.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useCurrentPatient.ts#L88)
 
 ___
 
