@@ -4,6 +4,7 @@ import { fetchCurrentPatient, PatientUuid } from "@openmrs/esm-api";
 type NullablePatient = fhir.Patient | null;
 
 interface CurrentPatientState {
+  patientUuid: string | null;
   patient: NullablePatient;
   isLoadingPatient: boolean;
   err: Error | null;
@@ -11,6 +12,7 @@ interface CurrentPatientState {
 
 interface LoadPatient {
   type: ActionTypes.loadPatient;
+  patientUuid: string | null;
 }
 
 interface NewPatient {
@@ -32,6 +34,7 @@ enum ActionTypes {
 }
 
 const initialState: CurrentPatientState = {
+  patientUuid: null,
   patient: null,
   isLoadingPatient: true,
   err: null,
@@ -50,6 +53,7 @@ function reducer(
     case ActionTypes.loadPatient:
       return {
         ...state,
+        patientUuid: action.patientUuid,
         patient: null,
         isLoadingPatient: true,
         err: null,
@@ -73,22 +77,41 @@ function reducer(
   }
 }
 
-/*
- * This React hook returns the current patient, as specified by the current route. It returns
- * all the information needed to render a loading state, error state, and normal/success state.
- *
- * @deprecated Use {@link usePatient} instead.
+/**
+ * This React hook returns a patient object. If the `patientUuid` is provided
+ * as a parameter, then the patient for that UUID is returned. If the parameter
+ * is not provided, the patient UUID is obtained from the current route, and
+ * a route listener is set up to update the patient whenever the route changes.
  */
-export function useCurrentPatient(
-  patientUuid = getPatientUuidFromUrl()
-): [boolean, NullablePatient, PatientUuid, Error | null] {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export function usePatient(patientUuid?: string) {
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    patientUuid: patientUuid ?? null,
+  });
+
+  useEffect(() => {
+    if (state.patientUuid) {
+      dispatch({
+        type: ActionTypes.loadPatient,
+        patientUuid: state.patientUuid,
+      });
+    } else {
+      const patientUuidFromUrl = getPatientUuidFromUrl();
+      if (patientUuidFromUrl) {
+        dispatch({
+          type: ActionTypes.loadPatient,
+          patientUuid: patientUuidFromUrl,
+        });
+      } else {
+        dispatch({ type: ActionTypes.newPatient, patient: null });
+      }
+    }
+  }, [state.patientUuid]);
 
   useEffect(() => {
     let active = true;
-
-    if (patientUuid) {
-      fetchCurrentPatient(patientUuid).then(
+    if (state.isLoadingPatient && state.patientUuid) {
+      fetchCurrentPatient(state.patientUuid).then(
         (patient) =>
           active &&
           dispatch({
@@ -102,15 +125,29 @@ export function useCurrentPatient(
             type: ActionTypes.loadError,
           })
       );
-      dispatch({ type: ActionTypes.loadPatient });
-    } else {
-      dispatch({ type: ActionTypes.newPatient, patient: null });
     }
-
     return () => {
       active = false;
     };
-  }, [patientUuid]);
+  }, [state.isLoadingPatient, state.patientUuid]);
 
-  return [state.isLoadingPatient, state.patient, patientUuid, state.err];
+  useEffect(() => {
+    const handleRouteUpdate = (evt) => {
+      dispatch({
+        type: ActionTypes.loadPatient,
+        patientUuid: getPatientUuidFromUrl(),
+      });
+    };
+    window.addEventListener("single-spa:routing-event", handleRouteUpdate);
+    return () =>
+      window.removeEventListener("single-spa:routing-event", handleRouteUpdate);
+  }, []);
+
+  console.log(state);
+  return {
+    isLoading: state.isLoadingPatient,
+    patient: state.patient,
+    patientUuid: patientUuid ?? null,
+    error: state.err,
+  };
 }

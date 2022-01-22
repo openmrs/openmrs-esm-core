@@ -213,7 +213,14 @@ export const openmrsComponentDecorator = jest
   .fn()
   .mockImplementation(() => (component) => component);
 
-export const useCurrentPatient = jest.fn(() => [null, null, null, null]);
+export const useCurrentPatient = jest.fn(() => []);
+
+export const usePatient = jest.fn(() => ({
+  isLoading: true,
+  patient: null,
+  patientUuid: null,
+  error: null,
+}));
 
 export const useSessionUser = jest.fn(() => null);
 
