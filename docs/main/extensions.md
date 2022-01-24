@@ -24,7 +24,7 @@ Read the above two lines until they resonate in your head like a mantra.
 Extensions get rendered into slots. An extension gets associated with a
 slot in one of the following ways:
 - The extension names the slot in its definition, under `slot[s]`
-- A call to [attach](useExtensionSlotMeta)
+- A call to [attach](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#attach)
 - A system administrator adds the extension to the slot using the
   slot's `add` array
 
