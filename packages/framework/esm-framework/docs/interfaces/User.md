@@ -8,7 +8,7 @@
 
 - [display](User.md#display)
 - [link](User.md#link)
-- [persion](User.md#persion)
+- [person](User.md#person)
 - [priviliges](User.md#priviliges)
 - [resourceVersion](User.md#resourceversion)
 - [roles](User.md#roles)
@@ -38,9 +38,9 @@ ___
 
 ___
 
-### persion
+### person
 
-• **persion**: `any`
+• **person**: `any`
 
 #### Defined in
 
