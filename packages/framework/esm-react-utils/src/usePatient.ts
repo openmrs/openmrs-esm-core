@@ -30,7 +30,7 @@ type Action = LoadPatient | NewPatient | PatientLoadError;
 enum ActionTypes {
   loadPatient = "loadPatient",
   newPatient = "newPatient",
-  loadError = "patientLloadErroroadError",
+  loadError = "patientLoadError",
 }
 
 const initialState: CurrentPatientState = {
@@ -143,7 +143,6 @@ export function usePatient(patientUuid?: string) {
       window.removeEventListener("single-spa:routing-event", handleRouteUpdate);
   }, []);
 
-  console.log(state);
   return {
     isLoading: state.isLoadingPatient,
     patient: state.patient,
