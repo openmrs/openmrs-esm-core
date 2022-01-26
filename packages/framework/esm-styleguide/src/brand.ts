@@ -20,7 +20,7 @@ export function setupBranding() {
     if (store.loaded && store.config) {
       setGlobalCSSVariable("--brand-01", store.config["Brand color #1"]);
       setGlobalCSSVariable("--brand-02", store.config["Brand color #2"]);
-      setGlobalCSSVariable("--brand-light-01", store.config["Brand color #3"]);
+      setGlobalCSSVariable("--brand-03", store.config["Brand color #3"]);
     }
   });
 
