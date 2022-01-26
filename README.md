@@ -103,6 +103,12 @@ yarn build
 ./dist/cli.js
 ```
 
+#### The tests
+
+Run `yarn test` in the directory containing the package you want to test.
+
+Run `yarn lerna run test` to run all the tests in this repository.
+
 #### Linking the framework
 
 If you want to try out changes to a framework library, you will
