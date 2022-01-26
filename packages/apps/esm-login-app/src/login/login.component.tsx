@@ -36,7 +36,6 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [t] = useTranslation();
   const showPassword = location.pathname === "/login/confirm";
-  const [inValidLogin, setInvalidLogin] = useState<boolean>(false);
 
   useEffect(() => {
     if (user) {
@@ -104,8 +103,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
         const valid = authData && authData.authenticated;
 
         if (!valid) {
-          setInvalidLogin(true);
-          throw new Error("Incorrect username or password");
+          throw new Error("invalidCredentials");
         }
       } catch (error) {
         setErrorMessage(error.message);
@@ -132,13 +130,13 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
   if (config.provider.type === "basic") {
     return (
       <div className={`canvas ${styles["container"]}`}>
-        {inValidLogin && (
+        {errorMessage && (
           <InlineNotification
             kind="error"
             style={{ width: "23rem" }}
-            subtitle={t("errorMessage", errorMessage)}
+            subtitle={t(errorMessage)}
             title={t("error", "Error")}
-            onClick={() => setInvalidLogin((prevState) => !prevState)}
+            onClick={() => setErrorMessage("")}
           />
         )}
         <div className={`omrs-card ${styles["login-card"]}`}>
