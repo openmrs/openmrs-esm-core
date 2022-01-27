@@ -210,20 +210,61 @@ async function setupServiceWorker() {
     `${window.getOpenmrsSpaBase()}service-worker.js`
   );
   registerSwEvents(sw);
-  await triggerOfflineMode();
+  await prepareOfflineMode();
 }
 
-async function triggerOfflineMode() {
-  if (navigator.onLine) {
-    try {
-      await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
-    } catch (e) {
-      showNotification({
-        critical: true,
-        title: "Offline Setup Error",
-        description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
-      });
+async function isSafariPrivateBrowsing() {
+  const storage = window.sessionStorage;
+
+  try {
+    storage.setItem("someKeyHere", "test");
+    storage.removeItem("someKeyHere");
+  } catch (e) {
+    if (e.code === DOMException.QUOTA_EXCEEDED_ERR && storage.length === 0) {
+      return true;
     }
+  }
+
+  return false;
+}
+
+async function isEdgePrivateBrowsing() {
+  return !window.indexedDB;
+}
+
+async function isFirefoxPrivateBrowsing() {
+  return new Promise<boolean>((resolve) => {
+    const db = indexedDB.open("test");
+    db.onerror = () => resolve(true);
+    db.onsuccess = () => resolve(false);
+  });
+}
+
+async function isPrivateBrowsing() {
+  return await isFirefoxPrivateBrowsing() || await isEdgePrivateBrowsing() || await isSafariPrivateBrowsing();
+}
+
+async function activateOfflineCapability() {
+  if (navigator.onLine) {
+    const isPrivate = await isPrivateBrowsing();
+
+    if (!isPrivate) {
+      //TODO trigger here
+    }
+  }
+}
+
+async function prepareOfflineMode() {
+  try {
+    await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
+  } catch (e) {
+    console.error("Error while setting up offline mode.", e);
+
+    showNotification({
+      critical: true,
+      title: "Offline Setup Error",
+      description: `There was an error while initializing the website's offline mode. You can try reloading the page later.`,
+    });
   }
 }
 
