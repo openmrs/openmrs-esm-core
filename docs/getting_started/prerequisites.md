@@ -2,7 +2,6 @@
 
 If you haven't already done so: Please first see [the Implementer Documentation](https://wiki.openmrs.org/x/pQJiDQ), which provides some conceptual orientation as well as instructions for deployment and configuring.
 
-
 Before developing OpenMRS Frontend 3.0, you should be familiar with the following technologies.
 
 ## Javascript
@@ -18,11 +17,13 @@ including the command-line interface (run `npm help`), [package.json](https://do
 If the repository you're looking at has a `yarn.lock` file, then it uses `yarn`,
 and you'll want to read the [Yarn docs](https://classic.yarnpkg.com/en/docs/getting-started).
 Otherwise it uses `npm`. Yarn and npm are exclusive of each other within a repository.
-    
-If the repository you're looking at has a `packages` directory at the top level,
+
+### Lerna
+
+Most OpenMRS 3 projects use Lerna. If the repository you're looking
+at has a `packages` directory at the top level,
 then it is a "monorepo" and is using Lerna, and you'll want to read the
 [Lerna docs](https://github.com/lerna/lerna#readme).
-Otherwise, you don't have to worry about Lerna.
 
 ## React
 

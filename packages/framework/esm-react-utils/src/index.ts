@@ -11,6 +11,7 @@ export * from "./useBodyScrollLock";
 export * from "./useConfig";
 export * from "./useConnectedExtensions";
 export * from "./useConnectivity";
+export * from "./usePatient";
 export * from "./useCurrentPatient";
 export * from "./useExtension";
 export * from "./useExtensionSlotConfig";

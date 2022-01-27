@@ -41,5 +41,5 @@
 
 .changeLocationLink :hover {
   color: $field-01;
-  background-color: $brand-01;
+  @include brand-01(background-color);
 }

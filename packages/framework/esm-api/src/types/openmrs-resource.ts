@@ -17,7 +17,7 @@ export interface SessionUser {
 export interface User {
   display: string;
   link: Array<string>;
-  persion: any;
+  person: any;
   priviliges: any;
   resourceVersion: any;
   roles: Array<any>;
