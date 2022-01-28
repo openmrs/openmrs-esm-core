@@ -103,6 +103,21 @@ yarn build
 ./dist/cli.js
 ```
 
+#### The tests
+
+Run `yarn test` in the directory containing the package you want to test.
+
+Run `yarn lerna run test` to run all the tests in this repository.
+
+#### Linking the framework
+
+If you want to try out changes to a framework library, you will
+probably want to `yarn link` or `npm link` it into a frontend module.
+Note that even though frontend modules import from `@openmrs/esm-framework`,
+the package you need to link is the sub-library; e.g., if you are trying
+to test changes in `packages/framework/esm-api`, you will need to link
+`@openmrs/esm-api`.
+
 ### Version and release
 
 To increment the version, run the following command:
@@ -125,23 +140,3 @@ should just be the version number (e.g., `3.2.1`). The creation of the GitHub re
 will cause GitHub Actions to publish the packages, completing the release process.
 
 > Don't run `npm publish`, `yarn publish`, or `lerna publish`. Use the above process.
-
-## Possibilities
-
-The new architecture offers a couple of interesting possibilities. We go into them one by one.
-
-### Proxying OpenMRS Backends
-
-We can now proxy *any* backend. For instance, using the backend of the demo instance we just run:
-
-```sh
-npx openmrs debug --backend https://demo.openmrs.org/
-```
-
-There are a couple of interesting public instances:
-
-```sh
-https://qa-refapp.openmrs.org/
-https://demo.openmrs.org/
-https://openmrs-spa.org/
-```

@@ -11,12 +11,12 @@
 .link > div a:nth-child(1):hover {
   background-color: $ui-03;
   color: $ui-05;
-  border-left-color: $brand-01;
+  @include brand-01(border-left-color);
 }
 
 .link > div a:nth-child(1):focus {
   background-color: $ui-03;
   outline: none;
   color: $ui-05;
-  border-left-color: $brand-01;
+  @include brand-01(border-left-color);
 }

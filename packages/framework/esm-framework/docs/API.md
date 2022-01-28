@@ -315,6 +315,7 @@
 - [useNavigationContext](API.md#usenavigationcontext)
 - [useOnClickOutside](API.md#useonclickoutside)
 - [usePagination](API.md#usepagination)
+- [usePatient](API.md#usepatient)
 - [useSessionUser](API.md#usesessionuser)
 - [useStore](API.md#usestore)
 - [useStoreState](API.md#usestorestate)
@@ -660,7 +661,7 @@ ___
 
 ### fhir
 
-• `Const` **fhir**: `FhirClient`
+• **fhir**: `FhirClient`
 
 The `fhir` object is [an instance of fhir.js](https://github.com/FHIR/fhir.js)
 that can be used to call FHIR-compliant OpenMRS APIs. See
@@ -677,7 +678,7 @@ ___
 
 ### ConfigurableLink
 
-• `Const` **ConfigurableLink**: `React.FC`<[`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md)\>
+• **ConfigurableLink**: `React.FC`<[`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md)\>
 
 A React link component which calls [navigate](API.md#navigate) when clicked
 
@@ -697,7 +698,7 @@ ___
 
 ### ComponentContext
 
-• `Const` **ComponentContext**: `Context`<[`ComponentConfig`](interfaces/ComponentConfig.md)\>
+• **ComponentContext**: `Context`<[`ComponentConfig`](interfaces/ComponentConfig.md)\>
 
 Available to all components. Provided by `openmrsComponentDecorator`.
 
@@ -709,7 +710,7 @@ ___
 
 ### Extension
 
-• `Const` **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
+• **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
 
 Represents the position in the DOM where each extension within
 an extension slot is rendered.
@@ -727,7 +728,7 @@ ___
 
 ### ExtensionSlot
 
-• `Const` **ExtensionSlot**: `React.FC`<[`ExtensionSlotProps`](API.md#extensionslotprops)\>
+• **ExtensionSlot**: `React.FC`<[`ExtensionSlotProps`](API.md#extensionslotprops)\>
 
 #### Defined in
 
@@ -737,7 +738,7 @@ ___
 
 ### UserHasAccess
 
-• `Const` **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
+• **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
 
 #### Defined in
 
@@ -747,7 +748,7 @@ ___
 
 ### backendDependencies
 
-• `Const` **backendDependencies**: `Object`
+• **backendDependencies**: `Object`
 
 #### Type declaration
 
@@ -764,7 +765,7 @@ ___
 
 ### extensionStore
 
-• `Const` **extensionStore**: `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
+• **extensionStore**: `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
 #### Defined in
 
@@ -774,7 +775,7 @@ ___
 
 ### fhirBaseUrl
 
-• `Const` **fhirBaseUrl**: ``"/ws/fhir2/R4"``
+• **fhirBaseUrl**: ``"/ws/fhir2/R4"``
 
 #### Defined in
 
@@ -784,7 +785,7 @@ ___
 
 ### getStartedVisit
 
-• `Const` **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
+• **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
 
 #### Defined in
 
@@ -794,7 +795,7 @@ ___
 
 ### implementerToolsConfigStore
 
-• `Const` **implementerToolsConfigStore**: `Store`<[`ImplementerToolsConfigStore`](interfaces/ImplementerToolsConfigStore.md)\>
+• **implementerToolsConfigStore**: `Store`<[`ImplementerToolsConfigStore`](interfaces/ImplementerToolsConfigStore.md)\>
 
 #### Defined in
 
@@ -804,7 +805,7 @@ ___
 
 ### offlineUuidPrefix
 
-• `Const` **offlineUuidPrefix**: ``"OFFLINE+"``
+• **offlineUuidPrefix**: ``"OFFLINE+"``
 
 #### Defined in
 
@@ -814,7 +815,7 @@ ___
 
 ### omrsOfflineCachingStrategyHttpHeaderName
 
-• `Const` **omrsOfflineCachingStrategyHttpHeaderName**: ``"x-omrs-offline-caching-strategy"``
+• **omrsOfflineCachingStrategyHttpHeaderName**: ``"x-omrs-offline-caching-strategy"``
 
 #### Defined in
 
@@ -824,7 +825,7 @@ ___
 
 ### omrsOfflineResponseBodyHttpHeaderName
 
-• `Const` **omrsOfflineResponseBodyHttpHeaderName**: ``"x-omrs-offline-response-body"``
+• **omrsOfflineResponseBodyHttpHeaderName**: ``"x-omrs-offline-response-body"``
 
 #### Defined in
 
@@ -834,7 +835,7 @@ ___
 
 ### omrsOfflineResponseStatusHttpHeaderName
 
-• `Const` **omrsOfflineResponseStatusHttpHeaderName**: ``"x-omrs-offline-response-status"``
+• **omrsOfflineResponseStatusHttpHeaderName**: ``"x-omrs-offline-response-status"``
 
 #### Defined in
 
@@ -844,7 +845,7 @@ ___
 
 ### sessionEndpoint
 
-• `Const` **sessionEndpoint**: ``"/ws/rest/v1/session"``
+• **sessionEndpoint**: ``"/ws/rest/v1/session"``
 
 #### Defined in
 
@@ -854,7 +855,7 @@ ___
 
 ### temporaryConfigStore
 
-• `Const` **temporaryConfigStore**: `Store`<`TemporaryConfigStore`\>
+• **temporaryConfigStore**: `Store`<`TemporaryConfigStore`\>
 
 #### Defined in
 
@@ -864,7 +865,7 @@ ___
 
 ### validators
 
-• `Const` **validators**: `Object`
+• **validators**: `Object`
 
 #### Type declaration
 
@@ -1002,18 +1003,18 @@ ___
 
 ### fetchCurrentPatient
 
-▸ **fetchCurrentPatient**(`patientUuid`, `contentOverrides?`): `Promise`<`Object`\> \| `Promise`<``null``\>
+▸ **fetchCurrentPatient**(`patientUuid`, `contentOverrides?`): `Promise`<{ `data`: `Patient`  }\> \| `Promise`<``null``\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
-| `contentOverrides?` | `Partial`<`Parameters`<typeof `fhir.read`\>[``0``]\> |
+| `contentOverrides?` | `Partial`<{ `headers?`: [`FetchHeaders`](interfaces/FetchHeaders.md) ; `id?`: `string` ; `patient?`: `string` ; `type`: `ResourceName`  }\> |
 
 #### Returns
 
-`Promise`<`Object`\> \| `Promise`<``null``\>
+`Promise`<{ `data`: `Patient`  }\> \| `Promise`<``null``\>
 
 #### Defined in
 
@@ -1330,7 +1331,7 @@ ___
 
 ### navigate
 
-▸ **navigate**(`__namedParameters`): `void`
+▸ **navigate**(`to`): `void`
 
 Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
 
@@ -1344,9 +1345,9 @@ const submitHandler = () => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`NavigateOptions`](interfaces/NavigateOptions.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `to` | [`NavigateOptions`](interfaces/NavigateOptions.md) | The target path or URL. Supports templating with 'openmrsBase' and 'openmrsSpaBase'. For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home` for implementations using the standard OpenMRS and SPA base paths. |
 
 #### Returns
 
@@ -1773,7 +1774,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 | :------ | :------ | :------ |
 | `date` | `Date` | `undefined` |
 | `mode` | [`FormatDateMode`](API.md#formatdatemode) | `"standard"` |
-| `options` | [`FormatDateOptions`](API.md#formatdateoptions) | `undefined` |
+| `options` | [`FormatDateOptions`](API.md#formatdateoptions) | `defaultOptions` |
 
 #### Returns
 
@@ -1907,7 +1908,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `lazy` | () => `Promise`<`Object`\> |
+| `lazy` | () => `Promise`<{ `default`: `ComponentType`<`T`\>  }\> |
 | `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
@@ -1940,7 +1941,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `lazy` | () => `Promise`<`Object`\> |
+| `lazy` | () => `Promise`<{ `default`: `ComponentType`<`T`\>  }\> |
 | `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
@@ -2017,8 +2018,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `online` | `boolean` \| `object` \| `undefined` |
-| `offline` | `boolean` \| `object` \| `undefined` |
+| `online` | `undefined` \| `boolean` \| `object` |
+| `offline` | `undefined` \| `boolean` \| `object` |
 
 #### Returns
 
@@ -2199,7 +2200,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Component` | `React.ComponentType`<`T`\> |
+| `Component` | `ComponentType`<`T`\> |
 | `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
@@ -2318,7 +2319,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Component` | `React.ComponentType`<`T`\> |
+| `Component` | `ComponentType`<`T`\> |
 | `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
 
 #### Returns
@@ -2433,7 +2434,7 @@ ___
 
 ### getVisitsForPatient
 
-▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`Object`\>\>
+▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
 
 #### Parameters
 
@@ -2445,7 +2446,7 @@ ___
 
 #### Returns
 
-`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`Object`\>\>
+`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
 
 #### Defined in
 
@@ -2708,7 +2709,7 @@ ___
 
 ### openmrsComponentDecorator
 
-▸ **openmrsComponentDecorator**(`userOpts`): (`Comp`: `ComponentType`<`Object`\>) => `ComponentType`<`any`\>
+▸ **openmrsComponentDecorator**(`userOpts`): (`Comp`: `ComponentType`<{}\>) => `ComponentType`<`any`\>
 
 #### Parameters
 
@@ -2726,7 +2727,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `Comp` | `ComponentType`<`Object`\> |
+| `Comp` | `ComponentType`<{}\> |
 
 ##### Returns
 
@@ -3040,7 +3041,7 @@ Under normal conditions there is no need to use this function.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `target` | `HTMLElement` \| ``null`` | The container target that hosts the inline notifications. |
+| `target` | ``null`` \| `HTMLElement` | The container target that hosts the inline notifications. |
 
 #### Returns
 
@@ -3086,7 +3087,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `modalContainer` | `HTMLElement` \| ``null`` |
+| `modalContainer` | ``null`` \| `HTMLElement` |
 
 #### Returns
 
@@ -3109,7 +3110,7 @@ Under normal conditions there is no need to use this function.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `target` | `HTMLElement` \| ``null`` | The container target that hosts the toast notifications. |
+| `target` | ``null`` \| `HTMLElement` | The container target that hosts the toast notifications. |
 
 #### Returns
 
@@ -3913,7 +3914,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `uuid` | `string` |
-| `payload` | [`UpdateVisitPayload`](API.md#updatevisitpayload) |
+| `payload` | [`NewVisitPayload`](interfaces/NewVisitPayload.md) |
 | `abortController` | `AbortController` |
 
 #### Returns
@@ -4004,12 +4005,12 @@ Use this React Hook to obtain your module's configuration.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `constructor` | `Function` | The initial value of Object.prototype.constructor is the standard built-in Object constructor. |
-| `hasOwnProperty` | (`v`: `PropertyKey`) => `boolean` | - |
-| `isPrototypeOf` | (`v`: `Object`) => `boolean` | - |
-| `propertyIsEnumerable` | (`v`: `PropertyKey`) => `boolean` | - |
-| `toLocaleString` | () => `string` | - |
-| `toString` | () => `string` | - |
-| `valueOf` | () => `Object` | - |
+| `hasOwnProperty` | (`v`: `PropertyKey`) => `boolean` | Determines whether an object has a property with the specified name. |
+| `isPrototypeOf` | (`v`: `Object`) => `boolean` | Determines whether an object exists in another object's prototype chain. |
+| `propertyIsEnumerable` | (`v`: `PropertyKey`) => `boolean` | Determines whether a specified property is enumerable. |
+| `toLocaleString` | () => `string` | Returns a date converted to a string using the current locale. |
+| `toString` | () => `string` | Returns a string representation of an object. |
+| `valueOf` | () => `Object` | Returns the primitive value of the specified object. |
 
 #### Defined in
 
@@ -4070,7 +4071,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useCurrentPatient.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useCurrentPatient.ts#L79)
+[packages/framework/esm-react-utils/src/useCurrentPatient.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useCurrentPatient.ts#L82)
 
 ___
 
@@ -4298,7 +4299,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `HTMLElement``HTMLElement` |
+| `T` | extends `HTMLElement` = `HTMLElement` |
 
 #### Parameters
 
@@ -4332,7 +4333,7 @@ ___
 | Name | Type | Default value |
 | :------ | :------ | :------ |
 | `data` | `T`[] | `[]` |
-| `resultsPerPage` | `number` | `undefined` |
+| `resultsPerPage` | `number` | `defaultResultsPerPage` |
 
 #### Returns
 
@@ -4353,6 +4354,38 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/usePagination.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/usePagination.ts#L5)
+
+___
+
+### usePatient
+
+▸ **usePatient**(`patientUuid?`): `Object`
+
+This React hook returns a patient object. If the `patientUuid` is provided
+as a parameter, then the patient for that UUID is returned. If the parameter
+is not provided, the patient UUID is obtained from the current route, and
+a route listener is set up to update the patient whenever the route changes.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid?` | `string` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `error` | ``null`` \| `Error` |
+| `isLoading` | `boolean` |
+| `patient` | `NullablePatient` |
+| `patientUuid` | ``null`` \| `string` |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/usePatient.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/usePatient.ts#L86)
 
 ___
 

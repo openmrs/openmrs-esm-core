@@ -6,6 +6,21 @@
 You can fork that repository, or clone-and-copy it. 
 Follow the instructions in the README to turn it into your own frontend module.
 
+## Creating a new frontend module in a Lerna monorepo
+
+The process for creating a new frontend module in a monorepo
+is nearly identical to the one for creating one in an independent
+repo.
+1. Put the contents into a new directory under `packages/`
+2. Remove configuration files that are already present at the
+  workspace level—things like `.github` and `.eslintrc`.
+3. Remove `devDependencies` from the new frontend module's `package.json`
+  which are already in the `devDependencies` of the `package.json` at
+  the workspace level.
+
+That's it! Use the `@openrms/esm-template-app` above along with this guide
+to get your frontend module started.
+
 ## The `index.ts` file
 
 All frontend modules have an `index.ts` as an

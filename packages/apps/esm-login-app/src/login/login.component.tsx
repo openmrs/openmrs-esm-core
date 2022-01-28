@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styles from "../styles.scss";
 import ArrowRight24 from "@carbon/icons-react/es/arrow--right/24";
-import { Button, TextInput } from "carbon-components-react";
+import { Button, InlineNotification, TextInput } from "carbon-components-react";
 import { RouteComponentProps } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useConfig, interpolateUrl } from "@openmrs/esm-framework";
@@ -103,7 +103,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
         const valid = authData && authData.authenticated;
 
         if (!valid) {
-          throw new Error("Incorrect username or password");
+          throw new Error("invalidCredentials");
         }
       } catch (error) {
         setErrorMessage(error.message);
@@ -130,6 +130,15 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
   if (config.provider.type === "basic") {
     return (
       <div className={`canvas ${styles["container"]}`}>
+        {errorMessage && (
+          <InlineNotification
+            kind="error"
+            style={{ width: "23rem" }}
+            subtitle={t(errorMessage)}
+            title={t("error", "Error")}
+            onClick={() => setErrorMessage("")}
+          />
+        )}
         <div className={`omrs-card ${styles["login-card"]}`}>
           <div className={styles["center"]}>{logo}</div>
           <form onSubmit={handleSubmit} ref={formRef}>
@@ -209,11 +218,6 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
                 </Button>
               </div>
             )}
-            <div className={styles["center"]}>
-              <p className={styles["error-msg"]}>
-                {t("errorMessage", errorMessage)}
-              </p>
-            </div>
           </form>
         </div>
         <div className={styles["need-help"]}>

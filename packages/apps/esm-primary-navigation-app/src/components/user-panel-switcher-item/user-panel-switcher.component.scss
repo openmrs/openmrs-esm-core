@@ -25,12 +25,12 @@
 .switcherContainer ul button {
   @extend .productiveHeading01;
   width: 100%;
-  background-color: $brand-02;
+  @include brand-02(background-color);
 }
 
 .switcherContainer ul button:hover {
   color: $field-01;
-  background-color: $brand-01;
+  @include brand-01(background-color);
 }
 
 .switcherContainer ul div {
@@ -48,7 +48,7 @@
 }
 
 .switcherContainer ul div button:hover {
-  background-color: $brand-01;
+  @include brand-01(background-color);
   color: $inverse-link;
 }
 
