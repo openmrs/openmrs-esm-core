@@ -24,13 +24,13 @@
 }
 
 .changeLocationLinkContainer button {
-  background-color: #004144;
+  @include brand-02(background-color);
   padding: 0rem 0.75rem;
   color: $inverse-link;
 }
 
 .changeLocationLinkContainer button :hover {
-  background-color: #004144;
+  @include brand-03(background-color);
   color: $inverse-link;
 }
 
