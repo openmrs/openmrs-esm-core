@@ -12,11 +12,12 @@
 }
 
 .menuLink a:hover {
-  background-color: #005d5d;
+  @include brand-01(background-color)
 }
 
 .externalLinks {
-  border-top: 1px solid var(--brand-03);
+  border-top: 1px solid;
+  @include brand-03(border-top-color)
 }
 
 .launchIcon {
