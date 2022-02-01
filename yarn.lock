@@ -15623,7 +15623,7 @@ single-spa-react@^4.1.1:
   resolved "https://registry.yarnpkg.com/single-spa-react/-/single-spa-react-4.3.1.tgz#7c787fe8f4da535ca46c10fae9bbace9c6567701"
   integrity sha512-RD93IpUfjuHnSiPSb3zPIUYkUuDAmxj3L1fkGjVzmSCRhEcc7oZBEe68k32oN36IqyOyQPJrCiPUOMAx6aC26g==
 
-single-spa@^5.9.2:
+single-spa@^5.9.2, single-spa@^5.9.3:
   version "5.9.3"
   resolved "https://registry.yarnpkg.com/single-spa/-/single-spa-5.9.3.tgz#2d151cbb3b273629a5b27b30a3b8ca847dcba4c5"
   integrity sha512-qMGraRzIBsodV6569Fob4cQ4/yQNrcZ5Achh3SAQDljmqUtjAZ7BAA7GAyO/l5eizb7GtTmVq9Di7ORyKw82CQ==
