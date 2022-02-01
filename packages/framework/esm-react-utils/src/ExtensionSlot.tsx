@@ -69,9 +69,8 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
     stateRef.current = state;
   }
 
-  const content = useMemo(() => {
-    console.log("creating new Context and Extension instance");
-    return (
+  const content = useMemo(
+    () =>
       extensionSlotName &&
       select(extensions).map((extension) => (
         <ComponentContext.Provider
@@ -87,9 +86,9 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
         >
           {children ?? <Extension state={stateRef.current} />}
         </ComponentContext.Provider>
-      ))
-    );
-  }, [select, extensions, extensionSlotName]);
+      )),
+    [select, extensions, extensionSlotName]
+  );
 
   return (
     <div
