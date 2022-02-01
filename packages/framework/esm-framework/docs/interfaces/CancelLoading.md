@@ -14,4 +14,4 @@
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L15)
+[packages/framework/esm-extensions/src/render.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L9)
