@@ -48,9 +48,11 @@ export interface ExtensionSlotBaseProps {
 export type ExtensionSlotProps = ExtensionSlotBaseProps &
   React.HTMLAttributes<HTMLDivElement>;
 
+const defaultSelect = (e) => e;
+
 export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   extensionSlotName,
-  select = (e) => e,
+  select = defaultSelect,
   children,
   state,
   style,
@@ -65,8 +67,9 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
     stateRef.current = state;
   }
 
-  const content = useMemo(
-    () =>
+  const content = useMemo(() => {
+    console.log("creating new Context and Extension instance");
+    return (
       extensionSlotName &&
       select(extensions).map((extension) => (
         <ComponentContext.Provider
@@ -82,9 +85,9 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
         >
           {children ?? <Extension state={stateRef.current} />}
         </ComponentContext.Provider>
-      )),
-    [select, extensions, extensionSlotName, stateRef.current]
-  );
+      ))
+    );
+  }, [select, extensions, extensionSlotName]);
 
   return (
     <div
