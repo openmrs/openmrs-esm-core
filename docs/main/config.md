@@ -63,7 +63,7 @@ defineConfigSchema("@openmrs/esm-hologram-doctor", {
     color: {
       _type: Type.Boolean,
       _default: false,
-      _description: "Whether the cologram supports color display."
+      _description: "Whether the hologram supports color display."
     }
   }
 }
