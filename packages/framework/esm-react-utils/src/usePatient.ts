@@ -146,7 +146,7 @@ export function usePatient(patientUuid?: string) {
   return {
     isLoading: state.isLoadingPatient,
     patient: state.patient,
-    patientUuid: patientUuid ?? null,
+    patientUuid: patientUuid ?? state.patientUuid,
     error: state.err,
   };
 }
