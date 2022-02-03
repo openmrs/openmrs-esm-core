@@ -1,5 +1,6 @@
 import React from "react";
 import { useConfig } from "@openmrs/esm-framework";
+import styles from "./logo.component.scss";
 
 const Logo: React.FC = () => {
   const { logo } = useConfig();
@@ -7,7 +8,13 @@ const Logo: React.FC = () => {
   return (
     <>
       {logo?.src ? (
-        <img src={logo.src} alt={logo.alt} width={110} height={40} />
+        <img
+          className={styles.logo}
+          src={logo.src}
+          alt={logo.alt}
+          width={110}
+          height={40}
+        />
       ) : logo?.name ? (
         logo.name
       ) : (
