@@ -4059,6 +4059,11 @@ ___
 
 ▸ **useCurrentPatient**(`patientUuid?`): [`boolean`, `NullablePatient`, [`PatientUuid`](API.md#patientuuid), `Error` \| ``null``]
 
+This React hook returns the current patient, as specified by the current route. It returns
+all the information needed to render a loading state, error state, and normal/success state.
+
+**`deprecated`** Use [usePatient](API.md#usepatient) instead.
+
 #### Parameters
 
 | Name | Type |
