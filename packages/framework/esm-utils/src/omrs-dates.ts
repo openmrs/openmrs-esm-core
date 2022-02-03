@@ -205,7 +205,7 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
       locale = "en-GB";
     }
     localeString = date.toLocaleDateString(locale, formatterOptions);
-    if (locale == "en-GB" && mode == "standard") {
+    if (locale == "en-GB" && mode == "standard" && year && day) {
       // Custom formatting for English. Use hyphens instead of spaces.
       localeString = localeString.replace(/ /g, "-");
     }
