@@ -31,5 +31,11 @@
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {
+    "single-spa": "5.x"
+  },
+  "devDependencies": {
+    "single-spa": "^5.9.3"
   }
 }

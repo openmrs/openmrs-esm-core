@@ -1,3 +1,5 @@
+import { LifeCycleFn } from "single-spa";
+
 declare global {
   interface Window {
     /**
@@ -54,6 +56,13 @@ export type SpaEnvironment = "production" | "development" | "test";
 
 export interface ImportMap {
   imports: Record<string, string>;
+}
+
+export interface Lifecycle {
+  bootstrap: LifeCycleFn<any>;
+  mount: LifeCycleFn<any>;
+  unmount: LifeCycleFn<any>;
+  update?: LifeCycleFn<any>;
 }
 
 export interface SpaConfig {
