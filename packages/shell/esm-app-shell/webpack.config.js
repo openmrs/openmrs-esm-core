@@ -27,7 +27,7 @@ const openmrsPublicPath = removeTrailingSlash(
   process.env.OMRS_PUBLIC_PATH || "/openmrs/spa"
 );
 const openmrsProxyTarget =
-  process.env.OMRS_PROXY_TARGET || "https://openmrs-spa.org/";
+  process.env.OMRS_PROXY_TARGET || "https://dev3.openmrs.org/";
 const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || "OpenMRS";
 const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
 const openmrsOffline = process.env.OMRS_OFFLINE !== "disable";

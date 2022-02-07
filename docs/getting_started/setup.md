@@ -76,7 +76,7 @@ In the frontend module you want to develop, run
 ```bash
 # if the OpenMRS frontend you're looking at uses HTTP (e.g. a local server)
 yarn serve
-# if the OpenMRS frontend you're looking at uses HTTPS (e.g. openmrs-spa.org)
+# if the OpenMRS frontend you're looking at uses HTTPS (e.g. dev3.openmrs.org)
 yarn serve --https
 ```
 
