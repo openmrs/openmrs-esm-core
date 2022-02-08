@@ -21,6 +21,7 @@
   - [Translations](/main/translations.md)
   - [Breadcrumbs](/main/breadcrumbs.md)
   - [Creating a Distribution](/main/distribution.md)
+  - [FAQ](/main/faq.md)
 - Under the hood
   - [Architecture Overview](/under_the_hood/architecture.md)
   - [Tooling](/under_the_hood/tooling.md)
