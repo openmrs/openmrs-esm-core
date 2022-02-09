@@ -16,6 +16,7 @@ import {
   Search,
   SearchSkeleton,
   DataTable,
+  DataTableHeader,
 } from "carbon-components-react";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -27,22 +28,30 @@ import {
   SyncItem,
 } from "@openmrs/esm-framework";
 
-export interface OfflineActionsTableProps {
-  isLoading: boolean;
-  data?: Array<SyncItemWithPatient>;
-  disableEditing: boolean;
-  disableDelete: boolean;
-  onDelete(syncItemIds: Array<number>): void;
-}
-
 export interface SyncItemWithPatient {
   item: SyncItem;
   patient?: fhir.Patient;
 }
 
+export type OfflineActionsTableHeaders =
+  | "createdOn"
+  | "patient"
+  | "action"
+  | "error";
+
+export interface OfflineActionsTableProps {
+  isLoading: boolean;
+  data?: Array<SyncItemWithPatient>;
+  hiddenHeaders?: Array<OfflineActionsTableHeaders>;
+  disableEditing: boolean;
+  disableDelete: boolean;
+  onDelete(syncItemIds: Array<number>): void;
+}
+
 const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
   isLoading,
   data = [],
+  hiddenHeaders,
   disableEditing,
   disableDelete,
   onDelete,
@@ -52,8 +61,7 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
   const { results, currentPage, goTo } = usePagination(data);
   const layout = useLayoutType();
   const toolbarItemSize = layout === "desktop" ? "sm" : undefined;
-
-  const headers = [
+  const defaultHeaders: Array<DataTableHeader<OfflineActionsTableHeaders>> = [
     {
       key: "createdOn",
       header: t("offlineActionsTableCreatedOn", "Date & Time"),
@@ -71,8 +79,11 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
       header: t("offlineActionsTableError", "Error"),
     },
   ];
+  const headers = defaultHeaders.filter(
+    (header) => !hiddenHeaders?.includes(header.key)
+  );
 
-  const rows = results.map((syncItem, i) => {
+  const rows = results.map((syncItem) => {
     const patientName = getPatientName(syncItem);
 
     return {
