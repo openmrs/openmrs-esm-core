@@ -1,7 +1,8 @@
 # OpenMRS Frontend 3.0 for Developers
 
 <!--
-  This documentation follows the Google developer documentation style guide:
+ 
+This documentation follows the Google developer documentation style guide:
     https://developers.google.com/style
   
   Please give it a read and write accordingly.
@@ -27,6 +28,8 @@
         some point in the future it may make sense to refactor these docs to
         be less React-centric.
   -->
+
+:link:	**Short Link to this Guide: [om.rs/dev3docs](https://om.rs/dev3docs)** :link:	
 
 This documentation is intended to enable developers to develop and deploy
 custom UI features for OpenMRS.
