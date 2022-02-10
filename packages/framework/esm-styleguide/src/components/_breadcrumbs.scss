@@ -1,5 +1,8 @@
+@import "~@openmrs/esm-styleguide/src/vars";
+
 nav.breadcrumbs-container {
   padding: 1rem;
+  background-color: $ui-01;
 
   ol li {
     display: inline-flex;
