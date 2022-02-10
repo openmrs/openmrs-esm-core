@@ -22,10 +22,13 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./offline-actions-table.styles.scss";
 import {
+  createErrorHandler,
   usePagination,
   useLayoutType,
   navigate,
   SyncItem,
+  canBeginEditSynchronizationItemsOfType,
+  beginEditSynchronizationItem,
 } from "@openmrs/esm-framework";
 
 export interface SyncItemWithPatient {
@@ -98,7 +101,10 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
         ),
         filterableValue: patientName,
       },
-      action: syncItem.item.descriptor?.displayName,
+      action: {
+        value: <ActionNameLink syncItem={syncItem.item} />,
+        filterableValue: syncItem.item.descriptor.displayName ?? "-",
+      },
       error: syncItem.item.lastError?.message ?? "-",
     };
   });
@@ -226,6 +232,26 @@ function getPatientName({ item, patient }: SyncItemWithPatient) {
   return patientName
     ? `${patientName.given.join(" ")} ${patientName.family}`
     : item.descriptor.patientUuid;
+}
+
+function ActionNameLink({ syncItem }: { syncItem: SyncItem }) {
+  const displayName = syncItem.descriptor.displayName ?? "-";
+
+  if (!canBeginEditSynchronizationItemsOfType(syncItem.type)) {
+    return <>{displayName}</>;
+  }
+
+  return (
+    <Link
+      onClick={() =>
+        beginEditSynchronizationItem(syncItem.id).catch((e) =>
+          createErrorHandler()(e)
+        )
+      }
+    >
+      {displayName}
+    </Link>
+  );
 }
 
 function PatientLink({ patientUuid, patientName }) {
