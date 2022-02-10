@@ -1,8 +1,8 @@
 # OpenMRS Frontend 3.0 for Developers
 
 <!--
- 
-This documentation follows the Google developer documentation style guide:
+
+  This documentation follows the Google developer documentation style guide:
     https://developers.google.com/style
   
   Please give it a read and write accordingly.
@@ -29,7 +29,7 @@ This documentation follows the Google developer documentation style guide:
         be less React-centric.
   -->
 
-:link:	**Short Link to this Guide: [om.rs/dev3docs](https://om.rs/dev3docs)** :link:	
+:link: **Link to this guide: [om.rs/dev3docs](https://om.rs/dev3docs)** :link:	
 
 This documentation is intended to enable developers to develop and deploy
 custom UI features for OpenMRS.
@@ -42,18 +42,17 @@ introduction to the project and all of the relevant links.
 You should first read the
 [Implementer Documentation](https://wiki.openmrs.org/display/projects/3.x+Implementer+Documentation),
 which provides some conceptual orientation as well as instructions for deployment
-and configuring. The Implementer Documentation is also Developer Documentation
-(but not vice-versa).
+and configuring.
 
 Once you've read that, click [Prerequisite knowledge](getting_started/prerequisites.md)
 here or in the left sidebar to begin, or check out some videos below.
 
-Note that this documentation tends to assume that the developer is using React,
+> Note: This documentation tends to assume that the developer is using React,
 but this is not a requirement of OpenMRS Frontend 3.0. Indeed, the entire purpose
 of choosing a microfrontends-based architecture was to allow collaboration between
 different teams using different technologies. If you are developing
 frontend modules in a technology other than React, please tell us so in the
-[#microfrontends](https://openmrs.slack.com/archives/CHP5QAE5R) channel on Slack.
+[#openmrs3](https://openmrs.slack.com/archives/CHP5QAE5R) channel on Slack.
 We'd love to work with you to make the development experience as smooth as possible,
 and take the opportunity to expand OpenMRS Frontend 3.0 support for different
 frameworks.
