@@ -6,6 +6,7 @@ import {
   PageDefinition,
   registerExtension,
   ResourceLoader,
+  Lifecycle,
 } from "@openmrs/esm-framework";
 import { registerApplication } from "single-spa";
 import { routePrefix, routeRegex, wrapLifecycle } from "./helpers";
@@ -44,10 +45,10 @@ function trySetup(appName: string, setup: () => any): any {
 }
 
 function getLoader(
-  load: () => Promise<any>,
+  load: () => Promise<Lifecycle>,
   resources?: Record<string, ResourceLoader>,
   privilege?: string
-) {
+): () => Promise<Lifecycle> {
   if (typeof privilege === "string") {
     load = wrapLifecycle(load, privilege);
   }
@@ -65,7 +66,7 @@ function getLoader(
           return props;
         }, {});
         const lifecycle = await load();
-        return {
+        const newLifecycle = {
           ...lifecycle,
           mount(props) {
             return lifecycle.mount({
@@ -73,13 +74,21 @@ function getLoader(
               ...props,
             });
           },
-          update(props) {
-            return lifecycle.update({
-              ...dataProps,
-              ...props,
-            });
-          },
         };
+        if (lifecycle.update) {
+          Object.assign(newLifecycle, {
+            update(props) {
+              return (
+                lifecycle.update &&
+                lifecycle.update({
+                  ...dataProps,
+                  ...props,
+                })
+              );
+            },
+          });
+        }
+        return newLifecycle;
       };
     }
   }

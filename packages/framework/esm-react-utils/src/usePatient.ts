@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useMemo, useReducer } from "react";
 import { fetchCurrentPatient, PatientUuid } from "@openmrs/esm-api";
 
 type NullablePatient = fhir.Patient | null;
@@ -133,10 +133,13 @@ export function usePatient(patientUuid?: string) {
 
   useEffect(() => {
     const handleRouteUpdate = (evt) => {
-      dispatch({
-        type: ActionTypes.loadPatient,
-        patientUuid: getPatientUuidFromUrl(),
-      });
+      const newPatientUuid = getPatientUuidFromUrl();
+      if (newPatientUuid != state.patientUuid) {
+        dispatch({
+          type: ActionTypes.loadPatient,
+          patientUuid: newPatientUuid,
+        });
+      }
     };
     window.addEventListener("single-spa:routing-event", handleRouteUpdate);
     return () =>
@@ -146,7 +149,7 @@ export function usePatient(patientUuid?: string) {
   return {
     isLoading: state.isLoadingPatient,
     patient: state.patient,
-    patientUuid: patientUuid ?? null,
+    patientUuid: patientUuid ?? state.patientUuid,
     error: state.err,
   };
 }

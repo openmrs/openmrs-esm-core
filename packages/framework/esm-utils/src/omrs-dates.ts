@@ -137,63 +137,58 @@ export function parseDate(dateString: string) {
   return dayjs(dateString).toDate();
 }
 
-const DATE_FORMAT_YYYY_MMM_DD = {
-  year: "numeric",
-  month: "short",
-  day: "2-digit",
-};
-const DATE_FORMAT_YYYY_MMM = {
-  year: "numeric",
-  month: "short",
-};
-const DATE_FORMAT_MMM_DD = {
-  month: "short",
-  day: "2-digit",
-};
-
-export type FormatDateMode = "standard" | "no year" | "no day" | "wide";
+export type FormatDateMode = "standard" | "wide";
 
 export type FormatDateOptions = {
+  /**
+   * - `standard`: "03 Feb 2022"
+   * - `wide`:     "03 — Feb — 2022"
+   */
+  mode: FormatDateMode;
   /**
    * Whether the time should be included in the output always (`true`),
    * never (`false`), or only when the input date is today (`for today`).
    */
   time: true | false | "for today";
+  /** Whether to include the day number */
+  day: boolean;
+  /** Whether to include the year */
+  year: boolean;
 };
+
 const defaultOptions: FormatDateOptions = {
+  mode: "standard",
   time: "for today",
+  day: true,
+  year: true,
 };
 
 /**
  * Formats the input date according to the current locale and the
- * given format mode.
+ * given options.
  *
- * - `standard`: "13 Dec 2021"
- * - `no year`:  "13 Dec"
- * - `no day`:   "Dec 2021"
- * - `wide`:     "13 — Dec — 2021"
+ * Default options:
+ *  - mode: "standard",
+ *  - time: "for today",
+ *  - day: true,
+ *  - year: true
  *
- * Regardless of the mode, if the date is today, then "Today" is produced
- * (in the locale language).
+ * If the date is today then "Today" is produced (in the locale language).
  *
- * Can be used to format a date with time, also, by providing `options`.
- * By default, the time is included only when the input date is today.
- * The time is appended with a comma and a space. This agrees with the
- * output of `Date.prototype.toLocaleString` for *most* locales.
+ * When time is included, it is appended with a comma and a space. This
+ * agrees with the output of `Date.prototype.toLocaleString` for *most*
+ * locales.
  */
-export function formatDate(
-  date: Date,
-  mode: FormatDateMode = "standard",
-  options: FormatDateOptions = defaultOptions
-) {
-  const formatterOptions = (
-    {
-      standard: DATE_FORMAT_YYYY_MMM_DD,
-      wide: DATE_FORMAT_YYYY_MMM_DD,
-      "no year": DATE_FORMAT_MMM_DD,
-      "no day": DATE_FORMAT_YYYY_MMM,
-    } as Record<string, Intl.DateTimeFormatOptions>
-  )[mode];
+export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
+  const { mode, time, day, year }: FormatDateOptions = {
+    ...defaultOptions,
+    ...options,
+  };
+  const formatterOptions: Intl.DateTimeFormatOptions = {
+    year: year ? "numeric" : undefined,
+    month: "short",
+    day: day ? "2-digit" : undefined,
+  };
   let locale = getLocale();
   let localeString: string;
   const isToday = dayjs(date).isToday();
@@ -210,7 +205,7 @@ export function formatDate(
       locale = "en-GB";
     }
     localeString = date.toLocaleDateString(locale, formatterOptions);
-    if (locale == "en-GB" && mode == "standard") {
+    if (locale == "en-GB" && mode == "standard" && year && day) {
       // Custom formatting for English. Use hyphens instead of spaces.
       localeString = localeString.replace(/ /g, "-");
     }
@@ -225,7 +220,7 @@ export function formatDate(
       }
     }
   }
-  if (options.time === true || (isToday && options.time === "for today")) {
+  if (time === true || (isToday && time === "for today")) {
     localeString += `, ${formatTime(date)}`;
   }
   return localeString;
@@ -251,8 +246,11 @@ export function formatTime(date: Date) {
  * and `formatTime` with a comma and space. This agrees with the
  * output of `Date.prototype.toLocaleString` for *most* locales.
  */
-export function formatDatetime(date: Date, mode: FormatDateMode = "standard") {
-  return formatDate(date, mode, { time: true });
+export function formatDatetime(
+  date: Date,
+  options?: Partial<Omit<FormatDateOptions, "time">>
+) {
+  return formatDate(date, { ...options, time: true });
 }
 
 function getLocale() {

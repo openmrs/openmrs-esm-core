@@ -73,7 +73,7 @@ function reducer(
   }
 }
 
-/*
+/**
  * This React hook returns the current patient, as specified by the current route. It returns
  * all the information needed to render a loading state, error state, and normal/success state.
  *

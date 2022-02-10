@@ -38,7 +38,12 @@ yarn
 
 Then you're ready to start a dev server! The command to run will depend on
 the repository you checked out. Read the README for that repository to find
-out what command you should run.
+out what command you should run. In the case of `openmrs-esm-template-app`,
+use `yarn start` to start the server
+
+```bash
+yarn start
+```
 
 This command will almost certainly run a "script" from the `package.json`
 file. Take a look at the `scripts` section of this file to find out what
@@ -71,7 +76,7 @@ In the frontend module you want to develop, run
 ```bash
 # if the OpenMRS frontend you're looking at uses HTTP (e.g. a local server)
 yarn serve
-# if the OpenMRS frontend you're looking at uses HTTPS (e.g. openmrs-spa.org)
+# if the OpenMRS frontend you're looking at uses HTTPS (e.g. dev3.openmrs.org)
 yarn serve --https
 ```
 

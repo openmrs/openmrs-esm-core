@@ -10,7 +10,7 @@
     - "frontend module": any "-app" package
     - "microfrontends": the generic architecture concept
     - "OpenMRS Frontend 3.0": the OpenMRS framework for frontend modules
-    - "the openmrs-spa.org CI server": openmrs-spa.org
+    - "the OpenMRS CI server": dev3.openmrs.org
     - "community-managed frontend modules": what it sounds like. Doesn't necessarily include
         everything published to the `openmrs` NPM org.
 

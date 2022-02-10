@@ -1,15 +1,9 @@
+import { Lifecycle } from "@openmrs/esm-globals";
 import { update } from "@openmrs/esm-state";
 import { mountRootParcel, Parcel } from "single-spa";
 import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
 import { checkStatus, getCustomProps } from "./helpers";
 import { updateExtensionStore } from "./store";
-
-export interface Lifecycle {
-  bootstrap(): void;
-  mount(): void;
-  unmount(): void;
-  update?(): void;
-}
 
 export interface CancelLoading {
   (): void;

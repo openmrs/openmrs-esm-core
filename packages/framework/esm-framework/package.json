@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-framework",
-  "version": "3.1.14",
+  "version": "3.2.0",
   "license": "MPL-2.0",
   "browser": "dist/openmrs-esm-framework.js",
   "main": "src/index.ts",
@@ -35,17 +35,17 @@
     "access": "public"
   },
   "dependencies": {
-    "@openmrs/esm-api": "^3.1.14",
-    "@openmrs/esm-breadcrumbs": "^3.1.14",
-    "@openmrs/esm-config": "^3.1.14",
-    "@openmrs/esm-error-handling": "^3.1.14",
-    "@openmrs/esm-extensions": "^3.1.14",
-    "@openmrs/esm-globals": "^3.1.14",
-    "@openmrs/esm-offline": "^3.1.14",
-    "@openmrs/esm-react-utils": "^3.1.14",
-    "@openmrs/esm-state": "^3.1.14",
-    "@openmrs/esm-styleguide": "^3.1.14",
-    "@openmrs/esm-utils": "^3.1.14",
+    "@openmrs/esm-api": "^3.2.0",
+    "@openmrs/esm-breadcrumbs": "^3.2.0",
+    "@openmrs/esm-config": "^3.2.0",
+    "@openmrs/esm-error-handling": "^3.2.0",
+    "@openmrs/esm-extensions": "^3.2.0",
+    "@openmrs/esm-globals": "^3.2.0",
+    "@openmrs/esm-offline": "^3.2.0",
+    "@openmrs/esm-react-utils": "^3.2.0",
+    "@openmrs/esm-state": "^3.2.0",
+    "@openmrs/esm-styleguide": "^3.2.0",
+    "@openmrs/esm-utils": "^3.2.0",
     "dayjs": "^1.10.7"
   }
 }
