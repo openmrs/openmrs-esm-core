@@ -7,6 +7,7 @@ In a repository using Yarn:
 ```
 yarn upgrade @openmrs/esm-framework openmrs  // to upgrade
 git checkout package.json  // to reset the version specifiers to 'next'
+yarn  // to re-create the lockfile
 ```
 
 ### How do I keep my local dev server up to date?
