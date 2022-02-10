@@ -78,7 +78,7 @@ interface SetupOfflineSyncOptions<T> {
  * {@link setupOfflineSync} function.
  * These handlers are used for synchronizing queued data.
  */
-export interface SyncHandler {
+interface SyncHandler {
   readonly type: string;
   readonly dependsOn: ReadonlyArray<string>;
   readonly process: ProcessSyncItem<unknown>;
