@@ -1,18 +1,36 @@
 import "@testing-library/jest-dom";
 import Login from "./login.component";
 import { useState } from "react";
-import { cleanup, wait } from "@testing-library/react";
+import { cleanup, render, screen, wait } from "@testing-library/react";
 import { setSessionLocation } from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
 import { useCurrentUser } from "../CurrentUserContext";
 import renderWithRouter from "../test-helpers/render-with-router";
 import userEvent from "@testing-library/user-event";
+import React from "react";
 
 const mockedLogin = performLogin as jest.Mock;
 
 jest.mock("./login.resource", () => ({
   performLogin: jest.fn(),
 }));
+
+jest.mock("@openmrs/esm-framework", () => {
+  const originalModule = jest.requireActual("@openmrs/esm-framework/mock");
+  const defaultConfig = originalModule.useConfig();
+  return {
+    ...originalModule,
+    useConfig: jest.fn().mockReturnValue({
+      ...defaultConfig,
+      logo: {
+        src: "https://someimage.png",
+        alt: "alternative text image",
+        name: null,
+      },
+    }),
+    interpolateUrl: jest.fn(),
+  };
+});
 
 const mockedSetSessionLocation = setSessionLocation as jest.Mock;
 const mockedUseCurrentUser = useCurrentUser as jest.Mock;
@@ -140,5 +158,27 @@ describe(`<Login />`, () => {
     await wait();
 
     expect(wrapper.history.location.pathname).toBe("/login/location");
+  });
+
+  it("the logo svg gets swapped out for an img with the right src when logo.src != null and also the logo alt text gets set correctly when logo.alt != null && logo.src != null", () => {
+    const locationMock = {
+      state: {
+        referrer: "/home/patient-search",
+      },
+      pathname: "/login",
+      search: "",
+      hash: "",
+    };
+    render(
+      <Login
+        isLoginEnabled
+        history={undefined}
+        match={undefined}
+        location={locationMock}
+      />
+    );
+    const logo = screen.getByAltText("alternative text image");
+    expect(logo).toBeInTheDocument();
+    expect(logo).toHaveAttribute("alt");
   });
 });
