@@ -5,8 +5,8 @@ import {
   fetchConceptByUuid,
   performConceptSearch,
 } from "./concept-search.resource";
-import styles from "./concept-search.styles.css";
-import { TextInput } from "carbon-components-react";
+import styles from "./concept-search.styles.scss";
+import { Search } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 
 interface ConceptSearchBoxProps {
@@ -52,45 +52,50 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   }, [searchTerm]);
 
   return (
-    <div className={styles.autocomplete}>
-      <TextInput
-        id={`searchbox-${id}`}
-        helperText={activeConceptUuid}
-        labelText=""
-        type="text"
-        autoComplete="off"
-        autoCapitalize="off"
-        aria-autocomplete="list"
-        role="combobox"
-        aria-label={t("searchConceptHelperText", "Look up concept by name")}
-        aria-controls={`searchbox-${id}`}
-        aria-expanded={searchResults.length > 0}
-        placeholder={t("searchConceptHelperText", "Look up concept by name")}
-        autoFocus
-        onChange={($event) => {
-          handleSearchTermChange($event.target.value);
-        }}
-      />
-      <div id={`searchbox-${id}`}>
-        <ul role="listbox">
-          {!!searchResults.length &&
-            searchResults.map((concept: any) => (
-              <li
-                key={concept.uuid}
-                role="option"
-                style={{ padding: "5px" }}
-                onClick={() => {
-                  handleUuidChange(concept);
-                }}
-                aria-selected="true"
-              >
-                {concept.display}
-              </li>
-            ))}
-          {searchTerm && searchResults && !searchResults.length && (
-            <li>{t("noConceptsFoundText", "No matching results found")}</li>
-          )}
-        </ul>
+    <div>
+      {activeConceptUuid && (
+        <p className={styles.activeConceptUuid}>{activeConceptUuid}</p>
+      )}
+      <div className={styles.autocomplete}>
+        <Search
+          id={`searchbox-${id}`}
+          labelText=""
+          type="text"
+          size="sm"
+          autoComplete="off"
+          autoCapitalize="off"
+          aria-autocomplete="list"
+          role="combobox"
+          aria-label={t("searchConceptHelperText", "Concept Name")}
+          aria-controls={`searchbox-${id}`}
+          aria-expanded={searchResults.length > 0}
+          placeholder={t("searchConceptHelperText", "Concept Name")}
+          autoFocus
+          onChange={($event) => {
+            handleSearchTermChange($event.target.value);
+          }}
+        />
+        <div id={`searchbox-${id}`}>
+          <ul role="listbox">
+            {!!searchResults.length &&
+              searchResults.map((concept: any) => (
+                <li
+                  key={concept.uuid}
+                  role="option"
+                  style={{ padding: "5px" }}
+                  onClick={() => {
+                    handleUuidChange(concept);
+                  }}
+                  aria-selected="true"
+                >
+                  {concept.display}
+                </li>
+              ))}
+            {searchTerm && searchResults && !searchResults.length && (
+              <li>{t("noConceptsFoundText", "No matching results found")}</li>
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );

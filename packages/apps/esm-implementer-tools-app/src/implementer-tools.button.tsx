@@ -5,7 +5,7 @@ import Tools20 from "@carbon/icons-react/es/tools/20";
 import { HeaderGlobalAction } from "carbon-components-react";
 import { UserHasAccess, useStore } from "@openmrs/esm-framework";
 import { implementerToolsStore, togglePopup } from "./store";
-import styles from "./implementer-tools.styles.css";
+import styles from "./implementer-tools.styles.scss";
 
 const ImplementerToolsButton: React.FC = () => {
   const { t } = useTranslation();

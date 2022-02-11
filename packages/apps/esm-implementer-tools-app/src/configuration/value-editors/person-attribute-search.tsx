@@ -2,9 +2,9 @@ import React, { useState, useEffect, useMemo } from "react";
 import debounce from "lodash-es/debounce";
 import uniqueId from "lodash-es/uniqueId";
 import { performPersonAttributeTypeSearch } from "./person-attribute-search.resource";
-import styles from "./person-attribute-search.css";
+import styles from "./person-attribute-search.scss";
 import { useTranslation } from "react-i18next";
-import { TextInput } from "carbon-components-react";
+import { Search } from "carbon-components-react";
 
 interface PersonAttributeTypeSearchBoxProps {
   value: string;
@@ -17,7 +17,7 @@ export function PersonAttributeTypeSearchBox({
 }: PersonAttributeTypeSearchBoxProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [activePersonAttribute, setActivePersonAttribute] =
+  const [activePersonAttributeUuid, setActivePersonAttributeUuid] =
     useState<any>(value);
   const { t } = useTranslation();
   const searchTimeoutInMs = 300;
@@ -25,7 +25,7 @@ export function PersonAttributeTypeSearchBox({
   const id = useMemo(() => uniqueId(), []);
 
   const handleUuidChange = (personAttributeType) => {
-    setActivePersonAttribute(personAttributeType.uuid);
+    setActivePersonAttributeUuid(personAttributeType.uuid);
     resetSearch();
     setPersonAttributeUuid(personAttributeType.uuid);
   };
@@ -55,54 +55,60 @@ export function PersonAttributeTypeSearchBox({
   }, [searchTerm]);
 
   return (
-    <div className={styles.autocomplete}>
-      <div>
-        <TextInput
+    <div>
+      {activePersonAttributeUuid && (
+        <p className={styles.activePersonAttributeUuid}>
+          {activePersonAttributeUuid}
+        </p>
+      )}
+      <div className={styles.autocomplete}>
+        <Search
           id={`search-input-${id}`}
-          labelText={activePersonAttribute}
+          labelText=""
           type="text"
+          size="sm"
           autoComplete="off"
           autoCapitalize="off"
           aria-autocomplete="list"
           role="combobox"
           aria-label={t(
             "searchPersonAttributeHelperText",
-            "Look up person attribute by name"
+            "Person attribute type name"
           )}
           aria-controls={`searchbox-${id}`}
           aria-expanded={searchResults.length > 0}
           placeholder={t(
             "searchPersonAttributeHelperText",
-            "Look up person attribute by name"
+            "Person attribute type name"
           )}
           autoFocus
           onChange={($event) => {
             handleSearchTermChange($event.target.value);
           }}
         />
-      </div>
-      <div id={`searchbox-${id}`}>
-        <ul role="listbox">
-          {!!searchResults.length &&
-            searchResults.map((personAttributeType: any) => (
-              <li
-                key={personAttributeType.uuid}
-                role="option"
-                style={{ padding: "5px" }}
-                onClick={() => {
-                  handleUuidChange(personAttributeType);
-                }}
-                aria-selected="true"
-              >
-                {personAttributeType.display}
+        <div id={`searchbox-${id}`}>
+          <ul role="listbox">
+            {!!searchResults.length &&
+              searchResults.map((personAttributeType: any) => (
+                <li
+                  key={personAttributeType.uuid}
+                  role="option"
+                  style={{ padding: "5px" }}
+                  onClick={() => {
+                    handleUuidChange(personAttributeType);
+                  }}
+                  aria-selected="true"
+                >
+                  {personAttributeType.display}
+                </li>
+              ))}
+            {searchTerm && searchResults && !searchResults.length && (
+              <li>
+                {t("noPersonAttributeFoundText", "No matching results found")}
               </li>
-            ))}
-          {searchTerm && searchResults && !searchResults.length && (
-            <li>
-              {t("noPersonAttributeFoundText", "No matching results found")}
-            </li>
-          )}
-        </ul>
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );

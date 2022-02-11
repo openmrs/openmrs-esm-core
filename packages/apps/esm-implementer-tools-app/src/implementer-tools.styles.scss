@@ -1,0 +1,14 @@
+@import "~carbon-components/scss/globals/scss/vendor/@carbon/elements/scss/type/styles";
+@import "~carbon-components/src/globals/scss/vendor/@carbon/layout/scss/generated/spacing";
+@import "~@openmrs/esm-styleguide/src/vars";
+
+.popupTriggerButton {
+  height: 25px !important;
+  width: 25px !important;
+  position: relative;
+  border-radius: 2px;
+}
+
+.toolStyles {
+  background-color: transparent;
+}
