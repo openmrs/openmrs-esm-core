@@ -47,6 +47,7 @@
     "@types/carbon-components-react": "^7.24.0",
     "carbon-components": "10.31.0",
     "carbon-icons": "7.0.7",
+    "openmrs": "^3.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }

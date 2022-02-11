@@ -55,6 +55,7 @@
     "@types/carbon-components-react": "^7.24.0",
     "@types/react-router-dom": "^5.1.7",
     "jest": "^26.6.3",
+    "openmrs": "^3.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "rxjs": "^6.5.3"
