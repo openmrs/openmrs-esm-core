@@ -1397,7 +1397,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/mode.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L64)
+[packages/framework/esm-offline/src/mode.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L65)
 
 ___
 

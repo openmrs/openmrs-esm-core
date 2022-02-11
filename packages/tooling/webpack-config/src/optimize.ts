@@ -166,7 +166,7 @@ export function transformFile(filename: string) {
 export function postProcessFile(fn: string) {
   const [result, original] = transformFile(fn);
 
-  if (result) {
+  if (result && original) {
     writeFileSync(fn.replace(".js", ".old"), original, "utf8");
     writeFileSync(fn.replace(".js", ".js"), result, "utf8");
   }
