@@ -134,6 +134,10 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
           <InlineNotification
             kind="error"
             style={{ width: "23rem" }}
+            /**
+             * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
+             * t('invalidCredentials')
+             */
             subtitle={t(errorMessage)}
             title={t("error", "Error")}
             onClick={() => setErrorMessage("")}
