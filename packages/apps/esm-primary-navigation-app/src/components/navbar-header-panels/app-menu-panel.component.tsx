@@ -7,6 +7,7 @@ import {
 } from "@openmrs/esm-framework";
 import { HeaderPanel } from "carbon-components-react";
 import Launch16 from "@carbon/icons-react/es/launch/16";
+import { useTranslation } from "react-i18next";
 
 interface AppMenuProps {
   expanded: boolean;
@@ -16,6 +17,7 @@ interface AppMenuProps {
 const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
   const appMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel, expanded);
   const config = useConfig();
+  const { t } = useTranslation();
 
   return (
     <HeaderPanel
@@ -28,24 +30,16 @@ const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
         className={styles.menuLink}
         extensionSlotName="app-menu-slot"
       />
-      {config?.externalRefLinks?.enabled &&
-        config?.externalRefLinks?.links.length > 0 && (
-          <div className={`${styles.menuLink} ${styles.externalLinks}`}>
-            {config?.externalRefLinks?.links?.map(
-              (link) =>
-                link?.visible && (
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={link?.redirect}
-                  >
-                    {link?.title}
-                    <Launch16 className={styles.launchIcon} />
-                  </a>
-                )
-            )}
-          </div>
-        )}
+      {config?.externalRefLinks?.length > 0 && (
+        <div className={`${styles.menuLink} ${styles.externalLinks}`}>
+          {config?.externalRefLinks?.map((link) => (
+            <a target="_blank" rel="noopener noreferrer" href={link?.redirect}>
+              {t(link?.title)}
+              <Launch16 className={styles.launchIcon} />
+            </a>
+          ))}
+        </div>
+      )}
     </HeaderPanel>
   );
 };
