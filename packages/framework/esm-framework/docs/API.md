@@ -189,6 +189,8 @@
 
 - [age](API.md#age)
 - [attach](API.md#attach)
+- [beginEditSynchronizationItem](API.md#begineditsynchronizationitem)
+- [canBeginEditSynchronizationItemsOfType](API.md#canbegineditsynchronizationitemsoftype)
 - [checkStatus](API.md#checkstatus)
 - [checkStatusFor](API.md#checkstatusfor)
 - [createErrorHandler](API.md#createerrorhandler)
@@ -229,6 +231,7 @@
 - [getOmrsServiceWorker](API.md#getomrsserviceworker)
 - [getSessionLocation](API.md#getsessionlocation)
 - [getSyncLifecycle](API.md#getsynclifecycle)
+- [getSynchronizationItem](API.md#getsynchronizationitem)
 - [getSynchronizationItems](API.md#getsynchronizationitems)
 - [getSynchronizationItemsFor](API.md#getsynchronizationitemsfor)
 - [getUpdatedExtensionSlotInfo](API.md#getupdatedextensionslotinfo)
@@ -560,6 +563,11 @@ ___
 
 ▸ (`item`, `options`): `Promise`<`any`\>
 
+A function which, when invoked, performs the actual client-server synchronization of the given
+`item` (which is the actual data to be synchronized).
+The function receives additional `options` which provide additional data that can be used
+for synchronizing.
+
 ##### Parameters
 
 | Name | Type |
@@ -573,7 +581,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L28)
+[packages/framework/esm-offline/src/sync.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L45)
 
 ___
 
@@ -1409,6 +1417,52 @@ ___
 
 ___
 
+### beginEditSynchronizationItem
+
+▸ **beginEditSynchronizationItem**(`id`): `Promise`<`void`\>
+
+Triggers an edit flow for the given synchronization item.
+If this is not possible, throws an error.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `number` | The ID of the synchronization item to be edited. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:354](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L354)
+
+___
+
+### canBeginEditSynchronizationItemsOfType
+
+▸ **canBeginEditSynchronizationItemsOfType**(`type`): `boolean`
+
+Returns whether editing synchronization items of the given type is supported by the currently
+registered synchronization handlers.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | The identifying type of the synchronization item which should be edited. |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:344](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L344)
+
+___
+
 ### checkStatus
 
 ▸ **checkStatus**(`online?`, `offline?`): `boolean`
@@ -1614,11 +1668,13 @@ ___
 
 ▸ **deleteSynchronizationItem**(`id`): `Promise`<`void`\>
 
+Deletes a queued up sync item with the given ID.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `id` | `number` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `number` | The ID of the synchronization item to be deleted. |
 
 #### Returns
 
@@ -1626,7 +1682,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L251)
+[packages/framework/esm-offline/src/sync.ts:374](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L374)
 
 ___
 
@@ -2266,7 +2322,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L80)
+[packages/framework/esm-offline/src/sync.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L133)
 
 ___
 
@@ -2339,9 +2395,39 @@ ___
 
 ___
 
+### getSynchronizationItem
+
+▸ **getSynchronizationItem**<`T`\>(`id`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\> \| `undefined`\>
+
+Returns a queued sync item with the given ID or `undefined` if no such item exists.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `id` | `number` | The ID of the requested sync item. |
+
+#### Returns
+
+`Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\> \| `undefined`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:333](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L333)
+
+___
+
 ### getSynchronizationItems
 
 ▸ **getSynchronizationItems**<`T`\>(`type`): `Promise`<`T`[]\>
+
+Returns all currently queued up sync items of the currently signed in user.
 
 #### Type parameters
 
@@ -2351,9 +2437,9 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | The identifying type of the synchronization items to be returned. |
 
 #### Returns
 
@@ -2361,7 +2447,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L246)
+[packages/framework/esm-offline/src/sync.ts:324](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L324)
 
 ___
 
@@ -2369,6 +2455,8 @@ ___
 
 ▸ **getSynchronizationItemsFor**<`T`\>(`userId`, `type`): `Promise`<`T`[]\>
 
+Returns all currently queued up sync items of a given user.
+
 #### Type parameters
 
 | Name |
@@ -2377,10 +2465,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `userId` | `string` |
-| `type` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `userId` | `string` | The ID of the user whose synchronization items should be returned. |
+| `type` | `string` | The identifying type of the synchronization items to be returned.. |
 
 #### Returns
 
@@ -2388,7 +2476,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L232)
+[packages/framework/esm-offline/src/sync.ts:306](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L306)
 
 ___
 
@@ -2855,6 +2943,8 @@ ___
 
 ▸ **queueSynchronizationItem**<`T`\>(`type`, `content`, `descriptor?`): `Promise`<`number`\>
 
+Enqueues a new item in the sync queue and associates the item with the currently signed in user.
+
 #### Type parameters
 
 | Name |
@@ -2863,11 +2953,11 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `string` |
-| `content` | `T` |
-| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | The identifying type of the synchronization item. |
+| `content` | `T` | The actual data to be synchronized. |
+| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) | An optional descriptor providing additional metadata about the sync item. |
 
 #### Returns
 
@@ -2875,7 +2965,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:223](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L223)
+[packages/framework/esm-offline/src/sync.ts:292](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L292)
 
 ___
 
@@ -2883,6 +2973,8 @@ ___
 
 ▸ **queueSynchronizationItemFor**<`T`\>(`userId`, `type`, `content`, `descriptor?`): `Promise`<`number`\>
 
+Enqueues a new item in the sync queue for a specific user.
+
 #### Type parameters
 
 | Name |
@@ -2891,12 +2983,12 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `userId` | `string` |
-| `type` | `string` |
-| `content` | `T` |
-| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `userId` | `string` | The user with whom the sync item should be associated with. |
+| `type` | `string` | The identifying type of the synchronization item. |
+| `content` | `T` | The actual data to be synchronized. |
+| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) | An optional descriptor providing additional metadata about the sync item. |
 
 #### Returns
 
@@ -2904,7 +2996,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L195)
+[packages/framework/esm-offline/src/sync.ts:258](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L258)
 
 ___
 
@@ -3185,13 +3277,15 @@ ___
 
 ▸ **runSynchronization**(): `Promise`<`void`\>
 
+Runs a full synchronization of **all** queued synchronization items.
+
 #### Returns
 
 `Promise`<`void`\>
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L84)
+[packages/framework/esm-offline/src/sync.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L140)
 
 ___
 
@@ -3239,7 +3333,9 @@ ___
 
 ### setupOfflineSync
 
-▸ **setupOfflineSync**<`T`\>(`type`, `dependsOn`, `process`): `void`
+▸ **setupOfflineSync**<`T`\>(`type`, `dependsOn`, `process`, `options?`): `void`
+
+Registers a new synchronization handler which is able to synchronize data of a specific type.
 
 #### Type parameters
 
@@ -3249,11 +3345,12 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `type` | `string` |
-| `dependsOn` | `string`[] |
-| `process` | [`ProcessSyncItem`](API.md#processsyncitem)<`T`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | The identifying type of the synchronization items which can be handled by this handler. |
+| `dependsOn` | `string`[] | An array of other sync item types which must be synchronized before this handler   can synchronize its own data. Items of these types are effectively dependencies of the data   synchronized by this handler. |
+| `process` | [`ProcessSyncItem`](API.md#processsyncitem)<`T`\> | A function which, when invoked, performs the actual client-server synchronization of the given   `item` (which is the actual data to be synchronized). |
+| `options` | `SetupOfflineSyncOptions`<`T`\> | Additional options which can optionally be provided when setting up a synchronization callback   for a specific synchronization item type. |
 
 #### Returns
 
@@ -3261,7 +3358,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:263](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L263)
+[packages/framework/esm-offline/src/sync.ts:389](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L389)
 
 ___
 
