@@ -4,7 +4,7 @@
 
 In a repository using Yarn:
 
-```
+```sh
 yarn upgrade @openmrs/esm-framework openmrs  // to upgrade
 git checkout package.json  // to reset the version specifiers to 'next'
 ```
@@ -31,3 +31,19 @@ If you have done both of the above things and still haven't found the
 code you're looking for, feel free to ask in the
 [#openmrs-helpme](https://openmrs.slack.com/archives/C02UNMKFH8V) channel
 on Slack.
+
+### How to develop against a restricted environment?
+
+In general you can develop against another environment using the `--backend` flag.
+If the other environment is guarded, e.g., by an IP or network restriction then
+this is something you need to take care of on your local machine.
+
+In case the guarded environment is restricted via some SSO mechanism using a
+cookie you could use the `--add-cookie` flag to achieve this. As an example,
+look at the access for a development server from the ICRC:
+
+```sh
+npx openmrs start --backend "https://emr-v2.test.icrc.org/" --add-cookie "MRHSession=1234..."
+```
+
+The cookie must be obtained by you and strongly depends on the used backend.
