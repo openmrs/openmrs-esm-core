@@ -209,8 +209,11 @@ async function setupServiceWorker() {
   const sw = await registerOmrsServiceWorker(
     `${window.getOpenmrsSpaBase()}service-worker.js`
   );
+
   registerSwEvents(sw);
+
   await prepareOfflineMode();
+  await activateOfflineCapability();
 }
 
 async function isSafariPrivateBrowsing() {
@@ -241,7 +244,11 @@ async function isFirefoxPrivateBrowsing() {
 }
 
 async function isPrivateBrowsing() {
-  return await isFirefoxPrivateBrowsing() || await isEdgePrivateBrowsing() || await isSafariPrivateBrowsing();
+  return (
+    (await isFirefoxPrivateBrowsing()) ||
+    (await isEdgePrivateBrowsing()) ||
+    (await isSafariPrivateBrowsing())
+  );
 }
 
 async function activateOfflineCapability() {

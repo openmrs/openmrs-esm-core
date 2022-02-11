@@ -1,11 +1,11 @@
 import { RouteHandlerCallbackOptions } from "workbox-core";
 import { registerRoute } from "workbox-routing";
 import { getOrCreateDefaultRouter } from "workbox-routing/utils/getOrCreateDefaultRouter";
+import { validMethods } from "workbox-routing/utils/constants";
 import { CacheOnly, NetworkFirst, NetworkOnly } from "workbox-strategies";
 import { indexUrl, omrsCacheName } from "./constants";
 import { ServiceWorkerDb } from "./storage";
 import { publishEvent } from "./event";
-import { validMethods } from "workbox-routing/utils/constants";
 import {
   getOmrsHeader,
   headersToObject,

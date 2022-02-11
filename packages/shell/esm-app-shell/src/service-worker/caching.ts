@@ -58,6 +58,7 @@ export async function addToOmrsCache(urls: Array<string>) {
 
   const cached = results.filter((r) => r.success);
   const failedToCache = results.filter((r) => !r.success);
+
   if (cached.length > 0) {
     console.debug(
       `[SW] Successfully added ${cached.length} URLs to the OMRS cache. URLs: `,
@@ -78,6 +79,7 @@ async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
   const cachedUrls = (await cache.keys()).map((x) => x.url);
   const dynamicRoutes =
     await new ServiceWorkerDb().dynamicRouteRegistrations.toArray();
+
   const urlsToInvalidate = cachedUrls.filter(
     (cachedUrl) =>
       !absoluteWbManifestUrls.includes(cachedUrl) &&
