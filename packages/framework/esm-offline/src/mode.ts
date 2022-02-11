@@ -58,6 +58,7 @@ export function setCurrentOfflineMode(mode: OfflineMode) {
       offlineModeStorageKey,
       mode === "on" ? "active" : "disabled"
     );
+    offlineMode = mode;
   }
 }
 

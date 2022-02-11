@@ -1,12 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Toggle } from "carbon-components-react";
+import Network20 from "@carbon/icons-react/es/network--3/20";
 import {
   getCurrentOfflineMode,
   setCurrentOfflineMode,
 } from "@openmrs/esm-framework";
 import styles from "./offline-actions-mode-button.component.scss";
-import Network20 from "@carbon/icons-react/es/network--3/20";
 
 function doNotCloseMenu(ev: React.SyntheticEvent) {
   ev.stopPropagation();
