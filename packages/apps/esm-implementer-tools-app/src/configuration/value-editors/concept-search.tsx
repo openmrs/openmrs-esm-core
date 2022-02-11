@@ -6,16 +6,20 @@ import {
   performConceptSearch,
 } from "./concept-search.resource";
 import styles from "./concept-search.styles.css";
+import { TextInput } from "carbon-components-react";
+import { useTranslation } from "react-i18next";
 
 interface ConceptSearchBoxProps {
+  value: string;
   setConcept: (concept) => void;
 }
 
-export function ConceptSearchBox({ setConcept }: ConceptSearchBoxProps) {
+export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [activeConceptUuid, setActiveConceptUuid] = useState<any>("");
+  const [activeConceptUuid, setActiveConceptUuid] = useState<any>(value);
   const searchTimeoutInMs = 300;
+  const { t } = useTranslation();
 
   const id = useMemo(() => uniqueId(), []);
 
@@ -49,16 +53,19 @@ export function ConceptSearchBox({ setConcept }: ConceptSearchBoxProps) {
 
   return (
     <div className={styles.autocomplete}>
-      <input
+      <TextInput
+        id={`searchbox-${id}`}
+        helperText={activeConceptUuid}
+        labelText=""
         type="text"
         autoComplete="off"
         autoCapitalize="off"
         aria-autocomplete="list"
         role="combobox"
-        aria-label="Look up concept by name"
+        aria-label={t("searchConceptHelperText", "Look up concept by name")}
         aria-controls={`searchbox-${id}`}
         aria-expanded={searchResults.length > 0}
-        placeholder="Look up concept by name"
+        placeholder={t("searchConceptHelperText", "Look up concept by name")}
         autoFocus
         onChange={($event) => {
           handleSearchTermChange($event.target.value);
@@ -81,7 +88,7 @@ export function ConceptSearchBox({ setConcept }: ConceptSearchBoxProps) {
               </li>
             ))}
           {searchTerm && searchResults && !searchResults.length && (
-            <li>No matching results found.</li>
+            <li>{t("noConceptsFoundText", "No matching results found")}</li>
           )}
         </ul>
       </div>
