@@ -1,4 +1,5 @@
 import { start, unregisterApplication, getAppNames } from "single-spa";
+import { Workbox } from "workbox-window";
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -22,16 +23,15 @@ import {
   renderModals,
   dispatchPrecacheStaticDependencies,
 } from "@openmrs/esm-framework";
-import { setupI18n } from "./locale";
 import {
   finishRegisteringAllApps,
   registerApp,
   tryRegisterExtension,
 } from "./apps";
+import { setupI18n } from "./locale";
 import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import { appName, getCoreExtensions } from "./ui";
-import { Workbox } from "workbox-window";
 
 const allowedSuffixes = ["-app", "-widgets"];
 

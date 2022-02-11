@@ -5,7 +5,7 @@ const { DefinePlugin, container } = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
 const { mergeWith, isArray } = require("lodash");
-const { postProcessFile } = require('./dist/utils/optimize');
+const { postProcessFile } = require("./dist/utils/optimize");
 
 const production = "production";
 const { ModuleFederationPlugin } = container;
@@ -139,9 +139,12 @@ module.exports = (env, argv = {}) => {
       }),
       {
         apply(compiler) {
-          compiler.hooks.afterEmit.tap('PostProcessPlugin', compilation => {
-            const fn = resolve(root, outDir, filename);
-            postProcessFile(fn);
+          compiler.hooks.afterEmit.tap("PostProcessPlugin", (compilation) => {
+            if (mode === "production") {
+              // only post-optimize the bundle in production mode
+              const fn = resolve(root, outDir, filename);
+              postProcessFile(fn);
+            }
           });
         },
       },
