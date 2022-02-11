@@ -87,7 +87,7 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
           {children ?? <Extension state={stateRef.current} />}
         </ComponentContext.Provider>
       )),
-    [select, extensions, extensionSlotName]
+    [select, extensions, extensionSlotName, stateRef.current]
   );
 
   return (
