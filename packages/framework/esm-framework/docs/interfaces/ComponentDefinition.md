@@ -34,7 +34,7 @@ The module/app that defines the component
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L92)
+[packages/framework/esm-globals/src/types.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L101)
 
 ___
 
@@ -46,7 +46,7 @@ Defines the offline support / properties of the component.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L104)
+[packages/framework/esm-globals/src/types.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L113)
 
 ___
 
@@ -58,7 +58,7 @@ Defines the online support / properties of the component.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L100)
+[packages/framework/esm-globals/src/types.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L109)
 
 ___
 
@@ -70,7 +70,7 @@ Defines the access privilege required for this component, if any.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:108](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L108)
+[packages/framework/esm-globals/src/types.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L117)
 
 ___
 
@@ -82,7 +82,7 @@ Defines resources that are loaded when the component should mount.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L112)
+[packages/framework/esm-globals/src/types.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L121)
 
 ## Methods
 
@@ -98,4 +98,4 @@ Defines a function to use for actually loading the component's lifecycle.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L96)
+[packages/framework/esm-globals/src/types.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L105)

@@ -48,9 +48,13 @@ export interface ExtensionSlotBaseProps {
 export type ExtensionSlotProps = ExtensionSlotBaseProps &
   React.HTMLAttributes<HTMLDivElement>;
 
+function defaultSelect(extensions: Array<ConnectedExtension>) {
+  return extensions;
+}
+
 export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   extensionSlotName,
-  select = (e) => e,
+  select = defaultSelect,
   children,
   state,
   style,
@@ -83,7 +87,7 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
           {children ?? <Extension state={stateRef.current} />}
         </ComponentContext.Provider>
       )),
-    [select, extensions, extensionSlotName, stateRef.current]
+    [select, extensions, extensionSlotName]
   );
 
   return (

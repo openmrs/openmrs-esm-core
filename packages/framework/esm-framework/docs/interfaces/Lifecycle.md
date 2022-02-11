@@ -4,65 +4,49 @@
 
 ## Table of contents
 
-### Methods
+### Properties
 
 - [bootstrap](Lifecycle.md#bootstrap)
 - [mount](Lifecycle.md#mount)
 - [unmount](Lifecycle.md#unmount)
 - [update](Lifecycle.md#update)
 
-## Methods
+## Properties
 
 ### bootstrap
 
-▸ **bootstrap**(): `void`
-
-#### Returns
-
-`void`
+• **bootstrap**: `LifeCycleFn`<`any`\>
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L8)
+[packages/framework/esm-globals/src/types.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L62)
 
 ___
 
 ### mount
 
-▸ **mount**(): `void`
-
-#### Returns
-
-`void`
+• **mount**: `LifeCycleFn`<`any`\>
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L9)
+[packages/framework/esm-globals/src/types.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L63)
 
 ___
 
 ### unmount
 
-▸ **unmount**(): `void`
-
-#### Returns
-
-`void`
+• **unmount**: `LifeCycleFn`<`any`\>
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L10)
+[packages/framework/esm-globals/src/types.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L64)
 
 ___
 
 ### update
 
-▸ `Optional` **update**(): `void`
-
-#### Returns
-
-`void`
+• `Optional` **update**: `LifeCycleFn`<`any`\>
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L11)
+[packages/framework/esm-globals/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L65)

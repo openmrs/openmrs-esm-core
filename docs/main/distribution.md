@@ -29,7 +29,7 @@ The import map is used to define what frontend modules are included and where th
 
 By building the app shell you'll already get a rudimenatary version of an import map, which can be used for development purposes. Generally, however, you should provide your own.
 
-An import map can also be specified as an URL. For instance, for the development instance as `openmrs-spa.org` we have [https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json](https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json). The contents of this import map are updated once an update to any (official) frontend module has been pushed. Thus, while this import map may be great for development purposes, it should be considered unstable. Avoid this for your distribution or any application that should not break unexpectedly.
+An import map can also be specified as an URL. For instance, for the development instance as `dev3.openmrs.org` we have [https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json](https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json). The contents of this import map are updated once an update to any (official) frontend module has been pushed. Thus, while this import map may be great for development purposes, it should be considered unstable. Avoid this for your distribution or any application that should not break unexpectedly.
 
 A custom import map can be created using the `openmrs assemble` command. If run directly the command will open a command line survey, guiding you through the different options. It will list all OpenMRS frontend modules that can be found on the NPM registry.
 

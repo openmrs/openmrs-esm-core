@@ -50,7 +50,7 @@ looks like this:
 
 ![Distro Build Diagram](./distro_setup.png)
 
-The built application is then executed on the server like this:
+The built application is then executed on the client like this:
 
 ![Application Diagram](./application.png)
 
