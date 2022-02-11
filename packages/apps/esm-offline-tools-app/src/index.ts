@@ -4,6 +4,8 @@ import {
   registerBreadcrumbs,
 } from "@openmrs/esm-framework";
 import { routes } from "./constants";
+import { createDashboardLink } from "./createDashboardLink";
+import { dashboardMeta } from "./dashboard.meta";
 import OfflineToolsNavLink from "./nav/offline-tools-nav-link.component";
 import { setupOffline } from "./offline";
 import { setupSynchronizingOfflineActionsNotifications } from "./offline-actions/synchronizing-notification";
@@ -161,7 +163,7 @@ function setupOpenMRS() {
         name: "offline-tools-page-actions",
         slot: "offline-tools-page-actions-slot",
         load: getAsyncLifecycle(
-          () => import("./offline-actions/offline-actions.component"),
+          () => import("./offline-actions/offline-actions-page.component"),
           options
         ),
         online: {
@@ -170,6 +172,46 @@ function setupOpenMRS() {
         offline: {
           canSynchronizeOfflineActions: false,
         },
+      },
+      {
+        id: "offline-tools-patient-chart-actions-widget",
+        slot: "patient-chart-summary-dashboard-slot",
+        order: 0,
+        load: getAsyncLifecycle(
+          () =>
+            import(
+              "./offline-actions/offline-actions-patient-chart-widget.component"
+            ),
+          options
+        ),
+        meta: {
+          columnSpan: 4,
+        },
+        online: true,
+        offline: true,
+      },
+      {
+        id: "offline-tools-patient-chart-actions-dashboard",
+        order: 0,
+        slot: dashboardMeta.slot,
+        load: getAsyncLifecycle(
+          () =>
+            import(
+              "./offline-actions/offline-actions-patient-chart-widget.component"
+            ),
+          options
+        ),
+        online: true,
+        offline: true,
+      },
+      {
+        id: "offline-tools-patient-chart-actions-dashboard-link",
+        slot: "patient-chart-dashboard-slot",
+        order: 12,
+        load: getSyncLifecycle(createDashboardLink(dashboardMeta), options),
+        meta: dashboardMeta,
+        online: true,
+        offline: true,
       },
     ],
   };
