@@ -8,17 +8,18 @@ export interface OfflineActionsPatientChartWidgetProps {
   patientUuid: string;
 }
 
-const OfflineActionsPatientChartWidget: React.FC<OfflineActionsPatientChartWidgetProps> =
-  ({ patientUuid }) => {
-    const { t } = useTranslation();
+const OfflineActionsPatientChartWidget: React.FC<
+  OfflineActionsPatientChartWidgetProps
+> = ({ patientUuid }) => {
+  const { t } = useTranslation();
 
-    return (
-      <div className={styles.widgetCard}>
-        <CardHeader title={t("offlineActions", "Offline actions")} />
-        <OfflineActions patientUuid={patientUuid} />
-      </div>
-    );
-  };
+  return (
+    <div className={styles.widgetCard}>
+      <CardHeader title={t("offlineActions", "Offline actions")} />
+      <OfflineActions patientUuid={patientUuid} />
+    </div>
+  );
+};
 
 const CardHeader: React.FC<{
   title: string;
