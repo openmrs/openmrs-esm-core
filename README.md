@@ -118,6 +118,26 @@ the package you need to link is the sub-library; e.g., if you are trying
 to test changes in `packages/framework/esm-api`, you will need to link
 `@openmrs/esm-api`.
 
+In order to get your local version of that package to be served in your local
+dev server, you will need to link the app shell as well, and to build it.
+
+##### Example
+To set up to develop `@openmrs/esm-api` in a dev server for
+the patient chart:
+
+1. In this repository, run
+`yarn link` in each of `packages/framework/esm-api` and
+`packages/shell/esm-app-shell`.
+2. In `packages/shell/esm-app-shell`, run
+`yarn build:development --watch` to ensure that the built app shell is
+updated with your changes and available to the patient chart.
+3. In another terminal, navigate to the patient chart repository. Execute
+`yarn link @openmrs/esm-api @openmrs/esm-app-shell`.
+Then run your patient chart dev server as usual.
+
+Check your work by adding a `console.log` at the top level of a file you're
+working on in `esm-api`.
+
 ### Version and release
 
 To increment the version, run the following command:
