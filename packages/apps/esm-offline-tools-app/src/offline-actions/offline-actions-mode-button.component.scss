@@ -1,0 +1,33 @@
+@import "../root.scss";
+
+.offlineModeButtonContainer {
+  display: flex;
+  flex-direction: row;
+  width: 16rem;
+  justify-content: flex-start;
+  color: $field-01;
+  align-items: center;
+  @extend .bodyLong01;
+  height: 3rem;
+  cursor: pointer;
+
+  :global(.bx--toggle-input__label .bx--toggle__switch) {
+    margin-top: 0 !important;
+  }
+}
+
+.offlineModeButtonContainer svg {
+  margin: 0rem 0.75rem;
+  fill: $field-01;
+}
+
+.offlineModeButtonContainer > div {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  align-items: center;
+
+  & > div {
+    margin-left: 1rem;
+  }
+}

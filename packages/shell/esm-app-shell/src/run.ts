@@ -22,6 +22,7 @@ import {
   dispatchNetworkRequestFailed,
   renderModals,
   dispatchPrecacheStaticDependencies,
+  activateOfflineCapability,
 } from "@openmrs/esm-framework";
 import {
   finishRegisteringAllApps,
@@ -214,51 +215,6 @@ async function setupServiceWorker() {
 
   await prepareOfflineMode();
   await activateOfflineCapability();
-}
-
-async function isSafariPrivateBrowsing() {
-  const storage = window.sessionStorage;
-
-  try {
-    storage.setItem("someKeyHere", "test");
-    storage.removeItem("someKeyHere");
-  } catch (e) {
-    if (e.code === DOMException.QUOTA_EXCEEDED_ERR && storage.length === 0) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-async function isEdgePrivateBrowsing() {
-  return !window.indexedDB;
-}
-
-async function isFirefoxPrivateBrowsing() {
-  return new Promise<boolean>((resolve) => {
-    const db = indexedDB.open("test");
-    db.onerror = () => resolve(true);
-    db.onsuccess = () => resolve(false);
-  });
-}
-
-async function isPrivateBrowsing() {
-  return (
-    (await isFirefoxPrivateBrowsing()) ||
-    (await isEdgePrivateBrowsing()) ||
-    (await isSafariPrivateBrowsing())
-  );
-}
-
-async function activateOfflineCapability() {
-  if (navigator.onLine) {
-    const isPrivate = await isPrivateBrowsing();
-
-    if (!isPrivate) {
-      //TODO trigger here
-    }
-  }
 }
 
 async function prepareOfflineMode() {

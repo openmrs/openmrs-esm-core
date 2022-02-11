@@ -213,6 +213,18 @@ function setupOpenMRS() {
         online: true,
         offline: true,
       },
+      {
+        name: "offline-tools-opt-in-offline-mode-button",
+        slot: "user-panel-slot",
+        order: 1,
+        load: getAsyncLifecycle(
+          () =>
+            import("./offline-actions/offline-actions-mode-button.component"),
+          options
+        ),
+        online: true,
+        offline: false,
+      },
     ],
   };
 }

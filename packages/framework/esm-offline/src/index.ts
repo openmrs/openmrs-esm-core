@@ -3,6 +3,7 @@ export * from "./service-worker-http-headers";
 export * from "./service-worker-messaging";
 export * from "./service-worker-events";
 export * from "./events";
+export * from "./mode";
 export * from "./patches";
 export * from "./sync";
 export * from "./uuid";

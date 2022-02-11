@@ -67,6 +67,7 @@
 - [NavigationContext](interfaces/NavigationContext.md)
 - [NetworkRequestFailedEvent](interfaces/NetworkRequestFailedEvent.md)
 - [NewVisitPayload](interfaces/NewVisitPayload.md)
+- [OfflineModeResult](interfaces/OfflineModeResult.md)
 - [OfflinePatientArgs](interfaces/OfflinePatientArgs.md)
 - [OfflinePatientDataSyncHandler](interfaces/OfflinePatientDataSyncHandler.md)
 - [OfflinePatientDataSyncState](interfaces/OfflinePatientDataSyncState.md)
@@ -120,6 +121,7 @@
 - [LoggedInUserData](API.md#loggedinuserdata)
 - [MaybeAsync](API.md#maybeasync)
 - [NavigationContextType](API.md#navigationcontexttype)
+- [OfflineMode](API.md#offlinemode)
 - [OmrsOfflineCachingStrategy](API.md#omrsofflinecachingstrategy)
 - [OmrsOfflineHttpHeaderNames](API.md#omrsofflinehttpheadernames)
 - [OmrsOfflineHttpHeaders](API.md#omrsofflinehttpheaders)
@@ -187,6 +189,7 @@
 
 ### Other Functions
 
+- [activateOfflineCapability](API.md#activateofflinecapability)
 - [age](API.md#age)
 - [attach](API.md#attach)
 - [beginEditSynchronizationItem](API.md#begineditsynchronizationitem)
@@ -215,6 +218,7 @@
 - [getAsyncLifecycle](API.md#getasynclifecycle)
 - [getConfig](API.md#getconfig)
 - [getConfigStore](API.md#getconfigstore)
+- [getCurrentOfflineMode](API.md#getcurrentofflinemode)
 - [getCustomProps](API.md#getcustomprops)
 - [getExtensionConfigStore](API.md#getextensionconfigstore)
 - [getExtensionNameFromId](API.md#getextensionnamefromid)
@@ -270,6 +274,7 @@
 - [retry](API.md#retry)
 - [runSynchronization](API.md#runsynchronization)
 - [saveVisit](API.md#savevisit)
+- [setCurrentOfflineMode](API.md#setcurrentofflinemode)
 - [setSessionLocation](API.md#setsessionlocation)
 - [setupOfflineSync](API.md#setupofflinesync)
 - [setupPaths](API.md#setuppaths)
@@ -490,6 +495,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-extensions/src/contexts.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L3)
+
+___
+
+### OfflineMode
+
+Ƭ **OfflineMode**: ``"on"`` \| ``"off"`` \| ``"unavailable"``
+
+#### Defined in
+
+[packages/framework/esm-offline/src/mode.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L36)
 
 ___
 
@@ -1372,6 +1387,20 @@ ___
 
 ## Other Functions
 
+### activateOfflineCapability
+
+▸ **activateOfflineCapability**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/mode.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L64)
+
+___
+
 ### age
 
 ▸ **age**(`dateString`): `string`
@@ -2064,6 +2093,20 @@ ___
 #### Defined in
 
 [packages/framework/esm-config/src/module-config/state.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/state.ts#L136)
+
+___
+
+### getCurrentOfflineMode
+
+▸ **getCurrentOfflineMode**(): [`OfflineModeResult`](interfaces/OfflineModeResult.md)
+
+#### Returns
+
+[`OfflineModeResult`](interfaces/OfflineModeResult.md)
+
+#### Defined in
+
+[packages/framework/esm-offline/src/mode.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L47)
 
 ___
 
@@ -3307,6 +3350,26 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L55)
+
+___
+
+### setCurrentOfflineMode
+
+▸ **setCurrentOfflineMode**(`mode`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mode` | [`OfflineMode`](API.md#offlinemode) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-offline/src/mode.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L55)
 
 ___
 
