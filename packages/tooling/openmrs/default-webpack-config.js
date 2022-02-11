@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
-const { mergeWith, isArray } = require("lodash");
+const { merge, mergeWith, isArray } = require("lodash");
 
 const production = "production";
 const { ModuleFederationPlugin } = container;
@@ -32,6 +32,10 @@ function makeIdent(name) {
 
 const overrides = {};
 const additionalConfig = {};
+const scriptRuleConfig = {};
+const cssRuleConfig = {};
+const scssRuleConfig = {};
+const assetRuleConfig = {};
 
 module.exports = (env, argv = {}) => {
   const root = process.cwd();
@@ -67,29 +71,41 @@ module.exports = (env, argv = {}) => {
     target: "web",
     module: {
       rules: [
-        {
-          test: /\.m?(js|ts|tsx)$/,
-          exclude: /(node_modules|bower_components)/,
-          use: {
-            loader: require.resolve("babel-loader"),
+        merge(
+          {
+            test: /\.m?(js|ts|tsx)$/,
+            exclude: /(node_modules|bower_components)/,
+            use: {
+              loader: require.resolve("babel-loader"),
+            },
           },
-        },
-        {
-          test: /\.css$/,
-          use: [require.resolve("style-loader"), cssLoader],
-        },
-        {
-          test: /\.s[ac]ss$/i,
-          use: [
-            require.resolve("style-loader"),
-            cssLoader,
-            { loader: require.resolve("sass-loader") },
-          ],
-        },
-        {
-          test: /\.(png|jpe?g|gif|svg)$/i,
-          type: "asset/resource",
-        },
+          scriptRuleConfig
+        ),
+        merge(
+          {
+            test: /\.css$/,
+            use: [require.resolve("style-loader"), cssLoader],
+          },
+          cssRuleConfig
+        ),
+        merge(
+          {
+            test: /\.s[ac]ss$/i,
+            use: [
+              require.resolve("style-loader"),
+              cssLoader,
+              { loader: require.resolve("sass-loader") },
+            ],
+          },
+          scssRuleConfig
+        ),
+        merge(
+          {
+            test: /\.(png|jpe?g|gif|svg)$/i,
+            type: "asset/resource",
+          },
+          assetRuleConfig
+        ),
       ],
     },
     mode,
@@ -164,3 +180,31 @@ module.exports.additionalConfig = additionalConfig;
  * Make sure to modify this object and not reassign it.
  */
 module.exports.overrides = overrides;
+
+/**
+ * This object will be merged into the webpack rule governing
+ * the loading of JS, JSX, TS, etc. files.
+ * Make sure to modify this object and not reassign it.
+ */
+module.exports.scriptRuleConfig = scriptRuleConfig;
+
+/**
+ * This object will be merged into the webpack rule governing
+ * the loading of CSS files.
+ * Make sure to modify this object and not reassign it.
+ */
+module.exports.cssRuleConfig = cssRuleConfig;
+
+/**
+ * This object will be merged into the webpack rule governing
+ * the loading of SCSS files.
+ * Make sure to modify this object and not reassign it.
+ */
+module.exports.scssRuleConfig = scssRuleConfig;
+
+/**
+ * This object will be merged into the webpack rule governing
+ * the loading of static asset files.
+ * Make sure to modify this object and not reassign it.
+ */
+module.exports.assetRuleConfig = assetRuleConfig;

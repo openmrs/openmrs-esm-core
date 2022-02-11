@@ -16,33 +16,45 @@ import {
   Search,
   SearchSkeleton,
   DataTable,
+  DataTableHeader,
 } from "carbon-components-react";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./offline-actions-table.styles.scss";
 import {
+  createErrorHandler,
   usePagination,
   useLayoutType,
   navigate,
   SyncItem,
+  canBeginEditSynchronizationItemsOfType,
+  beginEditSynchronizationItem,
 } from "@openmrs/esm-framework";
-
-export interface OfflineActionsTableProps {
-  isLoading: boolean;
-  data?: Array<SyncItemWithPatient>;
-  disableEditing: boolean;
-  disableDelete: boolean;
-  onDelete(syncItemIds: Array<number>): void;
-}
 
 export interface SyncItemWithPatient {
   item: SyncItem;
   patient?: fhir.Patient;
 }
 
+export type OfflineActionsTableHeaders =
+  | "createdOn"
+  | "patient"
+  | "action"
+  | "error";
+
+export interface OfflineActionsTableProps {
+  isLoading: boolean;
+  data?: Array<SyncItemWithPatient>;
+  hiddenHeaders?: Array<OfflineActionsTableHeaders>;
+  disableEditing: boolean;
+  disableDelete: boolean;
+  onDelete(syncItemIds: Array<number>): void;
+}
+
 const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
   isLoading,
   data = [],
+  hiddenHeaders,
   disableEditing,
   disableDelete,
   onDelete,
@@ -52,8 +64,7 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
   const { results, currentPage, goTo } = usePagination(data);
   const layout = useLayoutType();
   const toolbarItemSize = layout === "desktop" ? "sm" : undefined;
-
-  const headers = [
+  const defaultHeaders: Array<DataTableHeader<OfflineActionsTableHeaders>> = [
     {
       key: "createdOn",
       header: t("offlineActionsTableCreatedOn", "Date & Time"),
@@ -71,8 +82,11 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
       header: t("offlineActionsTableError", "Error"),
     },
   ];
+  const headers = defaultHeaders.filter(
+    (header) => !hiddenHeaders?.includes(header.key)
+  );
 
-  const rows = results.map((syncItem, i) => {
+  const rows = results.map((syncItem) => {
     const patientName = getPatientName(syncItem);
 
     return {
@@ -87,7 +101,10 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
         ),
         filterableValue: patientName,
       },
-      action: syncItem.item.descriptor?.displayName,
+      action: {
+        value: <ActionNameLink syncItem={syncItem.item} />,
+        filterableValue: syncItem.item.descriptor.displayName ?? "-",
+      },
       error: syncItem.item.lastError?.message ?? "-",
     };
   });
@@ -215,6 +232,26 @@ function getPatientName({ item, patient }: SyncItemWithPatient) {
   return patientName
     ? `${patientName.given.join(" ")} ${patientName.family}`
     : item.descriptor.patientUuid;
+}
+
+function ActionNameLink({ syncItem }: { syncItem: SyncItem }) {
+  const displayName = syncItem.descriptor.displayName ?? "-";
+
+  if (!canBeginEditSynchronizationItemsOfType(syncItem.type)) {
+    return <>{displayName}</>;
+  }
+
+  return (
+    <Link
+      onClick={() =>
+        beginEditSynchronizationItem(syncItem.id).catch((e) =>
+          createErrorHandler()(e)
+        )
+      }
+    >
+      {displayName}
+    </Link>
+  );
 }
 
 function PatientLink({ patientUuid, patientName }) {
