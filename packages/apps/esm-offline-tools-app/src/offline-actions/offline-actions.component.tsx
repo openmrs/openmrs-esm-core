@@ -1,19 +1,13 @@
 import {
   deleteSynchronizationItem,
   getOfflineSynchronizationStore,
-  runSynchronization,
   showModal,
   SyncItem,
-  useLayoutType,
   useStore,
 } from "@openmrs/esm-framework";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import SharedPageLayout from "../components/shared-page-layout.component";
 import OfflineActionsTable from "./offline-actions-table.component";
-import styles from "./offline-actions.styles.scss";
-import Renew16 from "@carbon/icons-react/es/renew/16";
-import { Button } from "carbon-components-react";
 import {
   usePendingSyncItems,
   useSyncItemPatients,
@@ -21,21 +15,27 @@ import {
 import NoActionsEmptyState from "./no-actions-empty-state.component";
 
 export interface OfflineActionsProps {
-  canSynchronizeOfflineActions: boolean;
+  /**
+   * If specified, shows a single patient's offline actions only.
+   */
+  patientUuid?: string;
 }
 
-const OfflineActions: React.FC<OfflineActionsProps> = ({
-  canSynchronizeOfflineActions,
-}) => {
+const OfflineActions: React.FC<OfflineActionsProps> = ({ patientUuid }) => {
   const { t } = useTranslation();
-  const layout = useLayoutType();
   const syncStore = useStore(getOfflineSynchronizationStore());
   const { data: syncItems, mutate } = usePendingSyncItems();
   const { data: syncItemPatients } = useSyncItemPatients(syncItems);
+  const syncItemsToRender = patientUuid
+    ? syncItems?.filter((x) => x.descriptor.patientUuid === patientUuid)
+    : syncItems;
+  const syncItemsTableData = getSyncItemsWithPatient(
+    syncItemsToRender,
+    syncItemPatients
+  );
   const isLoading = !syncItems || !syncItemPatients;
   const isSynchronizing = !!syncStore.synchronization;
 
-  const synchronize = () => runSynchronization().finally(() => mutate());
   const deleteSynchronizationItems = async (ids: Array<number>) => {
     const closeModal = showModal("offline-tools-confirmation-modal", {
       title: t(
@@ -61,38 +61,21 @@ const OfflineActions: React.FC<OfflineActionsProps> = ({
     });
   };
 
-  const primaryActions = (
-    <Button
-      className={styles.primaryActionButton}
-      size={layout === "desktop" ? "sm" : undefined}
-      renderIcon={layout === "desktop" ? Renew16 : undefined}
-      disabled={isSynchronizing}
-      onClick={synchronize}
-    >
-      {layout !== "desktop" && <Renew16 className={styles.buttonInlineIcon} />}
-      {t("offlineActionsUpdateOfflinePatients", "Update offline patients")}
-    </Button>
-  );
-
   return (
-    <SharedPageLayout
-      header={t("offlineActionsHeader", "Offline actions")}
-      primaryActions={canSynchronizeOfflineActions ? primaryActions : undefined}
-    >
-      <div className={styles.contentContainer}>
-        {isLoading || syncItems?.length > 0 ? (
-          <OfflineActionsTable
-            isLoading={isLoading}
-            data={getSyncItemsWithPatient(syncItems, syncItemPatients)}
-            disableEditing={isSynchronizing}
-            disableDelete={false}
-            onDelete={deleteSynchronizationItems}
-          />
-        ) : (
-          <NoActionsEmptyState />
-        )}
-      </div>
-    </SharedPageLayout>
+    <>
+      {isLoading || syncItems?.length > 0 ? (
+        <OfflineActionsTable
+          isLoading={isLoading}
+          data={syncItemsTableData}
+          hiddenHeaders={patientUuid ? ["patient"] : []}
+          disableEditing={isSynchronizing}
+          disableDelete={false}
+          onDelete={deleteSynchronizationItems}
+        />
+      ) : (
+        <NoActionsEmptyState />
+      )}
+    </>
   );
 };
 
