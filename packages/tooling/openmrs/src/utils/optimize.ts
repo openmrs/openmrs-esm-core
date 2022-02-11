@@ -1,7 +1,7 @@
 import * as types from "@babel/types";
 import { transformSync, Node } from "@babel/core";
-import { resolve, dirname } from "path";
 import { readFileSync, writeFileSync } from "fs";
+import { resolve, dirname } from "path";
 
 const exportedSetupFunctionName = "setupOpenMRS";
 const assetsPropertyName = "assets";
@@ -41,10 +41,18 @@ function getChunkId(arg: Node): number {
   return 0;
 }
 
-function postProcessEntry(fn: string, allFiles: Array<string>) {
-  const code = readFileSync(fn, "utf8");
+function extendEntryFile(
+  root: string,
+  chunkId: number,
+  allFiles: Array<string>
+) {
+  const chunkName = `${chunkId}.js`;
+  const filename = resolve(root, chunkName);
+  const code = readFileSync(filename, "utf8");
   const result = transformSync(code, {
     ast: true,
+    filename,
+    sourceType: "script",
     plugins: [
       () => ({
         visitor: {
@@ -53,8 +61,13 @@ function postProcessEntry(fn: string, allFiles: Array<string>) {
               path.insertAfter(
                 types.objectProperty(
                   types.identifier(assetsPropertyName),
-                  types.arrayExpression(
-                    allFiles.map((file) => types.stringLiteral(file))
+                  types.arrowFunctionExpression(
+                    [],
+                    types.arrayExpression(
+                      allFiles
+                        .filter((file) => file !== chunkName)
+                        .map((file) => types.stringLiteral(file))
+                    )
                   )
                 )
               );
@@ -67,12 +80,15 @@ function postProcessEntry(fn: string, allFiles: Array<string>) {
   return result?.ast?.program.body ?? [];
 }
 
-function postProcessContainer(fn: string) {
-  const root = dirname(fn);
-  const manifest = require(`${fn}.buildmanifest.json`);
+export function transformFile(filename: string) {
+  const root = dirname(filename);
+  const manifest = require(`${filename}.buildmanifest.json`);
   const files = getFiles(manifest);
-  const code = readFileSync(fn, "utf8");
+  const code = readFileSync(filename, "utf8");
   const result = transformSync(code, {
+    filename,
+    sourceType: "script",
+    presets: ["minify"],
     plugins: [
       () => ({
         visitor: {
@@ -99,9 +115,7 @@ function postProcessContainer(fn: string) {
                   const arg = body.node.callee.object.arguments[0];
                   const chunkId = getChunkId(arg);
 
-                  statements.unshift(
-                    ...postProcessEntry(resolve(root, `${chunkId}.js`), files)
-                  );
+                  statements.unshift(...extendEntryFile(root, chunkId, files));
                 }
 
                 body.replaceWith(
@@ -146,20 +160,14 @@ function postProcessContainer(fn: string) {
     ],
   });
 
-  return result?.code;
+  return [result?.code?.split('"use strict";').join(""), code];
 }
 
-function modifyFile(fn: string) {
-  const result = postProcessContainer(fn);
+export function postProcessFile(fn: string) {
+  const [result, original] = transformFile(fn);
 
   if (result) {
-    writeFileSync(fn, result, "utf8");
+    writeFileSync(fn.replace('.js', '.old'), original, "utf8");
+    writeFileSync(fn.replace('.js', '.js'), result, "utf8");
   }
 }
-
-modifyFile(
-  resolve(
-    __dirname,
-    "packages/shell/esm-app-shell/dist/esm-login-app/openmrs-esm-login-app.js"
-  )
-);

@@ -5,6 +5,7 @@ const { DefinePlugin, container } = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { StatsWriterPlugin } = require("webpack-stats-plugin");
 const { mergeWith, isArray } = require("lodash");
+const { postProcessFile } = require('./dist/utils/optimize');
 
 const production = "production";
 const { ModuleFederationPlugin } = container;
@@ -136,6 +137,14 @@ module.exports = (env, argv = {}) => {
           chunks: true,
         },
       }),
+      {
+        apply(compiler) {
+          compiler.hooks.afterEmit.tap('PostProcessPlugin', compilation => {
+            const fn = resolve(root, outDir, filename);
+            postProcessFile(fn);
+          });
+        },
+      },
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],
