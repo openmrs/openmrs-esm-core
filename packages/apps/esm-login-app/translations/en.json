@@ -5,6 +5,7 @@
   "continue": "Continue",
   "error": "Error",
   "found": "found",
+  "invalidCredentials": "Invalid username or password",
   "locationNotFound": "Sorry, no matching location was found.",
   "locations": "locations",
   "login": "Log in",

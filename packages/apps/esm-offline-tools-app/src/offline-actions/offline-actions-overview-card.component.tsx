@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import HeaderedQuickInfo from "../components/headered-quick-info.component";
-import OverviewCard from "../components/overview-card.component";
 import { usePendingSyncItems } from "../hooks/offline-actions";
 import { routes } from "../constants";
+import HeaderedQuickInfo from "../components/headered-quick-info.component";
+import OverviewCard from "../components/overview-card.component";
 
 const OfflineActionsOverviewCard: React.FC = () => {
   const { t } = useTranslation();

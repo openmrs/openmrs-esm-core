@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@openmrs/esm-framework": "^3.2.0",
+    "@openmrs/webpack-config": "^3.2.0",
     "@types/carbon-components-react": "^7.24.0",
     "carbon-components": "10.31.0",
     "carbon-icons": "7.0.7",

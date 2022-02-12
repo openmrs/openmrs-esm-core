@@ -100,7 +100,12 @@ export function registerApp(appName: string, appExports: System.Module) {
   const setup = appExports.setupOpenMRS;
 
   if (typeof setup === "function") {
+    const assets = appExports.assets;
     const result = trySetup(appName, setup);
+
+    if (Array.isArray(assets)) {
+      //TODO
+    }
 
     if (result && typeof result === "object") {
       const availableExtensions: Array<Partial<ExtensionDefinition>> =
@@ -131,11 +136,14 @@ export function registerApp(appName: string, appExports: System.Module) {
 
 export function finishRegisteringAllApps() {
   pages.sort((a, b) => a.order - b.order);
+
   // Create a div for each page. This ensures their DOM order.
   // If we don't do this, Single-SPA 5 will create the DOM element only once
   // the page becomes active, which makes it impossible to guarantee order.
+
   let index = 0;
-  let lastAppName;
+  let lastAppName: string | undefined = undefined;
+
   for (let page of pages) {
     if (page.appName !== lastAppName) {
       index = 0;

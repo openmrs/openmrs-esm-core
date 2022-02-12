@@ -2,6 +2,9 @@
 
 # Interface: OfflineSynchronizationStore
 
+Represents the data inside the global offline synchronization store.
+Provides information about a currently ongoing synchronization.
+
 ## Table of contents
 
 ### Properties
@@ -24,4 +27,4 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L68)
+[packages/framework/esm-offline/src/sync.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L93)

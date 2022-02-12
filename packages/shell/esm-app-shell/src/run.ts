@@ -1,4 +1,5 @@
 import { start, unregisterApplication, getAppNames } from "single-spa";
+import { Workbox } from "workbox-window";
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -21,17 +22,17 @@ import {
   dispatchNetworkRequestFailed,
   renderModals,
   dispatchPrecacheStaticDependencies,
+  activateOfflineCapability,
 } from "@openmrs/esm-framework";
-import { setupI18n } from "./locale";
 import {
   finishRegisteringAllApps,
   registerApp,
   tryRegisterExtension,
 } from "./apps";
+import { setupI18n } from "./locale";
 import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import { appName, getCoreExtensions } from "./ui";
-import { Workbox } from "workbox-window";
 
 const allowedSuffixes = ["-app", "-widgets"];
 
@@ -209,21 +210,24 @@ async function setupServiceWorker() {
   const sw = await registerOmrsServiceWorker(
     `${window.getOpenmrsSpaBase()}service-worker.js`
   );
+
   registerSwEvents(sw);
-  await triggerOfflineMode();
+
+  await prepareOfflineMode();
+  await activateOfflineCapability();
 }
 
-async function triggerOfflineMode() {
-  if (navigator.onLine) {
-    try {
-      await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
-    } catch (e) {
-      showNotification({
-        critical: true,
-        title: "Offline Setup Error",
-        description: `There was an error while preparing the website's offline mode. You can try reloading the page to potentially fix the error. Details: ${e}.`,
-      });
-    }
+async function prepareOfflineMode() {
+  try {
+    await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
+  } catch (e) {
+    console.error("Error while setting up offline mode.", e);
+
+    showNotification({
+      critical: true,
+      title: "Offline Setup Error",
+      description: `There was an error while initializing the website's offline mode. You can try reloading the page later.`,
+    });
   }
 }
 

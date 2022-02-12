@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@openmrs/esm-framework": "^3.2.0",
+    "@openmrs/webpack-config": "^3.2.0",
     "@types/carbon-components-react": "^7.24.0",
     "@types/lodash-es": "^4.17.5",
     "@types/react-router-dom": "^5.1.7",

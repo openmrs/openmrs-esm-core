@@ -18,10 +18,10 @@
 
 | Name | Type |
 | :------ | :------ |
-| `code` | `Object` |
+| `code` | { `coding`: [`FHIRCode`](FHIRCode.md)[]  } |
 | `code.coding` | [`FHIRCode`](FHIRCode.md)[] |
 | `effectiveDateTime` | `Date` |
-| `encounter` | `Object` |
+| `encounter` | { `reference`: `string` ; `type`: `string`  } |
 | `encounter.reference` | `string` |
 | `encounter.type` | `string` |
 | `id` | `string` |
@@ -29,16 +29,16 @@
 | `referenceRange` | `any` |
 | `resourceType` | `string` |
 | `status` | `string` |
-| `subject` | `Object` |
+| `subject` | { `display`: `string` ; `identifier`: { `id`: `string` ; `system`: `string` ; `use`: `string` ; `value`: `string`  } ; `reference`: `string` ; `type`: `string`  } |
 | `subject.display` | `string` |
-| `subject.identifier` | `Object` |
+| `subject.identifier` | { `id`: `string` ; `system`: `string` ; `use`: `string` ; `value`: `string`  } |
 | `subject.identifier.id` | `string` |
 | `subject.identifier.system` | `string` |
 | `subject.identifier.use` | `string` |
 | `subject.identifier.value` | `string` |
 | `subject.reference` | `string` |
 | `subject.type` | `string` |
-| `valueQuantity` | `Object` |
+| `valueQuantity` | { `value`: `number`  } |
 | `valueQuantity.value` | `number` |
 
 #### Defined in

@@ -1,7 +1,6 @@
 import {
   OmrsOfflineHttpHeaderNames,
   OmrsOfflineHttpHeaders,
-  omrsOfflineCachingStrategyHttpHeaderName,
   omrsOfflineResponseBodyHttpHeaderName,
   omrsOfflineResponseStatusHttpHeaderName,
 } from "@openmrs/esm-offline/src/service-worker-http-headers";
