@@ -2,6 +2,8 @@
 
 # Interface: SyncProcessOptions<T\>
 
+Additional data which can be used for synchronizing data in a [ProcessSyncItem](../API.md#processsyncitem) function.
+
 ## Type parameters
 
 | Name |
@@ -26,7 +28,7 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:256](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L256)
+[packages/framework/esm-offline/src/sync.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L54)
 
 ___
 
@@ -36,7 +38,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L260)
+[packages/framework/esm-offline/src/sync.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L58)
 
 ___
 
@@ -46,7 +48,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:258](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L258)
+[packages/framework/esm-offline/src/sync.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L56)
 
 ___
 
@@ -56,7 +58,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:259](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L259)
+[packages/framework/esm-offline/src/sync.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L57)
 
 ___
 
@@ -66,4 +68,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:257](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L257)
+[packages/framework/esm-offline/src/sync.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L55)

@@ -7,6 +7,7 @@
   "homeOverviewCardPatientsDownloaded": "Downloaded",
   "homeOverviewCardPatientsHeader": "Patients",
   "homeOverviewCardView": "View",
+  "offlineActions": "Offline actions",
   "offlineActionsDeleteConfirmationModalCancel": "Cancel",
   "offlineActionsDeleteConfirmationModalConfirm": "Delete forever",
   "offlineActionsDeleteConfirmationModalContent": "Are you sure that you want to delete all selected offline actions? This cannot be undone!",
@@ -30,5 +31,6 @@
   "offlinePatientSyncDetailsFailedHeader": "There was an error downloading the following items",
   "offlinePatientSyncDetailsFallbackErrorMessage": "Unknown error.",
   "offlinePatientSyncDetailsHeader": "Offline patient details",
+  "offlineReady": "Offline Ready",
   "offlineToolsAppMenuLink": "Offline tools"
 }

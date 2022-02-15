@@ -2,6 +2,11 @@
 
 # Interface: QueueItemDescriptor
 
+Contains information about the sync item which has been provided externally by the caller
+who added the item to the queue.
+This information is all optional, but, when provided while enqueuing the item, can be used in other
+locations to better represent the sync item, e.g. in the UI.
+
 ## Table of contents
 
 ### Properties
@@ -19,7 +24,7 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L20)
+[packages/framework/esm-offline/src/sync.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L31)
 
 ___
 
@@ -29,7 +34,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L25)
+[packages/framework/esm-offline/src/sync.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L36)
 
 ___
 
@@ -39,7 +44,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L19)
+[packages/framework/esm-offline/src/sync.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L30)
 
 ___
 
@@ -49,4 +54,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L24)
+[packages/framework/esm-offline/src/sync.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L35)

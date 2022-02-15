@@ -8,31 +8,32 @@ export interface OfflineToolsPageParams {
   page: string;
 }
 
-const OfflineToolsPage: React.FC<RouteComponentProps<OfflineToolsPageParams>> =
-  ({ match }) => {
-    const basePath = trimEnd(window.getOpenmrsSpaBase(), "/") + match.url;
-    const page = match.params.page;
-    const meta = useExtensionSlotMeta<OfflineToolsPageConfig>(
-      "offline-tools-page-slot"
-    );
-    const pageConfig = Object.values(meta).find(
-      (pageConfig) => pageConfig.name === page
-    );
+const OfflineToolsPage: React.FC<
+  RouteComponentProps<OfflineToolsPageParams>
+> = ({ match }) => {
+  const basePath = trimEnd(window.getOpenmrsSpaBase(), "/") + match.url;
+  const page = match.params.page;
+  const meta = useExtensionSlotMeta<OfflineToolsPageConfig>(
+    "offline-tools-page-slot"
+  );
+  const pageConfig = Object.values(meta).find(
+    (pageConfig) => pageConfig.name === page
+  );
 
-    if (!pageConfig) {
-      return null;
-    }
+  if (!pageConfig) {
+    return null;
+  }
 
-    return (
-      <>
-        <ExtensionSlot extensionSlotName="breadcrumbs-slot" />
-        <ExtensionSlot
-          key={pageConfig.slot}
-          extensionSlotName={pageConfig.slot}
-          state={{ basePath }}
-        />
-      </>
-    );
-  };
+  return (
+    <>
+      <ExtensionSlot extensionSlotName="breadcrumbs-slot" />
+      <ExtensionSlot
+        key={pageConfig.slot}
+        extensionSlotName={pageConfig.slot}
+        state={{ basePath }}
+      />
+    </>
+  );
+};
 
 export default OfflineToolsPage;

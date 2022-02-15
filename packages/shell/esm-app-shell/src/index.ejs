@@ -17,7 +17,7 @@
     <%= htmlWebpackPlugin.tags.headTags %>
 <% if (openmrsImportmapDef) { %>
     <script type="systemjs-importmap"><%= openmrsImportmapDef %></script>
-<% } else { %>
+<% } else if (openmrsImportmapUrl) { %>
     <link
       rel="preload"
       href="<%= openmrsImportmapUrl %>"

@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from "fs";
 import { exec } from "child_process";
 import { logFail, logInfo, logWarn } from "./logger";
 import { startWebpack } from "./webpack";
-import { getDependentModules, getMainBundle } from "./dependencies";
+import { getMainBundle } from "./dependencies";
 import axios from "axios";
 
 import glob = require("glob");
@@ -89,21 +89,13 @@ function runProjectWebpack(
   configPath: string,
   port: number,
   project: any,
-  sharedDependencies: Array<string>,
   sourceDirectory: string,
   importMap: Record<string, string>
 ) {
   const bundle = getMainBundle(project);
   const host = `http://localhost:${port}`;
-  const dependencies = getDependentModules(
-    process.cwd(),
-    host,
-    project.peerDependencies,
-    sharedDependencies
-  );
 
   startWebpack(configPath, port, sourceDirectory);
-  Object.assign(importMap, dependencies);
   importMap[project.name] = `${host}/${bundle.name}`;
 }
 
@@ -156,20 +148,12 @@ export async function runProject(
         defaultConfigPath,
         port,
         project,
-        sharedDependencies,
         sourceDirectory,
         importMap
       );
     } else {
       // run via specialized webpack.config.js
-      runProjectWebpack(
-        configPath,
-        port,
-        project,
-        sharedDependencies,
-        sourceDirectory,
-        importMap
-      );
+      runProjectWebpack(configPath, port, project, sourceDirectory, importMap);
     }
   }
 

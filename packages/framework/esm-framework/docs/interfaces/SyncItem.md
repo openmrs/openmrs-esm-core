@@ -1,6 +1,16 @@
 [@openmrs/esm-framework](../API.md) / SyncItem
 
-# Interface: SyncItem
+# Interface: SyncItem<T\>
+
+Defines an item queued up in the offline synchronization queue.
+A `SyncItem` contains both meta information about the item in the sync queue, as well as the
+actual data to be synchronized (i.e. the item's `content`).
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
 
 ## Table of contents
 
@@ -18,11 +28,11 @@
 
 ### content
 
-• **content**: `any`
+• **content**: `T`
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L9)
+[packages/framework/esm-offline/src/sync.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L14)
 
 ___
 
@@ -32,7 +42,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L10)
+[packages/framework/esm-offline/src/sync.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L15)
 
 ___
 
@@ -42,7 +52,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L11)
+[packages/framework/esm-offline/src/sync.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L16)
 
 ___
 
@@ -52,7 +62,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L6)
+[packages/framework/esm-offline/src/sync.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L11)
 
 ___
 
@@ -69,7 +79,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L12)
+[packages/framework/esm-offline/src/sync.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L17)
 
 ___
 
@@ -79,7 +89,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L8)
+[packages/framework/esm-offline/src/sync.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L13)
 
 ___
 
@@ -89,4 +99,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L7)
+[packages/framework/esm-offline/src/sync.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L12)

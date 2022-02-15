@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "CommonJS",
+    "target": "es2015",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "lib": ["es5", "es2015", "es2015.promise", "es2016.array.include", "es2018"]
+  },
+  "include": ["src/**/*"]
+}

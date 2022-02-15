@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
 import { Tile, Button, TileProps } from "carbon-components-react";
 import styles from "./overview-card.styles.scss";
 import ArrowRight16 from "@carbon/icons-react/es/arrow--right/16";
@@ -17,7 +16,6 @@ const OverviewCard: React.FC<OverviewCardProps> = ({
   children,
 }) => {
   const { t } = useTranslation();
-  const history = useHistory();
 
   return (
     <Tile light className={`${styles.overviewCard}`}>
@@ -27,7 +25,7 @@ const OverviewCard: React.FC<OverviewCardProps> = ({
           kind="ghost"
           renderIcon={ArrowRight16}
           size="sm"
-          onClick={() => navigate({ to: viewLink })}
+          onClick={() => navigate({ to: `\${openmrsSpaBase}/${viewLink}` })}
         >
           {t("homeOverviewCardView", "View")}
         </Button>

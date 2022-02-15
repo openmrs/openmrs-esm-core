@@ -111,3 +111,19 @@ function setupOpenMRS() {
 ```
 
 The previous snippet creates a synchronization processor for items of type `my-offline-data`. These items have a (potential) dependency to other items of type `other-offline-data`. Therefore, these items will be processed *before* the `my-offline-data` items.
+
+## State Machine
+
+Offline is in general a bit of a difficult topic. Most importantly, there are multiple states associated with it. Not only is the specific behavior dependent on the state of the network (online, offline), but also of the user (wants or does not want to be offline ready) and the application (already offline ready or still trying to be offline ready or updating the files required to go offline).
+
+The following state diagram shows the different entry points and their possible transitions.
+
+![Map of OpenMRS offline capability and state transitions](./openmrs-offline-state.png)
+
+Importantly, the user has 5 possible entry points to the application:
+
+- Fresh state (did not opt-in)
+- Downloading assets state (did opt-in, but never finished)
+- Ready state (did opt-in, no changes since last use), followed by a data sync
+- Outdated state (did opt-in, changes to assets since last use)
+- Offline state (did opt-in, no Internet connectivity)

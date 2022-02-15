@@ -84,7 +84,9 @@ const Navbar: React.FC<NavbarProps> = ({
             />
           )}
           <ConfigurableLink to="${openmrsSpaBase}/home">
-            <Logo />
+            <div className={showHamburger ? "" : styles.spacedLogo}>
+              <Logo />
+            </div>
           </ConfigurableLink>
           <ExtensionSlot
             className={styles.dividerOverride}
