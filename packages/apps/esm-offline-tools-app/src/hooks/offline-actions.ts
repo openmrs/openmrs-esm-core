@@ -1,6 +1,7 @@
 import {
   fetchCurrentPatient,
   getOfflineDb,
+  getSynchronizationItems,
   SyncItem,
 } from "@openmrs/esm-framework";
 import uniq from "lodash-es/uniq";
@@ -26,11 +27,20 @@ export function useSyncItemPatients(syncItems?: Array<SyncItem>) {
 
   return useSWR(
     () => ["patients", ...patientUuids],
-    async () => {
-      const results: Array<{ data: fhir.Patient }> = await Promise.all(
-        patientUuids.map((id) => fetchCurrentPatient(id))
-      );
-      return results.map((res) => res.data);
-    }
+    () => Promise.all(patientUuids.map((id) => getFhirPatient(id)))
+  );
+}
+
+async function getFhirPatient(patientUuid: string) {
+  const syncItems = await getSynchronizationItems<{
+    fhirPatient?: fhir.Patient;
+  }>("patient-registration");
+  const offlineRegisteredPatient = syncItems.find(
+    (syncItem) => syncItem?.fhirPatient?.id === patientUuid
+  )?.fhirPatient;
+
+  return (
+    offlineRegisteredPatient ??
+    (await fetchCurrentPatient(patientUuid).then((res) => res.data))
   );
 }
