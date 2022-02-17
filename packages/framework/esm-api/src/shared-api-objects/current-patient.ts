@@ -1,3 +1,8 @@
+/**
+ * @module
+ * @category API
+ */
+
 import { fhir } from "../fhir";
 import { FetchResponse } from "../types";
 
@@ -17,9 +22,6 @@ export interface OnlyThePatient extends CurrentPatientOptions {
 
 export type PatientUuid = string | null;
 
-/**
- * @category API Object
- */
 export function fetchCurrentPatient(
   patientUuid: PatientUuid,
   contentOverrides?: Partial<Parameters<typeof fhir.read>[0]>

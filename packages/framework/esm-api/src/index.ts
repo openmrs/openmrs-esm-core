@@ -10,4 +10,3 @@ export * from "./shared-api-objects/visit-type";
 export * from "./shared-api-objects/location";
 
 export * from "./openmrs-backend-dependencies";
-export * from "./workspace/workspace.resource";

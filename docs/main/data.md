@@ -131,6 +131,6 @@ Some API objects are made available via React hooks (or via framework-agnostic s
 The hooks are in
 `@openmrs/esm-react-utils`,
 and the subscription-yielding equivalents are in
-[`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#api-object-functions).
+[`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#api-functions).
 See for example [`useVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#usevisittypes)
 and the corresponding [`getVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#getvisittypes).

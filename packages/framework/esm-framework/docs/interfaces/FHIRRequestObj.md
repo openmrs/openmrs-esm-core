@@ -4,13 +4,13 @@
 
 ## Table of contents
 
-### Properties
+### API Properties
 
 - [headers](FHIRRequestObj.md#headers)
 - [method](FHIRRequestObj.md#method)
 - [url](FHIRRequestObj.md#url)
 
-## Properties
+## API Properties
 
 ### headers
 
@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L49)
+[packages/framework/esm-api/src/fhir.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L53)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L48)
+[packages/framework/esm-api/src/fhir.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L52)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L47)
+[packages/framework/esm-api/src/fhir.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L51)

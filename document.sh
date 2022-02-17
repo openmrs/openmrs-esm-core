@@ -14,6 +14,12 @@ npx typedoc src/index.ts
 sed -i.bak "s/^@openmrs\/$1$/[Back to README.md](..\/README.md)/" "docs/API.md"
 rm docs/API.md.bak
 
+# Delete everything up to the functions in the index file
+start=$(grep -n -m 1 Enumerations docs/API.md | cut -f1 -d:)
+end=$(grep -n -m 1 Functions docs/API.md | cut -f1 -d:)
+sed -i.bak "${start},$(expr ${end} - 1)d" docs/API.md
+rm docs/API.md.bak
+
 if grep -q tocstop README.md; then
   echo Generating TOC
   npx markdown-toc -i --maxdepth 2 README.md
