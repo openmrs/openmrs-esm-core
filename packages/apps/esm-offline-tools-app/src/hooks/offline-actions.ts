@@ -36,7 +36,7 @@ async function getFhirPatient(patientUuid: string) {
     fhirPatient?: fhir.Patient;
   }>("patient-registration");
   const offlineRegisteredPatient = syncItems.find(
-    (syncItem) => syncItem?.fhirPatient?.id === patientUuid
+    (syncItem) => syncItem.fhirPatient?.id === patientUuid
   )?.fhirPatient;
 
   return (
