@@ -3977,7 +3977,7 @@ ___
 
 ### translateFrom
 
-▸ **translateFrom**(`moduleName`, `key`, `fallback?`): `string`
+▸ **translateFrom**(`moduleName`, `key`, `fallback?`, `options?`): `string`
 
 #### Parameters
 
@@ -3986,6 +3986,7 @@ ___
 | `moduleName` | `string` |
 | `key` | `string` |
 | `fallback?` | `string` |
+| `options?` | `object` |
 
 #### Returns
 
@@ -4551,7 +4552,7 @@ a route listener is set up to update the patient whenever the route changes.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/usePatient.ts#L86)
+[packages/framework/esm-react-utils/src/usePatient.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/usePatient.ts#L91)
 
 ___
 
