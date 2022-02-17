@@ -10,11 +10,11 @@
 
 ## Table of contents
 
-### Properties
+### API Properties
 
 - [includeConfig](OnlyThePatient.md#includeconfig)
 
-## Properties
+## API Properties
 
 ### includeConfig
 
@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L15)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L20)

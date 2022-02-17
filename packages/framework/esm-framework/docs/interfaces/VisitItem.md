@@ -4,14 +4,14 @@
 
 ## Table of contents
 
-### Properties
+### API Properties
 
 - [anythingElse](VisitItem.md#anythingelse)
 - [mode](VisitItem.md#mode)
 - [status](VisitItem.md#status)
 - [visitData](VisitItem.md#visitdata)
 
-## Properties
+## API Properties
 
 ### anythingElse
 
@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L90)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L83)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L87)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L80)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L89)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L82)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L88)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L81)

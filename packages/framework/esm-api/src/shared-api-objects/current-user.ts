@@ -1,3 +1,8 @@
+/**
+ * @module
+ * @category API
+ */
+
 import { Observable, ReplaySubject } from "rxjs";
 import { filter, map, tap, mergeAll } from "rxjs/operators";
 import { openmrsFetch, sessionEndpoint } from "../openmrs-fetch";
@@ -51,8 +56,6 @@ let lastFetchTimeMillis = 0;
  * Otherwise your code will continue getting updates to the user object
  * even after the UI component is gone from the screen. This is a memory
  * leak and source of bugs.
- *
- * @category API Object
  */
 function getCurrentUser(): Observable<LoggedInUser>;
 function getCurrentUser(
@@ -110,8 +113,6 @@ export { getCurrentUser };
  * import { refetchCurrentUser } from '@openmrs/esm-api'
  * refetchCurrentUser()
  * ```
- *
- * @category API Object
  */
 export function refetchCurrentUser() {
   lastFetchTimeMillis = Date.now();

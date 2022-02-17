@@ -4,12 +4,12 @@
 
 ## Table of contents
 
-### Enumeration members
+### API Enumeration members
 
 - [NOTSTARTED](VisitStatus.md#notstarted)
 - [ONGOING](VisitStatus.md#ongoing)
 
-## Enumeration members
+## API Enumeration members
 
 ### NOTSTARTED
 
@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L100)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L93)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L101)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L94)

@@ -1,3 +1,7 @@
+/**
+ * @module
+ * @category API
+ */
 import { openmrsFetch, FetchHeaders, OpenmrsFetchError } from "./openmrs-fetch";
 import type { FhirClient } from "./types/fhir";
 

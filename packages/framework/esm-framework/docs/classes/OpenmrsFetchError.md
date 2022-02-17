@@ -10,16 +10,19 @@
 
 ## Table of contents
 
-### Constructors
+### API Constructors
 
 - [constructor](OpenmrsFetchError.md#constructor)
 
-### Properties
+### API Properties
+
+- [response](OpenmrsFetchError.md#response)
+- [responseBody](OpenmrsFetchError.md#responsebody)
+
+### Other Properties
 
 - [message](OpenmrsFetchError.md#message)
 - [name](OpenmrsFetchError.md#name)
-- [response](OpenmrsFetchError.md#response)
-- [responseBody](OpenmrsFetchError.md#responsebody)
 - [stack](OpenmrsFetchError.md#stack)
 - [prepareStackTrace](OpenmrsFetchError.md#preparestacktrace)
 - [stackTraceLimit](OpenmrsFetchError.md#stacktracelimit)
@@ -28,7 +31,7 @@
 
 - [captureStackTrace](OpenmrsFetchError.md#capturestacktrace)
 
-## Constructors
+## API Constructors
 
 ### constructor
 
@@ -49,9 +52,31 @@ Error.constructor
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:270](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L270)
+[packages/framework/esm-api/src/openmrs-fetch.ts:275](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L275)
 
-## Properties
+## API Properties
+
+### response
+
+• **response**: `Response`
+
+#### Defined in
+
+[packages/framework/esm-api/src/openmrs-fetch.ts:288](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L288)
+
+___
+
+### responseBody
+
+• **responseBody**: ``null`` \| `string` \| `FetchResponseJson`
+
+#### Defined in
+
+[packages/framework/esm-api/src/openmrs-fetch.ts:289](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L289)
+
+___
+
+## Other Properties
 
 ### message
 
@@ -78,26 +103,6 @@ Error.name
 #### Defined in
 
 node_modules/typescript/lib/lib.es5.d.ts:1022
-
-___
-
-### response
-
-• **response**: `Response`
-
-#### Defined in
-
-[packages/framework/esm-api/src/openmrs-fetch.ts:283](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L283)
-
-___
-
-### responseBody
-
-• **responseBody**: ``null`` \| `string` \| `FetchResponseJson`
-
-#### Defined in
-
-[packages/framework/esm-api/src/openmrs-fetch.ts:284](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L284)
 
 ___
 

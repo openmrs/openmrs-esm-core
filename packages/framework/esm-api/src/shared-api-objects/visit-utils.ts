@@ -1,24 +1,17 @@
+/**
+ * @module
+ * @category API
+ */
+
 import { Observable, BehaviorSubject } from "rxjs";
 import { take, map } from "rxjs/operators";
 import { openmrsObservableFetch } from "../openmrs-fetch";
-import { newWorkspaceItem } from "../workspace/workspace.resource";
 import {
   FetchResponse,
   NewVisitPayload,
   UpdateVisitPayload,
   Visit,
 } from "../types";
-
-export function openVisitsNoteWorkspace(componentName: string, title: string) {
-  newWorkspaceItem({
-    component: componentName,
-    name: title,
-    props: {},
-    inProgress: false,
-    validations: (workspaceTabs: Array<any>) =>
-      workspaceTabs.findIndex((tab) => tab.component === componentName),
-  });
-}
 
 export function getVisitsForPatient(
   patientUuid: string,

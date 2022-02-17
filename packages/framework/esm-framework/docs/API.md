@@ -4,172 +4,25 @@
 
 ## Table of contents
 
-### Enumerations
-
-- [Type](enums/Type.md)
-- [VisitMode](enums/VisitMode.md)
-- [VisitStatus](enums/VisitStatus.md)
-
-### Classes
-
-- [OpenmrsFetchError](classes/OpenmrsFetchError.md)
-
-### Interfaces
-
-- [AppState](interfaces/AppState.md)
-- [BreadcrumbRegistration](interfaces/BreadcrumbRegistration.md)
-- [BreadcrumbSettings](interfaces/BreadcrumbSettings.md)
-- [CancelLoading](interfaces/CancelLoading.md)
-- [ClearDynamicRoutesMessage](interfaces/ClearDynamicRoutesMessage.md)
-- [ComponentConfig](interfaces/ComponentConfig.md)
-- [ComponentDecoratorOptions](interfaces/ComponentDecoratorOptions.md)
-- [ComponentDefinition](interfaces/ComponentDefinition.md)
-- [Config](interfaces/Config.md)
-- [ConfigObject](interfaces/ConfigObject.md)
-- [ConfigSchema](interfaces/ConfigSchema.md)
-- [ConfigStore](interfaces/ConfigStore.md)
-- [ConfigurableLinkProps](interfaces/ConfigurableLinkProps.md)
-- [ConnectedExtension](interfaces/ConnectedExtension.md)
-- [ConnectivityChangedEvent](interfaces/ConnectivityChangedEvent.md)
-- [CurrentPatientOptions](interfaces/CurrentPatientOptions.md)
-- [CurrentUserOptions](interfaces/CurrentUserOptions.md)
-- [CurrentUserWithResponseOption](interfaces/CurrentUserWithResponseOption.md)
-- [CurrentUserWithoutResponseOption](interfaces/CurrentUserWithoutResponseOption.md)
-- [ExtensionData](interfaces/ExtensionData.md)
-- [ExtensionDefinition](interfaces/ExtensionDefinition.md)
-- [ExtensionDetails](interfaces/ExtensionDetails.md)
-- [ExtensionInfo](interfaces/ExtensionInfo.md)
-- [ExtensionInstance](interfaces/ExtensionInstance.md)
-- [ExtensionMeta](interfaces/ExtensionMeta.md)
-- [ExtensionProps](interfaces/ExtensionProps.md)
-- [ExtensionRegistration](interfaces/ExtensionRegistration.md)
-- [ExtensionSlotBaseProps](interfaces/ExtensionSlotBaseProps.md)
-- [ExtensionSlotConfig](interfaces/ExtensionSlotConfig.md)
-- [ExtensionSlotConfigObject](interfaces/ExtensionSlotConfigObject.md)
-- [ExtensionSlotConfigsStore](interfaces/ExtensionSlotConfigsStore.md)
-- [ExtensionSlotConfigureValueObject](interfaces/ExtensionSlotConfigureValueObject.md)
-- [ExtensionSlotInfo](interfaces/ExtensionSlotInfo.md)
-- [ExtensionSlotInstance](interfaces/ExtensionSlotInstance.md)
-- [ExtensionStore](interfaces/ExtensionStore.md)
-- [FHIRCode](interfaces/FHIRCode.md)
-- [FHIRRequestObj](interfaces/FHIRRequestObj.md)
-- [FHIRResource](interfaces/FHIRResource.md)
-- [FetchHeaders](interfaces/FetchHeaders.md)
-- [FetchResponse](interfaces/FetchResponse.md)
-- [ImplementerToolsConfigStore](interfaces/ImplementerToolsConfigStore.md)
-- [ImportMap](interfaces/ImportMap.md)
-- [Lifecycle](interfaces/Lifecycle.md)
-- [Location](interfaces/Location.md)
-- [LoggedInUser](interfaces/LoggedInUser.md)
-- [LoggedInUserFetchResponse](interfaces/LoggedInUserFetchResponse.md)
-- [MessageServiceWorkerResult](interfaces/MessageServiceWorkerResult.md)
-- [NavigateOptions](interfaces/NavigateOptions.md)
-- [NavigationContext](interfaces/NavigationContext.md)
-- [NetworkRequestFailedEvent](interfaces/NetworkRequestFailedEvent.md)
-- [NewVisitPayload](interfaces/NewVisitPayload.md)
-- [OfflineModeResult](interfaces/OfflineModeResult.md)
-- [OfflinePatientArgs](interfaces/OfflinePatientArgs.md)
-- [OfflinePatientDataSyncHandler](interfaces/OfflinePatientDataSyncHandler.md)
-- [OfflinePatientDataSyncState](interfaces/OfflinePatientDataSyncState.md)
-- [OfflinePatientDataSyncStore](interfaces/OfflinePatientDataSyncStore.md)
-- [OfflineSynchronizationStore](interfaces/OfflineSynchronizationStore.md)
-- [OmrsServiceWorkerEvent](interfaces/OmrsServiceWorkerEvent.md)
-- [OmrsServiceWorkerMessage](interfaces/OmrsServiceWorkerMessage.md)
-- [OnImportMapChangedMessage](interfaces/OnImportMapChangedMessage.md)
-- [OnlyThePatient](interfaces/OnlyThePatient.md)
-- [OpenmrsReactComponentProps](interfaces/OpenmrsReactComponentProps.md)
-- [OpenmrsReactComponentState](interfaces/OpenmrsReactComponentState.md)
-- [OpenmrsResource](interfaces/OpenmrsResource.md)
-- [PageDefinition](interfaces/PageDefinition.md)
-- [PatientWithFullResponse](interfaces/PatientWithFullResponse.md)
-- [Person](interfaces/Person.md)
-- [PrecacheStaticDependenciesEvent](interfaces/PrecacheStaticDependenciesEvent.md)
-- [Privilege](interfaces/Privilege.md)
-- [QueueItemDescriptor](interfaces/QueueItemDescriptor.md)
-- [RegisterDynamicRouteMessage](interfaces/RegisterDynamicRouteMessage.md)
-- [ResourceLoader](interfaces/ResourceLoader.md)
-- [RetryOptions](interfaces/RetryOptions.md)
-- [Role](interfaces/Role.md)
-- [SessionLocation](interfaces/SessionLocation.md)
-- [SessionUser](interfaces/SessionUser.md)
-- [ShowNotificationEvent](interfaces/ShowNotificationEvent.md)
-- [ShowToastEvent](interfaces/ShowToastEvent.md)
-- [SpaConfig](interfaces/SpaConfig.md)
-- [SyncItem](interfaces/SyncItem.md)
-- [SyncProcessOptions](interfaces/SyncProcessOptions.md)
-- [UnauthenticatedUser](interfaces/UnauthenticatedUser.md)
-- [User](interfaces/User.md)
-- [UserHasAccessProps](interfaces/UserHasAccessProps.md)
-- [Visit](interfaces/Visit.md)
-- [VisitItem](interfaces/VisitItem.md)
-- [VisitType](interfaces/VisitType.md)
-- [WorkspaceItem](interfaces/WorkspaceItem.md)
-
-### Type aliases
-
-- [Actions](API.md#actions)
-- [BoundActions](API.md#boundactions)
-- [ConfigValue](API.md#configvalue)
-- [CurrentPatient](API.md#currentpatient)
-- [DateInput](API.md#dateinput)
-- [ExtensionSlotProps](API.md#extensionslotprops)
-- [FormatDateMode](API.md#formatdatemode)
-- [FormatDateOptions](API.md#formatdateoptions)
-- [KnownOmrsServiceWorkerEvents](API.md#knownomrsserviceworkerevents)
-- [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
-- [LayoutType](API.md#layouttype)
-- [LoggedInUserData](API.md#loggedinuserdata)
-- [MaybeAsync](API.md#maybeasync)
-- [NavigationContextType](API.md#navigationcontexttype)
-- [OfflineMode](API.md#offlinemode)
-- [OmrsOfflineCachingStrategy](API.md#omrsofflinecachingstrategy)
-- [OmrsOfflineHttpHeaderNames](API.md#omrsofflinehttpheadernames)
-- [OmrsOfflineHttpHeaders](API.md#omrsofflinehttpheaders)
-- [PatientUuid](API.md#patientuuid)
-- [ProcessSyncItem](API.md#processsyncitem)
-- [ProvidedConfig](API.md#providedconfig)
-- [SpaEnvironment](API.md#spaenvironment)
-- [UpdateVisitPayload](API.md#updatevisitpayload)
-- [Validator](API.md#validator)
-- [ValidatorFunction](API.md#validatorfunction)
-
-### API Variables
-
-- [fhir](API.md#fhir)
-
-### Navigation Variables
-
-- [ConfigurableLink](API.md#configurablelink)
-
-### Other Variables
-
-- [ComponentContext](API.md#componentcontext)
-- [Extension](API.md#extension)
-- [ExtensionSlot](API.md#extensionslot)
-- [UserHasAccess](API.md#userhasaccess)
-- [backendDependencies](API.md#backenddependencies)
-- [extensionStore](API.md#extensionstore)
-- [fhirBaseUrl](API.md#fhirbaseurl)
-- [getStartedVisit](API.md#getstartedvisit)
-- [implementerToolsConfigStore](API.md#implementertoolsconfigstore)
-- [offlineUuidPrefix](API.md#offlineuuidprefix)
-- [omrsOfflineCachingStrategyHttpHeaderName](API.md#omrsofflinecachingstrategyhttpheadername)
-- [omrsOfflineResponseBodyHttpHeaderName](API.md#omrsofflineresponsebodyhttpheadername)
-- [omrsOfflineResponseStatusHttpHeaderName](API.md#omrsofflineresponsestatushttpheadername)
-- [sessionEndpoint](API.md#sessionendpoint)
-- [temporaryConfigStore](API.md#temporaryconfigstore)
-- [validators](API.md#validators)
-
 ### API Functions
-
-- [openmrsFetch](API.md#openmrsfetch)
-- [openmrsObservableFetch](API.md#openmrsobservablefetch)
-
-### API Object Functions
 
 - [fetchCurrentPatient](API.md#fetchcurrentpatient)
 - [getCurrentUser](API.md#getcurrentuser)
+- [getLocations](API.md#getlocations)
+- [getLoggedInUser](API.md#getloggedinuser)
+- [getSessionLocation](API.md#getsessionlocation)
+- [getVisitTypes](API.md#getvisittypes)
+- [getVisitsForPatient](API.md#getvisitsforpatient)
+- [makeUrl](API.md#makeurl)
+- [openmrsFetch](API.md#openmrsfetch)
+- [openmrsObservableFetch](API.md#openmrsobservablefetch)
 - [refetchCurrentUser](API.md#refetchcurrentuser)
+- [saveVisit](API.md#savevisit)
+- [setSessionLocation](API.md#setsessionlocation)
+- [toLocationObject](API.md#tolocationobject)
+- [toVisitTypeObject](API.md#tovisittypeobject)
+- [updateVisit](API.md#updatevisit)
+- [userHasAccess](API.md#userhasaccess)
 
 ### Breadcrumb Functions
 
@@ -178,6 +31,22 @@
 - [getBreadcrumbsFor](API.md#getbreadcrumbsfor)
 - [registerBreadcrumb](API.md#registerbreadcrumb)
 - [registerBreadcrumbs](API.md#registerbreadcrumbs)
+
+### Date and time Functions
+
+- [formatDate](API.md#formatdate)
+- [formatDatetime](API.md#formatdatetime)
+- [formatTime](API.md#formattime)
+- [isOmrsDateStrict](API.md#isomrsdatestrict)
+- [isOmrsDateToday](API.md#isomrsdatetoday)
+- [parseDate](API.md#parsedate)
+- [toDateObjectStrict](API.md#todateobjectstrict)
+- [toOmrsDateFormat](API.md#toomrsdateformat)
+- [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
+- [toOmrsIsoString](API.md#toomrsisostring)
+- [toOmrsTimeString](API.md#toomrstimestring)
+- [toOmrsTimeString24](API.md#toomrstimestring24)
+- [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
 
 ### Navigation Functions
 
@@ -208,9 +77,6 @@
 - [dispatchNetworkRequestFailed](API.md#dispatchnetworkrequestfailed)
 - [dispatchNotificationShown](API.md#dispatchnotificationshown)
 - [dispatchPrecacheStaticDependencies](API.md#dispatchprecachestaticdependencies)
-- [formatDate](API.md#formatdate)
-- [formatDatetime](API.md#formatdatetime)
-- [formatTime](API.md#formattime)
 - [generateOfflineUuid](API.md#generateofflineuuid)
 - [getAppState](API.md#getappstate)
 - [getAssignedIds](API.md#getassignedids)
@@ -228,33 +94,23 @@
 - [getExtensionSlotsForModule](API.md#getextensionslotsformodule)
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
-- [getLocations](API.md#getlocations)
-- [getLoggedInUser](API.md#getloggedinuser)
 - [getOfflinePatientDataStore](API.md#getofflinepatientdatastore)
 - [getOfflineSynchronizationStore](API.md#getofflinesynchronizationstore)
 - [getOmrsServiceWorker](API.md#getomrsserviceworker)
-- [getSessionLocation](API.md#getsessionlocation)
 - [getSyncLifecycle](API.md#getsynclifecycle)
 - [getSynchronizationItem](API.md#getsynchronizationitem)
 - [getSynchronizationItems](API.md#getsynchronizationitems)
 - [getSynchronizationItemsFor](API.md#getsynchronizationitemsfor)
 - [getUpdatedExtensionSlotInfo](API.md#getupdatedextensionslotinfo)
-- [getVisitTypes](API.md#getvisittypes)
-- [getVisitsForPatient](API.md#getvisitsforpatient)
 - [handleApiError](API.md#handleapierror)
 - [inRange](API.md#inrange)
 - [integrateBreakpoints](API.md#integratebreakpoints)
 - [isOfflineUuid](API.md#isofflineuuid)
-- [isOmrsDateStrict](API.md#isomrsdatestrict)
-- [isOmrsDateToday](API.md#isomrsdatetoday)
 - [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [loadPersistedPatientDataSyncState](API.md#loadpersistedpatientdatasyncstate)
-- [makeUrl](API.md#makeurl)
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
-- [openVisitsNoteWorkspace](API.md#openvisitsnoteworkspace)
 - [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
-- [parseDate](API.md#parsedate)
 - [patchXMLHttpRequest](API.md#patchxmlhttprequest)
 - [processConfig](API.md#processconfig)
 - [provide](API.md#provide)
@@ -273,9 +129,7 @@
 - [reportError](API.md#reporterror)
 - [retry](API.md#retry)
 - [runSynchronization](API.md#runsynchronization)
-- [saveVisit](API.md#savevisit)
 - [setCurrentOfflineMode](API.md#setcurrentofflinemode)
-- [setSessionLocation](API.md#setsessionlocation)
 - [setupOfflineSync](API.md#setupofflinesync)
 - [setupPaths](API.md#setuppaths)
 - [setupUtils](API.md#setuputils)
@@ -291,20 +145,10 @@
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [switchTo](API.md#switchto)
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
-- [toDateObjectStrict](API.md#todateobjectstrict)
-- [toLocationObject](API.md#tolocationobject)
-- [toOmrsDateFormat](API.md#toomrsdateformat)
-- [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
-- [toOmrsIsoString](API.md#toomrsisostring)
-- [toOmrsTimeString](API.md#toomrstimestring)
-- [toOmrsTimeString24](API.md#toomrstimestring24)
-- [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
-- [toVisitTypeObject](API.md#tovisittypeobject)
 - [translateFrom](API.md#translatefrom)
 - [unregisterExtensionSlot](API.md#unregisterextensionslot)
 - [update](API.md#update)
 - [updateExtensionStore](API.md#updateextensionstore)
-- [updateVisit](API.md#updatevisit)
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
 - [useAttachedExtensionIds](API.md#useattachedextensionids)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
@@ -329,15 +173,72 @@
 - [useStoreState](API.md#usestorestate)
 - [useVisit](API.md#usevisit)
 - [useVisitTypes](API.md#usevisittypes)
-- [userHasAccess](API.md#userhasaccess)
 - [validator](API.md#validator)
 
-### Workspace Functions
+## API Type aliases
 
-- [getNewWorkspaceItem](API.md#getnewworkspaceitem)
-- [newWorkspaceItem](API.md#newworkspaceitem)
+### CurrentPatient
 
-## Type aliases
+Ƭ **CurrentPatient**: `fhir.Patient` \| [`FetchResponse`](interfaces/FetchResponse.md)<`fhir.Patient`\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L9)
+
+___
+
+### PatientUuid
+
+Ƭ **PatientUuid**: `string` \| ``null``
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L23)
+
+___
+
+## Date and time Type aliases
+
+### DateInput
+
+Ƭ **DateInput**: `string` \| `number` \| `Date`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L19)
+
+___
+
+### FormatDateMode
+
+Ƭ **FormatDateMode**: ``"standard"`` \| ``"wide"``
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L140)
+
+___
+
+### FormatDateOptions
+
+Ƭ **FormatDateOptions**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `day` | `boolean` | Whether to include the day number |
+| `mode` | [`FormatDateMode`](API.md#formatdatemode) | - `standard`: "03 Feb 2022" - `wide`:     "03 — Feb — 2022" |
+| `time` | `boolean` \| ``"for today"`` | Whether the time should be included in the output always (`true`), never (`false`), or only when the input date is today (`for today`). |
+| `year` | `boolean` | Whether to include the year |
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L142)
+
+___
+
+## Other Type aliases
 
 ### Actions
 
@@ -373,26 +274,6 @@ ___
 
 ___
 
-### CurrentPatient
-
-Ƭ **CurrentPatient**: `fhir.Patient` \| [`FetchResponse`](interfaces/FetchResponse.md)<`fhir.Patient`\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L4)
-
-___
-
-### DateInput
-
-Ƭ **DateInput**: `string` \| `number` \| `Date`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L19)
-
-___
-
 ### ExtensionSlotProps
 
 Ƭ **ExtensionSlotProps**: [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `React.HTMLAttributes`<`HTMLDivElement`\>
@@ -400,35 +281,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L48)
-
-___
-
-### FormatDateMode
-
-Ƭ **FormatDateMode**: ``"standard"`` \| ``"wide"``
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L140)
-
-___
-
-### FormatDateOptions
-
-Ƭ **FormatDateOptions**: `Object`
-
-#### Type declaration
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `day` | `boolean` | Whether to include the day number |
-| `mode` | [`FormatDateMode`](API.md#formatdatemode) | - `standard`: "03 Feb 2022" - `wide`:     "03 — Feb — 2022" |
-| `time` | `boolean` \| ``"for today"`` | Whether the time should be included in the output always (`true`), never (`false`), or only when the input date is today (`for today`). |
-| `year` | `boolean` | Whether to include the year |
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L142)
 
 ___
 
@@ -551,16 +403,6 @@ HTTP requests with these headers are handled in a special way by the SPA's servi
 #### Defined in
 
 [packages/framework/esm-offline/src/service-worker-http-headers.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L24)
-
-___
-
-### PatientUuid
-
-Ƭ **PatientUuid**: `string` \| ``null``
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L18)
 
 ___
 
@@ -696,7 +538,37 @@ and example usage.
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L41)
+[packages/framework/esm-api/src/fhir.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L45)
+
+___
+
+### fhirBaseUrl
+
+• **fhirBaseUrl**: ``"/ws/fhir2/R4"``
+
+#### Defined in
+
+[packages/framework/esm-api/src/fhir.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L8)
+
+___
+
+### getStartedVisit
+
+• **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L77)
+
+___
+
+### sessionEndpoint
+
+• **sessionEndpoint**: ``"/ws/rest/v1/session"``
+
+#### Defined in
+
+[packages/framework/esm-api/src/openmrs-fetch.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L11)
 
 ___
 
@@ -799,26 +671,6 @@ ___
 
 ___
 
-### fhirBaseUrl
-
-• **fhirBaseUrl**: ``"/ws/fhir2/R4"``
-
-#### Defined in
-
-[packages/framework/esm-api/src/fhir.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L4)
-
-___
-
-### getStartedVisit
-
-• **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L84)
-
-___
-
 ### implementerToolsConfigStore
 
 • **implementerToolsConfigStore**: `Store`<[`ImplementerToolsConfigStore`](interfaces/ImplementerToolsConfigStore.md)\>
@@ -869,16 +721,6 @@ ___
 
 ___
 
-### sessionEndpoint
-
-• **sessionEndpoint**: ``"/ws/rest/v1/session"``
-
-#### Defined in
-
-[packages/framework/esm-api/src/openmrs-fetch.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L6)
-
-___
-
 ### temporaryConfigStore
 
 • **temporaryConfigStore**: `Store`<`TemporaryConfigStore`\>
@@ -906,6 +748,202 @@ ___
 [packages/framework/esm-config/src/validators/validators.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L57)
 
 ## API Functions
+
+### fetchCurrentPatient
+
+▸ **fetchCurrentPatient**(`patientUuid`, `contentOverrides?`): `Promise`<{ `data`: `Patient`  }\> \| `Promise`<``null``\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
+| `contentOverrides?` | `Partial`<{ `headers?`: [`FetchHeaders`](interfaces/FetchHeaders.md) ; `id?`: `string` ; `patient?`: `string` ; `type`: `ResourceName`  }\> |
+
+#### Returns
+
+`Promise`<{ `data`: `Patient`  }\> \| `Promise`<``null``\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L25)
+
+___
+
+### getCurrentUser
+
+▸ **getCurrentUser**(): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
+
+The getCurrentUser function returns an observable that produces
+**zero or more values, over time**. It will produce zero values
+by default if the user is not logged in. And it will provide a
+first value when the logged in user is fetched from the server.
+Subsequent values will be produced whenever the user object is
+updated.
+
+#### Returns
+
+`Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
+
+An Observable that produces zero or more values (as
+  described above). The values produced will be a user object (if
+  `includeAuthStatus` is set to `false`) or an object with a session
+  and authenticated property (if `includeAuthStatus` is set to `true`).
+
+#### Example
+
+```js
+import { getCurrentUser } from '@openmrs/esm-api'
+const subscription = getCurrentUser().subscribe(
+  user => console.log(user)
+)
+subscription.unsubscribe()
+getCurrentUser({includeAuthStatus: true}).subscribe(
+  data => console.log(data.authenticated)
+)
+```
+
+#### Be sure to unsubscribe when your component unmounts
+
+Otherwise your code will continue getting updates to the user object
+even after the UI component is gone from the screen. This is a memory
+leak and source of bugs.
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L60)
+
+▸ **getCurrentUser**(`opts`): `Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `opts` | [`CurrentUserWithResponseOption`](interfaces/CurrentUserWithResponseOption.md) |
+
+#### Returns
+
+`Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L61)
+
+▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `opts` | [`CurrentUserWithoutResponseOption`](interfaces/CurrentUserWithoutResponseOption.md) |
+
+#### Returns
+
+`Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L64)
+
+___
+
+### getLocations
+
+▸ **getLocations**(): `Observable`<[`Location`](interfaces/Location.md)[]\>
+
+#### Returns
+
+`Observable`<[`Location`](interfaces/Location.md)[]\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/location.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/location.ts#L18)
+
+___
+
+### getLoggedInUser
+
+▸ **getLoggedInUser**(): `Promise`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
+
+#### Returns
+
+`Promise`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:135](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L135)
+
+___
+
+### getSessionLocation
+
+▸ **getSessionLocation**(): `Promise`<`undefined` \| [`SessionLocation`](interfaces/SessionLocation.md)\>
+
+#### Returns
+
+`Promise`<`undefined` \| [`SessionLocation`](interfaces/SessionLocation.md)\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L144)
+
+___
+
+### getVisitTypes
+
+▸ **getVisitTypes**(): `Observable`<[`VisitType`](interfaces/VisitType.md)[]\>
+
+#### Returns
+
+`Observable`<[`VisitType`](interfaces/VisitType.md)[]\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L19)
+
+___
+
+### getVisitsForPatient
+
+▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+| `abortController` | `AbortController` |
+| `v?` | `string` |
+
+#### Returns
+
+`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L16)
+
+___
+
+### makeUrl
+
+▸ **makeUrl**(`path`): `string`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `path` | `string` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/openmrs-fetch.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L13)
+
+___
 
 ### openmrsFetch
 
@@ -970,7 +1008,7 @@ free up memory and network resources and to prevent race conditions.
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L61)
+[packages/framework/esm-api/src/openmrs-fetch.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L66)
 
 ___
 
@@ -1021,107 +1059,7 @@ To cancel the network request, simply call `subscription.unsubscribe();`
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L232)
-
-___
-
-## API Object Functions
-
-### fetchCurrentPatient
-
-▸ **fetchCurrentPatient**(`patientUuid`, `contentOverrides?`): `Promise`<{ `data`: `Patient`  }\> \| `Promise`<``null``\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
-| `contentOverrides?` | `Partial`<{ `headers?`: [`FetchHeaders`](interfaces/FetchHeaders.md) ; `id?`: `string` ; `patient?`: `string` ; `type`: `ResourceName`  }\> |
-
-#### Returns
-
-`Promise`<{ `data`: `Patient`  }\> \| `Promise`<``null``\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L23)
-
-___
-
-### getCurrentUser
-
-▸ **getCurrentUser**(): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
-
-The getCurrentUser function returns an observable that produces
-**zero or more values, over time**. It will produce zero values
-by default if the user is not logged in. And it will provide a
-first value when the logged in user is fetched from the server.
-Subsequent values will be produced whenever the user object is
-updated.
-
-#### Returns
-
-`Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
-
-An Observable that produces zero or more values (as
-  described above). The values produced will be a user object (if
-  `includeAuthStatus` is set to `false`) or an object with a session
-  and authenticated property (if `includeAuthStatus` is set to `true`).
-
-#### Example
-
-```js
-import { getCurrentUser } from '@openmrs/esm-api'
-const subscription = getCurrentUser().subscribe(
-  user => console.log(user)
-)
-subscription.unsubscribe()
-getCurrentUser({includeAuthStatus: true}).subscribe(
-  data => console.log(data.authenticated)
-)
-```
-
-#### Be sure to unsubscribe when your component unmounts
-
-Otherwise your code will continue getting updates to the user object
-even after the UI component is gone from the screen. This is a memory
-leak and source of bugs.
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L57)
-
-▸ **getCurrentUser**(`opts`): `Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `opts` | [`CurrentUserWithResponseOption`](interfaces/CurrentUserWithResponseOption.md) |
-
-#### Returns
-
-`Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L58)
-
-▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `opts` | [`CurrentUserWithoutResponseOption`](interfaces/CurrentUserWithoutResponseOption.md) |
-
-#### Returns
-
-`Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L61)
+[packages/framework/esm-api/src/openmrs-fetch.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L237)
 
 ___
 
@@ -1147,7 +1085,132 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L116)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L117)
+
+___
+
+### saveVisit
+
+▸ **saveVisit**(`payload`, `abortController`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `payload` | [`NewVisitPayload`](interfaces/NewVisitPayload.md) |
+| `abortController` | `AbortController` |
+
+#### Returns
+
+`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L48)
+
+___
+
+### setSessionLocation
+
+▸ **setSessionLocation**(`locationUuid`, `abortController`): `Promise`<`any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `locationUuid` | `string` |
+| `abortController` | `AbortController` |
+
+#### Returns
+
+`Promise`<`any`\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:156](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L156)
+
+___
+
+### toLocationObject
+
+▸ **toLocationObject**(`openmrsRestForm`): [`Location`](interfaces/Location.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `openmrsRestForm` | `any` |
+
+#### Returns
+
+[`Location`](interfaces/Location.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/location.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/location.ts#L11)
+
+___
+
+### toVisitTypeObject
+
+▸ **toVisitTypeObject**(`openmrsRestForm`): [`VisitType`](interfaces/VisitType.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `openmrsRestForm` | `any` |
+
+#### Returns
+
+[`VisitType`](interfaces/VisitType.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L11)
+
+___
+
+### updateVisit
+
+▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Observable`<`any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `uuid` | `string` |
+| `payload` | [`NewVisitPayload`](interfaces/NewVisitPayload.md) |
+| `abortController` | `AbortController` |
+
+#### Returns
+
+`Observable`<`any`\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L62)
+
+___
+
+### userHasAccess
+
+▸ **userHasAccess**(`requiredPrivilege`, `user`): `undefined` \| [`Privilege`](interfaces/Privilege.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `requiredPrivilege` | `string` |
+| `user` | [`LoggedInUser`](interfaces/LoggedInUser.md) |
+
+#### Returns
+
+`undefined` \| [`Privilege`](interfaces/Privilege.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L131)
 
 ___
 
@@ -1245,6 +1308,323 @@ ___
 #### Defined in
 
 [packages/framework/esm-breadcrumbs/src/db.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L35)
+
+___
+
+## Date and time Functions
+
+### formatDate
+
+▸ **formatDate**(`date`, `options?`): `string`
+
+Formats the input date according to the current locale and the
+given options.
+
+Default options:
+ - mode: "standard",
+ - time: "for today",
+ - day: true,
+ - year: true
+
+If the date is today then "Today" is produced (in the locale language).
+
+When time is included, it is appended with a comma and a space. This
+agrees with the output of `Date.prototype.toLocaleString` for *most*
+locales.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `Date` |
+| `options?` | `Partial`<[`FormatDateOptions`](API.md#formatdateoptions)\> |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L182)
+
+___
+
+### formatDatetime
+
+▸ **formatDatetime**(`date`, `options?`): `string`
+
+Formats the input into a string showing the date and time, according
+to the current locale. The `mode` parameter is as described for
+`formatDate`.
+
+This is created by concatenating the results of `formatDate`
+and `formatTime` with a comma and space. This agrees with the
+output of `Date.prototype.toLocaleString` for *most* locales.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `Date` |
+| `options?` | `Partial`<`Omit`<[`FormatDateOptions`](API.md#formatdateoptions), ``"time"``\>\> |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:249](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L249)
+
+___
+
+### formatTime
+
+▸ **formatTime**(`date`): `string`
+
+Formats the input as a time, according to the current locale.
+12-hour or 24-hour clock depends on locale.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `Date` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:233](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L233)
+
+___
+
+### isOmrsDateStrict
+
+▸ **isOmrsDateStrict**(`omrsPayloadString`): `boolean`
+
+This function is STRICT on checking whether a date string is the openmrs format.
+The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `omrsPayloadString` | `string` |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L27)
+
+___
+
+### isOmrsDateToday
+
+▸ **isOmrsDateToday**(`date`): `boolean`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) | Checks if the provided date is today. |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L64)
+
+___
+
+### parseDate
+
+▸ **parseDate**(`dateString`): `Date`
+
+Utility function to parse an arbitrary string into a date.
+Uses `dayjs(dateString)`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `dateString` | `string` |
+
+#### Returns
+
+`Date`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L136)
+
+___
+
+### toDateObjectStrict
+
+▸ **toDateObjectStrict**(`omrsDateString`): `Date` \| ``null``
+
+Converts the object to a date object if it is a valid ISO date time string.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `omrsDateString` | `string` |
+
+#### Returns
+
+`Date` \| ``null``
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L71)
+
+___
+
+### toOmrsDateFormat
+
+▸ **toOmrsDateFormat**(`date`, `format?`): `string`
+
+**`deprecated`** use `formatDate(date)`
+Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `format` | `string` | `"YYYY-MMM-DD"` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L128)
+
+___
+
+### toOmrsDayDateFormat
+
+▸ **toOmrsDayDateFormat**(`date`): `string`
+
+**`deprecated`** use `formatDate(date, "wide")`
+Formats the input as a date string using the format "DD - MMM - YYYY".
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L112)
+
+___
+
+### toOmrsIsoString
+
+▸ **toOmrsIsoString**(`date`, `toUTC?`): `string`
+
+Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SSSZZ".
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
+| `toUTC` | `boolean` | `false` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L82)
+
+___
+
+### toOmrsTimeString
+
+▸ **toOmrsTimeString**(`date`): `string`
+
+**`deprecated`** use `formatTime`
+Formats the input as a time string using the format "HH:mm A".
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L104)
+
+___
+
+### toOmrsTimeString24
+
+▸ **toOmrsTimeString24**(`date`): `string`
+
+**`deprecated`** use `formatTime`
+Formats the input as a time string using the format "HH:mm".
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L96)
+
+___
+
+### toOmrsYearlessDateFormat
+
+▸ **toOmrsYearlessDateFormat**(`date`): `string`
+
+**`deprecated`** use `formatDate(date, "no year")`
+Formats the input as a date string using the format "DD-MMM".
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | [`DateInput`](API.md#dateinput) |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L120)
 
 ___
 
@@ -1836,94 +2216,6 @@ ___
 
 ___
 
-### formatDate
-
-▸ **formatDate**(`date`, `options?`): `string`
-
-Formats the input date according to the current locale and the
-given options.
-
-Default options:
- - mode: "standard",
- - time: "for today",
- - day: true,
- - year: true
-
-If the date is today then "Today" is produced (in the locale language).
-
-When time is included, it is appended with a comma and a space. This
-agrees with the output of `Date.prototype.toLocaleString` for *most*
-locales.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | `Date` |
-| `options?` | `Partial`<[`FormatDateOptions`](API.md#formatdateoptions)\> |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L182)
-
-___
-
-### formatDatetime
-
-▸ **formatDatetime**(`date`, `options?`): `string`
-
-Formats the input into a string showing the date and time, according
-to the current locale. The `mode` parameter is as described for
-`formatDate`.
-
-This is created by concatenating the results of `formatDate`
-and `formatTime` with a comma and space. This agrees with the
-output of `Date.prototype.toLocaleString` for *most* locales.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | `Date` |
-| `options?` | `Partial`<`Omit`<[`FormatDateOptions`](API.md#formatdateoptions), ``"time"``\>\> |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:249](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L249)
-
-___
-
-### formatTime
-
-▸ **formatTime**(`date`): `string`
-
-Formats the input as a time, according to the current locale.
-12-hour or 24-hour clock depends on locale.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | `Date` |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:233](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L233)
-
-___
-
 ### generateOfflineUuid
 
 ▸ **generateOfflineUuid**(): `string`
@@ -2313,34 +2605,6 @@ ___
 
 ___
 
-### getLocations
-
-▸ **getLocations**(): `Observable`<[`Location`](interfaces/Location.md)[]\>
-
-#### Returns
-
-`Observable`<[`Location`](interfaces/Location.md)[]\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/location.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/location.ts#L13)
-
-___
-
-### getLoggedInUser
-
-▸ **getLoggedInUser**(): `Promise`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
-
-#### Returns
-
-`Promise`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L134)
-
-___
-
 ### getOfflinePatientDataStore
 
 ▸ **getOfflinePatientDataStore**(): `Store`<[`OfflinePatientDataSyncStore`](interfaces/OfflinePatientDataSyncStore.md)\>
@@ -2388,20 +2652,6 @@ A promise which either resolves to `undefined` or to the app's {@link Workbox} i
 #### Defined in
 
 [packages/framework/esm-offline/src/service-worker.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker.ts#L42)
-
-___
-
-### getSessionLocation
-
-▸ **getSessionLocation**(): `Promise`<`undefined` \| [`SessionLocation`](interfaces/SessionLocation.md)\>
-
-#### Returns
-
-`Promise`<`undefined` \| [`SessionLocation`](interfaces/SessionLocation.md)\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L143)
 
 ___
 
@@ -2550,42 +2800,6 @@ with which it has been attached.
 
 ___
 
-### getVisitTypes
-
-▸ **getVisitTypes**(): `Observable`<[`VisitType`](interfaces/VisitType.md)[]\>
-
-#### Returns
-
-`Observable`<[`VisitType`](interfaces/VisitType.md)[]\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L14)
-
-___
-
-### getVisitsForPatient
-
-▸ **getVisitsForPatient**(`patientUuid`, `abortController`, `v?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `patientUuid` | `string` |
-| `abortController` | `AbortController` |
-| `v?` | `string` |
-
-#### Returns
-
-`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`Visit`](interfaces/Visit.md)[]  }\>\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L23)
-
-___
-
 ### handleApiError
 
 ▸ **handleApiError**(): (`incomingResponseErr`: `any`) => `void`
@@ -2671,49 +2885,6 @@ Checks whether the given string has the format of an offline UUID generated by [
 
 ___
 
-### isOmrsDateStrict
-
-▸ **isOmrsDateStrict**(`omrsPayloadString`): `boolean`
-
-This function is STRICT on checking whether a date string is the openmrs format.
-The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `omrsPayloadString` | `string` |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L27)
-
-___
-
-### isOmrsDateToday
-
-▸ **isOmrsDateToday**(`date`): `boolean`
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) | Checks if the provided date is today. |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L64)
-
-___
-
 ### isSameDay
 
 ▸ **isSameDay**(`firstDate`, `secondDate`): `boolean`
@@ -2774,26 +2945,6 @@ ___
 
 ___
 
-### makeUrl
-
-▸ **makeUrl**(`path`): `string`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `path` | `string` |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/openmrs-fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L8)
-
-___
-
 ### messageOmrsServiceWorker
 
 ▸ **messageOmrsServiceWorker**(`message`): `Promise`<[`MessageServiceWorkerResult`](interfaces/MessageServiceWorkerResult.md)<`any`\>\>
@@ -2815,27 +2966,6 @@ A promise which completes when the message has been successfully processed by th
 #### Defined in
 
 [packages/framework/esm-offline/src/service-worker-messaging.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L10)
-
-___
-
-### openVisitsNoteWorkspace
-
-▸ **openVisitsNoteWorkspace**(`componentName`, `title`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `componentName` | `string` |
-| `title` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L12)
 
 ___
 
@@ -2868,29 +2998,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L71)
-
-___
-
-### parseDate
-
-▸ **parseDate**(`dateString`): `Date`
-
-Utility function to parse an arbitrary string into a date.
-Uses `dayjs(dateString)`.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `dateString` | `string` |
-
-#### Returns
-
-`Date`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L136)
 
 ___
 
@@ -3332,27 +3439,6 @@ Runs a full synchronization of **all** queued synchronization items.
 
 ___
 
-### saveVisit
-
-▸ **saveVisit**(`payload`, `abortController`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `payload` | [`NewVisitPayload`](interfaces/NewVisitPayload.md) |
-| `abortController` | `AbortController` |
-
-#### Returns
-
-`Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L55)
-
-___
-
 ### setCurrentOfflineMode
 
 ▸ **setCurrentOfflineMode**(`mode`): `void`
@@ -3370,27 +3456,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-offline/src/mode.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L55)
-
-___
-
-### setSessionLocation
-
-▸ **setSessionLocation**(`locationUuid`, `abortController`): `Promise`<`any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `locationUuid` | `string` |
-| `abortController` | `AbortController` |
-
-#### Returns
-
-`Promise`<`any`\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:155](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L155)
 
 ___
 
@@ -3774,207 +3839,6 @@ A promise which resolves once all registered handlers have finished synchronizin
 
 ___
 
-### toDateObjectStrict
-
-▸ **toDateObjectStrict**(`omrsDateString`): `Date` \| ``null``
-
-Converts the object to a date object if it is a valid ISO date time string.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `omrsDateString` | `string` |
-
-#### Returns
-
-`Date` \| ``null``
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L71)
-
-___
-
-### toLocationObject
-
-▸ **toLocationObject**(`openmrsRestForm`): [`Location`](interfaces/Location.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `openmrsRestForm` | `any` |
-
-#### Returns
-
-[`Location`](interfaces/Location.md)
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/location.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/location.ts#L6)
-
-___
-
-### toOmrsDateFormat
-
-▸ **toOmrsDateFormat**(`date`, `format?`): `string`
-
-**`deprecated`** use `formatDate(date)`
-Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
-
-#### Parameters
-
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
-| `format` | `string` | `"YYYY-MMM-DD"` |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L128)
-
-___
-
-### toOmrsDayDateFormat
-
-▸ **toOmrsDayDateFormat**(`date`): `string`
-
-**`deprecated`** use `formatDate(date, "wide")`
-Formats the input as a date string using the format "DD - MMM - YYYY".
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L112)
-
-___
-
-### toOmrsIsoString
-
-▸ **toOmrsIsoString**(`date`, `toUTC?`): `string`
-
-Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SSSZZ".
-
-#### Parameters
-
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) | `undefined` |
-| `toUTC` | `boolean` | `false` |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L82)
-
-___
-
-### toOmrsTimeString
-
-▸ **toOmrsTimeString**(`date`): `string`
-
-**`deprecated`** use `formatTime`
-Formats the input as a time string using the format "HH:mm A".
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L104)
-
-___
-
-### toOmrsTimeString24
-
-▸ **toOmrsTimeString24**(`date`): `string`
-
-**`deprecated`** use `formatTime`
-Formats the input as a time string using the format "HH:mm".
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L96)
-
-___
-
-### toOmrsYearlessDateFormat
-
-▸ **toOmrsYearlessDateFormat**(`date`): `string`
-
-**`deprecated`** use `formatDate(date, "no year")`
-Formats the input as a date string using the format "DD-MMM".
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/omrs-dates.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L120)
-
-___
-
-### toVisitTypeObject
-
-▸ **toVisitTypeObject**(`openmrsRestForm`): [`VisitType`](interfaces/VisitType.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `openmrsRestForm` | `any` |
-
-#### Returns
-
-[`VisitType`](interfaces/VisitType.md)
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L6)
-
-___
-
 ### translateFrom
 
 ▸ **translateFrom**(`moduleName`, `key`, `fallback?`, `options?`): `string`
@@ -4064,28 +3928,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L87)
-
-___
-
-### updateVisit
-
-▸ **updateVisit**(`uuid`, `payload`, `abortController`): `Observable`<`any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `uuid` | `string` |
-| `payload` | [`NewVisitPayload`](interfaces/NewVisitPayload.md) |
-| `abortController` | `AbortController` |
-
-#### Returns
-
-`Observable`<`any`\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L69)
 
 ___
 
@@ -4686,27 +4528,6 @@ ___
 
 ___
 
-### userHasAccess
-
-▸ **userHasAccess**(`requiredPrivilege`, `user`): `undefined` \| [`Privilege`](interfaces/Privilege.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `requiredPrivilege` | `string` |
-| `user` | [`LoggedInUser`](interfaces/LoggedInUser.md) |
-
-#### Returns
-
-`undefined` \| [`Privilege`](interfaces/Privilege.md)
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L130)
-
-___
-
 ### validator
 
 ▸ **validator**(`validationFunction`, `message`): [`Validator`](API.md#validator)
@@ -4725,39 +4546,3 @@ ___
 #### Defined in
 
 [packages/framework/esm-config/src/validators/validator.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validator.ts#L3)
-
-___
-
-## Workspace Functions
-
-### getNewWorkspaceItem
-
-▸ **getNewWorkspaceItem**(): `Observable`<[`WorkspaceItem`](interfaces/WorkspaceItem.md)\>
-
-#### Returns
-
-`Observable`<[`WorkspaceItem`](interfaces/WorkspaceItem.md)\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/workspace/workspace.resource.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/workspace/workspace.resource.tsx#L19)
-
-___
-
-### newWorkspaceItem
-
-▸ **newWorkspaceItem**(`item`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `item` | [`WorkspaceItem`](interfaces/WorkspaceItem.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-api/src/workspace/workspace.resource.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/workspace/workspace.resource.tsx#L10)
