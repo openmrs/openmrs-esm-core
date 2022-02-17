@@ -57,6 +57,24 @@ Remember—small PRs are easier to review anyway!
 
 Get a feel for what the reviewer expects before submitting a PR with a large amount of code in it.
 
+#### Your PR title should indicate the type of change it is.
+
+We use PR titles to determine version bumps. PR titles should start with something
+in parentheses, or the word `BREAKING`. Examples of good PR titles:
+
+- "(docs) Add to contributing docs"
+- "(fix) Console error when visiting allergies page"
+- "(feat) Add search bar to medications widget"
+- "(refactor) Tidy the dashboard implementation"
+- "BREAKING: New left nav system"
+
+Common prefixes include the above, and `chore`, `style`, `perf`, and `test`.
+
+The versioning bump to indicate is based on the
+[OpenMRS Frontend 3.0 versioning conventions](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0022-versions.md).
+*Don't worry if you aren't sure which one you should use!* Your reviewer should make
+sure your PR has an appropriate one.
+
 ## Guidelines for Reviewing
 
 - Encourage feedback as both an author and reviewer.
@@ -71,3 +89,25 @@ Get a feel for what the reviewer expects before submitting a PR with a large amo
 ---
 
 *The above guidelines were established in [RFC-20](https://github.com/openmrs/openmrs-rfc-frontend/blob/master/text/0020-contributing-guidelines.md).*
+
+
+## Code Conventions
+
+### Filenames
+
+Above all, maintain consistency with the repository you are working in.
+
+Our general conventions are these:
+
+- The React component `FooBar` should be called `foo-bar.tsx` or `foo-bar.component.tsx`.
+- The style file for `FooBar` should be called `foo-bar.[s]css` or `foo-bar.style.[s]css`.
+- `FooBar` should not handle API calls itself, rather it should use functions that fetch
+  and clean the data as needed. Those functions should be in a file called `foo-bar.resource.ts`.
+- The tests for `FooBar` should be in a file called `foo-bar.test.tsx`.
+- Avoid calling things "utils." It is a meaningless name. Group the functions by what
+  they are for. If the function is only used in one place, just put it in the file
+  where it is used.
+
+### Naming things
+
+Use the [Naming Cheatsheet](https://github.com/kettanaito/naming-cheatsheet#readme).
