@@ -7,7 +7,8 @@
 ### Properties
 
 - [attachedIds](ExtensionSlotInfo.md#attachedids)
-- [instances](ExtensionSlotInfo.md#instances)
+- [config](ExtensionSlotInfo.md#config)
+- [moduleName](ExtensionSlotInfo.md#modulename)
 - [name](ExtensionSlotInfo.md#name)
 
 ## Properties
@@ -16,26 +17,39 @@
 
 • **attachedIds**: `string`[]
 
-The set of extension IDs which have been attached to this slot.
-This is essentially a complete history of `attach` calls to this specific slot.
+The set of extension IDs which have been attached to this slot using `attach`.
 However, not all of these extension IDs should be rendered.
 `assignedIds` is the set defining those.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L75)
+[packages/framework/esm-extensions/src/store.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L56)
 
 ___
 
-### instances
+### config
 
-• **instances**: `Record`<`string`, [`ExtensionSlotInstance`](ExtensionSlotInstance.md)\>
+• **config**: ``null`` \| [`ExtensionSlotConfigObject`](ExtensionSlotConfigObject.md)
 
-The mapping of modules / extension slot instances where the extension slot has been used.
+The configuration provided for this extension slot. `null` if not yet loaded.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L68)
+[packages/framework/esm-extensions/src/store.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L58)
+
+___
+
+### moduleName
+
+• `Optional` **moduleName**: `string`
+
+The module in which the extension slot exists. Undefined if the slot
+hasn't been registered yet (but it has been attached or assigned to
+an extension.
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L48)
 
 ___
 
@@ -47,4 +61,4 @@ The name under which the extension slot has been registered.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L64)
+[packages/framework/esm-extensions/src/store.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L50)

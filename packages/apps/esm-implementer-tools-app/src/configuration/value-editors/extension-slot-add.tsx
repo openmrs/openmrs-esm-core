@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { MultiSelect } from "carbon-components-react";
-import { ExtensionStore, extensionStore } from "@openmrs/esm-framework";
+import {
+  ExtensionInternalStore,
+  getExtensionInternalStore,
+} from "@openmrs/esm-framework";
+
+const extensionInternalStore = getExtensionInternalStore();
 
 export function ExtensionSlotAdd({ value, setValue }) {
   const [availableExtensions, setAvailableExtensions] = useState<Array<string>>(
@@ -8,11 +13,11 @@ export function ExtensionSlotAdd({ value, setValue }) {
   );
 
   useEffect(() => {
-    function update(state: ExtensionStore) {
+    function update(state: ExtensionInternalStore) {
       setAvailableExtensions(Object.keys(state.extensions));
     }
-    update(extensionStore.getState());
-    return extensionStore.subscribe(update);
+    update(extensionInternalStore.getState());
+    return extensionInternalStore.subscribe(update);
   }, []);
 
   return (

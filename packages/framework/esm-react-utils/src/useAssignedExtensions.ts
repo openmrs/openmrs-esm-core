@@ -1,0 +1,23 @@
+import { useEffect, useState } from "react";
+import { AssignedExtension, getExtensionStore } from "@openmrs/esm-extensions";
+import { isEqual } from "lodash";
+
+/**
+ * Gets the assigned extensions for a given extension slot name.
+ * Does not consider if offline or online.
+ * @param slotName The name of the slot to get the assigned extensions for.
+ */
+export function useAssignedExtensions(slotName: string) {
+  const [extensions, setExtensions] = useState<Array<AssignedExtension>>([]);
+
+  useEffect(() => {
+    return getExtensionStore().subscribe((state) => {
+      const newExtensions = state.slots[slotName]?.assignedExtensions ?? [];
+      if (!isEqual(newExtensions, extensions)) {
+        setExtensions(newExtensions);
+      }
+    });
+  }, []);
+
+  return extensions;
+}
