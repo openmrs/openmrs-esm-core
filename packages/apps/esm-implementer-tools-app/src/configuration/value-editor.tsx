@@ -5,7 +5,7 @@ import { Button } from "carbon-components-react";
 import { Type } from "@openmrs/esm-framework";
 import { ConfigValueDescriptor } from "./editable-value.component";
 import { ValueEditorField } from "./value-editors/value-editor-field";
-import styles from "./configuration.styles.css";
+import styles from "./configuration.styles.scss";
 
 export type CustomValueType = "add" | "remove" | "order" | "configure";
 

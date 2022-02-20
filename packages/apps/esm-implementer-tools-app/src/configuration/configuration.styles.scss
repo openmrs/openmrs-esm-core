@@ -1,18 +1,17 @@
+@import "../implementer-tools.styles.scss";
+
 .tools {
-  position: fixed;
   width: 100%;
-  background-color: #e0e0e0;
-  border-bottom: 1px solid #a0a0a0;
-  border-top: 1px solid #c0c0c0;
+  background-color: $ui-03;
+  border-bottom: 1px solid $ui-04;
+  border-top: 1px solid $color-gray-30;
   z-index: 2;
 }
 
-.tools > div {
-  flex: 0 1 auto;
-}
-
-.actionButton {
-  display: inline-flex;
+.toolbar {
+  padding: $spacing-05 $spacing-05 0;
+  display: flex;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -22,7 +21,8 @@
 }
 
 .mainContent {
-  background-color: #f0f0f0;
+  height: 45vh;
+  background-color: $ui-01;
   width: 100%;
   display: flex;
   overflow-y: auto;
@@ -31,18 +31,18 @@
 .configTreePane {
   width: 55%;
   overflow-wrap: break-word;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
 .descriptionPane {
   width: 45%;
-  background-color: #e0e0e0;
+  background-color: $ui-03;
   color: #424242;
-  padding: 1em 2em;
+  padding: $spacing-05 2em;
   font-size: 12pt;
   overflow-wrap: break-word;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .configTreePane :global(.bx--text-input-wrapper) {
@@ -54,9 +54,9 @@
 }
 
 .toggleToolbarButton {
-  position: absolute;
-  left: 97vw;
-  top: -2px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .valueEditorInput {
@@ -66,5 +66,5 @@
 .valueEditorButtons {
   height: 2.5rem;
   min-width: 5em;
-  margin-left: 1em;
+  margin-left: $spacing-05;
 }

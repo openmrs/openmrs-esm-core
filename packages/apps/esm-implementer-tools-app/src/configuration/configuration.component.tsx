@@ -12,21 +12,14 @@ import {
   useExtensionStore,
   useStore,
 } from "@openmrs/esm-framework";
-import {
-  Button,
-  Column,
-  Grid,
-  Row,
-  TextInput,
-  Toggle,
-} from "carbon-components-react";
+import { Button, TextInput, Toggle } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
 import { ConfigTree } from "./config-tree.component";
 import { Description } from "./description.component";
 import cloneDeep from "lodash-es/cloneDeep";
 import isEmpty from "lodash-es/isEmpty";
-import styles from "./configuration.styles.css";
+import styles from "./configuration.styles.scss";
 
 function isLeaf(configNode: Config) {
   return (
@@ -138,60 +131,48 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
     <>
       <div className={styles.tools}>
         {isConfigToolbarOpen ? (
-          <Grid style={{ margin: "0.25rem", padding: "0.5em 1.5em" }}>
-            <Row>
-              <Column sm={1} md={2}>
-                <TextInput
-                  id="extensionSearch"
-                  labelText="Search configuration"
-                  onChange={(e) => setFilterText(e.target.value)}
-                />
-              </Column>
-              <Column sm={1} md={1}>
-                <Toggle
-                  id="devConfigSwitch"
-                  labelText={t("devConfig", "Dev Config")}
-                  onToggle={toggleDevDefaults}
-                  toggled={devDefaultsAreOn}
-                />
-              </Column>
-              <Column sm={1} md={1} className={styles.actionButton}>
-                <Toggle
-                  id="uiEditorSwitch"
-                  labelText={t("uiEditor", "UI Editor")}
-                  toggled={isUIEditorEnabled}
-                  onToggle={toggleIsUIEditorEnabled}
-                />
-              </Column>
-              <Column sm={1} md={2} className={styles.actionButton}>
-                <Button
-                  kind="danger"
-                  iconDescription="Clear temporary config"
-                  renderIcon={TrashCan16}
-                  onClick={() => {
-                    temporaryConfigStore.setState({ config: {} });
-                  }}
-                >
-                  {t("clearTemporaryConfig", "Clear Temporary Config")}
-                </Button>
-              </Column>
-              <Column sm={1} md={2} className={styles.actionButton}>
-                <Button
-                  kind="secondary"
-                  iconDescription="Download temporary config"
-                  renderIcon={Download16}
-                >
-                  <a
-                    className={styles.downloadLink}
-                    download="temporary_config.json"
-                    href={window.URL.createObjectURL(tempConfigObjUrl)}
-                  >
-                    {t("downloadTemporaryConfig", "Download Temporary Config")}
-                  </a>
-                </Button>
-              </Column>
-            </Row>
-          </Grid>
+          <div className={styles.toolbar}>
+            <TextInput
+              id="extensionSearch"
+              labelText="Search configuration"
+              onChange={(e) => setFilterText(e.target.value)}
+            />
+            <Toggle
+              id="devConfigSwitch"
+              labelText={t("devConfig", "Dev Config")}
+              onToggle={toggleDevDefaults}
+              toggled={devDefaultsAreOn}
+            />
+            <Toggle
+              id="uiEditorSwitch"
+              labelText={t("uiEditor", "UI Editor")}
+              toggled={isUIEditorEnabled}
+              onToggle={toggleIsUIEditorEnabled}
+            />
+            <Button
+              kind="danger"
+              iconDescription="Clear temporary config"
+              renderIcon={TrashCan16}
+              onClick={() => {
+                temporaryConfigStore.setState({ config: {} });
+              }}
+            >
+              {t("clearTemporaryConfig", "Clear Temporary Config")}
+            </Button>
+            <Button
+              kind="secondary"
+              iconDescription="Download temporary config"
+              renderIcon={Download16}
+            >
+              <a
+                className={styles.downloadLink}
+                download="temporary_config.json"
+                href={window.URL.createObjectURL(tempConfigObjUrl)}
+              >
+                {t("downloadTemporaryConfig", "Download Temporary Config")}
+              </a>
+            </Button>
+          </div>
         ) : null}
         <div className={styles.toggleToolbarButton}>
           <OpenOrCloseButton
@@ -200,15 +181,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
           />
         </div>
       </div>
-      <div
-        className={styles.mainContent}
-        style={{
-          marginTop: isConfigToolbarOpen ? "72px" : "25px",
-          height: isConfigToolbarOpen
-            ? "calc(50vh - 114px)"
-            : "calc(50vh - 68px)",
-        }}
-      >
+      <div className={styles.mainContent}>
         <div className={styles.configTreePane}>
           <ConfigTree config={filteredConfig} />
         </div>

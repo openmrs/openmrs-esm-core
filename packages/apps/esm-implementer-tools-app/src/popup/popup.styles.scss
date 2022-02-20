@@ -1,23 +1,22 @@
+@import "../implementer-tools.styles.scss";
+
 .popup {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50%;
   z-index: 100000;
-  background-color: #d0d0d0;
-  border-top: 2px solid #404050;
-  color: #222;
+  background-color: $ui-03;
+  border-top: 2px solid $ui-05;
+  color: $color-gray-100;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   box-sizing: border-box;
-  overflow-y: auto;
 }
 
 .content {
-  margin-top: 40px;
   width: 100%;
 }
 
@@ -26,19 +25,13 @@
 }
 
 .topBar {
-  position: fixed;
   width: 100%;
-  height: 42px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid #a0a0a0;
   z-index: 2;
   background: #e0e0e0;
-}
-
-.closeButton {
-  min-height: 3em;
-  padding: 0 1em;
 }
 
 .topBar :global(.bx--content-switcher-btn:first-child),
