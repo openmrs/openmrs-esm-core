@@ -91,28 +91,30 @@ export function PersonAttributeTypeSearchBox({
             handleSearchTermChange($event.target.value);
           }}
         />
-        <StructuredListWrapper
-          selection
-          className={styles.listbox}
-          id={`searchbox-${id}`}
-        >
-          {!!searchResults.length &&
-            searchResults.map((personAttributeType: any) => (
+
+        {!!searchResults.length && (
+          <StructuredListWrapper
+            selection
+            className={styles.listbox}
+            id={`searchbox-${id}`}
+          >
+            {searchResults.map((personAttributeType: any) => (
               <StructuredListRow
                 key={personAttributeType.uuid}
                 role="option"
-                style={{ padding: "5px" }}
                 onClick={() => {
                   handleUuidChange(personAttributeType);
                 }}
                 aria-selected="true"
               >
-                <StructuredListCell>
+                <StructuredListCell className={styles.smallListCell}>
                   {personAttributeType.display}
                 </StructuredListCell>
               </StructuredListRow>
             ))}
-        </StructuredListWrapper>
+          </StructuredListWrapper>
+        )}
+
         {searchTerm && searchResults && !searchResults.length && (
           <p className={styles.bodyShort01}>
             {t("noPersonAttributeFoundText", "No matching results found")}

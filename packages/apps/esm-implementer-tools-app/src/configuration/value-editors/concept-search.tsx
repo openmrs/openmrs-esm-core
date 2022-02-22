@@ -80,26 +80,28 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
             handleSearchTermChange($event.target.value);
           }}
         />
-        <StructuredListWrapper
-          selection
-          id={`searchbox-${id}`}
-          className={styles.listbox}
-        >
-          {!!searchResults.length &&
-            searchResults.map((concept: any) => (
+        {!!searchResults.length && (
+          <StructuredListWrapper
+            selection
+            id={`searchbox-${id}`}
+            className={styles.listbox}
+          >
+            {searchResults.map((concept: any) => (
               <StructuredListRow
                 key={concept.uuid}
                 role="option"
-                style={{ padding: "5px" }}
                 onClick={() => {
                   handleUuidChange(concept);
                 }}
                 aria-selected="true"
               >
-                <StructuredListCell>{concept.display}</StructuredListCell>
+                <StructuredListCell className={styles.smallListCell}>
+                  {concept.display}
+                </StructuredListCell>
               </StructuredListRow>
             ))}
-        </StructuredListWrapper>
+          </StructuredListWrapper>
+        )}
         {searchTerm && searchResults && !searchResults.length && (
           <p className={styles.bodyShort01}>
             {t("noConceptsFoundText", "No matching results found")}
