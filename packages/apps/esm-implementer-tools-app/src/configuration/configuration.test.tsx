@@ -272,7 +272,7 @@ describe(`<Configuration />`, () => {
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const valueButton = row.getByText("4, 12");
+      const valueButton = row.getByText("[ 4, 12 ]");
       const editButton = row.getByText("Edit").parentElement as any;
       fireEvent.click(editButton);
       const firstValue = row.getByDisplayValue("4");
