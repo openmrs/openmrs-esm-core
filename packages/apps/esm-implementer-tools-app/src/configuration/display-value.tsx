@@ -7,7 +7,7 @@ export interface DisplayValueProps {
 export function DisplayValue({ value }: DisplayValueProps) {
   // TODO: Make this show the concept name for ConceptUUID type values
   return (
-    <>
+    <div>
       {Array.isArray(value)
         ? typeof value[0] === "object"
           ? value.map((v, i) => (
@@ -27,6 +27,6 @@ export function DisplayValue({ value }: DisplayValueProps) {
         : value == null
         ? "none"
         : JSON.stringify(value)}
-    </>
+    </div>
   );
 }

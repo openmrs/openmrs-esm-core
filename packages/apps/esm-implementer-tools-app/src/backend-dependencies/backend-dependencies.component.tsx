@@ -40,7 +40,7 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
   );
 
   return (
-    <div>
+    <div style={{ height: "50vh", overflowY: "auto" }}>
       <DataTable rows={[]} headers={headers}>
         {({ headers, getTableProps, getHeaderProps }) => (
           <TableContainer title="">

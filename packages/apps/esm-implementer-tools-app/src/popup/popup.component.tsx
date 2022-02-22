@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Close16 from "@carbon/icons-react/es/close/16";
-import styles from "./popup.styles.css";
+import styles from "./popup.styles.scss";
 import { Button, ContentSwitcher, Switch } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
@@ -13,7 +13,7 @@ interface DevToolsPopupProps {
   visibleTabIndex?: number;
 }
 
-export default function Popup(props: DevToolsPopupProps) {
+export default function Popup({ close, frontendModules }: DevToolsPopupProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(0);
 
@@ -29,24 +29,19 @@ export default function Popup(props: DevToolsPopupProps) {
             <Switch
               name="configuration-tab"
               text={t("configuration", "Configuration")}
-              onClick={() => {}}
-              onKeyDown={() => {}}
             />
             <Switch
               name="backend-modules-tab"
               text={t("backendModules", "Backend Modules")}
-              onClick={() => {}}
-              onKeyDown={() => {}}
             />
           </ContentSwitcher>
         </div>
         <div>
           <Button
-            className={styles.closeButton}
             kind="secondary"
             renderIcon={Close16}
             iconDescription="Close"
-            onClick={props.close}
+            onClick={close}
             hasIconOnly
           />
         </div>
@@ -55,7 +50,7 @@ export default function Popup(props: DevToolsPopupProps) {
         {activeTab == 0 ? (
           <Configuration />
         ) : (
-          <ModuleDiagnostics frontendModules={props.frontendModules} />
+          <ModuleDiagnostics frontendModules={frontendModules} />
         )}
       </div>
     </div>

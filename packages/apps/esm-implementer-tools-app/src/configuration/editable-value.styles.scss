@@ -1,3 +1,5 @@
+@import "../implementer-tools.styles.scss";
+
 .secretButton {
   background: none;
   color: #474b6b;
@@ -14,4 +16,13 @@
 
 .overriddenValue {
   color: #2020a0;
+}
+
+.elementValue {
+  display: flex;
+  align-items: flex-start;
+}
+
+.editValueButton {
+  margin-left: $spacing-05;
 }

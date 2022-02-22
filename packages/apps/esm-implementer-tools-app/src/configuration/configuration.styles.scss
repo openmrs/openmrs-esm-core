@@ -1,0 +1,66 @@
+@import "../implementer-tools.styles.scss";
+
+.tools {
+  width: 100%;
+  background-color: $ui-03;
+  border-bottom: 1px solid $ui-04;
+  border-top: 1px solid $color-gray-30;
+  z-index: 2;
+  position: sticky;
+  top: 0;
+}
+
+.toolbar {
+  padding: $spacing-05 $spacing-05 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.downloadLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mainContent {
+  max-height: 50vh;
+  background-color: $ui-01;
+  width: 100%;
+  display: flex;
+  overflow-y: auto;
+}
+
+.configTreePane {
+  width: 65%;
+  // overflow-wrap: break-word;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.descriptionPane {
+  width: 35%;
+  background-color: $ui-03;
+  color: #424242;
+  padding: $spacing-05 2em;
+  font-size: 12pt;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+}
+
+.configTreePane :global(.bx--text-input-wrapper) {
+  min-width: 8em;
+}
+
+.fullWidthAccordion :global(.bx--accordion__content) {
+  padding-right: 0;
+}
+
+.toggleToolbarButton {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.valueEditorButtons {
+  margin-top: $spacing-03;
+}

@@ -3,7 +3,8 @@ import isEqual from "lodash-es/isEqual";
 import unset from "lodash-es/unset";
 import cloneDeep from "lodash-es/cloneDeep";
 import Reset16 from "@carbon/icons-react/es/reset/16";
-import styles from "./editable-value.styles.css";
+import Edit16 from "@carbon/icons-react/es/edit/16";
+import styles from "./editable-value.styles.scss";
 import { Button } from "carbon-components-react";
 import {
   ConfigValue,
@@ -15,6 +16,7 @@ import {
 import { ValueEditor, CustomValueType } from "./value-editor";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
 import { DisplayValue } from "./display-value";
+import { useTranslation } from "react-i18next";
 
 export interface EditableValueProps {
   path: Array<string>;
@@ -41,6 +43,7 @@ export default function EditableValue({
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const activeConfigRef = useRef<HTMLButtonElement>(null);
+  const { t } = useTranslation();
 
   const closeEditor = () => {
     setEditing(false);
@@ -114,25 +117,26 @@ export default function EditableValue({
             />
           </>
         ) : (
-          <>
-            <button
-              className={`${styles.secretButton} ${
-                element._source == "temporary config"
-                  ? styles.overriddenValue
-                  : ""
-              }`}
+          <div className={styles.elementValue}>
+            <DisplayValue value={element._value} />
+            <Button
+              kind="ghost"
+              size="sm"
+              iconDescription={t("editValueButtonText", "Edit")}
               onClick={() => setEditing(true)}
               ref={activeConfigRef}
-            >
-              <DisplayValue value={element._value} />
-            </button>
+              renderIcon={Edit16}
+              hasIconOnly
+            />
             {element._source == "temporary config" ? (
               <Button
-                style={{ marginLeft: "1em" }}
                 renderIcon={Reset16}
                 size="sm"
-                kind="tertiary"
-                iconDescription="Reset to default"
+                kind="ghost"
+                iconDescription={t(
+                  "resetToDefaultValueButtonText",
+                  "Reset to default"
+                )}
                 hasIconOnly
                 onClick={() => {
                   temporaryConfigStore.setState(
@@ -144,7 +148,7 @@ export default function EditableValue({
                 }}
               />
             ) : null}
-          </>
+          </div>
         )}
         {error && <div className={styles.error}>{error}</div>}
       </div>

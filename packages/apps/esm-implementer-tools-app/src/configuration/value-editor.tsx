@@ -5,7 +5,8 @@ import { Button } from "carbon-components-react";
 import { Type } from "@openmrs/esm-framework";
 import { ConfigValueDescriptor } from "./editable-value.component";
 import { ValueEditorField } from "./value-editors/value-editor-field";
-import styles from "./configuration.styles.css";
+import styles from "./configuration.styles.scss";
+import { useTranslation } from "react-i18next";
 
 export type CustomValueType = "add" | "remove" | "order" | "configure";
 
@@ -28,6 +29,7 @@ export function ValueEditor({
 }: ValueEditorProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [tmpValue, setTmpValue] = useState(element._value);
+  const { t } = useTranslation();
 
   const valueType = customType ?? element._type;
 
@@ -58,20 +60,20 @@ export function ValueEditor({
       <div className={styles.valueEditorButtons}>
         <Button
           renderIcon={Save16}
-          size="sm"
+          // size="sm"
           kind="primary"
-          iconDescription="Save"
-          hasIconOnly
           onClick={() => handleSave(JSON.stringify(tmpValue))}
-        />
+        >
+          {t("saveValueButtonText", "Save")}
+        </Button>
         <Button
           renderIcon={Close16}
-          size="sm"
+          // size="sm"
           kind="secondary"
-          iconDescription="Cancel"
-          hasIconOnly
           onClick={handleClose}
-        />
+        >
+          {t("CancelButtonText", "Cancel")}
+        </Button>
       </div>
     </div>
   );

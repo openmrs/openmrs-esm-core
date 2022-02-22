@@ -14,11 +14,11 @@ import {
 } from "@openmrs/esm-framework";
 import {
   Button,
-  Column,
-  Grid,
-  Row,
   TextInput,
   Toggle,
+  Grid,
+  Column,
+  Row,
 } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
@@ -26,7 +26,7 @@ import { ConfigTree } from "./config-tree.component";
 import { Description } from "./description.component";
 import cloneDeep from "lodash-es/cloneDeep";
 import isEmpty from "lodash-es/isEmpty";
-import styles from "./configuration.styles.css";
+import styles from "./configuration.styles.scss";
 
 function isLeaf(configNode: Config) {
   return (
@@ -137,8 +137,14 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
   return (
     <>
       <div className={styles.tools}>
+        <div className={styles.toggleToolbarButton}>
+          <OpenOrCloseButton
+            isConfigToolbarOpen={isConfigToolbarOpen}
+            toggleIsToolbarOpen={toggleIsToolbarOpen}
+          />
+        </div>
         {isConfigToolbarOpen ? (
-          <Grid style={{ margin: "0.25rem", padding: "0.5em 1.5em" }}>
+          <Grid style={{ padding: "0.5em 1.5em" }}>
             <Row>
               <Column sm={1} md={2}>
                 <TextInput
@@ -193,20 +199,13 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
             </Row>
           </Grid>
         ) : null}
-        <div className={styles.toggleToolbarButton}>
-          <OpenOrCloseButton
-            isConfigToolbarOpen={isConfigToolbarOpen}
-            toggleIsToolbarOpen={toggleIsToolbarOpen}
-          />
-        </div>
       </div>
       <div
         className={styles.mainContent}
         style={{
-          marginTop: isConfigToolbarOpen ? "72px" : "25px",
           height: isConfigToolbarOpen
-            ? "calc(50vh - 114px)"
-            : "calc(50vh - 68px)",
+            ? "calc(50vh - 7rem)"
+            : "calc(50vh - 2rem)",
         }}
       >
         <div className={styles.configTreePane}>

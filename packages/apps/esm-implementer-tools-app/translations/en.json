@@ -1,13 +1,18 @@
 {
+  "activeItemSourceText": "The current value comes from ",
   "backendModules": "Backend Modules",
   "clearTemporaryConfig": "Clear Temporary Config",
   "configuration": "Configuration",
   "devConfig": "Dev Config",
   "downloadTemporaryConfig": "Download Temporary Config",
   "edit": "Edit",
+  "editValueButtonText": "Edit",
   "installedVersion": "Installed Version",
+  "itemDescriptionSourceDefaultText": "The current value is the default.",
   "missing": "Missing",
   "moduleName": "Module Name",
   "requiredVersion": "Required Version",
-  "uiEditor": "UI Editor"
+  "resetToDefaultValueButtonText": "Reset to default",
+  "uiEditor": "UI Editor",
+  "value": "Value"
 }

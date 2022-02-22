@@ -1,0 +1,23 @@
+@import "../implementer-tools.styles.scss";
+
+.path {
+  @include carbon--type-style("productive-heading-02");
+  margin-bottom: $spacing-03;
+}
+
+.description {
+  @include carbon--type-style("body-short-01");
+  margin-bottom: $spacing-05;
+}
+
+.source {
+  @include carbon--type-style("body-short-01");
+  font-style: italic;
+  margin-bottom: $spacing-03;
+}
+
+.value {
+  font-family: monospace;
+  margin-top: $spacing-03;
+  margin-left: $spacing-03;
+}
