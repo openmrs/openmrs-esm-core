@@ -6,6 +6,8 @@
   border-bottom: 1px solid $ui-04;
   border-top: 1px solid $color-gray-30;
   z-index: 2;
+  position: sticky;
+  top: 0;
 }
 
 .toolbar {
@@ -21,7 +23,7 @@
 }
 
 .mainContent {
-  height: 40vh;
+  max-height: 50vh;
   background-color: $ui-01;
   width: 100%;
   display: flex;
@@ -29,14 +31,14 @@
 }
 
 .configTreePane {
-  width: 55%;
-  overflow-wrap: break-word;
+  width: 65%;
+  // overflow-wrap: break-word;
   overflow-x: auto;
   overflow-y: auto;
 }
 
 .descriptionPane {
-  width: 45%;
+  width: 35%;
   background-color: $ui-03;
   color: #424242;
   padding: $spacing-05 2em;
@@ -59,6 +61,6 @@
   justify-content: flex-end;
 }
 
-.valueEditorInput {
-  width: 25em;
+.valueEditorButtons {
+  margin-top: $spacing-03;
 }
