@@ -14,11 +14,12 @@ import {
 import { UiEditor } from "./ui-editor/ui-editor";
 import { useBackendDependencies } from "./backend-dependencies/useBackendDependencies";
 import { hasInvalidDependencies } from "./backend-dependencies/openmrs-backend-dependencies";
+import { useTranslation } from "react-i18next";
 
 function PopupHandler() {
   const frontendModules = useBackendDependencies();
   const [shouldShowNotification, setShouldShowNotification] = useState(false);
-
+  const { t } = useTranslation();
   useEffect(() => {
     // displaying toast if modules are missing
     setShouldShowNotification(
@@ -34,7 +35,7 @@ function PopupHandler() {
         description: "Found modules with unresolved backend dependencies.",
         action: (
           <NotificationActionButton onClick={showModuleDiagnostics}>
-            View
+            {t("view", "View")}
           </NotificationActionButton>
         ),
         kind: "error",

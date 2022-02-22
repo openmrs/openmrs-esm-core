@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import Close20 from "@carbon/icons-react/es/close/20";
-import Tools20 from "@carbon/icons-react/es/tools/20";
+import Tools24 from "@carbon/icons-react/es/tools/24";
 import { HeaderGlobalAction } from "carbon-components-react";
 import { UserHasAccess, useStore } from "@openmrs/esm-framework";
 import { implementerToolsStore, togglePopup } from "./store";
@@ -20,11 +20,7 @@ const ImplementerToolsButton: React.FC = () => {
         name="ImplementerToolsIcon"
         onClick={togglePopup}
       >
-        {isOpen ? (
-          <Close20 />
-        ) : (
-          <Tools20 className={styles.popupTriggerButton} />
-        )}
+        {isOpen ? <Close20 /> : <Tools24 />}
       </HeaderGlobalAction>
     </UserHasAccess>
   );
