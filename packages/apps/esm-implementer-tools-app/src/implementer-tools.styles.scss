@@ -10,6 +10,10 @@
   @include carbon--type-style("productive-heading-02");
 }
 
+.bodyShort01 {
+  @include carbon--type-style("body-short-01");
+}
+
 .popupTriggerButton {
   height: 25px !important;
   width: 25px !important;

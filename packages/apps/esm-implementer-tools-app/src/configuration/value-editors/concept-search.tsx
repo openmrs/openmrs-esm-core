@@ -5,8 +5,13 @@ import {
   fetchConceptByUuid,
   performConceptSearch,
 } from "./concept-search.resource";
-import styles from "./concept-search.styles.scss";
-import { Search } from "carbon-components-react";
+import styles from "./uuid-search.scss";
+import {
+  Search,
+  StructuredListCell,
+  StructuredListRow,
+  StructuredListWrapper,
+} from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 
 interface ConceptSearchBoxProps {
@@ -75,27 +80,31 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
             handleSearchTermChange($event.target.value);
           }}
         />
-        <div id={`searchbox-${id}`}>
-          <ul role="listbox">
-            {!!searchResults.length &&
-              searchResults.map((concept: any) => (
-                <li
-                  key={concept.uuid}
-                  role="option"
-                  style={{ padding: "5px" }}
-                  onClick={() => {
-                    handleUuidChange(concept);
-                  }}
-                  aria-selected="true"
-                >
-                  {concept.display}
-                </li>
-              ))}
-            {searchTerm && searchResults && !searchResults.length && (
-              <li>{t("noConceptsFoundText", "No matching results found")}</li>
-            )}
-          </ul>
-        </div>
+        <StructuredListWrapper
+          selection
+          id={`searchbox-${id}`}
+          className={styles.listbox}
+        >
+          {!!searchResults.length &&
+            searchResults.map((concept: any) => (
+              <StructuredListRow
+                key={concept.uuid}
+                role="option"
+                style={{ padding: "5px" }}
+                onClick={() => {
+                  handleUuidChange(concept);
+                }}
+                aria-selected="true"
+              >
+                <StructuredListCell>{concept.display}</StructuredListCell>
+              </StructuredListRow>
+            ))}
+        </StructuredListWrapper>
+        {searchTerm && searchResults && !searchResults.length && (
+          <p className={styles.bodyShort01}>
+            {t("noConceptsFoundText", "No matching results found")}
+          </p>
+        )}
       </div>
     </div>
   );

@@ -1,0 +1,19 @@
+@import "../../implementer-tools.styles.scss";
+
+.activePersonAttributeUuid {
+  @include carbon--type-style("body-short-01");
+  color: $ui-05;
+  margin-bottom: $spacing-03;
+  padding-bottom: $spacing-03;
+  border-bottom: 1px solid $ui-03;
+}
+
+.autocomplete,
+.autocomplete > [role="combobox"] {
+  position: relative;
+  width: 20em;
+}
+
+.listbox {
+  box-shadow: 0 0 $spacing-03;
+}
