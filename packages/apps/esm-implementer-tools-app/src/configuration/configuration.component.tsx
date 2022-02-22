@@ -144,7 +144,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
           />
         </div>
         {isConfigToolbarOpen ? (
-          <Grid style={{ margin: "0.25rem", padding: "0.5em 1.5em" }}>
+          <Grid style={{ padding: "0.5em 1.5em" }}>
             <Row>
               <Column sm={1} md={2}>
                 <TextInput
@@ -200,7 +200,14 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
           </Grid>
         ) : null}
       </div>
-      <div className={styles.mainContent}>
+      <div
+        className={styles.mainContent}
+        style={{
+          height: isConfigToolbarOpen
+            ? "calc(50vh - 7rem)"
+            : "calc(50vh - 2rem)",
+        }}
+      >
         <div className={styles.configTreePane}>
           <ConfigTree config={filteredConfig} />
         </div>
