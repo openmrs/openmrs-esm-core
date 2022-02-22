@@ -14,5 +14,6 @@
   "requiredVersion": "Required Version",
   "resetToDefaultValueButtonText": "Reset to default",
   "uiEditor": "UI Editor",
-  "value": "Value"
+  "value": "Value",
+  "view": "View"
 }

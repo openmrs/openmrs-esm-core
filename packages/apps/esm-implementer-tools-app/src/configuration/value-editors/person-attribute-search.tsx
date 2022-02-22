@@ -2,9 +2,14 @@ import React, { useState, useEffect, useMemo } from "react";
 import debounce from "lodash-es/debounce";
 import uniqueId from "lodash-es/uniqueId";
 import { performPersonAttributeTypeSearch } from "./person-attribute-search.resource";
-import styles from "./person-attribute-search.scss";
+import styles from "./uuid-search.scss";
 import { useTranslation } from "react-i18next";
-import { Search } from "carbon-components-react";
+import {
+  Search,
+  StructuredListCell,
+  StructuredListRow,
+  StructuredListWrapper,
+} from "carbon-components-react";
 
 interface PersonAttributeTypeSearchBoxProps {
   value: string;
@@ -86,29 +91,35 @@ export function PersonAttributeTypeSearchBox({
             handleSearchTermChange($event.target.value);
           }}
         />
-        <div id={`searchbox-${id}`}>
-          <ul role="listbox">
-            {!!searchResults.length &&
-              searchResults.map((personAttributeType: any) => (
-                <li
-                  key={personAttributeType.uuid}
-                  role="option"
-                  style={{ padding: "5px" }}
-                  onClick={() => {
-                    handleUuidChange(personAttributeType);
-                  }}
-                  aria-selected="true"
-                >
+
+        {!!searchResults.length && (
+          <StructuredListWrapper
+            selection
+            className={styles.listbox}
+            id={`searchbox-${id}`}
+          >
+            {searchResults.map((personAttributeType: any) => (
+              <StructuredListRow
+                key={personAttributeType.uuid}
+                role="option"
+                onClick={() => {
+                  handleUuidChange(personAttributeType);
+                }}
+                aria-selected="true"
+              >
+                <StructuredListCell className={styles.smallListCell}>
                   {personAttributeType.display}
-                </li>
-              ))}
-            {searchTerm && searchResults && !searchResults.length && (
-              <li>
-                {t("noPersonAttributeFoundText", "No matching results found")}
-              </li>
-            )}
-          </ul>
-        </div>
+                </StructuredListCell>
+              </StructuredListRow>
+            ))}
+          </StructuredListWrapper>
+        )}
+
+        {searchTerm && searchResults && !searchResults.length && (
+          <p className={styles.bodyShort01}>
+            {t("noPersonAttributeFoundText", "No matching results found")}
+          </p>
+        )}
       </div>
     </div>
   );

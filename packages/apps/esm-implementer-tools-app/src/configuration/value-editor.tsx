@@ -60,18 +60,12 @@ export function ValueEditor({
       <div className={styles.valueEditorButtons}>
         <Button
           renderIcon={Save16}
-          // size="sm"
           kind="primary"
           onClick={() => handleSave(JSON.stringify(tmpValue))}
         >
           {t("saveValueButtonText", "Save")}
         </Button>
-        <Button
-          renderIcon={Close16}
-          // size="sm"
-          kind="secondary"
-          onClick={handleClose}
-        >
+        <Button renderIcon={Close16} kind="secondary" onClick={handleClose}>
           {t("CancelButtonText", "Cancel")}
         </Button>
       </div>
