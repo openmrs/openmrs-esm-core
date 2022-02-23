@@ -15,18 +15,16 @@ export function UiEditor() {
     <>
       {implementerToolsIsOpen ? null : <ExitButton />}
       {slots
-        ? Object.entries(slots).map(([slotName, slotInfo]) =>
-            Object.keys(slotInfo.instances).map((slotModuleName) => (
-              <Portal
-                key={`slot-overlay-${slotModuleName}-${slotName}`}
-                el={document.querySelector(
-                  `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotModuleName}"]`
-                )}
-              >
-                <SlotOverlay slotName={slotName} />
-              </Portal>
-            ))
-          )
+        ? Object.entries(slots).map(([slotName, slotInfo]) => (
+            <Portal
+              key={`slot-overlay-${slotInfo.moduleName}-${slotName}`}
+              el={document.querySelector(
+                `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotInfo.moduleName}"]`
+              )}
+            >
+              <SlotOverlay slotName={slotName} />
+            </Portal>
+          ))
         : null}
       {extensions
         ? Object.entries(extensions).map(([extensionName, extensionInfo]) =>

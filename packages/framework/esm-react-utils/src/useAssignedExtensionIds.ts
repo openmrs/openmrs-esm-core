@@ -1,29 +1,26 @@
 import { useEffect, useState } from "react";
-import { getAssignedIds } from "@openmrs/esm-extensions";
-import { useExtensionSlotConfig } from "./useExtensionSlotConfig";
-import { useAttachedExtensionIds } from "./useAttachedExtensionIds";
+import { getExtensionStore } from "@openmrs/esm-extensions";
+import { isEqual } from "lodash";
 
 /**
  * Gets the assigned extension ids for a given extension slot name.
  * Does not consider if offline or online.
- * @param extensionSlotName The name of the slot to get the assigned IDs for.
+ * @param slotName The name of the slot to get the assigned IDs for.
+ *
+ * @deprecated Use `useAssignedExtensions`
  */
-export function useAssignedExtensionIds(extensionSlotName: string) {
-  const config = useExtensionSlotConfig(extensionSlotName);
-  const attachedIds = useAttachedExtensionIds(extensionSlotName);
-  const [assignedIds, setAssignedIds] = useState<Array<string>>([]);
+export function useAssignedExtensionIds(slotName: string) {
+  const [ids, setIds] = useState<Array<string>>([]);
 
   useEffect(() => {
-    const newAssignedIds = getAssignedIds(
-      extensionSlotName,
-      config,
-      attachedIds
-    );
+    return getExtensionStore().subscribe((state) => {
+      const newIds =
+        state.slots[slotName]?.assignedExtensions.map((e) => e.id) ?? [];
+      if (!isEqual(newIds, ids)) {
+        setIds(newIds);
+      }
+    });
+  }, []);
 
-    if (newAssignedIds.join(",") !== assignedIds.join(",")) {
-      setAssignedIds(newAssignedIds);
-    }
-  }, [attachedIds, config]);
-
-  return assignedIds;
+  return ids;
 }

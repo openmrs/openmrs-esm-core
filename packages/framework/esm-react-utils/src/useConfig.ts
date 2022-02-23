@@ -120,8 +120,5 @@ export function useConfig() {
     [normalConfig, extensionConfig]
   );
 
-  const configNameForDebugMessage = extension
-    ? `${extension?.extensionSlotModuleName}-${extension?.extensionSlotName}-${extension?.extensionId}`
-    : moduleName;
   return config;
 }

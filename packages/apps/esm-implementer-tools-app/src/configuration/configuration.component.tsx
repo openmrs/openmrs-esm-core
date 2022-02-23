@@ -9,7 +9,7 @@ import {
   configInternalStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
-  useExtensionStore,
+  useExtensionInternalStore,
   useStore,
 } from "@openmrs/esm-framework";
 import {
@@ -86,7 +86,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
     configActions
   );
   const { config } = useStore(implementerToolsConfigStore);
-  const extensionStore = useExtensionStore();
+  const extensionStore = useExtensionInternalStore();
   const tempConfigStore = useStore(temporaryConfigStore);
   const [filterText, setFilterText] = useState("");
   const tempConfig = tempConfigStore.config;
@@ -100,12 +100,12 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
   const combinedConfig = useMemo(() => {
     const result = cloneDeep(config);
     for (let slot of Object.values(extensionStore.slots)) {
-      for (let moduleName of Object.keys(slot.instances)) {
-        if (!result[moduleName].extensions) {
-          result[moduleName].extensions = {};
+      if (slot.moduleName) {
+        if (!result[slot.moduleName].extensions) {
+          result[slot.moduleName].extensions = {};
         }
-        if (!result[moduleName].extensions[slot.name]) {
-          result[moduleName].extensions[slot.name] = {};
+        if (!result[slot.moduleName].extensions[slot.name]) {
+          result[slot.moduleName].extensions[slot.name] = {};
         }
       }
     }

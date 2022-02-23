@@ -3,7 +3,7 @@ import { update } from "@openmrs/esm-state";
 import { mountRootParcel, Parcel } from "single-spa";
 import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
 import { checkStatus, getCustomProps } from "./helpers";
-import { updateExtensionStore } from "./store";
+import { updateInternalExtensionStore } from "./store";
 
 export interface CancelLoading {
   (): void;
@@ -54,7 +54,7 @@ export function renderExtension(
         }
       });
 
-      updateExtensionStore((state) =>
+      updateInternalExtensionStore((state) =>
         update(
           state,
           [
@@ -68,6 +68,10 @@ export function renderExtension(
         )
       );
     }
+  } else {
+    console.warn(
+      `Tried to render ${extensionId} into ${extensionSlotName} but no DOM element was available.`
+    );
   }
 
   return () => {

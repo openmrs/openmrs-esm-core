@@ -43,7 +43,7 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .map((url) => JSON.stringify(url))
   .join(", ");
 
-function checkDirectory(dirName) {
+function checkDirectoryExists(dirName) {
   if (dirName) {
     try {
       return statSync(dirName).isDirectory();
@@ -53,6 +53,11 @@ function checkDirectory(dirName) {
   }
 
   return false;
+}
+
+function checkDirectoryHasContents(dirName) {
+  const contents = readdirSync(dirName);
+  return contents.length > 0;
 }
 
 module.exports = (env, argv = {}) => {
@@ -68,17 +73,21 @@ module.exports = (env, argv = {}) => {
     imports: {},
   };
 
-  if (checkDirectory(openmrsCoreApps)) {
+  if (checkDirectoryExists(openmrsCoreApps)) {
     readdirSync(openmrsCoreApps).forEach((dir) => {
       const appDir = resolve(openmrsCoreApps, dir);
       const { name, browser } = require(resolve(appDir, "package.json"));
-
+      const distDir = resolve(appDir, dirname(browser));
       if (allowedSuffixes.some((suffix) => name.endsWith(suffix))) {
-        appPatterns.push({
-          from: resolve(appDir, dirname(browser)),
-          to: dir,
-        });
-        coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
+        if (checkDirectoryHasContents(distDir)) {
+          appPatterns.push({
+            from: distDir,
+            to: dir,
+          });
+          coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
+        } else {
+          console.warn(`Not serving ${name} because couldn't find ${distDir}`);
+        }
       }
     });
   }
