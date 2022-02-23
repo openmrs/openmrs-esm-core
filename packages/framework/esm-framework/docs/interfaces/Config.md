@@ -10,7 +10,7 @@
 
 ## Indexable
 
-▪ [moduleName: `string`]: { [key: string]: `any`;  }
+▪ [moduleName: `string`]: { `[key: string]`: `any`;  }
 
 ## Table of contents
 

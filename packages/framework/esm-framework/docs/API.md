@@ -232,7 +232,7 @@ ___
 
 ### Actions
 
-Ƭ **Actions**: `Function` \| { [key: string]: `Function`;  }
+Ƭ **Actions**: `Function` \| { `[key: string]`: `Function`;  }
 
 #### Defined in
 
@@ -260,7 +260,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L30)
+[packages/framework/esm-config/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L31)
 
 ___
 
@@ -429,7 +429,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L58)
+[packages/framework/esm-config/src/types.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L59)
 
 ___
 
@@ -473,7 +473,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L65)
+[packages/framework/esm-config/src/types.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L66)
 
 ___
 
@@ -497,7 +497,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L63)
+[packages/framework/esm-config/src/types.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L64)
 
 ## API Variables
 

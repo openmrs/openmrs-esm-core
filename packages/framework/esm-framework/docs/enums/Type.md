@@ -11,6 +11,7 @@
 - [ConceptUuid](Type.md#conceptuuid)
 - [Number](Type.md#number)
 - [Object](Type.md#object)
+- [PersonAttributeTypeUuid](Type.md#personattributetypeuuid)
 - [String](Type.md#string)
 - [UUID](Type.md#uuid)
 
@@ -63,6 +64,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-config/src/types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L6)
+
+___
+
+### PersonAttributeTypeUuid
+
+• **PersonAttributeTypeUuid** = `"PersonAttributeTypeUuid"`
+
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L9)
 
 ___
 
