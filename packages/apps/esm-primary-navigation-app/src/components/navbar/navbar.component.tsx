@@ -3,8 +3,8 @@ import {
   LoggedInUser,
   useLayoutType,
   ExtensionSlot,
-  useAssignedExtensionIds,
   ConfigurableLink,
+  useAssignedExtensions,
 } from "@openmrs/esm-framework";
 import {
   HeaderContainer,
@@ -40,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({
   session,
 }) => {
   const layout = useLayoutType();
-  const navMenuItems = useAssignedExtensionIds("nav-menu-slot");
+  const navMenuItems = useAssignedExtensions("nav-menu-slot").map((e) => e.id);
 
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
 
