@@ -175,6 +175,7 @@ const Navbar: React.FC<NavbarProps> = ({
     layout,
     hidePanel,
     togglePanel,
+    onLogout,
   ]);
 
   return <div>{session && <HeaderContainer render={render} />}</div>;
