@@ -97,10 +97,10 @@ as well as something like `asset openmrs-esm-login-app.js`, then in the import
 map overrides you can click on the entry for `openmrs-esm-login-app` and give it the value
 
 ```
-//localhost:8080/openmrs-esm-login-app.js
+//localhost:8081/openmrs-esm-login-app.js
 ```
 
-You can also simply type `8080` and Import Map Overrides will infer the URL above.
+You can also simply type `8081` and Import Map Overrides will infer the URL above.
 
 > **Note**: The name of the entrypoint file (such as `openmrs-esm-login-app.js`) is set
   by the `browser` parameter of the `package.json`.
