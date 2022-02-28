@@ -8,6 +8,7 @@
 
 - [id](AssignedExtension.md#id)
 - [meta](AssignedExtension.md#meta)
+- [moduleName](AssignedExtension.md#modulename)
 - [name](AssignedExtension.md#name)
 - [offline](AssignedExtension.md#offline)
 - [online](AssignedExtension.md#online)
@@ -27,6 +28,16 @@ ___
 ### meta
 
 • **meta**: [`ExtensionMeta`](ExtensionMeta.md)
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L74)
+
+___
+
+### moduleName
+
+• **moduleName**: `string`
 
 #### Defined in
 
@@ -50,7 +61,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L75)
+[packages/framework/esm-extensions/src/store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L76)
 
 ___
 
@@ -60,4 +71,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L74)
+[packages/framework/esm-extensions/src/store.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L75)

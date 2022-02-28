@@ -1,14 +1,14 @@
 import React from "react";
 import styles from "./styles.css";
 import Close16 from "@carbon/icons-react/es/close/16";
-import { useExtensionStore, useStore } from "@openmrs/esm-framework";
+import { useExtensionInternalStore, useStore } from "@openmrs/esm-framework";
 import { Button } from "carbon-components-react";
 import { Portal } from "./portal";
 import { ExtensionOverlay } from "./extension-overlay.component";
 import { ImplementerToolsStore, implementerToolsStore } from "../store";
 
 export function UiEditor() {
-  const { slots, extensions } = useExtensionStore();
+  const { slots, extensions } = useExtensionInternalStore();
   const { isOpen: implementerToolsIsOpen } = useStore(implementerToolsStore);
 
   return (

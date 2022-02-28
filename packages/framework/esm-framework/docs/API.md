@@ -2487,7 +2487,7 @@ extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L128)
+[packages/framework/esm-extensions/src/store.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L129)
 
 ___
 
@@ -3954,21 +3954,15 @@ ___
 
 ▸ `Const` **useExtensionStore**(): `T`
 
-The implementation of this will soon undergo a breaking change.
-This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
-
 #### Returns
 
 `T`
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L11)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
 ▸ `Const` **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
-
-The implementation of this will soon undergo a breaking change.
-This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Parameters
 
@@ -3982,12 +3976,9 @@ This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L11)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
 ▸ `Const` **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
-
-The implementation of this will soon undergo a breaking change.
-This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Parameters
 
@@ -4001,7 +3992,7 @@ This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L11)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
 ___
 

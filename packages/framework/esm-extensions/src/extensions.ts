@@ -260,6 +260,7 @@ export function getAssignedExtensions(
     extensions.push({
       id,
       name,
+      moduleName: extension.moduleName,
       meta: extension.meta,
       online: extension.online,
       offline: extension.offline,
