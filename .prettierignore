@@ -6,3 +6,4 @@ docs/
 *.ico
 *.ejs
 packages/esm-styleguide/src/**/*.html
+.github/
