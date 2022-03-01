@@ -4257,26 +4257,28 @@ ___
 
 ### useVisit
 
-▸ **useVisit**(`patientUuid`): `Object`
+▸ **useVisit**(`patientUuid`, `includeInactive?`): `VisitReturnType`
+
+This React hook returns a visit object. If the `patientUuid` is provided
+as a parameter, then the visits, currentVisit, error and mutate function
+for that patient visit is returned.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `patientUuid` | `string` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `patientUuid` | `string` | `undefined` | Unique patient identifier `string` |
+| `includeInactive` | `boolean` | `false` | Boolean that specifies whether to include Inactive visits `boolean`, defaults to false |
 
 #### Returns
 
-`Object`
+`VisitReturnType`
 
-| Name | Type |
-| :------ | :------ |
-| `currentVisit` | ``null`` \| [`Visit`](interfaces/Visit.md) |
-| `error` | ``null`` |
+Object {`visits`, `error` `isValidating`, `currentVisit`, `mutate`}
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useVisit.ts#L11)
+[packages/framework/esm-react-utils/src/useVisit.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useVisit.ts#L27)
 
 ___
 
