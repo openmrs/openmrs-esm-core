@@ -1,40 +1,70 @@
+import { useState, useEffect } from "react";
 import {
   openmrsFetch,
   openmrsObservableFetch,
   fhirBaseUrl,
+  FetchResponse,
 } from "@openmrs/esm-framework";
 import { map } from "rxjs/operators";
-import { LocationResponse } from "../types";
+import { LocationEntry, LocationResponse } from "../types";
+import useSwr from "swr";
 
-export function getLoginLocations(): Observable<Object[]> {
-  return openmrsObservableFetch(
-    `/ws/rest/v1/location?tag=Login%20Location&v=custom:(uuid,display)`
-  ).pipe(map(({ data }) => data["results"]));
-}
+export const fhirLocationUrl = `${fhirBaseUrl}/Location?_summary=data`;
 
-export function searchLocationsFhir(
-  location: string,
-  abortController: AbortController,
-  useLoginLocationTag: boolean
+export function useLocation(
+  useLoginLocationTag: boolean,
+  count: number = null,
+  location: string = "",
+  pagesOffset: number = 0
 ) {
-  const baseUrl = `${fhirBaseUrl}/Location?name=${location}`;
-  const url = useLoginLocationTag
-    ? baseUrl.concat("&_tag=login location")
-    : baseUrl;
-  return openmrsFetch<LocationResponse>(url, {
-    method: "GET",
-    signal: abortController.signal,
-  });
-}
+  const [locationData, setLocationData] = useState<Array<LocationEntry>>(null);
+  const [totalResults, setTotalResults] = useState(null);
 
-export function queryLocations(
-  location: string,
-  abortController = new AbortController(),
-  useLoginLocationTag: boolean
-) {
-  return searchLocationsFhir(
-    location,
-    abortController,
-    useLoginLocationTag
-  ).then((locs) => locs.data.entry);
+  // URL fetching
+  let url = fhirLocationUrl;
+  url = url.concat(`&_count=${count}`);
+
+  if (pagesOffset) {
+    url = url.concat(`&_getpagesoffset=${pagesOffset}`);
+  }
+  if (useLoginLocationTag) {
+    url = url.concat("&_tag=login location");
+  }
+  if (location != "" && location != null) {
+    url = url.concat(`&name=${location}`);
+  }
+  const swrResult = useSwr<FetchResponse<LocationResponse>, Error>(
+    url,
+    openmrsFetch
+  );
+
+  useEffect(() => {
+    setLocationData((locationData) =>
+      swrResult.data
+        ? locationData
+          ? [...new Set([...locationData, ...swrResult.data?.data?.entry])]
+          : swrResult.data?.data?.entry
+        : locationData
+    );
+    if (swrResult.data) {
+      setTotalResults(swrResult?.data?.data?.total);
+    }
+  }, [swrResult.data]);
+
+  // Reset Location data when a new search query is triggered
+  useEffect(() => {
+    setLocationData(null);
+  }, [location]);
+
+  return {
+    locationData,
+    isLoading: !locationData,
+    totalResults,
+    nextPage: swrResult?.data?.data?.link?.find(
+      (link) => link.relation === "next"
+    )
+      ? true
+      : false,
+    loadingNewData: !swrResult.data,
+  };
 }

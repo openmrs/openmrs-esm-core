@@ -6,6 +6,7 @@
   "error": "Error",
   "found": "found",
   "invalidCredentials": "Invalid username or password",
+  "loading": "Loading",
   "locationNotFound": "Sorry, no matching location was found.",
   "locations": "locations",
   "login": "Log in",

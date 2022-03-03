@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { act } from "react-dom/test-utils";
 import { cleanup, wait } from "@testing-library/react";
 import { navigate } from "@openmrs/esm-framework";
-import { queryLocations } from "./choose-location.resource";
+import { useLocation } from "./choose-location.resource";
 import ChooseLocation from "./choose-location.component";
 import renderWithRouter from "../test-helpers/render-with-router";
 
@@ -19,16 +19,19 @@ jest.mock("../CurrentUserContext", () => ({
 }));
 
 jest.mock("./choose-location.resource.ts", () => ({
-  queryLocations: jest.fn(() =>
-    Promise.resolve([
+  useLocation: jest.fn(() => ({
+    data: [
       {
         resource: {
           id: "abc",
           name: "foo",
         },
       },
-    ])
-  ),
+    ],
+    isLoading: false,
+    previousLink: undefined,
+    nextLink: undefined,
+  })),
 }));
 
 describe(`<ChooseLocation />`, () => {
@@ -62,7 +65,12 @@ describe(`<ChooseLocation />`, () => {
 
   it(`should set location and skip location select page if there is no location`, async () => {
     cleanup();
-    (queryLocations as any).mockImplementationOnce(() => Promise.resolve([]));
+    (useLocation as any).mockImplementationOnce(() => ({
+      data: [],
+      isLoading: false,
+      previousLink: undefined,
+      nextLink: undefined,
+    }));
     renderWithRouter(ChooseLocation, { isLoginEnabled: true });
     await act(wait);
     expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/home" });
@@ -70,8 +78,8 @@ describe(`<ChooseLocation />`, () => {
 
   it(`should show the location picker when multiple locations exist`, async () => {
     cleanup();
-    (queryLocations as any).mockImplementationOnce(() =>
-      Promise.resolve([
+    (useLocation as any).mockImplementationOnce(() => ({
+      data: [
         {
           resource: {
             id: "abc",
@@ -84,8 +92,11 @@ describe(`<ChooseLocation />`, () => {
             name: "ghi",
           },
         },
-      ])
-    );
+      ],
+      isLoading: false,
+      previousLink: undefined,
+      nextLink: undefined,
+    }));
     renderWithRouter(ChooseLocation, { isLoginEnabled: true });
     await act(wait);
     expect(navigate).not.toHaveBeenCalled();
@@ -94,8 +105,8 @@ describe(`<ChooseLocation />`, () => {
   it(`should not show the location picker when disabled`, async () => {
     cleanup();
     config.chooseLocation.enabled = false;
-    (queryLocations as any).mockImplementationOnce(() =>
-      Promise.resolve([
+    (useLocation as any).mockImplementationOnce(() => ({
+      data: [
         {
           resource: {
             id: "abc",
@@ -108,8 +119,11 @@ describe(`<ChooseLocation />`, () => {
             name: "ghi",
           },
         },
-      ])
-    );
+      ],
+      isLoading: false,
+      previousLink: undefined,
+      nextLink: undefined,
+    }));
     const wrapper = renderWithRouter(ChooseLocation, { isLoginEnabled: true });
     await act(wait);
     expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/home" });

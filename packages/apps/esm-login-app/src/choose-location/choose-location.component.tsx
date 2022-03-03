@@ -7,7 +7,7 @@ import {
   useConfig,
   setSessionLocation,
 } from "@openmrs/esm-framework";
-import { queryLocations } from "./choose-location.resource";
+import { useLocation } from "./choose-location.resource";
 import { useCurrentUser } from "../CurrentUserContext";
 import { LocationEntry } from "../types";
 import type { StaticContext } from "react-router";
@@ -29,8 +29,9 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   const referrer = location?.state?.referrer;
   const config = useConfig();
   const user = useCurrentUser();
-  const [loginLocations, setLoginLocations] =
-    useState<Array<LocationEntry>>(null);
+  const { locationData } = useLocation(
+    config.chooseLocation.useLoginLocationTag
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   const changeLocation = useCallback(
@@ -54,32 +55,21 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   );
 
   useEffect(() => {
-    if (isLoginEnabled) {
-      const ac = new AbortController();
-      queryLocations("", ac, config.chooseLocation.useLoginLocationTag).then(
-        (locations) => setLoginLocations(locations)
-      );
-      return () => ac.abort();
-    }
-  }, [isLoginEnabled]);
-
-  useEffect(() => {
-    if (loginLocations) {
-      if (!config.chooseLocation.enabled || loginLocations.length < 2) {
-        changeLocation(loginLocations[0]?.resource.id);
+    if (locationData) {
+      if (!config.chooseLocation.enabled || locationData.length < 2) {
+        changeLocation(locationData?.[0]?.resource.id);
       } else {
         setIsLoading(false);
       }
     }
-  }, [loginLocations, user, changeLocation, config.chooseLocation.enabled]);
+  }, [locationData, user, changeLocation, config.chooseLocation.enabled]);
 
   if (!isLoading || !isLoginEnabled) {
     return (
       <LocationPicker
         currentUser={user.display}
-        loginLocations={loginLocations ?? []}
+        loginLocations={locationData ?? []}
         onChangeLocation={changeLocation}
-        searchLocations={queryLocations}
         isLoginEnabled={isLoginEnabled}
       />
     );
