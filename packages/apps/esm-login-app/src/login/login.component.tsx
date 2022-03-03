@@ -123,6 +123,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
     />
   ) : (
     <svg role="img" className={styles["logo"]}>
+      <title>OpenMRS svg</title>
       <use xlinkHref="#omrs-logo-full-color"></use>
     </svg>
   );

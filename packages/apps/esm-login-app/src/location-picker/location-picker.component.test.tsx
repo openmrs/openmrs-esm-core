@@ -2,13 +2,9 @@ import "@testing-library/jest-dom";
 import React from "react";
 import LocationPicker from "./location-picker.component";
 import { act } from "react-dom/test-utils";
-import {
-  cleanup,
-  fireEvent,
-  render,
-  wait,
-  screen,
-} from "@testing-library/react";
+import { fireEvent, render, waitFor, screen } from "@testing-library/react";
+import { useConfig } from "@openmrs/esm-framework";
+import { mockConfig } from "../../__mocks__/config.mock";
 
 const loginLocations = {
   data: {
@@ -19,11 +15,14 @@ const loginLocations = {
   },
 };
 
+const mockedUseConfig = useConfig as jest.Mock;
+
+jest.mock("lodash-es/debounce", () => jest.fn((fn) => fn));
+
 describe(`<LocationPicker />`, () => {
   let searchInput,
     marsInput,
     submitButton,
-    wrapper,
     locationEntries,
     onChangeLocation,
     searchLocations;
@@ -37,13 +36,15 @@ describe(`<LocationPicker />`, () => {
       writable: true,
     });
 
+    mockedUseConfig.mockReturnValue(mockConfig);
+
     // reset mocks
     locationEntries = loginLocations.data.entry;
     onChangeLocation = jest.fn(() => {});
     searchLocations = jest.fn(() => Promise.resolve([]));
 
-    //prepare components
-    wrapper = render(
+    // prepare components
+    render(
       <LocationPicker
         loginLocations={locationEntries}
         onChangeLocation={onChangeLocation}
@@ -53,16 +54,14 @@ describe(`<LocationPicker />`, () => {
       />
     );
 
-    searchInput = wrapper.container.querySelector("input");
-    submitButton = wrapper.getByText("Confirm", { selector: "button" });
+    searchInput = screen.getByRole("searchbox");
+    submitButton = screen.getByText("Confirm", { selector: "button" });
   });
 
-  afterEach(cleanup);
-
   it("trigger search on typing", async () => {
-    cleanup();
     searchLocations = jest.fn(() => Promise.resolve(loginLocations));
-    wrapper = render(
+
+    render(
       <LocationPicker
         loginLocations={locationEntries}
         onChangeLocation={onChangeLocation}
@@ -74,8 +73,8 @@ describe(`<LocationPicker />`, () => {
 
     fireEvent.change(searchInput, { target: { value: "mars" } });
 
-    await wait(() => {
-      expect(wrapper.getByLabelText("Mars")).not.toBeNull();
+    await waitFor(() => {
+      expect(screen.getByLabelText("Mars")).not.toBeNull();
     });
   });
 
@@ -84,16 +83,16 @@ describe(`<LocationPicker />`, () => {
       fireEvent.change(searchInput, { target: { value: "Mars" } });
     });
 
-    await wait(() => {
-      expect(wrapper.queryByText("Mars")).not.toBeNull();
-      marsInput = wrapper.getByLabelText("Mars");
+    await waitFor(() => {
+      expect(screen.queryByText("Mars")).not.toBeNull();
+      marsInput = screen.getByLabelText("Mars");
     });
 
     act(() => {
       fireEvent.click(marsInput);
     });
 
-    await wait(() => {
+    await waitFor(() => {
       expect(submitButton).not.toHaveAttribute("disabled");
     });
   });
@@ -105,15 +104,15 @@ describe(`<LocationPicker />`, () => {
       fireEvent.change(searchInput, { target: { value: "Mars" } });
     });
 
-    await wait(() => {
-      expect(wrapper.queryByText("Mars")).not.toBeNull();
-      marsInput = wrapper.getByLabelText("Mars");
+    await waitFor(() => {
+      expect(screen.queryByText("Mars")).not.toBeNull();
+      marsInput = screen.getByLabelText("Mars");
     });
 
     fireEvent.click(marsInput);
     fireEvent.click(submitButton);
 
-    await wait(() => expect(onChangeLocation).toHaveBeenCalled());
+    await waitFor(() => expect(onChangeLocation).toHaveBeenCalled());
   });
 
   it(`send the user to the home page on submit`, async () => {
@@ -123,15 +122,15 @@ describe(`<LocationPicker />`, () => {
       fireEvent.change(searchInput, { target: { value: "Mars" } });
     });
 
-    await wait(() => {
-      expect(wrapper.queryByText("Mars")).not.toBeNull();
-      marsInput = wrapper.getByLabelText("Mars");
+    await waitFor(() => {
+      expect(screen.queryByText("Mars")).not.toBeNull();
+      marsInput = screen.getByLabelText("Mars");
     });
 
     fireEvent.click(marsInput);
     fireEvent.click(submitButton);
 
-    await wait(() => {
+    await waitFor(() => {
       expect(onChangeLocation).toHaveBeenCalled();
     });
   });
@@ -143,17 +142,17 @@ describe(`<LocationPicker />`, () => {
       fireEvent.change(searchInput, { target: { value: "Mars" } });
     });
 
-    await wait(() => {
-      expect(wrapper.queryByText("Mars")).not.toBeNull();
-      marsInput = wrapper.getByLabelText("Mars");
+    await waitFor(() => {
+      expect(screen.queryByText("Mars")).not.toBeNull();
+      marsInput = screen.getByLabelText("Mars");
     });
 
-    submitButton = wrapper.getByText("Confirm", { selector: "button" });
+    submitButton = screen.getByText("Confirm", { selector: "button" });
 
     fireEvent.click(marsInput);
     fireEvent.click(submitButton);
 
-    await wait(() => {
+    await waitFor(() => {
       expect(onChangeLocation).toHaveBeenCalled();
     });
   });
@@ -163,7 +162,7 @@ describe(`<LocationPicker />`, () => {
   });
 
   it("should deselect active location when user searches for a location", async () => {
-    const locationRadioButton: HTMLElement = await wrapper.getByRole("radio", {
+    const locationRadioButton: HTMLElement = await screen.getByRole("radio", {
       name: /Earth/,
     });
     fireEvent.click(locationRadioButton);
@@ -175,9 +174,9 @@ describe(`<LocationPicker />`, () => {
   it("shows error message when no matching locations can be found", async () => {
     fireEvent.change(searchInput, { target: { value: "doof" } });
 
-    await wait(() => {
+    await waitFor(() => {
       expect(
-        wrapper.getByText("Sorry, no matching location was found")
+        screen.getByText("Sorry, no matching location was found")
       ).not.toBeNull();
     });
     expect(submitButton).toHaveAttribute("disabled");
@@ -187,14 +186,14 @@ describe(`<LocationPicker />`, () => {
     expect(
       window.localStorage.getItem("userDefaultLoginLocationKeyDemo")
     ).toEqual("111");
-    const locationRadioButton: HTMLElement = await wrapper.getByRole("radio", {
+    const locationRadioButton: HTMLElement = await screen.getByRole("radio", {
       name: /Earth/,
     });
     expect(locationRadioButton).toHaveProperty("checked", true);
   });
 
   it("should set user Default location when location is changed", async () => {
-    const locationRadioButton: HTMLElement = await wrapper.findByLabelText(
+    const locationRadioButton: HTMLElement = await screen.findByLabelText(
       /Earth/
     );
     fireEvent.click(locationRadioButton);
@@ -207,7 +206,7 @@ describe(`<LocationPicker />`, () => {
 
   it("should display the correct pageSize", async () => {
     expect(screen.getByText(/Showing 2 of 2 locations/i)).toBeInTheDocument();
-    cleanup();
+
     const loginLocations: any = {
       data: {
         entry: [
@@ -217,7 +216,8 @@ describe(`<LocationPicker />`, () => {
         ],
       },
     };
-    const wrapper = render(
+
+    render(
       <LocationPicker
         loginLocations={loginLocations.data.entry}
         onChangeLocation={onChangeLocation}
@@ -226,6 +226,7 @@ describe(`<LocationPicker />`, () => {
         isLoginEnabled={true}
       />
     );
-    expect(wrapper.getByText(/Showing 3 of 3 locations/i)).toBeInTheDocument();
+
+    expect(screen.getByText(/Showing 3 of 3 locations/i)).toBeInTheDocument();
   });
 });
