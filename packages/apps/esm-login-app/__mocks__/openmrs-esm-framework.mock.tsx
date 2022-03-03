@@ -36,6 +36,10 @@ export function createErrorHandler() {
   };
 }
 
+export function interpolateUrl(url) {
+  return url;
+}
+
 export const openmrsComponentDecorator = jest
   .fn()
   .mockImplementation(() => (f) => f);

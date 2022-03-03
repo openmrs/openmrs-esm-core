@@ -10,6 +10,8 @@ import userEvent from "@testing-library/user-event";
 
 const mockedLogin = performLogin as jest.Mock;
 
+const { config } = require("@openmrs/esm-framework");
+
 jest.mock("./login.resource", () => ({
   performLogin: jest.fn(),
 }));
@@ -140,5 +142,17 @@ describe(`<Login />`, () => {
     await wait();
 
     expect(wrapper.history.location.pathname).toBe("/login/location");
+  });
+
+  it("respects the logo configuration", () => {
+    config.logo.src = "https://someimage.png";
+
+    const wrapper = renderWithRouter(Login, {
+      loginLocations: loginLocations,
+      isLoginEnabled: true,
+    });
+
+    const logo = wrapper.getAllByAltText("Logo");
+    expect(logo[0]).toHaveAttribute("src", "https://someimage.png");
   });
 });
