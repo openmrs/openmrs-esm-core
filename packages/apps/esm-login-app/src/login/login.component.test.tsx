@@ -1,12 +1,13 @@
 import "@testing-library/jest-dom";
 import Login from "./login.component";
 import { useState } from "react";
-import { cleanup, wait } from "@testing-library/react";
-import { setSessionLocation } from "@openmrs/esm-framework";
+import { waitFor, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { setSessionLocation, useConfig } from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
 import { useCurrentUser } from "../CurrentUserContext";
+import { mockConfig } from "../../__mocks__/config.mock";
 import renderWithRouter from "../test-helpers/render-with-router";
-import userEvent from "@testing-library/user-event";
 
 const mockedLogin = performLogin as jest.Mock;
 
@@ -16,6 +17,7 @@ jest.mock("./login.resource", () => ({
 
 const mockedSetSessionLocation = setSessionLocation as jest.Mock;
 const mockedUseCurrentUser = useCurrentUser as jest.Mock;
+const mockedUseConfig = useConfig as jest.Mock;
 
 jest.mock("../CurrentUserContext", () => ({
   useCurrentUser: jest.fn(),
@@ -31,22 +33,23 @@ describe(`<Login />`, () => {
     mockedLogin.mockReset();
     mockedSetSessionLocation.mockReset();
     mockedUseCurrentUser.mockReset();
+    mockedUseConfig.mockReturnValue(mockConfig);
   });
 
-  afterEach(cleanup);
-
   it(`renders a login form`, () => {
-    const wrapper = renderWithRouter(Login, {
+    renderWithRouter(Login, {
       loginLocations: loginLocations,
       isLoginEnabled: true,
     });
 
-    wrapper.getByRole("textbox", { name: /Username/i });
-    wrapper.getByRole("button", { name: /Continue/i });
+    screen.getByRole("img", { name: /OpenMRS logo/i });
+    expect(screen.queryByAltText(/logo/i)).not.toBeInTheDocument();
+    screen.getByRole("textbox", { name: /Username/i });
+    screen.getByRole("button", { name: /Continue/i });
   });
 
   it(`should return user focus to username input when input is invalid`, () => {
-    const wrapper = renderWithRouter(
+    renderWithRouter(
       Login,
       {
         loginLocations: loginLocations,
@@ -59,25 +62,22 @@ describe(`<Login />`, () => {
     );
 
     expect(
-      wrapper.getByRole("textbox", { name: /username/i })
+      screen.getByRole("textbox", { name: /username/i })
     ).toBeInTheDocument();
-    userEvent.type(wrapper.getByRole("textbox", { name: /Username/i }), "");
-    const continueButton = wrapper.getByRole("button", { name: /Continue/i });
+    userEvent.type(screen.getByRole("textbox", { name: /Username/i }), "");
+    const continueButton = screen.getByRole("button", { name: /Continue/i });
     userEvent.click(continueButton);
-    expect(wrapper.getByRole("textbox", { name: /username/i })).toHaveFocus();
-    userEvent.type(
-      wrapper.getByRole("textbox", { name: /Username/i }),
-      "yoshi"
-    );
+    expect(screen.getByRole("textbox", { name: /username/i })).toHaveFocus();
+    userEvent.type(screen.getByRole("textbox", { name: /Username/i }), "yoshi");
     userEvent.click(continueButton);
-    userEvent.type(wrapper.getByLabelText("password"), "yoshi");
-    expect(wrapper.getByLabelText(/password/i)).toHaveFocus();
+    userEvent.type(screen.getByLabelText("password"), "yoshi");
+    expect(screen.getByLabelText(/password/i)).toHaveFocus();
   });
 
   it(`makes an API request when you submit the form`, async () => {
     mockedLogin.mockReturnValue(Promise.resolve({ some: "data" }));
 
-    const wrapper = renderWithRouter(
+    renderWithRouter(
       Login,
       {
         loginLocations: loginLocations,
@@ -90,18 +90,16 @@ describe(`<Login />`, () => {
     );
 
     expect(performLogin).not.toHaveBeenCalled();
-    userEvent.type(
-      wrapper.getByRole("textbox", { name: /Username/i }),
-      "yoshi"
+    userEvent.type(screen.getByRole("textbox", { name: /Username/i }), "yoshi");
+    userEvent.click(screen.getByRole("button", { name: /Continue/i }));
+    userEvent.type(screen.getByLabelText("password"), "no-tax-fraud");
+    userEvent.click(screen.getByRole("button", { name: /submit/i }));
+    await waitFor(() =>
+      expect(performLogin).toHaveBeenCalledWith("yoshi", "no-tax-fraud")
     );
-    userEvent.click(wrapper.getByRole("button", { name: /Continue/i }));
-    userEvent.type(wrapper.getByLabelText("password"), "no-tax-fraud");
-    userEvent.click(wrapper.getByRole("button", { name: /submit/i }));
-    await wait();
-    expect(performLogin).toHaveBeenCalledWith("yoshi", "no-tax-fraud");
   });
 
-  it(`send the user to the location select page on login if there is more than one location`, async () => {
+  it(`sends the user to the location select page on login if there is more than one location`, async () => {
     let refreshUser = (user: any) => {};
     mockedLogin.mockImplementation(() => {
       refreshUser({
@@ -130,15 +128,12 @@ describe(`<Login />`, () => {
       }
     );
 
-    userEvent.type(
-      wrapper.getByRole("textbox", { name: /Username/i }),
-      "yoshi"
+    userEvent.type(screen.getByRole("textbox", { name: /Username/i }), "yoshi");
+    userEvent.click(screen.getByRole("button", { name: /Continue/i }));
+    userEvent.type(screen.getByLabelText("password"), "no-tax-fraud");
+    userEvent.click(screen.getByRole("button", { name: /submit/i }));
+    await waitFor(() =>
+      expect(wrapper.history.location.pathname).toBe("/login/location")
     );
-    userEvent.click(wrapper.getByRole("button", { name: /Continue/i }));
-    userEvent.type(wrapper.getByLabelText("password"), "no-tax-fraud");
-    userEvent.click(wrapper.getByRole("button", { name: /submit/i }));
-    await wait();
-
-    expect(wrapper.history.location.pathname).toBe("/login/location");
   });
 });

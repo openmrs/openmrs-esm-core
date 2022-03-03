@@ -1,14 +1,14 @@
 import "@testing-library/jest-dom";
-import { act } from "react-dom/test-utils";
-import { cleanup, wait } from "@testing-library/react";
-import { navigate } from "@openmrs/esm-framework";
+import { waitFor } from "@testing-library/react";
+import { navigate, useConfig } from "@openmrs/esm-framework";
 import { queryLocations } from "./choose-location.resource";
+import { mockConfig } from "../../__mocks__/config.mock";
 import ChooseLocation from "./choose-location.component";
 import renderWithRouter from "../test-helpers/render-with-router";
 
 const navigateMock = navigate as jest.Mock;
-
-const { config } = require("@openmrs/esm-framework");
+const mockedQueryLocations = queryLocations as jest.Mock;
+const mockedUseConfig = useConfig as jest.Mock;
 
 jest.mock("../CurrentUserContext", () => ({
   useCurrentUser() {
@@ -19,19 +19,21 @@ jest.mock("../CurrentUserContext", () => ({
 }));
 
 jest.mock("./choose-location.resource.ts", () => ({
-  queryLocations: jest.fn(() =>
-    Promise.resolve([
-      {
-        resource: {
-          id: "abc",
-          name: "foo",
-        },
+  queryLocations: jest.fn().mockResolvedValue([
+    {
+      resource: {
+        id: "abc",
+        name: "foo",
       },
-    ])
-  ),
+    },
+  ]),
 }));
 
 describe(`<ChooseLocation />`, () => {
+  beforeEach(() => {
+    mockedUseConfig.mockReturnValue(mockConfig);
+  });
+
   afterEach(() => {
     navigateMock.mockClear();
   });
@@ -42,99 +44,117 @@ describe(`<ChooseLocation />`, () => {
         referrer: "/home/patient-search",
       },
     };
-    cleanup();
+
     renderWithRouter(ChooseLocation, {
       location: locationMock,
       isLoginEnabled: true,
     });
-    await act(wait);
-    expect(navigate).toHaveBeenCalledWith({
-      to: "${openmrsSpaBase}" + locationMock.state.referrer,
-    });
+
+    await waitFor(() =>
+      expect(navigate).toHaveBeenCalledWith({
+        to: "${openmrsSpaBase}" + locationMock.state.referrer,
+      })
+    );
   });
 
   it(`should set location and skip location select page if there is exactly one location`, async () => {
-    cleanup();
     renderWithRouter(ChooseLocation, { isLoginEnabled: true });
-    await act(wait);
-    expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/home" });
+
+    await waitFor(() =>
+      expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/home" })
+    );
   });
 
   it(`should set location and skip location select page if there is no location`, async () => {
-    cleanup();
-    (queryLocations as any).mockImplementationOnce(() => Promise.resolve([]));
+    mockedQueryLocations.mockResolvedValueOnce([]);
+
     renderWithRouter(ChooseLocation, { isLoginEnabled: true });
-    await act(wait);
-    expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/home" });
+
+    await waitFor(() =>
+      expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/home" })
+    );
   });
 
   it(`should show the location picker when multiple locations exist`, async () => {
-    cleanup();
-    (queryLocations as any).mockImplementationOnce(() =>
-      Promise.resolve([
-        {
-          resource: {
-            id: "abc",
-            name: "foo",
-          },
+    mockedQueryLocations.mockResolvedValueOnce([
+      {
+        resource: {
+          id: "abc",
+          name: "foo",
         },
-        {
-          resource: {
-            id: "def",
-            name: "ghi",
-          },
+      },
+      {
+        resource: {
+          id: "def",
+          name: "ghi",
         },
-      ])
-    );
+      },
+    ]);
+
     renderWithRouter(ChooseLocation, { isLoginEnabled: true });
-    await act(wait);
-    expect(navigate).not.toHaveBeenCalled();
+
+    await waitFor(() => expect(navigate).not.toHaveBeenCalled());
   });
 
   it(`should not show the location picker when disabled`, async () => {
-    cleanup();
-    config.chooseLocation.enabled = false;
-    (queryLocations as any).mockImplementationOnce(() =>
-      Promise.resolve([
-        {
-          resource: {
-            id: "abc",
-            name: "foo",
-          },
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+      chooseLocation: {
+        enabled: false,
+      },
+    });
+
+    mockedQueryLocations.mockResolvedValueOnce([
+      {
+        resource: {
+          id: "abc",
+          name: "foo",
         },
-        {
-          resource: {
-            id: "def",
-            name: "ghi",
-          },
+      },
+      {
+        resource: {
+          id: "def",
+          name: "ghi",
         },
-      ])
+      },
+    ]);
+
+    renderWithRouter(ChooseLocation, { isLoginEnabled: true });
+
+    await waitFor(() =>
+      expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/home" })
     );
-    const wrapper = renderWithRouter(ChooseLocation, { isLoginEnabled: true });
-    await act(wait);
-    expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/home" });
   });
 
   it(`should redirect to custom path if configured`, async () => {
-    cleanup();
-    config.links.loginSuccess = "${openmrsSpaBase}/foo";
-    const wrapper = renderWithRouter(ChooseLocation, { isLoginEnabled: true });
-    await act(wait);
-    expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/foo" });
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+      links: {
+        loginSuccess: "${openmrsSpaBase}/foo",
+      },
+    });
+
+    renderWithRouter(ChooseLocation, { isLoginEnabled: true });
+
+    await waitFor(() =>
+      expect(navigate).toHaveBeenCalledWith({ to: "${openmrsSpaBase}/foo" })
+    );
   });
 
   it(`should redirect back to returnUrl when provided`, async () => {
     const locationMock = {
       search: "?returnToUrl=/openmrs/spa/home",
     };
-    cleanup();
+
     renderWithRouter(ChooseLocation, {
       location: locationMock,
       isLoginEnabled: true,
     });
-    await act(wait);
-    expect(navigate).toHaveBeenCalledWith({
-      to: "/openmrs/spa/home",
-    });
+
+    await waitFor(() =>
+      expect(navigate).toHaveBeenCalledWith({
+        to: "/openmrs/spa/home",
+      })
+    );
   });
 });
