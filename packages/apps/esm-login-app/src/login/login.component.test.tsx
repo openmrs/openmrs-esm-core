@@ -146,13 +146,15 @@ describe(`<Login />`, () => {
 
   it("respects the logo configuration", () => {
     config.logo.src = "https://someimage.png";
+    config.logo.alt = "customised Logo";
 
     const wrapper = renderWithRouter(Login, {
       loginLocations: loginLocations,
       isLoginEnabled: true,
     });
 
-    const logo = wrapper.getAllByAltText("Logo");
+    const logo = wrapper.getAllByAltText("customised Logo");
     expect(logo[0]).toHaveAttribute("src", "https://someimage.png");
+    expect(logo[0]).toHaveAttribute("alt", "customised Logo");
   });
 });
