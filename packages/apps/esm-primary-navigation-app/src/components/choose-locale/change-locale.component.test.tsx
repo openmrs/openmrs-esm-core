@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, wait } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import ChangeLocale from "./change-locale.component";
 
 const allowedLocales = ["en", "fr", "it", "pt"];
@@ -32,7 +32,7 @@ describe(`<ChangeLocale />`, () => {
     fireEvent.change(screen.getByLabelText(/Select locale/i), {
       target: { value: "en" },
     });
-    await wait(() =>
+    await waitFor(() =>
       expect(postUserPropertiesMock).toHaveBeenCalledWith(
         user.uuid,
         { defaultLocale: "en" },

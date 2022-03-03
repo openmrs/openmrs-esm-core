@@ -1,49 +1,34 @@
-import { useState, useEffect } from "react";
-import dayjs from "dayjs";
 import {
-  getVisitsForPatient,
-  getStartedVisit,
-  VisitMode,
-  VisitStatus,
+  defaultVisitCustomRepresentation,
+  openmrsFetch,
   Visit,
 } from "@openmrs/esm-api";
+import useSWR from "swr";
 
-export function useVisit(patientUuid: string) {
-  const [currentVisit, setCurrentVisit] = useState<Visit | null>(null);
-  const [error, setError] = useState(null);
+interface VisitReturnType {
+  error: Error;
+  mutate: () => void;
+  isValidating: boolean;
+  currentVisit: Visit | null;
+}
 
-  useEffect(() => {
-    const sub = getStartedVisit.subscribe((visit) => {
-      if (visit) {
-        setCurrentVisit(visit?.visitData ?? null);
-      } else {
-        setCurrentVisit(null);
-      }
-    });
+/**
+ * This React hook returns a visit object. If the `patientUuid` is provided
+ * as a parameter, then the currentVisit, error and mutate function
+ * for that patient visit is returned.
+ * @param patientUuid Unique patient identifier `string`
+ * @returns Object {`error` `isValidating`, `currentVisit`, `mutate`}
+ */
+export function useVisit(patientUuid: string): VisitReturnType {
+  const { data, error, mutate, isValidating } = useSWR<{
+    data: { results: Array<Visit> };
+  }>(
+    `/ws/rest/v1/visit?patient=${patientUuid}&v=${defaultVisitCustomRepresentation}&includeInactive=false`,
+    openmrsFetch
+  );
 
-    return () => sub.unsubscribe();
-  }, [patientUuid]);
+  const currentVisit =
+    data?.data.results.find((visit) => visit.stopDatetime === null) ?? null;
 
-  useEffect(() => {
-    const abortController = new AbortController();
-    const sub = getVisitsForPatient(patientUuid, abortController).subscribe(
-      ({ data }) => {
-        const currentVisit = data.results.find(
-          (visit) => visit.stopDatetime === null
-        );
-
-        if (currentVisit) {
-          getStartedVisit.next({
-            mode: VisitMode.LOADING,
-            visitData: currentVisit,
-            status: VisitStatus.ONGOING,
-          });
-        }
-      },
-      setError
-    );
-    return () => sub && sub.unsubscribe();
-  }, [patientUuid]);
-
-  return { currentVisit, error };
+  return { error, mutate, isValidating, currentVisit };
 }
