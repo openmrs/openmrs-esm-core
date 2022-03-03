@@ -136,4 +136,22 @@ describe(`<Login />`, () => {
       expect(wrapper.history.location.pathname).toBe("/login/location")
     );
   });
+  it("respects the logo configuration", () => {
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+      logo: {
+        src: "https://someimage.png",
+        alt: "customised Logo",
+      },
+    });
+
+    const wrapper = renderWithRouter(Login, {
+      loginLocations: loginLocations,
+      isLoginEnabled: true,
+    });
+
+    const logo = wrapper.getAllByAltText("customised Logo");
+    expect(logo[0]).toHaveAttribute("src", "https://someimage.png");
+    expect(logo[0]).toHaveAttribute("alt", "customised Logo");
+  });
 });
