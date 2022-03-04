@@ -29,10 +29,9 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   const referrer = location?.state?.referrer;
   const config = useConfig();
   const user = useCurrentUser();
-  const { locationData } = useLocation(
+  const { locationData, isLoading } = useLocation(
     config.chooseLocation.useLoginLocationTag
   );
-  const [isLoading, setIsLoading] = useState(true);
 
   const changeLocation = useCallback(
     (locationUuid?: string) => {
@@ -56,10 +55,11 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
 
   useEffect(() => {
     if (locationData) {
-      if (!config.chooseLocation.enabled || locationData.length < 2) {
-        changeLocation(locationData?.[0]?.resource.id);
-      } else {
-        setIsLoading(false);
+      if (!config.chooseLocation.enabled || locationData.length === 1) {
+        changeLocation(locationData[0]?.resource.id);
+      }
+      if (!locationData.length) {
+        changeLocation();
       }
     }
   }, [locationData, user, changeLocation, config.chooseLocation.enabled]);

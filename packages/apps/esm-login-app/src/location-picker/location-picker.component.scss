@@ -73,11 +73,13 @@
   width: 20rem;
 }
 
-.loadingIcon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.radioButtonSkeleton {
+  margin-right: 0 !important;
   margin-bottom: $spacing-05;
+}
+
+.radioButtonSkeleton span {
+  width: 100% !important;
 }
 
 .pagination {

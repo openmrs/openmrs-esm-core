@@ -7,6 +7,7 @@ import {
   RadioButton,
   RadioButtonGroup,
   Loading,
+  RadioButtonSkeleton,
 } from "carbon-components-react";
 import { LocationEntry } from "../types";
 import { useConfig } from "@openmrs/esm-framework";
@@ -50,7 +51,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   );
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { locationData, isLoading, nextPage, totalResults, loadingNewData } =
+  const { locationData, isLoading, hasMore, totalResults, loadingNewData } =
     useLocation(
       chooseLocation.useLoginLocationTag,
       chooseLocation.numberToShow,
@@ -67,7 +68,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       onChangeLocation(activeLocation);
       setIsSubmitting(false);
     }
-  }, [isSubmitting, locationData, onChangeLocation]);
+  }, [isSubmitting, activeLocation, onChangeLocation]);
 
   useEffect(() => {
     if (activeLocation) {
@@ -93,14 +94,15 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   }, [isSubmitting]);
 
   useEffect(() => {
-    if (!isLoading && totalResults) {
+    if (!isLoading && totalResults && chooseLocation.numberToShow) {
       setPageSize(Math.min(chooseLocation.numberToShow, totalResults));
     }
   }, [isLoading, totalResults, chooseLocation.numberToShow]);
 
   const search = debounce((location: string) => {
-    clearSelectedLocation();
+    setActiveLocation("");
     setSearchTerm(location);
+    setPage(1);
   }, searchTimeout);
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
@@ -108,11 +110,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     setIsSubmitting(true);
   };
 
-  const clearSelectedLocation = (): void => {
-    setActiveLocation("");
-  };
-
-  // Infinte scroll
+  // Infinte scrolling
   const observer = useRef(null);
   const loadingIconRef = useCallback(
     (node) => {
@@ -120,7 +118,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(
         (entries) => {
-          if (entries[0].isIntersecting && nextPage) {
+          if (entries[0].isIntersecting && hasMore) {
             setPage((page) => page + 1);
           }
         },
@@ -130,7 +128,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       );
       if (node) observer.current.observe(node);
     },
-    [loadingNewData, nextPage]
+    [loadingNewData, hasMore]
   );
 
   return (
@@ -206,17 +204,24 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                   )}
                 </div>
 
-                <div className={styles.loadingIcon} ref={loadingIconRef}>
-                  <Loading
-                    small
-                    withOverlay={false}
-                    description={t("loading", "Loading")}
-                  />
-                </div>
+                {hasMore && (
+                  <div className={styles.loadingIcon} ref={loadingIconRef}>
+                    <Loading
+                      small
+                      withOverlay={false}
+                      description={t("loading", "Loading")}
+                    />
+                  </div>
+                )}
               </>
             ) : (
-              <div className={styles.loadingIcon}>
-                <Loading small withOverlay={false} />
+              <div>
+                {[...Array(pageSize).keys()].map((key) => (
+                  <RadioButtonSkeleton
+                    className={styles.radioButtonSkeleton}
+                    key={key}
+                  />
+                ))}
               </div>
             )}
           </div>
@@ -234,9 +239,5 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     </div>
   );
 };
-
-// const LocationList: React.FC<{}> = () => {
-//   return
-// }
 
 export default LocationPicker;

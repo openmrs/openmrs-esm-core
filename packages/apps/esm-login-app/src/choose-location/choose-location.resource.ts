@@ -1,70 +1,88 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   openmrsFetch,
   openmrsObservableFetch,
   fhirBaseUrl,
   FetchResponse,
 } from "@openmrs/esm-framework";
-import { map } from "rxjs/operators";
 import { LocationEntry, LocationResponse } from "../types";
 import useSwr from "swr";
 
-export const fhirLocationUrl = `${fhirBaseUrl}/Location?_summary=data`;
+const fhirLocationUrl = `${fhirBaseUrl}/Location?_summary=data`;
 
 export function useLocation(
   useLoginLocationTag: boolean,
   count: number = null,
-  location: string = "",
+  searchQuery: string = "",
   pagesOffset: number = 0
 ) {
   const [locationData, setLocationData] = useState<Array<LocationEntry>>(null);
   const [totalResults, setTotalResults] = useState(null);
+  const [hasMore, setHasMore] = useState<boolean>(false);
 
   // URL fetching
   let url = fhirLocationUrl;
-  url = url.concat(`&_count=${count}`);
-
+  if (count) {
+    url += `&_count=${count}`;
+  }
   if (pagesOffset) {
-    url = url.concat(`&_getpagesoffset=${pagesOffset}`);
+    url += `&_getpagesoffset=${pagesOffset}`;
   }
   if (useLoginLocationTag) {
-    url = url.concat("&_tag=login location");
+    url += "&_tag=login location";
   }
-  if (location != "" && location != null) {
-    url = url.concat(`&name=${location}`);
+  if (searchQuery != "" && searchQuery != null) {
+    url += `&name=${searchQuery}`;
   }
   const swrResult = useSwr<FetchResponse<LocationResponse>, Error>(
     url,
     openmrsFetch
   );
 
+  // Creating a set to store all the locations that is already present in the locationData
+  // Since SWR triggers multiple requests at different events
+
+  let setOfLocationNames: Set<string> = useMemo(() => {
+    if (!locationData) {
+      return new Set<string>();
+    } else {
+      return new Set(locationData.map((entry) => entry.resource.name));
+    }
+  }, [locationData]);
+
   useEffect(() => {
-    setLocationData((locationData) =>
-      swrResult.data
-        ? locationData
-          ? [...new Set([...locationData, ...swrResult.data?.data?.entry])]
-          : swrResult.data?.data?.entry
-        : locationData
-    );
     if (swrResult.data) {
+      setLocationData((locationData) =>
+        locationData
+          ? [
+              ...locationData,
+              ...(swrResult.data?.data?.entry?.filter(
+                (entry) => !setOfLocationNames.has(entry.resource.name)
+              ) ?? []),
+            ]
+          : swrResult.data?.data?.entry ?? []
+      );
       setTotalResults(swrResult?.data?.data?.total);
+      setHasMore(
+        swrResult?.data?.data?.link?.find((link) => link.relation === "next")
+          ? true
+          : false
+      );
     }
   }, [swrResult.data]);
 
-  // Reset Location data when a new search query is triggered
+  // Reset LocationData when a new search query is triggered
   useEffect(() => {
     setLocationData(null);
-  }, [location]);
+    setTotalResults(null);
+    setHasMore(null);
+  }, [searchQuery]);
 
   return {
     locationData,
     isLoading: !locationData,
     totalResults,
-    nextPage: swrResult?.data?.data?.link?.find(
-      (link) => link.relation === "next"
-    )
-      ? true
-      : false,
+    hasMore,
     loadingNewData: !swrResult.data,
   };
 }
