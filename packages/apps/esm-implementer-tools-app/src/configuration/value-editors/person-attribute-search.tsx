@@ -12,7 +12,6 @@ import {
   StructuredListWrapper,
 } from "carbon-components-react";
 import { ValueEditorField } from "./value-editor-field";
-import { DisplayValue } from "../display-value";
 import { Type } from "@openmrs/esm-framework";
 import { ConceptSearchBox } from "./concept-search";
 
@@ -137,20 +136,32 @@ export function PersonAttributeTypeSearchBox({
             {t("noPersonAttributeFoundText", "No matching results found")}
           </p>
         )}
-        {activePersonAttribute.name && activePersonAttribute.uuid && (
-          <DisplayValue
-            value={{
-              name: activePersonAttribute.name,
-              uuid: activePersonAttribute.uuid,
-            }}
-          />
-        )}
       </div>
       <div>
         <StructuredListWrapper>
           <StructuredListBody>
+            {activePersonAttribute.name && (
+              <StructuredListRow>
+                <StructuredListCell>
+                  {t("nameField", "name")}
+                </StructuredListCell>
+                <StructuredListCell>
+                  {activePersonAttribute.name}
+                </StructuredListCell>
+              </StructuredListRow>
+            )}
+            {activePersonAttribute.uuid && (
+              <StructuredListRow>
+                <StructuredListCell>
+                  {t("uuidField", "uuid")}
+                </StructuredListCell>
+                <StructuredListCell>
+                  {activePersonAttribute.uuid}
+                </StructuredListCell>
+              </StructuredListRow>
+            )}
             <StructuredListRow>
-              <StructuredListCell>{t("type", "type")}</StructuredListCell>
+              <StructuredListCell>{t("typeField", "type")}</StructuredListCell>
               <StructuredListCell>
                 <ValueEditorField
                   element={{
@@ -166,7 +177,9 @@ export function PersonAttributeTypeSearchBox({
               </StructuredListCell>
             </StructuredListRow>
             <StructuredListRow>
-              <StructuredListCell>{t("concept", "concept")}</StructuredListCell>
+              <StructuredListCell>
+                {t("conceptField", "concept")}
+              </StructuredListCell>
               <StructuredListCell>
                 <ConceptSearchBox
                   value={activePersonAttribute.concept}
