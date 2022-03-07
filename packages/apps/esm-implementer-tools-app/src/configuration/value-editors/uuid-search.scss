@@ -11,7 +11,7 @@
 .autocomplete,
 .autocomplete > [role="combobox"] {
   position: relative;
-  width: 20em;
+  min-width: 20rem;
 }
 
 .listbox {

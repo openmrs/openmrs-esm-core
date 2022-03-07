@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import debounce from "lodash-es/debounce";
 import uniqueId from "lodash-es/uniqueId";
-import {
-  fetchConceptByUuid,
-  performConceptSearch,
-} from "./concept-search.resource";
+import { performConceptSearch } from "./concept-search.resource";
 import styles from "./uuid-search.scss";
 import {
   Search,
@@ -75,7 +72,6 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           aria-controls={`searchbox-${id}`}
           aria-expanded={searchResults.length > 0}
           placeholder={t("searchConceptHelperText", "Concept Name")}
-          autoFocus
           onChange={($event) => {
             handleSearchTermChange($event.target.value);
           }}

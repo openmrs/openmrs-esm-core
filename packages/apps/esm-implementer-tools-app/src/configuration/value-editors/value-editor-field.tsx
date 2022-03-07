@@ -53,8 +53,8 @@ export function ValueEditorField({
   ) : valueType === Type.PersonAttributeTypeUuid ? (
     <PersonAttributeTypeSearchBox
       value={value}
-      setPersonAttributeUuid={(personAttributeTypeUuid) =>
-        onChange(personAttributeTypeUuid)
+      setPersonAttributeUuid={(personAttributeType) =>
+        onChange(personAttributeType)
       }
     />
   ) : valueType === Type.Number ? (

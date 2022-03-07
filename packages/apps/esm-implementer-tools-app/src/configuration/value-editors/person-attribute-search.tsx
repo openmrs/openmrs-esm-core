@@ -6,13 +6,24 @@ import styles from "./uuid-search.scss";
 import { useTranslation } from "react-i18next";
 import {
   Search,
+  StructuredListBody,
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
 } from "carbon-components-react";
+import { ValueEditorField } from "./value-editor-field";
+import { DisplayValue } from "../display-value";
+import { Type } from "@openmrs/esm-framework";
+import { ConceptSearchBox } from "./concept-search";
 
+interface PersonAttributeType {
+  name: string;
+  uuid: string;
+  type: string;
+  concept: any;
+}
 interface PersonAttributeTypeSearchBoxProps {
-  value: string;
+  value: PersonAttributeType;
   setPersonAttributeUuid: (personAttributeType) => void;
 }
 
@@ -22,18 +33,28 @@ export function PersonAttributeTypeSearchBox({
 }: PersonAttributeTypeSearchBoxProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [activePersonAttributeUuid, setActivePersonAttributeUuid] =
-    useState<any>(value);
+  const [activePersonAttribute, setActivePersonAttribute] = useState<any>({
+    name: value?.name,
+    uuid: value?.uuid,
+    type: value?.type ?? "coded",
+    concept: value?.concept ?? "",
+  });
   const { t } = useTranslation();
   const searchTimeoutInMs = 300;
 
   const id = useMemo(() => uniqueId(), []);
 
-  const handleUuidChange = (personAttributeType) => {
-    setActivePersonAttributeUuid(personAttributeType.uuid);
+  const handleChange = (fieldName, value) => {
+    setActivePersonAttribute((prevPersonAttribute) => ({
+      ...prevPersonAttribute,
+      [fieldName]: value,
+    }));
     resetSearch();
-    setPersonAttributeUuid(personAttributeType.uuid);
   };
+
+  useEffect(() => {
+    setPersonAttributeUuid(activePersonAttribute);
+  }, [activePersonAttribute]);
 
   const resetSearch = () => {
     setSearchTerm("");
@@ -61,11 +82,6 @@ export function PersonAttributeTypeSearchBox({
 
   return (
     <div>
-      {activePersonAttributeUuid && (
-        <p className={styles.activePersonAttributeUuid}>
-          {activePersonAttributeUuid}
-        </p>
-      )}
       <div className={styles.autocomplete}>
         <Search
           id={`search-input-${id}`}
@@ -103,7 +119,8 @@ export function PersonAttributeTypeSearchBox({
                 key={personAttributeType.uuid}
                 role="option"
                 onClick={() => {
-                  handleUuidChange(personAttributeType);
+                  handleChange("uuid", personAttributeType.uuid);
+                  handleChange("name", personAttributeType.display);
                 }}
                 aria-selected="true"
               >
@@ -120,6 +137,47 @@ export function PersonAttributeTypeSearchBox({
             {t("noPersonAttributeFoundText", "No matching results found")}
           </p>
         )}
+        {activePersonAttribute.name && activePersonAttribute.uuid && (
+          <DisplayValue
+            value={{
+              name: activePersonAttribute.name,
+              uuid: activePersonAttribute.uuid,
+            }}
+          />
+        )}
+      </div>
+      <div>
+        <StructuredListWrapper>
+          <StructuredListBody>
+            <StructuredListRow>
+              <StructuredListCell>{t("type", "type")}</StructuredListCell>
+              <StructuredListCell>
+                <ValueEditorField
+                  element={{
+                    _value: activePersonAttribute.type,
+                    _source: "",
+                  }}
+                  valueType={Type.String}
+                  value={activePersonAttribute.type}
+                  onChange={(type: string) => {
+                    handleChange("type", type);
+                  }}
+                />
+              </StructuredListCell>
+            </StructuredListRow>
+            <StructuredListRow>
+              <StructuredListCell>{t("concept", "concept")}</StructuredListCell>
+              <StructuredListCell>
+                <ConceptSearchBox
+                  value={activePersonAttribute.concept}
+                  setConcept={(conceptUuid: string) =>
+                    handleChange("concept", conceptUuid)
+                  }
+                />
+              </StructuredListCell>
+            </StructuredListRow>
+          </StructuredListBody>
+        </StructuredListWrapper>
       </div>
     </div>
   );
