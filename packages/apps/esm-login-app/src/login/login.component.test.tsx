@@ -136,4 +136,25 @@ describe(`<Login />`, () => {
       expect(wrapper.history.location.pathname).toBe("/login/location")
     );
   });
+  it("respects the logo configuration", () => {
+    const customLogoConfig = {
+      src: "https://some-image-host.com/foo.png",
+      alt: "Custom logo",
+    };
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+      logo: customLogoConfig,
+    });
+
+    renderWithRouter(Login, {
+      loginLocations: loginLocations,
+      isLoginEnabled: true,
+    });
+
+    const logo = screen.getByAltText(customLogoConfig.alt);
+
+    expect(screen.queryByTitle(/openmrs logo/i)).not.toBeInTheDocument();
+    expect(logo).toHaveAttribute("src", customLogoConfig.src);
+    expect(logo).toHaveAttribute("alt", customLogoConfig.alt);
+  });
 });
