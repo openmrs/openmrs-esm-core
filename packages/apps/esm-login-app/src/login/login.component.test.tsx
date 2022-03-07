@@ -137,21 +137,24 @@ describe(`<Login />`, () => {
     );
   });
   it("respects the logo configuration", () => {
+    const customLogoConfig = {
+      src: "https://some-image-host.com/foo.png",
+      alt: "Custom logo",
+    };
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
-      logo: {
-        src: "https://someimage.png",
-        alt: "customised Logo",
-      },
+      logo: customLogoConfig,
     });
 
-    const wrapper = renderWithRouter(Login, {
+    renderWithRouter(Login, {
       loginLocations: loginLocations,
       isLoginEnabled: true,
     });
 
-    const logo = wrapper.getAllByAltText("customised Logo");
-    expect(logo[0]).toHaveAttribute("src", "https://someimage.png");
-    expect(logo[0]).toHaveAttribute("alt", "customised Logo");
+    const logo = screen.getByAltText(customLogoConfig.alt);
+
+    expect(screen.queryByTitle(/openmrs logo/i)).not.toBeInTheDocument();
+    expect(logo).toHaveAttribute("src", customLogoConfig.src);
+    expect(logo).toHaveAttribute("alt", customLogoConfig.alt);
   });
 });
