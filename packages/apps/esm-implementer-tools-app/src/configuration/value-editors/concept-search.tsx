@@ -75,7 +75,6 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           aria-controls={`searchbox-${id}`}
           aria-expanded={searchResults.length > 0}
           placeholder={t("searchConceptHelperText", "Concept Name")}
-          autoFocus
           onChange={($event) => {
             handleSearchTermChange($event.target.value);
           }}

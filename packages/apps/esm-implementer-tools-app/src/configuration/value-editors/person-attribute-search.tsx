@@ -84,7 +84,6 @@ export function PersonAttributeTypeSearchBox({
             "searchPersonAttributeHelperText",
             "Person attribute type name"
           )}
-          autoFocus
           onChange={($event) => {
             handleSearchTermChange($event.target.value);
           }}
