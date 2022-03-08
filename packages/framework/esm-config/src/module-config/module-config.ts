@@ -618,6 +618,7 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
       Object: isObject,
       String: isString,
       UUID: isUuid,
+      PersonAttributeTypeUuid: isUuid,
     };
     runValidators(keyPath, [validator[_type]], value);
   }

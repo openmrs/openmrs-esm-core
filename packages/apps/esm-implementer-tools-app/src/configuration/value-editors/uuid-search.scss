@@ -1,6 +1,6 @@
 @import "../../implementer-tools.styles.scss";
 
-.activePersonAttributeUuid {
+.activeUuid {
   @include carbon--type-style("body-short-01");
   color: $ui-05;
   margin-bottom: $spacing-03;

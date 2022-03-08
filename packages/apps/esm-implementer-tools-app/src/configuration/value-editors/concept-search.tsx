@@ -59,7 +59,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   return (
     <div>
       {activeConceptUuid && (
-        <p className={styles.activeConceptUuid}>{activeConceptUuid}</p>
+        <p className={styles.activeUuid}>{activeConceptUuid}</p>
       )}
       <div className={styles.autocomplete}>
         <Search
