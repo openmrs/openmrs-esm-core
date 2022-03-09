@@ -62,9 +62,7 @@ export function PersonAttributeTypeSearchBox({
   return (
     <div>
       {activePersonAttributeUuid && (
-        <p className={styles.activePersonAttributeUuid}>
-          {activePersonAttributeUuid}
-        </p>
+        <p className={styles.activeUuid}>{activePersonAttributeUuid}</p>
       )}
       <div className={styles.autocomplete}>
         <Search
@@ -86,7 +84,6 @@ export function PersonAttributeTypeSearchBox({
             "searchPersonAttributeHelperText",
             "Person attribute type name"
           )}
-          autoFocus
           onChange={($event) => {
             handleSearchTermChange($event.target.value);
           }}
