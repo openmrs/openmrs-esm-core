@@ -199,7 +199,9 @@ export const detachAll = jest.fn();
 
 export const switchTo = jest.fn();
 
-export const ExtensionSlot = ({ children }) => <>{children}</>;
+export const ExtensionSlot = jest
+  .fn()
+  .mockImplementation(({ children }) => <>{children}</>);
 
 export const Extension = jest.fn().mockImplementation((props: any) => <slot />);
 
@@ -239,6 +241,8 @@ export const useExtensionSlot = jest.fn(() => ({
   extensionIdsToRender: [],
 }));
 
+export const useExtensionSlotMeta = jest.fn(() => ({}));
+
 export const UserHasAccess = jest.fn().mockImplementation((props: any) => {
   return props.children;
 });
@@ -264,6 +268,13 @@ export const usePagination = jest.fn().mockImplementation(() => ({
   goTo: () => {},
   results: [],
 }));
+
+export const useVisit = jest.fn().mockReturnValue({
+  error: null,
+  mutate: jest.fn(),
+  isValidating: true,
+  currentVisit: null,
+});
 
 export const useVisitTypes = jest.fn(() => []);
 
