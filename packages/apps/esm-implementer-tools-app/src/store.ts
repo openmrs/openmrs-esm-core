@@ -9,6 +9,7 @@ export interface ImplementerToolsStore {
   openTabIndex: number;
   isConfigToolbarOpen: boolean;
   isUIEditorEnabled: boolean;
+  isJsonModeEnabled: boolean;
 }
 
 export interface ActiveItemDescription {
@@ -27,6 +28,7 @@ export const implementerToolsStore: Store<ImplementerToolsStore> =
     openTabIndex: 0,
     isConfigToolbarOpen: getIsConfigToolbarOpen(),
     isUIEditorEnabled: getIsUIEditorEnabled(),
+    isJsonModeEnabled: getIsJsonModeEnabled(),
   });
 
 export const setHasAlert = implementerToolsStore.action(
@@ -52,6 +54,7 @@ export const showModuleDiagnostics = implementerToolsStore.action((state) => ({
 let lastValueOfIsOpen = getIsImplementerToolsOpen();
 let lastValueOfConfigToolbarOpen = getIsConfigToolbarOpen();
 let lastValueOfIsUiEditorEnabled = getIsUIEditorEnabled();
+let lastValueOfIsJsonModeEnabled = getIsJsonModeEnabled();
 
 implementerToolsStore.subscribe((state) => {
   if (state.isOpen != lastValueOfIsOpen) {
@@ -65,6 +68,10 @@ implementerToolsStore.subscribe((state) => {
   if (state.isConfigToolbarOpen != lastValueOfConfigToolbarOpen) {
     setIsConfigToolbarOpen(state.isConfigToolbarOpen);
     lastValueOfConfigToolbarOpen = state.isConfigToolbarOpen;
+  }
+  if (state.isJsonModeEnabled != lastValueOfIsJsonModeEnabled) {
+    setIsJsonModeEnabled(state.isJsonModeEnabled);
+    lastValueOfIsJsonModeEnabled = state.isJsonModeEnabled;
   }
 });
 
@@ -108,4 +115,16 @@ function getIsUIEditorEnabled(): boolean {
 
 function setIsUIEditorEnabled(enabled: boolean) {
   localStorage.setItem("openmrs:isUIEditorEnabled", JSON.stringify(enabled));
+}
+
+function getIsJsonModeEnabled(): boolean {
+  return (
+    JSON.parse(
+      localStorage.getItem("openmrs:getIsJsonModeEnabled") || "false"
+    ) ?? false
+  );
+}
+
+function setIsJsonModeEnabled(enabled: boolean) {
+  localStorage.setItem("openmrs:getIsJsonModeEnabled", JSON.stringify(enabled));
 }
