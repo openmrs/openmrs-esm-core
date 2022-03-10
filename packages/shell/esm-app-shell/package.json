@@ -13,7 +13,7 @@
     "analyze": "webpack --mode=production --env analyze=true",
     "watch": "webpack serve --mode development",
     "lint": "eslint src --ext ts,tsx",
-    "version": "yarn add @openmrs/esm-framework@$npm_package_version --exact"
+    "postversion": "yarn add @openmrs/esm-framework@$npm_package_version --exact"
   },
   "keywords": [
     "openmrs",
