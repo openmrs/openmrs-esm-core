@@ -22,8 +22,8 @@ import {
 } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
-import { ConfigTree } from "./config-tree.component";
-import { Description } from "./description.component";
+import { ConfigTree } from "./interactive-editor/config-tree.component";
+import { Description } from "./interactive-editor/description.component";
 import cloneDeep from "lodash-es/cloneDeep";
 import isEmpty from "lodash-es/isEmpty";
 import styles from "./configuration.styles.scss";

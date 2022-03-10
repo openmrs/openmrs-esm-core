@@ -11,7 +11,7 @@ import { Configuration } from "./configuration.component";
 import {
   performConceptSearch,
   fetchConceptByUuid,
-} from "./value-editors/concept-search.resource";
+} from "./interactive-editor/value-editors/concept-search.resource";
 
 const mockPerformConceptSearch = performConceptSearch as jest.Mock;
 const mockFetchConceptByUuid = fetchConceptByUuid as jest.Mock;

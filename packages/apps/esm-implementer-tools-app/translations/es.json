@@ -1,13 +1,20 @@
 {
-  "backendModules": "Módulos backend",
-  "clearTemporaryConfig": "Borrar configuración temporal",
+  "activeItemSourceText": "El valor coriente viene de ",
+  "backendModules": "Modulos backend",
+  "clearConfig": "Borrar config",
   "configuration": "Configuración",
-  "devConfig": "Configuración de desarrollo",
-  "downloadTemporaryConfig": "Descargar configuración temporal",
+  "devConfig": "Valores defectos experimentales",
+  "downloadConfig": "Descargar config",
   "edit": "Editar",
+  "editValueButtonText": "Editar",
   "installedVersion": "Versión instalada",
-  "missing": "Desaparecido",
+  "itemDescriptionSourceDefaultText": "El valor coriente es lo predeterminado.",
+  "jsonEditor": "Editar como JSON",
+  "missing": "Falta",
+  "moduleName": "Nombre de modulo",
   "requiredVersion": "Versión requerida",
-  "uiEditor": "Editora de interfaz de usuario",
-  "implementerTools": "Herramientas de implementación"
+  "resetToDefaultValueButtonText": "Volver al valor predeterminado",
+  "uiEditor": "Editór visual",
+  "value": "Valor",
+  "view": "Vista"
 }
