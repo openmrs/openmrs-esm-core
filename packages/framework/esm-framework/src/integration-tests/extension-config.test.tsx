@@ -28,7 +28,7 @@ describe("Interaction between configuration and extension systems", () => {
     defineConfigSchema("esm-flintstone", {});
     provide({
       "esm-flintstone": {
-        extensions: {
+        extensionSlots: {
           "A slot": {
             add: ["Barney", "Betty"],
             order: ["Betty", "Wilma"],
@@ -62,7 +62,7 @@ describe("Interaction between configuration and extension systems", () => {
     provide({
       "esm-flintstone": {
         town: "Springfield",
-        extensions: {
+        extensionSlots: {
           "Future slot": {
             configure: {
               Wilma: {
@@ -106,7 +106,7 @@ describe("Interaction between configuration and extension systems", () => {
     attach("Flintstone slot", "pet#BabyPuss");
     provide({
       "esm-flintstone": {
-        extensions: {
+        extensionSlots: {
           "Flintstone slot": {
             configure: {
               "pet#Dino": {

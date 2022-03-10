@@ -41,7 +41,7 @@ export function ExtensionSlotsConfigTree({
         <ExtensionSlotConfigTree
           key={slotName}
           config={extensionsConfig?.[slotName]}
-          path={[moduleName, "extensions", slotName]}
+          path={[moduleName, "extensionSlots", slotName]}
         />
       ))}
     </Subtree>

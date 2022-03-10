@@ -101,11 +101,11 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
     const result = cloneDeep(config);
     for (let slot of Object.values(extensionStore.slots)) {
       if (slot.moduleName) {
-        if (!result[slot.moduleName].extensions) {
-          result[slot.moduleName].extensions = {};
+        if (!result[slot.moduleName].extensionSlots) {
+          result[slot.moduleName].extensionSlots = {};
         }
-        if (!result[slot.moduleName].extensions[slot.name]) {
-          result[slot.moduleName].extensions[slot.name] = {};
+        if (!result[slot.moduleName].extensionSlots[slot.name]) {
+          result[slot.moduleName].extensionSlots[slot.name] = {};
         }
       }
     }
