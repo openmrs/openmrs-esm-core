@@ -844,7 +844,7 @@ describe("extension slot config", () => {
     // modules that define schemas.
     Config.provide({
       "foo-module": {
-        extensions: {
+        extensionSlots: {
           fooSlot: {
             add: ["bar", "baz"],
             remove: ["zap"],
@@ -874,7 +874,7 @@ describe("extension slot config", () => {
     });
     Config.provide({
       "foo-module": {
-        extensions: { fooSlot: { remove: ["bar"] } },
+        extensionSlots: { fooSlot: { remove: ["bar"] } },
       },
     });
     const config = await Config.getConfig("foo-module");
@@ -888,7 +888,7 @@ describe("extension slot config", () => {
     });
     Config.provide({
       "foo-module": {
-        extensions: { fooSlot: { remove: ["bar"] } },
+        extensionSlots: { fooSlot: { remove: ["bar"] } },
       },
     });
     await Config.getConfig("foo-module");
@@ -902,14 +902,14 @@ describe("extension slot config", () => {
     });
     Config.provide({
       "foo-module": {
-        extensions: { fooSlot: { remove: ["bar"] } },
+        extensionSlots: { fooSlot: { remove: ["bar"] } },
       },
     });
     const config = implementerToolsConfigStore.getState().config;
     expect(config).toStrictEqual({
       "foo-module": {
         foo: { _default: 0, _value: 0, _source: "default" },
-        extensions: {
+        extensionSlots: {
           fooSlot: {
             remove: { _value: ["bar"], _source: "provided" },
           },
@@ -921,11 +921,13 @@ describe("extension slot config", () => {
   it("validates that no other keys are present for the slot", async () => {
     Config.provide({
       "foo-module": {
-        extensions: { fooSlot: { quitar: ["bar"] } },
+        extensionSlots: { fooSlot: { quitar: ["bar"] } },
       },
     });
     expect(console.error).toHaveBeenCalledWith(
-      expect.stringMatching(/foo-module.extensions.fooSlot.*invalid.*quitar/)
+      expect.stringMatching(
+        /foo-module.extensionSlots.fooSlot.*invalid.*quitar/
+      )
     );
   });
 });
@@ -971,7 +973,7 @@ describe("extension config", () => {
     const testConfig = {
       "ext-mod": { bar: "qux" },
       "slot-mod": {
-        extensions: {
+        extensionSlots: {
           barSlot: {
             configure: { "fooExt#id0": { baz: "quiz" } },
           },
@@ -1006,7 +1008,7 @@ describe("extension config", () => {
     const testConfig = {
       "ext-mod": { bar: "qux" },
       "slot-mod": {
-        extensions: {
+        extensionSlots: {
           barSlot: {
             configure: { "fooExt#id0": { beef: "bad" } },
           },
