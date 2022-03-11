@@ -98,6 +98,7 @@ module.exports = (env, argv = {}) => {
       filename: "openmrs.js",
       chunkFilename: "[chunkhash].js",
       path: resolve(__dirname, outDir),
+      publicPath: "",
     },
     target: "web",
     devServer: {
