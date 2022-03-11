@@ -7,7 +7,7 @@ import { Portal } from "./portal";
 import { ExtensionOverlay } from "./extension-overlay.component";
 import { ImplementerToolsStore, implementerToolsStore } from "../store";
 
-export function UiEditor() {
+export default function UiEditor() {
   const { slots, extensions } = useExtensionInternalStore();
   const { isOpen: implementerToolsIsOpen } = useStore(implementerToolsStore);
 
