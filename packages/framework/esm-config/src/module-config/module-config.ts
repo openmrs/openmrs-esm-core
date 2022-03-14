@@ -1,4 +1,4 @@
-import { clone, reduce, mergeDeepRight } from "ramda";
+import { clone, reduce, mergeDeepRight, equals } from "ramda";
 import {
   Config,
   ConfigObject,
@@ -23,9 +23,9 @@ import {
   configExtensionStore,
   getConfigStore,
   getExtensionConfigStore,
-  getExtensionSlotConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
+  getExtensionSlotsConfigStore,
 } from "./state";
 import type {} from "@openmrs/esm-globals";
 import { TemporaryConfigStore } from "..";
@@ -125,9 +125,17 @@ function computeExtensionSlotConfigs(
   tempState: TemporaryConfigStore
 ) {
   const slotConfigs = getExtensionSlotConfigs(state, tempState);
-  for (let [slotName, config] of Object.entries(slotConfigs)) {
-    const slotStore = getExtensionSlotConfigStore(slotName);
-    slotStore.setState({ loaded: true, config });
+  const newSlotStoreEntries = Object.fromEntries(
+    Object.entries(slotConfigs).map(([slotName, config]) => [
+      slotName,
+      { loaded: true, config },
+    ])
+  );
+  const slotStore = getExtensionSlotsConfigStore();
+  const oldState = slotStore.getState();
+  const newState = { slots: { ...oldState.slots, ...newSlotStoreEntries } };
+  if (!equals(oldState, newState)) {
+    slotStore.setState(newState);
   }
 }
 

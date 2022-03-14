@@ -23,7 +23,7 @@ export function useAssignedExtensions(slotName: string) {
     }
     update(getExtensionStore().getState());
     return getExtensionStore().subscribe(update);
-  }, [slotName]);
+  }, [slotName, extensions]);
 
   return extensions;
 }

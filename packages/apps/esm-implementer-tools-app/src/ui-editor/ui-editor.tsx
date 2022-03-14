@@ -1,14 +1,18 @@
 import React from "react";
 import styles from "./styles.css";
 import Close16 from "@carbon/icons-react/es/close/16";
-import { useExtensionInternalStore, useStore } from "@openmrs/esm-framework";
+import {
+  getExtensionInternalStore,
+  useStore,
+  useStoreWithActions,
+} from "@openmrs/esm-framework";
 import { Button } from "carbon-components-react";
 import { Portal } from "./portal";
 import { ExtensionOverlay } from "./extension-overlay.component";
 import { ImplementerToolsStore, implementerToolsStore } from "../store";
 
 export default function UiEditor() {
-  const { slots, extensions } = useExtensionInternalStore();
+  const { slots, extensions } = useStore(getExtensionInternalStore());
   const { isOpen: implementerToolsIsOpen } = useStore(implementerToolsStore);
 
   return (
@@ -66,7 +70,10 @@ const actions = {
 };
 
 export function ExitButton() {
-  const { toggleIsUIEditorEnabled } = useStore(implementerToolsStore, actions);
+  const { toggleIsUIEditorEnabled } = useStoreWithActions(
+    implementerToolsStore,
+    actions
+  );
   return (
     <Button
       className={styles.exitButton}
