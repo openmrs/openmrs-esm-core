@@ -69,8 +69,6 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
     isLoading,
   ]);
 
-  console.log(isLoading, locationData);
-
   if (!isLoading || !isLoginEnabled) {
     return (
       <LocationPicker
