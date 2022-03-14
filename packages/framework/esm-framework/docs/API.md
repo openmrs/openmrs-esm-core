@@ -160,7 +160,7 @@
 - [usePatient](API.md#usepatient)
 - [useSessionUser](API.md#usesessionuser)
 - [useStore](API.md#usestore)
-- [useStoreState](API.md#usestorestate)
+- [useStoreWithActions](API.md#usestorewithactions)
 - [useVisit](API.md#usevisit)
 - [useVisitTypes](API.md#usevisittypes)
 - [validator](API.md#validator)
@@ -1801,7 +1801,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L131)
+[packages/framework/esm-extensions/src/extensions.ts:154](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L154)
 
 ___
 
@@ -1955,6 +1955,8 @@ ___
 
 ▸ **createUseStore**<`T`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)(`actions?`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)
 
+Avoid this; generally prefer to have clients use `useStore(yourStore)`
+
 #### Type parameters
 
 | Name |
@@ -2003,7 +2005,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/createUseStore.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/createUseStore.ts#L21)
+[packages/framework/esm-react-utils/src/createUseStore.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/createUseStore.ts#L22)
 
 ___
 
@@ -2048,7 +2050,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:170](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L170)
+[packages/framework/esm-config/src/module-config/module-config.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L178)
 
 ___
 
@@ -2093,7 +2095,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L162)
+[packages/framework/esm-extensions/src/extensions.ts:185](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L185)
 
 ___
 
@@ -2115,7 +2117,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:186](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L186)
+[packages/framework/esm-extensions/src/extensions.ts:209](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L209)
 
 ___
 
@@ -2247,7 +2249,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:277](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L277)
+[packages/framework/esm-extensions/src/extensions.ts:300](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L300)
 
 ___
 
@@ -2345,7 +2347,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:198](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L198)
+[packages/framework/esm-config/src/module-config/module-config.ts:206](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L206)
 
 ___
 
@@ -2371,7 +2373,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L244)
+[packages/framework/esm-extensions/src/extensions.ts:267](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L267)
 
 ___
 
@@ -2438,7 +2440,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L75)
+[packages/framework/esm-extensions/src/extensions.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L98)
 
 ___
 
@@ -2458,7 +2460,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L88)
+[packages/framework/esm-extensions/src/extensions.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L111)
 
 ___
 
@@ -2479,7 +2481,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L80)
+[packages/framework/esm-extensions/src/extensions.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L103)
 
 ___
 
@@ -2964,7 +2966,7 @@ Validate and interpolate defaults for `providedConfig` according to `schema`
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L220)
+[packages/framework/esm-config/src/module-config/module-config.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L228)
 
 ___
 
@@ -2985,7 +2987,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L178)
+[packages/framework/esm-config/src/module-config/module-config.ts:186](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L186)
 
 ___
 
@@ -4190,13 +4192,14 @@ ___
 
 ### useStore
 
-▸ **useStore**<`T`\>(`store`): `T`
+▸ **useStore**<`T`, `U`\>(`store`): `T`
 
 #### Type parameters
 
 | Name |
 | :------ |
 | `T` |
+| `U` |
 
 #### Parameters
 
@@ -4210,36 +4213,9 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L4)
+[packages/framework/esm-react-utils/src/useStore.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L22)
 
-▸ **useStore**<`T`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `store` | `Store`<`T`\> |
-| `actions` | [`Actions`](API.md#actions) |
-
-#### Returns
-
-`T` & [`BoundActions`](API.md#boundactions)
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L5)
-
-___
-
-### useStoreState
-
-▸ **useStoreState**<`T`, `U`\>(`store`, `select`): `U`
+▸ **useStore**<`T`, `U`\>(`store`, `select`): `U`
 
 #### Type parameters
 
@@ -4261,7 +4237,84 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStoreState.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStoreState.ts#L5)
+[packages/framework/esm-react-utils/src/useStore.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L23)
+
+▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `U` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `store` | `Store`<`T`\> |
+| `select` | `undefined` |
+| `actions` | [`Actions`](API.md#actions) |
+
+#### Returns
+
+`T` & [`BoundActions`](API.md#boundactions)
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useStore.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L24)
+
+▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+| `U` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `store` | `Store`<`T`\> |
+| `select` | (`state`: `T`) => `U` |
+| `actions` | [`Actions`](API.md#actions) |
+
+#### Returns
+
+`U` & [`BoundActions`](API.md#boundactions)
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useStore.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L29)
+
+___
+
+### useStoreWithActions
+
+▸ **useStoreWithActions**<`T`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `store` | `Store`<`T`\> |
+| `actions` | [`Actions`](API.md#actions) |
+
+#### Returns
+
+`T` & [`BoundActions`](API.md#boundactions)
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useStore.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L51)
 
 ___
 
