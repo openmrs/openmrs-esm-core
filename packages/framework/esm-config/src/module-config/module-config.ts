@@ -256,7 +256,8 @@ function getExtensionConfig(
   const providedConfigs = getProvidedConfigs(configState, tempConfigState);
   const slotModuleConfig = mergeConfigsFor(slotModuleName, providedConfigs);
   const configOverride =
-    slotModuleConfig?.extensions?.[slotName]?.configure?.[extensionId] ?? {};
+    slotModuleConfig?.extensionSlots?.[slotName]?.configure?.[extensionId] ??
+    {};
   const extensionModuleConfig = mergeConfigsFor(
     extensionModuleName,
     providedConfigs
@@ -269,7 +270,7 @@ function getExtensionConfig(
     extensionConfig,
     configState.devDefaultsAreOn
   );
-  delete config.extensions;
+  delete config.extensionSlots;
   return config;
 }
 
@@ -324,8 +325,8 @@ function getExtensionSlotConfigs(
     string,
     Record<string, ExtensionSlotConfig>
   > = Object.keys(allConfigs).reduce((obj, key) => {
-    if (allConfigs[key]?.extensions) {
-      obj[key] = allConfigs[key]?.extensions;
+    if (allConfigs[key]?.extensionSlots) {
+      obj[key] = allConfigs[key]?.extensionSlots;
     }
     return obj;
   }, {});
@@ -354,7 +355,7 @@ function validateExtensionSlotConfig(
   moduleName: string,
   slotName: string
 ): void {
-  const errorPrefix = `Extension slot config '${moduleName}.extensions.${slotName}`;
+  const errorPrefix = `Extension slot config '${moduleName}.extensionSlots.${slotName}`;
   const invalidKeys = Object.keys(config).filter(
     (k) => !["add", "remove", "order", "configure"].includes(k)
   );
@@ -510,7 +511,7 @@ function getConfigForModule(
   );
   validateConfig(schema, inputConfig, moduleName);
   const config = setDefaults(schema, inputConfig, configState.devDefaultsAreOn);
-  delete config.extensions;
+  delete config.extensionSlots;
   return config;
 }
 
@@ -544,7 +545,7 @@ const validateConfig = (
     const schemaPart = schema[key] as ConfigSchema;
 
     if (!schema.hasOwnProperty(key)) {
-      if (key !== "extensions") {
+      if (key !== "extensionSlots") {
         console.error(
           `Unknown config key '${thisKeyPath}' provided. Ignoring.`
         );
@@ -618,6 +619,7 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
       Object: isObject,
       String: isString,
       UUID: isUuid,
+      PersonAttributeTypeUuid: isUuid,
     };
     runValidators(keyPath, [validator[_type]], value);
   }

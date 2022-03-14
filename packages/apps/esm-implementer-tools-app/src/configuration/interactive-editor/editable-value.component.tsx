@@ -14,7 +14,7 @@ import {
   temporaryConfigStore,
 } from "@openmrs/esm-framework";
 import { ValueEditor, CustomValueType } from "./value-editor";
-import { implementerToolsStore, ImplementerToolsStore } from "../store";
+import { implementerToolsStore, ImplementerToolsStore } from "../../store";
 import { DisplayValue } from "./display-value";
 import { useTranslation } from "react-i18next";
 

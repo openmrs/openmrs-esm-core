@@ -11,11 +11,11 @@ import { Configuration } from "./configuration.component";
 import {
   performConceptSearch,
   fetchConceptByUuid,
-} from "./value-editors/concept-search.resource";
+} from "./interactive-editor/value-editors/concept-search.resource";
 
 const mockPerformConceptSearch = performConceptSearch as jest.Mock;
 const mockFetchConceptByUuid = fetchConceptByUuid as jest.Mock;
-jest.mock("./value-editors/concept-search.resource", () => ({
+jest.mock("./interactive-editor/value-editors/concept-search.resource", () => ({
   fetchConceptByUuid: jest.fn(),
   performConceptSearch: jest.fn(),
 }));
@@ -106,8 +106,8 @@ describe(`<Configuration />`, () => {
     renderConfiguration();
     await screen.findByText("Dev Config");
     screen.getByText("UI Editor");
-    screen.getByText("Clear Temporary Config");
-    screen.getByText("Download Temporary Config");
+    screen.getByText("Clear Local Config");
+    screen.getByText("Download Config");
   });
 
   it("displays correct boolean value and editor", async () => {

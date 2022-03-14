@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, wait } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { of } from "rxjs";
 import { isDesktop } from "./utils";
 import { mockUser } from "../__mocks__/mock-user";
@@ -8,10 +8,9 @@ import Root from "./root.component";
 
 const mockUserObservable = of(mockUser);
 const mockSessionObservable = of({ data: mockSession });
-
 jest.mock("@openmrs/esm-framework", () => ({
   openmrsFetch: jest.fn().mockResolvedValue({}),
-  useAssignedExtensionIds: jest.fn().mockResolvedValue([]),
+  useAssignedExtensions: jest.fn().mockReturnValue([]),
   createErrorHandler: jest.fn(),
   openmrsObservableFetch: jest.fn(),
   getCurrentUser: jest.fn(() => mockUserObservable),
@@ -72,7 +71,7 @@ describe(`<Root />`, () => {
     });
 
     it("does not render side menu button if desktop", async () => {
-      await wait(() =>
+      await waitFor(() =>
         expect(screen.queryAllByLabelText("Open menu")).toHaveLength(0)
       );
     });

@@ -20,12 +20,14 @@ describe("<ChangeLocationLink/>", () => {
     );
   });
 
-  it("should display the change link", async () => {
+  it("should display the `Change location` link", async () => {
     const changeLocationButton = await screen.findByRole("button", {
       name: /Change/i,
     });
+
     fireEvent.click(changeLocationButton);
-    expect(navigate).toHaveBeenCalledWith({
+
+    expect(navigateMock).toHaveBeenCalledWith({
       to: "${openmrsSpaBase}/login/location?returnToUrl=/openmrs/spa/home",
     });
   });

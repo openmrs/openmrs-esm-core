@@ -39,7 +39,8 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "single-spa-react": "^4.1.1"
+    "single-spa-react": "^4.1.1",
+    "swr": "^1.2.2"
   },
   "peerDependencies": {
     "@openmrs/esm-api": "3.x",

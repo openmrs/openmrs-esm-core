@@ -51,20 +51,8 @@
   min-width: 8em;
 }
 
-.fullWidthAccordion :global(.bx--accordion__content) {
-  padding-right: 0;
-}
-
 .toggleToolbarButton {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-}
-
-.valueEditorButtons {
-  margin-top: $spacing-03;
-}
-
-.smallListCell {
-  padding: $spacing-03;
 }

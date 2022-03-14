@@ -67,8 +67,7 @@ export function ArrayEditor({
             </StructuredListRow>
           ))}
           <StructuredListRow>
-            <StructuredListCell></StructuredListCell>
-            <StructuredListCell className={styles.buttonCell}>
+            <StructuredListCell>
               <Button
                 renderIcon={Add16}
                 size="sm"

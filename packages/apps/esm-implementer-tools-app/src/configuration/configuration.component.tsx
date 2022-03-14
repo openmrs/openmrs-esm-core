@@ -22,11 +22,15 @@ import {
 } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
-import { ConfigTree } from "./config-tree.component";
-import { Description } from "./description.component";
+import { ConfigTree } from "./interactive-editor/config-tree.component";
+import { Description } from "./interactive-editor/description.component";
 import cloneDeep from "lodash-es/cloneDeep";
 import isEmpty from "lodash-es/isEmpty";
 import styles from "./configuration.styles.scss";
+
+const JsonEditor = React.lazy(
+  () => import("./json-editor/json-editor.component")
+);
 
 function isLeaf(configNode: Config) {
   return (
@@ -43,6 +47,9 @@ const actions = {
   },
   toggleIsToolbarOpen({ isConfigToolbarOpen }: ImplementerToolsStore) {
     return { isConfigToolbarOpen: !isConfigToolbarOpen };
+  },
+  toggleIsJsonModeEnabled({ isJsonModeEnabled }: ImplementerToolsStore) {
+    return { isJsonModeEnabled: !isJsonModeEnabled };
   },
 };
 
@@ -78,6 +85,8 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
   const {
     isUIEditorEnabled,
     toggleIsUIEditorEnabled,
+    isJsonModeEnabled,
+    toggleIsJsonModeEnabled,
     isConfigToolbarOpen,
     toggleIsToolbarOpen,
   } = useStore(implementerToolsStore, actions);
@@ -101,11 +110,11 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
     const result = cloneDeep(config);
     for (let slot of Object.values(extensionStore.slots)) {
       if (slot.moduleName) {
-        if (!result[slot.moduleName].extensions) {
-          result[slot.moduleName].extensions = {};
+        if (!result[slot.moduleName].extensionSlots) {
+          result[slot.moduleName].extensionSlots = {};
         }
-        if (!result[slot.moduleName].extensions[slot.name]) {
-          result[slot.moduleName].extensions[slot.name] = {};
+        if (!result[slot.moduleName].extensionSlots[slot.name]) {
+          result[slot.moduleName].extensionSlots[slot.name] = {};
         }
       }
     }
@@ -134,6 +143,9 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
       : combinedConfig;
   }, [filterText, combinedConfig]);
 
+  const mainContentHeight = isConfigToolbarOpen
+    ? "calc(50vh - 7rem)"
+    : "calc(50vh - 2rem)";
   return (
     <>
       <div className={styles.tools}>
@@ -155,6 +167,14 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               </Column>
               <Column sm={1} md={1}>
                 <Toggle
+                  id="jsonModeSwitch"
+                  labelText={t("jsonEditor", "JSON Editor")}
+                  onToggle={toggleIsJsonModeEnabled}
+                  toggled={isJsonModeEnabled}
+                />
+              </Column>
+              <Column sm={1} md={1}>
+                <Toggle
                   id="devConfigSwitch"
                   labelText={t("devConfig", "Dev Config")}
                   onToggle={toggleDevDefaults}
@@ -169,22 +189,22 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   onToggle={toggleIsUIEditorEnabled}
                 />
               </Column>
-              <Column sm={1} md={2} className={styles.actionButton}>
+              <Column sm={1} md={1} className={styles.actionButton}>
                 <Button
                   kind="danger"
-                  iconDescription="Clear temporary config"
+                  iconDescription="Clear local config"
                   renderIcon={TrashCan16}
                   onClick={() => {
                     temporaryConfigStore.setState({ config: {} });
                   }}
                 >
-                  {t("clearTemporaryConfig", "Clear Temporary Config")}
+                  {t("clearConfig", "Clear Local Config")}
                 </Button>
               </Column>
-              <Column sm={1} md={2} className={styles.actionButton}>
+              <Column sm={1} md={1} className={styles.actionButton}>
                 <Button
                   kind="secondary"
-                  iconDescription="Download temporary config"
+                  iconDescription="Download config"
                   renderIcon={Download16}
                 >
                   <a
@@ -192,7 +212,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                     download="temporary_config.json"
                     href={window.URL.createObjectURL(tempConfigObjUrl)}
                   >
-                    {t("downloadTemporaryConfig", "Download Temporary Config")}
+                    {t("downloadConfig", "Download Config")}
                   </a>
                 </Button>
               </Column>
@@ -200,20 +220,19 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
           </Grid>
         ) : null}
       </div>
-      <div
-        className={styles.mainContent}
-        style={{
-          height: isConfigToolbarOpen
-            ? "calc(50vh - 7rem)"
-            : "calc(50vh - 2rem)",
-        }}
-      >
-        <div className={styles.configTreePane}>
-          <ConfigTree config={filteredConfig} />
-        </div>
-        <div className={styles.descriptionPane}>
-          <Description />
-        </div>
+      <div className={styles.mainContent} style={{ height: mainContentHeight }}>
+        {isJsonModeEnabled ? (
+          <JsonEditor height={mainContentHeight} />
+        ) : (
+          <>
+            <div className={styles.configTreePane}>
+              <ConfigTree config={filteredConfig} />
+            </div>
+            <div className={styles.descriptionPane}>
+              <Description />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

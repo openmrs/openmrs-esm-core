@@ -70,6 +70,7 @@ export interface ExtensionSlotState {
 export interface AssignedExtension {
   id: string;
   name: string;
+  moduleName: string;
   meta: ExtensionMeta;
   online?: boolean | object;
   offline?: boolean | object;

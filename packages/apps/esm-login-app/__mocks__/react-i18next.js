@@ -35,7 +35,7 @@ const renderNodes = (reactNodes) => {
 };
 
 const useMock = [(k) => k, {}];
-useMock.t = (k) => k;
+useMock.t = (k, o) => (o && o.defaultValue) || (typeof o === "string" ? o : k);
 useMock.i18n = {};
 
 module.exports = {

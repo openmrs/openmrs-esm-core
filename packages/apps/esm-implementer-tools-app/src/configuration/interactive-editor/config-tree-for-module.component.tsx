@@ -16,11 +16,11 @@ export function ConfigTreeForModule({
   return (
     <TreeContainer>
       <ExtensionSlotsConfigTree
-        extensionsConfig={config.extensions}
+        extensionsConfig={config.extensionSlots}
         moduleName={moduleName}
       />
       <ConfigSubtree
-        config={pickBy(config, (v, key) => key !== "extensions")}
+        config={pickBy(config, (v, key) => key !== "extensionSlots")}
         path={[moduleName]}
       />
     </TreeContainer>

@@ -13,19 +13,20 @@ import {
   Visit,
 } from "../types";
 
+export const defaultVisitCustomRepresentation =
+  "custom:(uuid,encounters:(uuid,encounterDatetime," +
+  "form:(uuid,name),location:ref," +
+  "encounterType:ref,encounterProviders:(uuid,display," +
+  "provider:(uuid,display))),patient:(uuid,uuid)," +
+  "visitType:(uuid,name,display),attributes:(uuid,display,value),location:(uuid,name,display),startDatetime," +
+  "stopDatetime)";
+
 export function getVisitsForPatient(
   patientUuid: string,
   abortController: AbortController,
   v?: string
 ): Observable<FetchResponse<{ results: Array<Visit> }>> {
-  const custom =
-    v ||
-    "custom:(uuid,encounters:(uuid,encounterDatetime," +
-      "form:(uuid,name),location:ref," +
-      "encounterType:ref,encounterProviders:(uuid,display," +
-      "provider:(uuid,display))),patient:(uuid,uuid)," +
-      "visitType:(uuid,name,display),attributes:(uuid,display,value),location:(uuid,name,display),startDatetime," +
-      "stopDatetime)";
+  const custom = v ?? defaultVisitCustomRepresentation;
 
   return openmrsObservableFetch(
     `/ws/rest/v1/visit?patient=${patientUuid}&v=${custom}`,

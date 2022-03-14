@@ -5,7 +5,7 @@
 - [ ] My work conforms to the [**OpenMRS 3.0 Styleguide**](https://om.rs/styleguide).
 
 #### If applicable
-- [ ] My work includes tests, or is validated by existing tests.
+- [ ] My work includes tests or is validated by existing tests.
 - [ ] I have updated the [esm-framework mock](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/mock.tsx) to reflect any API changes I have made.
 
 ## Summary

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Popup from "./popup/popup.component";
 import { NotificationActionButton } from "carbon-components-react";
 import {
   showNotification,
@@ -11,10 +10,13 @@ import {
   showModuleDiagnostics,
   togglePopup,
 } from "./store";
-import { UiEditor } from "./ui-editor/ui-editor";
+
 import { useBackendDependencies } from "./backend-dependencies/useBackendDependencies";
 import { hasInvalidDependencies } from "./backend-dependencies/openmrs-backend-dependencies";
 import { useTranslation } from "react-i18next";
+
+const Popup = React.lazy(() => import("./popup/popup.component"));
+const UiEditor = React.lazy(() => import("./ui-editor/ui-editor"));
 
 function PopupHandler() {
   const frontendModules = useBackendDependencies();

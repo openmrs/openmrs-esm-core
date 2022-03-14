@@ -501,6 +501,16 @@ ___
 
 ## API Variables
 
+### defaultVisitCustomRepresentation
+
+• **defaultVisitCustomRepresentation**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L16)
+
+___
+
 ### fhir
 
 • **fhir**: `FhirClient`
@@ -532,7 +542,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L77)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L78)
 
 ___
 
@@ -877,7 +887,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L16)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L24)
 
 ___
 
@@ -1062,7 +1072,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L48)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L49)
 
 ___
 
@@ -1145,7 +1155,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L62)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L63)
 
 ___
 
@@ -2487,7 +2497,7 @@ extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L128)
+[packages/framework/esm-extensions/src/store.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L129)
 
 ___
 
@@ -3954,21 +3964,15 @@ ___
 
 ▸ `Const` **useExtensionStore**(): `T`
 
-The implementation of this will soon undergo a breaking change.
-This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
-
 #### Returns
 
 `T`
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L11)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
 ▸ `Const` **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
-
-The implementation of this will soon undergo a breaking change.
-This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Parameters
 
@@ -3982,12 +3986,9 @@ This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L11)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
 ▸ `Const` **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
-
-The implementation of this will soon undergo a breaking change.
-This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Parameters
 
@@ -4001,7 +4002,7 @@ This will return an `ExtensionStore` rather than `ExtensionInternalStore`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L11)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
 
 ___
 
@@ -4266,26 +4267,27 @@ ___
 
 ### useVisit
 
-▸ **useVisit**(`patientUuid`): `Object`
+▸ **useVisit**(`patientUuid`): `VisitReturnType`
+
+This React hook returns a visit object. If the `patientUuid` is provided
+as a parameter, then the currentVisit, error and mutate function
+for that patient visit is returned.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `patientUuid` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `patientUuid` | `string` | Unique patient identifier `string` |
 
 #### Returns
 
-`Object`
+`VisitReturnType`
 
-| Name | Type |
-| :------ | :------ |
-| `currentVisit` | ``null`` \| [`Visit`](interfaces/Visit.md) |
-| `error` | ``null`` |
+Object {`error` `isValidating`, `currentVisit`, `mutate`}
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useVisit.ts#L11)
+[packages/framework/esm-react-utils/src/useVisit.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useVisit.ts#L22)
 
 ___
 

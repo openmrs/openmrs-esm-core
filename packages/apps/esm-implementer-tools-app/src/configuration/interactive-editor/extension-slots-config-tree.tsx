@@ -7,7 +7,7 @@ import {
 } from "@openmrs/esm-framework";
 import { ExtensionConfigureTree } from "./extension-configure-tree";
 import { Subtree } from "./layout/subtree.component";
-import { implementerToolsStore } from "../store";
+import { implementerToolsStore } from "../../store";
 
 interface ExtensionSlotsConfigTreeProps {
   extensionsConfig: { [key: string]: any };
@@ -41,7 +41,7 @@ export function ExtensionSlotsConfigTree({
         <ExtensionSlotConfigTree
           key={slotName}
           config={extensionsConfig?.[slotName]}
-          path={[moduleName, "extensions", slotName]}
+          path={[moduleName, "extensionSlots", slotName]}
         />
       ))}
     </Subtree>

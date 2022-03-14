@@ -1,37 +1,38 @@
 import React, { useState, useEffect, useMemo } from "react";
 import debounce from "lodash-es/debounce";
 import uniqueId from "lodash-es/uniqueId";
-import {
-  fetchConceptByUuid,
-  performConceptSearch,
-} from "./concept-search.resource";
+import { performPersonAttributeTypeSearch } from "./person-attribute-search.resource";
 import styles from "./uuid-search.scss";
+import { useTranslation } from "react-i18next";
 import {
   Search,
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
 } from "carbon-components-react";
-import { useTranslation } from "react-i18next";
 
-interface ConceptSearchBoxProps {
+interface PersonAttributeTypeSearchBoxProps {
   value: string;
-  setConcept: (concept) => void;
+  setPersonAttributeUuid: (personAttributeType) => void;
 }
 
-export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
+export function PersonAttributeTypeSearchBox({
+  setPersonAttributeUuid,
+  value,
+}: PersonAttributeTypeSearchBoxProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [activeConceptUuid, setActiveConceptUuid] = useState<any>(value);
-  const searchTimeoutInMs = 300;
+  const [activePersonAttributeUuid, setActivePersonAttributeUuid] =
+    useState<any>(value);
   const { t } = useTranslation();
+  const searchTimeoutInMs = 300;
 
   const id = useMemo(() => uniqueId(), []);
 
-  const handleUuidChange = (concept) => {
-    setActiveConceptUuid(concept.uuid);
+  const handleUuidChange = (personAttributeType) => {
+    setActivePersonAttributeUuid(personAttributeType.uuid);
     resetSearch();
-    setConcept(concept);
+    setPersonAttributeUuid(personAttributeType.uuid);
   };
 
   const resetSearch = () => {
@@ -47,9 +48,11 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
     const ac = new AbortController();
 
     if (searchTerm && searchTerm.length >= 2) {
-      performConceptSearch(searchTerm).then(({ data: { results } }) => {
-        setSearchResults(results.slice(0, 9));
-      });
+      performPersonAttributeTypeSearch(searchTerm).then(
+        ({ data: { results } }) => {
+          setSearchResults(results.slice(0, 9));
+        }
+      );
     } else {
       setSearchResults([]);
     }
@@ -58,12 +61,12 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
 
   return (
     <div>
-      {activeConceptUuid && (
-        <p className={styles.activeConceptUuid}>{activeConceptUuid}</p>
+      {activePersonAttributeUuid && (
+        <p className={styles.activeUuid}>{activePersonAttributeUuid}</p>
       )}
       <div className={styles.autocomplete}>
         <Search
-          id={`searchbox-${id}`}
+          id={`search-input-${id}`}
           labelText=""
           type="text"
           size="sm"
@@ -71,40 +74,47 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           autoCapitalize="off"
           aria-autocomplete="list"
           role="combobox"
-          aria-label={t("searchConceptHelperText", "Concept Name")}
+          aria-label={t(
+            "searchPersonAttributeHelperText",
+            "Person attribute type name"
+          )}
           aria-controls={`searchbox-${id}`}
           aria-expanded={searchResults.length > 0}
-          placeholder={t("searchConceptHelperText", "Concept Name")}
-          autoFocus
+          placeholder={t(
+            "searchPersonAttributeHelperText",
+            "Person attribute type name"
+          )}
           onChange={($event) => {
             handleSearchTermChange($event.target.value);
           }}
         />
+
         {!!searchResults.length && (
           <StructuredListWrapper
             selection
-            id={`searchbox-${id}`}
             className={styles.listbox}
+            id={`searchbox-${id}`}
           >
-            {searchResults.map((concept: any) => (
+            {searchResults.map((personAttributeType: any) => (
               <StructuredListRow
-                key={concept.uuid}
+                key={personAttributeType.uuid}
                 role="option"
                 onClick={() => {
-                  handleUuidChange(concept);
+                  handleUuidChange(personAttributeType);
                 }}
                 aria-selected="true"
               >
                 <StructuredListCell className={styles.smallListCell}>
-                  {concept.display}
+                  {personAttributeType.display}
                 </StructuredListCell>
               </StructuredListRow>
             ))}
           </StructuredListWrapper>
         )}
+
         {searchTerm && searchResults && !searchResults.length && (
           <p className={styles.bodyShort01}>
-            {t("noConceptsFoundText", "No matching results found")}
+            {t("noPersonAttributeFoundText", "No matching results found")}
           </p>
         )}
       </div>
