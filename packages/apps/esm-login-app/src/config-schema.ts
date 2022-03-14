@@ -36,6 +36,12 @@ export const configSchema = {
       _default: 8,
       _description: "The number of locations displayed on location picker",
     },
+    resultsInOneCycle: {
+      _type: Type.Number,
+      _default: 50,
+      _description:
+        "The number of results to be fetched in each cycle of the infinite scroll",
+    },
     useLoginLocationTag: {
       _type: Type.Boolean,
       _default: true,

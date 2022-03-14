@@ -1,88 +1,85 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   openmrsFetch,
-  openmrsObservableFetch,
   fhirBaseUrl,
   FetchResponse,
+  showNotification,
 } from "@openmrs/esm-framework";
 import { LocationEntry, LocationResponse } from "../types";
-import useSwr from "swr";
+import useSwrInfinite from "swr/infinite";
 
 const fhirLocationUrl = `${fhirBaseUrl}/Location?_summary=data`;
 
-export function useLocation(
+export function useLocationPicker(
   useLoginLocationTag: boolean,
-  count: number = null,
-  searchQuery: string = "",
-  pagesOffset: number = 0
-) {
-  const [locationData, setLocationData] = useState<Array<LocationEntry>>(null);
-  const [totalResults, setTotalResults] = useState(null);
-  const [hasMore, setHasMore] = useState<boolean>(false);
-
-  // URL fetching
-  let url = fhirLocationUrl;
-  if (count) {
-    url += `&_count=${count}`;
-  }
-  if (pagesOffset) {
-    url += `&_getpagesoffset=${pagesOffset}`;
-  }
-  if (useLoginLocationTag) {
-    url += "&_tag=login location";
-  }
-  if (searchQuery != "" && searchQuery != null) {
-    url += `&name=${searchQuery}`;
-  }
-  const swrResult = useSwr<FetchResponse<LocationResponse>, Error>(
-    url,
-    openmrsFetch
-  );
-
-  // Creating a set to store all the locations that is already present in the locationData
-  // Since SWR triggers multiple requests at different events
-
-  let setOfLocationNames: Set<string> = useMemo(() => {
-    if (!locationData) {
-      return new Set<string>();
-    } else {
-      return new Set(locationData.map((entry) => entry.resource.name));
+  count: number = 0,
+  searchQuery: string = ""
+): {
+  locationData: Array<LocationEntry>;
+  isLoading: boolean;
+  totalResults: number;
+  hasMore: boolean;
+  loadingNewData: boolean;
+  setPage: (
+    size: number | ((_size: number) => number)
+  ) => Promise<FetchResponse<LocationResponse>[]>;
+} {
+  const getUrl = (page, prevPageData: FetchResponse<LocationResponse>) => {
+    if (
+      prevPageData &&
+      !prevPageData?.data?.link?.some((link) => link.relation === "next")
+    )
+      return null;
+    let url = fhirLocationUrl;
+    if (count) {
+      url += `&_count=${count}`;
     }
-  }, [locationData]);
+    if (page) {
+      url += `&_getpagesoffset=${page * count}`;
+    }
+    if (useLoginLocationTag) {
+      url += "&_tag=login location";
+    }
+    if (typeof searchQuery === "string" && searchQuery != "") {
+      url += `&name=${searchQuery}`;
+    }
+    return url;
+  };
+
+  const { data, isValidating, size, setSize, error } = useSwrInfinite<
+    FetchResponse<LocationResponse>,
+    Error
+  >(getUrl, openmrsFetch);
+
+  if (error) {
+    console.error(error.message);
+    showNotification({
+      title: error.name,
+      description: error.message,
+      kind: "error",
+    });
+  }
 
   useEffect(() => {
-    if (swrResult.data) {
-      setLocationData((locationData) =>
-        locationData
-          ? [
-              ...locationData,
-              ...(swrResult.data?.data?.entry?.filter(
-                (entry) => !setOfLocationNames.has(entry.resource.name)
-              ) ?? []),
-            ]
-          : swrResult.data?.data?.entry ?? []
-      );
-      setTotalResults(swrResult?.data?.data?.total);
-      setHasMore(
-        swrResult?.data?.data?.link?.find((link) => link.relation === "next")
-          ? true
-          : false
-      );
-    }
-  }, [swrResult.data]);
-
-  // Reset LocationData when a new search query is triggered
-  useEffect(() => {
-    setLocationData(null);
-    setTotalResults(null);
-    setHasMore(null);
+    setSize(1);
   }, [searchQuery]);
 
-  return {
-    locationData,
-    isLoading: !locationData,
-    totalResults,
-    hasMore,
-    loadingNewData: !swrResult.data,
-  };
+  const returnValue = useMemo(() => {
+    return {
+      locationData: data
+        ? [].concat(...data?.map((data) => data?.data?.entry))
+        : null,
+      isLoading: !data,
+      totalResults: data?.[0]?.data?.total ?? null,
+      hasMore: data?.length
+        ? data?.[data.length - 1]?.data?.link.some(
+            (link) => link.relation === "next"
+          )
+        : false,
+      loadingNewData: isValidating,
+      setPage: setSize,
+    };
+  }, [data, isValidating, setSize, size]);
+
+  return returnValue;
 }

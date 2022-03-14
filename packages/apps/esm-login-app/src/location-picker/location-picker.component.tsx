@@ -12,7 +12,7 @@ import {
 import { LocationEntry } from "../types";
 import { useConfig } from "@openmrs/esm-framework";
 import styles from "./location-picker.component.scss";
-import { useLocation } from "../choose-location/choose-location.resource";
+import { useLocationPicker } from "../choose-location/choose-location.resource";
 
 interface LocationPickerProps {
   currentUser: string;
@@ -34,7 +34,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   const config = useConfig();
   const { chooseLocation } = config;
   const { t } = useTranslation();
-  const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(chooseLocation.numberToShow);
   const userDefaultLoginLocation: string = "userDefaultLoginLocationKey";
   const getDefaultUserLoginLocation = (): string => {
@@ -51,13 +50,18 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   );
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { locationData, isLoading, hasMore, totalResults, loadingNewData } =
-    useLocation(
-      chooseLocation.useLoginLocationTag,
-      chooseLocation.numberToShow,
-      searchTerm,
-      (page - 1) * pageSize
-    );
+  const {
+    locationData,
+    isLoading,
+    hasMore,
+    totalResults,
+    loadingNewData,
+    setPage,
+  } = useLocationPicker(
+    chooseLocation.useLoginLocationTag,
+    chooseLocation.resultsInOneCycle,
+    searchTerm
+  );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const inputRef = useRef();

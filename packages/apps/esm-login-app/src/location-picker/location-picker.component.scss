@@ -100,3 +100,10 @@ pagination > button:first-child:hover {
 .pagination > button:hover {
   border-left: 2px solid $ui-03;
 }
+
+.loadingIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: $spacing-05;
+}

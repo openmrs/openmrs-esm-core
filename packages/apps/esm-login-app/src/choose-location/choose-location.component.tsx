@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import LoadingIcon from "../loading/loading.component";
 import LocationPicker from "../location-picker/location-picker.component";
 import { RouteComponentProps } from "react-router-dom";
@@ -7,9 +7,8 @@ import {
   useConfig,
   setSessionLocation,
 } from "@openmrs/esm-framework";
-import { useLocation } from "./choose-location.resource";
+import { useLocationPicker } from "./choose-location.resource";
 import { useCurrentUser } from "../CurrentUserContext";
-import { LocationEntry } from "../types";
 import type { StaticContext } from "react-router";
 
 export interface LoginReferrer {
@@ -29,7 +28,7 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   const referrer = location?.state?.referrer;
   const config = useConfig();
   const user = useCurrentUser();
-  const { locationData, isLoading } = useLocation(
+  const { locationData, isLoading } = useLocationPicker(
     config.chooseLocation.useLoginLocationTag
   );
 
@@ -54,15 +53,23 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   );
 
   useEffect(() => {
-    if (locationData) {
+    if (!isLoading) {
       if (!config.chooseLocation.enabled || locationData.length === 1) {
         changeLocation(locationData[0]?.resource.id);
       }
-      if (!locationData.length) {
+      if (!isLoading && !locationData.length) {
         changeLocation();
       }
     }
-  }, [locationData, user, changeLocation, config.chooseLocation.enabled]);
+  }, [
+    locationData,
+    user,
+    changeLocation,
+    config.chooseLocation.enabled,
+    isLoading,
+  ]);
+
+  console.log(isLoading, locationData);
 
   if (!isLoading || !isLoginEnabled) {
     return (
