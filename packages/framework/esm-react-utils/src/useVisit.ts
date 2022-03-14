@@ -4,6 +4,10 @@ import {
   Visit,
 } from "@openmrs/esm-api";
 import useSWR from "swr";
+import dayjs from "dayjs";
+import isToday from "dayjs/plugin/isToday";
+
+dayjs.extend(isToday);
 
 interface VisitReturnType {
   error: Error;
@@ -28,7 +32,10 @@ export function useVisit(patientUuid: string): VisitReturnType {
   );
 
   const currentVisit =
-    data?.data.results.find((visit) => visit.stopDatetime === null) ?? null;
+    data?.data.results.find(
+      (visit) =>
+        visit.stopDatetime === null && dayjs(visit.startDatetime).isToday()
+    ) ?? null;
 
   return { error, mutate, isValidating, currentVisit };
 }
