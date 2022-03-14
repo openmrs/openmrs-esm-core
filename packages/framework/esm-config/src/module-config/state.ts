@@ -141,27 +141,40 @@ export function getConfigStore(moduleName: string) {
 }
 
 /**
- * Configuration for a specific extension slot
+ * Configuration for all the specific extension slots
  * @internal
  */
-export interface ExtensionSlotConfigStore {
-  config: ExtensionSlotConfigObject;
-  loaded: boolean;
-}
-
-function initializeExtensionSlotConfigStore() {
-  return {
-    config: {},
-    loaded: false,
+export interface ExtensionSlotsConfigStore {
+  slots: {
+    [slotName: string]: {
+      config: ExtensionSlotConfigObject;
+      loaded: boolean;
+    };
   };
 }
 
 /** @internal */
-export function getExtensionSlotConfigStore(slotName: string) {
-  return getGlobalStore<ExtensionSlotConfigStore>(
-    `config-extension-slots-${slotName}`,
-    initializeExtensionSlotConfigStore()
+export function getExtensionSlotsConfigStore() {
+  return getGlobalStore<ExtensionSlotsConfigStore>(`config-extension-slots`, {
+    slots: {},
+  });
+}
+
+/** @internal */
+export function getExtensionSlotConfig(slotName: string) {
+  return getExtensionSlotConfigFromStore(
+    getExtensionSlotsConfigStore().getState(),
+    slotName
   );
+}
+
+/** @internal */
+export function getExtensionSlotConfigFromStore(
+  state: ExtensionSlotsConfigStore,
+  slotName: string
+) {
+  const slotConfig = state.slots[slotName];
+  return slotConfig ?? { loaded: false, config: {} };
 }
 
 /**

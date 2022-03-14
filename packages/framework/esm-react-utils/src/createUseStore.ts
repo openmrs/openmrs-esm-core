@@ -18,6 +18,7 @@ function bindActions<T>(store: Store<T>, actions: Actions) {
   return bound;
 }
 
+/** Avoid this; generally prefer to have clients use `useStore(yourStore)` */
 export function createUseStore<T>(store: Store<T>) {
   function useStore(): T;
   function useStore(actions: Actions): T & BoundActions;

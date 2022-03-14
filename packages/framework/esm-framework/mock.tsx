@@ -258,7 +258,17 @@ export const useExtensionInternalStore = createUseStore(
 
 export const useExtensionStore = createUseStore(getExtensionStore());
 
-export const useStore = (store: Store<any>, actions) => {
+const defaultSelect = (x) => x;
+export const useStore = (
+  store: Store<any>,
+  select = defaultSelect,
+  actions = {}
+) => {
+  const state = select(store.getState());
+  return { ...state, ...actions };
+};
+
+export const useStoreWithActions = (store: Store<any>, actions) => {
   const state = store.getState();
   return { ...state, ...actions };
 };

@@ -3,6 +3,7 @@ import {
   attach,
   registerExtension,
   updateInternalExtensionStore,
+  getExtensionStore,
 } from "../../../esm-extensions";
 import {
   ExtensionSlot,
@@ -10,11 +11,22 @@ import {
   openmrsComponentDecorator,
   useConfig,
 } from "../../../esm-react-utils/src";
-import { defineConfigSchema, provide, Type } from "../../../esm-config/src";
-import { render, screen, waitFor } from "@testing-library/react";
+import {
+  defineConfigSchema,
+  provide,
+  Type,
+  temporaryConfigStore,
+  configInternalStore,
+  getExtensionSlotsConfigStore,
+} from "../../../esm-config/src";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { waitForElementToBeRemoved } from "@testing-library/dom";
 
 describe("Interaction between configuration and extension systems", () => {
   beforeEach(() => {
+    temporaryConfigStore.setState({ config: {} });
+    configInternalStore.setState({ providedConfigs: [], schemas: {} });
+    getExtensionSlotsConfigStore().setState({ slots: {} });
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
   });
 
@@ -137,6 +149,66 @@ describe("Interaction between configuration and extension systems", () => {
     const slot = screen.getByTestId("flintstone-slot");
     expect(slot.firstChild).toHaveTextContent(/Dino/);
     expect(slot.lastChild).toHaveTextContent(/Baby Puss/);
+  });
+
+  test("Slot config should update with temporary config", async () => {
+    registerSimpleExtension("Pearl", "esm-slaghoople");
+    attach("A slot", "Pearl");
+    defineConfigSchema("esm-slaghoople", {});
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-slaghoople",
+      featureName: "The Slaghooples",
+      disableTranslations: true,
+    })(() => <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />);
+    render(<App />);
+    await waitFor(() => expect(screen.getByText("Pearl")).toBeInTheDocument());
+    act(() => {
+      temporaryConfigStore.setState({
+        config: {
+          "esm-slaghoople": {
+            extensionSlots: {
+              "A slot": {
+                remove: ["Pearl"],
+              },
+            },
+          },
+        },
+      });
+    });
+    expect(screen.queryByText("Pearl")).not.toBeInTheDocument();
+  });
+
+  test("Extension config should update with temporary config", async () => {
+    registerSimpleExtension("Mr. Slate", "esm-flintstone", true);
+    attach("A slot", "Mr. Slate");
+    defineConfigSchema("esm-flintstone", { tie: { _default: "green" } });
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-quarry",
+      featureName: "The Flintstones",
+      disableTranslations: true,
+    })(() => <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />);
+    render(<App />);
+    await waitFor(() =>
+      expect(screen.getByText(/Mr. Slate/)).toBeInTheDocument()
+    );
+    expect(screen.getByTestId("slot")).toHaveTextContent(/green/);
+    act(() => {
+      temporaryConfigStore.setState({
+        config: {
+          "esm-quarry": {
+            extensionSlots: {
+              "A slot": {
+                configure: {
+                  "Mr. Slate": { tie: "black" },
+                },
+              },
+            },
+          },
+        },
+      });
+    });
+    expect(screen.queryByText("green")).not.toBeInTheDocument();
+    expect(screen.getByTestId("slot")).toHaveTextContent(/black/);
   });
 });
 

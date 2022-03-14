@@ -1,1 +1,1 @@
-export const getExtensionSlotConfig = jest.fn().mockResolvedValue({});
+export const getExtensionSlotConfigs = jest.fn().mockResolvedValue({});

@@ -17,7 +17,7 @@ import {
   temporaryConfigStore,
 } from "./state";
 import { Type } from "../types";
-import { getExtensionSlotConfigStore } from "..";
+import { getExtensionSlotsConfigStore } from "..";
 
 const mockConfigInternalStore =
   configInternalStore as MockedStore<ConfigInternalStore>;
@@ -854,7 +854,8 @@ describe("extension slot config", () => {
         },
       },
     });
-    const { config } = getExtensionSlotConfigStore("fooSlot").getState();
+    const { config } =
+      getExtensionSlotsConfigStore().getState().slots["fooSlot"];
     expect(config).toStrictEqual({
       add: ["bar", "baz"],
       remove: ["zap"],
@@ -892,7 +893,8 @@ describe("extension slot config", () => {
       },
     });
     await Config.getConfig("foo-module");
-    const { config } = getExtensionSlotConfigStore("fooSlot").getState();
+    const { config } =
+      getExtensionSlotsConfigStore().getState().slots["fooSlot"];
     expect(config).toStrictEqual({ remove: ["bar"] });
   });
 

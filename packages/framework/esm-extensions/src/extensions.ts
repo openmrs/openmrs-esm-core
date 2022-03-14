@@ -9,8 +9,12 @@
 
 import {
   ExtensionSlotConfigObject,
-  getExtensionSlotConfigStore,
+  ExtensionSlotsConfigStore,
+  getExtensionSlotConfig,
+  getExtensionSlotConfigFromStore,
+  getExtensionSlotsConfigStore,
 } from "@openmrs/esm-config";
+import isEqual from "lodash-es/isEqual";
 import {
   getExtensionInternalStore,
   ExtensionSlotState,
@@ -30,16 +34,40 @@ const extensionInternalStore = getExtensionInternalStore();
 const extensionStore = getExtensionStore();
 
 // Keep the output store updated
-extensionInternalStore.subscribe((internalStore) => {
+function updateExtensionOutputStore(
+  internalState: ExtensionInternalStore,
+  extensionSlotConfigs: ExtensionSlotsConfigStore
+) {
   const slots: Record<string, ExtensionSlotState> = {};
-  for (let [slotName, slot] of Object.entries(internalStore.slots)) {
+  for (let [slotName, slot] of Object.entries(internalState.slots)) {
+    // Only include registered slots
     if (slot.moduleName) {
-      // Only include registered slots
-      const assignedExtensions = getAssignedExtensions(slotName);
+      const { config } = getExtensionSlotConfigFromStore(
+        extensionSlotConfigs,
+        slot.name
+      );
+      const assignedExtensions = getAssignedExtensionsFromData(
+        slotName,
+        internalState,
+        config
+      );
       slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
     }
   }
-  extensionStore.setState({ slots: slots });
+  if (!isEqual(extensionStore.getState().slots, slots)) {
+    extensionStore.setState({ slots });
+  }
+}
+
+extensionInternalStore.subscribe((internalStore) => {
+  updateExtensionOutputStore(
+    internalStore,
+    getExtensionSlotsConfigStore().getState()
+  );
+});
+
+getExtensionSlotsConfigStore().subscribe((slotConfigs) => {
+  updateExtensionOutputStore(extensionInternalStore.getState(), slotConfigs);
 });
 
 function createNewExtensionSlotInfo(
@@ -246,11 +274,11 @@ export function getConnectedExtensions(
   );
 }
 
-export function getAssignedExtensions(
-  slotName: string
+function getAssignedExtensionsFromData(
+  slotName: string,
+  internalState: ExtensionInternalStore,
+  config: ExtensionSlotConfigObject
 ): Array<AssignedExtension> {
-  const internalState = extensionInternalStore.getState();
-  const config = getExtensionSlotConfigStore(slotName).getState().config;
   const attachedIds = internalState.slots[slotName].attachedIds;
   const assignedIds = calculateAssignedIds(config, attachedIds);
   const extensions: Array<AssignedExtension> = [];
@@ -267,6 +295,14 @@ export function getAssignedExtensions(
     });
   }
   return extensions;
+}
+
+export function getAssignedExtensions(
+  slotName: string
+): Array<AssignedExtension> {
+  const internalState = extensionInternalStore.getState();
+  const { config } = getExtensionSlotConfig(slotName);
+  return getAssignedExtensionsFromData(slotName, internalState, config);
 }
 
 function calculateAssignedIds(

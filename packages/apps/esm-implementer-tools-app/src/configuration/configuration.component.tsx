@@ -7,10 +7,11 @@ import {
   Config,
   ConfigInternalStore,
   configInternalStore,
+  getExtensionInternalStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
-  useExtensionInternalStore,
   useStore,
+  useStoreWithActions,
 } from "@openmrs/esm-framework";
 import {
   Button,
@@ -89,13 +90,13 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
     toggleIsJsonModeEnabled,
     isConfigToolbarOpen,
     toggleIsToolbarOpen,
-  } = useStore(implementerToolsStore, actions);
-  const { devDefaultsAreOn, toggleDevDefaults } = useStore(
+  } = useStoreWithActions(implementerToolsStore, actions);
+  const { devDefaultsAreOn, toggleDevDefaults } = useStoreWithActions(
     configInternalStore,
     configActions
   );
   const { config } = useStore(implementerToolsConfigStore);
-  const extensionStore = useExtensionInternalStore();
+  const extensionStore = useStore(getExtensionInternalStore());
   const tempConfigStore = useStore(temporaryConfigStore);
   const [filterText, setFilterText] = useState("");
   const tempConfig = tempConfigStore.config;
