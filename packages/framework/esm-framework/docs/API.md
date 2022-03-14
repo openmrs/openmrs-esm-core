@@ -4287,7 +4287,7 @@ Object {`error` `isValidating`, `currentVisit`, `mutate`}
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useVisit.ts#L22)
+[packages/framework/esm-react-utils/src/useVisit.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useVisit.ts#L26)
 
 ___
 
