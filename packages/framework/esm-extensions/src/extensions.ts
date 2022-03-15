@@ -153,7 +153,7 @@ export const registerExtension: (
  *    attached to the same slot.
  */
 export function attach(slotName: string, extensionId: string) {
-  return updateInternalExtensionStore((state) => {
+  updateInternalExtensionStore((state) => {
     const existingSlot = state.slots[slotName];
 
     if (!existingSlot) {
