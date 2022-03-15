@@ -176,6 +176,10 @@ export function defineConfigSchema(moduleName, schema) {
   configSchema = schema;
 }
 
+export function defineExtensionConfigSchema(extensionName, schema) {
+  configSchema = schema;
+}
+
 export const navigate = jest.fn();
 
 export const ConfigurableLink = jest
