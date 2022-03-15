@@ -40,19 +40,16 @@ function updateExtensionOutputStore(
 ) {
   const slots: Record<string, ExtensionSlotState> = {};
   for (let [slotName, slot] of Object.entries(internalState.slots)) {
-    // Only include registered slots
-    if (slot.moduleName) {
-      const { config } = getExtensionSlotConfigFromStore(
-        extensionSlotConfigs,
-        slot.name
-      );
-      const assignedExtensions = getAssignedExtensionsFromData(
-        slotName,
-        internalState,
-        config
-      );
-      slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
-    }
+    const { config } = getExtensionSlotConfigFromStore(
+      extensionSlotConfigs,
+      slot.name
+    );
+    const assignedExtensions = getAssignedExtensionsFromData(
+      slotName,
+      internalState,
+      config
+    );
+    slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
   }
   if (!isEqual(extensionStore.getState().slots, slots)) {
     extensionStore.setState({ slots });

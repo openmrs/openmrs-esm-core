@@ -63,7 +63,7 @@ export interface ExtensionStore {
 }
 
 export interface ExtensionSlotState {
-  moduleName: string;
+  moduleName?: string;
   assignedExtensions: Array<AssignedExtension>;
 }
 
