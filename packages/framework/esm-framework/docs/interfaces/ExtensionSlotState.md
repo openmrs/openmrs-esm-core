@@ -23,7 +23,7 @@ ___
 
 ### moduleName
 
-• **moduleName**: `string`
+• `Optional` **moduleName**: `string`
 
 #### Defined in
 
