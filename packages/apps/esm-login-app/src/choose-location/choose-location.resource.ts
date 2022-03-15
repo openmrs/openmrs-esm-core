@@ -10,7 +10,7 @@ import useSwrInfinite from "swr/infinite";
 
 const fhirLocationUrl = `${fhirBaseUrl}/Location?_summary=data`;
 
-export function useLocationPicker(
+export function useLoginLocations(
   useLoginLocationTag: boolean,
   count: number = 0,
   searchQuery: string = ""
@@ -62,12 +62,12 @@ export function useLocationPicker(
 
   useEffect(() => {
     setSize(1);
-  }, [searchQuery]);
+  }, [searchQuery, setSize]);
 
   const returnValue = useMemo(() => {
     return {
       locationData: data
-        ? [].concat(...data?.map((data) => data?.data?.entry))
+        ? [].concat(...data?.map((resp) => resp?.data?.entry))
         : null,
       isLoading: !data,
       totalResults: data?.[0]?.data?.total ?? null,
@@ -79,7 +79,7 @@ export function useLocationPicker(
       loadingNewData: isValidating,
       setPage: setSize,
     };
-  }, [data, isValidating, setSize, size]);
+  }, [data, isValidating, setSize]);
 
   return returnValue;
 }

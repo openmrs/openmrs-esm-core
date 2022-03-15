@@ -12,7 +12,7 @@ import {
 import { LocationEntry } from "../types";
 import { useConfig } from "@openmrs/esm-framework";
 import styles from "./location-picker.component.scss";
-import { useLocationPicker } from "../choose-location/choose-location.resource";
+import { useLoginLocations } from "../choose-location/choose-location.resource";
 
 interface LocationPickerProps {
   currentUser: string;
@@ -57,9 +57,9 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     totalResults,
     loadingNewData,
     setPage,
-  } = useLocationPicker(
+  } = useLoginLocations(
     chooseLocation.useLoginLocationTag,
-    chooseLocation.resultsInOneCycle,
+    chooseLocation.locationsPerRequest,
     searchTerm
   );
 
@@ -132,7 +132,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       );
       if (node) observer.current.observe(node);
     },
-    [loadingNewData, hasMore]
+    [loadingNewData, hasMore, setPage]
   );
 
   return (
@@ -220,12 +220,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
               </>
             ) : (
               <div>
-                {[...Array(pageSize).keys()].map((key) => (
-                  <RadioButtonSkeleton
-                    className={styles.radioButtonSkeleton}
-                    key={key}
-                  />
-                ))}
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} />
               </div>
             )}
           </div>

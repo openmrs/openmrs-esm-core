@@ -7,7 +7,7 @@ import {
   useConfig,
   setSessionLocation,
 } from "@openmrs/esm-framework";
-import { useLocationPicker } from "./choose-location.resource";
+import { useLoginLocations } from "./choose-location.resource";
 import { useCurrentUser } from "../CurrentUserContext";
 import type { StaticContext } from "react-router";
 
@@ -28,7 +28,7 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   const referrer = location?.state?.referrer;
   const config = useConfig();
   const user = useCurrentUser();
-  const { locationData, isLoading } = useLocationPicker(
+  const { locationData, isLoading } = useLoginLocations(
     config.chooseLocation.useLoginLocationTag
   );
 
