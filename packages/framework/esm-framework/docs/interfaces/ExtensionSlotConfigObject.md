@@ -7,6 +7,7 @@
 ### Properties
 
 - [add](ExtensionSlotConfigObject.md#add)
+- [configure](ExtensionSlotConfigObject.md#configure)
 - [order](ExtensionSlotConfigObject.md#order)
 - [remove](ExtensionSlotConfigObject.md#remove)
 
@@ -21,6 +22,18 @@ Additional extension IDs to assign to this slot, in addition to those `attach`ed
 #### Defined in
 
 [packages/framework/esm-config/src/types.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L52)
+
+___
+
+### configure
+
+• `Optional` **configure**: [`ExtensionSlotConfigureValueObject`](ExtensionSlotConfigureValueObject.md)
+
+Configuration passed to the extensions, also used to override the extension meta.
+
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L58)
 
 ___
 

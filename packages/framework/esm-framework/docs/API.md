@@ -429,7 +429,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L59)
+[packages/framework/esm-config/src/types.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L61)
 
 ___
 
@@ -473,7 +473,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L66)
+[packages/framework/esm-config/src/types.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L68)
 
 ___
 
@@ -497,7 +497,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L64)
+[packages/framework/esm-config/src/types.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L66)
 
 ## API Variables
 
@@ -1801,7 +1801,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:151](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L151)
+[packages/framework/esm-extensions/src/extensions.ts:155](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L155)
 
 ___
 
@@ -2095,7 +2095,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L182)
+[packages/framework/esm-extensions/src/extensions.ts:186](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L186)
 
 ___
 
@@ -2117,7 +2117,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:206](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L206)
+[packages/framework/esm-extensions/src/extensions.ts:210](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L210)
 
 ___
 
@@ -2249,7 +2249,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:297](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L297)
+[packages/framework/esm-extensions/src/extensions.ts:322](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L322)
 
 ___
 
@@ -2373,7 +2373,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L264)
+[packages/framework/esm-extensions/src/extensions.ts:268](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L268)
 
 ___
 
@@ -2440,7 +2440,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L95)
+[packages/framework/esm-extensions/src/extensions.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L99)
 
 ___
 
@@ -2460,7 +2460,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:108](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L108)
+[packages/framework/esm-extensions/src/extensions.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L112)
 
 ___
 
@@ -2481,7 +2481,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L100)
+[packages/framework/esm-extensions/src/extensions.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L104)
 
 ___
 
@@ -2499,7 +2499,7 @@ extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L129)
+[packages/framework/esm-extensions/src/store.ts:122](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L122)
 
 ___
 
@@ -3752,7 +3752,18 @@ ___
 
 ### update
 
-▸ **update**<`T`\>(`obj`, `__namedParameters`, `value`): `T`
+▸ **update**<`T`\>(`obj`, `propertyPath`, `value`): `T`
+
+This is a non-mutating update function. It updates the property of
+the given object accessed at `propertyPath`. It is similar to
+Lodash's [update](https://lodash.com/docs/4.17.15#update).
+
+#### Example
+
+```js
+update({ foo: { bar: 0 }}, ['foo', 'bar'], 1);
+// => { foo: { bar: 1 }}
+```
 
 #### Type parameters
 
@@ -3762,19 +3773,21 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `obj` | `T` |
-| `__namedParameters` | `string`[] |
-| `value` | `any` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `obj` | `T` | The object to be modified |
+| `propertyPath` | `string`[] | The path in the object to be modified |
+| `value` | `any` | The value to set the property |
 
 #### Returns
 
 `T`
 
+A new object with the update applied
+
 #### Defined in
 
-[packages/framework/esm-state/src/update.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/update.ts#L1)
+[packages/framework/esm-state/src/state.ts:123](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L123)
 
 ___
 
