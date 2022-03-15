@@ -20,7 +20,6 @@ export * from "./useExtensionStore";
 export * from "./useForceUpdate";
 export * from "./useLayoutType";
 export * from "./useLocations";
-export * from "./useNavigationContext";
 export * from "./useOnClickOutside";
 export * from "./UserHasAccess";
 export * from "./useSessionUser";
