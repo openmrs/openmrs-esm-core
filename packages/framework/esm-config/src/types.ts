@@ -54,6 +54,8 @@ export interface ExtensionSlotConfigObject {
   remove?: Array<string>;
   /** Overrides the default ordering of extensions. */
   order?: Array<string>;
+  /** Configuration passed to the extensions, also used to override the extension meta. */
+  configure?: ExtensionSlotConfigureValueObject;
 }
 
 export type ProvidedConfig = {

@@ -3,6 +3,7 @@ import {
   attach,
   registerExtension,
   updateInternalExtensionStore,
+  getExtensionInternalStore,
   getExtensionStore,
 } from "../../../esm-extensions";
 import {
@@ -10,6 +11,7 @@ import {
   getSyncLifecycle,
   openmrsComponentDecorator,
   useConfig,
+  useExtensionStore,
 } from "../../../esm-react-utils/src";
 import {
   defineConfigSchema,
@@ -210,12 +212,56 @@ describe("Interaction between configuration and extension systems", () => {
     expect(screen.queryByText("green")).not.toBeInTheDocument();
     expect(screen.getByTestId("slot")).toHaveTextContent(/black/);
   });
+
+  test("Extension config should override meta", async () => {
+    registerSimpleExtension("Bamm-Bamm", "esm-flintstone", false, {
+      clothes: "leopard",
+    });
+    attach("A slot", "Bamm-Bamm");
+    defineConfigSchema("esm-flintstone", {});
+    function RootComponent() {
+      const store = useExtensionStore();
+      return (
+        <div id="metas">
+          <div>A slot</div>
+          {store.slots["A slot"].assignedExtensions.map((e) => (
+            <div key={e.name}>{JSON.stringify(e.meta)}</div>
+          ))}
+        </div>
+      );
+    }
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-flintstone",
+      featureName: "The Flintstones",
+      disableTranslations: true,
+    })(RootComponent);
+    render(<App />);
+    await waitFor(() => expect(screen.getByText(/A slot/)).toBeInTheDocument());
+    expect(screen.getByText(/clothes/)).toHaveTextContent(/leopard/);
+    act(() => {
+      temporaryConfigStore.setState({
+        config: {
+          "esm-flintstone": {
+            extensionSlots: {
+              "A slot": {
+                configure: {
+                  "Bamm-Bamm": { clothes: "tiger" },
+                },
+              },
+            },
+          },
+        },
+      });
+    });
+    expect(screen.getByText(/clothes/)).toHaveTextContent(/tiger/);
+  });
 });
 
 function registerSimpleExtension(
   name: string,
   moduleName: string,
-  takesConfig: boolean = false
+  takesConfig: boolean = false,
+  meta: object = {}
 ) {
   const SimpleComponent = () => <div>{name}</div>;
   const ConfigurableComponent = () => {
@@ -237,6 +283,6 @@ function registerSimpleExtension(
         disableTranslations: true,
       }
     ),
-    meta: {},
+    meta,
   });
 }

@@ -102,3 +102,38 @@ export function subscribeTo<T, U>(
     }
   });
 }
+
+/**
+ * This is a non-mutating update function. It updates the property of
+ * the given object accessed at `propertyPath`. It is similar to
+ * Lodash's [update](https://lodash.com/docs/4.17.15#update).
+ *
+ * #### Example
+ *
+ * ```js
+ * update({ foo: { bar: 0 }}, ['foo', 'bar'], 1);
+ * // => { foo: { bar: 1 }}
+ * ```
+ *
+ * @param obj The object to be modified
+ * @param propertyPath The path in the object to be modified
+ * @param value The value to set the property
+ * @returns A new object with the update applied
+ */
+export function update<T extends Record<string, any>>(
+  obj: T,
+  propertyPath: Array<string>,
+  value: any
+): T {
+  const [property, ...restPropertyPath] = propertyPath;
+  if (!property) {
+    return obj;
+  } else if (restPropertyPath.length === 0) {
+    return { ...obj, [property]: value };
+  } else {
+    return {
+      ...obj,
+      [property]: update(obj[property] || {}, restPropertyPath, value),
+    };
+  }
+}

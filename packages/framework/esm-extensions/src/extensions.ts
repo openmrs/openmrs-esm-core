@@ -8,12 +8,15 @@
  */
 
 import {
+  ConfigObject,
   ExtensionSlotConfigObject,
   ExtensionSlotsConfigStore,
   getExtensionSlotConfig,
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
 } from "@openmrs/esm-config";
+import cloneDeep from "lodash-es/cloneDeep";
+import isPlainObject from "lodash-es/isPlainObject";
 import isEqual from "lodash-es/isEqual";
 import {
   getExtensionInternalStore,
@@ -28,6 +31,7 @@ import {
   ExtensionInternalStore,
   getExtensionStore,
   updateInternalExtensionStore,
+  ExtensionMeta,
 } from "./store";
 
 const extensionInternalStore = getExtensionInternalStore();
@@ -149,7 +153,7 @@ export const registerExtension: (
  *    attached to the same slot.
  */
 export function attach(slotName: string, extensionId: string) {
-  updateInternalExtensionStore((state) => {
+  return updateInternalExtensionStore((state) => {
     const existingSlot = state.slots[slotName];
 
     if (!existingSlot) {
@@ -282,16 +286,37 @@ function getAssignedExtensionsFromData(
   for (let id of assignedIds) {
     const name = getExtensionNameFromId(id);
     const extension = internalState.extensions[name];
+    const extensionConfig = config.configure?.[name];
+    let newMeta: ExtensionMeta | null = null;
+    if (extensionConfig) {
+      newMeta = cloneDeep(extension.meta);
+      updateMetaWithConfigOverrides(newMeta, extensionConfig);
+    }
     extensions.push({
       id,
       name,
       moduleName: extension.moduleName,
-      meta: extension.meta,
+      meta: newMeta ?? extension.meta,
       online: extension.online,
       offline: extension.offline,
     });
   }
   return extensions;
+}
+
+function updateMetaWithConfigOverrides(
+  meta: ExtensionMeta,
+  config: ConfigObject
+) {
+  for (let key of Object.keys(meta)) {
+    if (config[key]) {
+      if (isPlainObject(meta[key]) && isPlainObject(config[key])) {
+        updateMetaWithConfigOverrides(meta[key], config[key]);
+      } else {
+        meta[key] = config[key];
+      }
+    }
+  }
 }
 
 export function getAssignedExtensions(

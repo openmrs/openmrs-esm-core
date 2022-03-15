@@ -103,22 +103,15 @@ export const getExtensionInternalStore = () =>
   });
 
 /** @internal */
-export type MaybeAsync<T> = T | Promise<T>;
-
-let storeUpdates: Promise<void> = Promise.resolve();
-
-/** @internal */
 export function updateInternalExtensionStore(
-  updater: (state: ExtensionInternalStore) => MaybeAsync<ExtensionInternalStore>
+  updater: (state: ExtensionInternalStore) => ExtensionInternalStore
 ) {
-  storeUpdates = storeUpdates.then(async () => {
-    const state = extensionInternalStore.getState();
-    const newState = await updater(state);
+  const state = extensionInternalStore.getState();
+  const newState = updater(state);
 
-    if (newState !== state) {
-      extensionInternalStore.setState(newState);
-    }
-  });
+  if (newState !== state) {
+    extensionInternalStore.setState(newState);
+  }
 }
 
 /**
