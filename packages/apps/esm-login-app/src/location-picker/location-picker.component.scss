@@ -9,7 +9,7 @@
   width: 100vw;
 }
 
-.location-card {
+.locationCard {
   display: flex;
   flex-direction: column;
   width: 23rem;
@@ -37,8 +37,8 @@
 .searchResults {
   @extend .bodyShort02;
   margin: 1rem 0rem;
-  height: 26.125rem;
   max-height: 100%;
+  overflow-y: auto;
 }
 
 .resultsCount {
@@ -50,10 +50,6 @@
   display: flex;
   overflow-y: auto;
   margin-top: 0.5rem;
-}
-
-:global(.omrs-breakpoint-gt-tablet) .locationResultsContainer {
-  height: 23rem;
 }
 
 .locationRadioButton {
@@ -74,4 +70,39 @@
 
 .confirmButton button {
   width: 20rem;
+}
+
+.radioButtonSkeleton {
+  margin-right: 0 !important;
+  margin-bottom: $spacing-05;
+}
+
+.radioButtonSkeleton span {
+  width: 100% !important;
+}
+
+.pagination {
+  background-color: $ui-01;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-05;
+  border: 2px solid $ui-03;
+}
+
+.pagination > button:first-child,
+pagination > button:first-child:hover {
+  border-right: 2px solid $ui-03;
+}
+
+.pagination > button,
+.pagination > button:hover {
+  border-left: 2px solid $ui-03;
+}
+
+.loadingIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: $spacing-05;
 }

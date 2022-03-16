@@ -1,40 +1,85 @@
+import { useEffect, useMemo } from "react";
 import {
   openmrsFetch,
-  openmrsObservableFetch,
   fhirBaseUrl,
+  FetchResponse,
+  showNotification,
 } from "@openmrs/esm-framework";
-import { map } from "rxjs/operators";
-import { LocationResponse } from "../types";
+import { LocationEntry, LocationResponse } from "../types";
+import useSwrInfinite from "swr/infinite";
 
-export function getLoginLocations(): Observable<Object[]> {
-  return openmrsObservableFetch(
-    `/ws/rest/v1/location?tag=Login%20Location&v=custom:(uuid,display)`
-  ).pipe(map(({ data }) => data["results"]));
-}
+const fhirLocationUrl = `${fhirBaseUrl}/Location?_summary=data`;
 
-export function searchLocationsFhir(
-  location: string,
-  abortController: AbortController,
-  useLoginLocationTag: boolean
-) {
-  const baseUrl = `${fhirBaseUrl}/Location?name=${location}`;
-  const url = useLoginLocationTag
-    ? baseUrl.concat("&_tag=login location")
-    : baseUrl;
-  return openmrsFetch<LocationResponse>(url, {
-    method: "GET",
-    signal: abortController.signal,
-  });
-}
+export function useLoginLocations(
+  useLoginLocationTag: boolean,
+  count: number = 0,
+  searchQuery: string = ""
+): {
+  locationData: Array<LocationEntry>;
+  isLoading: boolean;
+  totalResults: number;
+  hasMore: boolean;
+  loadingNewData: boolean;
+  setPage: (
+    size: number | ((_size: number) => number)
+  ) => Promise<FetchResponse<LocationResponse>[]>;
+} {
+  const getUrl = (page, prevPageData: FetchResponse<LocationResponse>) => {
+    if (
+      prevPageData &&
+      !prevPageData?.data?.link?.some((link) => link.relation === "next")
+    )
+      return null;
+    let url = fhirLocationUrl;
+    if (count) {
+      url += `&_count=${count}`;
+    }
+    if (page) {
+      url += `&_getpagesoffset=${page * count}`;
+    }
+    if (useLoginLocationTag) {
+      url += "&_tag=login location";
+    }
+    if (typeof searchQuery === "string" && searchQuery != "") {
+      url += `&name=${searchQuery}`;
+    }
+    return url;
+  };
 
-export function queryLocations(
-  location: string,
-  abortController = new AbortController(),
-  useLoginLocationTag: boolean
-) {
-  return searchLocationsFhir(
-    location,
-    abortController,
-    useLoginLocationTag
-  ).then((locs) => locs.data.entry);
+  const { data, isValidating, size, setSize, error } = useSwrInfinite<
+    FetchResponse<LocationResponse>,
+    Error
+  >(getUrl, openmrsFetch);
+
+  if (error) {
+    console.error(error.message);
+    showNotification({
+      title: error.name,
+      description: error.message,
+      kind: "error",
+    });
+  }
+
+  useEffect(() => {
+    setSize(1);
+  }, [searchQuery, setSize]);
+
+  const returnValue = useMemo(() => {
+    return {
+      locationData: data
+        ? [].concat(...data?.map((resp) => resp?.data?.entry))
+        : null,
+      isLoading: !data,
+      totalResults: data?.[0]?.data?.total ?? null,
+      hasMore: data?.length
+        ? data?.[data.length - 1]?.data?.link.some(
+            (link) => link.relation === "next"
+          )
+        : false,
+      loadingNewData: isValidating,
+      setPage: setSize,
+    };
+  }, [data, isValidating, setSize]);
+
+  return returnValue;
 }
