@@ -46,7 +46,8 @@ import { TemporaryConfigStore } from "..";
  * the correct set of output stores are updated.
  *
  * All `compute...` functions except `computeExtensionConfigs` are pure
- * (or are supposed to be). `computeExtensionConfigs` calls `getGlobalStore`,
+ * (or are supposed to be), other than the fact that they all `setState`
+ * store values at the end. `computeExtensionConfigs` calls `getGlobalStore`,
  * which creates stores.
  */
 computeModuleConfig(
@@ -175,11 +176,56 @@ function computeExtensionConfigs(
  *
  */
 
+/**
+ * This defines a configuration schema for a module. The schema tells the
+ * configuration system how the module can be configured. It specifies
+ * what makes configuration valid or invalid.
+ *
+ * See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+ * for more information about defining a config schema.
+ *
+ * @param moduleName Name of the module the schema is being defined for. Generally
+ *   should be the one in which the `defineConfigSchema` call takes place.
+ * @param schema The config schema for the module
+ */
 export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
   const state = configInternalStore.getState();
   configInternalStore.setState({
     schemas: { ...state.schemas, [moduleName]: schema },
+  });
+}
+
+/**
+ * This defines a configuration schema for an extension. When a schema is defined
+ * for an extension, that extension will receive the configuration corresponding
+ * to that schema, rather than the configuration corresponding to the module
+ * in which it is defined.
+ *
+ * The schema tells the configuration system how the module can be configured.
+ * It specifies what makes configuration valid or invalid.
+ *
+ * See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+ * for more information about defining a config schema.
+ *
+ * @param extensionName Name of the extension the schema is being defined for.
+ *   Should match the `name` of one of the `extensions` entries being returned
+ *   by `setupOpenMRS`.
+ * @param schema The config schema for the extension
+ */
+export function defineExtensionConfigSchema(
+  extensionName: string,
+  schema: ConfigSchema
+) {
+  validateConfigSchema(extensionName, schema);
+  const state = configInternalStore.getState();
+  if (state.schemas[extensionName]) {
+    console.warn(
+      `Config schema for extension ${extensionName} already exists. If there are multiple extensions with this same name, one will probably crash.`
+    );
+  }
+  configInternalStore.setState({
+    schemas: { ...state.schemas, [extensionName]: schema },
   });
 }
 
@@ -245,8 +291,9 @@ export function processConfig(
  * Returns the configuration for an extension. This configuration is specific
  * to the slot in which it is mounted, and its ID within that slot.
  *
- * The schema for that configuration is the schema for the module in which the
- * extension is defined.
+ * The schema for that configuration is the extension schema. If no extension
+ * schema has been provided, the schema used is the schema of the module in
+ * which the extension is defined.
  *
  * @param slotModuleName The name of the module which defines the extension slot
  * @param extensionModuleName The name of the module which defines the extension (and therefore the config schema)
@@ -261,21 +308,25 @@ function getExtensionConfig(
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore
 ) {
+  const extensionName = getExtensionNameFromId(extensionId);
+  const extensionConfigSchema = configState.schemas[extensionName];
+  const nameOfSchemaSource = extensionConfigSchema
+    ? extensionName
+    : extensionModuleName;
   const providedConfigs = getProvidedConfigs(configState, tempConfigState);
   const slotModuleConfig = mergeConfigsFor(slotModuleName, providedConfigs);
   const configOverride =
     slotModuleConfig?.extensionSlots?.[slotName]?.configure?.[extensionId] ??
     {};
-  const extensionModuleConfig = mergeConfigsFor(
-    extensionModuleName,
-    providedConfigs
-  );
-  const extensionConfig = mergeConfigs([extensionModuleConfig, configOverride]);
-  const schema = configState.schemas[extensionModuleName]; // TODO: validate that a schema exists for the module
-  validateConfig(schema, extensionConfig, extensionModuleName);
+  const extensionConfig = mergeConfigsFor(nameOfSchemaSource, providedConfigs);
+  const combinedConfig = mergeConfigs([extensionConfig, configOverride]);
+  // TODO: validate that a schema exists for the module
+  const schema =
+    extensionConfigSchema ?? configState.schemas[extensionModuleName];
+  validateConfig(schema, combinedConfig, nameOfSchemaSource);
   const config = setDefaults(
     schema,
-    extensionConfig,
+    combinedConfig,
     configState.devDefaultsAreOn
   );
   delete config.extensionSlots;
@@ -740,4 +791,13 @@ function hasObjectSchema(
 
 function isOrdinaryObject(value) {
   return typeof value === "object" && !Array.isArray(value) && value !== null;
+}
+
+/**
+ * Copied over from esm-extensions. It rightly belongs to that module, but esm-config
+ * cannot depend on esm-extensions.
+ */
+function getExtensionNameFromId(extensionId: string) {
+  const [extensionName] = extensionId.split("#");
+  return extensionName;
 }

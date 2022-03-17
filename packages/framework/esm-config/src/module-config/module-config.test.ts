@@ -937,42 +937,30 @@ describe("extension slot config", () => {
 describe("extension config", () => {
   beforeEach(() => {
     console.error = jest.fn();
+    Config.defineConfigSchema("ext-mod", {
+      bar: { _default: "barry" },
+      baz: { _default: "bazzy" },
+    });
   });
 
   afterEach(resetAll);
 
   it("returns the module config", async () => {
-    Config.defineConfigSchema("ext-mod", {
-      bar: { _default: "barry" },
-      baz: { _default: "bazzy" },
-    });
-    const testConfig = { "ext-mod": { bar: "qux" } };
-    Config.provide(testConfig);
-    configExtensionStore.setState({
-      mountedExtensions: [
-        {
-          slotModuleName: "slot-mod",
-          extensionModuleName: "ext-mod",
-          slotName: "barSlot",
-          extensionId: "fooExt",
-        },
-      ],
-    });
-    const config = getExtensionConfigStore(
+    const moduleLevelConfig = { "ext-mod": { bar: "qux" } };
+    updateConfigExtensionStore();
+    Config.provide(moduleLevelConfig);
+    const result = getExtensionConfigStore(
       "slot-mod",
       "barSlot",
       "fooExt"
     ).getState().config;
-    expect(config).toStrictEqual({ bar: "qux", baz: "bazzy" });
+    expect(result).toStrictEqual({ bar: "qux", baz: "bazzy" });
     expect(console.error).not.toHaveBeenCalled();
   });
 
-  it("uses the 'configure' config if one is present", async () => {
-    Config.defineConfigSchema("ext-mod", {
-      bar: { _default: "barry" },
-      baz: { _default: "bazzy" },
-    });
-    const testConfig = {
+  it("uses the 'configure' config if one is present, with module config schema", () => {
+    updateConfigExtensionStore("fooExt#id0");
+    const configureConfig = {
       "ext-mod": { bar: "qux" },
       "slot-mod": {
         extensionSlots: {
@@ -982,54 +970,135 @@ describe("extension config", () => {
         },
       },
     };
-    Config.provide(testConfig);
-    configExtensionStore.setState({
-      mountedExtensions: [
-        {
-          slotModuleName: "slot-mod",
-          extensionModuleName: "ext-mod",
-          slotName: "barSlot",
-          extensionId: "fooExt#id0",
-        },
-      ],
-    });
-    const config = getExtensionConfigStore(
+    Config.provide(configureConfig);
+    const result = getExtensionConfigStore(
       "slot-mod",
       "barSlot",
       "fooExt#id0"
     ).getState().config;
-    expect(config).toStrictEqual({ bar: "qux", baz: "quiz" });
+    expect(result).toStrictEqual({ bar: "qux", baz: "quiz" });
     expect(console.error).not.toHaveBeenCalled();
   });
 
-  it("validates the extension slot config", async () => {
-    Config.defineConfigSchema("ext-mod", {
-      bar: { _default: "barry" },
-      baz: { _default: "bazzy" },
-    });
-    const testConfig = {
+  it("validates the extension configure config, with module config schema", () => {
+    updateConfigExtensionStore("fooExt#id1");
+    const badConfig = {
       "ext-mod": { bar: "qux" },
       "slot-mod": {
         extensionSlots: {
           barSlot: {
-            configure: { "fooExt#id0": { beef: "bad" } },
+            configure: { "fooExt#id1": { beef: "bad" } },
           },
         },
       },
     };
-    Config.provide(testConfig);
-    configExtensionStore.setState({
-      mountedExtensions: [
-        {
-          slotModuleName: "slot-mod",
-          extensionModuleName: "ext-mod",
-          slotName: "barSlot",
-          extensionId: "fooExt#id0",
-        },
-      ],
-    });
+    Config.provide(badConfig);
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(/unknown config key 'ext-mod.beef' provided.*/i)
     );
   });
+
+  it("returns the extension config if an extension config schema is defined", async () => {
+    updateConfigExtensionStore("fooExt");
+    Config.defineExtensionConfigSchema("fooExt", {
+      qux: { _default: "quxxy" },
+    });
+    const extensionAtBaseConfig = { fooExt: { qux: "quxolotl" } };
+    Config.provide(extensionAtBaseConfig);
+    const result = getExtensionConfigStore(
+      "slot-mod",
+      "barSlot",
+      "fooExt"
+    ).getState().config;
+    expect(result).toStrictEqual({ qux: "quxolotl" });
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("uses the 'configure' config if one is present, with extension config schema", () => {
+    updateConfigExtensionStore("fooExt#id2");
+    Config.defineExtensionConfigSchema("fooExt", {
+      qux: { _default: "quxxy" },
+    });
+    const configureConfig = {
+      fooExt: { qux: "quxolotl" },
+      "slot-mod": {
+        extensionSlots: {
+          barSlot: {
+            configure: { "fooExt#id2": { qux: "quxotic" } },
+          },
+        },
+      },
+    };
+    Config.provide(configureConfig);
+    const result = getExtensionConfigStore(
+      "slot-mod",
+      "barSlot",
+      "fooExt#id2"
+    ).getState().config;
+    expect(result).toStrictEqual({ qux: "quxotic" });
+  });
+
+  it("validates the extension configure config, with extension config schema", () => {
+    updateConfigExtensionStore("fooExt#id3");
+    Config.defineExtensionConfigSchema("fooExt", {
+      qux: { _default: "quxxy" },
+    });
+    const configureConfig = {
+      "slot-mod": {
+        extensionSlots: {
+          barSlot: {
+            configure: { "fooExt#id3": { no: "bad" } },
+          },
+        },
+      },
+    };
+    Config.provide(configureConfig);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/unknown config key 'fooExt.no' provided.*/i)
+    );
+  });
+
+  it("does not accept module config parameters for extension if extension config schema is defined", () => {
+    Config.defineExtensionConfigSchema("fooExt", {
+      qux: { _default: "quxxy" },
+    });
+    const badConfigNoModuleConfigsForExtension = {
+      fooExt: {
+        bar: "no good",
+      },
+    };
+    Config.provide(badConfigNoModuleConfigsForExtension);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/unknown config key 'fooExt.bar' provided.*/i)
+    );
+  });
+
+  it("does not accept extension config parameters for the module", () => {
+    updateConfigExtensionStore("fooExt#id5");
+    Config.defineExtensionConfigSchema("fooExt", {
+      qux: { _default: "quxxy" },
+    });
+    const badConfigNoExtensionConfigsForModule = {
+      "ext-mod": {
+        qux: "also bad",
+      },
+    };
+    Config.provide(badConfigNoExtensionConfigsForModule);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/unknown config key 'ext-mod.qux' provided.*/i)
+    );
+  });
 });
+
+function updateConfigExtensionStore(extensionId = "fooExt") {
+  configExtensionStore.setState({
+    mountedExtensions: [
+      {
+        slotModuleName: "slot-mod",
+        extensionModuleName: "ext-mod",
+        slotName: "barSlot",
+        extensionId,
+      },
+    ],
+  });
+}

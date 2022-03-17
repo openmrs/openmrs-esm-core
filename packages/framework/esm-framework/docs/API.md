@@ -70,6 +70,7 @@
 - [createUseStore](API.md#createusestore)
 - [daysIntoYear](API.md#daysintoyear)
 - [defineConfigSchema](API.md#defineconfigschema)
+- [defineExtensionConfigSchema](API.md#defineextensionconfigschema)
 - [deleteSynchronizationItem](API.md#deletesynchronizationitem)
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
@@ -154,7 +155,6 @@
 - [useForceUpdate](API.md#useforceupdate)
 - [useLayoutType](API.md#uselayouttype)
 - [useLocations](API.md#uselocations)
-- [useNavigationContext](API.md#usenavigationcontext)
 - [useOnClickOutside](API.md#useonclickoutside)
 - [usePagination](API.md#usepagination)
 - [usePatient](API.md#usepatient)
@@ -2037,12 +2037,19 @@ ___
 
 ▸ **defineConfigSchema**(`moduleName`, `schema`): `void`
 
+This defines a configuration schema for a module. The schema tells the
+configuration system how the module can be configured. It specifies
+what makes configuration valid or invalid.
+
+See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+for more information about defining a config schema.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `moduleName` | `string` |
-| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `moduleName` | `string` | Name of the module the schema is being defined for. Generally   should be the one in which the `defineConfigSchema` call takes place. |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | The config schema for the module |
 
 #### Returns
 
@@ -2050,7 +2057,39 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L178)
+[packages/framework/esm-config/src/module-config/module-config.ts:191](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L191)
+
+___
+
+### defineExtensionConfigSchema
+
+▸ **defineExtensionConfigSchema**(`extensionName`, `schema`): `void`
+
+This defines a configuration schema for an extension. When a schema is defined
+for an extension, that extension will receive the configuration corresponding
+to that schema, rather than the configuration corresponding to the module
+in which it is defined.
+
+The schema tells the configuration system how the module can be configured.
+It specifies what makes configuration valid or invalid.
+
+See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+for more information about defining a config schema.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `extensionName` | `string` | Name of the extension the schema is being defined for.   Should match the `name` of one of the `extensions` entries being returned   by `setupOpenMRS`. |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | The config schema for the extension |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/module-config.ts:216](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L216)
 
 ___
 
@@ -2347,7 +2386,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:206](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L206)
+[packages/framework/esm-config/src/module-config/module-config.ts:252](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L252)
 
 ___
 
@@ -2966,7 +3005,7 @@ Validate and interpolate defaults for `providedConfig` according to `schema`
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L228)
+[packages/framework/esm-config/src/module-config/module-config.ts:274](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L274)
 
 ___
 
@@ -2987,7 +3026,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:186](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L186)
+[packages/framework/esm-config/src/module-config/module-config.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L232)
 
 ___
 
@@ -4053,28 +4092,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useLocations.tsx:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLocations.tsx#L4)
-
-___
-
-### useNavigationContext
-
-▸ **useNavigationContext**(`context`): `void`
-
-**`deprecated`** Don't use this anymore.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `context` | [`NavigationContext`](interfaces/NavigationContext.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useNavigationContext.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useNavigationContext.ts#L10)
 
 ___
 
