@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom";
-import Login from "./login.component";
 import { useState } from "react";
 import { waitFor, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -8,6 +6,7 @@ import { performLogin } from "./login.resource";
 import { useCurrentUser } from "../CurrentUserContext";
 import { mockConfig } from "../../__mocks__/config.mock";
 import renderWithRouter from "../test-helpers/render-with-router";
+import Login from "./login.component";
 
 const mockedLogin = performLogin as jest.Mock;
 
@@ -136,6 +135,7 @@ describe(`<Login />`, () => {
       expect(wrapper.history.location.pathname).toBe("/login/location")
     );
   });
+
   it("respects the logo configuration", () => {
     const customLogoConfig = {
       src: "https://some-image-host.com/foo.png",

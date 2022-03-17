@@ -9,5 +9,5 @@ module.exports = {
     "\\.(s?css)$": "identity-obj-proxy",
     "^lodash-es/(.*)$": "lodash/$1",
   },
-  setupFiles: ["<rootDir>/src/setup-tests.js"],
+  setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
 };
