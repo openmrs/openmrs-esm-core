@@ -201,7 +201,7 @@ describe("ChooseLocation: ", () => {
   });
 });
 
-export function waitForLoadingToFinish() {
+function waitForLoadingToFinish() {
   return waitForElementToBeRemoved(
     () => [...screen.queryAllByRole(/progressbar/i)],
     {
