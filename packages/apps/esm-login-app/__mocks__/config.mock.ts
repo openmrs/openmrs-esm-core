@@ -7,6 +7,7 @@ export const mockConfig = {
   chooseLocation: {
     enabled: true,
     numberToShow: 3,
+    useLoginLocationTag: true,
   },
   logo: {
     src: null,

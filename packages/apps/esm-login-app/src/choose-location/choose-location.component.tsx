@@ -54,10 +54,10 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
 
   useEffect(() => {
     if (!isLoading) {
-      if (!config.chooseLocation.enabled || locationData.length === 1) {
+      if (!config.chooseLocation.enabled || locationData?.length === 1) {
         changeLocation(locationData[0]?.resource.id);
       }
-      if (!isLoading && !locationData.length) {
+      if (!isLoading && !locationData?.length) {
         changeLocation();
       }
     }
