@@ -1,6 +1,6 @@
 import React from "react";
 import { Loading } from "carbon-components-react";
-import styles from "./loading.component.scss";
+import styles from "./loading.scss";
 
 const LoadingIcon: React.FC = () => (
   <div className={styles["centerLoadingSVG"]}>

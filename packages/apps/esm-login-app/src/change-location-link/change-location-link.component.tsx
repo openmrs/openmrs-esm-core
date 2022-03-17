@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { navigate } from "@openmrs/esm-framework";
-import styles from "./change-location.link.component.scss";
+import { Button } from "carbon-components-react";
 import Location20 from "@carbon/icons-react/es/location/20";
+import styles from "./change-location-link.scss";
 
 interface ChangeLocationLinkProps {
   referer?: string;
