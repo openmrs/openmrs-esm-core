@@ -2,12 +2,6 @@
 
 # Interface: ExtensionRegistration
 
-## Hierarchy
-
-- **`ExtensionRegistration`**
-
-  ↳ [`ExtensionInfo`](ExtensionInfo.md)
-
 ## Table of contents
 
 ### Properties

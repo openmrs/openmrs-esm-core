@@ -63,8 +63,6 @@
 - [attach](API.md#attach)
 - [beginEditSynchronizationItem](API.md#begineditsynchronizationitem)
 - [canBeginEditSynchronizationItemsOfType](API.md#canbegineditsynchronizationitemsoftype)
-- [checkStatus](API.md#checkstatus)
-- [checkStatusFor](API.md#checkstatusfor)
 - [createErrorHandler](API.md#createerrorhandler)
 - [createGlobalStore](API.md#createglobalstore)
 - [createUseStore](API.md#createusestore)
@@ -74,10 +72,8 @@
 - [deleteSynchronizationItem](API.md#deletesynchronizationitem)
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
-- [dispatchConnectivityChanged](API.md#dispatchconnectivitychanged)
 - [dispatchNetworkRequestFailed](API.md#dispatchnetworkrequestfailed)
 - [dispatchNotificationShown](API.md#dispatchnotificationshown)
-- [dispatchPrecacheStaticDependencies](API.md#dispatchprecachestaticdependencies)
 - [generateOfflineUuid](API.md#generateofflineuuid)
 - [getAppState](API.md#getappstate)
 - [getAssignedExtensions](API.md#getassignedextensions)
@@ -86,10 +82,7 @@
 - [getConfig](API.md#getconfig)
 - [getConnectedExtensions](API.md#getconnectedextensions)
 - [getCurrentOfflineMode](API.md#getcurrentofflinemode)
-- [getCustomProps](API.md#getcustomprops)
 - [getExtensionNameFromId](API.md#getextensionnamefromid)
-- [getExtensionRegistration](API.md#getextensionregistration)
-- [getExtensionRegistrationFrom](API.md#getextensionregistrationfrom)
 - [getExtensionStore](API.md#getextensionstore)
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
@@ -100,7 +93,6 @@
 - [getSynchronizationItem](API.md#getsynchronizationitem)
 - [getSynchronizationItems](API.md#getsynchronizationitems)
 - [getSynchronizationItemsFor](API.md#getsynchronizationitemsfor)
-- [handleApiError](API.md#handleapierror)
 - [inRange](API.md#inrange)
 - [integrateBreakpoints](API.md#integratebreakpoints)
 - [isOfflineUuid](API.md#isofflineuuid)
@@ -111,7 +103,6 @@
 - [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
 - [patchXMLHttpRequest](API.md#patchxmlhttprequest)
 - [provide](API.md#provide)
-- [pushNavigationContext](API.md#pushnavigationcontext)
 - [queueSynchronizationItem](API.md#queuesynchronizationitem)
 - [queueSynchronizationItemFor](API.md#queuesynchronizationitemfor)
 - [registerOfflinePatientHandler](API.md#registerofflinepatienthandler)
@@ -126,8 +117,6 @@
 - [runSynchronization](API.md#runsynchronization)
 - [setCurrentOfflineMode](API.md#setcurrentofflinemode)
 - [setupOfflineSync](API.md#setupofflinesync)
-- [setupPaths](API.md#setuppaths)
-- [setupUtils](API.md#setuputils)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
@@ -138,7 +127,6 @@
 - [subscribePrecacheStaticDependencies](API.md#subscribeprecachestaticdependencies)
 - [subscribeTo](API.md#subscribeto)
 - [subscribeToastShown](API.md#subscribetoastshown)
-- [switchTo](API.md#switchto)
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
 - [translateFrom](API.md#translatefrom)
 - [update](API.md#update)
@@ -310,16 +298,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L7)
-
-___
-
-### NavigationContextType
-
-Ƭ **NavigationContextType**: ``"workspace"`` \| ``"dialog"`` \| ``"link"``
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/contexts.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L3)
 
 ___
 
@@ -641,18 +619,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-backend-dependencies.ts#L1)
-
-___
-
-### extensionStore
-
-• **extensionStore**: `Store`<[`ExtensionInternalStore`](interfaces/ExtensionInternalStore.md)\>
-
-**`deprecated`** Use `getExtensionStore`. The structure of this store has also changed.
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/index.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/index.ts#L12)
 
 ___
 
@@ -1850,49 +1816,6 @@ registered synchronization handlers.
 
 ___
 
-### checkStatus
-
-▸ **checkStatus**(`online?`, `offline?`): `boolean`
-
-#### Parameters
-
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `online` | `boolean` \| `object` | `true` |
-| `offline` | `boolean` \| `object` | `false` |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/helpers.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/helpers.ts#L1)
-
-___
-
-### checkStatusFor
-
-▸ **checkStatusFor**(`status`, `online?`, `offline?`): `boolean`
-
-#### Parameters
-
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `status` | `boolean` | `undefined` |
-| `online` | `boolean` \| `object` | `true` |
-| `offline` | `boolean` \| `object` | `false` |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/helpers.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/helpers.ts#L9)
-
-___
-
 ### createErrorHandler
 
 ▸ **createErrorHandler**(): (`incomingErr`: `any`) => `void`
@@ -1915,7 +1838,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-error-handling/src/index.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L31)
+[packages/framework/esm-error-handling/src/index.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L23)
 
 ___
 
@@ -2159,26 +2082,6 @@ Avoid using this. Extension attachments should be considered declarative.
 
 ___
 
-### dispatchConnectivityChanged
-
-▸ **dispatchConnectivityChanged**(`online`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `online` | `boolean` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/events.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L7)
-
-___
-
 ### dispatchNetworkRequestFailed
 
 ▸ **dispatchNetworkRequestFailed**(`data`): `void`
@@ -2216,26 +2119,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-globals/src/events.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L81)
-
-___
-
-### dispatchPrecacheStaticDependencies
-
-▸ **dispatchPrecacheStaticDependencies**(`data?`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | [`PrecacheStaticDependenciesEvent`](interfaces/PrecacheStaticDependenciesEvent.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/events.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L34)
 
 ___
 
@@ -2429,27 +2312,6 @@ ___
 
 ___
 
-### getCustomProps
-
-▸ **getCustomProps**(`online`, `offline`): `object`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `online` | `undefined` \| `boolean` \| `object` |
-| `offline` | `undefined` \| `boolean` \| `object` |
-
-#### Returns
-
-`object`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/helpers.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/helpers.ts#L17)
-
-___
-
 ### getExtensionNameFromId
 
 ▸ **getExtensionNameFromId**(`extensionId`): `string`
@@ -2479,47 +2341,6 @@ getExtensionNameFromId("baz")
 #### Defined in
 
 [packages/framework/esm-extensions/src/extensions.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L95)
-
-___
-
-### getExtensionRegistration
-
-▸ **getExtensionRegistration**(`extensionId`): [`ExtensionRegistration`](interfaces/ExtensionRegistration.md) \| `undefined`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `extensionId` | `string` |
-
-#### Returns
-
-[`ExtensionRegistration`](interfaces/ExtensionRegistration.md) \| `undefined`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:108](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L108)
-
-___
-
-### getExtensionRegistrationFrom
-
-▸ **getExtensionRegistrationFrom**(`state`, `extensionId`): [`ExtensionRegistration`](interfaces/ExtensionRegistration.md) \| `undefined`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `state` | [`ExtensionInternalStore`](interfaces/ExtensionInternalStore.md) |
-| `extensionId` | `string` |
-
-#### Returns
-
-[`ExtensionRegistration`](interfaces/ExtensionRegistration.md) \| `undefined`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L100)
 
 ___
 
@@ -2768,32 +2589,6 @@ Returns all currently queued up sync items of a given user.
 
 ___
 
-### handleApiError
-
-▸ **handleApiError**(): (`incomingResponseErr`: `any`) => `void`
-
-#### Returns
-
-`fn`
-
-▸ (`incomingResponseErr`): `void`
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `incomingResponseErr` | `any` |
-
-##### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-error-handling/src/index.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L3)
-
-___
-
 ### inRange
 
 ▸ `Const` **inRange**(`min`, `max`): [`Validator`](API.md#validator)
@@ -3001,34 +2796,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-config/src/module-config/module-config.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L232)
-
-___
-
-### pushNavigationContext
-
-▸ **pushNavigationContext**(`_context`): () => `void`
-
-**`deprecated`** don't use
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `_context` | [`NavigationContext`](interfaces/NavigationContext.md) |
-
-#### Returns
-
-`fn`
-
-▸ (): `void`
-
-##### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/contexts.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L24)
 
 ___
 
@@ -3282,7 +3049,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-error-handling/src/index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L24)
+[packages/framework/esm-error-handling/src/index.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L16)
 
 ___
 
@@ -3388,40 +3155,6 @@ Registers a new synchronization handler which is able to synchronize data of a s
 #### Defined in
 
 [packages/framework/esm-offline/src/sync.ts:389](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L389)
-
-___
-
-### setupPaths
-
-▸ **setupPaths**(`config`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `config` | [`SpaConfig`](interfaces/SpaConfig.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/globals.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/globals.ts#L3)
-
-___
-
-### setupUtils
-
-▸ **setupUtils**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/globals.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/globals.ts#L11)
 
 ___
 
@@ -3683,36 +3416,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-globals/src/events.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L95)
-
-___
-
-### switchTo
-
-▸ **switchTo**<`T`\>(`_type`, `link`, `_state?`): `void`
-
-**`deprecated`** use `navigate` directly
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `_type` | [`NavigationContextType`](API.md#navigationcontexttype) |
-| `link` | `string` |
-| `_state?` | `T` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/contexts.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/contexts.ts#L13)
 
 ___
 
