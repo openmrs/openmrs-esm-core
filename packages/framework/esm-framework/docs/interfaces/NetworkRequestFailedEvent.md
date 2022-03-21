@@ -10,12 +10,12 @@
 
 ## Table of contents
 
-### Properties
+### Offline Properties
 
 - [request](NetworkRequestFailedEvent.md#request)
 - [type](NetworkRequestFailedEvent.md#type)
 
-## Properties
+## Offline Properties
 
 ### request
 
@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-events.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L7)
+[packages/framework/esm-offline/src/service-worker-events.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L9)
 
 ___
 
@@ -46,4 +46,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-events.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L2)
+[packages/framework/esm-offline/src/service-worker-events.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L4)

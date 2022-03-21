@@ -4,14 +4,14 @@
 
 ## Table of contents
 
-### Properties
+### Breadcrumb Properties
 
 - [matcher](BreadcrumbSettings.md#matcher)
 - [parent](BreadcrumbSettings.md#parent)
 - [path](BreadcrumbSettings.md#path)
 - [title](BreadcrumbSettings.md#title)
 
-## Properties
+## Breadcrumb Properties
 
 ### matcher
 
@@ -26,7 +26,7 @@ Can be omitted; the value of `path` is used as the default value.
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/types.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L14)
+[packages/framework/esm-breadcrumbs/src/types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L16)
 
 ___
 
@@ -43,7 +43,7 @@ parent.
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/types.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L23)
+[packages/framework/esm-breadcrumbs/src/types.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L25)
 
 ___
 
@@ -55,7 +55,7 @@ Gets the path of breadcrumb for navigation purposes.
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L5)
+[packages/framework/esm-breadcrumbs/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L7)
 
 ___
 
@@ -67,4 +67,4 @@ The title of the breadcrumb.
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/types.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L27)
+[packages/framework/esm-breadcrumbs/src/types.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/types.ts#L29)

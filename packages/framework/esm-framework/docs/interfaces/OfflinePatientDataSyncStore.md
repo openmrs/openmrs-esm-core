@@ -4,12 +4,12 @@
 
 ## Table of contents
 
-### Properties
+### Offline Properties
 
 - [handlers](OfflinePatientDataSyncStore.md#handlers)
 - [offlinePatientDataSyncState](OfflinePatientDataSyncStore.md#offlinepatientdatasyncstate)
 
-## Properties
+## Offline Properties
 
 ### handlers
 
@@ -21,7 +21,7 @@ the handler registration.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L15)
+[packages/framework/esm-offline/src/offline-patient-data.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L16)
 
 ___
 
@@ -34,4 +34,4 @@ the current data synchronizaton state.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L9)
+[packages/framework/esm-offline/src/offline-patient-data.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L10)

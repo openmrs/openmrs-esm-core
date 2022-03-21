@@ -16,11 +16,11 @@
 
 ## Table of contents
 
-### Properties
+### Offline Properties
 
 - [type](OmrsServiceWorkerEvent.md#type)
 
-## Properties
+## Offline Properties
 
 ### type
 
@@ -28,4 +28,4 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-events.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L2)
+[packages/framework/esm-offline/src/service-worker-events.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L4)
