@@ -110,7 +110,6 @@
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
 - [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
 - [patchXMLHttpRequest](API.md#patchxmlhttprequest)
-- [processConfig](API.md#processconfig)
 - [provide](API.md#provide)
 - [pushNavigationContext](API.md#pushnavigationcontext)
 - [queueSynchronizationItem](API.md#queuesynchronizationitem)
@@ -2981,31 +2980,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-offline/src/patches.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/patches.ts#L1)
-
-___
-
-### processConfig
-
-▸ **processConfig**(`schema`, `providedConfig`, `keyPathContext`, `devDefaultsAreOn?`): [`Config`](interfaces/Config.md)
-
-Validate and interpolate defaults for `providedConfig` according to `schema`
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | `undefined` | a configuration schema |
-| `providedConfig` | [`ConfigObject`](interfaces/ConfigObject.md) | `undefined` | an object of config values (without the top-level module name) |
-| `keyPathContext` | `string` | `undefined` | a dot-deparated string which helps the user figure out where     the provided config came from |
-| `devDefaultsAreOn` | `boolean` | `false` | - |
-
-#### Returns
-
-[`Config`](interfaces/Config.md)
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/module-config.ts:274](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L274)
 
 ___
 
