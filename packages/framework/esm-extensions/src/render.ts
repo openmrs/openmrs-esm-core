@@ -1,3 +1,7 @@
+/**
+ * @module
+ * @category Extension
+ */
 import { Lifecycle } from "@openmrs/esm-globals";
 import { update } from "@openmrs/esm-state";
 import { mountRootParcel, Parcel } from "single-spa";
