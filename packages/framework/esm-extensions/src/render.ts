@@ -1,5 +1,4 @@
 import { Lifecycle } from "@openmrs/esm-globals";
-import { update } from "@openmrs/esm-state";
 import { mountRootParcel, Parcel } from "single-spa";
 import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
 import { checkStatus, getCustomProps } from "./helpers";
@@ -54,19 +53,27 @@ export function renderExtension(
         }
       });
 
-      updateInternalExtensionStore((state) =>
-        update(
-          state,
-          [
-            "extensions",
-            extensionName,
-            "instances",
-            extensionSlotModuleName,
-            extensionSlotName,
-          ],
-          { domElement, id: extensionId }
-        )
-      );
+      updateInternalExtensionStore((state) => {
+        const instance = {
+          domElement,
+          id: extensionId,
+          slotName: extensionSlotName,
+          slotModuleName: extensionSlotModuleName,
+        };
+        return {
+          ...state,
+          extensions: {
+            ...state.extensions,
+            [extensionName]: {
+              ...state.extensions[extensionName],
+              instances: [
+                ...state.extensions[extensionName].instances,
+                instance,
+              ],
+            },
+          },
+        };
+      });
     }
   } else {
     console.warn(

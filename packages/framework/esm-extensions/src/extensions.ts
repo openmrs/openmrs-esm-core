@@ -8,8 +8,11 @@
  */
 
 import {
+  ExtensionsConfigStore,
   ExtensionSlotConfigObject,
   ExtensionSlotsConfigStore,
+  getExtensionConfigFromStore,
+  getExtensionsConfigStore,
   getExtensionSlotConfig,
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
@@ -32,11 +35,14 @@ import {
 
 const extensionInternalStore = getExtensionInternalStore();
 const extensionStore = getExtensionStore();
+const slotsConfigStore = getExtensionSlotsConfigStore();
+const extensionsConfigStore = getExtensionsConfigStore();
 
 // Keep the output store updated
 function updateExtensionOutputStore(
   internalState: ExtensionInternalStore,
-  extensionSlotConfigs: ExtensionSlotsConfigStore
+  extensionSlotConfigs: ExtensionSlotsConfigStore,
+  extensionsConfigStore: ExtensionsConfigStore
 ) {
   const slots: Record<string, ExtensionSlotState> = {};
   for (let [slotName, slot] of Object.entries(internalState.slots)) {
@@ -44,10 +50,11 @@ function updateExtensionOutputStore(
       extensionSlotConfigs,
       slot.name
     );
-    const assignedExtensions = getAssignedExtensionsFromData(
+    const assignedExtensions = getAssignedExtensionsFromSlotData(
       slotName,
       internalState,
-      config
+      config,
+      extensionsConfigStore
     );
     slots[slotName] = { moduleName: slot.moduleName, assignedExtensions };
   }
@@ -59,12 +66,25 @@ function updateExtensionOutputStore(
 extensionInternalStore.subscribe((internalStore) => {
   updateExtensionOutputStore(
     internalStore,
-    getExtensionSlotsConfigStore().getState()
+    slotsConfigStore.getState(),
+    extensionsConfigStore.getState()
   );
 });
 
-getExtensionSlotsConfigStore().subscribe((slotConfigs) => {
-  updateExtensionOutputStore(extensionInternalStore.getState(), slotConfigs);
+slotsConfigStore.subscribe((slotConfigs) => {
+  updateExtensionOutputStore(
+    extensionInternalStore.getState(),
+    slotConfigs,
+    extensionsConfigStore.getState()
+  );
+});
+
+extensionsConfigStore.subscribe((extensionConfigs) => {
+  updateExtensionOutputStore(
+    extensionInternalStore.getState(),
+    slotsConfigStore.getState(),
+    extensionConfigs
+  );
 });
 
 function createNewExtensionSlotInfo(
@@ -124,7 +144,7 @@ export const registerExtension: (
   (state, extensionRegistration: ExtensionRegistration) => {
     state.extensions[extensionRegistration.name] = {
       ...extensionRegistration,
-      instances: {},
+      instances: [],
     };
   }
 );
@@ -271,21 +291,28 @@ export function getConnectedExtensions(
   );
 }
 
-function getAssignedExtensionsFromData(
+function getAssignedExtensionsFromSlotData(
   slotName: string,
   internalState: ExtensionInternalStore,
-  config: ExtensionSlotConfigObject
+  config: ExtensionSlotConfigObject,
+  extensionConfigStoreState: ExtensionsConfigStore
 ): Array<AssignedExtension> {
   const attachedIds = internalState.slots[slotName].attachedIds;
   const assignedIds = calculateAssignedIds(config, attachedIds);
   const extensions: Array<AssignedExtension> = [];
   for (let id of assignedIds) {
+    const { config: extensionConfig } = getExtensionConfigFromStore(
+      extensionConfigStoreState,
+      slotName,
+      id
+    );
     const name = getExtensionNameFromId(id);
     const extension = internalState.extensions[name];
     extensions.push({
       id,
       name,
       moduleName: extension.moduleName,
+      config: extensionConfig,
       meta: extension.meta,
       online: extension.online,
       offline: extension.offline,
@@ -298,8 +325,14 @@ export function getAssignedExtensions(
   slotName: string
 ): Array<AssignedExtension> {
   const internalState = extensionInternalStore.getState();
-  const { config } = getExtensionSlotConfig(slotName);
-  return getAssignedExtensionsFromData(slotName, internalState, config);
+  const { config: slotConfig } = getExtensionSlotConfig(slotName);
+  const extensionStoreState = extensionsConfigStore.getState();
+  return getAssignedExtensionsFromSlotData(
+    slotName,
+    internalState,
+    slotConfig,
+    extensionStoreState
+  );
 }
 
 function calculateAssignedIds(

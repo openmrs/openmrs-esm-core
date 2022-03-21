@@ -1,31 +1,50 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import {
   getConfigStore,
-  getExtensionConfigStore,
+  getExtensionsConfigStore,
   ConfigStore,
+  ExtensionsConfigStore,
+  getExtensionConfigFromStore,
 } from "@openmrs/esm-config";
 import { ComponentContext, ExtensionData } from "./ComponentContext";
 import { ConfigObject } from "@openmrs/esm-config";
 import { Store } from "unistore";
+import isEqual from "lodash-es/isEqual";
 
 const promises: Record<string, Promise<ConfigObject>> = {};
 const errorMessage = `No ComponentContext has been provided. This should come from "openmrsComponentDecorator".
 Usually this is already applied when using "getAsyncLifecycle" or "getSyncLifecycle".`;
 
-function readInitialConfig(store: Store<ConfigStore> | undefined) {
-  if (!store) {
-    return undefined;
-  } else {
+function readInitialConfig(store: Store<ConfigStore>) {
+  return () => {
+    const state = store.getState();
+
+    if (state.loaded && state.config) {
+      return state.config;
+    }
+
+    return null;
+  };
+}
+
+function readInitialExtensionConfig(
+  store: Store<ExtensionsConfigStore>,
+  extension: ExtensionData | undefined
+) {
+  if (extension) {
     return () => {
       const state = store.getState();
-
-      if (state.loaded && state.config) {
-        return state.config;
+      const extConfig = getExtensionConfigFromStore(
+        state,
+        extension.extensionSlotName,
+        extension.extensionId
+      );
+      if (extConfig.loaded && extConfig.config) {
+        return extConfig.config;
       }
-
-      return undefined;
     };
   }
+  return null;
 }
 
 function createConfigPromise(store: Store<ConfigStore>) {
@@ -39,7 +58,26 @@ function createConfigPromise(store: Store<ConfigStore>) {
   });
 }
 
-function useConfigStore(store: Store<ConfigStore> | undefined) {
+function createExtensionConfigPromise(
+  store: Store<ExtensionsConfigStore>,
+  extension: ExtensionData
+) {
+  return new Promise<ConfigObject>((resolve) => {
+    const unsubscribe = store.subscribe((state) => {
+      const extConfig = getExtensionConfigFromStore(
+        state,
+        extension.extensionSlotName,
+        extension.extensionId
+      );
+      if (extConfig.loaded && extConfig.config) {
+        resolve(extConfig.config);
+        unsubscribe();
+      }
+    });
+  });
+}
+
+function useConfigStore(store: Store<ConfigStore>) {
   const [state, setState] = useState(readInitialConfig(store));
 
   useEffect(() => {
@@ -53,24 +91,45 @@ function useConfigStore(store: Store<ConfigStore> | undefined) {
   return state;
 }
 
-function useExtensionConfig(extension: ExtensionData | undefined) {
-  const store = useMemo(
-    () =>
-      extension &&
-      getExtensionConfigStore(
-        extension.extensionSlotModuleName,
-        extension.extensionSlotName,
-        extension.extensionId
-      ),
-    [extension]
+function useExtensionConfigStore(
+  store: Store<ExtensionsConfigStore>,
+  extension: ExtensionData | undefined
+) {
+  const [config, setConfig] = useState<ConfigObject | null>(
+    readInitialExtensionConfig(store, extension)
   );
-  const state = useConfigStore(store);
+
+  useEffect(() => {
+    if (extension) {
+      return store.subscribe((state) => {
+        const extConfig = getExtensionConfigFromStore(
+          state,
+          extension.extensionSlotName,
+          extension.extensionId
+        );
+        if (
+          extConfig.loaded &&
+          extConfig.config &&
+          !isEqual(extConfig.config, config)
+        ) {
+          setConfig(extConfig.config);
+        }
+      });
+    }
+  }, [store, extension, config]);
+
+  return config;
+}
+
+function useExtensionConfig(extension: ExtensionData | undefined) {
+  const store = useMemo(getExtensionsConfigStore, []);
+  const state = useExtensionConfigStore(store, extension);
 
   if (!state && extension) {
-    const cacheId = `${extension.extensionSlotModuleName}-${extension.extensionSlotName}-${extension.extensionId}`;
+    const cacheId = `${extension.extensionSlotName}-${extension.extensionId}`;
 
     if (!promises[cacheId] && store) {
-      promises[cacheId] = createConfigPromise(store);
+      promises[cacheId] = createExtensionConfigPromise(store, extension);
     }
 
     // React will prevent the client component from rendering until the promise resolves

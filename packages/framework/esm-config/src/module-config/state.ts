@@ -109,7 +109,7 @@ export interface ConfigExtensionStoreElement {
 
 /** @internal */
 export const configExtensionStore = createGlobalStore<ConfigExtensionStore>(
-  "config-extensions",
+  "config-store-of-extension-state",
   { mountedExtensions: [] }
 );
 
@@ -177,19 +177,42 @@ export function getExtensionSlotConfigFromStore(
   return slotConfig ?? { loaded: false, config: {} };
 }
 
+/** @internal */
+export interface ExtensionsConfigStore {
+  configs: {
+    [slotName: string]: {
+      [extensionId: string]: ConfigStore;
+    };
+  };
+}
+
 /**
- * A store for each mounted extension's config
+ * One store for all the extensions
  * @internal
  */
-export function getExtensionConfigStore(
-  extensionSlotModuleName: string,
-  attachedExtensionSlotName: string,
+export function getExtensionsConfigStore() {
+  return getGlobalStore<ExtensionsConfigStore>(`config-extensions`, {
+    configs: {},
+  });
+}
+
+/** @internal */
+export function getExtensionConfig(slotName: string, extensionId: string) {
+  return getExtensionConfigFromStore(
+    getExtensionsConfigStore().getState(),
+    slotName,
+    extensionId
+  );
+}
+
+/** @internal */
+export function getExtensionConfigFromStore(
+  state: ExtensionsConfigStore,
+  slotName: string,
   extensionId: string
 ) {
-  return getGlobalStore<ConfigStore>(
-    `config-extension-${extensionSlotModuleName}-${attachedExtensionSlotName}-${extensionId}`,
-    initializeConfigStore()
-  );
+  const extensionConfig = state.configs[slotName]?.[extensionId];
+  return extensionConfig ?? { loaded: false, config: null };
 }
 
 /**

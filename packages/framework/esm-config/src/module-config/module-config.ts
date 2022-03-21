@@ -22,10 +22,11 @@ import {
   ConfigStore,
   configExtensionStore,
   getConfigStore,
-  getExtensionConfigStore,
+  getExtensionsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
   getExtensionSlotsConfigStore,
+  ExtensionsConfigStore,
 } from "./state";
 import type {} from "@openmrs/esm-globals";
 import { TemporaryConfigStore } from "..";
@@ -88,27 +89,27 @@ computeExtensionConfigs(
   configExtensionStore.getState(),
   temporaryConfigStore.getState()
 );
-configInternalStore.subscribe((configState) =>
+configInternalStore.subscribe((configState) => {
   computeExtensionConfigs(
     configState,
     configExtensionStore.getState(),
     temporaryConfigStore.getState()
-  )
-);
-configExtensionStore.subscribe((extensionState) =>
+  );
+});
+configExtensionStore.subscribe((extensionState) => {
   computeExtensionConfigs(
     configInternalStore.getState(),
     extensionState,
     temporaryConfigStore.getState()
-  )
-);
-temporaryConfigStore.subscribe((tempConfigState) =>
+  );
+});
+temporaryConfigStore.subscribe((tempConfigState) => {
   computeExtensionConfigs(
     configInternalStore.getState(),
     configExtensionStore.getState(),
     tempConfigState
-  )
-);
+  );
+});
 
 function computeModuleConfig(
   state: ConfigInternalStore,
@@ -153,13 +154,9 @@ function computeExtensionConfigs(
   extensionState: ConfigExtensionStore,
   tempConfigState: TemporaryConfigStore
 ) {
+  const configs = {};
   for (let extension of extensionState.mountedExtensions) {
-    const extensionStore = getExtensionConfigStore(
-      extension.slotModuleName,
-      extension.slotName,
-      extension.extensionId
-    );
-    const config = getExtensionConfig(
+    const config = computeExtensionConfig(
       extension.slotModuleName,
       extension.extensionModuleName,
       extension.slotName,
@@ -167,8 +164,12 @@ function computeExtensionConfigs(
       configState,
       tempConfigState
     );
-    extensionStore.setState({ loaded: true, config });
+    configs[extension.slotName] = {
+      ...configs[extension.slotName],
+      [extension.extensionId]: { config, loaded: true },
+    };
   }
+  getExtensionsConfigStore().setState({ configs });
 }
 
 /*
@@ -300,7 +301,7 @@ export function processConfig(
  * @param slotName The name of the extension slot where the extension is mounted
  * @param extensionId The ID of the extension in its slot
  */
-function getExtensionConfig(
+function computeExtensionConfig(
   slotModuleName: string,
   extensionModuleName: string,
   slotName: string,
