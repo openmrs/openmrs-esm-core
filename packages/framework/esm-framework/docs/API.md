@@ -58,23 +58,17 @@
 
 ### Other Functions
 
-- [activateOfflineCapability](API.md#activateofflinecapability)
 - [age](API.md#age)
 - [attach](API.md#attach)
-- [beginEditSynchronizationItem](API.md#begineditsynchronizationitem)
-- [canBeginEditSynchronizationItemsOfType](API.md#canbegineditsynchronizationitemsoftype)
 - [createErrorHandler](API.md#createerrorhandler)
 - [createGlobalStore](API.md#createglobalstore)
 - [createUseStore](API.md#createusestore)
 - [daysIntoYear](API.md#daysintoyear)
 - [defineConfigSchema](API.md#defineconfigschema)
 - [defineExtensionConfigSchema](API.md#defineextensionconfigschema)
-- [deleteSynchronizationItem](API.md#deletesynchronizationitem)
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
-- [dispatchNetworkRequestFailed](API.md#dispatchnetworkrequestfailed)
 - [dispatchNotificationShown](API.md#dispatchnotificationshown)
-- [generateOfflineUuid](API.md#generateofflineuuid)
 - [getAppState](API.md#getappstate)
 - [getAssignedExtensions](API.md#getassignedextensions)
 - [getAsyncExtensionLifecycle](API.md#getasyncextensionlifecycle)
@@ -87,36 +81,17 @@
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
 - [getOfflinePatientDataStore](API.md#getofflinepatientdatastore)
-- [getOfflineSynchronizationStore](API.md#getofflinesynchronizationstore)
-- [getOmrsServiceWorker](API.md#getomrsserviceworker)
 - [getSyncLifecycle](API.md#getsynclifecycle)
-- [getSynchronizationItem](API.md#getsynchronizationitem)
-- [getSynchronizationItems](API.md#getsynchronizationitems)
-- [getSynchronizationItemsFor](API.md#getsynchronizationitemsfor)
 - [inRange](API.md#inrange)
-- [integrateBreakpoints](API.md#integratebreakpoints)
-- [isOfflineUuid](API.md#isofflineuuid)
 - [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [loadPersistedPatientDataSyncState](API.md#loadpersistedpatientdatasyncstate)
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
-- [openmrsComponentDecorator](API.md#openmrscomponentdecorator)
-- [patchXMLHttpRequest](API.md#patchxmlhttprequest)
 - [provide](API.md#provide)
-- [queueSynchronizationItem](API.md#queuesynchronizationitem)
-- [queueSynchronizationItemFor](API.md#queuesynchronizationitemfor)
 - [registerOfflinePatientHandler](API.md#registerofflinepatienthandler)
-- [registerOmrsServiceWorker](API.md#registeromrsserviceworker)
 - [renderExtension](API.md#renderextension)
-- [renderInlineNotifications](API.md#renderinlinenotifications)
-- [renderLoadingSpinner](API.md#renderloadingspinner)
-- [renderModals](API.md#rendermodals)
-- [renderToasts](API.md#rendertoasts)
 - [reportError](API.md#reporterror)
 - [retry](API.md#retry)
-- [runSynchronization](API.md#runsynchronization)
-- [setCurrentOfflineMode](API.md#setcurrentofflinemode)
-- [setupOfflineSync](API.md#setupofflinesync)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
@@ -129,7 +104,6 @@
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
 - [translateFrom](API.md#translatefrom)
-- [update](API.md#update)
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
 - [useAssignedExtensions](API.md#useassignedextensions)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
@@ -139,7 +113,6 @@
 - [useCurrentPatient](API.md#usecurrentpatient)
 - [useExtensionSlotMeta](API.md#useextensionslotmeta)
 - [useExtensionStore](API.md#useextensionstore)
-- [useForceUpdate](API.md#useforceupdate)
 - [useLayoutType](API.md#uselayouttype)
 - [useLocations](API.md#uselocations)
 - [useOnClickOutside](API.md#useonclickoutside)
@@ -357,42 +330,6 @@ HTTP requests with these headers are handled in a special way by the SPA's servi
 
 ___
 
-### ProcessSyncItem
-
-Ƭ **ProcessSyncItem**<`T`\>: (`item`: `T`, `options`: [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\>) => `Promise`<`any`\>
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Type declaration
-
-▸ (`item`, `options`): `Promise`<`any`\>
-
-A function which, when invoked, performs the actual client-server synchronization of the given
-`item` (which is the actual data to be synchronized).
-The function receives additional `options` which provide additional data that can be used
-for synchronizing.
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `item` | `T` |
-| `options` | [`SyncProcessOptions`](interfaces/SyncProcessOptions.md)<`T`\> |
-
-##### Returns
-
-`Promise`<`any`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L45)
-
-___
-
 ### ProvidedConfig
 
 Ƭ **ProvidedConfig**: `Object`
@@ -555,18 +492,6 @@ ___
 
 ## Other Variables
 
-### ComponentContext
-
-• **ComponentContext**: `Context`<[`ComponentConfig`](interfaces/ComponentConfig.md)\>
-
-Available to all components. Provided by `openmrsComponentDecorator`.
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/ComponentContext.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ComponentContext.ts#L17)
-
-___
-
 ### Extension
 
 • **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
@@ -619,16 +544,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-backend-dependencies.ts#L1)
-
-___
-
-### offlineUuidPrefix
-
-• **offlineUuidPrefix**: ``"OFFLINE+"``
-
-#### Defined in
-
-[packages/framework/esm-offline/src/uuid.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/uuid.ts#L3)
 
 ___
 
@@ -1698,20 +1613,6 @@ ___
 
 ## Other Functions
 
-### activateOfflineCapability
-
-▸ **activateOfflineCapability**(): `Promise`<`void`\>
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/mode.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L65)
-
-___
-
 ### age
 
 ▸ **age**(`dateString`): `string`
@@ -1767,52 +1668,6 @@ writing a module for a specific implementation.
 #### Defined in
 
 [packages/framework/esm-extensions/src/extensions.ts:151](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L151)
-
-___
-
-### beginEditSynchronizationItem
-
-▸ **beginEditSynchronizationItem**(`id`): `Promise`<`void`\>
-
-Triggers an edit flow for the given synchronization item.
-If this is not possible, throws an error.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `id` | `number` | The ID of the synchronization item to be edited. |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:354](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L354)
-
-___
-
-### canBeginEditSynchronizationItemsOfType
-
-▸ **canBeginEditSynchronizationItemsOfType**(`type`): `boolean`
-
-Returns whether editing synchronization items of the given type is supported by the currently
-registered synchronization handlers.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization item which should be edited. |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:344](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L344)
 
 ___
 
@@ -2015,28 +1870,6 @@ for more information about defining a config schema.
 
 ___
 
-### deleteSynchronizationItem
-
-▸ **deleteSynchronizationItem**(`id`): `Promise`<`void`\>
-
-Deletes a queued up sync item with the given ID.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `id` | `number` | The ID of the synchronization item to be deleted. |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:374](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L374)
-
-___
-
 ### detach
 
 ▸ **detach**(`extensionSlotName`, `extensionId`): `void`
@@ -2082,26 +1915,6 @@ Avoid using this. Extension attachments should be considered declarative.
 
 ___
 
-### dispatchNetworkRequestFailed
-
-▸ **dispatchNetworkRequestFailed**(`data`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `data` | [`NetworkRequestFailedEvent`](interfaces/NetworkRequestFailedEvent.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/events.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/events.ts#L5)
-
-___
-
 ### dispatchNotificationShown
 
 ▸ **dispatchNotificationShown**(`data`): `void`
@@ -2122,29 +1935,13 @@ ___
 
 ___
 
-### generateOfflineUuid
-
-▸ **generateOfflineUuid**(): `string`
-
-Generates a UUID-like string which is used for uniquely identifying objects while offline.
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/uuid.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/uuid.ts#L6)
-
-___
-
 ### getAppState
 
-▸ **getAppState**(): `Store`<[`AppState`](interfaces/AppState.md)\>
+▸ **getAppState**(): `Store`<`AppState`\>
 
 #### Returns
 
-`Store`<[`AppState`](interfaces/AppState.md)\>
+`Store`<`AppState`\>
 
 The [store](https://github.com/developit/unistore#store) named `app`.
 
@@ -2191,7 +1988,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `lazy` | () => `Promise`<{ `default`: `ComponentType`<`T`\>  }\> |
-| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
+| `options` | `ComponentDecoratorOptions` |
 
 #### Returns
 
@@ -2224,7 +2021,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `lazy` | () => `Promise`<{ `default`: `ComponentType`<`T`\>  }\> |
-| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
+| `options` | `ComponentDecoratorOptions` |
 
 #### Returns
 
@@ -2409,7 +2206,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `Component` | `ComponentType`<`T`\> |
-| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
+| `options` | `ComponentDecoratorOptions` |
 
 #### Returns
 
@@ -2435,42 +2232,6 @@ ___
 
 ___
 
-### getOfflineSynchronizationStore
-
-▸ **getOfflineSynchronizationStore**(): `Store`<[`OfflineSynchronizationStore`](interfaces/OfflineSynchronizationStore.md)\>
-
-#### Returns
-
-`Store`<[`OfflineSynchronizationStore`](interfaces/OfflineSynchronizationStore.md)\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L133)
-
-___
-
-### getOmrsServiceWorker
-
-▸ **getOmrsServiceWorker**(): `Promise`<`Workbox` \| `undefined`\>
-
-If a service worker has been registered, returns a promise that resolves to a {@link Workbox}
-instance which is used by the application to manage that service worker.
-
-If no service worker has been registered (e.g. when the application is built without offline specific features),
-returns a promise which immediately resolves to `undefined`.
-
-#### Returns
-
-`Promise`<`Workbox` \| `undefined`\>
-
-A promise which either resolves to `undefined` or to the app's {@link Workbox} instance.
-
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker.ts#L42)
-
-___
-
 ### getSyncLifecycle
 
 ▸ **getSyncLifecycle**<`T`\>(`Component`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
@@ -2486,7 +2247,7 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `Component` | `ComponentType`<`T`\> |
-| `options` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
+| `options` | `ComponentDecoratorOptions` |
 
 #### Returns
 
@@ -2501,91 +2262,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/getLifecycle.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/getLifecycle.ts#L28)
-
-___
-
-### getSynchronizationItem
-
-▸ **getSynchronizationItem**<`T`\>(`id`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\> \| `undefined`\>
-
-Returns a queued sync item with the given ID or `undefined` if no such item exists.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `any` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `id` | `number` | The ID of the requested sync item. |
-
-#### Returns
-
-`Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\> \| `undefined`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:333](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L333)
-
-___
-
-### getSynchronizationItems
-
-▸ **getSynchronizationItems**<`T`\>(`type`): `Promise`<`T`[]\>
-
-Returns all currently queued up sync items of the currently signed in user.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization items to be returned. |
-
-#### Returns
-
-`Promise`<`T`[]\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:324](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L324)
-
-___
-
-### getSynchronizationItemsFor
-
-▸ **getSynchronizationItemsFor**<`T`\>(`userId`, `type`): `Promise`<`T`[]\>
-
-Returns all currently queued up sync items of a given user.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `userId` | `string` | The ID of the user whose synchronization items should be returned. |
-| `type` | `string` | The identifying type of the synchronization items to be returned.. |
-
-#### Returns
-
-`Promise`<`T`[]\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:306](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L306)
 
 ___
 
@@ -2609,42 +2285,6 @@ Verifies that the value is between the provided minimum and maximum
 #### Defined in
 
 [packages/framework/esm-config/src/validators/validators.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L9)
-
-___
-
-### integrateBreakpoints
-
-▸ **integrateBreakpoints**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/breakpoints/index.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/breakpoints/index.ts#L20)
-
-___
-
-### isOfflineUuid
-
-▸ **isOfflineUuid**(`uuid`): `boolean`
-
-Checks whether the given string has the format of an offline UUID generated by [generateOfflineUuid](API.md#generateofflineuuid)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `uuid` | `string` |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/uuid.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/uuid.ts#L11)
 
 ___
 
@@ -2732,52 +2372,6 @@ A promise which completes when the message has been successfully processed by th
 
 ___
 
-### openmrsComponentDecorator
-
-▸ **openmrsComponentDecorator**(`userOpts`): (`Comp`: `ComponentType`<{}\>) => `ComponentType`<`any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `userOpts` | [`ComponentDecoratorOptions`](interfaces/ComponentDecoratorOptions.md) |
-
-#### Returns
-
-`fn`
-
-▸ (`Comp`): `ComponentType`<`any`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `Comp` | `ComponentType`<{}\> |
-
-##### Returns
-
-`ComponentType`<`any`\>
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/openmrsComponentDecorator.tsx#L71)
-
-___
-
-### patchXMLHttpRequest
-
-▸ **patchXMLHttpRequest**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/patches.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/patches.ts#L1)
-
-___
-
 ### provide
 
 ▸ **provide**(`config`, `sourceName?`): `void`
@@ -2796,67 +2390,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-config/src/module-config/module-config.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L232)
-
-___
-
-### queueSynchronizationItem
-
-▸ **queueSynchronizationItem**<`T`\>(`type`, `content`, `descriptor?`): `Promise`<`number`\>
-
-Enqueues a new item in the sync queue and associates the item with the currently signed in user.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization item. |
-| `content` | `T` | The actual data to be synchronized. |
-| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) | An optional descriptor providing additional metadata about the sync item. |
-
-#### Returns
-
-`Promise`<`number`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:292](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L292)
-
-___
-
-### queueSynchronizationItemFor
-
-▸ **queueSynchronizationItemFor**<`T`\>(`userId`, `type`, `content`, `descriptor?`): `Promise`<`number`\>
-
-Enqueues a new item in the sync queue for a specific user.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `userId` | `string` | The user with whom the sync item should be associated with. |
-| `type` | `string` | The identifying type of the synchronization item. |
-| `content` | `T` | The actual data to be synchronized. |
-| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) | An optional descriptor providing additional metadata about the sync item. |
-
-#### Returns
-
-`Promise`<`number`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:258](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L258)
 
 ___
 
@@ -2886,32 +2419,6 @@ Attempts to add the specified patient handler registration to the list of offlin
 
 ___
 
-### registerOmrsServiceWorker
-
-▸ **registerOmrsServiceWorker**(`scriptUrl`, `registerOptions?`): `Promise`<`Workbox`\>
-
-If not yet registered, registers the application's global Service Worker.
-Throws if registration is not possible.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `scriptUrl` | `string` |
-| `registerOptions?` | `object` |
-
-#### Returns
-
-`Promise`<`Workbox`\>
-
-A promise which resolves to the registered {@link Workbox} instance which manages the SW.
-
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker.ts#L12)
-
-___
-
 ### renderExtension
 
 ▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): [`CancelLoading`](interfaces/CancelLoading.md)
@@ -2938,98 +2445,6 @@ that registered an extension component for this slot.
 #### Defined in
 
 [packages/framework/esm-extensions/src/render.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L17)
-
-___
-
-### renderInlineNotifications
-
-▸ **renderInlineNotifications**(`target`): `void`
-
-Starts a rendering host for inline notifications. Should only be used by the app shell.
-Under normal conditions there is no need to use this function.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `target` | ``null`` \| `HTMLElement` | The container target that hosts the inline notifications. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/notifications/index.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L19)
-
-___
-
-### renderLoadingSpinner
-
-▸ **renderLoadingSpinner**(`target`): () => `any`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `target` | `HTMLElement` |
-
-#### Returns
-
-`fn`
-
-▸ (): `any`
-
-##### Returns
-
-`any`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/spinner/index.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/spinner/index.ts#L1)
-
-___
-
-### renderModals
-
-▸ **renderModals**(`modalContainer`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `modalContainer` | ``null`` \| `HTMLElement` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/modals/index.tsx:109](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L109)
-
-___
-
-### renderToasts
-
-▸ **renderToasts**(`target`): `void`
-
-Starts a rendering host for toast notifications. Should only be used by the app shell.
-Under normal conditions there is no need to use this function.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `target` | ``null`` \| `HTMLElement` | The container target that hosts the toast notifications. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/toasts/index.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L16)
 
 ___
 
@@ -3088,73 +2503,6 @@ The result of successfully executing `fn`.
 #### Defined in
 
 [packages/framework/esm-utils/src/retry.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L38)
-
-___
-
-### runSynchronization
-
-▸ **runSynchronization**(): `Promise`<`void`\>
-
-Runs a full synchronization of **all** queued synchronization items.
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L140)
-
-___
-
-### setCurrentOfflineMode
-
-▸ **setCurrentOfflineMode**(`mode`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `mode` | [`OfflineMode`](API.md#offlinemode) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/mode.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L55)
-
-___
-
-### setupOfflineSync
-
-▸ **setupOfflineSync**<`T`\>(`type`, `dependsOn`, `process`, `options?`): `void`
-
-Registers a new synchronization handler which is able to synchronize data of a specific type.
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization items which can be handled by this handler. |
-| `dependsOn` | `string`[] | An array of other sync item types which must be synchronized before this handler   can synchronize its own data. Items of these types are effectively dependencies of the data   synchronized by this handler. |
-| `process` | [`ProcessSyncItem`](API.md#processsyncitem)<`T`\> | A function which, when invoked, performs the actual client-server synchronization of the given   `item` (which is the actual data to be synchronized). |
-| `options` | `SetupOfflineSyncOptions`<`T`\> | Additional options which can optionally be provided when setting up a synchronization callback   for a specific synchronization item type. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/sync.ts:389](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L389)
 
 ___
 
@@ -3466,34 +2814,6 @@ ___
 
 ___
 
-### update
-
-▸ **update**<`T`\>(`obj`, `__namedParameters`, `value`): `T`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `Record`<`string`, `any`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `obj` | `T` |
-| `__namedParameters` | `string`[] |
-| `value` | `any` |
-
-#### Returns
-
-`T`
-
-#### Defined in
-
-[packages/framework/esm-state/src/update.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/update.ts#L1)
-
-___
-
 ### useAssignedExtensionIds
 
 ▸ **useAssignedExtensionIds**(`slotName`): `string`[]
@@ -3721,26 +3041,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L4)
-
-___
-
-### useForceUpdate
-
-▸ **useForceUpdate**(): () => `void`
-
-#### Returns
-
-`fn`
-
-▸ (): `void`
-
-##### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useForceUpdate.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useForceUpdate.ts#L3)
 
 ___
 
