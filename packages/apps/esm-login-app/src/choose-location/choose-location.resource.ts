@@ -75,7 +75,7 @@ export function useLoginLocations(
   const memoizedLocationData = useMemo(() => {
     return {
       locationData: data
-        ? [].concat(...data?.map((resp) => resp?.data?.entry))
+        ? [].concat(...data?.map((resp) => resp?.data?.entry ?? []))
         : null,
       isLoading: !data && !error,
       totalResults: data?.[0]?.data?.total ?? null,
