@@ -59,8 +59,7 @@ Here is an example which uses all of the possible keys.
   return {
     pages: [
       {
-        // load (required): tells the app shell how to load the
-        //   frontend module content
+        // load (required): tells the app shell how to load the page content
         load: getAsyncLifecycle(() => import('./hello'), options),
         // route (required): a string, RegEx, function, or array of any of the
         //   above, which will be used to determine when to load the
@@ -79,15 +78,26 @@ Here is an example which uses all of the possible keys.
         resources: { greeting: fetchGreetingOffline }
       },
     ],
-    // To understand the `extensions` section, please see the extensions
-    // documentation and the offline documentation.
+    // To understand the `extensions` section, please read the "Extension System"
+    // page of the documentation.
     extensions: [
       {
+        // name (required): The name of the extension. Must be unique across
+        // all modules in the application.
         name: 'greeting-bot',
-        slot: 'bot-slot',
+        // load (required): tells the app shell how to load the extension content
         load: getAsyncLifecycle(() => import('./greeting-bot'), options),
+        // slot (optional): Specifies a slot for the extension to be attached to.
+        slot: 'bot-slot',
+        // slots (optional): Alternative to `slot` which allows attaching to
+        // multiple slots. For example:
+        // slots: ['bot-slot', 'greeters-slot']
+        
+        // `online`, `offline`, and `resources` are described in the offline
+        //   support documentation. All are optional.
         online: true,
         offline: true,
+        resources: { greeting: fetchGreetingOffline }
       },
     ]
   };
