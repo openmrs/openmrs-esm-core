@@ -167,8 +167,8 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
               <>
                 <p className={styles.resultsCount}>
                   {searchTerm
-                    ? `${locationData?.length ?? 0} ${
-                        locationData?.length === 1
+                    ? `${totalResults ?? 0} ${
+                        totalResults === 1
                           ? t("match", "match")
                           : t("matches", "matches")
                       } ${t("found", "found")}`
