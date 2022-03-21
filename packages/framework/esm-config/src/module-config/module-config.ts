@@ -1,3 +1,4 @@
+/** @module @category Config */
 import { clone, reduce, mergeDeepRight, equals } from "ramda";
 import {
   Config,

@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-### Properties
+### Navigation Properties
 
 - [to](NavigateOptions.md#to)
 
-## Properties
+## Navigation Properties
 
 ### to
 
@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L10)
+[packages/framework/esm-config/src/navigation/navigate.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L11)

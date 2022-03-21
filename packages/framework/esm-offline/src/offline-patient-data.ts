@@ -1,3 +1,4 @@
+/** @module @category Offline */
 import Dexie, { Table } from "dexie";
 import { createGlobalStore } from "@openmrs/esm-state";
 

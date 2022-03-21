@@ -1,3 +1,5 @@
+/** @module @category Offline */
+
 export interface OmrsServiceWorkerEvent<TypeIdentifier extends string> {
   type: TypeIdentifier;
 }

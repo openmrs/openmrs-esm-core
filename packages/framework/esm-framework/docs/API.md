@@ -32,6 +32,13 @@
 - [registerBreadcrumb](API.md#registerbreadcrumb)
 - [registerBreadcrumbs](API.md#registerbreadcrumbs)
 
+### Config Functions
+
+- [defineConfigSchema](API.md#defineconfigschema)
+- [defineExtensionConfigSchema](API.md#defineextensionconfigschema)
+- [getConfig](API.md#getconfig)
+- [provide](API.md#provide)
+
 ### Date and time Functions
 
 - [formatDate](API.md#formatdate)
@@ -48,6 +55,17 @@
 - [toOmrsTimeString24](API.md#toomrstimestring24)
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
 
+### Extension Functions
+
+- [attach](API.md#attach)
+- [detach](API.md#detach)
+- [detachAll](API.md#detachall)
+- [getAssignedExtensions](API.md#getassignedextensions)
+- [getConnectedExtensions](API.md#getconnectedextensions)
+- [getExtensionNameFromId](API.md#getextensionnamefromid)
+- [getExtensionStore](API.md#getextensionstore)
+- [renderExtension](API.md#renderextension)
+
 ### Navigation Functions
 
 - [interpolateString](API.md#interpolatestring)
@@ -59,25 +77,15 @@
 ### Other Functions
 
 - [age](API.md#age)
-- [attach](API.md#attach)
 - [createErrorHandler](API.md#createerrorhandler)
 - [createGlobalStore](API.md#createglobalstore)
 - [createUseStore](API.md#createusestore)
 - [daysIntoYear](API.md#daysintoyear)
-- [defineConfigSchema](API.md#defineconfigschema)
-- [defineExtensionConfigSchema](API.md#defineextensionconfigschema)
-- [detach](API.md#detach)
-- [detachAll](API.md#detachall)
 - [dispatchNotificationShown](API.md#dispatchnotificationshown)
 - [getAppState](API.md#getappstate)
-- [getAssignedExtensions](API.md#getassignedextensions)
 - [getAsyncExtensionLifecycle](API.md#getasyncextensionlifecycle)
 - [getAsyncLifecycle](API.md#getasynclifecycle)
-- [getConfig](API.md#getconfig)
-- [getConnectedExtensions](API.md#getconnectedextensions)
 - [getCurrentOfflineMode](API.md#getcurrentofflinemode)
-- [getExtensionNameFromId](API.md#getextensionnamefromid)
-- [getExtensionStore](API.md#getextensionstore)
 - [getGlobalStore](API.md#getglobalstore)
 - [getLifecycle](API.md#getlifecycle)
 - [getOfflinePatientDataStore](API.md#getofflinepatientdatastore)
@@ -87,9 +95,7 @@
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [loadPersistedPatientDataSyncState](API.md#loadpersistedpatientdatasyncstate)
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
-- [provide](API.md#provide)
 - [registerOfflinePatientHandler](API.md#registerofflinepatienthandler)
-- [renderExtension](API.md#renderextension)
 - [reportError](API.md#reporterror)
 - [retry](API.md#retry)
 - [showModal](API.md#showmodal)
@@ -775,6 +781,15 @@ ___
 
 ▸ **makeUrl**(`path`): `string`
 
+Append `path` to the OpenMRS SPA base.
+
+#### Example
+
+```ts
+makeUrl('/foo/bar');
+// => '/openmrs/foo/bar'
+```
+
 #### Parameters
 
 | Name | Type |
@@ -787,7 +802,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L13)
+[packages/framework/esm-api/src/openmrs-fetch.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L23)
 
 ___
 
@@ -854,7 +869,7 @@ free up memory and network resources and to prevent race conditions.
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L66)
+[packages/framework/esm-api/src/openmrs-fetch.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L76)
 
 ___
 
@@ -905,7 +920,7 @@ To cancel the network request, simply call `subscription.unsubscribe();`
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L237)
+[packages/framework/esm-api/src/openmrs-fetch.ts:247](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L247)
 
 ___
 
@@ -1154,6 +1169,119 @@ ___
 #### Defined in
 
 [packages/framework/esm-breadcrumbs/src/db.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L35)
+
+___
+
+## Config Functions
+
+### defineConfigSchema
+
+▸ **defineConfigSchema**(`moduleName`, `schema`): `void`
+
+This defines a configuration schema for a module. The schema tells the
+configuration system how the module can be configured. It specifies
+what makes configuration valid or invalid.
+
+See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+for more information about defining a config schema.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `moduleName` | `string` | Name of the module the schema is being defined for. Generally   should be the one in which the `defineConfigSchema` call takes place. |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | The config schema for the module |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/module-config.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L192)
+
+___
+
+### defineExtensionConfigSchema
+
+▸ **defineExtensionConfigSchema**(`extensionName`, `schema`): `void`
+
+This defines a configuration schema for an extension. When a schema is defined
+for an extension, that extension will receive the configuration corresponding
+to that schema, rather than the configuration corresponding to the module
+in which it is defined.
+
+The schema tells the configuration system how the module can be configured.
+It specifies what makes configuration valid or invalid.
+
+See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+for more information about defining a config schema.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `extensionName` | `string` | Name of the extension the schema is being defined for.   Should match the `name` of one of the `extensions` entries being returned   by `setupOpenMRS`. |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | The config schema for the extension |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/module-config.ts:217](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L217)
+
+___
+
+### getConfig
+
+▸ **getConfig**(`moduleName`): `Promise`<[`Config`](interfaces/Config.md)\>
+
+A promise-based way to access the config as soon as it is fully loaded.
+If it is already loaded, resolves the config in its present state.
+
+In general you should use the Unistore-based API provided by
+`getConfigStore`, which allows creating a subscription so that you always
+have the latest config. If using React, just use `useConfig`.
+
+This is a useful function if you need to get the config in the course
+of the execution of a function.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `moduleName` | `string` | The name of the module for which to look up the config |
+
+#### Returns
+
+`Promise`<[`Config`](interfaces/Config.md)\>
+
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/module-config.ts:253](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L253)
+
+___
+
+### provide
+
+▸ **provide**(`config`, `sourceName?`): `void`
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `config` | [`Config`](interfaces/Config.md) | `undefined` |
+| `sourceName` | `string` | `"provided"` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-config/src/module-config/module-config.ts:233](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L233)
 
 ___
 
@@ -1474,6 +1602,212 @@ Formats the input as a date string using the format "DD-MMM".
 
 ___
 
+## Extension Functions
+
+### attach
+
+▸ **attach**(`slotName`, `extensionId`): `void`
+
+Attach an extension to an extension slot.
+
+This will cause the extension to be rendered into the specified
+extension slot, unless it is removed by configuration. Using
+`attach` is an alternative to specifying the `slot` or `slots`
+in the extension declaration.
+
+It is particularly useful when creating a slot into which
+you want to render an existing extension. This enables you
+to do so without modifying the extension's declaration, which
+may be impractical or inappropriate, for example if you are
+writing a module for a specific implementation.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `slotName` | `string` | a name uniquely identifying the slot |
+| `extensionId` | `string` | an extension name, with an optional #-suffix    to distinguish it from other instances of the same extension    attached to the same slot. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L152)
+
+___
+
+### detach
+
+▸ **detach**(`extensionSlotName`, `extensionId`): `void`
+
+Avoid using this. Extension attachments should be considered declarative.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `extensionSlotName` | `string` |
+| `extensionId` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:183](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L183)
+
+___
+
+### detachAll
+
+▸ **detachAll**(`extensionSlotName`): `void`
+
+Avoid using this. Extension attachments should be considered declarative.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `extensionSlotName` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:207](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L207)
+
+___
+
+### getAssignedExtensions
+
+▸ **getAssignedExtensions**(`slotName`): [`AssignedExtension`](interfaces/AssignedExtension.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `slotName` | `string` |
+
+#### Returns
+
+[`AssignedExtension`](interfaces/AssignedExtension.md)[]
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:298](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L298)
+
+___
+
+### getConnectedExtensions
+
+▸ **getConnectedExtensions**(`assignedExtensions`, `online?`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
+
+Filters a list of extensions according to whether they support the
+current connectivity status.
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `assignedExtensions` | [`AssignedExtension`](interfaces/AssignedExtension.md)[] | `undefined` | The list of extensions to filter. |
+| `online` | ``null`` \| `boolean` | `null` | Whether the app is currently online. If `null`, uses `navigator.onLine`. |
+
+#### Returns
+
+[`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
+
+A list of extensions that should be rendered
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:265](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L265)
+
+___
+
+### getExtensionNameFromId
+
+▸ **getExtensionNameFromId**(`extensionId`): `string`
+
+Given an extension ID, which is a string uniquely identifying
+an instance of an extension within an extension slot, this
+returns the extension name.
+
+**`example`**
+```js
+getExtensionNameFromId("foo#bar")
+ --> "foo"
+getExtensionNameFromId("baz")
+ --> "baz"
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `extensionId` | `string` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/extensions.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L96)
+
+___
+
+### getExtensionStore
+
+▸ `Const` **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
+
+This returns a [store](https://github.com/developit/unistore#store)
+that modules can use to get information about the state of the
+extension system.
+
+#### Returns
+
+`Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L130)
+
+___
+
+### renderExtension
+
+▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): [`CancelLoading`](interfaces/CancelLoading.md)
+
+Mounts into a DOM node (representing an extension slot)
+a lazy-loaded component from *any* frontend module
+that registered an extension component for this slot.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `domElement` | `HTMLElement` |
+| `extensionSlotName` | `string` |
+| `extensionSlotModuleName` | `string` |
+| `extensionId` | `string` |
+| `renderFunction` | (`lifecycle`: [`Lifecycle`](interfaces/Lifecycle.md)) => [`Lifecycle`](interfaces/Lifecycle.md) |
+| `additionalProps` | `Record`<`string`, `any`\> |
+
+#### Returns
+
+[`CancelLoading`](interfaces/CancelLoading.md)
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/render.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L18)
+
+___
+
 ## Navigation Functions
 
 ### interpolateString
@@ -1532,7 +1866,7 @@ parameters in configurable URLs.
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L14)
+[packages/framework/esm-config/src/navigation/interpolate-string.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L15)
 
 ___
 
@@ -1634,40 +1968,6 @@ A human-readable string version of the age.
 #### Defined in
 
 [packages/framework/esm-utils/src/age-helpers.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L37)
-
-___
-
-### attach
-
-▸ **attach**(`slotName`, `extensionId`): `void`
-
-Attach an extension to an extension slot.
-
-This will cause the extension to be rendered into the specified
-extension slot, unless it is removed by configuration. Using
-`attach` is an alternative to specifying the `slot` or `slots`
-in the extension declaration.
-
-It is particularly useful when creating a slot into which
-you want to render an existing extension. This enables you
-to do so without modifying the extension's declaration, which
-may be impractical or inappropriate, for example if you are
-writing a module for a specific implementation.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `slotName` | `string` | a name uniquely identifying the slot |
-| `extensionId` | `string` | an extension name, with an optional #-suffix    to distinguish it from other instances of the same extension    attached to the same slot. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:151](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L151)
 
 ___
 
@@ -1810,111 +2110,6 @@ The number of days.
 
 ___
 
-### defineConfigSchema
-
-▸ **defineConfigSchema**(`moduleName`, `schema`): `void`
-
-This defines a configuration schema for a module. The schema tells the
-configuration system how the module can be configured. It specifies
-what makes configuration valid or invalid.
-
-See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
-for more information about defining a config schema.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `moduleName` | `string` | Name of the module the schema is being defined for. Generally   should be the one in which the `defineConfigSchema` call takes place. |
-| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | The config schema for the module |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/module-config.ts:191](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L191)
-
-___
-
-### defineExtensionConfigSchema
-
-▸ **defineExtensionConfigSchema**(`extensionName`, `schema`): `void`
-
-This defines a configuration schema for an extension. When a schema is defined
-for an extension, that extension will receive the configuration corresponding
-to that schema, rather than the configuration corresponding to the module
-in which it is defined.
-
-The schema tells the configuration system how the module can be configured.
-It specifies what makes configuration valid or invalid.
-
-See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
-for more information about defining a config schema.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `extensionName` | `string` | Name of the extension the schema is being defined for.   Should match the `name` of one of the `extensions` entries being returned   by `setupOpenMRS`. |
-| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | The config schema for the extension |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/module-config.ts:216](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L216)
-
-___
-
-### detach
-
-▸ **detach**(`extensionSlotName`, `extensionId`): `void`
-
-Avoid using this. Extension attachments should be considered declarative.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `extensionSlotName` | `string` |
-| `extensionId` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L182)
-
-___
-
-### detachAll
-
-▸ **detachAll**(`extensionSlotName`): `void`
-
-Avoid using this. Extension attachments should be considered declarative.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `extensionSlotName` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:206](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L206)
-
-___
-
 ### dispatchNotificationShown
 
 ▸ **dispatchNotificationShown**(`data`): `void`
@@ -1948,26 +2143,6 @@ The [store](https://github.com/developit/unistore#store) named `app`.
 #### Defined in
 
 [packages/framework/esm-state/src/state.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L85)
-
-___
-
-### getAssignedExtensions
-
-▸ **getAssignedExtensions**(`slotName`): [`AssignedExtension`](interfaces/AssignedExtension.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `slotName` | `string` |
-
-#### Returns
-
-[`AssignedExtension`](interfaces/AssignedExtension.md)[]
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:297](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L297)
 
 ___
 
@@ -2039,62 +2214,6 @@ ___
 
 ___
 
-### getConfig
-
-▸ **getConfig**(`moduleName`): `Promise`<[`Config`](interfaces/Config.md)\>
-
-A promise-based way to access the config as soon as it is fully loaded.
-If it is already loaded, resolves the config in its present state.
-
-In general you should use the Unistore-based API provided by
-`getConfigStore`, which allows creating a subscription so that you always
-have the latest config. If using React, just use `useConfig`.
-
-This is a useful function if you need to get the config in the course
-of the execution of a function.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `moduleName` | `string` | The name of the module for which to look up the config |
-
-#### Returns
-
-`Promise`<[`Config`](interfaces/Config.md)\>
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/module-config.ts:252](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L252)
-
-___
-
-### getConnectedExtensions
-
-▸ **getConnectedExtensions**(`assignedExtensions`, `online?`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
-
-Filters a list of extensions according to whether they support the
-current connectivity status.
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `assignedExtensions` | [`AssignedExtension`](interfaces/AssignedExtension.md)[] | `undefined` | The list of extensions to filter. |
-| `online` | ``null`` \| `boolean` | `null` | Whether the app is currently online. If `null`, uses `navigator.onLine`. |
-
-#### Returns
-
-[`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
-
-A list of extensions that should be rendered
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L264)
-
-___
-
 ### getCurrentOfflineMode
 
 ▸ **getCurrentOfflineMode**(): [`OfflineModeResult`](interfaces/OfflineModeResult.md)
@@ -2106,56 +2225,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-offline/src/mode.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L47)
-
-___
-
-### getExtensionNameFromId
-
-▸ **getExtensionNameFromId**(`extensionId`): `string`
-
-Given an extension ID, which is a string uniquely identifying
-an instance of an extension within an extension slot, this
-returns the extension name.
-
-**`example`**
-```js
-getExtensionNameFromId("foo#bar")
- --> "foo"
-getExtensionNameFromId("baz")
- --> "baz"
-```
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `extensionId` | `string` |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L95)
-
-___
-
-### getExtensionStore
-
-▸ `Const` **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
-
-This returns a [store](https://github.com/developit/unistore#store)
-that modules can use to get information about the state of the
-extension system.
-
-#### Returns
-
-`Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/store.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L129)
 
 ___
 
@@ -2372,27 +2441,6 @@ A promise which completes when the message has been successfully processed by th
 
 ___
 
-### provide
-
-▸ **provide**(`config`, `sourceName?`): `void`
-
-#### Parameters
-
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `config` | [`Config`](interfaces/Config.md) | `undefined` |
-| `sourceName` | `string` | `"provided"` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-config/src/module-config/module-config.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L232)
-
-___
-
 ### registerOfflinePatientHandler
 
 ▸ **registerOfflinePatientHandler**(`identifier`, `handler`): `void`
@@ -2416,35 +2464,6 @@ Attempts to add the specified patient handler registration to the list of offlin
 #### Defined in
 
 [packages/framework/esm-offline/src/offline-patient-data.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L96)
-
-___
-
-### renderExtension
-
-▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): [`CancelLoading`](interfaces/CancelLoading.md)
-
-Mounts into a DOM node (representing an extension slot)
-a lazy-loaded component from *any* frontend module
-that registered an extension component for this slot.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `domElement` | `HTMLElement` |
-| `extensionSlotName` | `string` |
-| `extensionSlotModuleName` | `string` |
-| `extensionId` | `string` |
-| `renderFunction` | (`lifecycle`: [`Lifecycle`](interfaces/Lifecycle.md)) => [`Lifecycle`](interfaces/Lifecycle.md) |
-| `additionalProps` | `Record`<`string`, `any`\> |
-
-#### Returns
-
-[`CancelLoading`](interfaces/CancelLoading.md)
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/render.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L17)
 
 ___
 

@@ -4,7 +4,6 @@ export {
   subscribeConnectivityChanged,
   subscribePrecacheStaticDependencies,
   PrecacheStaticDependenciesEvent,
-  dispatchNotificationShown,
   subscribeNotificationShown,
   subscribeToastShown,
   ShowNotificationEvent,

@@ -4,12 +4,12 @@
 
 ## Table of contents
 
-### Properties
+### Extension Properties
 
 - [assignedExtensions](ExtensionSlotState.md#assignedextensions)
 - [moduleName](ExtensionSlotState.md#modulename)
 
-## Properties
+## Extension Properties
 
 ### assignedExtensions
 
@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L67)
+[packages/framework/esm-extensions/src/store.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L68)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L66)
+[packages/framework/esm-extensions/src/store.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L67)

@@ -1,8 +1,4 @@
-/**
- * @module
- * @category API
- */
-
+/** @module @category API */
 import { Observable } from "rxjs";
 import isPlainObject from "lodash-es/isPlainObject";
 import { getConfig, navigate } from "@openmrs/esm-config";

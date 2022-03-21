@@ -1,3 +1,4 @@
+/** @module @category Offline */
 import { NetworkRequestFailedEvent } from "./service-worker-events";
 
 const networkRequestFailedEventName = "openmrs:network-request-failed";

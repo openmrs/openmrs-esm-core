@@ -1,7 +1,4 @@
-/**
- * @module
- * @category Extension
- */
+/** @module @category Extension */
 import isEqual from "lodash-es/isEqual";
 import {
   configExtensionStore,

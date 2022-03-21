@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-### Properties
+### Extension Properties
 
 - [slots](ExtensionStore.md#slots)
 
-## Properties
+## Extension Properties
 
 ### slots
 
@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L62)
+[packages/framework/esm-extensions/src/store.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L63)
