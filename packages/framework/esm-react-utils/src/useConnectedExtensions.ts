@@ -1,3 +1,4 @@
+/** @module @category Extension */
 import { useMemo } from "react";
 import {
   ConnectedExtension,

@@ -1,3 +1,4 @@
+/** @module @category API */
 import { getLocations, Location } from "@openmrs/esm-api";
 import { useState, useEffect } from "react";
 

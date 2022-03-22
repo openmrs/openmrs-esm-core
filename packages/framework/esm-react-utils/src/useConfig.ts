@@ -1,3 +1,4 @@
+/** @module @category Config */
 import { useContext, useEffect, useMemo, useState } from "react";
 import {
   getConfigStore,

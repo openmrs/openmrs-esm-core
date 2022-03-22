@@ -1,6 +1,6 @@
 /**
  * @module
- * @category Date and time
+ * @category Date and Time
  */
 import { i18n } from "i18next";
 import dayjs from "dayjs";

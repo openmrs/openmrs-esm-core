@@ -1,3 +1,4 @@
+/** @module @category API */
 import {
   defaultVisitCustomRepresentation,
   openmrsFetch,

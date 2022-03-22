@@ -1,4 +1,4 @@
-/** @module @category Config validation */
+/** @module @category Config Validation */
 import { validator } from "./validator";
 
 /**

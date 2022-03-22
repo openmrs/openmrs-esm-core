@@ -1,3 +1,4 @@
+/** @module @category Error Handling */
 import { dispatchNotificationShown } from "@openmrs/esm-globals";
 
 window.onerror = function () {

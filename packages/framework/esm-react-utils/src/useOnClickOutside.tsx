@@ -1,3 +1,4 @@
+/** @module @category UI */
 import { useRef, useEffect } from "react";
 
 export function useOnClickOutside<T extends HTMLElement = HTMLElement>(

@@ -1,3 +1,4 @@
+/** @module @category Extension */
 import { ExtensionMeta } from "@openmrs/esm-extensions";
 import { useMemo } from "react";
 import { useConnectedExtensions } from "./useConnectedExtensions";
