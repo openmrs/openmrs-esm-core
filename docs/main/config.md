@@ -9,10 +9,7 @@ please see the the
 
 ## How to make a frontend module configurable
 
-You should use this part of the OpenMRS Frontend Framework to modules configurable.
-
-Start with `npm install --save-dev @openmrs/esm-framework`. This is a runtime
-dependency, so you should also include it in `peerDependencies`.
+You should use the OpenMRS Frontend Framework to modules configurable.
 
 The main task is to create a config schema for your module. The config schema
 is what tells the framework what configuration files should look like,
@@ -151,7 +148,7 @@ colorPicker: {
 ```
 
 For convenience, some common validators are provided out of the box. See the
-[API / validators](../../packages/framework/esm-framework/docs/API.md#validators).
+[API / validators](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#validators).
 
 #### Arrays
 
@@ -299,7 +296,7 @@ the element, but this may change in future versions.
 
 #### `_type`
 
-One of the values from [the `Type` enum](../../packages/framework/esm-framework/docs/enums/Type.md). Used for validation and to help the
+One of the values from [the `Type` enum](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/enums/Type.md). Used for validation and to help the
 implementer tools work with the element.
 
 Should always appear alongside `_default`.
@@ -316,10 +313,10 @@ Can be used anywhere within the schema structure.
 An array of validator objects.
 
 Some common validators are
-provided: [API / validators](../../packages/framework/esm-framework/docs/API.md#const-validators).
+provided: [API / validators](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#config-validation-functions).
 
 Custom validators should
-be created with the [validator](../../packages/framework/esm-framework/docs/API.md#validator) function.
+be created with the [validator](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#validator) function.
 
 Can be used anywhere within the schema structure.
 
@@ -328,6 +325,10 @@ Can be used anywhere within the schema structure.
 Only valid alongside `_type: Type.Array` or `_type: Type.Object`. A `_default`
 must also be provided at this level. Value should be an object which is
 a schema for the values contained in the array or object.
+
+## API Documentation
+
+See the Config Functions section of the [API docs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md).
 
 ## The RFC
 
