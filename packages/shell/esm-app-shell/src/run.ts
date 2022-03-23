@@ -18,8 +18,6 @@ import {
   messageOmrsServiceWorker,
   subscribeConnectivity,
   getCurrentUser,
-  KnownOmrsServiceWorkerEvents,
-  dispatchNetworkRequestFailed,
   renderModals,
   dispatchPrecacheStaticDependencies,
   activateOfflineCapability,
@@ -207,12 +205,9 @@ function showLoadingSpinner() {
 }
 
 async function setupServiceWorker() {
-  const sw = await registerOmrsServiceWorker(
+  await registerOmrsServiceWorker(
     `${window.getOpenmrsSpaBase()}service-worker.js`
   );
-
-  registerSwEvents(sw);
-
   await prepareOfflineMode();
   await activateOfflineCapability();
 }
@@ -229,21 +224,6 @@ async function prepareOfflineMode() {
       description: `There was an error while initializing the website's offline mode. You can try reloading the page later.`,
     });
   }
-}
-
-function registerSwEvents(sw: Workbox) {
-  sw.addEventListener("message", (e) => {
-    const event = e.data as KnownOmrsServiceWorkerEvents;
-
-    if (event.type === "networkRequestFailed") {
-      dispatchNetworkRequestFailed(event);
-    } else {
-      console.warn(
-        `Received an unknown service worker event of type ${event.type}.`,
-        event
-      );
-    }
-  });
 }
 
 async function precacheImportMap() {

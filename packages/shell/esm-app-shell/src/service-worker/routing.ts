@@ -96,16 +96,6 @@ async function defaultHandler(options: RouteHandlerCallbackOptions) {
       e
     );
 
-    publishEvent({
-      type: "networkRequestFailed",
-      request: {
-        url: request.url,
-        method: request.method,
-        body: await requestClone.text(),
-        headers: headersToObject(request.headers),
-      },
-    });
-
     return new Response(parseOmrsOfflineResponseBodyHeader(request.headers), {
       status: parseOmrsOfflineResponseStatusHeader(request.headers),
     });
