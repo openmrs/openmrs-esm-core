@@ -1,7 +1,6 @@
 import {
   defineConfigSchema,
   getAsyncLifecycle,
-  getSyncLifecycle,
   setupOfflineSync,
 } from "@openmrs/esm-framework";
 import {
