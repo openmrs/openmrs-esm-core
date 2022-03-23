@@ -3,6 +3,7 @@ import {
   attach,
   registerExtension,
   updateInternalExtensionStore,
+  getExtensionInternalStore,
   getExtensionStore,
 } from "../../../esm-extensions";
 import {
@@ -10,6 +11,7 @@ import {
   getSyncLifecycle,
   openmrsComponentDecorator,
   useConfig,
+  useExtensionStore,
 } from "../../../esm-react-utils/src";
 import {
   defineConfigSchema,
@@ -65,19 +67,19 @@ describe("Interaction between configuration and extension systems", () => {
   });
 
   test("Extensions should recieve config from module and from 'configure' key", async () => {
-    registerSimpleExtension("Wilma", "esm-flintstone", true);
+    registerSimpleExtension("Pebbles", "esm-flintstone", true);
     defineConfigSchema("esm-flintstone", {
       town: { _type: Type.String, _default: "Bedrock" },
     });
-    attach("Flintstone slot", "Wilma");
-    attach("Future slot", "Wilma");
+    attach("Flintstone slot", "Pebbles");
+    attach("Future slot", "Pebbles");
     provide({
       "esm-flintstone": {
         town: "Springfield",
         extensionSlots: {
           "Future slot": {
             configure: {
-              Wilma: {
+              Pebbles: {
                 town: "New New York",
               },
             },
@@ -102,11 +104,11 @@ describe("Interaction between configuration and extension systems", () => {
       </>
     ));
     render(<App />);
-    await screen.findAllByText(/.*Wilma.*/);
-    const flintstoneWilma = screen.getByTestId("flintstone-slot");
-    expect(flintstoneWilma).toHaveTextContent(/Wilma:.*Springfield/);
-    const futureWilma = screen.getByTestId("future-slot");
-    expect(futureWilma).toHaveTextContent(/Wilma:.*New New York/);
+    await screen.findAllByText(/.*Pebbles.*/);
+    const flintstonePebbles = screen.getByTestId("flintstone-slot");
+    expect(flintstonePebbles).toHaveTextContent(/Pebbles:.*Springfield/);
+    const futurePebbles = screen.getByTestId("future-slot");
+    expect(futurePebbles).toHaveTextContent(/Pebbles:.*New New York/);
   });
 
   test("Should be possible to attach the same extension twice with different configurations", async () => {
@@ -209,6 +211,47 @@ describe("Interaction between configuration and extension systems", () => {
     });
     expect(screen.queryByText("green")).not.toBeInTheDocument();
     expect(screen.getByTestId("slot")).toHaveTextContent(/black/);
+  });
+
+  test("Extension config should be available in extension store", async () => {
+    registerSimpleExtension("Bamm-Bamm", "esm-flintstone", false);
+    attach("A slot", "Bamm-Bamm");
+    defineConfigSchema("esm-flintstone", { clothes: { _default: "leopard" } });
+    function RootComponent() {
+      const store = useExtensionStore();
+      return (
+        <div>
+          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+          {store.slots["A slot"].assignedExtensions.map((e) => (
+            <div key={e.name}>{JSON.stringify(e.config)}</div>
+          ))}
+        </div>
+      );
+    }
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-flintstone",
+      featureName: "The Flintstones",
+      disableTranslations: true,
+    })(RootComponent);
+    render(<App />);
+    await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
+    expect(screen.getByText(/clothes/)).toHaveTextContent(/leopard/);
+    act(() => {
+      temporaryConfigStore.setState({
+        config: {
+          "esm-flintstone": {
+            extensionSlots: {
+              "A slot": {
+                configure: {
+                  "Bamm-Bamm": { clothes: "tiger" },
+                },
+              },
+            },
+          },
+        },
+      });
+    });
+    expect(screen.getByText(/clothes/)).toHaveTextContent(/tiger/);
   });
 });
 

@@ -23,7 +23,7 @@ However, not all of these extension IDs should be rendered.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L56)
+[packages/framework/esm-extensions/src/store.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L58)
 
 ___
 
@@ -31,11 +31,11 @@ ___
 
 • **config**: ``null`` \| [`ExtensionSlotConfigObject`](ExtensionSlotConfigObject.md)
 
-The configuration provided for this extension slot. `null` if not yet loaded.
+The configuration provided for this slot. `null` if not yet loaded.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L58)
+[packages/framework/esm-extensions/src/store.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L60)
 
 ___
 
@@ -49,7 +49,7 @@ an extension.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L48)
+[packages/framework/esm-extensions/src/store.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L50)
 
 ___
 
@@ -61,4 +61,4 @@ The name under which the extension slot has been registered.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L50)
+[packages/framework/esm-extensions/src/store.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L52)
