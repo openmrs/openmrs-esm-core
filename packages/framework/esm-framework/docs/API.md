@@ -142,7 +142,6 @@
 - [switchTo](API.md#switchto)
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
 - [translateFrom](API.md#translatefrom)
-- [update](API.md#update)
 - [useAssignedExtensionIds](API.md#useassignedextensionids)
 - [useAssignedExtensions](API.md#useassignedextensions)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
@@ -1801,7 +1800,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:151](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L151)
+[packages/framework/esm-extensions/src/extensions.ts:171](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L171)
 
 ___
 
@@ -2057,7 +2056,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:191](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L191)
+[packages/framework/esm-config/src/module-config/module-config.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L192)
 
 ___
 
@@ -2089,7 +2088,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:216](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L216)
+[packages/framework/esm-config/src/module-config/module-config.ts:217](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L217)
 
 ___
 
@@ -2134,7 +2133,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L182)
+[packages/framework/esm-extensions/src/extensions.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L202)
 
 ___
 
@@ -2156,7 +2155,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:206](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L206)
+[packages/framework/esm-extensions/src/extensions.ts:226](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L226)
 
 ___
 
@@ -2288,7 +2287,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:297](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L297)
+[packages/framework/esm-extensions/src/extensions.ts:324](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L324)
 
 ___
 
@@ -2386,7 +2385,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:252](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L252)
+[packages/framework/esm-config/src/module-config/module-config.ts:253](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L253)
 
 ___
 
@@ -2412,7 +2411,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L264)
+[packages/framework/esm-extensions/src/extensions.ts:284](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L284)
 
 ___
 
@@ -2479,7 +2478,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L95)
+[packages/framework/esm-extensions/src/extensions.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L115)
 
 ___
 
@@ -2499,7 +2498,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:108](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L108)
+[packages/framework/esm-extensions/src/extensions.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L128)
 
 ___
 
@@ -2520,7 +2519,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L100)
+[packages/framework/esm-extensions/src/extensions.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L120)
 
 ___
 
@@ -2538,7 +2537,7 @@ extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L129)
+[packages/framework/esm-extensions/src/store.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L128)
 
 ___
 
@@ -3005,7 +3004,7 @@ Validate and interpolate defaults for `providedConfig` according to `schema`
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:274](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L274)
+[packages/framework/esm-config/src/module-config/module-config.ts:275](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L275)
 
 ___
 
@@ -3026,7 +3025,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L232)
+[packages/framework/esm-config/src/module-config/module-config.ts:233](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L233)
 
 ___
 
@@ -3196,7 +3195,7 @@ that registered an extension component for this slot.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L17)
+[packages/framework/esm-extensions/src/render.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L16)
 
 ___
 
@@ -3789,34 +3788,6 @@ ___
 
 ___
 
-### update
-
-▸ **update**<`T`\>(`obj`, `__namedParameters`, `value`): `T`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `Record`<`string`, `any`\> |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `obj` | `T` |
-| `__namedParameters` | `string`[] |
-| `value` | `any` |
-
-#### Returns
-
-`T`
-
-#### Defined in
-
-[packages/framework/esm-state/src/update.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/update.ts#L1)
-
-___
-
 ### useAssignedExtensionIds
 
 ▸ **useAssignedExtensionIds**(`slotName`): `string`[]
@@ -3907,7 +3878,7 @@ Use this React Hook to obtain your module's configuration.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConfig.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConfig.ts#L103)
+[packages/framework/esm-react-utils/src/useConfig.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConfig.ts#L162)
 
 ___
 

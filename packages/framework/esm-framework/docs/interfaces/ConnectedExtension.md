@@ -6,11 +6,24 @@
 
 ### Properties
 
+- [config](ConnectedExtension.md#config)
 - [id](ConnectedExtension.md#id)
 - [meta](ConnectedExtension.md#meta)
 - [name](ConnectedExtension.md#name)
 
 ## Properties
+
+### config
+
+• **config**: ``null`` \| [`ConfigObject`](ConfigObject.md)
+
+The extension's config. Note that this will be `null` until the slot is mounted.
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L88)
+
+___
 
 ### id
 
@@ -18,7 +31,7 @@
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L80)
+[packages/framework/esm-extensions/src/store.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L84)
 
 ___
 
@@ -28,7 +41,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L82)
+[packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L86)
 
 ___
 
@@ -38,4 +51,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L81)
+[packages/framework/esm-extensions/src/store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L85)
