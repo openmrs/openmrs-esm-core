@@ -78,7 +78,6 @@ async function navigationHandler(options: RouteHandlerCallbackOptions) {
 
 async function defaultHandler(options: RouteHandlerCallbackOptions) {
   const { request } = options;
-  const requestClone = await request.clone(); // Clone to avoid errors when calling request.text() later.
   const handlerKey =
     options.request.method === "GET"
       ? await getHandlerKey(options)
