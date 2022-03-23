@@ -12,6 +12,7 @@ setCacheNameDetails({ prefix: omrsCachePrefix });
 registerAllOmrsRoutes();
 
 self.addEventListener("message", handleMessage);
+
 self.addEventListener("install", (e) => {
   self.skipWaiting();
 
@@ -19,4 +20,8 @@ self.addEventListener("install", (e) => {
   // They also don't change in between builds which makes them safe to cache once only.
   // If they change *during* a build, the SW is updated as well which triggers a re-installation.
   e.waitUntil(precacheAppShell());
+});
+
+self.addEventListener("activate", (e) => {
+  e.waitUntil(self.clients.claim());
 });

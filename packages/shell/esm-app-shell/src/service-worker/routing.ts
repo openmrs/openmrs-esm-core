@@ -5,10 +5,8 @@ import { validMethods } from "workbox-routing/utils/constants";
 import { CacheOnly, NetworkFirst, NetworkOnly } from "workbox-strategies";
 import { indexUrl, omrsCacheName } from "./constants";
 import { ServiceWorkerDb } from "./storage";
-import { publishEvent } from "./event";
 import {
   getOmrsHeader,
-  headersToObject,
   parseOmrsOfflineResponseBodyHeader,
   parseOmrsOfflineResponseStatusHeader,
 } from "./http-header-utils";
