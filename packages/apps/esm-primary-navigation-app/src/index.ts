@@ -1,6 +1,7 @@
 import {
   defineConfigSchema,
   getAsyncLifecycle,
+  getSyncLifecycle,
   setupOfflineSync,
 } from "@openmrs/esm-framework";
 import {
@@ -9,6 +10,7 @@ import {
 } from "./components/choose-locale/change-locale.resource";
 import { configSchema } from "./config-schema";
 import { moduleName, userPropertyChange } from "./constants";
+import HomeRedirect from "./home-redirect.component";
 import { syncUserLanguagePreference } from "./offline";
 
 const importTranslation = require.context(
@@ -38,6 +40,14 @@ function setupOpenMRS() {
         load: getAsyncLifecycle(() => import("./root.component"), options),
         route: (location: Location) =>
           !location.pathname.startsWith(window.getOpenmrsSpaBase() + "login"),
+        online: true,
+        offline: true,
+        order: 0,
+      },
+      {
+        load: getSyncLifecycle(() => HomeRedirect(), options),
+        route: (location: Location) =>
+          location.pathname === window.getOpenmrsSpaBase(),
         online: true,
         offline: true,
         order: 0,
