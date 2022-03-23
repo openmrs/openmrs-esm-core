@@ -1,5 +1,4 @@
 import { start, unregisterApplication, getAppNames } from "single-spa";
-import { Workbox } from "workbox-window";
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -18,11 +17,11 @@ import {
   messageOmrsServiceWorker,
   subscribeConnectivity,
   getCurrentUser,
-  KnownOmrsServiceWorkerEvents,
-  dispatchNetworkRequestFailed,
   renderModals,
   dispatchPrecacheStaticDependencies,
   activateOfflineCapability,
+  subscribePrecacheStaticDependencies,
+  openmrsFetch,
 } from "@openmrs/esm-framework";
 import {
   finishRegisteringAllApps,
@@ -206,23 +205,16 @@ function showLoadingSpinner() {
   return renderLoadingSpinner(document.body);
 }
 
-async function setupServiceWorker() {
-  const sw = await registerOmrsServiceWorker(
-    `${window.getOpenmrsSpaBase()}service-worker.js`
-  );
-
-  registerSwEvents(sw);
-
-  await prepareOfflineMode();
-  await activateOfflineCapability();
-}
-
-async function prepareOfflineMode() {
+async function setupOffline() {
   try {
-    await Promise.all([precacheImportMap(), precacheSharedApiEndpoints()]);
+    await registerOmrsServiceWorker(
+      `${window.getOpenmrsSpaBase()}service-worker.js`
+    );
+    await precacheImportMap();
+    await activateOfflineCapability();
+    setupOfflineStaticDependencyPrecaching();
   } catch (e) {
     console.error("Error while setting up offline mode.", e);
-
     showNotification({
       critical: true,
       title: "Offline Setup Error",
@@ -231,41 +223,11 @@ async function prepareOfflineMode() {
   }
 }
 
-function registerSwEvents(sw: Workbox) {
-  sw.addEventListener("message", (e) => {
-    const event = e.data as KnownOmrsServiceWorkerEvents;
-
-    if (event.type === "networkRequestFailed") {
-      dispatchNetworkRequestFailed(event);
-    } else {
-      console.warn(
-        `Received an unknown service worker event of type ${event.type}.`,
-        event
-      );
-    }
-  });
-}
-
 async function precacheImportMap() {
   const importMap = await window.importMapOverrides.getCurrentPageMap();
   await messageOmrsServiceWorker({
     type: "onImportMapChanged",
     importMap,
-  });
-}
-
-async function precacheSharedApiEndpoints() {
-  // By default, cache the session endpoint.
-  // This ensures that a lot of user/session related functions also work offline.
-  const sessionPathUrl = new URL(
-    `${window.openmrsBase}/ws/rest/v1/session`,
-    window.location.origin
-  ).href;
-
-  await messageOmrsServiceWorker({
-    type: "registerDynamicRoute",
-    url: sessionPathUrl,
-    strategy: "network-first",
   });
 }
 
@@ -302,6 +264,28 @@ function subscribeOnlineAndLoginChange(
   });
 }
 
+async function precacheGlobalStaticDependencies() {
+  // By default, cache the session endpoint.
+  // This ensures that a lot of user/session related functions also work offline.
+  const sessionPathUrl = new URL(
+    `${window.openmrsBase}/ws/rest/v1/session`,
+    window.location.origin
+  ).href;
+
+  await messageOmrsServiceWorker({
+    type: "registerDynamicRoute",
+    url: sessionPathUrl,
+    strategy: "network-first",
+  });
+
+  await openmrsFetch("/ws/rest/v1/session").catch((e) =>
+    console.warn(
+      "Failed to precache the user session data from the app shell. MFs depending on this data may run into problems while offline.",
+      e
+    )
+  );
+}
+
 function setupOfflineCssClasses() {
   subscribeConnectivity(({ online }) => {
     const body = document.querySelector("body")!;
@@ -324,13 +308,10 @@ export function run(configUrls: Array<string>, offline: boolean) {
   createAppState({});
   subscribeNotificationShown(showNotification);
   subscribeToastShown(showToast);
+  subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
-
-  if (offline) {
-    setupServiceWorker();
-  }
 
   return loadApps()
     .then(setupApps)
@@ -339,5 +320,5 @@ export function run(configUrls: Array<string>, offline: boolean) {
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(setupOfflineStaticDependencyPrecaching);
+    .then(() => (offline ? setupOffline() : undefined));
 }
