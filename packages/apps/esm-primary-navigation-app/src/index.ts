@@ -10,8 +10,8 @@ import {
 } from "./components/choose-locale/change-locale.resource";
 import { configSchema } from "./config-schema";
 import { moduleName, userPropertyChange } from "./constants";
-import HomeRedirect from "./home-redirect.component";
 import { syncUserLanguagePreference } from "./offline";
+import { navigateToUrl } from "single-spa";
 
 const importTranslation = require.context(
   "../translations",
@@ -45,11 +45,14 @@ function setupOpenMRS() {
         order: 0,
       },
       {
-        load: getSyncLifecycle(() => HomeRedirect(), options),
+        load: {
+          bootstrap: () =>
+            Promise.resolve(navigateToUrl(window.getOpenmrsSpaBase() + "home")),
+          mount: () => Promise.resolve(),
+          unmount: () => Promise.resolve(),
+        },
         route: (location: Location) =>
           location.pathname === window.getOpenmrsSpaBase(),
-        online: true,
-        offline: true,
         order: 0,
       },
     ],
