@@ -33,7 +33,7 @@ code you're looking for, feel free to ask in the
 [#openmrs-helpme](https://openmrs.slack.com/archives/C02UNMKFH8V) channel
 on Slack.
 
-### How to develop against a restricted environment?
+### How do I develop against a restricted environment?
 
 In general you can develop against another environment using the `--backend` flag.
 If the other environment is guarded, e.g., by an IP or network restriction then
@@ -48,3 +48,8 @@ npx openmrs start --backend "https://emr-v2.test.icrc.org/" --add-cookie "MRHSes
 ```
 
 The cookie must be obtained by you and strongly depends on the used backend.
+
+### My local server fails with `Error: ENOSPC: System limit for number of file watchers reached`
+
+You need to increase the system limit for the number of file watchers. See
+[this StackOverflow answer](https://stackoverflow.com/a/55763478/1464495).
