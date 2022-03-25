@@ -39,17 +39,26 @@ yarn
 Then you're ready to start a dev server! The command to run will depend on
 the repository you checked out. Read the README for that repository to find
 out what command you should run. In the case of `openmrs-esm-template-app`,
-use `yarn start` to start the server
+use `yarn start` to start the server.
 
 ```bash
 yarn start
 ```
 
-This command will almost certainly run a "script" from the `package.json`
-file. Take a look at the `scripts` section of this file to find out what
+This command will run a "script" from the `package.json`
+file. Take a look at the `scripts` section of that file to find out what
 the command actually does.
 
 > :bulb: You run almost any command with `--help` to learn more about it.
+> This includes `yarn start --help`.
+
+### Troubleshooting
+
+If you're running Linux, you may see the following error the first time you run
+a a dev server: `Error: ENOSPC: System limit for number of file watchers reached`.
+If that happens, you need to increase the system limit for the number of file
+watchers. See
+[this StackOverflow answer](https://stackoverflow.com/a/55763478/1464495).
 
 ## Import map overrides
 
