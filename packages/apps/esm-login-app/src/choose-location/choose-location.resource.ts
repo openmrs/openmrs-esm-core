@@ -49,7 +49,7 @@ export function useLoginLocations(
     }
 
     if (typeof searchQuery === "string" && searchQuery != "") {
-      url += `&name=${searchQuery}`;
+      url += `&name:contains=${searchQuery}`;
     }
 
     return url;
