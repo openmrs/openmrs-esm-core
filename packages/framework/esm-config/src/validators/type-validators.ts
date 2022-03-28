@@ -27,7 +27,7 @@ export const isObject = validator(
 
 export const isUuid = validator(
   (val) =>
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
       val
     ) || /^[0-9a-f]{36}$/i.test(val),
   "must be a valid UUID or a 36-character hexadecimal string"
