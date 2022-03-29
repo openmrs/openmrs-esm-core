@@ -2,7 +2,8 @@ import { useRef, useEffect } from "react";
 
 export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
   handler: (event: Event) => void,
-  active = true
+  active = true,
+  invert = false
 ) {
   const ref = useRef<T>(null);
 
@@ -11,7 +12,7 @@ export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
       const listener = (event: Event) => {
         const el = ref?.current;
 
-        if (el?.contains(event.target as Node)) {
+        if (el?.contains(event.target as Node) === !invert) {
           handler(event);
         }
       };
