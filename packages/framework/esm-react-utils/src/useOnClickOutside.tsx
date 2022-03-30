@@ -2,19 +2,18 @@ import { useRef, useEffect } from "react";
 
 export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
   handler: (event: Event) => void,
-  active = true,
-  invert = false
+  active = true
 ) {
   const ref = useRef<T>(null);
 
   useEffect(() => {
     if (active) {
       const listener = (event: Event) => {
-        const el = ref?.current;
-
-        if (el?.contains(event.target as Node) === !invert) {
-          handler(event);
+        if (ref?.current?.contains(event.target as Node) {
+            return;
         }
+
+        handler(event);
       };
 
       window.addEventListener(`click`, listener);
