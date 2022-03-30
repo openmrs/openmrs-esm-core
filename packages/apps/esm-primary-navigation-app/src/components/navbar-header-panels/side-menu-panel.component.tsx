@@ -39,7 +39,7 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({
         className={styles.link}
       >
         <ExtensionSlot extensionSlotName="global-nav-menu-slot" />
-        <ExtensionSlot extensionSlotName="nav-menu-slot" />
+        <ExtensionSlot extensionSlotName="patient-chart-dashboard-slot" />
       </SideNav>
     )
   );
