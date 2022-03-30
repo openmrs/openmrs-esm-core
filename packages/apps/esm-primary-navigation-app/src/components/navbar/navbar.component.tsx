@@ -77,10 +77,10 @@ const Navbar: React.FC<NavbarProps> = ({
               isCollapsible
               className={styles.headerMenuButton}
               onClick={(event) => {
-                togglePanel("sideMenu");
+                togglePanel("side-navigation");
                 event.stopPropagation();
               }}
-              isActive={isActivePanel("sideMenu")}
+              isActive={isActivePanel("side-navigation")}
             />
           )}
           <ConfigurableLink to="${openmrsSpaBase}/home">
