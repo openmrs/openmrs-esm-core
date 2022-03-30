@@ -39,6 +39,7 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
         : Promise.resolve();
 
       sessionDefined.then(() => {
+        // console.log("referrer: ", referrer);
         if (referrer && referrer !== "/") {
           navigate({ to: "${openmrsSpaBase}" + referrer });
         }
