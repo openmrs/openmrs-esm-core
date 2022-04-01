@@ -2650,7 +2650,7 @@ ___
 
 ### getSynchronizationItem
 
-▸ **getSynchronizationItem**<`T`\>(`id`): `Promise`<`SyncItem`<`T`\> \| `undefined`\>
+▸ **getSynchronizationItem**<`T`\>(`id`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\> \| `undefined`\>
 
 Returns a queued sync item with the given ID or `undefined` if no such item exists.
 
@@ -2668,7 +2668,7 @@ Returns a queued sync item with the given ID or `undefined` if no such item exis
 
 #### Returns
 
-`Promise`<`SyncItem`<`T`\> \| `undefined`\>
+`Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\> \| `undefined`\>
 
 #### Defined in
 
@@ -2782,7 +2782,7 @@ Enqueues a new item in the sync queue and associates the item with the currently
 | :------ | :------ | :------ |
 | `type` | `string` | The identifying type of the synchronization item. |
 | `content` | `T` | The actual data to be synchronized. |
-| `descriptor?` | `QueueItemDescriptor` | An optional descriptor providing additional metadata about the sync item. |
+| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) | An optional descriptor providing additional metadata about the sync item. |
 
 #### Returns
 
