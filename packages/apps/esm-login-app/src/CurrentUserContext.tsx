@@ -70,9 +70,5 @@ export const CurrentUserContext: React.FC = ({ children }) => {
     return () => sub.unsubscribe();
   }, []);
 
-  return (
-    <CurrentUser.Provider value={value}>
-      {!user.loading && children}
-    </CurrentUser.Provider>
-  );
+  return <CurrentUser.Provider value={value}>{children}</CurrentUser.Provider>;
 };
