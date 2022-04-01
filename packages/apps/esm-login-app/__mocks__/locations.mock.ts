@@ -395,3 +395,5 @@ export const mockSoleLoginLocation = {
     ],
   },
 };
+
+export const mockSetSessionLocation = Promise.resolve();

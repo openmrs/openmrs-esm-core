@@ -1,7 +1,10 @@
 import { waitFor } from "@testing-library/react";
 import renderWithRouter from "../test-helpers/render-with-router";
 import { navigate, openmrsFetch, useConfig } from "@openmrs/esm-framework";
-import { mockSoleLoginLocation } from "../../__mocks__/locations.mock";
+import {
+  mockSetSessionLocation,
+  mockSoleLoginLocation,
+} from "../../__mocks__/locations.mock";
 import { mockConfig } from "../../__mocks__/config.mock";
 import ChooseLocation from "./choose-location.component";
 
@@ -29,6 +32,7 @@ describe("ChooseLocation: ", () => {
 
   it("auto-selects the location and navigates away from the page when only one login location is available", async () => {
     mockedOpenmrsFetch.mockReturnValueOnce(mockSoleLoginLocation);
+    mockedOpenmrsFetch.mockReturnValueOnce(mockSetSessionLocation);
 
     renderWithRouter(ChooseLocation, { isLoginEnabled: true });
 
