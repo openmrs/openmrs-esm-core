@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import {
   openmrsFetch,
   fhirBaseUrl,
@@ -49,13 +49,13 @@ export function useLoginLocations(
     }
 
     if (typeof searchQuery === "string" && searchQuery != "") {
-      url += `&name=${searchQuery}`;
+      url += `&name:contains=${searchQuery}`;
     }
 
     return url;
   };
 
-  const { data, isValidating, size, setSize, error } = useSwrInfinite<
+  const { data, isValidating, setSize, error } = useSwrInfinite<
     FetchResponse<LocationResponse>,
     Error
   >(getUrl, openmrsFetch);
@@ -67,10 +67,6 @@ export function useLoginLocations(
       kind: "error",
     });
   }
-
-  useEffect(() => {
-    setSize(1);
-  }, [searchQuery, setSize]);
 
   const memoizedLocationData = useMemo(() => {
     return {
@@ -87,7 +83,7 @@ export function useLoginLocations(
       loadingNewData: isValidating,
       setPage: setSize,
     };
-  }, [data, isValidating, setSize]);
+  }, [data, error, isValidating, setSize, searchQuery]);
 
   return memoizedLocationData;
 }

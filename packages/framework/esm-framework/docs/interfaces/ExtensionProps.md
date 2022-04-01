@@ -33,7 +33,7 @@
 | Name | Type |
 | :------ | :------ |
 | `slot` | `ReactNode` |
-| `extension` | `ExtensionData` |
+| `extension` | [`ExtensionData`](ExtensionData.md) |
 
 #### Returns
 

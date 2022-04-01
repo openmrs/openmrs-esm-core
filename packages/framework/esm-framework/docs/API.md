@@ -121,7 +121,6 @@
 - [setupOfflineSync](API.md#setupofflinesync)
 - [subscribeConnectivity](API.md#subscribeconnectivity)
 - [subscribeConnectivityChanged](API.md#subscribeconnectivitychanged)
-- [subscribeNetworkRequestFailed](API.md#subscribenetworkrequestfailed)
 - [subscribePrecacheStaticDependencies](API.md#subscribeprecachestaticdependencies)
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
 - [useConnectivity](API.md#useconnectivity)
@@ -166,6 +165,16 @@
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-patient.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L5)
+
+___
+
+### NullablePatient
+
+Ƭ **NullablePatient**: `fhir.Patient` \| ``null``
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/usePatient.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/usePatient.ts#L5)
 
 ___
 
@@ -221,16 +230,6 @@ ___
 ___
 
 ## Offline Type aliases
-
-### KnownOmrsServiceWorkerEvents
-
-Ƭ **KnownOmrsServiceWorkerEvents**: [`NetworkRequestFailedEvent`](interfaces/NetworkRequestFailedEvent.md)
-
-#### Defined in
-
-[packages/framework/esm-offline/src/service-worker-events.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-events.ts#L17)
-
-___
 
 ### KnownOmrsServiceWorkerMessages
 
@@ -1182,7 +1181,7 @@ a route listener is set up to update the patient whenever the route changes.
 | :------ | :------ |
 | `error` | ``null`` \| `Error` |
 | `isLoading` | `boolean` |
-| `patient` | `NullablePatient` |
+| `patient` | [`NullablePatient`](API.md#nullablepatient) |
 | `patientUuid` | ``null`` \| `string` |
 
 #### Defined in
@@ -1389,7 +1388,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L192)
+[packages/framework/esm-config/src/module-config/module-config.ts:193](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L193)
 
 ___
 
@@ -1421,7 +1420,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:217](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L217)
+[packages/framework/esm-config/src/module-config/module-config.ts:218](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L218)
 
 ___
 
@@ -1451,7 +1450,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:253](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L253)
+[packages/framework/esm-config/src/module-config/module-config.ts:254](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L254)
 
 ___
 
@@ -1472,7 +1471,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:233](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L233)
+[packages/framework/esm-config/src/module-config/module-config.ts:234](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L234)
 
 ___
 
@@ -1498,7 +1497,7 @@ Use this React Hook to obtain your module's configuration.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConfig.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConfig.ts#L104)
+[packages/framework/esm-react-utils/src/useConfig.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConfig.ts#L163)
 
 ___
 
@@ -1994,7 +1993,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L152)
+[packages/framework/esm-extensions/src/extensions.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L172)
 
 ___
 
@@ -2017,7 +2016,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:183](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L183)
+[packages/framework/esm-extensions/src/extensions.ts:203](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L203)
 
 ___
 
@@ -2039,7 +2038,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:207](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L207)
+[packages/framework/esm-extensions/src/extensions.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L227)
 
 ___
 
@@ -2059,7 +2058,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:298](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L298)
+[packages/framework/esm-extensions/src/extensions.ts:325](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L325)
 
 ___
 
@@ -2085,7 +2084,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:265](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L265)
+[packages/framework/esm-extensions/src/extensions.ts:285](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L285)
 
 ___
 
@@ -2117,7 +2116,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L96)
+[packages/framework/esm-extensions/src/extensions.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L116)
 
 ___
 
@@ -2135,7 +2134,7 @@ extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L130)
+[packages/framework/esm-extensions/src/store.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L129)
 
 ___
 
@@ -2164,7 +2163,7 @@ that registered an extension component for this slot.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L18)
+[packages/framework/esm-extensions/src/render.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L17)
 
 ___
 
@@ -2904,32 +2903,6 @@ ___
 
 ___
 
-### subscribeNetworkRequestFailed
-
-▸ **subscribeNetworkRequestFailed**(`cb`): () => `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `cb` | (`data`: [`NetworkRequestFailedEvent`](interfaces/NetworkRequestFailedEvent.md)) => `void` |
-
-#### Returns
-
-`fn`
-
-▸ (): `void`
-
-##### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-offline/src/events.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/events.ts#L12)
-
-___
-
 ### subscribePrecacheStaticDependencies
 
 ▸ **subscribePrecacheStaticDependencies**(`cb`): () => `void`
@@ -3087,11 +3060,11 @@ ___
 
 ### getAppState
 
-▸ **getAppState**(): `Store`<`AppState`\>
+▸ **getAppState**(): `Store`<[`AppState`](interfaces/AppState.md)\>
 
 #### Returns
 
-`Store`<`AppState`\>
+`Store`<[`AppState`](interfaces/AppState.md)\>
 
 The [store](https://github.com/developit/unistore#store) named `app`.
 

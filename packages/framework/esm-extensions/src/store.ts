@@ -3,6 +3,7 @@ import isEqual from "lodash-es/isEqual";
 import {
   configExtensionStore,
   ConfigExtensionStoreElement,
+  ConfigObject,
   ExtensionSlotConfigObject,
 } from "@openmrs/esm-config";
 import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
@@ -23,14 +24,15 @@ export interface ExtensionRegistration {
 
 export interface ExtensionInfo extends ExtensionRegistration {
   /**
-   * The instances where the extension has been rendered using `renderExtension`,
-   * indexed by slotModuleName and slotName.
+   * The instances where the extension has been rendered using `renderExtension`.
    */
-  instances: Record<string, Record<string, ExtensionInstance>>;
+  instances: Array<ExtensionInstance>;
 }
 
 export interface ExtensionInstance {
   id: string;
+  slotName: string;
+  slotModuleName: string;
 }
 
 export interface ExtensionInternalStore {
@@ -55,7 +57,7 @@ export interface ExtensionSlotInfo {
    * `assignedIds` is the set defining those.
    */
   attachedIds: Array<string>;
-  /** The configuration provided for this extension slot. `null` if not yet loaded. */
+  /** The configuration provided for this slot. `null` if not yet loaded. */
   config: ExtensionSlotConfigObject | null;
 }
 
@@ -73,6 +75,8 @@ export interface AssignedExtension {
   name: string;
   moduleName: string;
   meta: ExtensionMeta;
+  /** The extension's config. Note that this will be `null` until the slot is mounted. */
+  config: ConfigObject | null;
   online?: boolean | object;
   offline?: boolean | object;
 }
@@ -81,6 +85,8 @@ export interface ConnectedExtension {
   id: string;
   name: string;
   meta: ExtensionMeta;
+  /** The extension's config. Note that this will be `null` until the slot is mounted. */
+  config: ConfigObject | null;
 }
 
 const extensionInternalStore = createGlobalStore<ExtensionInternalStore>(
@@ -104,22 +110,15 @@ export const getExtensionInternalStore = () =>
   });
 
 /** @internal */
-export type MaybeAsync<T> = T | Promise<T>;
-
-let storeUpdates: Promise<void> = Promise.resolve();
-
-/** @internal */
 export function updateInternalExtensionStore(
-  updater: (state: ExtensionInternalStore) => MaybeAsync<ExtensionInternalStore>
+  updater: (state: ExtensionInternalStore) => ExtensionInternalStore
 ) {
-  storeUpdates = storeUpdates.then(async () => {
-    const state = extensionInternalStore.getState();
-    const newState = await updater(state);
+  const state = extensionInternalStore.getState();
+  const newState = updater(state);
 
-    if (newState !== state) {
-      extensionInternalStore.setState(newState);
-    }
-  });
+  if (newState !== state) {
+    extensionInternalStore.setState(newState);
+  }
 }
 
 /**
@@ -145,19 +144,13 @@ function updateConfigExtensionStore(extensionState: ExtensionInternalStore) {
   const configExtensionRecords: Array<ConfigExtensionStoreElement> = [];
 
   for (let extensionInfo of Object.values(extensionState.extensions)) {
-    for (let [slotModuleName, extensionBySlot] of Object.entries(
-      extensionInfo.instances
-    )) {
-      for (let [actualSlotName, extensionInstance] of Object.entries(
-        extensionBySlot
-      )) {
-        configExtensionRecords.push({
-          slotModuleName,
-          extensionModuleName: extensionInfo.moduleName,
-          slotName: actualSlotName,
-          extensionId: extensionInstance.id,
-        });
-      }
+    for (let instance of extensionInfo.instances) {
+      configExtensionRecords.push({
+        slotModuleName: instance.slotModuleName,
+        extensionModuleName: extensionInfo.moduleName,
+        slotName: instance.slotName,
+        extensionId: instance.id,
+      });
     }
   }
   if (

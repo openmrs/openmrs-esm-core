@@ -11,7 +11,8 @@ import {
   configExtensionStore,
   ConfigInternalStore,
   configInternalStore,
-  getExtensionConfigStore,
+  getExtensionConfig,
+  getExtensionsConfigStore,
   ImplementerToolsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
@@ -949,11 +950,7 @@ describe("extension config", () => {
     const moduleLevelConfig = { "ext-mod": { bar: "qux" } };
     updateConfigExtensionStore();
     Config.provide(moduleLevelConfig);
-    const result = getExtensionConfigStore(
-      "slot-mod",
-      "barSlot",
-      "fooExt"
-    ).getState().config;
+    const result = getExtensionConfig("barSlot", "fooExt").config;
     expect(result).toStrictEqual({ bar: "qux", baz: "bazzy" });
     expect(console.error).not.toHaveBeenCalled();
   });
@@ -971,11 +968,7 @@ describe("extension config", () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfigStore(
-      "slot-mod",
-      "barSlot",
-      "fooExt#id0"
-    ).getState().config;
+    const result = getExtensionConfig("barSlot", "fooExt#id0").config;
     expect(result).toStrictEqual({ bar: "qux", baz: "quiz" });
     expect(console.error).not.toHaveBeenCalled();
   });
@@ -1005,11 +998,7 @@ describe("extension config", () => {
     });
     const extensionAtBaseConfig = { fooExt: { qux: "quxolotl" } };
     Config.provide(extensionAtBaseConfig);
-    const result = getExtensionConfigStore(
-      "slot-mod",
-      "barSlot",
-      "fooExt"
-    ).getState().config;
+    const result = getExtensionConfig("barSlot", "fooExt").config;
     expect(result).toStrictEqual({ qux: "quxolotl" });
     expect(console.error).not.toHaveBeenCalled();
   });
@@ -1030,11 +1019,7 @@ describe("extension config", () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfigStore(
-      "slot-mod",
-      "barSlot",
-      "fooExt#id2"
-    ).getState().config;
+    const result = getExtensionConfig("barSlot", "fooExt#id2").config;
     expect(result).toStrictEqual({ qux: "quxotic" });
   });
 

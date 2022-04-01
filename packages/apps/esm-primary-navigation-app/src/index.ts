@@ -10,6 +10,7 @@ import {
 import { configSchema } from "./config-schema";
 import { moduleName, userPropertyChange } from "./constants";
 import { syncUserLanguagePreference } from "./offline";
+import { navigateToUrl } from "single-spa";
 
 const importTranslation = require.context(
   "../translations",
@@ -40,6 +41,17 @@ function setupOpenMRS() {
           !location.pathname.startsWith(window.getOpenmrsSpaBase() + "login"),
         online: true,
         offline: true,
+        order: 0,
+      },
+      {
+        load: {
+          bootstrap: () =>
+            Promise.resolve(navigateToUrl(window.getOpenmrsSpaBase() + "home")),
+          mount: () => Promise.resolve(),
+          unmount: () => Promise.resolve(),
+        },
+        route: (location: Location) =>
+          location.pathname === window.getOpenmrsSpaBase(),
         order: 0,
       },
     ],

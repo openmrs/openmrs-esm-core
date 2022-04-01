@@ -5,9 +5,9 @@
 In a repository using Yarn:
 
 ```sh
-yarn upgrade @openmrs/esm-framework openmrs  // to upgrade
-git checkout package.json  // to reset the version specifiers to 'next'
-yarn  // to re-create the lockfile
+yarn upgrade @openmrs/esm-framework openmrs  # to upgrade
+git checkout package.json  # to reset the version specifiers to 'next'
+yarn  # to re-create the lockfile
 ```
 
 ### How do I keep my local dev server up to date?
@@ -33,7 +33,7 @@ code you're looking for, feel free to ask in the
 [#openmrs-helpme](https://openmrs.slack.com/archives/C02UNMKFH8V) channel
 on Slack.
 
-### How to develop against a restricted environment?
+### How do I develop against a restricted environment?
 
 In general you can develop against another environment using the `--backend` flag.
 If the other environment is guarded, e.g., by an IP or network restriction then

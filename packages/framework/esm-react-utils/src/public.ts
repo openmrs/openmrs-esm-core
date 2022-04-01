@@ -1,3 +1,4 @@
+export { ExtensionData } from "./ComponentContext";
 export * from "./ConfigurableLink";
 export * from "./createUseStore";
 export * from "./Extension";

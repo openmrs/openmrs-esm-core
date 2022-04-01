@@ -40,7 +40,9 @@ const Navbar: React.FC<NavbarProps> = ({
   session,
 }) => {
   const layout = useLayoutType();
-  const navMenuItems = useAssignedExtensions("nav-menu-slot").map((e) => e.id);
+  const navMenuItems = useAssignedExtensions(
+    "patient-chart-dashboard-slot"
+  ).map((e) => e.id);
 
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
 

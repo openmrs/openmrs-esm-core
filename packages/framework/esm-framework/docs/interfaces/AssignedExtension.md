@@ -6,6 +6,7 @@
 
 ### Extension Properties
 
+- [config](AssignedExtension.md#config)
 - [id](AssignedExtension.md#id)
 - [meta](AssignedExtension.md#meta)
 - [moduleName](AssignedExtension.md#modulename)
@@ -15,13 +16,25 @@
 
 ## Extension Properties
 
+### config
+
+• **config**: ``null`` \| [`ConfigObject`](ConfigObject.md)
+
+The extension's config. Note that this will be `null` until the slot is mounted.
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L79)
+
+___
+
 ### id
 
 • **id**: `string`
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L72)
+[packages/framework/esm-extensions/src/store.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L74)
 
 ___
 
@@ -31,7 +44,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L75)
+[packages/framework/esm-extensions/src/store.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L77)
 
 ___
 
@@ -41,7 +54,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L74)
+[packages/framework/esm-extensions/src/store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L76)
 
 ___
 
@@ -51,7 +64,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L73)
+[packages/framework/esm-extensions/src/store.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L75)
 
 ___
 
@@ -61,7 +74,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L77)
+[packages/framework/esm-extensions/src/store.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L81)
 
 ___
 
@@ -71,4 +84,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L76)
+[packages/framework/esm-extensions/src/store.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L80)

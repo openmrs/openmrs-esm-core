@@ -5,10 +5,8 @@ import { validMethods } from "workbox-routing/utils/constants";
 import { CacheOnly, NetworkFirst, NetworkOnly } from "workbox-strategies";
 import { indexUrl, omrsCacheName } from "./constants";
 import { ServiceWorkerDb } from "./storage";
-import { publishEvent } from "./event";
 import {
   getOmrsHeader,
-  headersToObject,
   parseOmrsOfflineResponseBodyHeader,
   parseOmrsOfflineResponseStatusHeader,
 } from "./http-header-utils";
@@ -78,7 +76,6 @@ async function navigationHandler(options: RouteHandlerCallbackOptions) {
 
 async function defaultHandler(options: RouteHandlerCallbackOptions) {
   const { request } = options;
-  const requestClone = await request.clone(); // Clone to avoid errors when calling request.text() later.
   const handlerKey =
     options.request.method === "GET"
       ? await getHandlerKey(options)
@@ -95,16 +92,6 @@ async function defaultHandler(options: RouteHandlerCallbackOptions) {
       handlerKey,
       e
     );
-
-    publishEvent({
-      type: "networkRequestFailed",
-      request: {
-        url: request.url,
-        method: request.method,
-        body: await requestClone.text(),
-        headers: headersToObject(request.headers),
-      },
-    });
 
     return new Response(parseOmrsOfflineResponseBodyHeader(request.headers), {
       status: parseOmrsOfflineResponseStatusHeader(request.headers),

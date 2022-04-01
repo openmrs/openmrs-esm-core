@@ -106,7 +106,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   const search = debounce((location: string) => {
     setActiveLocation("");
     setSearchTerm(location);
-    setPage(1);
   }, searchTimeout);
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {

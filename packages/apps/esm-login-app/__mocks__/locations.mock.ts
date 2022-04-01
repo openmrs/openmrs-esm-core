@@ -372,3 +372,26 @@ export const mockLoginLocations = {
     ],
   },
 };
+
+export const mockSoleLoginLocation = {
+  data: {
+    id: "301b3ad6-868a-48a6-bc3f-aaa8aa3f891z",
+    total: 1,
+    link: [
+      {
+        relation: "self",
+        url: "http://openmrs:8080/openmrs/ws/fhir2/R4/Location?_count=50&_summary=data&_tag=login%20location",
+      },
+    ],
+    entry: [
+      {
+        resource: {
+          id: "44c3efb0-2583-4c80-a79e-1f756a03c0a1",
+          status: "active",
+          name: "Outpatient Clinic",
+          description: "Outpatient Clinic",
+        },
+      },
+    ],
+  },
+};
