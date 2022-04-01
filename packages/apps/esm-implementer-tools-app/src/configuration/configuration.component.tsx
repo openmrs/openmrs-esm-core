@@ -12,7 +12,7 @@ import {
   temporaryConfigStore,
   useStore,
   useStoreWithActions,
-} from "@openmrs/esm-framework";
+} from "@openmrs/esm-framework/src/internal";
 import {
   Button,
   TextInput,
