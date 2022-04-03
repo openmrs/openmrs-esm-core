@@ -1,29 +1,37 @@
 import React from "react";
+import { renderHook, act } from "@testing-library/react-hooks";
+
 import { render, fireEvent, screen } from "@testing-library/react";
 import { useOnClickOutside } from "./useOnClickOutside";
 
 describe("useOnClickOutside", () => {
   const handler = jest.fn();
-  const ref = useOnClickOutside<HTMLDivElement>(handler);
-  const activeRef = useOnClickOutside<HTMLDivElement>(handler, false);
-  const buttonText = "Button Text";
-  const children = <button type="button">{buttonText}</button>;
 
-  it("should call handler() when clicking outside", () => {
-    render(<div ref={ref}></div>);
-    fireEvent.mouseDown(document.body);
+  const ref = renderHook(() => useOnClickOutside(handler)) as unknown;
+
+  test("should call handler() when clicking outside", async () => {
+    expect(handler).not.toHaveBeenCalled();
+
+    await act(async () => {
+      render(<div ref={ref as React.MutableRefObject<HTMLDivElement>}></div>);
+      fireEvent.mouseDown(document.body);
+    });
+
     expect(handler).toHaveBeenCalledTimes(1);
-  });
 
-  it("should NOT call handler() when clicking inside", () => {
-    render(<div ref={ref}>{children}</div>);
-    fireEvent.mouseDown(screen.getByText("Button Text"));
-    expect(handler).not.toHaveBeenCalled();
-  });
+    // Testing that "removeEventListener" works correctly
+    // by ensuring that handler still be called once time.
+    jest.spyOn(document, "removeEventListener");
 
-  it("should NOT call handler() when active is false", () => {
-    render(<div ref={activeRef}>{children}</div>);
-    fireEvent.mouseDown(screen.getByText("Button Text"));
-    expect(handler).not.toHaveBeenCalled();
+    await act(async () => {
+      ref.unmount();
+    });
+
+    expect(document.removeEventListener).toHaveBeenCalledTimes(1);
+
+    await act(async () => {
+      fireEvent.mouseDown(document.body);
+    });
+    expect(handler).toHaveBeenCalledTimes(1);
   });
 });
