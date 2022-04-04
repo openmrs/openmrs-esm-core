@@ -9,7 +9,7 @@ please see the the
 
 ## How to make a frontend module configurable
 
-You should use the OpenMRS Frontend Framework to modules configurable.
+You should use the OpenMRS Frontend Framework to make modules configurable.
 
 The main task is to create a config schema for your module. The config schema
 is what tells the framework what configuration files should look like,
