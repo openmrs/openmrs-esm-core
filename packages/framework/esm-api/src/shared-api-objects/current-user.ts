@@ -1,8 +1,4 @@
-/**
- * @module
- * @category API
- */
-
+/** @module @category API */
 import { Observable, ReplaySubject } from "rxjs";
 import { filter, map, tap, mergeAll } from "rxjs/operators";
 import { openmrsFetch, sessionEndpoint } from "../openmrs-fetch";

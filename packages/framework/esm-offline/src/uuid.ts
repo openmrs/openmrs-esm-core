@@ -1,3 +1,4 @@
+/** @module @category Offline */
 import { v4 } from "uuid";
 
 export const offlineUuidPrefix = "OFFLINE+";

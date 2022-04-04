@@ -4,7 +4,7 @@ import {
   setupPaths,
   setupUtils,
   SpaConfig,
-} from "@openmrs/esm-framework";
+} from "@openmrs/esm-framework/src/internal";
 
 declare var __webpack_public_path__: string;
 

@@ -1,12 +1,5 @@
+/** @module @category Error Handling */
 import { dispatchNotificationShown } from "@openmrs/esm-globals";
-
-export function handleApiError() {
-  return (incomingResponseErr) => {
-    setTimeout(() => {
-      throw incomingResponseErr;
-    });
-  };
-}
 
 window.onerror = function () {
   dispatchNotificationShown({

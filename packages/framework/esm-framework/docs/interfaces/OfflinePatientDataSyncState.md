@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Properties
+### Offline Properties
 
 - [errors](OfflinePatientDataSyncState.md#errors)
 - [failedHandlers](OfflinePatientDataSyncState.md#failedhandlers)
@@ -16,7 +16,7 @@
 
 - [abort](OfflinePatientDataSyncState.md#abort)
 
-## Properties
+## Offline Properties
 
 ### errors
 
@@ -26,7 +26,7 @@ A set of error messages associated with the identifers of the failed handlers.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L41)
+[packages/framework/esm-offline/src/offline-patient-data.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L42)
 
 ___
 
@@ -39,7 +39,7 @@ patient's data.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L37)
+[packages/framework/esm-offline/src/offline-patient-data.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L38)
 
 ___
 
@@ -52,7 +52,7 @@ patient's data.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L32)
+[packages/framework/esm-offline/src/offline-patient-data.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L33)
 
 ___
 
@@ -65,7 +65,7 @@ of synchronizing the patient's data.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L27)
+[packages/framework/esm-offline/src/offline-patient-data.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L28)
 
 ___
 
@@ -77,7 +77,7 @@ The time when this state snapshot was initially created.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L22)
+[packages/framework/esm-offline/src/offline-patient-data.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L23)
 
 ## Methods
 
@@ -96,4 +96,4 @@ Aborts the process of downloading data.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L47)
+[packages/framework/esm-offline/src/offline-patient-data.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L48)

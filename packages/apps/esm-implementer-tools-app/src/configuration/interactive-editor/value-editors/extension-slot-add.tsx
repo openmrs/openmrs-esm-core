@@ -3,7 +3,7 @@ import { MultiSelect } from "carbon-components-react";
 import {
   ExtensionInternalStore,
   getExtensionInternalStore,
-} from "@openmrs/esm-framework";
+} from "@openmrs/esm-framework/src/internal";
 
 const extensionInternalStore = getExtensionInternalStore();
 

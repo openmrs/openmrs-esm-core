@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { temporaryConfigStore, useStore } from "@openmrs/esm-framework";
+import {
+  temporaryConfigStore,
+  useStore,
+} from "@openmrs/esm-framework/src/internal";
 import AceEditor from "react-ace";
 import style from "./json-editor.scss";
 
