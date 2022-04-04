@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { FetchResponse, openmrsFetch } from "@openmrs/esm-framework";
 import { useMemo } from "react";
 
-interface PatientIdentifierType {
+export interface PatientIdentifierType {
   uuid: string;
   display: string;
 }

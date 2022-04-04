@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useMemo } from "react";
-import debounce from "lodash-es/debounce";
+import React, { useState, useMemo } from "react";
 import uniqueId from "lodash-es/uniqueId";
-import { usePatientIdentifierTypes } from "./patient-identifier-type.resource";
+import {
+  usePatientIdentifierTypes,
+  PatientIdentifierType,
+} from "./patient-identifier-type.resource";
 import styles from "./uuid-search.scss";
 import { useTranslation } from "react-i18next";
 import {
@@ -13,7 +15,7 @@ import {
 
 interface PatientIdentifierTypeSearchBoxProps {
   value: string;
-  setPatientIdentifierTypeUuid: (patientIdentifierType) => void;
+  setPatientIdentifierTypeUuid: (patientIdentifierTypeUuid) => void;
 }
 
 export function PatientIdentifierTypeSearchBox({
@@ -26,29 +28,27 @@ export function PatientIdentifierTypeSearchBox({
   const [activePatientIdentifierTypeUuid, setActivePatientIdentifierTypeUuid] =
     useState<any>(value);
   const { t } = useTranslation();
-  const searchTimeoutInMs = 300;
 
   const id = useMemo(() => uniqueId(), []);
 
-  const handleUuidChange = (patientIdentifierType) => {
+  const handleUuidChange = (patientIdentifierType: PatientIdentifierType) => {
     setActivePatientIdentifierTypeUuid(patientIdentifierType.uuid);
     setPatientIdentifierTypeUuid(patientIdentifierType.uuid);
     setSearchTerm("");
   };
 
-  const handleSearchTermChange = debounce((searchTerm) => {
-    setSearchTerm(searchTerm);
-  }, searchTimeoutInMs);
+  const handleSearchTermChange = (evt) => setSearchTerm(evt.target.value);
 
-  const filteredResults = useMemo(() => {
-    if (!isLoading && searchTerm && searchTerm !== "") {
-      return patientIdentifierTypes?.filter((type) =>
-        type.display.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    } else {
-      return undefined;
-    }
-  }, [isLoading, searchTerm, patientIdentifierTypes]);
+  const filteredResults: Array<PatientIdentifierType> | undefined =
+    useMemo(() => {
+      if (!isLoading && searchTerm && searchTerm !== "") {
+        return patientIdentifierTypes?.filter((type) =>
+          type.display.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      } else {
+        return undefined;
+      }
+    }, [isLoading, searchTerm, patientIdentifierTypes]);
 
   return (
     <div>
@@ -69,9 +69,8 @@ export function PatientIdentifierTypeSearchBox({
                 )
               : t("loading", "Loading")
           }
-          onChange={(event) => {
-            handleSearchTermChange(event.target.value);
-          }}
+          onChange={handleSearchTermChange}
+          value={searchTerm}
           disabled={isLoading}
         />
         {searchTerm ? (
@@ -81,7 +80,7 @@ export function PatientIdentifierTypeSearchBox({
               className={styles.listbox}
               id={`searchbox-${id}`}
             >
-              {filteredResults?.map((patientIdentifierType: any) => (
+              {filteredResults?.map((patientIdentifierType) => (
                 <StructuredListRow
                   key={patientIdentifierType.uuid}
                   role="option"
