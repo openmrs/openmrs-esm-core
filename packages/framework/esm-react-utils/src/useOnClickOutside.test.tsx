@@ -1,37 +1,59 @@
 import React from "react";
-import { renderHook, act } from "@testing-library/react-hooks";
-
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { useOnClickOutside } from "./useOnClickOutside";
 
 describe("useOnClickOutside", () => {
-  const handler = jest.fn();
+  const handler: (e: Event) => void = jest.fn();
+  afterEach(() => (handler as jest.Mock).mockClear());
 
-  const ref = renderHook(() => useOnClickOutside(handler)) as unknown;
+  it("should call the handler when clicking outside", () => {
+    // setup
+    const Component: React.FC = ({ children }) => {
+      const ref = useOnClickOutside<HTMLDivElement>(handler);
+      return <div ref={ref}>{children}</div>;
+    };
+    const ref = render(<Component />);
 
-  test("should call handler() when clicking outside", async () => {
+    // act
+    fireEvent.click(ref.container);
+
+    // verify
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
+
+  it("should not call the handler when clicking on the element", () => {
+    // setup
+    const Component: React.FC = ({ children }) => {
+      const ref = useOnClickOutside<HTMLDivElement>(handler);
+      return <div ref={ref}>{children}</div>;
+    };
+    const mutableRef: { current: HTMLDivElement } = { current: undefined };
+    render(
+      <Component>
+        <div ref={mutableRef}></div>
+      </Component>
+    );
+
+    // act
+    fireEvent.click(mutableRef.current);
+
+    // verify
     expect(handler).not.toHaveBeenCalled();
+  });
 
-    await act(async () => {
-      render(<div ref={ref as React.MutableRefObject<HTMLDivElement>}></div>);
-      fireEvent.mouseDown(document.body);
-    });
+  it("should unregister the event listener when unmounted", () => {
+    // setup
+    const Component: React.FC = ({ children }) => {
+      const ref = useOnClickOutside<HTMLDivElement>(handler);
+      return <div ref={ref}>{children}</div>;
+    };
+    const ref = render(<Component />);
+    const spy = jest.spyOn(window, "removeEventListener");
 
-    expect(handler).toHaveBeenCalledTimes(1);
+    // act
+    ref.unmount();
 
-    // Testing that "removeEventListener" works correctly
-    // by ensuring that handler still be called once time.
-    jest.spyOn(document, "removeEventListener");
-
-    await act(async () => {
-      ref.unmount();
-    });
-
-    expect(document.removeEventListener).toHaveBeenCalledTimes(1);
-
-    await act(async () => {
-      fireEvent.mouseDown(document.body);
-    });
-    expect(handler).toHaveBeenCalledTimes(1);
+    // verify
+    expect(spy).toHaveBeenCalledWith("click", expect.any(Function));
   });
 });
