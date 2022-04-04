@@ -33,6 +33,7 @@ export function PatientIdentifierTypeSearchBox({
   const handleUuidChange = (patientIdentifierType) => {
     setActivePatientIdentifierTypeUuid(patientIdentifierType.uuid);
     setPatientIdentifierTypeUuid(patientIdentifierType.uuid);
+    setSearchTerm("");
   };
 
   const handleSearchTermChange = debounce((searchTerm) => {
@@ -48,23 +49,6 @@ export function PatientIdentifierTypeSearchBox({
       return undefined;
     }
   }, [isLoading, searchTerm, patientIdentifierTypes]);
-
-  console.log(filteredResults);
-
-  // useEffect(() => {
-  //   const ac = new AbortController();
-
-  //   if (searchTerm && searchTerm.length >= 2) {
-  //     performPatientIdentifierTypeSearch(searchTerm).then(
-  //       ({ data: { results } }) => {
-  //         setSearchResults(results.slice(0, 9));
-  //       }
-  //     );
-  //   } else {
-  //     setSearchResults([]);
-  //   }
-  //   return () => ac.abort();
-  // }, [searchTerm]);
 
   return (
     <div>
