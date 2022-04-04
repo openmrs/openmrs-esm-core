@@ -48,11 +48,11 @@
     "@openmrs/esm-error-handling": "3.x",
     "@openmrs/esm-extensions": "3.x",
     "@openmrs/esm-globals": "3.x",
-    "dayjs": "1.x",
     "i18next": "19.x",
     "react": "16.x",
     "react-dom": "16.x",
-    "react-i18next": "11.x"
+    "react-i18next": "11.x",
+    "dayjs": "1.x"
   },
   "devDependencies": {
     "@openmrs/esm-api": "^3.2.0",
