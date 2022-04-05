@@ -1,3 +1,4 @@
+/** @module @category Config Validation */
 import { Validator, ValidatorFunction } from "../types";
 
 export function validator(

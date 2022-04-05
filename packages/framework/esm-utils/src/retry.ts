@@ -1,3 +1,5 @@
+/** @module @category Utility */
+
 /**
  * Options for configuring the behavior of the {@link retry} function.
  */

@@ -1,3 +1,4 @@
+/** @module @category Extension */
 import { useEffect, useState } from "react";
 import {
   AssignedExtension,

@@ -1,3 +1,4 @@
+/** @module @category Offline */
 import type { ImportMap } from "@openmrs/esm-globals";
 import { OmrsOfflineCachingStrategy } from "./service-worker-http-headers";
 import { getOmrsServiceWorker } from "./service-worker";

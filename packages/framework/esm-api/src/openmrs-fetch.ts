@@ -1,8 +1,4 @@
-/**
- * @module
- * @category API
- */
-
+/** @module @category API */
 import { Observable } from "rxjs";
 import isPlainObject from "lodash-es/isPlainObject";
 import { getConfig, navigate } from "@openmrs/esm-config";
@@ -10,6 +6,16 @@ import { FetchResponse } from "./types";
 
 export const sessionEndpoint = "/ws/rest/v1/session";
 
+/**
+ * Append `path` to the OpenMRS SPA base.
+ *
+ * #### Example
+ *
+ * ```ts
+ * makeUrl('/foo/bar');
+ * // => '/openmrs/foo/bar'
+ * ```
+ */
 export function makeUrl(path: string) {
   return window.openmrsBase + path;
 }

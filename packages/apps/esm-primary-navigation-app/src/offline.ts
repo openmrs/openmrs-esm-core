@@ -2,7 +2,7 @@ import {
   refetchCurrentUser,
   getLoggedInUser,
   SyncProcessOptions,
-} from "@openmrs/esm-framework";
+} from "@openmrs/esm-framework/src/internal";
 import { postUserPropertiesOnline } from "./components/choose-locale/change-locale.resource";
 
 export async function syncUserLanguagePreference(

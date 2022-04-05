@@ -1,3 +1,4 @@
+/** @module @category UI */
 import React from "react";
 import { render } from "react-dom";
 import { Subject } from "rxjs";
