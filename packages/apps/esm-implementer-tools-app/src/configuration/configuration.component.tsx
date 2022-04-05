@@ -75,6 +75,7 @@ const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({
     onClick={toggleIsToolbarOpen}
     kind="ghost"
     size="small"
+    tooltipPosition="left"
     iconDescription={`${isConfigToolbarOpen ? "Hide" : "Show"} toolbar`}
   />
 );
