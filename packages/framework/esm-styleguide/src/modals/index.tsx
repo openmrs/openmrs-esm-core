@@ -1,4 +1,3 @@
-/** @module @category UI */
 import { renderExtension } from "@openmrs/esm-extensions";
 import { createGlobalStore } from "@openmrs/esm-state";
 

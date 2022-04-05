@@ -6,7 +6,7 @@ import {
   implementerToolsConfigStore,
   temporaryConfigStore,
   Type,
-} from "@openmrs/esm-framework/src/internal";
+} from "@openmrs/esm-framework";
 import { Configuration } from "./configuration.component";
 import {
   performConceptSearch,

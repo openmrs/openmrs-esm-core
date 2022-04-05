@@ -1,4 +1,3 @@
-/** @module @category UI */
 import { useMemo, useState } from "react";
 
 const defaultResultsPerPage = 10;

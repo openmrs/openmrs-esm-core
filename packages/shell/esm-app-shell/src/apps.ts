@@ -7,7 +7,7 @@ import {
   registerExtension,
   ResourceLoader,
   Lifecycle,
-} from "@openmrs/esm-framework/src/internal";
+} from "@openmrs/esm-framework";
 import { registerApplication } from "single-spa";
 import { routePrefix, routeRegex, wrapLifecycle } from "./helpers";
 import type { Activator, ActivatorDefinition } from "./types";

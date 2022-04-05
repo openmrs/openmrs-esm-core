@@ -1,4 +1,3 @@
-/** @module @category Store */
 import { subscribeTo } from "@openmrs/esm-state";
 import { useEffect, useMemo, useState } from "react";
 import { Store } from "unistore";

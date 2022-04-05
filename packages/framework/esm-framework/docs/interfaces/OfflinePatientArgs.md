@@ -4,12 +4,12 @@
 
 ## Table of contents
 
-### Offline Properties
+### Properties
 
 - [patientUuid](OfflinePatientArgs.md#patientuuid)
 - [signal](OfflinePatientArgs.md#signal)
 
-## Offline Properties
+## Properties
 
 ### patientUuid
 
@@ -19,7 +19,7 @@ The UUID of the patient that should be made available offline.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L71)
+[packages/framework/esm-offline/src/offline-patient-data.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L70)
 
 ___
 
@@ -31,4 +31,4 @@ An {@link AbortSignal} which notifies about the cancellation of the operation.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L75)
+[packages/framework/esm-offline/src/offline-patient-data.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L74)

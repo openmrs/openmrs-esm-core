@@ -1,5 +1,3 @@
-/** @module @category Offline */
-
 export const omrsOfflineResponseBodyHttpHeaderName =
   "x-omrs-offline-response-body";
 export const omrsOfflineResponseStatusHttpHeaderName =

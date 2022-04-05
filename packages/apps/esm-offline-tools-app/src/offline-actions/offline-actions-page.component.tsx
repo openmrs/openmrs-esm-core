@@ -4,7 +4,7 @@ import {
   runSynchronization,
   useLayoutType,
   useStore,
-} from "@openmrs/esm-framework/src/internal";
+} from "@openmrs/esm-framework";
 import { Button } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import SharedPageLayout from "../components/shared-page-layout.component";

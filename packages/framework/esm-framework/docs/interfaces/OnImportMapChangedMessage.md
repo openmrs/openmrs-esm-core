@@ -10,12 +10,12 @@
 
 ## Table of contents
 
-### Offline Properties
+### Properties
 
 - [importMap](OnImportMapChangedMessage.md#importmap)
 - [type](OnImportMapChangedMessage.md#type)
 
-## Offline Properties
+## Properties
 
 ### importMap
 
@@ -23,7 +23,7 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L33)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L32)
 
 ___
 
@@ -37,4 +37,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L28)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L27)

@@ -1,4 +1,3 @@
-/** @module @category API */
 import { useEffect, useReducer } from "react";
 import { fetchCurrentPatient, PatientUuid } from "@openmrs/esm-api";
 

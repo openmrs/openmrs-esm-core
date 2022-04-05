@@ -1,5 +1,4 @@
-/** @module @category Extension */
-/*
+/**
  * We have the following extension modes:
  *
  * - attached (set via code in form of: attach, detach, ...)

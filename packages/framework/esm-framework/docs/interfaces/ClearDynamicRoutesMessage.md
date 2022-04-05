@@ -10,11 +10,11 @@
 
 ## Table of contents
 
-### Offline Properties
+### Properties
 
 - [type](ClearDynamicRoutesMessage.md#type)
 
-## Offline Properties
+## Properties
 
 ### type
 
@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L28)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L27)

@@ -4,7 +4,7 @@
 
 ## Table of contents
 
-### Offline Properties
+### Properties
 
 - [displayName](OfflinePatientDataSyncHandler.md#displayname)
 
@@ -12,7 +12,7 @@
 
 - [onOfflinePatientAdded](OfflinePatientDataSyncHandler.md#onofflinepatientadded)
 
-## Offline Properties
+## Properties
 
 ### displayName
 
@@ -23,7 +23,7 @@ This is ideally translated.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L56)
+[packages/framework/esm-offline/src/offline-patient-data.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L55)
 
 ## Methods
 
@@ -49,4 +49,4 @@ A promise which should resolve if all data could be cached and reject when there
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L64)
+[packages/framework/esm-offline/src/offline-patient-data.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L63)

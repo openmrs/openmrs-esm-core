@@ -1,4 +1,3 @@
-/** @module @category UI */
 import { useEffect, useState } from "react";
 
 export type LayoutType = "tablet" | "phone" | "desktop";

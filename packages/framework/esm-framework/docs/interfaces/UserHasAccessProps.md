@@ -4,11 +4,11 @@
 
 ## Table of contents
 
-### API Properties
+### Properties
 
 - [privilege](UserHasAccessProps.md#privilege)
 
-## API Properties
+## Properties
 
 ### privilege
 
@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L6)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L5)

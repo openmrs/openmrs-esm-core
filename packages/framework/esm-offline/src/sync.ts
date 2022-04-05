@@ -1,4 +1,3 @@
-/** @module @category Offline */
 import Dexie, { Table } from "dexie";
 import { getLoggedInUser } from "@openmrs/esm-api";
 import { createGlobalStore } from "@openmrs/esm-state";

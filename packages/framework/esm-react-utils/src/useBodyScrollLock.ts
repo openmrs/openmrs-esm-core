@@ -1,4 +1,3 @@
-/** @module @category UI */
 import { useEffect } from "react";
 
 export function useBodyScrollLock(active: boolean) {

@@ -1,4 +1,8 @@
-/** @module @category API */
+/**
+ * @module
+ * @category API
+ */
+
 import { Observable, BehaviorSubject } from "rxjs";
 import { take, map } from "rxjs/operators";
 import { openmrsObservableFetch } from "../openmrs-fetch";

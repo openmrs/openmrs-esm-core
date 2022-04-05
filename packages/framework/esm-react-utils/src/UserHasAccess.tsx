@@ -1,4 +1,3 @@
-/** @module @category API */
 import React, { useEffect, useState } from "react";
 import { getCurrentUser, userHasAccess, LoggedInUser } from "@openmrs/esm-api";
 

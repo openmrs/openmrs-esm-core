@@ -1,4 +1,3 @@
-/** @module @category Utility */
 import * as semver from "semver";
 
 function normalizeOnlyVersion(version: string) {

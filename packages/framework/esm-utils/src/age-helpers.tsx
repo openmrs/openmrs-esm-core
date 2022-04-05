@@ -1,5 +1,3 @@
-/** @module @category Utility */
-
 /**
  * Gets the number of days in the year of the given date.
  * @param date The date to compute the days within the year.
