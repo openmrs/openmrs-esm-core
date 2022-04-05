@@ -19,8 +19,8 @@
   "offlineActionsTableAction": "Action",
   "offlineActionsTableCreatedOn": "Date & Time",
   "offlineActionsTableDeleteAction": "Delete action",
-  "offlineActionsTableDeleteActions_one": "Delete {count} actions",
-  "offlineActionsTableDeleteActions_other": "Delete {count} actions",
+  "offlineActionsTableDeleteActions": "Delete {count} actions",
+  "offlineActionsTableDeleteActions_plural": "Delete {count} actions",
   "offlineActionsTableError": "Error",
   "offlineActionsTablePatient": "Patient",
   "offlineActionsUpdateOfflinePatients": "Update offline patients",
@@ -32,5 +32,7 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Unknown error.",
   "offlinePatientSyncDetailsHeader": "Offline patient details",
   "offlineReady": "Offline Ready",
-  "offlineToolsAppMenuLink": "Offline tools"
+  "offlineToolsAppMenuLink": "Offline tools",
+  "offlineActionsTableDeleteActions_one": "Delete {count} actions",
+  "offlineActionsTableDeleteActions_other": "Delete {count} actions"
 }
