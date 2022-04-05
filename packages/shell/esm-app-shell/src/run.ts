@@ -210,7 +210,6 @@ async function setupOffline() {
     await registerOmrsServiceWorker(
       `${window.getOpenmrsSpaBase()}service-worker.js`
     );
-    await precacheImportMap();
     await activateOfflineCapability();
     setupOfflineStaticDependencyPrecaching();
   } catch (e) {
@@ -221,14 +220,6 @@ async function setupOffline() {
       description: `There was an error while initializing the website's offline mode. You can try reloading the page later.`,
     });
   }
-}
-
-async function precacheImportMap() {
-  const importMap = await window.importMapOverrides.getCurrentPageMap();
-  await messageOmrsServiceWorker({
-    type: "onImportMapChanged",
-    importMap,
-  });
 }
 
 function setupOfflineStaticDependencyPrecaching() {
@@ -265,6 +256,8 @@ function subscribeOnlineAndLoginChange(
 }
 
 async function precacheGlobalStaticDependencies() {
+  await precacheImportMap();
+
   // By default, cache the session endpoint.
   // This ensures that a lot of user/session related functions also work offline.
   const sessionPathUrl = new URL(
@@ -284,6 +277,14 @@ async function precacheGlobalStaticDependencies() {
       e
     )
   );
+}
+
+async function precacheImportMap() {
+  const importMap = await window.importMapOverrides.getCurrentPageMap();
+  await messageOmrsServiceWorker({
+    type: "onImportMapChanged",
+    importMap,
+  });
 }
 
 function setupOfflineCssClasses() {
