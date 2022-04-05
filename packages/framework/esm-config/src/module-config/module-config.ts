@@ -1,4 +1,3 @@
-/** @module @category Config */
 import { clone, reduce, mergeDeepRight, equals } from "ramda";
 import {
   Config,
@@ -272,7 +271,6 @@ export function getConfig(moduleName: string): Promise<Config> {
  * @param providedConfig  an object of config values (without the top-level module name)
  * @param keyPathContext  a dot-deparated string which helps the user figure out where
  *     the provided config came from
- * @internal
  */
 export function processConfig(
   schema: ConfigSchema,

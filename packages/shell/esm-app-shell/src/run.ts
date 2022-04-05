@@ -22,7 +22,7 @@ import {
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
   openmrsFetch,
-} from "@openmrs/esm-framework/src/internal";
+} from "@openmrs/esm-framework";
 import {
   finishRegisteringAllApps,
   registerApp,

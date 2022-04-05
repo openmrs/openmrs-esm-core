@@ -2,9 +2,15 @@
 
 # Interface: ExtensionRegistration
 
+## Hierarchy
+
+- **`ExtensionRegistration`**
+
+  ↳ [`ExtensionInfo`](ExtensionInfo.md)
+
 ## Table of contents
 
-### Extension Properties
+### Properties
 
 - [meta](ExtensionRegistration.md#meta)
 - [moduleName](ExtensionRegistration.md#modulename)
@@ -17,7 +23,7 @@
 
 - [load](ExtensionRegistration.md#load)
 
-## Extension Properties
+## Properties
 
 ### meta
 
@@ -25,7 +31,7 @@
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L19)
+[packages/framework/esm-extensions/src/store.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L18)
 
 ___
 
@@ -35,7 +41,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L18)
+[packages/framework/esm-extensions/src/store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L17)
 
 ___
 
@@ -45,7 +51,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L16)
+[packages/framework/esm-extensions/src/store.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L15)
 
 ___
 
@@ -55,7 +61,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L22)
+[packages/framework/esm-extensions/src/store.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L21)
 
 ___
 
@@ -65,7 +71,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L21)
+[packages/framework/esm-extensions/src/store.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L20)
 
 ___
 
@@ -75,7 +81,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L20)
+[packages/framework/esm-extensions/src/store.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L19)
 
 ## Methods
 
@@ -89,4 +95,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L17)
+[packages/framework/esm-extensions/src/store.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L16)

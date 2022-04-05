@@ -1,5 +1,3 @@
-/** @module @category Navigation */
-
 function trimTrailingSlash(str: string) {
   return str.replace(/\/$/, "");
 }
@@ -11,6 +9,7 @@ function trimTrailingSlash(str: string) {
  * parameters in configurable URLs.
  *
  * @param template A string to interpolate
+ * @category Navigation
  */
 export function interpolateUrl(template: string): string {
   const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());
@@ -37,6 +36,7 @@ export function interpolateUrl(template: string): string {
  *
  * @param template With optional params wrapped in `${ }`
  * @param params Values to interpolate into the string template
+ * @category Navigation
  */
 export function interpolateString(template: string, params: object): string {
   const names = Object.keys(params);

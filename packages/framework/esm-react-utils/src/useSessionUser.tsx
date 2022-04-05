@@ -1,4 +1,3 @@
-/** @module @category API */
 import { openmrsObservableFetch, SessionUser } from "@openmrs/esm-api";
 import { useState, useEffect } from "react";
 

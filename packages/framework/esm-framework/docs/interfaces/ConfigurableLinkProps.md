@@ -10,11 +10,11 @@
 
 ## Table of contents
 
-### Navigation Properties
+### Properties
 
 - [to](ConfigurableLinkProps.md#to)
 
-## Navigation Properties
+## Properties
 
 ### to
 
@@ -22,4 +22,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L22)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L21)

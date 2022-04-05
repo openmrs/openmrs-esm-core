@@ -1,4 +1,3 @@
-/** @module @category Store */
 import createStore, { Store } from "unistore";
 
 interface StoreEntity {

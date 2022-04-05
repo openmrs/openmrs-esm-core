@@ -29,7 +29,7 @@ import {
   SyncItem,
   canBeginEditSynchronizationItemsOfType,
   beginEditSynchronizationItem,
-} from "@openmrs/esm-framework/src/internal";
+} from "@openmrs/esm-framework";
 
 export interface SyncItemWithPatient {
   item: SyncItem;

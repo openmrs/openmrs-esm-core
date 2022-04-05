@@ -1,4 +1,3 @@
-/** @module @category Config */
 import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
 import {
   Config,

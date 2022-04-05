@@ -9,14 +9,14 @@ locations to better represent the sync item, e.g. in the UI.
 
 ## Table of contents
 
-### Offline Properties
+### Properties
 
 - [dependencies](QueueItemDescriptor.md#dependencies)
 - [displayName](QueueItemDescriptor.md#displayname)
 - [id](QueueItemDescriptor.md#id)
 - [patientUuid](QueueItemDescriptor.md#patientuuid)
 
-## Offline Properties
+## Properties
 
 ### dependencies
 
@@ -24,7 +24,7 @@ locations to better represent the sync item, e.g. in the UI.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L32)
+[packages/framework/esm-offline/src/sync.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L31)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L37)
+[packages/framework/esm-offline/src/sync.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L36)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L31)
+[packages/framework/esm-offline/src/sync.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L30)
 
 ___
 
@@ -54,4 +54,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L36)
+[packages/framework/esm-offline/src/sync.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L35)

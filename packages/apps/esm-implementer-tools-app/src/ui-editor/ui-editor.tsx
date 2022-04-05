@@ -5,7 +5,7 @@ import {
   getExtensionInternalStore,
   useStore,
   useStoreWithActions,
-} from "@openmrs/esm-framework/src/internal";
+} from "@openmrs/esm-framework";
 import { Button } from "carbon-components-react";
 import { Portal } from "./portal";
 import { ExtensionOverlay } from "./extension-overlay.component";

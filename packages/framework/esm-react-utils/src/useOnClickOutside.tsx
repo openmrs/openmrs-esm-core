@@ -1,4 +1,3 @@
-/** @module @category UI */
 import { useRef, useEffect } from "react";
 
 export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
@@ -11,7 +10,7 @@ export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
     if (active) {
       const listener = (event: Event) => {
         if (ref?.current?.contains(event.target as Node)) {
-          return;
+            return;
         }
 
         handler(event);

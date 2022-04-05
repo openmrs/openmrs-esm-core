@@ -1,5 +1,3 @@
-/** @module @category Breadcrumb */
-
 export interface BreadcrumbSettings {
   /**
    * Gets the path of breadcrumb for navigation purposes.

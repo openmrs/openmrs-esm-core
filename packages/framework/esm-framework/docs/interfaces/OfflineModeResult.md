@@ -4,13 +4,13 @@
 
 ## Table of contents
 
-### Offline Properties
+### Properties
 
 - [active](OfflineModeResult.md#active)
 - [current](OfflineModeResult.md#current)
 - [notAvailable](OfflineModeResult.md#notavailable)
 
-## Offline Properties
+## Properties
 
 ### active
 
@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/mode.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L43)
+[packages/framework/esm-offline/src/mode.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L41)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/mode.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L41)
+[packages/framework/esm-offline/src/mode.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L39)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/mode.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L42)
+[packages/framework/esm-offline/src/mode.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L40)

@@ -1,4 +1,3 @@
-/** @module @category Offline */
 import { subscribeConnectivityChanged } from "@openmrs/esm-globals";
 import { useEffect, useState } from "react";
 
