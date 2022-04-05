@@ -1,14 +1,7 @@
 import "@openmrs/esm-styleguide/dist/openmrs-esm-styleguide.css";
-import {
-  patchXMLHttpRequest,
-  setupPaths,
-  setupUtils,
-  SpaConfig,
-} from "@openmrs/esm-framework";
+import { setupPaths, setupUtils, SpaConfig } from "@openmrs/esm-framework";
 
 declare var __webpack_public_path__: string;
-
-patchXMLHttpRequest();
 
 function wireSpaPaths() {
   const baseElement = document.createElement("base");
