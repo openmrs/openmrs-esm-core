@@ -212,6 +212,10 @@ export default (
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],
+      resolve: {
+        alias: {
+          '@openmrs/esm-framework': '@openmrs/esm-framework/src/internal'
+        }
     },
     ...overrides,
   };
