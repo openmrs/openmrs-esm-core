@@ -46,7 +46,9 @@ function getUrlsFromBuildManifests(
   // Using a try/catch here seems better to me than doing defensive checks on every field/type in the response.
   try {
     const results: Array<string> = [];
-    const baseUrlForFiles = getUrlOfFileParentDir(new URL(importMapAddress));
+    const baseUrlForFiles = getUrlOfFileParentDir(
+      new URL(importMapAddress, self.location.href)
+    );
 
     for (const chunk of buildManifest.chunks ?? []) {
       for (const file of chunk.files ?? []) {
@@ -56,6 +58,12 @@ function getUrlsFromBuildManifests(
 
     return results;
   } catch (e) {
+    console.error(
+      "[SW] Failed to determine the dependencies of the module with the URL %s. Not precaching any of the module's assets. Error: ",
+      importMapAddress,
+      e
+    );
+
     return [];
   }
 }
