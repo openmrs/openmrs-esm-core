@@ -49,6 +49,7 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
         } else {
           navigate({ to: config.links.loginSuccess });
         }
+        return;
       });
     },
     [referrer, config.links.loginSuccess, returnToUrl]
