@@ -1,3 +1,4 @@
+/** @module @category Store */
 import { useEffect, useMemo, useState } from "react";
 import { Store, BoundAction } from "unistore";
 

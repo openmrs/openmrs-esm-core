@@ -1,3 +1,4 @@
+/** @module @category Navigation */
 import { navigateToUrl } from "single-spa";
 import { interpolateUrl } from "./interpolate-string";
 import type {} from "@openmrs/esm-globals";
@@ -24,7 +25,6 @@ export interface NavigateOptions {
  * @param to The target path or URL. Supports templating with 'openmrsBase' and 'openmrsSpaBase'.
  * For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home`
  * for implementations using the standard OpenMRS and SPA base paths.
- * @category Navigation
  */
 export function navigate({ to }: NavigateOptions): void {
   const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());

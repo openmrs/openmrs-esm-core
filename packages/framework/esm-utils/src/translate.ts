@@ -1,3 +1,4 @@
+/** @module @category Utility */
 import _i18n from "i18next";
 
 export function translateFrom(

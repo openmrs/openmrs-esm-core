@@ -1,3 +1,5 @@
+/** @module @category Offline */
+
 async function isSafariPrivateBrowsing() {
   const storage = window.sessionStorage;
 

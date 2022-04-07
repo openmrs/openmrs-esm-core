@@ -1,5 +1,9 @@
 import "@openmrs/esm-styleguide/dist/openmrs-esm-styleguide.css";
-import { setupPaths, setupUtils, SpaConfig } from "@openmrs/esm-framework";
+import {
+  setupPaths,
+  setupUtils,
+  SpaConfig,
+} from "@openmrs/esm-framework/src/internal";
 
 declare var __webpack_public_path__: string;
 

@@ -12,7 +12,7 @@ import {
   Type,
   Config,
   temporaryConfigStore,
-} from "@openmrs/esm-framework";
+} from "@openmrs/esm-framework/src/internal";
 import { ValueEditor, CustomValueType } from "./value-editor";
 import { implementerToolsStore, ImplementerToolsStore } from "../../store";
 import { DisplayValue } from "./display-value";
