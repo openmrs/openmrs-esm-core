@@ -2,17 +2,18 @@
 import { Observable, ReplaySubject } from "rxjs";
 import { filter, map, tap, mergeAll } from "rxjs/operators";
 import { openmrsFetch, sessionEndpoint } from "../openmrs-fetch";
-import {
-  LoggedInUserData,
+import type {
   LoggedInUser,
   CurrentUserWithResponseOption,
-  UnauthenticatedUser,
   CurrentUserWithoutResponseOption,
   CurrentUserOptions,
   SessionLocation,
+  Privilege,
+  Role,
+  Session,
 } from "../types";
 
-const userSubject = new ReplaySubject<Promise<LoggedInUserData>>(1);
+const userSubject = new ReplaySubject<Promise<Session>>(1);
 let lastFetchTimeMillis = 0;
 
 /**
@@ -56,13 +57,13 @@ let lastFetchTimeMillis = 0;
 function getCurrentUser(): Observable<LoggedInUser>;
 function getCurrentUser(
   opts: CurrentUserWithResponseOption
-): Observable<UnauthenticatedUser>;
+): Observable<Session>;
 function getCurrentUser(
   opts: CurrentUserWithoutResponseOption
 ): Observable<LoggedInUser>;
 function getCurrentUser(
   opts: CurrentUserOptions = { includeAuthStatus: false }
-): Observable<LoggedInUser | UnauthenticatedUser> {
+): Observable<LoggedInUser | Session> {
   if (lastFetchTimeMillis < Date.now() - 1000 * 60) {
     refetchCurrentUser();
   }
@@ -72,30 +73,31 @@ function getCurrentUser(
     tap(setUserLanguage),
     map((r) => (opts.includeAuthStatus ? r : r.user)),
     filter(Boolean)
-  ) as Observable<LoggedInUser | UnauthenticatedUser>;
-}
-
-function setUserLanguage(data: LoggedInUserData) {
-  if (data?.user?.userProperties?.defaultLocale) {
-    const locale = data.user.userProperties.defaultLocale;
-    const htmlLang = document.documentElement.getAttribute("lang");
-
-    if (locale !== htmlLang) {
-      document.documentElement.setAttribute("lang", locale);
-    }
-  }
-}
-
-function userHasPrivilege(requiredPrivilege: string, user: LoggedInUser) {
-  return user.privileges.find((p) => requiredPrivilege === p.display);
-}
-
-function isSuperUser(user: LoggedInUser) {
-  const superUserRole = "System Developer";
-  return user.roles.find((role) => role.display === superUserRole);
+  ) as Observable<LoggedInUser | Session>;
 }
 
 export { getCurrentUser };
+
+function setUserLanguage(data: Session) {
+  const locale = data?.user?.userProperties?.defaultLocale ?? data.locale;
+  const htmlLang = document.documentElement.getAttribute("lang");
+
+  if (locale !== htmlLang) {
+    document.documentElement.setAttribute("lang", locale);
+  }
+}
+
+function userHasPrivilege(
+  requiredPrivilege: string,
+  user: { privileges: Array<Privilege> }
+) {
+  return user.privileges.find((p) => requiredPrivilege === p.display);
+}
+
+function isSuperUser(user: { roles: Array<Role> }) {
+  const superUserRole = "System Developer";
+  return user.roles.find((role) => role.display === superUserRole);
+}
 
 /**
  * The `refetchCurrentUser` function causes a network request to redownload
@@ -124,7 +126,10 @@ export function refetchCurrentUser() {
   );
 }
 
-export function userHasAccess(requiredPrivilege: string, user: LoggedInUser) {
+export function userHasAccess(
+  requiredPrivilege: string,
+  user: { privileges: Array<Privilege>; roles: Array<Role> }
+) {
   return userHasPrivilege(requiredPrivilege, user) || isSuperUser(user);
 }
 
@@ -140,8 +145,8 @@ export function getLoggedInUser() {
 export function getSessionLocation() {
   return new Promise<SessionLocation | undefined>((res, rej) => {
     const sub = getCurrentUser({ includeAuthStatus: true }).subscribe(
-      (user) => {
-        res(user.sessionLocation);
+      (session) => {
+        res(session.sessionLocation);
         sub.unsubscribe();
       },
       rej
@@ -161,5 +166,6 @@ export async function setSessionLocation(
     },
     signal: abortController.signal,
   });
+
   refetchCurrentUser();
 }
