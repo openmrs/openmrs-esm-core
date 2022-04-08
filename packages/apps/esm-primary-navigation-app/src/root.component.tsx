@@ -11,7 +11,7 @@ export interface RootProps {}
 const Root: React.FC<RootProps> = () => {
   const [user, setUser] = useState<LoggedInUser | null | false>(null);
   const [userSession, setUserSession] = useState<UserSession>(null);
-  const [allowedLocales, setAllowedLocales] = useState();
+  const [allowedLocales, setAllowedLocales] = useState<Array<string> | null>();
   const logout = useCallback(() => setUser(false), []);
   const openmrsSpaBase = window["getOpenmrsSpaBase"]();
 
@@ -19,7 +19,8 @@ const Root: React.FC<RootProps> = () => {
     const currentUserSub = getSynchronizedCurrentUser({
       includeAuthStatus: true,
     }).subscribe((response) => {
-      setAllowedLocales(response["allowedLocales"]);
+      setAllowedLocales(response.allowedLocales);
+
       if (response.authenticated) {
         setUser(response.user);
       } else {

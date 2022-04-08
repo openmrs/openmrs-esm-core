@@ -25,6 +25,7 @@
 - [useCurrentPatient](API.md#usecurrentpatient)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
+- [useSession](API.md#usesession)
 - [useSessionUser](API.md#usesessionuser)
 - [useVisit](API.md#usevisit)
 - [useVisitTypes](API.md#usevisittypes)
@@ -316,16 +317,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L48)
-
-___
-
-### LoggedInUserData
-
-Ƭ **LoggedInUserData**: [`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md) & { `user?`: [`LoggedInUser`](interfaces/LoggedInUser.md)  }
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/fetch.ts#L7)
 
 ___
 
@@ -728,9 +719,9 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L56)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L57)
 
-▸ **getCurrentUser**(`opts`): `Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
+▸ **getCurrentUser**(`opts`): `Observable`<[`Session`](interfaces/Session.md)\>
 
 #### Parameters
 
@@ -740,11 +731,11 @@ leak and source of bugs.
 
 #### Returns
 
-`Observable`<[`UnauthenticatedUser`](interfaces/UnauthenticatedUser.md)\>
+`Observable`<[`Session`](interfaces/Session.md)\>
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L57)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L58)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
@@ -760,7 +751,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L60)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L61)
 
 ___
 
@@ -788,7 +779,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L131)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L136)
 
 ___
 
@@ -802,7 +793,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L140)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:145](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L145)
 
 ___
 
@@ -1011,7 +1002,7 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L113)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L115)
 
 ___
 
@@ -1053,7 +1044,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L152)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L157)
 
 ___
 
@@ -1190,17 +1181,33 @@ a route listener is set up to update the patient whenever the route changes.
 
 ___
 
-### useSessionUser
+### useSession
 
-▸ **useSessionUser**(): ``null`` \| [`SessionUser`](interfaces/SessionUser.md)
+▸ **useSession**(): ``null`` \| [`Session`](interfaces/Session.md)
 
 #### Returns
 
-``null`` \| [`SessionUser`](interfaces/SessionUser.md)
+``null`` \| [`Session`](interfaces/Session.md)
 
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useSessionUser.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useSessionUser.tsx#L5)
+
+___
+
+### useSessionUser
+
+▸ `Const` **useSessionUser**(): ``null`` \| [`Session`](interfaces/Session.md)
+
+**`deprecated`**
+
+#### Returns
+
+``null`` \| [`Session`](interfaces/Session.md)
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useSessionUser.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useSessionUser.tsx#L21)
 
 ___
 
@@ -1253,7 +1260,9 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `requiredPrivilege` | `string` |
-| `user` | [`LoggedInUser`](interfaces/LoggedInUser.md) |
+| `user` | `Object` |
+| `user.privileges` | [`Privilege`](interfaces/Privilege.md)[] |
+| `user.roles` | [`Role`](interfaces/Role.md)[] |
 
 #### Returns
 
@@ -1261,7 +1270,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L127)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L129)
 
 ___
 
