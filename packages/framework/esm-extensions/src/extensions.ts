@@ -351,13 +351,13 @@ function calculateAssignedIds(
       const ai = getOrder(
         idA,
         idOrder,
-        extensions[getExtensionNameFromId(idA)].order,
+        extensions[getExtensionNameFromId(idA)]?.order,
         attachedIds
       );
       const bi = getOrder(
         idB,
         idOrder,
-        extensions[getExtensionNameFromId(idB)].order,
+        extensions[getExtensionNameFromId(idB)]?.order,
         attachedIds
       );
 
