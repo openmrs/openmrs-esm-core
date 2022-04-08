@@ -151,10 +151,7 @@ module.exports = (env, argv = {}) => {
           test: /\.(js|jsx)$/,
           use: [
             {
-              loader: require.resolve("babel-loader"),
-              options: JSON.parse(
-                readFileSync(resolve(__dirname, ".babelrc"), "utf8")
-              ),
+              loader: require.resolve("swc-loader"),
             },
           ],
         },

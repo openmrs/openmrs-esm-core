@@ -1,5 +1,5 @@
 module.exports = {
   transform: {
-    "^.+\\.tsx?$": "babel-jest",
+    "^.+\\.tsx?$": ["@swc/jest"],
   },
 };

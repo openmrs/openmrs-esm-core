@@ -1,6 +1,6 @@
 module.exports = {
   transform: {
-    "^.+\\.(j|t)sx?$": "babel-jest",
+    "^.+\\.(j|t)sx?$": ["@swc/jest"],
   },
   moduleNameMapper: {
     "\\.(s?css)$": "identity-obj-proxy",

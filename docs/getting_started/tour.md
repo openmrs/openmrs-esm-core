@@ -5,6 +5,8 @@ Let's explore the contents of
 
 ## Tooling 🧰
 
+OpenMRS uses [SWC](https://swc.rs/) as it's transpiler. This means that it is responsible for translating the code we write into Javascript the browser understands. E.g., we can use TypeScript, JSC, and ES2020, even though most browsers don't support those features.
+
 There are a number of configuration files at the project level. These
 can generally be treated as boilerplate. The important ones are
 
@@ -12,11 +14,8 @@ can generally be treated as boilerplate. The important ones are
   See the [Actions panel](https://github.com/openmrs/openmrs-esm-template-app/actions).
 - `.husky`: Husky runs validations when committing.
 - `.eslintrc`: ESLint is a linter for ECMAScript, a.k.a. JavaScript
-- `babel.config.json`: Babel transpiles code to JavaScript that the browser can understand.
-  This allows us to write in TypeScript, JSX, and ES2020, even though browsers
-  generally don't understand that.
-- `jest.config.json`: Jest is the test runner. In this file you'll see:
-  - Jest is configured to use Babel (via babel-jest) to transform code so that Jest, like the
+- `jest.config.js`: Jest is the test runner. In this file you'll see:
+  - Jest is configured to use SWC (via @swc/jest) to transform code so that Jest, like the
     browser, can understand it. The contents of `node_modules` are not transformed,
     except the `@openmrs` packages, so that tests can make use of the generic mock
     for `@openmrs/esm-framework`.
@@ -30,7 +29,7 @@ can generally be treated as boilerplate. The important ones are
   is optional.
 - `tsconfig.json`: This is the TypeScript configuration. In general, it should not
   vary much between projects.
-- `webpack.config.js`: Webpack is what builds all the code (using Babel) into
+- `webpack.config.js`: Webpack is what builds all the code (using SWC) into
   a "bundle" in the `dist/` directory which can be read by the browser. This single
   line is usually all you'll need in the config file. If you need to add something,
   you can simply override the properties of that default object.
