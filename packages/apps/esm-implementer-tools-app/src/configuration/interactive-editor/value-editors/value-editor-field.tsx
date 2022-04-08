@@ -11,6 +11,7 @@ import { ExtensionSlotRemove } from "./extension-slot-remove";
 import { ObjectEditor } from "./object-editor";
 import { ExtensionSlotOrder } from "./extension-slot-order";
 import { PersonAttributeTypeSearchBox } from "./person-attribute-search";
+import { PatientIdentifierTypeSearchBox } from "./patient-identifier-type-search";
 
 export interface ValueEditorFieldProps {
   element: ConfigValueDescriptor;
@@ -56,6 +57,11 @@ export function ValueEditorField({
       setPersonAttributeUuid={(personAttributeTypeUuid) =>
         onChange(personAttributeTypeUuid)
       }
+    />
+  ) : valueType === Type.PatientIdentifierTypeUuid ? (
+    <PatientIdentifierTypeSearchBox
+      value={value}
+      setPatientIdentifierTypeUuid={(uuid) => onChange(uuid)}
     />
   ) : valueType === Type.Number ? (
     <NumberInput

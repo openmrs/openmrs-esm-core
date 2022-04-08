@@ -682,6 +682,7 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
       String: isString,
       UUID: isUuid,
       PersonAttributeTypeUuid: isUuid,
+      PatientIdentifierTypeUuid: isUuid,
     };
     runValidators(keyPath, [validator[_type]], value);
   }

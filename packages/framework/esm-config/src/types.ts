@@ -7,6 +7,7 @@ export enum Type {
   String = "String",
   UUID = "UUID",
   PersonAttributeTypeUuid = "PersonAttributeTypeUuid",
+  PatientIdentifierTypeUuid = "PatientIdentifierTypeUuid",
 }
 
 // Full-powered typing for Config and Schema trees depends on being able to
