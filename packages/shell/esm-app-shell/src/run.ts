@@ -117,7 +117,6 @@ function connectivityChanged() {
 function runShell() {
   window.addEventListener("offline", connectivityChanged);
   window.addEventListener("online", connectivityChanged);
-
   return setupI18n()
     .catch((err) => console.error(`Failed to initialize translations`, err))
     .then(() => start());
@@ -125,15 +124,10 @@ function runShell() {
 
 function handleInitFailure(e: Error) {
   console.error(e);
-
-  if (localStorage.getItem("openmrs:devtools")) {
-    clearDevOverrides();
-  }
-
-  renderApology(e.message);
+  renderFatalErrorPage(e.message);
 }
 
-function renderApology(message: string) {
+function renderFatalErrorPage(message: string) {
   const template = document.querySelector<HTMLTemplateElement>("#app-error");
 
   if (template) {
@@ -143,6 +137,23 @@ function renderApology(message: string) {
     if (messageContainer) {
       messageContainer.textContent =
         message || "No additional information available.";
+    }
+
+    if (
+      localStorage.getItem("openmrs:devtools") &&
+      Object.keys(localStorage).some((k) =>
+        k.startsWith("import-map-override:")
+      )
+    ) {
+      const appErrorActionButtons = fragment?.querySelector("#buttons");
+      console.log("buttons", appErrorActionButtons);
+      if (appErrorActionButtons) {
+        const clearDevOverridesButton = document.createElement("button");
+        clearDevOverridesButton.className = "bx--btn";
+        clearDevOverridesButton.innerHTML = "Clear dev overrides";
+        clearDevOverridesButton.onclick = clearDevOverrides;
+        appErrorActionButtons.appendChild(clearDevOverridesButton);
+      }
     }
 
     document.body.appendChild(fragment);
