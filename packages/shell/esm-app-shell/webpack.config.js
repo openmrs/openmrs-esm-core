@@ -85,6 +85,7 @@ module.exports = (env, argv = {}) => {
             to: dir,
           });
           coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
+          console.info(`Serving built artifact for ${name} from ${distDir}`);
         } else {
           console.warn(`Not serving ${name} because couldn't find ${distDir}`);
         }
@@ -223,7 +224,7 @@ module.exports = (env, argv = {}) => {
         name,
         shared: sharedDependencies.reduce((obj, depName) => {
           obj[depName] = {
-            requiredVersion: dependencies[depName],
+            requiredVersion: dependencies[depName] ?? false,
             singleton: true,
             eager: true,
             import: depName,

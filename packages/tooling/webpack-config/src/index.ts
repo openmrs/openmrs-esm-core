@@ -180,9 +180,12 @@ export default (
         exposes: {
           app: srcFile,
         },
-        shared: Object.keys(peerDependencies).reduce((obj, depName) => {
+        shared: [
+          ...Object.keys(peerDependencies),
+          "@openmrs/esm-framework/src/internal",
+        ].reduce((obj, depName) => {
           obj[depName] = {
-            requiredVersion: peerDependencies[depName],
+            requiredVersion: peerDependencies[depName] ?? false,
             singleton: true,
             import: depName,
             shareKey: depName,
