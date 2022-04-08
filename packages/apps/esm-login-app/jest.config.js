@@ -1,6 +1,6 @@
 module.exports = {
   transform: {
-    "^.+\\.tsx?$": "babel-jest",
+    "^.+\\.tsx?$": ["@swc/jest"],
   },
   moduleNameMapper: {
     "^@carbon/icons-react/es/(.*)$": "@carbon/icons-react/lib/$1",

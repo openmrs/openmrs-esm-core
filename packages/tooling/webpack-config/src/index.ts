@@ -122,7 +122,7 @@ export default (
             test: /\.m?(js|ts|tsx)$/,
             exclude: /(node_modules|bower_components)/,
             use: {
-              loader: require.resolve("babel-loader"),
+              loader: require.resolve("swc-loader"),
             },
           },
           scriptRuleConfig
