@@ -13,6 +13,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
 
     steps:
       - uses: actions/checkout@v2
@@ -21,10 +23,13 @@ jobs:
         with:
           node-version: "14.x"
       - run: npx lerna bootstrap
-      - run: npx lerna run lint
-      - run: npx lerna run typescript
-      - run: npx lerna run test
-      - run: npx lerna run build
+      - name: TurboRepo local cache server
+        uses: felixmosh/turborepo-gh-artifacts@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
+      - run: yarn run verify
+      - run: yarn turbo run build --api="http://127.0.0.1:9080" --token="${{ secrets.TURBO_SERVER_TOKEN }}" --team="${{ github.repository_owner }}"
 
   pre_release:
     runs-on: ubuntu-latest
@@ -43,10 +48,10 @@ jobs:
       - run: npx lerna bootstrap
       - run: npx lerna version patch --no-git-tag-version --no-push --yes
       - run: npx lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
-      - run: npx lerna run build
+      - run: yarn turbo run build
       - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
       - run: git add . && git commit -m "Prerelease version" --no-verify
-      - run: npm run ci:publish-next
+      - run: yarn run ci:publish-next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Upload Artifacts
@@ -103,8 +108,8 @@ jobs:
         with:
           node-version: "14.x"
           registry-url: "https://registry.npmjs.org"
-      - run: npx lerna bootstrap
-      - run: npx lerna run build
-      - run: npm run ci:publish
+      - run: yarn lerna bootstrap
+      - run: yarn turbo run build
+      - run: yarn run ci:publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
