@@ -70,7 +70,7 @@ yarn setup
 To build all packages in the repository, run the following command:
 
 ```sh
-lerna run build
+yarn build
 ```
 
 Verification of the existing packages can also be done in one step using `yarn`:
