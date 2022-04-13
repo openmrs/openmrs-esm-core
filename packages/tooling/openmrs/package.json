@@ -15,7 +15,7 @@
     "test": "jest --passWithNoTests",
     "build": "tsc",
     "lint": "eslint src --ext ts,tsx",
-    "version": "yarn add @openmrs/esm-app-shell@$npm_package_version --exact"
+    "postversion": "yarn add @openmrs/esm-app-shell@$npm_package_version @openmrs/esm-webpack-config@$npm_package_version --exact"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
   "dependencies": {
     "@babel/preset-typescript": "^7.16.7",
     "@openmrs/esm-app-shell": "3.2.0",
-    "@openmrs/webpack-config": "^3.2.0",
+    "@openmrs/webpack-config": "3.2.0",
     "@types/react": "^16.9.46",
     "@types/systemjs": "^6.1.0",
     "autoprefixer": "^10.4.2",
