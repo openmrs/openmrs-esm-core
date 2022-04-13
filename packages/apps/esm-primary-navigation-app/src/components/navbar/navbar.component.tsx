@@ -129,6 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </HeaderGlobalAction>
             <HeaderGlobalAction
               aria-label="App Menu"
+              tooltipAlignment="end"
               isActive={isActivePanel("appMenu")}
               className={`${
                 isActivePanel("appMenu")
