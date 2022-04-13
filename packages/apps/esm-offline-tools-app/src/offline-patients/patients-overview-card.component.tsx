@@ -4,10 +4,12 @@ import { useOfflinePatientDataStore } from "../hooks/offline-patient-data-hooks"
 import HeaderedQuickInfo from "../components/headered-quick-info.component";
 import OverviewCard from "../components/overview-card.component";
 import { routes } from "../constants";
+import useSWR from "swr";
+import { getSynchronizationItems } from "@openmrs/esm-framework";
 
 const PatientsOverviewCard: React.FC = () => {
   const { t } = useTranslation();
-  const downloaded = useDownloadedOfflinePatients();
+  const { data } = useDownloadedOfflinePatients();
 
   return (
     <OverviewCard
@@ -16,7 +18,16 @@ const PatientsOverviewCard: React.FC = () => {
     >
       <HeaderedQuickInfo
         header={t("homeOverviewCardPatientsDownloaded", "Downloaded")}
-        content={downloaded}
+        content={data?.downloadedCount}
+        isLoading={!data}
+      />
+      <HeaderedQuickInfo
+        header={t(
+          "homeOverviewCardPatientsNewlyRegistered",
+          "Newly registered"
+        )}
+        content={data?.registeredCount}
+        isLoading={!data}
       />
     </OverviewCard>
   );
@@ -24,11 +35,25 @@ const PatientsOverviewCard: React.FC = () => {
 
 function useDownloadedOfflinePatients() {
   const store = useOfflinePatientDataStore();
-  return Object.values(store.offlinePatientDataSyncState).filter(
-    (patientSyncState) =>
-      patientSyncState.failedHandlers.length === 0 &&
-      patientSyncState.syncingHandlers.length === 0
-  ).length;
+  return useSWR(["offlinePatientsTotalCount", store], async () => {
+    const downloadedCount = Object.values(
+      store.offlinePatientDataSyncState
+    ).filter(
+      (patientSyncState) =>
+        patientSyncState.failedHandlers.length === 0 &&
+        patientSyncState.syncingHandlers.length === 0
+    ).length;
+
+    const patientRegistrationSyncItems = await getSynchronizationItems(
+      "patient-registration"
+    );
+    const registeredCount = patientRegistrationSyncItems.length;
+
+    return {
+      downloadedCount,
+      registeredCount,
+    };
+  });
 }
 
 export default PatientsOverviewCard;
