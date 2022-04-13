@@ -122,7 +122,7 @@ export default (
             test: /\.m?(js|ts|tsx)$/,
             exclude: /(node_modules|bower_components)/,
             use: {
-              loader: require.resolve("babel-loader"),
+              loader: require.resolve("swc-loader"),
             },
           },
           scriptRuleConfig
@@ -180,9 +180,12 @@ export default (
         exposes: {
           app: srcFile,
         },
-        shared: Object.keys(peerDependencies).reduce((obj, depName) => {
+        shared: [
+          ...Object.keys(peerDependencies),
+          "@openmrs/esm-framework/src/internal",
+        ].reduce((obj, depName) => {
           obj[depName] = {
-            requiredVersion: peerDependencies[depName],
+            requiredVersion: peerDependencies[depName] ?? false,
             singleton: true,
             import: depName,
             shareKey: depName,
@@ -212,6 +215,9 @@ export default (
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],
+      alias: {
+        "@openmrs/esm-framework": "@openmrs/esm-framework/src/internal",
+      },
     },
     ...overrides,
   };

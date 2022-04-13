@@ -1,8 +1,4 @@
-/**
- * @module
- * @category API
- */
-
+/** @module @category API */
 import { fhir } from "../fhir";
 import { FetchResponse } from "../types";
 

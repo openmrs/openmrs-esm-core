@@ -20,7 +20,7 @@ module.exports = (env) => ({
         test: /\.m?(js|ts|tsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: "babel-loader",
+          loader: "swc-loader",
         },
       },
     ],

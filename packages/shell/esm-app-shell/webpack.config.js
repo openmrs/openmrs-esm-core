@@ -85,6 +85,7 @@ module.exports = (env, argv = {}) => {
             to: dir,
           });
           coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
+          console.info(`Serving built artifact for ${name} from ${distDir}`);
         } else {
           console.warn(`Not serving ${name} because couldn't find ${distDir}`);
         }
@@ -150,10 +151,7 @@ module.exports = (env, argv = {}) => {
           test: /\.(js|jsx)$/,
           use: [
             {
-              loader: require.resolve("babel-loader"),
-              options: JSON.parse(
-                readFileSync(resolve(__dirname, ".babelrc"), "utf8")
-              ),
+              loader: require.resolve("swc-loader"),
             },
           ],
         },
@@ -223,7 +221,7 @@ module.exports = (env, argv = {}) => {
         name,
         shared: sharedDependencies.reduce((obj, depName) => {
           obj[depName] = {
-            requiredVersion: dependencies[depName],
+            requiredVersion: dependencies[depName] ?? false,
             singleton: true,
             eager: true,
             import: depName,

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useMemo, useEffect } from "react";
-import { getCurrentUser } from "@openmrs/esm-framework";
+import { getCurrentUser, LoggedInUser } from "@openmrs/esm-framework";
 
 const CurrentUser = React.createContext<User>({
   current: undefined,
@@ -14,26 +14,6 @@ interface UserState {
 export interface User {
   current: LoggedInUser | undefined;
   setCurrent(user: LoggedInUser): void;
-}
-
-export interface ResourceRef {
-  uuid: string;
-  display: string;
-  links: Array<any>;
-}
-
-export interface LoggedInUser {
-  uuid: string;
-  display: string;
-  username: string;
-  systemId: string;
-  userProperties: any;
-  person: ResourceRef;
-  privileges: Array<ResourceRef>;
-  roles: Array<ResourceRef>;
-  retired: boolean;
-  locale: string;
-  allowedLocales: Array<string>;
 }
 
 export function useCurrentUser() {

@@ -1,6 +1,6 @@
 module.exports = {
   transform: {
-    "\\.tsx?$": "babel-jest",
+    "\\.tsx?$": ["@swc/jest"],
   },
   setupFiles: ["<rootDir>/src/setup-tests.tsx"],
   moduleNameMapper: {

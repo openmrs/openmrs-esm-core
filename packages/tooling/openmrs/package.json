@@ -32,6 +32,7 @@
   ],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
+    "@babel/preset-typescript": "^7.16.7",
     "@openmrs/esm-app-shell": "3.2.0",
     "@openmrs/webpack-config": "^3.2.0",
     "@types/react": "^16.9.46",

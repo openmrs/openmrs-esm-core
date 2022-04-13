@@ -33,7 +33,7 @@ Returning a value for the inital attempt (`0`) delays the initial function invoc
 
 #### Defined in
 
-[packages/framework/esm-utils/src/retry.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L16)
+[packages/framework/esm-utils/src/retry.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L18)
 
 ___
 
@@ -57,7 +57,7 @@ Allows running side-effects on errors, e.g. logging.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/retry.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L23)
+[packages/framework/esm-utils/src/retry.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L25)
 
 ___
 
@@ -80,4 +80,4 @@ with an error on the current attempt.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/retry.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L10)
+[packages/framework/esm-utils/src/retry.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L12)

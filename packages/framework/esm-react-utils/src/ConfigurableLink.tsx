@@ -1,3 +1,4 @@
+/** @module @category Navigation */
 import React, { MouseEvent, AnchorHTMLAttributes } from "react";
 import { navigate, interpolateUrl } from "@openmrs/esm-config";
 
@@ -27,7 +28,6 @@ export interface ConfigurableLinkProps
  * @param to The target path or URL. Supports interpolation. See [[navigate]]
  * @param children Inline elements within the link
  * @param otherProps Any other valid props for an <a> tag except `href` and `onClick`
- * @category Navigation
  */
 export const ConfigurableLink: React.FC<ConfigurableLinkProps> = ({
   to,

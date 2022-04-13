@@ -33,7 +33,7 @@ module.exports = (env) => ({
       },
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        use: ["babel-loader"],
+        use: ["swc-loader"],
       },
       {
         test: /\.(woff|woff2|png)?$/,

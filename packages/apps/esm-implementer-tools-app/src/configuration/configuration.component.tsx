@@ -12,7 +12,7 @@ import {
   temporaryConfigStore,
   useStore,
   useStoreWithActions,
-} from "@openmrs/esm-framework";
+} from "@openmrs/esm-framework/src/internal";
 import {
   Button,
   TextInput,
@@ -75,6 +75,7 @@ const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({
     onClick={toggleIsToolbarOpen}
     kind="ghost"
     size="small"
+    tooltipPosition="left"
     iconDescription={`${isConfigToolbarOpen ? "Hide" : "Show"} toolbar`}
   />
 );

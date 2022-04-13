@@ -1,4 +1,5 @@
-/**
+/** @module @category Extension */
+/*
  * We have the following extension modes:
  *
  * - attached (set via code in form of: attach, detach, ...)
@@ -350,13 +351,13 @@ function calculateAssignedIds(
       const ai = getOrder(
         idA,
         idOrder,
-        extensions[getExtensionNameFromId(idA)].order,
+        extensions[getExtensionNameFromId(idA)]?.order,
         attachedIds
       );
       const bi = getOrder(
         idB,
         idOrder,
-        extensions[getExtensionNameFromId(idB)].order,
+        extensions[getExtensionNameFromId(idB)]?.order,
         attachedIds
       );
 

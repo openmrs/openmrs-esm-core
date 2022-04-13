@@ -10,12 +10,22 @@ export interface CurrentUserWithoutResponseOption extends CurrentUserOptions {
   includeAuthStatus: false;
 }
 
+export interface Session {
+  allowedLocales?: Array<string>;
+  authenticated: boolean;
+  locale?: string;
+  sessionId: string;
+  user?: LoggedInUser;
+  currentProvider?: { uuid: string; identifier: string };
+  sessionLocation?: SessionLocation;
+}
+
 export interface LoggedInUser {
   uuid: string;
   display: string;
   username: string;
   systemId: string;
-  userProperties: any;
+  userProperties: { [key: string]: any } | null;
   person: Person;
   privileges: Array<Privilege>;
   roles: Array<Role>;
@@ -23,13 +33,6 @@ export interface LoggedInUser {
   locale: string;
   allowedLocales: Array<string>;
   [anythingElse: string]: any;
-}
-
-export interface UnauthenticatedUser {
-  sessionId: string;
-  authenticated: boolean;
-  user?: LoggedInUser;
-  sessionLocation?: SessionLocation;
 }
 
 export interface SessionLocation {
@@ -47,7 +50,7 @@ export interface Person {
 export interface Privilege {
   uuid: string;
   display: string;
-  links: Array<any>;
+  links?: Array<any>;
 }
 
 export interface Role {

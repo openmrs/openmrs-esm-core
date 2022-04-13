@@ -11,6 +11,7 @@
 - [ConceptUuid](Type.md#conceptuuid)
 - [Number](Type.md#number)
 - [Object](Type.md#object)
+- [PatientIdentifierTypeUuid](Type.md#patientidentifiertypeuuid)
 - [PersonAttributeTypeUuid](Type.md#personattributetypeuuid)
 - [String](Type.md#string)
 - [UUID](Type.md#uuid)
@@ -64,6 +65,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-config/src/types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L6)
+
+___
+
+### PatientIdentifierTypeUuid
+
+• **PatientIdentifierTypeUuid** = `"PatientIdentifierTypeUuid"`
+
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L10)
 
 ___
 

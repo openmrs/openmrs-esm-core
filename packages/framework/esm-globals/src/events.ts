@@ -10,6 +10,7 @@ export function dispatchConnectivityChanged(online: boolean) {
   );
 }
 
+/** @category Offline */
 export function subscribeConnectivityChanged(
   cb: (ev: ConnectivityChangedEvent) => void
 ) {
@@ -19,6 +20,7 @@ export function subscribeConnectivityChanged(
     window.removeEventListener(connectivityChangedEventName, handler);
 }
 
+/** @category Offline */
 export function subscribeConnectivity(
   cb: (ev: ConnectivityChangedEvent) => void
 ) {
@@ -39,6 +41,7 @@ export function dispatchPrecacheStaticDependencies(
   );
 }
 
+/** @category Offline */
 export function subscribePrecacheStaticDependencies(
   cb: (data: PrecacheStaticDependenciesEvent) => void
 ) {
@@ -48,6 +51,7 @@ export function subscribePrecacheStaticDependencies(
     window.removeEventListener(precacheStaticDependenciesEventName, handler);
 }
 
+/** @category UI */
 export interface ShowNotificationEvent {
   description: any;
   kind?:
@@ -62,6 +66,7 @@ export interface ShowNotificationEvent {
   millis?: number;
 }
 
+/** @category UI */
 export interface ShowToastEvent {
   description: any;
   kind?:
@@ -84,6 +89,7 @@ export function dispatchNotificationShown(data: ShowNotificationEvent) {
   );
 }
 
+/** @category UI */
 export function subscribeNotificationShown(
   cb: (data: ShowNotificationEvent) => void
 ) {
@@ -92,6 +98,7 @@ export function subscribeNotificationShown(
   return () => window.removeEventListener(notificationShownName, handler);
 }
 
+/** @category UI */
 export function subscribeToastShown(cb: (data: ShowToastEvent) => void) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
   window.addEventListener(toastShownName, handler);

@@ -1,20 +1,21 @@
-import { openmrsObservableFetch, SessionUser } from "@openmrs/esm-api";
+/** @module @category API */
+import { getCurrentUser, Session } from "@openmrs/esm-api";
 import { useState, useEffect } from "react";
 
-export function useSessionUser() {
-  const [sessionUser, setSessionUser] = useState<SessionUser | null>(null);
+export function useSession() {
+  const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
-    if (sessionUser === null) {
-      const sub = openmrsObservableFetch("/ws/rest/v1/session").subscribe(
-        (user: any) => {
-          setSessionUser(user.data);
-        }
-      );
+    const sub = getCurrentUser({ includeAuthStatus: true }).subscribe(
+      (session) => setSession(session)
+    );
 
-      return () => sub.unsubscribe();
-    }
-  }, [sessionUser]);
+    return () => sub.unsubscribe();
+  }, [setSession]);
 
-  return sessionUser;
+  return session;
 }
+
+/** @deprecated */
+// maintain alias for backwards compatibility
+export const useSessionUser = useSession;

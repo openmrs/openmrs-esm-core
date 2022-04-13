@@ -4,7 +4,7 @@ import {
   showModal,
   SyncItem,
   useStore,
-} from "@openmrs/esm-framework";
+} from "@openmrs/esm-framework/src/internal";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import OfflineActionsTable from "./offline-actions-table.component";

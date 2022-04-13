@@ -3,7 +3,7 @@ import {
   getOfflineDb,
   getSynchronizationItems,
   SyncItem,
-} from "@openmrs/esm-framework";
+} from "@openmrs/esm-framework/src/internal";
 import uniq from "lodash-es/uniq";
 import useSWR from "swr";
 
