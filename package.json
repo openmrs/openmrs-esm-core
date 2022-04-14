@@ -15,7 +15,7 @@
     "ci:publish": "lerna publish from-package --yes",
     "release": "lerna version --no-git-tag-version",
     "build": "turbo run build",
-    "build:apps": "turbo run build --scope '@openmrs/*-app'",
+    "build:apps": "turbo run build --filter='@openmrs/*-app'",
     "setup": "lerna bootstrap && turbo run build && lerna clean --yes && lerna bootstrap",
     "verify": "turbo run lint && turbo run test && turbo run typescript",
     "prettier": "prettier \"packages/**/src/**/*\" --write",
