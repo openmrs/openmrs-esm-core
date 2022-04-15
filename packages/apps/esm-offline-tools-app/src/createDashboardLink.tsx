@@ -1,12 +1,12 @@
 import React from "react";
 import { ConfigurableLink } from "@openmrs/esm-framework";
 
-export const createDashboardLink = (db: { name: string; title: string }) => {
+export const createDashboardLink = (db: { title: string }) => {
   const DashboardLink: React.FC<{ basePath: string }> = ({ basePath }) => {
     return (
-      <div key={db.name}>
+      <div key={db.title}>
         <ConfigurableLink
-          to={`${basePath}/${db.name}`}
+          to={`${basePath}/${encodeURIComponent(db.title)}`}
           className="bx--side-nav__link"
         >
           {db.title}
