@@ -1,0 +1,14 @@
+{
+  "name": "@openmrs/esm-app-shell-cypress-fixtures",
+  "version": "1.0.0",
+  "license": "MPL-2.0",
+  "private": true,
+  "source": true,
+  "peerDependencies": {
+    "@openmrs/esm-framework": "3.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-framework": "^3.2.0",
+    "systemjs-webpack-interop": "^2.3.7"
+  }
+}

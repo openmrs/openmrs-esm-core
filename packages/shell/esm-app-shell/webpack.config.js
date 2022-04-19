@@ -33,7 +33,7 @@ const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
 const openmrsOffline = process.env.OMRS_OFFLINE !== "disable";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsCoreApps =
-  process.env.OMRS_ESM_CORE_APPS_DIR || resolve(__dirname, "../../apps");
+  process.env.OMRS_ESM_CORE_APPS_DIR ?? resolve(__dirname, "../../apps");
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
@@ -85,9 +85,9 @@ module.exports = (env, argv = {}) => {
             to: dir,
           });
           coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
-          console.info(`Serving built artifact for ${name} from ${distDir}`);
+          console.info(`Using built artifact for ${name} from ${distDir}`);
         } else {
-          console.warn(`Not serving ${name} because couldn't find ${distDir}`);
+          console.warn(`Not using ${name} because couldn't find ${distDir}`);
         }
       }
     });

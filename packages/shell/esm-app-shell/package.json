@@ -5,10 +5,17 @@
   "main": "dist/openmrs.js",
   "scripts": {
     "start": "npm run watch",
-    "test": "jest --passWithNoTests",
+    "start:empty": "cross-env OMRS_ESM_CORE_APPS_DIR='' OMRS_ESM_IMPORTMAP_URL=\"/openmrs/spa/other/importmap.json\" yarn watch --no-open",
+    "start:cypress-fixtures": "cd cypress/fixtures/ && webpack serve --port 9081",
+    "start:for-cypress": "concurrently 'yarn start:empty --port 9080' 'yarn start:cypress-fixtures'",
+    "test": "start-server-and-test start:for-cypress http://localhost:9080/openmrs/spa/ cy:run",
+    "test:watch": "start-server-and-test 'yarn start:empty --port 9080' http://localhost:9080/openmrs/spa/ cy:open",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
     "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json\" OMRS_CONFIG_URLS=\"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/config/config.json\" OMRS_OFFLINE=\"disable\" NODE_ENV=\"development\" webpack serve --mode development",
     "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json\" OMRS_CONFIG_URLS=\"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/config/config.json\" OMRS_OFFLINE=\"enable\" NODE_ENV=\"production\" webpack --mode production",
     "build:development": "cross-env OMRS_OFFLINE=\"enable\" NODE_ENV=\"development\" webpack --mode development",
+    "build:cypress-fixtures": "cd cypress/fixtures/ && webpack build",
     "build": "npm run build:production && npm run build:development",
     "analyze": "webpack --mode=production --env analyze=true",
     "watch": "webpack serve --mode development",
@@ -58,12 +65,16 @@
     "workbox-window": "^6.1.5"
   },
   "devDependencies": {
+    "@cypress/webpack-preprocessor": "^5.11.1",
     "@openmrs/esm-devtools-app": "^3.3.1",
     "@openmrs/esm-implementer-tools-app": "^3.3.1",
     "@openmrs/esm-login-app": "^3.3.1",
     "@openmrs/esm-offline-tools-app": "^3.3.1",
     "@openmrs/esm-primary-navigation-app": "^3.3.1",
+    "@testing-library/cypress": "^8.0.2",
     "ts-loader": "^9.3.0",
+    "cypress": "^9.5.4",
+    "start-server-and-test": "^1.14.0",
     "webpack-pwa-manifest": "^4.3.0",
     "workbox-webpack-plugin": "^6.1.2"
   }
