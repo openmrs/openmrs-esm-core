@@ -5,7 +5,8 @@
     "packages/apps/*",
     "packages/framework/*",
     "packages/shell/*",
-    "packages/tooling/*"
+    "packages/tooling/*",
+    "packages/shell/esm-app-shell/cypress/fixtures"
   ],
   "scripts": {
     "run:docs": "docsify serve docs",
