@@ -31,9 +31,7 @@ const defaultMockSyncItemDescriptor: QueueItemDescriptor = {
 };
 
 jest.mock("@openmrs/esm-api", () => ({
-  getLoggedInUser: jest.fn(
-    async () => ({ uuid: mockUserId } as LoggedInUser | undefined)
-  ),
+  getLoggedInUser: jest.fn(async () => ({ uuid: mockUserId })),
 }));
 
 afterEach(async () => {
