@@ -9,8 +9,9 @@ import {
   QueueItemDescriptor,
   queueSynchronizationItem,
   queueSynchronizationItemFor,
+  deleteSynchronizationItem,
+  getSynchronizationItem,
 } from "./sync";
-import { deleteSynchronizationItem, getSynchronizationItem } from ".";
 
 interface MockSyncItem {
   value: number;
