@@ -184,7 +184,7 @@ export function tryRegisterExtension(
   if (!name) {
     console.warn(
       `A registered extension definition is missing an name and thus cannot be registered.
-To fix this, ensure that you define the "name" (or alternatively the "id") field inside the extension definition.`,
+To fix this, ensure that you define the "name" field inside the extension definition.`,
       extension
     );
     return;
