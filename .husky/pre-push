@@ -3,6 +3,4 @@
 
 set -e  # die on error
 
-yarn lerna run lint --since master
-yarn lerna run test --since master
-yarn lerna run typescript --since master
+yarn verify
