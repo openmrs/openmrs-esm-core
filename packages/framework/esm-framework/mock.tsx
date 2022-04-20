@@ -296,3 +296,4 @@ export const useVisitTypes = jest.fn(() => []);
 
 export const showNotification = jest.fn();
 export const showToast = jest.fn();
+export const showModal = jest.fn();
