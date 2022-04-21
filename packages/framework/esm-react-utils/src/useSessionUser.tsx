@@ -15,7 +15,3 @@ export function useSession() {
 
   return session;
 }
-
-/** @deprecated */
-// maintain alias for backwards compatibility
-export const useSessionUser = useSession;

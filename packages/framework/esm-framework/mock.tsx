@@ -237,8 +237,6 @@ export const usePatient = jest.fn(() => ({
 
 export const useSession = jest.fn(() => null);
 
-export const useSessionUser = jest.fn(() => null);
-
 export const useLayoutType = jest.fn(() => "desktop");
 
 export const useExtensionSlot = jest.fn(() => ({
