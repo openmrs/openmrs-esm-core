@@ -56,8 +56,12 @@ function checkDirectoryExists(dirName) {
 }
 
 function checkDirectoryHasContents(dirName) {
-  const contents = readdirSync(dirName);
-  return contents.length > 0;
+  if (checkDirectoryExists(dirName)) {
+    const contents = readdirSync(dirName);
+    return contents.length > 0;
+  } else {
+    return false;
+  }
 }
 
 module.exports = (env, argv = {}) => {

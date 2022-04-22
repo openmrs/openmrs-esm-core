@@ -2067,7 +2067,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:325](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L325)
+[packages/framework/esm-extensions/src/extensions.ts:328](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L328)
 
 ___
 

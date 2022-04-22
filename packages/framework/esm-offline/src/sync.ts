@@ -300,7 +300,7 @@ export async function queueSynchronizationItem<T>(
 }
 
 /**
- * Returns all currently queued up sync items of a given user.
+ * Returns the content of all currently queued up sync items of a given user.
  * @param userId The ID of the user whose synchronization items should be returned.
  * @param type The identifying type of the synchronization items to be returned..
  */
@@ -308,23 +308,45 @@ export async function getSynchronizationItemsFor<T>(
   userId: string,
   type: string
 ) {
+  const fullItems = await getFullSynchronizationItemsFor<T>(userId, type);
+  return fullItems.map((item) => item.content);
+}
+
+/**
+ * Returns all currently queued up sync items of a given user.
+ * @param userId The ID of the user whose synchronization items should be returned.
+ * @param type The identifying type of the synchronization items to be returned..
+ */
+export async function getFullSynchronizationItemsFor<T>(
+  userId: string,
+  type: string
+) {
   const table = db.syncQueue;
-  const items: Array<T> = [];
+  const items: Array<SyncItem<T>> = [];
 
   await table.where({ type, userId }).each((item) => {
-    items.push(item.content);
+    items.push(item);
   });
 
   return items;
 }
 
 /**
- * Returns all currently queued up sync items of the currently signed in user.
+ * Returns the content of all currently queued up sync items of the currently signed in user.
  * @param type The identifying type of the synchronization items to be returned.
  */
 export async function getSynchronizationItems<T>(type: string) {
   const userId = await getUserId();
   return await getSynchronizationItemsFor<T>(userId, type);
+}
+
+/**
+ * Returns all currently queued up sync items of the currently signed in user.
+ * @param type The identifying type of the synchronization items to be returned.
+ */
+export async function getFullSynchronizationItems<T>(type: string) {
+  const userId = await getUserId();
+  return await getFullSynchronizationItemsFor<T>(userId, type);
 }
 
 /**

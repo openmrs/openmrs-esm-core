@@ -10,6 +10,8 @@ export {
   queueSynchronizationItem,
   getSynchronizationItem,
   getSynchronizationItems,
+  getFullSynchronizationItems,
+  getFullSynchronizationItemsFor,
   getOfflineDb,
   canBeginEditSynchronizationItemsOfType,
   beginEditSynchronizationItem,

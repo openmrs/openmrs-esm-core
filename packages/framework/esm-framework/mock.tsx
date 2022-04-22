@@ -235,6 +235,8 @@ export const usePatient = jest.fn(() => ({
   error: null,
 }));
 
+export const useSession = jest.fn(() => null);
+
 export const useSessionUser = jest.fn(() => null);
 
 export const useLayoutType = jest.fn(() => "desktop");
@@ -296,3 +298,4 @@ export const useVisitTypes = jest.fn(() => []);
 
 export const showNotification = jest.fn();
 export const showToast = jest.fn();
+export const showModal = jest.fn();

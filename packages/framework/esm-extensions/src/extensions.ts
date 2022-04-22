@@ -309,15 +309,18 @@ function getAssignedExtensionsFromSlotData(
     );
     const name = getExtensionNameFromId(id);
     const extension = internalState.extensions[name];
-    extensions.push({
-      id,
-      name,
-      moduleName: extension.moduleName,
-      config: extensionConfig,
-      meta: extension.meta,
-      online: extension.online,
-      offline: extension.offline,
-    });
+    // if the extension has not been registered yet, do not include it
+    if (extension) {
+      extensions.push({
+        id,
+        name,
+        moduleName: extension.moduleName,
+        config: extensionConfig,
+        meta: extension.meta,
+        online: extension.online,
+        offline: extension.offline,
+      });
+    }
   }
   return extensions;
 }
