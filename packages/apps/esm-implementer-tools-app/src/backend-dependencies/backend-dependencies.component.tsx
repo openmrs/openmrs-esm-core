@@ -11,7 +11,6 @@ import {
   TableContainer,
 } from "carbon-components-react";
 import { FrontendModule } from "./openmrs-backend-dependencies";
-import { head } from "lodash-es";
 import styles from "./backend-dependencies.styles.scss";
 
 export interface ModuleDiagnosticsProps {
@@ -40,7 +39,6 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
     ],
     [t]
   );
-  console.log(headers);
   return (
     <div style={{ height: "50vh", overflowY: "auto" }}>
       <DataTable rows={[]} headers={headers}>
