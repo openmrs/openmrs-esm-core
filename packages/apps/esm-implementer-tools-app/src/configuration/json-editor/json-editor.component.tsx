@@ -3,9 +3,11 @@ import {
   temporaryConfigStore,
   useStore,
 } from "@openmrs/esm-framework/src/internal";
-import AceEditor from "react-ace";
+import Editor from "react-ace";
+// import { JsonEditor as Editor } from "jsoneditor-react";
+// import "jsoneditor-react/es/editor.min.css";
+// import "jsoneditor/dist/jsoneditor.css";
 import style from "./json-editor.scss";
-
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import { Button } from "carbon-components-react";
@@ -19,7 +21,7 @@ export default function JsonEditor({ height }: JsonEditorProps) {
   const temporaryConfig = useStore(temporaryConfigStore);
   const [editorValue, setEditorValue] = useState("");
   const [error, setError] = useState("");
-  const [key, setKey] = useState(`ace-editor`);
+  const [key, setKey] = useState(`json-editor`);
 
   const updateTemporaryConfig = useCallback(() => {
     let config;
@@ -41,14 +43,18 @@ export default function JsonEditor({ height }: JsonEditorProps) {
 
   return (
     <div>
-      <AceEditor
+      <Editor
         key={key}
-        mode="json"
-        theme="github"
         defaultValue={JSON.stringify(temporaryConfig.config, null, 2)}
         tabSize={2}
         fontSize="12pt"
         width="100vw"
+        style={{
+          backgroundColor: "#000",
+          color: "#fff",
+          caretColor: "#fff",
+          borderTop: "1px solid #e7e7e7",
+        }}
         height={`calc(${height} - 3rem)`}
         onChange={(v) => {
           setEditorValue(v);
@@ -60,7 +66,10 @@ export default function JsonEditor({ height }: JsonEditorProps) {
         </Button>
         <div
           className={style.alert}
-          style={{ backgroundColor: error ? "#d03030" : "inherit" }}
+          style={{
+            backgroundColor: error ? "#b81921" : "inherit",
+            paddingRight: 10,
+          }}
         >
           {error}
         </div>

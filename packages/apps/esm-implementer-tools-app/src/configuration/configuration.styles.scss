@@ -2,9 +2,9 @@
 
 .tools {
   width: 100%;
-  background-color: $ui-03;
-  border-bottom: 1px solid $ui-04;
-  border-top: 1px solid $color-gray-30;
+  background-color: #000;
+  border-bottom: 1px solid #000;
+  border-top: 1px solid #fff;
   z-index: 2;
   position: sticky;
   top: 0;
@@ -12,6 +12,7 @@
 
 .toolbar {
   padding: $spacing-05 $spacing-05 0;
+  background-color: #000;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -24,7 +25,8 @@
 
 .mainContent {
   max-height: 50vh;
-  background-color: $ui-01;
+  background-color: #000;
+  color: #ffffff;
   width: 100%;
   display: flex;
   overflow-y: auto;
@@ -33,14 +35,15 @@
 .configTreePane {
   width: 65%;
   // overflow-wrap: break-word;
+  color: #ffffff;
   overflow-x: auto;
   overflow-y: auto;
 }
 
 .descriptionPane {
   width: 35%;
-  background-color: $ui-03;
-  color: #424242;
+  background-color: #000;
+  color: #ffffff;
   padding: $spacing-05 2em;
   font-size: 12pt;
   overflow-wrap: break-word;
@@ -55,4 +58,12 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+}
+
+.text {
+  color: "#efefef";
+}
+
+.btn {
+  width: 11rem;
 }

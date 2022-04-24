@@ -17,7 +17,7 @@ export function ConfigTree({ config }: ConfigTreeProps) {
             const moduleConfig = config[moduleName];
             return Object.keys(moduleConfig).length ? (
               <AccordionItem
-                title={<h6>{moduleName}</h6>}
+                title={<h6 style={{ color: "#ffffff" }}>{moduleName}</h6>}
                 className={styles.fullWidthAccordion}
                 key={`accordion-${moduleName}`}
               >

@@ -162,15 +162,23 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
             <Row>
               <Column sm={1} md={2}>
                 <TextInput
+                  className={styles.text}
                   id="extensionSearch"
-                  labelText="Search configuration"
+                  placeholder="Search config"
+                  labelText={
+                    <p style={{ color: "#efefef" }}>{"Search configuration"}</p>
+                  }
                   onChange={(e) => setFilterText(e.target.value)}
                 />
               </Column>
               <Column sm={1} md={1}>
                 <Toggle
                   id="jsonModeSwitch"
-                  labelText={t("jsonEditor", "JSON Editor")}
+                  labelText={
+                    <p style={{ color: "#efefef" }}>
+                      {t("jsonEditor", "JSON Editor")}
+                    </p>
+                  }
                   onToggle={toggleIsJsonModeEnabled}
                   toggled={isJsonModeEnabled}
                 />
@@ -178,7 +186,11 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               <Column sm={1} md={1}>
                 <Toggle
                   id="devConfigSwitch"
-                  labelText={t("devConfig", "Dev Config")}
+                  labelText={
+                    <p style={{ color: "#efefef" }}>
+                      {t("devConfig", "Dev Config")}
+                    </p>
+                  }
                   onToggle={toggleDevDefaults}
                   toggled={devDefaultsAreOn}
                 />
@@ -186,7 +198,11 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               <Column sm={1} md={1} className={styles.actionButton}>
                 <Toggle
                   id="uiEditorSwitch"
-                  labelText={t("uiEditor", "UI Editor")}
+                  labelText={
+                    <p style={{ color: "#efefef" }}>
+                      {t("uiEditor", "UI Editor")}
+                    </p>
+                  }
                   toggled={isUIEditorEnabled}
                   onToggle={toggleIsUIEditorEnabled}
                 />
@@ -194,6 +210,8 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               <Column sm={1} md={1} className={styles.actionButton}>
                 <Button
                   kind="danger"
+                  className={styles.btn}
+                  size="sm"
                   iconDescription="Clear local config"
                   renderIcon={TrashCan16}
                   onClick={() => {
@@ -208,6 +226,8 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   kind="secondary"
                   iconDescription="Download config"
                   renderIcon={Download16}
+                  size="sm"
+                  className={styles.btn}
                 >
                   <a
                     className={styles.downloadLink}

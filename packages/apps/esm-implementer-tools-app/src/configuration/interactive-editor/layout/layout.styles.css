@@ -1,5 +1,6 @@
 .labelCell {
   width: 12em;
+  color: #ffffff;
 }
 
 .structuredList {
@@ -7,9 +8,10 @@
 }
 
 .structuredListRow {
-  border-left: 2px solid #c0c0c0;
+  border-left: 2px solid #8d8a8a;
 }
 
 .subtreeCell {
   left: -6em;
+  color: #ffffff;
 }
