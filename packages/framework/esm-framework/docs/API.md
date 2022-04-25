@@ -26,7 +26,6 @@
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [useSession](API.md#usesession)
-- [useSessionUser](API.md#usesessionuser)
 - [useVisit](API.md#usevisit)
 - [useVisitTypes](API.md#usevisittypes)
 - [userHasAccess](API.md#userhasaccess)
@@ -111,6 +110,8 @@
 - [deleteSynchronizationItem](API.md#deletesynchronizationitem)
 - [generateOfflineUuid](API.md#generateofflineuuid)
 - [getCurrentOfflineMode](API.md#getcurrentofflinemode)
+- [getFullSynchronizationItems](API.md#getfullsynchronizationitems)
+- [getFullSynchronizationItemsFor](API.md#getfullsynchronizationitemsfor)
 - [getOfflinePatientDataStore](API.md#getofflinepatientdatastore)
 - [getSynchronizationItem](API.md#getsynchronizationitem)
 - [getSynchronizationItems](API.md#getsynchronizationitems)
@@ -1192,22 +1193,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useSessionUser.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useSessionUser.tsx#L5)
-
-___
-
-### useSessionUser
-
-▸ `Const` **useSessionUser**(): ``null`` \| [`Session`](interfaces/Session.md)
-
-**`deprecated`**
-
-#### Returns
-
-``null`` \| [`Session`](interfaces/Session.md)
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useSessionUser.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useSessionUser.tsx#L21)
 
 ___
 
@@ -2564,7 +2549,7 @@ If this is not possible, throws an error.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:355](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L355)
+[packages/framework/esm-offline/src/sync.ts:377](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L377)
 
 ___
 
@@ -2587,7 +2572,7 @@ registered synchronization handlers.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:345](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L345)
+[packages/framework/esm-offline/src/sync.ts:367](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L367)
 
 ___
 
@@ -2609,7 +2594,7 @@ Deletes a queued up sync item with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:375](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L375)
+[packages/framework/esm-offline/src/sync.ts:397](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L397)
 
 ___
 
@@ -2640,6 +2625,63 @@ ___
 #### Defined in
 
 [packages/framework/esm-offline/src/mode.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L49)
+
+___
+
+### getFullSynchronizationItems
+
+▸ **getFullSynchronizationItems**<`T`\>(`type`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
+
+Returns all currently queued up sync items of the currently signed in user.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | The identifying type of the synchronization items to be returned. |
+
+#### Returns
+
+`Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L347)
+
+___
+
+### getFullSynchronizationItemsFor
+
+▸ **getFullSynchronizationItemsFor**<`T`\>(`userId`, `type`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
+
+Returns all currently queued up sync items of a given user.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `userId` | `string` | The ID of the user whose synchronization items should be returned. |
+| `type` | `string` | The identifying type of the synchronization items to be returned.. |
+
+#### Returns
+
+`Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/sync.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L320)
 
 ___
 
@@ -2681,7 +2723,7 @@ Returns a queued sync item with the given ID or `undefined` if no such item exis
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L334)
+[packages/framework/esm-offline/src/sync.ts:356](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L356)
 
 ___
 
@@ -2689,7 +2731,7 @@ ___
 
 ▸ **getSynchronizationItems**<`T`\>(`type`): `Promise`<`T`[]\>
 
-Returns all currently queued up sync items of the currently signed in user.
+Returns the content of all currently queued up sync items of the currently signed in user.
 
 #### Type parameters
 
@@ -2709,7 +2751,7 @@ Returns all currently queued up sync items of the currently signed in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:325](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L325)
+[packages/framework/esm-offline/src/sync.ts:338](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L338)
 
 ___
 
@@ -2856,7 +2898,7 @@ Registers a new synchronization handler which is able to synchronize data of a s
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:390](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L390)
+[packages/framework/esm-offline/src/sync.ts:412](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L412)
 
 ___
 
