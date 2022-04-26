@@ -11,12 +11,6 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({
   hidePanel,
 }) => {
   const menuRef = useRef(null);
-  const { patientUuid } = usePatient();
-  const patientChartBasePath = `${window.spaBase}/patient/:patientUuid/chart`;
-  const basePath = useMemo(
-    () => patientChartBasePath.replace(":patientUuid", patientUuid),
-    [patientUuid]
-  );
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
