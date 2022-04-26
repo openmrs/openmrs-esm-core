@@ -297,3 +297,7 @@ export const useVisitTypes = jest.fn(() => []);
 export const showNotification = jest.fn();
 export const showToast = jest.fn();
 export const showModal = jest.fn();
+
+export const LeftNavMenu = jest.fn().mockReturnValue("left nav menu");
+export const setLeftNav = jest.fn();
+export const unsetLeftNav = jest.fn();
