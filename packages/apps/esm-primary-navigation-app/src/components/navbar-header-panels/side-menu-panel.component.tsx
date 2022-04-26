@@ -28,7 +28,7 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({
     return window.addEventListener("popstate", hidePanel);
   }, [hidePanel]);
 
-  return expanded && <LeftNavMenu ref={menuRef} isChildOfHeader={expanded} />;
+  return expanded && <LeftNavMenu ref={menuRef} isChildOfHeader />;
 };
 
 export default SideMenuPanel;
