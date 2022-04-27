@@ -8,6 +8,7 @@ export {
   formatDate,
   formatDatetime,
   formatTime,
+  age,
 } from "@openmrs/esm-utils";
 export { interpolateString, interpolateUrl } from "@openmrs/esm-config";
 
