@@ -11,7 +11,7 @@ import {
   TableContainer,
 } from "carbon-components-react";
 import { FrontendModule } from "./openmrs-backend-dependencies";
-import style from "./backend-dependencies.styles.scss";
+import styles from "./backend-dependencies.styles.scss";
 
 export interface ModuleDiagnosticsProps {
   frontendModules: Array<FrontendModule>;
@@ -40,7 +40,7 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
     [t]
   );
   return (
-    <div className={style.container}>
+    <div className={styles.container}>
       <DataTable rows={[]} headers={headers}>
         {({ headers, getTableProps, getHeaderProps }) => (
           <TableContainer>
@@ -54,7 +54,7 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
                   ))}
                 </TableRow>
               </TableHead>
-              <TableBody className={style.table}>
+              <TableBody className={styles.table}>
                 {frontendModules.map((esm) => (
                   <Fragment key={esm.name}>
                     <TableRow>
@@ -65,7 +65,7 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
                       <TableCell></TableCell>
                     </TableRow>
                     {esm.dependencies.map((dep) => (
-                      <TableRow className={style.table} key={dep.name}>
+                      <TableRow className={styles.table} key={dep.name}>
                         <TableCell>{dep.name}</TableCell>
                         <TableCell>
                           {dep.type === "missing" ? (
