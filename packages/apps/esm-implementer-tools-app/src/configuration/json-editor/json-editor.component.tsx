@@ -4,14 +4,10 @@ import {
   useStore,
 } from "@openmrs/esm-framework/src/internal";
 import Editor from "react-ace";
-// import { JsonEditor as Editor } from "jsoneditor-react";
-// import "jsoneditor-react/es/editor.min.css";
-// import "jsoneditor/dist/jsoneditor.css";
 import style from "./json-editor.scss";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import { Button } from "carbon-components-react";
-
 export interface JsonEditorProps {
   /** A CSS value */
   height: string;
@@ -49,12 +45,7 @@ export default function JsonEditor({ height }: JsonEditorProps) {
         tabSize={2}
         fontSize="12pt"
         width="100vw"
-        style={{
-          backgroundColor: "#000",
-          color: "#fff",
-          caretColor: "#fff",
-          borderTop: "1px solid #e7e7e7",
-        }}
+        className={style.jsonEditorBackground}
         height={`calc(${height} - 3rem)`}
         onChange={(v) => {
           setEditorValue(v);

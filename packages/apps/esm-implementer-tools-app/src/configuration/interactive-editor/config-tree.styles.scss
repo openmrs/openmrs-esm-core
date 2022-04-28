@@ -1,3 +1,18 @@
+@import "../../implementer-tools.styles.scss";
+@import "~@openmrs/esm-styleguide/src/vars";
+
 .fullWidthAccordion :global(.bx--accordion__content) {
   padding-right: 0;
+  color: $color-gray-100;
+}
+.configTitle {
+  color: $ui-background;
+}
+
+.configTitle:hover {
+  color: $color-gray-100;
+}
+
+.configTab:hover {
+  color: $color-gray-100;
 }

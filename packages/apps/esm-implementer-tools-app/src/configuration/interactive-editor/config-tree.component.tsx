@@ -9,7 +9,7 @@ export interface ConfigTreeProps {
 
 export function ConfigTree({ config }: ConfigTreeProps) {
   return (
-    <Accordion align="start">
+    <Accordion align="start" className={styles.configTab}>
       {config &&
         Object.keys(config)
           .sort()
@@ -17,7 +17,7 @@ export function ConfigTree({ config }: ConfigTreeProps) {
             const moduleConfig = config[moduleName];
             return Object.keys(moduleConfig).length ? (
               <AccordionItem
-                title={<h6 style={{ color: "#ffffff" }}>{moduleName}</h6>}
+                title={<h6 className={styles.configTitle}>{moduleName}</h6>}
                 className={styles.fullWidthAccordion}
                 key={`accordion-${moduleName}`}
               >

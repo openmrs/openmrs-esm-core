@@ -1,4 +1,5 @@
 @import "../../implementer-tools.styles.scss";
+@import "~@openmrs/esm-styleguide/src/vars";
 
 .secretButton {
   background: none;
@@ -23,6 +24,10 @@
   align-items: flex-start;
 }
 
-.editValueButton {
+.buttons {
+  background-color: $ui-background;
+  border: 1px solid $ui-background;
+  border-radius: 50%;
   margin-left: $spacing-05;
+  margin-top: -5px;
 }

@@ -1,5 +1,10 @@
 @import "../implementer-tools.styles.scss";
+@import "~@openmrs/esm-styleguide/src/vars";
 
+.container {
+  height: "50vh";
+  overflow-y: "auto";
+}
 .table {
-  background-color: #000;
+  background-color: $color-gray-100;
 }

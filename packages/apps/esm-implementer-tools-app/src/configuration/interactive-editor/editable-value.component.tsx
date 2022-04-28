@@ -127,6 +127,7 @@ export default function EditableValue({
               ref={activeConfigRef}
               renderIcon={Edit16}
               hasIconOnly
+              className={styles.buttons}
             />
             {element._source == "temporary config" ? (
               <Button

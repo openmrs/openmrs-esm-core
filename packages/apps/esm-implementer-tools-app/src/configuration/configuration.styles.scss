@@ -1,10 +1,10 @@
 @import "../implementer-tools.styles.scss";
-
+@import "~@openmrs/esm-styleguide/src/vars";
 .tools {
   width: 100%;
-  background-color: #000;
-  border-bottom: 1px solid #000;
-  border-top: 1px solid #fff;
+  background-color: $color-gray-100;
+  border-bottom: 1px solid $color-gray-100;
+  border-top: 1px solid $ui-background;
   z-index: 2;
   position: sticky;
   top: 0;
@@ -12,7 +12,7 @@
 
 .toolbar {
   padding: $spacing-05 $spacing-05 0;
-  background-color: #000;
+  background-color: $color-gray-100;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -25,8 +25,8 @@
 
 .mainContent {
   max-height: 50vh;
-  background-color: #000;
-  color: #ffffff;
+  background-color: $color-gray-100;
+  color: $color-gray-100;
   width: 100%;
   display: flex;
   overflow-y: auto;
@@ -35,15 +35,15 @@
 .configTreePane {
   width: 65%;
   // overflow-wrap: break-word;
-  color: #ffffff;
+  color: $color-gray-100;
   overflow-x: auto;
   overflow-y: auto;
 }
 
 .descriptionPane {
   width: 35%;
-  background-color: #000;
-  color: #ffffff;
+  background-color: $color-gray-100;
+  color: $color-gray-100;
   padding: $spacing-05 2em;
   font-size: 12pt;
   overflow-wrap: break-word;
@@ -60,10 +60,10 @@
   justify-content: flex-end;
 }
 
-.text {
-  color: "#efefef";
+.labelText {
+  color: $ui-background;
 }
 
-.btn {
+.configButtons {
   width: 11rem;
 }

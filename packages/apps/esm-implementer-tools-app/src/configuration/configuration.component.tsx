@@ -175,7 +175,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 <Toggle
                   id="jsonModeSwitch"
                   labelText={
-                    <p style={{ color: "#efefef" }}>
+                    <p className={styles.labelText}>
                       {t("jsonEditor", "JSON Editor")}
                     </p>
                   }
@@ -187,7 +187,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 <Toggle
                   id="devConfigSwitch"
                   labelText={
-                    <p style={{ color: "#efefef" }}>
+                    <p className={styles.labelText}>
                       {t("devConfig", "Dev Config")}
                     </p>
                   }
@@ -199,7 +199,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 <Toggle
                   id="uiEditorSwitch"
                   labelText={
-                    <p style={{ color: "#efefef" }}>
+                    <p className={styles.labelText}>
                       {t("uiEditor", "UI Editor")}
                     </p>
                   }
@@ -210,7 +210,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               <Column sm={1} md={1} className={styles.actionButton}>
                 <Button
                   kind="danger"
-                  className={styles.btn}
+                  className={styles.configButtons}
                   size="sm"
                   iconDescription="Clear local config"
                   renderIcon={TrashCan16}
@@ -227,7 +227,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   iconDescription="Download config"
                   renderIcon={Download16}
                   size="sm"
-                  className={styles.btn}
+                  className={styles.configButtons}
                 >
                   <a
                     className={styles.downloadLink}

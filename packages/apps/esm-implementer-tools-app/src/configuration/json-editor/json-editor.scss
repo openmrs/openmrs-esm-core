@@ -1,9 +1,12 @@
+@import "../../implementer-tools.styles.scss";
+@import "~@openmrs/esm-styleguide/src/vars";
+
 .toolbar {
   display: flex;
 }
 
 .alert {
-  color: white;
+  color: $ui-background;
   display: flex;
   align-items: center;
   width: 100%;
@@ -11,6 +14,13 @@
 }
 
 .editorContent {
-  background-color: #000;
+  background-color: $color-gray-100;
   color: #007d79;
+}
+
+.jsonEditorBackground {
+  background-color: $color-gray-100;
+  color: $ui-background;
+  caret-color: $ui-background;
+  border-top: 1px solid $ui-background;
 }
