@@ -26,7 +26,6 @@ function debug(configPath: string, port: number) {
   const options = {
     ...config.devServer,
     port,
-    static: dirname(configPath),
   };
 
   const server = new WebpackDevServer(webpack(config), options);
