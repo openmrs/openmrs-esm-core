@@ -4,6 +4,8 @@
   "license": "MPL-2.0",
   "private": true,
   "source": true,
+  "browser": "dist/openmrs-esm-app-shell-cypress-fixtures.js",
+  "main": "src/helloWorldPage.tsx",
   "peerDependencies": {
     "@openmrs/esm-framework": "3.x"
   },
