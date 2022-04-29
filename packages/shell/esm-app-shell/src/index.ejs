@@ -26,6 +26,13 @@
     >
     <script type="systemjs-importmap" src="<%= openmrsImportmapUrl %>"></script>
 <% } %>
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "@openmrs/esm-app-shell-cypress-fixtures": "http://localhost:9081/openmrs-esm-app-shell-cypress-fixtures.js"
+        }
+      }
+    </script>
   </head>
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>
