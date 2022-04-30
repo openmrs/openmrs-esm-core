@@ -9,11 +9,11 @@ function setBodyCssClasses() {
   );
   document.body.classList.toggle(
     "omrs-breakpoint-lt-desktop",
-    window.innerWidth <= 1200
+    window.innerWidth < 1024
   );
   document.body.classList.toggle(
     "omrs-breakpoint-gt-tablet",
-    window.innerWidth > 1200
+    window.innerWidth >= 1024
   );
 }
 
