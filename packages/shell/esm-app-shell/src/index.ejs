@@ -11,21 +11,29 @@
     >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="importmap-type" content="systemjs-importmap">
-<% if (openmrsCoreImportmap) { %>
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "@openmrs/esm-patient-chart-app": "//localhost:8081/openmrs-esm-patient-chart-app.js"
+        }
+      }
+    </script>
+<!-- <% if (openmrsCoreImportmap) { %>
     <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
 <% } %>
     <%= htmlWebpackPlugin.tags.headTags %>
 <% if (openmrsImportmapDef) { %>
-    <script type="systemjs-importmap"><%= openmrsImportmapDef %></script>
-<% } else if (openmrsImportmapUrl) { %>
-    <link
+    <script type="systemjs-importmap"><%= openmrsImportmapDef %></script> -->
+
+<!-- <% } else if (openmrsImportmapUrl) { %> -->
+    <!-- <link
       rel="preload"
       href="<%= openmrsImportmapUrl %>"
       as="fetch"
       crossorigin="anonymous"
     >
-    <script type="systemjs-importmap" src="<%= openmrsImportmapUrl %>"></script>
-<% } %>
+    <script type="systemjs-importmap" src="<%= openmrsImportmapUrl %>"></script> -->
+<!-- <% } %> -->
   </head>
   <body>
     <%= htmlWebpackPlugin.tags.bodyTags %>

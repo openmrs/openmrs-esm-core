@@ -33,20 +33,6 @@ import { sharedDependencies } from "./dependencies";
 import { loadModules, registerModules } from "./system";
 import { appName, getCoreExtensions } from "./ui";
 
-const allowedSuffixes = ["-app", "-widgets"];
-
-/**
- * Gets the frontend modules (apps). These are entries
- * in the import maps that end with "-app".
- * @param maps The value of the "imports" property of the
- * import maps.
- */
-function getApps(maps: Record<string, string>) {
-  return Object.keys(maps).filter((m) =>
-    allowedSuffixes.some((n) => m.endsWith(n))
-  );
-}
-
 /**
  * Loads the frontend modules (apps and widgets). Should be done *after*
  * the import maps initialized, i.e., after modules loaded.
@@ -57,7 +43,7 @@ function getApps(maps: Record<string, string>) {
 function loadApps() {
   return window.importMapOverrides
     .getCurrentPageMap()
-    .then((importMap) => loadModules(getApps(importMap.imports)));
+    .then((importMap) => loadModules(importMap.imports));
 }
 
 /**

@@ -38,6 +38,10 @@ function mergeFunction(objValue: any, srcValue: any) {
   }
 }
 
+function slugify(name) {
+  return name.replace(/[\/\-@]/g, "_");
+}
+
 /**
  * This object will be merged into the webpack config.
  * Array values will be concatenated with the existing array.
@@ -106,12 +110,14 @@ export default (
   };
 
   const baseConfig = {
-    entry: {
-      [name]: "systemjs-webpack-interop/auto-public-path",
-    },
+    // entry: srcFile,
+    // entry: {
+    //   // [name]: "systemjs-webpack-interop/auto-public-path",
+      // [name]: srcFile
+    // },
     output: {
-      libraryTarget: "system",
-      publicPath: "",
+      // libraryTarget defaults to jsonp
+      publicPath: "auto",
       path: resolve(root, outDir),
     },
     target: "web",
@@ -166,6 +172,7 @@ export default (
       devMiddleware: {
         writeToDisk: true,
       },
+      static: [resolve(root, outDir)],
     },
     performance: {
       hints: mode === production && "warning",
@@ -181,10 +188,11 @@ export default (
       }),
       new ModuleFederationPlugin({
         name,
-        library: { type: "system", name },
+        library: { type: "var", name: slugify(name) },
         filename,
         exposes: {
-          app: srcFile,
+          // app: srcFile,
+          "./start": srcFile,
         },
         shared: [
           ...Object.keys(peerDependencies),
