@@ -44,7 +44,7 @@ export async function loadModules(modules: Record<string, string>) {
     await new Promise((resolve, reject) => {
       loadScript(url, resolve, reject);
     })
-    const app: { init: Function, get: Function } = window[slugify(name)];
+    const app: any = window[slugify(name)];
     console.log(slugify(name), app);
     app.init(__webpack_share_scopes__.default);
     const moduleExports = await app.get("./start");

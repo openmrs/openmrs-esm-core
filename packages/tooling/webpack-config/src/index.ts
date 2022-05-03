@@ -97,6 +97,10 @@ export default (
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
+  const exposeFile = srcFile.replace('/index.ts', '/root.component');
+  console.log("srcfile: ", srcFile);
+  console.log("exposeFile: ", exposeFile);
+  console.log("filename: ", filename);
   const ident = makeIdent(name);
   const frameworkVersion = getFrameworkVersion();
 
@@ -110,7 +114,10 @@ export default (
   };
 
   const baseConfig = {
-    // entry: srcFile,
+    entry: srcFile,
+    // entry: {
+    //   [srcFile]: srcFile
+    // },
     // entry: {
     //   // [name]: "systemjs-webpack-interop/auto-public-path",
       // [name]: srcFile
@@ -118,7 +125,7 @@ export default (
     output: {
       // libraryTarget defaults to jsonp
       publicPath: "auto",
-      path: resolve(root, outDir),
+      // path: resolve(root, outDir),
     },
     target: "web",
     module: {
@@ -192,7 +199,7 @@ export default (
         filename,
         exposes: {
           // app: srcFile,
-          "./start": srcFile,
+          "./start": exposeFile,
         },
         shared: [
           ...Object.keys(peerDependencies),
@@ -215,17 +222,17 @@ export default (
           chunks: true,
         },
       }),
-      {
-        apply(compiler) {
-          compiler.hooks.afterEmit.tap("PostProcessPlugin", (compilation) => {
-            if (mode === "production") {
-              // only post-optimize the bundle in production mode
-              const fn = resolve(root, outDir, filename);
-              postProcessFile(fn);
-            }
-          });
-        },
-      },
+      // {
+      //   apply(compiler) {
+      //     compiler.hooks.afterEmit.tap("PostProcessPlugin", (compilation) => {
+      //       if (mode === "production") {
+      //         // only post-optimize the bundle in production mode
+      //         const fn = resolve(root, outDir, filename);
+      //         postProcessFile(fn);
+      //       }
+      //     });
+      //   },
+      // },
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],
