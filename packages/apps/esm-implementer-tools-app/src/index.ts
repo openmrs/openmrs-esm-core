@@ -25,6 +25,7 @@ function setupOpenMRS() {
           () => import("./implementer-tools.button"),
           options
         ),
+        privilege: "coreapps.systemAdministration",
       },
     ],
   };

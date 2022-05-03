@@ -6,9 +6,9 @@ import {
   navigate,
   useConfig,
   setSessionLocation,
+  useSession,
 } from "@openmrs/esm-framework";
 import { useLoginLocations } from "./choose-location.resource";
-import { useCurrentUser } from "../CurrentUserContext";
 import type { StaticContext } from "react-router";
 
 export interface LoginReferrer {
@@ -27,7 +27,7 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   const returnToUrl = new URLSearchParams(location?.search).get("returnToUrl");
   const referrer = location?.state?.referrer;
   const config = useConfig();
-  const user = useCurrentUser();
+  const { user } = useSession();
   const { locationData, isLoading } = useLoginLocations(
     config.chooseLocation.useLoginLocationTag
   );
@@ -39,8 +39,10 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
         : Promise.resolve();
 
       sessionDefined.then(() => {
-        // console.log("referrer: ", referrer);
-        if (referrer && referrer !== "/") {
+        if (
+          referrer &&
+          !["/", "/login", "/login/location"].includes(referrer)
+        ) {
           navigate({ to: "${openmrsSpaBase}" + referrer });
           return;
         }
@@ -55,6 +57,8 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
     [referrer, config.links.loginSuccess, returnToUrl]
   );
 
+  // Handle cases where the location picker is disabled, there is only one
+  // location, or there are no locations.
   useEffect(() => {
     if (!isLoading) {
       if (!config.chooseLocation.enabled || locationData?.length === 1) {
@@ -71,6 +75,11 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
     config.chooseLocation.enabled,
     isLoading,
   ]);
+
+  if (!isLoading && !user) {
+    navigate({ to: "${openmrsSpaBase}/login" });
+    return null;
+  }
 
   if (!isLoading || !isLoginEnabled) {
     return (

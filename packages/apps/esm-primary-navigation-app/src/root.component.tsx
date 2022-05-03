@@ -16,19 +16,19 @@ const Root: React.FC<RootProps> = () => {
   const openmrsSpaBase = window["getOpenmrsSpaBase"]();
 
   useEffect(() => {
-    const currentUserSub = getSynchronizedCurrentUser({
-      includeAuthStatus: true,
-    }).subscribe((response) => {
-      setAllowedLocales(response.allowedLocales);
+    const currentUserSub = getSynchronizedCurrentUser().subscribe(
+      (response) => {
+        setAllowedLocales(response.allowedLocales);
 
-      if (response.authenticated) {
-        setUser(response.user);
-      } else {
-        setUser(false);
+        if (response.authenticated) {
+          setUser(response.user);
+        } else {
+          setUser(false);
+        }
+
+        createErrorHandler();
       }
-
-      createErrorHandler();
-    });
+    );
 
     const currentSessionSub = getCurrentSession().subscribe(({ data }) =>
       setUserSession(data)

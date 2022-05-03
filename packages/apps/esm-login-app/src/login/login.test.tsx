@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { waitFor, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { setSessionLocation, useConfig } from "@openmrs/esm-framework";
+import {
+  setSessionLocation,
+  useConfig,
+  useSession,
+} from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
-import { useCurrentUser } from "../CurrentUserContext";
 import { mockConfig } from "../../__mocks__/config.mock";
 import renderWithRouter from "../test-helpers/render-with-router";
 import Login from "./login.component";
@@ -15,12 +18,8 @@ jest.mock("./login.resource", () => ({
 }));
 
 const mockedSetSessionLocation = setSessionLocation as jest.Mock;
-const mockedUseCurrentUser = useCurrentUser as jest.Mock;
 const mockedUseConfig = useConfig as jest.Mock;
-
-jest.mock("../CurrentUserContext", () => ({
-  useCurrentUser: jest.fn(),
-}));
+const mockedUseSession = useSession as jest.Mock;
 
 const loginLocations = [
   { uuid: "111", display: "Earth" },
@@ -31,7 +30,8 @@ describe(`<Login />`, () => {
   beforeEach(() => {
     mockedLogin.mockReset();
     mockedSetSessionLocation.mockReset();
-    mockedUseCurrentUser.mockReset();
+    mockedUseSession.mockReset();
+    mockedUseSession.mockReturnValue({ authenticated: false });
     mockedUseConfig.mockReturnValue(mockConfig);
   });
 
@@ -106,10 +106,10 @@ describe(`<Login />`, () => {
       });
       return Promise.resolve({ data: { authenticated: true } });
     });
-    mockedUseCurrentUser.mockImplementation(() => {
+    mockedUseSession.mockImplementation(() => {
       const [user, setUser] = useState();
       refreshUser = setUser;
-      return user;
+      return { user, authenticated: !!user };
     });
 
     const wrapper = renderWithRouter(

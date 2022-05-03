@@ -236,7 +236,7 @@ export const usePatient = jest.fn(() => ({
   error: null,
 }));
 
-export const useSession = jest.fn(() => null);
+export const useSession = jest.fn(() => ({ authenticated: false }));
 
 export const useLayoutType = jest.fn(() => "desktop");
 

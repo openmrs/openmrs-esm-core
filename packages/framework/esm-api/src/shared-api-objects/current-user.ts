@@ -1,19 +1,32 @@
 /** @module @category API */
-import { Observable, ReplaySubject } from "rxjs";
-import { filter, map, tap, mergeAll } from "rxjs/operators";
+import { reportError } from "@openmrs/esm-error-handling";
+import { createGlobalStore } from "@openmrs/esm-state";
+import { Observable } from "rxjs";
 import { openmrsFetch, sessionEndpoint } from "../openmrs-fetch";
 import type {
   LoggedInUser,
-  CurrentUserWithResponseOption,
-  CurrentUserWithoutResponseOption,
-  CurrentUserOptions,
   SessionLocation,
   Privilege,
   Role,
   Session,
 } from "../types";
 
-const userSubject = new ReplaySubject<Promise<Session>>(1);
+export type SessionStore = LoadedSessionStore | UnloadedSessionStore;
+
+export type LoadedSessionStore = {
+  loaded: true;
+  session: Session;
+};
+
+export type UnloadedSessionStore = {
+  loaded: false;
+  session: null;
+};
+
+const sessionStore = createGlobalStore<SessionStore>("session", {
+  loaded: false,
+  session: null,
+});
 let lastFetchTimeMillis = 0;
 
 /**
@@ -54,29 +67,50 @@ let lastFetchTimeMillis = 0;
  * even after the UI component is gone from the screen. This is a memory
  * leak and source of bugs.
  */
-function getCurrentUser(): Observable<LoggedInUser>;
+function getCurrentUser(): Observable<Session>;
+function getCurrentUser(opts: { includeAuthStatus: true }): Observable<Session>;
+function getCurrentUser(opts: {
+  includeAuthStatus: false;
+}): Observable<LoggedInUser>;
 function getCurrentUser(
-  opts: CurrentUserWithResponseOption
-): Observable<Session>;
-function getCurrentUser(
-  opts: CurrentUserWithoutResponseOption
-): Observable<LoggedInUser>;
-function getCurrentUser(
-  opts: CurrentUserOptions = { includeAuthStatus: false }
-): Observable<LoggedInUser | Session> {
-  if (lastFetchTimeMillis < Date.now() - 1000 * 60) {
+  opts = { includeAuthStatus: true }
+): Observable<Session | LoggedInUser> {
+  if (
+    lastFetchTimeMillis < Date.now() - 1000 * 60 ||
+    !sessionStore.getState().loaded
+  ) {
     refetchCurrentUser();
   }
 
-  return userSubject.asObservable().pipe(
-    mergeAll(),
-    tap(setUserLanguage),
-    map((r) => (opts.includeAuthStatus ? r : r.user)),
-    filter(Boolean)
-  ) as Observable<LoggedInUser | Session>;
+  return new Observable((subscriber) => {
+    const handler = (state) => {
+      if (state.loaded) {
+        if (opts.includeAuthStatus) {
+          subscriber.next(state.session);
+        } else {
+          subscriber.next(state.session?.user);
+        }
+      }
+    };
+    handler(sessionStore.getState());
+    // The observable subscribe function should return an unsubscribe function,
+    // which happens to be exactly what Unistore `subscribe` returns.
+    return sessionStore.subscribe(handler);
+  });
 }
 
 export { getCurrentUser };
+
+export function getSessionStore() {
+  if (
+    lastFetchTimeMillis < Date.now() - 1000 * 60 ||
+    !sessionStore.getState().loaded
+  ) {
+    refetchCurrentUser();
+  }
+
+  return sessionStore;
+}
 
 function setUserLanguage(data: Session) {
   const locale = data?.user?.userProperties?.defaultLocale ?? data.locale;
@@ -113,17 +147,35 @@ function isSuperUser(user: { roles: Array<Role> }) {
  * ```
  */
 export function refetchCurrentUser() {
-  lastFetchTimeMillis = Date.now();
-  userSubject.next(
+  return new Promise((resolve, reject) => {
+    lastFetchTimeMillis = Date.now();
     openmrsFetch(sessionEndpoint)
-      .then((res) =>
-        typeof res.data === "object" ? res.data : Promise.reject()
-      )
-      .catch(() => ({
-        sessionId: "",
-        authenticated: false,
-      }))
-  );
+      .then((res) => {
+        if (typeof res?.data === "object") {
+          setUserLanguage(res.data);
+          resolve(res.data);
+          sessionStore.setState({ loaded: true, session: res.data });
+        } else {
+          reject();
+          return Promise.reject();
+        }
+      })
+      .catch((err) => {
+        reportError(`Failed to fetch new session information: ${err}`);
+        reject(err);
+        return {
+          sessionId: "",
+          authenticated: false,
+        };
+      });
+  });
+}
+
+export function clearCurrentUser() {
+  sessionStore.setState({
+    loaded: true,
+    session: { authenticated: false, sessionId: "" },
+  });
 }
 
 export function userHasAccess(
@@ -134,23 +186,29 @@ export function userHasAccess(
 }
 
 export function getLoggedInUser() {
+  let user;
+  let unsubscribe;
   return new Promise<LoggedInUser>((res, rej) => {
-    const sub = getCurrentUser().subscribe((user) => {
-      res(user);
-      sub.unsubscribe();
-    }, rej);
+    const handler = (state: SessionStore) => {
+      if (state.loaded && state.session.user) {
+        user = state.session.user;
+        res(state.session.user);
+        unsubscribe && unsubscribe();
+      }
+    };
+    handler(sessionStore.getState());
+    if (!user) {
+      unsubscribe = sessionStore.subscribe(handler);
+    }
   });
 }
 
 export function getSessionLocation() {
   return new Promise<SessionLocation | undefined>((res, rej) => {
-    const sub = getCurrentUser({ includeAuthStatus: true }).subscribe(
-      (session) => {
-        res(session.sessionLocation);
-        sub.unsubscribe();
-      },
-      rej
-    );
+    const sub = getCurrentUser().subscribe((session) => {
+      res(session.sessionLocation);
+      sub.unsubscribe();
+    }, rej);
   });
 }
 

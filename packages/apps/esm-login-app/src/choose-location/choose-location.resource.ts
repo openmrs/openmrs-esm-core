@@ -3,7 +3,7 @@ import {
   openmrsFetch,
   fhirBaseUrl,
   FetchResponse,
-  showNotification,
+  reportError,
 } from "@openmrs/esm-framework";
 import useSwrInfinite from "swr/infinite";
 import { LocationEntry, LocationResponse } from "../types";
@@ -61,11 +61,8 @@ export function useLoginLocations(
   >(getUrl, openmrsFetch);
 
   if (error) {
-    showNotification({
-      title: error.name,
-      description: error.message,
-      kind: "error",
-    });
+    console.error(error);
+    reportError(error);
   }
 
   const memoizedLocationData = useMemo(() => {

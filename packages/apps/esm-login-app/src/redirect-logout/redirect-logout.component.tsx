@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { navigate, useConfig } from "@openmrs/esm-framework";
+import { navigate, useConfig, useSession } from "@openmrs/esm-framework";
 import { performLogout } from "./logout.resource";
-import { useCurrentUser } from "../CurrentUserContext";
 
 export interface RedirectLogoutProps extends RouteComponentProps<{}> {
   isLoginEnabled: boolean;
@@ -10,17 +9,17 @@ export interface RedirectLogoutProps extends RouteComponentProps<{}> {
 
 const RedirectLogout: React.FC<RedirectLogoutProps> = ({ isLoginEnabled }) => {
   const config = useConfig();
-  const user = useCurrentUser();
+  const user = useSession();
 
   useEffect(() => {
-    if (!user || !isLoginEnabled) {
+    if (!user.authenticated || !isLoginEnabled) {
       navigate({ to: "${openmrsSpaBase}/login" });
     } else {
       performLogout().then(() => {
         if (config.provider.type === "oauth2") {
           location.href = config.provider.logoutUrl;
         } else {
-          location.href = window.spaBase;
+          navigate({ to: "${openmrsSpaBase}/login" });
         }
       });
     }

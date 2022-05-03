@@ -163,6 +163,9 @@ export default (
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
+      devMiddleware: {
+        writeToDisk: true,
+      },
     },
     performance: {
       hints: mode === production && "warning",
