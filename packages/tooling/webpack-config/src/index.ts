@@ -140,7 +140,10 @@ export default (
             use: [
               require.resolve("style-loader"),
               cssLoader,
-              { loader: require.resolve("sass-loader") },
+              {
+                loader: require.resolve("sass-loader"),
+                options: { sassOptions: { quietDeps: true } },
+              },
             ],
           },
           scssRuleConfig

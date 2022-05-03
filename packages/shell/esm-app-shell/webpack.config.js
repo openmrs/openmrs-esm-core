@@ -142,7 +142,10 @@ module.exports = (env, argv = {}) => {
               ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
               : { loader: require.resolve("style-loader") },
             { loader: require.resolve("css-loader") },
-            { loader: require.resolve("sass-loader") },
+            {
+              loader: require.resolve("sass-loader"),
+              options: { sassOptions: { quietDeps: true } },
+            },
           ],
         },
         {
