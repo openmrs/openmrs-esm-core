@@ -21,7 +21,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "16.x"
+          node-version: "16.15"
       - run: yarn
       - name: TurboRepo local cache server
         uses: felixmosh/turborepo-gh-artifacts@v1
@@ -43,7 +43,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "16.x"
+          node-version: "16.15"
           registry-url: "https://registry.npmjs.org"
       - run: yarn
       - run: yarn lerna version patch --no-git-tag-version --no-push --yes
@@ -106,7 +106,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ""16.15""
+          node-version: "16.15"
           registry-url: "https://registry.npmjs.org"
       - run: yarn
       - run: yarn turbo run build
