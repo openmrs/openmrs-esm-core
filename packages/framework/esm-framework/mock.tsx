@@ -11,6 +11,7 @@ export {
   age,
 } from "@openmrs/esm-utils";
 export { interpolateString, interpolateUrl } from "@openmrs/esm-config";
+export { useGender } from "@openmrs/esm-react-utils";
 
 window.i18next = { ...window.i18next, language: "en" };
 
