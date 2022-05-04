@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-styleguide",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "browser": "dist/openmrs-esm-styleguide.js",
@@ -53,9 +53,9 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-extensions": "^3.3.0",
-    "@openmrs/esm-react-utils": "^3.3.0",
-    "@openmrs/esm-state": "^3.3.0",
+    "@openmrs/esm-extensions": "^3.3.1",
+    "@openmrs/esm-react-utils": "^3.3.1",
+    "@openmrs/esm-state": "^3.3.1",
     "@pickra/copy-code-block": "^1.1.7",
     "@storybook/addon-a11y": "^5.2.1",
     "@storybook/addon-knobs": "^5.2.1",

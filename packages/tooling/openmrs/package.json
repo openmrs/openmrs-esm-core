@@ -1,6 +1,6 @@
 {
   "name": "openmrs",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "bin": {
@@ -33,8 +33,8 @@
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
     "@babel/preset-typescript": "^7.16.7",
-    "@openmrs/esm-app-shell": "^3.3.0",
-    "@openmrs/webpack-config": "^3.3.0",
+    "@openmrs/esm-app-shell": "^3.3.1",
+    "@openmrs/webpack-config": "^3.3.1",
     "@types/react": "^16.9.46",
     "@types/systemjs": "^6.1.0",
     "autoprefixer": "^10.4.2",

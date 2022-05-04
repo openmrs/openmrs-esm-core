@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-implementer-tools-app",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "license": "MPL-2.0",
   "description": "The admin interface for OpenMRS Frontend",
   "browser": "dist/openmrs-esm-implementer-tools-app.js",
@@ -52,8 +52,8 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-framework": "^3.3.0",
-    "@openmrs/webpack-config": "^3.3.0",
+    "@openmrs/esm-framework": "^3.3.1",
+    "@openmrs/webpack-config": "^3.3.1",
     "@types/carbon-components-react": "^7.24.0",
     "ace-builds": "^1.4.14",
     "jest": "^26.6.3",
