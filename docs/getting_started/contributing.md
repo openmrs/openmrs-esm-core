@@ -83,7 +83,7 @@ sure your PR has an appropriate one.
 - Avoid gatekeeping, which includes over-emphasizing to contributors how they're failing to follow the correct process.
 - Encourage code ownership, including reviewing changes to the code and projects you've contributed to.
 - Provide detailed and helpful feedback to contributors, including using GitHub's
-  [suggestion feature](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/incorporating-feedback-in-your-pull-request)
+  [suggestion feature](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/incorporating-feedback-in-your-pull-request)
   to help the contributor know how to make the needed changes.
 
 ---

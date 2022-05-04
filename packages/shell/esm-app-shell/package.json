@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-app-shell",
-  "version": "3.2.0",
+  "version": "3.3.1",
   "license": "MPL-2.0",
   "main": "dist/openmrs.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@openmrs/esm-framework": "3.2.0",
+    "@openmrs/esm-framework": "^3.3.1",
     "carbon-components": "10.31.0",
     "carbon-icons": "7.0.7",
     "dayjs": "^1.10.4",
@@ -58,11 +58,11 @@
     "workbox-window": "^6.1.5"
   },
   "devDependencies": {
-    "@openmrs/esm-devtools-app": "^3.2.0",
-    "@openmrs/esm-implementer-tools-app": "^3.2.0",
-    "@openmrs/esm-login-app": "^3.2.0",
-    "@openmrs/esm-offline-tools-app": "^3.2.0",
-    "@openmrs/esm-primary-navigation-app": "^3.2.0",
+    "@openmrs/esm-devtools-app": "^3.3.1",
+    "@openmrs/esm-implementer-tools-app": "^3.3.1",
+    "@openmrs/esm-login-app": "^3.3.1",
+    "@openmrs/esm-offline-tools-app": "^3.3.1",
+    "@openmrs/esm-primary-navigation-app": "^3.3.1",
     "webpack-pwa-manifest": "^4.3.0",
     "workbox-webpack-plugin": "^6.1.2"
   }

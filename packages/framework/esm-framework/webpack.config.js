@@ -19,10 +19,18 @@ module.exports = (env) => ({
         exclude: /(node_modules|bower_components)/,
         use: "swc-loader",
       },
+      {
+        test: /\.s?css$/,
+        use: [
+          { loader: require.resolve("style-loader") },
+          { loader: require.resolve("css-loader") },
+          { loader: require.resolve("sass-loader") },
+        ],
+      },
     ],
   },
   resolve: {
-    extensions: [".ts", ".js", ".tsx", ".jsx"],
+    extensions: [".ts", ".js", ".tsx", ".jsx", ".scss"],
   },
   plugins: [
     new SystemJSPublicPathWebpackPlugin(),

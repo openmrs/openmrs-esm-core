@@ -21,8 +21,8 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
-      - run: npx lerna bootstrap
+          node-version: "16.x"
+      - run: yarn
       - name: TurboRepo local cache server
         uses: felixmosh/turborepo-gh-artifacts@v1
         with:
@@ -43,11 +43,11 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: "16.x"
           registry-url: "https://registry.npmjs.org"
-      - run: npx lerna bootstrap
-      - run: npx lerna version patch --no-git-tag-version --no-push --yes
-      - run: npx lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
+      - run: yarn
+      - run: yarn lerna version patch --no-git-tag-version --no-push --yes
+      - run: yarn lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
       - run: yarn turbo run build
       - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
       - run: git add . && git commit -m "Prerelease version" --no-verify
@@ -106,9 +106,9 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: ""16.15""
           registry-url: "https://registry.npmjs.org"
-      - run: yarn lerna bootstrap
+      - run: yarn
       - run: yarn turbo run build
       - run: yarn run ci:publish
         env:

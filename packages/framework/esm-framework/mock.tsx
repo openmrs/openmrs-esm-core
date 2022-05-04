@@ -8,6 +8,7 @@ export {
   formatDate,
   formatDatetime,
   formatTime,
+  age,
 } from "@openmrs/esm-utils";
 export { interpolateString, interpolateUrl } from "@openmrs/esm-config";
 
@@ -237,8 +238,6 @@ export const usePatient = jest.fn(() => ({
 
 export const useSession = jest.fn(() => null);
 
-export const useSessionUser = jest.fn(() => null);
-
 export const useLayoutType = jest.fn(() => "desktop");
 
 export const useExtensionSlot = jest.fn(() => ({
@@ -299,3 +298,7 @@ export const useVisitTypes = jest.fn(() => []);
 export const showNotification = jest.fn();
 export const showToast = jest.fn();
 export const showModal = jest.fn();
+
+export const LeftNavMenu = jest.fn();
+export const setLeftNav = jest.fn();
+export const unsetLeftNav = jest.fn();
