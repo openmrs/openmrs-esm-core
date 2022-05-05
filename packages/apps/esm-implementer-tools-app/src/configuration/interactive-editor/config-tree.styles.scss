@@ -3,8 +3,9 @@
 
 .fullWidthAccordion :global(.bx--accordion__content) {
   padding-right: 0;
-  color: $color-gray-100;
+  color: $ui-background;
 }
+
 .configTitle {
   color: $ui-background;
 }

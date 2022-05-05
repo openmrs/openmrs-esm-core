@@ -3,21 +3,25 @@
 .path {
   @include carbon--type-style("productive-heading-02");
   margin-bottom: $spacing-03;
+  color: $ui-background;
 }
 
 .description {
   @include carbon--type-style("body-short-01");
   margin-bottom: $spacing-05;
+  color: $ui-background;
 }
 
 .source {
   @include carbon--type-style("body-short-01");
   font-style: italic;
   margin-bottom: $spacing-03;
+  color: $ui-background;
 }
 
 .value {
   font-family: monospace;
   margin-top: $spacing-03;
   margin-left: $spacing-03;
+  color: $ui-background;
 }
