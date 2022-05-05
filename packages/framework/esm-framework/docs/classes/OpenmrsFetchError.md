@@ -21,6 +21,7 @@
 
 ### Other Properties
 
+- [cause](OpenmrsFetchError.md#cause)
 - [message](OpenmrsFetchError.md#message)
 - [name](OpenmrsFetchError.md#name)
 - [stack](OpenmrsFetchError.md#stack)
@@ -52,7 +53,7 @@ Error.constructor
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:281](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L281)
+[packages/framework/esm-api/src/openmrs-fetch.ts:286](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L286)
 
 ## API Properties
 
@@ -62,7 +63,7 @@ Error.constructor
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:294](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L294)
+[packages/framework/esm-api/src/openmrs-fetch.ts:299](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L299)
 
 ___
 
@@ -72,11 +73,25 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:295](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L295)
+[packages/framework/esm-api/src/openmrs-fetch.ts:300](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L300)
 
 ___
 
 ## Other Properties
+
+### cause
+
+• `Optional` **cause**: `Error`
+
+#### Inherited from
+
+Error.cause
+
+#### Defined in
+
+node_modules/typescript/lib/lib.es2022.error.d.ts:26
+
+___
 
 ### message
 
