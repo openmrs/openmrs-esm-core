@@ -9,10 +9,10 @@ export interface RedirectLogoutProps extends RouteComponentProps<{}> {
 
 const RedirectLogout: React.FC<RedirectLogoutProps> = ({ isLoginEnabled }) => {
   const config = useConfig();
-  const user = useSession();
+  const session = useSession();
 
   useEffect(() => {
-    if (!user.authenticated || !isLoginEnabled) {
+    if (!session.authenticated || !isLoginEnabled) {
       navigate({ to: "${openmrsSpaBase}/login" });
     } else {
       performLogout().then(() => {
@@ -23,7 +23,7 @@ const RedirectLogout: React.FC<RedirectLogoutProps> = ({ isLoginEnabled }) => {
         }
       });
     }
-  }, [isLoginEnabled, user, config]);
+  }, [isLoginEnabled, session, config]);
 
   return null;
 };
