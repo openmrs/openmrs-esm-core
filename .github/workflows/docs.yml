@@ -18,3 +18,4 @@ jobs:
         with:
           max-depth: 4 # exclude the API docs
           use-quiet-mode: "yes"
+          config-file: "markdown_link_check_config.json"

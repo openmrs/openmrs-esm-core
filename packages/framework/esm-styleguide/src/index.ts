@@ -7,6 +7,7 @@ export * from "./spinner";
 export * from "./notifications";
 export * from "./toasts";
 export * from "./modals";
+export * from "./left-nav";
 
 setupBranding();
 setupLogo();

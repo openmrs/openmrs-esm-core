@@ -68,10 +68,6 @@ module.exports = (env, argv = {}) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? "dist" : "lib";
   const isProd = mode === "production";
-  const styleLoader = isProd
-    ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
-    : { loader: require.resolve("style-loader") };
-  const cssLoader = { loader: require.resolve("css-loader") };
   const appPatterns = [];
   const coreImportmap = {
     imports: {},
@@ -140,8 +136,17 @@ module.exports = (env, argv = {}) => {
     module: {
       rules: [
         {
-          test: /\.css$/,
-          use: [styleLoader, cssLoader],
+          test: /\.s?css$/,
+          use: [
+            isProd
+              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              : { loader: require.resolve("style-loader") },
+            { loader: require.resolve("css-loader") },
+            {
+              loader: require.resolve("sass-loader"),
+              options: { sassOptions: { quietDeps: true } },
+            },
+          ],
         },
         {
           test: /\.(woff|woff2|png)?$/,
@@ -174,7 +179,7 @@ module.exports = (env, argv = {}) => {
     },
     resolve: {
       mainFields: ["module", "main"],
-      extensions: [".ts", ".tsx", ".js", ".jsx"],
+      extensions: [".ts", ".tsx", ".js", ".jsx", ".css", ".scss"],
       fallback: {
         http: false,
         stream: false,
