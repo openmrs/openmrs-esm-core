@@ -14,6 +14,10 @@ export { interpolateString, interpolateUrl } from "@openmrs/esm-config";
 
 window.i18next = { ...window.i18next, language: "en" };
 
+// Needed for all mocks using stores
+const availableStores: Record<string, StoreEntity> = {};
+const initialStates: Record<string, any> = {};
+
 /* esm-globals */
 
 export function setupPaths(config: any) {
@@ -60,10 +64,6 @@ interface StoreEntity {
 }
 
 export type MockedStore<T> = Store<T> & { resetMock: () => void };
-
-const initialStates: Record<string, any> = {};
-
-const availableStores: Record<string, StoreEntity> = {};
 
 export const mockStores = availableStores;
 
