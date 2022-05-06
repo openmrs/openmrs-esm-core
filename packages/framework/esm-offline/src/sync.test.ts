@@ -1,5 +1,5 @@
 import "fake-indexeddb/auto";
-import { getLoggedInUser, LoggedInUser } from "@openmrs/esm-api";
+import { getLoggedInUser } from "@openmrs/esm-api";
 import {
   getFullSynchronizationItems,
   getFullSynchronizationItemsFor,
@@ -72,6 +72,13 @@ describe("Sync Queue", () => {
     expect(queuedItems[0].descriptor).toStrictEqual(
       defaultMockSyncItemDescriptor
     );
+  });
+
+  it("allows querying for items of all types at once", async () => {
+    await queueSynchronizationItem("type-a", defaultMockSyncItem);
+    await queueSynchronizationItem("type-b", defaultMockSyncItem);
+    const queuedItems = await getFullSynchronizationItems();
+    expect(queuedItems).toHaveLength(2);
   });
 });
 
