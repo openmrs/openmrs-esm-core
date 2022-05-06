@@ -1,15 +1,3 @@
-export interface CurrentUserOptions {
-  includeAuthStatus?: boolean;
-}
-
-export interface CurrentUserWithResponseOption extends CurrentUserOptions {
-  includeAuthStatus: true;
-}
-
-export interface CurrentUserWithoutResponseOption extends CurrentUserOptions {
-  includeAuthStatus: false;
-}
-
 export interface Session {
   allowedLocales?: Array<string>;
   authenticated: boolean;

@@ -22,7 +22,7 @@ export * from "./useLayoutType";
 export * from "./useLocations";
 export * from "./useOnClickOutside";
 export * from "./UserHasAccess";
-export * from "./useSessionUser";
+export { useSession } from "./useSession";
 export * from "./useStore";
 export * from "./useVisit";
 export * from "./useVisitTypes";

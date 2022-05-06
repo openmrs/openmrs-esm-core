@@ -1,5 +1,4 @@
 import {
-  CurrentUserWithResponseOption,
   getCurrentUser,
   getSynchronizationItemsFor,
   openmrsObservableFetch,
@@ -15,10 +14,8 @@ export function getCurrentSession() {
  * Returns an observable producing the current user, but also applies any unsynchronized user property
  * changes to that user.
  */
-export function getSynchronizedCurrentUser(
-  opts: CurrentUserWithResponseOption
-) {
-  return getCurrentUser(opts).pipe(
+export function getSynchronizedCurrentUser() {
+  return getCurrentUser({ includeAuthStatus: true }).pipe(
     mergeMap(async (result) => {
       const { user } = result;
 

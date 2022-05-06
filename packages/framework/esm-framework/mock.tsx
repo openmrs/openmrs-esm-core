@@ -14,6 +14,10 @@ export { interpolateString, interpolateUrl } from "@openmrs/esm-config";
 
 window.i18next = { ...window.i18next, language: "en" };
 
+// Needed for all mocks using stores
+const availableStores: Record<string, StoreEntity> = {};
+const initialStates: Record<string, any> = {};
+
 /* esm-globals */
 
 export function setupPaths(config: any) {
@@ -42,6 +46,13 @@ export function getCurrentUser() {
   return of({ authenticated: false });
 }
 
+export const mockSessionStore = createGlobalStore("mock-session-store", {
+  loaded: false,
+  session: null,
+});
+
+export const getSessionStore = jest.fn(() => mockSessionStore);
+
 export const newWorkspaceItem = jest.fn();
 
 export const fhirBaseUrl = "/ws/fhir2/R4";
@@ -53,10 +64,6 @@ interface StoreEntity {
 }
 
 export type MockedStore<T> = Store<T> & { resetMock: () => void };
-
-const initialStates: Record<string, any> = {};
-
-const availableStores: Record<string, StoreEntity> = {};
 
 export const mockStores = availableStores;
 
@@ -236,7 +243,10 @@ export const usePatient = jest.fn(() => ({
   error: null,
 }));
 
-export const useSession = jest.fn(() => null);
+export const useSession = jest.fn(() => ({
+  authenticated: false,
+  sessionId: "",
+}));
 
 export const useLayoutType = jest.fn(() => "desktop");
 

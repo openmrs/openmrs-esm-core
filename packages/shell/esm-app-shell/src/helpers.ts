@@ -1,8 +1,4 @@
-import {
-  getCurrentUser,
-  userHasAccess,
-  CurrentUserWithoutResponseOption,
-} from "@openmrs/esm-api";
+import { getLoggedInUser, userHasAccess } from "@openmrs/esm-api";
 
 const emptyLifecycle = {
   bootstrap() {
@@ -14,10 +10,6 @@ const emptyLifecycle = {
   unmount() {
     return Promise.resolve();
   },
-};
-
-const userOpts: CurrentUserWithoutResponseOption = {
-  includeAuthStatus: false,
 };
 
 export function routePrefix(prefix: string, location: Location) {
@@ -35,17 +27,12 @@ export function wrapLifecycle(
   load: () => Promise<any>,
   requiredPrivilege: string
 ): () => Promise<any> {
-  return () => {
-    return new Promise((resolve) => {
-      const sub = getCurrentUser(userOpts).subscribe((user) => {
-        sub.unsubscribe();
+  return async () => {
+    const user = await getLoggedInUser();
+    if (user && userHasAccess(requiredPrivilege, user)) {
+      return load();
+    }
 
-        if (user && userHasAccess(requiredPrivilege, user)) {
-          return resolve(load());
-        }
-
-        return resolve(emptyLifecycle);
-      });
-    });
+    return emptyLifecycle;
   };
 }

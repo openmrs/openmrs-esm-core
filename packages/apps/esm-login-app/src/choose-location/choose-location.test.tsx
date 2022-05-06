@@ -1,6 +1,11 @@
 import { waitFor } from "@testing-library/react";
 import renderWithRouter from "../test-helpers/render-with-router";
-import { navigate, openmrsFetch, useConfig } from "@openmrs/esm-framework";
+import {
+  navigate,
+  openmrsFetch,
+  useConfig,
+  useSession,
+} from "@openmrs/esm-framework";
 import {
   mockSetSessionLocation,
   mockSoleLoginLocation,
@@ -12,13 +17,13 @@ const mockedNavigate = navigate as jest.Mock;
 const mockedOpenmrsFetch = openmrsFetch as jest.Mock;
 const mockedUseConfig = useConfig as jest.Mock;
 
-jest.mock("../CurrentUserContext", () => ({
-  useCurrentUser() {
-    return {
-      display: "Testy McTesterface",
-    };
+const mockUseSession = useSession as jest.Mock;
+
+mockUseSession.mockReturnValue({
+  user: {
+    display: "Testy McTesterface",
   },
-}));
+});
 
 describe("ChooseLocation: ", () => {
   beforeEach(() => {

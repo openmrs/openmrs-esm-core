@@ -4,9 +4,8 @@ import ArrowRight24 from "@carbon/icons-react/es/arrow--right/24";
 import { Button, InlineNotification, TextInput } from "carbon-components-react";
 import { RouteComponentProps } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useConfig, interpolateUrl } from "@openmrs/esm-framework";
+import { useConfig, interpolateUrl, useSession } from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
-import { useCurrentUser } from "../CurrentUserContext";
 import type { StaticContext } from "react-router";
 
 const hidden: React.CSSProperties = {
@@ -27,7 +26,7 @@ export interface LoginProps
 
 const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
   const config = useConfig();
-  const user = useCurrentUser();
+  const { user } = useSession();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

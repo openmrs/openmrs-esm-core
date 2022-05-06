@@ -44,7 +44,7 @@
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2402
+node_modules/typescript/lib/lib.dom.d.ts:2432
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2403
+node_modules/typescript/lib/lib.dom.d.ts:2433
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11136
+node_modules/typescript/lib/lib.dom.d.ts:11265
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11137
+node_modules/typescript/lib/lib.dom.d.ts:11266
 
 ___
 
@@ -114,7 +114,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11138
+node_modules/typescript/lib/lib.dom.d.ts:11267
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11139
+node_modules/typescript/lib/lib.dom.d.ts:11268
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11140
+node_modules/typescript/lib/lib.dom.d.ts:11269
 
 ___
 
@@ -156,7 +156,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11141
+node_modules/typescript/lib/lib.dom.d.ts:11270
 
 ___
 
@@ -170,7 +170,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11142
+node_modules/typescript/lib/lib.dom.d.ts:11271
 
 ## Methods
 
@@ -188,7 +188,7 @@ node_modules/typescript/lib/lib.dom.d.ts:11142
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2404
+node_modules/typescript/lib/lib.dom.d.ts:2434
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2405
+node_modules/typescript/lib/lib.dom.d.ts:2435
 
 ___
 
@@ -224,7 +224,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:11143
+node_modules/typescript/lib/lib.dom.d.ts:11272
 
 ___
 
@@ -242,7 +242,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2406
+node_modules/typescript/lib/lib.dom.d.ts:2436
 
 ___
 
@@ -260,7 +260,7 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2407
+node_modules/typescript/lib/lib.dom.d.ts:2437
 
 ___
 
@@ -278,4 +278,4 @@ ___
 
 #### Defined in
 
-node_modules/typescript/lib/lib.dom.d.ts:2408
+node_modules/typescript/lib/lib.dom.d.ts:2438
