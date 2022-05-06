@@ -42,6 +42,13 @@ export function getCurrentUser() {
   return of({ authenticated: false });
 }
 
+export const mockSessionStore = createGlobalStore("mock-session-store", {
+  loaded: false,
+  session: null,
+});
+
+export const getSessionStore = jest.fn(() => mockSessionStore);
+
 export const newWorkspaceItem = jest.fn();
 
 export const fhirBaseUrl = "/ws/fhir2/R4";
@@ -236,7 +243,10 @@ export const usePatient = jest.fn(() => ({
   error: null,
 }));
 
-export const useSession = jest.fn(() => ({ authenticated: false }));
+export const useSession = jest.fn(() => ({
+  authenticated: false,
+  sessionId: "",
+}));
 
 export const useLayoutType = jest.fn(() => "desktop");
 
