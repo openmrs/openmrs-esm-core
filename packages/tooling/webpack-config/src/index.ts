@@ -1,3 +1,41 @@
+/**
+ * This is the base webpack config for all OpenMRS 3.x modules.
+ *
+ * ## Usage
+ *
+ * You can use it as simply as
+ *
+ * ```ts
+ * module.exports = require('openmrs/default-webpack-config');
+ * ```
+ *
+ * or you can customize the configuration using merges and overrides
+ * like
+ *
+ * ```ts
+ * const config = require('openmrs/default-webpack-config');
+ * config.cssRuleConfig.rules = [myCustomRule];
+ * module.exports = config;
+ * ```
+ *
+ * ## Development
+ *
+ * Advice for working on this file:
+ *
+ * Don't use `yarn link` or symlinks to work on it.
+ *
+ * After you `yarn build --watch`, do something like
+ * `watch "cp -R dist /path/to/packages/esm-patient-chart-app/webpack"`
+ * and then change the webpack line from
+ * `module.exports = require('openmrs/default-webpack-config');`
+ * to
+ * `module.exports = require('./webpack');`
+ *
+ * This is because Webpack has unpredictable behavior when working with
+ * symlinked files, **even when using absolute paths**. You read that right.
+ * Telling Webpack to use `/a/b/c`? If the Webpack config is symlinked
+ * from `/d/e/`, then it *might* in *some cases* try to import `/d/e/c`.
+ */
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { resolve, dirname, basename } from "path";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
@@ -97,10 +135,6 @@ export default (
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
-  // const exposeFile = srcFile.replace('/index.ts', '/root.component');
-  console.log("srcfile: ", srcFile);
-  // console.log("exposeFile: ", exposeFile);
-  console.log("filename: ", filename);
   const ident = makeIdent(name);
   const frameworkVersion = getFrameworkVersion();
 
@@ -114,18 +148,14 @@ export default (
   };
 
   const baseConfig = {
-    entry: srcFile,
-    // entry: {
-    //   [srcFile]: srcFile
-    // },
-    // entry: {
-    //   // [name]: "systemjs-webpack-interop/auto-public-path",
-      // [name]: srcFile
-    // },
+    // The only `entry` in the application is the app shell. Everything else is
+    // a Webpack Module Federation "remote." This ensures that there is always
+    // only one container context--i.e., if we had an entry point per module,
+    // WMF could get confused and not resolve shared dependencies correctly.
     output: {
-      // libraryTarget defaults to jsonp
+      // Use deafult `libraryTarget`, which is jsonp
       publicPath: "auto",
-      // path: resolve(root, outDir),
+      path: resolve(root, outDir),
     },
     target: "web",
     module: {
@@ -194,11 +224,12 @@ export default (
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new ModuleFederationPlugin({
+        // See `esm-app-shell/src/system.ts` for an explanation of how modules
+        // get loaded into the application.
         name,
         library: { type: "var", name: slugify(name) },
         filename,
         exposes: {
-          // app: srcFile,
           "./start": srcFile,
         },
         shared: [
@@ -222,17 +253,17 @@ export default (
           chunks: true,
         },
       }),
-      // {
-      //   apply(compiler) {
-      //     compiler.hooks.afterEmit.tap("PostProcessPlugin", (compilation) => {
-      //       if (mode === "production") {
-      //         // only post-optimize the bundle in production mode
-      //         const fn = resolve(root, outDir, filename);
-      //         postProcessFile(fn);
-      //       }
-      //     });
-      //   },
-      // },
+      {
+        apply(compiler) {
+          compiler.hooks.afterEmit.tap("PostProcessPlugin", (compilation) => {
+            if (mode === "production") {
+              // only post-optimize the bundle in production mode
+              const fn = resolve(root, outDir, filename);
+              postProcessFile(fn);
+            }
+          });
+        },
+      },
     ],
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],

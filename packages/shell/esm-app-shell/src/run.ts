@@ -1,3 +1,9 @@
+import "import-map-overrides";
+import "systemjs/dist/system";
+import "systemjs/dist/extras/amd";
+import "systemjs/dist/extras/named-exports";
+import "systemjs/dist/extras/named-register";
+import "systemjs/dist/extras/use-default";
 import { start, unregisterApplication, getAppNames } from "single-spa";
 import {
   setupApiModule,
@@ -29,8 +35,7 @@ import {
   tryRegisterExtension,
 } from "./apps";
 import { setupI18n } from "./locale";
-import { sharedDependencies } from "./dependencies";
-import { loadModules, registerModules } from "./system";
+import { loadModules } from "./load-modules";
 import { appName, getCoreExtensions } from "./ui";
 
 /**
@@ -306,7 +311,6 @@ export function run(configUrls: Array<string>, offline: boolean) {
   subscribeNotificationShown(showNotification);
   subscribeToastShown(showToast);
   subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
-  registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
 
