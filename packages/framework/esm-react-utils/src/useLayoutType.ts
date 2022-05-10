@@ -1,7 +1,7 @@
 /** @module @category UI */
 import { useEffect, useState } from "react";
 
-export type LayoutType = "tablet" | "phone" | "small-desktop" | "large-desktop";
+export type LayoutType = "phone" | "tablet" | "small-desktop" | "large-desktop";
 
 function getLayout() {
   let layout: LayoutType = "tablet";
