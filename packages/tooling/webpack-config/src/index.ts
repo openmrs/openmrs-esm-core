@@ -97,9 +97,9 @@ export default (
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
-  const exposeFile = srcFile.replace('/index.ts', '/root.component');
+  // const exposeFile = srcFile.replace('/index.ts', '/root.component');
   console.log("srcfile: ", srcFile);
-  console.log("exposeFile: ", exposeFile);
+  // console.log("exposeFile: ", exposeFile);
   console.log("filename: ", filename);
   const ident = makeIdent(name);
   const frameworkVersion = getFrameworkVersion();
@@ -199,7 +199,7 @@ export default (
         filename,
         exposes: {
           // app: srcFile,
-          "./start": exposeFile,
+          "./start": srcFile,
         },
         shared: [
           ...Object.keys(peerDependencies),
