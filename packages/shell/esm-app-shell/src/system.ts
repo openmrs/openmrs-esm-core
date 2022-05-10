@@ -10,11 +10,12 @@ function slugify(name) {
   return name.replace(/[\/\-@]/g, "_");
 }
 
-function loadScript(url: string, resolve: (value: unknown) => void, reject: () => void) {
+function loadScript(name: string, url: string, resolve: (value: unknown) => void, reject: () => void) {
   if (!document.head.querySelector(`script[src="${url}"]`)) {
     const element = document.createElement("script");
     element.src = url;
     element.type = "text/javascript";
+    element.setAttribute("data-webpack", slugify[name]);
     element.async = true;
     element.onload = () => {
       console.log(`Dynamic Script Loaded: ${url}`);
@@ -42,7 +43,7 @@ function loadScript(url: string, resolve: (value: unknown) => void, reject: () =
 export async function loadModules(modules: Record<string, string>) {
   return Promise.all(Object.entries(modules).map(async ([name, url]) => {
     await new Promise((resolve, reject) => {
-      loadScript(url, resolve, reject);
+      loadScript(name, url, resolve, reject);
     })
     const app: any = window[slugify(name)];
     console.log(slugify(name), app);
