@@ -1,8 +1,6 @@
 import React from "react";
 import { getSyncLifecycle } from "@openmrs/esm-framework";
 
-console.log("loading!!!");
-
 export function setupOpenMRS() {
   const moduleName = "@openmrs/esm-test-page-1-app";
 
@@ -14,7 +12,10 @@ export function setupOpenMRS() {
   return {
     pages: [
       {
-        load: getSyncLifecycle((<div>Hello world</div>) as any, options),
+        load: getSyncLifecycle(
+          () => (<div id="hello">Hello world</div>) as any,
+          options
+        ),
         route: "test",
       },
     ],
