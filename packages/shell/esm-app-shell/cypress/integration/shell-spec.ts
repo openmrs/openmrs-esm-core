@@ -18,13 +18,13 @@ describe("App Shell", () => {
         },
       },
     });
-    cy.intercept("openmrs/spa/*/*.js", (req) => {
-      console.log("initial", req.url);
-      if (!req.url.endsWith("openmrs.js")) {
-        req.url = req.url.replace("9080/openmrs/spa", "9081");
-        console.log("url", req.url);
-      }
-    });
+    // cy.intercept("openmrs/spa/*/*.js", (req) => {
+    //   console.log("initial", req.url);
+    //   if (!req.url.endsWith("openmrs.js")) {
+    //     req.url = req.url.replace("9080/openmrs/spa", "9081");
+    //     console.log("url", req.url);
+    //   }
+    // });
     cy.visit("localhost:9080/openmrs/spa/test");
     cy.get("div#test").should("have.text", "Hello world");
   });
@@ -39,14 +39,14 @@ describe("App Shell", () => {
         },
       },
     });
-    cy.intercept("openmrs/spa/*/*.js", (req) => {
-      // cy.intercept('openmrs/spa/*.js', (req) => {
-      console.log("initial", req.url);
-      if (!req.url.endsWith("openmrs.js")) {
-        req.url = req.url.replace("9080/openmrs/spa", "9081");
-        console.log("url", req.url);
-      }
-    });
+    // cy.intercept("openmrs/spa/*/*.js", (req) => {
+    //   // cy.intercept('openmrs/spa/*.js', (req) => {
+    //   console.log("initial", req.url);
+    //   if (!req.url.endsWith("openmrs.js")) {
+    //     req.url = req.url.replace("9080/openmrs/spa", "9081");
+    //     console.log("url", req.url);
+    //   }
+    // });
     cy.visit("localhost:9080/openmrs/spa/test");
     cy.get("div#test").should("have.text", "hey worldo");
   });
