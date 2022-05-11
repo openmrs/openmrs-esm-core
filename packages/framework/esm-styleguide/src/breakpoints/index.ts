@@ -12,26 +12,31 @@ export const Breakpoint = {
 function setBodyCssClasses() {
   document.body.classList.toggle(
     "omrs-breakpoint-lt-tablet",
-    window.innerWidth <= Breakpoint.PHONE_MAX
+    window.innerWidth < Breakpoint.TABLET_MIN
   );
-
   document.body.classList.toggle(
     "omrs-breakpoint-gt-phone",
-    window.innerWidth >= Breakpoint.TABLET_MIN
+    window.innerWidth > Breakpoint.PHONE_MAX
   );
-
   document.body.classList.toggle(
     "omrs-breakpoint-gt-tablet",
-    window.innerWidth >= Breakpoint.SMALL_DESKTOP_MIN
+    window.innerWidth > Breakpoint.TABLET_MAX
+  );
+  document.body.classList.toggle(
+    "omrs-breakpoint-lt-desktop",
+    window.innerWidth < Breakpoint.SMALL_DESKTOP_MIN
   );
   document.body.classList.toggle(
     "omrs-breakpoint-lt-small-desktop",
     window.innerWidth < Breakpoint.SMALL_DESKTOP_MIN
   );
-
+  document.body.classList.toggle(
+    "omrs-breakpoint-lt-large-desktop",
+    window.innerWidth < Breakpoint.LARGE_DESKTOP_MIN
+  );
   document.body.classList.toggle(
     "omrs-breakpoint-gt-small-desktop",
-    window.innerWidth >= Breakpoint.LARGE_DESKTOP_MIN
+    window.innerWidth > Breakpoint.SMALL_DESKTOP_MAX
   );
 }
 
