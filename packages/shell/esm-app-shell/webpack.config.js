@@ -33,7 +33,7 @@ const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
 const openmrsOffline = process.env.OMRS_OFFLINE !== "disable";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsCoreApps =
-  process.env.OMRS_ESM_CORE_APPS_DIR ?? resolve(__dirname, "../../apps");
+  process.env.OMRS_ESM_CORE_APPS_DIR || resolve(__dirname, "../../apps");
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
