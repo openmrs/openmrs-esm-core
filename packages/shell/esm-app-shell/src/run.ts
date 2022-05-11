@@ -1,3 +1,9 @@
+import "import-map-overrides";
+import "systemjs/dist/system";
+import "systemjs/dist/extras/amd";
+import "systemjs/dist/extras/named-exports";
+import "systemjs/dist/extras/named-register";
+import "systemjs/dist/extras/use-default";
 import { start, unregisterApplication, getAppNames } from "single-spa";
 import {
   setupApiModule,
@@ -29,23 +35,8 @@ import {
   tryRegisterExtension,
 } from "./apps";
 import { setupI18n } from "./locale";
-import { sharedDependencies } from "./dependencies";
-import { loadModules, registerModules } from "./system";
+import { loadModules } from "./load-modules";
 import { appName, getCoreExtensions } from "./ui";
-
-const allowedSuffixes = ["-app", "-widgets"];
-
-/**
- * Gets the frontend modules (apps). These are entries
- * in the import maps that end with "-app".
- * @param maps The value of the "imports" property of the
- * import maps.
- */
-function getApps(maps: Record<string, string>) {
-  return Object.keys(maps).filter((m) =>
-    allowedSuffixes.some((n) => m.endsWith(n))
-  );
-}
 
 /**
  * Loads the frontend modules (apps and widgets). Should be done *after*
@@ -57,7 +48,7 @@ function getApps(maps: Record<string, string>) {
 function loadApps() {
   return window.importMapOverrides
     .getCurrentPageMap()
-    .then((importMap) => loadModules(getApps(importMap.imports)));
+    .then((importMap) => loadModules(importMap.imports));
 }
 
 /**
@@ -320,7 +311,6 @@ export function run(configUrls: Array<string>, offline: boolean) {
   subscribeNotificationShown(showNotification);
   subscribeToastShown(showToast);
   subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
-  registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
 
