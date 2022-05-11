@@ -6,9 +6,20 @@
 
 ### API Properties
 
+- [children](UserHasAccessProps.md#children)
 - [privilege](UserHasAccessProps.md#privilege)
 
 ## API Properties
+
+### children
+
+• `Optional` **children**: `ReactNode`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L7)
+
+___
 
 ### privilege
 

@@ -8,4 +8,8 @@ module.exports = {
     "@openmrs/esm-globals": "<rootDir>/__mocks__/openmrs-esm-globals.mock.tsx",
     "@openmrs/esm-state": "<rootDir>/__mocks__/openmrs-esm-state.mock.tsx",
   },
+  testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    url: "http://localhost/",
+  },
 };

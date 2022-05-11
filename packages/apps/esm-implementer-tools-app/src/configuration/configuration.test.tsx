@@ -161,15 +161,15 @@ describe(`<Configuration />`, () => {
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const valueButton = row.getByText("38c650cf-85d5-41b4-b0b1-46709248acca");
+      row.getByText("38c650cf-85d5-41b4-b0b1-46709248acca");
       const editButton = row.getByText("Edit").parentElement as any;
-      fireEvent.click(editButton);
+      await userEvent.click(editButton);
       const editor = await row.findByRole("combobox");
-      userEvent.type(editor, "fed");
+      await userEvent.type(editor, "fed");
       expect(mockPerformConceptSearch).toHaveBeenCalledWith("fed");
       const targetConcept = await row.findByText("Fedora");
-      userEvent.click(targetConcept);
-      userEvent.click(row.getByText("Save"));
+      await userEvent.click(targetConcept);
+      await userEvent.click(row.getByText("Save"));
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
         config: {
           "@openmrs/mario": { hatUuid: "61523693-72e2-456d-8c64-8c5293febeb6" },
@@ -194,12 +194,12 @@ describe(`<Configuration />`, () => {
       const valueButton = row.getByText("8");
       expect(valueButton).toBeInTheDocument();
       const editButton = row.getByText("Edit").parentElement as any;
-      fireEvent.click(editButton);
+      await userEvent.click(editButton);
       const editor = await row.findByRole("spinbutton");
       expect(editor).toHaveAttribute("type", "number");
-      userEvent.clear(editor);
-      userEvent.type(editor, "11");
-      userEvent.click(row.getByText("Save"));
+      await userEvent.clear(editor);
+      await userEvent.type(editor, "11");
+      await userEvent.click(row.getByText("Save"));
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
         config: { "@openmrs/mario": { numberFingers: 11 } },
       });
@@ -221,11 +221,11 @@ describe(`<Configuration />`, () => {
       const row = within(rowElement as HTMLElement);
       const valueButton = row.getByText("Waluigi");
       const editButton = row.getByText("Edit").parentElement as any;
-      fireEvent.click(editButton);
+      await userEvent.click(editButton);
       const editor = await row.findByRole("textbox");
-      userEvent.clear(editor);
-      userEvent.type(editor, "Bowser");
-      userEvent.click(row.getByText("Save"));
+      await userEvent.clear(editor);
+      await userEvent.type(editor, "Bowser");
+      await userEvent.click(row.getByText("Save"));
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
         config: { "@openmrs/mario": { nemesisName: "Bowser" } },
       });
@@ -245,14 +245,14 @@ describe(`<Configuration />`, () => {
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const valueButton = row.getByText("181aee4a-5664-42da-8699-c36d28083bd0");
+      row.getByText("181aee4a-5664-42da-8699-c36d28083bd0");
       const editButton = row.getByText("Edit").parentElement as any;
-      fireEvent.click(editButton);
+      await userEvent.click(editButton);
       const editor = await row.findByRole("textbox");
-      userEvent.clear(editor);
+      await userEvent.clear(editor);
       const newUuid = "34f03796-f0e2-4f64-9e9a-28fb49a94baf";
-      userEvent.type(editor, newUuid);
-      userEvent.click(row.getByText("Save"));
+      await userEvent.type(editor, newUuid);
+      await userEvent.click(row.getByText("Save"));
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
         config: { "@openmrs/mario": { mustacheUuid: newUuid } },
       });
@@ -272,9 +272,11 @@ describe(`<Configuration />`, () => {
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const valueButton = row.getByText("[ 4, 12 ]");
-      const editButton = row.getByText("Edit").parentElement as any;
-      fireEvent.click(editButton);
+
+      const inputs = row.getByText("[ 4, 12 ]");
+      await userEvent.click(row.getByText("Edit"));
+      // expect(inputs[0]).toHaveValue(4);
+      // expect(inputs[1]).toHaveValue(12);
       const firstValue = row.getByDisplayValue("4");
       expect(firstValue).toHaveAttribute("type", "number");
       userEvent.clear(firstValue);

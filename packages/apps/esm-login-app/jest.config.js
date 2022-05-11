@@ -10,4 +10,8 @@ module.exports = {
     "^lodash-es/(.*)$": "lodash/$1",
   },
   setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
+  testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    url: "http://localhost/",
+  },
 };

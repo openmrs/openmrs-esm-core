@@ -12,4 +12,8 @@ module.exports = {
       Node: null,
     },
   },
+  testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    url: "http://localhost/",
+  },
 };

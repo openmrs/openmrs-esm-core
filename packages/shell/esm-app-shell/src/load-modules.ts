@@ -26,7 +26,9 @@ export async function loadModules(modules: Record<string, string>) {
       });
       const app: any = window[slugify(name)];
       if (!app) {
-        console.error(`${app} failed to be loaded into the webpack container.`);
+        console.error(
+          `${name} failed to be loaded into the webpack container. It might have been built using a version of the 'openmrs' library < 4.0.`
+        );
         return [name, {}];
       }
       app.init(__webpack_share_scopes__.default);

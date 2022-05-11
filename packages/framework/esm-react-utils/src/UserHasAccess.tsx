@@ -4,6 +4,7 @@ import { getCurrentUser, userHasAccess, LoggedInUser } from "@openmrs/esm-api";
 
 export interface UserHasAccessProps {
   privilege: string;
+  children?: React.ReactNode;
 }
 
 export const UserHasAccess: React.FC<UserHasAccessProps> = ({
