@@ -1,3 +1,9 @@
+import "import-map-overrides";
+import "systemjs/dist/system";
+import "systemjs/dist/extras/amd";
+import "systemjs/dist/extras/named-exports";
+import "systemjs/dist/extras/named-register";
+import "systemjs/dist/extras/use-default";
 import { start, unregisterApplication, getAppNames } from "single-spa";
 import {
   setupApiModule,
@@ -21,6 +27,7 @@ import {
   dispatchPrecacheStaticDependencies,
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
+  openmrsFetch,
 } from "@openmrs/esm-framework/src/internal";
 import {
   finishRegisteringAllApps,
@@ -28,23 +35,8 @@ import {
   tryRegisterExtension,
 } from "./apps";
 import { setupI18n } from "./locale";
-import { sharedDependencies } from "./dependencies";
-import { loadModules, registerModules } from "./system";
+import { loadModules } from "./load-modules";
 import { appName, getCoreExtensions } from "./ui";
-
-const allowedSuffixes = ["-app", "-widgets"];
-
-/**
- * Gets the frontend modules (apps). These are entries
- * in the import maps that end with "-app".
- * @param maps The value of the "imports" property of the
- * import maps.
- */
-function getApps(maps: Record<string, string>) {
-  return Object.keys(maps).filter((m) =>
-    allowedSuffixes.some((n) => m.endsWith(n))
-  );
-}
 
 /**
  * Loads the frontend modules (apps and widgets). Should be done *after*
@@ -56,7 +48,7 @@ function getApps(maps: Record<string, string>) {
 function loadApps() {
   return window.importMapOverrides
     .getCurrentPageMap()
-    .then((importMap) => loadModules(getApps(importMap.imports)));
+    .then((importMap) => loadModules(importMap.imports));
 }
 
 /**
@@ -264,30 +256,27 @@ function subscribeOnlineAndLoginChange(
   });
 }
 
-async function precacheGlobalStaticDependencies(configUrls: Array<string>) {
+async function precacheGlobalStaticDependencies() {
   await precacheImportMap();
 
-  const relativeUrls = [
+  // By default, cache the session endpoint.
+  // This ensures that a lot of user/session related functions also work offline.
+  const sessionPathUrl = new URL(
     `${window.openmrsBase}/ws/rest/v1/session`,
-    ...configUrls,
-  ];
+    window.location.origin
+  ).href;
 
-  await Promise.allSettled(
-    relativeUrls.map(async (relativeUrl) => {
-      try {
-        const absoluteUrl = new URL(relativeUrl, window.location.origin).href;
+  await messageOmrsServiceWorker({
+    type: "registerDynamicRoute",
+    url: sessionPathUrl,
+    strategy: "network-first",
+  });
 
-        await messageOmrsServiceWorker({
-          type: "registerDynamicRoute",
-          url: absoluteUrl,
-          strategy: "network-first",
-        });
-
-        await fetch(absoluteUrl);
-      } catch (e) {
-        console.warn(`Failed to precache core URL "${relativeUrl}". Error:`, e);
-      }
-    })
+  await openmrsFetch("/ws/rest/v1/session").catch((e) =>
+    console.warn(
+      "Failed to precache the user session data from the app shell. MFs depending on this data may run into problems while offline.",
+      e
+    )
   );
 }
 
@@ -321,10 +310,7 @@ export function run(configUrls: Array<string>, offline: boolean) {
   createAppState({});
   subscribeNotificationShown(showNotification);
   subscribeToastShown(showToast);
-  subscribePrecacheStaticDependencies(() =>
-    precacheGlobalStaticDependencies(configUrls)
-  );
-  registerModules(sharedDependencies);
+  subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
   setupApiModule();
   registerCoreExtensions();
 
