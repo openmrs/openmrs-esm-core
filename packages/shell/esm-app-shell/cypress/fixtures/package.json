@@ -5,7 +5,7 @@
   "private": true,
   "source": true,
   "browser": "dist/openmrs-esm-app-shell-cypress-fixtures.js",
-  "main": "src/helloWorldPage.tsx",
+  "main": "src/index.tsx",
   "peerDependencies": {
     "@openmrs/esm-framework": "3.x"
   },

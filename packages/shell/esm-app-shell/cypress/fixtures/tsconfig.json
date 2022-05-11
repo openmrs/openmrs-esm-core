@@ -19,5 +19,8 @@
       "WebWorker"
     ]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "paths": {
+    "@openmrs/*": ["./node_modules/@openmrs/*"]
+  }
 }

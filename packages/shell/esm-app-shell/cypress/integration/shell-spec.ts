@@ -1,17 +1,20 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
 
-describe("App Shell", () => {
-  it("runs without crashing", () => {
-    cy.visit("localhost:9080/openmrs/spa/test");
+function useAsIndexFile(filename: string) {
+  return cy.readFile(`cypress/fixtures/src/${filename}`).then((file) => {
+    cy.writeFile("cypress/fixtures/src/index.tsx", file);
   });
+}
 
-  it.only("loads a page", () => {
+describe("App Shell", () => {
+  it("loads a page", () => {
+    useAsIndexFile("helloWorld.tsx");
     cy.intercept("/openmrs/spa/other/importmap.json", {
       body: {
         imports: {
           "@openmrs/esm-test-page-1-app":
-            "/openmrs/spa/@openmrs/esm-app-shell-cypress-fixtures.js",
+            "//localhost:9081/openmrs-esm-app-shell-cypress-fixtures.js",
           // "@openmrs/esm-test-page-1-app": "/openmrs/spa/helloWorldPage.js"
         },
       },
@@ -25,6 +28,6 @@ describe("App Shell", () => {
       }
     });
     cy.visit("localhost:9080/openmrs/spa/test");
-    cy.get("body").should("have.text", "Hello world");
+    cy.get("div#hello").should("have.text", "Hello world");
   });
 });
