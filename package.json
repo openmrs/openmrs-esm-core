@@ -17,8 +17,8 @@
     "release": "lerna version --no-git-tag-version",
     "build": "turbo run build",
     "build:apps": "turbo run build --filter='@openmrs/*-app'",
-    "setup": "lerna bootstrap && turbo run build && lerna clean --yes && lerna bootstrap",
-    "verify": "turbo run lint && turbo run test && turbo run typescript",
+    "verify": "turbo run lint typescript test",
+    "shell-test": "cd packages/shell/esm-app-shell && yarn integration-test",
     "prettier": "prettier \"packages/**/src/**/*\" --write",
     "prepare": "husky install",
     "extract-translations": "lerna run extract-translations -- --config ../../../tools/i18next-parser.config.js"
@@ -37,6 +37,7 @@
     "@types/systemjs": "^6.1.0",
     "@typescript-eslint/parser": "^5.18.0",
     "autoprefixer": "^10.4.2",
+    "concurrently": "^7.1.0",
     "cross-env": "7.0.2",
     "docsify": "^4.12.2",
     "eslint": "^7.10.0",

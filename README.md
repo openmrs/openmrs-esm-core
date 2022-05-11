@@ -58,11 +58,10 @@ A set of frontend modules provide the core technical functionality of the applic
 
 ### Getting Started
 
-To set up the repository for development, run the following commands:
+To set up the repository for development, run:
 
 ```sh
-yarn install
-yarn setup
+yarn
 ```
 
 ### Building

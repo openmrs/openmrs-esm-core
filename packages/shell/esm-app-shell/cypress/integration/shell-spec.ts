@@ -8,45 +8,25 @@ function useAsIndexFile(filename: string) {
 }
 
 describe("App Shell", () => {
-  it("loads a page", () => {
-    useAsIndexFile("simplePage.tsx");
+  before(() => {
     cy.intercept("/openmrs/spa/other/importmap.json", {
       body: {
         imports: {
-          "@openmrs/esm-test-app-1":
+          "@openmrs/esm-test-app":
             "//localhost:9081/openmrs-esm-app-shell-cypress-fixtures.js",
         },
       },
     });
-    // cy.intercept("openmrs/spa/*/*.js", (req) => {
-    //   console.log("initial", req.url);
-    //   if (!req.url.endsWith("openmrs.js")) {
-    //     req.url = req.url.replace("9080/openmrs/spa", "9081");
-    //     console.log("url", req.url);
-    //   }
-    // });
+  });
+
+  it("loads a page", () => {
+    useAsIndexFile("simplePage.tsx");
     cy.visit("localhost:9080/openmrs/spa/test");
     cy.get("div#test").should("have.text", "Hello world");
   });
 
   it("loads a page with an extension", () => {
     useAsIndexFile("pageWithExtension.tsx");
-    cy.intercept("/openmrs/spa/other/importmap.json", {
-      body: {
-        imports: {
-          "@openmrs/esm-test-app-2":
-            "//localhost:9081/openmrs-esm-app-shell-cypress-fixtures.js",
-        },
-      },
-    });
-    // cy.intercept("openmrs/spa/*/*.js", (req) => {
-    //   // cy.intercept('openmrs/spa/*.js', (req) => {
-    //   console.log("initial", req.url);
-    //   if (!req.url.endsWith("openmrs.js")) {
-    //     req.url = req.url.replace("9080/openmrs/spa", "9081");
-    //     console.log("url", req.url);
-    //   }
-    // });
     cy.visit("localhost:9080/openmrs/spa/test");
     cy.get("div#test").should("have.text", "hey worldo");
   });
