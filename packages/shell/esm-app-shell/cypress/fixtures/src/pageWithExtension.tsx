@@ -2,7 +2,7 @@ import React from "react";
 import { ExtensionSlot, getSyncLifecycle } from "@openmrs/esm-framework";
 
 export function setupOpenMRS() {
-  const moduleName = "@openmrs/esm-test-app-2";
+  const moduleName = "@openmrs/esm-test-app";
 
   const options = {
     featureName: "test-2",

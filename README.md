@@ -58,11 +58,11 @@ A set of frontend modules provide the core technical functionality of the applic
 
 ### Getting Started
 
-To set up the repository for development, run the following commands:
+To set up the repository for development, run:
 
 ```sh
 yarn
-yarn setup
+yarn build
 ```
 
 ### Building
@@ -88,7 +88,7 @@ yarn run:shell
 ```
 
 This will use the built versions of the apps in `apps/`. Those are built
-by `yarn setup` or `yarn build:apps`, or by running `yarn build` in the
+by `yarn build` or `yarn build:apps`, or by running `yarn build` in the
 directory for any app.
 
 #### The frontend modules in `apps`

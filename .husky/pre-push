@@ -3,4 +3,4 @@
 
 set -e  # die on error
 
-yarn verify
+yarn concurrently 'yarn verify' 'git diff --quiet HEAD master -- packages/shell/esm-app-shell || yarn shell-test'
