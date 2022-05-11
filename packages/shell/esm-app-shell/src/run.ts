@@ -115,7 +115,7 @@ function runShell() {
 
 function handleInitFailure(e: Error) {
   console.error(e);
-  renderFatalErrorPage(e.message);
+  renderFatalErrorPage(e?.message ?? e?.toString());
 }
 
 function renderFatalErrorPage(message: string) {
