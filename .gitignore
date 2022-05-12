@@ -69,7 +69,6 @@ dist
 *.iml
 .idea/
 
-storybook-static
 package-lock.json
 
 .turbo

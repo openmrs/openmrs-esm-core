@@ -10,10 +10,6 @@
   transition: margin-left 0.5s ease;
 }
 
-body.omrs-sidenav-expanded .omrs-main-content {
-  margin-left: var(--omrs-sidenav-width);
-}
-
 .omrs-offline {
   --omrs-offline-banner-height: 1.5rem;
   --omrs-topnav-height: 4.5rem;

@@ -40,5 +40,36 @@
 }
 
 .closeButton {
-  cursor: pointer;
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  height: inherit;
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+}
+
+.closeButton:focus {
+  /*
+    there's some 3rd party css that turns these off using !important, so the only way to override them is to also use important.
+    this is why you don't use !important -- it makes it hard for other people to override it when they need to :(
+  */
+  outline: solid !important;
+  outline-width: thin !important;
+  outline-color: var(--omrs-color-bg-lowest-contrast) !important;
 }
