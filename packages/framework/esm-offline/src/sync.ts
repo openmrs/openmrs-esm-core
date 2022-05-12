@@ -202,12 +202,11 @@ async function processHandler(
   abortController: AbortController,
   notifySyncProgress: () => void
 ) {
-  const table = db.syncQueue;
   const items: Array<[number, unknown, QueueItemDescriptor]> = [];
   const contents: Array<unknown> = [];
   const userId = await getUserId();
 
-  await table.where({ type, userId }).each((item, cursor) => {
+  await db.syncQueue.where({ type, userId }).each((item, cursor) => {
     items.push([cursor.primaryKey, item.content, item.descriptor]);
     contents.push(item.content);
   });
@@ -230,9 +229,9 @@ async function processHandler(
         results[type][id] = result;
       }
 
-      await table.delete(key);
+      await db.syncQueue.delete(key);
     } catch (e) {
-      await table.update(key, {
+      await db.syncQueue.update(key, {
         lastError: {
           name: e?.name,
           message: e?.message ?? e?.toString(),
@@ -262,24 +261,26 @@ export async function queueSynchronizationItemFor<T>(
   content: T,
   descriptor?: QueueItemDescriptor
 ) {
-  const table = db.syncQueue;
   const targetId = descriptor && descriptor.id;
 
   if (targetId !== undefined) {
     // in case of replacement (i.e., used same ID) we just remove the existing item
-    await table
+    await db.syncQueue
       .where({ type, userId })
       .filter((item) => item?.descriptor.id === targetId)
-      .delete();
+      .delete()
+      .catch(Dexie.errnames.DatabaseClosed);
   }
 
-  const id = await table.add({
-    type,
-    content,
-    userId,
-    descriptor: descriptor || {},
-    createdOn: new Date(),
-  });
+  const id = await db.syncQueue
+    .add({
+      type,
+      content,
+      userId,
+      descriptor: descriptor || {},
+      createdOn: new Date(),
+    })
+    .catch(Dexie.errnames.DatabaseClosed, () => -1);
 
   return id;
 }
@@ -306,7 +307,7 @@ export async function queueSynchronizationItem<T>(
  */
 export async function getSynchronizationItemsFor<T>(
   userId: string,
-  type: string
+  type?: string
 ) {
   const fullItems = await getFullSynchronizationItemsFor<T>(userId, type);
   return fullItems.map((item) => item.content);
@@ -319,23 +320,20 @@ export async function getSynchronizationItemsFor<T>(
  */
 export async function getFullSynchronizationItemsFor<T>(
   userId: string,
-  type: string
-) {
-  const table = db.syncQueue;
-  const items: Array<SyncItem<T>> = [];
-
-  await table.where({ type, userId }).each((item) => {
-    items.push(item);
-  });
-
-  return items;
+  type?: string
+): Promise<Array<SyncItem<T>>> {
+  const filter = type ? { type, userId } : { userId };
+  return await db.syncQueue
+    .where(filter)
+    .toArray()
+    .catch(Dexie.errnames.DatabaseClosed, () => []);
 }
 
 /**
  * Returns the content of all currently queued up sync items of the currently signed in user.
  * @param type The identifying type of the synchronization items to be returned.
  */
-export async function getSynchronizationItems<T>(type: string) {
+export async function getSynchronizationItems<T>(type?: string) {
   const userId = await getUserId();
   return await getSynchronizationItemsFor<T>(userId, type);
 }
@@ -344,7 +342,7 @@ export async function getSynchronizationItems<T>(type: string) {
  * Returns all currently queued up sync items of the currently signed in user.
  * @param type The identifying type of the synchronization items to be returned.
  */
-export async function getFullSynchronizationItems<T>(type: string) {
+export async function getFullSynchronizationItems<T>(type?: string) {
   const userId = await getUserId();
   return await getFullSynchronizationItemsFor<T>(userId, type);
 }
@@ -356,7 +354,9 @@ export async function getFullSynchronizationItems<T>(type: string) {
 export async function getSynchronizationItem<T = any>(
   id: number
 ): Promise<SyncItem<T> | undefined> {
-  return await db.syncQueue.get(id);
+  return await db.syncQueue
+    .get(id)
+    .catch(Dexie.errnames.DatabaseClosed, () => undefined);
 }
 
 /**
@@ -395,7 +395,7 @@ export async function beginEditSynchronizationItem(id: number) {
  * @param id The ID of the synchronization item to be deleted.
  */
 export async function deleteSynchronizationItem(id: number) {
-  await db.syncQueue.delete(id);
+  await db.syncQueue.delete(id).catch(Dexie.errnames.DatabaseClosed);
 }
 
 /**
