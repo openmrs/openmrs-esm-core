@@ -71,5 +71,5 @@
   */
   outline: solid !important;
   outline-width: thin !important;
-  outline-color: var(--omrs-color-bg-lowest-contrast) !important;
+  outline-color: #e5e5e6 !important;
 }

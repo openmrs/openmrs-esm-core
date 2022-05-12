@@ -32,13 +32,13 @@
 
 .error-msg {
   margin-top: 1rem;
-  color: var(--omrs-color-danger);
+  color: $danger;
 }
 
 .powered-by-txt {
   @extend .caption01;
   text-align: center;
-  color: var(--omrs-color-ink-low-contrast);
+  color: $color-gray-70;
   color: $text-02;
 }
 
@@ -68,6 +68,8 @@
 
 .login-card {
   border-radius: 0;
+  border: 1px solid $color-gray-30;
+  background-color: $ui-02;
   width: 23rem;
   padding: 2.5rem;
 }
