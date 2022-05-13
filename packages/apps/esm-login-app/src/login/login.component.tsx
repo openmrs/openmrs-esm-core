@@ -1,7 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styles from "../styles.scss";
 import ArrowRight24 from "@carbon/icons-react/es/arrow--right/24";
-import { Button, InlineNotification, TextInput } from "carbon-components-react";
+import {
+  Button,
+  InlineNotification,
+  TextInput,
+  Tile,
+} from "carbon-components-react";
 import { RouteComponentProps } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useConfig, interpolateUrl, useSession } from "@openmrs/esm-framework";
@@ -143,7 +148,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
             onClick={() => setErrorMessage("")}
           />
         )}
-        <div className={`omrs-card ${styles["login-card"]}`}>
+        <Tile className={styles["login-card"]}>
           <div className={styles["center"]}>{logo}</div>
           <form onSubmit={handleSubmit} ref={formRef}>
             {!showPassword && (
@@ -223,7 +228,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
               </div>
             )}
           </form>
-        </div>
+        </Tile>
         <div className={styles["need-help"]}>
           <p className={styles["need-help-txt"]}>
             {t("needHelp", "Need help?")}

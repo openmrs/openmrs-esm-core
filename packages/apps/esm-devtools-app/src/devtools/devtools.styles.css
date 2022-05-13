@@ -1,6 +1,6 @@
 .devtoolsTriggerButton {
   z-index: 100000;
-  background-color: var(--omrs-color-ink-low-contrast);
+  background-color: #c6c6c6;
   height: 40px !important;
   width: 40px !important;
   bottom: 10px;
@@ -10,5 +10,5 @@
 }
 
 .overridden {
-  background-color: var(--omrs-color-danger);
+  background-color: #da1e28;
 }

@@ -7,7 +7,7 @@ export default function DevToolsPopup(props: DevToolsPopupProps) {
     <div className={styles.popup}>
       <ImportMap toggleOverridden={props.toggleOverridden} />
       <div className={styles.farRight}>
-        <button onClick={props.close} className="omrs-unstyled">
+        <button onClick={props.close} className={styles.closeButton}>
           {"\u24e7"}
         </button>
       </div>
