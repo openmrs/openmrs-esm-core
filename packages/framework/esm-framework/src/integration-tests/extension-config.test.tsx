@@ -3,8 +3,6 @@ import {
   attach,
   registerExtension,
   updateInternalExtensionStore,
-  getExtensionInternalStore,
-  getExtensionStore,
 } from "../../../esm-extensions";
 import {
   ExtensionSlot,
@@ -22,7 +20,6 @@ import {
   getExtensionSlotsConfigStore,
 } from "../../../esm-config/src";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import { waitForElementToBeRemoved } from "@testing-library/dom";
 
 describe("Interaction between configuration and extension systems", () => {
   beforeEach(() => {
@@ -210,7 +207,9 @@ describe("Interaction between configuration and extension systems", () => {
       });
     });
     expect(screen.queryByText("green")).not.toBeInTheDocument();
-    expect(screen.getByTestId("slot")).toHaveTextContent(/black/);
+    waitFor(() =>
+      expect(screen.getByTestId("slot")).toHaveTextContent(/black/)
+    );
   });
 
   test("Extension config should be available in extension store", async () => {

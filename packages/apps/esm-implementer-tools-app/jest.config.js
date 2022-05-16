@@ -12,4 +12,8 @@ module.exports = {
     "^carbon-components-react/es/(.*)$": "carbon-components-react/lib/$1",
     "@openmrs/esm-framework": "@openmrs/esm-framework/mock.tsx",
   },
+  testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    url: "http://localhost/",
+  },
 };

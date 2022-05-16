@@ -514,17 +514,17 @@ ___
 
 ### UserHasAccess
 
-• **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
+• `Const` **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L9)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L10)
 
 ___
 
 ### defaultVisitCustomRepresentation
 
-• **defaultVisitCustomRepresentation**: `string`
+• `Const` **defaultVisitCustomRepresentation**: `string`
 
 #### Defined in
 
@@ -534,7 +534,7 @@ ___
 
 ### fhir
 
-• **fhir**: `FhirClient`
+• `Const` **fhir**: `FhirClient`
 
 The `fhir` object is [an instance of fhir.js](https://github.com/FHIR/fhir.js)
 that can be used to call FHIR-compliant OpenMRS APIs. See
@@ -549,7 +549,7 @@ ___
 
 ### fhirBaseUrl
 
-• **fhirBaseUrl**: ``"/ws/fhir2/R4"``
+• `Const` **fhirBaseUrl**: ``"/ws/fhir2/R4"``
 
 #### Defined in
 
@@ -559,7 +559,7 @@ ___
 
 ### getStartedVisit
 
-• **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
+• `Const` **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
 
 #### Defined in
 
@@ -569,7 +569,7 @@ ___
 
 ### sessionEndpoint
 
-• **sessionEndpoint**: ``"/ws/rest/v1/session"``
+• `Const` **sessionEndpoint**: ``"/ws/rest/v1/session"``
 
 #### Defined in
 
@@ -581,7 +581,7 @@ ___
 
 ### validators
 
-• **validators**: `Object`
+• `Const` **validators**: `Object`
 
 #### Type declaration
 
@@ -601,7 +601,7 @@ ___
 
 ### ConfigurableLink
 
-• **ConfigurableLink**: `React.FC`<[`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md)\>
+• `Const` **ConfigurableLink**: `React.FC`<[`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md)\>
 
 A React link component which calls [navigate](API.md#navigate) when clicked
 
@@ -621,7 +621,7 @@ ___
 
 ### offlineUuidPrefix
 
-• **offlineUuidPrefix**: ``"OFFLINE+"``
+• `Const` **offlineUuidPrefix**: ``"OFFLINE+"``
 
 #### Defined in
 
@@ -631,7 +631,7 @@ ___
 
 ### omrsOfflineCachingStrategyHttpHeaderName
 
-• **omrsOfflineCachingStrategyHttpHeaderName**: ``"x-omrs-offline-caching-strategy"``
+• `Const` **omrsOfflineCachingStrategyHttpHeaderName**: ``"x-omrs-offline-caching-strategy"``
 
 #### Defined in
 
@@ -641,7 +641,7 @@ ___
 
 ### omrsOfflineResponseBodyHttpHeaderName
 
-• **omrsOfflineResponseBodyHttpHeaderName**: ``"x-omrs-offline-response-body"``
+• `Const` **omrsOfflineResponseBodyHttpHeaderName**: ``"x-omrs-offline-response-body"``
 
 #### Defined in
 
@@ -651,7 +651,7 @@ ___
 
 ### omrsOfflineResponseStatusHttpHeaderName
 
-• **omrsOfflineResponseStatusHttpHeaderName**: ``"x-omrs-offline-response-status"``
+• `Const` **omrsOfflineResponseStatusHttpHeaderName**: ``"x-omrs-offline-response-status"``
 
 #### Defined in
 
@@ -663,7 +663,7 @@ ___
 
 ### Extension
 
-• **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
 
 Represents the position in the DOM where each extension within
 an extension slot is rendered.
@@ -681,7 +681,7 @@ ___
 
 ### ExtensionSlot
 
-• **ExtensionSlot**: `React.FC`<[`ExtensionSlotProps`](API.md#extensionslotprops)\>
+• `Const` **ExtensionSlot**: `React.FC`<[`ExtensionSlotProps`](API.md#extensionslotprops)\>
 
 #### Defined in
 
@@ -691,7 +691,7 @@ ___
 
 ### backendDependencies
 
-• **backendDependencies**: `Object`
+• `Const` **backendDependencies**: `Object`
 
 #### Type declaration
 
@@ -710,7 +710,7 @@ ___
 
 ### LeftNavMenu
 
-• **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
+• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
 
 #### Defined in
 
@@ -1597,7 +1597,7 @@ ___
 
 ### inRange
 
-▸ `Const` **inRange**(`min`, `max`): [`Validator`](API.md#validator)
+▸ **inRange**(`min`, `max`): [`Validator`](API.md#validator)
 
 Verifies that the value is between the provided minimum and maximum
 
@@ -1620,7 +1620,7 @@ ___
 
 ### isUrl
 
-▸ `Const` **isUrl**(`value`): `string` \| `void`
+▸ **isUrl**(`value`): `string` \| `void`
 
 Verifies that a string contains only the default URL template parameters.
 
@@ -1644,7 +1644,7 @@ ___
 
 ### isUrlWithTemplateParameters
 
-▸ `Const` **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [`Validator`](API.md#validator)
+▸ **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [`Validator`](API.md#validator)
 
 Verifies that a string contains only the default URL template
 parameters, plus any specified in `allowedTemplateParameters`.
@@ -2214,7 +2214,7 @@ ___
 
 ### getExtensionStore
 
-▸ `Const` **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
+▸ **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
 This returns a [store](https://github.com/developit/unistore#store)
 that modules can use to get information about the state of the
@@ -2360,7 +2360,7 @@ ___
 
 ### useExtensionStore
 
-▸ `Const` **useExtensionStore**(): `T`
+▸ **useExtensionStore**(): `T`
 
 #### Returns
 
@@ -2370,7 +2370,7 @@ ___
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
-▸ `Const` **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
@@ -2386,7 +2386,7 @@ ___
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
-▸ `Const` **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
@@ -2408,7 +2408,7 @@ ___
 
 ### getAsyncExtensionLifecycle
 
-▸ `Const` **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
+▸ **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 **`deprecated`** Use getAsyncLifecycle instead.
 
@@ -2728,7 +2728,7 @@ ___
 
 ### getFullSynchronizationItems
 
-▸ **getFullSynchronizationItems**<`T`\>(`type`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
+▸ **getFullSynchronizationItems**<`T`\>(`type?`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
 
 Returns all currently queued up sync items of the currently signed in user.
 
@@ -2742,7 +2742,7 @@ Returns all currently queued up sync items of the currently signed in user.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization items to be returned. |
+| `type?` | `string` | The identifying type of the synchronization items to be returned. |
 
 #### Returns
 
@@ -2750,13 +2750,13 @@ Returns all currently queued up sync items of the currently signed in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L347)
+[packages/framework/esm-offline/src/sync.ts:345](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L345)
 
 ___
 
 ### getFullSynchronizationItemsFor
 
-▸ **getFullSynchronizationItemsFor**<`T`\>(`userId`, `type`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
+▸ **getFullSynchronizationItemsFor**<`T`\>(`userId`, `type?`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
 
 Returns all currently queued up sync items of a given user.
 
@@ -2771,7 +2771,7 @@ Returns all currently queued up sync items of a given user.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `userId` | `string` | The ID of the user whose synchronization items should be returned. |
-| `type` | `string` | The identifying type of the synchronization items to be returned.. |
+| `type?` | `string` | The identifying type of the synchronization items to be returned.. |
 
 #### Returns
 
@@ -2779,7 +2779,7 @@ Returns all currently queued up sync items of a given user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L320)
+[packages/framework/esm-offline/src/sync.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L321)
 
 ___
 
@@ -2821,13 +2821,13 @@ Returns a queued sync item with the given ID or `undefined` if no such item exis
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:356](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L356)
+[packages/framework/esm-offline/src/sync.ts:354](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L354)
 
 ___
 
 ### getSynchronizationItems
 
-▸ **getSynchronizationItems**<`T`\>(`type`): `Promise`<`T`[]\>
+▸ **getSynchronizationItems**<`T`\>(`type?`): `Promise`<`T`[]\>
 
 Returns the content of all currently queued up sync items of the currently signed in user.
 
@@ -2841,7 +2841,7 @@ Returns the content of all currently queued up sync items of the currently signe
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization items to be returned. |
+| `type?` | `string` | The identifying type of the synchronization items to be returned. |
 
 #### Returns
 
@@ -2849,7 +2849,7 @@ Returns the content of all currently queued up sync items of the currently signe
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:338](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L338)
+[packages/framework/esm-offline/src/sync.ts:336](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L336)
 
 ___
 
@@ -2939,7 +2939,7 @@ Enqueues a new item in the sync queue and associates the item with the currently
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:293](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L293)
+[packages/framework/esm-offline/src/sync.ts:294](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L294)
 
 ___
 
@@ -3484,7 +3484,7 @@ Displays an inline notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L41)
+[packages/framework/esm-styleguide/src/notifications/index.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L40)
 
 ___
 
@@ -3506,7 +3506,7 @@ Displays a toast notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/index.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L35)
+[packages/framework/esm-styleguide/src/toasts/index.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L36)
 
 ___
 

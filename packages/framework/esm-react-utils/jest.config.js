@@ -11,4 +11,8 @@ module.exports = {
     "@openmrs/esm-styleguide":
       "<rootDir>/__mocks__/openmrs-esm-styleguide.mock.tsx",
   },
+  testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    url: "http://localhost/",
+  },
 };

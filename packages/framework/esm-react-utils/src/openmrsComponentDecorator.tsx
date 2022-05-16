@@ -18,6 +18,7 @@ const defaultOpts = {
 interface I18nextLoadNamespaceProps {
   forceUpdate(): void;
   ns: string;
+  children?: React.ReactNode;
 }
 
 const I18nextLoadNamespace: React.FC<I18nextLoadNamespaceProps> = (props) => {
@@ -80,7 +81,7 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
   const opts = Object.assign({}, defaultOpts, userOpts);
 
   return function decorateComponent(
-    Comp: React.ComponentType
+    Comp: React.ComponentType<any>
   ): React.ComponentType<any> {
     return class OpenmrsReactComponent extends React.Component<
       OpenmrsReactComponentProps,
