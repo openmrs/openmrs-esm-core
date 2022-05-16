@@ -1,4 +1,4 @@
-name: Node.js CI
+name: OpenMRS CI
 
 on:
   workflow_dispatch: # temporary, for debugging
@@ -17,19 +17,34 @@ jobs:
       actions: read
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
           node-version: "16.15"
-      - run: yarn
-      - name: TurboRepo local cache server
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3 
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn
+
+      - name: Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
-      - run: yarn run verify
-      - run: yarn turbo run build --api="http://127.0.0.1:9080" --token="${{ secrets.TURBO_SERVER_TOKEN }}" --team="${{ github.repository_owner }}"
+      
+      - name: Run lint and typechecking
+        run: yarn run verify 
+      
+      - name: Run build
+        run: yarn turbo run build --color --api="http://127.0.0.1:9080" --token="${{ secrets.TURBO_SERVER_TOKEN }}" --team="${{ github.repository_owner }}"
 
   pre_release:
     runs-on: ubuntu-latest
@@ -39,16 +54,27 @@ jobs:
     if: ${{ github.event_name == 'push' }}
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
           node-version: "16.15"
           registry-url: "https://registry.npmjs.org"
-      - run: yarn
+      
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3 
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn
+
       - run: yarn lerna version patch --no-git-tag-version --no-push --yes
       - run: yarn lerna version "$(node -e "console.log(require('./lerna.json').version)")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
-      - run: yarn turbo run build
+      - run: yarn turbo run build --color
       - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
       - run: git add . && git commit -m "Prerelease version" --no-verify
       - run: yarn run ci:publish-next
@@ -102,14 +128,25 @@ jobs:
     if: ${{ github.event_name == 'release' }}
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16.15"
           registry-url: "https://registry.npmjs.org"
-      - run: yarn
-      - run: yarn turbo run build
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3 
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn
+
+      - run: yarn turbo run build --color
       - run: yarn run ci:publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
