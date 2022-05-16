@@ -209,7 +209,9 @@ describe("Interaction between configuration and extension systems", () => {
       });
     });
     expect(screen.queryByText("green")).not.toBeInTheDocument();
-    expect(screen.getByTestId("slot")).toHaveTextContent(/black/);
+    waitFor(() =>
+      expect(screen.getByTestId("slot")).toHaveTextContent(/black/)
+    );
   });
 
   test("Extension config should be available in extension store", async () => {

@@ -1,6 +1,6 @@
 /** @module @category UI */
 import React from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Subject } from "rxjs";
 import { ToastDescriptor, ToastNotificationMeta } from "./toast.component";
 import ActiveToasts from "./active-toasts.component";
@@ -16,7 +16,8 @@ let toastId = 0;
  */
 export function renderToasts(target: HTMLElement | null) {
   if (target) {
-    render(<ActiveToasts subject={toastsSubject} />, target);
+    const root = createRoot(target);
+    root.render(<ActiveToasts subject={toastsSubject} />);
   }
 }
 

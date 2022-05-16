@@ -6,4 +6,5 @@ module.exports = {
   moduleNameMapper: {
     "@openmrs/esm-globals": "<rootDir>/__mocks__/openmrs-esm-globals.mock.tsx",
   },
+  testEnvironment: "jsdom",
 };

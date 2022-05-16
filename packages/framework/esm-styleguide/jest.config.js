@@ -3,7 +3,7 @@ module.exports = {
     "^.+\\.(j|t)sx?$": ["@swc/jest"],
   },
   moduleNameMapper: {
-    "lodash-es": "lodash",
+    "lodash-es/(.*)": "lodash/$1",
   },
   testEnvironment: "jsdom",
 };

@@ -5,6 +5,8 @@ import { navigate, interpolateUrl } from "@openmrs/esm-config";
 import userEvent from "@testing-library/user-event";
 import { ConfigurableLink } from "./ConfigurableLink";
 
+jest.mock("single-spa");
+
 jest.mock("@openmrs/esm-config");
 const mockNavigate = navigate as jest.Mock;
 
@@ -34,18 +36,18 @@ describe(`ConfigurableLink`, () => {
     expect(link.closest("a")).toHaveAttribute("href", "/openmrs/spa/home");
   });
 
-  it(`calls navigate on normal click but not right click`, async () => {
+  it(`calls navigate on normal click but not special clicks`, async () => {
     const link = screen.getByRole("link", { name: /spa home/i });
-    userEvent.click(link, { button: 2 }); // right-click
+    await userEvent.pointer({ target: link, keys: "[MouseRight]" });
     expect(navigate).not.toHaveBeenCalled();
-    userEvent.click(link);
+    await userEvent.click(link);
     expect(navigate).toHaveBeenCalledWith({ to: path });
   });
 
   it(`calls navigate on enter`, async () => {
     expect(navigate).not.toHaveBeenCalled();
     const link = screen.getByRole("link", { name: /spa home/i });
-    userEvent.type(link, "{enter}");
+    await userEvent.type(link, "{enter}");
     expect(navigate).toHaveBeenCalledWith({ to: path });
   });
 });

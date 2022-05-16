@@ -7,7 +7,7 @@
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "test": "jest --config jest.config.json --passWithNoTests",
+    "test": "jest --config jest.config.js --passWithNoTests",
     "start:storybook": "start-storybook --port 7000",
     "build:storybook": "build-storybook",
     "build": "webpack --mode=production",
@@ -48,8 +48,7 @@
     "@openmrs/esm-state": "4.x",
     "carbon-components": "10.x",
     "carbon-icons": "7.x",
-    "i18next": "19.x",
-    "react": "16.x",
+    "react": "18.x",
     "react-dom": "16.x",
     "react-i18next": "11.x",
     "rxjs": "6.x"
@@ -66,9 +65,8 @@
     "jest": "^28.1.2",
     "jest-environment-jsdom": "^28.1.2",
     "postcss": "^8.4.6",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-i18next": "^11.7.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "rxjs": "^6.5.3"
   }
 }

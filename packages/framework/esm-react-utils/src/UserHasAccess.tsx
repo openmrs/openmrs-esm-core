@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 export interface UserHasAccessProps {
   privilege: string | string[];
   fallback?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export const UserHasAccess: React.FC<UserHasAccessProps> = ({
