@@ -5,7 +5,7 @@ Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
 for `@openmrs/esm-framework`, which is contained in this repository.
 
 
-![Node.js CI](https://github.com/openmrs/openmrs-esm-core/workflows/OpenMRS%20CI/badge.svg)
+![OpenMRS CI](https://github.com/openmrs/openmrs-esm-core/workflows/OpenMRS%20CI/badge.svg)
 ![Check documentation](https://github.com/openmrs/openmrs-esm-core/actions/workflows/docs.yml/badge.svg)
 
 
