@@ -1,25 +1,22 @@
-import { useState } from "react";
 import { waitFor, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {
-  setSessionLocation,
-  useConfig,
-  useSession,
-} from "@openmrs/esm-framework";
+import * as openMRSFramework from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
 import { mockConfig } from "../../__mocks__/config.mock";
 import renderWithRouter from "../test-helpers/render-with-router";
 import Login from "./login.component";
+import { Session } from "@openmrs/esm-framework";
 
 const mockedLogin = performLogin as jest.Mock;
 
+const mockSession: Session = {
+  authenticated: false,
+  user: null,
+  sessionId: "some-session-id",
+};
 jest.mock("./login.resource", () => ({
   performLogin: jest.fn(),
 }));
-
-const mockedSetSessionLocation = setSessionLocation as jest.Mock;
-const mockedUseConfig = useConfig as jest.Mock;
-const mockedUseSession = useSession as jest.Mock;
 
 const loginLocations = [
   { uuid: "111", display: "Earth" },
@@ -29,13 +26,10 @@ const loginLocations = [
 describe(`<Login />`, () => {
   beforeEach(() => {
     mockedLogin.mockReset();
-    mockedSetSessionLocation.mockReset();
-    mockedUseSession.mockReset();
-    mockedUseSession.mockReturnValue({ authenticated: false });
-    mockedUseConfig.mockReturnValue(mockConfig);
   });
 
   it(`renders a login form`, () => {
+    spyOn(openMRSFramework, "useConfig").and.returnValue(mockConfig);
     renderWithRouter(Login, {
       loginLocations: loginLocations,
       isLoginEnabled: true,
@@ -48,6 +42,7 @@ describe(`<Login />`, () => {
   });
 
   it(`should return user focus to username input when input is invalid`, async () => {
+    spyOn(openMRSFramework, "useConfig").and.returnValue(mockConfig);
     renderWithRouter(
       Login,
       {
@@ -55,8 +50,7 @@ describe(`<Login />`, () => {
         isLoginEnabled: true,
       },
       {
-        route: "/login",
-        routes: ["/login", "/login/confirm"],
+        route: "/",
       }
     );
     const user = userEvent.setup();
@@ -79,6 +73,7 @@ describe(`<Login />`, () => {
   });
 
   it(`makes an API request when you submit the form`, async () => {
+    spyOn(openMRSFramework, "useConfig").and.returnValue(mockConfig);
     mockedLogin.mockReturnValue(Promise.resolve({ some: "data" }));
 
     renderWithRouter(
@@ -89,7 +84,6 @@ describe(`<Login />`, () => {
       },
       {
         route: "/login",
-        routes: ["/login", "/login/confirm"],
       }
     );
     const user = userEvent.setup();
@@ -109,32 +103,16 @@ describe(`<Login />`, () => {
   });
 
   it(`sends the user to the location select page on login if there is more than one location`, async () => {
-    let refreshUser = (user: any) => {};
-    mockedLogin.mockImplementation(() => {
-      refreshUser({
-        display: "my name",
-      });
-      return Promise.resolve({ data: { authenticated: true } });
-    });
-    mockedUseSession.mockImplementation(() => {
-      const [user, setUser] = useState();
-      refreshUser = setUser;
-      return { user, authenticated: !!user };
-    });
+    spyOn(openMRSFramework, "useConfig").and.returnValue(mockConfig);
+    spyOn(openMRSFramework, "useSession").and.returnValue(mockSession);
 
-    const wrapper = renderWithRouter(
+    const { container, history } = renderWithRouter(
       Login,
       {
         loginLocations: loginLocations,
         isLoginEnabled: true,
       },
-      {
-        routeParams: {
-          path: "/login(/confirm)?",
-          exact: true,
-        },
-        routes: ["/login", "/login/confirm"],
-      }
+      {}
     );
     const user = userEvent.setup();
 
@@ -147,7 +125,7 @@ describe(`<Login />`, () => {
     await user.type(screen.getByLabelText("password"), "no-tax-fraud");
     await user.click(screen.getByRole("button", { name: /submit/i }));
     await waitFor(() =>
-      expect(wrapper.history.location.pathname).toBe("/login/location")
+    expect(screen.getByLabelText("password")).toHaveTextContent("");
     );
   });
 
@@ -156,7 +134,7 @@ describe(`<Login />`, () => {
       src: "https://some-image-host.com/foo.png",
       alt: "Custom logo",
     };
-    mockedUseConfig.mockReturnValue({
+    spyOn(openMRSFramework, "useConfig").and.returnValue({
       ...mockConfig,
       logo: customLogoConfig,
     });

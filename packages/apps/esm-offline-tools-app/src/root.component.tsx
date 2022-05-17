@@ -15,8 +15,9 @@ const Root: React.FC = () => {
     <BrowserRouter basename={window.spaBase}>
       <DesktopSideNav />
       <div className={`omrs-main-content ${styles.mainContentContainer}`}>
-        <Route path="/offline-tools" exact component={Home} />
-        <Route path="/offline-tools/:page" component={OfflineToolsPage} />
+        <Route path="/offline-tools" element={<Home />}>
+          <Route path="/offline-tools/:page" element={<OfflineToolsPage />} />
+        </Route>
       </div>
     </BrowserRouter>
   );

@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { RouteComponentProps } from "react-router-dom";
 import { OfflinePatientDataSyncStore } from "@openmrs/esm-framework";
 import { Tile } from "carbon-components-react";
 import { useOfflinePatientDataStore } from "../hooks/offline-patient-data-hooks";
@@ -8,17 +7,12 @@ import CheckmarkFilled16 from "@carbon/icons-react/es/checkmark--filled/16";
 import WarningFilled16 from "@carbon/icons-react/es/warning--filled/16";
 import styles from "./offline-patient-sync-details.styles.scss";
 import SharedPageLayout from "../components/shared-page-layout.component";
+import { useParams } from "react-router-dom";
 
-interface OfflinePatientSyncDetailsParams {
-  patientUuid: string;
-}
-
-const OfflinePatientSyncDetails: React.FC<
-  RouteComponentProps<OfflinePatientSyncDetailsParams>
-> = ({ match }) => {
+const OfflinePatientSyncDetails: React.FC = () => {
   const { t } = useTranslation();
   const store = useOfflinePatientDataStore();
-  const patientUuid: string = match.params.patientUuid;
+  const { patientUuid } = useParams();
   const syncedHandlers = getHandlersForDisplay(
     store.offlinePatientDataSyncState[patientUuid]?.syncedHandlers ?? [],
     store
