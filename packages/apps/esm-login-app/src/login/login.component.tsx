@@ -10,7 +10,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useConfig, interpolateUrl, useSession } from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const hidden: React.CSSProperties = {
   height: 0,

@@ -4,7 +4,6 @@ import SharedPageLayout from "../components/shared-page-layout.component";
 import CardsContainer from "./cards-container.component";
 import { ExtensionSlot } from "@openmrs/esm-framework";
 import styles from "./home.styles.scss";
-import { useParams } from "react-router-dom";
 
 /**
  * The offline tool's home/dashboard page.
