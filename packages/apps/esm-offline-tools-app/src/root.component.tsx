@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { loadPersistedPatientDataSyncState } from "@openmrs/esm-framework";
 import Home from "./home/home.component";
 import DesktopSideNav from "./nav/desktop-side-nav.component";
@@ -15,9 +15,12 @@ const Root: React.FC = () => {
     <BrowserRouter basename={window.spaBase}>
       <DesktopSideNav />
       <div className={`omrs-main-content ${styles.mainContentContainer}`}>
-        <Route path="/offline-tools" element={<Home />}>
-          <Route path="/offline-tools/:page" element={<OfflineToolsPage />} />
-        </Route>
+        <Routes>
+          <Route path="/offline-tools" element={<Home />} />
+          <Route path="/offline-tools/:page" element={<OfflineToolsPage />}>
+            <Route path=":patientUuid" element={<OfflineToolsPage />} />
+          </Route>
+        </Routes>
       </div>
     </BrowserRouter>
   );

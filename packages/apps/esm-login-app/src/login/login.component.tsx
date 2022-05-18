@@ -45,7 +45,7 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
     if (user) {
       navigate("/login/location", { state: location.state });
     } else if (!username && location.pathname === "/login/confirm") {
-      navigate("/login", { state: location.state, replace: true });
+      navigate("/login", { state: location.state });
     }
   }, [username, navigate, location, user]);
 
@@ -247,7 +247,6 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
             </svg>
           </div>
         </div>
-        <Outlet />
       </div>
     );
   }

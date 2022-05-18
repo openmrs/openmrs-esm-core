@@ -15,6 +15,7 @@ const OfflineToolsPage: React.FC = () => {
   const meta = useExtensionSlotMeta<OfflineToolsPageConfig>(
     "offline-tools-page-slot"
   );
+
   const pageConfig = Object.values(meta).find(
     (pageConfig) => pageConfig.name === page
   );

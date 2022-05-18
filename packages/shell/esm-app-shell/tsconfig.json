@@ -19,5 +19,6 @@
       "WebWorker"
     ]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["/.*.DS_Store/"]
 }

@@ -17,18 +17,21 @@ const OfflinePatients: React.FC<OfflinePatientsProps> = ({ basePath }) => {
     <BrowserRouter basename={basePath}>
       <Routes>
         <Route
+          path="/"
+          element={
+            <SharedPageLayout
+              header={t("offlinePatientsHeader", "Offline patients")}
+            >
+              <div className={styles.contentContainer}>
+                <ExtensionSlot extensionSlotName="offline-tools-offline-patients-slot" />
+              </div>
+            </SharedPageLayout>
+          }
+        />
+        <Route
           path="/:patientUuid/offline-data"
           element={<OfflinePatientSyncDetails />}
         />
-        <Route>
-          <SharedPageLayout
-            header={t("offlinePatientsHeader", "Offline patients")}
-          >
-            <div className={styles.contentContainer}>
-              <ExtensionSlot extensionSlotName="offline-tools-offline-patients-slot" />
-            </div>
-          </SharedPageLayout>
-        </Route>
       </Routes>
     </BrowserRouter>
   );

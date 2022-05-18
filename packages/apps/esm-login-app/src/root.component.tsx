@@ -12,16 +12,18 @@ const Root: React.FC<RootProps> = ({ isLoginEnabled }) => {
   return (
     <BrowserRouter basename={window.spaBase}>
       <Routes>
-        <Route path="login" element={<Login isLoginEnabled={isLoginEnabled} />}>
-          <Route
-            path="/login/confirm"
-            element={<Login isLoginEnabled={isLoginEnabled} />}
-          />
-          <Route
-            path="/login/location"
-            element={<ChooseLocation isLoginEnabled={isLoginEnabled} />}
-          />
-        </Route>
+        <Route
+          path="/login"
+          element={<Login isLoginEnabled={isLoginEnabled} />}
+        />
+        <Route
+          path="/login/confirm"
+          element={<Login isLoginEnabled={isLoginEnabled} />}
+        />
+        <Route
+          path="/login/location"
+          element={<ChooseLocation isLoginEnabled={isLoginEnabled} />}
+        />
         <Route
           path="/logout"
           element={<RedirectLogout isLoginEnabled={isLoginEnabled} />}
