@@ -2728,7 +2728,7 @@ ___
 
 ### getFullSynchronizationItems
 
-▸ **getFullSynchronizationItems**<`T`\>(`type`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
+▸ **getFullSynchronizationItems**<`T`\>(`type?`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
 
 Returns all currently queued up sync items of the currently signed in user.
 
@@ -2742,7 +2742,7 @@ Returns all currently queued up sync items of the currently signed in user.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization items to be returned. |
+| `type?` | `string` | The identifying type of the synchronization items to be returned. |
 
 #### Returns
 
@@ -2750,13 +2750,13 @@ Returns all currently queued up sync items of the currently signed in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L347)
+[packages/framework/esm-offline/src/sync.ts:345](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L345)
 
 ___
 
 ### getFullSynchronizationItemsFor
 
-▸ **getFullSynchronizationItemsFor**<`T`\>(`userId`, `type`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
+▸ **getFullSynchronizationItemsFor**<`T`\>(`userId`, `type?`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
 
 Returns all currently queued up sync items of a given user.
 
@@ -2771,7 +2771,7 @@ Returns all currently queued up sync items of a given user.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `userId` | `string` | The ID of the user whose synchronization items should be returned. |
-| `type` | `string` | The identifying type of the synchronization items to be returned.. |
+| `type?` | `string` | The identifying type of the synchronization items to be returned.. |
 
 #### Returns
 
@@ -2779,7 +2779,7 @@ Returns all currently queued up sync items of a given user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:320](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L320)
+[packages/framework/esm-offline/src/sync.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L321)
 
 ___
 
@@ -2821,13 +2821,13 @@ Returns a queued sync item with the given ID or `undefined` if no such item exis
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:356](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L356)
+[packages/framework/esm-offline/src/sync.ts:354](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L354)
 
 ___
 
 ### getSynchronizationItems
 
-▸ **getSynchronizationItems**<`T`\>(`type`): `Promise`<`T`[]\>
+▸ **getSynchronizationItems**<`T`\>(`type?`): `Promise`<`T`[]\>
 
 Returns the content of all currently queued up sync items of the currently signed in user.
 
@@ -2841,7 +2841,7 @@ Returns the content of all currently queued up sync items of the currently signe
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization items to be returned. |
+| `type?` | `string` | The identifying type of the synchronization items to be returned. |
 
 #### Returns
 
@@ -2849,7 +2849,7 @@ Returns the content of all currently queued up sync items of the currently signe
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:338](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L338)
+[packages/framework/esm-offline/src/sync.ts:336](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L336)
 
 ___
 
@@ -2939,7 +2939,7 @@ Enqueues a new item in the sync queue and associates the item with the currently
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:293](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L293)
+[packages/framework/esm-offline/src/sync.ts:294](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L294)
 
 ___
 
