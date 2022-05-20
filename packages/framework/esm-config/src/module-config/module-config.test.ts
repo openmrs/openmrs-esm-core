@@ -100,6 +100,30 @@ describe("defineConfigSchema", () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 
+  it("runs top-level validators on resolved config", () => {
+    const schema = {
+      foo: {
+        _type: Type.String,
+        _default: "bar-value",
+      },
+      fooStart: {
+        _type: Type.String,
+        _default: "bar",
+      },
+      _validators: [
+        validator(
+          (v) => v.foo.startsWith(v.fooStart),
+          "The value of `foo` must start with the value of `fooStart`."
+        ),
+      ],
+    };
+    Config.defineConfigSchema("foo-module", schema);
+    Config.provide({ "foo-module": { foo: "bar" } });
+    expect(console.error).toHaveBeenCalledWith(
+      /The value of `foo` must begin with 'foo'./
+    );
+  });
+
   it("logs an error if a non-function validator is provided", () => {
     const schema = {
       bar: { _default: [], _validators: [false] },

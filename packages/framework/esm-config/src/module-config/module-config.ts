@@ -601,6 +601,7 @@ function validateConfig(
   config: ConfigObject,
   keyPath = ""
 ) {
+  // validate each constituent element
   for (const key of Object.keys(config)) {
     const value = config[key];
     const thisKeyPath = keyPath + "." + key;
@@ -711,15 +712,23 @@ function runValidators(
         const validatorResult = validator(value);
 
         if (typeof validatorResult === "string") {
-          const valueString =
-            typeof value === "object" ? JSON.stringify(value) : value;
-          console.error(
-            `Invalid configuration value ${valueString} for ${keyPath}: ${validatorResult}`
-          );
+          if (!keyPath.includes(".")) {
+            console.error(
+              `Invalid configuration for ${keyPath}: ${validatorResult}`
+            );
+          } else {
+            const valueString =
+              typeof value === "object" ? JSON.stringify(value) : value;
+            console.error(
+              `Invalid configuration value ${valueString} for ${keyPath}: ${validatorResult}`
+            );
+          }
         }
       }
     } catch (e) {
-      console.error(`Skipping invalid validator at "${keyPath}".`);
+      console.error(
+        `Skipping invalid validator at "${keyPath}". Encountered error\n\t${e}`
+      );
     }
   }
 }
@@ -760,7 +769,7 @@ const setDefaults = (
       const elements = schemaPart._elements;
 
       if (configPart && hasObjectSchema(elements)) {
-        if (schemaPart._type === Type.Array) {
+        if (schemaPart._type === Type.Array && Array.isArray(configPart)) {
           const configWithDefaults = configPart.map((conf: Config) =>
             setDefaults(elements, conf, devDefaultsAreOn)
           );
