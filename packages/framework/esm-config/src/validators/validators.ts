@@ -45,7 +45,7 @@ export const isUrlWithTemplateParameters = (
     }
 
     return true;
-  }, "should be a URL or path. The allowed template parameters are " + allowedParams.map((p) => "${" + p + "}").join(", "));
+  }, "Should be a URL or path. The allowed template parameters are " + allowedParams.map((p) => "${" + p + "}").join(", "));
 };
 
 /**
@@ -55,8 +55,20 @@ export const isUrlWithTemplateParameters = (
  */
 export const isUrl = isUrlWithTemplateParameters([]);
 
+/**
+ * Verifies that the value is one of the allowed options.
+ * @param allowedValues The list of allowable values
+ */
+export const oneOf = (allowedValues: Array<any>) => {
+  return validator(
+    (val) => allowedValues.includes(val),
+    `Must be one of the following: '${allowedValues.join("', '")}'.`
+  );
+};
+
 export const validators = {
   inRange,
   isUrl,
   isUrlWithTemplateParameters,
+  oneOf,
 };

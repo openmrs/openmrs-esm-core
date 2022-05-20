@@ -100,7 +100,7 @@ describe("defineConfigSchema", () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 
-  it("runs top-level validators on resolved config", () => {
+  it("runs top-level validators on filled-in config", () => {
     const schema = {
       foo: {
         _type: Type.String,
@@ -113,14 +113,17 @@ describe("defineConfigSchema", () => {
       _validators: [
         validator(
           (v) => v.foo.startsWith(v.fooStart),
-          "The value of `foo` must start with the value of `fooStart`."
+          (v) =>
+            `The value of \`foo\` must start with the value of \`fooStart\` (which is ${v.fooStart}).`
         ),
       ],
     };
     Config.defineConfigSchema("foo-module", schema);
-    Config.provide({ "foo-module": { foo: "bar" } });
+    Config.provide({ "foo-module": { foo: "different" } });
     expect(console.error).toHaveBeenCalledWith(
-      /The value of `foo` must begin with 'foo'./
+      expect.stringMatching(
+        /The value of `foo` must start with the value of `fooStart`.*bar/
+      )
     );
   });
 
@@ -287,7 +290,7 @@ describe("getConfig", () => {
     await Config.getConfig("foo-module");
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(
-        /value.*{\"a\":{\"b\":5}\}.*foo-module.bar.*c must equal a\.b \+ diff/
+        /Invalid configuration for foo-module.bar.*c must equal a\.b \+ diff/
       )
     );
 
@@ -682,9 +685,7 @@ describe("getConfig", () => {
     Config.provide(badConfig);
     await Config.getConfig("foo-module");
     expect(console.error).toHaveBeenCalledWith(
-      expect.stringMatching(
-        /value.*{\"a\":{\"b\":1},\"c\":3}.*foo-module.bar\[1\].*c must equal a\.b \+ 1/
-      )
+      expect.stringMatching(/foo-module.bar\[1\].*c must equal a\.b \+ 1/i)
     );
 
     await resetAll();
