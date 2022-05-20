@@ -12,7 +12,6 @@ import {
   ConfigInternalStore,
   configInternalStore,
   getExtensionConfig,
-  getExtensionsConfigStore,
   ImplementerToolsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
@@ -502,6 +501,27 @@ describe("getConfig", () => {
     Config.provide(testConfig);
     const config = await Config.getConfig("foo-module");
     expect(config.foo).toStrictEqual([0, 2, 4]);
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it("supports array of string elements", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        _type: Type.Array,
+        _default: ["bar"],
+        _elements: {
+          _type: Type.String,
+        },
+      },
+    });
+    const testConfig = {
+      "foo-module": {
+        foo: ["bar", "baz", "qux"],
+      },
+    };
+    Config.provide(testConfig);
+    const config = await Config.getConfig("foo-module");
+    expect(config.foo).toStrictEqual(["bar", "baz", "qux"]);
     expect(console.error).not.toHaveBeenCalled();
   });
 
