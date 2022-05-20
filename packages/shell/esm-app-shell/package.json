@@ -34,7 +34,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@openmrs/esm-framework": "3.4.0",
+    "@openmrs/esm-framework": "^4.0.0",
     "carbon-components": "10.31.0",
     "carbon-icons": "7.0.7",
     "dayjs": "^1.10.4",
@@ -47,8 +47,8 @@
     "lodash-es": "4.17.21",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-i18next": "^11.16.9",
-    "react-router-dom": "^5.2.0",
+    "react-i18next": "^11.7.0",
+    "react-router-dom": "^6.3.0",
     "rxjs": "^6.5.3",
     "single-spa": "^5.9.2",
     "systemjs": "^6.8.3",

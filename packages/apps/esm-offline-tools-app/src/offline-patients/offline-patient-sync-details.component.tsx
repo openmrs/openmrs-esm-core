@@ -1,23 +1,16 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { RouteComponentProps } from "react-router-dom";
-import { Tile } from "carbon-components-react";
-import CheckmarkFilled16 from "@carbon/icons-react/es/checkmark--filled/16";
-import WarningFilled16 from "@carbon/icons-react/es/warning--filled/16";
-import styles from "./offline-patient-sync-details.styles.scss";
-import SharedPageLayout from "../components/shared-page-layout.component";
-import { useLastSyncStateOfPatient } from "../hooks/offline-patient-data-hooks";
+import { useParams } from "react-router-dom";
+import { Tile } from "@carbon/react";
+import { CheckmarkFilled, WarningFilled } from "@carbon/react/icons";
 import { getDynamicOfflineDataHandlers } from "@openmrs/esm-framework";
+import { useLastSyncStateOfPatient } from "../hooks/offline-patient-data-hooks";
+import SharedPageLayout from "../components/shared-page-layout.component";
+import styles from "./offline-patient-sync-details.styles.scss";
 
-interface OfflinePatientSyncDetailsParams {
-  patientUuid: string;
-}
-
-const OfflinePatientSyncDetails: React.FC<
-  RouteComponentProps<OfflinePatientSyncDetailsParams>
-> = ({ match }) => {
+const OfflinePatientSyncDetails: React.FC = () => {
   const { t } = useTranslation();
-  const patientUuid: string = match.params.patientUuid;
+  const { patientUuid } = useParams();
   const { data: lastSyncState } = useLastSyncStateOfPatient(patientUuid);
   const handlers = getDynamicOfflineDataHandlers();
   const succeededHandlers = filterOutNonDisplayableHandlerIds(
@@ -45,7 +38,7 @@ const OfflinePatientSyncDetails: React.FC<
                 <span className={styles.bodyShort01}>
                   {handlers.find((handler) => handler.id === id)?.displayName}
                 </span>
-                <CheckmarkFilled16 className={styles.syncedTileIcon} />
+                <CheckmarkFilled className={styles.syncedTileIcon} />
               </Tile>
             ))}
           </section>
@@ -63,7 +56,7 @@ const OfflinePatientSyncDetails: React.FC<
                 <span className={styles.bodyShort01}>
                   {handlers.find((handler) => handler.id === id)?.displayName}
                 </span>
-                <WarningFilled16 className={styles.failedTileIcon} />
+                <WarningFilled className={styles.failedTileIcon} />
                 <span
                   className={`${styles.failedTileErrorMessage} ${styles.label01}`}
                 >

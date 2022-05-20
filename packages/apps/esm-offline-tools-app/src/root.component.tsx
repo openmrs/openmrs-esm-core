@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./home/home.component";
 import DesktopSideNav from "./nav/desktop-side-nav.component";
 import styles from "./root.styles.scss";
@@ -10,8 +10,12 @@ const Root: React.FC = () => {
     <BrowserRouter basename={window.spaBase}>
       <DesktopSideNav />
       <div className={`omrs-main-content ${styles.mainContentContainer}`}>
-        <Route path="/offline-tools" exact component={Home} />
-        <Route path="/offline-tools/:page" component={OfflineToolsPage} />
+        <Routes>
+          <Route path="/offline-tools" element={<Home />} />
+          <Route path="/offline-tools/:page" element={<OfflineToolsPage />}>
+            <Route path=":patientUuid" element={<OfflineToolsPage />} />
+          </Route>
+        </Routes>
       </div>
     </BrowserRouter>
   );

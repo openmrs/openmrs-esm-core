@@ -1,21 +1,21 @@
 import { ExtensionSlot, useExtensionSlotMeta } from "@openmrs/esm-framework";
 import React from "react";
-import { RouteComponentProps, useRouteMatch } from "react-router-dom";
 import { OfflineToolsPageConfig } from "../types";
 import trimEnd from "lodash-es/trimEnd";
+import { useLocation, useMatch, useParams } from "react-router-dom";
 
 export interface OfflineToolsPageParams {
   page: string;
 }
 
-const OfflineToolsPage: React.FC<
-  RouteComponentProps<OfflineToolsPageParams>
-> = ({ match }) => {
-  const basePath = trimEnd(window.getOpenmrsSpaBase(), "/") + match.url;
-  const page = match.params.page;
+const OfflineToolsPage: React.FC = () => {
+  const location = useLocation();
+  const { page } = useParams();
+  const basePath = trimEnd(window.getOpenmrsSpaBase(), "/") + location.pathname;
   const meta = useExtensionSlotMeta<OfflineToolsPageConfig>(
     "offline-tools-page-slot"
   );
+
   const pageConfig = Object.values(meta).find(
     (pageConfig) => pageConfig.name === page
   );
