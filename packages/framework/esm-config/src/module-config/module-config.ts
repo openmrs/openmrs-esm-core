@@ -596,18 +596,18 @@ function mergeConfigs(configs: Array<Config>) {
 // Recursively check the provided config tree to make sure that all
 // of the provided properties exist in the schema. Run validators
 // where present in the schema.
-const validateConfig = (
+function validateConfig(
   schema: ConfigSchema,
   config: ConfigObject,
   keyPath = ""
-) => {
+) {
   for (const key of Object.keys(config)) {
     const value = config[key];
     const thisKeyPath = keyPath + "." + key;
     const schemaPart = schema[key] as ConfigSchema;
 
     if (!schema.hasOwnProperty(key)) {
-      if (key !== "extensionSlots") {
+      if (!(key === "extensionSlots" && keyPath !== "")) {
         console.error(
           `Unknown config key '${thisKeyPath}' provided. Ignoring.`
         );
@@ -616,25 +616,33 @@ const validateConfig = (
       continue;
     }
 
-    checkType(thisKeyPath, schemaPart._type, value);
-    runValidators(thisKeyPath, schemaPart._validators, value);
+    validateConfigElement(schemaPart, value, thisKeyPath);
+  }
+}
 
-    if (isOrdinaryObject(value)) {
-      // structurally validate only if there's elements specified
-      // or there's a `_default` value, which indicates a freeform object
-      if (schemaPart._type === Type.Object) {
-        validateDictionary(schemaPart, value, thisKeyPath);
-      } else if (!schemaPart.hasOwnProperty("_default")) {
-        // recurse to validate nested object structure
-        validateConfig(schemaPart, value, thisKeyPath);
-      }
-    } else {
-      if (schemaPart._type === Type.Array) {
-        validateArray(schemaPart, value, thisKeyPath);
-      }
+function validateConfigElement(
+  schemaPart: ConfigSchema,
+  value: any,
+  keyPath: string
+) {
+  checkType(keyPath, schemaPart._type, value);
+  runValidators(keyPath, schemaPart._validators, value);
+
+  if (isOrdinaryObject(value)) {
+    // structurally validate only if there's elements specified
+    // or there's a `_default` value, which indicates a freeform object
+    if (schemaPart._type === Type.Object) {
+      validateDictionary(schemaPart, value, keyPath);
+    } else if (!schemaPart.hasOwnProperty("_default")) {
+      // recurse to validate nested object structure
+      validateConfig(schemaPart, value, keyPath);
+    }
+  } else {
+    if (schemaPart._type === Type.Array) {
+      validateArray(schemaPart, value, keyPath);
     }
   }
-};
+}
 
 function validateDictionary(
   dictionarySchema: ConfigSchema,
@@ -657,7 +665,11 @@ function validateArray(
   // if there is an array element object schema, verify that elements match it
   if (hasObjectSchema(arraySchema._elements)) {
     for (let i = 0; i < value.length; i++) {
-      validateConfig(arraySchema._elements, value[i], `${keyPath}[${i}]`);
+      validateConfigElement(
+        arraySchema._elements,
+        value[i],
+        `${keyPath}[${i}]`
+      );
     }
   }
 
