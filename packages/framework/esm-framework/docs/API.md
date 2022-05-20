@@ -53,6 +53,7 @@
 - [inRange](API.md#inrange)
 - [isUrl](API.md#isurl)
 - [isUrlWithTemplateParameters](API.md#isurlwithtemplateparameters)
+- [oneOf](API.md#oneof)
 - [validator](API.md#validator)
 
 ### Date and Time Functions
@@ -590,10 +591,11 @@ ___
 | `inRange` | (`min`: `number`, `max`: `number`) => [`Validator`](API.md#validator) |
 | `isUrl` | [`Validator`](API.md#validator) |
 | `isUrlWithTemplateParameters` | (`allowedTemplateParameters`: `string`[]) => [`Validator`](API.md#validator) |
+| `oneOf` | (`allowedValues`: `any`[]) => [`Validator`](API.md#validator) |
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L58)
+[packages/framework/esm-config/src/validators/validators.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L69)
 
 ___
 
@@ -1667,16 +1669,17 @@ parameters, plus any specified in `allowedTemplateParameters`.
 
 ___
 
-### validator
+### oneOf
 
-▸ **validator**(`validationFunction`, `message`): [`Validator`](API.md#validator)
+▸ `Const` **oneOf**(`allowedValues`): [`Validator`](API.md#validator)
+
+Verifies that the value is one of the allowed options.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `validationFunction` | [`ValidatorFunction`](API.md#validatorfunction) |
-| `message` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `allowedValues` | `any`[] | The list of allowable values |
 
 #### Returns
 
@@ -1684,7 +1687,45 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validator.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validator.ts#L4)
+[packages/framework/esm-config/src/validators/validators.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L62)
+
+___
+
+### validator
+
+▸ **validator**(`validationFunction`, `message`): [`Validator`](API.md#validator)
+
+Constructs a custom validator.
+
+### Example
+
+```typescript
+{
+  foo: {
+    _default: 0,
+    _validators: [
+      validator(val => val >= 0, "Must not be negative.")
+    ]
+  }
+}
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `validationFunction` | [`ValidatorFunction`](API.md#validatorfunction) | Takes the configured value as input. Returns true    if it is valid, false otherwise. |
+| `message` | `string` \| (`value`: `any`) => `string` | A string message that explains why the value is invalid. Can    also be a function that takes the value as input and returns a string. |
+
+#### Returns
+
+[`Validator`](API.md#validator)
+
+A validator ready for use in a config schema
+
+#### Defined in
+
+[packages/framework/esm-config/src/validators/validator.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validator.ts#L25)
 
 ___
 
