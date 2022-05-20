@@ -24,6 +24,17 @@ $field-01: #f4f4f4;
 $grey-2: #e0e0e0;
 $labeldropdown: #c6c6c6;
 
+$brand-primary-10: #d9fbfb;
+$brand-primary-20: #9ef0f0;
+$brand-primary-30: #3ddbd9;
+$brand-primary-40: #08bdba;
+$brand-primary-50: #009d9a;
+
+/* 60,70 and 80 are already declared as brand-01, 02 and 03 respectively */
+
+$brand-primary-90: #022b30;
+$brand-primary-100: #081a1c;
+
 @mixin brand-01($property) {
   #{$property}: #005d5d;
   #{$property}: var(--brand-01);
