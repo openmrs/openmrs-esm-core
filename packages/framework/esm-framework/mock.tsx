@@ -10,7 +10,11 @@ export {
   formatTime,
   age,
 } from "@openmrs/esm-utils";
-export { interpolateString, interpolateUrl } from "@openmrs/esm-config";
+export {
+  interpolateString,
+  interpolateUrl,
+  validators,
+} from "@openmrs/esm-config";
 
 window.i18next = { ...window.i18next, language: "en" };
 
@@ -148,13 +152,6 @@ export enum Type {
   String = "String",
   UUID = "UUID",
 }
-
-export const validators = {
-  isBoolean: jest.fn(),
-  isString: jest.fn(),
-  isUuid: jest.fn(),
-  isObject: jest.fn(),
-};
 
 let configSchema = {};
 function getDefaults(schema) {
