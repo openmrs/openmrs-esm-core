@@ -7,11 +7,10 @@ import {
   TextInput,
   Tile,
 } from "carbon-components-react";
-import { RouteComponentProps } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useConfig, interpolateUrl, useSession } from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
-import type { StaticContext } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const hidden: React.CSSProperties = {
   height: 0,
@@ -24,14 +23,15 @@ export interface LoginReferrer {
   referrer?: string;
 }
 
-export interface LoginProps
-  extends RouteComponentProps<{}, StaticContext, LoginReferrer> {
+export interface LoginProps extends LoginReferrer {
   isLoginEnabled: boolean;
 }
 
-const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
+const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
   const config = useConfig();
   const { user } = useSession();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,11 +43,11 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
 
   useEffect(() => {
     if (user) {
-      history.push("/login/location", location.state);
+      navigate("/login/location", { state: location.state });
     } else if (!username && location.pathname === "/login/confirm") {
-      history.replace("/login", location.state);
+      navigate("/login", { state: location.state });
     }
-  }, [user, username, history, location]);
+  }, [username, navigate, location, user]);
 
   useEffect(() => {
     const field = showPassword
@@ -70,11 +70,11 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
     const field = usernameInputRef.current;
 
     if (field.value.length > 0) {
-      history.push("/login/confirm", location.state);
+      navigate("/login/confirm", { state: location.state });
     } else {
       field.focus();
     }
-  }, [history]);
+  }, [navigate]);
 
   const changeUsername = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value),

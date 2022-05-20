@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import LoadingIcon from "../loading/loading.component";
 import LocationPicker from "../location-picker/location-picker.component";
-import { RouteComponentProps } from "react-router-dom";
 import {
   navigate,
   useConfig,
@@ -9,23 +8,22 @@ import {
   useSession,
 } from "@openmrs/esm-framework";
 import { useLoginLocations } from "./choose-location.resource";
-import type { StaticContext } from "react-router";
+import { useLocation } from "react-router-dom";
 
 export interface LoginReferrer {
   referrer?: string;
 }
 
-export interface ChooseLocationProps
-  extends RouteComponentProps<{}, StaticContext, LoginReferrer> {
+export interface ChooseLocationProps extends LoginReferrer {
   isLoginEnabled: boolean;
 }
 
 export const ChooseLocation: React.FC<ChooseLocationProps> = ({
-  location,
   isLoginEnabled,
 }) => {
+  const { state } = useLocation() as { state: LoginReferrer };
   const returnToUrl = new URLSearchParams(location?.search).get("returnToUrl");
-  const referrer = location?.state?.referrer;
+  const referrer = state?.referrer;
   const config = useConfig();
   const { user } = useSession();
   const { locationData, isLoading } = useLoginLocations(
