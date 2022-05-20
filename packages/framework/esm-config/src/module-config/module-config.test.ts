@@ -386,6 +386,19 @@ describe("getConfig", () => {
     );
   });
 
+  it("tolerates defaults that don't pass validation", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        _default: null,
+        _validators: [
+          validator((val) => val.startsWith("thi"), "must start with 'thi'"),
+        ],
+      },
+    });
+    await Config.getConfig("foo-module");
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
   it("validators pass", async () => {
     Config.defineConfigSchema("foo-module", {
       foo: {

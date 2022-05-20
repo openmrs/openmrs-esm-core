@@ -696,7 +696,9 @@ function runAllValidatorsInConfigTree(
 ) {
   // If `!schema`, there should have been a structural validation error printed already.
   if (schema) {
-    runValidators(keyPath, schema._validators, config);
+    if (config !== schema._default) {
+      runValidators(keyPath, schema._validators, config);
+    }
 
     if (isOrdinaryObject(config)) {
       for (const key of Object.keys(config)) {
