@@ -69,7 +69,7 @@ export function ValueEditor({
           kind="secondary"
           onClick={handleClose}
         >
-          {t("CancelButtonText", "Cancel")}
+          {t("cancelButtonText", "Cancel")}
         </Button>
       </div>
     </div>
