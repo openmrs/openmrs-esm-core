@@ -1,0 +1,30 @@
+@use "@carbon/styles/scss/spacing";
+@import "~@openmrs/esm-styleguide/src/vars";
+
+.topNavActionsSlot {
+  display: flex;
+}
+
+.headerGlobalBarButton {
+  background-color: var(--brand-02);
+}
+
+.topNavHeader {
+  top: var(--omrs-offline-banner-height);
+  // background-color: var(--brand-01);
+}
+
+.activePanel {
+  // background-color: var(--brand-01);
+}
+
+.headerMenuButton {
+  height: spacing.$spacing-09;
+  width: spacing.$spacing-09;
+  padding: spacing.$spacing-04;
+  margin-right: spacing.$spacing-02;
+}
+
+.spacedLogo {
+  margin-left: 1rem;
+}

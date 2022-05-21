@@ -9,7 +9,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-} from "carbon-components-react";
+} from "@carbon/react";
 import { FrontendModule } from "./openmrs-backend-dependencies";
 
 export interface ModuleDiagnosticsProps {

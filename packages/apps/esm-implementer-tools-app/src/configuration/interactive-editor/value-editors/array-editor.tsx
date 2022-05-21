@@ -1,9 +1,6 @@
 import React, { useMemo } from "react";
 import cloneDeep from "lodash-es/cloneDeep";
 import uniqueId from "lodash-es/uniqueId";
-import Add16 from "@carbon/icons-react/es/add/16";
-import TrashCan16 from "@carbon/icons-react/es/trash-can/16";
-import styles from "./array-editor.styles.css";
 import { Type } from "@openmrs/esm-framework";
 import {
   Button,
@@ -12,9 +9,11 @@ import {
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-} from "carbon-components-react";
+} from "@carbon/react";
+import { Add, TrashCan } from "@carbon/icons-react";
 import { ValueEditorField } from "./value-editor-field";
 import { ConfigValueDescriptor } from "../editable-value.component";
+import styles from "./array-editor.styles.css";
 
 interface ArrayEditorProps {
   element: ConfigValueDescriptor;
@@ -52,7 +51,7 @@ export function ArrayEditor({
               </StructuredListCell>
               <StructuredListCell className={styles.buttonCell}>
                 <Button
-                  renderIcon={TrashCan16}
+                  renderIcon={(props) => <TrashCan {...props} size={16} />}
                   size="sm"
                   kind="secondary"
                   iconDescription="Remove"
@@ -69,7 +68,7 @@ export function ArrayEditor({
           <StructuredListRow>
             <StructuredListCell>
               <Button
-                renderIcon={Add16}
+                renderIcon={(props) => <Add {...props} size={16} />}
                 size="sm"
                 iconDescription="Add"
                 hasIconOnly

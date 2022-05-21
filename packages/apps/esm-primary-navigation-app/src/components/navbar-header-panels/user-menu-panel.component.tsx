@@ -5,10 +5,11 @@ import {
   LoggedInUser,
   useOnClickOutside,
 } from "@openmrs/esm-framework";
-import { HeaderPanel, HeaderPanelProps } from "carbon-components-react";
+import { HeaderPanel, HeaderPanelProps } from "@carbon/react";
 import { UserSession } from "../../types";
 
 interface UserMenuPanelProps extends HeaderPanelProps {
+  expanded?: boolean; // FIX
   user: LoggedInUser;
   allowedLocales: any;
   onLogout(): void;

@@ -11,7 +11,7 @@ import {
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-} from "carbon-components-react";
+} from "@carbon/react";
 import { useTranslation } from "react-i18next";
 
 interface ConceptSearchBoxProps {

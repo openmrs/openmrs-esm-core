@@ -1,17 +1,16 @@
+@use "@carbon/styles/scss/type";
 @import "~@openmrs/esm-styleguide/src/vars";
-@import "carbon-components/scss/globals/scss/typography.scss";
-@import "~carbon-components/scss/globals/scss/_spacing.scss";
 
 .productiveHeading01 {
-  @include carbon--type-style("productive-heading-01");
+  @include type.type-style("heading-compact-01");
 }
 
 .productiveHeading02 {
-  @include carbon--type-style("productive-heading-02");
+  @include type.type-style("heading-compact-02");
 }
 
 .bodyLong01 {
-  @include carbon--type-style("body-long-01");
+  @include type.type-style("body-01");
 }
 
 .headerPanel {
@@ -20,4 +19,23 @@
 
 .primaryNavContainer {
   height: var(--omrs-topnav-height);
+}
+
+// Overrides
+:global(.cds--header) {
+  @include brand-01(background-color);
+  border-bottom: none;
+}
+
+:global(.cds--header-panel) {
+  @include brand-02(background-color);
+}
+
+:global(.cds--btn.cds--btn--icon-only.cds--header__action svg) {
+  fill: white;
+}
+
+:global(.cds--header-panel--expanded) {
+  border-left: none;
+  border-right: none;
 }

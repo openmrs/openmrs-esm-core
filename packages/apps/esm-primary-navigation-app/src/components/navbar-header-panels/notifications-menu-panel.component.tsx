@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ExtensionSlot } from "@openmrs/esm-framework";
-import { HeaderPanel, HeaderPanelProps } from "carbon-components-react";
-import styles from "./notifications-menu.component.panel.scss";
+import { HeaderPanel, HeaderPanelProps } from "@carbon/react";
+import styles from "./notifications-menu.panel.scss";
 
 interface NotificationsMenuPanelProps extends HeaderPanelProps {
   expanded: boolean;

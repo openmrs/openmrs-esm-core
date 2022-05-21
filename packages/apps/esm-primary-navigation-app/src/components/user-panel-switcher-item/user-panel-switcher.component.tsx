@@ -1,8 +1,8 @@
 import React from "react";
-import UserAvatarFilledAlt20 from "@carbon/icons-react/es/user--avatar--filled--alt/20";
-import styles from "./user-panel-switcher.component.scss";
-import { Switcher } from "carbon-components-react";
+import { Switcher } from "@carbon/react";
+import { UserAvatarFilledAlt } from "@carbon/react/icons";
 import { LoggedInUser } from "@openmrs/esm-framework";
+import styles from "./user-panel-switcher.scss";
 
 export interface UserPanelSwitcherItemProps {
   user: LoggedInUser;
@@ -11,7 +11,7 @@ export interface UserPanelSwitcherItemProps {
 const UserPanelSwitcher: React.FC<UserPanelSwitcherItemProps> = ({ user }) => (
   <div className={styles.switcherContainer}>
     <Switcher aria-label="Switcher Container">
-      <UserAvatarFilledAlt20 />
+      <UserAvatarFilledAlt size={20} />
       <p>{user.person.display}</p>
     </Switcher>
   </div>

@@ -8,7 +8,7 @@ import {
   RadioButtonGroup,
   Loading,
   RadioButtonSkeleton,
-} from "carbon-components-react";
+} from "@carbon/react";
 import { LocationEntry } from "../types";
 import { useConfig } from "@openmrs/esm-framework";
 import styles from "./location-picker.scss";

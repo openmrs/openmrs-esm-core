@@ -1,5 +1,5 @@
-import { ModalBody, ModalFooter, ModalHeader } from "carbon-components-react";
 import React, { ReactNode } from "react";
+import { ModalBody, ModalFooter, ModalHeader } from "@carbon/react";
 
 export interface ConfirmationModalProps {
   title?: string;

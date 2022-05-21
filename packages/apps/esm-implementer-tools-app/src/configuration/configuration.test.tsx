@@ -118,7 +118,7 @@ describe(`<Configuration />`, () => {
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("hasHat")).closest(
-      ".bx--structured-list-row"
+      ".cds--structured-list-row"
     );
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
@@ -156,7 +156,7 @@ describe(`<Configuration />`, () => {
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("hatUuid")).closest(
-      ".bx--structured-list-row"
+      ".cds--structured-list-row"
     );
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
@@ -186,7 +186,7 @@ describe(`<Configuration />`, () => {
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("numberFingers")).closest(
-      ".bx--structured-list-row"
+      ".cds--structured-list-row"
     );
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
@@ -214,7 +214,7 @@ describe(`<Configuration />`, () => {
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("nemesisName")).closest(
-      ".bx--structured-list-row"
+      ".cds--structured-list-row"
     );
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
@@ -240,7 +240,7 @@ describe(`<Configuration />`, () => {
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("mustacheUuid")).closest(
-      ".bx--structured-list-row"
+      ".cds--structured-list-row"
     );
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
@@ -267,7 +267,7 @@ describe(`<Configuration />`, () => {
     });
     renderConfiguration();
     const rowElement = (await screen.findByText("favoriteNumbers")).closest(
-      ".bx--structured-list-row"
+      ".cds--structured-list-row"
     );
     expect(rowElement).toBeInTheDocument();
     if (rowElement) {
@@ -281,7 +281,7 @@ describe(`<Configuration />`, () => {
       userEvent.type(firstValue, "5");
       const secondRowElement = row
         .getByDisplayValue("12")
-        .closest(".bx--structured-list-row");
+        .closest(".cds--structured-list-row");
       expect(secondRowElement).toBeInTheDocument();
       // I can't get the add or remove buttons to work in tests.
       if (secondRowElement) {

@@ -1,3 +1,4 @@
+@import "~@openmrs/esm-styleguide/src/vars";
 @import "../root.scss";
 
 .offlineModeButtonContainer {
@@ -11,7 +12,7 @@
   height: 3rem;
   cursor: pointer;
 
-  :global(.bx--toggle-input__label .bx--toggle__switch) {
+  :global(.cds--toggle-input__label .cds--toggle__switch) {
     margin-top: 0 !important;
   }
 }
