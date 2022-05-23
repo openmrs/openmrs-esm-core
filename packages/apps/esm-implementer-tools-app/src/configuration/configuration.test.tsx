@@ -102,6 +102,7 @@ describe(`<Configuration />`, () => {
     render(<Configuration />);
   }
 
+  // I couldn't get this test suite to work. Reminder to fix it post-upgrade
   it.only("renders the configuration component inside the implementer tools panel", () => {
     renderConfiguration();
 
@@ -132,17 +133,17 @@ describe(`<Configuration />`, () => {
       const value = row.getByText("false");
       const editButton = row.getByText("Edit").parentElement as any;
       userEvent.click(editButton);
-      // const editor = await row.findByRole("checkbox");
-      // screen.getByRole("x");
-      // screen.debug(undefined, 100000);
-      // fireEvent.click(editor);
-      // fireEvent.click(row.getByText("Save"));
-      // // The mocked temporaryConfigStore.getState seems to be producing something
-      // // that doesn't work right, causing the `set` call and consequently this
-      // // `setState` call not to work either.
-      // expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
-      //   config: { "@openmrs/mario": { hasHat: true } },
-      // });
+      const editor = await row.findByRole("checkbox");
+      screen.getByRole("x");
+      screen.debug(undefined, 100000);
+      fireEvent.click(editor);
+      fireEvent.click(row.getByText("Save"));
+      // The mocked temporaryConfigStore.getState seems to be producing something
+      // that doesn't work right, causing the `set` call and consequently this
+      // `setState` call not to work either.
+      expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
+        config: { "@openmrs/mario": { hasHat: true } },
+      });
     }
   });
 
