@@ -34,8 +34,15 @@
 /* Content Switcher */
 .cds--content-switcher-btn {
   background-color: $ui-02;
-  border: 1px solid #a6c8ff;
+  border-top: 1px solid #a6c8ff;
+  border-bottom: 1px solid #a6c8ff;
   color: $text-02;
+
+  &:first-child,
+  &:last-child {
+    border-left: 0.0625rem solid #a6c8ff;
+    border-right: 0.0625rem solid #a6c8ff;
+  }
 
   &::after {
     background-color: transparent;
@@ -61,12 +68,6 @@
 
   &:last-of-type[aria-selected="false"] {
     border-left: 0;
-  }
-
-  &:first-child,
-  &:last-child {
-    // border-right: 0.0625rem solid #a6c8ff;
-    border: 0;
   }
 
   &:focus,
