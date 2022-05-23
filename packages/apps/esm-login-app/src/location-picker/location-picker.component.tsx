@@ -11,8 +11,8 @@ import {
 } from "@carbon/react";
 import { LocationEntry } from "../types";
 import { useConfig } from "@openmrs/esm-framework";
-import styles from "./location-picker.scss";
 import { useLoginLocations } from "../choose-location/choose-location.resource";
+import styles from "./location-picker.scss";
 
 interface LocationPickerProps {
   currentUser: string;

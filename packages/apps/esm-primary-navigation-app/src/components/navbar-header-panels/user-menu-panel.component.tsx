@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "../../root.scss";
 import {
   ExtensionSlot,
   LoggedInUser,
@@ -7,9 +6,9 @@ import {
 } from "@openmrs/esm-framework";
 import { HeaderPanel, HeaderPanelProps } from "@carbon/react";
 import { UserSession } from "../../types";
+import styles from "../../root.scss";
 
 interface UserMenuPanelProps extends HeaderPanelProps {
-  expanded?: boolean; // FIX
   user: LoggedInUser;
   allowedLocales: any;
   onLogout(): void;
@@ -17,7 +16,7 @@ interface UserMenuPanelProps extends HeaderPanelProps {
   hidePanel: () => void;
 }
 
-const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
+const UserMenuPanel: React.FC<any> = ({
   expanded,
   user,
   allowedLocales,

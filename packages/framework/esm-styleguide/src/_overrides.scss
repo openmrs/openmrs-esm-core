@@ -1,183 +1,204 @@
 @use "@carbon/styles/scss/spacing";
 
-// .cds--data-table,
-// .cds--data-table-header,
-// .cds--table-toolbar,
-// .cds--data-table tbody {
-//   background: transparent;
-// }
+/* UI Shell Header */
+.cds--header {
+  @include brand-01(background-color);
+  border-bottom: none;
+}
 
-// .cds--data-table-container {
-//   background: $ui-02;
-//   position: relative;
-// }
+.cds--header__action:hover {
+  @include brand-02(background-color);
+}
 
-// .cds--table-toolbar {
-//   position: absolute;
-//   top: 2px;
-// }
+.cds--header__action--active {
+  @include brand-02(background-color);
+  @include brand-02(border-color);
+}
 
-// .cds--data-table-header {
-//   padding: spacing.$spacing-04;
-//   text-align: start;
-// }
+.cds--header-panel {
+  @include brand-02(background-color);
+}
 
-// .cds--data-table-header__title {
-//   font-size: spacing.$spacing-05;
-//   font-weight: 600;
-//   color: $text-02;
-// }
+.cds--header__menu-trigger > svg,
+.cds--header__menu-trigger:hover > svg,
+.cds--btn.cds--btn--icon-only.cds--header__action svg,
+.cds--btn.cds--btn--icon-only.cds--header__action:hover svg {
+  fill: white;
+}
 
-// .cds--data-table thead,
-// .cds--data-table tr,
-// .cds--data-table td,
-// .cds--data-table--sort th,
-// .cds--data-table--sort th .cds--table-sort__flex {
-//   height: spacing.$spacing-07;
-//   min-height: unset;
-//   color: $text-02;
-// }
-
-// .cds--btn--primary,
-// .cds--btn--primary:active,
-// .cds--btn--tertiary:hover,
-// .cds--btn--tertiary:active,
-// .cds--btn--tertiary:focus {
-//   @include brand-01(background-color); // MOD
-// }
-
-// .cds--btn--primary:hover {
-//   @include brand-01(background-color);
-// }
-
-// .cds--btn--tertiary {
-//   @include brand-03(color);
-// }
-
-// .cds--btn--tertiary,
-// .cds--btn--primary:focus,
-// .cds--btn--tertiary:focus {
-//   @include brand-03(border-color);
-// }
-
-// .cds--btn--tertiary:hover,
-// .cds--btn--tertiary:active,
-// .cds--btn--tertiary:focus {
-//   color: $ui-02;
-// }
-
-/* UI Shell header */
-
-// .cds--header {
-//   // @include brand-01(background-color);
-//   // @include brand-02(border-bottom);
-
-//   background-color: var(--brand-01);
-//   border-bottom: var(--brand-02);
-// }
-
-// // .cds--header__action:hover {
-// //   @include brand-02(background-color);
-// // }
-
-// .cds--header-panel {
-//   // @include brand-02(background-color);
-//   background-color: var(--brand-02);
-// }
-
-// .cds--header__action--active {
-//   @include brand-02(background-color);
-//   @include brand-02(border-color);
-// }
-
-// .cds--btn.cds--btn--icon-only.cds--header__action svg {
-//   fill: white;
-// }
-
-// .cds--overflow-menu--flip {
-//   &.cds--overflow-menu-options {
-//     background-color: $openmrs-background-grey;
-//     left: -6.025rem;
-//     min-width: 12.5rem;
-//     top: spacing.$spacing-09;
-//   }
-// }
-
-// .cds--overflow-menu--flip {
-//   &.cds--overflow-menu-options[data-floating-menu-direction="bottom"] {
-//     &::after {
-//       top: 0;
-//       height: 0;
-//       width: 0;
-//       left: 0;
-//     }
-//   }
-// }
-
-// .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction) {
-//   &::after {
-//     @include brand-03(background-color);
-//   }
-// }
-
-// .cds--pagination-nav__page .cds--pagination-nav__page--active,
-// .cds--pagination-nav__page:focus {
-//   outline: 2px solid var(--brand-03);
-// }
+.cds--header-panel--expanded {
+  border-left: none;
+  border-right: none;
+}
 
 /* Content Switcher */
+.cds--content-switcher-btn {
+  background-color: $ui-02;
+  border: 1px solid #a6c8ff;
+  color: $text-02;
 
-// .cds--content-switcher-btn {
-//   background-color: $ui-02;
-//   border: 1px solid #a6c8ff;
-//   color: $text-02;
+  &::after {
+    background-color: transparent;
+  }
 
-//   &:first-of-type[aria-selected="false"] {
-//     border-right: 0;
-//   }
+  &.cds--content-switcher--selected {
+    background-color: $color-blue-10;
+    border: 1px solid $interactive-01;
+    color: $interactive-01;
 
-//   &:last-of-type[aria-selected="false"] {
-//     border-left: 0;
-//   }
+    &:active {
+      background-color: $color-blue-10;
+    }
 
-//   &:focus,
-//   &:hover {
-//     background-color: $color-blue-10;
-//     color: $interactive-01;
-//   }
+    &::after {
+      background-color: $color-blue-10;
+    }
+  }
 
-//   &.cds--content-switcher--selected {
-//     background-color: $color-blue-10;
-//     border: 1px solid $interactive-01;
-//     color: $interactive-01;
-//   }
-// }
+  &:first-of-type[aria-selected="false"] {
+    border-right: 0;
+  }
 
-// .cds--content-switcher-btn:before {
-//   display: none;
-// }
+  &:last-of-type[aria-selected="false"] {
+    border-left: 0;
+  }
 
-/* Tabs Overrides */
+  &:first-child,
+  &:last-child {
+    // border-right: 0.0625rem solid #a6c8ff;
+    border: 0;
+  }
 
-// .cds--tabs--scrollable
-//   .cds--tabs--scrollable__nav-item--selected
-//   .cds--tabs--scrollable__nav-link,
-// .cds--tabs--scrollable
-//   .cds--tabs--scrollable__nav-item--selected
-//   .cds--tabs--scrollable__nav-link:active,
-// .cds--tabs--scrollable
-//   .cds--tabs--scrollable__nav-item--selected
-//   .cds--tabs--scrollable__nav-link:focus {
-//   border-bottom: 2px solid var(--brand-03);
-// }
+  &:focus,
+  &:hover {
+    background-color: $ui-01;
+    color: $interactive-01;
+  }
+}
 
-// .cds--tabs--scrollable.cds--tabs--scrollable--container
-//   .cds--tabs--scrollable__nav-item--selected
-//   .cds--tabs--scrollable__nav-link {
-//   box-shadow: inset 0 2px 0 0 var(--brand-03);
-// }
+.cds--content-switcher-btn:before {
+  display: none;
+}
 
-// .cds--tabs--scrollable .cds--tabs--scrollable__nav-link:active,
-// .cds--tabs--scrollable .cds--tabs--scrollable__nav-link:focus {
-//   outline: 2px solid var(--brand-03);
-// }
+/* Tabs */
+.cds--tabs--scrollable
+  .cds--tabs--scrollable__nav-item--selected
+  .cds--tabs--scrollable__nav-link,
+.cds--tabs--scrollable
+  .cds--tabs--scrollable__nav-item--selected
+  .cds--tabs--scrollable__nav-link:active,
+.cds--tabs--scrollable
+  .cds--tabs--scrollable__nav-item--selected
+  .cds--tabs--scrollable__nav-link:focus {
+  border-bottom: 2px solid var(--brand-03);
+}
+
+.cds--tabs--scrollable.cds--tabs--scrollable--container
+  .cds--tabs--scrollable__nav-item--selected
+  .cds--tabs--scrollable__nav-link {
+  box-shadow: inset 0 2px 0 0 var(--brand-03);
+}
+
+.cds--tabs--scrollable .cds--tabs--scrollable__nav-link:active,
+.cds--tabs--scrollable .cds--tabs--scrollable__nav-link:focus {
+  outline: 2px solid var(--brand-03);
+}
+
+/* DataTables */
+.cds--data-table,
+.cds--data-table-header,
+.cds--table-toolbar,
+.cds--data-table tbody {
+  background: transparent;
+}
+
+.cds--data-table-container {
+  background: $ui-02;
+  position: relative;
+}
+
+.cds--table-toolbar {
+  position: absolute;
+  top: 2px;
+}
+
+.cds--data-table-header {
+  padding: spacing.$spacing-04;
+  text-align: start;
+}
+
+.cds--data-table-header__title {
+  font-size: spacing.$spacing-05;
+  font-weight: 600;
+  color: $text-02;
+}
+
+.cds--data-table thead,
+.cds--data-table tr,
+.cds--data-table td,
+.cds--data-table--sort th,
+.cds--data-table--sort th .cds--table-sort__flex {
+  height: spacing.$spacing-07;
+  min-height: unset;
+  color: $text-02;
+}
+
+/* Misc */
+.cds--btn--primary,
+.cds--btn--primary:active,
+.cds--btn--tertiary:hover,
+.cds--btn--tertiary:active,
+.cds--btn--tertiary:focus {
+  @include brand-01(background-color);
+}
+
+.cds--btn--primary:hover {
+  @include brand-02(background-color);
+}
+
+.cds--btn--tertiary {
+  @include brand-03(color);
+}
+
+.cds--btn--tertiary,
+.cds--btn--primary:focus,
+.cds--btn--tertiary:focus {
+  @include brand-03(border-color);
+}
+
+.cds--btn--tertiary:hover,
+.cds--btn--tertiary:active,
+.cds--btn--tertiary:focus {
+  color: $ui-02;
+}
+
+.cds--overflow-menu--flip {
+  &.cds--overflow-menu-options {
+    background-color: $openmrs-background-grey;
+    left: -6.025rem;
+    min-width: 12.5rem;
+    top: spacing.$spacing-09;
+  }
+}
+
+.cds--overflow-menu--flip {
+  &.cds--overflow-menu-options[data-floating-menu-direction="bottom"] {
+    &::after {
+      top: 0;
+      height: 0;
+      width: 0;
+      left: 0;
+    }
+  }
+}
+
+.cds--pagination-nav__page:not(.cds--pagination-nav__page--direction) {
+  &::after {
+    @include brand-03(background-color);
+  }
+}
+
+.cds--pagination-nav__page .cds--pagination-nav__page--active,
+.cds--pagination-nav__page:focus {
+  outline: 2px solid var(--brand-03);
+}

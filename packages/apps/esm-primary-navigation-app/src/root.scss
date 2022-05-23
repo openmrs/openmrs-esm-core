@@ -20,22 +20,3 @@
 .primaryNavContainer {
   height: var(--omrs-topnav-height);
 }
-
-// Overrides
-:global(.cds--header) {
-  @include brand-01(background-color);
-  border-bottom: none;
-}
-
-:global(.cds--header-panel) {
-  @include brand-02(background-color);
-}
-
-:global(.cds--btn.cds--btn--icon-only.cds--header__action svg) {
-  fill: white;
-}
-
-:global(.cds--header-panel--expanded) {
-  border-left: none;
-  border-right: none;
-}

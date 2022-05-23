@@ -6,16 +6,15 @@
 }
 
 .headerGlobalBarButton {
-  background-color: var(--brand-02);
+  @include brand-02(background-color);
 }
 
 .topNavHeader {
   top: var(--omrs-offline-banner-height);
-  // background-color: var(--brand-01);
 }
 
 .activePanel {
-  // background-color: var(--brand-01);
+  @include brand-01(background-color);
 }
 
 .headerMenuButton {
