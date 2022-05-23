@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import styles from "./popup.styles.scss";
 import { Button, ContentSwitcher, Switch } from "@carbon/react";
 import { Close } from "@carbon/icons-react";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependencies.component";
 import { FrontendModule } from "../backend-dependencies/openmrs-backend-dependencies";
+import styles from "./popup.styles.scss";
 
 interface DevToolsPopupProps {
   close(): void;

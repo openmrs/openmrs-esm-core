@@ -11,6 +11,7 @@ import {
   TableContainer,
 } from "@carbon/react";
 import { FrontendModule } from "./openmrs-backend-dependencies";
+import styles from "./backend-dependencies.styles.scss";
 
 export interface ModuleDiagnosticsProps {
   frontendModules: Array<FrontendModule>;
@@ -40,7 +41,7 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
   );
 
   return (
-    <div style={{ height: "50vh", overflowY: "auto" }}>
+    <div className={styles.container}>
       <DataTable rows={[]} headers={headers}>
         {({ headers, getTableProps, getHeaderProps }) => (
           <TableContainer title="">
