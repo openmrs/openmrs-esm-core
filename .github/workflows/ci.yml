@@ -40,7 +40,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
       
-      - name: Run lint and typechecking
+      - name: Run lint, tests and typecheck code
         run: yarn run verify 
       
       - name: Run build
