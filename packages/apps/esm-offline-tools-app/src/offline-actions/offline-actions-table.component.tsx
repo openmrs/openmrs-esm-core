@@ -29,6 +29,7 @@ import {
   SyncItem,
   canBeginEditSynchronizationItemsOfType,
   beginEditSynchronizationItem,
+  isDesktop,
 } from "@openmrs/esm-framework/src/internal";
 
 export interface SyncItemWithPatient {
@@ -63,7 +64,7 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
   const [pageSize, setPageSize] = useState(10);
   const { results, currentPage, goTo } = usePagination(data);
   const layout = useLayoutType();
-  const toolbarItemSize = layout === "desktop" ? "sm" : undefined;
+  const toolbarItemSize = isDesktop(layout) ? "sm" : undefined;
   const defaultHeaders: Array<DataTableHeader<OfflineActionsTableHeaders>> = [
     {
       key: "createdOn",

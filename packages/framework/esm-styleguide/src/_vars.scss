@@ -48,9 +48,11 @@ $labeldropdown: #c6c6c6;
 $breakpoint-phone-min: 0px;
 $breakpoint-phone-max: 600px;
 $breakpoint-tablet-min: 601px;
-$breakpoint-tablet-max: 1200px;
-$breakpoint-desktop-min: 1201px;
-$breakpoint-desktop-max: 99999999px;
+$breakpoint-tablet-max: 1023px;
+$breakpoint-small-desktop-min: 1024px;
+$breakpoint-small-desktop-max: 1439px;
+$breakpoint-large-desktop-min: 1440px;
+$breakpoint-large-desktop-max: 99999999px;
 
 /* These color variables will be removed in a future release */
 $brand-teal-01: #007d79;

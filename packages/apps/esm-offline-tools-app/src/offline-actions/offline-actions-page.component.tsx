@@ -1,6 +1,7 @@
 import React from "react";
 import {
   getOfflineSynchronizationStore,
+  isDesktop,
   runSynchronization,
   useLayoutType,
   useStore,
@@ -32,12 +33,12 @@ const OfflineActionsPage: React.FC<OfflineActionsPageProps> = ({
   const primaryActions = (
     <Button
       className={styles.primaryActionButton}
-      size={layout === "desktop" ? "sm" : undefined}
-      renderIcon={layout === "desktop" ? Renew16 : undefined}
+      size={isDesktop(layout) ? "sm" : undefined}
+      renderIcon={isDesktop(layout) ? Renew16 : undefined}
       disabled={isSynchronizing}
       onClick={synchronize}
     >
-      {layout !== "desktop" && <Renew16 className={styles.buttonInlineIcon} />}
+      {!isDesktop(layout) && <Renew16 className={styles.buttonInlineIcon} />}
       {t("offlineActionsUpdateOfflinePatients", "Update offline patients")}
     </Button>
   );

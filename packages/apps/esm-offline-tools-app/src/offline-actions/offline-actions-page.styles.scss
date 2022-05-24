@@ -8,7 +8,7 @@
   margin-right: $spacing-05;
 }
 
-:global(.omrs-breakpoint-lt-desktop) .primaryActionButton {
+:global(.omrs-breakpoint-lt-small-desktop) .primaryActionButton {
   position: fixed;
   bottom: $spacing-05;
   right: $spacing-05;
