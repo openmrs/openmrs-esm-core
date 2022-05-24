@@ -1693,24 +1693,16 @@
   resolved "https://registry.yarnpkg.com/@jsenv/dynamic-import-worker/-/dynamic-import-worker-1.0.1.tgz#e92ac0bc0dbb30e7e6c9ff06429194aed6f045c3"
   integrity sha512-2GQac9lkM2PMBNKPBq1YmwBucID4SlaDChaa4OYdEbha1hfr+/0bgLV9AHITbJnm4pfVCQfTrBxmz+KOSQTpNQ==
 
-"@jsenv/file-size-impact@12.1.10":
-  version "12.1.10"
-  resolved "https://registry.yarnpkg.com/@jsenv/file-size-impact/-/file-size-impact-12.1.10.tgz#e5b7dc9ab5b59175a5149aabf637d305f980ca7f"
-  integrity sha512-LVyPb7RbpTFd0yhJnqgJeSiIewQeeoKUsOYzmqoWGsWmFOdZfJt8HZSV/v4MpWHLNbLKVBgcwD8JcxR8nNra2g==
+"@jsenv/file-size-impact@^12.1.12":
+  version "12.1.12"
+  resolved "https://registry.yarnpkg.com/@jsenv/file-size-impact/-/file-size-impact-12.1.12.tgz#6ba1e3dffc9332bb7e39a8feb6daec9db5525fb6"
+  integrity sha512-W+RxkGAi21G0cUiExipSARycgN7A3pkN15wdl2zNvqHVHDSw4S8AsxWGhA+60RZPXc29BoEt2FdV/XDQFXHxOA==
   dependencies:
     "@jsenv/dynamic-import-worker" "1.0.1"
     "@jsenv/filesystem" "3.1.0"
-    "@jsenv/github-pull-request-impact" "1.6.10"
+    "@jsenv/github-pull-request-impact" "1.6.11"
     "@jsenv/logger" "4.0.1"
     pretty-bytes "6.0.0"
-
-"@jsenv/filesystem@2.7.1":
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/@jsenv/filesystem/-/filesystem-2.7.1.tgz#a855ec52606e231938fe8cdde74dad3e20571af9"
-  integrity sha512-uk0zA95FpubXF+Knb8sjefYhr+rYNzhMPnweQEeSe8fLbDuNiCd6XHtgNHW74aQ+nV48b5Ucpxf3K3cwmKwhXw==
-  dependencies:
-    "@jsenv/abort" "4.1.2"
-    "@jsenv/url-meta" "6.0.3"
 
 "@jsenv/filesystem@3.1.0":
   version "3.1.0"
@@ -1720,12 +1712,12 @@
     "@jsenv/abort" "4.1.2"
     "@jsenv/url-meta" "6.0.3"
 
-"@jsenv/github-pull-request-impact@1.6.10":
-  version "1.6.10"
-  resolved "https://registry.yarnpkg.com/@jsenv/github-pull-request-impact/-/github-pull-request-impact-1.6.10.tgz#f0d6ab6c22ce716d3efacb0e4fd3046852ebd02e"
-  integrity sha512-CJEHpOR9eg92HLfRhFrFlnMCeBonJMZQ5qza1Cr1lZJTW9QWOLsZ71LOBffRnfybh+7lvf1kG9Njih0s22VikQ==
+"@jsenv/github-pull-request-impact@1.6.11":
+  version "1.6.11"
+  resolved "https://registry.yarnpkg.com/@jsenv/github-pull-request-impact/-/github-pull-request-impact-1.6.11.tgz#f69172e5d7282fc935349ade0adc96cc6c6b7a3b"
+  integrity sha512-h8HgK/6zlVsUPI1sjuUSJD3sTuwJBCqD8gKpjmiBGQkMRx+SZrEcrMfL6eQBeRViByE5i5BSMRoJzoQHX7EOBA==
   dependencies:
-    "@jsenv/filesystem" "2.7.1"
+    "@jsenv/filesystem" "3.1.0"
     "@jsenv/logger" "4.0.1"
     node-fetch "2.6.7"
 
