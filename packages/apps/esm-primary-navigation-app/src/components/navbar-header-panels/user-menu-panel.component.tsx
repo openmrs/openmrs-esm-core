@@ -9,6 +9,7 @@ import { UserSession } from "../../types";
 import styles from "../../root.scss";
 
 interface UserMenuPanelProps extends HeaderPanelProps {
+  expanded: boolean;
   user: LoggedInUser;
   allowedLocales: any;
   onLogout(): void;
@@ -16,7 +17,7 @@ interface UserMenuPanelProps extends HeaderPanelProps {
   hidePanel: () => void;
 }
 
-const UserMenuPanel: React.FC<any> = ({
+const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
   expanded,
   user,
   allowedLocales,
