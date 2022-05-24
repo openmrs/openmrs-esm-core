@@ -17,6 +17,7 @@ export {
   validators,
   validator,
 } from "@openmrs/esm-config";
+export { isDesktop } from "@openmrs/esm-react-utils";
 
 window.i18next = { ...window.i18next, language: "en" };
 
