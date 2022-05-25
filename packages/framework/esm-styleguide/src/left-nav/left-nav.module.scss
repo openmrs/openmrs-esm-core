@@ -1,6 +1,5 @@
+@use "@carbon/styles/scss/type";
 @import "../vars";
-@import "carbon-components/scss/globals/scss/typography.scss";
-@import "~carbon-components/scss/globals/scss/_spacing.scss";
 
 :global(.active-left-nav-link) {
   background-color: $ui-03;
@@ -13,16 +12,7 @@
   height: 2.5rem;
   color: $ui-04;
   border-left: 0.25rem solid transparent;
-  @include carbon--type-style("productive-heading-01");
-  // Below are styles from bx--side-nav__link
-  align-items: center;
-  display: flex;
-  outline: 2px solid transparent;
-  outline-offset: -2px;
-  padding: 0 1rem;
-  position: relative;
-  text-decoration: none;
-  transition: color 0.11s, background-color 0.11s, outline 0.11s;
+  @include type.type-style("heading-compact-01");
 }
 
 :global(.omrs-breakpoint-gt-tablet) .leftNav > div {

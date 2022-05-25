@@ -1,65 +1,31 @@
-@import "~carbon-components/scss/globals/scss/vendor/@carbon/elements/scss/type/styles";
-@import "~carbon-components/src/globals/scss/vendor/@carbon/layout/scss/generated/spacing";
-@import "~carbon-components/src/globals/scss/vendor/@carbon/layout/scss/generated/layout";
+@use "@carbon/styles/scss/type";
+@use "@carbon/styles/scss/spacing";
 @import "~@openmrs/esm-styleguide/src/vars";
-@import "carbon-components/scss/globals/scss/typography.scss";
 
 .productiveHeading01 {
-  @include carbon--type-style("productive-heading-01");
-}
-
-.productiveHeading02 {
-  @include carbon--type-style("productive-heading-02");
+  @include type.type-style("heading-compact-01");
 }
 
 .productiveHeading03 {
-  @include carbon--type-style("productive-heading-03");
-}
-
-.productiveHeading04 {
-  @include carbon--type-style("productive-heading-04");
-}
-
-.productiveHeading05 {
-  @include carbon--type-style("productive-heading-05");
-}
-
-.productiveHeading06 {
-  @include carbon--type-style("productive-heading-06");
+  @include type.type-style("heading-03");
 }
 
 .bodyShort01 {
-  @include carbon--type-style("body-short-01");
+  @include type.type-style("body-compact-01");
 }
 
 .bodyShort02 {
-  @include carbon--type-style("body-short-02");
+  @include type.type-style("body-compact-02");
 }
 
 .bodyLong01 {
-  @include carbon--type-style("body-long-01");
-}
-
-.bodyLong02 {
-  @include carbon--type-style("body-long-02");
+  @include type.type-style("body-01");
 }
 
 .label01 {
-  @include carbon--type-style("label-01");
+  @include type.type-style("label-01");
 }
 
 .caption01 {
-  @include carbon--type-style("caption-01");
-}
-
-.helperText01 {
-  @include carbon--type-style("helper-text-01");
-}
-
-.text01 {
-  color: $text-01;
-}
-
-.text02 {
-  color: $text-02;
+  @include type.type-style("legal-01");
 }

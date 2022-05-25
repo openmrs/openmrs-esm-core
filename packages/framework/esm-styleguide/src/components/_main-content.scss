@@ -14,9 +14,9 @@
   --omrs-offline-banner-height: 1.5rem;
   --omrs-topnav-height: 4.5rem;
 
-  .bx--side-nav,
-  .bx--header-panel--expanded,
-  .bx--side-nav__overlay {
+  .cds--side-nav,
+  .cds--header-panel--expanded,
+  .cds--side-nav__overlay {
     top: var(--omrs-topnav-height);
   }
 }

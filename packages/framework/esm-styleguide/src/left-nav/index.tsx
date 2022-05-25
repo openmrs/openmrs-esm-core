@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import { ExtensionSlot, useStore } from "@openmrs/esm-react-utils";
 import { createGlobalStore } from "@openmrs/esm-state";
-import { SideNav, SideNavProps } from "carbon-components-react";
+import { SideNav, SideNavProps } from "@carbon/react";
 import styles from "./left-nav.module.scss";
 
 interface LeftNavStore {

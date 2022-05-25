@@ -9,6 +9,7 @@ import * as singleSpa from "single-spa";
 // of @openmrs/esm-framework. There's no point loading both.
 import * as openmrsEsmFrameworkInternal from "@openmrs/esm-framework/src/internal";
 import * as carbonComponents from "@carbon/react";
+import * as carbonIcons from "@carbon/react/icons";
 import * as rxjs from "rxjs";
 
 (window as any).esmFrameworkInternal = openmrsEsmFrameworkInternal;
@@ -40,5 +41,6 @@ export const sharedDependencies = {
   "@openmrs/esm-utils": () => openmrsEsmFrameworkInternal,
   "@openmrs/esm-offline": () => openmrsEsmFrameworkInternal,
   "carbon-components": () => carbonComponents,
+  "carbon-icons": () => carbonIcons,
   rxjs: () => rxjs,
 };

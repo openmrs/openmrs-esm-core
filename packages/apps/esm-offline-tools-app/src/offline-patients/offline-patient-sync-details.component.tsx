@@ -1,7 +1,7 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { Tile } from "@carbon/react";
+import { useTranslation } from "react-i18next";
+import { Layer, Tile } from "@carbon/react";
 import { CheckmarkFilled, WarningFilled } from "@carbon/react/icons";
 import { getDynamicOfflineDataHandlers } from "@openmrs/esm-framework";
 import { useLastSyncStateOfPatient } from "../hooks/offline-patient-data-hooks";
@@ -34,12 +34,17 @@ const OfflinePatientSyncDetails: React.FC = () => {
               )}
             </h2>
             {succeededHandlers.map((id) => (
-              <Tile className={styles.syncedTile} light>
-                <span className={styles.bodyShort01}>
-                  {handlers.find((handler) => handler.id === id)?.displayName}
-                </span>
-                <CheckmarkFilled className={styles.syncedTileIcon} />
-              </Tile>
+              <Layer>
+                <Tile className={styles.syncedTile}>
+                  <span className={styles.bodyShort01}>
+                    {handlers.find((handler) => handler.id === id)?.displayName}
+                  </span>
+                  <CheckmarkFilled
+                    size={16}
+                    className={styles.syncedTileIcon}
+                  />
+                </Tile>
+              </Layer>
             ))}
           </section>
         )}
@@ -52,22 +57,25 @@ const OfflinePatientSyncDetails: React.FC = () => {
               )}
             </h2>
             {erroredHandlers.map((id) => (
-              <Tile className={styles.failedTile} light>
-                <span className={styles.bodyShort01}>
-                  {handlers.find((handler) => handler.id === id)?.displayName}
-                </span>
-                <WarningFilled className={styles.failedTileIcon} />
-                <span
-                  className={`${styles.failedTileErrorMessage} ${styles.label01}`}
-                >
-                  {lastSyncState.errors.find((error) => error.handlerId === id)
-                    ?.message ??
-                    t(
-                      "offlinePatientSyncDetailsFallbackErrorMessage",
-                      "Unknown error."
-                    )}
-                </span>
-              </Tile>
+              <Layer>
+                <Tile className={styles.failedTile}>
+                  <span className={styles.bodyShort01}>
+                    {handlers.find((handler) => handler.id === id)?.displayName}
+                  </span>
+                  <WarningFilled size={16} className={styles.failedTileIcon} />
+                  <span
+                    className={`${styles.failedTileErrorMessage} ${styles.label01}`}
+                  >
+                    {lastSyncState.errors.find(
+                      (error) => error.handlerId === id
+                    )?.message ??
+                      t(
+                        "offlinePatientSyncDetailsFallbackErrorMessage",
+                        "Unknown error."
+                      )}
+                  </span>
+                </Tile>
+              </Layer>
             ))}
           </section>
         )}

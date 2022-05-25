@@ -17,7 +17,7 @@ export default function OfflineToolsNavLink({
         to={
           "${openmrsSpaBase}/" + routes.offlineTools + (page ? `/${page}` : "")
         }
-        className="bx--side-nav__link"
+        className="cds--side-nav__link"
       >
         {title}
       </ConfigurableLink>

@@ -1,17 +1,17 @@
-@import "~carbon-components/scss/globals/scss/vendor/@carbon/elements/scss/type/styles";
-@import "~carbon-components/src/globals/scss/vendor/@carbon/layout/scss/generated/spacing";
+@use "@carbon/styles/scss/spacing";
+@use "@carbon/styles/scss/type";
 @import "~@openmrs/esm-styleguide/src/vars";
 
 .productiveHeading01 {
-  @include carbon--type-style("productive-heading-01");
+  @include type.type-style("heading-compact-01");
 }
 
 .productiveHeading02 {
-  @include carbon--type-style("productive-heading-02");
+  @include type.type-style("heading-compact-02");
 }
 
 .bodyShort01 {
-  @include carbon--type-style("body-short-01");
+  @include type.type-style("body-compact-01");
 }
 
 .toolStyles {

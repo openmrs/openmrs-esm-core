@@ -1,3 +1,4 @@
+@use "@carbon/styles/scss/spacing";
 @import "../../root.scss";
 
 .menuLink a {
@@ -21,5 +22,5 @@
 }
 
 .launchIcon {
-  margin-left: $spacing-03;
+  margin-left: spacing.$spacing-03;
 }
