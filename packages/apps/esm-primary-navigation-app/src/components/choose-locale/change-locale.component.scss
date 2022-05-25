@@ -4,33 +4,13 @@
   display: flex;
   flex-direction: column;
 }
-
-.switcherContainer ul {
-  display: flex;
-  flex-direction: row;
-  width: 20rem;
-  justify-content: flex-start;
-  color: $field-01;
-  align-items: center;
-  @extend .productiveHeading01;
-  height: 3rem;
-  cursor: pointer;
+.switcherContainer label {
+  color: $labeldropdown;
 }
-
-.switcherContainer ul > svg {
-  margin: 0rem 0.75rem;
-  fill: $field-01;
-}
-
 .switcherContainer ul button {
   @extend .productiveHeading01;
   width: 100%;
-  background-color: var(--brand-02);
-}
-
-.switcherContainer ul button:hover {
-  color: $field-01;
-  background-color: var(--brand-01);
+  @include brand-02(background-color);
 }
 
 .switcherContainer ul div {
@@ -48,12 +28,12 @@
 }
 
 .switcherContainer ul div button:hover {
-  background-color: var(--brand-01);
+  @include brand-01(background-color);
   color: $inverse-link;
 }
 
 .switcherContainer hr {
   background-color: $ui-background;
-  width: 16rem;
+  width: 18rem;
   margin: 0.5rem 0rem;
 }

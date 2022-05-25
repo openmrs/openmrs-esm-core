@@ -1,7 +1,7 @@
 import React from "react";
-import { ConnectionSignalOff } from "@carbon/react/icons";
+import styles from "./offline-banner.component.scss";
+import ConnectionSignalOff16 from "@carbon/icons-react/es/connection-signal--off/16";
 import { subscribeConnectivity } from "@openmrs/esm-framework";
-import styles from "./offline-banner.scss";
 
 export interface OfflineBannerProps {}
 
@@ -11,7 +11,7 @@ const OfflineBanner: React.FC<OfflineBannerProps> = () => {
   return (
     <aside className={styles.offlineBanner}>
       <div className={styles.offlineIconContainer}>
-        <ConnectionSignalOff size={16} />
+        <ConnectionSignalOff16 />
       </div>
       <span className={styles.offlineNote}>Offline</span>
       <div className={styles.offlineLastUpdatedContainer}>

@@ -1,5 +1,5 @@
+import { SkeletonText } from "carbon-components-react";
 import React, { ReactNode } from "react";
-import { SkeletonText } from "@carbon/react";
 import styles from "./headered-quick-info.styles.scss";
 
 export interface HeaderedQuickInfoProps {

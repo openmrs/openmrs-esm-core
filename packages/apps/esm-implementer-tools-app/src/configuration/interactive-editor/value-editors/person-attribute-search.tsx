@@ -9,7 +9,7 @@ import {
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-} from "@carbon/react";
+} from "carbon-components-react";
 
 interface PersonAttributeTypeSearchBoxProps {
   value: string;

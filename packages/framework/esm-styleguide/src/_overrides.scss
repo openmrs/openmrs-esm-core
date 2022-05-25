@@ -1,66 +1,126 @@
-@use "@carbon/styles/scss/spacing";
-
-/* UI Shell Header */
-.cds--header {
-  @include brand-01(background-color);
-  border-bottom: none;
+.bx--data-table,
+.bx--data-table-header,
+.bx--table-toolbar,
+.bx--data-table tbody {
+  background: transparent;
 }
 
-.cds--header__action:hover {
+.bx--data-table-container {
+  background: $ui-02;
+  position: relative;
+}
+
+.bx--table-toolbar {
+  position: absolute;
+  top: 2px;
+}
+
+.bx--data-table-header {
+  padding: $spacing-04;
+  text-align: start;
+}
+
+.bx--data-table-header__title {
+  font-size: $spacing-05;
+  font-weight: 600;
+  color: $text-02;
+}
+
+.bx--data-table thead,
+.bx--data-table tr,
+.bx--data-table td,
+.bx--data-table--sort th,
+.bx--data-table--sort th .bx--table-sort__flex {
+  height: $spacing-07;
+  min-height: unset;
+  color: $text-02;
+}
+
+.bx--btn--primary,
+.bx--btn--primary:active,
+.bx--btn--tertiary:hover,
+.bx--btn--tertiary:active,
+.bx--btn--tertiary:focus {
+  @include brand-03(background-color);
+}
+
+.bx--btn--primary:hover {
+  @include brand-01(background-color);
+}
+
+.bx--btn--tertiary {
+  @include brand-03(color);
+}
+
+.bx--btn--tertiary,
+.bx--btn--primary:focus,
+.bx--btn--tertiary:focus {
+  @include brand-03(border-color);
+}
+
+.bx--btn--tertiary:hover,
+.bx--btn--tertiary:active,
+.bx--btn--tertiary:focus {
+  color: $ui-02;
+}
+
+/* UI Shell header */
+
+.bx--header {
+  @include brand-01(background-color);
+  @include brand-02(border-bottom);
+}
+
+.bx--header__action:hover {
   @include brand-02(background-color);
 }
 
-.cds--header__action--active {
+.bx--header-panel {
+  @include brand-02(background-color);
+}
+
+.bx--header__action--active {
   @include brand-02(background-color);
   @include brand-02(border-color);
 }
 
-.cds--header-panel {
-  @include brand-02(background-color);
+.bx--overflow-menu--flip {
+  &.bx--overflow-menu-options {
+    background-color: $openmrs-background-grey;
+    left: -6.025rem;
+    min-width: 12.5rem;
+    top: $spacing-09;
+  }
 }
 
-.cds--header__menu-trigger > svg,
-.cds--header__menu-trigger:hover > svg,
-.cds--btn.cds--btn--icon-only.cds--header__action svg,
-.cds--btn.cds--btn--icon-only.cds--header__action:hover svg {
-  fill: white;
+.bx--overflow-menu--flip {
+  &.bx--overflow-menu-options[data-floating-menu-direction="bottom"] {
+    &::after {
+      top: 0;
+      height: 0;
+      width: 0;
+      left: 0;
+    }
+  }
 }
 
-.cds--header-panel--expanded {
-  border-left: none;
-  border-right: none;
+.bx--pagination-nav__page:not(.bx--pagination-nav__page--direction) {
+  &::after {
+    @include brand-03(background-color);
+  }
+}
+
+.bx--pagination-nav__page .bx--pagination-nav__page--active,
+.bx--pagination-nav__page:focus {
+  outline: 2px solid var(--brand-03);
 }
 
 /* Content Switcher */
-.cds--content-switcher-btn {
+
+.bx--content-switcher-btn {
   background-color: $ui-02;
-  border-top: 1px solid #a6c8ff;
-  border-bottom: 1px solid #a6c8ff;
+  border: 1px solid #a6c8ff;
   color: $text-02;
-
-  &:first-child,
-  &:last-child {
-    border-left: 0.0625rem solid #a6c8ff;
-    border-right: 0.0625rem solid #a6c8ff;
-  }
-
-  &::after {
-    background-color: transparent;
-  }
-
-  &.cds--content-switcher--selected {
-    background-color: $color-blue-10;
-    border: 1px solid $interactive-01;
-    color: $interactive-01;
-
-    &:active {
-      background-color: $color-blue-10;
-    }
-
-    &::after {
-      background-color: $color-blue-10;
-    }
-  }
 
   &:first-of-type[aria-selected="false"] {
     border-right: 0;
@@ -72,138 +132,42 @@
 
   &:focus,
   &:hover {
-    background-color: $ui-01;
+    background-color: $color-blue-10;
+    color: $interactive-01;
+  }
+
+  &.bx--content-switcher--selected {
+    background-color: $color-blue-10;
+    border: 1px solid $interactive-01;
     color: $interactive-01;
   }
 }
 
-.cds--content-switcher-btn:before {
+.bx--content-switcher-btn:before {
   display: none;
 }
 
-/* Tabs */
-.cds--tabs--scrollable
-  .cds--tabs--scrollable__nav-item--selected
-  .cds--tabs--scrollable__nav-link,
-.cds--tabs--scrollable
-  .cds--tabs--scrollable__nav-item--selected
-  .cds--tabs--scrollable__nav-link:active,
-.cds--tabs--scrollable
-  .cds--tabs--scrollable__nav-item--selected
-  .cds--tabs--scrollable__nav-link:focus {
+/* Tabs Overrides */
+
+.bx--tabs--scrollable
+  .bx--tabs--scrollable__nav-item--selected
+  .bx--tabs--scrollable__nav-link,
+.bx--tabs--scrollable
+  .bx--tabs--scrollable__nav-item--selected
+  .bx--tabs--scrollable__nav-link:active,
+.bx--tabs--scrollable
+  .bx--tabs--scrollable__nav-item--selected
+  .bx--tabs--scrollable__nav-link:focus {
   border-bottom: 2px solid var(--brand-03);
 }
 
-.cds--tabs--scrollable.cds--tabs--scrollable--container
-  .cds--tabs--scrollable__nav-item--selected
-  .cds--tabs--scrollable__nav-link {
+.bx--tabs--scrollable.bx--tabs--scrollable--container
+  .bx--tabs--scrollable__nav-item--selected
+  .bx--tabs--scrollable__nav-link {
   box-shadow: inset 0 2px 0 0 var(--brand-03);
 }
 
-.cds--tabs--scrollable .cds--tabs--scrollable__nav-link:active,
-.cds--tabs--scrollable .cds--tabs--scrollable__nav-link:focus {
+.bx--tabs--scrollable .bx--tabs--scrollable__nav-link:active,
+.bx--tabs--scrollable .bx--tabs--scrollable__nav-link:focus {
   outline: 2px solid var(--brand-03);
-}
-
-/* DataTables */
-.cds--data-table,
-.cds--data-table-header,
-.cds--table-toolbar,
-.cds--data-table tbody {
-  background: transparent;
-}
-
-.cds--data-table-container {
-  background: $ui-02;
-  position: relative;
-}
-
-.cds--table-toolbar {
-  position: absolute;
-  top: 2px;
-}
-
-.cds--data-table-header {
-  padding: spacing.$spacing-04;
-  text-align: start;
-}
-
-.cds--data-table-header__title {
-  font-size: spacing.$spacing-05;
-  font-weight: 600;
-  color: $text-02;
-}
-
-.cds--data-table thead,
-.cds--data-table tr,
-.cds--data-table td,
-.cds--data-table--sort th,
-.cds--data-table--sort th .cds--table-sort__flex {
-  height: spacing.$spacing-07;
-  min-height: unset;
-  color: $text-02;
-}
-
-/* Misc */
-.cds--btn--primary,
-.cds--btn--primary:active,
-.cds--btn--tertiary:hover,
-.cds--btn--tertiary:active,
-.cds--btn--tertiary:focus {
-  @include brand-01(background-color);
-}
-
-.cds--btn--primary:hover {
-  @include brand-02(background-color);
-}
-
-.cds--btn--tertiary {
-  @include brand-03(color);
-}
-
-.cds--btn--tertiary,
-.cds--btn--primary:focus,
-.cds--btn--tertiary:focus {
-  @include brand-03(border-color);
-}
-
-.cds--btn--tertiary:hover,
-.cds--btn--tertiary:active,
-.cds--btn--tertiary:focus {
-  color: $ui-02;
-}
-
-.cds--overflow-menu--flip {
-  &.cds--overflow-menu-options {
-    background-color: $openmrs-background-grey;
-    left: -6.025rem;
-    min-width: 12.5rem;
-    top: spacing.$spacing-09;
-  }
-}
-
-.cds--overflow-menu--flip {
-  &.cds--overflow-menu-options[data-floating-menu-direction="bottom"] {
-    &::after {
-      top: 0;
-      height: 0;
-      width: 0;
-      left: 0;
-    }
-  }
-}
-
-.cds--pagination-nav__page:not(.cds--pagination-nav__page--direction) {
-  &::after {
-    @include brand-03(background-color);
-  }
-}
-
-.cds--pagination-nav__page .cds--pagination-nav__page--active,
-.cds--pagination-nav__page:focus {
-  outline: 2px solid var(--brand-03);
-}
-
-.cds--side-nav {
-  background-color: transparent;
 }

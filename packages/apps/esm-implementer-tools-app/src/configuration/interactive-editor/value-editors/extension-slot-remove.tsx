@@ -1,5 +1,5 @@
 import React from "react";
-import { MultiSelect } from "@carbon/react";
+import { MultiSelect } from "carbon-components-react";
 import { useAssignedExtensions } from "@openmrs/esm-framework";
 
 export function ExtensionSlotRemove({

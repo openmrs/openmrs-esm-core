@@ -1,7 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { HeaderGlobalAction } from "@carbon/react";
-import { Close, Tools } from "@carbon/react/icons";
+import Close20 from "@carbon/icons-react/es/close/20";
+import Tools24 from "@carbon/icons-react/es/tools/24";
+import { HeaderGlobalAction } from "carbon-components-react";
 import { UserHasAccess, useStore } from "@openmrs/esm-framework";
 import { implementerToolsStore, togglePopup } from "./store";
 import styles from "./implementer-tools.styles.scss";
@@ -19,7 +20,7 @@ const ImplementerToolsButton: React.FC = () => {
         name="ImplementerToolsIcon"
         onClick={togglePopup}
       >
-        {isOpen ? <Close size={20} /> : <Tools size={20} />}
+        {isOpen ? <Close20 /> : <Tools24 />}
       </HeaderGlobalAction>
     </UserHasAccess>
   );

@@ -1,6 +1,6 @@
 /** @module @category UI */
 import React, { useEffect, useState } from "react";
-import { ToastNotification } from "@carbon/react";
+import { ToastNotification } from "carbon-components-react";
 
 const defaultOptions = {
   millis: 5000,

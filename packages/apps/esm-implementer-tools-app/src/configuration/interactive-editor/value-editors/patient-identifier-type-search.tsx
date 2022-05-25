@@ -11,7 +11,7 @@ import {
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-} from "@carbon/react";
+} from "carbon-components-react";
 
 interface PatientIdentifierTypeSearchBoxProps {
   value: string;

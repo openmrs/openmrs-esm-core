@@ -5,13 +5,13 @@ import {
   useLayoutType,
   useStore,
 } from "@openmrs/esm-framework/src/internal";
-import { Button } from "@carbon/react";
-import { Renew } from "@carbon/react/icons";
+import { Button } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
-import { usePendingSyncItems } from "../hooks/offline-actions";
 import SharedPageLayout from "../components/shared-page-layout.component";
-import OfflineActions from "./offline-actions.component";
 import styles from "./offline-actions-page.styles.scss";
+import Renew16 from "@carbon/icons-react/es/renew/16";
+import OfflineActions from "./offline-actions.component";
+import { usePendingSyncItems } from "../hooks/offline-actions";
 
 export interface OfflineActionsPageProps {
   canSynchronizeOfflineActions: boolean;
@@ -33,15 +33,11 @@ const OfflineActionsPage: React.FC<OfflineActionsPageProps> = ({
     <Button
       className={styles.primaryActionButton}
       size={layout === "desktop" ? "sm" : undefined}
-      renderIcon={(props) =>
-        layout === "desktop" && <Renew size={16} {...props} />
-      }
+      renderIcon={layout === "desktop" ? Renew16 : undefined}
       disabled={isSynchronizing}
       onClick={synchronize}
     >
-      {layout !== "desktop" && (
-        <Renew size={16} className={styles.buttonInlineIcon} />
-      )}
+      {layout !== "desktop" && <Renew16 className={styles.buttonInlineIcon} />}
       {t("offlineActionsUpdateOfflinePatients", "Update offline patients")}
     </Button>
   );

@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import isEqual from "lodash-es/isEqual";
 import unset from "lodash-es/unset";
 import cloneDeep from "lodash-es/cloneDeep";
+import Reset16 from "@carbon/icons-react/es/reset/16";
+import Edit16 from "@carbon/icons-react/es/edit/16";
 import styles from "./editable-value.styles.scss";
-import { Button } from "@carbon/react";
-import { Edit, Reset } from "@carbon/react/icons";
+import { Button } from "carbon-components-react";
 import {
   ConfigValue,
   Validator,
@@ -124,12 +125,12 @@ export default function EditableValue({
               iconDescription={t("editValueButtonText", "Edit")}
               onClick={() => setEditing(true)}
               ref={activeConfigRef}
-              renderIcon={(props) => <Edit size={16} {...props} />}
+              renderIcon={Edit16}
               hasIconOnly
             />
             {element._source == "temporary config" ? (
               <Button
-                renderIcon={(props) => <Reset size={16} {...props} />}
+                renderIcon={Reset16}
                 size="sm"
                 kind="ghost"
                 iconDescription={t(

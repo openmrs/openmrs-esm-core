@@ -1,17 +1,15 @@
-@use "@carbon/styles/scss/spacing";
-@import "~@openmrs/esm-styleguide/src/vars";
 @import "../root.scss";
 
 .contentContainer {
-  padding: 0 spacing.$spacing-05;
+  padding: 0 $spacing-05;
   max-width: 800px;
 }
 
 .headeredTileSection {
-  margin-bottom: spacing.$spacing-09;
+  margin-bottom: $spacing-09;
 
   .productiveHeading02 {
-    margin-bottom: spacing.$spacing-03;
+    margin-bottom: $spacing-03;
   }
 }
 
@@ -19,20 +17,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: spacing.$spacing-03;
+  margin-bottom: $spacing-03;
 }
 
 .failedTile {
-  margin-bottom: spacing.$spacing-03;
+  margin-bottom: $spacing-03;
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr auto;
   align-items: center;
-  row-gap: spacing.$spacing-05;
+  row-gap: $spacing-05;
 }
 
 .failedTileErrorMessage {
-  // color: $support-01;
+  color: $support-01;
 }
 
 .syncedTileIcon {
@@ -40,5 +38,5 @@
 }
 
 .failedTileIcon {
-  // color: $support-01;
+  color: $support-01;
 }

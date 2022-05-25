@@ -1,5 +1,3 @@
-@use "@carbon/styles/scss/spacing";
-@import "~@openmrs/esm-styleguide/src/vars";
 @import "../root.scss";
 
 .overviewCard {
@@ -14,6 +12,6 @@
   .contentContainer {
     display: flex;
     justify-content: space-between;
-    margin-top: spacing.$spacing-05;
+    margin-top: $spacing-05;
   }
 }

@@ -1,13 +1,13 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
-import { HeaderPanel } from "@carbon/react";
-import { Launch } from "@carbon/react/icons";
+import styles from "./app-menu-panel.component.scss";
 import {
   ExtensionSlot,
   useOnClickOutside,
   useConfig,
 } from "@openmrs/esm-framework";
-import styles from "./app-menu-panel.scss";
+import { HeaderPanel } from "carbon-components-react";
+import Launch16 from "@carbon/icons-react/es/launch/16";
+import { useTranslation } from "react-i18next";
 
 interface AppMenuProps {
   expanded: boolean;
@@ -35,7 +35,7 @@ const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
           {config?.externalRefLinks?.map((link) => (
             <a target="_blank" rel="noopener noreferrer" href={link?.redirect}>
               {t(link?.title)}
-              <Launch size={16} className={styles.launchIcon} />
+              <Launch16 className={styles.launchIcon} />
             </a>
           ))}
         </div>

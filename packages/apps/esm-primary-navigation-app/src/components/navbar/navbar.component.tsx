@@ -12,17 +12,19 @@ import {
   HeaderMenuButton,
   HeaderGlobalBar,
   HeaderGlobalAction,
-} from "@carbon/react";
-import { Close, Switcher, UserAvatarFilledAlt } from "@carbon/react/icons";
+} from "carbon-components-react";
+import { isDesktop } from "../../utils";
+import { UserSession } from "../../types";
+import Close20 from "@carbon/icons-react/es/close/20";
+import Switcher20 from "@carbon/icons-react/es/switcher/20";
+import UserAvatarFilledAlt20 from "@carbon/icons-react/es/user--avatar--filled--alt/20";
 import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
 import UserMenuPanel from "../navbar-header-panels/user-menu-panel.component";
 import NotificationsMenuPanel from "../navbar-header-panels/notifications-menu-panel.component";
 import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
 import Logo from "../logo/logo.component";
+import styles from "./navbar.component.scss";
 import OfflineBanner from "../offline-banner/offline-banner.component";
-import { isDesktop } from "../../utils";
-import { UserSession } from "../../types";
-import styles from "./navbar.scss";
 
 export interface NavbarProps {
   user: LoggedInUser;
@@ -120,9 +122,9 @@ const Navbar: React.FC<NavbarProps> = ({
               }}
             >
               {isActivePanel("userMenu") ? (
-                <Close size={20} />
+                <Close20 />
               ) : (
-                <UserAvatarFilledAlt size={20} />
+                <UserAvatarFilledAlt20 />
               )}
             </HeaderGlobalAction>
             <HeaderGlobalAction
@@ -140,11 +142,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 event.stopPropagation();
               }}
             >
-              {isActivePanel("appMenu") ? (
-                <Close size={20} />
-              ) : (
-                <Switcher size={20} />
-              )}
+              {isActivePanel("appMenu") ? <Close20 /> : <Switcher20 />}
             </HeaderGlobalAction>
           </HeaderGlobalBar>
           {!isDesktop(layout) && (

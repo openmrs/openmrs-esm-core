@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MultiSelect } from "@carbon/react";
+import { MultiSelect } from "carbon-components-react";
 import {
   ExtensionInternalStore,
   getExtensionInternalStore,

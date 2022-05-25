@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import styles from "./change-locale.scss";
-import { Select, SelectItem } from "@carbon/react";
+import styles from "./change-locale.component.scss";
+import { Select, SelectItem } from "carbon-components-react";
 import { ExtensionSlot, LoggedInUser } from "@openmrs/esm-framework";
 import { PostUserProperties } from "./change-locale.resource";
-import { useTranslation } from "react-i18next";
 
 export interface ChangeLocaleProps {
   allowedLocales: Array<string>;
@@ -16,7 +15,6 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   user,
   postUserProperties,
 }) => {
-  const { t } = useTranslation();
   const [userProps, setUserProps] = useState(user.userProperties);
   const options = allowedLocales?.map((locale) => (
     <SelectItem text={locale} value={locale} key={locale} />
@@ -36,8 +34,8 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
       <Select
         name="selectLocale"
         id="selectLocale"
-        invalidText="A valid locale value is required"
-        labelText={t("selectLocale", "Select locale")}
+        invalidText="A valid value locale is required"
+        labelText="Select locale"
         onChange={(event) =>
           setUserProps({ ...userProps, defaultLocale: event.target.value })
         }
