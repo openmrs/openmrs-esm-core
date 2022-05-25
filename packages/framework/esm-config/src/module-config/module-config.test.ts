@@ -100,6 +100,33 @@ describe("defineConfigSchema", () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 
+  it("runs top-level validators on filled-in config", () => {
+    const schema = {
+      foo: {
+        _type: Type.String,
+        _default: "bar-value",
+      },
+      fooStart: {
+        _type: Type.String,
+        _default: "bar",
+      },
+      _validators: [
+        validator(
+          (v) => v.foo.startsWith(v.fooStart),
+          (v) =>
+            `The value of \`foo\` must start with the value of \`fooStart\` (which is ${v.fooStart}).`
+        ),
+      ],
+    };
+    Config.defineConfigSchema("foo-module", schema);
+    Config.provide({ "foo-module": { foo: "different" } });
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /The value of `foo` must start with the value of `fooStart`.*bar/
+      )
+    );
+  });
+
   it("logs an error if a non-function validator is provided", () => {
     const schema = {
       bar: { _default: [], _validators: [false] },
@@ -263,7 +290,7 @@ describe("getConfig", () => {
     await Config.getConfig("foo-module");
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(
-        /value.*{\"a\":{\"b\":5}\}.*foo-module.bar.*c must equal a\.b \+ diff/
+        /Invalid configuration for foo-module.bar.*c must equal a\.b \+ diff/
       )
     );
 
@@ -357,6 +384,19 @@ describe("getConfig", () => {
     expect(console.error).toHaveBeenCalledWith(
       expect.stringMatching(/bar.*foo.*must start with 'thi'.*/)
     );
+  });
+
+  it("tolerates defaults that don't pass validation", async () => {
+    Config.defineConfigSchema("foo-module", {
+      foo: {
+        _default: null,
+        _validators: [
+          validator((val) => val.startsWith("thi"), "must start with 'thi'"),
+        ],
+      },
+    });
+    await Config.getConfig("foo-module");
+    expect(console.error).not.toHaveBeenCalled();
   });
 
   it("validators pass", async () => {
@@ -658,9 +698,7 @@ describe("getConfig", () => {
     Config.provide(badConfig);
     await Config.getConfig("foo-module");
     expect(console.error).toHaveBeenCalledWith(
-      expect.stringMatching(
-        /value.*{\"a\":{\"b\":1},\"c\":3}.*foo-module.bar\[1\].*c must equal a\.b \+ 1/
-      )
+      expect.stringMatching(/foo-module.bar\[1\].*c must equal a\.b \+ 1/i)
     );
 
     await resetAll();

@@ -1,9 +1,16 @@
-import { isUrl, isUrlWithTemplateParameters } from "./validators";
+import {
+  inRange,
+  isUrl,
+  isUrlWithTemplateParameters,
+  oneOf,
+} from "./validators";
 
 describe("all validators", () => {
   it("fail on undefined", () => {
+    expect(inRange(0, 10)(undefined)).toMatch(/.*/);
     expect(isUrl(undefined)).toMatch(/.*/);
     expect(isUrlWithTemplateParameters(["foo"])(undefined)).toMatch(/.*/);
+    expect(oneOf(["foo", "bar"])(undefined)).toMatch(/.*/);
   });
 });
 
@@ -20,5 +27,15 @@ describe("isUrl", () => {
     expect(isUrl("${foo}/bad")).toMatch(
       /allowed template parameters are \${openmrsBase}, \${openmrsSpaBase}/i
     );
+  });
+});
+
+describe("oneOf", () => {
+  it("accepts one of the valid options", () => {
+    expect(oneOf(["foo", "bar"])("foo")).toBeUndefined();
+  });
+
+  it("rejects anything else", () => {
+    expect(oneOf(["foo", "bar"])("baz")).toMatch(/one of.*foo.*bar/i);
   });
 });

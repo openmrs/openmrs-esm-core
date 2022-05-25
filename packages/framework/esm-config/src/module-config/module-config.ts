@@ -280,8 +280,9 @@ export function processConfig(
   keyPathContext: string,
   devDefaultsAreOn: boolean = false
 ) {
-  validateConfig(schema, providedConfig, keyPathContext);
+  validateStructure(schema, providedConfig, keyPathContext);
   const config = setDefaults(schema, providedConfig, devDefaultsAreOn);
+  runAllValidatorsInConfigTree(schema, config, keyPathContext);
   return config;
 }
 
@@ -326,12 +327,13 @@ function computeExtensionConfig(
   // TODO: validate that a schema exists for the module
   const schema =
     extensionConfigSchema ?? configState.schemas[extensionModuleName];
-  validateConfig(schema, combinedConfig, nameOfSchemaSource);
+  validateStructure(schema, combinedConfig, nameOfSchemaSource);
   const config = setDefaults(
     schema,
     combinedConfig,
     configState.devDefaultsAreOn
   );
+  runAllValidatorsInConfigTree(schema, config, nameOfSchemaSource);
   delete config.extensionSlots;
   return config;
 }
@@ -571,8 +573,9 @@ function getConfigForModule(
     moduleName,
     getProvidedConfigs(configState, tempConfigState)
   );
-  validateConfig(schema, inputConfig, moduleName);
+  validateStructure(schema, inputConfig, moduleName);
   const config = setDefaults(schema, inputConfig, configState.devDefaultsAreOn);
+  runAllValidatorsInConfigTree(schema, config, moduleName);
   delete config.extensionSlots;
   return config;
 }
@@ -593,14 +596,18 @@ function mergeConfigs(configs: Array<Config>) {
   return mergeDeepAll({}, configs) as Config;
 }
 
-// Recursively check the provided config tree to make sure that all
-// of the provided properties exist in the schema. Run validators
-// where present in the schema.
-function validateConfig(
+/**
+ * Recursively check the provided config tree to make sure that all
+ * of the provided properties exist in the schema, and that types are
+ * correct. Does not run validators yet, since those will be run on
+ * the config with the defaults filled in.
+ */
+function validateStructure(
   schema: ConfigSchema,
   config: ConfigObject,
   keyPath = ""
 ) {
+  // validate each constituent element
   for (const key of Object.keys(config)) {
     const value = config[key];
     const thisKeyPath = keyPath + "." + key;
@@ -616,35 +623,34 @@ function validateConfig(
       continue;
     }
 
-    validateConfigElement(schemaPart, value, thisKeyPath);
+    validateBranchStructure(schemaPart, value, thisKeyPath);
   }
 }
 
-function validateConfigElement(
+function validateBranchStructure(
   schemaPart: ConfigSchema,
   value: any,
   keyPath: string
 ) {
   checkType(keyPath, schemaPart._type, value);
-  runValidators(keyPath, schemaPart._validators, value);
 
   if (isOrdinaryObject(value)) {
     // structurally validate only if there's elements specified
-    // or there's a `_default` value, which indicates a freeform object
+    // or there's no `_default` value (which would indicate a freeform object)
     if (schemaPart._type === Type.Object) {
-      validateDictionary(schemaPart, value, keyPath);
+      validateDictionaryStructure(schemaPart, value, keyPath);
     } else if (!schemaPart.hasOwnProperty("_default")) {
       // recurse to validate nested object structure
-      validateConfig(schemaPart, value, keyPath);
+      validateStructure(schemaPart, value, keyPath);
     }
   } else {
     if (schemaPart._type === Type.Array) {
-      validateArray(schemaPart, value, keyPath);
+      validateArrayStructure(schemaPart, value, keyPath);
     }
   }
 }
 
-function validateDictionary(
+function validateDictionaryStructure(
   dictionarySchema: ConfigSchema,
   config: ConfigObject,
   keyPath: string
@@ -652,12 +658,12 @@ function validateDictionary(
   if (dictionarySchema._elements) {
     for (const key of Object.keys(config)) {
       const value = config[key];
-      validateConfig(dictionarySchema._elements, value, `${keyPath}.${key}`);
+      validateStructure(dictionarySchema._elements, value, `${keyPath}.${key}`);
     }
   }
 }
 
-function validateArray(
+function validateArrayStructure(
   arraySchema: ConfigSchema,
   value: ConfigObject,
   keyPath: string
@@ -665,7 +671,7 @@ function validateArray(
   // if there is an array element object schema, verify that elements match it
   if (hasObjectSchema(arraySchema._elements)) {
     for (let i = 0; i < value.length; i++) {
-      validateConfigElement(
+      validateBranchStructure(
         arraySchema._elements,
         value[i],
         `${keyPath}[${i}]`
@@ -675,11 +681,45 @@ function validateArray(
 
   for (let i = 0; i < value.length; i++) {
     checkType(`${keyPath}[${i}]`, arraySchema._elements?._type, value[i]);
-    runValidators(
-      `${keyPath}[${i}]`,
-      arraySchema._elements?._validators,
-      value[i]
-    );
+  }
+}
+
+/**
+ * Run all the validators in the config tree. This should be run
+ * on the config object after it has been filled in with all the defaults, since
+ * higher-level validators may refer to default values.
+ */
+function runAllValidatorsInConfigTree(
+  schema: ConfigSchema,
+  config: ConfigObject,
+  keyPath = ""
+) {
+  // If `!schema`, there should have been a structural validation error printed already.
+  if (schema) {
+    if (config !== schema._default) {
+      runValidators(keyPath, schema._validators, config);
+    }
+
+    if (isOrdinaryObject(config)) {
+      for (const key of Object.keys(config)) {
+        const value = config[key];
+        const thisKeyPath = keyPath + "." + key;
+        const schemaPart = schema[key] as ConfigSchema;
+        if (schema._type === Type.Object && schema._elements) {
+          runAllValidatorsInConfigTree(schema._elements, value, thisKeyPath);
+        } else {
+          runAllValidatorsInConfigTree(schemaPart, value, thisKeyPath);
+        }
+      }
+    } else if (Array.isArray(config) && schema._elements) {
+      for (let i = 0; i < config.length; i++) {
+        runAllValidatorsInConfigTree(
+          schema._elements,
+          config[i],
+          `${keyPath}[${i}]`
+        );
+      }
+    }
   }
 }
 
@@ -711,15 +751,21 @@ function runValidators(
         const validatorResult = validator(value);
 
         if (typeof validatorResult === "string") {
-          const valueString =
-            typeof value === "object" ? JSON.stringify(value) : value;
-          console.error(
-            `Invalid configuration value ${valueString} for ${keyPath}: ${validatorResult}`
-          );
+          if (typeof value === "object") {
+            console.error(
+              `Invalid configuration for ${keyPath}: ${validatorResult}`
+            );
+          } else {
+            console.error(
+              `Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`
+            );
+          }
         }
       }
     } catch (e) {
-      console.error(`Skipping invalid validator at "${keyPath}".`);
+      console.error(
+        `Skipping invalid validator at "${keyPath}". Encountered error\n\t${e}`
+      );
     }
   }
 }
@@ -760,7 +806,7 @@ const setDefaults = (
       const elements = schemaPart._elements;
 
       if (configPart && hasObjectSchema(elements)) {
-        if (schemaPart._type === Type.Array) {
+        if (schemaPart._type === Type.Array && Array.isArray(configPart)) {
           const configWithDefaults = configPart.map((conf: Config) =>
             setDefaults(elements, conf, devDefaultsAreOn)
           );
