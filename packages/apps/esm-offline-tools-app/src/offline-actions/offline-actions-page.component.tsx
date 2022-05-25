@@ -6,12 +6,12 @@ import {
   useStore,
 } from "@openmrs/esm-framework/src/internal";
 import { Button } from "@carbon/react";
+import { Renew } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
-import SharedPageLayout from "../components/shared-page-layout.component";
-import styles from "./offline-actions-page.styles.scss";
-import { Renew } from "@carbon/icons-react";
-import OfflineActions from "./offline-actions.component";
 import { usePendingSyncItems } from "../hooks/offline-actions";
+import SharedPageLayout from "../components/shared-page-layout.component";
+import OfflineActions from "./offline-actions.component";
+import styles from "./offline-actions-page.styles.scss";
 
 export interface OfflineActionsPageProps {
   canSynchronizeOfflineActions: boolean;

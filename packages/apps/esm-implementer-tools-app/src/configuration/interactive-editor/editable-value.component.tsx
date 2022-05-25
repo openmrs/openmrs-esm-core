@@ -4,7 +4,7 @@ import unset from "lodash-es/unset";
 import cloneDeep from "lodash-es/cloneDeep";
 import styles from "./editable-value.styles.scss";
 import { Button } from "@carbon/react";
-import { Edit, Reset } from "@carbon/icons-react";
+import { Edit, Reset } from "@carbon/react/icons";
 import {
   ConfigValue,
   Validator,

@@ -10,7 +10,7 @@ import {
   StructuredListRow,
   StructuredListWrapper,
 } from "@carbon/react";
-import { Add, TrashCan } from "@carbon/icons-react";
+import { Add, TrashCan } from "@carbon/react/icons";
 import { ValueEditorField } from "./value-editor-field";
 import { ConfigValueDescriptor } from "../editable-value.component";
 import styles from "./array-editor.styles.css";

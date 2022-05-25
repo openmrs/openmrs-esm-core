@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, ContentSwitcher, Switch } from "@carbon/react";
-import { Close } from "@carbon/icons-react";
+import { Close } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependencies.component";

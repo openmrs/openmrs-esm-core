@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Button, InlineNotification, TextInput, Tile } from "@carbon/react";
-import { ArrowRight } from "@carbon/icons-react";
+import { ArrowRight } from "@carbon/react/icons";
 import { RouteComponentProps } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useConfig, interpolateUrl, useSession } from "@openmrs/esm-framework";

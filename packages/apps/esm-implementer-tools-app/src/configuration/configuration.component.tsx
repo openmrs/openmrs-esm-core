@@ -13,7 +13,7 @@ import {
   ChevronUp,
   Download,
   TrashCan,
-} from "@carbon/icons-react";
+} from "@carbon/react/icons";
 import cloneDeep from "lodash-es/cloneDeep";
 import isEmpty from "lodash-es/isEmpty";
 import {
@@ -206,7 +206,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 <Button
                   kind="secondary"
                   iconDescription="Download config"
-                  renderIcon={(props) => <Download size={24} {...props} />}
+                  renderIcon={(props) => <Download size={16} {...props} />}
                 >
                   <a
                     className={styles.downloadLink}

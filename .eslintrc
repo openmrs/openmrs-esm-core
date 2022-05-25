@@ -22,7 +22,7 @@
             "message": "Import from `@carbon/react` directly. e.g. `import { Toggle } from '@carbon/react'`"
           },
           {
-            "group": ["@carbon/icons-react/es/*"],
+            "group": ["@carbon/icons-react"],
             "message": "Import from `@carbon/react/icons`. e.g. `import { ChevronUp } from '@carbon/react/icons'`"
           }
         ]

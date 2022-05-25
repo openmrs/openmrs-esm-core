@@ -6,7 +6,7 @@ import {
   useStoreWithActions,
 } from "@openmrs/esm-framework/src/internal";
 import { Button } from "@carbon/react";
-import { Close } from "@carbon/icons-react";
+import { Close } from "@carbon/react/icons";
 import { Portal } from "./portal";
 import { ExtensionOverlay } from "./extension-overlay.component";
 import { ImplementerToolsStore, implementerToolsStore } from "../store";
