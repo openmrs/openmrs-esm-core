@@ -1,8 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { navigate } from "@openmrs/esm-framework";
-import { Button } from "@carbon/react";
-import { Location } from "@carbon/react/icons";
+import { Button } from "carbon-components-react";
+import Location20 from "@carbon/icons-react/es/location/20";
 import styles from "./change-location-link.scss";
 
 interface ChangeLocationLinkProps {
@@ -24,7 +24,7 @@ const ChangeLocationLink: React.FC<ChangeLocationLinkProps> = ({
 
   return (
     <div className={styles.changeLocationLinkContainer}>
-      <Location size={20} />
+      <Location20 />
       <div>
         {currentLocation}
         <Button onClick={changeLocation}>{t("change", "Change")}</Button>

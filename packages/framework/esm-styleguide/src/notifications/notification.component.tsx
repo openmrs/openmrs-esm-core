@@ -1,5 +1,5 @@
 import React from "react";
-import { InlineNotification } from "@carbon/react";
+import { InlineNotification } from "carbon-components-react";
 /** @module @category UI */
 
 export interface NotificationProps {

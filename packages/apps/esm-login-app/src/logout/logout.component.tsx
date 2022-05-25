@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { navigate } from "@openmrs/esm-framework";
-import { Button, Switcher, SwitcherDivider } from "@carbon/react";
+import { Button, Switcher, SwitcherDivider } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import styles from "./logout.scss";
 

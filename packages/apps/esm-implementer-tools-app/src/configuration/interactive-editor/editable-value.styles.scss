@@ -1,4 +1,3 @@
-@use "@carbon/styles/scss/spacing";
 @import "../../implementer-tools.styles.scss";
 
 .secretButton {
@@ -21,9 +20,9 @@
 
 .elementValue {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .editValueButton {
-  margin-left: spacing.$spacing-05;
+  margin-left: $spacing-05;
 }

@@ -1,21 +1,8 @@
 import React, { useMemo, useState } from "react";
-import {
-  Button,
-  Column,
-  FlexGrid,
-  Row,
-  TextInput,
-  Toggle,
-} from "@carbon/react";
-import { useTranslation } from "react-i18next";
-import {
-  ChevronDown,
-  ChevronUp,
-  Download,
-  TrashCan,
-} from "@carbon/react/icons";
-import cloneDeep from "lodash-es/cloneDeep";
-import isEmpty from "lodash-es/isEmpty";
+import ChevronDown16 from "@carbon/icons-react/es/chevron--down/16";
+import ChevronUp16 from "@carbon/icons-react/es/chevron--up/16";
+import Download16 from "@carbon/icons-react/es/download/16";
+import TrashCan16 from "@carbon/icons-react/es/trash-can/16";
 import {
   Config,
   ConfigInternalStore,
@@ -26,9 +13,20 @@ import {
   useStore,
   useStoreWithActions,
 } from "@openmrs/esm-framework/src/internal";
+import {
+  Button,
+  TextInput,
+  Toggle,
+  Grid,
+  Column,
+  Row,
+} from "carbon-components-react";
+import { useTranslation } from "react-i18next";
+import { implementerToolsStore, ImplementerToolsStore } from "../store";
 import { ConfigTree } from "./interactive-editor/config-tree.component";
 import { Description } from "./interactive-editor/description.component";
-import { implementerToolsStore, ImplementerToolsStore } from "../store";
+import cloneDeep from "lodash-es/cloneDeep";
+import isEmpty from "lodash-es/isEmpty";
 import styles from "./configuration.styles.scss";
 
 const JsonEditor = React.lazy(
@@ -73,10 +71,10 @@ const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({
 }) => (
   <Button
     hasIconOnly
-    renderIcon={isConfigToolbarOpen ? ChevronUp : ChevronDown}
+    renderIcon={isConfigToolbarOpen ? ChevronUp16 : ChevronDown16}
     onClick={toggleIsToolbarOpen}
     kind="ghost"
-    size="sm"
+    size="small"
     tooltipPosition="left"
     iconDescription={`${isConfigToolbarOpen ? "Hide" : "Show"} toolbar`}
   />
@@ -160,53 +158,56 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
           />
         </div>
         {isConfigToolbarOpen ? (
-          <FlexGrid style={{ padding: "0.5em 1.5em" }}>
-            <Row className={styles.row}>
-              <Column>
+          <Grid style={{ padding: "0.5em 1.5em" }}>
+            <Row>
+              <Column sm={1} md={2}>
                 <TextInput
                   id="extensionSearch"
                   labelText="Search configuration"
                   onChange={(e) => setFilterText(e.target.value)}
                 />
               </Column>
-              <Column className={styles.toggleButtons}>
+              <Column sm={1} md={1}>
                 <Toggle
-                  className={styles.toggle}
                   id="jsonModeSwitch"
                   labelText={t("jsonEditor", "JSON Editor")}
                   onToggle={toggleIsJsonModeEnabled}
                   toggled={isJsonModeEnabled}
                 />
+              </Column>
+              <Column sm={1} md={1}>
                 <Toggle
-                  className={styles.toggle}
                   id="devConfigSwitch"
                   labelText={t("devConfig", "Dev Config")}
                   onToggle={toggleDevDefaults}
                   toggled={devDefaultsAreOn}
                 />
+              </Column>
+              <Column sm={1} md={1} className={styles.actionButton}>
                 <Toggle
-                  className={styles.toggle}
                   id="uiEditorSwitch"
                   labelText={t("uiEditor", "UI Editor")}
                   toggled={isUIEditorEnabled}
                   onToggle={toggleIsUIEditorEnabled}
                 />
               </Column>
-              <Column className={styles.actionButtons}>
+              <Column sm={1} md={1} className={styles.actionButton}>
                 <Button
                   kind="danger"
                   iconDescription="Clear local config"
-                  renderIcon={(props) => <TrashCan size={16} {...props} />}
+                  renderIcon={TrashCan16}
                   onClick={() => {
                     temporaryConfigStore.setState({ config: {} });
                   }}
                 >
                   {t("clearConfig", "Clear Local Config")}
                 </Button>
+              </Column>
+              <Column sm={1} md={1} className={styles.actionButton}>
                 <Button
                   kind="secondary"
                   iconDescription="Download config"
-                  renderIcon={(props) => <Download size={16} {...props} />}
+                  renderIcon={Download16}
                 >
                   <a
                     className={styles.downloadLink}
@@ -218,7 +219,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 </Button>
               </Column>
             </Row>
-          </FlexGrid>
+          </Grid>
         ) : null}
       </div>
       <div className={styles.mainContent} style={{ height: mainContentHeight }}>

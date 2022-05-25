@@ -1,6 +1,5 @@
-@use "@carbon/styles/scss/spacing";
 @import "../root.scss";
 
 .offlinePatientsTableContainer {
-  padding: spacing.$spacing-05;
+  padding: $spacing-05;
 }

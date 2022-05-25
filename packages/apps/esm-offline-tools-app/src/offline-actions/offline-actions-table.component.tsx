@@ -1,24 +1,6 @@
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  createErrorHandler,
-  usePagination,
-  useLayoutType,
-  navigate,
-  SyncItem,
-  canBeginEditSynchronizationItemsOfType,
-  beginEditSynchronizationItem,
-} from "@openmrs/esm-framework/src/internal";
 import {
   Button,
-  DataTable,
-  DataTableHeader,
-  DataTableSkeleton,
   FilterRowsData,
-  Link,
-  Pagination,
-  Search,
-  SearchSkeleton,
   Table,
   TableBody,
   TableCell,
@@ -28,8 +10,26 @@ import {
   TableRow,
   TableSelectAll,
   TableSelectRow,
-} from "@carbon/react";
+  DataTableSkeleton,
+  Link,
+  Pagination,
+  Search,
+  SearchSkeleton,
+  DataTable,
+  DataTableHeader,
+} from "carbon-components-react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import styles from "./offline-actions-table.styles.scss";
+import {
+  createErrorHandler,
+  usePagination,
+  useLayoutType,
+  navigate,
+  SyncItem,
+  canBeginEditSynchronizationItemsOfType,
+  beginEditSynchronizationItem,
+} from "@openmrs/esm-framework/src/internal";
 
 export interface SyncItemWithPatient {
   item: SyncItem;
@@ -43,8 +43,8 @@ export type OfflineActionsTableHeaders =
   | "error";
 
 export interface OfflineActionsTableProps {
-  data?: Array<SyncItemWithPatient>;
   isLoading: boolean;
+  data?: Array<SyncItemWithPatient>;
   hiddenHeaders?: Array<OfflineActionsTableHeaders>;
   disableEditing: boolean;
   disableDelete: boolean;

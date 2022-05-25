@@ -148,7 +148,7 @@ function renderFatalErrorPage(message: string) {
       const appErrorActionButtons = fragment?.querySelector("#buttons");
       if (appErrorActionButtons) {
         const clearDevOverridesButton = document.createElement("button");
-        clearDevOverridesButton.className = "cds--btn";
+        clearDevOverridesButton.className = "bx--btn";
         clearDevOverridesButton.innerHTML = "Clear dev overrides";
         clearDevOverridesButton.onclick = clearDevOverrides;
         appErrorActionButtons.appendChild(clearDevOverridesButton);

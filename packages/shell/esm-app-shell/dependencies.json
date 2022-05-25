@@ -8,6 +8,7 @@
   "single-spa",
   "@openmrs/esm-framework",
   "@openmrs/esm-framework/src/internal",
-  "@carbon/react",
+  "carbon-components",
+  "carbon-icons",
   "rxjs"
 ]

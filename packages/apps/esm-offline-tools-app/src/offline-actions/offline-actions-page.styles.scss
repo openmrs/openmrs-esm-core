@@ -1,18 +1,17 @@
-@use "@carbon/styles/scss/spacing";
 @import "../root.scss";
 
 .contentContainer {
-  padding: 0 spacing.$spacing-05;
+  padding: 0 $spacing-05;
 }
 
 .buttonInlineIcon {
-  margin-right: spacing.$spacing-05;
+  margin-right: $spacing-05;
 }
 
 :global(.omrs-breakpoint-lt-desktop) .primaryActionButton {
   position: fixed;
-  bottom: spacing.$spacing-05;
-  right: spacing.$spacing-05;
+  bottom: $spacing-05;
+  right: $spacing-05;
   border-radius: 100vh;
-  padding-right: spacing.$spacing-05;
+  padding-right: $spacing-05;
 }

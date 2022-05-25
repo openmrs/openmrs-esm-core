@@ -6,7 +6,7 @@ import {
   useStore,
 } from "@openmrs/esm-framework/src/internal";
 import { getI18n, useTranslation } from "react-i18next";
-import { Loading, NotificationActionButton } from "@carbon/react";
+import { Loading, NotificationActionButton } from "carbon-components-react";
 import styles from "./synchronizing-notification.styles.scss";
 
 let showNewModalOnNextSynchronization = true;

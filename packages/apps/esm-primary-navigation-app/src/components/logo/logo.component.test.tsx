@@ -1,6 +1,6 @@
-import React from "react";
 import { useConfig } from "@openmrs/esm-framework";
 import { cleanup, render, screen } from "@testing-library/react";
+import React from "react";
 import Logo from "./logo.component";
 
 const mockUseConfig = useConfig as jest.Mock;

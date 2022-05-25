@@ -1,12 +1,10 @@
-@use "@carbon/styles/scss/spacing";
-@use "@carbon/styles/scss/type";
 @import "../../../implementer-tools.styles.scss";
 
 .activeUuid {
-  @include type.type-style("body-compact-01");
+  @include carbon--type-style("body-short-01");
   color: $ui-05;
-  margin-bottom: spacing.$spacing-03;
-  padding-bottom: spacing.$spacing-03;
+  margin-bottom: $spacing-03;
+  padding-bottom: $spacing-03;
   border-bottom: 1px solid $ui-03;
 }
 
@@ -17,9 +15,9 @@
 }
 
 .listbox {
-  box-shadow: 0 0 spacing.$spacing-03;
+  box-shadow: 0 0 $spacing-03;
 }
 
 .smallListCell {
-  padding: spacing.$spacing-03;
+  padding: $spacing-03;
 }
