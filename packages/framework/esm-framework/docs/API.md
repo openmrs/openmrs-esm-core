@@ -141,6 +141,7 @@
 
 ### UI Functions
 
+- [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
@@ -161,7 +162,6 @@
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [retry](API.md#retry)
 - [translateFrom](API.md#translatefrom)
-- [isDesktop](API.md#isdesktop)
 
 ## API Type aliases
 
@@ -495,7 +495,7 @@ ___
 
 ### LayoutType
 
-Ƭ **LayoutType**: ``"tablet"`` \| ``"phone"`` \| ``"small-desktop"`` \| ``"large-desktop"``
+Ƭ **LayoutType**: ``"phone"`` \| ``"tablet"`` \| ``"small-desktop"`` \| ``"large-desktop"``
 
 #### Defined in
 
@@ -3415,6 +3415,26 @@ ___
 
 ## UI Functions
 
+### isDesktop
+
+▸ **isDesktop**(`layout`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `layout` | [`LayoutType`](API.md#layouttype) |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useLayoutType.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLayoutType.ts#L40)
+
+___
+
 ### setLeftNav
 
 ▸ **setLeftNav**(`__namedParameters`): `void`
@@ -3837,25 +3857,3 @@ ___
 #### Defined in
 
 [packages/framework/esm-utils/src/translate.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/translate.ts#L4)
-
-___
-
-### isDesktop
-
-▸ **isDesktop**(`layout`): `boolean`
-
-Utility function which returns `true` if `layout` is of type `small-desktop` or `large-desktop`.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `layout` | [`LayoutType`](API.md#layouttype) | Layout type returned by [`useLayoutType()`](API.md#uselayouttype) |
-
-#### Returns
-
-`boolean`
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useLayoutType.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLayoutType.ts#L40)
