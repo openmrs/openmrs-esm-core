@@ -42,9 +42,6 @@
   },
   "peerDependencies": {
     "@openmrs/esm-framework": ">=4.0-pre",
-    "carbon-components": "10.x",
-    "carbon-components-react": "7.x",
-    "carbon-icons": "7.x",
     "react": "18.x",
     "react-dom": "18.x",
     "react-i18next": "11.x",

@@ -62,7 +62,6 @@
     "@openmrs/esm-login-app": "^4.0.0",
     "@openmrs/esm-offline-tools-app": "^4.0.0",
     "@openmrs/esm-primary-navigation-app": "^4.0.0",
-    "carbon-components-react": "7.31.0",
     "ts-loader": "^9.3.0",
     "webpack-pwa-manifest": "^4.3.0",
     "workbox-webpack-plugin": "^6.1.2"
