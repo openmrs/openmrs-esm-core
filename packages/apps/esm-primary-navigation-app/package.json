@@ -37,7 +37,7 @@
     "access": "public"
   },
   "dependencies": {
-    "carbon-components-react": "7.31.0",
+    "@carbon/react": "^1.3.0",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
@@ -54,7 +54,6 @@
   "devDependencies": {
     "@openmrs/esm-framework": "^4.0.0",
     "@openmrs/webpack-config": "^4.0.0",
-    "@types/carbon-components-react": "^7.24.0",
     "jest": "^28.1.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

@@ -1,6 +1,6 @@
 import React from "react";
 import { useConfig } from "@openmrs/esm-framework";
-import styles from "./logo.component.scss";
+import styles from "./logo.scss";
 
 const Logo: React.FC = () => {
   const { logo } = useConfig();

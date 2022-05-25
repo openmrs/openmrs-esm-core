@@ -1,13 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { OfflinePatientDataSyncStore } from "@openmrs/esm-framework";
-import { Tile } from "carbon-components-react";
-import { useOfflinePatientDataStore } from "../hooks/offline-patient-data-hooks";
-import CheckmarkFilled16 from "@carbon/icons-react/es/checkmark--filled/16";
-import WarningFilled16 from "@carbon/icons-react/es/warning--filled/16";
-import styles from "./offline-patient-sync-details.styles.scss";
+import { Layer, Tile } from "@carbon/react";
+import { CheckmarkFilled, WarningFilled } from "@carbon/react/icons";
 import SharedPageLayout from "../components/shared-page-layout.component";
 import { useParams } from "react-router-dom";
+import { useOfflinePatientDataStore } from "../hooks/offline-patient-data-hooks";
+import styles from "./offline-patient-sync-details.styles.scss";
 
 const OfflinePatientSyncDetails: React.FC = () => {
   const { t } = useTranslation();
@@ -36,12 +35,17 @@ const OfflinePatientSyncDetails: React.FC = () => {
               )}
             </h2>
             {syncedHandlers.map(({ handler }) => (
-              <Tile className={styles.syncedTile} light>
-                <span className={styles.bodyShort01}>
-                  {handler.displayName}
-                </span>
-                <CheckmarkFilled16 className={styles.syncedTileIcon} />
-              </Tile>
+              <Layer>
+                <Tile className={styles.syncedTile}>
+                  <span className={styles.bodyShort01}>
+                    {handler.displayName}
+                  </span>
+                  <CheckmarkFilled
+                    size={16}
+                    className={styles.syncedTileIcon}
+                  />
+                </Tile>
+              </Layer>
             ))}
           </section>
         )}
@@ -54,23 +58,25 @@ const OfflinePatientSyncDetails: React.FC = () => {
               )}
             </h2>
             {failedHandlers.map(({ identifier, handler }) => (
-              <Tile className={styles.failedTile} light>
-                <span className={styles.bodyShort01}>
-                  {handler.displayName}
-                </span>
-                <WarningFilled16 className={styles.failedTileIcon} />
-                <span
-                  className={`${styles.failedTileErrorMessage} ${styles.label01}`}
-                >
-                  {store.offlinePatientDataSyncState[patientUuid]?.errors[
-                    identifier
-                  ] ??
-                    t(
-                      "offlinePatientSyncDetailsFallbackErrorMessage",
-                      "Unknown error."
-                    )}
-                </span>
-              </Tile>
+              <Layer>
+                <Tile className={styles.failedTile}>
+                  <span className={styles.bodyShort01}>
+                    {handler.displayName}
+                  </span>
+                  <WarningFilled size={16} className={styles.failedTileIcon} />
+                  <span
+                    className={`${styles.failedTileErrorMessage} ${styles.label01}`}
+                  >
+                    {store.offlinePatientDataSyncState[patientUuid]?.errors[
+                      identifier
+                    ] ??
+                      t(
+                        "offlinePatientSyncDetailsFallbackErrorMessage",
+                        "Unknown error."
+                      )}
+                  </span>
+                </Tile>
+              </Layer>
             ))}
           </section>
         )}

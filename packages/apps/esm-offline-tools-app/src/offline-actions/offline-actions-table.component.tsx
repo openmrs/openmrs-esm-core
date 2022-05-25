@@ -1,26 +1,5 @@
-import {
-  Button,
-  FilterRowsData,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableHeader,
-  TableRow,
-  TableSelectAll,
-  TableSelectRow,
-  DataTableSkeleton,
-  Link,
-  Pagination,
-  Search,
-  SearchSkeleton,
-  DataTable,
-  DataTableHeader,
-} from "carbon-components-react";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import styles from "./offline-actions-table.styles.scss";
 import {
   createErrorHandler,
   usePagination,
@@ -31,6 +10,27 @@ import {
   beginEditSynchronizationItem,
   isDesktop,
 } from "@openmrs/esm-framework/src/internal";
+import {
+  Button,
+  DataTable,
+  DataTableHeader,
+  DataTableSkeleton,
+  FilterRowsData,
+  Link,
+  Pagination,
+  Search,
+  SearchSkeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableSelectAll,
+  TableSelectRow,
+} from "@carbon/react";
+import styles from "./offline-actions-table.styles.scss";
 
 export interface SyncItemWithPatient {
   item: SyncItem;
@@ -44,8 +44,8 @@ export type OfflineActionsTableHeaders =
   | "error";
 
 export interface OfflineActionsTableProps {
-  isLoading: boolean;
   data?: Array<SyncItemWithPatient>;
+  isLoading: boolean;
   hiddenHeaders?: Array<OfflineActionsTableHeaders>;
   disableEditing: boolean;
   disableDelete: boolean;

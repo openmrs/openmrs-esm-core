@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import Close16 from "@carbon/icons-react/es/close/16";
-import Save16 from "@carbon/icons-react/es/save/16";
-import { Button } from "carbon-components-react";
+import { useTranslation } from "react-i18next";
+import { Button } from "@carbon/react";
+import { Close, Save } from "@carbon/react/icons";
 import { Type } from "@openmrs/esm-framework";
 import { ConfigValueDescriptor } from "./editable-value.component";
 import { ValueEditorField } from "./value-editors/value-editor-field";
 import styles from "./value-editor.scss";
-import { useTranslation } from "react-i18next";
 
 export type CustomValueType = "add" | "remove" | "order" | "configure";
 
@@ -59,14 +58,18 @@ export function ValueEditor({
       />
       <div className={styles.valueEditorButtons}>
         <Button
-          renderIcon={Save16}
+          renderIcon={(props) => <Save {...props} size={16} />}
           kind="primary"
           onClick={() => handleSave(JSON.stringify(tmpValue))}
         >
           {t("saveValueButtonText", "Save")}
         </Button>
-        <Button renderIcon={Close16} kind="secondary" onClick={handleClose}>
-          {t("CancelButtonText", "Cancel")}
+        <Button
+          renderIcon={(props) => <Close {...props} size={16} />}
+          kind="secondary"
+          onClick={handleClose}
+        >
+          {t("cancelButtonText", "Cancel")}
         </Button>
       </div>
     </div>

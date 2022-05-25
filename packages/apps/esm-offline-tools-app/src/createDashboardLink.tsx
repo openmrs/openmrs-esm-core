@@ -7,7 +7,7 @@ export const createDashboardLink = (db: { name: string }) => {
       <div key={db.name}>
         <ConfigurableLink
           to={`${basePath}/${encodeURIComponent(db.name)}`}
-          className="bx--side-nav__link"
+          className="cds--side-nav__link"
         >
           {db.name}
         </ConfigurableLink>

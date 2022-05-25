@@ -5,7 +5,7 @@ import {
   isDesktop,
   useLayoutType,
 } from "@openmrs/esm-framework";
-import { SideNav } from "carbon-components-react";
+import { SideNav } from "@carbon/react";
 import React, { useEffect } from "react";
 import styles from "./desktop-side-nav.styles.scss";
 

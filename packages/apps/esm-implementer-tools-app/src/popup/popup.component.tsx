@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Close16 from "@carbon/icons-react/es/close/16";
-import styles from "./popup.styles.scss";
-import { Button, ContentSwitcher, Switch } from "carbon-components-react";
+import { Button, ContentSwitcher, Switch } from "@carbon/react";
+import { Close } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependencies.component";
 import { FrontendModule } from "../backend-dependencies/openmrs-backend-dependencies";
+import styles from "./popup.styles.scss";
 
 interface DevToolsPopupProps {
   close(): void;
@@ -39,10 +39,11 @@ export default function Popup({ close, frontendModules }: DevToolsPopupProps) {
         <div>
           <Button
             kind="secondary"
-            renderIcon={Close16}
+            renderIcon={(props) => <Close size={16} {...props} />}
             iconDescription="Close"
             onClick={close}
             hasIconOnly
+            size="sm"
           />
         </div>
       </div>
