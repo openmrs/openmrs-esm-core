@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-styleguide",
-  "version": "3.3.1",
+  "version": "4.0.0",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "browser": "dist/openmrs-esm-styleguide.js",
@@ -43,9 +43,9 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-extensions": "3.x",
-    "@openmrs/esm-react-utils": "3.x",
-    "@openmrs/esm-state": "3.x",
+    "@openmrs/esm-extensions": "4.x",
+    "@openmrs/esm-react-utils": "4.x",
+    "@openmrs/esm-state": "4.x",
     "carbon-components": "10.x",
     "carbon-icons": "7.x",
     "react": "18.x",
@@ -53,9 +53,9 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-extensions": "^3.3.1",
-    "@openmrs/esm-react-utils": "^3.3.1",
-    "@openmrs/esm-state": "^3.3.1",
+    "@openmrs/esm-extensions": "^4.0.0",
+    "@openmrs/esm-react-utils": "^4.0.0",
+    "@openmrs/esm-state": "^4.0.0",
     "autoprefixer": "^9.8.8",
     "carbon-components": "10.31.0",
     "carbon-icons": "7.0.7",
