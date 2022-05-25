@@ -8,8 +8,8 @@ import * as singleSpa from "single-spa";
 // Load @openmrs/esm-framework/src/internal because it is a superset
 // of @openmrs/esm-framework. There's no point loading both.
 import * as openmrsEsmFrameworkInternal from "@openmrs/esm-framework/src/internal";
-import * as carbonComponents from "carbon-components";
-import * as carbonIcons from "carbon-icons";
+import * as carbonComponents from "@carbon/react";
+import * as carbonIcons from "@carbon/react/icons";
 import * as rxjs from "rxjs";
 
 (window as any).esmFrameworkInternal = openmrsEsmFrameworkInternal;

@@ -1,12 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Toggle } from "carbon-components-react";
-import Network20 from "@carbon/icons-react/es/network--3/20";
+import { Toggle } from "@carbon/react";
+import { Network_3 } from "@carbon/react/icons";
 import {
   getCurrentOfflineMode,
   setCurrentOfflineMode,
 } from "@openmrs/esm-framework/src/internal";
-import styles from "./offline-actions-mode-button.component.scss";
+import styles from "./offline-actions-mode-button.scss";
 
 function doNotCloseMenu(ev: React.SyntheticEvent) {
   ev.stopPropagation();
@@ -27,16 +27,10 @@ const OfflineActionsModeButton: React.FC = () => {
 
   return (
     <div className={styles.offlineModeButtonContainer}>
-      <Network20 />
+      <Network_3 size={20} />
       <div onClick={doNotCloseMenu} role="none">
         {t("offlineReady", "Offline Ready")}
-        <Toggle
-          id="offlineModeSwitch"
-          labelA=""
-          labelB=""
-          toggled={active}
-          onToggle={toggle}
-        />
+        <Toggle id="offlineModeSwitch" toggled={active} onToggle={toggle} />
       </div>
     </div>
   );

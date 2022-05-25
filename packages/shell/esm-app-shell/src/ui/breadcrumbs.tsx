@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  InlineLoading,
-} from "carbon-components-react";
+import { Breadcrumb, BreadcrumbItem, InlineLoading } from "@carbon/react";
 import {
   getBreadcrumbsFor,
   ConfigurableLink,

@@ -1,8 +1,8 @@
-.objectEditor :global(.bx--structured-list-td) {
+.objectEditor :global(.cds--structured-list-td) {
   padding: 0.25rem 3rem 0.25rem 1rem;
 }
 
-.objectEditor :global(.bx--structured-list) {
+.objectEditor :global(.cds--structured-list) {
   margin-bottom: 0.25rem;
 }
 
