@@ -1,4 +1,4 @@
-:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/). You may find the [Map of the Project](https://openmrs.github.io/openmrs-esm-core/#/main/map) especially helpful. :teacher:	
+:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/). You may find the [Map of the Project](https://openmrs.github.io/openmrs-esm-core/#/main/map) especially helpful.
 
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
@@ -13,7 +13,7 @@ Below is the documentation for this repository.
 
 # OpenMRS Frontend Core
 
-This is a [Lerna](https://lerna.js.org/) project containing the core packages for the OpenMRS Frontend. These packages handle the "cross-cutting concerns" described in the [Domain Decomposition](https://wiki.openmrs.org/display/projects/MFE+Domain+Decomposition) document.
+This is a [monorepo](https://classic.yarnpkg.com/lang/en/docs/workspaces/) containing the core packages for the OpenMRS Frontend. These packages handle the "cross-cutting concerns" described in the [Domain Decomposition](https://wiki.openmrs.org/display/projects/MFE+Domain+Decomposition) document.
 
 ## Available Packages
 
@@ -61,7 +61,7 @@ A set of frontend modules provide the core technical functionality of the applic
 To set up the repository for development, run the following commands:
 
 ```sh
-yarn install
+yarn
 yarn setup
 ```
 
@@ -86,6 +86,10 @@ yarn verify
 ```sh
 yarn run:shell
 ```
+
+This will use the built versions of the apps in `apps/`. Those are built
+by `yarn setup` or `yarn build:apps`, or by running `yarn build` in the
+directory for any app.
 
 #### The frontend modules in `apps`
 
