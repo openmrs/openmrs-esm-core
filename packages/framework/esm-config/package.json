@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-config",
-  "version": "3.4.0",
+  "version": "4.0.0",
   "license": "MPL-2.0",
   "description": "A configuration library for the OpenMRS Single-Spa framework.",
   "browser": "dist/openmrs-esm-module-config.js",
@@ -39,14 +39,14 @@
     "ramda": "^0.26.1"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "3.x",
-    "@openmrs/esm-state": "3.x",
+    "@openmrs/esm-globals": "4.x",
+    "@openmrs/esm-state": "4.x",
     "single-spa": "5.x",
     "systemjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-globals": "^3.4.0",
-    "@openmrs/esm-state": "^3.4.0",
+    "@openmrs/esm-globals": "^4.0.0",
+    "@openmrs/esm-state": "^4.0.0",
     "@types/ramda": "^0.26.44",
     "@types/systemjs": "^6.1.0",
     "babel-plugin-ramda": "^2.0.0",

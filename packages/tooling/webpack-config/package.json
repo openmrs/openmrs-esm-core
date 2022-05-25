@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/webpack-config",
-  "version": "3.4.0",
+  "version": "4.0.0",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "types": "src/index.ts",
