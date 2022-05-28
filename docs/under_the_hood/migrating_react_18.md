@@ -52,9 +52,9 @@ browswer, we can start to integrate the modules together using the new libraries
 
     * Using `ls -l node_modules/@openmrs` in patient-management again we should see all the previous symlinks and now `webpack-config` which is a directory instead
 
-6. Upgrade packages within a repo 
+6. Upgrade React within a repo. We do this now so that the types can resolve properly.
 
-    * Add React. In esm-patient-management: `yarn add -D -W react react-dom`
+    * [Add React](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html). In esm-patient-management: `yarn add -D -W react react-dom`
     
     * Add types. In esm-patient-management: `yarn add -D -W @types/react@latest @types/react-dom@latest @types/react-router-dom@latest`
 
@@ -66,7 +66,7 @@ browswer, we can start to integrate the modules together using the new libraries
 
     * This will start a webpack dev server. Your microfrontend will be available at something like `[webpack-dev-server] Loopback: http://localhost:8081/`
 
-8. Add to import map overrides to the app shell (http://o3-dev.docs.openmrs.org/#/getting_started/setup). In the browser where app shell is running (http://localhost:8080/openmrs/spa/home)  
+8. Add to import map overrides to the app shell (http://o3-dev.docs.openmrs.org/#/getting_started/setup). In the browser where app shell is running (`http://localhost:8080/openmrs/spa/home`)  
 
     * Enable devtools by setting `localStorage.setItem('openmrs:devtools', true)` in your console browser
 
@@ -74,11 +74,20 @@ browswer, we can start to integrate the modules together using the new libraries
 
     * Find 'patient-search' -> click on it to edit entry 
 
-    * Type `8081` to set import url to "//localhost:8081/openmrs-esm-patient-search-app.js" (Make correctios to this based on what your port was from the previous step)
+    * Type `8081` to set import url to "`//localhost:8081/openmrs-esm-patient-search-app.js`" (Make correctios to this based on what your port was from the previous step)
 
-    * Refresh the page 
+    * Refresh the page. You should see the app running
 
- 
-At this point you will have a local version of the core app shell running, and one of the microfrontends served locally on a different server. The app shell is then pointed to the second server thanks to the importmap override done with the help of the devtools. 
+At this point you will have a local version of the core app shell running, and one of the microfrontends served locally on a different server. The app shell is then pointed to the second server thanks to the importmap override done with the help of the devtools. Now you can really start the integration effort in ernest. Let's upgrade the rest of the packages.
 
-Repeat steps 4-8 for all packages you want to serve at the same time.
+9. Upgrade Carbon to v11
+
+    * Follow the upgrade guide [here](https://carbondesignsystem.com/migrating/guide/develop).
+
+10. Upgrade React Router Dom
+
+    * Follow the upgrade guide [here](https://reactrouter.com/docs/en/v6/upgrading/v5)
+
+Congratulations! You have upgraded one microfrontend to use the latest libraries.
+
+Repeat steps 4-8 for all packages you want to serve, upgrade, and re-integrate at the same time.
