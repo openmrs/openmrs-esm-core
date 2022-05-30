@@ -84,10 +84,27 @@ At this point you will have a local version of the core app shell running, and o
 
     * Follow the upgrade guide [here](https://carbondesignsystem.com/migrating/guide/develop).
 
-10. Upgrade React Router Dom
+10. Upgrade React Router Dom v6
 
     * Follow the upgrade guide [here](https://reactrouter.com/docs/en/v6/upgrading/v5)
 
 Congratulations! You have upgraded one microfrontend to use the latest libraries.
 
-Repeat steps 4-8 for all packages you want to serve, upgrade, and re-integrate at the same time.
+Repeat steps 4-8 for all packages you want to serve, upgrade, and re-integrate at the same time. `help` 
+## Troubleshooting & Tips
+
+The following commands can help you figure out what is happening when you run into trouble
+
+* `yarn list @types/react` to see conflicting type definitions of react.
+
+* `yarn why` to see why a particular module is loaded.
+
+* `ls –l node_modules/@openmrs` to see which packages are symlinks or downloaded files.
+
+* When in doubt destroy node_modules folder and rebuild by running `yarn`.
+
+* When in doubt start from the beginning with `git status` to check you are on the right branch and `git pull` to find the latest updates.  
+
+* `yarn upgrade` for this migration is tricky since we technically don't want the latest of the core or framework packages listed on npmjs.com. We are trying to use our own versions. This will help upgrade other packages (to within their current semver specification in package.json) if they need it, but likely you will need to re-link the esm-framework folders 
+
+* Easy to revert all symlinks by destroying node_modules and running `yarn`
