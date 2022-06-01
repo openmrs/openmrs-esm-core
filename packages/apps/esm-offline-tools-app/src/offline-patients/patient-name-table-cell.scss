@@ -1,0 +1,7 @@
+@import "../root.scss";
+
+.cellContainer {
+  display: flex;
+  align-items: center;
+  column-gap: $spacing-03;
+}

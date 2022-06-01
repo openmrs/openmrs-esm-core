@@ -2,8 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import SharedPageLayout from "../components/shared-page-layout.component";
 import CardsContainer from "./cards-container.component";
-import { ExtensionSlot } from "@openmrs/esm-framework";
 import styles from "./home.styles.scss";
+import OfflinePatientTable from "../offline-patients/offline-patient-table.component";
 
 /**
  * The offline tool's home/dashboard page.
@@ -19,7 +19,7 @@ const Home: React.FC = () => {
       <CardsContainer />
 
       <div className={styles.offlinePatientsTableContainer}>
-        <ExtensionSlot extensionSlotName="offline-tools-home-overview-slot" />
+        <OfflinePatientTable isInteractive={false} showHeader />
       </div>
     </SharedPageLayout>
   );

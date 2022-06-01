@@ -12,9 +12,10 @@ export {
   getSynchronizationItems,
   getFullSynchronizationItems,
   getFullSynchronizationItemsFor,
-  getOfflineDb,
   canBeginEditSynchronizationItemsOfType,
   beginEditSynchronizationItem,
   deleteSynchronizationItem,
   setupOfflineSync,
 } from "./sync";
+export * from "./dynamic-offline-data";
+export { getOfflineDb } from "./offline-db";

@@ -1,14 +1,19 @@
 import {
   fetchCurrentPatient,
-  registerOfflinePatientHandler,
+  setupDynamicOfflineDataHandler,
 } from "@openmrs/esm-framework";
 import { cacheForOfflineHeaders } from "./constants";
 
 export function setupOffline() {
-  registerOfflinePatientHandler("esm-offline-tools-app", {
+  setupDynamicOfflineDataHandler({
+    id: "esm-offline-tools-app:patient",
     displayName: "Offline tools",
-    async onOfflinePatientAdded({ patientUuid }) {
-      await fetchCurrentPatient(patientUuid, {
+    type: "patient",
+    async isSynced(identifier) {
+      return true;
+    },
+    async sync(identifier) {
+      await fetchCurrentPatient(identifier, {
         headers: cacheForOfflineHeaders,
       });
     },

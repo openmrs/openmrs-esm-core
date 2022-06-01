@@ -1,0 +1,61 @@
+@import "../root.scss";
+
+.tableContainer {
+  background-color: transparent;
+}
+
+.tableHeaderContainer {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr auto auto;
+
+  .tableHeader {
+    @include carbon--type-style("productive-heading-03");
+    color: $text-02;
+    padding: $spacing-04 0 $spacing-04 $spacing-04;
+    grid-row: 1;
+    grid-column: 1 / span 4;
+  }
+
+  .tableSearch {
+    grid-row: 2;
+    grid-column: 2;
+    align-self: end;
+  }
+
+  .tablePrimaryAction {
+    grid-row: 2;
+    grid-column: 4;
+    align-self: end;
+  }
+
+  .tableSecondaryAction {
+    grid-row: 2;
+    grid-column: 3;
+    align-self: end;
+  }
+}
+
+:global(.omrs-breakpoint-gt-tablet) .tableHeaderContainer {
+  grid-template-columns: 1fr 20% 250px auto auto;
+
+  .tableHeader {
+    grid-column: 1;
+    padding: $spacing-04 0 $spacing-02 $spacing-04;
+  }
+
+  .tableSearch {
+    grid-row: 1;
+    grid-column: 3;
+  }
+
+  .tablePrimaryAction {
+    grid-row: 1;
+    grid-column: 5;
+  }
+
+  .tableSecondaryAction {
+    grid-row: 1;
+    grid-column: 4;
+  }
+}
