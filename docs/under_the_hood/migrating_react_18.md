@@ -66,6 +66,7 @@ browser, we can start to integrate the modules together using the new libraries.
 
     * In each openmrs-esm-core/packages/[apps, framework, shell/esm-app-shell/, tooling] repo create a yarn link like: `yarn link`
 
+<!-- markdown-link-check-disable-next-line -->
 4. Link child package to the up-to-date openmrs-esm-core. This will tell them to use the local version rather than downloading "next" from [npmjs.com](npmjs.com).
 
     * In openmrs-esm-patient-management `yarn link @openmrs/esm-app-shell` (example of doing one at a time)
