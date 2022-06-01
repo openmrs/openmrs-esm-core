@@ -2,17 +2,27 @@
 
 ## Motivation
 
-As of this writing the OpenMRS 3.x frontend is using old versions of its core libraries below is a list of the packages we're upgrading from -> to with some explanation of why this is a good idea
+As of this writing the OpenMRS 3.x frontend is using versions of its core libraries which are 1-2 years out of date. Below is a list of the packages we're upgrading from -> to with some explanation of the specifics.
+### Summary
+* React 18 makes `Suspense` a first class citizen leading to **faster loading** of elements due to the decoupling of UI rendering and API fetching.
+* This compounds with React Router 6 which should lead to a **several times speedup** of widget load times
+* Updates to Carbon v11 keep the UI modern for designers, the package and API cleanup makes it faster to use for developers, and smaller bundle sizes mean a faster UI for customers.
+### Specifics
+
 * Currently on Ract 16.14, upgrading to React 18.1
     * Suspense is now a first class citizen. This will allow us to unblock component rendering while api calls decide to load
     * Children are now not assumed prop of type `React.ReactNode`, now need to be explicitly declared.
     * Automatic batching to prevent fewer renders.
-* Currenly on carbon-components-react v7.31 (Carbon v10), upgrading to @carbon/react v1.4 (Carbon v11). See the [v11 migration guide)](https://carbondesignsystem.com/migrating/guide/overview/) for more information.
-    * Repo has moved to a consolidated format including some small api changes.
-    * Naming convention changes to simplify use.
-    * Improved theming to enable light and dark mode support
-    * Introduces CSS Grid
-    * 90% decrease in compilation of Styles from Carbon.
+* Currenly on carbon-components-react v7.31 (Carbon v10), upgrading to @carbon/react v1.4 (Carbon v11). See the [Carbon V11 FAQ](https://carbondesignsystem.com/migrating/faq/) for a full list of benefits.
+    * The [Design Kit](https://carbondesignsystem.com/migrating/guide/design) has:
+        * Updated concepts for Notifications, Tooltip, Tabs, Sizing, Type tokens, and Color tokens
+        * New Popover and Toggletip features
+        * The UI shell is now themable to support light and dark mode.
+    * The [React packages](https://carbondesignsystem.com/migrating/guide/develop) have been simplified from 4 packages down to one: `@carbon/react`.
+    * Sass styles are now accessable directly from `@carbon/react/scss` 
+    * 90% decrease in compilation time of Styles from Carbon.
+    * `size` is now consistent across all components.
+    * Uses CSS Grid (2 dimensional) by default instead of flexbox grid (1 dimension). (See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Relationship_of_Grid_Layout) for more info.)
     * Same IBM Design Language. Does not require any brand-driven product redesigns.
 * Currently on react-router-dom v5.3, upgrading to react-router-dom v6.3. Read the [v6 upgrade guide](https://reactrouter.com/docs/en/v6/upgrading/v5) for more information.
     * All `<Route>`s and `<Link>`s inside a `<Routes>` are relative. This leads to leaner and more predictable code in `<Route path>` and `<Link to>`
