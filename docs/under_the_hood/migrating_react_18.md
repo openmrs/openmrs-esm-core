@@ -2,8 +2,27 @@
 
 ## Motivation
 
-As of this writing the OpenMRS 3.x frontend is using Ract 16.18, Carbon v10, and Ract Router Dom v5. 
-All of these are about two years old by now and many breaking changes have happened since. 
+As of this writing the OpenMRS 3.x frontend is using old versions of its core libraries below is a list of the packages we're upgrading from -> to with some explanation of why this is a good idea
+* Currently on Ract 16.14, upgrading to React 18.1
+    * Suspense is now a first class citizen. This will allow us to unblock component rendering while api calls decide to load
+    * Children are now not assumed prop of type `React.ReactNode`, now need to be explicitly declared.
+    * Automatic batching to prevent fewer renders.
+* Currenly on carbon-components-react v7.31 (Carbon v10), upgrading to @carbon/react v1.4 (Carbon v11). See the [v11 migration guide)](https://carbondesignsystem.com/migrating/guide/overview/) for more information.
+    * Repo has moved to a consolidated format including some small api changes.
+    * Naming convention changes to simplify use.
+    * Improved theming to enable light and dark mode support
+    * Introduces CSS Grid
+    * 90% decrease in compilation of Styles from Carbon.
+    * Same IBM Design Language. Does not require any brand-driven product redesigns.
+* Currently on react-router-dom v5.3, upgrading to react-router-dom v6.3. Read the [v6 upgrade guide](https://reactrouter.com/docs/en/v6/upgrading/v5) for more information.
+    * All `<Route>`s and `<Link>`s inside a `<Routes>` are relative. This leads to leaner and more predictable code in `<Route path>` and `<Link to>`
+    * Routes are chosen based on the best match instead of being traversed in order. This avoids bugs due to unreachable routes because they were defined later in the `<Switch>`
+    * Routes are allowed to be nested instead of spread out. This allows all routes to be easily seen at once. Meanwhile nested routes can stil be loaded dynamically via `React.lazy`.
+    * Route children can only be nested routes; rendered elements need to go in `element`. This simplifies reading the routing structure leading to fewer bugs.
+    * Switches to using React Elements instead of Components. This combined with React 18's native Suspense makes for very quick rendering.
+    * Discontinued use of regexp routes leads to cleaner route syntax, and drops `path-to-regexp` dependency reducing bundle size.
+    * `useNavigate` is more suspense friendly than the old `useHistory`. This provides a smoother experience when a user interaction needs to interrupt a pending route transition.
+
 
 ## Strategy
 
