@@ -4,15 +4,17 @@
 
 As of this writing the OpenMRS 3.x frontend is using versions of its core libraries which are 1-2 years out of date. Below is a list of the packages we're upgrading from -> to with some explanation of the specifics.
 ### Summary
-* React 18 makes `Suspense` a first class citizen leading to **faster loading** of elements due to the decoupling of UI rendering and API fetching.
-* This compounds with React Router 6 which should lead to a **several times speedup** of widget load times
+* React 18 adds in concurrency, automatic render batching, and makes `<Suspense>` a first class citizen leading to **faster loading** of elements due to the decoupling of UI rendering and API fetching.
+* This compounds with React Router 6 which can enable a **several times speedup** of widget load times when implemented correctly.
 * Updates to Carbon v11 keep the UI modern for designers, the package and API cleanup makes it faster to use for developers, and smaller bundle sizes mean a faster UI for customers.
 ### Specifics
 
-* Currently on Ract 16.14, upgrading to React 18.1
-    * Suspense is now a first class citizen. This will allow us to unblock component rendering while api calls decide to load
+* Currently on Ract 16.14, upgrading to React 18.1. Detailed notes can be found in the [How To Upgrade to React 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html) guide and also the [React v18.0](https://reactjs.org/blog/2022/03/29/react-v18.html) release post.
+    * Suspense is now a first class citizen. This will allow us to unblock component rendering while api calls decide to load.
     * Children are now not assumed prop of type `React.ReactNode`, now need to be explicitly declared.
-    * Automatic batching to prevent fewer renders.
+    * Automatic batching is on by default which helps reduce the number of renders.
+    * New concurrent render means that the UI can immediately respond to user input even if it's in the middle of a large render task. => A more fluid UX
+    * Concurrent render also adds support for resuable state so that previously rendered sections of the UI can be added back in.
 * Currenly on carbon-components-react v7.31 (Carbon v10), upgrading to @carbon/react v1.4 (Carbon v11). See the [Carbon V11 FAQ](https://carbondesignsystem.com/migrating/faq/) for a full list of benefits.
     * The [Design Kit](https://carbondesignsystem.com/migrating/guide/design) has:
         * Updated concepts for Notifications, Tooltip, Tabs, Sizing, Type tokens, and Color tokens
