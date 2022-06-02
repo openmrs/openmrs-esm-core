@@ -42,7 +42,7 @@ The module/app that defines the component
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L101)
+[packages/framework/esm-globals/src/types.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L99)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L136)
+[packages/framework/esm-globals/src/types.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L134)
 
 ___
 
@@ -66,7 +66,7 @@ The meta data used for reflection by other components
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L132)
+[packages/framework/esm-globals/src/types.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L130)
 
 ___
 
@@ -78,7 +78,7 @@ The name of the extension being registered
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L126)
+[packages/framework/esm-globals/src/types.ts:124](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L124)
 
 ___
 
@@ -94,7 +94,7 @@ Defines the offline support / properties of the component.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L113)
+[packages/framework/esm-globals/src/types.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L111)
 
 ___
 
@@ -110,7 +110,7 @@ Defines the online support / properties of the component.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L109)
+[packages/framework/esm-globals/src/types.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L107)
 
 ___
 
@@ -122,7 +122,7 @@ Specifies the relative order in which the extension renders in a slot
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L134)
+[packages/framework/esm-globals/src/types.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L132)
 
 ___
 
@@ -138,7 +138,7 @@ Defines the access privilege required for this component, if any.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L117)
+[packages/framework/esm-globals/src/types.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L115)
 
 ___
 
@@ -154,7 +154,7 @@ Defines resources that are loaded when the component should mount.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L121)
+[packages/framework/esm-globals/src/types.ts:119](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L119)
 
 ___
 
@@ -166,7 +166,7 @@ A slot to attach to
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L128)
+[packages/framework/esm-globals/src/types.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L126)
 
 ___
 
@@ -178,7 +178,7 @@ Slots to attach to
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L130)
+[packages/framework/esm-globals/src/types.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L128)
 
 ## Methods
 
@@ -198,4 +198,4 @@ Defines a function to use for actually loading the component's lifecycle.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L105)
+[packages/framework/esm-globals/src/types.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L103)
