@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import styles from "../styles.scss";
 import ArrowRight24 from "@carbon/icons-react/es/arrow--right/24";
+import ArrowLeft16 from "@carbon/icons-react/es/arrow--left/16";
 import {
   Button,
   InlineNotification,
@@ -148,6 +149,19 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
             onClick={() => setErrorMessage("")}
           />
         )}
+        {showPassword ? (
+          <div style={{ width: "23rem" }}>
+            <Button
+              className={styles["back-button"]}
+              kind="ghost"
+              iconDescription="Back"
+              onClick={() => history.push("/login")}
+            >
+              <ArrowLeft16 />
+              Back
+            </Button>
+          </div>
+        ) : null}
         <Tile className={styles["login-card"]}>
           <div className={styles["center"]}>{logo}</div>
           <form onSubmit={handleSubmit} ref={formRef}>
