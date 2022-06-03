@@ -319,7 +319,6 @@ function useOfflinePatientTableRows(syncingPatientUuids: Array<string>) {
     }
 
     for (const { patient, entry } of offlinePatientsSwr.data ?? []) {
-      console.info(entry);
       result.push(mapPatientToRow(patient, false, entry.syncState));
     }
 
