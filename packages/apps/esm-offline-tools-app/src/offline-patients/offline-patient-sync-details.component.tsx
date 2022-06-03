@@ -19,7 +19,7 @@ const OfflinePatientSyncDetails: React.FC<
   const { t } = useTranslation();
   const patientUuid: string = match.params.patientUuid;
   const { data: lastSyncState } = useLastSyncStateOfPatient(patientUuid);
-  const handlers = useMemo(() => getDynamicOfflineDataHandlers(), []);
+  const handlers = getDynamicOfflineDataHandlers();
   const succeededHandlers = filterOutNonDisplayableHandlerIds(
     lastSyncState?.succeededHandlers ?? []
   );
