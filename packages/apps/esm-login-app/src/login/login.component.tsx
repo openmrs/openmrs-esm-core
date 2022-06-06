@@ -154,7 +154,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
             <Button
               className={styles["back-button"]}
               kind="ghost"
-              iconDescription="Back"
+              iconDescription="Back to username"
               onClick={() => history.push("/login")}
             >
               <ArrowLeft16 />
