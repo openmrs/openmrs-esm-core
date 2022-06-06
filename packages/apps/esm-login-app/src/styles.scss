@@ -116,10 +116,14 @@
 }
 
 .back-button {
-  width: 58px;
-  height: 48px;
-  margin: 133px 426px 0 0;
-  padding: 13px 3px 17px 0;
+  // width: 58px;
+  // height: 48px;
+  // margin: 133px 426px 0 0;
+  // padding: 13px 3px 17px 0;
+  margin-left: -1rem;
+  &:hover {
+    background-color: none;
+  }
 }
 
 .inputStyle {
