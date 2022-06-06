@@ -7,6 +7,7 @@ import {
 import useSWR from "swr";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
+import { useMemo } from "react";
 
 dayjs.extend(isToday);
 
@@ -15,6 +16,7 @@ interface VisitReturnType {
   mutate: () => void;
   isValidating: boolean;
   currentVisit: Visit | null;
+  isLoading: boolean;
 }
 
 /**
@@ -32,11 +34,20 @@ export function useVisit(patientUuid: string): VisitReturnType {
     openmrsFetch
   );
 
-  const currentVisit =
-    data?.data.results.find(
-      (visit) =>
-        visit.stopDatetime === null && dayjs(visit.startDatetime).isToday()
-    ) ?? null;
+  const currentVisit = useMemo(
+    () =>
+      data?.data.results.find(
+        (visit) =>
+          visit.stopDatetime === null && dayjs(visit.startDatetime).isToday()
+      ) ?? null,
+    [data?.data.results]
+  );
 
-  return { error, mutate, isValidating, currentVisit };
+  return {
+    error,
+    mutate,
+    isValidating,
+    currentVisit,
+    isLoading: !data && !error,
+  };
 }
