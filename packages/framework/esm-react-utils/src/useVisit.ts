@@ -28,7 +28,9 @@ export function useVisit(patientUuid: string): VisitReturnType {
   const { data, error, mutate, isValidating } = useSWR<{
     data: { results: Array<Visit> };
   }>(
-    `/ws/rest/v1/visit?patient=${patientUuid}&v=${defaultVisitCustomRepresentation}&includeInactive=false`,
+    patientUuid
+      ? `/ws/rest/v1/visit?patient=${patientUuid}&v=${defaultVisitCustomRepresentation}&includeInactive=false`
+      : null,
     openmrsFetch
   );
 
