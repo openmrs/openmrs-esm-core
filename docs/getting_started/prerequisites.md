@@ -39,9 +39,9 @@ or the video-based [React JS Crash Course 2021](https://www.youtube.com/watch?v=
 Take your time. This is a lot of material. The better you understand it, the more
 easily you will be able to develop high-quality frontend modules (and other React applications).
 
->#### Special note re. React Hooks
->As mentioned, definitely review sections 1-5 of [React Hooks](https://reactjs.org/docs/hooks-intro.html). Still looking for videos? Some of our favorite videos are from when hooks first came out in 2018 - 2019.  :clapper:[90% Cleaner React with Hooks](https://www.youtube.com/watch?v=wXLf18DsV-I), and
-:clapper:[React Today and Tomorrow](https://youtu.be/dpw9EHDh2bM?t=1047). These do a good job of showing the difference before and after hooks. But watching, you should have some experience with JavaScript and React in general to appreciate just how cool hooks are. :smile:
+### React Hooks
+As mentioned above, you should definitely review sections 1-5 of [React Hooks](https://reactjs.org/docs/hooks-intro.html). Still looking for more videos? Some of our favorite videos are from when hooks first came out in 2018 - 2019. :clapper:[90% Cleaner React with Hooks](https://www.youtube.com/watch?v=wXLf18DsV-I), and
+:clapper:[React Today and Tomorrow](https://youtu.be/dpw9EHDh2bM?t=1047). These do a good job of showing the difference before and after hooks. But before watching, you should have some experience with JavaScript and React in general to appreciate just how cool hooks are. :smile:
 
 ## TypeScript
 
