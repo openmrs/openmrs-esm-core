@@ -132,7 +132,7 @@ module.exports = (env, argv = {}) => {
       ],
     },
     mode,
-    devtool: isProd ? "source-map" : "inline-source-map",
+    devtool: isProd ? false : "inline-source-map",
     module: {
       rules: [
         {

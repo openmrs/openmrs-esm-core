@@ -5,7 +5,7 @@ configuring easier for implementers.
 
 For introduction to Frontend 3.0 config files and how to configure frontend modules,
 please see the the
-[Implementer Documentation](https://wiki.openmrs.org/display/projects/3.x+Implementer+Documentation#Frontend3.0DocumentationforImplementers-Configuringtheapplication).
+[Implementer Documentation](https://wiki.openmrs.org/pages/viewpage.action?pageId=224527013#O3ImplementerDocumentation:SetUp,Configure&Deploy-Part2:ConfigureYourO3Application).
 
 ## How to make a frontend module configurable
 

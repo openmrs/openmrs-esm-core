@@ -40,7 +40,7 @@ if you haven't already. It provides a high-level
 introduction to the project and all of the relevant links.
 
 You should first read the
-[Implementer Documentation](https://wiki.openmrs.org/display/projects/3.x+Implementer+Documentation),
+[Implementer Documentation](https://wiki.openmrs.org/pages/viewpage.action?pageId=224527013),
 which provides some conceptual orientation as well as instructions for deployment
 and configuring.
 

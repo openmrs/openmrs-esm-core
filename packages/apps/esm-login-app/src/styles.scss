@@ -115,6 +115,14 @@
   width: 18rem;
 }
 
+.back-button {
+  height: 3rem;
+
+  svg {
+    margin-right: 0.5rem;
+  }
+}
+
 .inputStyle {
   @extend .label01;
   width: 18rem;

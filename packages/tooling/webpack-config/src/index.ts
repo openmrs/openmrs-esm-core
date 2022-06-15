@@ -158,7 +158,7 @@ export default (
       ],
     },
     mode,
-    devtool: mode === production ? "source-map" : "inline-source-map",
+    devtool: mode === production ? false : "inline-source-map",
     devServer: {
       headers: {
         "Access-Control-Allow-Origin": "*",
