@@ -1,7 +1,8 @@
 /** @module @category Offline */
-import Dexie, { Table } from "dexie";
+import Dexie from "dexie";
 import { getLoggedInUser } from "@openmrs/esm-api";
 import { createGlobalStore } from "@openmrs/esm-state";
+import { OfflineDb } from "./offline-db";
 
 /**
  * Defines an item queued up in the offline synchronization queue.
@@ -102,29 +103,8 @@ interface SyncResultBag {
   [type: string]: Record<string, any>;
 }
 
-class OfflineDb extends Dexie {
-  syncQueue: Table<SyncItem, number>;
-
-  constructor() {
-    super("EsmOffline");
-
-    this.version(3).stores({
-      syncQueue: "++id,userId,type,[userId+type]",
-    });
-
-    this.syncQueue = this.table("syncQueue");
-  }
-}
-
 const db = new OfflineDb();
 const handlers: Record<string, SyncHandler> = {};
-
-/**
- * @internal Temporarily added for esm-offline-tools-app. Please don't use elsewhere.
- */
-export function getOfflineDb() {
-  return db;
-}
 
 const syncStore = createGlobalStore<OfflineSynchronizationStore>(
   "offline-synchronization",

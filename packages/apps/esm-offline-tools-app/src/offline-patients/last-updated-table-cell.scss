@@ -1,0 +1,15 @@
+@import "../root.scss";
+
+.errorIcon {
+  color: $danger;
+}
+
+.pendingIcon {
+  color: #ff832b;
+}
+
+.cellContainer {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+}

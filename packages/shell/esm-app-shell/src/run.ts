@@ -265,27 +265,30 @@ function subscribeOnlineAndLoginChange(
   });
 }
 
-async function precacheGlobalStaticDependencies() {
+async function precacheGlobalStaticDependencies(configUrls: Array<string>) {
   await precacheImportMap();
 
-  // By default, cache the session endpoint.
-  // This ensures that a lot of user/session related functions also work offline.
-  const sessionPathUrl = new URL(
+  const relativeUrls = [
     `${window.openmrsBase}/ws/rest/v1/session`,
-    window.location.origin
-  ).href;
+    ...configUrls,
+  ];
 
-  await messageOmrsServiceWorker({
-    type: "registerDynamicRoute",
-    url: sessionPathUrl,
-    strategy: "network-first",
-  });
+  await Promise.allSettled(
+    relativeUrls.map(async (relativeUrl) => {
+      try {
+        const absoluteUrl = new URL(relativeUrl, window.location.origin).href;
 
-  await openmrsFetch("/ws/rest/v1/session").catch((e) =>
-    console.warn(
-      "Failed to precache the user session data from the app shell. MFs depending on this data may run into problems while offline.",
-      e
-    )
+        await messageOmrsServiceWorker({
+          type: "registerDynamicRoute",
+          url: absoluteUrl,
+          strategy: "network-first",
+        });
+
+        await fetch(absoluteUrl);
+      } catch (e) {
+        console.warn(`Failed to precache core URL "${relativeUrl}". Error:`, e);
+      }
+    })
   );
 }
 
@@ -319,7 +322,9 @@ export function run(configUrls: Array<string>, offline: boolean) {
   createAppState({});
   subscribeNotificationShown(showNotification);
   subscribeToastShown(showToast);
-  subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
+  subscribePrecacheStaticDependencies(() =>
+    precacheGlobalStaticDependencies(configUrls)
+  );
   registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();

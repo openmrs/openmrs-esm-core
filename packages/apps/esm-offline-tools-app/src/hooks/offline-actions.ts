@@ -8,7 +8,7 @@ import uniq from "lodash-es/uniq";
 import useSWR from "swr";
 
 export function usePendingSyncItems() {
-  return useSWR("offlineActions/pending", getFullSynchronizationItems);
+  return useSWR("offlineActions/pending", () => getFullSynchronizationItems());
 }
 
 export function useSyncItemPatients(syncItems?: Array<SyncItem>) {

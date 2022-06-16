@@ -1,11 +1,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useOfflinePatientDataStore } from "../hooks/offline-patient-data-hooks";
 import HeaderedQuickInfo from "../components/headered-quick-info.component";
 import OverviewCard from "../components/overview-card.component";
 import { routes } from "../constants";
 import useSWR from "swr";
-import { getSynchronizationItems } from "@openmrs/esm-framework";
+import {
+  getDynamicOfflineDataEntries,
+  getSynchronizationItems,
+} from "@openmrs/esm-framework";
 
 const PatientsOverviewCard: React.FC = () => {
   const { t } = useTranslation();
@@ -34,20 +36,15 @@ const PatientsOverviewCard: React.FC = () => {
 };
 
 function useDownloadedOfflinePatients() {
-  const store = useOfflinePatientDataStore();
-  return useSWR(["offlinePatientsTotalCount", store], async () => {
-    const downloadedCount = Object.values(
-      store.offlinePatientDataSyncState
-    ).filter(
-      (patientSyncState) =>
-        patientSyncState.failedHandlers.length === 0 &&
-        patientSyncState.syncingHandlers.length === 0
-    ).length;
-
+  return useSWR(["offlineTools/offlinePatientsTotalCount"], async () => {
+    const patientDataEntries = await getDynamicOfflineDataEntries("patient");
     const patientRegistrationSyncItems = await getSynchronizationItems(
       "patient-registration"
     );
     const registeredCount = patientRegistrationSyncItems.length;
+    const downloadedCount = patientDataEntries.filter(
+      (entry) => entry.syncState && entry.syncState.erroredHandlers.length === 0
+    ).length;
 
     return {
       downloadedCount,

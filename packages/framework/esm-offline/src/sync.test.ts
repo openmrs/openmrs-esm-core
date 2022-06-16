@@ -3,7 +3,6 @@ import { getLoggedInUser } from "@openmrs/esm-api";
 import {
   getFullSynchronizationItems,
   getFullSynchronizationItemsFor,
-  getOfflineDb,
   getSynchronizationItems,
   getSynchronizationItemsFor,
   QueueItemDescriptor,
@@ -12,6 +11,7 @@ import {
   deleteSynchronizationItem,
   getSynchronizationItem,
 } from "./sync";
+import { OfflineDb } from "./offline-db";
 
 interface MockSyncItem {
   value: number;
@@ -36,7 +36,7 @@ jest.mock("@openmrs/esm-api", () => ({
 
 afterEach(async () => {
   // We want each test case to start fresh with a clean sync queue.
-  await getOfflineDb().syncQueue.clear();
+  await new OfflineDb().syncQueue.clear();
 });
 
 describe("Sync Queue", () => {

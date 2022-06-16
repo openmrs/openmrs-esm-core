@@ -1,77 +1,35 @@
 /** @module @category Offline */
-import Dexie, { Table } from "dexie";
 import { createGlobalStore } from "@openmrs/esm-state";
+import {
+  setupDynamicOfflineDataHandler,
+  syncDynamicOfflineData,
+} from "./dynamic-offline-data";
 
+/** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export interface OfflinePatientDataSyncStore {
-  /**
-   * For each patient ID of the patients whose data is currently made available offline, provides
-   * the current data synchronizaton state.
-   */
   offlinePatientDataSyncState: Record<string, OfflinePatientDataSyncState>;
-  /**
-   * Holds the list of currently registered handlers which deal with patients that should be available offline.
-   * The key is a unique identifier which, once defined, should never change as it gives identity to
-   * the handler registration.
-   */
   handlers: Record<string, OfflinePatientDataSyncHandler>;
 }
 
+/** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export interface OfflinePatientDataSyncState {
-  /**
-   * The time when this state snapshot was initially created.
-   */
   readonly timestamp: Date;
-  /**
-   * A list of the data sync handler registration identifiers which are still in the process
-   * of synchronizing the patient's data.
-   */
   readonly syncingHandlers: Array<string>;
-  /**
-   * A list of the data sync handler registration identifiers which successfully synchronized the
-   * patient's data.
-   */
   readonly syncedHandlers: Array<string>;
-  /**
-   * A list of the data sync handler registration identifiers which failed to synchronize the
-   * patient's data.
-   */
   readonly failedHandlers: Array<string>;
-  /**
-   * A set of error messages associated with the identifers of the failed handlers.
-   */
   readonly errors: Record<string, string>;
-  /**
-   * Aborts the process of downloading data.
-   * @returns `true` if the cancellation could be triggered (that is, if there were any syncing handlers);
-   *   `false` if not.
-   */
   abort(): boolean;
 }
 
+/** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export interface OfflinePatientDataSyncHandler {
-  /**
-   * A name of the handler registration which can be displayed to the user.
-   * This is ideally translated.
-   */
   readonly displayName: string;
-  /**
-   * A function which is invoked when a patient is added to the app's offline patient cache.
-   * Signals to the handler that the patient's data must be made available offline.
-   * @param args Arguments which provide data about the patient to be made available offline.
-   * @returns A promise which should resolve if all data could be cached and reject when there was an issue
-   *   caching the data.
-   */
   onOfflinePatientAdded(args: OfflinePatientArgs): Promise<void>;
 }
 
+/** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export interface OfflinePatientArgs {
-  /**
-   * The UUID of the patient that should be made available offline.
-   */
   patientUuid: string;
-  /**
-   * An {@link AbortSignal} which notifies about the cancellation of the operation.
-   */
   signal: AbortSignal;
 }
 
@@ -83,159 +41,41 @@ const store = createGlobalStore<OfflinePatientDataSyncStore>(
   }
 );
 
+/** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export function getOfflinePatientDataStore() {
+  printDeprecationWarning();
   return store;
 }
 
-/**
- * Attempts to add the specified patient handler registration to the list of offline patient handlers.
- * @param identifier A key which uniquely identifies the registration.
- * @param handler The patient handler registration to be registered.
- * @returns `true` if the registration was successfully made; `false` if another registration with
- *   the same identifier has already been registered before.
- */
+/** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export function registerOfflinePatientHandler(
   identifier: string,
   handler: OfflinePatientDataSyncHandler
 ) {
-  const state = store.getState();
-  store.setState({
-    handlers: { ...state.handlers, [identifier]: handler },
+  printDeprecationWarning();
+
+  setupDynamicOfflineDataHandler({
+    type: "patient",
+    displayName: handler.displayName,
+    id: identifier,
+    isSynced: () => Promise.resolve(true),
+    sync: (patientUuid, signal) =>
+      handler.onOfflinePatientAdded({
+        patientUuid,
+        signal: signal ?? new AbortController().signal,
+      }),
   });
 }
 
-/**
- * Notifies all registered offline patient handlers that a new patient must be made available offline.
- * @param args Arguments which provide data about the patient to be made available offline.
- * @returns A promise which resolves once all registered handlers have finished synchronizing.
- */
+/** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export async function syncOfflinePatientData(patientUuid: string) {
-  const handlers = Object.entries(store.getState().handlers);
-  const handlerIdentifiers = handlers.map(([identifier]) => identifier);
-  const syncedHandlers: Array<string> = [];
-  const failedHandlers: Array<string> = [];
-  const errors = {};
-  const abortController = new AbortController();
+  printDeprecationWarning();
+  await syncDynamicOfflineData("patient", patientUuid);
+}
 
-  await setPatientDataSyncState(patientUuid, {
-    timestamp: new Date(),
-    syncingHandlers: handlerIdentifiers,
-    syncedHandlers,
-    failedHandlers,
-    errors,
-    abort: () => {
-      abortController.abort();
-      return true;
-    },
-  });
-
-  await Promise.all(
-    handlers.map(async ([identifier, handler]) => {
-      try {
-        await handler.onOfflinePatientAdded({
-          patientUuid,
-          signal: abortController.signal,
-        });
-        // eslint-disable-next-line no-console
-        console.debug(
-          `Offline patient handler ${identifier} successfully synchronized patient data.`
-        );
-
-        syncedHandlers.push(identifier);
-      } catch (e) {
-        console.error(
-          `Offline patient handler ${identifier} failed. Error: `,
-          e
-        );
-
-        failedHandlers.push(identifier);
-        errors[identifier] = e?.message ?? e?.toString() ?? "";
-      }
-    })
+function printDeprecationWarning() {
+  console.warn(
+    "The offline patient API has been deprecated and will be removed in a future release. " +
+      "To prevent future crashes, the functions remain available for the moment, but any invocations should be migrated ASAP."
   );
-
-  await setPatientDataSyncState(patientUuid, {
-    timestamp: new Date(),
-    syncingHandlers: [],
-    syncedHandlers,
-    failedHandlers,
-    errors,
-    abort: () => false,
-  });
-}
-
-async function setPatientDataSyncState(
-  patientUuid: string,
-  nextState: OfflinePatientDataSyncState
-) {
-  const state = store.getState();
-  store.setState({
-    offlinePatientDataSyncState: {
-      ...state.offlinePatientDataSyncState,
-      [patientUuid]: nextState,
-    },
-  });
-
-  const db = new OfflinePatientDataDb();
-  const existingEntry = await db.offlinePatientDataSyncStates.get({
-    patientUuid,
-  });
-  const nextEntry: OfflinePatientDataSyncStateEntry = {
-    id: existingEntry?.id,
-    patientUuid,
-    state: {
-      timestamp: nextState.timestamp,
-      syncedHandlers: nextState.syncedHandlers,
-      failedHandlers: [
-        ...nextState.failedHandlers,
-        ...nextState.syncingHandlers,
-      ],
-      errors: nextState.errors,
-    },
-  };
-
-  await db.offlinePatientDataSyncStates.put(nextEntry);
-}
-
-export async function loadPersistedPatientDataSyncState() {
-  const db = new OfflinePatientDataDb();
-  const persistedStates = await db.offlinePatientDataSyncStates.toArray();
-  const nextState = store.getState().offlinePatientDataSyncState;
-
-  for (const entry of persistedStates) {
-    nextState[entry.patientUuid] = {
-      ...entry.state,
-      syncingHandlers: [],
-      abort: () => false,
-    };
-  }
-
-  store.setState({ offlinePatientDataSyncState: nextState });
-}
-
-class OfflinePatientDataDb extends Dexie {
-  offlinePatientDataSyncStates: Table<OfflinePatientDataSyncStateEntry, number>;
-
-  constructor() {
-    super("EsmOfflinePatientData");
-
-    this.version(1).stores({
-      offlinePatientDataSyncStates: "++id,&patientUuid",
-    });
-
-    this.offlinePatientDataSyncStates = this.table(
-      "offlinePatientDataSyncStates"
-    );
-  }
-}
-
-type PersistedOfflinePatientDataSyncState = Omit<
-  Omit<OfflinePatientDataSyncState, "syncingHandlers">,
-  "abort"
->;
-
-interface OfflinePatientDataSyncStateEntry {
-  id?: number;
-  patientUuid: string;
-  state: PersistedOfflinePatientDataSyncState;
 }
