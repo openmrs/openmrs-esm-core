@@ -27,7 +27,7 @@ export function registerOmrsServiceWorker(
   }
 
   const wb = new Workbox(scriptUrl, registerOptions);
-  workboxRegistration = wb.register().then(() => wb);
+  workboxRegistration = wb.register().then(() => wb.controlling.then(() => wb));
   return workboxRegistration;
 }
 
