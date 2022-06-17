@@ -14,12 +14,6 @@
   padding-top: 1rem;
 }
 
-:global(.omrs-breakpoint-gt-tablet) .link > div a:nth-child(1) {
-  height: 2rem;
-  color: $ui-04;
-  padding: 0 0 0 1rem;
-}
-
 .link > div a:nth-child(1):hover {
   background-color: $ui-03;
   color: $ui-05;
