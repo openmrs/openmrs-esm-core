@@ -98,11 +98,11 @@ export function useSession(): Session {
   if (!result) {
     if (promise) {
       console.warn(
-        "useSessionUser is in an unexpected state. Attempting to recover."
+        "useSession is in an unexpected state. Attempting to recover."
       );
       throw promise;
     } else {
-      throw Error("useSessionUser is in an invalid state.");
+      throw Error("useSession is in an invalid state.");
     }
   }
   return result;
