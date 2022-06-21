@@ -50,8 +50,8 @@ file. Take a look at the `scripts` section of that file to find out what
 the command actually does.
 
 Once the frontend server starts up, you should be able to access the template
-app at http://localhost:8080/openmrs/spa/hello. You might be redirected to
-the log in page to log in first.
+app at http://localhost:8080/openmrs/spa/hello. <!-- markdown-link-check-disable-line -->
+You might be redirected to the log in page to log in first.
 
 > :bulb: You run almost any command with `--help` to learn more about it.
 > This includes `yarn start --help`.
