@@ -188,9 +188,6 @@ by modifying the `order` configuration parameter of that slot.
 
 ## Additional Resources
 
-Conceptual overview video:
-[![OpenMRS Frontend Extension System Conceptual Introduction](https://img.youtube.com/vi/F342HUY4i5U/0.jpg)](https://www.youtube.com/watch?v=F342HUY4i5U)
-
 Introductory presentation: [Quick Guide to Slots](https://docs.google.com/presentation/d/1mQxh7qAYLD-gc9sh0I58t4o_XNndPcu6hAJmTZQZ_fo/edit#slide=id.gbe34f6b087_0_34 )
 
 For a terse technical description of the extension system, see the
