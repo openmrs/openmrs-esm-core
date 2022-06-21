@@ -149,20 +149,20 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
             onClick={() => setErrorMessage("")}
           />
         )}
-        {showPassword ? (
-          <div style={{ width: "23rem" }}>
-            <Button
-              className={styles["back-button"]}
-              kind="ghost"
-              iconDescription="Back to username"
-              onClick={() => history.push("/login")}
-            >
-              <ArrowLeft16 style={{ marginRight: "1rem" }} />
-              Back
-            </Button>
-          </div>
-        ) : null}
         <Tile className={styles["login-card"]}>
+          {showPassword ? (
+            <div className={styles["back-button-div"]}>
+              <Button
+                className={styles["back-button"]}
+                kind="ghost"
+                iconDescription="Back to username"
+                onClick={() => history.push("/login")}
+              >
+                <ArrowLeft16 style={{ marginRight: "1rem" }} />
+                Back
+              </Button>
+            </div>
+          ) : null}
           <div className={styles["center"]}>{logo}</div>
           <form onSubmit={handleSubmit} ref={formRef}>
             {!showPassword && (

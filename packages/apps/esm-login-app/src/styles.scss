@@ -72,6 +72,7 @@
   background-color: $ui-02;
   width: 23rem;
   padding: 2.5rem;
+  position: relative;
 }
 
 @media only screen and (min-width: 481px) {
@@ -113,6 +114,13 @@
 .continueButton {
   margin-top: 1.5rem;
   width: 18rem;
+}
+
+.back-button-div {
+  width: 23rem;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
 }
 
 .back-button {
