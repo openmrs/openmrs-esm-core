@@ -20,8 +20,8 @@ export interface FHIRResource {
     valueQuantity: {
       value: number;
     };
-    valueString?: string;
-    valueCodeableConcept?: { coding: Array<FHIRCode> };
+    valueString: string;
+    valueCodeableConcept: { coding: Array<FHIRCode> };
   };
 }
 
