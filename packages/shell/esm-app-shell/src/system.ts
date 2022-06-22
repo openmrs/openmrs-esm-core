@@ -1,4 +1,4 @@
-/// <reference path="../../../../node_modules/webpack/module.d.ts" />
+/// <reference types="webpack/module" />
 import "import-map-overrides";
 import "systemjs/dist/system";
 import "systemjs/dist/extras/amd";
