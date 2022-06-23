@@ -157,21 +157,10 @@ module.exports = (env, argv = {}) => {
           type: "asset/source",
         },
         {
-          test: /\.(js|jsx)$/,
+          test: /\.(j|t)sx?$/,
           use: [
             {
               loader: require.resolve("swc-loader"),
-            },
-          ],
-        },
-        {
-          test: /\.(ts|tsx)?$/,
-          use: [
-            {
-              loader: require.resolve("ts-loader"),
-              options: {
-                allowTsInNodeModules: true,
-              },
             },
           ],
         },
