@@ -40,7 +40,7 @@ await setPackages("shell");
 
 export const fileSizeReport = await generateFileSizeReport({
   log: process.argv.includes("--log"),
-  directoryUrl: new URL("../", import.meta.url),
+  rootDirectoryUrl: new URL("../", import.meta.url),
   manifestConfig,
   trackingConfig,
 });
