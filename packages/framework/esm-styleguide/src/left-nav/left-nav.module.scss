@@ -2,31 +2,32 @@
 @import "carbon-components/scss/globals/scss/typography.scss";
 @import "~carbon-components/scss/globals/scss/_spacing.scss";
 
-.link > div a:nth-child(1) {
-  height: 3rem;
-  padding: 1.5rem 0 1.5rem 1.2rem;
+:global(.active-left-nav-link) {
+  background-color: $ui-03;
+  outline: none;
+  color: $ui-05;
+  border-left: 0.25rem solid var(--brand-01);
+}
+
+.leftNav > div a:nth-child(1) {
+  height: 2.5rem;
   color: $ui-04;
   border-left: 0.25rem solid transparent;
   @include carbon--type-style("productive-heading-01");
 }
 
-:global(.omrs-breakpoint-gt-tablet) .link > div {
+:global(.omrs-breakpoint-gt-tablet) .leftNav > div {
   padding-top: 1rem;
 }
 
-:global(.omrs-breakpoint-gt-tablet) .link > div a:nth-child(1) {
-  height: 2rem;
-  color: $ui-04;
-  padding: 0 0 0 1rem;
-}
-
-.link > div a:nth-child(1):hover {
+.leftNav > div a:nth-child(1):hover {
   background-color: $ui-03;
   color: $ui-05;
   border-left: var(--brand-01);
+  padding: 1.2rem 0 1.2rem 1.2rem;
 }
 
-.link > div a:nth-child(1):focus {
+.leftNav > div a:nth-child(1):focus {
   background-color: $ui-03;
   outline: none;
   color: $ui-05;

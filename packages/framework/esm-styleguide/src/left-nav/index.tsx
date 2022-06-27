@@ -1,5 +1,7 @@
 /** @module @category UI */
 import React from "react";
+import { BrowserRouter, useLocation } from "react-router-dom";
+
 import { ExtensionSlot, useStore } from "@openmrs/esm-react-utils";
 import { createGlobalStore } from "@openmrs/esm-state";
 import { SideNav, SideNavProps } from "carbon-components-react";
@@ -30,20 +32,27 @@ type LeftNavMenuProps = SideNavProps;
 export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>(
   (props, ref) => {
     const { slotName, basePath } = useStore(leftNavStore);
+    const location = useLocation();
+    const currentPath = location.pathname;
 
     return (
-      <SideNav
-        ref={ref}
-        expanded
-        aria-label="Left navigation"
-        className={styles.link}
-        {...props}
-      >
-        <ExtensionSlot extensionSlotName="global-nav-menu-slot" />
-        {slotName ? (
-          <ExtensionSlot extensionSlotName={slotName} state={{ basePath }} />
-        ) : null}
-      </SideNav>
+      <BrowserRouter>
+        <SideNav
+          ref={ref}
+          expanded
+          aria-label="Left navigation"
+          className={styles.leftNav}
+          {...props}
+        >
+          <ExtensionSlot extensionSlotName="global-nav-menu-slot" />
+          {slotName ? (
+            <ExtensionSlot
+              extensionSlotName={slotName}
+              state={{ basePath, currentPath }}
+            />
+          ) : null}
+        </SideNav>
+      </BrowserRouter>
     );
   }
 );
