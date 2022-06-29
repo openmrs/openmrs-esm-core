@@ -22,6 +22,6 @@
     "@openmrs/esm-patient-list-app": "https://spa-modules.nyc3.cdn.digitaloceanspaces.com/@openmrs/esm-patient-list-app/2022-06-29_f0d7a2b3ebfc7e12997d9d089e48c5d96d980754/openmrs-esm-patient-list-app.js",
     "@openmrs/esm-active-visits-app": "https://spa-modules.nyc3.cdn.digitaloceanspaces.com/@openmrs/esm-active-visits-app/2022-06-29_f0d7a2b3ebfc7e12997d9d089e48c5d96d980754/openmrs-esm-active-visits-app.js",
     "@openmrs/esm-generic-patient-widgets-app": "https://spa-modules.nyc3.cdn.digitaloceanspaces.com/@openmrs/esm-generic-patient-widgets-app/2022-06-29_f28110d77691033ac6176340eefd992189a4ffa8/openmrs-esm-generic-patient-widgets-app.js",
-    "@openmrs/esm-outpatient-app": "https://spa-modules.nyc3.cdn.digitaloceanspaces.com/@openmrs/esm-outpatient-app/2022-06-29_f0d7a2b3ebfc7e12997d9d089e48c5d96d980754/openmrs-esm-outpatient-app.js",
+    "@openmrs/esm-outpatient-app": "https://spa-modules.nyc3.cdn.digitaloceanspaces.com/@openmrs/esm-outpatient-app/2022-06-29_f0d7a2b3ebfc7e12997d9d089e48c5d96d980754/openmrs-esm-outpatient-app.js"
   }
 }
