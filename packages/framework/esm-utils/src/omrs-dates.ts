@@ -178,6 +178,8 @@ const defaultOptions: FormatDateOptions = {
  * When time is included, it is appended with a comma and a space. This
  * agrees with the output of `Date.prototype.toLocaleString` for *most*
  * locales.
+ *
+ * TODO: Shouldn't throw on null input
  */
 export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
   const { mode, time, day, year }: FormatDateOptions = {
