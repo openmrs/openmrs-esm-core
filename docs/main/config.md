@@ -258,6 +258,38 @@ defaults for configuration elements for which no values have been provided.
 
 This hasn't been implemented yet, but we would like to implement it! See [Contributing](../getting_started/contributing.md).
 
+
+### Typing
+
+It is nice to be able to have type validation for your use of configuration. To
+accomplish this, define an interface alongside your config schema.
+
+```ts
+import { defineConfigSchema, Type } from "@openmrs/esm-framework"
+
+defineConfigSchema("@openmrs/esm-hologram-doctor", {
+  hologram: {
+    color: {
+      _type: Type.Boolean,
+      _default: false,
+      _description: "Whether the hologram supports color display."
+    }
+  }
+});
+
+export interface HologramDoctorConfig {
+  hologram: {
+    color: boolean;
+  }
+}
+```
+
+You can then use this typing information using the `as` keyword.
+
+```ts
+const config = useConfig() as HologramDoctorConfig;
+```
+
 ## Schema Reference
 
 #### `_default`
