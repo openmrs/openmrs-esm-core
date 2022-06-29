@@ -206,33 +206,6 @@ Objects within arrays do not
 have to have defaults. If an object is supplied to the `robots` array that
 does not have a `name`, an error will be thrown.
 
-#### Freeform objects
-
-In unusual scenarios you might want to accept an object without
-validating its keys. To do this, you can specify the config element 
-like a normal non-object element.
-
-```js
-beepsPerRobot: {
-  _type: Type.Object
-  _default: {
-    "R2-D2": 4,
-    "C-3P0": 0
-  },
-  _elements: {  // describes the *values* of the object
-    _type: Type.Number
-    _validators: [validator(n => Number.isInteger(n), "Beeps must be integers")]
-  },
-  _description: "An object mapping robot names to number of beeps",
-  _validators: [
-    validator(o => Object.keys(o).every(n => /\d/.test(n)),
-      "Robots must have numbers in their names")
-  ]
-}
-```
-
-Note that this is the only situation in which you should ever use `Type.Object`.
-
 ### Using config values
 
 #### The generic way
