@@ -27,6 +27,11 @@ export interface Config extends Object {
 
 export interface ConfigObject extends Object {
   [key: string]: any;
+  "Display conditions"?: DisplayConditionsConfigObject;
+}
+
+export interface DisplayConditionsConfigObject {
+  privileges?: string[];
 }
 
 export type ConfigValue =

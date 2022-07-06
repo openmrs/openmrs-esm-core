@@ -27,7 +27,6 @@ import {
   implementerToolsConfigStore,
   temporaryConfigStore,
   getExtensionSlotsConfigStore,
-  ExtensionsConfigStore,
 } from "./state";
 import type {} from "@openmrs/esm-globals";
 import { TemporaryConfigStore } from "..";
@@ -192,9 +191,14 @@ function computeExtensionConfigs(
  */
 export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
+  const enhancedSchema = mergeDeepRight(
+    schema,
+    displayConditionsSchema
+  ) as ConfigSchema;
+
   const state = configInternalStore.getState();
   configInternalStore.setState({
-    schemas: { ...state.schemas, [moduleName]: schema },
+    schemas: { ...state.schemas, [moduleName]: enhancedSchema },
   });
 }
 
@@ -220,14 +224,20 @@ export function defineExtensionConfigSchema(
   schema: ConfigSchema
 ) {
   validateConfigSchema(extensionName, schema);
+  const enhancedSchema = mergeDeepRight(
+    schema,
+    displayConditionsSchema
+  ) as ConfigSchema;
+
   const state = configInternalStore.getState();
   if (state.schemas[extensionName]) {
     console.warn(
       `Config schema for extension ${extensionName} already exists. If there are multiple extensions with this same name, one will probably crash.`
     );
   }
+
   configInternalStore.setState({
-    schemas: { ...state.schemas, [extensionName]: schema },
+    schemas: { ...state.schemas, [extensionName]: enhancedSchema },
   });
 }
 
@@ -362,7 +372,7 @@ function getSchemaWithValuesAndSources(schema) {
       return obj;
     }, {});
   } else {
-    // Schema is bad; error will have been logged during schema validation
+    // at this point, the schema is bad and an error will have been logged during schema validation
     return {};
   }
 }
@@ -491,6 +501,12 @@ function validateConfigSchema(
   for (const key of Object.keys(schema).filter((k) => !k.startsWith("_"))) {
     const thisKeyPath = keyPath + (keyPath && ".") + key;
     const schemaPart = schema[key] as ConfigSchema;
+
+    if (thisKeyPath === "Display conditions") {
+      console.error(
+        `${moduleName} declares a configuration option called "Display conditions"; the "Display conditions" option is a reserved name. ${updateMessage}`
+      );
+    }
 
     if (!isOrdinaryObject(schemaPart)) {
       console.error(
@@ -863,3 +879,16 @@ function getExtensionNameFromId(extensionId: string) {
   const [extensionName] = extensionId.split("#");
   return extensionName;
 }
+
+/**
+ * The displayConditionsSchema is implicitly included in every configuration schema
+ */
+const displayConditionsSchema: ConfigSchema = {
+  "Display conditions": {
+    privileges: {
+      _description: "The privilege(s) the user must have to use this extension",
+      _type: Type.Array,
+      _default: [],
+    },
+  },
+};

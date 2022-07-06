@@ -8,6 +8,7 @@
  * - connected (computed from assigned using connectivity and online / offline)
  */
 
+import { getSessionStore, LoggedInUser, userHasAccess } from "@openmrs/esm-api";
 import {
   ExtensionsConfigStore,
   ExtensionSlotConfigObject,
@@ -19,6 +20,7 @@ import {
   getExtensionSlotsConfigStore,
 } from "@openmrs/esm-config";
 import isEqual from "lodash-es/isEqual";
+import isUndefined from "lodash-es/isUndefined";
 import {
   getExtensionInternalStore,
   ExtensionSlotState,
@@ -301,6 +303,8 @@ function getAssignedExtensionsFromSlotData(
   const attachedIds = internalState.slots[slotName].attachedIds;
   const assignedIds = calculateAssignedIds(config, attachedIds);
   const extensions: Array<AssignedExtension> = [];
+  let user: LoggedInUser | undefined = undefined;
+
   for (let id of assignedIds) {
     const { config: extensionConfig } = getExtensionConfigFromStore(
       extensionConfigStoreState,
@@ -311,6 +315,23 @@ function getAssignedExtensionsFromSlotData(
     const extension = internalState.extensions[name];
     // if the extension has not been registered yet, do not include it
     if (extension) {
+      const requiredPermissions =
+        extensionConfig?.["Display conditions"]?.privileges;
+
+      if (requiredPermissions && requiredPermissions.length) {
+        if (isUndefined(user)) {
+          user = getSessionStore().getState().session?.user;
+        }
+
+        if (!user) {
+          continue;
+        }
+
+        if (!userHasAccess(requiredPermissions, user)) {
+          continue;
+        }
+      }
+
       extensions.push({
         id,
         name,
@@ -325,6 +346,12 @@ function getAssignedExtensionsFromSlotData(
   return extensions;
 }
 
+/**
+ * Gets the list of extensions assigned to a given slot
+ *
+ * @param slotName The slot to load the assigned extensions for
+ * @returns An array of extensions assigned to the named slot
+ */
 export function getAssignedExtensions(
   slotName: string
 ): Array<AssignedExtension> {

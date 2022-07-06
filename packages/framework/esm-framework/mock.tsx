@@ -3,6 +3,7 @@ import type {} from "@openmrs/esm-globals";
 import createStore, { Store } from "unistore";
 import { never, of } from "rxjs";
 import { interpolateUrl } from "@openmrs/esm-config";
+import { SessionStore } from "@openmrs/esm-api";
 export {
   parseDate,
   formatDate,
@@ -50,7 +51,7 @@ export function getCurrentUser() {
   return of({ authenticated: false });
 }
 
-export const mockSessionStore = createGlobalStore("mock-session-store", {
+export const mockSessionStore = createGlobalStore<SessionStore>("mock-session-store", {
   loaded: false,
   session: null,
 });

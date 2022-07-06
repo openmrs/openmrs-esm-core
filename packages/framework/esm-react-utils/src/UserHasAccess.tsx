@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getCurrentUser, userHasAccess, LoggedInUser } from "@openmrs/esm-api";
 
 export interface UserHasAccessProps {
-  privilege: string;
+  privilege: string | string[];
 }
 
 export const UserHasAccess: React.FC<UserHasAccessProps> = ({

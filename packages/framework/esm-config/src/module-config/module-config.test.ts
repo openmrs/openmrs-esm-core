@@ -201,6 +201,20 @@ describe("defineConfigSchema", () => {
     Config.defineConfigSchema("mod-mod", schema);
     expect(console.error).not.toHaveBeenCalled();
   });
+
+  it("logs an error if the schema attempts to include a key named 'Display conditions'", () => {
+    const schema = {
+      "Display conditions": {
+        _type: Type.Array,
+        _default: [],
+      },
+    };
+
+    Config.defineConfigSchema("mod-mod", schema);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/mod-mod.*\bDisplay conditions\b/)
+    );
+  });
 });
 
 describe("getConfig", () => {
@@ -301,7 +315,12 @@ describe("getConfig", () => {
     Config.provide(goodConfig);
     const result = await Config.getConfig("foo-module");
     expect(result).toStrictEqual({
-      bar: { a: { b: 0 }, c: 2, diff: 2 },
+      bar: {
+        a: { b: 0 },
+        c: 2,
+        diff: 2,
+      },
+      "Display conditions": { privileges: [] },
     });
   });
 
@@ -485,16 +504,15 @@ describe("getConfig", () => {
     Config.defineConfigSchema("object-def", {
       furi: {
         _type: Type.Object,
-        _elements: {
-          gohan: { _type: Type.String },
-        },
-        _default: {
-          kake: { gohan: "ok" },
-        },
+        _elements: { gohan: { _type: Type.String } },
+        _default: { kake: { gohan: "ok" } },
       },
     });
     const config = await Config.getConfig("object-def");
-    expect(config).toStrictEqual({ furi: { kake: { gohan: "ok" } } });
+    expect(config).toStrictEqual({
+      furi: { kake: { gohan: "ok" } },
+      "Display conditions": { privileges: [] },
+    });
   });
 
   it("interpolates freeform object element defaults", async () => {
@@ -524,6 +542,7 @@ describe("getConfig", () => {
         gyudon: { gohan: "no", nori: true },
         sake: { gohan: "maybe", nori: false },
       },
+      "Display conditions": { privileges: [] },
     });
   });
 
@@ -823,9 +842,29 @@ describe("implementer tools config", () => {
           _description: "All the foo",
           _validators: [],
         },
+        "Display conditions": {
+          privileges: {
+            _default: [],
+            _description:
+              "The privilege(s) the user must have to use this extension",
+            _source: "default",
+            _type: Type.Array,
+            _value: [],
+          },
+        },
       },
       "bar-module": {
         bar: { _value: "baz", _source: "my config source", _default: "quinn" },
+        "Display conditions": {
+          privileges: {
+            _default: [],
+            _description:
+              "The privilege(s) the user must have to use this extension",
+            _source: "default",
+            _type: Type.Array,
+            _value: [],
+          },
+        },
       },
     });
   });
@@ -847,7 +886,10 @@ describe("temporary config", () => {
       "foo-module": { foo: 3 },
     });
     let config = await Config.getConfig("foo-module");
-    expect(config).toStrictEqual({ foo: 3 });
+    expect(config).toStrictEqual({
+      foo: 3,
+      "Display conditions": { privileges: [] },
+    });
     temporaryConfigStore.setState({
       config: unset(temporaryConfigStore.getState(), [
         "foo-module",
@@ -855,7 +897,10 @@ describe("temporary config", () => {
       ]) as any,
     });
     config = await Config.getConfig("foo-module");
-    expect(config).toStrictEqual({ foo: "baz" });
+    expect(config).toStrictEqual({
+      foo: "baz",
+      "Display conditions": { privileges: [] },
+    });
   });
 
   it("can be gotten and cleared", async () => {
@@ -867,7 +912,10 @@ describe("temporary config", () => {
     temporaryConfigStore.setState({ config: {} });
     expect(temporaryConfigStore.getState()).toStrictEqual({ config: {} });
     const config = await Config.getConfig("foo-module");
-    expect(config).toStrictEqual({ foo: "qux" });
+    expect(config).toStrictEqual({
+      foo: "qux",
+      "Display conditions": { privileges: [] },
+    });
   });
 
   it("is not mutated by getConfig", async () => {
@@ -938,7 +986,10 @@ describe("extension slot config", () => {
       },
     });
     const config = await Config.getConfig("foo-module");
-    expect(config).toStrictEqual({ foo: 0 });
+    expect(config).toStrictEqual({
+      foo: 0,
+      "Display conditions": { privileges: [] },
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -975,6 +1026,16 @@ describe("extension slot config", () => {
             remove: { _value: ["bar"], _source: "provided" },
           },
         },
+        "Display conditions": {
+          privileges: {
+            _default: [],
+            _description:
+              "The privilege(s) the user must have to use this extension",
+            _source: "default",
+            _type: Type.Array,
+            _value: [],
+          },
+        },
       },
     });
   });
@@ -1009,7 +1070,11 @@ describe("extension config", () => {
     updateConfigExtensionStore();
     Config.provide(moduleLevelConfig);
     const result = getExtensionConfig("barSlot", "fooExt").config;
-    expect(result).toStrictEqual({ bar: "qux", baz: "bazzy" });
+    expect(result).toStrictEqual({
+      bar: "qux",
+      baz: "bazzy",
+      "Display conditions": { privileges: [] },
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -1027,7 +1092,11 @@ describe("extension config", () => {
     };
     Config.provide(configureConfig);
     const result = getExtensionConfig("barSlot", "fooExt#id0").config;
-    expect(result).toStrictEqual({ bar: "qux", baz: "quiz" });
+    expect(result).toStrictEqual({
+      bar: "qux",
+      baz: "quiz",
+      "Display conditions": { privileges: [] },
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -1057,7 +1126,10 @@ describe("extension config", () => {
     const extensionAtBaseConfig = { fooExt: { qux: "quxolotl" } };
     Config.provide(extensionAtBaseConfig);
     const result = getExtensionConfig("barSlot", "fooExt").config;
-    expect(result).toStrictEqual({ qux: "quxolotl" });
+    expect(result).toStrictEqual({
+      qux: "quxolotl",
+      "Display conditions": { privileges: [] },
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -1078,7 +1150,10 @@ describe("extension config", () => {
     };
     Config.provide(configureConfig);
     const result = getExtensionConfig("barSlot", "fooExt#id2").config;
-    expect(result).toStrictEqual({ qux: "quxotic" });
+    expect(result).toStrictEqual({
+      qux: "quxotic",
+      "Display conditions": { privileges: [] },
+    });
   });
 
   it("validates the extension configure config, with extension config schema", () => {
