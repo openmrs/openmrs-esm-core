@@ -2,6 +2,13 @@
 @import "~carbon-components/src/globals/scss/vars";
 .topNavActionsSlot {
   display: flex;
+  align-items: center;
+}
+
+.topNavActionsSlot a {
+  color: white;
+  text-decoration: none;
+  margin: 0 0.75rem;
 }
 
 .headerGlobalBarButton {

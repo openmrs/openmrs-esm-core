@@ -11,12 +11,17 @@ function trimTrailingSlash(str: string) {
  * parameters in configurable URLs.
  *
  * @param template A string to interpolate
+ * @param additionalParams Additional values to interpolate into the string template
  */
-export function interpolateUrl(template: string): string {
+export function interpolateUrl(
+  template: string,
+  additionalParams?: { [key: string]: string }
+): string {
   const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());
   return interpolateString(template, {
     openmrsBase: window.openmrsBase,
     openmrsSpaBase: openmrsSpaBase,
+    ...additionalParams,
   }).replace(/^\/\//, "/"); // remove extra initial slash if present
 }
 
@@ -38,7 +43,10 @@ export function interpolateUrl(template: string): string {
  * @param template With optional params wrapped in `${ }`
  * @param params Values to interpolate into the string template
  */
-export function interpolateString(template: string, params: object): string {
+export function interpolateString(
+  template: string,
+  params: { [key: string]: string }
+): string {
   const names = Object.keys(params);
   return names.reduce(
     (prev, curr) => prev.split("${" + curr + "}").join(params[curr]),
