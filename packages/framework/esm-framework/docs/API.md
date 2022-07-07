@@ -102,6 +102,7 @@
 
 ### Navigation Functions
 
+- [ConfigurableLink](API.md#configurablelink)
 - [interpolateString](API.md#interpolatestring)
 - [interpolateUrl](API.md#interpolateurl)
 - [navigate](API.md#navigate)
@@ -113,20 +114,29 @@
 - [deleteSynchronizationItem](API.md#deletesynchronizationitem)
 - [generateOfflineUuid](API.md#generateofflineuuid)
 - [getCurrentOfflineMode](API.md#getcurrentofflinemode)
+- [getDynamicOfflineDataEntries](API.md#getdynamicofflinedataentries)
+- [getDynamicOfflineDataEntriesFor](API.md#getdynamicofflinedataentriesfor)
+- [getDynamicOfflineDataHandlers](API.md#getdynamicofflinedatahandlers)
 - [getFullSynchronizationItems](API.md#getfullsynchronizationitems)
 - [getFullSynchronizationItemsFor](API.md#getfullsynchronizationitemsfor)
 - [getOfflinePatientDataStore](API.md#getofflinepatientdatastore)
 - [getSynchronizationItem](API.md#getsynchronizationitem)
 - [getSynchronizationItems](API.md#getsynchronizationitems)
 - [isOfflineUuid](API.md#isofflineuuid)
-- [loadPersistedPatientDataSyncState](API.md#loadpersistedpatientdatasyncstate)
 - [messageOmrsServiceWorker](API.md#messageomrsserviceworker)
+- [putDynamicOfflineData](API.md#putdynamicofflinedata)
+- [putDynamicOfflineDataFor](API.md#putdynamicofflinedatafor)
 - [queueSynchronizationItem](API.md#queuesynchronizationitem)
 - [registerOfflinePatientHandler](API.md#registerofflinepatienthandler)
+- [removeDynamicOfflineData](API.md#removedynamicofflinedata)
+- [removeDynamicOfflineDataFor](API.md#removedynamicofflinedatafor)
+- [setupDynamicOfflineDataHandler](API.md#setupdynamicofflinedatahandler)
 - [setupOfflineSync](API.md#setupofflinesync)
 - [subscribeConnectivity](API.md#subscribeconnectivity)
 - [subscribeConnectivityChanged](API.md#subscribeconnectivitychanged)
 - [subscribePrecacheStaticDependencies](API.md#subscribeprecachestaticdependencies)
+- [syncAllDynamicOfflineData](API.md#syncalldynamicofflinedata)
+- [syncDynamicOfflineData](API.md#syncdynamicofflinedata)
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
 - [useConnectivity](API.md#useconnectivity)
 
@@ -277,6 +287,22 @@ ___
 #### Defined in
 
 [packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L142)
+
+___
+
+## Navigation Type aliases
+
+### TemplateParams
+
+Ƭ **TemplateParams**: `Object`
+
+#### Index signature
+
+▪ [key: `string`]: `string`
+
+#### Defined in
+
+[packages/framework/esm-config/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L10)
 
 ___
 
@@ -599,26 +625,6 @@ ___
 
 ___
 
-## Navigation Variables
-
-### ConfigurableLink
-
-• **ConfigurableLink**: `React.FC`<[`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md)\>
-
-A React link component which calls [navigate](API.md#navigate) when clicked
-
-**`param`** The target path or URL. Supports interpolation. See [navigate](API.md#navigate)
-
-**`param`** Inline elements within the link
-
-**`param`** Any other valid props for an <a> tag except `href` and `onClick`
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L32)
-
-___
-
 ## Offline Variables
 
 ### offlineUuidPrefix
@@ -716,7 +722,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L30)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L32)
 
 ## API Functions
 
@@ -1750,6 +1756,8 @@ When time is included, it is appended with a comma and a space. This
 agrees with the output of `Date.prototype.toLocaleString` for *most*
 locales.
 
+TODO: Shouldn't throw on null input
+
 #### Parameters
 
 | Name | Type |
@@ -1763,7 +1771,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:182](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L182)
+[packages/framework/esm-utils/src/omrs-dates.ts:184](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L184)
 
 ___
 
@@ -1792,7 +1800,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:249](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L249)
+[packages/framework/esm-utils/src/omrs-dates.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L251)
 
 ___
 
@@ -1815,7 +1823,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:233](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L233)
+[packages/framework/esm-utils/src/omrs-dates.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L235)
 
 ___
 
@@ -2577,6 +2585,28 @@ ___
 
 ## Navigation Functions
 
+### ConfigurableLink
+
+▸ **ConfigurableLink**(`__namedParameters`): `Element`
+
+A React link component which calls [navigate](API.md#navigate) when clicked
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L38)
+
+___
+
 ### interpolateString
 
 ▸ **interpolateString**(`template`, `params`): `string`
@@ -2600,7 +2630,7 @@ navigate({
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `template` | `string` | With optional params wrapped in `${ }` |
-| `params` | `object` | Values to interpolate into the string template |
+| `params` | `Object` | Values to interpolate into the string template |
 
 #### Returns
 
@@ -2608,13 +2638,13 @@ navigate({
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L41)
+[packages/framework/esm-config/src/navigation/interpolate-string.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L46)
 
 ___
 
 ### interpolateUrl
 
-▸ **interpolateUrl**(`template`): `string`
+▸ **interpolateUrl**(`template`, `additionalParams?`): `string`
 
 Interpolates a string with openmrsBase and openmrsSpaBase.
 
@@ -2626,6 +2656,7 @@ parameters in configurable URLs.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `template` | `string` | A string to interpolate |
+| `additionalParams?` | `Object` | Additional values to interpolate into the string template |
 
 #### Returns
 
@@ -2633,7 +2664,7 @@ parameters in configurable URLs.
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L15)
+[packages/framework/esm-config/src/navigation/interpolate-string.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L16)
 
 ___
 
@@ -2645,7 +2676,7 @@ Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa
 
 Example usage:
 ```js
-const config = getConfig();
+const config = useConfig();
 const submitHandler = () => {
   navigate({ to: config.links.submitSuccess });
 };
@@ -2655,7 +2686,7 @@ const submitHandler = () => {
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `to` | [`NavigateOptions`](interfaces/NavigateOptions.md) | The target path or URL. Supports templating with 'openmrsBase' and 'openmrsSpaBase'. For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home` for implementations using the standard OpenMRS and SPA base paths. |
+| `to` | [`NavigateOptions`](interfaces/NavigateOptions.md) | The target path or URL. Supports templating with 'openmrsBase', 'openmrsSpaBase', and any additional template parameters defined in `templateParams`. For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home` for implementations using the standard OpenMRS and SPA base paths. If `templateParams` contains `{ foo: "bar" }`, then the URL `${openmrsBase}/${foo}` will become `/openmrs/bar`. |
 
 #### Returns
 
@@ -2663,7 +2694,7 @@ const submitHandler = () => {
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/navigate.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L29)
+[packages/framework/esm-config/src/navigation/navigate.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L35)
 
 ___
 
@@ -2688,7 +2719,7 @@ If this is not possible, throws an error.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:377](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L377)
+[packages/framework/esm-offline/src/sync.ts:357](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L357)
 
 ___
 
@@ -2711,7 +2742,7 @@ registered synchronization handlers.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:367](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L367)
+[packages/framework/esm-offline/src/sync.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L347)
 
 ___
 
@@ -2733,7 +2764,7 @@ Deletes a queued up sync item with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:397](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L397)
+[packages/framework/esm-offline/src/sync.ts:377](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L377)
 
 ___
 
@@ -2767,6 +2798,69 @@ ___
 
 ___
 
+### getDynamicOfflineDataEntries
+
+▸ **getDynamicOfflineDataEntries**(`type?`): `Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
+
+Returns all [DynamicOfflineData](interfaces/DynamicOfflineData.md) entries which registered for the currently logged in user.
+Optionally returns only entries of a given type.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type?` | `string` | The type of the entries to be returned. If `undefined`, returns all types. |
+
+#### Returns
+
+`Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L131)
+
+___
+
+### getDynamicOfflineDataEntriesFor
+
+▸ **getDynamicOfflineDataEntriesFor**(`userId`, `type?`): `Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
+
+Returns all [DynamicOfflineData](interfaces/DynamicOfflineData.md) entries which registered for the given user.
+Optionally returns only entries of a given type.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `userId` | `string` | The ID of the user whose entries are to be retrieved. |
+| `type?` | `string` | The type of the entries to be returned. If `undefined`, returns all types. |
+
+#### Returns
+
+`Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L144)
+
+___
+
+### getDynamicOfflineDataHandlers
+
+▸ **getDynamicOfflineDataHandlers**(): [`DynamicOfflineDataHandler`](interfaces/DynamicOfflineDataHandler.md)[]
+
+Returns all handlers which have been setup using the [setupDynamicOfflineDataHandler](API.md#setupdynamicofflinedatahandler) function.
+
+#### Returns
+
+[`DynamicOfflineDataHandler`](interfaces/DynamicOfflineDataHandler.md)[]
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L105)
+
+___
+
 ### getFullSynchronizationItems
 
 ▸ **getFullSynchronizationItems**<`T`\>(`type?`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
@@ -2791,7 +2885,7 @@ Returns all currently queued up sync items of the currently signed in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:345](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L345)
+[packages/framework/esm-offline/src/sync.ts:325](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L325)
 
 ___
 
@@ -2820,7 +2914,7 @@ Returns all currently queued up sync items of a given user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L321)
+[packages/framework/esm-offline/src/sync.ts:301](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L301)
 
 ___
 
@@ -2828,13 +2922,15 @@ ___
 
 ▸ **getOfflinePatientDataStore**(): `Store`<[`OfflinePatientDataSyncStore`](interfaces/OfflinePatientDataSyncStore.md)\>
 
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
+
 #### Returns
 
 `Store`<[`OfflinePatientDataSyncStore`](interfaces/OfflinePatientDataSyncStore.md)\>
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L86)
+[packages/framework/esm-offline/src/offline-patient-data.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L45)
 
 ___
 
@@ -2862,7 +2958,7 @@ Returns a queued sync item with the given ID or `undefined` if no such item exis
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:354](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L354)
+[packages/framework/esm-offline/src/sync.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L334)
 
 ___
 
@@ -2890,7 +2986,7 @@ Returns the content of all currently queued up sync items of the currently signe
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:336](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L336)
+[packages/framework/esm-offline/src/sync.ts:316](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L316)
 
 ___
 
@@ -2916,20 +3012,6 @@ Checks whether the given string has the format of an offline UUID generated by [
 
 ___
 
-### loadPersistedPatientDataSyncState
-
-▸ **loadPersistedPatientDataSyncState**(): `Promise`<`void`\>
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[packages/framework/esm-offline/src/offline-patient-data.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L200)
-
-___
-
 ### messageOmrsServiceWorker
 
 ▸ **messageOmrsServiceWorker**(`message`): `Promise`<[`MessageServiceWorkerResult`](interfaces/MessageServiceWorkerResult.md)<`any`\>\>
@@ -2951,6 +3033,55 @@ A promise which completes when the message has been successfully processed by th
 #### Defined in
 
 [packages/framework/esm-offline/src/service-worker-messaging.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L11)
+
+___
+
+### putDynamicOfflineData
+
+▸ **putDynamicOfflineData**(`type`, `identifier`): `Promise`<`void`\>
+
+Declares that dynamic offline data of the given [type](interfaces/FetchResponse.md#type) with the given [identifier](interfaces/FHIRResource.md#identifier)
+should be made available offline for the currently logged in user.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L162)
+
+___
+
+### putDynamicOfflineDataFor
+
+▸ **putDynamicOfflineDataFor**(`userId`, `type`, `identifier`): `Promise`<`void`\>
+
+Declares that dynamic offline data of the given [type](interfaces/FetchResponse.md#type) with the given [identifier](interfaces/FHIRResource.md#identifier)
+should be made available offline for the user with the given ID.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `userId` | `string` | The ID of the user for whom the dynamic offline data should be made available. |
+| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L177)
 
 ___
 
@@ -2980,7 +3111,7 @@ Enqueues a new item in the sync queue and associates the item with the currently
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:294](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L294)
+[packages/framework/esm-offline/src/sync.ts:274](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L274)
 
 ___
 
@@ -2988,25 +3119,94 @@ ___
 
 ▸ **registerOfflinePatientHandler**(`identifier`, `handler`): `void`
 
-Attempts to add the specified patient handler registration to the list of offline patient handlers.
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `identifier` | `string` | A key which uniquely identifies the registration. |
-| `handler` | [`OfflinePatientDataSyncHandler`](interfaces/OfflinePatientDataSyncHandler.md) | The patient handler registration to be registered. |
+| Name | Type |
+| :------ | :------ |
+| `identifier` | `string` |
+| `handler` | [`OfflinePatientDataSyncHandler`](interfaces/OfflinePatientDataSyncHandler.md) |
 
 #### Returns
 
 `void`
 
-`true` if the registration was successfully made; `false` if another registration with
-  the same identifier has already been registered before.
+#### Defined in
+
+[packages/framework/esm-offline/src/offline-patient-data.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L51)
+
+___
+
+### removeDynamicOfflineData
+
+▸ **removeDynamicOfflineData**(`type`, `identifier`): `Promise`<`void`\>
+
+Declares that dynamic offline data of the given [type](interfaces/FetchResponse.md#type) with the given [identifier](interfaces/FHIRResource.md#identifier)
+no longer needs to be available offline for the currently logged in user.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+
+#### Returns
+
+`Promise`<`void`\>
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L97)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L213)
+
+___
+
+### removeDynamicOfflineDataFor
+
+▸ **removeDynamicOfflineDataFor**(`userId`, `type`, `identifier`): `Promise`<`void`\>
+
+Declares that dynamic offline data of the given [type](interfaces/FetchResponse.md#type) with the given [identifier](interfaces/FHIRResource.md#identifier)
+no longer needs to be available offline for the user with the given ID.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `userId` | `string` | The ID of the user who doesn't require the specified offline data. |
+| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L228)
+
+___
+
+### setupDynamicOfflineDataHandler
+
+▸ **setupDynamicOfflineDataHandler**(`handler`): `void`
+
+Sets up a handler for synchronizing dynamic offline data.
+See [DynamicOfflineDataHandler](interfaces/DynamicOfflineDataHandler.md) for details.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `handler` | [`DynamicOfflineDataHandler`](interfaces/DynamicOfflineDataHandler.md) | The handler to be setup. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L114)
 
 ___
 
@@ -3037,7 +3237,7 @@ Registers a new synchronization handler which is able to synchronize data of a s
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:412](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L412)
+[packages/framework/esm-offline/src/sync.ts:392](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L392)
 
 ___
 
@@ -3119,11 +3319,58 @@ ___
 
 ___
 
+### syncAllDynamicOfflineData
+
+▸ **syncAllDynamicOfflineData**(`type`, `abortSignal?`): `Promise`<`void`\>
+
+Synchronizes all offline data entries of the given [type](interfaces/FetchResponse.md#type) for the currently logged in user.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `abortSignal?` | `AbortSignal` | An {@link AbortSignal} which can be used to cancel the operation. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L262)
+
+___
+
+### syncDynamicOfflineData
+
+▸ **syncDynamicOfflineData**(`type`, `identifier`, `abortSignal?`): `Promise`<`void`\>
+
+Synchronizes a single offline data entry of the given [type](interfaces/FetchResponse.md#type) for the currently logged in user.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `abortSignal?` | `AbortSignal` | An {@link AbortSignal} which can be used to cancel the operation. |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:280](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L280)
+
+___
+
 ### syncOfflinePatientData
 
 ▸ **syncOfflinePatientData**(`patientUuid`): `Promise`<`void`\>
 
-Notifies all registered offline patient handlers that a new patient must be made available offline.
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
 
 #### Parameters
 
@@ -3135,11 +3382,9 @@ Notifies all registered offline patient handlers that a new patient must be made
 
 `Promise`<`void`\>
 
-A promise which resolves once all registered handlers have finished synchronizing.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L112)
+[packages/framework/esm-offline/src/offline-patient-data.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L71)
 
 ___
 
@@ -3471,7 +3716,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L18)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L20)
 
 ___
 
@@ -3619,7 +3864,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L22)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L24)
 
 ___
 

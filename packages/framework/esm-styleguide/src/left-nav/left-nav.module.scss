@@ -9,25 +9,34 @@
   border-left: 0.25rem solid var(--brand-01);
 }
 
-.leftNav > div a:nth-child(1) {
+.leftNav > div a {
   height: 2.5rem;
   color: $ui-04;
   border-left: 0.25rem solid transparent;
   @include carbon--type-style("productive-heading-01");
+  // Below are styles from bx--side-nav__link
+  align-items: center;
+  display: flex;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  padding: 0 1rem;
+  position: relative;
+  text-decoration: none;
+  transition: color 0.11s, background-color 0.11s, outline 0.11s;
 }
 
 :global(.omrs-breakpoint-gt-tablet) .leftNav > div {
   padding-top: 1rem;
 }
 
-.leftNav > div a:nth-child(1):hover {
+.leftNav > div a:hover {
   background-color: $ui-03;
   color: $ui-05;
   border-left: var(--brand-01);
   padding: 1.2rem 0 1.2rem 1.2rem;
 }
 
-.leftNav > div a:nth-child(1):focus {
+.leftNav > div a:focus {
   background-color: $ui-03;
   outline: none;
   color: $ui-05;

@@ -2,6 +2,8 @@
 
 # Interface: OfflinePatientDataSyncHandler
 
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
+
 ## Table of contents
 
 ### Offline Properties
@@ -18,12 +20,9 @@
 
 • `Readonly` **displayName**: `string`
 
-A name of the handler registration which can be displayed to the user.
-This is ideally translated.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L56)
+[packages/framework/esm-offline/src/offline-patient-data.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L26)
 
 ## Methods
 
@@ -31,22 +30,16 @@ This is ideally translated.
 
 ▸ **onOfflinePatientAdded**(`args`): `Promise`<`void`\>
 
-A function which is invoked when a patient is added to the app's offline patient cache.
-Signals to the handler that the patient's data must be made available offline.
-
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `args` | [`OfflinePatientArgs`](OfflinePatientArgs.md) | Arguments which provide data about the patient to be made available offline. |
+| Name | Type |
+| :------ | :------ |
+| `args` | [`OfflinePatientArgs`](OfflinePatientArgs.md) |
 
 #### Returns
 
 `Promise`<`void`\>
 
-A promise which should resolve if all data could be cached and reject when there was an issue
-  caching the data.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L64)
+[packages/framework/esm-offline/src/offline-patient-data.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L27)

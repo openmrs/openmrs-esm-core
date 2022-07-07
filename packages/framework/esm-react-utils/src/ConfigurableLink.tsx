@@ -1,8 +1,12 @@
 /** @module @category Navigation */
 import React, { MouseEvent, AnchorHTMLAttributes } from "react";
-import { navigate, interpolateUrl } from "@openmrs/esm-config";
+import { navigate, interpolateUrl, TemplateParams } from "@openmrs/esm-config";
 
-function handleClick(event: MouseEvent, to: string) {
+function handleClick(
+  event: MouseEvent,
+  to: string,
+  templateParams?: TemplateParams
+) {
   if (
     !event.metaKey &&
     !event.ctrlKey &&
@@ -10,7 +14,7 @@ function handleClick(event: MouseEvent, to: string) {
     event.button == 0
   ) {
     event.preventDefault();
-    navigate({ to });
+    navigate({ to, templateParams });
   }
 }
 
@@ -20,25 +24,30 @@ function handleClick(event: MouseEvent, to: string) {
 export interface ConfigurableLinkProps
   extends AnchorHTMLAttributes<HTMLAnchorElement> {
   to: string;
+  templateParams?: TemplateParams;
 }
 
 /**
  * A React link component which calls [[navigate]] when clicked
  *
  * @param to The target path or URL. Supports interpolation. See [[navigate]]
+ * @param urlParams: A dictionary of values to interpolate into the URL, in addition to the default keys `openmrsBase` and `openmrsSpaBase`.
  * @param children Inline elements within the link
  * @param otherProps Any other valid props for an <a> tag except `href` and `onClick`
  */
-export const ConfigurableLink: React.FC<ConfigurableLinkProps> = ({
+export function ConfigurableLink({
   to,
+  templateParams,
   children,
   ...otherProps
-}) => (
-  <a
-    onClick={(event) => handleClick(event, to)}
-    href={interpolateUrl(to)}
-    {...otherProps}
-  >
-    {children}
-  </a>
-);
+}: ConfigurableLinkProps) {
+  return (
+    <a
+      onClick={(event) => handleClick(event, to, templateParams)}
+      href={interpolateUrl(to, templateParams)}
+      {...otherProps}
+    >
+      {children}
+    </a>
+  );
+}

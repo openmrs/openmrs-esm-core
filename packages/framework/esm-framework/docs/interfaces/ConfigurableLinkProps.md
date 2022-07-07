@@ -12,9 +12,20 @@
 
 ### Navigation Properties
 
+- [templateParams](ConfigurableLinkProps.md#templateparams)
 - [to](ConfigurableLinkProps.md#to)
 
 ## Navigation Properties
+
+### templateParams
+
+• `Optional` **templateParams**: [`TemplateParams`](../API.md#templateparams)
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L27)
+
+___
 
 ### to
 
@@ -22,4 +33,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L22)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L26)

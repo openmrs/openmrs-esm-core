@@ -2,6 +2,8 @@
 
 # Interface: OfflinePatientArgs
 
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
+
 ## Table of contents
 
 ### Offline Properties
@@ -15,11 +17,9 @@
 
 • **patientUuid**: `string`
 
-The UUID of the patient that should be made available offline.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L71)
+[packages/framework/esm-offline/src/offline-patient-data.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L32)
 
 ___
 
@@ -27,8 +27,6 @@ ___
 
 • **signal**: `AbortSignal`
 
-An {@link AbortSignal} which notifies about the cancellation of the operation.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L75)
+[packages/framework/esm-offline/src/offline-patient-data.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L33)

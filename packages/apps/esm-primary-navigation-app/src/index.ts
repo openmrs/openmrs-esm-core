@@ -1,5 +1,6 @@
 import {
   defineConfigSchema,
+  defineExtensionConfigSchema,
   getAsyncLifecycle,
   setupOfflineSync,
 } from "@openmrs/esm-framework";
@@ -11,6 +12,7 @@ import { configSchema } from "./config-schema";
 import { moduleName, userPropertyChange } from "./constants";
 import { syncUserLanguagePreference } from "./offline";
 import { navigateToUrl } from "single-spa";
+import { genericLinkConfigSchema } from "./components/generic-link/generic-link.component";
 
 const importTranslation = require.context(
   "../translations",
@@ -30,6 +32,7 @@ const options = {
 
 function setupOpenMRS() {
   defineConfigSchema(moduleName, configSchema);
+  defineExtensionConfigSchema("link", genericLinkConfigSchema);
 
   setupOfflineSync(userPropertyChange, [], syncUserLanguagePreference);
 
@@ -84,6 +87,16 @@ function setupOpenMRS() {
         offline: {
           postUserProperties: postUserPropertiesOffline,
         },
+      },
+      {
+        name: "link",
+        load: getAsyncLifecycle(
+          () => import("./components/generic-link/generic-link.component"),
+          {
+            featureName: "Link",
+            moduleName,
+          }
+        ),
       },
     ],
   };
