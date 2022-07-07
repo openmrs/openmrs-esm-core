@@ -2,6 +2,8 @@
 
 # Interface: OfflinePatientDataSyncState
 
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
+
 ## Table of contents
 
 ### Offline Properties
@@ -22,11 +24,9 @@
 
 • `Readonly` **errors**: `Record`<`string`, `string`\>
 
-A set of error messages associated with the identifers of the failed handlers.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L42)
+[packages/framework/esm-offline/src/offline-patient-data.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L20)
 
 ___
 
@@ -34,12 +34,9 @@ ___
 
 • `Readonly` **failedHandlers**: `string`[]
 
-A list of the data sync handler registration identifiers which failed to synchronize the
-patient's data.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L38)
+[packages/framework/esm-offline/src/offline-patient-data.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L19)
 
 ___
 
@@ -47,12 +44,9 @@ ___
 
 • `Readonly` **syncedHandlers**: `string`[]
 
-A list of the data sync handler registration identifiers which successfully synchronized the
-patient's data.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L33)
+[packages/framework/esm-offline/src/offline-patient-data.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L18)
 
 ___
 
@@ -60,12 +54,9 @@ ___
 
 • `Readonly` **syncingHandlers**: `string`[]
 
-A list of the data sync handler registration identifiers which are still in the process
-of synchronizing the patient's data.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L28)
+[packages/framework/esm-offline/src/offline-patient-data.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L17)
 
 ___
 
@@ -73,11 +64,9 @@ ___
 
 • `Readonly` **timestamp**: `Date`
 
-The time when this state snapshot was initially created.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L23)
+[packages/framework/esm-offline/src/offline-patient-data.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L16)
 
 ## Methods
 
@@ -85,15 +74,10 @@ The time when this state snapshot was initially created.
 
 ▸ **abort**(): `boolean`
 
-Aborts the process of downloading data.
-
 #### Returns
 
 `boolean`
 
-`true` if the cancellation could be triggered (that is, if there were any syncing handlers);
-  `false` if not.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L48)
+[packages/framework/esm-offline/src/offline-patient-data.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L21)

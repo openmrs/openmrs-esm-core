@@ -38,8 +38,11 @@
 | `subject.identifier.value` | `string` |
 | `subject.reference` | `string` |
 | `subject.type` | `string` |
+| `valueCodeableConcept` | { `coding`: [`FHIRCode`](FHIRCode.md)[]  } |
+| `valueCodeableConcept.coding` | [`FHIRCode`](FHIRCode.md)[] |
 | `valueQuantity` | { `value`: `number`  } |
 | `valueQuantity.value` | `number` |
+| `valueString` | `string` |
 
 #### Defined in
 
