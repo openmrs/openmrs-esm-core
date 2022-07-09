@@ -16,6 +16,7 @@
 
 ### Properties
 
+- [Display conditions](ConfigObject.md#display conditions)
 - [constructor](ConfigObject.md#constructor)
 
 ### Methods
@@ -28,6 +29,16 @@
 - [valueOf](ConfigObject.md#valueof)
 
 ## Properties
+
+### Display conditions
+
+• `Optional` **Display conditions**: [`DisplayConditionsConfigObject`](DisplayConditionsConfigObject.md)
+
+#### Defined in
+
+[packages/framework/esm-config/src/types.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L30)
+
+___
 
 ### constructor
 

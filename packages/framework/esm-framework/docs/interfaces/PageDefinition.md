@@ -82,15 +82,16 @@ The order in which to load the page. This determines DOM order.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:145](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L145)
+[packages/framework/esm-globals/src/types.ts:146](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L146)
 
 ___
 
 ### privilege
 
-• `Optional` **privilege**: `string`
+• `Optional` **privilege**: `string` \| `string`[]
 
-Defines the access privilege required for this component, if any.
+Defines the access privilege(s) required for this component, if any.
+If more than one privilege is provided, the user must have all specified permissions.
 
 #### Inherited from
 
@@ -98,7 +99,7 @@ Defines the access privilege required for this component, if any.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L115)
+[packages/framework/esm-globals/src/types.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L116)
 
 ___
 
@@ -114,7 +115,7 @@ Defines resources that are loaded when the component should mount.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:119](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L119)
+[packages/framework/esm-globals/src/types.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L120)
 
 ___
 
@@ -126,7 +127,7 @@ The route of the page.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:141](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L141)
+[packages/framework/esm-globals/src/types.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L142)
 
 ## Methods
 

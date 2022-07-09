@@ -64,13 +64,14 @@ ___
 
 ### privilege
 
-• `Optional` **privilege**: `string`
+• `Optional` **privilege**: `string` \| `string`[]
 
-Defines the access privilege required for this component, if any.
+Defines the access privilege(s) required for this component, if any.
+If more than one privilege is provided, the user must have all specified permissions.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L115)
+[packages/framework/esm-globals/src/types.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L116)
 
 ___
 
@@ -82,7 +83,7 @@ Defines resources that are loaded when the component should mount.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:119](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L119)
+[packages/framework/esm-globals/src/types.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L120)
 
 ## Methods
 
