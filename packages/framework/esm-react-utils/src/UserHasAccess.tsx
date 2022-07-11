@@ -2,14 +2,14 @@
 import { getCurrentUser, LoggedInUser, userHasAccess } from "@openmrs/esm-api";
 import React, { useEffect, useState } from "react";
 
-interface UserHasAccessProps {
+export interface UserHasAccessProps {
   privilege: string;
-  unauthorisedResponse?: React.ReactNode | undefined;
+  fallback?: React.ReactNode;
 }
 
 export const UserHasAccess: React.FC<UserHasAccessProps> = ({
   privilege,
-  unauthorisedResponse,
+  fallback,
   children,
 }) => {
   const [user, setUser] = useState<LoggedInUser | null>(null);
@@ -24,6 +24,6 @@ export const UserHasAccess: React.FC<UserHasAccessProps> = ({
   if (user && userHasAccess(privilege, user)) {
     return <>{children}</>;
   } else {
-    return unauthorisedResponse ? <>{unauthorisedResponse}</> : null;
+    return fallback ? <>{fallback}</> : null;
   }
 };
