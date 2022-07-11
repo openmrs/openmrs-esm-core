@@ -132,7 +132,6 @@ function userHasPrivilege(
     );
   } else if (Array.isArray(requiredPrivilege)) {
     return (
-      requiredPrivilege.length &&
       requiredPrivilege.every(
         (rp) => !isUndefined(user.privileges.find((p) => rp === p.display))
       )
