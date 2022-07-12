@@ -669,6 +669,16 @@ ___
 
 ## Other Variables
 
+### ErrorState
+
+• **ErrorState**: `React.FC`<[`ErrorStateProps`](interfaces/ErrorStateProps.md)\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L12)
+
+___
+
 ### Extension
 
 • **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>

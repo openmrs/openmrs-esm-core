@@ -7,7 +7,7 @@
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "test": "jest --passWithNoTests",
+    "test": "jest --config jest.config.json --passWithNoTests",
     "start:storybook": "start-storybook --port 7000",
     "build:storybook": "build-storybook",
     "build": "webpack --mode=production",
@@ -48,21 +48,32 @@
     "@openmrs/esm-state": "3.x",
     "carbon-components": "10.x",
     "carbon-icons": "7.x",
+    "i18next": "19.x",
     "react": "16.x",
     "react-dom": "16.x",
+    "react-i18next": "11.x",
     "rxjs": "6.x"
   },
   "devDependencies": {
     "@openmrs/esm-extensions": "^3.4.0",
     "@openmrs/esm-react-utils": "^3.4.0",
     "@openmrs/esm-state": "^3.4.0",
+    "@swc/core": "^1.2.210",
+    "@swc/jest": "^0.2.21",
+    "@testing-library/dom": "^8.14.0",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.x",
     "autoprefixer": "^9.8.8",
     "carbon-components": "10.31.0",
     "carbon-icons": "7.0.7",
     "css-minimizer-webpack-plugin": "^1.2.0",
+    "i18next": "^19.6.0",
+    "jest": "^28.1.2",
+    "jest-environment-jsdom": "^28.1.2",
     "postcss": "^8.4.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-i18next": "^11.7.0",
     "rxjs": "^6.5.3"
   }
 }
