@@ -16,7 +16,9 @@ const Home: React.FC = () => {
 
   return (
     <SharedPageLayout header={t("homeHeader", "Offline home")}>
-      <CardsContainer />
+      <div style={{ backgroundColor: "#ededed" }}>
+        <CardsContainer />
+      </div>
 
       <div className={styles.offlinePatientsTableContainer}>
         <OfflinePatientTable isInteractive={false} showHeader />

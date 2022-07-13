@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./error-state.module.scss";
-import { Tile } from "carbon-components-react";
+import { Tile } from "@carbon/react";
 import { useTranslation } from "react-i18next";
 import { useLayoutType } from "@openmrs/esm-react-utils";
+import styles from "./error-state.module.scss";
 
 export interface ErrorStateProps {
   error: any;

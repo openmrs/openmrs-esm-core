@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, InlineNotification, TextInput, Tile } from "@carbon/react";
-import { ArrowRight } from "@carbon/react/icons";
+import { ArrowLeft, ArrowRight } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import { useConfig, interpolateUrl, useSession } from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
@@ -148,12 +148,18 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
             <div className={styles["back-button-div"]}>
               <Button
                 className={styles["back-button"]}
-                kind="ghost"
                 iconDescription="Back to username"
-                onClick={() => history.push("/login")}
+                kind="ghost"
+                onClick={() => navigate("/login")}
+                renderIcon={(props) => (
+                  <ArrowLeft
+                    size={24}
+                    style={{ marginRight: "0.5rem" }}
+                    {...props}
+                  />
+                )}
               >
-                <ArrowLeft16 style={{ marginRight: "1rem" }} />
-                Back
+                <span>{t("back", "Back")}</span>
               </Button>
             </div>
           ) : null}
@@ -185,7 +191,6 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
                 </div>
                 <div className={styles.buttonContainer}>
                   <Button
-                    aria-label="continue"
                     className={styles.continueButton}
                     renderIcon={(props) => <ArrowRight size={24} {...props} />}
                     type="submit"
@@ -229,7 +234,6 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
                 </div>
                 <div className={styles.buttonContainer}>
                   <Button
-                    aria-label="submit"
                     type="submit"
                     className={styles.continueButton}
                     renderIcon={(props) => <ArrowRight size={24} {...props} />}

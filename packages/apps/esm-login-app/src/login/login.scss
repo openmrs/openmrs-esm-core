@@ -11,28 +11,15 @@
   text-align: center;
 }
 
-.right {
-  text-align: right;
-}
-
 .logo {
   margin-bottom: 2.5rem;
   height: 5rem;
-  max-width: 18rem;
+  width: 13rem;
 }
 
 .logo-img {
   margin-bottom: 3rem;
   max-width: 100%;
-}
-
-.icon-btn {
-  cursor: pointer;
-}
-
-.error-msg {
-  margin-top: 1rem;
-  color: $danger;
 }
 
 .powered-by-txt {
@@ -56,11 +43,6 @@
   align-items: center;
 }
 
-.contact-administrator-need-help {
-  @extend .bodyShort01;
-  padding-left: 0.5rem;
-}
-
 .powered-by-logo {
   height: 2.5rem;
   width: 6.5rem;
@@ -72,6 +54,7 @@
   background-color: $ui-02;
   width: 23rem;
   padding: 2.5rem;
+  position: relative;
 }
 
 @media only screen and (min-width: 481px) {
@@ -91,38 +74,44 @@
   }
 }
 
-.card-content {
-  border: none;
-  padding: 0.625rem 0.25rem 0.625rem 1rem;
-  border-radius: 0;
-}
-
-.card {
-  width: 21.75rem;
-  margin: 0.5rem 1rem;
-}
-
 .input-group {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 18rem;
-  height: 4.5rem;
 }
 
 .continueButton {
+  margin-top: 1.5rem;
   width: 18rem;
+}
+
+.back-button-div {
+  width: 23rem;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+}
+
+.back-button {
+  height: 3rem;
+  padding-left: 0rem;
+
+  svg {
+    margin-right: 0.5rem;
+    order: 1;
+  }
+
+  span {
+    order: 2;
+  }
 }
 
 .inputStyle {
   @extend .label01;
   width: 18rem;
   height: 3rem;
-}
-
-.buttonContainer {
-  margin-top: 1.5rem;
 }
 
 .footer {

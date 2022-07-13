@@ -1,3 +1,6 @@
+@use "@carbon/styles/scss/spacing";
+@use "@carbon/styles/scss/type";
+@import "~@openmrs/esm-styleguide/src/vars";
 @import "../root.scss";
 
 .tableContainer {
@@ -10,9 +13,9 @@
   grid-template-columns: 1fr 1fr auto auto;
 
   .tableHeader {
-    @include carbon--type-style("productive-heading-03");
+    @include type.type-style("heading-compact-02");
     color: $text-02;
-    padding: $spacing-04 0 $spacing-04 $spacing-04;
+    padding: spacing.$spacing-04 0 spacing.$spacing-04 spacing.$spacing-04;
     grid-row: 1;
     grid-column: 1 / span 4;
   }
@@ -41,7 +44,7 @@
 
   .tableHeader {
     grid-column: 1;
-    padding: $spacing-04 0 $spacing-02 $spacing-04;
+    padding: spacing.$spacing-04 0 spacing.$spacing-02 spacing.$spacing-04;
   }
 
   .tableSearch {

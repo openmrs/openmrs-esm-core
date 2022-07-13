@@ -5,7 +5,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 spacing.$spacing-05 spacing.$spacing-05 spacing.$spacing-05;
+  padding: spacing.$spacing-05;
+  background-color: #ededed;
 
   .pageHeader {
     @extend .productiveHeading03;

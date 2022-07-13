@@ -1,11 +1,12 @@
 @use "@carbon/styles/scss/type";
+@use "@carbon/styles/scss/spacing";
 @import "../../implementer-tools.styles.scss";
 
 .activeConceptUuid {
   @include type.type-style("body-compact-01");
   color: $ui-05;
-  margin-bottom: $spacing-03;
-  padding-bottom: $spacing-03;
+  margin-bottom: spacing.$spacing-03;
+  padding-bottom: spacing.$spacing-03;
   border-bottom: 1px solid $ui-03;
 }
 

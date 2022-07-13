@@ -1,6 +1,8 @@
 @use "@carbon/styles/scss/spacing";
+@import "~@openmrs/esm-styleguide/src/vars";
 @import "../root.scss";
 
 .offlinePatientsTableContainer {
+  border-top: 1px solid $ui-03;
   padding: spacing.$spacing-05;
 }

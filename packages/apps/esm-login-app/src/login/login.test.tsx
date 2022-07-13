@@ -102,7 +102,7 @@ describe(`<Login />`, () => {
     await user.click(screen.getByRole("button", { name: /Continue/i }));
     await screen.findByLabelText(/password/i);
     await user.type(screen.getByLabelText(/password/i), "no-tax-fraud");
-    await user.click(screen.getByRole("button", { name: /submit/i }));
+    await user.click(screen.getByRole("button", { name: /login/i }));
     await waitFor(() =>
       expect(performLogin).toHaveBeenCalledWith("yoshi", "no-tax-fraud")
     );
@@ -147,7 +147,7 @@ describe(`<Login />`, () => {
     await user.type(screen.getByLabelText("password"), "no-tax-fraud");
     //FIX ME
     // For some reason this assertion mounts and unmounts causing test to fail, commenting out to do a follow up to fix it
-    // await user.click(screen.getByRole("button", { name: /submit/i }));
+    // await user.click(screen.getByRole("button", { name: /login/i }));
     //expect(wrapper.history.location.pathname).toBe("/login/location");
     //await waitFor(() =>
     //);

@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import LoadingIcon from "../loading/loading.component";
-import LocationPicker from "../location-picker/location-picker.component";
+import { useLocation } from "react-router-dom";
 import {
   navigate,
   useConfig,
@@ -8,7 +7,8 @@ import {
   useSession,
 } from "@openmrs/esm-framework";
 import { useLoginLocations } from "./choose-location.resource";
-import { useLocation } from "react-router-dom";
+import LoadingIcon from "../loading/loading.component";
+import LocationPicker from "../location-picker/location-picker.component";
 
 export interface LoginReferrer {
   referrer?: string;

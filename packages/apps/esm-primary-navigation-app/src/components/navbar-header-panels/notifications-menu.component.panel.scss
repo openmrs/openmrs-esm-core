@@ -1,0 +1,13 @@
+@use "@carbon/styles/scss/type";
+@import "~@openmrs/esm-styleguide/src/vars";
+@import "../../root.scss";
+
+.heading {
+  @include type.type-style("heading-03");
+  color: $ui-background;
+  margin: 1rem;
+}
+
+.emptyNotifications {
+  margin: 4rem 1rem;
+}

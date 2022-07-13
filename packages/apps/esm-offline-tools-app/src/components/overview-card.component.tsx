@@ -23,6 +23,7 @@ const OverviewCard: React.FC<OverviewCardProps> = ({
         <div className={styles.headerContainer}>
           <h3 className={styles.productiveHeading01}>{header}</h3>
           <Button
+            className={styles.viewButton}
             kind="ghost"
             renderIcon={(props) => <ArrowRight size={16} {...props} />}
             size="sm"

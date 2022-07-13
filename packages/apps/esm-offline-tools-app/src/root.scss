@@ -1,11 +1,13 @@
 @use "@carbon/styles/scss/type";
+@import "~@openmrs/esm-styleguide/src/vars";
 
 .productiveHeading01 {
   @include type.type-style("heading-compact-01");
+  color: $text-02;
 }
 
 .productiveHeading02 {
-  @include type.type-style("heading-compact-01");
+  @include type.type-style("heading-compact-02");
 }
 
 .productiveHeading03 {
@@ -26,4 +28,5 @@
 
 .label01 {
   @include type.type-style("label-01");
+  color: $text-02;
 }

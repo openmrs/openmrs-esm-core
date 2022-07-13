@@ -1,21 +1,12 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  createErrorHandler,
-  usePagination,
-  useLayoutType,
-  navigate,
-  SyncItem,
-  canBeginEditSynchronizationItemsOfType,
-  beginEditSynchronizationItem,
-  isDesktop,
-} from "@openmrs/esm-framework/src/internal";
-import {
   Button,
   DataTable,
   DataTableHeader,
   DataTableSkeleton,
   FilterRowsData,
+  Layer,
   Link,
   Pagination,
   Search,
@@ -30,6 +21,16 @@ import {
   TableSelectAll,
   TableSelectRow,
 } from "@carbon/react";
+import {
+  beginEditSynchronizationItem,
+  canBeginEditSynchronizationItemsOfType,
+  createErrorHandler,
+  isDesktop,
+  navigate,
+  SyncItem,
+  useLayoutType,
+  usePagination,
+} from "@openmrs/esm-framework";
 import styles from "./offline-actions-table.styles.scss";
 
 export interface SyncItemWithPatient {
@@ -133,20 +134,21 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
         >
           <div className={styles.tableHeaderContainer}>
             {selectedRows.length === 0 && (
-              <Search
-                className={styles.tableSearch}
-                labelText={t(
-                  "offlinePatientsTableSearchLabel",
-                  "Search this list"
-                )}
-                placeholder={t(
-                  "offlinePatientsTableSearchPlaceholder",
-                  "Search this list"
-                )}
-                size={toolbarItemSize}
-                onChange={onInputChange}
-                light
-              />
+              <Layer>
+                <Search
+                  className={styles.tableSearch}
+                  labelText={t(
+                    "offlinePatientsTableSearchLabel",
+                    "Search this list"
+                  )}
+                  placeholder={t(
+                    "offlinePatientsTableSearchPlaceholder",
+                    "Search this list"
+                  )}
+                  size={toolbarItemSize}
+                  onChange={onInputChange}
+                />
+              </Layer>
             )}
             {selectedRows.length > 0 && (
               <Button
