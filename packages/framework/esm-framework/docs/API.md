@@ -545,7 +545,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L9)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L10)
 
 ___
 
@@ -561,16 +561,27 @@ ___
 
 ### fhir
 
-• **fhir**: `FhirClient`
+• **fhir**: `Object`
 
-The `fhir` object is [an instance of fhir.js](https://github.com/FHIR/fhir.js)
+The `fhir` object is replicates the API from [fhir.js](https://github.com/FHIR/fhir.js)
 that can be used to call FHIR-compliant OpenMRS APIs. See
 [the docs for fhir.js](https://github.com/FHIR/fhir.js) for more info
 and example usage.
 
+This object should be considered deprecated and may be removed from a future version
+of the framework.
+
+**`deprecated`**
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `read` | <T\>(`options`: [`FHIRRequestOptions`](interfaces/FHIRRequestOptions.md)) => `Promise`<{ `config`: [`FHIRRequestObj`](interfaces/FHIRRequestObj.md) ; `data`: `T` ; `headers`: `Headers` ; `status`: `number`  }\> |
+
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L42)
+[packages/framework/esm-api/src/fhir.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L45)
 
 ___
 
@@ -600,7 +611,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L12)
+[packages/framework/esm-api/src/openmrs-fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L7)
 
 ___
 
@@ -752,18 +763,18 @@ ___
 
 ### fetchCurrentPatient
 
-▸ **fetchCurrentPatient**(`patientUuid`, `contentOverrides?`): `Promise`<{ `data`: `Patient`  }\> \| `Promise`<``null``\>
+▸ **fetchCurrentPatient**(`patientUuid`, `contentOverrides?`): `Promise`<{ `config`: [`FHIRRequestObj`](interfaces/FHIRRequestObj.md) ; `data`: `Patient` ; `headers`: `Headers` ; `status`: `number`  }\> \| `Promise`<``null``\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
-| `contentOverrides?` | `Partial`<{ `headers?`: [`FetchHeaders`](interfaces/FetchHeaders.md) ; `id?`: `string` ; `patient?`: `string` ; `type`: `ResourceName`  }\> |
+| `contentOverrides?` | `Partial`<[`FHIRRequestOptions`](interfaces/FHIRRequestOptions.md)\> |
 
 #### Returns
 
-`Promise`<{ `data`: `Patient`  }\> \| `Promise`<``null``\>
+`Promise`<{ `config`: [`FHIRRequestObj`](interfaces/FHIRRequestObj.md) ; `data`: `Patient` ; `headers`: `Headers` ; `status`: `number`  }\> \| `Promise`<``null``\>
 
 #### Defined in
 
@@ -967,7 +978,7 @@ makeUrl('/foo/bar');
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L24)
+[packages/framework/esm-api/src/openmrs-fetch.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L19)
 
 ___
 
@@ -1034,7 +1045,7 @@ free up memory and network resources and to prevent race conditions.
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L77)
+[packages/framework/esm-api/src/openmrs-fetch.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L72)
 
 ___
 
@@ -1085,7 +1096,7 @@ To cancel the network request, simply call `subscription.unsubscribe();`
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:248](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L248)
+[packages/framework/esm-api/src/openmrs-fetch.ts:243](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L243)
 
 ___
 
