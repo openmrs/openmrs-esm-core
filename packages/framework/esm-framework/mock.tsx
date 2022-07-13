@@ -14,6 +14,7 @@ export {
   interpolateString,
   interpolateUrl,
   validators,
+  validator,
 } from "@openmrs/esm-config";
 
 window.i18next = { ...window.i18next, language: "en" };
