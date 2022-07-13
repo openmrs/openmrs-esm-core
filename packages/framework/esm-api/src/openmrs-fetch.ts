@@ -1,12 +1,7 @@
 /** @module @category API */
 import { Observable } from "rxjs";
 import isPlainObject from "lodash-es/isPlainObject";
-import {
-  getConfig,
-  interpolateString,
-  interpolateUrl,
-  navigate,
-} from "@openmrs/esm-config";
+import { getConfig, navigate } from "@openmrs/esm-config";
 import { FetchResponse } from "./types";
 
 export const sessionEndpoint = "/ws/rest/v1/session";
@@ -315,6 +310,6 @@ interface FetchBody {
   [key: string]: any;
 }
 
-interface FetchResponseJson {
+export interface FetchResponseJson {
   [key: string]: any;
 }

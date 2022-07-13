@@ -36,7 +36,6 @@
     "access": "public"
   },
   "dependencies": {
-    "fhir.js": "0.0.22",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {

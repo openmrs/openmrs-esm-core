@@ -7,7 +7,7 @@ we can remove this file in favor of the one they maintain
 */
 
 type ClientFn = (...args: any[]) => Promise<{ data: any }>;
-type ResourceName =
+export type ResourceName =
   | "DomainResource"
   | "Organization"
   | "Location"
