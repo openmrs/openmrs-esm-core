@@ -53,7 +53,7 @@ Error.constructor
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:286](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L286)
+[packages/framework/esm-api/src/openmrs-fetch.ts:281](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L281)
 
 ## API Properties
 
@@ -63,17 +63,17 @@ Error.constructor
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:299](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L299)
+[packages/framework/esm-api/src/openmrs-fetch.ts:294](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L294)
 
 ___
 
 ### responseBody
 
-• **responseBody**: ``null`` \| `string` \| `FetchResponseJson`
+• **responseBody**: ``null`` \| `string` \| [`FetchResponseJson`](../interfaces/FetchResponseJson.md)
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:300](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L300)
+[packages/framework/esm-api/src/openmrs-fetch.ts:295](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L295)
 
 ___
 

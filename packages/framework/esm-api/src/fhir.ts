@@ -1,10 +1,9 @@
 /** @module @category API */
 import { openmrsFetch, FetchHeaders, OpenmrsFetchError } from "./openmrs-fetch";
-import type { FhirClient } from "./types/fhir";
+import type { ResourceName } from "./types/fhir";
 
 export const fhirBaseUrl = `/ws/fhir2/R4`;
 
-const makeFhir = require("fhir.js/src/fhir.js");
 const openmrsFhirAdapter = {
   http(requestObj: FHIRRequestObj) {
     return openmrsFetch(requestObj.url, {
@@ -23,7 +22,7 @@ const openmrsFhirAdapter = {
         return {
           status: err.response.status,
           headers: err.response.headers,
-          data: err.responseBody,
+          data: err.responseBody as any,
           config: requestObj,
         };
       }
@@ -32,18 +31,42 @@ const openmrsFhirAdapter = {
 };
 
 /**
- * The `fhir` object is [an instance of fhir.js](https://github.com/FHIR/fhir.js)
+ * The `fhir` object is replicates the API from [fhir.js](https://github.com/FHIR/fhir.js)
  * that can be used to call FHIR-compliant OpenMRS APIs. See
  * [the docs for fhir.js](https://github.com/FHIR/fhir.js) for more info
  * and example usage.
  *
+ * This object should be considered deprecated and may be removed from a future version
+ * of the framework.
+ *
  * @category API
+ * @deprecated
  */
-export const fhir: FhirClient = makeFhir(
-  { baseUrl: fhirBaseUrl },
-  openmrsFhirAdapter
-);
+export const fhir = {
+  read: <T>(
+    options: FHIRRequestOptions
+  ): Promise<{
+    status: number;
+    headers: Headers;
+    data: T;
+    config: FHIRRequestObj;
+  }> => {
+    return openmrsFhirAdapter.http({
+      url: `${fhirBaseUrl}/${options.type}/${options.patient}`,
+      method: "GET",
+      headers: options.headers ?? {},
+    });
+  },
+};
 
+/** @deprecated */
+export interface FHIRRequestOptions {
+  type: ResourceName;
+  patient: string;
+  headers?: FetchHeaders;
+}
+
+/** @deprecated */
 export interface FHIRRequestObj {
   url: string;
   method: string;

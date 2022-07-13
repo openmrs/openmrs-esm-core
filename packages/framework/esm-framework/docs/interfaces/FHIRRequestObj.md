@@ -2,6 +2,8 @@
 
 # Interface: FHIRRequestObj
 
+**`deprecated`**
+
 ## Table of contents
 
 ### API Properties
@@ -18,7 +20,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L50)
+[packages/framework/esm-api/src/fhir.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L73)
 
 ___
 
@@ -28,7 +30,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L49)
+[packages/framework/esm-api/src/fhir.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L72)
 
 ___
 
@@ -38,4 +40,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L48)
+[packages/framework/esm-api/src/fhir.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L71)
