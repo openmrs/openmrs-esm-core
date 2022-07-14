@@ -28,5 +28,5 @@
   - [Translations](/under_the_hood/translations.md)
   - [Extensions System](/under_the_hood/extensions.md)
   - [Squad DevOps and CI](/under_the_hood/squad_devops.md)
-  - [Migration Guide: React 18](/under_the_hood/migrating_react_18.md)
+  - [Migration Guide](/under_the_hood/migration_guide.md)
 <!-- markdown-link-check-enable-->
