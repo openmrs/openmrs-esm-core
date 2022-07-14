@@ -36,6 +36,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@types/fhir": "0.0.31",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
@@ -46,7 +47,6 @@
     "@openmrs/esm-config": "^3.4.0",
     "@openmrs/esm-error-handling": "^3.4.0",
     "@openmrs/esm-state": "^3.4.0",
-    "@types/fhir": "0.0.31",
     "rxjs": "^6.5.3"
   }
 }
