@@ -1,18 +1,24 @@
 import {
   fetchCurrentPatient,
   getSynchronizationItems,
-  useStore,
   getDynamicOfflineDataEntries,
 } from "@openmrs/esm-framework";
 import useSWR from "swr";
 
 export function useOfflineRegisteredPatients() {
   return useSWR("offlineTools/offlineRegisteredPatients", async () => {
+    const offlinePatients = await getDynamicOfflineDataEntries("patient");
     const syncItems = await getSynchronizationItems<{
       fhirPatient?: fhir.Patient;
     }>("patient-registration");
     return syncItems
-      .filter((item) => item.fhirPatient)
+      .filter(
+        (item) =>
+          item.fhirPatient &&
+          !offlinePatients.find(
+            (entry) => entry.identifier === item.fhirPatient.id
+          )
+      )
       .map((item) => item.fhirPatient);
   });
 }
