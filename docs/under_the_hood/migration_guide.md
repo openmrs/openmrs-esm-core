@@ -7,7 +7,7 @@ Presently, the OpenMRS 3 frontend uses core dependencies that are several years 
 - React 
 - React Router
 - Carbon Design System
-- Jest / Testing Library React / userEvent
+- Jest / React Testing Library / userEvent
 
 ## Preamble
 
