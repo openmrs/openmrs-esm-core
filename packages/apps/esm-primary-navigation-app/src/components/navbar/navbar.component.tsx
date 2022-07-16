@@ -92,15 +92,15 @@ const Navbar: React.FC<NavbarProps> = ({
           </ConfigurableLink>
           <ExtensionSlot
             className={styles.dividerOverride}
-            extensionSlotName="top-nav-info-slot"
+            name="top-nav-info-slot"
           />
           <HeaderGlobalBar className={styles.headerGlobalBar}>
             <ExtensionSlot
-              extensionSlotName="top-nav-actions-slot"
+              name="top-nav-actions-slot"
               className={styles.topNavActionsSlot}
             />
             <ExtensionSlot
-              extensionSlotName="notifications-menu-button-slot"
+              name="notifications-menu-button-slot"
               state={{
                 isActivePanel: isActivePanel,
                 togglePanel: togglePanel,

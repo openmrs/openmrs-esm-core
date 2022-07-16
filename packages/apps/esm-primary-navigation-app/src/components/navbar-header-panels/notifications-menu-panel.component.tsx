@@ -21,10 +21,7 @@ const NotificationsMenuPanel: React.FC<NotificationsMenuPanelProps> = ({
       expanded={expanded}
     >
       <h1 className={styles.heading}>{t("notifications", "Notifications")}</h1>
-      <ExtensionSlot
-        extensionSlotName="notifications-nav-menu-slot"
-        state={state}
-      />
+      <ExtensionSlot name="notifications-nav-menu-slot" state={state} />
     </HeaderPanel>
   );
 };

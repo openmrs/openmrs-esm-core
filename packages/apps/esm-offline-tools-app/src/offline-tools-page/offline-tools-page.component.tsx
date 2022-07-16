@@ -26,10 +26,10 @@ const OfflineToolsPage: React.FC<
 
   return (
     <>
-      <ExtensionSlot extensionSlotName="breadcrumbs-slot" />
+      <ExtensionSlot name="breadcrumbs-slot" />
       <ExtensionSlot
         key={pageConfig.slot}
-        extensionSlotName={pageConfig.slot}
+        name={pageConfig.slot}
         state={{ basePath }}
       />
     </>

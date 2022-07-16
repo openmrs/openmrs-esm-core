@@ -35,7 +35,7 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
       aria-labelledby="Location Icon"
     >
       <ExtensionSlot
-        extensionSlotName="user-panel-slot"
+        name="user-panel-slot"
         state={{
           user: user,
           allowedLocales: allowedLocales,

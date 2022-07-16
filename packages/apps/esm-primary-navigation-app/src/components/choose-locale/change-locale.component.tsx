@@ -44,7 +44,7 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
       >
         {options}
       </Select>
-      <ExtensionSlot extensionSlotName="user-panel-actions-slot" />
+      <ExtensionSlot name="user-panel-actions-slot" />
     </div>
   );
 };

@@ -8,7 +8,7 @@ const OfflineToolsNavMenu: React.FC = () => {
   return (
     <>
       <OfflineToolsNavLink title={t("home", "Home")} />
-      <ExtensionSlot extensionSlotName="offline-tools-page-slot" />
+      <ExtensionSlot name="offline-tools-page-slot" />
     </>
   );
 };

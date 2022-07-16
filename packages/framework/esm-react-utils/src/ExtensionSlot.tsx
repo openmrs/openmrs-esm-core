@@ -40,12 +40,25 @@ function isShallowEqual(prevDeps: any, nextDeps: any) {
 }
 
 export interface ExtensionSlotBaseProps {
+  name: string;
+  /** @deprecated Use `name` */
+  extensionSlotName?: string;
+  select?: (extensions: Array<ConnectedExtension>) => Array<ConnectedExtension>;
+  state?: Record<string, any>;
+}
+
+export interface OldExtensionSlotBaseProps {
+  name?: string;
+  /** @deprecated Use `name` */
   extensionSlotName: string;
   select?: (extensions: Array<ConnectedExtension>) => Array<ConnectedExtension>;
   state?: Record<string, any>;
 }
 
-export type ExtensionSlotProps = ExtensionSlotBaseProps &
+export type ExtensionSlotProps = (
+  | OldExtensionSlotBaseProps
+  | ExtensionSlotBaseProps
+) &
   React.HTMLAttributes<HTMLDivElement>;
 
 function defaultSelect(extensions: Array<ConnectedExtension>) {
@@ -53,6 +66,7 @@ function defaultSelect(extensions: Array<ConnectedExtension>) {
 }
 
 export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
+  name: goodName,
   extensionSlotName,
   select = defaultSelect,
   children,
@@ -60,9 +74,9 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   style,
   ...divProps
 }: ExtensionSlotProps) => {
+  const name = (goodName ?? extensionSlotName) as string;
   const slotRef = useRef(null);
-  const { extensions, extensionSlotModuleName } =
-    useExtensionSlot(extensionSlotName);
+  const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
   const stateRef = useRef(state);
 
   if (!isShallowEqual(stateRef.current, state)) {
@@ -71,7 +85,7 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
 
   const content = useMemo(
     () =>
-      extensionSlotName &&
+      name &&
       select(extensions).map((extension) => (
         <ComponentContext.Provider
           key={extension.id}
@@ -79,7 +93,7 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
             moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
             extension: {
               extensionId: extension.id,
-              extensionSlotName,
+              extensionSlotName: name,
               extensionSlotModuleName,
             },
           }}
@@ -87,13 +101,13 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
           {children ?? <Extension state={stateRef.current} />}
         </ComponentContext.Provider>
       )),
-    [select, extensions, extensionSlotName, stateRef.current]
+    [select, extensions, name, stateRef.current]
   );
 
   return (
     <div
       ref={slotRef}
-      data-extension-slot-name={extensionSlotName}
+      data-extension-slot-name={name}
       data-extension-slot-module-name={extensionSlotModuleName}
       style={{ ...style, position: "relative" }}
       {...divProps}
