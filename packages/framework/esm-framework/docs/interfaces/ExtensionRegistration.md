@@ -12,6 +12,7 @@
 - [offline](ExtensionRegistration.md#offline)
 - [online](ExtensionRegistration.md#online)
 - [order](ExtensionRegistration.md#order)
+- [privileges](ExtensionRegistration.md#privileges)
 
 ### Methods
 
@@ -76,6 +77,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L20)
+
+___
+
+### privileges
+
+• `Optional` **privileges**: `string` \| `string`[]
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L23)
 
 ## Methods
 
