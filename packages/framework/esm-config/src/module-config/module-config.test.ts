@@ -320,7 +320,6 @@ describe("getConfig", () => {
         c: 2,
         diff: 2,
       },
-      "Display conditions": { privileges: [] },
     });
   });
 
@@ -511,7 +510,6 @@ describe("getConfig", () => {
     const config = await Config.getConfig("object-def");
     expect(config).toStrictEqual({
       furi: { kake: { gohan: "ok" } },
-      "Display conditions": { privileges: [] },
     });
   });
 
@@ -542,7 +540,6 @@ describe("getConfig", () => {
         gyudon: { gohan: "no", nori: true },
         sake: { gohan: "maybe", nori: false },
       },
-      "Display conditions": { privileges: [] },
     });
   });
 
@@ -886,10 +883,7 @@ describe("temporary config", () => {
       "foo-module": { foo: 3 },
     });
     let config = await Config.getConfig("foo-module");
-    expect(config).toStrictEqual({
-      foo: 3,
-      "Display conditions": { privileges: [] },
-    });
+    expect(config).toStrictEqual({ foo: 3 });
     temporaryConfigStore.setState({
       config: unset(temporaryConfigStore.getState(), [
         "foo-module",
@@ -897,10 +891,7 @@ describe("temporary config", () => {
       ]) as any,
     });
     config = await Config.getConfig("foo-module");
-    expect(config).toStrictEqual({
-      foo: "baz",
-      "Display conditions": { privileges: [] },
-    });
+    expect(config).toStrictEqual({ foo: "baz" });
   });
 
   it("can be gotten and cleared", async () => {
@@ -912,10 +903,7 @@ describe("temporary config", () => {
     temporaryConfigStore.setState({ config: {} });
     expect(temporaryConfigStore.getState()).toStrictEqual({ config: {} });
     const config = await Config.getConfig("foo-module");
-    expect(config).toStrictEqual({
-      foo: "qux",
-      "Display conditions": { privileges: [] },
-    });
+    expect(config).toStrictEqual({ foo: "qux" });
   });
 
   it("is not mutated by getConfig", async () => {
@@ -986,10 +974,7 @@ describe("extension slot config", () => {
       },
     });
     const config = await Config.getConfig("foo-module");
-    expect(config).toStrictEqual({
-      foo: 0,
-      "Display conditions": { privileges: [] },
-    });
+    expect(config).toStrictEqual({ foo: 0 });
     expect(console.error).not.toHaveBeenCalled();
   });
 

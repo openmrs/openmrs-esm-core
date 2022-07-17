@@ -315,10 +315,14 @@ function getAssignedExtensionsFromSlotData(
     const extension = internalState.extensions[name];
     // if the extension has not been registered yet, do not include it
     if (extension) {
-      const requiredPermissions =
-        extensionConfig?.["Display conditions"]?.privileges;
-
-      if (requiredPermissions && requiredPermissions.length) {
+      const requiredPrivileges =
+        extensionConfig?.["Display conditions"]?.privileges ??
+        extension.privileges;
+      if (
+        requiredPrivileges &&
+        (typeof requiredPrivileges === "string" ||
+          (Array.isArray(requiredPrivileges) && requiredPrivileges.length > 0))
+      ) {
         if (isUndefined(user)) {
           user = getSessionStore().getState().session?.user;
         }
@@ -327,7 +331,7 @@ function getAssignedExtensionsFromSlotData(
           continue;
         }
 
-        if (!userHasAccess(requiredPermissions, user)) {
+        if (!userHasAccess(requiredPrivileges, user)) {
           continue;
         }
       }

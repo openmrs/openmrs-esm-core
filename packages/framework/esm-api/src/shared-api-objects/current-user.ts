@@ -131,10 +131,8 @@ function userHasPrivilege(
       user.privileges.find((p) => requiredPrivilege === p.display)
     );
   } else if (Array.isArray(requiredPrivilege)) {
-    return (
-      requiredPrivilege.every(
-        (rp) => !isUndefined(user.privileges.find((p) => rp === p.display))
-      )
+    return requiredPrivilege.every(
+      (rp) => !isUndefined(user.privileges.find((p) => rp === p.display))
     );
   } else {
     console.error(`Could not understand privileges "${requiredPrivilege}"`);

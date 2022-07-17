@@ -207,6 +207,7 @@ To fix this, ensure that you define a "load" function inside the extension defin
     moduleName,
     offline: extension.offline,
     online: extension.online,
+    privileges: extension.privilege,
   });
 
   for (const slot of slots) {

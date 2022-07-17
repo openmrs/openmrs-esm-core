@@ -1,5 +1,5 @@
 /** @module @category Config */
-import { clone, reduce, mergeDeepRight, equals } from "ramda";
+import { clone, reduce, mergeDeepRight, equals, omit } from "ramda";
 import {
   Config,
   ConfigObject,
@@ -266,7 +266,8 @@ export function getConfig(moduleName: string): Promise<Config> {
     const store = getConfigStore(moduleName);
     function update(state: ConfigStore) {
       if (state.loaded && state.config) {
-        resolve(state.config);
+        const config = omit(["Display conditions"], state.config);
+        resolve(config);
         unsubscribe && unsubscribe();
       }
     }
