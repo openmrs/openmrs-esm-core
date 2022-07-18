@@ -43,12 +43,9 @@ export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>(
           className={styles.leftNav}
           {...props}
         >
-          <ExtensionSlot extensionSlotName="global-nav-menu-slot" />
+          <ExtensionSlot name="global-nav-menu-slot" />
           {slotName ? (
-            <ExtensionSlot
-              extensionSlotName={slotName}
-              state={{ basePath, currentPath }}
-            />
+            <ExtensionSlot name={slotName} state={{ basePath, currentPath }} />
           ) : null}
         </SideNav>
       </BrowserRouter>

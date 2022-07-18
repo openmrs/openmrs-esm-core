@@ -10,7 +10,7 @@ import styles from "./cards-container.styles.scss";
 const CardsContainer: React.FC = () => {
   return (
     <ExtensionSlot
-      extensionSlotName="offline-tools-dashboard-cards"
+      name="offline-tools-dashboard-cards"
       className={styles.overviewCardContainer}
     />
   );

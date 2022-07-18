@@ -19,7 +19,7 @@ const DesktopSideNav: React.FC = () => {
   return (
     layout === "desktop" && (
       <SideNav expanded aria-label="Menu" className={styles.link}>
-        <ExtensionSlot extensionSlotName="nav-menu-slot" />
+        <ExtensionSlot name="nav-menu-slot" />
       </SideNav>
     )
   );

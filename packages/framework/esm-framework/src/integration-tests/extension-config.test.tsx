@@ -55,7 +55,7 @@ describe("Interaction between configuration and extension systems", () => {
       moduleName: "esm-flintstone",
       featureName: "The Flintstones",
       disableTranslations: true,
-    })(() => <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />);
+    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
     render(<App />);
     await waitFor(() => expect(screen.getByText("Betty")).toBeInTheDocument());
     const slot = screen.getByTestId("slot");
@@ -93,14 +93,8 @@ describe("Interaction between configuration and extension systems", () => {
       disableTranslations: true,
     })(() => (
       <>
-        <ExtensionSlot
-          data-testid="flintstone-slot"
-          extensionSlotName="Flintstone slot"
-        />
-        <ExtensionSlot
-          data-testid="future-slot"
-          extensionSlotName="Future slot"
-        />
+        <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
+        <ExtensionSlot data-testid="future-slot" name="Future slot" />
       </>
     ));
     render(<App />);
@@ -140,10 +134,7 @@ describe("Interaction between configuration and extension systems", () => {
       disableTranslations: true,
     })(() => (
       <>
-        <ExtensionSlot
-          data-testid="flintstone-slot"
-          extensionSlotName="Flintstone slot"
-        />
+        <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
       </>
     ));
     render(<App />);
@@ -161,7 +152,7 @@ describe("Interaction between configuration and extension systems", () => {
       moduleName: "esm-slaghoople",
       featureName: "The Slaghooples",
       disableTranslations: true,
-    })(() => <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />);
+    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
     render(<App />);
     await waitFor(() => expect(screen.getByText("Pearl")).toBeInTheDocument());
     act(() => {
@@ -188,7 +179,7 @@ describe("Interaction between configuration and extension systems", () => {
       moduleName: "esm-quarry",
       featureName: "The Flintstones",
       disableTranslations: true,
-    })(() => <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />);
+    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
     render(<App />);
     await waitFor(() =>
       expect(screen.getByText(/Mr. Slate/)).toBeInTheDocument()
@@ -221,7 +212,7 @@ describe("Interaction between configuration and extension systems", () => {
       const store = useExtensionStore();
       return (
         <div>
-          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+          <ExtensionSlot data-testid="slot" name="A slot" />
           {store.slots["A slot"].assignedExtensions.map((e) => (
             <div key={e.name}>{JSON.stringify(e.config)}</div>
           ))}

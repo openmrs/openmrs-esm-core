@@ -1,5 +1,5 @@
 import React from "react";
-import { render, cleanup, screen, waitFor } from "@testing-library/react";
+import { render, cleanup, screen, waitFor, act } from "@testing-library/react";
 import {
   defineConfigSchema,
   temporaryConfigStore,
@@ -26,7 +26,6 @@ function clearConfig() {
 
 describe(`useConfig in root context`, () => {
   afterEach(clearConfig);
-  afterEach(cleanup);
 
   it(`can return config as a react hook`, async () => {
     defineConfigSchema("foo-module", {
@@ -103,9 +102,11 @@ describe(`useConfig in root context`, () => {
       expect(screen.findByText("The first thing")).toBeTruthy()
     );
 
-    temporaryConfigStore.setState({
-      config: { "foo-module": { thing: "A new thing" } },
-    });
+    act(() =>
+      temporaryConfigStore.setState({
+        config: { "foo-module": { thing: "A new thing" } },
+      })
+    );
 
     await waitFor(() => expect(screen.findByText("A new thing")).toBeTruthy());
   });
@@ -273,7 +274,7 @@ describe(`useConfig in an extension`, () => {
     );
 
     const newConfig = { "ext-module": { thing: "A new thing" } };
-    temporaryConfigStore.setState({ config: newConfig });
+    act(() => temporaryConfigStore.setState({ config: newConfig }));
 
     await waitFor(() => expect(screen.findByText("A new thing")).toBeTruthy());
 
@@ -290,7 +291,7 @@ describe(`useConfig in an extension`, () => {
         },
       },
     };
-    temporaryConfigStore.setState({ config: newConfig2 });
+    act(() => temporaryConfigStore.setState({ config: newConfig2 }));
 
     await waitFor(() =>
       expect(screen.findByText("Yet another thing")).toBeTruthy()
