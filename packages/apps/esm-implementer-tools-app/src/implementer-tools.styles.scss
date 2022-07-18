@@ -17,3 +17,25 @@
 .toolStyles {
   background-color: transparent;
 }
+
+// Chevron button - implementer-tools component
+
+.chevronImplementerToolsButton {
+  position: fixed;
+  top: 0;
+  left: calc(50vw - $spacing-05);
+  z-index: 9999;
+
+  div {
+    background-color: $ui-02;
+    width: $spacing-07;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+  }
+
+  div:hover {
+    padding: $spacing-03 0;
+  }
+}
