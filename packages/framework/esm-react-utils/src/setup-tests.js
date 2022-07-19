@@ -1,3 +1,5 @@
+import "@testing-library/jest-dom/extend-expect";
+
 window.System = {
   import: (name) => import(name),
   resolve: jest.fn().mockImplementation(() => {

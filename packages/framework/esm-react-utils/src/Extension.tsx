@@ -47,9 +47,9 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
     domElement,
   ]);
 
-  // The extension is rendered into the `<slot>`. It is surrounded by a
-  // `<div>` with relative positioning in order to allow the UI Editor
-  // to absolutely position elements within it.
+  // The extension is rendered into the `<div>`. The `<div>` has relative
+  // positioning in order to allow the UI Editor to absolutely position
+  // elements within it.
   const slot = (
     <div
       ref={ref}

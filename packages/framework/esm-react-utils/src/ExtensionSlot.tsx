@@ -77,32 +77,6 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
   const name = (goodName ?? extensionSlotName) as string;
   const slotRef = useRef(null);
   const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
-  const stateRef = useRef(state);
-
-  if (!isShallowEqual(stateRef.current, state)) {
-    stateRef.current = state;
-  }
-
-  const content = useMemo(
-    () =>
-      name &&
-      select(extensions).map((extension) => (
-        <ComponentContext.Provider
-          key={extension.id}
-          value={{
-            moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
-            extension: {
-              extensionId: extension.id,
-              extensionSlotName: name,
-              extensionSlotModuleName,
-            },
-          }}
-        >
-          {children ?? <Extension state={stateRef.current} />}
-        </ComponentContext.Provider>
-      )),
-    [select, extensions, name, stateRef.current]
-  );
 
   return (
     <div
@@ -112,7 +86,22 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
       style={{ ...style, position: "relative" }}
       {...divProps}
     >
-      {content}
+      {name &&
+        select(extensions).map((extension) => (
+          <ComponentContext.Provider
+            key={extension.id}
+            value={{
+              moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
+              extension: {
+                extensionId: extension.id,
+                extensionSlotName: name,
+                extensionSlotModuleName,
+              },
+            }}
+          >
+            {children ?? <Extension state={state} />}
+          </ComponentContext.Provider>
+        ))}
     </div>
   );
 };
