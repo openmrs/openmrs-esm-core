@@ -17,7 +17,7 @@ const GlobalImplementerToolsButton: React.FC = () => {
         data-testid="globalImplementerToolsButton"
       >
         <div onClick={togglePopup} role="button" tabIndex={0}>
-          {isOpen ? <ChevronUp /> : <ChevronDown />}
+          {isOpen ? <ChevronDown /> : <ChevronUp />}
         </div>
       </div>
     </UserHasAccess>
