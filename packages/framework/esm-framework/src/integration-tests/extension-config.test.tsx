@@ -3,8 +3,6 @@ import {
   attach,
   registerExtension,
   updateInternalExtensionStore,
-  getExtensionInternalStore,
-  getExtensionStore,
 } from "../../../esm-extensions";
 import {
   ExtensionSlot,
@@ -22,7 +20,17 @@ import {
   getExtensionSlotsConfigStore,
 } from "../../../esm-config/src";
 import { act, render, screen, waitFor } from "@testing-library/react";
-import { waitForElementToBeRemoved } from "@testing-library/dom";
+import { Person } from "@openmrs/esm-api";
+import { mockSessionStore } from "../../mock";
+
+jest.mock("@openmrs/esm-api", () => {
+  const original = jest.requireActual("@openmrs/esm-api");
+  return {
+    ...original,
+    getSessionStore: () => mockSessionStore,
+    refetchCurrentUser: jest.fn(),
+  };
+});
 
 describe("Interaction between configuration and extension systems", () => {
   beforeEach(() => {
@@ -244,12 +252,172 @@ describe("Interaction between configuration and extension systems", () => {
     });
     expect(screen.getByText(/clothes/)).toHaveTextContent(/tiger/);
   });
+
+  test("should not show extension when user lacks configured privilege", async () => {
+    mockSessionStore.setState({
+      loaded: true,
+      session: {
+        authenticated: true,
+        sessionId: "1",
+        user: {
+          uuid: "1",
+          display: "Non-Admin",
+          username: "nonadmin",
+          systemId: "nonadmin",
+          userProperties: {},
+          person: {} as Person,
+          privileges: [],
+          roles: [],
+          retired: false,
+          locale: "en",
+          allowedLocales: ["en"],
+        },
+      },
+    });
+
+    registerSimpleExtension("Schmoo", "esm-bedrock", true);
+    registerSimpleExtension("Wilma", "esm-flintstones", true);
+    attach("A slot", "Schmoo");
+    attach("A slot", "Wilma");
+    defineConfigSchema("esm-bedrock", {});
+    defineConfigSchema("esm-flintstones", {});
+    provide({
+      "esm-bedrock": {
+        "Display conditions": {
+          privileges: ["Yabadabadoo!"],
+        },
+      },
+    });
+    provide({
+      "esm-flintstones": {},
+    });
+
+    function RootComponent() {
+      return (
+        <div>
+          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+        </div>
+      );
+    }
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-bedrock",
+      featureName: "Bedrock",
+      disableTranslations: true,
+    })(RootComponent);
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
+    expect(screen.getByText(/\bWilma\b/)).toBeVisible();
+    expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
+  });
+
+  test("should show extension when user has configured privilege", async () => {
+    mockSessionStore.setState({
+      loaded: true,
+      session: {
+        authenticated: true,
+        sessionId: "1",
+        user: {
+          uuid: "1",
+          display: "Non-Admin",
+          username: "nonadmin",
+          systemId: "nonadmin",
+          userProperties: {},
+          person: {} as Person,
+          privileges: [{ uuid: "1", display: "Yabadabadoo!" }],
+          roles: [],
+          retired: false,
+          locale: "en",
+          allowedLocales: ["en"],
+        },
+      },
+    });
+
+    registerSimpleExtension("Schmoo", "esm-bedrock", true);
+    attach("A slot", "Schmoo");
+    defineConfigSchema("esm-bedrock", {});
+    provide({
+      "esm-bedrock": {
+        "Display conditions": {
+          privileges: ["Yabadabadoo!"],
+        },
+      },
+    });
+
+    function RootComponent() {
+      return (
+        <div>
+          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+        </div>
+      );
+    }
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-bedrock",
+      featureName: "Bedrock",
+      disableTranslations: true,
+    })(RootComponent);
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
+    expect(screen.getByText(/\bSchmoo\b/)).toBeVisible();
+  });
+
+  test("should only show extensions users have default privilege for", async () => {
+    mockSessionStore.setState({
+      loaded: true,
+      session: {
+        authenticated: true,
+        sessionId: "1",
+        user: {
+          uuid: "1",
+          display: "Non-Admin",
+          username: "nonadmin",
+          systemId: "nonadmin",
+          userProperties: {},
+          person: {} as Person,
+          privileges: [{ uuid: "1", display: "YOWTCH!" }],
+          roles: [],
+          retired: false,
+          locale: "en",
+          allowedLocales: ["en"],
+        },
+      },
+    });
+
+    registerSimpleExtension("Schmoo", "esm-bedrock", true, "Yabadabadoo!");
+    registerSimpleExtension("Wilma", "esm-flintstones", true, "YOWTCH!");
+    attach("A slot", "Schmoo");
+    attach("A slot", "Wilma");
+    defineConfigSchema("esm-bedrock", {});
+    defineConfigSchema("esm-flintstones", {});
+    provide({ "esm-bedrock": {} });
+    provide({ "esm-flintstones": {} });
+
+    function RootComponent() {
+      return (
+        <div>
+          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+        </div>
+      );
+    }
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-bedrock",
+      featureName: "Bedrock",
+      disableTranslations: true,
+    })(RootComponent);
+
+    render(<App />);
+    await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
+    expect(screen.getByText(/\bWilma\b/)).toBeVisible();
+    expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
+  });
 });
 
 function registerSimpleExtension(
   name: string,
   moduleName: string,
-  takesConfig: boolean = false
+  takesConfig: boolean = false,
+  privileges?: string | string[]
 ) {
   const SimpleComponent = () => <div>{name}</div>;
   const ConfigurableComponent = () => {
@@ -272,5 +440,6 @@ function registerSimpleExtension(
       }
     ),
     meta: {},
+    privileges,
   });
 }

@@ -20,6 +20,7 @@ export interface ExtensionRegistration {
   order?: number;
   online?: boolean | object;
   offline?: boolean | object;
+  privileges?: string | string[];
 }
 
 export interface ExtensionInfo extends ExtensionRegistration {

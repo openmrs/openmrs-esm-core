@@ -25,14 +25,12 @@ export function routeRegex(regex: RegExp, location: Location) {
 
 export function wrapLifecycle(
   load: () => Promise<any>,
-  requiredPrivilege: string
+  requiredPrivileges: string | Array<string>
 ): () => Promise<any> {
   return async () => {
     const user = await getLoggedInUser();
-    if (user && userHasAccess(requiredPrivilege, user)) {
-      return load();
-    }
-
-    return emptyLifecycle;
+    return user && userHasAccess(requiredPrivileges, user)
+      ? load()
+      : emptyLifecycle;
   };
 }

@@ -23,7 +23,7 @@ ___
 
 ### privilege
 
-• **privilege**: `string`
+• **privilege**: `string` \| `string`[]
 
 #### Defined in
 

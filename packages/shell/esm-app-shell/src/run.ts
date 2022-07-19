@@ -21,7 +21,6 @@ import {
   dispatchPrecacheStaticDependencies,
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
-  openmrsFetch,
 } from "@openmrs/esm-framework/src/internal";
 import {
   finishRegisteringAllApps,

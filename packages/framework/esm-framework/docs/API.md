@@ -198,7 +198,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L16)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L17)
 
 ___
 
@@ -228,7 +228,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L14)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L15)
 
 ___
 
@@ -245,7 +245,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L21)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L22)
 
 ___
 
@@ -382,7 +382,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L32)
+[packages/framework/esm-config/src/types.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L37)
 
 ___
 
@@ -409,7 +409,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L60)
+[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L65)
 
 ___
 
@@ -453,7 +453,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L67)
+[packages/framework/esm-config/src/types.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L72)
 
 ___
 
@@ -477,7 +477,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L65)
+[packages/framework/esm-config/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L70)
 
 ___
 
@@ -757,7 +757,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:174](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L174)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:188](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L188)
 
 ___
 
@@ -823,7 +823,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L70)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L71)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`Session`](interfaces/Session.md)\>
 
@@ -840,7 +840,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L71)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L72)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
@@ -857,7 +857,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L72)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L73)
 
 ___
 
@@ -885,7 +885,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:188](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L188)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L202)
 
 ___
 
@@ -899,7 +899,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:206](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L206)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L220)
 
 ___
 
@@ -913,7 +913,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L104)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L105)
 
 ___
 
@@ -1122,7 +1122,7 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:149](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L149)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L163)
 
 ___
 
@@ -1164,7 +1164,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:215](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L215)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L229)
 
 ___
 
@@ -1365,24 +1365,24 @@ ___
 
 ### userHasAccess
 
-▸ **userHasAccess**(`requiredPrivilege`, `user`): `undefined` \| [`Privilege`](interfaces/Privilege.md)
+▸ **userHasAccess**(`requiredPrivilege`, `user`): `boolean`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `requiredPrivilege` | `string` |
+| `requiredPrivilege` | `string` \| `string`[] |
 | `user` | `Object` |
 | `user.privileges` | [`Privilege`](interfaces/Privilege.md)[] |
 | `user.roles` | [`Role`](interfaces/Role.md)[] |
 
 #### Returns
 
-`undefined` \| [`Privilege`](interfaces/Privilege.md)
+`boolean`
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:181](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L181)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L195)
 
 ___
 
@@ -1509,7 +1509,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:193](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L193)
+[packages/framework/esm-config/src/module-config/module-config.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L192)
 
 ___
 
@@ -1541,7 +1541,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:218](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L218)
+[packages/framework/esm-config/src/module-config/module-config.ts:222](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L222)
 
 ___
 
@@ -1571,7 +1571,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:254](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L254)
+[packages/framework/esm-config/src/module-config/module-config.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L264)
 
 ___
 
@@ -1592,7 +1592,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:234](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L234)
+[packages/framework/esm-config/src/module-config/module-config.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L244)
 
 ___
 
@@ -1608,6 +1608,7 @@ Use this React Hook to obtain your module's configuration.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
+| `Display conditions?` | [`DisplayConditionsConfigObject`](interfaces/DisplayConditionsConfigObject.md) | - |
 | `constructor` | `Function` | The initial value of Object.prototype.constructor is the standard built-in Object constructor. |
 | `hasOwnProperty` | (`v`: `PropertyKey`) => `boolean` | Determines whether an object has a property with the specified name. |
 | `isPrototypeOf` | (`v`: `Object`) => `boolean` | Determines whether an object exists in another object's prototype chain. |
@@ -2155,7 +2156,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L172)
+[packages/framework/esm-extensions/src/extensions.ts:174](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L174)
 
 ___
 
@@ -2178,7 +2179,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:203](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L203)
+[packages/framework/esm-extensions/src/extensions.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L205)
 
 ___
 
@@ -2200,7 +2201,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L227)
+[packages/framework/esm-extensions/src/extensions.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L229)
 
 ___
 
@@ -2208,19 +2209,23 @@ ___
 
 ▸ **getAssignedExtensions**(`slotName`): [`AssignedExtension`](interfaces/AssignedExtension.md)[]
 
+Gets the list of extensions assigned to a given slot
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `slotName` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `slotName` | `string` | The slot to load the assigned extensions for |
 
 #### Returns
 
 [`AssignedExtension`](interfaces/AssignedExtension.md)[]
 
+An array of extensions assigned to the named slot
+
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:328](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L328)
+[packages/framework/esm-extensions/src/extensions.ts:359](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L359)
 
 ___
 
@@ -2246,7 +2251,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:285](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L285)
+[packages/framework/esm-extensions/src/extensions.ts:287](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L287)
 
 ___
 
@@ -2278,7 +2283,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L116)
+[packages/framework/esm-extensions/src/extensions.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L118)
 
 ___
 
@@ -2296,7 +2301,7 @@ extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L129)
+[packages/framework/esm-extensions/src/store.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L130)
 
 ___
 

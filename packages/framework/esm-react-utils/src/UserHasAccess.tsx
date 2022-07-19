@@ -3,7 +3,7 @@ import { getCurrentUser, LoggedInUser, userHasAccess } from "@openmrs/esm-api";
 import React, { useEffect, useState } from "react";
 
 export interface UserHasAccessProps {
-  privilege: string;
+  privilege: string | string[];
   fallback?: React.ReactNode;
 }
 

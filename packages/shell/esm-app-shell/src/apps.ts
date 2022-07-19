@@ -47,10 +47,10 @@ function trySetup(appName: string, setup: () => any): any {
 function getLoader(
   load: () => Promise<Lifecycle>,
   resources?: Record<string, ResourceLoader>,
-  privilege?: string
+  privileges?: string | string[]
 ): () => Promise<Lifecycle> {
-  if (typeof privilege === "string") {
-    load = wrapLifecycle(load, privilege);
+  if (typeof privileges === "string" || Array.isArray(privileges)) {
+    load = wrapLifecycle(load, privileges);
   }
 
   if (typeof resources === "object") {
@@ -207,6 +207,7 @@ To fix this, ensure that you define a "load" function inside the extension defin
     moduleName,
     offline: extension.offline,
     online: extension.online,
+    privileges: extension.privilege,
   });
 
   for (const slot of slots) {

@@ -110,9 +110,10 @@ export interface ComponentDefinition {
    */
   offline?: boolean | object;
   /**
-   * Defines the access privilege required for this component, if any.
+   * Defines the access privilege(s) required for this component, if any.
+   * If more than one privilege is provided, the user must have all specified permissions.
    */
-  privilege?: string;
+  privilege?: string | string[];
   /**
    * Defines resources that are loaded when the component should mount.
    */

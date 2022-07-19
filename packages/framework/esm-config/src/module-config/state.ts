@@ -1,5 +1,6 @@
 /** @module @category Config */
 import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
+import { omit } from "ramda";
 import {
   Config,
   ConfigObject,
@@ -199,11 +200,16 @@ export function getExtensionsConfigStore() {
 
 /** @internal */
 export function getExtensionConfig(slotName: string, extensionId: string) {
-  return getExtensionConfigFromStore(
-    getExtensionsConfigStore().getState(),
-    slotName,
-    extensionId
+  const extensionConfig = Object.assign(
+    {},
+    getExtensionConfigFromStore(
+      getExtensionsConfigStore().getState(),
+      slotName,
+      extensionId
+    )
   );
+  extensionConfig.config = omit(["Display conditions"], extensionConfig.config);
+  return extensionConfig;
 }
 
 /** @internal */

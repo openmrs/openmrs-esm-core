@@ -201,6 +201,20 @@ describe("defineConfigSchema", () => {
     Config.defineConfigSchema("mod-mod", schema);
     expect(console.error).not.toHaveBeenCalled();
   });
+
+  it("logs an error if the schema attempts to include a key named 'Display conditions'", () => {
+    const schema = {
+      "Display conditions": {
+        _type: Type.Array,
+        _default: [],
+      },
+    };
+
+    Config.defineConfigSchema("mod-mod", schema);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringMatching(/mod-mod.*\bDisplay conditions\b/)
+    );
+  });
 });
 
 describe("getConfig", () => {
@@ -301,7 +315,11 @@ describe("getConfig", () => {
     Config.provide(goodConfig);
     const result = await Config.getConfig("foo-module");
     expect(result).toStrictEqual({
-      bar: { a: { b: 0 }, c: 2, diff: 2 },
+      bar: {
+        a: { b: 0 },
+        c: 2,
+        diff: 2,
+      },
     });
   });
 
@@ -485,16 +503,14 @@ describe("getConfig", () => {
     Config.defineConfigSchema("object-def", {
       furi: {
         _type: Type.Object,
-        _elements: {
-          gohan: { _type: Type.String },
-        },
-        _default: {
-          kake: { gohan: "ok" },
-        },
+        _elements: { gohan: { _type: Type.String } },
+        _default: { kake: { gohan: "ok" } },
       },
     });
     const config = await Config.getConfig("object-def");
-    expect(config).toStrictEqual({ furi: { kake: { gohan: "ok" } } });
+    expect(config).toStrictEqual({
+      furi: { kake: { gohan: "ok" } },
+    });
   });
 
   it("interpolates freeform object element defaults", async () => {
@@ -823,9 +839,29 @@ describe("implementer tools config", () => {
           _description: "All the foo",
           _validators: [],
         },
+        "Display conditions": {
+          privileges: {
+            _default: [],
+            _description:
+              "The privilege(s) the user must have to use this extension",
+            _source: "default",
+            _type: Type.Array,
+            _value: [],
+          },
+        },
       },
       "bar-module": {
         bar: { _value: "baz", _source: "my config source", _default: "quinn" },
+        "Display conditions": {
+          privileges: {
+            _default: [],
+            _description:
+              "The privilege(s) the user must have to use this extension",
+            _source: "default",
+            _type: Type.Array,
+            _value: [],
+          },
+        },
       },
     });
   });
@@ -973,6 +1009,16 @@ describe("extension slot config", () => {
         extensionSlots: {
           fooSlot: {
             remove: { _value: ["bar"], _source: "provided" },
+          },
+        },
+        "Display conditions": {
+          privileges: {
+            _default: [],
+            _description:
+              "The privilege(s) the user must have to use this extension",
+            _source: "default",
+            _type: Type.Array,
+            _value: [],
           },
         },
       },
