@@ -5,9 +5,10 @@ import React, {
   useRef,
   useEffect,
 } from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import {
   attach,
+  ConnectedExtension,
   getExtensionNameFromId,
   registerExtension,
   updateInternalExtensionStore,
@@ -103,6 +104,19 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
     );
   });
 
+  test("ExtensionSlot throws error if both state and children provided", () => {
+    const App = () => (
+      <ExtensionSlot name="Box" state={{ color: "red" }}>
+        <Extension />
+      </ExtensionSlot>
+    );
+    expect(() => render(<App />)).toThrowError(
+      expect.objectContaining({
+        message: expect.stringMatching(/children.*state/),
+      })
+    );
+  });
+
   test("Extension Slot receives meta", async () => {
     registerSimpleExtension("Spanish", "esm-languages-app", undefined, {
       code: "es",
@@ -195,6 +209,44 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
     await waitFor(() =>
       expect(screen.getByText(/Swahili/)).toHaveTextContent("Swahili?")
     );
+  });
+
+  test("Extension Slot renders function children", async () => {
+    registerSimpleExtension("Urdu", "esm-languages-app", undefined, {
+      code: "urd",
+    });
+    registerSimpleExtension("Hindi", "esm-languages-app", undefined, {
+      code: "hi",
+    });
+    attach("Box", "Urdu");
+    attach("Box", "Hindi");
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-languages-app",
+      featureName: "Languages",
+      disableTranslations: true,
+    })(() => {
+      return (
+        <div>
+          <ExtensionSlot name="Box">
+            {(extension: ConnectedExtension) => (
+              <div data-testid={extension.name}>
+                <h2>{extension.meta.code}</h2>
+                <Extension />
+              </div>
+            )}
+          </ExtensionSlot>
+        </div>
+      );
+    });
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByTestId("Urdu")).toBeInTheDocument());
+    expect(
+      within(screen.getByTestId("Urdu")).getByRole("heading")
+    ).toHaveTextContent("urd");
+    expect(
+      within(screen.getByTestId("Hindi")).getByRole("heading")
+    ).toHaveTextContent("hi");
   });
 });
 

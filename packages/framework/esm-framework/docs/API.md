@@ -140,6 +140,10 @@
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
 - [useConnectivity](API.md#useconnectivity)
 
+### Other Functions
+
+- [ExtensionSlot](API.md#extensionslot)
+
 ### Store Functions
 
 - [createGlobalStore](API.md#createglobalstore)
@@ -388,11 +392,11 @@ ___
 
 ### ExtensionSlotProps
 
-Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `React.HTMLAttributes`<`HTMLDivElement`\>
+Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `React.HTMLAttributes`<`HTMLDivElement`\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L58)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L23)
 
 ___
 
@@ -704,17 +708,7 @@ and *must* only be used once within that `<ExtensionSlot>`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L23)
-
-___
-
-### ExtensionSlot
-
-• **ExtensionSlot**: `React.FC`<[`ExtensionSlotProps`](API.md#extensionslotprops)\>
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L68)
+[packages/framework/esm-react-utils/src/Extension.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L31)
 
 ___
 
@@ -2307,7 +2301,7 @@ ___
 
 ### renderExtension
 
-▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): [`CancelLoading`](interfaces/CancelLoading.md)
+▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): `Parcel` \| ``null``
 
 Mounts into a DOM node (representing an extension slot)
 a lazy-loaded component from *any* frontend module
@@ -2326,7 +2320,7 @@ that registered an extension component for this slot.
 
 #### Returns
 
-[`CancelLoading`](interfaces/CancelLoading.md)
+`Parcel` \| ``null``
 
 #### Defined in
 
@@ -3428,6 +3422,57 @@ ___
 
 ___
 
+## Other Functions
+
+### ExtensionSlot
+
+▸ **ExtensionSlot**(`__namedParameters`): `Element`
+
+An [extension slot](https://o3-dev.docs.openmrs.org/#/main/extensions).
+A place with a name. Extensions that get connected to that name
+will be rendered into this.
+
+**`example`**
+Passing a react node as children
+
+```tsx
+<ExtensionSlot name="Foo">
+  <div style={{ width: 10rem }}>
+    <Extension />
+  </div>
+</ExtensionSlot>
+```
+
+**`example`**
+Passing a function as children
+
+```tsx
+<ExtensionSlot name="Bar">
+  {(extension) => (
+    <h1>{extension.name}</h1>
+    <div style={{ color: extension.meta.color }}>
+      <Extension />
+    </div>
+  )}
+</ExtensionSlot>
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`ExtensionSlotProps`](API.md#extensionslotprops) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L85)
+
+___
+
 ## Store Functions
 
 ### createGlobalStore
@@ -3774,7 +3819,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:164](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L164)
+[packages/framework/esm-styleguide/src/modals/index.tsx:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L165)
 
 ___
 

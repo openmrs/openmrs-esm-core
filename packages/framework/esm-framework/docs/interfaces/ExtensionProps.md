@@ -20,13 +20,15 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L7)
+[packages/framework/esm-react-utils/src/Extension.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L14)
 
 ## Methods
 
 ### wrap
 
 ▸ `Optional` **wrap**(`slot`, `extension`): ``null`` \| `ReactElement`<`any`, `any`\>
+
+**`deprecated`** Pass a function as the child of `ExtensionSlot` instead.
 
 #### Parameters
 
@@ -41,4 +43,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L8)
+[packages/framework/esm-react-utils/src/Extension.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L16)

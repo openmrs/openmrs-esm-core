@@ -327,9 +327,9 @@ Can be used anywhere within the schema structure.
 
 #### `_elements`
 
-Only valid alongside `_type: Type.Array` or `_type: Type.Object`. A `_default`
-must also be provided at this level. Value should be an object which is
-a schema for the values contained in the array or object.
+Only valid alongside `_type: Type.Array`. A `_default`
+must also be provided at this level. Value should be a schema for the values
+contained in the array.
 
 ## API Documentation
 
