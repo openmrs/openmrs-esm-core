@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useReducer,
-  useMemo,
-  useRef,
-  useEffect,
-} from "react";
+import React, { useCallback, useReducer } from "react";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import {
   attach,
@@ -22,6 +16,14 @@ import {
   ExtensionData,
 } from ".";
 import userEvent from "@testing-library/user-event";
+
+// For some reason in the text context `isEqual` always returns true
+// when using the import substitution in jest.config.js. Here's a custom
+// mock.
+jest.mock(
+  "lodash-es/isEqual",
+  () => (a, b) => JSON.stringify(a) == JSON.stringify(b)
+);
 
 describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
   beforeEach(() => {

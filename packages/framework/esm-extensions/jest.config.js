@@ -3,6 +3,6 @@ module.exports = {
     "^.+\\.(j|t)sx?$": ["@swc/jest"],
   },
   moduleNameMapper: {
-    "lodash-es/(.*)": "lodash/$1",
+    "lodash-es": "lodash",
   },
 };
