@@ -1,6 +1,7 @@
 /** @module @category UI */
 import { renderExtension } from "@openmrs/esm-extensions";
 import { createGlobalStore } from "@openmrs/esm-state";
+import { Parcel } from "single-spa";
 
 type ModalInstanceState = "NEW" | "MOUNTED" | "TO_BE_DELETED";
 
@@ -8,7 +9,7 @@ interface ModalInstance {
   container?: HTMLElement;
   state: ModalInstanceState;
   onClose: () => void;
-  cleanup?: () => void;
+  parcel?: Parcel | null;
   extensionId: string;
   props: Record<string, any>;
 }
@@ -68,14 +69,14 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
         case "NEW":
           const { outer, contentContainer } = createModalFrame();
           instance.container = outer;
-          instance.cleanup = renderExtension(
+          instance.parcel = renderExtension(
             contentContainer,
             "",
             "",
             instance.extensionId,
             undefined,
             instance.props
-          ).unmount;
+          );
           instance.state = "MOUNTED";
           modalContainer.prepend(outer);
           outer.style.visibility = "unset";
@@ -89,7 +90,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
 
         case "TO_BE_DELETED":
           instance.onClose();
-          instance.cleanup?.();
+          instance.parcel?.unmount?.();
           instance.container?.remove();
           setTimeout(() => {
             modalStore.setState({
