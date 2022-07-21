@@ -2301,7 +2301,7 @@ ___
 
 ### renderExtension
 
-▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): `Parcel` \| ``null``
+▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): `Object`
 
 Mounts into a DOM node (representing an extension slot)
 a lazy-loaded component from *any* frontend module
@@ -2320,7 +2320,12 @@ that registered an extension component for this slot.
 
 #### Returns
 
-`Parcel` \| ``null``
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `parcel` | `Parcel` \| ``null`` |
+| `unmount` | () => `void` |
 
 #### Defined in
 
@@ -3819,7 +3824,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L165)
+[packages/framework/esm-styleguide/src/modals/index.tsx:164](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L164)
 
 ___
 

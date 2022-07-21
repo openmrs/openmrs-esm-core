@@ -45,7 +45,7 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
 
   useEffect(() => {
     if (domElement != null && extension && !parcel.current) {
-      parcel.current = renderExtension(
+      const { parcel: resultParcel, unmount } = renderExtension(
         domElement,
         extension.extensionSlotName,
         extension.extensionSlotModuleName,
@@ -53,9 +53,8 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
         undefined,
         state
       );
-      return () => {
-        parcel.current && parcel.current.unmount();
-      };
+      parcel.current = resultParcel;
+      return unmount;
     }
   }, [
     extension?.extensionSlotName,
