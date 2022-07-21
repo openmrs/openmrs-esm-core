@@ -16,6 +16,13 @@ function setupOpenMRS() {
           options
         ),
       },
+      {
+        route: () => true,
+        load: getAsyncLifecycle(
+          () => import("./global-implementer-tools.component"),
+          options
+        ),
+      },
     ],
     extensions: [
       {
