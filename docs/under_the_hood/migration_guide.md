@@ -1,43 +1,89 @@
-# Migration Guide for React 18, Carbon v11, and React Router Dom 6
+# Migration Guide for Core Dependencies
 
 ## Motivation
 
-As of this writing the OpenMRS 3.x frontend is using versions of its core libraries which are 1-2 years out of date. Below is a list of the packages we're upgrading from -> to with some explanation of the specifics.
+Presently, the OpenMRS 3 frontend uses core dependencies that are several years out of date. Specifically, we are looking to migrate the following dependencies to the latest available versions to be able to leverage new features, fixes and API and bundle size savings:
 
-### Summary
+- React 
+- React Router
+- Carbon Design System
+- Jest / React Testing Library / userEvent
+
+## Preamble
 
 * React 18 adds in concurrency, automatic render batching, and makes `<Suspense>` a first class citizen leading to **faster loading** of elements due to the decoupling of UI rendering and API fetching.
 * This compounds with React Router 6 which can enable a **several times speedup** of widget load times when implemented correctly.
 * Updates to Carbon v11 keep the UI modern for designers, the package and API cleanup makes it faster to use for developers, and smaller bundle sizes mean a faster UI for customers.
+* Jest now supports test sharding which means our tests can run faster than ever.
 
-### Specifics
+## Dependencies
 
-* Currently on React 16.14, upgrading to React 18.1. Detailed notes can be found in the [How To Upgrade to React 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html) guide and also the [React v18.0](https://reactjs.org/blog/2022/03/29/react-v18.html) release post.
-    * Suspense is now a first class citizen. This will allow us to unblock component rendering while api calls decide to load.
-    * Children are now not assumed prop of type `React.ReactNode`, now need to be explicitly declared.
-    * Automatic batching is on by default which helps reduce the number of renders.
-    * New concurrent render means that the UI can immediately respond to user input even if it's in the middle of a large render task. => A more fluid UX
-    * Concurrent render also adds support for reusable state so that previously rendered sections of the UI can be added back in.
-* Currently on carbon-components-react v7.31 (Carbon v10), upgrading to @carbon/react v1.4 (Carbon v11). See the [Carbon V11 FAQ](https://carbondesignsystem.com/migrating/faq/) for a full list of benefits.
-    * The [Design Kit](https://carbondesignsystem.com/migrating/guide/design) has:
-        * Updated concepts for Notifications, Tooltip, Tabs, Sizing, Type tokens, and Color tokens
-        * New Popover and Toggletip features
-        * The UI shell is now theme-able to support light and dark mode.
-    * The [React packages](https://carbondesignsystem.com/migrating/guide/develop) have been simplified from 4 packages down to one: `@carbon/react`.
-    * Sass styles are now accessible directly from `@carbon/react/scss` 
-    * 90% decrease in compilation time of Styles from Carbon.
-    * `size` is now consistent across all components.
-    * Uses CSS Grid (2 dimensional) by default instead of flexbox grid (1 dimension). (See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Relationship_of_Grid_Layout) for more info.)
-    * Same IBM Design Language. Does not require any brand-driven product redesigns.
-* Currently on react-router-dom v5.3, upgrading to react-router-dom v6.3. Read the [v6 upgrade guide](https://reactrouter.com/docs/en/v6/upgrading/v5) for more information.
-    * All `<Route>`s and `<Link>`s inside a `<Routes>` are relative. This leads to leaner and more predictable code in `<Route path>` and `<Link to>`
-    * Routes are chosen based on the best match instead of being traversed in order. This avoids bugs due to unreachable routes because they were defined later in the `<Switch>`
-    * Routes are allowed to be nested instead of spread out. This allows all routes to be easily seen at once. Meanwhile nested routes can still be loaded dynamically via `React.lazy`.
-    * Route children can only be nested routes; rendered elements need to go in `element`. This simplifies reading the routing structure leading to fewer bugs.
-    * Switches to using React Elements instead of Components. This combined with React 18's native Suspense makes for very quick rendering.
-    * Discontinued use of regex routes leads to cleaner route syntax, and drops `path-to-regexp` dependency reducing bundle size.
-    * `useNavigate` is more suspense friendly than the old `useHistory`. This provides a smoother experience when a user interaction needs to interrupt a pending route transition.
+### React
+We're currently on React 16.14 (released in October 2020) across all our repositories. React 18, released in March 2022, brought out-of-the-box improvements like automatic batching, new APIs like `startTransition`, and streaming server-side rendering with support for `Suspense`. Notably:
 
+ - `Suspense` is now a first-class citizen. This will allow us to unblock component rendering while API calls decide to load.
+ - Children are no longer implicitly declared as props of type `React.ReactNode`. They have to be declared explicitly.
+ - Automatic batching is enabled by default which helps reduce the number of renders.
+ - The new concurrent render means that the UI can immediately respond to user input even if it's in the middle of a large render task
+. This should result in a more fluid user experience.
+ - The concurrent render also adds support for reusable state so that previously rendered sections of the UI can be added back in.
+
+Important resources: [React 18 release notes](https://reactjs.org/blog/2022/03/29/react-v18.html) and [Migration Guide](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html).
+
+### React Router
+We're currently on React Router v5.3 (released in March 2019). React Router 6 introduces several powerful new features, as well as improved compatibility with the latest versions of React. Notably:
+
+  - All `<Route>`s and `<Link>`s inside a `<Routes>` are relative. This leads to leaner and more predictable code in `<Route path>` and `<Link to>`.
+  - Routes are chosen based on the best match instead of being traversed in order. This avoids bugs due to unreachable routes because they were defined later in the `<Switch>`
+  - Routes are allowed to be nested instead of being spread out. This allows all routes to be easily seen at once. Meanwhile, nested routes can still be loaded dynamically via `React.lazy`.
+  - Route children can only be nested routes; rendered elements need to go in `element`. This simplifies reading the routing structure leading to fewer bugs.
+  - Switches to using React Elements instead of Components. This combined with React 18's native Suspense makes for very quick rendering.
+  - Discontinued use of regex routes leads to cleaner route syntax and drops `path-to-regexp` dependency reducing bundle size.
+`useNavigate` is more suspense friendly than the old `useHistory`. This provides a smoother experience when a user interaction needs to interrupt a pending route transition.
+
+Important resources: [Migration Guide](https://reactrouter.com/docs/en/v6/upgrading/v5).
+
+### Carbon Design System 
+We're currently on Carbon v10 (released in December 2020). Carbon 11 shipped with a host of feature improvements, fixes and enhancements to the developer experience. Notably: 
+
+ - The [Design Kit](https://carbondesignsystem.com/migrating/guide/design) has:
+   - Updated concepts for Notifications, Tooltip, Tabs, Sizing, Type tokens, and Color tokens.
+   - New Popover and Toggletip features.
+ - The UI shell is now theme-able to support light and dark mode.
+ - The [React packages](https://carbondesignsystem.com/migrating/guide/develop) have been simplified from 4 packages down to one: `@carbon/react`.
+ - Sass styles are now accessible directly from `@carbon/react/scss` 
+ - 90% decrease in compilation time of Styles from Carbon.
+ - `size` is now consistent across all components.
+ - Uses CSS Grid (2 dimensional) by default instead of flexbox grid (1 dimension). (See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Relationship_of_Grid_Layout) for more info.)
+ - Same IBM Design Language. Does not require any brand-driven product redesigns.
+
+Important resources: [Carbon v11 release notes](https://v10.carbondesignsystem.com/whats-happening/v11-release/) /  [Migration Guide](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md) / [Carbon v11 announcement blog post](https://medium.com/carbondesign/carbon-v11-72ace7fac01f).
+
+### Jest / Testing Library React / userEvent
+
+We're currently on the following versions:
+
+- Jest v26
+- Testing Library React v10
+- userEvent v12
+
+Jest v28 introduced some long-requested features such as: 
+
+  - Support for sharding a test run across multiple machines. Upon leveraging this feature, Jest's own test suite on CI went from about 10 minutes to 3 on Ubuntu, and on Windows from 20 minutes to 7.
+  - In Jest 28, jest-environment-node will now automatically provide node and node-addons conditions, while jest-environment-jsdom will provide the browser condition.
+  - The ability to customize the behavior of fake timers. 
+  - A new GitHub Actions reporter, which will use annotations to print test errors inline.
+  Vastly improved type annotations.
+
+Testing Library React v13 notably adds support for React 18 and drops support for older versions of React.
+
+userEvent v14 adds various features and fixes. Notably:
+
+  - The new `userEvent.setup` allows you to prepare the document for interacting per user-event APIs right when you set up your test.
+  - v14 introduces a new `userEvent.pointer` API that enables users to simulate the events for user interaction per touchscreen or stylus.
+  - APIs in v14 now always return a promise and are therefore asynchronous. As such, they have to be await-ed.
+
+Important resources: [Jest 28 release notes](https://jestjs.io/blog/2022/04/25/jest-28) / [Testing Library React 13 changelog](https://github.com/testing-library/react-testing-library/releases/tag/v13.0.0) / [userEvent 14 changelog](https://github.com/testing-library/user-event/releases/tag/v14.0.0).
 
 ## Strategy
 
@@ -55,15 +101,15 @@ browser, we can start to integrate the modules together using the new libraries.
 
 2. Build the App Shell – This compiles the core source files into static webpack JS files which can be served. This will automatically bundle all of the openmrs-esm-core/packages/apps/ into a dist folder. The yarn run:shell at the end serves this app shell on 8080 and will be our main entry into the app.
 
-    * In openmrs-esm-core: `cd packages/tooling/webpack-config` then `yarn build`
+  - In openmrs-esm-core: `cd packages/tooling/webpack-config` then `yarn build`
 
-    * In openmrs-esm-core: `cd packages/tooling/openmrs` then `yarn build`
+  - In openmrs-esm-core: `cd packages/tooling/openmrs` then `yarn build`
 
-    * In openmrs-esm-core: `cd packages/shell/esm-app-shell` then `yarn build`
+  - In openmrs-esm-core: `cd packages/shell/esm-app-shell` then `yarn build`
 
-    * In openmrs-esm-core: `yarn run:shell`
-
-    * At this point there should be no errors in the terminal. The web server should start in your terminal and the app shell should load in your browser, although most of the microfrontends will be missing and should tell you this in the browser console. 
+  - In openmrs-esm-core: `yarn run:shell`
+  
+  At this point there should be no errors in the terminal. The web server should start in your terminal and the app shell should load in your browser, although most of the microfrontends will be missing and should tell you this in the browser console. 
 
 3. Create links to all core packages (if you haven't already). This will make them available in the yarn system to do a symlink shorthand inside of node_modules 
 
@@ -119,16 +165,23 @@ At this point you will have a local version of the core app shell running, and o
 
     * Follow the upgrade guide [here](https://carbondesignsystem.com/migrating/guide/develop).
 
-10. Upgrade React Router Dom v6
+10. Upgrade React Router Dom to v6
 
     * Follow the upgrade guide [here](https://reactrouter.com/docs/en/v6/upgrading/v5)
 
+11. Upgrade Jest to v28
+
+12. Upgrade Testing Library React to v13
+
+13. Upgrade userEvent to v13
+
 Congratulations! You have upgraded one microfrontend to use the latest libraries.
 
-Repeat steps 4-8 for all packages you want to serve, upgrade, and re-integrate at the same time. `help` 
+Repeat steps 4-8 for all packages you want to serve, upgrade, and re-integrate at the same time.
+
 ## Troubleshooting & Tips
 
-The following commands can help you figure out what is happening when you run into trouble
+The following commands can help you figure out what is happening when you run into trouble:
 
 * `yarn list @types/react` to see conflicting type definitions of react.
 
