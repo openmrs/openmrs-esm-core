@@ -196,3 +196,22 @@ The following commands can help you figure out what is happening when you run in
 * `yarn upgrade` for this migration is tricky since we technically don't want the latest of the core or framework packages listed on npmjs.com. We are trying to use our own versions. This will help upgrade other packages (to within their current semver specification in package.json) if they need it, but likely you will need to re-link the esm-framework folders 
 
 * Easy to revert all symlinks by destroying node_modules and running `yarn`
+
+## Releasing a major pre-release version of esm-core
+
+To prepare other frontend modules it is helpful to have pre-releases of new major versions.
+For example, before 4.0.0 is released, 4.0.0-pre.1 is released so that frontend
+module maintainers can install that version and fix everything that needs to be
+fixed.
+
+To release a version like `4.0.0-pre.5`:
+1. Make sure the release branch is in good shape. `yarn` and `yarn verify`.
+2. Build everything. `yarn turbo run build`.
+3. Version bump. `yarn lerna version`. Select "Custom Version" and type `4.0.0-pre.5`.
+4. Publish
+  - In the past I have published with `yarn lerna publish from-package`. However, this
+    tags the published version as `latest`, which is definitely not what you want. I have
+    corrected this by manually running `npm dist-tag add @openmrs/esm-abc@3.4.0 latest`
+    for everything published, which is a very annoying thing to have to do.
+  - You can try doing `yarn lerna publish from-package --dist-tag=4.0`; I think `4.0` is
+    a reasonable tag for this. There is no way to publish without tagging at all.
