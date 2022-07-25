@@ -21,10 +21,9 @@ export function renderExtension(
   extensionId: string,
   renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x,
   additionalProps: Record<string, any> = {}
-): CancelLoading {
+): Parcel | null {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionRegistration = getExtensionRegistration(extensionId);
-  let active: boolean = true;
   let parcel: Parcel | null = null;
 
   if (domElement) {
@@ -38,20 +37,18 @@ export function renderExtension(
 
     if (checkStatus(online, offline)) {
       load().then(({ default: result, ...lifecycle }) => {
-        if (active) {
-          parcel = mountRootParcel(renderFunction(result ?? lifecycle) as any, {
-            ...getCustomProps(online, offline),
-            ...additionalProps,
-            _meta: meta,
-            _extensionContext: {
-              extensionId,
-              extensionSlotName,
-              extensionSlotModuleName,
-              extensionModuleName: moduleName,
-            },
-            domElement,
-          });
-        }
+        parcel = mountRootParcel(renderFunction(result ?? lifecycle) as any, {
+          ...getCustomProps(online, offline),
+          ...additionalProps,
+          _meta: meta,
+          _extensionContext: {
+            extensionId,
+            extensionSlotName,
+            extensionSlotModuleName,
+            extensionModuleName: moduleName,
+          },
+          domElement,
+        });
       });
 
       updateInternalExtensionStore((state) => {
@@ -82,18 +79,5 @@ export function renderExtension(
     );
   }
 
-  return () => {
-    active = false;
-    if (parcel) {
-      if (parcel.getStatus() !== "MOUNTED") {
-        parcel.mountPromise.then(() => {
-          if (parcel) {
-            parcel.unmount();
-          }
-        });
-      } else {
-        parcel.unmount();
-      }
-    }
-  };
+  return parcel;
 }

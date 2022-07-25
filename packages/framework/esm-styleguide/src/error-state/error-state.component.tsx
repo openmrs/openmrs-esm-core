@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./error-state.module.scss";
 import { Tile } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
-import { useLayoutType } from "@openmrs/esm-framework";
+import { useLayoutType } from "@openmrs/esm-react-utils";
 
 export interface ErrorStateProps {
   error: any;

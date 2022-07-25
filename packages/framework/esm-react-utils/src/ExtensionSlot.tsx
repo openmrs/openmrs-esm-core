@@ -4,41 +4,6 @@ import { ComponentContext } from "./ComponentContext";
 import { Extension } from "./Extension";
 import { useExtensionSlot } from "./useExtensionSlot";
 
-function isShallowEqual(prevDeps: any, nextDeps: any) {
-  if (prevDeps === nextDeps) {
-    return true;
-  }
-
-  if (!prevDeps && nextDeps) {
-    return false;
-  }
-
-  if (prevDeps && !nextDeps) {
-    return false;
-  }
-
-  if (typeof prevDeps !== "object" || typeof nextDeps !== "object") {
-    return false;
-  }
-
-  const prev = Object.keys(prevDeps);
-  const next = Object.keys(nextDeps);
-
-  if (prev.length !== next.length) {
-    return false;
-  }
-
-  for (let i = 0; i < prev.length; i++) {
-    const key = prev[i];
-
-    if (!(key in nextDeps) || nextDeps[key] !== prevDeps[key]) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
 export interface ExtensionSlotBaseProps {
   name: string;
   /** @deprecated Use `name` */
@@ -59,50 +24,93 @@ export type ExtensionSlotProps = (
   | OldExtensionSlotBaseProps
   | ExtensionSlotBaseProps
 ) &
-  React.HTMLAttributes<HTMLDivElement>;
+  React.HTMLAttributes<HTMLDivElement> & {
+    children?:
+      | React.ReactNode
+      | ((extension: ConnectedExtension) => React.ReactNode);
+  };
 
 function defaultSelect(extensions: Array<ConnectedExtension>) {
   return extensions;
 }
 
-export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
-  name: goodName,
-  extensionSlotName,
+/**
+ * An [extension slot](https://o3-dev.docs.openmrs.org/#/main/extensions).
+ * A place with a name. Extensions that get connected to that name
+ * will be rendered into this.
+ *
+ * @param props.name The name of the extension slot
+ * @param props.select An optional function for filtering or otherwise modifying
+ *   the list of extensions that will be rendered.
+ * @param props.state *Only works if no children are provided*. Passes data
+ *   through as props to the extensions that are mounted here. If `ExtensionSlot`
+ *   has children, you must pass the state through the `state` param of the
+ *   `Extension` component.
+ * @param props.children There are two different ways to use `ExtensionSlot`
+ *   children.
+ *  - Passing a `ReactNode`, the "normal" way. The child must contain the component
+ *     `Extension`. Whatever is passed as the child will be rendered once per extension.
+ *     See the first example below.
+ *  - Passing a function, the "render props" way. The child must be a function
+ *     which takes a [[ConnectedExtension]] as argument and returns a `ReactNode`.
+ *     the resulting react node must contain the component `Extension`. It will
+ *     be run for each extension. See the second example below.
+ *
+ * @example
+ * Passing a react node as children
+ *
+ * ```tsx
+ * <ExtensionSlot name="Foo">
+ *   <div style={{ width: 10rem }}>
+ *     <Extension />
+ *   </div>
+ * </ExtensionSlot>
+ * ```
+ *
+ * @example
+ * Passing a function as children
+ *
+ * ```tsx
+ * <ExtensionSlot name="Bar">
+ *   {(extension) => (
+ *     <h1>{extension.name}</h1>
+ *     <div style={{ color: extension.meta.color }}>
+ *       <Extension />
+ *     </div>
+ *   )}
+ * </ExtensionSlot>
+ * ```
+ *
+ */
+export function ExtensionSlot({
+  name: extensionSlotName,
+  extensionSlotName: legacyExtensionSlotName,
   select = defaultSelect,
   children,
   state,
   style,
   ...divProps
-}: ExtensionSlotProps) => {
-  const name = (goodName ?? extensionSlotName) as string;
-  const slotRef = useRef(null);
-  const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
-  const stateRef = useRef(state);
-
-  if (!isShallowEqual(stateRef.current, state)) {
-    stateRef.current = state;
+}: ExtensionSlotProps) {
+  if (children && state) {
+    throw new Error(
+      "Both children and state have been provided. If children are provided, the state must be passed as a prop to the `Extension` component."
+    );
   }
 
-  const content = useMemo(
-    () =>
-      name &&
-      select(extensions).map((extension) => (
-        <ComponentContext.Provider
-          key={extension.id}
-          value={{
-            moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
-            extension: {
-              extensionId: extension.id,
-              extensionSlotName: name,
-              extensionSlotModuleName,
-            },
-          }}
-        >
-          {children ?? <Extension state={stateRef.current} />}
-        </ComponentContext.Provider>
-      )),
-    [select, extensions, name, stateRef.current]
+  const name = (extensionSlotName ?? legacyExtensionSlotName) as string;
+  const slotRef = useRef(null);
+  const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
+
+  const extensionsToRender = useMemo(
+    () => select(extensions),
+    [select, extensions]
   );
+
+  const extensionsFromChildrenFunction = useMemo(() => {
+    if (typeof children == "function" && !React.isValidElement(children)) {
+      return extensionsToRender.map((extension) => children(extension));
+    }
+  }, [children, extensionsToRender]);
 
   return (
     <div
@@ -112,7 +120,24 @@ export const ExtensionSlot: React.FC<ExtensionSlotProps> = ({
       style={{ ...style, position: "relative" }}
       {...divProps}
     >
-      {content}
+      {name &&
+        extensionsToRender.map((extension, i) => (
+          <ComponentContext.Provider
+            key={extension.id}
+            value={{
+              moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
+              extension: {
+                extensionId: extension.id,
+                extensionSlotName: name,
+                extensionSlotModuleName,
+              },
+            }}
+          >
+            {extensionsFromChildrenFunction?.[i] ?? children ?? (
+              <Extension state={state} />
+            )}
+          </ComponentContext.Provider>
+        ))}
     </div>
   );
-};
+}

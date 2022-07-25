@@ -64,6 +64,7 @@ export function getGlobalStore<TState = any>(
 
 function instrumentedStore<T>(name: string, store: Store<T>) {
   return {
+    action: jest.spyOn(store, "action"),
     getState: jest.spyOn(store, "getState"),
     setState: jest.spyOn(store, "setState"),
     subscribe: jest.spyOn(store, "subscribe"),

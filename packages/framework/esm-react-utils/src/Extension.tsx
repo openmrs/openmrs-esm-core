@@ -1,10 +1,18 @@
 import { renderExtension } from "@openmrs/esm-extensions";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { Parcel } from "single-spa";
 import { ComponentContext } from ".";
 import { ExtensionData } from "./ComponentContext";
 
 export interface ExtensionProps {
   state?: Record<string, any>;
+  /** @deprecated Pass a function as the child of `ExtensionSlot` instead. */
   wrap?(
     slot: React.ReactNode,
     extension: ExtensionData
@@ -23,14 +31,21 @@ export interface ExtensionProps {
 export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
   const [domElement, setDomElement] = useState<HTMLDivElement>();
   const { extension } = useContext(ComponentContext);
+  const parcel = useRef<Parcel | null>();
+
+  if (wrap) {
+    console.warn(
+      "`wrap` prop of Extension is being used. This will be removed in a future release."
+    );
+  }
 
   const ref = useCallback((node) => {
     setDomElement(node);
   }, []);
 
   useEffect(() => {
-    if (domElement != null && extension) {
-      return renderExtension(
+    if (domElement != null && extension && !parcel.current) {
+      parcel.current = renderExtension(
         domElement,
         extension.extensionSlotName,
         extension.extensionSlotModuleName,
@@ -38,6 +53,9 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
         undefined,
         state
       );
+      return () => {
+        parcel.current && parcel.current.unmount();
+      };
     }
   }, [
     extension?.extensionSlotName,
@@ -47,9 +65,15 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
     domElement,
   ]);
 
-  // The extension is rendered into the `<slot>`. It is surrounded by a
-  // `<div>` with relative positioning in order to allow the UI Editor
-  // to absolutely position elements within it.
+  useEffect(() => {
+    if (parcel.current && parcel.current.update) {
+      parcel.current.update({ ...state });
+    }
+  }, [parcel.current, state]);
+
+  // The extension is rendered into the `<div>`. The `<div>` has relative
+  // positioning in order to allow the UI Editor to absolutely position
+  // elements within it.
   const slot = (
     <div
       ref={ref}

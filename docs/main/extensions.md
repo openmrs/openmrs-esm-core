@@ -136,8 +136,11 @@ slots have a standard configuration interface that allows administrators
 to add, remove, and re-order extensions, as well as specific
 configuration specific to an extension within a particular slot.
 
-You can use `useConfig` as usual within an extension. An extension uses
-the config schema of the module in which it is defined.
+You can use `useConfig` as usual within an extension.
+
+The schema for an extension can be specified using `defineExtensionConfigSchema`.
+If no schema is defined specifically for your extension, the extension will inherit
+the configuration of the module that contains it.
 
 ## State
 
@@ -147,8 +150,8 @@ Most commonly, extensions that pertain to a specific patient will accept
 a `patientUuid` parameter which can be used to fetch relevant patient
 information.
 
-State is provided as a parameter to the slot, and recieved as a normal
-component parameter by the extension.
+State is provided as a parameter to the `ExtensionSlot` or `Extension`
+components, and recieved as a prop by the extension.
 
 See the [ExtensionSlot API docs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#extensionslot)
 for more.

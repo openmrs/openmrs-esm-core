@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L53)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L18)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L51)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L16)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L55)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
 
 ## Methods
 
@@ -64,4 +64,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L54)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L19)

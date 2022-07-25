@@ -1,10 +1,11 @@
 module.exports = {
   transform: {
-    "^.+\\.tsx?$": ["@swc/jest"],
+    "^.+\\.(j|t)sx?$": ["@swc/jest"],
   },
-  setupFiles: ["<rootDir>/src/setup-tests.js"],
+  setupFilesAfterEnv: ["<rootDir>/src/setup-tests.js"],
   moduleNameMapper: {
     "lodash-es": "lodash",
+    "^lodash-es/(.*)$": "lodash/$1",
     "@openmrs/esm-error-handling":
       "<rootDir>/__mocks__/openmrs-esm-error-handling.mock.ts",
     "@openmrs/esm-state": "<rootDir>/__mocks__/openmrs-esm-state.mock.ts",
