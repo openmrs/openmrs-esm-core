@@ -86,8 +86,12 @@ export const Breadcrumbs: React.FC = () => {
 
   return (
     <Breadcrumb className="breadcrumbs-container">
-      {breadcrumbs.map((bc) => (
-        <CustomBreadcrumbItem breadcrumbRegistration={bc} params={params} />
+      {breadcrumbs.map((bc, index) => (
+        <CustomBreadcrumbItem
+          key={`breadcrumb-item-${index}`}
+          breadcrumbRegistration={bc}
+          params={params}
+        />
       ))}
     </Breadcrumb>
   );

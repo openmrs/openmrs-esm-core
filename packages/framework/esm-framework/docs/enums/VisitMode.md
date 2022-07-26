@@ -4,17 +4,17 @@
 
 ## Table of contents
 
-### API Enumeration members
+### API Enumeration Members
 
 - [EDITVISIT](VisitMode.md#editvisit)
 - [LOADING](VisitMode.md#loading)
 - [NEWVISIT](VisitMode.md#newvisit)
 
-## API Enumeration members
+## API Enumeration Members
 
 ### EDITVISIT
 
-• **EDITVISIT** = `"editVisit"`
+• **EDITVISIT**
 
 #### Defined in
 
@@ -24,7 +24,7 @@ ___
 
 ### LOADING
 
-• **LOADING** = `"loadingVisit"`
+• **LOADING**
 
 #### Defined in
 
@@ -34,7 +34,7 @@ ___
 
 ### NEWVISIT
 
-• **NEWVISIT** = `"startVisit"`
+• **NEWVISIT**
 
 #### Defined in
 

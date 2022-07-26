@@ -11,7 +11,13 @@
 
   .emptyStateDescription {
     @include type.type-style("body-01");
+    color: $text-02;
     white-space: pre-line;
     text-align: center;
+  }
+
+  .heading {
+    @extend .productiveHeading01;
+    color: $ui-05;
   }
 }

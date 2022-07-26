@@ -320,7 +320,7 @@ describe("Interaction between configuration and extension systems", () => {
     function RootComponent() {
       return (
         <div>
-          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+          <ExtensionSlot data-testid="slot" name="A slot" />
         </div>
       );
     }
@@ -376,7 +376,7 @@ describe("Interaction between configuration and extension systems", () => {
     function RootComponent() {
       return (
         <div>
-          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+          <ExtensionSlot data-testid="slot" name="A slot" />
         </div>
       );
     }
@@ -429,7 +429,7 @@ describe("Interaction between configuration and extension systems", () => {
     function RootComponent() {
       return (
         <div>
-          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+          <ExtensionSlot data-testid="slot" name="A slot" />
         </div>
       );
     }

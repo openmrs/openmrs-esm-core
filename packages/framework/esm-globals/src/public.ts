@@ -1,12 +1,12 @@
 export {
-  ConnectivityChangedEvent,
+  type ConnectivityChangedEvent,
+  type PrecacheStaticDependenciesEvent,
+  type ShowNotificationEvent,
+  type ShowToastEvent,
   subscribeConnectivity,
   subscribeConnectivityChanged,
   subscribePrecacheStaticDependencies,
-  PrecacheStaticDependenciesEvent,
   subscribeNotificationShown,
   subscribeToastShown,
-  ShowNotificationEvent,
-  ShowToastEvent,
 } from "./events";
 export * from "./types";

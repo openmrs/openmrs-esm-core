@@ -80,6 +80,15 @@
   flex-direction: column;
   align-items: center;
   width: 18rem;
+
+  :global(.cds--text-input) {
+    height: 3rem;
+    @extend .label01;
+  }
+
+  :global(.cds--text-input__field-outer-wrapper) {
+    width: 18rem;
+  }
 }
 
 .continueButton {
@@ -106,12 +115,6 @@
   span {
     order: 2;
   }
-}
-
-.inputStyle {
-  @extend .label01;
-  width: 18rem;
-  height: 3rem;
 }
 
 .footer {

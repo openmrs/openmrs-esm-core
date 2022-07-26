@@ -8,6 +8,10 @@
   border-left: 0.25rem solid var(--brand-01);
 }
 
+.leftNav {
+  border-right: 1px solid $ui-03;
+}
+
 .leftNav > div a {
   height: 2.5rem;
   color: $ui-04;

@@ -178,7 +178,7 @@
 - [retry](API.md#retry)
 - [translateFrom](API.md#translatefrom)
 
-## API Type aliases
+## API Type Aliases
 
 ### CurrentPatient
 
@@ -254,7 +254,7 @@ ___
 
 ___
 
-## Date and Time Type aliases
+## Date and Time Type Aliases
 
 ### DateInput
 
@@ -295,7 +295,7 @@ ___
 
 ___
 
-## Navigation Type aliases
+## Navigation Type Aliases
 
 ### TemplateParams
 
@@ -311,7 +311,7 @@ ___
 
 ___
 
-## Offline Type aliases
+## Offline Type Aliases
 
 ### KnownOmrsServiceWorkerMessages
 
@@ -379,7 +379,7 @@ HTTP requests with these headers are handled in a special way by the SPA's servi
 
 ___
 
-## Other Type aliases
+## Other Type Aliases
 
 ### ConfigValue
 
@@ -486,7 +486,7 @@ ___
 
 ___
 
-## Store Type aliases
+## Store Type Aliases
 
 ### Actions
 
@@ -512,7 +512,7 @@ ___
 
 ___
 
-## UI Type aliases
+## UI Type Aliases
 
 ### InlineNotificationType
 
@@ -738,7 +738,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L32)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L30)
 
 ## API Functions
 
@@ -3832,7 +3832,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L20)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L18)
 
 ___
 
@@ -3980,7 +3980,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L24)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L22)
 
 ___
 

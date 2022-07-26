@@ -8,6 +8,7 @@ import styles from "./overview-card.styles.scss";
 export interface OverviewCardProps extends TileProps {
   header: string;
   viewLink: string;
+  children?: React.ReactNode;
 }
 
 const OverviewCard: React.FC<OverviewCardProps> = ({

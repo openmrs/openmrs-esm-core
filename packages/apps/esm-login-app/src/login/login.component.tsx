@@ -1,6 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, InlineNotification, TextInput, Tile } from "@carbon/react";
+import {
+  Button,
+  InlineNotification,
+  PasswordInput,
+  TextInput,
+  Tile,
+} from "@carbon/react";
 import { ArrowLeft, ArrowRight } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import { useConfig, interpolateUrl, useSession } from "@openmrs/esm-framework";
@@ -133,7 +139,7 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
         {errorMessage && (
           <InlineNotification
             kind="error"
-            style={{ width: "23rem" }}
+            style={{ width: "23rem", marginBottom: "3rem" }}
             /**
              * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
              * t('invalidCredentials')
@@ -166,84 +172,75 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
           <div className={styles["center"]}>{logo}</div>
           <form onSubmit={handleSubmit} ref={formRef}>
             {!showPassword && (
-              <>
-                <div className={styles["input-group"]}>
-                  <TextInput
-                    id="username"
-                    type="text"
-                    name="username"
-                    labelText={t("username", "Username")}
-                    className={styles.inputStyle}
-                    value={username}
-                    onChange={changeUsername}
-                    ref={usernameInputRef}
-                    autoFocus
-                    required
-                  />
-                  <input
-                    id="password"
-                    style={hidden}
-                    type="password"
-                    name="password"
-                    value={password}
-                    onChange={changePassword}
-                  />
-                </div>
-                <div className={styles.buttonContainer}>
-                  <Button
-                    className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRight size={24} {...props} />}
-                    type="submit"
-                    iconDescription="Continue to login"
-                    onClick={continueLogin}
-                    disabled={!isLoginEnabled}
-                  >
-                    {t("continue", "Continue")}
-                  </Button>
-                </div>
-              </>
+              <div className={styles["input-group"]}>
+                <TextInput
+                  id="username"
+                  type="text"
+                  name="username"
+                  labelText={t("username", "Username")}
+                  value={username}
+                  onChange={changeUsername}
+                  ref={usernameInputRef}
+                  autoFocus
+                  required
+                />
+                <input
+                  id="password"
+                  style={hidden}
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={changePassword}
+                />
+                <Button
+                  className={styles.continueButton}
+                  renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                  type="submit"
+                  iconDescription="Continue to login"
+                  onClick={continueLogin}
+                  disabled={!isLoginEnabled}
+                >
+                  {t("continue", "Continue")}
+                </Button>
+              </div>
             )}
             {showPassword && (
-              <>
-                <div className={styles["input-group"]}>
-                  <input
-                    id="username"
-                    type="text"
-                    name="username"
-                    style={hidden}
-                    value={username}
-                    onChange={changeUsername}
-                    required
-                  />
+              <div className={styles["input-group"]}>
+                <input
+                  id="username"
+                  type="text"
+                  name="username"
+                  style={hidden}
+                  value={username}
+                  onChange={changeUsername}
+                  required
+                />
 
-                  <TextInput.PasswordInput
-                    id="password"
-                    invalidText={t(
-                      "validValueRequired",
-                      "A valid value is required"
-                    )}
-                    labelText={t("password", "Password")}
-                    name="password"
-                    className={styles.inputStyle}
-                    value={password}
-                    onChange={changePassword}
-                    ref={passwordInputRef}
-                    required
-                    showPasswordLabel="Show password"
-                  />
-                </div>
-                <div className={styles.buttonContainer}>
-                  <Button
-                    type="submit"
-                    className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRight size={24} {...props} />}
-                    iconDescription="Log in"
-                    disabled={!isLoginEnabled}
-                  >
-                    {t("login", "Log in")}
-                  </Button>
-                </div>
-              </>
+                <PasswordInput
+                  id="password"
+                  invalidText={t(
+                    "validValueRequired",
+                    "A valid value is required"
+                  )}
+                  labelText={t("password", "Password")}
+                  name="password"
+                  value={password}
+                  onChange={changePassword}
+                  ref={passwordInputRef}
+                  required
+                  showPasswordLabel="Show password"
+                />
+
+                <Button
+                  type="submit"
+                  className={styles.continueButton}
+                  renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                  iconDescription="Log in"
+                  disabled={!isLoginEnabled}
+                >
+                  {t("login", "Log in")}
+                </Button>
+              </div>
             )}
           </form>
         </Tile>

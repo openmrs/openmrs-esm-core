@@ -1,5 +1,5 @@
 export {
-  AppState,
+  type AppState,
   createGlobalStore,
   getGlobalStore,
   getAppState,

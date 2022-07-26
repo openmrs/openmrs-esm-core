@@ -4,16 +4,16 @@
 
 ## Table of contents
 
-### API Enumeration members
+### API Enumeration Members
 
 - [NOTSTARTED](VisitStatus.md#notstarted)
 - [ONGOING](VisitStatus.md#ongoing)
 
-## API Enumeration members
+## API Enumeration Members
 
 ### NOTSTARTED
 
-• **NOTSTARTED** = `"notStarted"`
+• **NOTSTARTED**
 
 #### Defined in
 
@@ -23,7 +23,7 @@ ___
 
 ### ONGOING
 
-• **ONGOING** = `"ongoing"`
+• **ONGOING**
 
 #### Defined in
 
