@@ -24,7 +24,7 @@ export type ExtensionSlotProps = (
   | OldExtensionSlotBaseProps
   | ExtensionSlotBaseProps
 ) &
-  React.HTMLAttributes<HTMLDivElement> & {
+  Omit<React.HTMLAttributes<HTMLDivElement>, "children"> & {
     children?:
       | React.ReactNode
       | ((extension: ConnectedExtension) => React.ReactNode);
@@ -133,9 +133,10 @@ export function ExtensionSlot({
               },
             }}
           >
-            {extensionsFromChildrenFunction?.[i] ?? children ?? (
-              <Extension state={state} />
-            )}
+            {extensionsFromChildrenFunction?.[i] ??
+              (typeof children != "function" ? children : null) ?? (
+                <Extension state={state} />
+              )}
           </ComponentContext.Provider>
         ))}
     </div>
