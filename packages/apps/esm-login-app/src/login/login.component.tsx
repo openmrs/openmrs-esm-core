@@ -30,6 +30,7 @@ export interface LoginProps extends LoginReferrer {
 
 const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
   const config = useConfig();
+  const { t } = useTranslation();
   const { user } = useSession();
   const location = useLocation();
   const navigate = useNavigate();
@@ -39,7 +40,6 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const [t] = useTranslation();
   const showPassword = location.pathname === "/login/confirm";
 
   useEffect(() => {

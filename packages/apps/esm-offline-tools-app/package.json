@@ -37,7 +37,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.3.0",
+    "@carbon/react": "^1.8.0",
     "lodash-es": "^4.17.21",
     "swr": "^1.0.1"
   },
