@@ -7,6 +7,7 @@
   "downloadConfig": "Download Config",
   "edit": "Edit",
   "editValueButtonText": "Edit",
+  "frontendModules": "Frontend Modules",
   "installedVersion": "Installed Version",
   "itemDescriptionSourceDefaultText": "The current value is the default.",
   "jsonEditor": "JSON Editor",
@@ -15,6 +16,7 @@
   "requiredVersion": "Required Version",
   "resetToDefaultValueButtonText": "Reset to default",
   "uiEditor": "UI Editor",
+  "unknownVersion": "unknown",
   "value": "Value",
   "view": "View"
 }

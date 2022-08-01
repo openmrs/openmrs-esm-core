@@ -13,6 +13,7 @@ export interface ResolvedBackendModule {
 export interface FrontendModule {
   name: string;
   dependencies: Array<ResolvedBackendModule>;
+  version?: string;
 }
 
 interface Module {
