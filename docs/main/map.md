@@ -49,10 +49,12 @@ The process of building an application, which is described in the
 looks like this:
 
 ![Distro Build Diagram](./distro_setup.png)
+<!-- https://docs.google.com/drawings/d/1TZy8k4x3sb6El6-vND2FgBC62BagHB4r32M--Kvxorg/edit -->
 
 The built application is then executed on the client like this:
 
 ![Application Diagram](./application.png)
+<!-- https://docs.google.com/drawings/d/1myQ4ETSX35-fM1AtGNLnJRTtGqY4AmHzJvlgxotl82c/edit -->
 
 ## Repositories you should know :octocat:	
 The 3.x EMR Reference Application is made up of all the frontend modules found in the following repositories:
