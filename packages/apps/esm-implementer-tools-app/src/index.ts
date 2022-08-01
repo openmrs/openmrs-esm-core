@@ -1,5 +1,8 @@
 import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
+declare var __VERSION__: string;
+const version = __VERSION__;
+
 function setupOpenMRS() {
   const moduleName = "@openmrs/esm-implementer-tools-app";
   const options = {
@@ -44,6 +47,5 @@ const importTranslation = require.context(
   "lazy"
 );
 
-export { setupOpenMRS, importTranslation };
-
+export { setupOpenMRS, importTranslation, version };
 export { default as ConfigEditButton } from "./config-edit-button/config-edit-button.component";

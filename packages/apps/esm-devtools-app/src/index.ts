@@ -1,5 +1,8 @@
 import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
+declare var __VERSION__: string;
+const version = __VERSION__;
+
 const importTranslation = () => Promise.resolve();
 
 function setupOpenMRS() {
@@ -19,4 +22,4 @@ function setupOpenMRS() {
   };
 }
 
-export { setupOpenMRS, importTranslation };
+export { setupOpenMRS, importTranslation, version };

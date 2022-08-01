@@ -10,6 +10,9 @@ import OfflineToolsNavLink from "./nav/offline-tools-nav-link.component";
 import { setupOffline } from "./offline";
 import { setupSynchronizingOfflineActionsNotifications } from "./offline-actions/synchronizing-notification";
 
+declare var __VERSION__: string;
+const version = __VERSION__;
+
 const importTranslation = require.context(
   "../translations",
   false,
@@ -229,4 +232,4 @@ function setupOpenMRS() {
   };
 }
 
-export { setupOpenMRS, importTranslation, backendDependencies };
+export { setupOpenMRS, importTranslation, backendDependencies, version };

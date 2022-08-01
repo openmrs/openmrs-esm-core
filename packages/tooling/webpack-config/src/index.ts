@@ -85,10 +85,14 @@ export default (
   argv: Record<string, string> = {}
 ) => {
   const root = process.cwd();
-  const { name, peerDependencies, browser, main, types } = require(resolve(
-    root,
-    "package.json"
-  ));
+  const {
+    name,
+    version,
+    peerDependencies,
+    browser,
+    main,
+    types,
+  } = require(resolve(root, "package.json"));
   const mode = argv.mode || process.env.NODE_ENV || "development";
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
@@ -177,6 +181,7 @@ export default (
         analyzerMode: env && env.analyze ? "server" : "disabled",
       }),
       new DefinePlugin({
+        __VERSION__: JSON.stringify(version),
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new ModuleFederationPlugin({
