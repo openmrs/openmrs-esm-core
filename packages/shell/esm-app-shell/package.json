@@ -13,7 +13,7 @@
     "analyze": "webpack --mode=production --env analyze=true",
     "watch": "webpack serve --mode development",
     "lint": "eslint src --ext ts,tsx",
-    "postversion": "yarn add @openmrs/esm-framework@$npm_package_version --exact"
+    "version": "yarn add @openmrs/esm-framework@$npm_package_version --exact"
   },
   "keywords": [
     "openmrs",
@@ -34,7 +34,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@openmrs/esm-framework": "^3.4.0",
+    "@openmrs/esm-framework": "3.4.0",
     "carbon-components": "10.31.0",
     "carbon-icons": "7.0.7",
     "dayjs": "^1.10.4",
