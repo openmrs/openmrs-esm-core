@@ -7,6 +7,7 @@ import { StatsWriterPlugin } from "webpack-stats-plugin";
 // eslint-disable-next-line no-restricted-imports
 import { merge, mergeWith, isArray } from "lodash";
 import { postProcessFile } from "./optimize";
+import { inc } from "semver";
 
 const production = "production";
 const { ModuleFederationPlugin } = container;
@@ -181,7 +182,10 @@ export default (
         analyzerMode: env && env.analyze ? "server" : "disabled",
       }),
       new DefinePlugin({
-        __VERSION__: JSON.stringify(version),
+        __VERSION__:
+          mode === production
+            ? JSON.stringify(version)
+            : JSON.stringify(inc(version, "prerelease", "local")),
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new ModuleFederationPlugin({
