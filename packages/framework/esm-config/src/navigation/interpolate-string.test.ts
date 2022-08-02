@@ -6,6 +6,15 @@ describe("interpolateUrl", () => {
     expect(result).toBe("test /openmrs /openmrs/spa ok");
   });
 
+  it("interpolates other URL template parameters", () => {
+    const result = interpolateUrl("${openmrsSpaBase}/patient/${patientUuid}", {
+      patientUuid: "4fcb7185-c6c9-450f-8828-ccae9436bd82",
+    });
+    expect(result).toBe(
+      "/openmrs/spa/patient/4fcb7185-c6c9-450f-8828-ccae9436bd82"
+    );
+  });
+
   it("works when no interpolation needed", () => {
     const result = interpolateUrl("test ok");
     expect(result).toBe("test ok");

@@ -2633,16 +2633,13 @@ ___
 
 Interpolates values of `params` into the `template` string.
 
-Useful for additional template parameters in URLs.
-
 Example usage:
 ```js
-navigate({
- to: interpolateString(
-   config.links.patientChart,
-   { patientUuid: patient.uuid }
- )
-});
+interpolateString("test ${one} ${two} 3", {
+   one: "1",
+   two: "2",
+}); // will return "test 1 2 3"
+interpolateString("test ok", { one: "1", two: "2" }) // will return "test ok"
 ```
 
 #### Parameters
@@ -2658,7 +2655,7 @@ navigate({
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L46)
+[packages/framework/esm-config/src/navigation/interpolate-string.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L63)
 
 ___
 
@@ -2668,8 +2665,28 @@ ___
 
 Interpolates a string with openmrsBase and openmrsSpaBase.
 
-Useful for accepting `${openmrsBase}` or `${openmrsSpaBase}` template
+Useful for accepting `${openmrsBase}` or `${openmrsSpaBase}`plus additional template
 parameters in configurable URLs.
+
+Example usage:
+```js
+interpolateUrl("test ${openmrsBase} ${openmrsSpaBase} ok");
+   // will return "test /openmrs /openmrs/spa ok"
+
+interpolateUrl("${openmrsSpaBase}/patient/${patientUuid}", {
+   patientUuid: "4fcb7185-c6c9-450f-8828-ccae9436bd82",
+}); // will return "/openmrs/spa/patient/4fcb7185-c6c9-450f-8828-ccae9436bd82"
+```
+
+This can be used in conjunction with the `navigate` function like so
+```js
+navigate({
+ to: interpolateUrl(
+   "${openmrsSpaBase}/patient/${patientUuid}",
+   { patientUuid: patient.uuid }
+ )
+}); // will navigate to "/openmrs/spa/patient/4fcb7185-c6c9-450f-8828-ccae9436bd82"
+```
 
 #### Parameters
 
@@ -2684,7 +2701,7 @@ parameters in configurable URLs.
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L16)
+[packages/framework/esm-config/src/navigation/interpolate-string.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L36)
 
 ___
 
@@ -2701,6 +2718,13 @@ const submitHandler = () => {
   navigate({ to: config.links.submitSuccess });
 };
 ```
+Example return values:
+navigate({ to: "/some/path" }); => window.location.assign("/some/path")
+navigate({ to: "https://single-spa.js.org/" }); => window.location.assign("https://single-spa.js.org/")
+navigate({ to: "${openmrsBase}/some/path" }); => window.location.assign("/openmrs/some/path")
+navigate({ to: "/openmrs/spa/foo/page" }); => navigateToUrl("/openmrs/spa/foo/page")
+navigate({ to: "${openmrsSpaBase}/bar/page" }); => navigateToUrl("/openmrs/spa/bar/page")
+navigate({ to: "/${openmrsSpaBase}/baz/page" }) => navigateToUrl("/openmrs/spa/baz/page")
 
 #### Parameters
 
@@ -2714,7 +2738,7 @@ const submitHandler = () => {
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/navigate.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L35)
+[packages/framework/esm-config/src/navigation/navigate.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L42)
 
 ___
 
