@@ -4,6 +4,7 @@
 - Getting started
   - [Prerequisite Knowledge](/getting_started/prerequisites.md)
   - [Setup](/getting_started/setup.md)
+  - [Staying Current & Troubleshooting](/getting_started/troubleshooting.md)
   - [Contributing](/getting_started/contributing.md)
   - [Release and Deployment](/getting_started/release_and_deployment.md)
   - [Tour of a Frontend Module](/getting_started/tour.md)
