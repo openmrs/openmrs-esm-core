@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { FrontendModule } from "../backend-dependencies/openmrs-backend-dependencies";
+import { FrontendModule } from "./frontend-modules.component";
 
 let cachedFrontendModules: Array<FrontendModule>;
 

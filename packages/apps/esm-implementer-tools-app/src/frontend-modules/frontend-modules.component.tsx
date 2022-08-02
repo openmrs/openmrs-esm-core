@@ -10,7 +10,11 @@ import {
   TableHeader,
   TableRow,
 } from "carbon-components-react";
-import type { FrontendModule } from "../backend-dependencies/openmrs-backend-dependencies";
+
+export interface FrontendModule {
+  name: string;
+  version?: string;
+}
 
 export interface FrontendModulesProps {
   frontendModules: Array<FrontendModule>;

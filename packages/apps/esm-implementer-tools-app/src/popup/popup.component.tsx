@@ -4,14 +4,17 @@ import styles from "./popup.styles.scss";
 import { Button, ContentSwitcher, Switch } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
-import { FrontendModules } from "../frontend-modules/frontend-modules.component";
+import {
+  FrontendModule,
+  FrontendModules,
+} from "../frontend-modules/frontend-modules.component";
 import { ModuleDiagnostics } from "../backend-dependencies/backend-dependencies.component";
-import type { FrontendModule } from "../backend-dependencies/openmrs-backend-dependencies";
+import type { ResolvedDependenciesModule } from "../backend-dependencies/openmrs-backend-dependencies";
 
 interface DevToolsPopupProps {
   close(): void;
   frontendModules: Array<FrontendModule>;
-  backendDependencies: Array<FrontendModule>;
+  backendDependencies: Array<ResolvedDependenciesModule>;
   visibleTabIndex?: number;
 }
 

@@ -10,10 +10,10 @@ import {
   TableCell,
   TableContainer,
 } from "carbon-components-react";
-import { FrontendModule } from "./openmrs-backend-dependencies";
+import { ResolvedDependenciesModule } from "./openmrs-backend-dependencies";
 
 export interface ModuleDiagnosticsProps {
-  frontendModules: Array<FrontendModule>;
+  frontendModules: Array<ResolvedDependenciesModule>;
 }
 
 export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
