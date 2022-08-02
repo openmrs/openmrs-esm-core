@@ -1,6 +1,7 @@
 import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
 declare var __VERSION__: string;
+// __VERSION__ is replaced by Webpack with the version from package.json
 const version = __VERSION__;
 
 const importTranslation = () => Promise.resolve();
