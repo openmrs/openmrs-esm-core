@@ -115,10 +115,10 @@ function runShell() {
 
 function handleInitFailure(e: Error) {
   console.error(e);
-  renderFatalErrorPage(e.message);
+  renderFatalErrorPage(e);
 }
 
-function renderFatalErrorPage(message: string) {
+function renderFatalErrorPage(e?: Error) {
   const template = document.querySelector<HTMLTemplateElement>("#app-error");
 
   if (template) {
@@ -127,7 +127,7 @@ function renderFatalErrorPage(message: string) {
 
     if (messageContainer) {
       messageContainer.textContent =
-        message || "No additional information available.";
+        e?.message || "No additional information available.";
     }
 
     if (
