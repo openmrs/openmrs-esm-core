@@ -10,7 +10,7 @@ export interface ResolvedBackendModule {
   type: ResolvedBackendModuleType;
 }
 
-export interface FrontendModule {
+export interface ResolvedDependenciesModule {
   name: string;
   dependencies: Array<ResolvedBackendModule>;
 }
@@ -25,7 +25,7 @@ interface BackendModule {
   version: string;
 }
 
-let cachedFrontendModules: Array<FrontendModule>;
+let cachedFrontendModules: Array<ResolvedDependenciesModule>;
 
 async function initInstalledBackendModules(): Promise<Array<BackendModule>> {
   try {
@@ -41,7 +41,7 @@ async function initInstalledBackendModules(): Promise<Array<BackendModule>> {
 function checkIfModulesAreInstalled(
   module: Module,
   installedBackendModules: Array<BackendModule>
-): FrontendModule {
+): ResolvedDependenciesModule {
   const dependencies: Array<ResolvedBackendModule> = [];
 
   const missingBackendModule = getMissingBackendModules(
@@ -141,7 +141,9 @@ function getResolvedModuleType(
   return "okay";
 }
 
-export async function checkModules(): Promise<Array<FrontendModule>> {
+export async function checkModules(): Promise<
+  Array<ResolvedDependenciesModule>
+> {
   if (!cachedFrontendModules) {
     const modules = (window.installedModules ?? [])
       .filter((module) => module[1].backendDependencies)
@@ -159,7 +161,9 @@ export async function checkModules(): Promise<Array<FrontendModule>> {
   return cachedFrontendModules;
 }
 
-export function hasInvalidDependencies(frontendModules: Array<FrontendModule>) {
+export function hasInvalidDependencies(
+  frontendModules: Array<ResolvedDependenciesModule>
+) {
   return frontendModules.some((m) =>
     m.dependencies.some((n) => n.type !== "okay")
   );

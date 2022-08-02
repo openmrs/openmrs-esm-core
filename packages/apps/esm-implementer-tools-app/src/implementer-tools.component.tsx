@@ -14,21 +14,23 @@ import {
 import { useBackendDependencies } from "./backend-dependencies/useBackendDependencies";
 import { hasInvalidDependencies } from "./backend-dependencies/openmrs-backend-dependencies";
 import { useTranslation } from "react-i18next";
+import { useFrontendModules } from "./frontend-modules/useFrontendModules";
 
 const Popup = React.lazy(() => import("./popup/popup.component"));
 const UiEditor = React.lazy(() => import("./ui-editor/ui-editor"));
 
 function PopupHandler() {
-  const frontendModules = useBackendDependencies();
+  const frontendModules = useFrontendModules();
+  const backendDependencies = useBackendDependencies();
   const [shouldShowNotification, setShouldShowNotification] = useState(false);
   const { t } = useTranslation();
   useEffect(() => {
     // displaying toast if modules are missing
     setShouldShowNotification(
       (alreadyShowing) =>
-        alreadyShowing || hasInvalidDependencies(frontendModules)
+        alreadyShowing || hasInvalidDependencies(backendDependencies)
     );
-  }, [frontendModules]);
+  }, [backendDependencies]);
 
   useEffect(() => {
     // only show notification max. 1 time
@@ -54,6 +56,7 @@ function PopupHandler() {
         <Popup
           close={togglePopup}
           frontendModules={frontendModules}
+          backendDependencies={backendDependencies}
           visibleTabIndex={openTabIndex}
         />
       ) : null}

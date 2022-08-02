@@ -7,6 +7,7 @@ import { StatsWriterPlugin } from "webpack-stats-plugin";
 // eslint-disable-next-line no-restricted-imports
 import { merge, mergeWith, isArray } from "lodash";
 import { postProcessFile } from "./optimize";
+import { inc } from "semver";
 
 const production = "production";
 const { ModuleFederationPlugin } = container;
@@ -85,10 +86,14 @@ export default (
   argv: Record<string, string> = {}
 ) => {
   const root = process.cwd();
-  const { name, peerDependencies, browser, main, types } = require(resolve(
-    root,
-    "package.json"
-  ));
+  const {
+    name,
+    version,
+    peerDependencies,
+    browser,
+    main,
+    types,
+  } = require(resolve(root, "package.json"));
   const mode = argv.mode || process.env.NODE_ENV || "development";
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
@@ -177,6 +182,10 @@ export default (
         analyzerMode: env && env.analyze ? "server" : "disabled",
       }),
       new DefinePlugin({
+        __VERSION__:
+          mode === production
+            ? JSON.stringify(version)
+            : JSON.stringify(inc(version, "prerelease", "local")),
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new ModuleFederationPlugin({
