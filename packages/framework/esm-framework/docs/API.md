@@ -2719,12 +2719,14 @@ const submitHandler = () => {
 };
 ```
 Example return values:
-navigate({ to: "/some/path" }); => window.location.assign("/some/path")
-navigate({ to: "https://single-spa.js.org/" }); => window.location.assign("https://single-spa.js.org/")
-navigate({ to: "${openmrsBase}/some/path" }); => window.location.assign("/openmrs/some/path")
-navigate({ to: "/openmrs/spa/foo/page" }); => navigateToUrl("/openmrs/spa/foo/page")
-navigate({ to: "${openmrsSpaBase}/bar/page" }); => navigateToUrl("/openmrs/spa/bar/page")
-navigate({ to: "/${openmrsSpaBase}/baz/page" }) => navigateToUrl("/openmrs/spa/baz/page")
+```js
+navigate({ to: "/some/path" }); // => window.location.assign("/some/path")
+navigate({ to: "https://single-spa.js.org/" }); // => window.location.assign("https://single-spa.js.org/")
+navigate({ to: "${openmrsBase}/some/path" }); // => window.location.assign("/openmrs/some/path")
+navigate({ to: "/openmrs/spa/foo/page" }); // => navigateToUrl("/openmrs/spa/foo/page")
+navigate({ to: "${openmrsSpaBase}/bar/page" }); // => navigateToUrl("/openmrs/spa/bar/page")
+navigate({ to: "/${openmrsSpaBase}/baz/page" }) // => navigateToUrl("/openmrs/spa/baz/page")
+```
 
 #### Parameters
 
@@ -2738,7 +2740,7 @@ navigate({ to: "/${openmrsSpaBase}/baz/page" }) => navigateToUrl("/openmrs/spa/b
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/navigate.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L42)
+[packages/framework/esm-config/src/navigation/navigate.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L44)
 
 ___
 
