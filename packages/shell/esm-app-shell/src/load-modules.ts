@@ -62,7 +62,7 @@ function loadScript(
     const element = document.createElement("script");
     // Webpack uses this attribute to check whether a module has already
     // been loaded into the application.
-    element.setAttribute("data-webpack", slugify[name]);
+    element.setAttribute("data-webpack", slugify(name));
     element.src = url;
     element.type = "text/javascript";
     element.async = true;
