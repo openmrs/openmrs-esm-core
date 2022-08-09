@@ -24,6 +24,6 @@ export const UserHasAccess: React.FC<UserHasAccessProps> = ({
   if (user && userHasAccess(privilege, user)) {
     return <>{children}</>;
   } else {
-    return fallback ? <>{fallback}</> : null;
+    return fallback && user ? <>{fallback}</> : null;
   }
 };
