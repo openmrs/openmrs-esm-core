@@ -191,6 +191,10 @@ by modifying the `order` configuration parameter of that slot.
 
 ## Additional Resources
 
+Short introductory videos:
+- [OpenMRS Frontend 3 Extension System 1 - Basics](https://youtu.be/Teq3FwKofSc)
+- [OpenMRS Frontend 3 Extension System 2 - State and Meta](https://youtu.be/8514ebpAEWI)
+
 Introductory presentation: [Quick Guide to Slots](https://docs.google.com/presentation/d/1mQxh7qAYLD-gc9sh0I58t4o_XNndPcu6hAJmTZQZ_fo/edit#slide=id.gbe34f6b087_0_34 )
 
 For a terse technical description of the extension system, see the
