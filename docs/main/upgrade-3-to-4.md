@@ -1,14 +1,12 @@
-# Upgrading from OpenMRS 3 Frontend Framework version 3 to OpenMRS 3 Frontend Framework version 4
-
-> Note: This has nothing to do with any OpenMRS 4, which does not exist yet (in 2022). This is about upgrading some libraries within OpenMRS 3.
-
-## Motivation
+# Upgrading to Framework Version 4
 
 Version 4 of the OpenMRS 3 frontend framework includes a number of essential updates, including
 - Updating React from 16 to 18
 - Updating React Router from 5 to 6
 - Updating Carbon Design System from 10 to 11
 - Major improvement to the system that loads frontend modules into the application
+
+> Note: This has nothing to do with any OpenMRS 4, which does not exist yet (in 2022). This is about upgrading some libraries within OpenMRS 3. The packages `openmrs` and `@openmrs/esm-framework` are being upgraded from version 3 to version 4.
 
 A consequence of this last change is that frontend modules built with the `openmrs`
 library at version 3.x will not work in an application running the app shell at
