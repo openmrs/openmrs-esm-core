@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NotificationActionButton } from "carbon-components-react";
+import { NotificationActionButton } from "@carbon/react";
 import {
   showNotification,
   UserHasAccess,
@@ -45,7 +45,7 @@ function PopupHandler() {
         kind: "error",
       });
     }
-  }, [shouldShowNotification]);
+  }, [t, shouldShowNotification]);
 
   const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(
     implementerToolsStore

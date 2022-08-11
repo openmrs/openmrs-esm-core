@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-styleguide",
-  "version": "3.4.0",
+  "version": "4.0.0",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "browser": "dist/openmrs-esm-styleguide.js",
@@ -38,42 +38,31 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/charts": "^0.41.57",
-    "carbon-components-react": "7.31.0",
+    "@carbon/charts": "^1.5.0",
+    "@carbon/react": "^1.8.0",
+    "d3": "^7.6.1",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-extensions": "3.x",
-    "@openmrs/esm-react-utils": "3.x",
-    "@openmrs/esm-state": "3.x",
-    "carbon-components": "10.x",
-    "carbon-icons": "7.x",
-    "i18next": "19.x",
-    "react": "16.x",
-    "react-dom": "16.x",
-    "react-i18next": "11.x",
+    "@openmrs/esm-extensions": "4.x",
+    "@openmrs/esm-react-utils": "4.x",
+    "@openmrs/esm-state": "4.x",
+    "react": "18.x",
+    "react-dom": "18.x",
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-extensions": "^3.4.0",
-    "@openmrs/esm-react-utils": "^3.4.0",
-    "@openmrs/esm-state": "^3.4.0",
-    "@swc/core": "^1.2.210",
-    "@swc/jest": "^0.2.21",
-    "@testing-library/dom": "^8.14.0",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.x",
+    "@openmrs/esm-extensions": "^4.0.0",
+    "@openmrs/esm-react-utils": "^4.0.0",
+    "@openmrs/esm-state": "^4.0.0",
     "autoprefixer": "^9.8.8",
-    "carbon-components": "10.31.0",
-    "carbon-icons": "7.0.7",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "i18next": "^19.6.0",
     "jest": "^28.1.2",
     "jest-environment-jsdom": "^28.1.2",
     "postcss": "^8.4.6",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-i18next": "^11.7.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "rxjs": "^6.5.3"
   }
 }

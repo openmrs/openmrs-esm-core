@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { LeftNavMenu } from "@openmrs/esm-framework";
-import { SideNavProps } from "carbon-components-react";
+import React, { useEffect, useMemo, useRef } from "react";
+import { LeftNavMenu, usePatient } from "@openmrs/esm-framework";
 
-interface SideMenuPanelProps extends SideNavProps {
+interface SideMenuPanelProps {
+  expanded: boolean;
   hidePanel: () => void;
 }
 

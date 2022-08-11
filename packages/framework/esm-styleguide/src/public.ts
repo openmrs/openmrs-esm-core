@@ -1,14 +1,14 @@
 export { showNotification } from "./notifications";
 export {
-  NotificationDescriptor,
-  InlineNotificationType,
+  type NotificationDescriptor,
+  type InlineNotificationType,
 } from "./notifications/notification.component";
 export { showToast } from "./toasts";
 export { showModal } from "./modals";
 export {
-  ToastDescriptor,
-  ToastType,
-  ToastNotificationMeta,
+  type ToastDescriptor,
+  type ToastType,
+  type ToastNotificationMeta,
 } from "./toasts/toast.component";
 export * from "./left-nav";
 export * from "./error-state";

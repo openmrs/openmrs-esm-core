@@ -9,4 +9,8 @@ module.exports = {
     "@openmrs/esm-config": "<rootDir>/__mocks__/openmrs-esm-config.mock.ts",
     "single-spa": "<rootDir>/__mocks__/single-spa.mock.ts",
   },
+  testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    url: "http://localhost/",
+  },
 };

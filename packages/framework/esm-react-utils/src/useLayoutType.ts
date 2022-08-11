@@ -1,7 +1,7 @@
 /** @module @category UI */
 import { useEffect, useState } from "react";
 
-export type LayoutType = "tablet" | "phone" | "desktop";
+export type LayoutType = "phone" | "tablet" | "small-desktop" | "large-desktop";
 
 function getLayout() {
   let layout: LayoutType = "tablet";
@@ -11,8 +11,11 @@ function getLayout() {
       case "omrs-breakpoint-lt-tablet":
         layout = "phone";
         break;
+      case "omrs-breakpoint-gt-small-desktop":
+        layout = "large-desktop";
+        break;
       case "omrs-breakpoint-gt-tablet":
-        layout = "desktop";
+        layout = "small-desktop";
         break;
     }
   });
@@ -33,3 +36,6 @@ export function useLayoutType() {
 
   return type;
 }
+
+export const isDesktop = (layout: LayoutType) =>
+  layout === "small-desktop" || layout === "large-desktop";

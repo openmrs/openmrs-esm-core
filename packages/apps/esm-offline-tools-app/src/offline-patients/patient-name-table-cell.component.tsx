@@ -1,7 +1,7 @@
-import { navigate } from "@openmrs/esm-framework";
-import { Link, Tag } from "carbon-components-react";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Link, Tag } from "@carbon/react";
+import { navigate } from "@openmrs/esm-framework";
 import styles from "./patient-name-table-cell.scss";
 
 export interface PatientNameTableCellProps {

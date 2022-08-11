@@ -8,6 +8,7 @@ import {
 } from "./notification.component";
 import ActiveNotifications from "./active-notifications.component";
 import isEmpty from "lodash-es/isEmpty";
+import { createRoot } from "react-dom/client";
 
 const inlineNotificationsSubject = new Subject<InlineNotificationMeta>();
 let notificationId = 0;
@@ -19,10 +20,8 @@ let notificationId = 0;
  */
 export function renderInlineNotifications(target: HTMLElement | null) {
   if (target) {
-    render(
-      <ActiveNotifications subject={inlineNotificationsSubject} />,
-      target
-    );
+    const root = createRoot(target);
+    root.render(<ActiveNotifications subject={inlineNotificationsSubject} />);
   }
 }
 

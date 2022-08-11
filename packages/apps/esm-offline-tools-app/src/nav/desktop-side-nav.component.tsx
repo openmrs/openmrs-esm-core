@@ -2,9 +2,10 @@ import {
   attach,
   detach,
   ExtensionSlot,
+  isDesktop,
   useLayoutType,
 } from "@openmrs/esm-framework";
-import { SideNav } from "carbon-components-react";
+import { SideNav } from "@carbon/react";
 import React, { useEffect } from "react";
 import styles from "./desktop-side-nav.styles.scss";
 
@@ -17,7 +18,7 @@ const DesktopSideNav: React.FC = () => {
   }, []);
 
   return (
-    layout === "desktop" && (
+    isDesktop(layout) && (
       <SideNav expanded aria-label="Menu" className={styles.link}>
         <ExtensionSlot name="nav-menu-slot" />
       </SideNav>

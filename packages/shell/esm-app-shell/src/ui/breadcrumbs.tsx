@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  InlineLoading,
-} from "carbon-components-react";
+import { Breadcrumb, BreadcrumbItem, InlineLoading } from "@carbon/react";
 import {
   getBreadcrumbsFor,
   ConfigurableLink,
@@ -90,8 +86,12 @@ export const Breadcrumbs: React.FC = () => {
 
   return (
     <Breadcrumb className="breadcrumbs-container">
-      {breadcrumbs.map((bc) => (
-        <CustomBreadcrumbItem breadcrumbRegistration={bc} params={params} />
+      {breadcrumbs.map((bc, index) => (
+        <CustomBreadcrumbItem
+          key={`breadcrumb-item-${index}`}
+          breadcrumbRegistration={bc}
+          params={params}
+        />
       ))}
     </Breadcrumb>
   );

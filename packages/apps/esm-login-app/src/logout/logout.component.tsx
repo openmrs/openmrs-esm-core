@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
-import { navigate } from "@openmrs/esm-framework";
-import { Button, Switcher, SwitcherDivider } from "carbon-components-react";
 import { useTranslation } from "react-i18next";
+import { Button, Switcher, SwitcherDivider } from "@carbon/react";
+import { navigate } from "@openmrs/esm-framework";
 import styles from "./logout.scss";
 
 export interface LogoutProps {}

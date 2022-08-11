@@ -157,7 +157,9 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
       expect(screen.getByRole("heading")).toBeInTheDocument()
     );
     expect(screen.getByRole("heading")).toHaveTextContent("es");
-    expect(screen.getByText("Spanish")).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByText("Spanish")).toBeInTheDocument()
+    );
   });
 
   test("Both meta and state can be used at the same time", async () => {
@@ -206,7 +208,9 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
       expect(screen.getByRole("heading")).toBeInTheDocument()
     );
     expect(screen.getByRole("heading")).toHaveTextContent("sw");
-    expect(screen.getByText(/Swahili/)).toHaveTextContent("Swahili!");
+    await waitFor(() =>
+      expect(screen.getByText(/Swahili/)).toHaveTextContent("Swahili!")
+    );
     userEvent.click(screen.getByText("Toggle suffix"));
     await waitFor(() =>
       expect(screen.getByText(/Swahili/)).toHaveTextContent("Swahili?")

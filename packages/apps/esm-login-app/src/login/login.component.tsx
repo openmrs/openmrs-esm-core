@@ -1,18 +1,17 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import styles from "../styles.scss";
-import ArrowRight24 from "@carbon/icons-react/es/arrow--right/24";
-import ArrowLeft16 from "@carbon/icons-react/es/arrow--left/16";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   InlineNotification,
+  PasswordInput,
   TextInput,
   Tile,
-} from "carbon-components-react";
-import { RouteComponentProps } from "react-router-dom";
+} from "@carbon/react";
+import { ArrowLeft, ArrowRight } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import { useConfig, interpolateUrl, useSession } from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
-import type { StaticContext } from "react-router";
+import styles from "./login.scss";
 
 const hidden: React.CSSProperties = {
   height: 0,
@@ -25,30 +24,31 @@ export interface LoginReferrer {
   referrer?: string;
 }
 
-export interface LoginProps
-  extends RouteComponentProps<{}, StaticContext, LoginReferrer> {
+export interface LoginProps extends LoginReferrer {
   isLoginEnabled: boolean;
 }
 
-const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
+const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
   const config = useConfig();
+  const { t } = useTranslation();
   const { user } = useSession();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const [t] = useTranslation();
   const showPassword = location.pathname === "/login/confirm";
 
   useEffect(() => {
     if (user) {
-      history.push("/login/location", location.state);
+      navigate("/login/location", { state: location.state });
     } else if (!username && location.pathname === "/login/confirm") {
-      history.replace("/login", location.state);
+      navigate("/login", { state: location.state });
     }
-  }, [user, username, history, location]);
+  }, [username, navigate, location, user]);
 
   useEffect(() => {
     const field = showPassword
@@ -71,11 +71,11 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
     const field = usernameInputRef.current;
 
     if (field.value.length > 0) {
-      history.push("/login/confirm", location.state);
+      navigate("/login/confirm", { state: location.state });
     } else {
       field.focus();
     }
-  }, [history]);
+  }, [navigate]);
 
   const changeUsername = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value),
@@ -139,7 +139,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
         {errorMessage && (
           <InlineNotification
             kind="error"
-            style={{ width: "23rem" }}
+            style={{ width: "23rem", marginBottom: "3rem" }}
             /**
              * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
              * t('invalidCredentials')
@@ -154,12 +154,18 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
             <div className={styles["back-button-div"]}>
               <Button
                 className={styles["back-button"]}
-                kind="ghost"
                 iconDescription="Back to username"
-                onClick={() => history.push("/login")}
+                kind="ghost"
+                onClick={() => navigate("/login")}
+                renderIcon={(props) => (
+                  <ArrowLeft
+                    size={24}
+                    style={{ marginRight: "0.5rem" }}
+                    {...props}
+                  />
+                )}
               >
-                <ArrowLeft16 style={{ marginRight: "1rem" }} />
-                Back
+                <span>{t("back", "Back")}</span>
               </Button>
             </div>
           ) : null}
@@ -172,14 +178,12 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
                   type="text"
                   name="username"
                   labelText={t("username", "Username")}
-                  className={styles.inputStyle}
                   value={username}
                   onChange={changeUsername}
                   ref={usernameInputRef}
                   autoFocus
                   required
                 />
-
                 <input
                   id="password"
                   style={hidden}
@@ -188,12 +192,11 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
                   value={password}
                   onChange={changePassword}
                 />
-
                 <Button
                   className={styles.continueButton}
-                  renderIcon={ArrowRight24}
+                  renderIcon={(props) => <ArrowRight size={24} {...props} />}
                   type="submit"
-                  iconDescription="Next"
+                  iconDescription="Continue to login"
                   onClick={continueLogin}
                   disabled={!isLoginEnabled}
                 >
@@ -213,7 +216,7 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
                   required
                 />
 
-                <TextInput.PasswordInput
+                <PasswordInput
                   id="password"
                   invalidText={t(
                     "validValueRequired",
@@ -221,7 +224,6 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
                   )}
                   labelText={t("password", "Password")}
                   name="password"
-                  className={styles.inputStyle}
                   value={password}
                   onChange={changePassword}
                   ref={passwordInputRef}
@@ -230,11 +232,10 @@ const Login: React.FC<LoginProps> = ({ history, location, isLoginEnabled }) => {
                 />
 
                 <Button
-                  aria-label="submit"
                   type="submit"
                   className={styles.continueButton}
-                  renderIcon={ArrowRight24}
-                  iconDescription="Next"
+                  renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                  iconDescription="Log in"
                   disabled={!isLoginEnabled}
                 >
                   {t("login", "Log in")}

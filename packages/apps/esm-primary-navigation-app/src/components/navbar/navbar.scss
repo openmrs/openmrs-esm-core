@@ -1,5 +1,6 @@
+@use "@carbon/styles/scss/spacing";
 @import "~@openmrs/esm-styleguide/src/vars";
-@import "~carbon-components/src/globals/scss/vars";
+
 .topNavActionsSlot {
   display: flex;
   align-items: center;
@@ -24,10 +25,10 @@
 }
 
 .headerMenuButton {
-  height: $spacing-09;
-  width: $spacing-09;
-  padding: $spacing-04;
-  margin-right: $spacing-02;
+  height: spacing.$spacing-09;
+  width: spacing.$spacing-09;
+  padding: spacing.$spacing-04;
+  margin-right: spacing.$spacing-02;
 }
 
 .spacedLogo {

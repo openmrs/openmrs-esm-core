@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "carbon-components-react";
+} from "@carbon/react";
 
 export interface FrontendModule {
   name: string;

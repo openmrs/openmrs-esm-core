@@ -5,4 +5,5 @@ module.exports = {
   moduleNameMapper: {
     "lodash-es": "lodash",
   },
+  testEnvironment: "jsdom",
 };

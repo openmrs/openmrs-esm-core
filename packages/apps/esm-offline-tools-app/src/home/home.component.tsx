@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import SharedPageLayout from "../components/shared-page-layout.component";
 import CardsContainer from "./cards-container.component";
-import styles from "./home.styles.scss";
 import OfflinePatientTable from "../offline-patients/offline-patient-table.component";
+import SharedPageLayout from "../components/shared-page-layout.component";
+import styles from "./home.styles.scss";
 
 /**
  * The offline tool's home/dashboard page.
@@ -16,7 +16,9 @@ const Home: React.FC = () => {
 
   return (
     <SharedPageLayout header={t("homeHeader", "Offline home")}>
-      <CardsContainer />
+      <div style={{ backgroundColor: "#ededed" }}>
+        <CardsContainer />
+      </div>
 
       <div className={styles.offlinePatientsTableContainer}>
         <OfflinePatientTable isInteractive={false} showHeader />

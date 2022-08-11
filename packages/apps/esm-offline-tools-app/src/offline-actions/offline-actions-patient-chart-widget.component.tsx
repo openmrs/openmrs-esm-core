@@ -1,8 +1,8 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { useLayoutType } from "@openmrs/esm-framework";
 import OfflineActions from "./offline-actions.component";
 import styles from "./offline-actions-patient-chart-widget.styles.scss";
-import { useLayoutType } from "@openmrs/esm-framework";
-import { useTranslation } from "react-i18next";
 
 export interface OfflineActionsPatientChartWidgetProps {
   patientUuid: string;
@@ -22,6 +22,7 @@ const OfflineActionsPatientChartWidget: React.FC<
 };
 
 const CardHeader: React.FC<{
+  children?: React.ReactNode;
   title: string;
 }> = ({ title, children }) => {
   const isTablet = useLayoutType() === "tablet";

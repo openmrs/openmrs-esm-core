@@ -8,13 +8,13 @@ export {
   getAssignedExtensions,
   registerExtensionSlot,
 } from "./extensions";
-export { renderExtension, CancelLoading } from "./render";
+export { type CancelLoading, renderExtension } from "./render";
 export {
-  ExtensionMeta,
-  ExtensionRegistration,
-  AssignedExtension,
-  ConnectedExtension,
-  ExtensionStore,
-  ExtensionSlotState,
+  type ExtensionMeta,
+  type ExtensionRegistration,
+  type ExtensionStore,
+  type AssignedExtension,
+  type ConnectedExtension,
+  type ExtensionSlotState,
   getExtensionStore,
 } from "./store";

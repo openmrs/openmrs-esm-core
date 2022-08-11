@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import { RouteComponentProps } from "react-router-dom";
 import { navigate, useConfig, useSession } from "@openmrs/esm-framework";
 import { performLogout } from "./logout.resource";
 
-export interface RedirectLogoutProps extends RouteComponentProps<{}> {
+export interface RedirectLogoutProps {
   isLoginEnabled: boolean;
 }
 

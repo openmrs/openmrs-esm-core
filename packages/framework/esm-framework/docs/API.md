@@ -156,6 +156,7 @@
 
 ### UI Functions
 
+- [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
@@ -177,7 +178,7 @@
 - [retry](API.md#retry)
 - [translateFrom](API.md#translatefrom)
 
-## API Type aliases
+## API Type Aliases
 
 ### CurrentPatient
 
@@ -253,7 +254,7 @@ ___
 
 ___
 
-## Date and Time Type aliases
+## Date and Time Type Aliases
 
 ### DateInput
 
@@ -294,7 +295,7 @@ ___
 
 ___
 
-## Navigation Type aliases
+## Navigation Type Aliases
 
 ### TemplateParams
 
@@ -310,7 +311,7 @@ ___
 
 ___
 
-## Offline Type aliases
+## Offline Type Aliases
 
 ### KnownOmrsServiceWorkerMessages
 
@@ -378,7 +379,7 @@ HTTP requests with these headers are handled in a special way by the SPA's servi
 
 ___
 
-## Other Type aliases
+## Other Type Aliases
 
 ### ConfigValue
 
@@ -392,7 +393,7 @@ ___
 
 ### ExtensionSlotProps
 
-Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `React.HTMLAttributes`<`HTMLDivElement`\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
+Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
 
 #### Defined in
 
@@ -485,7 +486,7 @@ ___
 
 ___
 
-## Store Type aliases
+## Store Type Aliases
 
 ### Actions
 
@@ -511,7 +512,7 @@ ___
 
 ___
 
-## UI Type aliases
+## UI Type Aliases
 
 ### InlineNotificationType
 
@@ -525,7 +526,7 @@ ___
 
 ### LayoutType
 
-Ƭ **LayoutType**: ``"tablet"`` \| ``"phone"`` \| ``"desktop"``
+Ƭ **LayoutType**: ``"phone"`` \| ``"tablet"`` \| ``"small-desktop"`` \| ``"large-desktop"``
 
 #### Defined in
 
@@ -545,17 +546,17 @@ ___
 
 ### UserHasAccess
 
-• **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
+• `Const` **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L10)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L11)
 
 ___
 
 ### defaultVisitCustomRepresentation
 
-• **defaultVisitCustomRepresentation**: `string`
+• `Const` **defaultVisitCustomRepresentation**: `string`
 
 #### Defined in
 
@@ -565,7 +566,7 @@ ___
 
 ### fhir
 
-• **fhir**: `Object`
+• `Const` **fhir**: `Object`
 
 The `fhir` object is replicates the API from [fhir.js](https://github.com/FHIR/fhir.js)
 that can be used to call FHIR-compliant OpenMRS APIs. See
@@ -591,7 +592,7 @@ ___
 
 ### fhirBaseUrl
 
-• **fhirBaseUrl**: ``"/ws/fhir2/R4"``
+• `Const` **fhirBaseUrl**: ``"/ws/fhir2/R4"``
 
 #### Defined in
 
@@ -601,7 +602,7 @@ ___
 
 ### getStartedVisit
 
-• **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
+• `Const` **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
 
 #### Defined in
 
@@ -611,7 +612,7 @@ ___
 
 ### sessionEndpoint
 
-• **sessionEndpoint**: ``"/ws/rest/v1/session"``
+• `Const` **sessionEndpoint**: ``"/ws/rest/v1/session"``
 
 #### Defined in
 
@@ -623,7 +624,7 @@ ___
 
 ### validators
 
-• **validators**: `Object`
+• `Const` **validators**: `Object`
 
 #### Type declaration
 
@@ -644,7 +645,7 @@ ___
 
 ### offlineUuidPrefix
 
-• **offlineUuidPrefix**: ``"OFFLINE+"``
+• `Const` **offlineUuidPrefix**: ``"OFFLINE+"``
 
 #### Defined in
 
@@ -654,7 +655,7 @@ ___
 
 ### omrsOfflineCachingStrategyHttpHeaderName
 
-• **omrsOfflineCachingStrategyHttpHeaderName**: ``"x-omrs-offline-caching-strategy"``
+• `Const` **omrsOfflineCachingStrategyHttpHeaderName**: ``"x-omrs-offline-caching-strategy"``
 
 #### Defined in
 
@@ -664,7 +665,7 @@ ___
 
 ### omrsOfflineResponseBodyHttpHeaderName
 
-• **omrsOfflineResponseBodyHttpHeaderName**: ``"x-omrs-offline-response-body"``
+• `Const` **omrsOfflineResponseBodyHttpHeaderName**: ``"x-omrs-offline-response-body"``
 
 #### Defined in
 
@@ -674,7 +675,7 @@ ___
 
 ### omrsOfflineResponseStatusHttpHeaderName
 
-• **omrsOfflineResponseStatusHttpHeaderName**: ``"x-omrs-offline-response-status"``
+• `Const` **omrsOfflineResponseStatusHttpHeaderName**: ``"x-omrs-offline-response-status"``
 
 #### Defined in
 
@@ -686,7 +687,7 @@ ___
 
 ### ErrorState
 
-• **ErrorState**: `React.FC`<[`ErrorStateProps`](interfaces/ErrorStateProps.md)\>
+• `Const` **ErrorState**: `React.FC`<[`ErrorStateProps`](interfaces/ErrorStateProps.md)\>
 
 #### Defined in
 
@@ -696,7 +697,7 @@ ___
 
 ### Extension
 
-• **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
 
 Represents the position in the DOM where each extension within
 an extension slot is rendered.
@@ -714,7 +715,7 @@ ___
 
 ### backendDependencies
 
-• **backendDependencies**: `Object`
+• `Const` **backendDependencies**: `Object`
 
 #### Type declaration
 
@@ -733,11 +734,11 @@ ___
 
 ### LeftNavMenu
 
-• **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
+• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`Pick`<`SideNavProps`, `string` \| `number` \| `symbol`\> & `RefAttributes`<`HTMLElement`\>\>
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L32)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L30)
 
 ## API Functions
 
@@ -1621,7 +1622,7 @@ ___
 
 ### inRange
 
-▸ `Const` **inRange**(`min`, `max`): [`Validator`](API.md#validator)
+▸ **inRange**(`min`, `max`): [`Validator`](API.md#validator)
 
 Verifies that the value is between the provided minimum and maximum
 
@@ -1644,7 +1645,7 @@ ___
 
 ### isUrl
 
-▸ `Const` **isUrl**(`value`): `string` \| `void`
+▸ **isUrl**(`value`): `string` \| `void`
 
 Verifies that a string contains only the default URL template parameters.
 
@@ -1668,7 +1669,7 @@ ___
 
 ### isUrlWithTemplateParameters
 
-▸ `Const` **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [`Validator`](API.md#validator)
+▸ **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [`Validator`](API.md#validator)
 
 Verifies that a string contains only the default URL template
 parameters, plus any specified in `allowedTemplateParameters`.
@@ -1693,7 +1694,7 @@ ___
 
 ### oneOf
 
-▸ `Const` **oneOf**(`allowedValues`): [`Validator`](API.md#validator)
+▸ **oneOf**(`allowedValues`): [`Validator`](API.md#validator)
 
 Verifies that the value is one of the allowed options.
 
@@ -2283,7 +2284,7 @@ ___
 
 ### getExtensionStore
 
-▸ `Const` **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
+▸ **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
 This returns a [store](https://github.com/developit/unistore#store)
 that modules can use to get information about the state of the
@@ -2429,7 +2430,7 @@ ___
 
 ### useExtensionStore
 
-▸ `Const` **useExtensionStore**(): `T`
+▸ **useExtensionStore**(): `T`
 
 #### Returns
 
@@ -2439,7 +2440,7 @@ ___
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
-▸ `Const` **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
@@ -2455,7 +2456,7 @@ ___
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
-▸ `Const` **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
@@ -2477,7 +2478,7 @@ ___
 
 ### getAsyncExtensionLifecycle
 
-▸ `Const` **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
+▸ **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 **`deprecated`** Use getAsyncLifecycle instead.
 
@@ -3795,6 +3796,26 @@ ___
 
 ## UI Functions
 
+### isDesktop
+
+▸ **isDesktop**(`layout`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `layout` | [`LayoutType`](API.md#layouttype) |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useLayoutType.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLayoutType.ts#L40)
+
+___
+
 ### setLeftNav
 
 ▸ **setLeftNav**(`__namedParameters`): `void`
@@ -3811,7 +3832,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L20)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L18)
 
 ___
 
@@ -3865,7 +3886,7 @@ Displays an inline notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L41)
+[packages/framework/esm-styleguide/src/notifications/index.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L40)
 
 ___
 
@@ -3887,7 +3908,7 @@ Displays a toast notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/index.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L35)
+[packages/framework/esm-styleguide/src/toasts/index.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L36)
 
 ___
 
@@ -3959,7 +3980,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L24)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L22)
 
 ___
 
@@ -3993,7 +4014,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useLayoutType.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLayoutType.ts#L23)
+[packages/framework/esm-react-utils/src/useLayoutType.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLayoutType.ts#L26)
 
 ___
 

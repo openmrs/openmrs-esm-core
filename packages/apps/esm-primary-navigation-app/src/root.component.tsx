@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./root.scss";
 import Navbar from "./components/navbar/navbar.component";
-import { BrowserRouter, Redirect } from "react-router-dom";
+import { BrowserRouter, Navigate } from "react-router-dom";
 import { LoggedInUser, createErrorHandler } from "@openmrs/esm-framework";
 import { getCurrentSession, getSynchronizedCurrentUser } from "./root.resource";
 import { UserSession } from "./types";
@@ -44,16 +44,14 @@ const Root: React.FC<RootProps> = () => {
     <BrowserRouter>
       <div className={styles.primaryNavContainer}>
         {user === false ? (
-          <Redirect
-            to={{
-              pathname: `${openmrsSpaBase}login`,
-              state: {
-                referrer: window.location.pathname.slice(
-                  window.location.pathname.indexOf(openmrsSpaBase) +
-                    openmrsSpaBase.length -
-                    1
-                ),
-              },
+          <Navigate
+            to={`${openmrsSpaBase}login`}
+            state={{
+              referrer: window.location.pathname.slice(
+                window.location.pathname.indexOf(openmrsSpaBase) +
+                  openmrsSpaBase.length -
+                  1
+              ),
             }}
           />
         ) : (

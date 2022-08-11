@@ -3,12 +3,12 @@ import {
   temporaryConfigStore,
   useStore,
 } from "@openmrs/esm-framework/src/internal";
+import { Button } from "@carbon/react";
 import AceEditor from "react-ace";
 import style from "./json-editor.scss";
 
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
-import { Button } from "carbon-components-react";
 
 export interface JsonEditorProps {
   /** A CSS value */
@@ -55,7 +55,7 @@ export default function JsonEditor({ height }: JsonEditorProps) {
         }}
       />
       <div className={style.toolbar}>
-        <Button type="submit" onClick={updateTemporaryConfig}>
+        <Button size="md" type="submit" onClick={updateTemporaryConfig}>
           Update
         </Button>
         <div

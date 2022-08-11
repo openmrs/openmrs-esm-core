@@ -1,15 +1,17 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "@carbon/react";
+import {
+  PendingFilled,
+  WarningAltFilled,
+  CheckmarkOutline,
+} from "@carbon/react/icons";
 import {
   DynamicOfflineDataSyncState,
   getDynamicOfflineDataHandlers,
   navigate,
 } from "@openmrs/esm-framework";
-import { useTranslation } from "react-i18next";
-import PendingFilled16 from "@carbon/icons-react/es/pending--filled/16";
-import WarningAltFilled16 from "@carbon/icons-react/es/warning--alt--filled/16";
-import CheckmarkOutline16 from "@carbon/icons-react/es/checkmark--outline/16";
 import styles from "./last-updated-table-cell.scss";
-import { Link } from "carbon-components-react";
 
 export interface LastUpdatedTableCellProps {
   patientUuid: string;
@@ -28,7 +30,7 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
     if (isSyncing) {
       return (
         <>
-          <PendingFilled16 className={styles.pendingIcon} />
+          <PendingFilled className={styles.pendingIcon} />
           {t("offlinePatientsTableLastUpdatedDownloading", "Downloading...")}
         </>
       );
@@ -37,7 +39,7 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
     if (!lastSyncState) {
       return (
         <>
-          <WarningAltFilled16 className={styles.errorIcon} />
+          <WarningAltFilled className={styles.errorIcon} />
           {t(
             "offlinePatientsTableLastUpdatedNotYetSynchronized",
             "Not synchronized"
@@ -49,7 +51,7 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
     if (hasNewUnknownHandlers(lastSyncState)) {
       return (
         <>
-          <WarningAltFilled16 className={styles.errorIcon} />
+          <WarningAltFilled className={styles.errorIcon} />
           {t("offlinePatientsTableLastUpdatedOutdatedData", "Outdated data")}
         </>
       );
@@ -58,7 +60,7 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
     if (lastSyncState.erroredHandlers.length > 0) {
       return (
         <>
-          <WarningAltFilled16 className={styles.errorIcon} />
+          <WarningAltFilled className={styles.errorIcon} />
           <Link
             onClick={() =>
               navigate({
@@ -77,7 +79,7 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
 
     return (
       <>
-        <CheckmarkOutline16 />
+        <CheckmarkOutline />
         {lastSyncState.syncedOn.toLocaleDateString()}
       </>
     );

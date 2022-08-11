@@ -1,3 +1,6 @@
+@use "@carbon/styles/scss/spacing";
+@use "@carbon/styles/scss/type";
+@import "~@openmrs/esm-styleguide/src/vars";
 @import "../implementer-tools.styles.scss";
 
 .tools {
@@ -11,10 +14,24 @@
 }
 
 .toolbar {
-  padding: $spacing-05 $spacing-05 0;
+  padding: spacing.$spacing-05 spacing.$spacing-05 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0 -1rem;
+
+  :global(.cds--col) {
+    max-width: 100%;
+    flex-basis: 0;
+    flex-grow: 1;
+    width: 100%;
+    padding: 0 1rem;
+  }
 }
 
 .downloadLink {
@@ -41,13 +58,13 @@
   width: 35%;
   background-color: $ui-03;
   color: #424242;
-  padding: $spacing-05 2em;
+  padding: spacing.$spacing-05 2em;
   font-size: 12pt;
   overflow-wrap: break-word;
   overflow-y: auto;
 }
 
-.configTreePane :global(.bx--text-input-wrapper) {
+.configTreePane :global(.cds--text-input-wrapper) {
   min-width: 8em;
 }
 
@@ -55,4 +72,21 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  padding: 0.25rem;
+}
+
+.toggleButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  > button {
+    margin: 0 1rem;
+  }
 }
