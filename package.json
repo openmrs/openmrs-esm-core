@@ -23,6 +23,8 @@
     "extract-translations": "lerna run extract-translations -- --config ../../../tools/i18next-parser.config.js"
   },
   "devDependencies": {
+    "@babel/highlight": "^7.18.6",
+    "@jest/types": "^28.1.3",
     "@jsenv/file-size-impact": "^12.1.12",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.164",
@@ -44,7 +46,7 @@
     "eslint-config-ts-react-important-stuff": "^3.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "fake-indexeddb": "^3.1.2",
-    "fork-ts-checker-webpack-plugin": "^7.2.11",
+    "fork-ts-checker-webpack-plugin": "^7.2.13",
     "husky": "^6.0.0",
     "i18next-parser": "^5.4.0",
     "identity-obj-proxy": "^3.0.0",
