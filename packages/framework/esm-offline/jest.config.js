@@ -9,4 +9,7 @@ module.exports = {
     "^dexie$": require.resolve("dexie"),
   },
   testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    url: "http://localhost/",
+  },
 };

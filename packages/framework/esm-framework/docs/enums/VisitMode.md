@@ -14,7 +14,7 @@
 
 ### EDITVISIT
 
-• **EDITVISIT**
+• **EDITVISIT** = ``"editVisit"``
 
 #### Defined in
 
@@ -24,7 +24,7 @@ ___
 
 ### LOADING
 
-• **LOADING**
+• **LOADING** = ``"loadingVisit"``
 
 #### Defined in
 
@@ -34,7 +34,7 @@ ___
 
 ### NEWVISIT
 
-• **NEWVISIT**
+• **NEWVISIT** = ``"startVisit"``
 
 #### Defined in
 

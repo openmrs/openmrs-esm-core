@@ -2,8 +2,6 @@
 
 # Interface: SyncProcessOptions<T\>
 
-Additional data which can be used for synchronizing data in a {@link ProcessSyncItem} function.
-
 ## Type parameters
 
 | Name |

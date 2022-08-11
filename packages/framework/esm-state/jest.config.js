@@ -3,4 +3,7 @@ module.exports = {
     "^.+\\.tsx?$": ["@swc/jest"],
   },
   testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    url: "http://localhost/",
+  },
 };

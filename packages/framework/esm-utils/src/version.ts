@@ -27,5 +27,5 @@ export function isVersionSatisfied(
 
   return semver.satisfies(version, requiredVersion, {
     includePrerelease: true,
-  });
+  } as semver.Options);
 }
