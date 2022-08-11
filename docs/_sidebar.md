@@ -21,6 +21,7 @@
   - [Translations](/main/translations.md)
   - [Breadcrumbs](/main/breadcrumbs.md)
   - [Creating a Distribution](/main/distribution.md)
+  - [Upgrade 3 to 4](/main/upgrade_3_to_4.md)
   - [FAQ](/main/faq.md)
 - Under the hood
   - [Architecture Overview](/under_the_hood/architecture.md)
