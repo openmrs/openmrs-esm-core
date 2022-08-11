@@ -103,12 +103,7 @@ yargs.command(
       ),
   async (args) =>
     runCommand("runDebug", {
-      apiUrl: args["api-url"],
-      spaPath: args["spa-path"],
       configUrls: args["config-url"],
-      pageTitle: args["page-title"],
-      supportOffline: args["support-offline"],
-      addCookie: args["add-cookie"],
       ...args,
       importmap: proxyImportmap(
         await mergeImportmap(
@@ -182,10 +177,7 @@ yargs.command(
       ),
   async (args) =>
     runCommand("runDevelop", {
-      apiUrl: args["api-url"],
-      spaPath: args["spa-path"],
       configUrls: args["config-url"],
-      addCookie: args["add-cookie"],
       ...args,
       importmap: proxyImportmap(
         await mergeImportmap(
@@ -272,13 +264,8 @@ yargs.command(
       ),
   async (args) =>
     runCommand("runBuild", {
-      apiUrl: args["api-url"],
-      spaPath: args["spa-path"],
       configUrls: args["config-url"],
       configPaths: args["config-path"].map((p) => resolve(process.cwd(), p)),
-      pageTitle: args["page-title"],
-      supportOffline: args["support-offline"],
-      downloadCoreapps: args["download-coreapps"],
       ...args,
       importmap: args.importmap,
       buildConfig:
@@ -347,7 +334,6 @@ yargs.command(
       .describe("open", "Immediately opens the SPA page URL in the browser."),
   (args) =>
     runCommand("runStart", {
-      addCookie: args["add-cookie"],
       ...args,
     })
 );
