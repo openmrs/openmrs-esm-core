@@ -23,6 +23,7 @@
     "extract-translations": "lerna run extract-translations -- --config ../../../tools/i18next-parser.config.js"
   },
   "devDependencies": {
+    "@babel/highlight": "^7.18.6",
     "@jsenv/file-size-impact": "^12.1.12",
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.164",
