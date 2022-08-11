@@ -13,4 +13,7 @@ module.exports = {
   },
   setupFilesAfterEnv: ["<rootDir>/src/integration-tests/setup-tests.ts"],
   testEnvironment: "jsdom",
+  testEnvironmentOptions: {
+    url: "http://localhost/",
+  },
 };

@@ -28,8 +28,6 @@
 
 ▸ `Optional` **wrap**(`slot`, `extension`): ``null`` \| `ReactElement`<`any`, `any`\>
 
-**`deprecated`** Pass a function as the child of `ExtensionSlot` instead.
-
 #### Parameters
 
 | Name | Type |

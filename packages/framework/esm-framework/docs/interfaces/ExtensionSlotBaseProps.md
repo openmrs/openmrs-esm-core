@@ -20,8 +20,6 @@
 
 • `Optional` **extensionSlotName**: `string`
 
-**`deprecated`** Use `name`
-
 #### Defined in
 
 [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L10)

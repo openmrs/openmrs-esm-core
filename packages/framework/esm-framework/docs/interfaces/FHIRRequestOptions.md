@@ -2,8 +2,6 @@
 
 # Interface: FHIRRequestOptions
 
-**`deprecated`**
-
 ## Table of contents
 
 ### API Properties

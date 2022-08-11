@@ -18,8 +18,6 @@
 
 • **apiUrl**: `string`
 
-The base path or URL for the OpenMRS API / endpoints.
-
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L70)
@@ -29,8 +27,6 @@ ___
 ### configUrls
 
 • `Optional` **configUrls**: `string`[]
-
-URLs of configurations to load in the system.
 
 #### Defined in
 
@@ -42,10 +38,6 @@ ___
 
 • `Optional` **env**: [`SpaEnvironment`](../API.md#spaenvironment)
 
-The environment to use.
-
-**`default`** production
-
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L79)
@@ -56,10 +48,6 @@ ___
 
 • `Optional` **offline**: `boolean`
 
-Defines if offline should be supported by installing a service worker.
-
-**`default`** true
-
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:88](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L88)
@@ -69,8 +57,6 @@ ___
 ### spaPath
 
 • **spaPath**: `string`
-
-The base path for the SPA root path.
 
 #### Defined in
 
