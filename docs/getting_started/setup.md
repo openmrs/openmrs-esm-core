@@ -104,7 +104,7 @@ the import map overrides panel to override the existing import map
 entry, or add your frontend module as a new entry.
 
 For example, if you run `yarn serve` in
-[esm-login-app](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/apps/esm-login-app),
+[esm-login-app](https://github.com/openmrs/openmrs-esm-core/tree/main/packages/apps/esm-login-app),
 and if it says something like `Project is running at http://localhost:8080/`,
 as well as something like `asset openmrs-esm-login-app.js`, then in the import
 map overrides you can click on the entry for `openmrs-esm-login-app` and give it the value

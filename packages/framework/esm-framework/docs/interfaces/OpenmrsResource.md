@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L3)
+[packages/framework/esm-api/src/types/openmrs-resource.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L3)
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/openmrs-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/openmrs-resource.ts#L2)
+[packages/framework/esm-api/src/types/openmrs-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L2)

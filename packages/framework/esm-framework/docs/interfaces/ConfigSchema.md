@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L21)
+[packages/framework/esm-config/src/types.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L21)
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L19)
+[packages/framework/esm-config/src/types.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L19)
 
 ___
 
@@ -42,4 +42,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L20)
+[packages/framework/esm-config/src/types.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L20)

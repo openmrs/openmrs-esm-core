@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L22)
+[packages/framework/esm-api/src/types/user-resource.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L22)
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L13)
+[packages/framework/esm-api/src/types/user-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L13)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L21)
+[packages/framework/esm-api/src/types/user-resource.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L21)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L17)
+[packages/framework/esm-api/src/types/user-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L17)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L18)
+[packages/framework/esm-api/src/types/user-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L18)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L20)
+[packages/framework/esm-api/src/types/user-resource.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L20)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L19)
+[packages/framework/esm-api/src/types/user-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L19)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L15)
+[packages/framework/esm-api/src/types/user-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L15)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L16)
+[packages/framework/esm-api/src/types/user-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L16)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L14)
+[packages/framework/esm-api/src/types/user-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L14)
 
 ___
 
@@ -130,4 +130,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/user-resource.ts#L12)
+[packages/framework/esm-api/src/types/user-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L12)

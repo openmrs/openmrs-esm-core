@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L66)
+[packages/framework/esm-api/src/fhir.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/fhir.ts#L66)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L65)
+[packages/framework/esm-api/src/fhir.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/fhir.ts#L65)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L64)
+[packages/framework/esm-api/src/fhir.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/fhir.ts#L64)

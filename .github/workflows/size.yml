@@ -2,7 +2,7 @@ name: Report bundle size
 
 on:
   pull_request_target:
-    branches: [master]
+    branches: [main]
 
 jobs:
   file_size_impact:

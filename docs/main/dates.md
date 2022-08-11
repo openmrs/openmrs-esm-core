@@ -8,9 +8,9 @@ are intended to accomodate that variation.
 ## Formatting for display
 
 Date objects can be displayed in a variety of standard formats using the
-[formatDate](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#formatdate),
-[formatTime](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#formattime), and
-[formatDatetime](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#formatdatetime)
+[formatDate](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#formatdate),
+[formatTime](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#formattime), and
+[formatDatetime](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#formatdatetime)
 functions. These functions format dates in ways that are both adaptable
 (using the `mode` parameter) and localized according to the user's locale.
 
@@ -28,7 +28,7 @@ formatted into ISO-8601 format.
 
 The ISO-8601 date strings sent by the server can be parsed into Javascript
 `Date` objects using the
-[parseDate](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#parsedate)
+[parseDate](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#parsedate)
 function. This uses [dayjs](https://day.js.org/docs/en/parse/string) for
 parsing.
 
