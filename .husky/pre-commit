@@ -5,4 +5,4 @@ set -e  # die on error
 
 yarn run extract-translations
 yarn pretty-quick --staged
-yarn lerna run document --since master
+yarn lerna run document --since main

@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L26)
+[packages/framework/esm-offline/src/offline-patient-data.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L26)
 
 ## Methods
 
@@ -42,4 +42,4 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L27)
+[packages/framework/esm-offline/src/offline-patient-data.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L27)

@@ -155,7 +155,7 @@ to indicate big new features and breaking changes, and patch changes (e.g. `3.2.
 otherwise.
 
 Note that this command will not create a new tag, nor publish the packages.
-After running it, make a PR or merge to `master` with the resulting changeset.
+After running it, make a PR or merge to `main` with the resulting changeset.
 
 Once the version bump is merged, go to GitHub and
 [draft a new release](https://github.com/openmrs/openmrs-esm-core/releases/new). 

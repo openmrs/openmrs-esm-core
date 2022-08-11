@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L14)
+[packages/framework/esm-react-utils/src/Extension.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L14)
 
 ## Methods
 
@@ -43,4 +43,4 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L16)
+[packages/framework/esm-react-utils/src/Extension.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L16)

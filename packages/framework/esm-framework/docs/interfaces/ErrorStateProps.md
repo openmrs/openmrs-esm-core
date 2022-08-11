@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L8)
+[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L8)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L9)
+[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L9)

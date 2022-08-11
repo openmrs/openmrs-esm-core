@@ -13,14 +13,14 @@ This can come up, for example, if you your frontend module has multiple extensio
 that need to share state with each other.
 
 In these cases you can use the
-[`@openmrs/esm-state`](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/framework/esm-state)
+[`@openmrs/esm-state`](https://github.com/openmrs/openmrs-esm-core/tree/main/packages/framework/esm-state)
 features of `@openmrs/esm-framework`. The framework provides functions for
 managing state using [Unistore](https://github.com/developit/unistore#unistore).
 
 ## How do I use it?
 
 A Unistore store can be created using
-[`createGlobalStore`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#createglobalstore):
+[`createGlobalStore`](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#createglobalstore):
 
 ```typescript
 import { createGlobalStore } from '@openmrs/esm-framework';
@@ -35,7 +35,7 @@ createGlobalStore("books", {
 ```
 
 The store can then be accessed using
-[`getGlobalStore`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#getglobalstore)
+[`getGlobalStore`](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#getglobalstore)
 
 ```typescript
 import { getGlobalStore } from '@openmrs/esm-framework';

@@ -14,12 +14,12 @@ Some data is available using higher-level functions or custom React Hooks provid
 by `@openmrs/esm-framework`.  These should be used when available.
 
 All of this functionality (React hooks excepted) is provided by the
-[`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/framework/esm-api)
+[`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/tree/main/packages/framework/esm-api)
 package, which is part of `@openmrs/esm-framework`.
 The React hooks are in
-[`@openmrs/esm-react-utils`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils),
+[`@openmrs/esm-react-utils`](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils),
 which is also part of `@openmrs/esm-framework`. See the
-[API Docs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md).
+[API Docs](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md).
 
 ## FHIR
 
@@ -39,7 +39,7 @@ If you have questions about FHIR support in OpenMRS, you can ask in the
 
 Some administrative endpoints will likely never have a proper representation in FHIR (e.g., endpoints for managing encounter types). When no suitable FHIR endpoint is available, you will want to use a different OpenMRS server API. The [REST Web Services API](https://rest.openmrs.org/) is used widely across many of our frontend modules.
 
-We recommend using [SWR](https://swr.vercel.app/docs/data-fetching) based hooks and the [`openmrsFetch`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#openmrsfetch) fetcher function to retrieve data from the server. SWR offers a host of features that help us deliver an improved user experience.
+We recommend using [SWR](https://swr.vercel.app/docs/data-fetching) based hooks and the [`openmrsFetch`](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#openmrsfetch) fetcher function to retrieve data from the server. SWR offers a host of features that help us deliver an improved user experience.
 
 Here's an example of a custom SWR hook that retrieves visits data.
 
@@ -131,6 +131,6 @@ Some API objects are made available via React hooks (or via framework-agnostic s
 The hooks are in
 `@openmrs/esm-react-utils`,
 and the subscription-yielding equivalents are in
-[`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#api-functions).
-See for example [`useVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#usevisittypes)
-and the corresponding [`getVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#getvisittypes).
+[`@openmrs/esm-api`](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#api-functions).
+See for example [`useVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#usevisittypes)
+and the corresponding [`getVisitTypes`](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#getvisittypes).

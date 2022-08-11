@@ -24,7 +24,7 @@ Once the UI is rendered the content is exclusively coming from the different fro
 Frontend modules use [dynamic imports](https://webpack.js.org/guides/code-splitting/)
 to split into a "front bundle" and content bundles.
 The front bundle begins at the entry point, which the
-[webpack config](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/tooling/openmrs/default-webpack-config.js)
+[webpack config](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/tooling/openmrs/default-webpack-config.js)
 takes from the
 [main entry of package.json](https://github.com/openmrs/openmrs-esm-template-app/blob/69b0f7a3ef3e79e9851fc0621e8b6c8311e7e6d7/package.json#L7)
 and which is usually `src/index.ts`. This bundle should be small and not contain much
