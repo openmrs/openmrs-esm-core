@@ -21,9 +21,16 @@
 export async function loadModules(modules: Record<string, string>) {
   return Promise.all(
     Object.entries(modules).map(async ([name, url]) => {
-      await new Promise((resolve, reject) => {
-        loadScript(name, url, resolve, reject);
-      });
+      try {
+        await new Promise((resolve, reject) => {
+          loadScript(name, url, resolve, reject);
+        });
+      } catch {
+        // on an error, loadScript will log an appropriate message
+        // we bail here so we don't break the application
+        return [name, []];
+      }
+
       const app: any = window[slugify(name)];
       if (!app) {
         console.warn(
