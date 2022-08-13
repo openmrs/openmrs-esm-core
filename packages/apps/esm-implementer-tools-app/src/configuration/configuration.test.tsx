@@ -21,7 +21,7 @@ jest.mock("./interactive-editor/value-editors/concept-search.resource", () => ({
 }));
 jest.mock("lodash-es/debounce", () => jest.fn((fn) => fn));
 
-global.URL.createObjectURL = jest.fn();
+window.URL.createObjectURL = jest.fn();
 
 const mockImplToolsConfig = {
   "@openmrs/mario": {
