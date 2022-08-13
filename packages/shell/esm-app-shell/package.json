@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@carbon/react": "^1.8.0",
-    "@openmrs/esm-framework": "3.4.0",
+    "@openmrs/esm-framework": "*",
     "dayjs": "^1.10.4",
     "dexie": "^3.0.3",
     "i18next": "^19.6.0",
