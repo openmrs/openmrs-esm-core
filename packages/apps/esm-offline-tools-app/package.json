@@ -42,7 +42,7 @@
     "swr": "^1.0.1"
   },
   "peerDependencies": {
-    "@openmrs/esm-framework": ">=4.0-pre",
+    "@openmrs/esm-framework": "*",
     "react": "18.x",
     "react-dom": "18.x",
     "react-i18next": "11.x",

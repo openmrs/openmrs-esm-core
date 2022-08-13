@@ -36,7 +36,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-framework": ">=4.0-pre",
+    "@openmrs/esm-framework": "*",
     "react": "18.x",
     "react-dom": "18.x",
     "rxjs": "6.x"
