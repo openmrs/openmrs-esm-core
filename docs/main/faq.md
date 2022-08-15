@@ -94,3 +94,18 @@ npx openmrs start --backend "https://emr-v2.test.icrc.org/" --add-cookie "MRHSes
 ```
 
 The cookie must be obtained by you and strongly depends on the used backend.
+
+
+## Dev hacks
+
+### Turn on dev tools
+
+```js
+localStorage.setItem('openmrs:devtools', true)
+```
+
+### Manually set an importmap override
+
+```js
+localStorage.setItem("import-map-override:@openmrs/esm-form-entry-app", "http://localhost:4200/openmrs-esm-form-entry-app.js");
+```
