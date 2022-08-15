@@ -17,14 +17,14 @@ export interface NavigateOptions {
 /**
  * Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
  *
- * Example usage:
+ * #### Example usage:
  * ```js
  * const config = useConfig();
  * const submitHandler = () => {
  *   navigate({ to: config.links.submitSuccess });
  * };
  * ```
- * Example return values:
+ * #### Example return values:
  * ```js
  * navigate({ to: "/some/path" }); // => window.location.assign("/some/path")
  * navigate({ to: "https://single-spa.js.org/" }); // => window.location.assign("https://single-spa.js.org/")
