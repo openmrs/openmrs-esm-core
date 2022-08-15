@@ -1,5 +1,9 @@
 /** @module @category Navigation */
-import React, { MouseEvent, AnchorHTMLAttributes } from "react";
+import React, {
+  MouseEvent,
+  AnchorHTMLAttributes,
+  PropsWithChildren,
+} from "react";
 import { navigate, interpolateUrl, TemplateParams } from "@openmrs/esm-config";
 
 function handleClick(
@@ -40,7 +44,7 @@ export function ConfigurableLink({
   templateParams,
   children,
   ...otherProps
-}: ConfigurableLinkProps) {
+}: PropsWithChildren<ConfigurableLinkProps>) {
   return (
     <a
       onClick={(event) => handleClick(event, to, templateParams)}

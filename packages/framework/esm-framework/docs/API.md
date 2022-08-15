@@ -383,6 +383,16 @@ ___
 
 ___
 
+### ExtensionProps
+
+Ƭ **ExtensionProps**: { `state?`: `Record`<`string`, `any`\> ; `wrap?`: (`slot`: `ReactNode`, `extension`: [`ExtensionData`](interfaces/ExtensionData.md)) => ``null`` \| `ReactElement`<`any`, `any`\>  } & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: `React.ReactNode`) => `React.ReactNode`  }
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/Extension.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L14)
+
+___
+
 ### ExtensionSlotProps
 
 Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
@@ -679,11 +689,11 @@ ___
 
 ### Extension
 
-• `Const` **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](API.md#extensionprops)\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L31)
+[packages/framework/esm-react-utils/src/Extension.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L36)
 
 ___
 
@@ -2274,7 +2284,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md) |
+| `__namedParameters` | `PropsWithChildren`<[`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md)\> |
 
 #### Returns
 
@@ -2282,7 +2292,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L38)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L42)
 
 ___
 

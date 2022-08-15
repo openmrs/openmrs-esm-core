@@ -1,5 +1,6 @@
 import { renderExtension } from "@openmrs/esm-extensions";
 import React, {
+  PropsWithChildren,
   useCallback,
   useContext,
   useEffect,
@@ -10,14 +11,18 @@ import { Parcel } from "single-spa";
 import { ComponentContext } from ".";
 import { ExtensionData } from "./ComponentContext";
 
-export interface ExtensionProps {
+export type ExtensionProps = {
   state?: Record<string, any>;
   /** @deprecated Pass a function as the child of `ExtensionSlot` instead. */
   wrap?(
     slot: React.ReactNode,
     extension: ExtensionData
   ): React.ReactElement<any, any> | null;
-}
+} & Omit<React.HTMLAttributes<HTMLDivElement>, "children"> & {
+    children?:
+      | React.ReactNode
+      | ((extension: React.ReactNode) => React.ReactNode);
+  };
 
 /**
  * Represents the position in the DOM where each extension within
@@ -28,20 +33,36 @@ export interface ExtensionProps {
  * Usage of this component *must* have an ancestor `<ExtensionSlot>`,
  * and *must* only be used once within that `<ExtensionSlot>`.
  */
-export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
+export const Extension: React.FC<ExtensionProps> = ({
+  state,
+  children,
+  wrap,
+  ...divProps
+}) => {
   const [domElement, setDomElement] = useState<HTMLDivElement>();
   const { extension } = useContext(ComponentContext);
   const parcel = useRef<Parcel | null>();
 
-  if (wrap) {
-    console.warn(
-      "`wrap` prop of Extension is being used. This will be removed in a future release."
-    );
-  }
-
-  const ref = useCallback((node) => {
-    setDomElement(node);
+  useEffect(() => {
+    if (wrap) {
+      console.warn(
+        `'wrap' prop of Extension is being used ${
+          extension?.extensionId
+            ? `by ${extension.extensionId} in ${extension.extensionSlotName}`
+            : ""
+        }. This will be removed in a future release.`
+      );
+    }
+    // we only warn when component mounts
+    // eslint-disable-next-line eslintreact-hooks/exhaustive-deps
   }, []);
+
+  const ref = useCallback(
+    (node) => {
+      setDomElement(node);
+    },
+    [setDomElement]
+  );
 
   useEffect(() => {
     if (domElement != null && extension && !parcel.current) {
@@ -79,8 +100,13 @@ export const Extension: React.FC<ExtensionProps> = ({ state, wrap }) => {
       ref={ref}
       data-extension-id={extension?.extensionId}
       style={{ position: "relative" }}
+      {...divProps}
     />
   );
+
+  if (typeof children == "function" && !React.isValidElement(children)) {
+    return <>{children(slot)}</>;
+  }
 
   return extension && wrap ? wrap(slot, extension) : slot;
 };

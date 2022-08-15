@@ -254,6 +254,42 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
       within(screen.getByTestId("Hindi")).getByRole("heading")
     ).toHaveTextContent("hi");
   });
+
+  test("Extension renders with child function", async () => {
+    registerSimpleExtension("Hindi", "esm-languages-app", undefined, {
+      code: "hi",
+    });
+    attach("Box", "Hindi");
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-languages-app",
+      featureName: "Languages",
+      disableTranslations: true,
+    })(() => {
+      return (
+        <div>
+          <ExtensionSlot name="Box">
+            {() => (
+              <Extension>
+                {(slot) => <div data-testid="custom-wrapper">{slot}</div>}
+              </Extension>
+            )}
+          </ExtensionSlot>
+        </div>
+      );
+    });
+
+    render(<App />);
+
+    await waitFor(() =>
+      expect(screen.getByTestId("custom-wrapper")).toBeInTheDocument()
+    );
+
+    // essentially: is the first child of custom-wrapper the extension?
+    expect(screen.getByTestId("custom-wrapper").children[0]).toHaveAttribute(
+      "data-extension-id",
+      "Hindi"
+    );
+  });
 });
 
 function registerSimpleExtension(
