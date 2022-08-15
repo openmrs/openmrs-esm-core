@@ -30,6 +30,8 @@
 
 • **appName**: `string`
 
+The module/app that defines the component
+
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L99)
@@ -39,6 +41,8 @@ ___
 ### offline
 
 • `Optional` **offline**: `boolean` \| `object`
+
+Defines the offline support / properties of the component.
 
 #### Defined in
 
@@ -50,6 +54,8 @@ ___
 
 • `Optional` **online**: `boolean` \| `object`
 
+Defines the online support / properties of the component.
+
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L107)
@@ -59,6 +65,9 @@ ___
 ### privilege
 
 • `Optional` **privilege**: `string` \| `string`[]
+
+Defines the access privilege(s) required for this component, if any.
+If more than one privilege is provided, the user must have all specified permissions.
 
 #### Defined in
 
@@ -70,6 +79,8 @@ ___
 
 • `Optional` **resources**: `Record`<`string`, [`ResourceLoader`](ResourceLoader.md)<`any`\>\>
 
+Defines resources that are loaded when the component should mount.
+
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L120)
@@ -79,6 +90,8 @@ ___
 ### load
 
 ▸ **load**(): `Promise`<`any`\>
+
+Defines a function to use for actually loading the component's lifecycle.
 
 #### Returns
 

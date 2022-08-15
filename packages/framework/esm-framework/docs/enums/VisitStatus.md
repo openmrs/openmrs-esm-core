@@ -13,7 +13,7 @@
 
 ### NOTSTARTED
 
-• **NOTSTARTED** = ``"notStarted"``
+• **NOTSTARTED**
 
 #### Defined in
 
@@ -23,7 +23,7 @@ ___
 
 ### ONGOING
 
-• **ONGOING** = ``"ongoing"``
+• **ONGOING**
 
 #### Defined in
 

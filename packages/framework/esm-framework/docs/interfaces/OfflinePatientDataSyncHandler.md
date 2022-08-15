@@ -2,6 +2,8 @@
 
 # Interface: OfflinePatientDataSyncHandler
 
+**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
+
 ## Table of contents
 
 ### Offline Properties

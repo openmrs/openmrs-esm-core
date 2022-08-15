@@ -34,6 +34,8 @@
 
 • **appName**: `string`
 
+The module/app that defines the component
+
 #### Inherited from
 
 [ComponentDefinition](ComponentDefinition.md).[appName](ComponentDefinition.md#appname)
@@ -48,6 +50,8 @@ ___
 
 • `Optional` **id**: `string`
 
+**`deprecated`** A confusing way to specify the name of the extension
+
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:135](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L135)
@@ -57,6 +61,8 @@ ___
 ### meta
 
 • `Optional` **meta**: `Record`<`string`, `any`\>
+
+The meta data used for reflection by other components
 
 #### Defined in
 
@@ -68,6 +74,8 @@ ___
 
 • **name**: `string`
 
+The name of the extension being registered
+
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L125)
@@ -77,6 +85,8 @@ ___
 ### offline
 
 • `Optional` **offline**: `boolean` \| `object`
+
+Defines the offline support / properties of the component.
 
 #### Inherited from
 
@@ -92,6 +102,8 @@ ___
 
 • `Optional` **online**: `boolean` \| `object`
 
+Defines the online support / properties of the component.
+
 #### Inherited from
 
 [ComponentDefinition](ComponentDefinition.md).[online](ComponentDefinition.md#online)
@@ -106,6 +118,8 @@ ___
 
 • `Optional` **order**: `number`
 
+Specifies the relative order in which the extension renders in a slot
+
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L133)
@@ -115,6 +129,9 @@ ___
 ### privilege
 
 • `Optional` **privilege**: `string` \| `string`[]
+
+Defines the access privilege(s) required for this component, if any.
+If more than one privilege is provided, the user must have all specified permissions.
 
 #### Inherited from
 
@@ -130,6 +147,8 @@ ___
 
 • `Optional` **resources**: `Record`<`string`, [`ResourceLoader`](ResourceLoader.md)<`any`\>\>
 
+Defines resources that are loaded when the component should mount.
+
 #### Inherited from
 
 [ComponentDefinition](ComponentDefinition.md).[resources](ComponentDefinition.md#resources)
@@ -144,6 +163,8 @@ ___
 
 • `Optional` **slot**: `string`
 
+A slot to attach to
+
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L127)
@@ -154,6 +175,8 @@ ___
 
 • `Optional` **slots**: `string`[]
 
+Slots to attach to
+
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L129)
@@ -163,6 +186,8 @@ ___
 ### load
 
 ▸ **load**(): `Promise`<`any`\>
+
+Defines a function to use for actually loading the component's lifecycle.
 
 #### Returns
 
