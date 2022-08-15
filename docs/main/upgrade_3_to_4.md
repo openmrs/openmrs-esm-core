@@ -27,7 +27,7 @@ In brief, you're going to run the app shell, upgrade the libraries in your front
 
 ### Getting Frontend Framework 4.0
 
-Check out the `4.0` branch of [openmrs-esm-core](https://github.com/openmrs/openmrs-esm-core/tree/4.0).
+Check out the `main` branch of [openmrs-esm-core](https://github.com/openmrs/openmrs-esm-core/tree/main).
 Set it up by running
 
 ```sh

@@ -10,12 +10,12 @@ jobs:
 
     steps:
       - name: Setup git
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: "16.15"
-      - run: npx lerna bootstrap
+          node-version: 16
+      - run: yarn install --immutable
       - name: Report changes
         run: node ./tools/size-reporter.mjs
         env:
