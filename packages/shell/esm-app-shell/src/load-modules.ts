@@ -21,6 +21,10 @@
 export async function loadModules(modules: Record<string, string>) {
   return Promise.all(
     Object.entries(modules).map(async ([name, url]) => {
+      if (!url || !url.match(/\.js$/)) {
+        return [name, {}];
+      }
+
       try {
         await new Promise((resolve, reject) => {
           loadScript(name, url, resolve, reject);
@@ -28,7 +32,7 @@ export async function loadModules(modules: Record<string, string>) {
       } catch {
         // on an error, loadScript will log an appropriate message
         // we bail here so we don't break the application
-        return [name, []];
+        return [name, {}];
       }
 
       const app: any = window[slugify(name)];
