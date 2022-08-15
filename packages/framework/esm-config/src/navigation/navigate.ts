@@ -19,6 +19,7 @@ export interface NavigateOptions {
  *
  * #### Example usage:
  * ```js
+ * @example
  * const config = useConfig();
  * const submitHandler = () => {
  *   navigate({ to: config.links.submitSuccess });
@@ -26,6 +27,7 @@ export interface NavigateOptions {
  * ```
  * #### Example return values:
  * ```js
+ * @example
  * navigate({ to: "/some/path" }); // => window.location.assign("/some/path")
  * navigate({ to: "https://single-spa.js.org/" }); // => window.location.assign("https://single-spa.js.org/")
  * navigate({ to: "${openmrsBase}/some/path" }); // => window.location.assign("/openmrs/some/path")

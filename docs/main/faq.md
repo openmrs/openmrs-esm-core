@@ -1,20 +1,66 @@
 # Frequently Asked Questions
 
-### I'm not seeing the latest `@openmrs/esm-framework`. How do I update the dependency?
+## Troubleshooting Local Dev Environment
 
-In a repository using Yarn:
+It's important to keep your working code base current with the latest fixes, latest features, and library APIs to develop against. When developing a frontend module your code will depend on the app shell and core libraries, and sometimes other frontend modules. If you are having trouble running code locally when it appears to be working on the server ([dev3](https://dev3.openmrs.org/openmrs/spa)), try the following.
 
-```sh
-yarn upgrade @openmrs/esm-framework openmrs  # to upgrade
-git checkout package.json  # to reset the version specifiers to 'next'
-yarn  # to re-create the lockfile
-```
 
 ### How do I keep my local dev server up to date?
 
 Just pull the repository you want to work on and run `yarn` or `npm install`.
 That will install the latest dependencies, which includes `openmrs`, which is
 the tool that runs the dev server.
+
+For help with pulling the latest code see the [community help page](https://wiki.openmrs.org/display/docs/Using+Git) for basic git commands.
+
+### I'm not seeing the latest `@openmrs/esm-framework`. How do I update the dependency?
+
+If you notice your app suddenly stop working, it might be because a core library has changed in the app shell on the server you are developing against. The main dependencies shared by all OpenMRS frontend modules are `openmrs` and `@openmrs/esm-framework`. They can be updated like this:
+
+```sh
+yarn up openmrs @openmrs/esm-framework openmrs  # to upgrade
+git checkout package.json  # to reset the version specifiers to 'next'
+yarn  # to re-create the lockfile
+```
+
+## Refreshing importmap
+
+The static importmap file used by `openmrs develop` is manually updated and therefore often out of date containing old versions of the frontend modules. You can submit a PR to update [that file](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/shell/esm-app-shell/src/assets/importmap.json), or you can use an import map from the internet like so:
+
+```sh
+yarn start --importmap "https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json"
+```
+
+
+### Clearing out the browser cache
+
+By default the server [tells your browser](https://github.com/openmrs/openmrs-contrib-ansible-docker-compose/blob/c36115ca22b8fb842f8cf0ff745d1d35a4567912/files/emr-3-dev/proxy.conf#L97) to cache JavaScript files for 30 days. You can [bypass your browser's cache](https://en.wikipedia.org/wiki/Wikipedia:Bypass_your_cache) when refreshing the page. If you want to keep the cache disabled while you are developing, open your browser's developer tools, go to the "Network" tab, and check "Disable Cache." The cache will only be disabled while the developer tools are open, and only for the page that they are attached to. 
+
+How to open browser developer tools (chrome)
+<img width="933" alt="open-devtools-chrome" src="https://user-images.githubusercontent.com/5445264/182458545-ba701bb0-1cfe-4083-98bb-5e7338d97065.png">
+
+How to disable asset (javascript, css) cache (chrome)
+<img width="936" alt="disable-cache-chrome" src="https://user-images.githubusercontent.com/5445264/182458626-bab053e1-0d4c-4d71-a69a-1357fc1dd13e.png">
+
+### Clear local package cache
+
+Although yarn is very good at maintaining its dependency list as specified in `yarn.lock` it is possible for the `node_modules` folder containing library packages to get corrupted. You can manually remove the the `node_modules` folder and rebuild it with `yarn`
+
+```sh
+rm -rf node_modules/
+yarn
+```
+
+This will only delete the root `node_modules` folder. You may also want to delete the `node_modules` of all packages in a monorepo. If the monorepo has Lerna you can simply run `npx lerna clean` followed by `yarn`. Otherwise delete these manually, then run `yarn`.
+
+Yarn is smart and will quickly compile the new `node_modules` folder from its internal cache. If you are worried that yarn has cached an invalid version of a package you can clear yarn cache to force it to download the packages again
+
+```sh
+yarn cache clean
+```
+
+
+## Further Info
 
 ### How do I find out where the code I need to work on is?
 
