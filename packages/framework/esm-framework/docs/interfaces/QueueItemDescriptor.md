@@ -2,6 +2,11 @@
 
 # Interface: QueueItemDescriptor
 
+Contains information about the sync item which has been provided externally by the caller
+who added the item to the queue.
+This information is all optional, but, when provided while enqueuing the item, can be used in other
+locations to better represent the sync item, e.g. in the UI.
+
 ## Table of contents
 
 ### Offline Properties

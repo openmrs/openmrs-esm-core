@@ -153,6 +153,8 @@ node_modules/@types/node/globals.d.ts:142
 
 ▸ `Static` **captureStackTrace**(`targetObject`, `constructorOpt?`): `void`
 
+Create .stack property on a target object
+
 #### Parameters
 
 | Name | Type |
@@ -177,6 +179,10 @@ ___
 ### prepareStackTrace
 
 ▸ `Static` `Optional` **prepareStackTrace**(`err`, `stackTraces`): `any`
+
+Optional override for formatting stack traces
+
+**`see`** https://github.com/v8/v8/wiki/Stack%20Trace%20API#customizing-stack-traces
 
 #### Parameters
 

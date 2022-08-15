@@ -2,6 +2,8 @@
 
 # Interface: RetryOptions
 
+Options for configuring the behavior of the [retry](../API.md#retry) function.
+
 ## Table of contents
 
 ### Methods
@@ -16,11 +18,14 @@
 
 ▸ `Optional` **getDelay**(`attempt`): `number`
 
+Calculates the next delay (in milliseconds) before a retry attempt.
+Returning a value for the inital attempt (`0`) delays the initial function invocation.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `attempt` | `number` |  |
+| `attempt` | `number` | The current (zero-based) retry attempt. `0` indicates the initial attempt. |
 
 #### Returns
 
@@ -36,12 +41,15 @@ ___
 
 ▸ `Optional` **onError**(`e`, `attempt`): `void`
 
+Called when invoking the function resulted in an error.
+Allows running side-effects on errors, e.g. logging.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `e` | `any` |  |
-| `attempt` | `number` |  |
+| `e` | `any` | The error thrown by the function. |
+| `attempt` | `number` | The current (zero-based) retry attempt. `0` indicates the initial attempt. |
 
 #### Returns
 
@@ -57,11 +65,14 @@ ___
 
 ▸ `Optional` **shouldRetry**(`attempt`): `any`
 
+Determines whether the retry function should retry executing the function after it failed
+with an error on the current attempt.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `attempt` | `number` |  |
+| `attempt` | `number` | The current (zero-based) retry attempt. `0` indicates the initial attempt. |
 
 #### Returns
 

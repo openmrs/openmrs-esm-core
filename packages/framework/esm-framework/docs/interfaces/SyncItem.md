@@ -2,6 +2,10 @@
 
 # Interface: SyncItem<T\>
 
+Defines an item queued up in the offline synchronization queue.
+A `SyncItem` contains both meta information about the item in the sync queue, as well as the
+actual data to be synchronized (i.e. the item's `content`).
+
 ## Type parameters
 
 | Name | Type |

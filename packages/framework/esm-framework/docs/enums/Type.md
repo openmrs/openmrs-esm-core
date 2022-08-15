@@ -20,7 +20,7 @@
 
 ### Array
 
-• **Array** = ``"Array"``
+• **Array**
 
 #### Defined in
 
@@ -30,7 +30,7 @@ ___
 
 ### Boolean
 
-• **Boolean** = ``"Boolean"``
+• **Boolean**
 
 #### Defined in
 
@@ -40,7 +40,7 @@ ___
 
 ### ConceptUuid
 
-• **ConceptUuid** = ``"ConceptUuid"``
+• **ConceptUuid**
 
 #### Defined in
 
@@ -50,7 +50,7 @@ ___
 
 ### Number
 
-• **Number** = ``"Number"``
+• **Number**
 
 #### Defined in
 
@@ -60,7 +60,7 @@ ___
 
 ### Object
 
-• **Object** = ``"Object"``
+• **Object**
 
 #### Defined in
 
@@ -70,7 +70,7 @@ ___
 
 ### PatientIdentifierTypeUuid
 
-• **PatientIdentifierTypeUuid** = ``"PatientIdentifierTypeUuid"``
+• **PatientIdentifierTypeUuid**
 
 #### Defined in
 
@@ -80,7 +80,7 @@ ___
 
 ### PersonAttributeTypeUuid
 
-• **PersonAttributeTypeUuid** = ``"PersonAttributeTypeUuid"``
+• **PersonAttributeTypeUuid**
 
 #### Defined in
 
@@ -90,7 +90,7 @@ ___
 
 ### String
 
-• **String** = ``"String"``
+• **String**
 
 #### Defined in
 
@@ -100,7 +100,7 @@ ___
 
 ### UUID
 
-• **UUID** = ``"UUID"``
+• **UUID**
 
 #### Defined in
 
