@@ -123,7 +123,7 @@ function setUserLanguage(data: Session) {
 }
 
 function userHasPrivilege(
-  requiredPrivilege: string | string[],
+  requiredPrivilege: string | string[] | undefined,
   user: { privileges: Array<Privilege> }
 ) {
   if (typeof requiredPrivilege === "string") {
@@ -134,7 +134,7 @@ function userHasPrivilege(
     return requiredPrivilege.every(
       (rp) => !isUndefined(user.privileges.find((p) => rp === p.display))
     );
-  } else {
+  } else if (!isUndefined(requiredPrivilege)) {
     console.error(`Could not understand privileges "${requiredPrivilege}"`);
   }
 
