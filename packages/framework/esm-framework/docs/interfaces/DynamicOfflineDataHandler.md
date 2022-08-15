@@ -2,6 +2,9 @@
 
 # Interface: DynamicOfflineDataHandler
 
+A handler for synchronizing dynamically declared offline data.
+Can be setup using the [setupDynamicOfflineDataHandler](../API.md#setupdynamicofflinedatahandler) function.
+
 ## Table of contents
 
 ### Offline Properties
@@ -21,6 +24,9 @@
 
 • `Optional` **displayName**: `string`
 
+A human-readable string representing the handler.
+If provided, the handler can be rendered in the UI using that string.
+
 #### Defined in
 
 [packages/framework/esm-offline/src/dynamic-offline-data.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L24)
@@ -30,6 +36,8 @@ ___
 ### id
 
 • **id**: `string`
+
+A string uniquely identifying the handler.
 
 #### Defined in
 
@@ -41,6 +49,9 @@ ___
 
 • **type**: `string`
 
+The type of offline data handled by this handler.
+See [DynamicOfflineData.type](DynamicOfflineData.md#type) for details.
+
 #### Defined in
 
 [packages/framework/esm-offline/src/dynamic-offline-data.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L19)
@@ -51,12 +62,16 @@ ___
 
 ▸ **isSynced**(`identifier`, `abortSignal?`): `Promise`<`boolean`\>
 
+Evaluates whether the given offline data is correctly synced at this point in time from the perspective
+of this single handler.
+If `false`, the handler would have to (re-)sync the data in order for offline mode to properly work.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `identifier` | `string` |  |
-| `abortSignal?` | `AbortSignal` |  |
+| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](DynamicOfflineData.md) for details. |
+| `abortSignal?` | `AbortSignal` | An {@link AbortSignal} which can be used to cancel the operation. |
 
 #### Returns
 
@@ -72,12 +87,14 @@ ___
 
 ▸ **sync**(`identifier`, `abortSignal?`): `Promise`<`void`\>
 
+Synchronizes the given offline data.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `identifier` | `string` |  |
-| `abortSignal?` | `AbortSignal` |  |
+| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](DynamicOfflineData.md) for details. |
+| `abortSignal?` | `AbortSignal` | An {@link AbortSignal} which can be used to cancel the operation. |
 
 #### Returns
 

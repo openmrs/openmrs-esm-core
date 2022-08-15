@@ -3594,7 +3594,7 @@ __metadata:
     turbo: ^1.2.1
     typedoc: ^0.22.15
     typedoc-plugin-file-tags: ^1.0.0
-    typedoc-plugin-markdown: ^3.11.12
+    typedoc-plugin-markdown: 3.11.14
     typedoc-plugin-no-inherit: ^1.3.1
     typescript: ~4.6.4
     webpack: ^5.74.0
@@ -18099,14 +18099,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@npm:^3.11.12":
-  version: 3.13.4
-  resolution: "typedoc-plugin-markdown@npm:3.13.4"
+"typedoc-plugin-markdown@npm:3.11.14":
+  version: 3.11.14
+  resolution: "typedoc-plugin-markdown@npm:3.11.14"
   dependencies:
     handlebars: ^4.7.7
   peerDependencies:
-    typedoc: ">=0.23.0"
-  checksum: b4edc0147694b8669a05695ef67b6a1f645c10179930fa86759374347f4e8cbb6bd29b58929abce62ab6a3e165de36711ab22eaad240785b1235c06bba4574e4
+    typedoc: ">=0.22.0"
+  checksum: 7eff9e5b8b6b2457b484ea16bbae453c23313c838b4ac8826bd166c5d37a18010242dd43a21010b759965d860106951ddd321f85bd0ff39b78dcb172daa60e6e
   languageName: node
   linkType: hard
 

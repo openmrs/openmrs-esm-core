@@ -20,6 +20,8 @@
 
 • **config**: ``null`` \| [`ConfigObject`](ConfigObject.md)
 
+The extension's config. Note that this will be `null` until the slot is mounted.
+
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L80)
