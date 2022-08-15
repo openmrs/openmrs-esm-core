@@ -1,23 +1,9 @@
+@use "@carbon/styles/scss/type";
+@import "~@openmrs/esm-styleguide/src/vars";
 @import "../../root.scss";
 
-:global(.bx--header-panel--expanded) {
-  height: max-content;
-}
-
-@media only screen and (min-width: 99rem) {
-  :global(.bx--header-panel--expanded) {
-    width: 22rem;
-  }
-}
-
-@media only screen and (max-width: 99rem) {
-  :global(.bx--header-panel--expanded) {
-    width: 18rem;
-  }
-}
-
 .heading {
-  @include carbon--type-style("productive-heading-03");
+  @include type.type-style("heading-03");
   color: $ui-background;
   margin: 1rem;
 }

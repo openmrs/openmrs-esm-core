@@ -1,17 +1,17 @@
-@import "~carbon-components/scss/globals/scss/vendor/@carbon/elements/scss/type/styles";
-@import "~carbon-components/src/globals/scss/vendor/@carbon/layout/scss/generated/spacing";
+@use "@carbon/styles/scss/spacing";
+@use "@carbon/styles/scss/type";
 @import "~@openmrs/esm-styleguide/src/vars";
 
 .productiveHeading01 {
-  @include carbon--type-style("productive-heading-01");
+  @include type.type-style("heading-compact-01");
 }
 
 .productiveHeading02 {
-  @include carbon--type-style("productive-heading-02");
+  @include type.type-style("heading-compact-02");
 }
 
 .bodyShort01 {
-  @include carbon--type-style("body-short-01");
+  @include type.type-style("body-compact-01");
 }
 
 .toolStyles {
@@ -19,16 +19,15 @@
 }
 
 // Chevron button - implementer-tools component
-
 .chevronImplementerToolsButton {
   position: fixed;
   bottom: 0;
-  left: calc(50vw - $spacing-05);
+  left: calc(50vw - spacing.$spacing-05);
   z-index: 9999;
 
   div {
     background-color: $ui-02;
-    width: $spacing-07;
+    width: spacing.$spacing-07;
     display: flex;
     justify-content: center;
     cursor: pointer;
@@ -36,6 +35,6 @@
   }
 
   div:hover {
-    padding: $spacing-03 0;
+    padding: spacing.$spacing-03 0;
   }
 }

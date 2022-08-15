@@ -14,6 +14,10 @@ import { syncUserLanguagePreference } from "./offline";
 import { navigateToUrl } from "single-spa";
 import { genericLinkConfigSchema } from "./components/generic-link/generic-link.component";
 
+declare var __VERSION__: string;
+// __VERSION__ is replaced by Webpack with the version from package.json
+const version = __VERSION__;
+
 const importTranslation = require.context(
   "../translations",
   false,
@@ -102,4 +106,4 @@ function setupOpenMRS() {
   };
 }
 
-export { setupOpenMRS, importTranslation, backendDependencies };
+export { setupOpenMRS, importTranslation, backendDependencies, version };

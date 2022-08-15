@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-globals",
-  "version": "3.4.0",
+  "version": "4.0.0",
   "license": "MPL-2.0",
   "browser": "dist/openmrs-esm-globals.js",
   "main": "src/index.ts",

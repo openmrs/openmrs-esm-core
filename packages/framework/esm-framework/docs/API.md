@@ -30,7 +30,7 @@
 - [useSession](API.md#usesession)
 - [useVisit](API.md#usevisit)
 - [useVisitTypes](API.md#usevisittypes)
-- [userHasAccess](API.md#userhasaccess)
+- [userHasAccess](API.md#userhasaccess-1)
 
 ### Breadcrumb Functions
 
@@ -54,7 +54,7 @@
 - [isUrl](API.md#isurl)
 - [isUrlWithTemplateParameters](API.md#isurlwithtemplateparameters)
 - [oneOf](API.md#oneof)
-- [validator](API.md#validator)
+- [validator](API.md#validator-1)
 
 ### Date and Time Functions
 
@@ -156,6 +156,7 @@
 
 ### UI Functions
 
+- [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
@@ -177,7 +178,7 @@
 - [retry](API.md#retry)
 - [translateFrom](API.md#translatefrom)
 
-## API Type aliases
+## API Type Aliases
 
 ### CurrentPatient
 
@@ -185,7 +186,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L5)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L5)
 
 ___
 
@@ -202,7 +203,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L17)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L17)
 
 ___
 
@@ -212,7 +213,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/usePatient.ts#L5)
+[packages/framework/esm-react-utils/src/usePatient.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L5)
 
 ___
 
@@ -222,7 +223,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L19)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L19)
 
 ___
 
@@ -232,7 +233,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L15)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L15)
 
 ___
 
@@ -249,11 +250,11 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L22)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L22)
 
 ___
 
-## Date and Time Type aliases
+## Date and Time Type Aliases
 
 ### DateInput
 
@@ -261,7 +262,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L19)
+[packages/framework/esm-utils/src/omrs-dates.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L19)
 
 ___
 
@@ -271,7 +272,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L140)
+[packages/framework/esm-utils/src/omrs-dates.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L140)
 
 ___
 
@@ -283,18 +284,18 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `day` | `boolean` | Whether to include the day number |
-| `mode` | [`FormatDateMode`](API.md#formatdatemode) | - `standard`: "03 Feb 2022" - `wide`:     "03 — Feb — 2022" |
-| `time` | `boolean` \| ``"for today"`` | Whether the time should be included in the output always (`true`), never (`false`), or only when the input date is today (`for today`). |
-| `year` | `boolean` | Whether to include the year |
+| `day` | `boolean` |  |
+| `mode` | [`FormatDateMode`](API.md#formatdatemode) |  |
+| `time` | `boolean` \| ``"for today"`` |  |
+| `year` | `boolean` |  |
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L142)
+[packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L142)
 
 ___
 
-## Navigation Type aliases
+## Navigation Type Aliases
 
 ### TemplateParams
 
@@ -306,11 +307,11 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L10)
+[packages/framework/esm-config/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/navigation/navigate.ts#L10)
 
 ___
 
-## Offline Type aliases
+## Offline Type Aliases
 
 ### KnownOmrsServiceWorkerMessages
 
@@ -318,7 +319,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L46)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L46)
 
 ___
 
@@ -328,7 +329,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/mode.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L38)
+[packages/framework/esm-offline/src/mode.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L38)
 
 ___
 
@@ -336,14 +337,9 @@ ___
 
 Ƭ **OmrsOfflineCachingStrategy**: ``"network-only-or-cache-only"`` \| ``"network-first"``
 
-* `cache-or-network`: The default strategy, equal to the absence of this header.
-  The SW attempts to resolve the request via the network, but falls back to the cache if required.
-  The service worker decides the strategy to be used.
-* `network-first`: See https://developers.google.com/web/tools/workbox/modules/workbox-strategies#network_first_network_falling_back_to_cache.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L18)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L18)
 
 ___
 
@@ -353,7 +349,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L45)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L45)
 
 ___
 
@@ -361,24 +357,21 @@ ___
 
 Ƭ **OmrsOfflineHttpHeaders**: `Object`
 
-Defines the keys of the custom headers which can be appended to an HTTP request.
-HTTP requests with these headers are handled in a special way by the SPA's service worker.
-
 #### Type declaration
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `x-omrs-offline-caching-strategy?` | [`OmrsOfflineCachingStrategy`](API.md#omrsofflinecachingstrategy) | Instructs the service worker to use a specific caching strategy for this request. |
-| `x-omrs-offline-response-body?` | `string` | If the client is offline and the request cannot be read from the cache (i.e. if there is no way to receive any kind of data for this request), the service worker will return a response with the body in this header. |
-| `x-omrs-offline-response-status?` | \`${number}\` | If the client is offline and the request cannot be read from the cache (i.e. if there is no way to receive any kind of data for this request), the service worker will return a response with the status code defined in this header. |
+| `x-omrs-offline-caching-strategy?` | [`OmrsOfflineCachingStrategy`](API.md#omrsofflinecachingstrategy) |  |
+| `x-omrs-offline-response-body?` | `string` |  |
+| `x-omrs-offline-response-status?` | \`${number}\` |  |
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L26)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L26)
 
 ___
 
-## Other Type aliases
+## Other Type Aliases
 
 ### ConfigValue
 
@@ -386,17 +379,27 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L37)
+[packages/framework/esm-config/src/types.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L37)
+
+___
+
+### ExtensionProps
+
+Ƭ **ExtensionProps**: { `state?`: `Record`<`string`, `any`\> ; `wrap?`: (`slot`: `ReactNode`, `extension`: [`ExtensionData`](interfaces/ExtensionData.md)) => ``null`` \| `ReactElement`<`any`, `any`\>  } & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: `React.ReactNode`) => `React.ReactNode`  }
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/Extension.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L14)
 
 ___
 
 ### ExtensionSlotProps
 
-Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `React.HTMLAttributes`<`HTMLDivElement`\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
+Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L23)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L23)
 
 ___
 
@@ -413,7 +416,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L65)
+[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L65)
 
 ___
 
@@ -423,7 +426,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L53)
+[packages/framework/esm-globals/src/types.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L53)
 
 ___
 
@@ -433,7 +436,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/types/visit-resource.ts#L12)
+[packages/framework/esm-api/src/types/visit-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L12)
 
 ___
 
@@ -457,7 +460,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L72)
+[packages/framework/esm-config/src/types.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L72)
 
 ___
 
@@ -481,11 +484,11 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L70)
+[packages/framework/esm-config/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L70)
 
 ___
 
-## Store Type aliases
+## Store Type Aliases
 
 ### Actions
 
@@ -493,7 +496,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/createUseStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/createUseStore.ts#L5)
+[packages/framework/esm-react-utils/src/createUseStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/createUseStore.ts#L5)
 
 ___
 
@@ -507,11 +510,11 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/createUseStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/createUseStore.ts#L6)
+[packages/framework/esm-react-utils/src/createUseStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/createUseStore.ts#L6)
 
 ___
 
-## UI Type aliases
+## UI Type Aliases
 
 ### InlineNotificationType
 
@@ -519,17 +522,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L22)
+[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L22)
 
 ___
 
 ### LayoutType
 
-Ƭ **LayoutType**: ``"tablet"`` \| ``"phone"`` \| ``"desktop"``
+Ƭ **LayoutType**: ``"phone"`` \| ``"tablet"`` \| ``"small-desktop"`` \| ``"large-desktop"``
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useLayoutType.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLayoutType.ts#L4)
+[packages/framework/esm-react-utils/src/useLayoutType.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L4)
 
 ___
 
@@ -539,43 +542,33 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L26)
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L26)
 
 ## API Variables
 
 ### UserHasAccess
 
-• **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
+• `Const` **UserHasAccess**: `React.FC`<[`UserHasAccessProps`](interfaces/UserHasAccessProps.md)\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L10)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L11)
 
 ___
 
 ### defaultVisitCustomRepresentation
 
-• **defaultVisitCustomRepresentation**: `string`
+• `Const` **defaultVisitCustomRepresentation**: `string`
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L12)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L12)
 
 ___
 
 ### fhir
 
-• **fhir**: `Object`
-
-The `fhir` object is replicates the API from [fhir.js](https://github.com/FHIR/fhir.js)
-that can be used to call FHIR-compliant OpenMRS APIs. See
-[the docs for fhir.js](https://github.com/FHIR/fhir.js) for more info
-and example usage.
-
-This object should be considered deprecated and may be removed from a future version
-of the framework.
-
-**`deprecated`**
+• `Const` **fhir**: `Object`
 
 #### Type declaration
 
@@ -585,37 +578,37 @@ of the framework.
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L45)
+[packages/framework/esm-api/src/fhir.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/fhir.ts#L45)
 
 ___
 
 ### fhirBaseUrl
 
-• **fhirBaseUrl**: ``"/ws/fhir2/R4"``
+• `Const` **fhirBaseUrl**: ``"/ws/fhir2/R4"``
 
 #### Defined in
 
-[packages/framework/esm-api/src/fhir.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/fhir.ts#L5)
+[packages/framework/esm-api/src/fhir.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/fhir.ts#L5)
 
 ___
 
 ### getStartedVisit
 
-• **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
+• `Const` **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L74)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L74)
 
 ___
 
 ### sessionEndpoint
 
-• **sessionEndpoint**: ``"/ws/rest/v1/session"``
+• `Const` **sessionEndpoint**: ``"/ws/rest/v1/session"``
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L7)
+[packages/framework/esm-api/src/openmrs-fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L7)
 
 ___
 
@@ -623,7 +616,7 @@ ___
 
 ### validators
 
-• **validators**: `Object`
+• `Const` **validators**: `Object`
 
 #### Type declaration
 
@@ -636,7 +629,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L69)
+[packages/framework/esm-config/src/validators/validators.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L69)
 
 ___
 
@@ -644,41 +637,41 @@ ___
 
 ### offlineUuidPrefix
 
-• **offlineUuidPrefix**: ``"OFFLINE+"``
+• `Const` **offlineUuidPrefix**: ``"OFFLINE+"``
 
 #### Defined in
 
-[packages/framework/esm-offline/src/uuid.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/uuid.ts#L4)
+[packages/framework/esm-offline/src/uuid.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/uuid.ts#L4)
 
 ___
 
 ### omrsOfflineCachingStrategyHttpHeaderName
 
-• **omrsOfflineCachingStrategyHttpHeaderName**: ``"x-omrs-offline-caching-strategy"``
+• `Const` **omrsOfflineCachingStrategyHttpHeaderName**: ``"x-omrs-offline-caching-strategy"``
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L7)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L7)
 
 ___
 
 ### omrsOfflineResponseBodyHttpHeaderName
 
-• **omrsOfflineResponseBodyHttpHeaderName**: ``"x-omrs-offline-response-body"``
+• `Const` **omrsOfflineResponseBodyHttpHeaderName**: ``"x-omrs-offline-response-body"``
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L3)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L3)
 
 ___
 
 ### omrsOfflineResponseStatusHttpHeaderName
 
-• **omrsOfflineResponseStatusHttpHeaderName**: ``"x-omrs-offline-response-status"``
+• `Const` **omrsOfflineResponseStatusHttpHeaderName**: ``"x-omrs-offline-response-status"``
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-http-headers.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-http-headers.ts#L5)
+[packages/framework/esm-offline/src/service-worker-http-headers.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-http-headers.ts#L5)
 
 ___
 
@@ -686,35 +679,27 @@ ___
 
 ### ErrorState
 
-• **ErrorState**: `React.FC`<[`ErrorStateProps`](interfaces/ErrorStateProps.md)\>
+• `Const` **ErrorState**: `React.FC`<[`ErrorStateProps`](interfaces/ErrorStateProps.md)\>
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L12)
+[packages/framework/esm-styleguide/src/error-state/error-state.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/error-state/error-state.component.tsx#L12)
 
 ___
 
 ### Extension
 
-• **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
-
-Represents the position in the DOM where each extension within
-an extension slot is rendered.
-
-Renders once for each extension attached to that extension slot.
-
-Usage of this component *must* have an ancestor `<ExtensionSlot>`,
-and *must* only be used once within that `<ExtensionSlot>`.
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](API.md#extensionprops)\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/Extension.tsx#L31)
+[packages/framework/esm-react-utils/src/Extension.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L36)
 
 ___
 
 ### backendDependencies
 
-• **backendDependencies**: `Object`
+• `Const` **backendDependencies**: `Object`
 
 #### Type declaration
 
@@ -725,7 +710,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-backend-dependencies.ts#L1)
+[packages/framework/esm-api/src/openmrs-backend-dependencies.ts:1](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-backend-dependencies.ts#L1)
 
 ___
 
@@ -733,11 +718,11 @@ ___
 
 ### LeftNavMenu
 
-• **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
+• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`Pick`<`SideNavProps`, `string` \| `number` \| `symbol`\> & `RefAttributes`<`HTMLElement`\>\>
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L32)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L30)
 
 ## API Functions
 
@@ -751,7 +736,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:188](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L188)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:188](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L188)
 
 ___
 
@@ -772,7 +757,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L21)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L21)
 
 ___
 
@@ -780,44 +765,13 @@ ___
 
 ▸ **getCurrentUser**(): `Observable`<[`Session`](interfaces/Session.md)\>
 
-The getCurrentUser function returns an observable that produces
-**zero or more values, over time**. It will produce zero values
-by default if the user is not logged in. And it will provide a
-first value when the logged in user is fetched from the server.
-Subsequent values will be produced whenever the user object is
-updated.
-
 #### Returns
 
 `Observable`<[`Session`](interfaces/Session.md)\>
 
-An Observable that produces zero or more values (as
-  described above). The values produced will be a user object (if
-  `includeAuthStatus` is set to `false`) or an object with a session
-  and authenticated property (if `includeAuthStatus` is set to `true`).
-
-#### Example
-
-```js
-import { getCurrentUser } from '@openmrs/esm-api'
-const subscription = getCurrentUser().subscribe(
-  user => console.log(user)
-)
-subscription.unsubscribe()
-getCurrentUser({includeAuthStatus: true}).subscribe(
-  data => console.log(data.authenticated)
-)
-```
-
-#### Be sure to unsubscribe when your component unmounts
-
-Otherwise your code will continue getting updates to the user object
-even after the UI component is gone from the screen. This is a memory
-leak and source of bugs.
-
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L71)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L71)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`Session`](interfaces/Session.md)\>
 
@@ -834,7 +788,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L72)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L72)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
@@ -851,7 +805,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L73)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L73)
 
 ___
 
@@ -865,7 +819,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/location.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/location.ts#L14)
+[packages/framework/esm-api/src/shared-api-objects/location.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/location.ts#L14)
 
 ___
 
@@ -879,7 +833,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L202)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L202)
 
 ___
 
@@ -893,7 +847,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L220)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L220)
 
 ___
 
@@ -907,7 +861,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L105)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L105)
 
 ___
 
@@ -921,7 +875,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L15)
+[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L15)
 
 ___
 
@@ -943,22 +897,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L20)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L20)
 
 ___
 
 ### makeUrl
 
 ▸ **makeUrl**(`path`): `string`
-
-Append `path` to the OpenMRS SPA base.
-
-#### Example
-
-```ts
-makeUrl('/foo/bar');
-// => '/openmrs/foo/bar'
-```
 
 #### Parameters
 
@@ -972,18 +917,13 @@ makeUrl('/foo/bar');
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L19)
+[packages/framework/esm-api/src/openmrs-fetch.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L19)
 
 ___
 
 ### openmrsFetch
 
 ▸ **openmrsFetch**<`T`\>(`path`, `fetchInit?`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
-
-The openmrsFetch function is a wrapper around the
-[browser's built-in fetch function](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch),
-with extra handling for OpenMRS-specific API behaviors, such as
-request headers, authentication, authorization, and the API urls.
 
 #### Type parameters
 
@@ -995,62 +935,22 @@ request headers, authentication, authorization, and the API urls.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `path` | `string` | A string url to make the request to. Note that the   openmrs base url (by default `/openmrs`) will be automatically   prepended to the URL, so there is no need to include it. |
-| `fetchInit` | `FetchConfig` | A [fetch init object](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Syntax).   Note that the `body` property does not need to be `JSON.stringify()`ed   because openmrsFetch will do that for you. |
+| `path` | `string` |  |
+| `fetchInit` | `FetchConfig` |  |
 
 #### Returns
 
 `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
-A [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-  that resolves with a [Response object](https://developer.mozilla.org/en-US/docs/Web/API/Response).
-  Note that the openmrs version of the Response object has already
-  downloaded the HTTP response body as json, and has an additional
-  `data` property with the HTTP response json as a javascript object.
-
-#### Example
-```js
-import { openmrsFetch } from '@openmrs/esm-api'
-const abortController = new AbortController();
-openmrsFetch('/ws/rest/v1/session', {signal: abortController.signal})
-  .then(response => {
-    console.log(response.data.authenticated)
-  })
-  .catch(err => {
-    console.error(err.status);
-  })
-abortController.abort();
-openmrsFetch('/ws/rest/v1/session', {
-  method: 'POST',
-  body: {
-    username: 'hi',
-    password: 'there',
-  }
-})
-```
-
-#### Cancellation
-
-To cancel a network request, use an
-[AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort).
-It is best practice to cancel your network requests when the user
-navigates away from a page while the request is pending request, to
-free up memory and network resources and to prevent race conditions.
-
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L72)
+[packages/framework/esm-api/src/openmrs-fetch.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L72)
 
 ___
 
 ### openmrsObservableFetch
 
 ▸ **openmrsObservableFetch**<`T`\>(`url`, `fetchInit?`): `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
-
-The openmrsObservableFetch function is a wrapper around openmrsFetch
-that returns an [Observable](https://rxjs-dev.firebaseapp.com/guide/observable)
-instead of a promise. It exists in case using an Observable is
-preferred or more convenient than a promise.
 
 #### Type parameters
 
@@ -1062,35 +962,16 @@ preferred or more convenient than a promise.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `url` | `string` | See [openmrsFetch](API.md#openmrsfetch) |
-| `fetchInit` | `FetchConfig` | See [openmrsFetch](API.md#openmrsfetch) |
+| `url` | `string` |  |
+| `fetchInit` | `FetchConfig` |  |
 
 #### Returns
 
 `Observable`<[`FetchResponse`](interfaces/FetchResponse.md)<`T`\>\>
 
-An Observable that produces exactly one Response object.
-The response object is exactly the same as for [openmrsFetch](API.md#openmrsfetch).
-
-#### Example
-
-```js
-import { openmrsObservableFetch } from '@openmrs/esm-api'
-const subscription = openmrsObservableFetch('/ws/rest/v1/session').subscribe(
-  response => console.log(response.data),
-  err => {throw err},
-  () => console.log('finished')
-)
-subscription.unsubscribe()
-```
-
-#### Cancellation
-
-To cancel the network request, simply call `subscription.unsubscribe();`
-
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:243](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/openmrs-fetch.ts#L243)
+[packages/framework/esm-api/src/openmrs-fetch.ts:243](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L243)
 
 ___
 
@@ -1098,25 +979,13 @@ ___
 
 ▸ **refetchCurrentUser**(): `Promise`<`unknown`\>
 
-The `refetchCurrentUser` function causes a network request to redownload
-the user. All subscribers to the current user will be notified of the
-new users once the new version of the user object is downloaded.
-
 #### Returns
 
 `Promise`<`unknown`\>
 
-The same observable as returned by [getCurrentUser](API.md#getcurrentuser).
-
-#### Example
-```js
-import { refetchCurrentUser } from '@openmrs/esm-api'
-refetchCurrentUser()
-```
-
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L163)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L163)
 
 ___
 
@@ -1137,7 +1006,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L45)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L45)
 
 ___
 
@@ -1158,7 +1027,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L229)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L229)
 
 ___
 
@@ -1178,7 +1047,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/location.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/location.ts#L7)
+[packages/framework/esm-api/src/shared-api-objects/location.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/location.ts#L7)
 
 ___
 
@@ -1198,7 +1067,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L7)
+[packages/framework/esm-api/src/shared-api-objects/visit-type.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-type.ts#L7)
 
 ___
 
@@ -1220,18 +1089,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L59)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L59)
 
 ___
 
 ### useCurrentPatient
 
 ▸ **useCurrentPatient**(`patientUuid?`): [`boolean`, `NullablePatient`, [`PatientUuid`](API.md#patientuuid), `Error` \| ``null``]
-
-This React hook returns the current patient, as specified by the current route. It returns
-all the information needed to render a loading state, error state, and normal/success state.
-
-**`deprecated`** Use [usePatient](API.md#usepatient) instead.
 
 #### Parameters
 
@@ -1245,7 +1109,7 @@ all the information needed to render a loading state, error state, and normal/su
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useCurrentPatient.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useCurrentPatient.ts#L83)
+[packages/framework/esm-react-utils/src/useCurrentPatient.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useCurrentPatient.ts#L83)
 
 ___
 
@@ -1259,18 +1123,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useLocations.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLocations.tsx#L5)
+[packages/framework/esm-react-utils/src/useLocations.tsx:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLocations.tsx#L5)
 
 ___
 
 ### usePatient
 
 ▸ **usePatient**(`patientUuid?`): `Object`
-
-This React hook returns a patient object. If the `patientUuid` is provided
-as a parameter, then the patient for that UUID is returned. If the parameter
-is not provided, the patient UUID is obtained from the current route, and
-a route listener is set up to update the patient whenever the route changes.
 
 #### Parameters
 
@@ -1291,7 +1150,7 @@ a route listener is set up to update the patient whenever the route changes.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/usePatient.ts#L92)
+[packages/framework/esm-react-utils/src/usePatient.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L92)
 
 ___
 
@@ -1299,21 +1158,13 @@ ___
 
 ▸ **useSession**(): [`Session`](interfaces/Session.md)
 
-Gets the current user session information. Returns an object with
-property `authenticated` == `false` if the user is not logged in.
-
-Uses Suspense. This hook will always either return a Session object
-or throw for Suspense. It will never return `null`/`undefined`.
-
 #### Returns
 
 [`Session`](interfaces/Session.md)
 
-Current user session information
-
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useSession.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useSession.tsx#L17)
+[packages/framework/esm-react-utils/src/useSession.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.tsx#L17)
 
 ___
 
@@ -1321,25 +1172,19 @@ ___
 
 ▸ **useVisit**(`patientUuid`): `VisitReturnType`
 
-This React hook returns a visit object. If the `patientUuid` is provided
-as a parameter, then the currentVisit, error and mutate function
-for that patient visit is returned.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `patientUuid` | `string` | Unique patient identifier `string` |
+| `patientUuid` | `string` |  |
 
 #### Returns
 
 `VisitReturnType`
 
-Object {`error` `isValidating`, `currentVisit`, `mutate`}
-
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useVisit.ts#L29)
+[packages/framework/esm-react-utils/src/useVisit.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L29)
 
 ___
 
@@ -1353,7 +1198,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisitTypes.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useVisitTypes.ts#L5)
+[packages/framework/esm-react-utils/src/useVisitTypes.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisitTypes.ts#L5)
 
 ___
 
@@ -1376,7 +1221,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L195)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L195)
 
 ___
 
@@ -1399,7 +1244,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/filter.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/filter.ts#L43)
+[packages/framework/esm-breadcrumbs/src/filter.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/filter.ts#L43)
 
 ___
 
@@ -1413,7 +1258,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/db.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L35)
+[packages/framework/esm-breadcrumbs/src/db.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/db.ts#L35)
 
 ___
 
@@ -1433,7 +1278,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/filter.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/filter.ts#L66)
+[packages/framework/esm-breadcrumbs/src/filter.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/filter.ts#L66)
 
 ___
 
@@ -1453,7 +1298,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/db.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L21)
+[packages/framework/esm-breadcrumbs/src/db.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/db.ts#L21)
 
 ___
 
@@ -1473,7 +1318,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/db.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-breadcrumbs/src/db.ts#L25)
+[packages/framework/esm-breadcrumbs/src/db.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/db.ts#L25)
 
 ___
 
@@ -1483,19 +1328,12 @@ ___
 
 ▸ **defineConfigSchema**(`moduleName`, `schema`): `void`
 
-This defines a configuration schema for a module. The schema tells the
-configuration system how the module can be configured. It specifies
-what makes configuration valid or invalid.
-
-See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
-for more information about defining a config schema.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `moduleName` | `string` | Name of the module the schema is being defined for. Generally   should be the one in which the `defineConfigSchema` call takes place. |
-| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | The config schema for the module |
+| `moduleName` | `string` |  |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) |  |
 
 #### Returns
 
@@ -1503,7 +1341,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L192)
+[packages/framework/esm-config/src/module-config/module-config.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L192)
 
 ___
 
@@ -1511,23 +1349,12 @@ ___
 
 ▸ **defineExtensionConfigSchema**(`extensionName`, `schema`): `void`
 
-This defines a configuration schema for an extension. When a schema is defined
-for an extension, that extension will receive the configuration corresponding
-to that schema, rather than the configuration corresponding to the module
-in which it is defined.
-
-The schema tells the configuration system how the module can be configured.
-It specifies what makes configuration valid or invalid.
-
-See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
-for more information about defining a config schema.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `extensionName` | `string` | Name of the extension the schema is being defined for.   Should match the `name` of one of the `extensions` entries being returned   by `setupOpenMRS`. |
-| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) | The config schema for the extension |
+| `extensionName` | `string` |  |
+| `schema` | [`ConfigSchema`](interfaces/ConfigSchema.md) |  |
 
 #### Returns
 
@@ -1535,7 +1362,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:222](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L222)
+[packages/framework/esm-config/src/module-config/module-config.ts:222](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L222)
 
 ___
 
@@ -1543,21 +1370,11 @@ ___
 
 ▸ **getConfig**(`moduleName`): `Promise`<[`Config`](interfaces/Config.md)\>
 
-A promise-based way to access the config as soon as it is fully loaded.
-If it is already loaded, resolves the config in its present state.
-
-In general you should use the Unistore-based API provided by
-`getConfigStore`, which allows creating a subscription so that you always
-have the latest config. If using React, just use `useConfig`.
-
-This is a useful function if you need to get the config in the course
-of the execution of a function.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `moduleName` | `string` | The name of the module for which to look up the config |
+| `moduleName` | `string` |  |
 
 #### Returns
 
@@ -1565,7 +1382,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L264)
+[packages/framework/esm-config/src/module-config/module-config.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L264)
 
 ___
 
@@ -1586,15 +1403,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/module-config/module-config.ts#L244)
+[packages/framework/esm-config/src/module-config/module-config.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L244)
 
 ___
 
 ### useConfig
 
 ▸ **useConfig**(): `Object`
-
-Use this React Hook to obtain your module's configuration.
 
 #### Returns
 
@@ -1603,17 +1418,17 @@ Use this React Hook to obtain your module's configuration.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `Display conditions?` | [`DisplayConditionsConfigObject`](interfaces/DisplayConditionsConfigObject.md) | - |
-| `constructor` | `Function` | The initial value of Object.prototype.constructor is the standard built-in Object constructor. |
-| `hasOwnProperty` | (`v`: `PropertyKey`) => `boolean` | Determines whether an object has a property with the specified name. |
-| `isPrototypeOf` | (`v`: `Object`) => `boolean` | Determines whether an object exists in another object's prototype chain. |
-| `propertyIsEnumerable` | (`v`: `PropertyKey`) => `boolean` | Determines whether a specified property is enumerable. |
-| `toLocaleString` | () => `string` | Returns a date converted to a string using the current locale. |
-| `toString` | () => `string` | Returns a string representation of an object. |
-| `valueOf` | () => `Object` | Returns the primitive value of the specified object. |
+| `constructor` | `Function` |  |
+| `hasOwnProperty` | (`v`: `PropertyKey`) => `boolean` |  |
+| `isPrototypeOf` | (`v`: `Object`) => `boolean` |  |
+| `propertyIsEnumerable` | (`v`: `PropertyKey`) => `boolean` |  |
+| `toLocaleString` | () => `string` |  |
+| `toString` | () => `string` |  |
+| `valueOf` | () => `Object` |  |
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConfig.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConfig.ts#L163)
+[packages/framework/esm-react-utils/src/useConfig.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L163)
 
 ___
 
@@ -1621,16 +1436,14 @@ ___
 
 ### inRange
 
-▸ `Const` **inRange**(`min`, `max`): [`Validator`](API.md#validator)
-
-Verifies that the value is between the provided minimum and maximum
+▸ **inRange**(`min`, `max`): [`Validator`](API.md#validator)
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `min` | `number` | Minimum acceptable value |
-| `max` | `number` | Maximum acceptable value |
+| `min` | `number` |  |
+| `max` | `number` |  |
 
 #### Returns
 
@@ -1638,17 +1451,13 @@ Verifies that the value is between the provided minimum and maximum
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L10)
+[packages/framework/esm-config/src/validators/validators.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L10)
 
 ___
 
 ### isUrl
 
-▸ `Const` **isUrl**(`value`): `string` \| `void`
-
-Verifies that a string contains only the default URL template parameters.
-
-**`category`** Navigation
+▸ **isUrl**(`value`): `string` \| `void`
 
 #### Parameters
 
@@ -1662,24 +1471,19 @@ Verifies that a string contains only the default URL template parameters.
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L56)
+[packages/framework/esm-config/src/validators/validators.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L56)
 
 ___
 
 ### isUrlWithTemplateParameters
 
-▸ `Const` **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [`Validator`](API.md#validator)
-
-Verifies that a string contains only the default URL template
-parameters, plus any specified in `allowedTemplateParameters`.
-
-**`category`** Navigation
+▸ **isUrlWithTemplateParameters**(`allowedTemplateParameters`): [`Validator`](API.md#validator)
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `allowedTemplateParameters` | `string`[] | To be added to `openmrsBase` and `openmrsSpaBase` |
+| `allowedTemplateParameters` | `string`[] |  |
 
 #### Returns
 
@@ -1687,21 +1491,19 @@ parameters, plus any specified in `allowedTemplateParameters`.
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L24)
+[packages/framework/esm-config/src/validators/validators.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L24)
 
 ___
 
 ### oneOf
 
-▸ `Const` **oneOf**(`allowedValues`): [`Validator`](API.md#validator)
-
-Verifies that the value is one of the allowed options.
+▸ **oneOf**(`allowedValues`): [`Validator`](API.md#validator)
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `allowedValues` | `any`[] | The list of allowable values |
+| `allowedValues` | `any`[] |  |
 
 #### Returns
 
@@ -1709,7 +1511,7 @@ Verifies that the value is one of the allowed options.
 
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validators.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validators.ts#L62)
+[packages/framework/esm-config/src/validators/validators.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validators.ts#L62)
 
 ___
 
@@ -1717,37 +1519,20 @@ ___
 
 ▸ **validator**(`validationFunction`, `message`): [`Validator`](API.md#validator)
 
-Constructs a custom validator.
-
-### Example
-
-```typescript
-{
-  foo: {
-    _default: 0,
-    _validators: [
-      validator(val => val >= 0, "Must not be negative.")
-    ]
-  }
-}
-```
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `validationFunction` | [`ValidatorFunction`](API.md#validatorfunction) | Takes the configured value as input. Returns true    if it is valid, false otherwise. |
-| `message` | `string` \| (`value`: `any`) => `string` | A string message that explains why the value is invalid. Can    also be a function that takes the value as input and returns a string. |
+| `validationFunction` | [`ValidatorFunction`](API.md#validatorfunction) |  |
+| `message` | `string` \| (`value`: `any`) => `string` |  |
 
 #### Returns
 
 [`Validator`](API.md#validator)
 
-A validator ready for use in a config schema
-
 #### Defined in
 
-[packages/framework/esm-config/src/validators/validator.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/validators/validator.ts#L25)
+[packages/framework/esm-config/src/validators/validator.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validator.ts#L25)
 
 ___
 
@@ -1756,23 +1541,6 @@ ___
 ### formatDate
 
 ▸ **formatDate**(`date`, `options?`): `string`
-
-Formats the input date according to the current locale and the
-given options.
-
-Default options:
- - mode: "standard",
- - time: "for today",
- - day: true,
- - year: true
-
-If the date is today then "Today" is produced (in the locale language).
-
-When time is included, it is appended with a comma and a space. This
-agrees with the output of `Date.prototype.toLocaleString` for *most*
-locales.
-
-TODO: Shouldn't throw on null input
 
 #### Parameters
 
@@ -1787,21 +1555,13 @@ TODO: Shouldn't throw on null input
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:184](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L184)
+[packages/framework/esm-utils/src/omrs-dates.ts:184](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L184)
 
 ___
 
 ### formatDatetime
 
 ▸ **formatDatetime**(`date`, `options?`): `string`
-
-Formats the input into a string showing the date and time, according
-to the current locale. The `mode` parameter is as described for
-`formatDate`.
-
-This is created by concatenating the results of `formatDate`
-and `formatTime` with a comma and space. This agrees with the
-output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Parameters
 
@@ -1816,16 +1576,13 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L251)
+[packages/framework/esm-utils/src/omrs-dates.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L251)
 
 ___
 
 ### formatTime
 
 ▸ **formatTime**(`date`): `string`
-
-Formats the input as a time, according to the current locale.
-12-hour or 24-hour clock depends on locale.
 
 #### Parameters
 
@@ -1839,16 +1596,13 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L235)
+[packages/framework/esm-utils/src/omrs-dates.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L235)
 
 ___
 
 ### isOmrsDateStrict
 
 ▸ **isOmrsDateStrict**(`omrsPayloadString`): `boolean`
-
-This function is STRICT on checking whether a date string is the openmrs format.
-The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 #### Parameters
 
@@ -1862,7 +1616,7 @@ The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L27)
+[packages/framework/esm-utils/src/omrs-dates.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L27)
 
 ___
 
@@ -1874,7 +1628,7 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | [`DateInput`](API.md#dateinput) | Checks if the provided date is today. |
+| `date` | [`DateInput`](API.md#dateinput) |  |
 
 #### Returns
 
@@ -1882,16 +1636,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L64)
+[packages/framework/esm-utils/src/omrs-dates.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L64)
 
 ___
 
 ### parseDate
 
 ▸ **parseDate**(`dateString`): `Date`
-
-Utility function to parse an arbitrary string into a date.
-Uses `dayjs(dateString)`.
 
 #### Parameters
 
@@ -1905,15 +1656,13 @@ Uses `dayjs(dateString)`.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L136)
+[packages/framework/esm-utils/src/omrs-dates.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L136)
 
 ___
 
 ### toDateObjectStrict
 
 ▸ **toDateObjectStrict**(`omrsDateString`): `Date` \| ``null``
-
-Converts the object to a date object if it is a valid ISO date time string.
 
 #### Parameters
 
@@ -1927,16 +1676,13 @@ Converts the object to a date object if it is a valid ISO date time string.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L71)
+[packages/framework/esm-utils/src/omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L71)
 
 ___
 
 ### toOmrsDateFormat
 
 ▸ **toOmrsDateFormat**(`date`, `format?`): `string`
-
-**`deprecated`** use `formatDate(date)`
-Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 #### Parameters
 
@@ -1951,16 +1697,13 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L128)
+[packages/framework/esm-utils/src/omrs-dates.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L128)
 
 ___
 
 ### toOmrsDayDateFormat
 
 ▸ **toOmrsDayDateFormat**(`date`): `string`
-
-**`deprecated`** use `formatDate(date, "wide")`
-Formats the input as a date string using the format "DD - MMM - YYYY".
 
 #### Parameters
 
@@ -1974,15 +1717,13 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L112)
+[packages/framework/esm-utils/src/omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L112)
 
 ___
 
 ### toOmrsIsoString
 
 ▸ **toOmrsIsoString**(`date`, `toUTC?`): `string`
-
-Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
 #### Parameters
 
@@ -1997,7 +1738,7 @@ Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SS
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L82)
+[packages/framework/esm-utils/src/omrs-dates.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L82)
 
 ___
 
@@ -2005,9 +1746,6 @@ ___
 
 ▸ **toOmrsTimeString**(`date`): `string`
 
-**`deprecated`** use `formatTime`
-Formats the input as a time string using the format "HH:mm A".
-
 #### Parameters
 
 | Name | Type |
@@ -2020,7 +1758,7 @@ Formats the input as a time string using the format "HH:mm A".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L104)
+[packages/framework/esm-utils/src/omrs-dates.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L104)
 
 ___
 
@@ -2028,9 +1766,6 @@ ___
 
 ▸ **toOmrsTimeString24**(`date`): `string`
 
-**`deprecated`** use `formatTime`
-Formats the input as a time string using the format "HH:mm".
-
 #### Parameters
 
 | Name | Type |
@@ -2043,7 +1778,7 @@ Formats the input as a time string using the format "HH:mm".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L96)
+[packages/framework/esm-utils/src/omrs-dates.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L96)
 
 ___
 
@@ -2051,9 +1786,6 @@ ___
 
 ▸ **toOmrsYearlessDateFormat**(`date`): `string`
 
-**`deprecated`** use `formatDate(date, "no year")`
-Formats the input as a date string using the format "DD-MMM".
-
 #### Parameters
 
 | Name | Type |
@@ -2066,7 +1798,7 @@ Formats the input as a date string using the format "DD-MMM".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/omrs-dates.ts#L120)
+[packages/framework/esm-utils/src/omrs-dates.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L120)
 
 ___
 
@@ -2094,7 +1826,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-error-handling/src/index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L24)
+[packages/framework/esm-error-handling/src/index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L24)
 
 ___
 
@@ -2114,7 +1846,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-error-handling/src/index.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-error-handling/src/index.ts#L17)
+[packages/framework/esm-error-handling/src/index.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L17)
 
 ___
 
@@ -2124,25 +1856,12 @@ ___
 
 ▸ **attach**(`slotName`, `extensionId`): `void`
 
-Attach an extension to an extension slot.
-
-This will cause the extension to be rendered into the specified
-extension slot, unless it is removed by configuration. Using
-`attach` is an alternative to specifying the `slot` or `slots`
-in the extension declaration.
-
-It is particularly useful when creating a slot into which
-you want to render an existing extension. This enables you
-to do so without modifying the extension's declaration, which
-may be impractical or inappropriate, for example if you are
-writing a module for a specific implementation.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `slotName` | `string` | a name uniquely identifying the slot |
-| `extensionId` | `string` | an extension name, with an optional #-suffix    to distinguish it from other instances of the same extension    attached to the same slot. |
+| `slotName` | `string` |  |
+| `extensionId` | `string` |  |
 
 #### Returns
 
@@ -2150,15 +1869,13 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:174](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L174)
+[packages/framework/esm-extensions/src/extensions.ts:174](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L174)
 
 ___
 
 ### detach
 
 ▸ **detach**(`extensionSlotName`, `extensionId`): `void`
-
-Avoid using this. Extension attachments should be considered declarative.
 
 #### Parameters
 
@@ -2173,15 +1890,13 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L205)
+[packages/framework/esm-extensions/src/extensions.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L205)
 
 ___
 
 ### detachAll
 
 ▸ **detachAll**(`extensionSlotName`): `void`
-
-Avoid using this. Extension attachments should be considered declarative.
 
 #### Parameters
 
@@ -2195,7 +1910,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L229)
+[packages/framework/esm-extensions/src/extensions.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L229)
 
 ___
 
@@ -2203,23 +1918,19 @@ ___
 
 ▸ **getAssignedExtensions**(`slotName`): [`AssignedExtension`](interfaces/AssignedExtension.md)[]
 
-Gets the list of extensions assigned to a given slot
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `slotName` | `string` | The slot to load the assigned extensions for |
+| `slotName` | `string` |  |
 
 #### Returns
 
 [`AssignedExtension`](interfaces/AssignedExtension.md)[]
 
-An array of extensions assigned to the named slot
-
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:359](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L359)
+[packages/framework/esm-extensions/src/extensions.ts:359](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L359)
 
 ___
 
@@ -2227,43 +1938,26 @@ ___
 
 ▸ **getConnectedExtensions**(`assignedExtensions`, `online?`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
 
-Filters a list of extensions according to whether they support the
-current connectivity status.
-
 #### Parameters
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `assignedExtensions` | [`AssignedExtension`](interfaces/AssignedExtension.md)[] | `undefined` | The list of extensions to filter. |
-| `online` | ``null`` \| `boolean` | `null` | Whether the app is currently online. If `null`, uses `navigator.onLine`. |
+| `assignedExtensions` | [`AssignedExtension`](interfaces/AssignedExtension.md)[] | `undefined` |  |
+| `online` | ``null`` \| `boolean` | `null` |  |
 
 #### Returns
 
 [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
 
-A list of extensions that should be rendered
-
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:287](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L287)
+[packages/framework/esm-extensions/src/extensions.ts:287](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L287)
 
 ___
 
 ### getExtensionNameFromId
 
 ▸ **getExtensionNameFromId**(`extensionId`): `string`
-
-Given an extension ID, which is a string uniquely identifying
-an instance of an extension within an extension slot, this
-returns the extension name.
-
-**`example`**
-```js
-getExtensionNameFromId("foo#bar")
- --> "foo"
-getExtensionNameFromId("baz")
- --> "baz"
-```
 
 #### Parameters
 
@@ -2277,17 +1971,13 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/extensions.ts#L118)
+[packages/framework/esm-extensions/src/extensions.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L118)
 
 ___
 
 ### getExtensionStore
 
-▸ `Const` **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
-
-This returns a [store](https://github.com/developit/unistore#store)
-that modules can use to get information about the state of the
-extension system.
+▸ **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
 #### Returns
 
@@ -2295,17 +1985,13 @@ extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/store.ts#L130)
+[packages/framework/esm-extensions/src/store.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L130)
 
 ___
 
 ### renderExtension
 
 ▸ **renderExtension**(`domElement`, `extensionSlotName`, `extensionSlotModuleName`, `extensionId`, `renderFunction?`, `additionalProps?`): `Parcel` \| ``null``
-
-Mounts into a DOM node (representing an extension slot)
-a lazy-loaded component from *any* frontend module
-that registered an extension component for this slot.
 
 #### Parameters
 
@@ -2324,7 +2010,7 @@ that registered an extension component for this slot.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-extensions/src/render.ts#L17)
+[packages/framework/esm-extensions/src/render.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L17)
 
 ___
 
@@ -2332,16 +2018,11 @@ ___
 
 ▸ **useAssignedExtensionIds**(`slotName`): `string`[]
 
-Gets the assigned extension ids for a given extension slot name.
-Does not consider if offline or online.
-
-**`deprecated`** Use `useAssignedExtensions`
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `slotName` | `string` | The name of the slot to get the assigned IDs for. |
+| `slotName` | `string` |  |
 
 #### Returns
 
@@ -2349,7 +2030,7 @@ Does not consider if offline or online.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts#L13)
+[packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensionIds.ts#L13)
 
 ___
 
@@ -2357,14 +2038,11 @@ ___
 
 ▸ **useAssignedExtensions**(`slotName`): [`AssignedExtension`](interfaces/AssignedExtension.md)[]
 
-Gets the assigned extensions for a given extension slot name.
-Does not consider if offline or online.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `slotName` | `string` | The name of the slot to get the assigned extensions for. |
+| `slotName` | `string` |  |
 
 #### Returns
 
@@ -2372,7 +2050,7 @@ Does not consider if offline or online.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAssignedExtensions.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L15)
+[packages/framework/esm-react-utils/src/useAssignedExtensions.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L15)
 
 ___
 
@@ -2380,14 +2058,11 @@ ___
 
 ▸ **useConnectedExtensions**(`slotName`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
 
-Gets the assigned extension for a given extension slot name.
-Considers if offline or online.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `slotName` | `string` | The name of the slot to get the assigned extensions for. |
+| `slotName` | `string` |  |
 
 #### Returns
 
@@ -2395,15 +2070,13 @@ Considers if offline or online.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L15)
+[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L15)
 
 ___
 
 ### useExtensionSlotMeta
 
 ▸ **useExtensionSlotMeta**<`T`\>(`extensionSlotName`): `Object`
-
-Extract meta data from all extension for a given extension slot.
 
 #### Type parameters
 
@@ -2413,9 +2086,9 @@ Extract meta data from all extension for a given extension slot.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `extensionSlotName` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `extensionSlotName` | `string` |  |
 
 #### Returns
 
@@ -2423,13 +2096,13 @@ Extract meta data from all extension for a given extension slot.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L10)
+[packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotMeta.ts#L10)
 
 ___
 
 ### useExtensionStore
 
-▸ `Const` **useExtensionStore**(): `T`
+▸ **useExtensionStore**(): `T`
 
 #### Returns
 
@@ -2437,9 +2110,9 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
-▸ `Const` **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
@@ -2453,9 +2126,9 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
-▸ `Const` **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
@@ -2469,7 +2142,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ___
 
@@ -2477,9 +2150,7 @@ ___
 
 ### getAsyncExtensionLifecycle
 
-▸ `Const` **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
-
-**`deprecated`** Use getAsyncLifecycle instead.
+▸ **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
 
 #### Type parameters
 
@@ -2506,7 +2177,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/getLifecycle.ts#L39)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L39)
 
 ___
 
@@ -2539,7 +2210,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/getLifecycle.ts#L21)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L21)
 
 ___
 
@@ -2566,7 +2237,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/getLifecycle.ts#L10)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L10)
 
 ___
 
@@ -2599,7 +2270,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/getLifecycle.ts#L29)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L29)
 
 ___
 
@@ -2609,13 +2280,11 @@ ___
 
 ▸ **ConfigurableLink**(`__namedParameters`): `Element`
 
-A React link component which calls [navigate](API.md#navigate) when clicked
-
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md) |
+| `__namedParameters` | `PropsWithChildren`<[`ConfigurableLinkProps`](interfaces/ConfigurableLinkProps.md)\> |
 
 #### Returns
 
@@ -2623,7 +2292,7 @@ A React link component which calls [navigate](API.md#navigate) when clicked
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L38)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L42)
 
 ___
 
@@ -2631,23 +2300,12 @@ ___
 
 ▸ **interpolateString**(`template`, `params`): `string`
 
-Interpolates values of `params` into the `template` string.
-
-Example usage:
-```js
-interpolateString("test ${one} ${two} 3", {
-   one: "1",
-   two: "2",
-}); // will return "test 1 2 3"
-interpolateString("test ok", { one: "1", two: "2" }) // will return "test ok"
-```
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `template` | `string` | With optional params wrapped in `${ }` |
-| `params` | `Object` | Values to interpolate into the string template |
+| `template` | `string` |  |
+| `params` | `Object` |  |
 
 #### Returns
 
@@ -2655,7 +2313,7 @@ interpolateString("test ok", { one: "1", two: "2" }) // will return "test ok"
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L63)
+[packages/framework/esm-config/src/navigation/interpolate-string.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/navigation/interpolate-string.ts#L63)
 
 ___
 
@@ -2663,37 +2321,12 @@ ___
 
 ▸ **interpolateUrl**(`template`, `additionalParams?`): `string`
 
-Interpolates a string with openmrsBase and openmrsSpaBase.
-
-Useful for accepting `${openmrsBase}` or `${openmrsSpaBase}`plus additional template
-parameters in configurable URLs.
-
-Example usage:
-```js
-interpolateUrl("test ${openmrsBase} ${openmrsSpaBase} ok");
-   // will return "test /openmrs /openmrs/spa ok"
-
-interpolateUrl("${openmrsSpaBase}/patient/${patientUuid}", {
-   patientUuid: "4fcb7185-c6c9-450f-8828-ccae9436bd82",
-}); // will return "/openmrs/spa/patient/4fcb7185-c6c9-450f-8828-ccae9436bd82"
-```
-
-This can be used in conjunction with the `navigate` function like so
-```js
-navigate({
- to: interpolateUrl(
-   "${openmrsSpaBase}/patient/${patientUuid}",
-   { patientUuid: patient.uuid }
- )
-}); // will navigate to "/openmrs/spa/patient/4fcb7185-c6c9-450f-8828-ccae9436bd82"
-```
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `template` | `string` | A string to interpolate |
-| `additionalParams?` | `Object` | Additional values to interpolate into the string template |
+| `template` | `string` |  |
+| `additionalParams?` | `Object` |  |
 
 #### Returns
 
@@ -2701,7 +2334,7 @@ navigate({
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/interpolate-string.ts#L36)
+[packages/framework/esm-config/src/navigation/interpolate-string.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/navigation/interpolate-string.ts#L36)
 
 ___
 
@@ -2732,7 +2365,7 @@ navigate({ to: "/${openmrsSpaBase}/baz/page" }) // => navigateToUrl("/openmrs/sp
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `to` | [`NavigateOptions`](interfaces/NavigateOptions.md) | The target path or URL. Supports templating with 'openmrsBase', 'openmrsSpaBase', and any additional template parameters defined in `templateParams`. For example, `${openmrsSpaBase}/home` will resolve to `/openmrs/spa/home` for implementations using the standard OpenMRS and SPA base paths. If `templateParams` contains `{ foo: "bar" }`, then the URL `${openmrsBase}/${foo}` will become `/openmrs/bar`. |
+| `to` | [`NavigateOptions`](interfaces/NavigateOptions.md) |  |
 
 #### Returns
 
@@ -2750,14 +2383,11 @@ ___
 
 ▸ **beginEditSynchronizationItem**(`id`): `Promise`<`void`\>
 
-Triggers an edit flow for the given synchronization item.
-If this is not possible, throws an error.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `id` | `number` | The ID of the synchronization item to be edited. |
+| `id` | `number` |  |
 
 #### Returns
 
@@ -2765,7 +2395,7 @@ If this is not possible, throws an error.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:357](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L357)
+[packages/framework/esm-offline/src/sync.ts:357](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L357)
 
 ___
 
@@ -2773,14 +2403,11 @@ ___
 
 ▸ **canBeginEditSynchronizationItemsOfType**(`type`): `boolean`
 
-Returns whether editing synchronization items of the given type is supported by the currently
-registered synchronization handlers.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization item which should be edited. |
+| `type` | `string` |  |
 
 #### Returns
 
@@ -2788,7 +2415,7 @@ registered synchronization handlers.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L347)
+[packages/framework/esm-offline/src/sync.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L347)
 
 ___
 
@@ -2796,13 +2423,11 @@ ___
 
 ▸ **deleteSynchronizationItem**(`id`): `Promise`<`void`\>
 
-Deletes a queued up sync item with the given ID.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `id` | `number` | The ID of the synchronization item to be deleted. |
+| `id` | `number` |  |
 
 #### Returns
 
@@ -2810,7 +2435,7 @@ Deletes a queued up sync item with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:377](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L377)
+[packages/framework/esm-offline/src/sync.ts:377](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L377)
 
 ___
 
@@ -2818,15 +2443,13 @@ ___
 
 ▸ **generateOfflineUuid**(): `string`
 
-Generates a UUID-like string which is used for uniquely identifying objects while offline.
-
 #### Returns
 
 `string`
 
 #### Defined in
 
-[packages/framework/esm-offline/src/uuid.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/uuid.ts#L7)
+[packages/framework/esm-offline/src/uuid.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/uuid.ts#L7)
 
 ___
 
@@ -2840,7 +2463,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/mode.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/mode.ts#L49)
+[packages/framework/esm-offline/src/mode.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/mode.ts#L49)
 
 ___
 
@@ -2848,14 +2471,11 @@ ___
 
 ▸ **getDynamicOfflineDataEntries**(`type?`): `Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
 
-Returns all [DynamicOfflineData](interfaces/DynamicOfflineData.md) entries which registered for the currently logged in user.
-Optionally returns only entries of a given type.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type?` | `string` | The type of the entries to be returned. If `undefined`, returns all types. |
+| `type?` | `string` |  |
 
 #### Returns
 
@@ -2863,7 +2483,7 @@ Optionally returns only entries of a given type.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L131)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L131)
 
 ___
 
@@ -2871,15 +2491,12 @@ ___
 
 ▸ **getDynamicOfflineDataEntriesFor**(`userId`, `type?`): `Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
 
-Returns all [DynamicOfflineData](interfaces/DynamicOfflineData.md) entries which registered for the given user.
-Optionally returns only entries of a given type.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `userId` | `string` | The ID of the user whose entries are to be retrieved. |
-| `type?` | `string` | The type of the entries to be returned. If `undefined`, returns all types. |
+| `userId` | `string` |  |
+| `type?` | `string` |  |
 
 #### Returns
 
@@ -2887,7 +2504,7 @@ Optionally returns only entries of a given type.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L144)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L144)
 
 ___
 
@@ -2895,15 +2512,13 @@ ___
 
 ▸ **getDynamicOfflineDataHandlers**(): [`DynamicOfflineDataHandler`](interfaces/DynamicOfflineDataHandler.md)[]
 
-Returns all handlers which have been setup using the [setupDynamicOfflineDataHandler](API.md#setupdynamicofflinedatahandler) function.
-
 #### Returns
 
 [`DynamicOfflineDataHandler`](interfaces/DynamicOfflineDataHandler.md)[]
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L105)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L105)
 
 ___
 
@@ -2911,8 +2526,6 @@ ___
 
 ▸ **getFullSynchronizationItems**<`T`\>(`type?`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
 
-Returns all currently queued up sync items of the currently signed in user.
-
 #### Type parameters
 
 | Name |
@@ -2923,7 +2536,7 @@ Returns all currently queued up sync items of the currently signed in user.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type?` | `string` | The identifying type of the synchronization items to be returned. |
+| `type?` | `string` |  |
 
 #### Returns
 
@@ -2931,7 +2544,7 @@ Returns all currently queued up sync items of the currently signed in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:325](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L325)
+[packages/framework/esm-offline/src/sync.ts:325](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L325)
 
 ___
 
@@ -2939,8 +2552,6 @@ ___
 
 ▸ **getFullSynchronizationItemsFor**<`T`\>(`userId`, `type?`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\>[]\>
 
-Returns all currently queued up sync items of a given user.
-
 #### Type parameters
 
 | Name |
@@ -2951,8 +2562,8 @@ Returns all currently queued up sync items of a given user.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `userId` | `string` | The ID of the user whose synchronization items should be returned. |
-| `type?` | `string` | The identifying type of the synchronization items to be returned.. |
+| `userId` | `string` |  |
+| `type?` | `string` |  |
 
 #### Returns
 
@@ -2960,7 +2571,7 @@ Returns all currently queued up sync items of a given user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:301](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L301)
+[packages/framework/esm-offline/src/sync.ts:301](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L301)
 
 ___
 
@@ -2968,23 +2579,19 @@ ___
 
 ▸ **getOfflinePatientDataStore**(): `Store`<[`OfflinePatientDataSyncStore`](interfaces/OfflinePatientDataSyncStore.md)\>
 
-**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
-
 #### Returns
 
 `Store`<[`OfflinePatientDataSyncStore`](interfaces/OfflinePatientDataSyncStore.md)\>
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L45)
+[packages/framework/esm-offline/src/offline-patient-data.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L45)
 
 ___
 
 ### getSynchronizationItem
 
 ▸ **getSynchronizationItem**<`T`\>(`id`): `Promise`<[`SyncItem`](interfaces/SyncItem.md)<`T`\> \| `undefined`\>
-
-Returns a queued sync item with the given ID or `undefined` if no such item exists.
 
 #### Type parameters
 
@@ -2996,7 +2603,7 @@ Returns a queued sync item with the given ID or `undefined` if no such item exis
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `id` | `number` | The ID of the requested sync item. |
+| `id` | `number` |  |
 
 #### Returns
 
@@ -3004,15 +2611,13 @@ Returns a queued sync item with the given ID or `undefined` if no such item exis
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L334)
+[packages/framework/esm-offline/src/sync.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L334)
 
 ___
 
 ### getSynchronizationItems
 
 ▸ **getSynchronizationItems**<`T`\>(`type?`): `Promise`<`T`[]\>
-
-Returns the content of all currently queued up sync items of the currently signed in user.
 
 #### Type parameters
 
@@ -3024,7 +2629,7 @@ Returns the content of all currently queued up sync items of the currently signe
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type?` | `string` | The identifying type of the synchronization items to be returned. |
+| `type?` | `string` |  |
 
 #### Returns
 
@@ -3032,15 +2637,13 @@ Returns the content of all currently queued up sync items of the currently signe
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:316](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L316)
+[packages/framework/esm-offline/src/sync.ts:316](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L316)
 
 ___
 
 ### isOfflineUuid
 
 ▸ **isOfflineUuid**(`uuid`): `boolean`
-
-Checks whether the given string has the format of an offline UUID generated by [generateOfflineUuid](API.md#generateofflineuuid)
 
 #### Parameters
 
@@ -3054,7 +2657,7 @@ Checks whether the given string has the format of an offline UUID generated by [
 
 #### Defined in
 
-[packages/framework/esm-offline/src/uuid.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/uuid.ts#L12)
+[packages/framework/esm-offline/src/uuid.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/uuid.ts#L12)
 
 ___
 
@@ -3062,23 +2665,19 @@ ___
 
 ▸ **messageOmrsServiceWorker**(`message`): `Promise`<[`MessageServiceWorkerResult`](interfaces/MessageServiceWorkerResult.md)<`any`\>\>
 
-Sends the specified message to the application's service worker.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `message` | [`KnownOmrsServiceWorkerMessages`](API.md#knownomrsserviceworkermessages) | The message to be sent. |
+| `message` | [`KnownOmrsServiceWorkerMessages`](API.md#knownomrsserviceworkermessages) |  |
 
 #### Returns
 
 `Promise`<[`MessageServiceWorkerResult`](interfaces/MessageServiceWorkerResult.md)<`any`\>\>
 
-A promise which completes when the message has been successfully processed by the Service Worker.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/service-worker-messaging.ts#L11)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L11)
 
 ___
 
@@ -3086,15 +2685,12 @@ ___
 
 ▸ **putDynamicOfflineData**(`type`, `identifier`): `Promise`<`void`\>
 
-Declares that dynamic offline data of the given [type](interfaces/FetchResponse.md#type) with the given [identifier](interfaces/FHIRResource.md#identifier)
-should be made available offline for the currently logged in user.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
-| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `type` | `string` |  |
+| `identifier` | `string` |  |
 
 #### Returns
 
@@ -3102,7 +2698,7 @@ should be made available offline for the currently logged in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L162)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L162)
 
 ___
 
@@ -3110,16 +2706,13 @@ ___
 
 ▸ **putDynamicOfflineDataFor**(`userId`, `type`, `identifier`): `Promise`<`void`\>
 
-Declares that dynamic offline data of the given [type](interfaces/FetchResponse.md#type) with the given [identifier](interfaces/FHIRResource.md#identifier)
-should be made available offline for the user with the given ID.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `userId` | `string` | The ID of the user for whom the dynamic offline data should be made available. |
-| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
-| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `userId` | `string` |  |
+| `type` | `string` |  |
+| `identifier` | `string` |  |
 
 #### Returns
 
@@ -3127,15 +2720,13 @@ should be made available offline for the user with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L177)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L177)
 
 ___
 
 ### queueSynchronizationItem
 
 ▸ **queueSynchronizationItem**<`T`\>(`type`, `content`, `descriptor?`): `Promise`<`number`\>
-
-Enqueues a new item in the sync queue and associates the item with the currently signed in user.
 
 #### Type parameters
 
@@ -3147,9 +2738,9 @@ Enqueues a new item in the sync queue and associates the item with the currently
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization item. |
-| `content` | `T` | The actual data to be synchronized. |
-| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) | An optional descriptor providing additional metadata about the sync item. |
+| `type` | `string` |  |
+| `content` | `T` |  |
+| `descriptor?` | [`QueueItemDescriptor`](interfaces/QueueItemDescriptor.md) |  |
 
 #### Returns
 
@@ -3157,15 +2748,13 @@ Enqueues a new item in the sync queue and associates the item with the currently
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:274](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L274)
+[packages/framework/esm-offline/src/sync.ts:274](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L274)
 
 ___
 
 ### registerOfflinePatientHandler
 
 ▸ **registerOfflinePatientHandler**(`identifier`, `handler`): `void`
-
-**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
 
 #### Parameters
 
@@ -3180,7 +2769,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L51)
+[packages/framework/esm-offline/src/offline-patient-data.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L51)
 
 ___
 
@@ -3188,15 +2777,12 @@ ___
 
 ▸ **removeDynamicOfflineData**(`type`, `identifier`): `Promise`<`void`\>
 
-Declares that dynamic offline data of the given [type](interfaces/FetchResponse.md#type) with the given [identifier](interfaces/FHIRResource.md#identifier)
-no longer needs to be available offline for the currently logged in user.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
-| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `type` | `string` |  |
+| `identifier` | `string` |  |
 
 #### Returns
 
@@ -3204,7 +2790,7 @@ no longer needs to be available offline for the currently logged in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L213)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L213)
 
 ___
 
@@ -3212,16 +2798,13 @@ ___
 
 ▸ **removeDynamicOfflineDataFor**(`userId`, `type`, `identifier`): `Promise`<`void`\>
 
-Declares that dynamic offline data of the given [type](interfaces/FetchResponse.md#type) with the given [identifier](interfaces/FHIRResource.md#identifier)
-no longer needs to be available offline for the user with the given ID.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `userId` | `string` | The ID of the user who doesn't require the specified offline data. |
-| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
-| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
+| `userId` | `string` |  |
+| `type` | `string` |  |
+| `identifier` | `string` |  |
 
 #### Returns
 
@@ -3229,7 +2812,7 @@ no longer needs to be available offline for the user with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L228)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L228)
 
 ___
 
@@ -3237,14 +2820,11 @@ ___
 
 ▸ **setupDynamicOfflineDataHandler**(`handler`): `void`
 
-Sets up a handler for synchronizing dynamic offline data.
-See [DynamicOfflineDataHandler](interfaces/DynamicOfflineDataHandler.md) for details.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `handler` | [`DynamicOfflineDataHandler`](interfaces/DynamicOfflineDataHandler.md) | The handler to be setup. |
+| `handler` | [`DynamicOfflineDataHandler`](interfaces/DynamicOfflineDataHandler.md) |  |
 
 #### Returns
 
@@ -3252,15 +2832,13 @@ See [DynamicOfflineDataHandler](interfaces/DynamicOfflineDataHandler.md) for det
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L114)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L114)
 
 ___
 
 ### setupOfflineSync
 
 ▸ **setupOfflineSync**<`T`\>(`type`, `dependsOn`, `process`, `options?`): `void`
-
-Registers a new synchronization handler which is able to synchronize data of a specific type.
 
 #### Type parameters
 
@@ -3272,10 +2850,10 @@ Registers a new synchronization handler which is able to synchronize data of a s
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The identifying type of the synchronization items which can be handled by this handler. |
-| `dependsOn` | `string`[] | An array of other sync item types which must be synchronized before this handler   can synchronize its own data. Items of these types are effectively dependencies of the data   synchronized by this handler. |
-| `process` | `ProcessSyncItem`<`T`\> | A function which, when invoked, performs the actual client-server synchronization of the given   `item` (which is the actual data to be synchronized). |
-| `options` | `SetupOfflineSyncOptions`<`T`\> | Additional options which can optionally be provided when setting up a synchronization callback   for a specific synchronization item type. |
+| `type` | `string` |  |
+| `dependsOn` | `string`[] |  |
+| `process` | `ProcessSyncItem`<`T`\> |  |
+| `options` | `SetupOfflineSyncOptions`<`T`\> |  |
 
 #### Returns
 
@@ -3283,7 +2861,7 @@ Registers a new synchronization handler which is able to synchronize data of a s
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:392](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/sync.ts#L392)
+[packages/framework/esm-offline/src/sync.ts:392](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L392)
 
 ___
 
@@ -3309,7 +2887,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L24)
+[packages/framework/esm-globals/src/events.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L24)
 
 ___
 
@@ -3335,7 +2913,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L14)
+[packages/framework/esm-globals/src/events.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L14)
 
 ___
 
@@ -3361,7 +2939,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L45)
+[packages/framework/esm-globals/src/events.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L45)
 
 ___
 
@@ -3369,14 +2947,12 @@ ___
 
 ▸ **syncAllDynamicOfflineData**(`type`, `abortSignal?`): `Promise`<`void`\>
 
-Synchronizes all offline data entries of the given [type](interfaces/FetchResponse.md#type) for the currently logged in user.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
-| `abortSignal?` | `AbortSignal` | An {@link AbortSignal} which can be used to cancel the operation. |
+| `type` | `string` |  |
+| `abortSignal?` | `AbortSignal` |  |
 
 #### Returns
 
@@ -3384,7 +2960,7 @@ Synchronizes all offline data entries of the given [type](interfaces/FetchRespon
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L262)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L262)
 
 ___
 
@@ -3392,15 +2968,13 @@ ___
 
 ▸ **syncDynamicOfflineData**(`type`, `identifier`, `abortSignal?`): `Promise`<`void`\>
 
-Synchronizes a single offline data entry of the given [type](interfaces/FetchResponse.md#type) for the currently logged in user.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `type` | `string` | The type of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
-| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](interfaces/DynamicOfflineData.md) for details. |
-| `abortSignal?` | `AbortSignal` | An {@link AbortSignal} which can be used to cancel the operation. |
+| `type` | `string` |  |
+| `identifier` | `string` |  |
+| `abortSignal?` | `AbortSignal` |  |
 
 #### Returns
 
@@ -3408,15 +2982,13 @@ Synchronizes a single offline data entry of the given [type](interfaces/FetchRes
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:280](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L280)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:280](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L280)
 
 ___
 
 ### syncOfflinePatientData
 
 ▸ **syncOfflinePatientData**(`patientUuid`): `Promise`<`void`\>
-
-**`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
 
 #### Parameters
 
@@ -3430,7 +3002,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/offline-patient-data.ts#L71)
+[packages/framework/esm-offline/src/offline-patient-data.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L71)
 
 ___
 
@@ -3444,7 +3016,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectivity.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useConnectivity.ts#L5)
+[packages/framework/esm-react-utils/src/useConnectivity.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectivity.ts#L5)
 
 ___
 
@@ -3453,35 +3025,6 @@ ___
 ### ExtensionSlot
 
 ▸ **ExtensionSlot**(`__namedParameters`): `Element`
-
-An [extension slot](https://o3-dev.docs.openmrs.org/#/main/extensions).
-A place with a name. Extensions that get connected to that name
-will be rendered into this.
-
-**`example`**
-Passing a react node as children
-
-```tsx
-<ExtensionSlot name="Foo">
-  <div style={{ width: 10rem }}>
-    <Extension />
-  </div>
-</ExtensionSlot>
-```
-
-**`example`**
-Passing a function as children
-
-```tsx
-<ExtensionSlot name="Bar">
-  {(extension) => (
-    <h1>{extension.name}</h1>
-    <div style={{ color: extension.meta.color }}>
-      <Extension />
-    </div>
-  )}
-</ExtensionSlot>
-```
 
 #### Parameters
 
@@ -3495,7 +3038,7 @@ Passing a function as children
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L85)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L85)
 
 ___
 
@@ -3504,8 +3047,6 @@ ___
 ### createGlobalStore
 
 ▸ **createGlobalStore**<`TState`\>(`name`, `initialState`): `Store`<`TState`\>
-
-Creates a Unistore [store](https://github.com/developit/unistore#store).
 
 #### Type parameters
 
@@ -3517,26 +3058,22 @@ Creates a Unistore [store](https://github.com/developit/unistore#store).
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `name` | `string` | A name by which the store can be looked up later.    Must be unique across the entire application. |
-| `initialState` | `TState` | An object which will be the initial state of the store. |
+| `name` | `string` |  |
+| `initialState` | `TState` |  |
 
 #### Returns
 
 `Store`<`TState`\>
 
-The newly created store.
-
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L19)
+[packages/framework/esm-state/src/state.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L19)
 
 ___
 
 ### createUseStore
 
 ▸ **createUseStore**<`T`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)(`actions?`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)
-
-Avoid this; generally prefer to have clients use `useStore(yourStore)`
 
 #### Type parameters
 
@@ -3586,7 +3123,7 @@ Avoid this; generally prefer to have clients use `useStore(yourStore)`
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/createUseStore.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/createUseStore.ts#L23)
+[packages/framework/esm-react-utils/src/createUseStore.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/createUseStore.ts#L23)
 
 ___
 
@@ -3598,20 +3135,15 @@ ___
 
 `Store`<[`AppState`](interfaces/AppState.md)\>
 
-The [store](https://github.com/developit/unistore#store) named `app`.
-
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L86)
+[packages/framework/esm-state/src/state.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L86)
 
 ___
 
 ### getGlobalStore
 
 ▸ **getGlobalStore**<`TState`\>(`name`, `fallbackState?`): `Store`<`TState`\>
-
-Returns the existing [store](https://github.com/developit/unistore#store) named `name`,
-or creates a new store named `name` if none exists.
 
 #### Type parameters
 
@@ -3623,18 +3155,16 @@ or creates a new store named `name` if none exists.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `name` | `string` | The name of the store to look up. |
-| `fallbackState?` | `TState` | The initial value of the new store if no store named `name` exists. |
+| `name` | `string` |  |
+| `fallbackState?` | `TState` |  |
 
 #### Returns
 
 `Store`<`TState`\>
 
-The found or newly created store.
-
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L56)
+[packages/framework/esm-state/src/state.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L56)
 
 ___
 
@@ -3663,7 +3193,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-state/src/state.ts#L90)
+[packages/framework/esm-state/src/state.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L90)
 
 ___
 
@@ -3690,7 +3220,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L23)
+[packages/framework/esm-react-utils/src/useStore.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L23)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`): `U`
 
@@ -3714,7 +3244,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L24)
+[packages/framework/esm-react-utils/src/useStore.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L24)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
 
@@ -3739,7 +3269,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L25)
+[packages/framework/esm-react-utils/src/useStore.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L25)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)
 
@@ -3764,7 +3294,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L30)
+[packages/framework/esm-react-utils/src/useStore.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L30)
 
 ___
 
@@ -3791,11 +3321,31 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useStore.ts#L52)
+[packages/framework/esm-react-utils/src/useStore.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L52)
 
 ___
 
 ## UI Functions
+
+### isDesktop
+
+▸ **isDesktop**(`layout`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `layout` | [`LayoutType`](API.md#layouttype) |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useLayoutType.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L40)
+
+___
 
 ### setLeftNav
 
@@ -3813,7 +3363,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L20)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L18)
 
 ___
 
@@ -3821,21 +3371,17 @@ ___
 
 ▸ **showModal**(`extensionId`, `props?`, `onClose?`): () => `void`
 
-Shows the provided extension component in a modal dialog.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `extensionId` | `string` | The id of the extension to show. |
-| `props` | `Record`<`string`, `any`\> | The optional props to provide to the extension. |
-| `onClose` | () => `void` | The optional notification to receive when the modal is closed. |
+| `extensionId` | `string` |  |
+| `props` | `Record`<`string`, `any`\> |  |
+| `onClose` | () => `void` |  |
 
 #### Returns
 
 `fn`
-
-The dispose function to force closing the modal dialog.
 
 ▸ (): `void`
 
@@ -3845,7 +3391,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:165](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/modals/index.tsx#L165)
+[packages/framework/esm-styleguide/src/modals/index.tsx:165](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L165)
 
 ___
 
@@ -3853,13 +3399,11 @@ ___
 
 ▸ **showNotification**(`notification`): `void`
 
-Displays an inline notification in the UI.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `notification` | [`NotificationDescriptor`](interfaces/NotificationDescriptor.md) | The description of the notification to display. |
+| `notification` | [`NotificationDescriptor`](interfaces/NotificationDescriptor.md) |  |
 
 #### Returns
 
@@ -3867,7 +3411,7 @@ Displays an inline notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/index.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/notifications/index.tsx#L41)
+[packages/framework/esm-styleguide/src/notifications/index.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L40)
 
 ___
 
@@ -3875,13 +3419,11 @@ ___
 
 ▸ **showToast**(`toast`): `void`
 
-Displays a toast notification in the UI.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `toast` | [`ToastDescriptor`](interfaces/ToastDescriptor.md) | The description of the toast to display. |
+| `toast` | [`ToastDescriptor`](interfaces/ToastDescriptor.md) |  |
 
 #### Returns
 
@@ -3889,7 +3431,7 @@ Displays a toast notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/index.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/toasts/index.tsx#L35)
+[packages/framework/esm-styleguide/src/toasts/index.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/index.tsx#L36)
 
 ___
 
@@ -3915,7 +3457,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L93)
+[packages/framework/esm-globals/src/events.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L93)
 
 ___
 
@@ -3941,7 +3483,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/events.ts#L102)
+[packages/framework/esm-globals/src/events.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L102)
 
 ___
 
@@ -3961,7 +3503,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-styleguide/src/left-nav/index.tsx#L24)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L22)
 
 ___
 
@@ -3981,7 +3523,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useBodyScrollLock.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useBodyScrollLock.ts#L4)
+[packages/framework/esm-react-utils/src/useBodyScrollLock.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useBodyScrollLock.ts#L4)
 
 ___
 
@@ -3995,7 +3537,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useLayoutType.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useLayoutType.ts#L23)
+[packages/framework/esm-react-utils/src/useLayoutType.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L26)
 
 ___
 
@@ -4022,7 +3564,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOnClickOutside.tsx:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/useOnClickOutside.tsx#L4)
+[packages/framework/esm-react-utils/src/useOnClickOutside.tsx:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.tsx#L4)
 
 ___
 
@@ -4061,7 +3603,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePagination.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-react-utils/src/usePagination.ts#L6)
+[packages/framework/esm-react-utils/src/usePagination.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L6)
 
 ___
 
@@ -4071,23 +3613,19 @@ ___
 
 ▸ **age**(`dateString`): `string`
 
-Gets a human readable age represention of the provided date string.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `dateString` | `string` | The stringified date. |
+| `dateString` | `string` |  |
 
 #### Returns
 
 `string`
 
-A human-readable string version of the age.
-
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L39)
+[packages/framework/esm-utils/src/age-helpers.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L39)
 
 ___
 
@@ -4095,23 +3633,19 @@ ___
 
 ▸ **daysIntoYear**(`date`): `number`
 
-Gets the number of days in the year of the given date.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `date` | `Date` | The date to compute the days within the year. |
+| `date` | `Date` |  |
 
 #### Returns
 
 `number`
 
-The number of days.
-
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L8)
+[packages/framework/esm-utils/src/age-helpers.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L8)
 
 ___
 
@@ -4119,24 +3653,20 @@ ___
 
 ▸ **isSameDay**(`firstDate`, `secondDate`): `boolean`
 
-Checks if two dates are representing the same day.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `firstDate` | `Date` | The first date. |
-| `secondDate` | `Date` | The second date. |
+| `firstDate` | `Date` |  |
+| `secondDate` | `Date` |  |
 
 #### Returns
 
 `boolean`
 
-True if both are located on the same day.
-
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/age-helpers.tsx#L25)
+[packages/framework/esm-utils/src/age-helpers.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L25)
 
 ___
 
@@ -4157,22 +3687,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/version.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/version.ts#L22)
+[packages/framework/esm-utils/src/version.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/version.ts#L22)
 
 ___
 
 ### retry
 
 ▸ **retry**<`T`\>(`fn`, `options?`): `Promise`<`T`\>
-
-Executes the specified function and retries executing on failure with a custom backoff strategy
-defined by the options.
-
-If not configured otherwise, this function uses the following default options:
-* Retries 5 times beyond the initial attempt.
-* Uses an exponential backoff starting with an initial delay of 1000ms.
-
-**`throws`** Rethrows the final error of running `fn` when the function stops retrying.
 
 #### Type parameters
 
@@ -4184,18 +3705,16 @@ If not configured otherwise, this function uses the following default options:
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `fn` | () => `Promise`<`T`\> | The function to be executed and retried on failure. |
-| `options` | [`RetryOptions`](interfaces/RetryOptions.md) | Additional options which configure the retry behavior. |
+| `fn` | () => `Promise`<`T`\> |  |
+| `options` | [`RetryOptions`](interfaces/RetryOptions.md) |  |
 
 #### Returns
 
 `Promise`<`T`\>
 
-The result of successfully executing `fn`.
-
 #### Defined in
 
-[packages/framework/esm-utils/src/retry.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/retry.ts#L40)
+[packages/framework/esm-utils/src/retry.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L40)
 
 ___
 
@@ -4218,4 +3737,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/translate.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-utils/src/translate.ts#L4)
+[packages/framework/esm-utils/src/translate.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/translate.ts#L4)

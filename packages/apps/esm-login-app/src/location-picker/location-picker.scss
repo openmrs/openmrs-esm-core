@@ -1,3 +1,5 @@
+@use "@carbon/styles/scss/spacing";
+@import "~@openmrs/esm-styleguide/src/vars";
 @import "../root.scss";
 
 .locationPickerContainer {
@@ -74,7 +76,7 @@
 
 .radioButtonSkeleton {
   margin-right: 0 !important;
-  margin-bottom: $spacing-05;
+  margin-bottom: spacing.$spacing-05;
 }
 
 .radioButtonSkeleton span {
@@ -86,7 +88,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $spacing-05;
+  margin-bottom: spacing.$spacing-05;
   border: 2px solid $ui-03;
 }
 
@@ -104,5 +106,5 @@ pagination > button:first-child:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: $spacing-05;
+  margin-top: spacing.$spacing-05;
 }

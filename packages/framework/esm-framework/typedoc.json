@@ -2,6 +2,6 @@
   "out": "docs",
   "readme": "none",
   "excludeInternal": true,
-  "gitRevision": "master",
+  "gitRevision": "main",
   "entryDocument": "API.md"
 }

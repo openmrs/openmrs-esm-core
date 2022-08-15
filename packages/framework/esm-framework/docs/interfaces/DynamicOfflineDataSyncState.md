@@ -2,8 +2,6 @@
 
 # Interface: DynamicOfflineDataSyncState
 
-Represents the result of syncing a given [DynamicOfflineData](DynamicOfflineData.md) entry.
-
 ## Table of contents
 
 ### Offline Properties
@@ -20,11 +18,9 @@ Represents the result of syncing a given [DynamicOfflineData](DynamicOfflineData
 
 • **erroredHandlers**: `string`[]
 
-The IDs of the handlers which failed to synchronize their data.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L89)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L89)
 
 ___
 
@@ -32,11 +28,9 @@ ___
 
 • **errors**: { `handlerId`: `string` ; `message`: `string`  }[]
 
-A collection of the errors caught while synchronizing, per handler.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L93)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L93)
 
 ___
 
@@ -44,11 +38,9 @@ ___
 
 • **succeededHandlers**: `string`[]
 
-The IDs of the handlers which successfully synchronized their data.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L85)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L85)
 
 ___
 
@@ -56,11 +48,9 @@ ___
 
 • **syncedBy**: `string`
 
-The ID of the user who has triggered the data synchronization.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L81)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L81)
 
 ___
 
@@ -68,8 +58,6 @@ ___
 
 • **syncedOn**: `Date`
 
-The time when the entry has been synced the last time.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L77)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L77)

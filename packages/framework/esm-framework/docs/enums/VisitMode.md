@@ -4,38 +4,38 @@
 
 ## Table of contents
 
-### API Enumeration members
+### API Enumeration Members
 
 - [EDITVISIT](VisitMode.md#editvisit)
 - [LOADING](VisitMode.md#loading)
 - [NEWVISIT](VisitMode.md#newvisit)
 
-## API Enumeration members
+## API Enumeration Members
 
 ### EDITVISIT
 
-• **EDITVISIT** = `"editVisit"`
+• **EDITVISIT** = ``"editVisit"``
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L85)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L85)
 
 ___
 
 ### LOADING
 
-• **LOADING** = `"loadingVisit"`
+• **LOADING** = ``"loadingVisit"``
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L86)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L86)
 
 ___
 
 ### NEWVISIT
 
-• **NEWVISIT** = `"startVisit"`
+• **NEWVISIT** = ``"startVisit"``
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L84)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L84)

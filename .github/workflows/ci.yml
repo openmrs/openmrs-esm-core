@@ -3,9 +3,9 @@ name: OpenMRS CI
 on:
   workflow_dispatch: # temporary, for debugging
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
   release:
     types:
       - created
@@ -25,24 +25,24 @@ jobs:
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3 
+        uses: actions/cache@v3
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      
+
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn
+        run: yarn install --immutable
 
       - name: Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
-      
+
       - name: Run lint, tests and typecheck code
-        run: yarn run verify 
-      
+        run: yarn run verify
+
       - name: Run build
         run: yarn turbo run build --color --api="http://127.0.0.1:9080" --token="${{ secrets.TURBO_SERVER_TOKEN }}" --team="${{ github.repository_owner }}"
 
@@ -60,17 +60,17 @@ jobs:
         with:
           node-version: "16.15"
           registry-url: "https://registry.npmjs.org"
-      
+
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3 
+        uses: actions/cache@v3
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      
+
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn
+        run: yarn install --immutable
 
       - run: yarn lerna version "$(node -e "console.log(require('semver').inc(require('./lerna.json').version, 'patch'))")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
       - run: yarn turbo run build --color
@@ -136,14 +136,14 @@ jobs:
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3 
+        uses: actions/cache@v3
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
-      
+
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn
+        run: yarn install --immutable
 
       - run: yarn turbo run build --color
       - run: yarn run ci:publish

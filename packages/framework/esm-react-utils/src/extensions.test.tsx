@@ -157,7 +157,9 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
       expect(screen.getByRole("heading")).toBeInTheDocument()
     );
     expect(screen.getByRole("heading")).toHaveTextContent("es");
-    expect(screen.getByText("Spanish")).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.getByText("Spanish")).toBeInTheDocument()
+    );
   });
 
   test("Both meta and state can be used at the same time", async () => {
@@ -206,7 +208,9 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
       expect(screen.getByRole("heading")).toBeInTheDocument()
     );
     expect(screen.getByRole("heading")).toHaveTextContent("sw");
-    expect(screen.getByText(/Swahili/)).toHaveTextContent("Swahili!");
+    await waitFor(() =>
+      expect(screen.getByText(/Swahili/)).toHaveTextContent("Swahili!")
+    );
     userEvent.click(screen.getByText("Toggle suffix"));
     await waitFor(() =>
       expect(screen.getByText(/Swahili/)).toHaveTextContent("Swahili?")
@@ -249,6 +253,42 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
     expect(
       within(screen.getByTestId("Hindi")).getByRole("heading")
     ).toHaveTextContent("hi");
+  });
+
+  test("Extension renders with child function", async () => {
+    registerSimpleExtension("Hindi", "esm-languages-app", undefined, {
+      code: "hi",
+    });
+    attach("Box", "Hindi");
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-languages-app",
+      featureName: "Languages",
+      disableTranslations: true,
+    })(() => {
+      return (
+        <div>
+          <ExtensionSlot name="Box">
+            {() => (
+              <Extension>
+                {(slot) => <div data-testid="custom-wrapper">{slot}</div>}
+              </Extension>
+            )}
+          </ExtensionSlot>
+        </div>
+      );
+    });
+
+    render(<App />);
+
+    await waitFor(() =>
+      expect(screen.getByTestId("custom-wrapper")).toBeInTheDocument()
+    );
+
+    // essentially: is the first child of custom-wrapper the extension?
+    expect(screen.getByTestId("custom-wrapper").children[0]).toHaveAttribute(
+      "data-extension-id",
+      "Hindi"
+    );
   });
 });
 

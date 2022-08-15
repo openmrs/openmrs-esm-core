@@ -4,11 +4,11 @@ import {
   getConfigStore,
   getExtensionsConfigStore,
   ConfigStore,
+  ConfigObject,
   ExtensionsConfigStore,
   getExtensionConfigFromStore,
 } from "@openmrs/esm-config";
 import { ComponentContext, ExtensionData } from "./ComponentContext";
-import { ConfigObject } from "@openmrs/esm-config";
 import { Store } from "unistore";
 import isEqual from "lodash-es/isEqual";
 

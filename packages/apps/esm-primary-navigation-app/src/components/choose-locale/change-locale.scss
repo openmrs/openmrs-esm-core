@@ -1,0 +1,42 @@
+@import "../../root.scss";
+
+.switcherContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+
+  label {
+    color: $labeldropdown;
+  }
+
+  ul button {
+    @extend .productiveHeading01;
+    width: 100%;
+    background-color: var(--brand-02);
+  }
+
+  ul div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    @extend .bodyLong01;
+  }
+
+  ul div button {
+    color: $inverse-link;
+    margin-left: 0.5rem;
+    width: 5rem;
+  }
+
+  ul div button:hover {
+    @include brand-01(background-color);
+    color: $inverse-link;
+  }
+
+  hr {
+    background-color: $ui-background;
+    width: 18rem;
+    margin: 0.5rem 0rem;
+  }
+}

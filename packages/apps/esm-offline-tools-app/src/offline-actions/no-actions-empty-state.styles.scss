@@ -1,15 +1,23 @@
+@use "@carbon/styles/scss/spacing";
+@use "@carbon/styles/scss/type";
 @import "../root.scss";
 
 .emptyStateContainer {
-  padding: $spacing-07;
+  padding: spacing.$spacing-07;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
   .emptyStateDescription {
-    @include carbon--type-style("body-long-01");
+    @include type.type-style("body-01");
+    color: $text-02;
     white-space: pre-line;
     text-align: center;
+  }
+
+  .heading {
+    @extend .productiveHeading01;
+    color: $ui-05;
   }
 }

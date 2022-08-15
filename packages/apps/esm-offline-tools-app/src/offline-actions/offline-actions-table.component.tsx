@@ -1,6 +1,16 @@
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Button,
+  DataTable,
+  DataTableHeader,
+  DataTableSkeleton,
   FilterRowsData,
+  Layer,
+  Link,
+  Pagination,
+  Search,
+  SearchSkeleton,
   Table,
   TableBody,
   TableCell,
@@ -10,26 +20,18 @@ import {
   TableRow,
   TableSelectAll,
   TableSelectRow,
-  DataTableSkeleton,
-  Link,
-  Pagination,
-  Search,
-  SearchSkeleton,
-  DataTable,
-  DataTableHeader,
-} from "carbon-components-react";
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import styles from "./offline-actions-table.styles.scss";
+} from "@carbon/react";
 import {
+  beginEditSynchronizationItem,
+  canBeginEditSynchronizationItemsOfType,
   createErrorHandler,
-  usePagination,
-  useLayoutType,
+  isDesktop,
   navigate,
   SyncItem,
-  canBeginEditSynchronizationItemsOfType,
-  beginEditSynchronizationItem,
-} from "@openmrs/esm-framework/src/internal";
+  useLayoutType,
+  usePagination,
+} from "@openmrs/esm-framework";
+import styles from "./offline-actions-table.styles.scss";
 
 export interface SyncItemWithPatient {
   item: SyncItem;
@@ -43,8 +45,8 @@ export type OfflineActionsTableHeaders =
   | "error";
 
 export interface OfflineActionsTableProps {
-  isLoading: boolean;
   data?: Array<SyncItemWithPatient>;
+  isLoading: boolean;
   hiddenHeaders?: Array<OfflineActionsTableHeaders>;
   disableEditing: boolean;
   disableDelete: boolean;
@@ -63,7 +65,7 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
   const [pageSize, setPageSize] = useState(10);
   const { results, currentPage, goTo } = usePagination(data);
   const layout = useLayoutType();
-  const toolbarItemSize = layout === "desktop" ? "sm" : undefined;
+  const toolbarItemSize = isDesktop(layout) ? "sm" : undefined;
   const defaultHeaders: Array<DataTableHeader<OfflineActionsTableHeaders>> = [
     {
       key: "createdOn",
@@ -132,20 +134,21 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
         >
           <div className={styles.tableHeaderContainer}>
             {selectedRows.length === 0 && (
-              <Search
-                className={styles.tableSearch}
-                labelText={t(
-                  "offlinePatientsTableSearchLabel",
-                  "Search this list"
-                )}
-                placeholder={t(
-                  "offlinePatientsTableSearchPlaceholder",
-                  "Search this list"
-                )}
-                size={toolbarItemSize}
-                onChange={onInputChange}
-                light
-              />
+              <Layer>
+                <Search
+                  className={styles.tableSearch}
+                  labelText={t(
+                    "offlinePatientsTableSearchLabel",
+                    "Search this list"
+                  )}
+                  placeholder={t(
+                    "offlinePatientsTableSearchPlaceholder",
+                    "Search this list"
+                  )}
+                  size={toolbarItemSize}
+                  onChange={onInputChange}
+                />
+              </Layer>
             )}
             {selectedRows.length > 0 && (
               <Button

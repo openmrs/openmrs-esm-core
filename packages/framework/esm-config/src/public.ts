@@ -9,4 +9,4 @@ export {
   provide,
   getConfig,
 } from "./module-config/module-config";
-export { getConfigStore, ConfigStore } from "./module-config/state";
+export { type ConfigStore, getConfigStore } from "./module-config/state";

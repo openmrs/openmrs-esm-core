@@ -148,7 +148,7 @@ colorPicker: {
 ```
 
 For convenience, some common validators are provided out of the box. See the
-[API / validators](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#validators).
+[API / validators](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#validators).
 
 #### Arrays
 
@@ -229,7 +229,7 @@ the defaults for configuration elements for which no values have been provided.
 
 A React Hook is provided to hide the asynchronicity of config loading. The
 `moduleName`provided to the
-[`openmrsComponentDecorator` in esm-react-utils](https://github.com/openmrs/openmrs-esm-core/tree/master/packages/framework/esm-react-utils)
+[`openmrsComponentDecorator` in esm-react-utils](https://github.com/openmrs/openmrs-esm-core/tree/main/packages/framework/esm-react-utils)
 is used to look up the configuration elsewhere in the application.
 
 ```js
@@ -301,7 +301,7 @@ the element, but this may change in future versions.
 
 #### `_type`
 
-One of the values from [the `Type` enum](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/enums/Type.md). Used for validation and to help the
+One of the values from [the `Type` enum](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/enums/Type.md). Used for validation and to help the
 implementer tools work with the element.
 
 Should always appear alongside `_default`.
@@ -318,10 +318,10 @@ Can be used anywhere within the schema structure.
 An array of validator objects.
 
 Some common validators are
-provided: [API / validators](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#config-validation-functions).
+provided: [API / validators](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#config-validation-functions).
 
 Custom validators should
-be created with the [validator](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md#validator) function.
+be created with the [validator](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#validator) function.
 
 Can be used anywhere within the schema structure.
 
@@ -333,7 +333,7 @@ contained in the array.
 
 ## API Documentation
 
-See the Config Functions section of the [API docs](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-framework/docs/API.md).
+See the Config Functions section of the [API docs](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md).
 
 ## The RFC
 

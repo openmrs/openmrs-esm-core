@@ -64,8 +64,11 @@ describe("Interaction between configuration and extension systems", () => {
       featureName: "The Flintstones",
       disableTranslations: true,
     })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
+
     render(<App />);
+
     await waitFor(() => expect(screen.getByText("Betty")).toBeInTheDocument());
+
     const slot = screen.getByTestId("slot");
     const extensions = slot.childNodes;
     expect(extensions[0]).toHaveTextContent("Betty");
@@ -105,8 +108,11 @@ describe("Interaction between configuration and extension systems", () => {
         <ExtensionSlot data-testid="future-slot" name="Future slot" />
       </>
     ));
+
     render(<App />);
+
     await screen.findAllByText(/.*Pebbles.*/);
+
     const flintstonePebbles = screen.getByTestId("flintstone-slot");
     expect(flintstonePebbles).toHaveTextContent(/Pebbles:.*Springfield/);
     const futurePebbles = screen.getByTestId("future-slot");
@@ -145,8 +151,11 @@ describe("Interaction between configuration and extension systems", () => {
         <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
       </>
     ));
+
     render(<App />);
+
     await screen.findAllByText(/.*Dino.*/);
+
     const slot = screen.getByTestId("flintstone-slot");
     expect(slot.firstChild).toHaveTextContent(/Dino/);
     expect(slot.lastChild).toHaveTextContent(/Baby Puss/);
@@ -161,8 +170,11 @@ describe("Interaction between configuration and extension systems", () => {
       featureName: "The Slaghooples",
       disableTranslations: true,
     })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
+
     render(<App />);
+
     await waitFor(() => expect(screen.getByText("Pearl")).toBeInTheDocument());
+
     act(() => {
       temporaryConfigStore.setState({
         config: {
@@ -176,6 +188,7 @@ describe("Interaction between configuration and extension systems", () => {
         },
       });
     });
+
     expect(screen.queryByText("Pearl")).not.toBeInTheDocument();
   });
 
@@ -188,11 +201,15 @@ describe("Interaction between configuration and extension systems", () => {
       featureName: "The Flintstones",
       disableTranslations: true,
     })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
+
     render(<App />);
+
     await waitFor(() =>
       expect(screen.getByText(/Mr. Slate/)).toBeInTheDocument()
     );
+
     expect(screen.getByTestId("slot")).toHaveTextContent(/green/);
+
     act(() => {
       temporaryConfigStore.setState({
         config: {
@@ -208,8 +225,11 @@ describe("Interaction between configuration and extension systems", () => {
         },
       });
     });
+
     expect(screen.queryByText("green")).not.toBeInTheDocument();
-    expect(screen.getByTestId("slot")).toHaveTextContent(/black/);
+    waitFor(() =>
+      expect(screen.getByTestId("slot")).toHaveTextContent(/black/)
+    );
   });
 
   test("Extension config should be available in extension store", async () => {
@@ -232,9 +252,13 @@ describe("Interaction between configuration and extension systems", () => {
       featureName: "The Flintstones",
       disableTranslations: true,
     })(RootComponent);
+
     render(<App />);
+
     await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
+
     expect(screen.getByText(/clothes/)).toHaveTextContent(/leopard/);
+
     act(() => {
       temporaryConfigStore.setState({
         config: {
@@ -250,6 +274,7 @@ describe("Interaction between configuration and extension systems", () => {
         },
       });
     });
+
     expect(screen.getByText(/clothes/)).toHaveTextContent(/tiger/);
   });
 
@@ -295,7 +320,7 @@ describe("Interaction between configuration and extension systems", () => {
     function RootComponent() {
       return (
         <div>
-          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+          <ExtensionSlot data-testid="slot" name="A slot" />
         </div>
       );
     }
@@ -306,8 +331,12 @@ describe("Interaction between configuration and extension systems", () => {
     })(RootComponent);
 
     render(<App />);
+
     await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
-    expect(screen.getByText(/\bWilma\b/)).toBeVisible();
+    expect(screen.getByTestId("slot").firstChild).toHaveAttribute(
+      "data-extension-id",
+      "Wilma"
+    );
     expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
   });
 
@@ -347,7 +376,7 @@ describe("Interaction between configuration and extension systems", () => {
     function RootComponent() {
       return (
         <div>
-          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+          <ExtensionSlot data-testid="slot" name="A slot" />
         </div>
       );
     }
@@ -358,8 +387,12 @@ describe("Interaction between configuration and extension systems", () => {
     })(RootComponent);
 
     render(<App />);
+
     await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
-    expect(screen.getByText(/\bSchmoo\b/)).toBeVisible();
+    expect(screen.getByTestId("slot").firstChild).toHaveAttribute(
+      "data-extension-id",
+      "Schmoo"
+    );
   });
 
   test("should only show extensions users have default privilege for", async () => {
@@ -396,7 +429,7 @@ describe("Interaction between configuration and extension systems", () => {
     function RootComponent() {
       return (
         <div>
-          <ExtensionSlot data-testid="slot" extensionSlotName="A slot" />
+          <ExtensionSlot data-testid="slot" name="A slot" />
         </div>
       );
     }
@@ -407,8 +440,12 @@ describe("Interaction between configuration and extension systems", () => {
     })(RootComponent);
 
     render(<App />);
+
     await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
-    expect(screen.getByText(/\bWilma\b/)).toBeVisible();
+    expect(screen.getByTestId("slot").firstChild).toHaveAttribute(
+      "data-extension-id",
+      "Wilma"
+    );
     expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
   });
 });

@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/types.ts#L34)
+[packages/framework/esm-config/src/types.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L34)

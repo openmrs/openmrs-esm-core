@@ -2,9 +2,6 @@
 
 # Interface: DynamicOfflineDataHandler
 
-A handler for synchronizing dynamically declared offline data.
-Can be setup using the [setupDynamicOfflineDataHandler](../API.md#setupdynamicofflinedatahandler) function.
-
 ## Table of contents
 
 ### Offline Properties
@@ -24,12 +21,9 @@ Can be setup using the [setupDynamicOfflineDataHandler](../API.md#setupdynamicof
 
 • `Optional` **displayName**: `string`
 
-A human-readable string representing the handler.
-If provided, the handler can be rendered in the UI using that string.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L24)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L24)
 
 ___
 
@@ -37,11 +31,9 @@ ___
 
 • **id**: `string`
 
-A string uniquely identifying the handler.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L14)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L14)
 
 ___
 
@@ -49,12 +41,9 @@ ___
 
 • **type**: `string`
 
-The type of offline data handled by this handler.
-See [DynamicOfflineData.type](DynamicOfflineData.md#type) for details.
-
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L19)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L19)
 
 ## Methods
 
@@ -62,16 +51,12 @@ See [DynamicOfflineData.type](DynamicOfflineData.md#type) for details.
 
 ▸ **isSynced**(`identifier`, `abortSignal?`): `Promise`<`boolean`\>
 
-Evaluates whether the given offline data is correctly synced at this point in time from the perspective
-of this single handler.
-If `false`, the handler would have to (re-)sync the data in order for offline mode to properly work.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](DynamicOfflineData.md) for details. |
-| `abortSignal?` | `AbortSignal` | An {@link AbortSignal} which can be used to cancel the operation. |
+| `identifier` | `string` |  |
+| `abortSignal?` | `AbortSignal` |  |
 
 #### Returns
 
@@ -79,7 +64,7 @@ If `false`, the handler would have to (re-)sync the data in order for offline mo
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L32)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L32)
 
 ___
 
@@ -87,14 +72,12 @@ ___
 
 ▸ **sync**(`identifier`, `abortSignal?`): `Promise`<`void`\>
 
-Synchronizes the given offline data.
-
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `identifier` | `string` | The identifier of the offline data. See [DynamicOfflineData](DynamicOfflineData.md) for details. |
-| `abortSignal?` | `AbortSignal` | An {@link AbortSignal} which can be used to cancel the operation. |
+| `identifier` | `string` |  |
+| `abortSignal?` | `AbortSignal` |  |
 
 #### Returns
 
@@ -102,4 +85,4 @@ Synchronizes the given offline data.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-offline/src/dynamic-offline-data.ts#L38)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L38)

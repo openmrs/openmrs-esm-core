@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./styles.css";
-import Close16 from "@carbon/icons-react/es/close/16";
 import {
   getExtensionInternalStore,
   useStore,
   useStoreWithActions,
 } from "@openmrs/esm-framework/src/internal";
-import { Button } from "carbon-components-react";
+import { Button } from "@carbon/react";
+import { Close } from "@carbon/react/icons";
 import { Portal } from "./portal";
 import { ExtensionOverlay } from "./extension-overlay.component";
 import { ImplementerToolsStore, implementerToolsStore } from "../store";
@@ -79,7 +79,7 @@ export function ExitButton() {
       className={styles.exitButton}
       kind="danger"
       size="sm"
-      renderIcon={Close16}
+      renderIcon={(props) => <Close {...props} size={16} />}
       iconDescription="Exit UI Editor"
       tooltipPosition="left"
       onClick={toggleIsUIEditorEnabled}

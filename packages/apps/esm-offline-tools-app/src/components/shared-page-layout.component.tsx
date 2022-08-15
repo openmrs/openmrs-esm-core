@@ -4,6 +4,7 @@ import styles from "./shared-page-layout.styles.scss";
 export interface SharedPageLayoutProps {
   header: string;
   primaryActions?: ReactNode;
+  children?: React.ReactNode;
 }
 
 const SharedPageLayout: React.FC<SharedPageLayoutProps> = ({

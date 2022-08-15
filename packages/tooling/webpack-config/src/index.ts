@@ -1,3 +1,41 @@
+/**
+ * This is the base webpack config for all OpenMRS 3.x modules.
+ *
+ * ## Usage
+ *
+ * You can use it as simply as
+ *
+ * ```ts
+ * module.exports = require('openmrs/default-webpack-config');
+ * ```
+ *
+ * or you can customize the configuration using merges and overrides
+ * like
+ *
+ * ```ts
+ * const config = require('openmrs/default-webpack-config');
+ * config.cssRuleConfig.rules = [myCustomRule];
+ * module.exports = config;
+ * ```
+ *
+ * ## Development
+ *
+ * Advice for working on this file:
+ *
+ * Don't use `yarn link` or symlinks to work on it.
+ *
+ * After you `yarn build --watch`, do something like
+ * `watch "cp -R dist /path/to/packages/esm-patient-chart-app/webpack"`
+ * and then change the webpack line from
+ * `module.exports = require('openmrs/default-webpack-config');`
+ * to
+ * `module.exports = require('./webpack');`
+ *
+ * This is because Webpack has unpredictable behavior when working with
+ * symlinked files, **even when using absolute paths**. You read that right.
+ * Telling Webpack to use `/a/b/c`? If the Webpack config is symlinked
+ * from `/d/e/`, then it *might* in *some cases* try to import `/d/e/c`.
+ */
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { resolve, dirname, basename } from "path";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
@@ -7,6 +45,7 @@ import { StatsWriterPlugin } from "webpack-stats-plugin";
 // eslint-disable-next-line no-restricted-imports
 import { merge, mergeWith, isArray } from "lodash";
 import { postProcessFile } from "./optimize";
+import { inc } from "semver";
 
 const production = "production";
 const { ModuleFederationPlugin } = container;
@@ -16,7 +55,7 @@ function getFrameworkVersion() {
     const { version } = require("@openmrs/esm-framework/package.json");
     return `^${version}`;
   } catch {
-    return "3.x";
+    return "4.x";
   }
 }
 
@@ -36,6 +75,10 @@ function mergeFunction(objValue: any, srcValue: any) {
   if (isArray(objValue)) {
     return objValue.concat(srcValue);
   }
+}
+
+function slugify(name) {
+  return name.replace(/[\/\-@]/g, "_");
 }
 
 /**
@@ -85,10 +128,14 @@ export default (
   argv: Record<string, string> = {}
 ) => {
   const root = process.cwd();
-  const { name, peerDependencies, browser, main, types } = require(resolve(
-    root,
-    "package.json"
-  ));
+  const {
+    name,
+    version,
+    peerDependencies,
+    browser,
+    main,
+    types,
+  } = require(resolve(root, "package.json"));
   const mode = argv.mode || process.env.NODE_ENV || "development";
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
@@ -106,12 +153,13 @@ export default (
   };
 
   const baseConfig = {
-    entry: {
-      [name]: "systemjs-webpack-interop/auto-public-path",
-    },
+    // The only `entry` in the application is the app shell. Everything else is
+    // a Webpack Module Federation "remote." This ensures that there is always
+    // only one container context--i.e., if we had an entry point per module,
+    // WMF could get confused and not resolve shared dependencies correctly.
     output: {
-      libraryTarget: "system",
-      publicPath: "",
+      // Use default `libraryTarget`, which is jsonp
+      publicPath: "auto",
       path: resolve(root, outDir),
     },
     target: "web",
@@ -166,6 +214,7 @@ export default (
       devMiddleware: {
         writeToDisk: true,
       },
+      static: [resolve(root, outDir)],
     },
     performance: {
       hints: mode === production && "warning",
@@ -177,14 +226,20 @@ export default (
         analyzerMode: env && env.analyze ? "server" : "disabled",
       }),
       new DefinePlugin({
+        __VERSION__:
+          mode === production
+            ? JSON.stringify(version)
+            : JSON.stringify(inc(version, "prerelease", "local")),
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new ModuleFederationPlugin({
+        // See `esm-app-shell/src/system.ts` for an explanation of how modules
+        // get loaded into the application.
         name,
-        library: { type: "system", name },
+        library: { type: "var", name: slugify(name) },
         filename,
         exposes: {
-          app: srcFile,
+          "./start": srcFile,
         },
         shared: [
           ...Object.keys(peerDependencies),

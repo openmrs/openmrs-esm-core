@@ -1,0 +1,38 @@
+@import "~@openmrs/esm-styleguide/src/vars";
+@import "../root.scss";
+
+.offlineModeButtonContainer {
+  display: flex;
+  flex-direction: row;
+  width: 16rem;
+  justify-content: flex-start;
+  color: $field-01;
+  align-items: center;
+  @extend .bodyLong01;
+  height: 3rem;
+  cursor: pointer;
+
+  :global(.cds--toggle-input__label .cds--toggle__switch) {
+    margin-top: 0 !important;
+  }
+
+  :global(.cds--toggle) {
+    margin: 0 0 1rem 1rem;
+  }
+
+  :global(.cds--toggle__text) {
+    color: $ui-02;
+  }
+
+  svg {
+    margin: 0rem 0.75rem;
+    fill: $field-01;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    align-items: center;
+  }
+}

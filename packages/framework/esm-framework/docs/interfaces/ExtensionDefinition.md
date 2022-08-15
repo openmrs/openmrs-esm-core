@@ -34,15 +34,13 @@
 
 • **appName**: `string`
 
-The module/app that defines the component
-
 #### Inherited from
 
 [ComponentDefinition](ComponentDefinition.md).[appName](ComponentDefinition.md#appname)
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L99)
+[packages/framework/esm-globals/src/types.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L99)
 
 ___
 
@@ -50,11 +48,9 @@ ___
 
 • `Optional` **id**: `string`
 
-**`deprecated`** A confusing way to specify the name of the extension
-
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:135](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L135)
+[packages/framework/esm-globals/src/types.ts:135](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L135)
 
 ___
 
@@ -62,11 +58,9 @@ ___
 
 • `Optional` **meta**: `Record`<`string`, `any`\>
 
-The meta data used for reflection by other components
-
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L131)
+[packages/framework/esm-globals/src/types.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L131)
 
 ___
 
@@ -74,11 +68,9 @@ ___
 
 • **name**: `string`
 
-The name of the extension being registered
-
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L125)
+[packages/framework/esm-globals/src/types.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L125)
 
 ___
 
@@ -86,15 +78,13 @@ ___
 
 • `Optional` **offline**: `boolean` \| `object`
 
-Defines the offline support / properties of the component.
-
 #### Inherited from
 
 [ComponentDefinition](ComponentDefinition.md).[offline](ComponentDefinition.md#offline)
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L111)
+[packages/framework/esm-globals/src/types.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L111)
 
 ___
 
@@ -102,15 +92,13 @@ ___
 
 • `Optional` **online**: `boolean` \| `object`
 
-Defines the online support / properties of the component.
-
 #### Inherited from
 
 [ComponentDefinition](ComponentDefinition.md).[online](ComponentDefinition.md#online)
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L107)
+[packages/framework/esm-globals/src/types.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L107)
 
 ___
 
@@ -118,11 +106,9 @@ ___
 
 • `Optional` **order**: `number`
 
-Specifies the relative order in which the extension renders in a slot
-
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L133)
+[packages/framework/esm-globals/src/types.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L133)
 
 ___
 
@@ -130,16 +116,13 @@ ___
 
 • `Optional` **privilege**: `string` \| `string`[]
 
-Defines the access privilege(s) required for this component, if any.
-If more than one privilege is provided, the user must have all specified permissions.
-
 #### Inherited from
 
 [ComponentDefinition](ComponentDefinition.md).[privilege](ComponentDefinition.md#privilege)
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L116)
+[packages/framework/esm-globals/src/types.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L116)
 
 ___
 
@@ -147,15 +130,13 @@ ___
 
 • `Optional` **resources**: `Record`<`string`, [`ResourceLoader`](ResourceLoader.md)<`any`\>\>
 
-Defines resources that are loaded when the component should mount.
-
 #### Inherited from
 
 [ComponentDefinition](ComponentDefinition.md).[resources](ComponentDefinition.md#resources)
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L120)
+[packages/framework/esm-globals/src/types.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L120)
 
 ___
 
@@ -163,11 +144,9 @@ ___
 
 • `Optional` **slot**: `string`
 
-A slot to attach to
-
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L127)
+[packages/framework/esm-globals/src/types.ts:127](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L127)
 
 ___
 
@@ -175,19 +154,15 @@ ___
 
 • `Optional` **slots**: `string`[]
 
-Slots to attach to
-
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L129)
+[packages/framework/esm-globals/src/types.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L129)
 
 ## Methods
 
 ### load
 
 ▸ **load**(): `Promise`<`any`\>
-
-Defines a function to use for actually loading the component's lifecycle.
 
 #### Returns
 
@@ -199,4 +174,4 @@ Defines a function to use for actually loading the component's lifecycle.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-globals/src/types.ts#L103)
+[packages/framework/esm-globals/src/types.ts:103](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L103)

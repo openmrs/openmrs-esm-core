@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/navigate.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L14)
+[packages/framework/esm-config/src/navigation/navigate.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/navigation/navigate.ts#L14)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/navigate.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/framework/esm-config/src/navigation/navigate.ts#L13)
+[packages/framework/esm-config/src/navigation/navigate.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/navigation/navigate.ts#L13)

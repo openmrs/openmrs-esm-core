@@ -43,7 +43,7 @@ describe("Sync Queue", () => {
   beforeAll(() => {
     // We want to control the timers to ensure that we can test the `createdOn` attribute
     // of the sync item (which is created using `new Date()`).
-    jest.useFakeTimers("modern");
+    jest.useFakeTimers();
     jest.setSystemTime(systemTime);
   });
 

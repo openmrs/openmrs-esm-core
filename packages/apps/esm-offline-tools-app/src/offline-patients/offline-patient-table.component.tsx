@@ -2,7 +2,11 @@ import React, { useMemo, useState } from "react";
 import {
   Button,
   DataTable,
+  DataTableCustomRenderProps,
   DataTableSkeleton,
+  DenormalizedRow,
+  FilterRowsData,
+  Layer,
   Search,
   SearchSkeleton,
   SkeletonText,
@@ -13,15 +17,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  FilterRowsData,
   TableSelectAll,
   TableSelectRow,
-  DataTableCustomRenderProps,
-  DenormalizedRow,
-} from "carbon-components-react";
+} from "@carbon/react";
+import { Renew } from "@carbon/react/icons";
 import {
   age,
-  useLayoutType,
+  isDesktop,
   showModal,
   deleteSynchronizationItem,
   getFullSynchronizationItems,
@@ -29,17 +31,17 @@ import {
   syncDynamicOfflineData,
   getDynamicOfflineDataEntries,
   DynamicOfflineDataSyncState,
+  useLayoutType,
 } from "@openmrs/esm-framework";
 import { useTranslation } from "react-i18next";
 import capitalize from "lodash-es/capitalize";
 import LastUpdatedTableCell from "./last-updated-table-cell.component";
-import styles from "./offline-patient-table.scss";
 import PatientNameTableCell from "./patient-name-table-cell.component";
-import Renew32 from "@carbon/icons-react/es/renew/32";
 import {
   useOfflinePatientsWithEntries,
   useOfflineRegisteredPatients,
 } from "../hooks/offline-patient-data-hooks";
+import styles from "./offline-patient-table.scss";
 
 export interface OfflinePatientTableProps {
   isInteractive: boolean;
@@ -54,7 +56,7 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
   const layout = useLayoutType();
   const offlinePatientsSwr = useOfflinePatientsWithEntries();
   const offlineRegisteredPatientsSwr = useOfflineRegisteredPatients();
-  const toolbarItemSize = layout === "desktop" ? "sm" : undefined;
+  const toolbarItemSize = isDesktop(layout) ? "sm" : undefined;
   const [syncingPatientUuids, setSyncingPatientUuids] = useState<Array<string>>(
     []
   );
@@ -135,20 +137,21 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
                 </h4>
               )}
               {selectedRows.length === 0 && (
-                <Search
-                  className={styles.tableSearch}
-                  labelText={t(
-                    "offlinePatientsTableSearchLabel",
-                    "Search this list"
-                  )}
-                  placeholder={t(
-                    "offlinePatientsTableSearchPlaceholder",
-                    "Search this list"
-                  )}
-                  size={toolbarItemSize}
-                  onChange={onInputChange}
-                  light
-                />
+                <Layer>
+                  <Search
+                    className={styles.tableSearch}
+                    labelText={t(
+                      "offlinePatientsTableSearchLabel",
+                      "Search this list"
+                    )}
+                    placeholder={t(
+                      "offlinePatientsTableSearchPlaceholder",
+                      "Search this list"
+                    )}
+                    size={toolbarItemSize}
+                    onChange={onInputChange}
+                  />
+                </Layer>
               )}
               {selectedRows.length > 0 && (
                 <>
@@ -156,7 +159,7 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
                     className={styles.tableSecondaryAction}
                     kind="ghost"
                     size={toolbarItemSize}
-                    renderIcon={Renew32}
+                    renderIcon={(props) => <Renew size={32} {...props} />}
                     onClick={() =>
                       handleUpdateSelectedPatientsClick(selectedRows)
                     }

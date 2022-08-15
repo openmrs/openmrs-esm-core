@@ -1,4 +1,4 @@
-@import "./root.scss";
+@import "../root.scss";
 
 .container {
   display: flex;
@@ -11,10 +11,6 @@
   text-align: center;
 }
 
-.right {
-  text-align: right;
-}
-
 .logo {
   margin-bottom: 2.5rem;
   height: 5rem;
@@ -24,15 +20,6 @@
 .logo-img {
   margin-bottom: 3rem;
   max-width: 100%;
-}
-
-.icon-btn {
-  cursor: pointer;
-}
-
-.error-msg {
-  margin-top: 1rem;
-  color: $danger;
 }
 
 .powered-by-txt {
@@ -54,11 +41,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.contact-administrator-need-help {
-  @extend .bodyShort01;
-  padding-left: 0.5rem;
 }
 
 .powered-by-logo {
@@ -92,23 +74,21 @@
   }
 }
 
-.card-content {
-  border: none;
-  padding: 0.625rem 0.25rem 0.625rem 1rem;
-  border-radius: 0;
-}
-
-.card {
-  width: 21.75rem;
-  margin: 0.5rem 1rem;
-}
-
 .input-group {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 18rem;
+
+  :global(.cds--text-input) {
+    height: 3rem;
+    @extend .label01;
+  }
+
+  :global(.cds--text-input__field-outer-wrapper) {
+    width: 18rem;
+  }
 }
 
 .continueButton {
@@ -125,16 +105,16 @@
 
 .back-button {
   height: 3rem;
+  padding-left: 0rem;
 
   svg {
     margin-right: 0.5rem;
+    order: 1;
   }
-}
 
-.inputStyle {
-  @extend .label01;
-  width: 18rem;
-  height: 3rem;
+  span {
+    order: 2;
+  }
 }
 
 .footer {

@@ -9,11 +9,12 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-} from "carbon-components-react";
-import { FrontendModule } from "./openmrs-backend-dependencies";
+} from "@carbon/react";
+import { ResolvedDependenciesModule } from "./openmrs-backend-dependencies";
+import styles from "./backend-dependencies.styles.scss";
 
 export interface ModuleDiagnosticsProps {
-  frontendModules: Array<FrontendModule>;
+  frontendModules: Array<ResolvedDependenciesModule>;
 }
 
 export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
@@ -40,7 +41,7 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
   );
 
   return (
-    <div style={{ height: "50vh", overflowY: "auto" }}>
+    <div className={styles.container}>
       <DataTable rows={[]} headers={headers}>
         {({ headers, getTableProps, getHeaderProps }) => (
           <TableContainer title="">
