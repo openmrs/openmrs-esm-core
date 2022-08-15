@@ -97,7 +97,7 @@ browser, we can start to integrate the modules together using the new libraries.
 
 ## Procedure
 
-1. Get latest openmrs-esm-core branch ([4.0](https://github.com/openmrs/openmrs-esm-core/tree/4.0)) - This is the branch where new versions of the core libraries are specified (thanks to a prior effort by Brandon) 
+1. Get latest openmrs-esm-core branch ([4.0](https://github.com/openmrs/openmrs-esm-core/tree/main)) - This is the branch where new versions of the core libraries are specified (thanks to a prior effort by Brandon) 
 
 2. Build the App Shell – This compiles the core source files into static webpack JS files which can be served. This will automatically bundle all of the openmrs-esm-core/packages/apps/ into a dist folder. The yarn run:shell at the end serves this app shell on 8080 and will be our main entry into the app.
 
