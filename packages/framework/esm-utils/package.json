@@ -47,6 +47,6 @@
     "rxjs": "6.x"
   },
   "dependencies": {
-    "semver": "^7.3.2"
+    "semver": "7.3.2"
   }
 }
