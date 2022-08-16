@@ -17,20 +17,24 @@ export interface NavigateOptions {
 /**
  * Calls `location.assign` for non-SPA paths and [navigateToUrl](https://single-spa.js.org/docs/api/#navigatetourl) for SPA paths
  *
- * Example usage:
+ * #### Example usage:
  * ```js
+ * @example
  * const config = useConfig();
  * const submitHandler = () => {
  *   navigate({ to: config.links.submitSuccess });
  * };
  * ```
- * Example return values:
- * navigate({ to: "/some/path" }); => window.location.assign("/some/path")
- * navigate({ to: "https://single-spa.js.org/" }); => window.location.assign("https://single-spa.js.org/")
- * navigate({ to: "${openmrsBase}/some/path" }); => window.location.assign("/openmrs/some/path")
- * navigate({ to: "/openmrs/spa/foo/page" }); => navigateToUrl("/openmrs/spa/foo/page")
- * navigate({ to: "${openmrsSpaBase}/bar/page" }); => navigateToUrl("/openmrs/spa/bar/page")
- * navigate({ to: "/${openmrsSpaBase}/baz/page" }) => navigateToUrl("/openmrs/spa/baz/page")
+ * #### Example return values:
+ * ```js
+ * @example
+ * navigate({ to: "/some/path" }); // => window.location.assign("/some/path")
+ * navigate({ to: "https://single-spa.js.org/" }); // => window.location.assign("https://single-spa.js.org/")
+ * navigate({ to: "${openmrsBase}/some/path" }); // => window.location.assign("/openmrs/some/path")
+ * navigate({ to: "/openmrs/spa/foo/page" }); // => navigateToUrl("/openmrs/spa/foo/page")
+ * navigate({ to: "${openmrsSpaBase}/bar/page" }); // => navigateToUrl("/openmrs/spa/bar/page")
+ * navigate({ to: "/${openmrsSpaBase}/baz/page" }) // => navigateToUrl("/openmrs/spa/baz/page")
+ * ```
  *
  * @param to The target path or URL. Supports templating with 'openmrsBase', 'openmrsSpaBase',
  * and any additional template parameters defined in `templateParams`.

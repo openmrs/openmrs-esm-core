@@ -53,10 +53,13 @@ export function getCurrentUser() {
   return of({ authenticated: false });
 }
 
-export const mockSessionStore = createGlobalStore<SessionStore>("mock-session-store", {
-  loaded: false,
-  session: null,
-});
+export const mockSessionStore = createGlobalStore<SessionStore>(
+  "mock-session-store",
+  {
+    loaded: false,
+    session: null,
+  }
+);
 
 export const getSessionStore = jest.fn(() => mockSessionStore);
 
