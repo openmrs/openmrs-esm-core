@@ -3872,7 +3872,7 @@ __metadata:
     "@types/semver": ^7.3.4
     dayjs: ^1.10.4
     rxjs: ^6.5.3
-    semver: ^7.3.2
+    semver: 7.3.2
   peerDependencies:
     dayjs: 1.x
     i18next: 19.x
@@ -16460,6 +16460,15 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 272c11bf8d083274ef79fe40a81c55c184dff84dd58e3c325299d0927ba48cece1f020793d138382b85f89bab5002a35a5ba59a3a68a7eebbb597eb733838778
+  languageName: node
+  linkType: hard
+
+"semver@npm:7.3.2":
+  version: 7.3.2
+  resolution: "semver@npm:7.3.2"
+  bin:
+    semver: bin/semver.js
+  checksum: 692f4900dadb43919614b0df9af23fe05743051cda0d1735b5e4d76f93c9e43a266fae73cfc928f5d1489f022c5c0e65dfd2900fcf5b1839c4e9a239729afa7b
   languageName: node
   linkType: hard
 
