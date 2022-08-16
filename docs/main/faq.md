@@ -7,7 +7,7 @@ It's important to keep your working code base current with the latest fixes, lat
 
 ### How do I keep my local dev server up to date?
 
-Just pull the repository you want to work on and run `yarn` or `npm install`.
+Just pull the repository you want to work on and run `yarn`.
 That will install the latest dependencies, which includes `openmrs`, which is
 the tool that runs the dev server.
 
