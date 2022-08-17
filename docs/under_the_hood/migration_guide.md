@@ -2,7 +2,7 @@
 
 ## Motivation
 
-Presently, the OpenMRS 3 frontend uses core dependencies that are several years out of date. Specifically, we are looking to migrate the following dependencies to the latest available versions to be able to leverage new features, fixes and API and bundle size savings:
+Presently, the OpenMRS 3 frontend uses core dependencies that are several years out of date. Specifically, we are looking to migrate the following dependencies to the latest available versions to be able to leverage new features, fixes, API improvements and bundle size savings:
 
 - React 
 - React Router
