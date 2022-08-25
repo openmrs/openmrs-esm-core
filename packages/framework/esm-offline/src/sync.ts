@@ -16,6 +16,7 @@ export interface SyncItem<T = any> {
   content: T;
   createdOn: Date;
   descriptor: QueueItemDescriptor;
+  encrypted?: boolean;
   lastError?: {
     name?: string;
     message?: string;
@@ -187,8 +188,15 @@ async function processHandler(
   const userId = await getUserId();
 
   await db.syncQueue.where({ type, userId }).each((item, cursor) => {
-    items.push([cursor.primaryKey, item.content, item.descriptor]);
-    contents.push(item.content);
+    var content: any;
+    if (item.encrypted) {
+      content = JSON.parse(item.content);
+    } else {
+      content = item.content;
+    }
+
+    items.push([cursor.primaryKey, content, item.descriptor]);
+    contents.push(content);
   });
 
   for (let i = 0; i < items.length; i++) {
@@ -252,10 +260,13 @@ export async function queueSynchronizationItemFor<T>(
       .catch(Dexie.errnames.DatabaseClosed);
   }
 
+  // Mock encryption by converting the json inton a string
+  const stringContent: string = JSON.stringify(content);
   const id = await db.syncQueue
     .add({
-      type,
-      content,
+      type: type,
+      content: stringContent,
+      encrypted: true,
       userId,
       descriptor: descriptor || {},
       createdOn: new Date(),
