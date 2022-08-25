@@ -69,17 +69,19 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
         case "NEW":
           const { outer, contentContainer } = createModalFrame();
           instance.container = outer;
-          instance.parcel = renderExtension(
+          renderExtension(
             contentContainer,
             "",
             "",
             instance.extensionId,
             undefined,
             instance.props
-          );
-          instance.state = "MOUNTED";
-          modalContainer.prepend(outer);
-          outer.style.visibility = "unset";
+          ).then((parcel) => {
+            instance.parcel = parcel;
+            instance.state = "MOUNTED";
+            modalContainer.prepend(outer);
+            outer.style.visibility = "unset";
+          });
           break;
 
         case "MOUNTED":

@@ -47,5 +47,10 @@
     "@openmrs/esm-styleguide": "^4.0.2",
     "@openmrs/esm-utils": "^4.0.2",
     "dayjs": "^1.10.7"
+  },
+  "devDependencies": {
+    "jest": "28.1.0",
+    "jest-cli": "28.1.0",
+    "jest-environment-jsdom": "28.1.0"
   }
 }

@@ -1,15 +1,14 @@
 import { renderExtension } from "@openmrs/esm-extensions";
 import React, {
-  PropsWithChildren,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { Parcel } from "single-spa";
+import type { Parcel } from "single-spa";
 import { ComponentContext } from ".";
-import { ExtensionData } from "./ComponentContext";
+import type { ExtensionData } from "./ComponentContext";
 
 export type ExtensionProps = {
   state?: Record<string, any>;
@@ -41,7 +40,8 @@ export const Extension: React.FC<ExtensionProps> = ({
 }) => {
   const [domElement, setDomElement] = useState<HTMLDivElement>();
   const { extension } = useContext(ComponentContext);
-  const parcel = useRef<Parcel | null>();
+  const parcel = useRef<Parcel | null>(null);
+  const updatePromise = useRef<Promise<null> | null>(null);
 
   useEffect(() => {
     if (wrap) {
@@ -58,7 +58,7 @@ export const Extension: React.FC<ExtensionProps> = ({
   }, []);
 
   const ref = useCallback(
-    (node) => {
+    (node: HTMLDivElement) => {
       setDomElement(node);
     },
     [setDomElement]
@@ -66,30 +66,69 @@ export const Extension: React.FC<ExtensionProps> = ({
 
   useEffect(() => {
     if (domElement != null && extension && !parcel.current) {
-      parcel.current = renderExtension(
+      renderExtension(
         domElement,
         extension.extensionSlotName,
         extension.extensionSlotModuleName,
         extension.extensionId,
         undefined,
         state
-      );
+      ).then((newParcel) => {
+        parcel.current = newParcel;
+      });
+
       return () => {
-        parcel.current && parcel.current.unmount();
+        if (parcel && parcel.current) {
+          const status = parcel.current.getStatus();
+          switch (status) {
+            case "MOUNTING":
+              parcel.current.mountPromise.then(parcel.current.unmount);
+              break;
+            case "MOUNTED":
+              parcel.current.unmount();
+              break;
+            case "UPDATING":
+              if (updatePromise.current) {
+                updatePromise.current.then(() => {
+                  if (
+                    parcel.current &&
+                    parcel.current.getStatus() === "MOUNTED"
+                  ) {
+                    parcel.current.unmount();
+                  }
+                });
+              }
+          }
+        }
       };
     }
+
+    // we intentionally do not re-run this hook if state gets updated
+    // state updates are handled in the next useEffect hook
+    // eslint-disable-next-line eslintreact-hooks/exhaustive-deps
   }, [
     extension?.extensionSlotName,
     extension?.extensionId,
     extension?.extensionSlotModuleName,
-    state,
     domElement,
   ]);
 
   useEffect(() => {
     if (parcel.current && parcel.current.update) {
-      parcel.current.update({ ...state });
+      if (parcel.current.getStatus() === "MOUNTED") {
+        parcel.current.update({ ...state });
+      } else if (parcel.current.getStatus() === "MOUNTING") {
+        parcel.current.mountPromise.then(() => {
+          if (parcel.current && parcel.current.update) {
+            updatePromise.current = parcel.current.update({ ...state });
+          }
+        });
+      }
     }
+
+    return () => {
+      updatePromise.current = null;
+    };
   }, [parcel.current, state]);
 
   // The extension is rendered into the `<div>`. The `<div>` has relative

@@ -1595,7 +1595,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/core@npm:^28.1.3":
+"@jest/core@npm:^28.1.0, @jest/core@npm:^28.1.3":
   version: 28.1.3
   resolution: "@jest/core@npm:28.1.3"
   dependencies:
@@ -1646,7 +1646,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/environment@npm:^28.1.3":
+"@jest/environment@npm:^28.1.0, @jest/environment@npm:^28.1.3":
   version: 28.1.3
   resolution: "@jest/environment@npm:28.1.3"
   dependencies:
@@ -1686,7 +1686,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/fake-timers@npm:^28.1.3":
+"@jest/fake-timers@npm:^28.1.0, @jest/fake-timers@npm:^28.1.3":
   version: 28.1.3
   resolution: "@jest/fake-timers@npm:28.1.3"
   dependencies:
@@ -1778,7 +1778,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/test-result@npm:^28.1.3":
+"@jest/test-result@npm:^28.1.0, @jest/test-result@npm:^28.1.3":
   version: 28.1.3
   resolution: "@jest/test-result@npm:28.1.3"
   dependencies:
@@ -1838,7 +1838,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/types@npm:^28.1.3":
+"@jest/types@npm:^28.1.0, @jest/types@npm:^28.1.3":
   version: 28.1.3
   resolution: "@jest/types@npm:28.1.3"
   dependencies:
@@ -3605,6 +3605,9 @@ __metadata:
     "@openmrs/esm-styleguide": ^4.0.2
     "@openmrs/esm-utils": ^4.0.2
     dayjs: ^1.10.7
+    jest: 28.1.0
+    jest-cli: 28.1.0
+    jest-environment-jsdom: 28.1.0
   languageName: unknown
   linkType: soft
 
@@ -3749,6 +3752,9 @@ __metadata:
     "@openmrs/esm-globals": ^4.0.2
     dayjs: ^1.10.8
     i18next: ^19.6.0
+    jest: 28.1.0
+    jest-cli: 28.1.0
+    jest-environment-jsdom: 28.1.0
     lodash-es: ^4.17.21
     react: ^18.1.0
     react-dom: ^18.1.0
@@ -11596,6 +11602,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jest-cli@npm:28.1.0":
+  version: 28.1.0
+  resolution: "jest-cli@npm:28.1.0"
+  dependencies:
+    "@jest/core": ^28.1.0
+    "@jest/test-result": ^28.1.0
+    "@jest/types": ^28.1.0
+    chalk: ^4.0.0
+    exit: ^0.1.2
+    graceful-fs: ^4.2.9
+    import-local: ^3.0.2
+    jest-config: ^28.1.0
+    jest-util: ^28.1.0
+    jest-validate: ^28.1.0
+    prompts: ^2.0.1
+    yargs: ^17.3.1
+  peerDependencies:
+    node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
+  peerDependenciesMeta:
+    node-notifier:
+      optional: true
+  bin:
+    jest: bin/jest.js
+  checksum: 9da98d9a7a0b670f610943be708205988030fd094029f8a64b258a5a5ef18c0b527ec7019e6b95802f2baa2241bb2d6caf31ef4fd530bcf176737e4ede1d9d79
+  languageName: node
+  linkType: hard
+
 "jest-cli@npm:^28.1.0, jest-cli@npm:^28.1.3":
   version: 28.1.3
   resolution: "jest-cli@npm:28.1.3"
@@ -11623,7 +11656,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-config@npm:^28.1.3":
+"jest-config@npm:^28.1.0, jest-config@npm:^28.1.3":
   version: 28.1.3
   resolution: "jest-config@npm:28.1.3"
   dependencies:
@@ -11704,6 +11737,22 @@ __metadata:
     jest-util: ^28.1.3
     pretty-format: ^28.1.3
   checksum: 5c5b8ccb1484e58b027bea682cfa020a45e5bf5379cc7c23bdec972576c1dc3c3bf03df2b78416cefc1a58859dd33b7cf5fff54c370bc3c0f14a3e509eb87282
+  languageName: node
+  linkType: hard
+
+"jest-environment-jsdom@npm:28.1.0":
+  version: 28.1.0
+  resolution: "jest-environment-jsdom@npm:28.1.0"
+  dependencies:
+    "@jest/environment": ^28.1.0
+    "@jest/fake-timers": ^28.1.0
+    "@jest/types": ^28.1.0
+    "@types/jsdom": ^16.2.4
+    "@types/node": "*"
+    jest-mock: ^28.1.0
+    jest-util: ^28.1.0
+    jsdom: ^19.0.0
+  checksum: b1e3354a4a6fe1486cc6cd597460e6851c4f575770582e6ade7cca852ce9af9c421cb42f071863a37a0ad81e5d57443d99b1d8b2f39eac5acde8134a29e759d2
   languageName: node
   linkType: hard
 
@@ -11842,7 +11891,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-mock@npm:^28.1.3":
+"jest-mock@npm:^28.1.0, jest-mock@npm:^28.1.3":
   version: 28.1.3
   resolution: "jest-mock@npm:28.1.3"
   dependencies:
@@ -11988,7 +12037,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-util@npm:^28.1.3":
+"jest-util@npm:^28.1.0, jest-util@npm:^28.1.3":
   version: 28.1.3
   resolution: "jest-util@npm:28.1.3"
   dependencies:
@@ -12016,7 +12065,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-validate@npm:^28.1.3":
+"jest-validate@npm:^28.1.0, jest-validate@npm:^28.1.3":
   version: 28.1.3
   resolution: "jest-validate@npm:28.1.3"
   dependencies:
@@ -12076,6 +12125,24 @@ __metadata:
     merge-stream: ^2.0.0
     supports-color: ^8.0.0
   checksum: e921c9a1b8f0909da9ea07dbf3592f95b653aef3a8bb0cbcd20fc7f9a795a1304adecac31eecb308992c167e8d7e75c522061fec38a5928ace0f9571c90169ca
+  languageName: node
+  linkType: hard
+
+"jest@npm:28.1.0":
+  version: 28.1.0
+  resolution: "jest@npm:28.1.0"
+  dependencies:
+    "@jest/core": ^28.1.0
+    import-local: ^3.0.2
+    jest-cli: ^28.1.0
+  peerDependencies:
+    node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
+  peerDependenciesMeta:
+    node-notifier:
+      optional: true
+  bin:
+    jest: bin/jest.js
+  checksum: f025164c408cf5ddb6e74dac1e8cbaf94c1c31dd1c67aba4ceee5989b2d8a77886db8ed1fb88853b45cf194b14cd802b454bbbe6b278a1e2140250297dc100d3
   languageName: node
   linkType: hard
 

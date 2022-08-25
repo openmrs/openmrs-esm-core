@@ -59,13 +59,16 @@ describe("Interaction between configuration and extension systems", () => {
         },
       },
     });
-    const App = openmrsComponentDecorator({
-      moduleName: "esm-flintstone",
-      featureName: "The Flintstones",
-      disableTranslations: true,
-    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
-    render(<App />);
+    act(() => {
+      const App = openmrsComponentDecorator({
+        moduleName: "esm-flintstone",
+        featureName: "The Flintstones",
+        disableTranslations: true,
+      })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
+
+      render(<App />);
+    });
 
     await waitFor(() => expect(screen.getByText("Betty")).toBeInTheDocument());
 
@@ -101,18 +104,21 @@ describe("Interaction between configuration and extension systems", () => {
         },
       },
     });
-    const App = openmrsComponentDecorator({
-      moduleName: "esm-flintstone",
-      featureName: "The Flintstones",
-      disableTranslations: true,
-    })(() => (
-      <>
-        <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
-        <ExtensionSlot data-testid="future-slot" name="Future slot" />
-      </>
-    ));
 
-    render(<App />);
+    act(() => {
+      const App = openmrsComponentDecorator({
+        moduleName: "esm-flintstone",
+        featureName: "The Flintstones",
+        disableTranslations: true,
+      })(() => (
+        <>
+          <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
+          <ExtensionSlot data-testid="future-slot" name="Future slot" />
+        </>
+      ));
+
+      render(<App />);
+    });
 
     await screen.findAllByText(/.*Pebbles.*/);
 
@@ -148,17 +154,20 @@ describe("Interaction between configuration and extension systems", () => {
         },
       },
     });
-    const App = openmrsComponentDecorator({
-      moduleName: "esm-flintstone",
-      featureName: "The Flintstones",
-      disableTranslations: true,
-    })(() => (
-      <>
-        <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
-      </>
-    ));
 
-    render(<App />);
+    act(() => {
+      const App = openmrsComponentDecorator({
+        moduleName: "esm-flintstone",
+        featureName: "The Flintstones",
+        disableTranslations: true,
+      })(() => (
+        <>
+          <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
+        </>
+      ));
+
+      render(<App />);
+    });
 
     await screen.findAllByText(/.*Dino.*/);
 
@@ -174,13 +183,16 @@ describe("Interaction between configuration and extension systems", () => {
     registerSimpleExtension("Pearl", "esm-slaghoople");
     attach("A slot", "Pearl");
     defineConfigSchema("esm-slaghoople", {});
-    const App = openmrsComponentDecorator({
-      moduleName: "esm-slaghoople",
-      featureName: "The Slaghooples",
-      disableTranslations: true,
-    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
-    render(<App />);
+    act(() => {
+      const App = openmrsComponentDecorator({
+        moduleName: "esm-slaghoople",
+        featureName: "The Slaghooples",
+        disableTranslations: true,
+      })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
+
+      render(<App />);
+    });
 
     await waitFor(() => expect(screen.getByText("Pearl")).toBeInTheDocument());
 
@@ -207,13 +219,16 @@ describe("Interaction between configuration and extension systems", () => {
     registerSimpleExtension("Mr. Slate", "esm-flintstone", true);
     attach("A slot", "Mr. Slate");
     defineConfigSchema("esm-flintstone", { tie: { _default: "green" } });
-    const App = openmrsComponentDecorator({
-      moduleName: "esm-quarry",
-      featureName: "The Flintstones",
-      disableTranslations: true,
-    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
-    render(<App />);
+    act(() => {
+      const App = openmrsComponentDecorator({
+        moduleName: "esm-quarry",
+        featureName: "The Flintstones",
+        disableTranslations: true,
+      })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
+
+      render(<App />);
+    });
 
     await waitFor(() =>
       expect(screen.getByText(/Mr. Slate/)).toBeInTheDocument()
@@ -258,13 +273,16 @@ describe("Interaction between configuration and extension systems", () => {
         </div>
       );
     }
-    const App = openmrsComponentDecorator({
-      moduleName: "esm-flintstone",
-      featureName: "The Flintstones",
-      disableTranslations: true,
-    })(RootComponent);
 
-    render(<App />);
+    act(() => {
+      const App = openmrsComponentDecorator({
+        moduleName: "esm-flintstone",
+        featureName: "The Flintstones",
+        disableTranslations: true,
+      })(RootComponent);
+
+      render(<App />);
+    });
 
     await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
 
@@ -335,13 +353,16 @@ describe("Interaction between configuration and extension systems", () => {
         </div>
       );
     }
-    const App = openmrsComponentDecorator({
-      moduleName: "esm-bedrock",
-      featureName: "Bedrock",
-      disableTranslations: true,
-    })(RootComponent);
 
-    render(<App />);
+    act(() => {
+      const App = openmrsComponentDecorator({
+        moduleName: "esm-bedrock",
+        featureName: "Bedrock",
+        disableTranslations: true,
+      })(RootComponent);
+
+      render(<App />);
+    });
 
     await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
     expect(screen.getByTestId("slot").firstChild).toHaveAttribute(
@@ -391,13 +412,16 @@ describe("Interaction between configuration and extension systems", () => {
         </div>
       );
     }
-    const App = openmrsComponentDecorator({
-      moduleName: "esm-bedrock",
-      featureName: "Bedrock",
-      disableTranslations: true,
-    })(RootComponent);
 
-    render(<App />);
+    act(() => {
+      const App = openmrsComponentDecorator({
+        moduleName: "esm-bedrock",
+        featureName: "Bedrock",
+        disableTranslations: true,
+      })(RootComponent);
+
+      render(<App />);
+    });
 
     await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
     expect(screen.getByTestId("slot").firstChild).toHaveAttribute(
@@ -444,13 +468,16 @@ describe("Interaction between configuration and extension systems", () => {
         </div>
       );
     }
-    const App = openmrsComponentDecorator({
-      moduleName: "esm-bedrock",
-      featureName: "Bedrock",
-      disableTranslations: true,
-    })(RootComponent);
 
-    render(<App />);
+    act(() => {
+      const App = openmrsComponentDecorator({
+        moduleName: "esm-bedrock",
+        featureName: "Bedrock",
+        disableTranslations: true,
+      })(RootComponent);
+
+      render(<App />);
+    });
 
     await waitFor(() => {
       expect(screen.getByTestId(/slot/)).toBeInTheDocument();
