@@ -77,8 +77,6 @@ export function useOfflinePatientsWithEntries() {
         ...offlineUpdates
       ) as fhir.Patient;
 
-      console.log("final", fhirPatientsSwr.data);
-
       return {
         patient: finalPatient,
         entry: offlinePatientEntry,
