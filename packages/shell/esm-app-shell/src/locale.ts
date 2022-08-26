@@ -38,8 +38,6 @@ export function setupI18n() {
     .use(initReactI18next)
     .use(ICU)
     .init({
-      debug: true,
-      lng: "en",
       backend: {
         parse: (data) => data,
         loadPath: "{{lng}}|{{ns}}",
