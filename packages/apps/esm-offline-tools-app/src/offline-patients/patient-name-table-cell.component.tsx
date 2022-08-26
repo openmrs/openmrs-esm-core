@@ -14,7 +14,9 @@ const PatientNameTableCell: React.FC<PatientNameTableCellProps> = ({
   isNewlyRegistered = false,
 }) => {
   const { t } = useTranslation();
-  const name = `${patient.name[0].given.join(" ")} ${patient.name[0].family}`;
+  const name = `${[patient.name?.[0]?.given, patient.name?.[0]?.family]
+    .filter(Boolean)
+    .join(" ")}`;
 
   return (
     <div className={styles.cellContainer}>
