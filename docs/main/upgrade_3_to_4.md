@@ -1,10 +1,11 @@
 # Upgrading to Framework Version 4
 
-Version 4 of the OpenMRS 3 frontend framework includes a number of essential updates, including
-- Updating React from 16 to 18
-- Updating React Router from 5 to 6
-- Updating Carbon Design System from 10 to 11
-- Major improvement to the system that loads frontend modules into the application
+Version 4 of the OpenMRS 3 frontend framework includes a number of essential updates, including:
+
+- Updating React from v16 to 18
+- Updating React Router from v5 to 6
+- Updating Carbon Design System from v10 to 11
+- Major improvement to the system that loads frontend modules into the application.
 
 > Note: This has nothing to do with any OpenMRS 4, which does not exist yet (in 2022). This is about upgrading some libraries within OpenMRS 3. The packages `openmrs` and `@openmrs/esm-framework` are being upgraded from version 3 to version 4.
 
@@ -50,26 +51,27 @@ In `openmrs-esm-core` run `yarn run:shell`. Then in your frontend module run `ya
 
 ### Alternate Approach
 
-Another way to upgrade frontend modules is [used for the core apps](https://o3-dev.docs.openmrs.org/#/under_the_hood/migration_guide?id=procedure). You can use that technique for your frontend module, buit it is much more involved than the above.
+Another way to upgrade frontend modules is [used for the core apps](https://o3-dev.docs.openmrs.org/#/under_the_hood/migration_guide?id=procedure). You can use that technique for your frontend module, but it is much more involved than the above.
 
 ## Upgrading
 
-For a complete look at what needs to be upgraded, please read the relevant documentation for
-[React 16 to 17](https://reactjs.org/blog/2020/08/10/react-v17-rc.html#other-breaking-changes),
-[React 17 to 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html),
-[React Router 5 to 6](https://reactrouter.com/docs/en/v6/upgrading/v5),
-[Carbon 10 to 11](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md),
-[Jest 26 to 27](https://jestjs.io/blog/2021/05/25/jest-27),
-[Jest 27 to 28](https://jestjs.io/docs/upgrading-to-jest28),
-[User Event 12 to 13](https://github.com/testing-library/user-event/releases/tag/v12.0.0),
-[User Event 13 to 14](https://github.com/testing-library/user-event/releases/tag/v14.0.0)
+For a complete look at what needs to be upgraded, please read the relevant documentation for the following:
+
+- [React 16 to 17](https://reactjs.org/blog/2020/08/10/react-v17-rc.html#other-breaking-changes)
+- [React 17 to 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html)
+- [React Router 5 to 6](https://reactrouter.com/docs/en/v6/upgrading/v5)
+- [Carbon 10 to 11](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md)
+- [Jest 26 to 27](https://jestjs.io/blog/2021/05/25/jest-27)
+- [Jest 27 to 28](https://jestjs.io/docs/upgrading-to-jest28)
+- [User Event 12 to 13](https://github.com/testing-library/user-event/releases/tag/v12.0.0)
+- [User Event 13 to 14](https://github.com/testing-library/user-event/releases/tag/v14.0.0)
 
 In practice, relatively little of that will apply to your frontend module. Here are the
-most likely changes you'll need to make.
+most likely changes you'll need to make:
 
 ### Jest
 
-Add the following to your `jest.config.json`.
+- Add the following to your `jest.config.json`.
 
 ```json
   "testEnvironment": "jsdom",
@@ -78,28 +80,114 @@ Add the following to your `jest.config.json`.
   }
 ```
 
+- Remove the following `moduleNameMapper` references in your `jest.config.json`:
+
+```json
+"moduleNameMapper": {
+  "lodash-es": "lodash"
+  "\\.(s?css)$": "identity-obj-proxy",
+  "@openmrs/esm-framework": "@openmrs/esm-framework/mock",
+  // Remove the following lines
+  "^@carbon/icons-react/es/(.*)$": "@carbon/icons-react/lib/$1",
+  "^@carbon/charts": "identity-obj-proxy",
+  "^carbon-components-react/es/(.*)$": "carbon-components-react/lib/$1",
+},
+```
+
 ### User Event
 
-`await` every `userEvent` function call.
+- Invoke `userEvent.setup()` before your component gets rendered in your test spec. Use the methods returned from the invocation rather than calling `userEvent` directly.
+
+```js
+it('trigger some awesome feature when clicking the button', async () => {
+  const user = userEvent.setup();
+  
+  render(<MyComponent />);
+
+  await user.click(screen.getByRole('button', { name: /click me!/i }));
+
+  // ...assertions...
+});
+```
+
+- Make sure to `await` every `userEvent` function call.
+
+```js
+await user.click(screen.getByRole('button', { name: /click me!/i }));
+```
 
 ### React Router
 
 This is the most involved of the changes. You really just have to follow the [React Router 5 to 6 upgrade guide](https://reactrouter.com/docs/en/v6/upgrading/v5#introduction).
 
 ### Carbon
-
 - Change `carbon-components-react` to `@carbon/react`
 - Change `carbon-icons` to `@carbon/icons-react`
 - Icons now get size from a prop. So change e.g. `<Close24 />` to `<Close size={24}>`.
+- Replace any style rules that use the `bx--` prefix with `cds--`. Often, you can do a global find and replace to achieve this.
+- Import Carbon's spacing and type token mixins using `@use '@carbon/styles/scss/spacing` and `@use '@carbon/styles/scss/type` instead of the old `@import "~carbon-components/src/globals/scss/mixins"` import. Also, the signature for referencing mixins changes as follows:
 
-If errors remain, reference the [migration docs](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md).
+```scss
+// old type mixin
+.heading {
+  @include carbon--type-style("productive-heading-02");
+}
+
+// new type mixin
+.heading {
+  @include type.type-style("productive-heading-02");
+}
+
+// old spacing mixin
+.formGroup {
+  margin-bottom: $spacing-02;
+}
+
+// new spacing mixin
+.formGroup {
+  margin-bottom: spacing.$spacing-02;
+}
+```
+
+- Replace deprecated [type tokens](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md#type-tokens).
+- Components no longer use the `light` prop. Wrap your code in a `Layer` component instead.
+- Changes to the [Grid](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md#grid) component might mean your layouts no longer work as they should. Consider using the [FlexGrid](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md#flexgrid) component instead as well as a [Stack](https://react.carbondesignsystem.com/?path=/story/layout-stack--default) for vertical spacing.
+
+
+If errors or visual inconsistencies remain, reference the [migration docs](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md).
 
 ### OpenMRS
 
-Where
+Where:
 
 ```typescript
 const layout = useLayoutType();
 ```
 
 Change `layout == "desktop"` to `isDesktop(layout)`.
+
+### ESLint
+
+Add following rules to your `.eslintrc`:
+
+```json
+"rules": {
+  "no-restricted-imports": [
+    "error",
+    {
+      "patterns": [
+        {
+          "group": ["carbon-components-react"],
+          "message": "Import from `@carbon/react` directly. e.g. `import { Toggle } from '@carbon/react'`"
+        },
+        {
+          "group": ["@carbon/icons-react"],
+          "message": "Import from `@carbon/react/icons`. e.g. `import { ChevronUp } from '@carbon/react/icons'`"
+        }
+      ]
+    }
+  ]
+}
+```
+
+These patterns will help flag imports that use the older Carbon 10 import notation.
