@@ -3,6 +3,7 @@ import ICU from "i18next-icu";
 import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
+import { slugify } from "./load-modules";
 
 declare global {
   interface Window {
@@ -37,30 +38,29 @@ export function setupI18n() {
     .use(initReactI18next)
     .use(ICU)
     .init({
+      debug: true,
+      lng: "en",
       backend: {
         parse: (data) => data,
         loadPath: "{{lng}}|{{ns}}",
-        request(options, url, payload, callback) {
+        async request(options, url, payload, callback) {
           const [language, namespace] = url.split("|");
 
           if (namespace === "translation") {
             callback(null, { status: 404, data: null });
           } else {
-            System.import(decodeHtmlEntity(namespace))
-              .then((value) => {
-                if ("init" in value && "get" in value) {
-                  return value
-                    .get("app")
-                    .then((factory) =>
-                      getImportPromise(factory(), namespace, language)
-                    );
-                }
-                return getImportPromise(value, namespace, language);
-              })
-              .then(
+            const app: any = window[slugify(decodeHtmlEntity(namespace))];
+
+            if ("init" in app && "get" in app) {
+              app.init(__webpack_share_scopes__.default);
+              const start = await app.get("./start");
+              const module = start();
+
+              getImportPromise(module, namespace, language).then(
                 (json) => callback(null, { status: 200, data: json }),
                 (err) => callback(err, { status: 404, data: null })
               );
+            }
           }
         },
       },

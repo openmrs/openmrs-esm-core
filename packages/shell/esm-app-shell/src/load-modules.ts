@@ -94,6 +94,6 @@ function loadScript(
   }
 }
 
-function slugify(name) {
+export function slugify(name) {
   return name.replace(/[\/\-@]/g, "_");
 }
