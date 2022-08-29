@@ -3486,13 +3486,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-app-shell@4.0.1, @openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell":
+"@openmrs/esm-app-shell@*, @openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell"
   dependencies:
     "@carbon/react": ^1.8.0
     "@openmrs/esm-devtools-app": ^4.0.1
-    "@openmrs/esm-framework": 4.0.1
+    "@openmrs/esm-framework": "*"
     "@openmrs/esm-implementer-tools-app": ^4.0.1
     "@openmrs/esm-login-app": ^4.0.1
     "@openmrs/esm-offline-tools-app": ^4.0.1
@@ -3645,7 +3645,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-framework@4.0.1, @openmrs/esm-framework@^4.0.1, @openmrs/esm-framework@workspace:packages/framework/esm-framework":
+"@openmrs/esm-framework@*, @openmrs/esm-framework@^4.0.1, @openmrs/esm-framework@workspace:packages/framework/esm-framework":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-framework@workspace:packages/framework/esm-framework"
   dependencies:
@@ -3880,7 +3880,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/webpack-config@4.0.1, @openmrs/webpack-config@^4.0.1, @openmrs/webpack-config@workspace:packages/tooling/webpack-config":
+"@openmrs/webpack-config@*, @openmrs/webpack-config@^4.0.1, @openmrs/webpack-config@workspace:packages/tooling/webpack-config":
   version: 0.0.0-use.local
   resolution: "@openmrs/webpack-config@workspace:packages/tooling/webpack-config"
   dependencies:
@@ -13861,8 +13861,8 @@ __metadata:
   resolution: "openmrs@workspace:packages/tooling/openmrs"
   dependencies:
     "@babel/preset-typescript": ^7.16.7
-    "@openmrs/esm-app-shell": 4.0.1
-    "@openmrs/webpack-config": 4.0.1
+    "@openmrs/esm-app-shell": "*"
+    "@openmrs/webpack-config": "*"
     "@types/express": ^4.11.1
     "@types/glob": ^7.1.1
     "@types/inquirer": ^6.5.0
