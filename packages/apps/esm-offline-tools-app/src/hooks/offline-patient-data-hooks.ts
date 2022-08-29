@@ -132,5 +132,9 @@ function useMergedSwr<T>(
       isValidating,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [merge, ...swrResponses]);
+  }, [
+    merge,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    ...swrResponses.flatMap((res) => [res.data, res.error, res.isValidating]),
+  ]);
 }
