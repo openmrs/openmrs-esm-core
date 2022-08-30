@@ -31,7 +31,7 @@ export function runDevelop(args: DevelopArgs) {
   const source = resolve(
     require.resolve("@openmrs/esm-app-shell/package.json"),
     "..",
-    "lib"
+    "dist"
   );
   const index = resolve(source, "index.html");
   const indexContent = readFileSync(index, "utf8")
