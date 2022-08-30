@@ -19,24 +19,21 @@ function loadConfig(configPath: string) {
 }
 
 function debug(configPath: string, port: number) {
-  const webpack = require("webpack");
+  const Webpack = require("webpack");
   const WebpackDevServer = require("webpack-dev-server");
   const config = loadConfig(configPath);
 
-  const options = {
+  const compiler = Webpack(config);
+  const devServerOptions = {
     ...config.devServer,
     port,
     static: dirname(configPath),
   };
 
-  const server = new WebpackDevServer(webpack(config), options);
+  const server = new WebpackDevServer(devServerOptions, compiler);
 
-  server.listen(port, "localhost", (err?: Error) => {
-    if (err) {
-      logWarn(`Error: ${err}`);
-    } else {
-      logInfo(`Listening at http://localhost:${port}`);
-    }
+  server.startCallback(() => {
+    logInfo(`Listening at http://localhost:${port}`);
   });
 }
 
