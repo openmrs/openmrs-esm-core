@@ -49,15 +49,17 @@ export function setupI18n() {
           } else {
             const app: any = window[slugify(decodeHtmlEntity(namespace))];
 
-            if ("init" in app && "get" in app) {
-              app.init(__webpack_share_scopes__.default);
-              const start = await app.get("./start");
-              const module = start();
+            if (app) {
+              if ("init" in app && "get" in app) {
+                app.init(__webpack_share_scopes__.default);
+                const start = await app.get("./start");
+                const module = start();
 
-              getImportPromise(module, namespace, language).then(
-                (json) => callback(null, { status: 200, data: json }),
-                (err) => callback(err, { status: 404, data: null })
-              );
+                getImportPromise(module, namespace, language).then(
+                  (json) => callback(null, { status: 200, data: json }),
+                  (err) => callback(err, { status: 404, data: null })
+                );
+              }
             }
           }
         },
