@@ -41,10 +41,10 @@ and then run the app shell using `yarn run:shell`.
 ### Running your Frontend Module
 
 In your checked-out frontend module, upgrade the `openmrs` and `@openmrs/esm-framework`
-packages to version `4.0.0-pre` (use `4.x` once `4.0.0` is released).
+packages to version `4.0.1` or later
 
 ```sh
-yarn upgrade openmrs@4.0.0-pre @openmrs-esm-framework@4.0.0-pre
+yarn upgrade openmrs@next @openmrs-esm-framework@next
 ```
 
 In `openmrs-esm-core` run `yarn run:shell`. Then in your frontend module run `yarn serve` your frontend module and load it using the [import map overrides UI](https://o3-dev.docs.openmrs.org/#/getting_started/setup?id=import-map-overrides).
