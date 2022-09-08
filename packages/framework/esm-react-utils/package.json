@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "single-spa-react": "^4.6.1",
+    "single-spa-react": "^5.0.0",
     "swr": "^1.2.2"
   },
   "peerDependencies": {
