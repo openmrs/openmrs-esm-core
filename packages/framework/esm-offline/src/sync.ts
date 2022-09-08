@@ -190,7 +190,8 @@ async function processHandler(
   await db.syncQueue.where({ type, userId }).each((item, cursor) => {
     var content: any;
     if (item.encrypted) {
-      content = JSON.parse(item.content);
+      var decryptedData = atob(item.content["content"]);
+      content = JSON.parse(decryptedData);
     } else {
       content = item.content;
     }
@@ -260,12 +261,12 @@ export async function queueSynchronizationItemFor<T>(
       .catch(Dexie.errnames.DatabaseClosed);
   }
 
-  // Mock encryption by converting the json inton a string
-  const stringContent: string = JSON.stringify(content);
+  var encryptedData = btoa(JSON.stringify(content));
+  var encryptedJson = { content: encryptedData };
   const id = await db.syncQueue
     .add({
       type: type,
-      content: stringContent,
+      content: encryptedJson,
       encrypted: true,
       userId,
       descriptor: descriptor || {},
@@ -301,7 +302,10 @@ export async function getSynchronizationItemsFor<T>(
   type?: string
 ) {
   const fullItems = await getFullSynchronizationItemsFor<T>(userId, type);
-  return fullItems.map((item) => JSON.parse(item.content as unknown as string));
+  return fullItems.map((item) => {
+    var decryptedData = atob(item.content["content"]);
+    return JSON.parse(decryptedData);
+  });
 }
 
 /**
