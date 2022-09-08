@@ -44,7 +44,7 @@ In your checked-out frontend module, upgrade the `openmrs` and `@openmrs/esm-fra
 packages to version `4.0.1` or later
 
 ```sh
-yarn up openmrs@next @openmrs-esm-framework@next
+yarn up openmrs@next @openmrs/esm-framework@next
 ```
 
 In `openmrs-esm-core` run `yarn run:shell`. Then in your frontend module run `yarn serve` your frontend module and load it using the [import map overrides UI](https://o3-dev.docs.openmrs.org/#/getting_started/setup?id=import-map-overrides).
