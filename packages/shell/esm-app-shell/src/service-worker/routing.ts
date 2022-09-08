@@ -16,9 +16,59 @@ import {
 } from "@openmrs/esm-offline/src/service-worker-http-headers";
 import uniq from "lodash-es/uniq";
 
+const offlineEncryptionPlugin = {
+  cachedResponseWillBeUsed: async ({
+    cacheName,
+    request,
+    matchOptions,
+    cachedResponse,
+    event,
+    state,
+  }) => {
+    var responseClone = cachedResponse.clone();
+    var resHeaders = responseClone.headers;
+    var isEncrypted = resHeaders.has("encryption");
+    if (isEncrypted) {
+      var resJson = await responseClone.json().then((json) => json);
+      var decryptedData = atob(resJson["content"]);
+      var decryptedJson = JSON.parse(decryptedData);
+      return new Response(JSON.stringify(decryptedJson), {
+        headers: resHeaders,
+      });
+    }
+    return cachedResponse;
+  },
+  cacheWillUpdate: async ({ request, response, event, state }) => {
+    // Return `response`, a different `Response` object, or `null`.
+    console.log("cacheWillUpdate");
+    var responseClone = response.clone();
+    var contentType;
+    if (request.url.includes("fhir")) {
+      var resHeaders = new Headers(responseClone.headers);
+      contentType = resHeaders.get("content-type");
+      if (contentType == "application/fhir+json;charset=UTF-8") {
+        resHeaders.append("encryption", "true");
+        var resJson = await responseClone.json().then((json) => json);
+        var encryptedData = btoa(JSON.stringify(resJson));
+        var encryptedJson = { content: encryptedData };
+        return new Response(JSON.stringify(encryptedJson), {
+          headers: resHeaders,
+        });
+      }
+    }
+    return response;
+  },
+};
+
 const networkOnly = new NetworkOnly();
-const cacheOnly = new CacheOnly({ cacheName: omrsCacheName });
-const networkFirst = new NetworkFirst({ cacheName: omrsCacheName });
+const cacheOnly = new CacheOnly({
+  cacheName: omrsCacheName,
+  plugins: [offlineEncryptionPlugin],
+});
+const networkFirst = new NetworkFirst({
+  cacheName: omrsCacheName,
+  plugins: [offlineEncryptionPlugin],
+});
 
 const defaultStrategy: OmrsOfflineCachingStrategy =
   "network-only-or-cache-only";
