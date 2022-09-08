@@ -15,6 +15,10 @@ import {
   omrsOfflineCachingStrategyHttpHeaderName,
 } from "@openmrs/esm-offline/src/service-worker-http-headers";
 import uniq from "lodash-es/uniq";
+import {
+  encryptCache,
+  decryptCache,
+} from "@openmrs/esm-offline/src/encryption";
 
 const offlineEncryptionPlugin = {
   cachedResponseWillBeUsed: async ({
@@ -30,17 +34,13 @@ const offlineEncryptionPlugin = {
     var isEncrypted = resHeaders.has("encryption");
     if (isEncrypted) {
       var resJson = await responseClone.json().then((json) => json);
-      var decryptedData = atob(resJson["content"]);
-      var decryptedJson = JSON.parse(decryptedData);
-      return new Response(JSON.stringify(decryptedJson), {
+      return new Response(decryptCache(resJson), {
         headers: resHeaders,
       });
     }
     return cachedResponse;
   },
   cacheWillUpdate: async ({ request, response, event, state }) => {
-    // Return `response`, a different `Response` object, or `null`.
-    console.log("cacheWillUpdate");
     var responseClone = response.clone();
     var contentType;
     if (request.url.includes("fhir")) {
@@ -49,9 +49,7 @@ const offlineEncryptionPlugin = {
       if (contentType == "application/fhir+json;charset=UTF-8") {
         resHeaders.append("encryption", "true");
         var resJson = await responseClone.json().then((json) => json);
-        var encryptedData = btoa(JSON.stringify(resJson));
-        var encryptedJson = { content: encryptedData };
-        return new Response(JSON.stringify(encryptedJson), {
+        return new Response(encryptCache(resJson), {
           headers: resHeaders,
         });
       }

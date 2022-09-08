@@ -3,6 +3,7 @@ import Dexie from "dexie";
 import { getLoggedInUser } from "@openmrs/esm-api";
 import { createGlobalStore } from "@openmrs/esm-state";
 import { OfflineDb } from "./offline-db";
+import { encryptSyncData, decryptSyncData } from "./encryption";
 
 /**
  * Defines an item queued up in the offline synchronization queue.
@@ -190,8 +191,7 @@ async function processHandler(
   await db.syncQueue.where({ type, userId }).each((item, cursor) => {
     var content: any;
     if (item.encrypted) {
-      var decryptedData = atob(item.content["content"]);
-      content = JSON.parse(decryptedData);
+      content = decryptSyncData(item.content);
     } else {
       content = item.content;
     }
@@ -261,12 +261,10 @@ export async function queueSynchronizationItemFor<T>(
       .catch(Dexie.errnames.DatabaseClosed);
   }
 
-  var encryptedData = btoa(JSON.stringify(content));
-  var encryptedJson = { content: encryptedData };
   const id = await db.syncQueue
     .add({
       type: type,
-      content: encryptedJson,
+      content: encryptSyncData(content),
       encrypted: true,
       userId,
       descriptor: descriptor || {},
@@ -302,10 +300,9 @@ export async function getSynchronizationItemsFor<T>(
   type?: string
 ) {
   const fullItems = await getFullSynchronizationItemsFor<T>(userId, type);
-  return fullItems.map((item) => {
-    var decryptedData = atob(item.content["content"]);
-    return JSON.parse(decryptedData);
-  });
+  return fullItems.map((item) =>
+    decryptSyncData(item.content as unknown as string)
+  );
 }
 
 /**
