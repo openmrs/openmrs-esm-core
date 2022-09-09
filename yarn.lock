@@ -2357,65 +2357,132 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsenv/abort@npm:4.1.2":
-  version: 4.1.2
-  resolution: "@jsenv/abort@npm:4.1.2"
-  checksum: 9dc89f47e36f135d639a58626336de4b899c52fa0e49b0467629db6defbb594142723e2198eb2218153e8494ed600d1c8f9eb8ea242df445a2f590e9ff641aa2
+"@jsenv/abort@npm:4.2.3":
+  version: 4.2.3
+  resolution: "@jsenv/abort@npm:4.2.3"
+  checksum: 834c6ea1163467ef93281045269ca0b77d2c8d3c6a6419eb177b3a0f007d98a3b2a1f395b700d6a1332f086ee09590d72e3a945216c4a1174950cbfa4f376ce0
   languageName: node
   linkType: hard
 
-"@jsenv/dynamic-import-worker@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@jsenv/dynamic-import-worker@npm:1.0.1"
-  checksum: 684ca2624f5f36e72b885c3517c94bc9de3ed107daa55e3fb40057ead2b57784a85893f970496945e5ab94d7a57c6a5b91afbc6ee7488c41ab4b9f79fef55d7d
+"@jsenv/dynamic-import-worker@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@jsenv/dynamic-import-worker@npm:1.1.0"
+  checksum: 1b385ad7facdef09ac7195e82138d71848372e414397639405807108f372afd07e682e5194a295a37833c9d896d81b2c491802de6217828daf0cbce4ca37c680
   languageName: node
   linkType: hard
 
-"@jsenv/file-size-impact@npm:^12.1.12":
-  version: 12.2.0
-  resolution: "@jsenv/file-size-impact@npm:12.2.0"
+"@jsenv/fetch@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@jsenv/fetch@npm:1.1.2"
   dependencies:
-    "@jsenv/dynamic-import-worker": 1.0.1
-    "@jsenv/filesystem": 3.1.0
-    "@jsenv/github-pull-request-impact": 1.6.11
-    "@jsenv/logger": 4.0.1
-    pretty-bytes: 6.0.0
-  checksum: d46038d74db9fd5d826f71a61529ecf03b2a731098030245c55f3bc4d162e536eb2c4e01d7ca8064f76a49e9ff852c3596b79b5af4147da92bc59ee04009ba20
-  languageName: node
-  linkType: hard
-
-"@jsenv/filesystem@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@jsenv/filesystem@npm:3.1.0"
-  dependencies:
-    "@jsenv/abort": 4.1.2
-    "@jsenv/url-meta": 6.0.3
-  checksum: fc84096939761e6da1cc6edaebb942ab295a2b7e44a4bc9cea46e846dfe74d45155f8ba6b9aa489f73634024f1c2b2259e8054154e9f0b56889344dfeb8bb3ed
-  languageName: node
-  linkType: hard
-
-"@jsenv/github-pull-request-impact@npm:1.6.11":
-  version: 1.6.11
-  resolution: "@jsenv/github-pull-request-impact@npm:1.6.11"
-  dependencies:
-    "@jsenv/filesystem": 3.1.0
-    "@jsenv/logger": 4.0.1
+    "@jsenv/server": 12.7.2
+    "@jsenv/urls": 1.2.6
     node-fetch: 2.6.7
-  checksum: ec558871f85a941bd02f40e499d32fb01b4bbfdaf9ffa2070deca46caeefbffeda0ec6fe73971cb9ed9217f34cfcc8dd3f8e4e437deec2aa0b4cde024e21717f
+  checksum: ac667be2c3cbebd93f24959278f2e58170f79968424a5b3cfba99e3b88460887b80140d2f3ee4cce5abbd69208d8d70c89ad8e472203d390d9abe370b071ad6c
   languageName: node
   linkType: hard
 
-"@jsenv/logger@npm:4.0.1":
-  version: 4.0.1
-  resolution: "@jsenv/logger@npm:4.0.1"
-  checksum: a8f55f69a657d1febb39556b017719eb648c340dbaef9f7d3c7eca4da88940bff9a49e95b5ef6e551ef6c4fb7b1e076cde1fa3603f2c1df2839c5c52e34b0197
+"@jsenv/file-size-impact@npm:^13.0.1":
+  version: 13.0.1
+  resolution: "@jsenv/file-size-impact@npm:13.0.1"
+  dependencies:
+    "@jsenv/dynamic-import-worker": 1.1.0
+    "@jsenv/filesystem": 4.1.0
+    "@jsenv/github-pull-request-impact": 1.7.0
+    "@jsenv/log": 3.0.0
+    "@jsenv/urls": 1.2.6
+  checksum: 15498080315da3ddd028a81ea4c2aa94787e3c001426f70fa1001aac973a274d30487e36dc3107de2d28a8bbe5982fe358271ec6c3e89b5e63fae63106599557
   languageName: node
   linkType: hard
 
-"@jsenv/url-meta@npm:6.0.3":
-  version: 6.0.3
-  resolution: "@jsenv/url-meta@npm:6.0.3"
-  checksum: 390604540379d0e10a8f4352849052e604a5e4c0321e690571e447a532e4ac6447e5489e5a94400ed68261fcf8f31cf74363c168108a1d287d4c5c89f6f8f7f4
+"@jsenv/filesystem@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@jsenv/filesystem@npm:4.1.0"
+  dependencies:
+    "@jsenv/abort": 4.2.3
+    "@jsenv/url-meta": 7.0.0
+    "@jsenv/urls": 1.2.6
+  checksum: bb87f4cda5ade74aa22ba8fbef4add094e63922990d7d6a36c739a40a60f91877328419f52d5ef29e85ad2f94275fb9c6f95e916f448cc1e3b79f90adde73609
+  languageName: node
+  linkType: hard
+
+"@jsenv/github-pull-request-impact@npm:1.7.0":
+  version: 1.7.0
+  resolution: "@jsenv/github-pull-request-impact@npm:1.7.0"
+  dependencies:
+    "@jsenv/fetch": 1.1.2
+    "@jsenv/filesystem": 4.1.0
+    "@jsenv/log": 2.1.0
+  checksum: 126972ab7f9a85c6a1184a2e54b194d1d75e20908dc282eb55217fc07d3f8a23d9067b349c838feb2f859a582058bc1ce510987b50a41093daf6fb52b2f100d8
+  languageName: node
+  linkType: hard
+
+"@jsenv/log@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@jsenv/log@npm:2.0.1"
+  dependencies:
+    ansi-escapes: 5.0.0
+    is-unicode-supported: 1.2.0
+    string-width: 5.1.2
+    supports-color: 9.2.2
+  checksum: b58d9cfdb2b0bdde419274b1add81471ada0bc8446c03c74117ecb3bb76d133eb76ef162cb541fd9e607681995c913a2435045045d23454f27d07ae9d32de7f3
+  languageName: node
+  linkType: hard
+
+"@jsenv/log@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@jsenv/log@npm:2.1.0"
+  dependencies:
+    ansi-escapes: 5.0.0
+    is-unicode-supported: 1.2.0
+    string-width: 5.1.2
+    supports-color: 9.2.2
+  checksum: 3bd37b4b8eb1b7e1b05af8038a60f722b0fce4de93d18743285e5784e575b8c0344202fcc413dc4209d8cfab4b135878efae6b8dbfd73fbae3417430df1b8e3d
+  languageName: node
+  linkType: hard
+
+"@jsenv/log@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@jsenv/log@npm:3.0.0"
+  dependencies:
+    ansi-escapes: 5.0.0
+    is-unicode-supported: 1.2.0
+    string-width: 5.1.2
+    supports-color: 9.2.2
+  checksum: 587be637af5286b2d5939b7313589cc60446e00053ab17df72945134e01bb5395ba83204068581b0277ec5ee08ad99bd2abd6681c24d44c815b484ee79bab00b
+  languageName: node
+  linkType: hard
+
+"@jsenv/server@npm:12.7.2":
+  version: 12.7.2
+  resolution: "@jsenv/server@npm:12.7.2"
+  dependencies:
+    "@jsenv/abort": 4.2.3
+    "@jsenv/log": 2.0.1
+    "@jsenv/url-meta": 7.0.0
+    "@jsenv/utils": 2.0.1
+  checksum: e463c2fa5e3e8033840d225e8f9b45d0f604908c395c364c6abe667f4e37000880481298c8884b7344e6f6d705f79728c9f34e141d163477066a55df10a85ee3
+  languageName: node
+  linkType: hard
+
+"@jsenv/url-meta@npm:7.0.0":
+  version: 7.0.0
+  resolution: "@jsenv/url-meta@npm:7.0.0"
+  checksum: 9f538bb6ea77b2ae222edb2d5d86b7fc4433f706a7f272dbba97c12826456b25b839253514adbad35c9e110567888daa0c68d775c80d7b2701386fd924bb3988
+  languageName: node
+  linkType: hard
+
+"@jsenv/urls@npm:1.2.6":
+  version: 1.2.6
+  resolution: "@jsenv/urls@npm:1.2.6"
+  checksum: f6c7f9aae26b1ca4e388c77c401262abd2cc1d03ee17426a472eff8d293f84832b840275e84ced5692a4e51201174829b387ecd2bdc2e2b685824fafdcddefcb
+  languageName: node
+  linkType: hard
+
+"@jsenv/utils@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@jsenv/utils@npm:2.0.1"
+  checksum: 2ae25d3b588bc3a39367af2ca49013284be010d014b4451c3fe6f6c73c12bd8758ccca9a47fc17a6ec21aaf5d5ae2659a95217ff4369b0f853b800b1c5a57c1a
   languageName: node
   linkType: hard
 
@@ -3571,7 +3638,7 @@ __metadata:
   dependencies:
     "@babel/highlight": ^7.18.6
     "@jest/types": ^28.1.3
-    "@jsenv/file-size-impact": ^12.1.12
+    "@jsenv/file-size-impact": ^13.0.1
     "@swc/cli": ^0.1.57
     "@swc/core": ^1.2.164
     "@swc/jest": ^0.2.22
@@ -5355,6 +5422,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi-escapes@npm:5.0.0":
+  version: 5.0.0
+  resolution: "ansi-escapes@npm:5.0.0"
+  dependencies:
+    type-fest: ^1.0.2
+  checksum: d4b5eb8207df38367945f5dd2ef41e08c28edc192dc766ef18af6b53736682f49d8bfcfa4e4d6ecbc2e2f97c258fda084fb29a9e43b69170b71090f771afccac
+  languageName: node
+  linkType: hard
+
 "ansi-escapes@npm:^4.2.1":
   version: 4.3.2
   resolution: "ansi-escapes@npm:4.3.2"
@@ -5384,6 +5460,13 @@ __metadata:
   version: 5.0.1
   resolution: "ansi-regex@npm:5.0.1"
   checksum: 2aa4bb54caf2d622f1afdad09441695af2a83aa3fe8b8afa581d205e57ed4261c183c4d3877cee25794443fde5876417d859c108078ab788d6af7e4fe52eb66b
+  languageName: node
+  linkType: hard
+
+"ansi-regex@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "ansi-regex@npm:6.0.1"
+  checksum: 1ff8b7667cded1de4fa2c9ae283e979fc87036864317da86a2e546725f96406746411d0d85e87a2d12fa5abd715d90006de7fa4fa0477c92321ad3b4c7d4e169
   languageName: node
   linkType: hard
 
@@ -8646,6 +8729,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eastasianwidth@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "eastasianwidth@npm:0.2.0"
+  checksum: 7d00d7cd8e49b9afa762a813faac332dee781932d6f2c848dc348939c4253f1d4564341b7af1d041853bc3f32c2ef141b58e0a4d9862c17a7f08f68df1e0f1ed
+  languageName: node
+  linkType: hard
+
 "ecc-jsbn@npm:~0.1.1":
   version: 0.1.2
   resolution: "ecc-jsbn@npm:0.1.2"
@@ -11446,6 +11536,13 @@ __metadata:
   dependencies:
     unc-path-regex: ^0.1.2
   checksum: e8abfde203f7409f5b03a5f1f8636e3a41e78b983702ef49d9343eb608cdfe691429398e8815157519b987b739bcfbc73ae7cf4c8582b0ab66add5171088eab6
+  languageName: node
+  linkType: hard
+
+"is-unicode-supported@npm:1.2.0":
+  version: 1.2.0
+  resolution: "is-unicode-supported@npm:1.2.0"
+  checksum: 2d90b4b3ce622c1ecf7414b8954cc8f0483576d4d8e6892cbbdc1e2dd33d6126b1cf0319cf1549bee03d45f989b8b0de3309c879a9388a4fe6b8836f866ed86c
   languageName: node
   linkType: hard
 
@@ -15230,13 +15327,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pretty-bytes@npm:6.0.0":
-  version: 6.0.0
-  resolution: "pretty-bytes@npm:6.0.0"
-  checksum: 0bb9f95e617236404b29a8392c6efd82d65805f622f5e809ecd70068102be857d4e3276c86d2a32fa2ef851cc29472e380945dab7bec83ec79bd57a19a10faf7
-  languageName: node
-  linkType: hard
-
 "pretty-bytes@npm:^5.3.0, pretty-bytes@npm:^5.4.1":
   version: 5.6.0
   resolution: "pretty-bytes@npm:5.6.0"
@@ -17067,6 +17157,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"string-width@npm:5.1.2":
+  version: 5.1.2
+  resolution: "string-width@npm:5.1.2"
+  dependencies:
+    eastasianwidth: ^0.2.0
+    emoji-regex: ^9.2.2
+    strip-ansi: ^7.0.1
+  checksum: 7369deaa29f21dda9a438686154b62c2c5f661f8dda60449088f9f980196f7908fc39fdd1803e3e01541970287cf5deae336798337e9319a7055af89dafa7193
+  languageName: node
+  linkType: hard
+
 "string-width@npm:^1.0.1":
   version: 1.0.2
   resolution: "string-width@npm:1.0.2"
@@ -17174,6 +17275,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strip-ansi@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "strip-ansi@npm:7.0.1"
+  dependencies:
+    ansi-regex: ^6.0.1
+  checksum: 257f78fa433520e7f9897722731d78599cb3fce29ff26a20a5e12ba4957463b50a01136f37c43707f4951817a75e90820174853d6ccc240997adc5df8f966039
+  languageName: node
+  linkType: hard
+
 "strip-bom@npm:^3.0.0":
   version: 3.0.0
   resolution: "strip-bom@npm:3.0.0"
@@ -17260,6 +17370,13 @@ __metadata:
   peerDependencies:
     postcss: ^8.2.15
   checksum: 310b3452c11fd443b0d327aa2d5b43ae7479407339204b7ad11cf2e16d33b690c1cbf47a21b737ef112411e53563f0f996c5fa3642d135c896329950a008277f
+  languageName: node
+  linkType: hard
+
+"supports-color@npm:9.2.2":
+  version: 9.2.2
+  resolution: "supports-color@npm:9.2.2"
+  checksum: 976d84877402fc38c1d43b1fde20b0a8dc0283273f21cfebe4ff7507d27543cdfbeec7db108a96b82d694465f06d64e8577562b05d0520b41710088e0a33cc50
   languageName: node
   linkType: hard
 
@@ -18080,6 +18197,13 @@ __metadata:
   version: 0.8.1
   resolution: "type-fest@npm:0.8.1"
   checksum: d61c4b2eba24009033ae4500d7d818a94fd6d1b481a8111612ee141400d5f1db46f199c014766b9fa9b31a6a7374d96fc748c6d688a78a3ce5a33123839becb7
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^1.0.2":
+  version: 1.4.0
+  resolution: "type-fest@npm:1.4.0"
+  checksum: b011c3388665b097ae6a109a437a04d6f61d81b7357f74cbcb02246f2f5bd72b888ae33631b99871388122ba0a87f4ff1c94078e7119ff22c70e52c0ff828201
   languageName: node
   linkType: hard
 
