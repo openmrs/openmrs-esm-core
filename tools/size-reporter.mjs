@@ -6,7 +6,7 @@ import {
 await reportFileSizeImpact({
   ...readGitHubWorkflowEnv(),
   buildCommand: "npx turbo run build",
-  installCommand: "npx lerna bootstrap",
+  installCommand: "yarn install --immutable",
   fileSizeReportUrl: new URL(
     "./tools/size-generator.mjs#fileSizeReport",
     import.meta.url
