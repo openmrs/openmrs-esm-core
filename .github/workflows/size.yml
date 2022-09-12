@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: yarn install --immutable
+      - run: yarn
       - name: Report changes
         run: node ./tools/size-reporter.mjs
         env:
