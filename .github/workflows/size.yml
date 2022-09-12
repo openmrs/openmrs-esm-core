@@ -15,8 +15,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: yarn install --no-immutable
-      - name: Report changes
+      - run: yarn install --no-immutable 
+      - name: Report bundle size changes
         run: node ./tools/size-reporter.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
