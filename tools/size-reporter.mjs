@@ -7,6 +7,9 @@ await reportFileSizeImpact({
   ...readGitHubWorkflowEnv(),
   buildCommand: "npx turbo run build",
   installCommand: "npx lerna bootstrap",
-  fileSizeReportUrl: "./tools/size-generator.mjs#fileSizeReport",
+  fileSizeReportUrl: new URL(
+    "./tools/size-generator.mjs#fileSizeReport",
+    import.meta.url
+  ),
   rootDirectoryUrl: new URL("../", import.meta.url),
 });
