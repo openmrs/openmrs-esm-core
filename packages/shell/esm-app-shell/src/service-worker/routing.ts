@@ -48,7 +48,7 @@ const offlineEncryptionPlugin = {
       contentType = resHeaders.get("content-type");
       if (contentType == "application/fhir+json;charset=UTF-8") {
         resHeaders.append("encryption", "true");
-        var resJson = await responseClone.json().then((json) => json);
+        var resJson = await responseClone.json();
         return new Response(encryptCache(resJson), {
           headers: resHeaders,
         });

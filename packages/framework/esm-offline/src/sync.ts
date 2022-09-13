@@ -189,7 +189,7 @@ async function processHandler(
   const userId = await getUserId();
 
   await db.syncQueue.where({ type, userId }).each((item, cursor) => {
-    var content: any;
+    var content: unknown;
     if (item.encrypted) {
       content = decryptSyncData(item.content);
     } else {
