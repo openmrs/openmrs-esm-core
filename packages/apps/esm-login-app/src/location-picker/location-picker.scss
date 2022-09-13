@@ -11,23 +11,22 @@
   width: 100vw;
 }
 
+.paddedContainer {
+  padding: 1.5rem;
+}
+
 .locationCard {
   display: flex;
   flex-direction: column;
   width: 23rem;
-  background-color: $ui-background;
+  background-color: $ui-02;
   margin: 0;
-  padding: 1.5rem;
   border: 1px solid $ui-03;
 }
 
 .welcomeTitle {
   @extend .productiveHeading03;
   text-transform: capitalize;
-}
-
-.searchBox {
-  margin-top: 1rem;
 }
 
 .welcomeMessage {
@@ -38,9 +37,10 @@
 
 .searchResults {
   @extend .bodyShort02;
-  margin: 1rem 0rem;
   max-height: 100%;
   overflow-y: auto;
+  padding: 1rem 1.5rem 0rem;
+  background-color: $ui-01;
 }
 
 .resultsCount {
@@ -52,6 +52,7 @@
   display: flex;
   overflow-y: auto;
   margin-top: 0.5rem;
+  padding: 0rem 0.125rem 0rem;
 }
 
 .locationRadioButton {
@@ -71,6 +72,7 @@
 }
 
 .confirmButton button {
+  margin: 1.5rem;
   width: 20rem;
 }
 

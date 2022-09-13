@@ -138,7 +138,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     <div className={styles.locationPickerContainer}>
       <form onSubmit={handleSubmit}>
         <div className={styles.locationCard}>
-          <div>
+          <div className={styles.paddedContainer}>
             <p className={styles.welcomeTitle}>
               {t("welcome", "Welcome")} {currentUser}
             </p>
@@ -149,80 +149,81 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
               )}
             </p>
           </div>
-          <Search
-            autoFocus
-            className={styles.searchBox}
-            labelText={t("searchForLocation", "Search for a location")}
-            id="search-1"
-            placeholder={t("searchForLocation", "Search for a location")}
-            onChange={(ev) => search(ev.target.value)}
-            name="searchForLocation"
-          />
-          <div
-            className={styles.searchResults}
-            style={{ height: `${chooseLocation.numberToShow * 2.875}rem` }}
-          >
-            {!isLoading ? (
-              <>
-                <p className={styles.resultsCount}>
-                  {searchTerm
-                    ? `${totalResults ?? 0} ${
-                        totalResults === 1
-                          ? t("match", "match")
-                          : t("matches", "matches")
-                      } ${t("found", "found")}`
-                    : `${t("showing", "Showing")} ${pageSize} ${t(
-                        "of",
-                        "of"
-                      )} ${totalResults} ${t("locations", "locations")}`}
-                </p>
-                <div className={styles.locationResultsContainer}>
-                  {locationData?.length > 0 && (
-                    <RadioButtonGroup
-                      valueSelected={activeLocation}
-                      orientation="vertical"
-                      name={activeLocation}
-                      onChange={(ev) => {
-                        setActiveLocation(ev.toString());
-                      }}
-                    >
-                      {locationData.map((entry) => (
-                        <RadioButton
-                          className={styles.locationRadioButton}
-                          key={entry.resource.id}
-                          id={entry.resource.name}
-                          labelText={entry.resource.name}
-                          value={entry.resource.id}
-                        />
-                      ))}
-                    </RadioButtonGroup>
-                  )}
-                  {locationData?.length === 0 && (
-                    <p className={styles.locationNotFound}>
-                      {t(
-                        "locationNotFound",
-                        "Sorry, no matching location was found"
-                      )}
-                    </p>
-                  )}
-                </div>
-
-                {hasMore && (
-                  <div className={styles.loadingIcon} ref={loadingIconRef}>
-                    <Loading
-                      small
-                      withOverlay={false}
-                      description={t("loading", "Loading")}
-                    />
+          <>
+            <Search
+              autoFocus
+              labelText={t("searchForLocation", "Search for a location")}
+              id="search-1"
+              placeholder={t("searchForLocation", "Search for a location")}
+              onChange={(ev) => search(ev.target.value)}
+              name="searchForLocation"
+              size="lg"
+            />
+            <div
+              className={styles.searchResults}
+              style={{ height: `${chooseLocation.numberToShow * 2.875}rem` }}
+            >
+              {!isLoading ? (
+                <>
+                  <p className={styles.resultsCount}>
+                    {searchTerm
+                      ? `${totalResults ?? 0} ${
+                          totalResults === 1
+                            ? t("match", "match")
+                            : t("matches", "matches")
+                        } ${t("found", "found")}`
+                      : `${t("showing", "Showing")} ${pageSize} ${t(
+                          "of",
+                          "of"
+                        )} ${totalResults} ${t("locations", "locations")}`}
+                  </p>
+                  <div className={styles.locationResultsContainer}>
+                    {locationData?.length > 0 && (
+                      <RadioButtonGroup
+                        valueSelected={activeLocation}
+                        orientation="vertical"
+                        name={activeLocation}
+                        onChange={(ev) => {
+                          setActiveLocation(ev.toString());
+                        }}
+                      >
+                        {locationData.map((entry) => (
+                          <RadioButton
+                            className={styles.locationRadioButton}
+                            key={entry.resource.id}
+                            id={entry.resource.name}
+                            labelText={entry.resource.name}
+                            value={entry.resource.id}
+                          />
+                        ))}
+                      </RadioButtonGroup>
+                    )}
+                    {locationData?.length === 0 && (
+                      <p className={styles.locationNotFound}>
+                        {t(
+                          "locationNotFound",
+                          "Sorry, no matching location was found"
+                        )}
+                      </p>
+                    )}
                   </div>
-                )}
-              </>
-            ) : (
-              <div>
-                <RadioButtonSkeleton className={styles.radioButtonSkeleton} />
-              </div>
-            )}
-          </div>
+                  {hasMore && (
+                    <div className={styles.loadingIcon} ref={loadingIconRef}>
+                      <Loading
+                        small
+                        withOverlay={false}
+                        description={t("loading", "Loading")}
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div>
+                  <RadioButtonSkeleton className={styles.radioButtonSkeleton} />
+                </div>
+              )}
+            </div>
+          </>
           <div className={styles.confirmButton}>
             <Button
               kind="primary"
