@@ -3,7 +3,7 @@ import { registerRoute } from "workbox-routing";
 import { getOrCreateDefaultRouter } from "workbox-routing/utils/getOrCreateDefaultRouter";
 import { validMethods } from "workbox-routing/utils/constants";
 import { CacheOnly, NetworkFirst, NetworkOnly } from "workbox-strategies";
-import { indexUrl, omrsCacheName } from "./constants";
+import { indexUrl, omrsCacheName, encryption } from "./constants";
 import { ServiceWorkerDb } from "./storage";
 import {
   getOmrsHeader,
@@ -43,15 +43,17 @@ const offlineEncryptionPlugin = {
   cacheWillUpdate: async ({ request, response, event, state }) => {
     var responseClone = response.clone();
     var contentType;
-    if (request.url.includes("fhir")) {
-      var resHeaders = new Headers(responseClone.headers);
-      contentType = resHeaders.get("content-type");
-      if (contentType == "application/fhir+json;charset=UTF-8") {
-        resHeaders.append("encryption", "true");
-        var resJson = await responseClone.json();
-        return new Response(encryptCache(resJson), {
-          headers: resHeaders,
-        });
+    if (encryption) {
+      if (request.url.includes("fhir")) {
+        var resHeaders = new Headers(responseClone.headers);
+        contentType = resHeaders.get("content-type");
+        if (contentType == "application/fhir+json;charset=UTF-8") {
+          resHeaders.append("encryption", "true");
+          var resJson = await responseClone.json();
+          return new Response(encryptCache(resJson), {
+            headers: resHeaders,
+          });
+        }
       }
     }
     return response;

@@ -14,3 +14,5 @@ export const buildManifestSuffix = ".buildmanifest.json";
 function prefixWithServiceWorkerLocationIfRelative(path: string) {
   return new URL(path, self.location.href).href;
 }
+
+export const encryption = true;
