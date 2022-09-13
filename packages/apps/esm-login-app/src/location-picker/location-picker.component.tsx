@@ -155,7 +155,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
               labelText={t("searchForLocation", "Search for a location")}
               id="search-1"
               placeholder={t("searchForLocation", "Search for a location")}
-              onChange={(ev) => search(ev.target.value)}
+              onChange={(event) => search(event.target.value)}
               name="searchForLocation"
               size="lg"
             />
@@ -165,18 +165,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             >
               {!isLoading ? (
                 <>
-                  <p className={styles.resultsCount}>
-                    {searchTerm
-                      ? `${totalResults ?? 0} ${
-                          totalResults === 1
-                            ? t("match", "match")
-                            : t("matches", "matches")
-                        } ${t("found", "found")}`
-                      : `${t("showing", "Showing")} ${pageSize} ${t(
-                          "of",
-                          "of"
-                        )} ${totalResults} ${t("locations", "locations")}`}
-                  </p>
                   <div className={styles.locationResultsContainer}>
                     {locationData?.length > 0 && (
                       <RadioButtonGroup
@@ -199,12 +187,11 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                       </RadioButtonGroup>
                     )}
                     {locationData?.length === 0 && (
-                      <p className={styles.locationNotFound}>
-                        {t(
-                          "locationNotFound",
-                          "Sorry, no matching location was found"
-                        )}
-                      </p>
+                      <div className={styles.emptyState}>
+                        <p className={styles.locationNotFound}>
+                          {t("noResultsToDisplay", "No results to display")}
+                        </p>
+                      </div>
                     )}
                   </div>
                   {hasMore && (
@@ -218,7 +205,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                   )}
                 </>
               ) : (
-                <div>
+                <div className={styles.loadingContainer}>
                   <RadioButtonSkeleton className={styles.radioButtonSkeleton} />
                 </div>
               )}

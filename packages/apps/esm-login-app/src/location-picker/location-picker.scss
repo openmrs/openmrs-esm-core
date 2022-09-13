@@ -39,7 +39,7 @@
   @extend .bodyShort02;
   max-height: 100%;
   overflow-y: auto;
-  padding: 1rem 1.5rem 0rem;
+  padding: 0rem 1.5rem;
   background-color: $ui-01;
 }
 
@@ -66,9 +66,9 @@
 }
 
 .locationNotFound {
-  @extend .bodyShort01;
-  padding: 1rem 0rem;
-  color: $color-gray-70;
+  @extend .productiveHeading01;
+  color: $text-02;
+  margin-bottom: 1rem;
 }
 
 .confirmButton button {
@@ -109,4 +109,15 @@ pagination > button:first-child:hover {
   justify-content: center;
   align-items: center;
   margin-top: spacing.$spacing-05;
+}
+
+.loadingContainer {
+  margin-top: 1.5rem;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1.5rem auto 0rem;
 }
