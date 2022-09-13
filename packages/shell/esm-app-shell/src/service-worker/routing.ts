@@ -43,17 +43,15 @@ const offlineEncryptionPlugin = {
   cacheWillUpdate: async ({ request, response, event, state }) => {
     var responseClone = response.clone();
     var contentType;
-    if (encryption) {
-      if (request.url.includes("fhir")) {
-        var resHeaders = new Headers(responseClone.headers);
-        contentType = resHeaders.get("content-type");
-        if (contentType == "application/fhir+json;charset=UTF-8") {
-          resHeaders.append("encryption", "true");
-          var resJson = await responseClone.json();
-          return new Response(encryptCache(resJson), {
-            headers: resHeaders,
-          });
-        }
+    if (request.url.includes("fhir")) {
+      var resHeaders = new Headers(responseClone.headers);
+      contentType = resHeaders.get("content-type");
+      if (contentType == "application/fhir+json;charset=UTF-8") {
+        resHeaders.append("encryption", encryption.toString());
+        var resJson = await responseClone.json();
+        return new Response(encryptCache(resJson), {
+          headers: resHeaders,
+        });
       }
     }
     return response;
