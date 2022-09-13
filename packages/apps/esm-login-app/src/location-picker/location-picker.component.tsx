@@ -145,7 +145,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             <p className={styles.welcomeMessage}>
               {t(
                 "selectYourLocation",
-                "Select your location from the list below. Use the search bar to search for your location."
+                "Select your location from the list below. Use the search bar to find your location."
               )}
             </p>
           </div>
