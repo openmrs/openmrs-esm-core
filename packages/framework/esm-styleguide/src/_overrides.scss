@@ -78,7 +78,9 @@
 }
 
 .cds--content-switcher-btn:before {
-  display: none;
+  background-color: $color-blue-30;
+  height: 100%;
+  z-index: 0;
 }
 
 /* Tabs */
