@@ -1,3 +1,5 @@
+export const encryption = true;
+
 function encrypt(data: string) {
   return btoa(data);
 }
@@ -11,9 +13,9 @@ function decrypt(data: string) {
  * @param json response json data
  */
 export function encryptCache(json: JSON) {
-  var data = JSON.stringify(json);
-  var encryptedData = encrypt(data);
-  var encryptedJson = { content: encryptedData };
+  let data = JSON.stringify(json);
+  let encryptedData = encrypt(data);
+  let encryptedJson = { content: encryptedData };
 
   return JSON.stringify(encryptedJson);
 }
@@ -23,9 +25,9 @@ export function encryptCache(json: JSON) {
  * @param json response json data
  */
 export function decryptCache(json: JSON) {
-  var data = json["content"];
-  var decryptedData = decrypt(data);
-  var decryptedJson = JSON.parse(decryptedData);
+  let data = json["content"];
+  let decryptedData = decrypt(data);
+  let decryptedJson = JSON.parse(decryptedData);
 
   return JSON.stringify(decryptedJson);
 }
@@ -35,7 +37,7 @@ export function decryptCache(json: JSON) {
  * @param json content json data
  */
 export function encryptSyncData(json: JSON) {
-  var data = JSON.stringify(json);
+  let data = JSON.stringify(json);
 
   return encrypt(data);
 }
@@ -45,7 +47,7 @@ export function encryptSyncData(json: JSON) {
  * @param data content string data
  */
 export function decryptSyncData(data: string) {
-  var decryptedData = decrypt(data);
+  let decryptedData = decrypt(data);
 
   return JSON.parse(decryptedData);
 }

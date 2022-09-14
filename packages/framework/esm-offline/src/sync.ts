@@ -3,7 +3,7 @@ import Dexie from "dexie";
 import { getLoggedInUser } from "@openmrs/esm-api";
 import { createGlobalStore } from "@openmrs/esm-state";
 import { OfflineDb } from "./offline-db";
-import { encryptSyncData, decryptSyncData } from "./encryption";
+import { encryptSyncData, decryptSyncData, encryption } from "./encryption";
 
 /**
  * Defines an item queued up in the offline synchronization queue.
@@ -153,7 +153,7 @@ export async function runSynchronization() {
 
     // we try until the queue is depleted, but no more than queue.length tries.
     for (let iter = 0; iter < maxIter && handlerQueue.length > 0; iter++) {
-      for (let i = handlerQueue.length; i--; ) {
+      for (let i = handlerQueue.length; i--;) {
         const [name, handler] = handlerQueue[i];
         const deps = handler.dependsOn.map((dep) => promises[dep]);
 
@@ -189,7 +189,7 @@ async function processHandler(
   const userId = await getUserId();
 
   await db.syncQueue.where({ type, userId }).each((item, cursor) => {
-    var content: unknown;
+    var content: any;
     if (item.encrypted) {
       content = decryptSyncData(item.content);
     } else {
@@ -264,8 +264,8 @@ export async function queueSynchronizationItemFor<T>(
   const id = await db.syncQueue
     .add({
       type: type,
-      content: encryptSyncData(content),
-      encrypted: true,
+      content: encryption ? encryptSyncData(content as unknown as JSON) : content,
+      encrypted: encryption,
       userId,
       descriptor: descriptor || {},
       createdOn: new Date(),
@@ -301,7 +301,7 @@ export async function getSynchronizationItemsFor<T>(
 ) {
   const fullItems = await getFullSynchronizationItemsFor<T>(userId, type);
   return fullItems.map((item) =>
-    decryptSyncData(item.content as unknown as string)
+    item.encrypted ? decryptSyncData(item.content as unknown as string) : item.content
   );
 }
 

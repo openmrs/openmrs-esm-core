@@ -3,7 +3,7 @@ import { registerRoute } from "workbox-routing";
 import { getOrCreateDefaultRouter } from "workbox-routing/utils/getOrCreateDefaultRouter";
 import { validMethods } from "workbox-routing/utils/constants";
 import { CacheOnly, NetworkFirst, NetworkOnly } from "workbox-strategies";
-import { indexUrl, omrsCacheName, encryption } from "./constants";
+import { indexUrl, omrsCacheName } from "./constants";
 import { ServiceWorkerDb } from "./storage";
 import {
   getOmrsHeader,
@@ -18,6 +18,7 @@ import uniq from "lodash-es/uniq";
 import {
   encryptCache,
   decryptCache,
+  encryption
 } from "@openmrs/esm-offline/src/encryption";
 
 const offlineEncryptionPlugin = {
@@ -41,9 +42,12 @@ const offlineEncryptionPlugin = {
     return cachedResponse;
   },
   cacheWillUpdate: async ({ request, response, event, state }) => {
-    var responseClone = response.clone();
-    var contentType;
+    if(!encryption) {
+      return response;
+    }
     if (request.url.includes("fhir")) {
+      var responseClone = response.clone();
+      var contentType;
       var resHeaders = new Headers(responseClone.headers);
       contentType = resHeaders.get("content-type");
       if (contentType == "application/fhir+json;charset=UTF-8") {
