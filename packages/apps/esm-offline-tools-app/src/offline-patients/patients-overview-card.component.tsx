@@ -3,15 +3,11 @@ import { useTranslation } from "react-i18next";
 import HeaderedQuickInfo from "../components/headered-quick-info.component";
 import OverviewCard from "../components/overview-card.component";
 import { routes } from "../constants";
-import useSWR from "swr";
-import {
-  getDynamicOfflineDataEntries,
-  getSynchronizationItems,
-} from "@openmrs/esm-framework";
+import { useOfflinePatientStats } from "../hooks/offline-patient-data-hooks";
 
 const PatientsOverviewCard: React.FC = () => {
   const { t } = useTranslation();
-  const { data } = useDownloadedOfflinePatients();
+  const { data } = useOfflinePatientStats();
 
   return (
     <OverviewCard
@@ -34,23 +30,5 @@ const PatientsOverviewCard: React.FC = () => {
     </OverviewCard>
   );
 };
-
-function useDownloadedOfflinePatients() {
-  return useSWR(["offlineTools/offlinePatientsTotalCount"], async () => {
-    const patientDataEntries = await getDynamicOfflineDataEntries("patient");
-    const patientRegistrationSyncItems = await getSynchronizationItems(
-      "patient-registration"
-    );
-    const registeredCount = patientRegistrationSyncItems.length;
-    const downloadedCount = patientDataEntries.filter(
-      (entry) => entry.syncState && entry.syncState.erroredHandlers.length === 0
-    ).length;
-
-    return {
-      downloadedCount,
-      registeredCount,
-    };
-  });
-}
 
 export default PatientsOverviewCard;

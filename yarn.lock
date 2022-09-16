@@ -1408,15 +1408,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/react@npm:^1.8.0":
-  version: 1.9.0
-  resolution: "@carbon/react@npm:1.9.0"
+"@carbon/react@npm:^1.12.0":
+  version: 1.12.0
+  resolution: "@carbon/react@npm:1.12.0"
   dependencies:
     "@babel/runtime": ^7.18.3
     "@carbon/feature-flags": ^0.8.0
     "@carbon/icons-react": ^11.7.0
     "@carbon/layout": ^11.5.0
-    "@carbon/styles": ^1.9.0
+    "@carbon/styles": ^1.12.0
     "@carbon/telemetry": 0.1.0
     classnames: 2.3.1
     copy-to-clipboard: ^3.3.1
@@ -1437,11 +1437,29 @@ __metadata:
     react: ^16.8.6 || ^17.0.1
     react-dom: ^16.8.6 || ^17.0.1
     sass: ^1.33.0
-  checksum: de84cdbc8ec8a4abae8ec3446df32e32042c5b71028deb6d8da3c3a5e4b57f0ad5d756cb1f61518a8223abd3e357e37dc11a8446cf3f9a24ccbdbe86c5ef7f62
+  checksum: ec723fc7f57fc3f03836d302fc22d2fbbb3376d567ee6657b693761e78f21bcaf89c6236d57e141cf7dd53e13df026dbf2bbd68f2d363f30d7a9f1d6733f68ca
   languageName: node
   linkType: hard
 
-"@carbon/styles@npm:^1.4.0, @carbon/styles@npm:^1.9.0":
+"@carbon/styles@npm:^1.12.0":
+  version: 1.12.0
+  resolution: "@carbon/styles@npm:1.12.0"
+  dependencies:
+    "@carbon/colors": ^11.4.0
+    "@carbon/feature-flags": ^0.8.0
+    "@carbon/grid": ^11.5.0
+    "@carbon/layout": ^11.5.0
+    "@carbon/motion": ^11.3.0
+    "@carbon/themes": ^11.8.0
+    "@carbon/type": ^11.8.0
+    "@ibm/plex": 6.0.0-next.6
+  peerDependencies:
+    sass: ^1.33.0
+  checksum: 382a0284a49f23e2c5fa304b55eccdf53f24420ec9aa527db5b472b4bb25dea7e8f88e755d0635b0b9e432326ef6db1698bddc050219fd3a940c0d1206fdc467
+  languageName: node
+  linkType: hard
+
+"@carbon/styles@npm:^1.4.0":
   version: 1.9.0
   resolution: "@carbon/styles@npm:1.9.0"
   dependencies:
@@ -1480,12 +1498,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@carbon/themes@npm:^11.8.0":
+  version: 11.8.0
+  resolution: "@carbon/themes@npm:11.8.0"
+  dependencies:
+    "@carbon/colors": ^11.4.0
+    "@carbon/layout": ^11.5.0
+    "@carbon/type": ^11.8.0
+    color: ^3.1.2
+  checksum: 99c23eeeeaa8821cffbf820396410c2e7429e5ffdd530ba75e8ef7cddf1cd8ace43dfdf6883d858e188eb5baee4d292019f521ffeab2dd7e4db7722f5416b497
+  languageName: node
+  linkType: hard
+
 "@carbon/type@npm:^11.6.0":
   version: 11.6.0
   resolution: "@carbon/type@npm:11.6.0"
   dependencies:
     "@carbon/grid": ^11.5.0
   checksum: 1448a3f1fd4cf48203a4ee0b131ad1681e930dc7450de8332f00ec20c63af76228493a5289480be07cfc0e031bd8faddc5bab378ec4c72ad90d7e2b04a79de59
+  languageName: node
+  linkType: hard
+
+"@carbon/type@npm:^11.8.0":
+  version: 11.8.0
+  resolution: "@carbon/type@npm:11.8.0"
+  dependencies:
+    "@carbon/grid": ^11.5.0
+  checksum: 3dcbcff46f1911225b5d5ac76a29e4f475f7f6245f3ba678c2e4ad51f9ca18db5fb63ba5957c51c27aa68618979c02f3147ffa12e1d53d376846944011453d36
   languageName: node
   linkType: hard
 
@@ -3464,7 +3503,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell"
   dependencies:
-    "@carbon/react": ^1.8.0
+    "@carbon/react": ^1.12.0
     "@openmrs/esm-devtools-app": ^4.0.1
     "@openmrs/esm-framework": "*"
     "@openmrs/esm-implementer-tools-app": ^4.0.1
@@ -3579,7 +3618,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-devtools-app@workspace:packages/apps/esm-devtools-app"
   dependencies:
-    "@carbon/react": ^1.8.0
+    "@carbon/react": ^1.12.0
     "@openmrs/esm-framework": ^4.0.1
     "@openmrs/webpack-config": ^4.0.1
     react: ^18.1.0
@@ -3652,7 +3691,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-implementer-tools-app@workspace:packages/apps/esm-implementer-tools-app"
   dependencies:
-    "@carbon/react": ^1.8.0
+    "@carbon/react": ^1.12.0
     "@openmrs/esm-framework": ^4.0.1
     "@openmrs/webpack-config": ^4.0.1
     ace-builds: ^1.4.14
@@ -3676,7 +3715,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-login-app@workspace:packages/apps/esm-login-app"
   dependencies:
-    "@carbon/react": ^1.8.0
+    "@carbon/react": ^1.12.0
     "@openmrs/esm-framework": ^4.0.1
     "@openmrs/webpack-config": ^4.0.1
     jest: ^28.1.0
@@ -3701,7 +3740,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-offline-tools-app@workspace:packages/apps/esm-offline-tools-app"
   dependencies:
-    "@carbon/react": ^1.8.0
+    "@carbon/react": ^1.12.0
     "@openmrs/esm-framework": ^4.0.1
     "@openmrs/webpack-config": ^4.0.1
     "@types/lodash-es": ^4.17.5
@@ -3748,7 +3787,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-primary-navigation-app@workspace:packages/apps/esm-primary-navigation-app"
   dependencies:
-    "@carbon/react": ^1.8.0
+    "@carbon/react": ^1.12.0
     "@openmrs/esm-framework": ^4.0.1
     "@openmrs/webpack-config": ^4.0.1
     jest: ^28.1.0
@@ -3784,7 +3823,7 @@ __metadata:
     react-dom: ^18.1.0
     react-i18next: ^11.16.9
     rxjs: ^6.5.3
-    single-spa-react: ^4.6.1
+    single-spa-react: ^5.0.0
     swr: ^1.2.2
     unistore: ^3.5.2
   peerDependencies:
@@ -3814,7 +3853,7 @@ __metadata:
   resolution: "@openmrs/esm-styleguide@workspace:packages/framework/esm-styleguide"
   dependencies:
     "@carbon/charts": ^1.5.0
-    "@carbon/react": ^1.8.0
+    "@carbon/react": ^1.12.0
     "@openmrs/esm-extensions": ^4.0.1
     "@openmrs/esm-react-utils": ^4.0.1
     "@openmrs/esm-state": ^4.0.1
@@ -16617,16 +16656,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"single-spa-react@npm:^4.6.1":
-  version: 4.6.1
-  resolution: "single-spa-react@npm:4.6.1"
+"single-spa-react@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "single-spa-react@npm:5.0.0"
   dependencies:
     browserslist-config-single-spa: ^1.0.1
   peerDependencies:
     "@types/react": "*"
     "@types/react-dom": "*"
     react: "*"
-  checksum: 12383d3b1dfc328efb7386f1094cbd255cf7e4785685416cd854ff3e1ba5da7828a2edaada94859593c8bc0405c5982c9655d1f51b5b67a2a94a6c1908983428
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 6b3d0c69720eaef494964f36a5c41fc601d80fcb1fead87bd73c9a7c2db53155ac70111626eec7d75260452f2a867c9139c88269900a2e5cb718264db4863ec7
   languageName: node
   linkType: hard
 
