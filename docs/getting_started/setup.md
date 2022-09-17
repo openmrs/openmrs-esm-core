@@ -3,7 +3,7 @@
 ## Prerequisities
 
 You must have git, node, npm, and yarn installed. The versions required are
-- The Node [Active LTS version](https://nodejs.org/en/download/)
+- The Node [Active LTS version](https://github.com/nodejs/release#release-schedule)
 - The latest stable version of NPM
 - The latest stable version of Yarn
 
