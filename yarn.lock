@@ -2357,68 +2357,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsenv/abort@npm:4.1.2":
-  version: 4.1.2
-  resolution: "@jsenv/abort@npm:4.1.2"
-  checksum: 9dc89f47e36f135d639a58626336de4b899c52fa0e49b0467629db6defbb594142723e2198eb2218153e8494ed600d1c8f9eb8ea242df445a2f590e9ff641aa2
-  languageName: node
-  linkType: hard
-
-"@jsenv/dynamic-import-worker@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@jsenv/dynamic-import-worker@npm:1.0.1"
-  checksum: 684ca2624f5f36e72b885c3517c94bc9de3ed107daa55e3fb40057ead2b57784a85893f970496945e5ab94d7a57c6a5b91afbc6ee7488c41ab4b9f79fef55d7d
-  languageName: node
-  linkType: hard
-
-"@jsenv/file-size-impact@npm:^12.1.12":
-  version: 12.2.0
-  resolution: "@jsenv/file-size-impact@npm:12.2.0"
-  dependencies:
-    "@jsenv/dynamic-import-worker": 1.0.1
-    "@jsenv/filesystem": 3.1.0
-    "@jsenv/github-pull-request-impact": 1.6.11
-    "@jsenv/logger": 4.0.1
-    pretty-bytes: 6.0.0
-  checksum: d46038d74db9fd5d826f71a61529ecf03b2a731098030245c55f3bc4d162e536eb2c4e01d7ca8064f76a49e9ff852c3596b79b5af4147da92bc59ee04009ba20
-  languageName: node
-  linkType: hard
-
-"@jsenv/filesystem@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@jsenv/filesystem@npm:3.1.0"
-  dependencies:
-    "@jsenv/abort": 4.1.2
-    "@jsenv/url-meta": 6.0.3
-  checksum: fc84096939761e6da1cc6edaebb942ab295a2b7e44a4bc9cea46e846dfe74d45155f8ba6b9aa489f73634024f1c2b2259e8054154e9f0b56889344dfeb8bb3ed
-  languageName: node
-  linkType: hard
-
-"@jsenv/github-pull-request-impact@npm:1.6.11":
-  version: 1.6.11
-  resolution: "@jsenv/github-pull-request-impact@npm:1.6.11"
-  dependencies:
-    "@jsenv/filesystem": 3.1.0
-    "@jsenv/logger": 4.0.1
-    node-fetch: 2.6.7
-  checksum: ec558871f85a941bd02f40e499d32fb01b4bbfdaf9ffa2070deca46caeefbffeda0ec6fe73971cb9ed9217f34cfcc8dd3f8e4e437deec2aa0b4cde024e21717f
-  languageName: node
-  linkType: hard
-
-"@jsenv/logger@npm:4.0.1":
-  version: 4.0.1
-  resolution: "@jsenv/logger@npm:4.0.1"
-  checksum: a8f55f69a657d1febb39556b017719eb648c340dbaef9f7d3c7eca4da88940bff9a49e95b5ef6e551ef6c4fb7b1e076cde1fa3603f2c1df2839c5c52e34b0197
-  languageName: node
-  linkType: hard
-
-"@jsenv/url-meta@npm:6.0.3":
-  version: 6.0.3
-  resolution: "@jsenv/url-meta@npm:6.0.3"
-  checksum: 390604540379d0e10a8f4352849052e604a5e4c0321e690571e447a532e4ac6447e5489e5a94400ed68261fcf8f31cf74363c168108a1d287d4c5c89f6f8f7f4
-  languageName: node
-  linkType: hard
-
 "@leichtgewicht/ip-codec@npm:^2.0.1":
   version: 2.0.4
   resolution: "@leichtgewicht/ip-codec@npm:2.0.4"
@@ -3571,7 +3509,6 @@ __metadata:
   dependencies:
     "@babel/highlight": ^7.18.6
     "@jest/types": ^28.1.3
-    "@jsenv/file-size-impact": ^12.1.12
     "@swc/cli": ^0.1.57
     "@swc/core": ^1.2.164
     "@swc/jest": ^0.2.22
@@ -15227,13 +15164,6 @@ __metadata:
   bin:
     prettier: bin-prettier.js
   checksum: 55a4409182260866ab31284d929b3cb961e5fdb91fe0d2e099dac92eaecec890f36e524b4c19e6ceae839c99c6d7195817579cdffc8e2c80da0cb794463a748b
-  languageName: node
-  linkType: hard
-
-"pretty-bytes@npm:6.0.0":
-  version: 6.0.0
-  resolution: "pretty-bytes@npm:6.0.0"
-  checksum: 0bb9f95e617236404b29a8392c6efd82d65805f622f5e809ecd70068102be857d4e3276c86d2a32fa2ef851cc29472e380945dab7bec83ec79bd57a19a10faf7
   languageName: node
   linkType: hard
 
