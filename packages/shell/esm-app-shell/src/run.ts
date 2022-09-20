@@ -1,4 +1,3 @@
-import "import-map-overrides";
 import "systemjs/dist/system";
 import "systemjs/dist/extras/amd";
 import "systemjs/dist/extras/named-exports";
