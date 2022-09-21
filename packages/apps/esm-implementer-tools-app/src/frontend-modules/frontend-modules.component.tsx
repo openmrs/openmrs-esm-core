@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@carbon/react";
+import styles from "./frontend-modules.scss";
 
 export interface FrontendModule {
   name: string;
@@ -40,7 +41,7 @@ export const FrontendModules: React.FC<FrontendModulesProps> = ({
   );
 
   return (
-    <div style={{ height: "50vh", overflowY: "auto" }}>
+    <div className={styles.container}>
       <DataTable rows={[]} headers={headers}>
         {({ headers, getTableProps, getHeaderProps }) => (
           <TableContainer title="">
