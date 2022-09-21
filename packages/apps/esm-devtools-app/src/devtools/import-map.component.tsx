@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import styles from "./import-map.styles.css";
 
-export default function ImportMap({ toggleOverridden }: ImportMapProps) {
+export default function ImportMap(props: ImportMapProps) {
   const importMapListRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function ImportMap({ toggleOverridden }: ImportMapProps) {
       );
 
     function handleImportMapChange(evt) {
-      toggleOverridden(importMapOverridden());
+      props.toggleOverridden(importMapOverridden());
     }
   }, [importMapListRef.current]);
 
