@@ -1,4 +1,5 @@
 @use "@carbon/styles/scss/spacing";
+@use "@carbon/colors";
 
 /* UI Shell Header */
 .cds--header {
@@ -78,7 +79,7 @@
 }
 
 .cds--content-switcher-btn:before {
-  background-color: $color-blue-30;
+  background-color: colors.$blue-30;
   height: 100%;
   z-index: 0;
 }
