@@ -9,8 +9,8 @@ import {
   Loading,
   RadioButtonSkeleton,
 } from "@carbon/react";
-import { LocationEntry } from "../types";
 import { useConfig } from "@openmrs/esm-framework";
+import { LocationEntry } from "../types";
 import { useLoginLocations } from "../choose-location/choose-location.resource";
 import styles from "./location-picker.scss";
 
@@ -149,68 +149,63 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
               )}
             </p>
           </div>
-          <>
-            <Search
-              autoFocus
-              labelText={t("searchForLocation", "Search for a location")}
-              id="search-1"
-              placeholder={t("searchForLocation", "Search for a location")}
-              onChange={(event) => search(event.target.value)}
-              name="searchForLocation"
-              size="lg"
-            />
-            <div
-              className={styles.searchResults}
-              style={{ height: `${chooseLocation.numberToShow * 2.875}rem` }}
-            >
-              {!isLoading ? (
-                <>
-                  <div className={styles.locationResultsContainer}>
-                    {locationData?.length > 0 && (
-                      <RadioButtonGroup
-                        valueSelected={activeLocation}
-                        orientation="vertical"
-                        name={activeLocation}
-                        onChange={(ev) => {
-                          setActiveLocation(ev.toString());
-                        }}
-                      >
-                        {locationData.map((entry) => (
-                          <RadioButton
-                            className={styles.locationRadioButton}
-                            key={entry.resource.id}
-                            id={entry.resource.name}
-                            labelText={entry.resource.name}
-                            value={entry.resource.id}
-                          />
-                        ))}
-                      </RadioButtonGroup>
-                    )}
-                    {locationData?.length === 0 && (
-                      <div className={styles.emptyState}>
-                        <p className={styles.locationNotFound}>
-                          {t("noResultsToDisplay", "No results to display")}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                  {hasMore && (
-                    <div className={styles.loadingIcon} ref={loadingIconRef}>
-                      <Loading
-                        small
-                        withOverlay={false}
-                        description={t("loading", "Loading")}
-                      />
+          <Search
+            autoFocus
+            labelText={t("searchForLocation", "Search for a location")}
+            id="search-1"
+            placeholder={t("searchForLocation", "Search for a location")}
+            onChange={(event) => search(event.target.value)}
+            name="searchForLocation"
+            size="lg"
+          />
+          <div className={styles.searchResults}>
+            {!isLoading ? (
+              <>
+                <div className={styles.locationResultsContainer}>
+                  {locationData?.length > 0 && (
+                    <RadioButtonGroup
+                      valueSelected={activeLocation}
+                      orientation="vertical"
+                      name={activeLocation}
+                      onChange={(ev) => {
+                        setActiveLocation(ev.toString());
+                      }}
+                    >
+                      {locationData.map((entry) => (
+                        <RadioButton
+                          className={styles.locationRadioButton}
+                          key={entry.resource.id}
+                          id={entry.resource.name}
+                          labelText={entry.resource.name}
+                          value={entry.resource.id}
+                        />
+                      ))}
+                    </RadioButtonGroup>
+                  )}
+                  {locationData?.length === 0 && (
+                    <div className={styles.emptyState}>
+                      <p className={styles.locationNotFound}>
+                        {t("noResultsToDisplay", "No results to display")}
+                      </p>
                     </div>
                   )}
-                </>
-              ) : (
-                <div className={styles.loadingContainer}>
-                  <RadioButtonSkeleton className={styles.radioButtonSkeleton} />
                 </div>
-              )}
-            </div>
-          </>
+                {hasMore && (
+                  <div className={styles.loadingIcon} ref={loadingIconRef}>
+                    <Loading
+                      small
+                      withOverlay={false}
+                      description={t("loading", "Loading")}
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className={styles.loadingContainer}>
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} />
+              </div>
+            )}
+          </div>
           <div className={styles.confirmButton}>
             <Button
               kind="primary"
