@@ -52,18 +52,15 @@
 .locationResultsContainer {
   display: flex;
   overflow-y: auto;
-  margin-top: spacing.$spacing-01;
+  margin-top: spacing.$spacing-05;
   padding: 0rem spacing.$spacing-01 0rem;
 }
 
 .locationRadioButton {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  height: spacing.$spacing-09;
+  align-items: center;
   @extend .bodyShort01;
-  padding: spacing.$spacing-01 0rem;
-  text-align: left;
-  width: 18rem;
 }
 
 .locationNotFound {
