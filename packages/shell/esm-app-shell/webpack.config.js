@@ -111,14 +111,14 @@ module.exports = (env, argv = {}) => {
       historyApiFallback: {
         rewrites: [
           {
-            from: new RegExp(`^${openmrsPublicPath}/`),
+            from: new RegExp(`^${openmrsPublicPath}/.*(?!\.(?!html?).+$)`),
             to: `${openmrsPublicPath}/index.html`,
           },
         ],
       },
       proxy: [
         {
-          context: [`${openmrsApiUrl}/**`, `!${openmrsPublicPath}/**`],
+          context: [`${openmrsApiUrl}/**`, `${openmrsPublicPath}/**`],
           target: openmrsProxyTarget,
           changeOrigin: true,
           onProxyReq(proxyReq) {

@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npm run watch",
     "test": "jest --passWithNoTests",
-    "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json\" OMRS_CONFIG_URLS=\"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/config/config.json\" OMRS_OFFLINE=\"disable\" NODE_ENV=\"development\" webpack serve --mode development",
-    "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json\" OMRS_CONFIG_URLS=\"https://spa-modules.nyc3.digitaloceanspaces.com/@openmrs/config/config.json\" OMRS_OFFLINE=\"enable\" NODE_ENV=\"production\" webpack --mode production",
+    "watch:ref": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/import-map.json\" OMRS_OFFLINE=\"disable\" NODE_ENV=\"development\" webpack serve --mode development",
+    "build:production": "cross-env OMRS_ESM_IMPORTMAP_URL=\"https://dev3.openmrs.org/openmrs/spa/import-map.json\" OMRS_OFFLINE=\"enable\" NODE_ENV=\"production\" webpack --mode production",
     "build:development": "cross-env OMRS_OFFLINE=\"enable\" NODE_ENV=\"development\" webpack --mode development",
     "build": "npm run build:production && npm run build:development",
     "analyze": "webpack --mode=production --env analyze=true",

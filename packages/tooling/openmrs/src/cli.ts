@@ -187,7 +187,9 @@ yargs.command(
               args.port,
               args["shared-dependencies"],
               args.sources
-            ))
+            )),
+          args.backend,
+          args.spaPath
         ),
         args.backend,
         args.host,
