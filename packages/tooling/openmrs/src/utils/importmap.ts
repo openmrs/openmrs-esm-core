@@ -13,25 +13,17 @@ async function readImportmap(path: string, backend?: string, spaPath?: string) {
   if (path.startsWith("http://") || path.startsWith("https://")) {
     return fetchRemoteImportmap(path);
   } else if (path === "importmap.json") {
-    const path = require.resolve(
-      "@openmrs/esm-app-shell/src/assets/importmap.json"
-    );
-
-    if (existsSync(path)) {
-      return readFileSync(path, "utf8");
-    } else {
-      if (backend && spaPath) {
-        try {
-          return await fetchRemoteImportmap(
-            `${backend}/${spaPath}/importmap.json`
-          );
-        } catch {}
-      }
-
-      return fetchRemoteImportmap(
-        "https://dev3.openmrs.org/openmrs/spa/importmap.json"
-      );
+    if (backend && spaPath) {
+      try {
+        return await fetchRemoteImportmap(
+          `${backend}/${spaPath}/importmap.json`
+        );
+      } catch {}
     }
+
+    return fetchRemoteImportmap(
+      "https://dev3.openmrs.org/openmrs/spa/importmap.json"
+    );
   }
 
   return '{"imports":{}}';
