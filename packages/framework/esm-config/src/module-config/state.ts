@@ -208,7 +208,10 @@ export function getExtensionConfig(slotName: string, extensionId: string) {
       extensionId
     )
   );
-  extensionConfig.config = omit(["Display conditions"], extensionConfig.config);
+  extensionConfig.config = omit(
+    ["Display conditions", "Translation overrides"],
+    extensionConfig.config
+  );
   return extensionConfig;
 }
 
