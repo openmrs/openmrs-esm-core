@@ -9,33 +9,44 @@ import axios from "axios";
 
 import glob = require("glob");
 
-async function readImportmap(path: string) {
+async function readImportmap(path: string, backend?: string, spaPath?: string) {
   if (path.startsWith("http://") || path.startsWith("https://")) {
-    return await axios
-      .get(path)
-      .then((res) => res.data)
-      .then((m) => (typeof m === "string" ? JSON.parse(m) : m))
-      .then((m) => {
-        if (typeof m === "object" && "imports" in m) {
-          Object.keys(m.imports).forEach((key) => {
-            const url = m.imports[key];
-
-            if (typeof url === "string") {
-              m.imports[key] = new URL(url, path).href;
-            }
-          });
-        }
-        return m;
-      })
-      .then((m) => JSON.stringify(m));
+    return fetchRemoteImportmap(path);
   } else if (path === "importmap.json") {
-    const path = require.resolve(
-      "@openmrs/esm-app-shell/src/assets/importmap.json"
+    if (backend && spaPath) {
+      try {
+        return await fetchRemoteImportmap(
+          `${backend}/${spaPath}/importmap.json`
+        );
+      } catch {}
+    }
+
+    return fetchRemoteImportmap(
+      "https://dev3.openmrs.org/openmrs/spa/importmap.json"
     );
-    return readFileSync(path, "utf8");
   }
 
   return '{"imports":{}}';
+}
+
+async function fetchRemoteImportmap(fetchUrl: string) {
+  return await axios
+    .get(fetchUrl)
+    .then((res) => res.data)
+    .then((m) => (typeof m === "string" ? JSON.parse(m) : m))
+    .then((m) => {
+      if (typeof m === "object" && "imports" in m) {
+        Object.keys(m.imports).forEach((key) => {
+          const url = m.imports[key];
+
+          if (typeof url === "string") {
+            m.imports[key] = new URL(url, fetchUrl).href;
+          }
+        });
+      }
+      return m;
+    })
+    .then((m) => JSON.stringify(m));
 }
 
 export interface ImportmapDeclaration {
@@ -173,12 +184,14 @@ export async function runProject(
  */
 export async function mergeImportmap(
   decl: ImportmapDeclaration,
-  additionalImports: Record<string, string> | false
+  additionalImports: Record<string, string> | false,
+  backend?: string,
+  spaPath?: string
 ) {
   if (additionalImports && Object.keys(additionalImports).length > 0) {
     if (decl.type === "url") {
       decl.type = "inline";
-      decl.value = await readImportmap(decl.value);
+      decl.value = await readImportmap(decl.value, backend, spaPath);
     }
 
     const map = JSON.parse(decl.value);
