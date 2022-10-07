@@ -2,8 +2,9 @@
 name: Report bundle size
 
 on:
-  pull_request_target:
-    branches: [main]
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
