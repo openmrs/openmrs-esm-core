@@ -34,6 +34,8 @@ export function setupI18n() {
       read(language, namespace, callback) {
         if (namespace === "translation") {
           callback(Error("can't handle translation namespace"), null);
+        } else if (namespace === undefined || language === undefined) {
+          callback(Error(), null);
         } else {
           const app: any = window[slugify(namespace)];
 
@@ -45,18 +47,25 @@ export function setupI18n() {
                   Promise.all([
                     getImportPromise(start(), namespace, language),
                     getConfigInternal(namespace),
-                  ]).then(([json, config]) => {
-                    let translations = json ?? {};
+                  ])
+                    .then(([json, config]) => {
+                      let translations = json ?? {};
 
-                    if (config && "Translation overrides" in config) {
-                      const overrides = config["Translation overrides"];
-                      if (language in overrides) {
-                        translations = merge(translations, overrides[language]);
+                      if (config && "Translation overrides" in config) {
+                        const overrides = config["Translation overrides"];
+                        if (language in overrides) {
+                          translations = merge(
+                            translations,
+                            overrides[language]
+                          );
+                        }
                       }
-                    }
 
-                    callback(null, translations);
-                  });
+                      callback(null, translations);
+                    })
+                    .catch((err: Error) => {
+                      callback(err, null);
+                    });
                 })
                 .catch((err: Error) => {
                   callback(err, null);
