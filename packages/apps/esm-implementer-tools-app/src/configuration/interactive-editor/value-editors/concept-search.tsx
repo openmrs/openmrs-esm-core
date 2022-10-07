@@ -25,7 +25,6 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const [activeConceptUuid, setActiveConceptUuid] = useState<any>(value);
   const searchTimeoutInMs = 300;
   const { t } = useTranslation();
-
   const id = useMemo(() => uniqueId(), []);
 
   const handleUuidChange = (concept) => {
@@ -89,12 +88,14 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
               <StructuredListRow
                 key={concept.uuid}
                 role="option"
-                onClick={() => {
-                  handleUuidChange(concept);
-                }}
                 aria-selected="true"
               >
-                <StructuredListCell className={styles.smallListCell}>
+                <StructuredListCell
+                  onClick={() => {
+                    handleUuidChange(concept);
+                  }}
+                  className={styles.smallListCell}
+                >
                   {concept.display}
                 </StructuredListCell>
               </StructuredListRow>
