@@ -50,9 +50,13 @@ export function runDevelop(args: DevelopArgs) {
   `
     )
     .replace(/href="\/openmrs\/spa/g, `href="${spaPath}`)
-    .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`);
+    .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`)
+    .replace(
+      /https:\/\/dev3.openmrs.org\/openmrs\/spa\/importmap\.json/g,
+      `http://${host}:${port}${spaPath}/importmap.json`
+    );
 
-  const pageUrl = `http://${host}:${port}${spaPath}/`;
+  const pageUrl = `http://${host}:${port}${spaPath}`;
 
   // Set up routes. Note that different middlewares have different rules
   // about route precedence.
@@ -70,13 +74,11 @@ export function runDevelop(args: DevelopArgs) {
   );
 
   // Route for custom `importmap.json` goes above static assets
-  app.get(`${spaPath}/importmap.json`, (_, res) => {
-    if (importmap.type === "inline") {
+  if (importmap.type === "inline") {
+    app.get(`${spaPath}/importmap.json`, (_, res) => {
       res.contentType("application/json").send(importmap.value);
-    } else {
-      res.redirect(importmap.value);
-    }
-  });
+    });
+  }
 
   // Route for custom `index.html` goes above static assets
   app.get(indexHtmlPathMatcher, (_, res) =>
