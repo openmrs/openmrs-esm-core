@@ -1,6 +1,11 @@
 import React from "react";
+import { rest } from "msw";
+import { setupServer } from "msw/node";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import ChangeLocale from "./change-locale.component";
+
+export const handlers = [rest.post("/login", null), rest.get("/user", null)];
+export const server = setupServer(...handlers);
 
 const allowedLocales = ["en", "fr", "it", "pt"];
 const user: any = {
