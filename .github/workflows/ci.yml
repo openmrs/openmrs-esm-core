@@ -51,7 +51,7 @@ jobs:
 
     needs: build
 
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
 
     steps:
       - uses: actions/checkout@v3
@@ -91,7 +91,7 @@ jobs:
 
     needs: pre_release
 
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
 
     steps:
       - name: Trigger RefApp Build
