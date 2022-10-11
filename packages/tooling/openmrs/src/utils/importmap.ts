@@ -15,9 +15,7 @@ async function readImportmap(path: string, backend?: string, spaPath?: string) {
   } else if (path === "importmap.json") {
     if (backend && spaPath) {
       try {
-        return await fetchRemoteImportmap(
-          `${backend}/${spaPath}/importmap.json`
-        );
+        return await fetchRemoteImportmap(`${backend}${spaPath}importmap.json`);
       } catch {}
     }
 
