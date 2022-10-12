@@ -196,6 +196,16 @@ export function userHasAccess(
   requiredPrivilege: string | string[],
   user: { privileges: Array<Privilege>; roles: Array<Role> }
 ) {
+  if (user === undefined) {
+    // if the user hasn't been loaded, then return false iff there is a required privilege
+    return Boolean(requiredPrivilege);
+  }
+
+  if (!Boolean(requiredPrivilege)) {
+    // if user exists but no requiredPrivilege is defined
+    return true;
+  }
+
   return userHasPrivilege(requiredPrivilege, user) || isSuperUser(user);
 }
 

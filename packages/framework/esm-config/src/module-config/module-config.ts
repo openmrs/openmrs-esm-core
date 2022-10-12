@@ -193,7 +193,7 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
   const enhancedSchema = mergeDeepRight(
     schema,
-    displayConditionsSchema
+    implicitConfigSchema
   ) as ConfigSchema;
 
   const state = configInternalStore.getState();
@@ -226,7 +226,7 @@ export function defineExtensionConfigSchema(
   validateConfigSchema(extensionName, schema);
   const enhancedSchema = mergeDeepRight(
     schema,
-    displayConditionsSchema
+    implicitConfigSchema
   ) as ConfigSchema;
 
   const state = configInternalStore.getState();
@@ -252,10 +252,6 @@ export function provide(config: Config, sourceName = "provided") {
  * A promise-based way to access the config as soon as it is fully loaded.
  * If it is already loaded, resolves the config in its present state.
  *
- * In general you should use the Unistore-based API provided by
- * `getConfigStore`, which allows creating a subscription so that you always
- * have the latest config. If using React, just use `useConfig`.
- *
  * This is a useful function if you need to get the config in the course
  * of the execution of a function.
  *
@@ -266,7 +262,26 @@ export function getConfig(moduleName: string): Promise<Config> {
     const store = getConfigStore(moduleName);
     function update(state: ConfigStore) {
       if (state.loaded && state.config) {
-        const config = omit(["Display conditions"], state.config);
+        const config = omit(
+          ["Display conditions", "Translation overrides"],
+          state.config
+        );
+        resolve(config);
+        unsubscribe && unsubscribe();
+      }
+    }
+    update(store.getState());
+    const unsubscribe = store.subscribe(update);
+  });
+}
+
+/** @internal */
+export function getConfigInternal(moduleName: string): Promise<Config> {
+  return new Promise<Config>((resolve) => {
+    const store = getConfigStore(moduleName);
+    function update(state: ConfigStore) {
+      if (state.loaded && state.config) {
+        const config = state.config;
         resolve(config);
         unsubscribe && unsubscribe();
       }
@@ -506,6 +521,12 @@ function validateConfigSchema(
     if (thisKeyPath === "Display conditions") {
       console.error(
         `${moduleName} declares a configuration option called "Display conditions"; the "Display conditions" option is a reserved name. ${updateMessage}`
+      );
+    }
+
+    if (thisKeyPath === "Translation overrides") {
+      console.error(
+        `${moduleName} declares a configuration option called "Translation overrides"; the "Translation overrides" option is a reserved name. ${updateMessage}`
       );
     }
 
@@ -882,14 +903,20 @@ function getExtensionNameFromId(extensionId: string) {
 }
 
 /**
- * The displayConditionsSchema is implicitly included in every configuration schema
+ * The implicitConfigSchema is implicitly included in every configuration schema
  */
-const displayConditionsSchema: ConfigSchema = {
+const implicitConfigSchema: ConfigSchema = {
   "Display conditions": {
     privileges: {
       _description: "The privilege(s) the user must have to use this extension",
       _type: Type.Array,
       _default: [],
     },
+  },
+  "Translation overrides": {
+    _description:
+      "Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value",
+    _type: Type.Object,
+    _default: {},
   },
 };

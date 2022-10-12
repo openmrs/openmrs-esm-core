@@ -849,6 +849,14 @@ describe("implementer tools config", () => {
             _value: [],
           },
         },
+        "Translation overrides": {
+          _default: {},
+          _description:
+            "Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value",
+          _source: "default",
+          _type: Type.Object,
+          _value: {},
+        },
       },
       "bar-module": {
         bar: { _value: "baz", _source: "my config source", _default: "quinn" },
@@ -861,6 +869,14 @@ describe("implementer tools config", () => {
             _type: Type.Array,
             _value: [],
           },
+        },
+        "Translation overrides": {
+          _default: {},
+          _description:
+            "Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value",
+          _source: "default",
+          _type: Type.Object,
+          _value: {},
         },
       },
     });
@@ -1020,6 +1036,14 @@ describe("extension slot config", () => {
             _type: Type.Array,
             _value: [],
           },
+        },
+        "Translation overrides": {
+          _default: {},
+          _description:
+            "Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value",
+          _source: "default",
+          _type: Type.Object,
+          _value: {},
         },
       },
     });

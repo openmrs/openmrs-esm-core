@@ -387,7 +387,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L37)
+[packages/framework/esm-config/src/types.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L38)
 
 ___
 
@@ -424,7 +424,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L65)
+[packages/framework/esm-config/src/types.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L66)
 
 ___
 
@@ -468,7 +468,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L72)
+[packages/framework/esm-config/src/types.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L73)
 
 ___
 
@@ -492,7 +492,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L70)
+[packages/framework/esm-config/src/types.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L71)
 
 ___
 
@@ -890,7 +890,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L202)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:212](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L212)
 
 ___
 
@@ -904,7 +904,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L220)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:230](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L230)
 
 ___
 
@@ -1169,7 +1169,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L229)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:239](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L239)
 
 ___
 
@@ -1557,10 +1557,6 @@ ___
 A promise-based way to access the config as soon as it is fully loaded.
 If it is already loaded, resolves the config in its present state.
 
-In general you should use the Unistore-based API provided by
-`getConfigStore`, which allows creating a subscription so that you always
-have the latest config. If using React, just use `useConfig`.
-
 This is a useful function if you need to get the config in the course
 of the execution of a function.
 
@@ -1576,7 +1572,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L264)
+[packages/framework/esm-config/src/module-config/module-config.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L260)
 
 ___
 
@@ -1614,6 +1610,7 @@ Use this React Hook to obtain your module's configuration.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `Display conditions?` | [`DisplayConditionsConfigObject`](interfaces/DisplayConditionsConfigObject.md) | - |
+| `Translation overrides?` | `Record`<`string`, `Record`<`string`, `string`\>\> | - |
 | `constructor` | `Function` | The initial value of Object.prototype.constructor is the standard built-in Object constructor. |
 | `hasOwnProperty` | (`v`: `PropertyKey`) => `boolean` | Determines whether an object has a property with the specified name. |
 | `isPrototypeOf` | (`v`: `Object`) => `boolean` | Determines whether an object exists in another object's prototype chain. |

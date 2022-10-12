@@ -28,6 +28,7 @@ export interface Config extends Object {
 export interface ConfigObject extends Object {
   [key: string]: any;
   "Display conditions"?: DisplayConditionsConfigObject;
+  "Translation overrides"?: Record<string, Record<string, string>>;
 }
 
 export interface DisplayConditionsConfigObject {
