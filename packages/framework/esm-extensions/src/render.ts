@@ -14,14 +14,14 @@ export interface CancelLoading {
  * a lazy-loaded component from *any* frontend module
  * that registered an extension component for this slot.
  */
-export function renderExtension(
+export async function renderExtension(
   domElement: HTMLElement,
   extensionSlotName: string,
   extensionSlotModuleName: string,
   extensionId: string,
   renderFunction: (lifecycle: Lifecycle) => Lifecycle = (x) => x,
   additionalProps: Record<string, any> = {}
-): Parcel | null {
+): Promise<Parcel | null> {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionRegistration = getExtensionRegistration(extensionId);
   let parcel: Parcel | null = null;
@@ -36,21 +36,6 @@ export function renderExtension(
     const { load, online, offline, meta, moduleName } = extensionRegistration;
 
     if (checkStatus(online, offline)) {
-      load().then(({ default: result, ...lifecycle }) => {
-        parcel = mountRootParcel(renderFunction(result ?? lifecycle) as any, {
-          ...getCustomProps(online, offline),
-          ...additionalProps,
-          _meta: meta,
-          _extensionContext: {
-            extensionId,
-            extensionSlotName,
-            extensionSlotModuleName,
-            extensionModuleName: moduleName,
-          },
-          domElement,
-        });
-      });
-
       updateInternalExtensionStore((state) => {
         const instance = {
           domElement,
@@ -71,6 +56,20 @@ export function renderExtension(
             },
           },
         };
+      });
+
+      const { default: result, ...lifecycle } = await load();
+      parcel = mountRootParcel(renderFunction(result ?? lifecycle), {
+        ...getCustomProps(online, offline),
+        ...additionalProps,
+        _meta: meta,
+        _extensionContext: {
+          extensionId,
+          extensionSlotName,
+          extensionSlotModuleName,
+          extensionModuleName: moduleName,
+        },
+        domElement,
       });
     }
   } else {
