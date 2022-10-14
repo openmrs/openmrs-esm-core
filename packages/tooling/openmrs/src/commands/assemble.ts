@@ -8,11 +8,11 @@ import {
   copyFileSync,
 } from "fs";
 import { resolve, dirname, basename } from "path";
-import { execSync } from "child_process";
 import { prompt, Question } from "inquirer";
-import { logInfo, untar } from "../utils";
 import rimraf from "rimraf";
 import axios from "axios";
+import pacote from "pacote";
+import { logInfo, untar } from "../utils";
 
 export interface AssembleArgs {
   target: string;
@@ -135,12 +135,20 @@ async function downloadPackage(
     return file;
   } else {
     const packageName = `${esmName}@${esmVersion}`;
-    const command = `npm pack ${packageName} --registry ${registry}`;
-    mkdirSync(cacheDir, { recursive: true });
-    const result = execSync(command, {
-      cwd: cacheDir,
+    const tarManifest = await pacote.manifest(packageName, { registry });
+    const tarball = await pacote.tarball(tarManifest._resolved, {
+      registry,
+      integrity: tarManifest._integrity,
     });
-    return result.toString("utf8").split("\n").filter(Boolean).pop() ?? "";
+
+    const filename = `${tarManifest.name}-${tarManifest.version}.tgz`
+      .replace(/^@/, "")
+      .replace(/\//, "-");
+
+    mkdirSync(cacheDir, { recursive: true });
+    writeFileSync(resolve(cacheDir, filename), tarball);
+
+    return filename;
   }
 }
 
