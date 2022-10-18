@@ -17,12 +17,14 @@
   - [Extension System](/main/extensions.md)
   - [Configuration System](/main/config.md)
   - [Sharing State](/main/state.md)
-  - [Offline Mode](/main/offline.md)
   - [Translations](/main/translations.md)
   - [Breadcrumbs](/main/breadcrumbs.md)
   - [Creating a Distribution](/main/distribution.md)
   - [Upgrade 3 to 4](/main/upgrade_3_to_4.md)
   - [FAQ](/main/faq.md)
+- Offline
+  - [Offline Mode](/offline/offline.md)
+  - [Dynamic Offline Data](/offline/dynamic_offline_data.md)
 - Under the hood
   - [Architecture Overview](/under_the_hood/architecture.md)
   - [Tooling](/under_the_hood/tooling.md)
