@@ -80,10 +80,10 @@ function isNotActionableNotificationEmpty(subtitle: React.ReactNode) {
     : false;
 }
 
-// /**
-//  * Displays an actionable notification in the UI.
-//  * @param notification The description of the notification to display.
-//  */
+/**
+ * Displays an actionable notification in the UI.
+ * @param notification The description of the notification to display.
+ */
 
 export function showActionableNotification(
   notification: ActionableNotificationDescriptor

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ActionableNotification } from "@carbon/react";
 /** @module @category UI */
 
@@ -40,16 +40,25 @@ export const ActionableNotificationComponent: React.FC<
     kind,
     title,
     critical,
-    progressActionLabel = "Undoing",
+    progressActionLabel,
     ...props
   } = notification;
+
+  const [actionText, setActionText] = useState(actionButtonLabel);
+
+  const handleActionClick = () => {
+    onActionButtonClick();
+    progressActionLabel
+      ? setActionText(progressActionLabel)
+      : setActionText("Taking Action..");
+  };
 
   return (
     <ActionableNotification
       kind={kind || "info"}
-      actionButtonLabel={actionButtonLabel || progressActionLabel}
+      actionButtonLabel={actionText}
       ariaLabel="closes notification"
-      onActionButtonClick={onActionButtonClick}
+      onActionButtonClick={handleActionClick}
       onClose={function noRefCheck() {}}
       onCloseButtonClick={function noRefCheck() {}}
       statusIconDescription="notification"
