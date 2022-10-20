@@ -303,6 +303,7 @@ export const useVisitTypes = jest.fn(() => []);
 /* esm-styleguide */
 
 export const showNotification = jest.fn();
+export const showActionableNotification = jest.fn();
 export const showToast = jest.fn();
 export const showModal = jest.fn();
 

@@ -12,12 +12,15 @@ import {
   Config,
   provide,
   showNotification,
+  showActionableNotification,
   showToast,
   renderInlineNotifications,
+  renderActionableNotifications,
   renderToasts,
   integrateBreakpoints,
   dispatchConnectivityChanged,
   subscribeNotificationShown,
+  subscribeActionableNotificationShown,
   subscribeToastShown,
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
@@ -193,6 +196,13 @@ function showNotifications() {
   return;
 }
 
+function showActionableNotifications() {
+  renderActionableNotifications(
+    document.querySelector(".omrs-actionable-notifications-container")
+  );
+  return;
+}
+
 function showToasts() {
   renderToasts(document.querySelector(".omrs-toasts-container"));
   return;
@@ -308,8 +318,10 @@ export function run(configUrls: Array<string>, offline: boolean) {
   showToasts();
   showModals();
   showNotifications();
+  showActionableNotifications();
   createAppState({});
   subscribeNotificationShown(showNotification);
+  subscribeActionableNotificationShown(showActionableNotification);
   subscribeToastShown(showToast);
   subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
   // FIXME this is part of a hack to load esm-form-app which depends on the legacy loading for now
