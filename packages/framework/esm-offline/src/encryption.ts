@@ -1,5 +1,10 @@
 export const encryption = true;
 
+export const encryptionConfig = {
+  updated: false,
+  password: ""
+};
+
 function encrypt(data: string) {
   return btoa(data);
 }

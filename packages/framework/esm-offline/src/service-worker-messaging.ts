@@ -43,10 +43,16 @@ export interface RegisterDynamicRouteMessage
   strategy?: OmrsOfflineCachingStrategy;
 }
 
+export interface UpdateEncryptionKeyMessage
+  extends OmrsServiceWorkerMessage<"updateEncryptionKey"> {
+  passphrase: string;
+}
+
 export type KnownOmrsServiceWorkerMessages =
   | OnImportMapChangedMessage
   | ClearDynamicRoutesMessage
-  | RegisterDynamicRouteMessage;
+  | RegisterDynamicRouteMessage
+  | UpdateEncryptionKeyMessage;
 
 export interface MessageServiceWorkerResult<T> {
   success: boolean;

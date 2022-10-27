@@ -18,7 +18,8 @@ import uniq from "lodash-es/uniq";
 import {
   encryptCache,
   decryptCache,
-  encryption
+  encryption,
+  encryptionConfig
 } from "@openmrs/esm-offline/src/encryption";
 
 const offlineEncryptionPlugin = {
@@ -30,6 +31,7 @@ const offlineEncryptionPlugin = {
     event,
     state,
   }) => {
+    console.log("encryptionConfig :: cachedResponseWillBeUsed", encryptionConfig);
     var responseClone = cachedResponse.clone();
     var resHeaders = responseClone.headers;
     var isEncrypted = resHeaders.has("encryption");
@@ -46,6 +48,7 @@ const offlineEncryptionPlugin = {
       return response;
     }
     if (request.url.includes("fhir")) {
+      console.log("encryptionConfig :: cacheWillUpdate", encryptionConfig);
       var responseClone = response.clone();
       var contentType;
       var resHeaders = new Headers(responseClone.headers);
