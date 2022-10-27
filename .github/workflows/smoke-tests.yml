@@ -1,4 +1,4 @@
-name: OpenMRS CI
+name: OpenMRS Smoke Tests
 
 on:
   workflow_dispatch: # temporary, for debugging
