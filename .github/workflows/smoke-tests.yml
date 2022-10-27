@@ -19,16 +19,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: "16.15"
-
-      - name: Cache dependencies
-        id: cache
-        uses: actions/cache@v3
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+          node-version: 18
+          cache: 'yarn'
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
@@ -52,7 +46,22 @@ jobs:
         run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost/openmrs/login.htm)" != "200" ]]; do sleep 10; done
       - name: Start local app shell
         run: yarn run:shell &
+        env:
+          OMRS_PROXY_TARGET: "http://localhost"
       - name: Clone tests
-        run: git clone git@github.com:openmrs/openmrs-test-3refapp.git
+        uses: actions/checkout@v3
+        with:
+          repository: openmrs/openmrs-test-3refapp
+          path: openmrs-test-3refapp
       - name: Run playwright tests
-        run: cd openmrs-test-3refapp/packages/playwright && yarn install && yarn playwright test --project=chromium
+        run: cd openmrs-test-3refapp && yarn install && cd packages/playwright && yarn playwright install && yarn playwright test --project=chromium
+        env:
+          YARN_ENABLE_IMMUTABLE_INSTALLS: false
+          UI_BASE_URL: "http://localhost:8080/openmrs/spa"
+          WS_BASE_URL: "http://localhost:8080/openmrs/ws"
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: playwright-reports
+          path: openmrs-test-3refapp/packages/playwright/test-results/
+          retention-days: 30
