@@ -1,3 +1,5 @@
+import { encryptData, decryptData } from "./crypto";
+
 export const encryption = true;
 
 export const encryptionConfig = {
@@ -17,11 +19,16 @@ function decrypt(data: string) {
  * Encrypts data for dynamic caching
  * @param json response json data
  */
-export function encryptCache(json: JSON) {
+export async function encryptCache(json: JSON) {
   let data = JSON.stringify(json);
-  let encryptedData = encrypt(data);
-  let encryptedJson = { content: encryptedData };
-
+  let encryptedData = await encryptData(data);
+  let encryptedJson = { 
+    content: new Uint8Array(encryptedData[0]),
+    nonce: encryptedData[1]
+  };
+  console.log("crypto :: encrypted json: ",encryptedJson);
+  console.log("crypto :: content type: ",typeof encryptedJson[0]);
+  console.log("crypto :: nonce type: ",typeof encryptedJson[1]);
   return JSON.stringify(encryptedJson);
 }
 
@@ -29,11 +36,12 @@ export function encryptCache(json: JSON) {
  * Decrypts data for dynamic caching
  * @param json response json data
  */
-export function decryptCache(json: JSON) {
+export async function decryptCache(json: JSON) {
   let data = json["content"];
-  let decryptedData = decrypt(data);
+  let nonce = json["nonce"];
+  console.log("crypto :: json: ",json);
+  let decryptedData = await decryptData(data, nonce);
   let decryptedJson = JSON.parse(decryptedData);
-
   return JSON.stringify(decryptedJson);
 }
 
