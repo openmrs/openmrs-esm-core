@@ -1,4 +1,4 @@
-import { encryptData, decryptData } from "./crypto";
+import { encryptData, decryptData } from "./encryption-lib";
 
 export const encryption = true;
 
