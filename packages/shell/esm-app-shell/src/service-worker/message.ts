@@ -7,7 +7,7 @@ import type {
 import escapeRegExp from "lodash-es/escapeRegExp";
 import { cacheImportMapReferences } from "./caching";
 import { DynamicRouteRegistration, ServiceWorkerDb } from "./storage";
-import { encryptionConfig } from '@openmrs/esm-offline/src/encryption';
+import { setCryptoKey } from "@openmrs/esm-offline/src/encryption-lib";
 
 const messageHandlers = {
   onImportMapChanged,
@@ -45,16 +45,9 @@ async function registerDynamicRoute({
 }
 
 async function updateEncryptionKey({
-  passphrase
+  password
 }: UpdateEncryptionKeyMessage) {
-  if(encryptionConfig && !encryptionConfig.updated) {
-    encryptionConfig.updated = true;
-    encryptionConfig.password = passphrase;
-    console.log("encryptionConfig :: updated encryptionConfig", encryptionConfig);
-  }
-  else {
-    console.log("encryptionConfig :: did not update encryptionConfig");
-  }
+    setCryptoKey(password);
 }
 
 /**

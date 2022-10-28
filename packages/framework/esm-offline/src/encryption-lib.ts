@@ -1,28 +1,44 @@
 export const encryption = true;
+export const referenceText = 'OpenMRS';
 
-class EncryptionConfig {
-  key: CryptoKey 
+class EncryptionKey {
+  key: CryptoKey
 };
 
-var encryptionConfig: EncryptionConfig = new EncryptionConfig(); 
+var encryptionKey: EncryptionKey = new EncryptionKey(); 
 
-async function getCryptoKey(password: string = "") {
-  if(encryptionConfig.key) {
-    return encryptionConfig.key;
-  }
-  else {
-    encryptionConfig.key = await generateCryptoKey(password);
-    return encryptionConfig.key;
-  }
+function getEncryptedReference() {
+  return localStorage.getItem('encryptedReference');
+}
+
+function setEncryptedReference(encryptedReference: string) {
+  return localStorage.setItem('encryptedReference', encryptedReference);
+}
+
+export async function isPasswordCorrect(password: string = "") {
+  let encryptedRefernce = getEncryptedReference();
+  let tempKey = await generateCryptoKey(password);
+  let result = await encrypt(referenceText, tempKey);
+  return (result[0] != encryptedRefernce);
+}
+
+async function getCryptoKey() {
+  return encryptionKey.key;
+}
+
+export async function setCryptoKey(password: string = "") {
+  encryptionKey.key = await generateCryptoKey(password);
+  let encryptedRef = await encrypt(referenceText, encryptionKey.key);
+  setEncryptedReference(encryptedRef[0]);
 }
 
 export async function encryptData(data: string) {
-  let key = await getCryptoKey('password');
+  let key = await getCryptoKey();
   return await encrypt(data, key);
 }
 
 export async function decryptData(data: string, nonce: string) {
-  let key = await getCryptoKey('password');
+  let key = await getCryptoKey();
   return await decrypt(data, key, nonce);
 }
 

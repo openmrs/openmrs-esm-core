@@ -18,8 +18,7 @@ import uniq from "lodash-es/uniq";
 import {
   encryptCache,
   decryptCache,
-  encryption,
-  encryptionConfig
+  encryption
 } from "@openmrs/esm-offline/src/encryption";
 
 const offlineEncryptionPlugin = {

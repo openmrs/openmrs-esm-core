@@ -45,7 +45,7 @@ export interface RegisterDynamicRouteMessage
 
 export interface UpdateEncryptionKeyMessage
   extends OmrsServiceWorkerMessage<"updateEncryptionKey"> {
-  passphrase: string;
+  password: string;
 }
 
 export type KnownOmrsServiceWorkerMessages =

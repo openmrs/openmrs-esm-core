@@ -214,6 +214,7 @@ async function setupOffline() {
     );
     await activateOfflineCapability();
     setupOfflineStaticDependencyPrecaching();
+    updateEncryptionPassword();
   } catch (e) {
     console.error("Error while setting up offline mode.", e);
     showNotification({
@@ -279,6 +280,13 @@ async function precacheGlobalStaticDependencies() {
       e
     )
   );
+}
+
+async function updateEncryptionPassword() {
+  await messageOmrsServiceWorker({
+    type: "updateEncryptionKey",
+    password: "password"
+  });
 }
 
 async function precacheImportMap() {
