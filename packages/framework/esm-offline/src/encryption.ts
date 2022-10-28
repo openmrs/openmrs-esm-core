@@ -23,12 +23,9 @@ export async function encryptCache(json: JSON) {
   let data = JSON.stringify(json);
   let encryptedData = await encryptData(data);
   let encryptedJson = { 
-    content: new Uint8Array(encryptedData[0]),
+    content: encryptedData[0],
     nonce: encryptedData[1]
   };
-  console.log("crypto :: encrypted json: ",encryptedJson);
-  console.log("crypto :: content type: ",typeof encryptedJson[0]);
-  console.log("crypto :: nonce type: ",typeof encryptedJson[1]);
   return JSON.stringify(encryptedJson);
 }
 
@@ -39,7 +36,6 @@ export async function encryptCache(json: JSON) {
 export async function decryptCache(json: JSON) {
   let data = json["content"];
   let nonce = json["nonce"];
-  console.log("crypto :: json: ",json);
   let decryptedData = await decryptData(data, nonce);
   let decryptedJson = JSON.parse(decryptedData);
   return JSON.stringify(decryptedJson);
