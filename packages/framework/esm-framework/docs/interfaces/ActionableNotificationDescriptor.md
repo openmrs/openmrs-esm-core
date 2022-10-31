@@ -6,12 +6,17 @@
 
 ### UI Properties
 
-- [actionButtonLable](ActionableNotificationDescriptor.md#actionButtonLable)
+- [actionButtonLabel](ActionableNotificationDescriptor.md#actionbuttonlabel)
 - [critical](ActionableNotificationDescriptor.md#critical)
-- [subtitle](ActionableNotificationDescriptor.md#subtitle)
 - [kind](ActionableNotificationDescriptor.md#kind)
-- [onActionButtonClick](ActionableNotificationDescriptor.md#onActionButtonClick)
+- [progressActionLabel](ActionableNotificationDescriptor.md#progressactionlabel)
+- [subtitle](ActionableNotificationDescriptor.md#subtitle)
 - [title](ActionableNotificationDescriptor.md#title)
+
+### UI Methods
+
+- [onActionButtonClick](ActionableNotificationDescriptor.md#onactionbuttonclick)
+- [onClose](ActionableNotificationDescriptor.md#onclose)
 
 ## UI Properties
 
@@ -25,37 +30,19 @@
 
 ___
 
-• **onActionButtonClick**: `void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L11)
-
-___
-
 ### critical
 
 • `Optional` **critical**: `boolean`
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L16)
-
-___
-
-### subtitle
-
-• **subtitle**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L13)
+[packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L16)
 
 ___
 
 ### kind
 
-• `Optional` **kind**: [`ActionableNotificationType`](../API.md#actionablenotificationtype)
+• `Optional` **kind**: `string`
 
 #### Defined in
 
@@ -73,6 +60,16 @@ ___
 
 ___
 
+### subtitle
+
+• **subtitle**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L13)
+
+___
+
 ### title
 
 • `Optional` **title**: `string`
@@ -80,3 +77,31 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L14)
+
+## UI Methods
+
+### onActionButtonClick
+
+▸ **onActionButtonClick**(): `void`
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L11)
+
+___
+
+### onClose
+
+▸ `Optional` **onClose**(): `void`
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L12)
