@@ -158,10 +158,11 @@
 
 - [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
+- [showActionableNotification](API.md#showactionablenotification)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
-- [showActionableNotification](API.md#showactionablenotification)
 - [showToast](API.md#showtoast)
+- [subscribeActionableNotificationShown](API.md#subscribeactionablenotificationshown)
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [unsetLeftNav](API.md#unsetleftnav)
@@ -525,16 +526,6 @@ ___
 
 ## UI Type Aliases
 
-### InlineNotificationType
-
-Ƭ **InlineNotificationType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L22)
-
-___
-
 ### ActionableNotificationType
 
 Ƭ **ActionableNotificationType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
@@ -542,6 +533,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L25)
+
+___
+
+### InlineNotificationType
+
+Ƭ **InlineNotificationType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/notifications/notification.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/notification.component.tsx#L22)
 
 ___
 
@@ -1180,7 +1181,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:239](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L239)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L241)
 
 ___
 
@@ -3858,6 +3859,28 @@ ___
 
 ___
 
+### showActionableNotification
+
+▸ **showActionableNotification**(`notification`): `void`
+
+Displays an actionable notification in the UI.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `notification` | [`ActionableNotificationDescriptor`](interfaces/ActionableNotificationDescriptor.md) | The description of the notification to display. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/notifications/index.tsx:88](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L88)
+
+___
+
 ### showModal
 
 ▸ **showModal**(`extensionId`, `props?`, `onClose?`): () => `void`
@@ -3908,31 +3931,10 @@ Displays an inline notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/notifications/index.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L48)
+[packages/framework/esm-styleguide/src/notifications/index.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L48)
 
 ___
 
-### showActionableNotification
-
-▸ **showActionableNotification**(`notification`): `void`
-
-Displays an actionable notification in the UI which takes in an action.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `notification` | [`ActionableNotificationDescriptor`](interfaces/ActionableNotificationDescriptor.md) | The description of the actionable notification to display. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/notifications/index.tsx:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L88)
-
-___
 ### showToast
 
 ▸ **showToast**(`toast`): `void`
@@ -3952,6 +3954,32 @@ Displays a toast notification in the UI.
 #### Defined in
 
 [packages/framework/esm-styleguide/src/toasts/index.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/index.tsx#L36)
+
+___
+
+### subscribeActionableNotificationShown
+
+▸ **subscribeActionableNotificationShown**(`cb`): () => `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [`ShowActionableNotificationEvent`](interfaces/ShowActionableNotificationEvent.md)) => `void` |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L126)
 
 ___
 
@@ -3977,31 +4005,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L117)
-
-___
-
-▸ **subscribeActionableNotificationShown**(`cb`): () => `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `cb` | (`data`: [`ShowActionableNotificationEvent`](interfaces/ShowActionableNotificationEvent.md)) => `void` |
-
-#### Returns
-
-`fn`
-
-▸ (): `void`
-
-##### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/events.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L126)
+[packages/framework/esm-globals/src/events.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L117)
 
 ___
 
@@ -4027,7 +4031,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L136)
+[packages/framework/esm-globals/src/events.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L136)
 
 ___
 

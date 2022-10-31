@@ -231,8 +231,8 @@ export function getSessionLocation() {
   return new Promise<SessionLocation | undefined>((res, rej) => {
     const sub = getCurrentUser().subscribe((session) => {
       res(session.sessionLocation);
-      sub.unsubscribe();
     }, rej);
+    sub.unsubscribe();
   });
 }
 
