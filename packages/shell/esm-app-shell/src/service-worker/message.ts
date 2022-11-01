@@ -46,8 +46,9 @@ async function registerDynamicRoute({
 
 async function updateEncryptionKey({
   password
-}: UpdateEncryptionKeyMessage) {
-    setCryptoKey(password);
+}: UpdateEncryptionKeyMessage): Promise<CryptoKey> {
+  let key = await setCryptoKey(password);
+  return Promise.resolve(key);
 }
 
 /**

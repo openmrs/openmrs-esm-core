@@ -38,6 +38,7 @@ import { setupI18n } from "./locale";
 import { loadModules } from "./load-modules";
 import { appName, getCoreExtensions } from "./ui";
 import { registerModules, sharedDependencies } from "./dependencies";
+import { setEncryptedReference, setCryptoKey } from "@openmrs/esm-offline/src/encryption-lib";
 
 /**
  * Loads the frontend modules (apps and widgets). Should be done *after*
@@ -283,10 +284,12 @@ async function precacheGlobalStaticDependencies() {
 }
 
 async function updateEncryptionPassword() {
-  await messageOmrsServiceWorker({
+  let response = await messageOmrsServiceWorker({
     type: "updateEncryptionKey",
     password: "password"
   });
+  setCryptoKey(response.result);
+  setEncryptedReference(response.result);
 }
 
 async function precacheImportMap() {

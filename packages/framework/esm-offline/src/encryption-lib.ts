@@ -11,8 +11,9 @@ function getEncryptedReference() {
   return localStorage.getItem('encryptedReference');
 }
 
-function setEncryptedReference(encryptedReference: string) {
-  return localStorage.setItem('encryptedReference', encryptedReference);
+export async function setEncryptedReference(key: CryptoKey) {
+  let encryptedRef = await encrypt(referenceText, key);
+  localStorage.setItem('encryptedReference', encryptedRef[0]);
 }
 
 export async function isPasswordCorrect(password: string = "") {
@@ -26,10 +27,11 @@ async function getCryptoKey() {
   return encryptionKey.key;
 }
 
-export async function setCryptoKey(password: string = "") {
-  encryptionKey.key = await generateCryptoKey(password);
-  let encryptedRef = await encrypt(referenceText, encryptionKey.key);
-  setEncryptedReference(encryptedRef[0]);
+export async function setCryptoKey(key: CryptoKey): Promise<CryptoKey>
+export async function setCryptoKey(password: string): Promise<CryptoKey>
+export async function setCryptoKey(input: any): Promise<CryptoKey> {
+  encryptionKey.key = (typeof input === "string") ? await generateCryptoKey(input) : input;
+  return Promise.resolve(encryptionKey.key);
 }
 
 export async function encryptData(data: string) {
