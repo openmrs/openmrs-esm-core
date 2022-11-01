@@ -7,7 +7,7 @@ import type {
 import escapeRegExp from "lodash-es/escapeRegExp";
 import { cacheImportMapReferences } from "./caching";
 import { DynamicRouteRegistration, ServiceWorkerDb } from "./storage";
-import { setCryptoKey } from "@openmrs/esm-offline/src/encryption-lib";
+import { setCryptoKey } from "@openmrs/esm-offline/src/encryption";
 
 const messageHandlers = {
   onImportMapChanged,

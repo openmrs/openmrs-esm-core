@@ -16,8 +16,8 @@ import {
 } from "@openmrs/esm-offline/src/service-worker-http-headers";
 import uniq from "lodash-es/uniq";
 import {
-  encryptCache,
-  decryptCache,
+  encrypt,
+  decrypt,
   encryption
 } from "@openmrs/esm-offline/src/encryption";
 
@@ -35,7 +35,8 @@ const offlineEncryptionPlugin = {
     var isEncrypted = resHeaders.has("encryption");
     if (isEncrypted) {
       var resJson = await responseClone.json().then((json) => json);
-      return new Response(await decryptCache(resJson), {
+      var decryptedJson = await decrypt(resJson);
+      return new Response(JSON.stringify(decryptedJson), {
         headers: resHeaders,
       });
     }
@@ -53,7 +54,8 @@ const offlineEncryptionPlugin = {
       if (contentType == "application/fhir+json;charset=UTF-8") {
         resHeaders.append("encryption", encryption.toString());
         var resJson = await responseClone.json();
-        return new Response(await encryptCache(resJson), {
+        var encryptedJson = await encrypt(resJson);
+        return new Response(JSON.stringify(encryptedJson), {
           headers: resHeaders,
         });
       }
