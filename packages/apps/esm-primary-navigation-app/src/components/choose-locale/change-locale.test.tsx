@@ -12,14 +12,18 @@ const user: any = {
 
 describe(`<ChangeLocale />`, () => {
   let postUserPropertiesMock = jest.fn(() => Promise.resolve({}));
+  let postSessionLocaleMock = jest.fn(() => Promise.resolve({}));
 
   beforeEach(() => {
     postUserPropertiesMock = jest.fn(() => Promise.resolve({}));
+    postSessionLocaleMock = jest.fn(() => Promise.resolve({}));
+
     render(
       <ChangeLocale
         allowedLocales={allowedLocales}
         user={user}
         postUserProperties={postUserPropertiesMock}
+        postSessionLocale={postSessionLocaleMock}
       />
     );
   });
@@ -32,12 +36,16 @@ describe(`<ChangeLocale />`, () => {
     fireEvent.change(screen.getByLabelText(/Select locale/i), {
       target: { value: "en" },
     });
-    await waitFor(() =>
+    await waitFor(() => {
       expect(postUserPropertiesMock).toHaveBeenCalledWith(
         user.uuid,
         { defaultLocale: "en" },
         expect.anything()
-      )
-    );
+      );
+      expect(postSessionLocaleMock).toHaveBeenCalledWith(
+        "en",
+        expect.anything()
+      );
+    });
   });
 });
