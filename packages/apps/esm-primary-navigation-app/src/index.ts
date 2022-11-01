@@ -7,6 +7,7 @@ import {
 import {
   postUserPropertiesOnline,
   postUserPropertiesOffline,
+  postSessionLocaleOnline,
 } from "./components/choose-locale/change-locale.resource";
 import { configSchema } from "./config-schema";
 import { moduleName, userPropertyChange } from "./constants";
@@ -87,9 +88,11 @@ function setupOpenMRS() {
         ),
         online: {
           postUserProperties: postUserPropertiesOnline,
+          postSessionLocale: postSessionLocaleOnline,
         },
         offline: {
           postUserProperties: postUserPropertiesOffline,
+          postSessionLocale: () => Promise.resolve({}),
         },
       },
       {
