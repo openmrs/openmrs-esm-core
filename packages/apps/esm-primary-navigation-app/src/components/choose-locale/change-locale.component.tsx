@@ -35,7 +35,7 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
       return () => ac.abort();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProps]);
+  }, [userProps, postUserProperties, postSessionLocale]);
 
   return (
     <div className={`omrs-margin-12 ${styles.switcherContainer}`}>
