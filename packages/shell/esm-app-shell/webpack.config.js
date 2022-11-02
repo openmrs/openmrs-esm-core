@@ -157,7 +157,7 @@ module.exports = (env, argv = {}) => {
           type: "asset/source",
         },
         {
-          test: /\.(js|jsx)$/,
+          test: /\.jsx?$/,
           use: [
             {
               loader: require.resolve("esbuild-loader"),
@@ -168,7 +168,7 @@ module.exports = (env, argv = {}) => {
           ],
         },
         {
-          test: /\.(ts|tsx)?$/,
+          test: /\.tsx?$/,
           use: [
             {
               loader: require.resolve("esbuild-loader"),
