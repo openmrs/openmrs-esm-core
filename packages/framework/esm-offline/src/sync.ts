@@ -393,6 +393,13 @@ export async function deleteSynchronizationItem(id: number) {
 }
 
 /**
+ * Deletes all synchronization items.
+ */
+export async function deleteAllSynchronizationItems() {
+  await db.syncQueue.clear().catch(Dexie.errnames.DatabaseClosed);
+}
+
+/**
  * Registers a new synchronization handler which is able to synchronize data of a specific type.
  * @param type The identifying type of the synchronization items which can be handled by this handler.
  * @param dependsOn An array of other sync item types which must be synchronized before this handler
