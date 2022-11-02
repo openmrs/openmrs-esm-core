@@ -1,5 +1,12 @@
 export const encryption = true;
 export const referenceText = 'OpenMRS';
+export const passwordExpiryHours = 8;
+
+const ENCRYPTION_CONTENT_KEY = "content";
+const ENCRYPTION_NONCE_KEY = "nonce";
+const ENCRYPTED_REFERENCE_KEY = "encryptedReference";
+const ENCRYPTED_KEY_CREATION_TIME_KEY = "encryptedKeyCreationTime";
+const TIME_ONE_HOUR = 3600000;
 
 class EncryptionKey {
   key: CryptoKey
@@ -8,19 +15,50 @@ class EncryptionKey {
 var encryptionKey: EncryptionKey = new EncryptionKey(); 
 
 function getEncryptedReference() {
-  return localStorage.getItem('encryptedReference');
+  return localStorage.getItem(ENCRYPTED_REFERENCE_KEY);
 }
 
-export async function setEncryptedReference(key: CryptoKey) {
+async function setEncryptedReference(key: CryptoKey) {
   let encryptedRef = await encryptData(referenceText, key);
-  localStorage.setItem('encryptedReference', encryptedRef[0]);
+  localStorage.setItem(ENCRYPTED_REFERENCE_KEY, encryptedRef[0]);
 }
 
-export async function isPasswordCorrect(password: string = "") {
+function getEncryptedKeyCreationTime() {
+  let date = localStorage.getItem(ENCRYPTED_KEY_CREATION_TIME_KEY);
+  return date ? new Date(Number(date)) : null;
+}
+
+function setEncryptedKeyCreationTime() {
+  localStorage.setItem(ENCRYPTED_KEY_CREATION_TIME_KEY, Date.now().toString());
+}
+
+export async function setPasswordData(key: CryptoKey) {
+  await setEncryptedReference(key);
+  setEncryptedKeyCreationTime();
+}
+
+export function clearPasswordData() {
+  localStorage.removeItem(ENCRYPTED_REFERENCE_KEY);
+  localStorage.removeItem(ENCRYPTED_KEY_CREATION_TIME_KEY);
+}
+
+export function isPasswordExpired(): boolean {
+  let time = getEncryptedKeyCreationTime();
+  if(!time) {
+    return true;
+  }
+  else {
+    let expiryTime = new Date(time.getTime() + (TIME_ONE_HOUR * passwordExpiryHours));
+    let currentTime = new Date(Date.now());
+    return (currentTime > expiryTime);
+  }
+}
+
+export async function isPasswordCorrect(password: string = ""): Promise<boolean> {
   let encryptedRefernce = getEncryptedReference();
   let tempKey = await generateCryptoKey(password);
   let result = await encryptData(referenceText, tempKey);
-  return (result[0] != encryptedRefernce);
+  return Promise.resolve(result[0] != encryptedRefernce);
 }
 
 async function getCryptoKey() {
@@ -45,8 +83,8 @@ export async function encrypt(json: JSON) {
 }
 
 export async function decrypt(json: JSON) {
-  let data = json["content"];
-  let nonce = json["nonce"];
+  let data = json[ENCRYPTION_CONTENT_KEY];
+  let nonce = json[ENCRYPTION_NONCE_KEY];
   let key = await getCryptoKey();
   let decryptedData = await decryptData(data, key, nonce);
   return JSON.parse(decryptedData);
