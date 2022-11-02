@@ -172,7 +172,7 @@ Slots can access meta through the extension system API, such as by using
 
 ## Offline Support
 
-For information about offline support, please see [Offline Mode](./offline.md).
+For information about offline support, please see [Offline Mode](../offline/offline.md).
 
 ## Order
 
