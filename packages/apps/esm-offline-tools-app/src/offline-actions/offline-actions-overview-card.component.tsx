@@ -11,7 +11,7 @@ const OfflineActionsOverviewCard: React.FC = () => {
 
   return (
     <OverviewCard
-      header={t("homeOverviewCardOfflineActionsHeader", "Offline actions")}
+      header={t("homeOverviewCardOfflineActionsHeader", "Offline Actions")}
       viewLink={routes.offlineToolsActions}
     >
       <HeaderedQuickInfo
