@@ -3599,6 +3599,7 @@ __metadata:
     jest-cli: ^28.1.0
     jest-environment-jsdom: ^28.1.0
     lerna: ^4.0.0
+    openmrs: "workspace:^"
     postcss: ^8.4.6
     prettier: ^2.0.5
     pretty-quick: ^3.0.0
@@ -14521,7 +14522,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openmrs@workspace:packages/tooling/openmrs":
+"openmrs@workspace:^, openmrs@workspace:packages/tooling/openmrs":
   version: 0.0.0-use.local
   resolution: "openmrs@workspace:packages/tooling/openmrs"
   dependencies:
