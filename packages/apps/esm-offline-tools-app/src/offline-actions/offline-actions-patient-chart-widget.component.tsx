@@ -15,7 +15,7 @@ const OfflineActionsPatientChartWidget: React.FC<
 
   return (
     <div className={styles.widgetCard}>
-      <CardHeader title={t("offlineActions", "Offline actions")} />
+      <CardHeader title={t("offlineActions", "Offline Actions")} />
       <OfflineActions patientUuid={patientUuid} />
     </div>
   );
