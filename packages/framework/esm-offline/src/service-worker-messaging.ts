@@ -48,11 +48,15 @@ export interface UpdateEncryptionKeyMessage
   password: string;
 }
 
+export interface ClearCachedEncryptedDataMessage
+  extends OmrsServiceWorkerMessage<"clearCachedEncryptedData"> {}
+
 export type KnownOmrsServiceWorkerMessages =
   | OnImportMapChangedMessage
   | ClearDynamicRoutesMessage
   | RegisterDynamicRouteMessage
-  | UpdateEncryptionKeyMessage;
+  | UpdateEncryptionKeyMessage
+  | ClearCachedEncryptedDataMessage;
 
 export interface MessageServiceWorkerResult<T> {
   success: boolean;

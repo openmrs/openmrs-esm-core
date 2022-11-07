@@ -102,3 +102,14 @@ async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
 
   await Promise.all(urlsToInvalidate.map((url) => cache.delete(url)));
 }
+
+export async function clearEncryptedCacheEntries() {
+  const cache = await caches.open(omrsCacheName);
+  (await cache.keys())
+    .filter((request) => request.url.includes("fhir"))
+    .forEach(async (request) => 
+      (await cache.matchAll(request.url))
+        .filter((response) => response.headers.has("encryption")) 
+        .forEach(() => cache.delete(request.url))
+    );
+}

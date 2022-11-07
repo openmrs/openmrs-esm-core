@@ -302,6 +302,8 @@ async function updateEncryptionPassword() {
   }
   else {
     //user enters password
+    // await messageOmrsServiceWorker({type: "clearCachedEncryptedData"});
+    // await deleteAllSynchronizationItems();
     var result = await isPasswordCorrect("password");
   }
 }

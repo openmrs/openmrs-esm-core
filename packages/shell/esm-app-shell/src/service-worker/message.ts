@@ -5,7 +5,7 @@ import type {
   UpdateEncryptionKeyMessage
 } from "@openmrs/esm-offline";
 import escapeRegExp from "lodash-es/escapeRegExp";
-import { cacheImportMapReferences } from "./caching";
+import { cacheImportMapReferences, clearEncryptedCacheEntries } from "./caching";
 import { DynamicRouteRegistration, ServiceWorkerDb } from "./storage";
 import { setCryptoKey } from "@openmrs/esm-offline/src/encryption";
 
@@ -13,7 +13,8 @@ const messageHandlers = {
   onImportMapChanged,
   clearDynamicRoutes,
   registerDynamicRoute,
-  updateEncryptionKey
+  updateEncryptionKey,
+  clearCachedEncryptedData
 };
 
 async function onImportMapChanged({ importMap }: OnImportMapChangedMessage) {
@@ -49,6 +50,10 @@ async function updateEncryptionKey({
 }: UpdateEncryptionKeyMessage): Promise<CryptoKey> {
   let key = await setCryptoKey(password);
   return Promise.resolve(key);
+}
+
+async function clearCachedEncryptedData() {
+  await clearEncryptedCacheEntries();
 }
 
 /**
