@@ -1,6 +1,6 @@
 export const encryption = true;
-export const referenceText = 'OpenMRS';
-export const passwordExpiryHours = 8;
+const referenceText = 'OpenMRS';
+const passwordExpiryHours = 8;
 
 const ENCRYPTION_CONTENT_KEY = "content";
 const ENCRYPTION_NONCE_KEY = "nonce";
@@ -96,7 +96,7 @@ export async function decrypt(json: JSON) {
  *
  * @returns The Crypto object.
  */
-export function getCryptoObject(): Crypto {
+function getCryptoObject(): Crypto {
   return self.crypto; // for IE 11
 }
 
@@ -106,7 +106,7 @@ export function getCryptoObject(): Crypto {
  * @param input The original key to start the encrypt process.
  * @returns A promise with the base Crypto Key.
  */
-export function generateCryptoKey(input: string): Promise<CryptoKey> {
+function generateCryptoKey(input: string): Promise<CryptoKey> {
   let algorithm: string = 'AES-GCM';
   let keyUsages: KeyUsage[] = ['encrypt','decrypt'];
   let format: KeyFormat = 'raw';
@@ -128,7 +128,7 @@ export function generateCryptoKey(input: string): Promise<CryptoKey> {
  * @param cryptoKey The Crypto Key to be used in encryption.
  * @returns A promise with the encrypted value and the used nonce, if used with the encryption algorithm.
  */
-export function encryptData(data: string, cryptoKey: CryptoKey): Promise<[string, string | null]> {
+function encryptData(data: string, cryptoKey: CryptoKey): Promise<[string, string | null]> {
   let algorithm = { name: 'AES-GCM', iv: generateNonce() } as AesGcmParams;
   return Promise.resolve(
     getCryptoObject().subtle.encrypt(algorithm, cryptoKey, encode(data)),
@@ -146,7 +146,7 @@ export function encryptData(data: string, cryptoKey: CryptoKey): Promise<[string
  * @param nonceOrAlgorithm The nonce used for AES encryption or the custom algorithm.
  * @returns A promise with the decrypt value
  */
-export function decryptData(
+function decryptData(
   data: string,
   cryptoKey: CryptoKey,
   nonceOrAlgorithm: string,
@@ -162,7 +162,7 @@ export function decryptData(
  * @param byteSize The byte size of the generated random value.
  * @returns The random value.
  */
-export function generateRandomValues(byteSize = 8): Uint8Array {
+function generateRandomValues(byteSize = 8): Uint8Array {
   return getCryptoObject().getRandomValues(new Uint8Array(byteSize));
 }
 
@@ -172,7 +172,7 @@ export function generateRandomValues(byteSize = 8): Uint8Array {
  * @param byteSize The byte size of the generated random value.
  * @returns The random value.
  */
-export function generateNonce(byteSize = 16): Uint8Array {
+function generateNonce(byteSize = 16): Uint8Array {
   // We should generate at least 16 bytes
   // to allow for 2^128 possible variations.
   return generateRandomValues(byteSize);
@@ -184,7 +184,7 @@ export function generateNonce(byteSize = 16): Uint8Array {
  * @param data Value to be encoded.
  * @returns The transformed given value as an ArrayBuffer.
  */
-export function encode(data: string, size: number = 16): ArrayBuffer {
+function encode(data: string, size: number = 16): ArrayBuffer {
   var arr = size == 8 ? new Uint8Array(data.length) : new Uint16Array(data.length);
   for (var i = data.length; i--; ) arr[i] = data.charCodeAt(i);
   return arr.buffer;
@@ -196,18 +196,8 @@ export function encode(data: string, size: number = 16): ArrayBuffer {
  * @param data Value to be decoded.
  * @returns The transformed given value as a string.
  */
-export function decode(data: ArrayBuffer, size: number = 16): string {
+function decode(data: ArrayBuffer, size: number = 16): string {
   var arr = size == 8 ? new Uint8Array(data) : new Uint16Array(data);
   var str = String.fromCharCode.apply(String, arr);
   return str;
-}
-
-/**
- * Type Guard to Typed Array.
- *
- * @param data Any data to be checked.
- * @returns Verify if the given data is a Typed Array.
- */
-export function isTypedArray(data: unknown): data is BufferSource {
-  return ArrayBuffer.isView(data) || data instanceof ArrayBuffer;
 }
