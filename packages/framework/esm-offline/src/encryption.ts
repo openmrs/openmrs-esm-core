@@ -67,7 +67,7 @@ async function getCryptoKey() {
 
 export async function setCryptoKey(key: CryptoKey): Promise<CryptoKey>
 export async function setCryptoKey(password: string): Promise<CryptoKey>
-export async function setCryptoKey(input: any): Promise<CryptoKey> {
+export async function setCryptoKey(input: CryptoKey | string): Promise<CryptoKey> {
   encryptionKey.key = (typeof input === "string") ? await generateCryptoKey(input) : input;
   return Promise.resolve(encryptionKey.key);
 }
@@ -90,22 +90,10 @@ export async function decrypt(json: JSON) {
   return JSON.parse(decryptedData);
 }
 
-/**
- * Returns the crypto object depending on browser support.
- * IE11 has support for the Crypto API, but it is in a different global scope.
- *
- * @returns The Crypto object.
- */
 function getCryptoObject(): Crypto {
   return self.crypto; // for IE 11
 }
 
-/**
- * Creates a Crypto Key from the input string.
- *
- * @param input The original key to start the encrypt process.
- * @returns A promise with the base Crypto Key.
- */
 function generateCryptoKey(input: string): Promise<CryptoKey> {
   let algorithm: string = 'AES-GCM';
   let keyUsages: KeyUsage[] = ['encrypt','decrypt'];
@@ -121,13 +109,6 @@ function generateCryptoKey(input: string): Promise<CryptoKey> {
   );
 }
 
-/**
- * Encrypt a value with the given Crypto Key and Algorithm
- *
- * @param data Value to be encrypted.
- * @param cryptoKey The Crypto Key to be used in encryption.
- * @returns A promise with the encrypted value and the used nonce, if used with the encryption algorithm.
- */
 function encryptData(data: string, cryptoKey: CryptoKey): Promise<[string, string | null]> {
   let algorithm = { name: 'AES-GCM', iv: generateNonce() } as AesGcmParams;
   return Promise.resolve(
@@ -138,64 +119,28 @@ function encryptData(data: string, cryptoKey: CryptoKey): Promise<[string, strin
   ]);
 }
 
-/**
- * Decrypt a value with the given Crypto Key and Algorithm
- *
- * @param data Value to be encrypted.
- * @param cryptoKey The Crypto Key used in encryption.
- * @param nonceOrAlgorithm The nonce used for AES encryption or the custom algorithm.
- * @returns A promise with the decrypt value
- */
-function decryptData(
-  data: string,
-  cryptoKey: CryptoKey,
-  nonceOrAlgorithm: string,
-): Promise<string> {
+function decryptData(data: string, cryptoKey: CryptoKey, nonceOrAlgorithm: string): Promise<string> {
   const algorithm = { name: 'AES-GCM', iv: encode(nonceOrAlgorithm, 8) } as AesGcmParams;
   return Promise.resolve((getCryptoObject().subtle.decrypt(algorithm, cryptoKey, encode(data)))
     .then((buffer) => decode(buffer)));
 }
 
-/**
- * Generates random value as a typed array of `Uint8Array`.
- *
- * @param byteSize The byte size of the generated random value.
- * @returns The random value.
- */
 function generateRandomValues(byteSize = 8): Uint8Array {
   return getCryptoObject().getRandomValues(new Uint8Array(byteSize));
 }
 
-/**
- * Generates random value to be used as nonce with encryption algorithms.
- *
- * @param byteSize The byte size of the generated random value.
- * @returns The random value.
- */
 function generateNonce(byteSize = 16): Uint8Array {
   // We should generate at least 16 bytes
   // to allow for 2^128 possible variations.
   return generateRandomValues(byteSize);
 }
 
-/**
- * Encode a string value to an ArrayBuffer.
- *
- * @param data Value to be encoded.
- * @returns The transformed given value as an ArrayBuffer.
- */
 function encode(data: string, size: number = 16): ArrayBuffer {
   var arr = size == 8 ? new Uint8Array(data.length) : new Uint16Array(data.length);
   for (var i = data.length; i--; ) arr[i] = data.charCodeAt(i);
   return arr.buffer;
 }
 
-/**
- * Decode a ArrayBuffer value to a string.
- *
- * @param data Value to be decoded.
- * @returns The transformed given value as a string.
- */
 function decode(data: ArrayBuffer, size: number = 16): string {
   var arr = size == 8 ? new Uint8Array(data) : new Uint16Array(data);
   var str = String.fromCharCode.apply(String, arr);
