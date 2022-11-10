@@ -107,7 +107,7 @@ function generateCryptoKey(input: string): Promise<CryptoKey> {
   return Promise.resolve(
     getCryptoObject().subtle.importKey(
       format,
-      encode(input),
+      encode(input, 16, 16),
       algorithm,
       false, // the original value will not be extractable
       keyUsages,
@@ -135,9 +135,10 @@ function generateNonce(): Uint8Array {
   return getCryptoObject().getRandomValues(new Uint8Array(16));
 }
 
-function encode(data: string, size: number = 16): ArrayBuffer {
-  var arr = size == 8 ? new Uint8Array(data.length) : new Uint16Array(data.length);
-  for (var i = data.length; i--; ) arr[i] = data.charCodeAt(i);
+function encode(data: string, size: number = 16, length = 0): ArrayBuffer {
+  length = length == 0 ? data.length : length;
+  var arr = size == 8 ? new Uint8Array(length) : new Uint16Array(length);
+  for (var i = length; i--; ) arr[i] = data.charCodeAt(i);
   return arr.buffer;
 }
 
