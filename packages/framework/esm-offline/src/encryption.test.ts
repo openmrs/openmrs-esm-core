@@ -14,9 +14,11 @@ describe("setPasswordData", () => {
         let localStorageSet = jest.spyOn(window.localStorage.__proto__, 'setItem');
         let key = await setCryptoKey("password");
         await setPasswordData(key);
-        expect(localStorageSet).toHaveBeenCalledWith("encryptedReference", expect.anything());
+        expect(localStorageSet).toHaveBeenCalledWith("encryptedReferenceContent", expect.anything());
+        expect(localStorageSet).toHaveBeenCalledWith("encryptedReferenceNonce", expect.anything());
         expect(localStorageSet).toHaveBeenCalledWith("encryptedKeyCreationTime", expect.anything());
-        expect(localStorageSet).toHaveBeenCalledTimes(2);
+        expect(localStorageSet).toHaveBeenCalledTimes(3);
+        localStorageSet.mockRestore();
     })
 })
 
@@ -24,9 +26,10 @@ describe("clearPasswordData", () => {
     it("clears encryption reference and time in local storage", async () => {
         let localStorageRemove = jest.spyOn(window.localStorage.__proto__, 'removeItem');
         clearPasswordData();
-        expect(localStorageRemove).toHaveBeenCalledWith("encryptedReference");
+        expect(localStorageRemove).toHaveBeenCalledWith("encryptedReferenceContent");
+        expect(localStorageRemove).toHaveBeenCalledWith("encryptedReferenceNonce");
         expect(localStorageRemove).toHaveBeenCalledWith("encryptedKeyCreationTime");
-        expect(localStorageRemove).toHaveBeenCalledTimes(2);
+        expect(localStorageRemove).toHaveBeenCalledTimes(3);
     })
 })
 

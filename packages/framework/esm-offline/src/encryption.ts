@@ -115,7 +115,7 @@ function generateCryptoKey(input: string): Promise<CryptoKey> {
   );
 }
 
-export async function encryptData(data: string, cryptoKey: CryptoKey): Promise<[string, string]> {
+async function encryptData(data: string, cryptoKey: CryptoKey): Promise<[string, string]> {
   let nonce = generateNonce();
   let algorithm = { name: 'AES-GCM', iv: nonce } as AesGcmParams;
   let result = await getCryptoObject().subtle.encrypt(algorithm, cryptoKey, encode(data));
