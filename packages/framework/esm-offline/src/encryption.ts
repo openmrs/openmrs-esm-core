@@ -4,7 +4,8 @@ const passwordExpiryHours = 8;
 
 const ENCRYPTION_CONTENT_KEY = "content";
 const ENCRYPTION_NONCE_KEY = "nonce";
-const ENCRYPTED_REFERENCE_KEY = "encryptedReference";
+const ENCRYPTED_REFERENCE_CONTENT_KEY = "encryptedReferenceContent";
+const ENCRYPTED_REFERENCE_NONCE_KEY = "encryptedReferenceNonce";
 const ENCRYPTED_KEY_CREATION_TIME_KEY = "encryptedKeyCreationTime";
 const TIME_ONE_HOUR = 3600000;
 
@@ -15,12 +16,16 @@ class EncryptionKey {
 var encryptionKey: EncryptionKey = new EncryptionKey(); 
 
 function getEncryptedReference() {
-  return localStorage.getItem(ENCRYPTED_REFERENCE_KEY);
+  return [
+    localStorage.getItem(ENCRYPTED_REFERENCE_CONTENT_KEY) || "", 
+    localStorage.getItem(ENCRYPTED_REFERENCE_NONCE_KEY) || ""
+  ];
 }
 
 async function setEncryptedReference(key: CryptoKey) {
   let encryptedRef = await encryptData(referenceText, key);
-  localStorage.setItem(ENCRYPTED_REFERENCE_KEY, encryptedRef[0]);
+  localStorage.setItem(ENCRYPTED_REFERENCE_CONTENT_KEY, encryptedRef[0]);
+  localStorage.setItem(ENCRYPTED_REFERENCE_NONCE_KEY, encryptedRef[1]);
 }
 
 function getEncryptedKeyCreationTime() {
@@ -38,7 +43,8 @@ export async function setPasswordData(key: CryptoKey) {
 }
 
 export function clearPasswordData() {
-  localStorage.removeItem(ENCRYPTED_REFERENCE_KEY);
+  localStorage.removeItem(ENCRYPTED_REFERENCE_CONTENT_KEY);
+  localStorage.removeItem(ENCRYPTED_REFERENCE_NONCE_KEY);
   localStorage.removeItem(ENCRYPTED_KEY_CREATION_TIME_KEY);
 }
 
@@ -55,10 +61,10 @@ export function isPasswordExpired(): boolean {
 }
 
 export async function isPasswordCorrect(password: string = ""): Promise<boolean> {
-  let encryptedRefernce = getEncryptedReference();
+  let encryptedReference = getEncryptedReference();
   let tempKey = await generateCryptoKey(password);
-  let result = await encryptData(referenceText, tempKey);
-  return Promise.resolve(result[0] != encryptedRefernce);
+  let decryptedReference = await decryptData(encryptedReference[0], tempKey, encryptedReference[1]);
+  return Promise.resolve(referenceText == decryptedReference);
 }
 
 async function getCryptoKey() {
@@ -109,30 +115,24 @@ function generateCryptoKey(input: string): Promise<CryptoKey> {
   );
 }
 
-function encryptData(data: string, cryptoKey: CryptoKey): Promise<[string, string | null]> {
-  let algorithm = { name: 'AES-GCM', iv: generateNonce() } as AesGcmParams;
-  return Promise.resolve(
-    getCryptoObject().subtle.encrypt(algorithm, cryptoKey, encode(data)),
-  ).then(cryptoValue => [
-    decode(cryptoValue),
-    algorithm ? decode(algorithm.iv as Uint8Array, 8) : null,
+export async function encryptData(data: string, cryptoKey: CryptoKey): Promise<[string, string]> {
+  let nonce = generateNonce();
+  let algorithm = { name: 'AES-GCM', iv: nonce } as AesGcmParams;
+  let result = await getCryptoObject().subtle.encrypt(algorithm, cryptoKey, encode(data));
+  return Promise.resolve([
+    decode(result),
+    decode(nonce, 8),
   ]);
 }
 
-function decryptData(data: string, cryptoKey: CryptoKey, nonceOrAlgorithm: string): Promise<string> {
-  const algorithm = { name: 'AES-GCM', iv: encode(nonceOrAlgorithm, 8) } as AesGcmParams;
-  return Promise.resolve((getCryptoObject().subtle.decrypt(algorithm, cryptoKey, encode(data)))
-    .then((buffer) => decode(buffer)));
+async function decryptData(data: string, cryptoKey: CryptoKey, nonce: string): Promise<string> {
+  const algorithm = { name: 'AES-GCM', iv: encode(nonce, 8) } as AesGcmParams;
+  let result = await getCryptoObject().subtle.decrypt(algorithm, cryptoKey, encode(data));
+  return Promise.resolve(decode(result));
 }
 
-function generateRandomValues(byteSize = 8): Uint8Array {
-  return getCryptoObject().getRandomValues(new Uint8Array(byteSize));
-}
-
-function generateNonce(byteSize = 16): Uint8Array {
-  // We should generate at least 16 bytes
-  // to allow for 2^128 possible variations.
-  return generateRandomValues(byteSize);
+function generateNonce(): Uint8Array {
+  return getCryptoObject().getRandomValues(new Uint8Array(16));
 }
 
 function encode(data: string, size: number = 16): ArrayBuffer {
