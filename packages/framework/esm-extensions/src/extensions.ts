@@ -347,6 +347,7 @@ function getAssignedExtensionsFromSlotData(
       });
     }
   }
+
   return extensions;
 }
 

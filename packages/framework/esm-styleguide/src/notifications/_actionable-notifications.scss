@@ -1,0 +1,21 @@
+@use "@carbon/styles/scss/spacing";
+
+.omrs-actionable-notifications-container {
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.2rem;
+  bottom: spacing.$spacing-07;
+}
+
+.omrs-actionable-notification-mounting,
+.omrs-actionable-notification-mounting > * {
+  padding: 0;
+}
+
+.omrs-actionable-notification-closing,
+.omrs-actionable-notification-mounting {
+  opacity: 0;
+}

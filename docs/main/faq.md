@@ -18,9 +18,14 @@ For help with pulling the latest code see the [community help page](https://wiki
 If you notice your app suddenly stop working, it might be because a core library has changed in the app shell on the server you are developing against. The main dependencies shared by all OpenMRS frontend modules are `openmrs` and `@openmrs/esm-framework`. They can be updated like this:
 
 ```sh
-yarn up openmrs @openmrs/esm-framework openmrs  # to upgrade
-git checkout package.json  # to reset the version specifiers to 'next'
-yarn  # to re-create the lockfile
+# Upgrade core libraries
+yarn up openmrs @openmrs/esm-framework
+
+# Reset version specifiers to `next`. Don't commit actual version numbers.
+git checkout package.json
+
+# Run `yarn` to recreate the lockfile
+yarn
 ```
 
 ## Refreshing importmap

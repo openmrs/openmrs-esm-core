@@ -8,7 +8,7 @@ const WebpackPwaManifest = require("webpack-pwa-manifest");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
 const { resolve, dirname, basename } = require("path");
-const { readFileSync, readdirSync, statSync } = require("fs");
+const { readdirSync, statSync } = require("fs");
 const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
 const { name, version, dependencies } = require("./package.json");
 const sharedDependencies = require("./dependencies.json");
@@ -157,10 +157,24 @@ module.exports = (env, argv = {}) => {
           type: "asset/source",
         },
         {
-          test: /\.(j|t)sx?$/,
+          test: /\.jsx?$/,
           use: [
             {
-              loader: require.resolve("swc-loader"),
+              loader: require.resolve("esbuild-loader"),
+              options: {
+                loader: "jsx",
+              },
+            },
+          ],
+        },
+        {
+          test: /\.tsx?$/,
+          use: [
+            {
+              loader: require.resolve("esbuild-loader"),
+              options: {
+                loader: "tsx",
+              },
             },
           ],
         },
