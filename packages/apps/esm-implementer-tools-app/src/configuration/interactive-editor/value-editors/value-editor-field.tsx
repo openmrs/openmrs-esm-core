@@ -44,7 +44,7 @@ export function ValueEditorField({
       checked={value}
       hideLabel
       labelText=""
-      onChange={onChange}
+      onChange={(event, { checked, id }) => onChange(checked)}
     ></Checkbox>
   ) : valueType === Type.ConceptUuid ? (
     <ConceptSearchBox
