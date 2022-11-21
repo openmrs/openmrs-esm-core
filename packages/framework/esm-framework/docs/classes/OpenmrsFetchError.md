@@ -25,12 +25,12 @@
 - [message](OpenmrsFetchError.md#message)
 - [name](OpenmrsFetchError.md#name)
 - [stack](OpenmrsFetchError.md#stack)
-- [prepareStackTrace](OpenmrsFetchError.md#preparestacktrace)
 - [stackTraceLimit](OpenmrsFetchError.md#stacktracelimit)
 
 ### Methods
 
 - [captureStackTrace](OpenmrsFetchError.md#capturestacktrace)
+- [prepareStackTrace](OpenmrsFetchError.md#preparestacktrace)
 
 ## API Constructors
 
@@ -135,39 +135,6 @@ node_modules/typescript/lib/lib.es5.d.ts:1024
 
 ___
 
-### prepareStackTrace
-
-▪ `Static` `Optional` **prepareStackTrace**: (`err`: `Error`, `stackTraces`: `CallSite`[]) => `any`
-
-#### Type declaration
-
-▸ (`err`, `stackTraces`): `any`
-
-Optional override for formatting stack traces
-
-**`see`** https://v8.dev/docs/stack-trace-api#customizing-stack-traces
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `err` | `Error` |
-| `stackTraces` | `CallSite`[] |
-
-##### Returns
-
-`any`
-
-#### Inherited from
-
-Error.prepareStackTrace
-
-#### Defined in
-
-packages/framework/esm-framework/node_modules/@types/node/ts4.8/globals.d.ts:11
-
-___
-
 ### stackTraceLimit
 
 ▪ `Static` **stackTraceLimit**: `number`
@@ -178,7 +145,7 @@ Error.stackTraceLimit
 
 #### Defined in
 
-packages/framework/esm-framework/node_modules/@types/node/ts4.8/globals.d.ts:13
+node_modules/@types/node/globals.d.ts:142
 
 ## Methods
 
@@ -192,7 +159,7 @@ Create .stack property on a target object
 
 | Name | Type |
 | :------ | :------ |
-| `targetObject` | `object` |
+| `targetObject` | `Object` |
 | `constructorOpt?` | `Function` |
 
 #### Returns
@@ -205,4 +172,33 @@ Error.captureStackTrace
 
 #### Defined in
 
-packages/framework/esm-framework/node_modules/@types/node/ts4.8/globals.d.ts:4
+node_modules/@types/node/globals.d.ts:133
+
+___
+
+### prepareStackTrace
+
+▸ `Static` `Optional` **prepareStackTrace**(`err`, `stackTraces`): `any`
+
+Optional override for formatting stack traces
+
+**`see`** https://github.com/v8/v8/wiki/Stack%20Trace%20API#customizing-stack-traces
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `err` | `Error` |
+| `stackTraces` | `CallSite`[] |
+
+#### Returns
+
+`any`
+
+#### Inherited from
+
+Error.prepareStackTrace
+
+#### Defined in
+
+node_modules/@types/node/globals.d.ts:140
