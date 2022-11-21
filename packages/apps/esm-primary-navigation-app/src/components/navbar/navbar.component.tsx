@@ -66,8 +66,8 @@ const Navbar: React.FC<NavbarProps> = ({
     [navMenuItems.length, layout]
   );
 
-  const render = useCallback(() => {
-    return (
+  const render = useCallback(
+    () => (
       <>
         <OfflineBanner />
         <Header className={styles.topNavHeader} aria-label="OpenMRS">
@@ -112,6 +112,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   ? styles.headerGlobalBarButton
                   : styles.activePanel
               }`}
+              enterDelayMs={500}
               name="Users"
               isActive={isActivePanel("userMenu")}
               onClick={(event) => {
@@ -127,14 +128,15 @@ const Navbar: React.FC<NavbarProps> = ({
             </HeaderGlobalAction>
             <HeaderGlobalAction
               aria-label="App Menu"
-              tooltipAlignment="end"
+              aria-labelledby="App Menu"
+              enterDelayMs={500}
               isActive={isActivePanel("appMenu")}
+              tooltipAlignment="end"
               className={`${
                 isActivePanel("appMenu")
                   ? styles.headerGlobalBarButton
                   : styles.activePanel
               }`}
-              aria-labelledby="App Menu"
               onClick={(event) => {
                 togglePanel("appMenu");
                 event.stopPropagation();
@@ -170,18 +172,19 @@ const Navbar: React.FC<NavbarProps> = ({
           />
         </Header>
       </>
-    );
-  }, [
-    showHamburger,
-    session,
-    user,
-    allowedLocales,
-    isActivePanel,
-    layout,
-    hidePanel,
-    togglePanel,
-    onLogout,
-  ]);
+    ),
+    [
+      showHamburger,
+      session,
+      user,
+      allowedLocales,
+      isActivePanel,
+      layout,
+      hidePanel,
+      togglePanel,
+      onLogout,
+    ]
+  );
 
   return <div>{session && <HeaderContainer render={render} />}</div>;
 };

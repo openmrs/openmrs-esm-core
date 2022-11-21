@@ -147,6 +147,32 @@
   color: $text-02;
 }
 
+/* Alternate background and border colors for zebra styled table rows */
+
+// Datatables without expansion
+.cds--data-table--zebra tbody tr:not(.cds--parent-row):nth-child(odd) td {
+  background-color: $ui-02;
+  border-bottom: 1px solid $ui-03;
+}
+
+.cds--data-table--zebra tbody tr:not(.cds--parent-row):nth-child(2n) td {
+  background-color: $ui-01;
+  border-bottom: 1px solid $ui-03;
+  border-top: 1px solid $ui-03;
+}
+
+// Datatables with expansion
+.cds--data-table--zebra tbody tr[data-parent-row]:nth-child(4n + 1) td {
+  background-color: $ui-02;
+  border-bottom: 1px solid $ui-03;
+  border-top: 1px solid $ui-03;
+}
+
+.cds--data-table--zebra tbody tr[data-parent-row]:nth-child(4n + 3) td {
+  background-color: $ui-01;
+  border-bottom: 1px solid $ui-03;
+}
+
 /* Misc */
 .cds--btn--primary,
 .cds--btn--primary:active,

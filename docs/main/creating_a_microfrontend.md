@@ -42,7 +42,7 @@ should only do the following four things:
 
 - define the [configuration schema](config.md)
 - register [breadcrumbs](breadcrumbs.md)
-- set up [offline support](offline.md)
+- set up [offline support](../offline/offline.md)
 - return an object specifying the frontend module's pages and extensions
 
 #### The `setupOpenMRS` return object
