@@ -6,6 +6,7 @@
 
 ### Properties
 
+- [attributes](NewVisitPayload.md#attributes)
 - [location](NewVisitPayload.md#location)
 - [patient](NewVisitPayload.md#patient)
 - [startDatetime](NewVisitPayload.md#startdatetime)
@@ -14,6 +15,16 @@
 - [visitType](NewVisitPayload.md#visittype)
 
 ## Properties
+
+### attributes
+
+• `Optional` **attributes**: { `attributeType`: `string` ; `value`: `string`  }[]
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/visit-resource.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L10)
+
+___
 
 ### location
 

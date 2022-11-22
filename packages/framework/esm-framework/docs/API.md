@@ -446,7 +446,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L12)
+[packages/framework/esm-api/src/types/visit-resource.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L16)
 
 ___
 

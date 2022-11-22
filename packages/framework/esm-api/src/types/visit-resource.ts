@@ -7,6 +7,10 @@ export interface NewVisitPayload {
   startDatetime: Date;
   visitType: string;
   stopDatetime?: Date;
+  attributes?: Array<{
+    attributeType: string;
+    value: string;
+  }>;
 }
 
 export type UpdateVisitPayload = NewVisitPayload & {};
