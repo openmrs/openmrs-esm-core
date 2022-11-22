@@ -32,8 +32,6 @@ const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || "OpenMRS";
 const openmrsFavicon = process.env.OMRS_FAVICON || "favicon.ico";
 const openmrsOffline = process.env.OMRS_OFFLINE !== "disable";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
-const openmrsCoreApps =
-  process.env.OMRS_ESM_CORE_APPS_DIR || resolve(__dirname, "../../apps");
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
@@ -69,29 +67,6 @@ module.exports = (env, argv = {}) => {
   const outDir = mode === production ? "dist" : "lib";
   const isProd = mode === "production";
   const appPatterns = [];
-  const coreImportmap = {
-    imports: {},
-  };
-
-  if (checkDirectoryExists(openmrsCoreApps)) {
-    readdirSync(openmrsCoreApps).forEach((dir) => {
-      const appDir = resolve(openmrsCoreApps, dir);
-      const { name, browser } = require(resolve(appDir, "package.json"));
-      const distDir = resolve(appDir, dirname(browser));
-      if (allowedSuffixes.some((suffix) => name.endsWith(suffix))) {
-        if (checkDirectoryHasContents(distDir)) {
-          appPatterns.push({
-            from: distDir,
-            to: dir,
-          });
-          coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
-          console.info(`Serving built artifact for ${name} from ${distDir}`);
-        } else {
-          console.warn(`Not serving ${name} because couldn't find ${distDir}`);
-        }
-      }
-    });
-  }
 
   return {
     entry: resolve(__dirname, "src/index.ts"),
@@ -222,8 +197,6 @@ module.exports = (env, argv = {}) => {
           openmrsOffline,
           openmrsEnvironment,
           openmrsConfigUrls,
-          openmrsCoreImportmap:
-            appPatterns.length > 0 && JSON.stringify(coreImportmap),
         },
       }),
       new CopyWebpackPlugin({
