@@ -98,6 +98,7 @@
 - [itemType](ConfigurableLinkProps.md#itemtype)
 - [lang](ConfigurableLinkProps.md#lang)
 - [media](ConfigurableLinkProps.md#media)
+- [nonce](ConfigurableLinkProps.md#nonce)
 - [onAbort](ConfigurableLinkProps.md#onabort)
 - [onAbortCapture](ConfigurableLinkProps.md#onabortcapture)
 - [onAnimationEnd](ConfigurableLinkProps.md#onanimationend)
@@ -226,6 +227,8 @@
 - [onRateChangeCapture](ConfigurableLinkProps.md#onratechangecapture)
 - [onReset](ConfigurableLinkProps.md#onreset)
 - [onResetCapture](ConfigurableLinkProps.md#onresetcapture)
+- [onResize](ConfigurableLinkProps.md#onresize)
+- [onResizeCapture](ConfigurableLinkProps.md#onresizecapture)
 - [onScroll](ConfigurableLinkProps.md#onscroll)
 - [onScrollCapture](ConfigurableLinkProps.md#onscrollcapture)
 - [onSeeked](ConfigurableLinkProps.md#onseeked)
@@ -317,7 +320,7 @@ AnchorHTMLAttributes.about
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1875
+node_modules/@types/react/index.d.ts:1881
 
 ___
 
@@ -331,7 +334,7 @@ AnchorHTMLAttributes.accessKey
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1851
+node_modules/@types/react/index.d.ts:1856
 
 ___
 
@@ -347,7 +350,7 @@ AnchorHTMLAttributes.aria-activedescendant
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1585
+node_modules/@types/react/index.d.ts:1590
 
 ___
 
@@ -363,7 +366,7 @@ AnchorHTMLAttributes.aria-atomic
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1587
+node_modules/@types/react/index.d.ts:1592
 
 ___
 
@@ -380,7 +383,7 @@ AnchorHTMLAttributes.aria-autocomplete
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1592
+node_modules/@types/react/index.d.ts:1597
 
 ___
 
@@ -396,7 +399,7 @@ AnchorHTMLAttributes.aria-busy
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1594
+node_modules/@types/react/index.d.ts:1599
 
 ___
 
@@ -414,7 +417,7 @@ AnchorHTMLAttributes.aria-checked
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1599
+node_modules/@types/react/index.d.ts:1604
 
 ___
 
@@ -432,7 +435,7 @@ AnchorHTMLAttributes.aria-colcount
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1604
+node_modules/@types/react/index.d.ts:1609
 
 ___
 
@@ -450,7 +453,7 @@ AnchorHTMLAttributes.aria-colindex
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1609
+node_modules/@types/react/index.d.ts:1614
 
 ___
 
@@ -468,7 +471,7 @@ AnchorHTMLAttributes.aria-colspan
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1614
+node_modules/@types/react/index.d.ts:1619
 
 ___
 
@@ -486,7 +489,7 @@ AnchorHTMLAttributes.aria-controls
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1619
+node_modules/@types/react/index.d.ts:1624
 
 ___
 
@@ -502,7 +505,7 @@ AnchorHTMLAttributes.aria-current
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1621
+node_modules/@types/react/index.d.ts:1626
 
 ___
 
@@ -520,7 +523,7 @@ AnchorHTMLAttributes.aria-describedby
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1626
+node_modules/@types/react/index.d.ts:1631
 
 ___
 
@@ -538,7 +541,7 @@ AnchorHTMLAttributes.aria-details
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1631
+node_modules/@types/react/index.d.ts:1636
 
 ___
 
@@ -556,7 +559,7 @@ AnchorHTMLAttributes.aria-disabled
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1636
+node_modules/@types/react/index.d.ts:1641
 
 ___
 
@@ -574,7 +577,7 @@ AnchorHTMLAttributes.aria-dropeffect
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1641
+node_modules/@types/react/index.d.ts:1646
 
 ___
 
@@ -592,7 +595,7 @@ AnchorHTMLAttributes.aria-errormessage
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1646
+node_modules/@types/react/index.d.ts:1651
 
 ___
 
@@ -608,7 +611,7 @@ AnchorHTMLAttributes.aria-expanded
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1648
+node_modules/@types/react/index.d.ts:1653
 
 ___
 
@@ -625,7 +628,7 @@ AnchorHTMLAttributes.aria-flowto
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1653
+node_modules/@types/react/index.d.ts:1658
 
 ___
 
@@ -643,7 +646,7 @@ AnchorHTMLAttributes.aria-grabbed
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1658
+node_modules/@types/react/index.d.ts:1663
 
 ___
 
@@ -659,7 +662,7 @@ AnchorHTMLAttributes.aria-haspopup
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1660
+node_modules/@types/react/index.d.ts:1665
 
 ___
 
@@ -677,7 +680,7 @@ AnchorHTMLAttributes.aria-hidden
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1665
+node_modules/@types/react/index.d.ts:1670
 
 ___
 
@@ -695,7 +698,7 @@ AnchorHTMLAttributes.aria-invalid
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1670
+node_modules/@types/react/index.d.ts:1675
 
 ___
 
@@ -711,7 +714,7 @@ AnchorHTMLAttributes.aria-keyshortcuts
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1672
+node_modules/@types/react/index.d.ts:1677
 
 ___
 
@@ -729,7 +732,7 @@ AnchorHTMLAttributes.aria-label
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1677
+node_modules/@types/react/index.d.ts:1682
 
 ___
 
@@ -747,7 +750,7 @@ AnchorHTMLAttributes.aria-labelledby
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1682
+node_modules/@types/react/index.d.ts:1687
 
 ___
 
@@ -763,7 +766,7 @@ AnchorHTMLAttributes.aria-level
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1684
+node_modules/@types/react/index.d.ts:1689
 
 ___
 
@@ -779,7 +782,7 @@ AnchorHTMLAttributes.aria-live
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1686
+node_modules/@types/react/index.d.ts:1691
 
 ___
 
@@ -795,7 +798,7 @@ AnchorHTMLAttributes.aria-modal
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1688
+node_modules/@types/react/index.d.ts:1693
 
 ___
 
@@ -811,7 +814,7 @@ AnchorHTMLAttributes.aria-multiline
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1690
+node_modules/@types/react/index.d.ts:1695
 
 ___
 
@@ -827,7 +830,7 @@ AnchorHTMLAttributes.aria-multiselectable
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1692
+node_modules/@types/react/index.d.ts:1697
 
 ___
 
@@ -843,7 +846,7 @@ AnchorHTMLAttributes.aria-orientation
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1694
+node_modules/@types/react/index.d.ts:1699
 
 ___
 
@@ -862,7 +865,7 @@ AnchorHTMLAttributes.aria-owns
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1700
+node_modules/@types/react/index.d.ts:1705
 
 ___
 
@@ -879,7 +882,7 @@ AnchorHTMLAttributes.aria-placeholder
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1705
+node_modules/@types/react/index.d.ts:1710
 
 ___
 
@@ -897,7 +900,7 @@ AnchorHTMLAttributes.aria-posinset
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1710
+node_modules/@types/react/index.d.ts:1715
 
 ___
 
@@ -915,7 +918,7 @@ AnchorHTMLAttributes.aria-pressed
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1715
+node_modules/@types/react/index.d.ts:1720
 
 ___
 
@@ -933,7 +936,7 @@ AnchorHTMLAttributes.aria-readonly
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1720
+node_modules/@types/react/index.d.ts:1725
 
 ___
 
@@ -951,7 +954,7 @@ AnchorHTMLAttributes.aria-relevant
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1725
+node_modules/@types/react/index.d.ts:1730
 
 ___
 
@@ -967,7 +970,7 @@ AnchorHTMLAttributes.aria-required
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1727
+node_modules/@types/react/index.d.ts:1732
 
 ___
 
@@ -983,7 +986,7 @@ AnchorHTMLAttributes.aria-roledescription
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1729
+node_modules/@types/react/index.d.ts:1734
 
 ___
 
@@ -1001,7 +1004,7 @@ AnchorHTMLAttributes.aria-rowcount
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1734
+node_modules/@types/react/index.d.ts:1739
 
 ___
 
@@ -1019,7 +1022,7 @@ AnchorHTMLAttributes.aria-rowindex
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1739
+node_modules/@types/react/index.d.ts:1744
 
 ___
 
@@ -1037,7 +1040,7 @@ AnchorHTMLAttributes.aria-rowspan
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1744
+node_modules/@types/react/index.d.ts:1749
 
 ___
 
@@ -1055,7 +1058,7 @@ AnchorHTMLAttributes.aria-selected
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1749
+node_modules/@types/react/index.d.ts:1754
 
 ___
 
@@ -1073,7 +1076,7 @@ AnchorHTMLAttributes.aria-setsize
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1754
+node_modules/@types/react/index.d.ts:1759
 
 ___
 
@@ -1089,7 +1092,7 @@ AnchorHTMLAttributes.aria-sort
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1756
+node_modules/@types/react/index.d.ts:1761
 
 ___
 
@@ -1105,7 +1108,7 @@ AnchorHTMLAttributes.aria-valuemax
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1758
+node_modules/@types/react/index.d.ts:1763
 
 ___
 
@@ -1121,7 +1124,7 @@ AnchorHTMLAttributes.aria-valuemin
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1760
+node_modules/@types/react/index.d.ts:1765
 
 ___
 
@@ -1139,7 +1142,7 @@ AnchorHTMLAttributes.aria-valuenow
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1765
+node_modules/@types/react/index.d.ts:1770
 
 ___
 
@@ -1155,7 +1158,7 @@ AnchorHTMLAttributes.aria-valuetext
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1767
+node_modules/@types/react/index.d.ts:1772
 
 ___
 
@@ -1169,7 +1172,7 @@ AnchorHTMLAttributes.autoCapitalize
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1885
+node_modules/@types/react/index.d.ts:1891
 
 ___
 
@@ -1183,7 +1186,7 @@ AnchorHTMLAttributes.autoCorrect
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1886
+node_modules/@types/react/index.d.ts:1892
 
 ___
 
@@ -1197,7 +1200,7 @@ AnchorHTMLAttributes.autoSave
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1887
+node_modules/@types/react/index.d.ts:1893
 
 ___
 
@@ -1225,7 +1228,7 @@ AnchorHTMLAttributes.className
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1852
+node_modules/@types/react/index.d.ts:1857
 
 ___
 
@@ -1239,7 +1242,7 @@ AnchorHTMLAttributes.color
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1888
+node_modules/@types/react/index.d.ts:1894
 
 ___
 
@@ -1253,7 +1256,7 @@ AnchorHTMLAttributes.contentEditable
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1853
+node_modules/@types/react/index.d.ts:1858
 
 ___
 
@@ -1267,7 +1270,7 @@ AnchorHTMLAttributes.contextMenu
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1854
+node_modules/@types/react/index.d.ts:1859
 
 ___
 
@@ -1287,7 +1290,7 @@ AnchorHTMLAttributes.dangerouslySetInnerHTML
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1374
+node_modules/@types/react/index.d.ts:1377
 
 ___
 
@@ -1301,7 +1304,7 @@ AnchorHTMLAttributes.datatype
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1876
+node_modules/@types/react/index.d.ts:1882
 
 ___
 
@@ -1315,7 +1318,7 @@ AnchorHTMLAttributes.defaultChecked
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1845
+node_modules/@types/react/index.d.ts:1850
 
 ___
 
@@ -1329,7 +1332,7 @@ AnchorHTMLAttributes.defaultValue
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1846
+node_modules/@types/react/index.d.ts:1851
 
 ___
 
@@ -1343,7 +1346,7 @@ AnchorHTMLAttributes.dir
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1855
+node_modules/@types/react/index.d.ts:1860
 
 ___
 
@@ -1357,7 +1360,7 @@ AnchorHTMLAttributes.download
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:2040
+node_modules/@types/react/index.d.ts:2045
 
 ___
 
@@ -1371,7 +1374,7 @@ AnchorHTMLAttributes.draggable
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1856
+node_modules/@types/react/index.d.ts:1861
 
 ___
 
@@ -1385,7 +1388,7 @@ AnchorHTMLAttributes.hidden
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1857
+node_modules/@types/react/index.d.ts:1862
 
 ___
 
@@ -1399,7 +1402,7 @@ AnchorHTMLAttributes.href
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:2041
+node_modules/@types/react/index.d.ts:2046
 
 ___
 
@@ -1413,7 +1416,7 @@ AnchorHTMLAttributes.hrefLang
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:2042
+node_modules/@types/react/index.d.ts:2047
 
 ___
 
@@ -1427,7 +1430,7 @@ AnchorHTMLAttributes.id
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1858
+node_modules/@types/react/index.d.ts:1863
 
 ___
 
@@ -1441,7 +1444,7 @@ AnchorHTMLAttributes.inlist
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1877
+node_modules/@types/react/index.d.ts:1883
 
 ___
 
@@ -1459,7 +1462,7 @@ AnchorHTMLAttributes.inputMode
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1903
+node_modules/@types/react/index.d.ts:1909
 
 ___
 
@@ -1477,7 +1480,7 @@ AnchorHTMLAttributes.is
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1908
+node_modules/@types/react/index.d.ts:1914
 
 ___
 
@@ -1491,7 +1494,7 @@ AnchorHTMLAttributes.itemID
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1892
+node_modules/@types/react/index.d.ts:1898
 
 ___
 
@@ -1505,7 +1508,7 @@ AnchorHTMLAttributes.itemProp
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1889
+node_modules/@types/react/index.d.ts:1895
 
 ___
 
@@ -1519,7 +1522,7 @@ AnchorHTMLAttributes.itemRef
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1893
+node_modules/@types/react/index.d.ts:1899
 
 ___
 
@@ -1533,7 +1536,7 @@ AnchorHTMLAttributes.itemScope
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1890
+node_modules/@types/react/index.d.ts:1896
 
 ___
 
@@ -1547,7 +1550,7 @@ AnchorHTMLAttributes.itemType
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1891
+node_modules/@types/react/index.d.ts:1897
 
 ___
 
@@ -1561,7 +1564,7 @@ AnchorHTMLAttributes.lang
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1859
+node_modules/@types/react/index.d.ts:1864
 
 ___
 
@@ -1575,7 +1578,21 @@ AnchorHTMLAttributes.media
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:2043
+node_modules/@types/react/index.d.ts:2048
+
+___
+
+### nonce
+
+• `Optional` **nonce**: `string`
+
+#### Inherited from
+
+AnchorHTMLAttributes.nonce
+
+#### Defined in
+
+node_modules/@types/react/index.d.ts:1865
 
 ___
 
@@ -1589,7 +1606,7 @@ AnchorHTMLAttributes.onAbort
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1431
+node_modules/@types/react/index.d.ts:1434
 
 ___
 
@@ -1603,7 +1620,7 @@ AnchorHTMLAttributes.onAbortCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1432
+node_modules/@types/react/index.d.ts:1435
 
 ___
 
@@ -1617,7 +1634,7 @@ AnchorHTMLAttributes.onAnimationEnd
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1561
+node_modules/@types/react/index.d.ts:1566
 
 ___
 
@@ -1631,7 +1648,7 @@ AnchorHTMLAttributes.onAnimationEndCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1562
+node_modules/@types/react/index.d.ts:1567
 
 ___
 
@@ -1645,7 +1662,7 @@ AnchorHTMLAttributes.onAnimationIteration
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1563
+node_modules/@types/react/index.d.ts:1568
 
 ___
 
@@ -1659,7 +1676,7 @@ AnchorHTMLAttributes.onAnimationIterationCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1564
+node_modules/@types/react/index.d.ts:1569
 
 ___
 
@@ -1673,7 +1690,7 @@ AnchorHTMLAttributes.onAnimationStart
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1559
+node_modules/@types/react/index.d.ts:1564
 
 ___
 
@@ -1687,7 +1704,7 @@ AnchorHTMLAttributes.onAnimationStartCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1560
+node_modules/@types/react/index.d.ts:1565
 
 ___
 
@@ -1701,7 +1718,7 @@ AnchorHTMLAttributes.onAuxClick
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1477
+node_modules/@types/react/index.d.ts:1482
 
 ___
 
@@ -1715,7 +1732,7 @@ AnchorHTMLAttributes.onAuxClickCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1478
+node_modules/@types/react/index.d.ts:1483
 
 ___
 
@@ -1729,7 +1746,7 @@ AnchorHTMLAttributes.onBeforeInput
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1403
+node_modules/@types/react/index.d.ts:1406
 
 ___
 
@@ -1743,7 +1760,7 @@ AnchorHTMLAttributes.onBeforeInputCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1404
+node_modules/@types/react/index.d.ts:1407
 
 ___
 
@@ -1757,7 +1774,7 @@ AnchorHTMLAttributes.onBlur
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1397
+node_modules/@types/react/index.d.ts:1400
 
 ___
 
@@ -1771,7 +1788,7 @@ AnchorHTMLAttributes.onBlurCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1398
+node_modules/@types/react/index.d.ts:1401
 
 ___
 
@@ -1785,7 +1802,7 @@ AnchorHTMLAttributes.onCanPlay
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1433
+node_modules/@types/react/index.d.ts:1436
 
 ___
 
@@ -1799,7 +1816,7 @@ AnchorHTMLAttributes.onCanPlayCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1434
+node_modules/@types/react/index.d.ts:1437
 
 ___
 
@@ -1813,7 +1830,7 @@ AnchorHTMLAttributes.onCanPlayThrough
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1435
+node_modules/@types/react/index.d.ts:1438
 
 ___
 
@@ -1827,7 +1844,7 @@ AnchorHTMLAttributes.onCanPlayThroughCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1436
+node_modules/@types/react/index.d.ts:1439
 
 ___
 
@@ -1841,7 +1858,7 @@ AnchorHTMLAttributes.onChange
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1401
+node_modules/@types/react/index.d.ts:1404
 
 ___
 
@@ -1855,7 +1872,7 @@ AnchorHTMLAttributes.onChangeCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1402
+node_modules/@types/react/index.d.ts:1405
 
 ___
 
@@ -1869,7 +1886,7 @@ AnchorHTMLAttributes.onClick
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1479
+node_modules/@types/react/index.d.ts:1484
 
 ___
 
@@ -1883,7 +1900,7 @@ AnchorHTMLAttributes.onClickCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1480
+node_modules/@types/react/index.d.ts:1485
 
 ___
 
@@ -1897,7 +1914,7 @@ AnchorHTMLAttributes.onCompositionEnd
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1387
+node_modules/@types/react/index.d.ts:1390
 
 ___
 
@@ -1911,7 +1928,7 @@ AnchorHTMLAttributes.onCompositionEndCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1388
+node_modules/@types/react/index.d.ts:1391
 
 ___
 
@@ -1925,7 +1942,7 @@ AnchorHTMLAttributes.onCompositionStart
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1389
+node_modules/@types/react/index.d.ts:1392
 
 ___
 
@@ -1939,7 +1956,7 @@ AnchorHTMLAttributes.onCompositionStartCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1390
+node_modules/@types/react/index.d.ts:1393
 
 ___
 
@@ -1953,7 +1970,7 @@ AnchorHTMLAttributes.onCompositionUpdate
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1391
+node_modules/@types/react/index.d.ts:1394
 
 ___
 
@@ -1967,7 +1984,7 @@ AnchorHTMLAttributes.onCompositionUpdateCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1392
+node_modules/@types/react/index.d.ts:1395
 
 ___
 
@@ -1981,7 +1998,7 @@ AnchorHTMLAttributes.onContextMenu
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1481
+node_modules/@types/react/index.d.ts:1486
 
 ___
 
@@ -1995,7 +2012,7 @@ AnchorHTMLAttributes.onContextMenuCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1482
+node_modules/@types/react/index.d.ts:1487
 
 ___
 
@@ -2009,7 +2026,7 @@ AnchorHTMLAttributes.onCopy
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1379
+node_modules/@types/react/index.d.ts:1382
 
 ___
 
@@ -2023,7 +2040,7 @@ AnchorHTMLAttributes.onCopyCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1380
+node_modules/@types/react/index.d.ts:1383
 
 ___
 
@@ -2037,7 +2054,7 @@ AnchorHTMLAttributes.onCut
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1381
+node_modules/@types/react/index.d.ts:1384
 
 ___
 
@@ -2051,7 +2068,7 @@ AnchorHTMLAttributes.onCutCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1382
+node_modules/@types/react/index.d.ts:1385
 
 ___
 
@@ -2065,7 +2082,7 @@ AnchorHTMLAttributes.onDoubleClick
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1483
+node_modules/@types/react/index.d.ts:1488
 
 ___
 
@@ -2079,7 +2096,7 @@ AnchorHTMLAttributes.onDoubleClickCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1484
+node_modules/@types/react/index.d.ts:1489
 
 ___
 
@@ -2093,7 +2110,7 @@ AnchorHTMLAttributes.onDrag
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1485
+node_modules/@types/react/index.d.ts:1490
 
 ___
 
@@ -2107,7 +2124,7 @@ AnchorHTMLAttributes.onDragCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1486
+node_modules/@types/react/index.d.ts:1491
 
 ___
 
@@ -2121,7 +2138,7 @@ AnchorHTMLAttributes.onDragEnd
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1487
+node_modules/@types/react/index.d.ts:1492
 
 ___
 
@@ -2135,7 +2152,7 @@ AnchorHTMLAttributes.onDragEndCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1488
+node_modules/@types/react/index.d.ts:1493
 
 ___
 
@@ -2149,7 +2166,7 @@ AnchorHTMLAttributes.onDragEnter
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1489
+node_modules/@types/react/index.d.ts:1494
 
 ___
 
@@ -2163,7 +2180,7 @@ AnchorHTMLAttributes.onDragEnterCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1490
+node_modules/@types/react/index.d.ts:1495
 
 ___
 
@@ -2177,7 +2194,7 @@ AnchorHTMLAttributes.onDragExit
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1491
+node_modules/@types/react/index.d.ts:1496
 
 ___
 
@@ -2191,7 +2208,7 @@ AnchorHTMLAttributes.onDragExitCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1492
+node_modules/@types/react/index.d.ts:1497
 
 ___
 
@@ -2205,7 +2222,7 @@ AnchorHTMLAttributes.onDragLeave
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1493
+node_modules/@types/react/index.d.ts:1498
 
 ___
 
@@ -2219,7 +2236,7 @@ AnchorHTMLAttributes.onDragLeaveCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1494
+node_modules/@types/react/index.d.ts:1499
 
 ___
 
@@ -2233,7 +2250,7 @@ AnchorHTMLAttributes.onDragOver
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1495
+node_modules/@types/react/index.d.ts:1500
 
 ___
 
@@ -2247,7 +2264,7 @@ AnchorHTMLAttributes.onDragOverCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1496
+node_modules/@types/react/index.d.ts:1501
 
 ___
 
@@ -2261,7 +2278,7 @@ AnchorHTMLAttributes.onDragStart
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1497
+node_modules/@types/react/index.d.ts:1502
 
 ___
 
@@ -2275,7 +2292,7 @@ AnchorHTMLAttributes.onDragStartCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1498
+node_modules/@types/react/index.d.ts:1503
 
 ___
 
@@ -2289,7 +2306,7 @@ AnchorHTMLAttributes.onDrop
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1499
+node_modules/@types/react/index.d.ts:1504
 
 ___
 
@@ -2303,7 +2320,7 @@ AnchorHTMLAttributes.onDropCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1500
+node_modules/@types/react/index.d.ts:1505
 
 ___
 
@@ -2317,7 +2334,7 @@ AnchorHTMLAttributes.onDurationChange
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1437
+node_modules/@types/react/index.d.ts:1440
 
 ___
 
@@ -2331,7 +2348,7 @@ AnchorHTMLAttributes.onDurationChangeCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1438
+node_modules/@types/react/index.d.ts:1441
 
 ___
 
@@ -2345,7 +2362,7 @@ AnchorHTMLAttributes.onEmptied
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1439
+node_modules/@types/react/index.d.ts:1442
 
 ___
 
@@ -2359,7 +2376,7 @@ AnchorHTMLAttributes.onEmptiedCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1440
+node_modules/@types/react/index.d.ts:1443
 
 ___
 
@@ -2373,7 +2390,7 @@ AnchorHTMLAttributes.onEncrypted
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1441
+node_modules/@types/react/index.d.ts:1444
 
 ___
 
@@ -2387,7 +2404,7 @@ AnchorHTMLAttributes.onEncryptedCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1442
+node_modules/@types/react/index.d.ts:1445
 
 ___
 
@@ -2401,7 +2418,7 @@ AnchorHTMLAttributes.onEnded
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1443
+node_modules/@types/react/index.d.ts:1446
 
 ___
 
@@ -2415,7 +2432,7 @@ AnchorHTMLAttributes.onEndedCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1444
+node_modules/@types/react/index.d.ts:1447
 
 ___
 
@@ -2429,7 +2446,7 @@ AnchorHTMLAttributes.onError
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1417
+node_modules/@types/react/index.d.ts:1420
 
 ___
 
@@ -2443,7 +2460,7 @@ AnchorHTMLAttributes.onErrorCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1418
+node_modules/@types/react/index.d.ts:1421
 
 ___
 
@@ -2457,7 +2474,7 @@ AnchorHTMLAttributes.onFocus
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1395
+node_modules/@types/react/index.d.ts:1398
 
 ___
 
@@ -2471,7 +2488,7 @@ AnchorHTMLAttributes.onFocusCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1396
+node_modules/@types/react/index.d.ts:1399
 
 ___
 
@@ -2485,7 +2502,7 @@ AnchorHTMLAttributes.onGotPointerCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1545
+node_modules/@types/react/index.d.ts:1550
 
 ___
 
@@ -2499,7 +2516,7 @@ AnchorHTMLAttributes.onGotPointerCaptureCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1546
+node_modules/@types/react/index.d.ts:1551
 
 ___
 
@@ -2513,7 +2530,7 @@ AnchorHTMLAttributes.onInput
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1405
+node_modules/@types/react/index.d.ts:1408
 
 ___
 
@@ -2527,7 +2544,7 @@ AnchorHTMLAttributes.onInputCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1406
+node_modules/@types/react/index.d.ts:1409
 
 ___
 
@@ -2541,7 +2558,7 @@ AnchorHTMLAttributes.onInvalid
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1411
+node_modules/@types/react/index.d.ts:1414
 
 ___
 
@@ -2555,7 +2572,7 @@ AnchorHTMLAttributes.onInvalidCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1412
+node_modules/@types/react/index.d.ts:1415
 
 ___
 
@@ -2569,7 +2586,7 @@ AnchorHTMLAttributes.onKeyDown
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1421
+node_modules/@types/react/index.d.ts:1424
 
 ___
 
@@ -2583,7 +2600,7 @@ AnchorHTMLAttributes.onKeyDownCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1422
+node_modules/@types/react/index.d.ts:1425
 
 ___
 
@@ -2599,7 +2616,7 @@ AnchorHTMLAttributes.onKeyPress
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1424
+node_modules/@types/react/index.d.ts:1427
 
 ___
 
@@ -2615,7 +2632,7 @@ AnchorHTMLAttributes.onKeyPressCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1426
+node_modules/@types/react/index.d.ts:1429
 
 ___
 
@@ -2629,7 +2646,7 @@ AnchorHTMLAttributes.onKeyUp
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1427
+node_modules/@types/react/index.d.ts:1430
 
 ___
 
@@ -2643,7 +2660,7 @@ AnchorHTMLAttributes.onKeyUpCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1428
+node_modules/@types/react/index.d.ts:1431
 
 ___
 
@@ -2657,7 +2674,7 @@ AnchorHTMLAttributes.onLoad
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1415
+node_modules/@types/react/index.d.ts:1418
 
 ___
 
@@ -2671,7 +2688,7 @@ AnchorHTMLAttributes.onLoadCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1416
+node_modules/@types/react/index.d.ts:1419
 
 ___
 
@@ -2685,7 +2702,7 @@ AnchorHTMLAttributes.onLoadStart
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1449
+node_modules/@types/react/index.d.ts:1452
 
 ___
 
@@ -2699,7 +2716,7 @@ AnchorHTMLAttributes.onLoadStartCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1450
+node_modules/@types/react/index.d.ts:1453
 
 ___
 
@@ -2713,7 +2730,7 @@ AnchorHTMLAttributes.onLoadedData
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1445
+node_modules/@types/react/index.d.ts:1448
 
 ___
 
@@ -2727,7 +2744,7 @@ AnchorHTMLAttributes.onLoadedDataCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1446
+node_modules/@types/react/index.d.ts:1449
 
 ___
 
@@ -2741,7 +2758,7 @@ AnchorHTMLAttributes.onLoadedMetadata
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1447
+node_modules/@types/react/index.d.ts:1450
 
 ___
 
@@ -2755,7 +2772,7 @@ AnchorHTMLAttributes.onLoadedMetadataCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1448
+node_modules/@types/react/index.d.ts:1451
 
 ___
 
@@ -2769,7 +2786,7 @@ AnchorHTMLAttributes.onLostPointerCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1547
+node_modules/@types/react/index.d.ts:1552
 
 ___
 
@@ -2783,7 +2800,7 @@ AnchorHTMLAttributes.onLostPointerCaptureCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1548
+node_modules/@types/react/index.d.ts:1553
 
 ___
 
@@ -2797,7 +2814,7 @@ AnchorHTMLAttributes.onMouseDown
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1501
+node_modules/@types/react/index.d.ts:1506
 
 ___
 
@@ -2811,7 +2828,7 @@ AnchorHTMLAttributes.onMouseDownCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1502
+node_modules/@types/react/index.d.ts:1507
 
 ___
 
@@ -2825,7 +2842,7 @@ AnchorHTMLAttributes.onMouseEnter
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1503
+node_modules/@types/react/index.d.ts:1508
 
 ___
 
@@ -2839,7 +2856,7 @@ AnchorHTMLAttributes.onMouseLeave
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1504
+node_modules/@types/react/index.d.ts:1509
 
 ___
 
@@ -2853,7 +2870,7 @@ AnchorHTMLAttributes.onMouseMove
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1505
+node_modules/@types/react/index.d.ts:1510
 
 ___
 
@@ -2867,7 +2884,7 @@ AnchorHTMLAttributes.onMouseMoveCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1506
+node_modules/@types/react/index.d.ts:1511
 
 ___
 
@@ -2881,7 +2898,7 @@ AnchorHTMLAttributes.onMouseOut
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1507
+node_modules/@types/react/index.d.ts:1512
 
 ___
 
@@ -2895,7 +2912,7 @@ AnchorHTMLAttributes.onMouseOutCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1508
+node_modules/@types/react/index.d.ts:1513
 
 ___
 
@@ -2909,7 +2926,7 @@ AnchorHTMLAttributes.onMouseOver
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1509
+node_modules/@types/react/index.d.ts:1514
 
 ___
 
@@ -2923,7 +2940,7 @@ AnchorHTMLAttributes.onMouseOverCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1510
+node_modules/@types/react/index.d.ts:1515
 
 ___
 
@@ -2937,7 +2954,7 @@ AnchorHTMLAttributes.onMouseUp
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1511
+node_modules/@types/react/index.d.ts:1516
 
 ___
 
@@ -2951,7 +2968,7 @@ AnchorHTMLAttributes.onMouseUpCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1512
+node_modules/@types/react/index.d.ts:1517
 
 ___
 
@@ -2965,7 +2982,7 @@ AnchorHTMLAttributes.onPaste
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1383
+node_modules/@types/react/index.d.ts:1386
 
 ___
 
@@ -2979,7 +2996,7 @@ AnchorHTMLAttributes.onPasteCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1384
+node_modules/@types/react/index.d.ts:1387
 
 ___
 
@@ -2993,7 +3010,7 @@ AnchorHTMLAttributes.onPause
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1451
+node_modules/@types/react/index.d.ts:1454
 
 ___
 
@@ -3007,7 +3024,7 @@ AnchorHTMLAttributes.onPauseCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1452
+node_modules/@types/react/index.d.ts:1455
 
 ___
 
@@ -3021,7 +3038,7 @@ AnchorHTMLAttributes.onPlay
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1453
+node_modules/@types/react/index.d.ts:1456
 
 ___
 
@@ -3035,7 +3052,7 @@ AnchorHTMLAttributes.onPlayCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1454
+node_modules/@types/react/index.d.ts:1457
 
 ___
 
@@ -3049,7 +3066,7 @@ AnchorHTMLAttributes.onPlaying
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1455
+node_modules/@types/react/index.d.ts:1458
 
 ___
 
@@ -3063,7 +3080,7 @@ AnchorHTMLAttributes.onPlayingCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1456
+node_modules/@types/react/index.d.ts:1459
 
 ___
 
@@ -3077,7 +3094,7 @@ AnchorHTMLAttributes.onPointerCancel
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1535
+node_modules/@types/react/index.d.ts:1540
 
 ___
 
@@ -3091,7 +3108,7 @@ AnchorHTMLAttributes.onPointerCancelCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1536
+node_modules/@types/react/index.d.ts:1541
 
 ___
 
@@ -3105,7 +3122,7 @@ AnchorHTMLAttributes.onPointerDown
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1529
+node_modules/@types/react/index.d.ts:1534
 
 ___
 
@@ -3119,7 +3136,7 @@ AnchorHTMLAttributes.onPointerDownCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1530
+node_modules/@types/react/index.d.ts:1535
 
 ___
 
@@ -3133,7 +3150,7 @@ AnchorHTMLAttributes.onPointerEnter
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1537
+node_modules/@types/react/index.d.ts:1542
 
 ___
 
@@ -3147,7 +3164,7 @@ AnchorHTMLAttributes.onPointerEnterCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1538
+node_modules/@types/react/index.d.ts:1543
 
 ___
 
@@ -3161,7 +3178,7 @@ AnchorHTMLAttributes.onPointerLeave
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1539
+node_modules/@types/react/index.d.ts:1544
 
 ___
 
@@ -3175,7 +3192,7 @@ AnchorHTMLAttributes.onPointerLeaveCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1540
+node_modules/@types/react/index.d.ts:1545
 
 ___
 
@@ -3189,7 +3206,7 @@ AnchorHTMLAttributes.onPointerMove
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1531
+node_modules/@types/react/index.d.ts:1536
 
 ___
 
@@ -3203,7 +3220,7 @@ AnchorHTMLAttributes.onPointerMoveCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1532
+node_modules/@types/react/index.d.ts:1537
 
 ___
 
@@ -3217,7 +3234,7 @@ AnchorHTMLAttributes.onPointerOut
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1543
+node_modules/@types/react/index.d.ts:1548
 
 ___
 
@@ -3231,7 +3248,7 @@ AnchorHTMLAttributes.onPointerOutCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1544
+node_modules/@types/react/index.d.ts:1549
 
 ___
 
@@ -3245,7 +3262,7 @@ AnchorHTMLAttributes.onPointerOver
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1541
+node_modules/@types/react/index.d.ts:1546
 
 ___
 
@@ -3259,7 +3276,7 @@ AnchorHTMLAttributes.onPointerOverCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1542
+node_modules/@types/react/index.d.ts:1547
 
 ___
 
@@ -3273,7 +3290,7 @@ AnchorHTMLAttributes.onPointerUp
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1533
+node_modules/@types/react/index.d.ts:1538
 
 ___
 
@@ -3287,7 +3304,7 @@ AnchorHTMLAttributes.onPointerUpCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1534
+node_modules/@types/react/index.d.ts:1539
 
 ___
 
@@ -3301,7 +3318,7 @@ AnchorHTMLAttributes.onProgress
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1457
+node_modules/@types/react/index.d.ts:1460
 
 ___
 
@@ -3315,7 +3332,7 @@ AnchorHTMLAttributes.onProgressCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1458
+node_modules/@types/react/index.d.ts:1461
 
 ___
 
@@ -3329,7 +3346,7 @@ AnchorHTMLAttributes.onRateChange
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1459
+node_modules/@types/react/index.d.ts:1462
 
 ___
 
@@ -3343,7 +3360,7 @@ AnchorHTMLAttributes.onRateChangeCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1460
+node_modules/@types/react/index.d.ts:1463
 
 ___
 
@@ -3357,7 +3374,7 @@ AnchorHTMLAttributes.onReset
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1407
+node_modules/@types/react/index.d.ts:1410
 
 ___
 
@@ -3371,7 +3388,35 @@ AnchorHTMLAttributes.onResetCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1408
+node_modules/@types/react/index.d.ts:1411
+
+___
+
+### onResize
+
+• `Optional` **onResize**: `ReactEventHandler`<`HTMLAnchorElement`\>
+
+#### Inherited from
+
+AnchorHTMLAttributes.onResize
+
+#### Defined in
+
+node_modules/@types/react/index.d.ts:1464
+
+___
+
+### onResizeCapture
+
+• `Optional` **onResizeCapture**: `ReactEventHandler`<`HTMLAnchorElement`\>
+
+#### Inherited from
+
+AnchorHTMLAttributes.onResizeCapture
+
+#### Defined in
+
+node_modules/@types/react/index.d.ts:1465
 
 ___
 
@@ -3385,7 +3430,7 @@ AnchorHTMLAttributes.onScroll
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1551
+node_modules/@types/react/index.d.ts:1556
 
 ___
 
@@ -3399,7 +3444,7 @@ AnchorHTMLAttributes.onScrollCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1552
+node_modules/@types/react/index.d.ts:1557
 
 ___
 
@@ -3413,7 +3458,7 @@ AnchorHTMLAttributes.onSeeked
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1461
+node_modules/@types/react/index.d.ts:1466
 
 ___
 
@@ -3427,7 +3472,7 @@ AnchorHTMLAttributes.onSeekedCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1462
+node_modules/@types/react/index.d.ts:1467
 
 ___
 
@@ -3441,7 +3486,7 @@ AnchorHTMLAttributes.onSeeking
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1463
+node_modules/@types/react/index.d.ts:1468
 
 ___
 
@@ -3455,7 +3500,7 @@ AnchorHTMLAttributes.onSeekingCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1464
+node_modules/@types/react/index.d.ts:1469
 
 ___
 
@@ -3469,7 +3514,7 @@ AnchorHTMLAttributes.onSelect
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1515
+node_modules/@types/react/index.d.ts:1520
 
 ___
 
@@ -3483,7 +3528,7 @@ AnchorHTMLAttributes.onSelectCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1516
+node_modules/@types/react/index.d.ts:1521
 
 ___
 
@@ -3497,7 +3542,7 @@ AnchorHTMLAttributes.onStalled
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1465
+node_modules/@types/react/index.d.ts:1470
 
 ___
 
@@ -3511,7 +3556,7 @@ AnchorHTMLAttributes.onStalledCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1466
+node_modules/@types/react/index.d.ts:1471
 
 ___
 
@@ -3525,7 +3570,7 @@ AnchorHTMLAttributes.onSubmit
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1409
+node_modules/@types/react/index.d.ts:1412
 
 ___
 
@@ -3539,7 +3584,7 @@ AnchorHTMLAttributes.onSubmitCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1410
+node_modules/@types/react/index.d.ts:1413
 
 ___
 
@@ -3553,7 +3598,7 @@ AnchorHTMLAttributes.onSuspend
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1467
+node_modules/@types/react/index.d.ts:1472
 
 ___
 
@@ -3567,7 +3612,7 @@ AnchorHTMLAttributes.onSuspendCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1468
+node_modules/@types/react/index.d.ts:1473
 
 ___
 
@@ -3581,7 +3626,7 @@ AnchorHTMLAttributes.onTimeUpdate
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1469
+node_modules/@types/react/index.d.ts:1474
 
 ___
 
@@ -3595,7 +3640,7 @@ AnchorHTMLAttributes.onTimeUpdateCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1470
+node_modules/@types/react/index.d.ts:1475
 
 ___
 
@@ -3609,7 +3654,7 @@ AnchorHTMLAttributes.onTouchCancel
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1519
+node_modules/@types/react/index.d.ts:1524
 
 ___
 
@@ -3623,7 +3668,7 @@ AnchorHTMLAttributes.onTouchCancelCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1520
+node_modules/@types/react/index.d.ts:1525
 
 ___
 
@@ -3637,7 +3682,7 @@ AnchorHTMLAttributes.onTouchEnd
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1521
+node_modules/@types/react/index.d.ts:1526
 
 ___
 
@@ -3651,7 +3696,7 @@ AnchorHTMLAttributes.onTouchEndCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1522
+node_modules/@types/react/index.d.ts:1527
 
 ___
 
@@ -3665,7 +3710,7 @@ AnchorHTMLAttributes.onTouchMove
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1523
+node_modules/@types/react/index.d.ts:1528
 
 ___
 
@@ -3679,7 +3724,7 @@ AnchorHTMLAttributes.onTouchMoveCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1524
+node_modules/@types/react/index.d.ts:1529
 
 ___
 
@@ -3693,7 +3738,7 @@ AnchorHTMLAttributes.onTouchStart
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1525
+node_modules/@types/react/index.d.ts:1530
 
 ___
 
@@ -3707,7 +3752,7 @@ AnchorHTMLAttributes.onTouchStartCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1526
+node_modules/@types/react/index.d.ts:1531
 
 ___
 
@@ -3721,7 +3766,7 @@ AnchorHTMLAttributes.onTransitionEnd
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1567
+node_modules/@types/react/index.d.ts:1572
 
 ___
 
@@ -3735,7 +3780,7 @@ AnchorHTMLAttributes.onTransitionEndCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1568
+node_modules/@types/react/index.d.ts:1573
 
 ___
 
@@ -3749,7 +3794,7 @@ AnchorHTMLAttributes.onVolumeChange
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1471
+node_modules/@types/react/index.d.ts:1476
 
 ___
 
@@ -3763,7 +3808,7 @@ AnchorHTMLAttributes.onVolumeChangeCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1472
+node_modules/@types/react/index.d.ts:1477
 
 ___
 
@@ -3777,7 +3822,7 @@ AnchorHTMLAttributes.onWaiting
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1473
+node_modules/@types/react/index.d.ts:1478
 
 ___
 
@@ -3791,7 +3836,7 @@ AnchorHTMLAttributes.onWaitingCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1474
+node_modules/@types/react/index.d.ts:1479
 
 ___
 
@@ -3805,7 +3850,7 @@ AnchorHTMLAttributes.onWheel
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1555
+node_modules/@types/react/index.d.ts:1560
 
 ___
 
@@ -3819,7 +3864,7 @@ AnchorHTMLAttributes.onWheelCapture
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1556
+node_modules/@types/react/index.d.ts:1561
 
 ___
 
@@ -3833,7 +3878,7 @@ AnchorHTMLAttributes.ping
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:2044
+node_modules/@types/react/index.d.ts:2049
 
 ___
 
@@ -3847,7 +3892,7 @@ AnchorHTMLAttributes.placeholder
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1860
+node_modules/@types/react/index.d.ts:1866
 
 ___
 
@@ -3861,7 +3906,7 @@ AnchorHTMLAttributes.prefix
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1878
+node_modules/@types/react/index.d.ts:1884
 
 ___
 
@@ -3875,7 +3920,7 @@ AnchorHTMLAttributes.property
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1879
+node_modules/@types/react/index.d.ts:1885
 
 ___
 
@@ -3889,7 +3934,7 @@ AnchorHTMLAttributes.radioGroup
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1869
+node_modules/@types/react/index.d.ts:1875
 
 ___
 
@@ -3903,7 +3948,7 @@ AnchorHTMLAttributes.referrerPolicy
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:2048
+node_modules/@types/react/index.d.ts:2053
 
 ___
 
@@ -3917,7 +3962,7 @@ AnchorHTMLAttributes.rel
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:2045
+node_modules/@types/react/index.d.ts:2050
 
 ___
 
@@ -3931,7 +3976,7 @@ AnchorHTMLAttributes.resource
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1880
+node_modules/@types/react/index.d.ts:1886
 
 ___
 
@@ -3945,7 +3990,7 @@ AnchorHTMLAttributes.results
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1894
+node_modules/@types/react/index.d.ts:1900
 
 ___
 
@@ -3959,7 +4004,7 @@ AnchorHTMLAttributes.role
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1872
+node_modules/@types/react/index.d.ts:1878
 
 ___
 
@@ -3973,7 +4018,7 @@ AnchorHTMLAttributes.security
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1895
+node_modules/@types/react/index.d.ts:1901
 
 ___
 
@@ -3987,7 +4032,7 @@ AnchorHTMLAttributes.slot
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1861
+node_modules/@types/react/index.d.ts:1867
 
 ___
 
@@ -4001,7 +4046,7 @@ AnchorHTMLAttributes.spellCheck
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1862
+node_modules/@types/react/index.d.ts:1868
 
 ___
 
@@ -4015,7 +4060,7 @@ AnchorHTMLAttributes.style
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1863
+node_modules/@types/react/index.d.ts:1869
 
 ___
 
@@ -4029,7 +4074,7 @@ AnchorHTMLAttributes.suppressContentEditableWarning
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1847
+node_modules/@types/react/index.d.ts:1852
 
 ___
 
@@ -4043,7 +4088,7 @@ AnchorHTMLAttributes.suppressHydrationWarning
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1848
+node_modules/@types/react/index.d.ts:1853
 
 ___
 
@@ -4057,7 +4102,7 @@ AnchorHTMLAttributes.tabIndex
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1864
+node_modules/@types/react/index.d.ts:1870
 
 ___
 
@@ -4071,7 +4116,7 @@ AnchorHTMLAttributes.target
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:2046
+node_modules/@types/react/index.d.ts:2051
 
 ___
 
@@ -4085,7 +4130,7 @@ AnchorHTMLAttributes.title
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1865
+node_modules/@types/react/index.d.ts:1871
 
 ___
 
@@ -4099,7 +4144,7 @@ AnchorHTMLAttributes.translate
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1866
+node_modules/@types/react/index.d.ts:1872
 
 ___
 
@@ -4113,7 +4158,7 @@ AnchorHTMLAttributes.type
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:2047
+node_modules/@types/react/index.d.ts:2052
 
 ___
 
@@ -4127,7 +4172,7 @@ AnchorHTMLAttributes.typeof
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1881
+node_modules/@types/react/index.d.ts:1887
 
 ___
 
@@ -4141,7 +4186,7 @@ AnchorHTMLAttributes.unselectable
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1896
+node_modules/@types/react/index.d.ts:1902
 
 ___
 
@@ -4155,4 +4200,4 @@ AnchorHTMLAttributes.vocab
 
 #### Defined in
 
-node_modules/@types/react/index.d.ts:1882
+node_modules/@types/react/index.d.ts:1888
