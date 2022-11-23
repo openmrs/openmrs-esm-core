@@ -55,7 +55,10 @@ describe("openmrsFetch", () => {
     window.fetch.mockReturnValue(new Promise(() => {}));
     openmrsFetch("/ws/rest/v1/session");
     expect(window.fetch).toHaveBeenCalledWith("/openmrs/ws/rest/v1/session", {
-      headers: { Accept: "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Disable-WWW-Authenticate": "true",
+      },
     });
   });
 
@@ -68,7 +71,10 @@ describe("openmrsFetch", () => {
       body: requestBody,
     });
     expect(window.fetch).toHaveBeenCalledWith("/openmrs/ws/rest/v1/session", {
-      headers: { Accept: "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Disable-WWW-Authenticate": "true",
+      },
       body: JSON.stringify(requestBody),
       method: "POST",
     });
@@ -84,7 +90,10 @@ describe("openmrsFetch", () => {
       },
     });
     expect(window.fetch).toHaveBeenCalledWith("/openmrs/ws/rest/v1/session", {
-      headers: { Accept: "application/xml" },
+      headers: {
+        Accept: "application/xml",
+        "Disable-WWW-Authenticate": "true",
+      },
     });
   });
 
@@ -98,7 +107,9 @@ describe("openmrsFetch", () => {
       },
     });
     expect(window.fetch).toHaveBeenCalledWith("/openmrs/ws/rest/v1/session", {
-      headers: {},
+      headers: {
+        "Disable-WWW-Authenticate": "true",
+      },
     });
   });
 
