@@ -87,17 +87,15 @@ yarn verify
 yarn run:shell
 ```
 
-This will use the built versions of the apps in `apps/`. Those are built
-by `yarn setup` or `yarn build:apps`, or by running `yarn build` in the
-directory for any app.
+`run:shell` will run the latest version of the shell and the framework only.
 
 #### The frontend modules in `apps`
 
 ```sh
-cd packages/apps/esm-[xyz]-app
-yarn serve
-# Use with [Import Map Overrides](https://openmrs.github.io/openmrs-esm-core/#/getting_started/setup?id=import-map-overrides)
+yarn run:omrs develop --sources packages/apps/<app folder>
 ```
+
+This will allow you to develop the app similar to the experience of developing other apps.
 
 #### The tooling
 
