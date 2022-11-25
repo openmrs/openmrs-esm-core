@@ -122,6 +122,14 @@ export function openmrsFetch<T = any>(
     delete fetchInit.headers.Accept;
   }
 
+  /* This tells the OpenMRS REST API not to return a WWW-Authenticate
+   * header. Returning that header is useful when using the API, but
+   * not from a UI.
+   */
+  if (typeof fetchInit.headers["Disable-WWW-Authenticate"] === "undefined") {
+    fetchInit.headers["Disable-WWW-Authenticate"] = "true";
+  }
+
   /* We capture the stacktrace before making the request, so that if an error occurs we can
    * log a full stacktrace that includes the code that made the request and handled the response
    * Otherwise, we could run into situations where the stacktrace doesn't even show which code
