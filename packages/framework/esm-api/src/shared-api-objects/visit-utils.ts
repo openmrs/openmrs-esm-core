@@ -14,8 +14,9 @@ export const defaultVisitCustomRepresentation =
   "form:(uuid,name),location:ref," +
   "encounterType:ref,encounterProviders:(uuid,display," +
   "provider:(uuid,display))),patient:(uuid,uuid)," +
-  "visitType:(uuid,name,display),attributes:(uuid,display,value),location:(uuid,name,display),startDatetime," +
-  "stopDatetime)";
+  "visitType:(uuid,name,display)," +
+  "attributes:(uuid,display,attributeType:(name,datatypeClassname,uuid),value)," +
+  "location:(uuid,name,display),startDatetime,stopDatetime)";
 
 export function getVisitsForPatient(
   patientUuid: string,
