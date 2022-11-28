@@ -1,4 +1,4 @@
-import { getLoggedInUser, userHasAccess } from "@openmrs/esm-api";
+import { getLoggedInUser, userHasAccess } from "@openmrs/esm-framework";
 
 const emptyLifecycle = {
   bootstrap() {
