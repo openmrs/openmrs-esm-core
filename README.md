@@ -127,15 +127,15 @@ dev server, you will need to link the app shell as well, and to build it.
 To set up to develop `@openmrs/esm-api` in a dev server for
 the patient chart:
 
-1. In this repository, run
-`yarn link` in each of `packages/framework/esm-api` and
-`packages/shell/esm-app-shell`.
-2. In `packages/shell/esm-app-shell`, run
-`yarn build:development --watch` to ensure that the built app shell is
-updated with your changes and available to the patient chart.
-3. In another terminal, navigate to the patient chart repository. Execute
-`yarn link @openmrs/esm-api @openmrs/esm-app-shell`.
+1. Navigate to the patient chart repository. Execute
+`yarn link /path/to/esm-core/packages/framework/esm-api` and then run
+`yarn link /path/to/esm-corepackages/shell/esm-app-shell`.
+2. In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
 Then run your patient chart dev server as usual.
+
+Please note that this will result in entries being added to the package.json file
+in the `resolutions` field. These changes must be undone before creating your PR,
+which you can do by running `yarn unlink --all` in the patient chart repo.
 
 Check your work by adding a `console.log` at the top level of a file you're
 working on in `esm-api`.
