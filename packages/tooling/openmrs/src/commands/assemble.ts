@@ -20,6 +20,7 @@ export interface AssembleArgs {
   config: string;
   registry: string;
   fresh: boolean;
+  manifest: boolean;
 }
 
 interface NpmSearchResult {
@@ -160,6 +161,7 @@ async function extractFiles(sourceFile: string, targetDir: string) {
   const packageJson = JSON.parse(
     files[`${packageRoot}/package.json`].toString("utf8")
   );
+  const version = packageJson.version ?? "unknown";
   const entryModule =
     packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
@@ -177,13 +179,16 @@ async function extractFiles(sourceFile: string, targetDir: string) {
     });
 
   unlinkSync(sourceFile);
-  return fileName;
+  return [fileName, version];
 }
 
 export async function runAssemble(args: AssembleArgs) {
   const config = await readConfig(args.mode, args.config, args.registry);
   const importmap = {
     imports: {},
+  };
+  const versionManifest = {
+    frontendModules: {},
   };
 
   logInfo(`Assembling the importmap ...`);
@@ -208,11 +213,12 @@ export async function runAssemble(args: AssembleArgs) {
         args.registry
       );
       const dirName = tgzFileName.replace(".tgz", "");
-      const fileName = await extractFiles(
+      const [fileName, version] = await extractFiles(
         resolve(cacheDir, tgzFileName),
         resolve(args.target, dirName)
       );
       importmap.imports[esmName] = `${publicUrl}/${dirName}/${fileName}`;
+      versionManifest.frontendModules[esmName] = version;
     })
   );
 
@@ -221,4 +227,12 @@ export async function runAssemble(args: AssembleArgs) {
     JSON.stringify(importmap, undefined, 2),
     "utf8"
   );
+
+  if (args.manifest) {
+    writeFileSync(
+      resolve(args.target, "spa-module-versions.json"),
+      JSON.stringify(versionManifest, undefined, 2),
+      "utf-8"
+    );
+  }
 }
