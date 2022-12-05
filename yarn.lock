@@ -4646,17 +4646,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:12.12.2":
-  version: 12.12.2
-  resolution: "@types/node@npm:12.12.2"
-  checksum: 0758099b5312ce0a63542663d22bf9c9cf308d8c7e000bc9c59701585680e6a08cacbac289d4e059d5afcfea00a86f64a98b81bd78155213b3c1444f47794174
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:16.9.1":
   version: 16.9.1
   resolution: "@types/node@npm:16.9.1"
   checksum: 41afcf183a22d59323a0199dd7e0f46591247f45fc08a4434edb26d56dc279ae4fdb80f37989ddd7a0f45e3857c4933e6e82057ede09c5a829f77e373e680375
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.11.11":
+  version: 18.11.11
+  resolution: "@types/node@npm:18.11.11"
+  checksum: c4b1176a8f1714a3ee3fc2a5e1d568b0cd50209000282db5c68154b3c975952928dbb834ef3a0ce55bd7b345ae29f2cbf4a34635a070294d135a24254231386a
   languageName: node
   linkType: hard
 
@@ -14531,7 +14531,7 @@ __metadata:
     "@types/express": ^4.11.1
     "@types/glob": ^7.1.1
     "@types/inquirer": ^6.5.0
-    "@types/node": 12.12.2
+    "@types/node": ^18.11.11
     "@types/pacote": ^11.1.5
     "@types/react": ^18.0.9
     "@types/rimraf": ^2.0.2
