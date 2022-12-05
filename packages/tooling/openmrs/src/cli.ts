@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import * as yargs from "yargs";
+import yargs from "yargs";
 import { fork } from "child_process";
 import { resolve } from "path";
 import {
@@ -281,37 +281,44 @@ yargs.command(
   "Assembles an import map incl. all required resources.",
   (argv) =>
     argv
-      .string("target")
-      .default("target", "dist")
-      .describe(
-        "target",
-        "The target directory where the gathered artifacts will be stored."
-      )
-      .string("registry")
-      .default("registry", "https://registry.npmjs.org/")
-      .describe("registry", "The NPM registry used for getting the packages.")
-      .string("config")
-      .default("config", "spa-build-config.json")
-      .describe("config", "Path to a SPA build config JSON.")
-      .boolean("fresh")
-      .describe(
-        "fresh",
-        "Determines if the output directory should be cleaned before the run."
-      )
-      .default("fresh", false)
-      .choices("mode", ["config", "survey"])
-      .default("mode", "survey")
-      .describe(
-        "mode",
-        "The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey."
-      ),
-  (args) =>
-    runCommand("runAssemble", {
-      ...args,
-      registry: trimEnd(args.registry, "/"),
-      config: resolve(process.cwd(), args.config),
-      target: resolve(process.cwd(), args.target),
-    })
+      .option("target", {
+        default: "dist",
+        description:
+          "The target directory where the gathered artifacts will be stored.",
+        type: "string",
+        coerce: (arg) => resolve(process.cwd(), arg),
+      })
+      .option("registry", {
+        default: "https://registry.npmjs.org/",
+        description: "The NPM registry used for getting the packages.",
+        type: "string",
+        coerce: (arg) => trimEnd(arg, "/"),
+      })
+      .option("config", {
+        default: "spa-build-config.json",
+        description: "Path to a SPA build config JSON.",
+        type: "string",
+        coerce: (arg) => resolve(process.cwd(), arg),
+      })
+      .option("fresh", {
+        default: false,
+        description:
+          "Determines if the output directory should be cleaned before the run.",
+        type: "boolean",
+      })
+      .option("manifest", {
+        default: false,
+        description: "Whether to output a manifest",
+        type: "boolean",
+      })
+      .option("mode", {
+        choices: ["config", "survey"],
+        default: "survey",
+        description:
+          "The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey.",
+        type: "string",
+      }),
+  (args) => runCommand("runAssemble", args)
 );
 
 yargs.command(

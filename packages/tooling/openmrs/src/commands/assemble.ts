@@ -1,18 +1,11 @@
-import {
-  readFileSync,
-  writeFileSync,
-  unlinkSync,
-  existsSync,
-  mkdirSync,
-  createReadStream,
-  copyFileSync,
-} from "fs";
+import { copyFile, mkdir, readFile, unlink, writeFile } from "fs/promises";
 import { resolve, dirname, basename } from "path";
 import { prompt, Question } from "inquirer";
 import rimraf from "rimraf";
 import axios from "axios";
 import pacote from "pacote";
 import { logInfo, untar } from "../utils";
+import { createReadStream, existsSync } from "fs";
 
 export interface AssembleArgs {
   target: string;
@@ -20,6 +13,7 @@ export interface AssembleArgs {
   config: string;
   registry: string;
   fresh: boolean;
+  manifest: boolean;
 }
 
 interface NpmSearchResult {
@@ -52,7 +46,7 @@ async function readConfig(
 
       return {
         baseDir: dirname(config),
-        ...JSON.parse(readFileSync(config, "utf8")),
+        ...JSON.parse(await readFile(config, "utf8")),
       };
     case "survey":
       logInfo(`Loading available frontend modules ...`);
@@ -125,13 +119,13 @@ async function downloadPackage(
     const source = resolve(baseDir, esmVersion.substr(5));
     const file = basename(source);
     const target = resolve(cacheDir, file);
-    copyFileSync(source, target);
+    await copyFile(source, target);
     return file;
   } else if (/^https?:\/\//.test(esmVersion)) {
     const response = await axios.get<Buffer>(esmVersion);
     const content = response.data;
     const file = esmName.replace("@", "").replace(/\//g, "-") + ".tgz";
-    writeFileSync(resolve(cacheDir, file), content);
+    await writeFile(resolve(cacheDir, file), content);
     return file;
   } else {
     const packageName = `${esmName}@${esmVersion}`;
@@ -145,21 +139,22 @@ async function downloadPackage(
       .replace(/^@/, "")
       .replace(/\//, "-");
 
-    mkdirSync(cacheDir, { recursive: true });
-    writeFileSync(resolve(cacheDir, filename), tarball);
+    await mkdir(cacheDir, { recursive: true });
+    await writeFile(resolve(cacheDir, filename), tarball);
 
     return filename;
   }
 }
 
 async function extractFiles(sourceFile: string, targetDir: string) {
-  mkdirSync(targetDir, { recursive: true });
+  await mkdir(targetDir, { recursive: true });
   const packageRoot = "package";
   const rs = createReadStream(sourceFile);
   const files = await untar(rs);
   const packageJson = JSON.parse(
     files[`${packageRoot}/package.json`].toString("utf8")
   );
+  const version = packageJson.version ?? "0.0.0";
   const entryModule =
     packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
@@ -168,22 +163,25 @@ async function extractFiles(sourceFile: string, targetDir: string) {
   Object.keys(files)
     .filter((m) => m.startsWith(`${packageRoot}/${sourceDir}`))
     .filter((m) => !m.endsWith(".map"))
-    .forEach((m) => {
+    .forEach(async (m) => {
       const content = files[m];
       const fileName = m.replace(`${packageRoot}/${sourceDir}/`, "");
       const targetFile = resolve(targetDir, fileName);
-      mkdirSync(dirname(targetFile), { recursive: true });
-      writeFileSync(targetFile, content);
+      await mkdir(dirname(targetFile), { recursive: true });
+      await writeFile(targetFile, content);
     });
 
-  unlinkSync(sourceFile);
-  return fileName;
+  await unlink(sourceFile);
+  return [fileName, version];
 }
 
 export async function runAssemble(args: AssembleArgs) {
   const config = await readConfig(args.mode, args.config, args.registry);
   const importmap = {
     imports: {},
+  };
+  const versionManifest = {
+    frontendModules: {},
   };
 
   logInfo(`Assembling the importmap ...`);
@@ -195,7 +193,7 @@ export async function runAssemble(args: AssembleArgs) {
     await new Promise((resolve) => rimraf(args.target, resolve));
   }
 
-  mkdirSync(args.target, { recursive: true });
+  await mkdir(args.target, { recursive: true });
 
   await Promise.all(
     Object.keys(frontendModules).map(async (esmName) => {
@@ -208,17 +206,26 @@ export async function runAssemble(args: AssembleArgs) {
         args.registry
       );
       const dirName = tgzFileName.replace(".tgz", "");
-      const fileName = await extractFiles(
+      const [fileName, version] = await extractFiles(
         resolve(cacheDir, tgzFileName),
         resolve(args.target, dirName)
       );
       importmap.imports[esmName] = `${publicUrl}/${dirName}/${fileName}`;
+      versionManifest.frontendModules[esmName] = version;
     })
   );
 
-  writeFileSync(
+  await writeFile(
     resolve(args.target, "importmap.json"),
     JSON.stringify(importmap, undefined, 2),
     "utf8"
   );
+
+  if (args.manifest) {
+    await writeFile(
+      resolve(args.target, "spa-module-versions.json"),
+      JSON.stringify(versionManifest, undefined, 2),
+      "utf8"
+    );
+  }
 }
