@@ -226,7 +226,7 @@ module.exports = (env, argv = {}) => {
         "process.env.NODE_ENV": JSON.stringify(mode),
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: env && env.analyze ? "static" : "disabled",
+        analyzerMode: env?.analyze ? "static" : "disabled",
       }),
       openmrsOffline &&
         new InjectManifest({
