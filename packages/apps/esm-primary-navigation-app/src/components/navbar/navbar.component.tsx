@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   LoggedInUser,
   useLayoutType,
@@ -65,6 +65,43 @@ const Navbar: React.FC<NavbarProps> = ({
     () => !isDesktop(layout) && navMenuItems.length > 0,
     [navMenuItems.length, layout]
   );
+
+  // This part of code is present to record the origin page when navigating to the patient chart.
+  // This piece of code is not related to primary-navigation, but since primary-nagivation is present
+  // in all of the app, hence putting this code in here.
+  const handleRouteChange = useCallback(
+    (evt) => {
+      const prevUrl = evt?.detail?.oldUrl;
+      const newUrl = evt?.detail?.newUrl;
+
+      const patientChartURLRegex = /\/patient\/([a-zA-Z0-9\-]+)\/chart\/?/;
+
+      if (
+        !patientChartURLRegex.test(prevUrl) &&
+        patientChartURLRegex.test(newUrl)
+      ) {
+        const originPage = prevUrl.split(window.spaBase)?.[1];
+        window.localStorage.setItem("patient-chart-origin-page", originPage);
+      }
+    },
+    [origin]
+  );
+
+  useEffect(() => {
+    window.addEventListener(
+      "single-spa:before-routing-event",
+      handleRouteChange
+    );
+
+    return () => {
+      window.removeEventListener(
+        "single-spa:before-routing-event",
+        handleRouteChange
+      );
+    };
+  }, [handleRouteChange]);
+
+  // The code for recording the origin page of the patient chart ends here.
 
   const render = useCallback(
     () => (
