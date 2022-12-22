@@ -106,7 +106,6 @@ describe.skip(`<Configuration />`, () => {
   it("renders the configuration component inside the implementer tools panel", () => {
     renderConfiguration();
 
-    screen.getByRole("switch", { name: /Dev Config/i });
     screen.getByRole("switch", { name: /JSON Editor/i });
     screen.getByRole("switch", { name: /UI Editor/i });
     screen.getByRole("button", { name: /Clear Local Config/i });

@@ -20,13 +20,11 @@ export interface ConfigInternalStore {
   /** An object with module names for keys and schemas for values */
   schemas: Record<string, ConfigSchema>;
   /** Whether to use dev defaults or not */
-  devDefaultsAreOn: boolean;
 }
 
 const configInternalStoreInitialValue = {
   providedConfigs: [],
   schemas: {},
-  devDefaultsAreOn: getAreDevDefaultsOn(),
 };
 
 /**
@@ -36,28 +34,6 @@ export const configInternalStore = createGlobalStore<ConfigInternalStore>(
   "config-internal",
   configInternalStoreInitialValue
 );
-
-let lastValueOfDevDefaultsAreOn = getAreDevDefaultsOn();
-configInternalStore.subscribe((state) => {
-  if (state.devDefaultsAreOn != lastValueOfDevDefaultsAreOn) {
-    setAreDevDefaultsOn(state.devDefaultsAreOn);
-    lastValueOfDevDefaultsAreOn = state.devDefaultsAreOn;
-  }
-});
-
-function setAreDevDefaultsOn(value: boolean) {
-  localStorage.setItem("openmrs:configAreDevDefaultsOn", JSON.stringify(value));
-}
-
-function getAreDevDefaultsOn(): boolean {
-  try {
-    return JSON.parse(
-      localStorage.getItem("openmrs:configAreDevDefaultsOn") || "false"
-    );
-  } catch (e) {
-    return false;
-  }
-}
 
 /**
  * Temporary config
