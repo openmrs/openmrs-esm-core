@@ -1,64 +1,42 @@
-import React, { useState, useEffect, useMemo } from "react";
-import debounce from "lodash-es/debounce";
+import React, { useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import uniqueId from "lodash-es/uniqueId";
 import {
-  fetchConceptByUuid,
-  performConceptSearch,
-} from "./concept-search.resource";
-import styles from "./uuid-search.scss";
-import {
+  InlineLoading,
   Search,
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
+  Tile,
 } from "@carbon/react";
-import { useTranslation } from "react-i18next";
+import { Concept, useConceptLookup } from "./concept-search.resource";
+import styles from "./uuid-search.scss";
 
 interface ConceptSearchBoxProps {
-  value: string;
   setConcept: (concept) => void;
+  value: string;
 }
 
 export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [activeConceptUuid, setActiveConceptUuid] = useState<any>(value);
-  const searchTimeoutInMs = 300;
   const { t } = useTranslation();
   const id = useMemo(() => uniqueId(), []);
+  const [conceptToLookup, setConceptToLookup] = useState("");
+  const [selectedConcept, setSelectedConcept] = useState<string>(value);
+  const { concepts, isSearchingConcepts } = useConceptLookup(conceptToLookup);
 
-  const handleUuidChange = (concept) => {
-    setActiveConceptUuid(concept.uuid);
-    resetSearch();
-    setConcept(concept);
+  const handleSearchTermChange = (event) => {
+    setConceptToLookup(event.target.value);
   };
 
-  const resetSearch = () => {
-    setSearchTerm("");
-    setSearchResults([]);
+  const handleConceptUuidChange = (concept) => {
+    setSelectedConcept(concept.uuid);
+    setConceptToLookup("");
   };
-
-  const handleSearchTermChange = debounce((searchTerm) => {
-    setSearchTerm(searchTerm);
-  }, searchTimeoutInMs);
-
-  useEffect(() => {
-    const ac = new AbortController();
-
-    if (searchTerm && searchTerm.length >= 2) {
-      performConceptSearch(searchTerm).then(({ data: { results } }) => {
-        setSearchResults(results.slice(0, 9));
-      });
-    } else {
-      setSearchResults([]);
-    }
-    return () => ac.abort();
-  }, [searchTerm]);
 
   return (
     <div>
-      {activeConceptUuid && (
-        <p className={styles.activeUuid}>{activeConceptUuid}</p>
+      {selectedConcept && (
+        <p className={styles.activeUuid}>{selectedConcept}</p>
       )}
       <div className={styles.autocomplete}>
         <Search
@@ -70,43 +48,55 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           autoCapitalize="off"
           aria-autocomplete="list"
           role="combobox"
-          aria-label={t("searchConceptHelperText", "Concept Name")}
+          aria-label={t("searchConceptHelperText", "Search concepts")}
           aria-controls={`searchbox-${id}`}
-          aria-expanded={searchResults.length > 0}
-          placeholder={t("searchConceptHelperText", "Concept Name")}
-          onChange={($event) => {
-            handleSearchTermChange($event.target.value);
-          }}
+          aria-expanded={concepts.length > 0}
+          placeholder={t("searchConceptHelperText", "Search concepts")}
+          onChange={handleSearchTermChange}
         />
-        {!!searchResults.length && (
-          <StructuredListWrapper
-            selection
-            id={`searchbox-${id}`}
-            className={styles.listbox}
-          >
-            {searchResults.map((concept: any) => (
-              <StructuredListRow
-                key={concept.uuid}
-                role="option"
-                aria-selected="true"
+        {(() => {
+          if (!conceptToLookup) return null;
+          if (isSearchingConcepts)
+            return (
+              <InlineLoading
+                className={styles.loader}
+                description={t("searching", "Searching") + "..."}
+              />
+            );
+          if (concepts && concepts?.length && !isSearchingConcepts) {
+            return (
+              <StructuredListWrapper
+                selection
+                id={`searchbox-${id}`}
+                className={styles.listbox}
               >
-                <StructuredListCell
-                  onClick={() => {
-                    handleUuidChange(concept);
-                  }}
-                  className={styles.smallListCell}
-                >
-                  {concept.display}
-                </StructuredListCell>
-              </StructuredListRow>
-            ))}
-          </StructuredListWrapper>
-        )}
-        {searchTerm && searchResults && !searchResults.length && (
-          <p className={styles.bodyShort01}>
-            {t("noConceptsFoundText", "No matching results found")}
-          </p>
-        )}
+                {concepts.map((concept: Concept) => (
+                  <StructuredListRow
+                    key={concept.uuid}
+                    role="option"
+                    aria-selected="true"
+                  >
+                    <StructuredListCell
+                      onClick={() => {
+                        handleConceptUuidChange(concept);
+                      }}
+                      className={styles.smallListCell}
+                    >
+                      {concept.display}
+                    </StructuredListCell>
+                  </StructuredListRow>
+                ))}
+              </StructuredListWrapper>
+            );
+          }
+          return (
+            <Tile className={styles.emptyResults}>
+              <span>
+                {t("noConceptsFoundText", "No matching concepts found")}
+              </span>
+            </Tile>
+          );
+        })()}
       </div>
     </div>
   );
