@@ -22,6 +22,7 @@ export interface FHIRResource {
     };
     valueString: string;
     valueCodeableConcept: { coding: Array<FHIRCode> };
+    valueDateTime: string;
   };
 }
 
