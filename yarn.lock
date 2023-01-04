@@ -1333,9 +1333,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/charts@npm:^1.5.0":
-  version: 1.6.0
-  resolution: "@carbon/charts@npm:1.6.0"
+"@carbon/charts@npm:^1.6.3":
+  version: 1.6.3
+  resolution: "@carbon/charts@npm:1.6.3"
   dependencies:
     "@carbon/styles": ^1.4.0
     "@carbon/telemetry": 0.1.0
@@ -1348,7 +1348,7 @@ __metadata:
     resize-observer-polyfill: 1.5.0
   peerDependencies:
     d3: 7.x
-  checksum: 8ffe4c80882a4e89577cdd925113446d95cc45ef17d2935f6840ae8a18891b8329bb043fe500ba1fc6cb4bea520aa5a1f83dffe789a86277f6b0b0f51d14c56b
+  checksum: 482cabba5c6a5e0890540f7c5fdacfee11f54b26e02a7bc09d6013fdd29b6d303e1dcbe1c87cd3fec0ed16ae7a584b38b2a39cb97d8ac115b2a9b84868747f7c
   languageName: node
   linkType: hard
 
@@ -3857,14 +3857,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-styleguide@workspace:packages/framework/esm-styleguide"
   dependencies:
-    "@carbon/charts": ^1.5.0
+    "@carbon/charts": ^1.6.3
     "@carbon/react": ^1.12.0
     "@openmrs/esm-extensions": ^4.0.2
     "@openmrs/esm-react-utils": ^4.0.2
     "@openmrs/esm-state": ^4.0.2
     autoprefixer: ^9.8.8
     css-minimizer-webpack-plugin: ^1.2.0
-    d3: ^7.6.1
+    d3: ^7.8.0
     i18next: ^19.6.0
     jest: ^28.1.2
     jest-environment-jsdom: ^28.1.2
@@ -8192,9 +8192,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3@npm:^7.6.1":
-  version: 7.6.1
-  resolution: "d3@npm:7.6.1"
+"d3@npm:^7.8.0":
+  version: 7.8.0
+  resolution: "d3@npm:7.8.0"
   dependencies:
     d3-array: 3
     d3-axis: 3
@@ -8226,7 +8226,7 @@ __metadata:
     d3-timer: 3
     d3-transition: 3
     d3-zoom: 3
-  checksum: af883cfeaf0a861afb2424edcb5419a5c56c84ddbc1ac9c7771c569f1926ace8db3cf0f4996038eb1db9700f7335e30c23b885199e0320a002893492ae83b415
+  checksum: 383d2c8aa6a66f3a6c6977b629de8fa1bf3bce829b15c4a769a59096691730a39e7763eb17b0ff4abbf4d1b577212160d7e5d5f1da35591e5ef5399e8398cefa
   languageName: node
   linkType: hard
 
