@@ -109,6 +109,8 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
 
         if (!valid) {
           throw new Error("invalidCredentials");
+        } else {
+          navigate("/login/location", { state: location.state });
         }
       } catch (error) {
         setErrorMessage(error.message);
@@ -117,7 +119,15 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
 
       return false;
     },
-    [continueLogin, resetUserNameAndPassword, showPassword, username, password]
+    [
+      showPassword,
+      continueLogin,
+      username,
+      password,
+      navigate,
+      location.state,
+      resetUserNameAndPassword,
+    ]
   );
 
   const logo = config.logo.src ? (
