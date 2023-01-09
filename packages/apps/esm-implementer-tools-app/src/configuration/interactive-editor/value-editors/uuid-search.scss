@@ -23,3 +23,14 @@
 .smallListCell {
   padding: spacing.$spacing-03;
 }
+
+.loader {
+  margin: 1rem;
+}
+
+.emptyResults {
+  @include type.type-style("body-compact-01");
+  background-color: $ui-02;
+  color: $text-02;
+  min-height: 1rem;
+}
