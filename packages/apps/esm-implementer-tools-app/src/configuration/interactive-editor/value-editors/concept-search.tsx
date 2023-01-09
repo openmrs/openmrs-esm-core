@@ -63,7 +63,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
                 description={t("searching", "Searching") + "..."}
               />
             );
-          if (concepts && concepts?.length && !isSearchingConcepts) {
+          if (concepts && concepts.length && !isSearchingConcepts) {
             return (
               <StructuredListWrapper
                 selection
