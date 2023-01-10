@@ -10,7 +10,7 @@ export interface FHIRResource {
     issued: Date;
     referenceRange: any;
     resourceType: string;
-    status: string;
+    status: string;ß
     subject: {
       display: string;
       identifier: { id: string; system: string; use: string; value: string };
@@ -22,7 +22,7 @@ export interface FHIRResource {
     };
     valueString: string;
     valueCodeableConcept: { coding: Array<FHIRCode> };
-    valueDateTime: string;
+    valueDateTime?: string;
   };
 }
 
