@@ -53,10 +53,10 @@ describe("Openmrs Dates", () => {
     testDate.setHours(15);
     testDate.setMinutes(22);
     window.i18next.language = "en";
-    expect(formatDate(testDate)).toMatch(/Today,\s+03:22 PM/);
-    expect(formatDate(testDate, { day: false })).toMatch(/Today,\s+03:22 PM/);
-    expect(formatDate(testDate, { year: false })).toMatch(/Today,\s+03:22 PM/);
-    expect(formatDate(testDate, { mode: "wide" })).toMatch(/Today,\s+03:22 PM/);
+    expect(formatDate(testDate)).toMatch(/Today,\s+03:22\sPM/);
+    expect(formatDate(testDate, { day: false })).toMatch(/Today,\s03:22\sPM/);
+    expect(formatDate(testDate, { year: false })).toMatch(/Today,\s03:22\sPM/);
+    expect(formatDate(testDate, { mode: "wide" })).toMatch(/Today,\s03:22\sPM/);
     window.i18next.language = "sw";
     expect(formatDate(testDate)).toEqual("Leo, 15:22");
     window.i18next.language = "ru";
