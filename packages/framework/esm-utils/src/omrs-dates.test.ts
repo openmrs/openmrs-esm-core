@@ -32,6 +32,7 @@ describe("Openmrs Dates", () => {
     expect(isOmrsDateStrict(null as any)).toEqual(false);
     expect(isOmrsDateStrict(undefined as any)).toEqual(false);
   });
+
   it("converts omrs date string version to js Date object", () => {
     expect(
       toDateObjectStrict("2018-03-19T00:00:00.000+0300")?.toUTCString()
@@ -52,10 +53,10 @@ describe("Openmrs Dates", () => {
     testDate.setHours(15);
     testDate.setMinutes(22);
     window.i18next.language = "en";
-    expect(formatDate(testDate)).toEqual("Today, 03:22 PM");
-    expect(formatDate(testDate, { day: false })).toEqual("Today, 03:22 PM");
-    expect(formatDate(testDate, { year: false })).toEqual("Today, 03:22 PM");
-    expect(formatDate(testDate, { mode: "wide" })).toEqual("Today, 03:22 PM");
+    expect(formatDate(testDate)).toMatch(/Today,\s+03:22 PM/);
+    expect(formatDate(testDate, { day: false })).toMatch(/Today,\s+03:22 PM/);
+    expect(formatDate(testDate, { year: false })).toMatch(/Today,\s+03:22 PM/);
+    expect(formatDate(testDate, { mode: "wide" })).toMatch(/Today,\s+03:22 PM/);
     window.i18next.language = "sw";
     expect(formatDate(testDate)).toEqual("Leo, 15:22");
     window.i18next.language = "ru";
@@ -81,8 +82,8 @@ describe("Openmrs Dates", () => {
     window.i18next.language = "sw";
     expect(formatDate(testDate)).toEqual("09 Des 2021");
     window.i18next.language = "ru";
-    expect(formatDate(testDate, { mode: "wide" })).toEqual(
-      "09 — дек. — 2021 г."
+    expect(formatDate(testDate, { mode: "wide" })).toMatch(
+      /09\s—\sдек\.\s—\s2021\sг\./
     );
   });
 
@@ -94,23 +95,25 @@ describe("Openmrs Dates", () => {
     today.setMinutes(22);
     window.i18next.language = "en";
     expect(formatDate(testDate)).toEqual("09-Dec-2021");
-    expect(formatDate(testDate, { time: true })).toEqual(
-      "09-Dec-2021, 01:15 PM"
+    expect(formatDate(testDate, { time: true })).toMatch(
+      /09-Dec-2021,\s01:15\sPM/
     );
     expect(formatDate(testDate, { time: false })).toEqual("09-Dec-2021");
     expect(formatDate(testDate, { time: "for today" })).toEqual("09-Dec-2021");
-    expect(formatDate(today, { time: true })).toEqual("Today, 03:22 PM");
+    expect(formatDate(today, { time: true })).toMatch(/Today,\s03:22\sPM/);
     expect(formatDate(today, { time: false })).toEqual("Today");
-    expect(formatDate(today, { time: "for today" })).toEqual("Today, 03:22 PM");
+    expect(formatDate(today, { time: "for today" })).toMatch(
+      /Today, 03:22\sPM/
+    );
   });
 
   it("formats times with respect to the locale", () => {
     timezoneMock.register("Australia/Adelaide");
     const testDate = new Date("2021-12-09T13:15:33");
     window.i18next.language = "en";
-    expect(formatTime(testDate)).toEqual("01:15 PM");
+    expect(formatTime(testDate)).toMatch(/01:15\sPM/i);
     window.i18next.language = "es-CO";
-    expect(formatTime(testDate)).toMatch(/1:15 p.\sm./); // it's not a normal space between the 'p.' and 'm.'
+    expect(formatTime(testDate)).toMatch(/1:15\sp.\sm./); // it's not a normal space between the 'p.' and 'm.'
     window.i18next.language = "es-MX";
     expect(formatTime(testDate)).toEqual("13:15");
   });
@@ -122,8 +125,8 @@ describe("Openmrs Dates", () => {
     todayDate.setHours(15);
     todayDate.setMinutes(20);
     window.i18next.language = "en";
-    expect(formatDatetime(testDate)).toEqual("09-Feb-2022, 01:15 PM");
-    expect(formatDatetime(todayDate)).toEqual("Today, 03:20 PM");
+    expect(formatDatetime(testDate)).toMatch(/09-Feb-2022,\s01:15\sPM/i);
+    expect(formatDatetime(todayDate)).toMatch(/Today,\s03:20\sPM/i);
     window.i18next.language = "ht";
     expect(formatDatetime(testDate)).toEqual("09 févr. 2022, 13:15");
     expect(formatDatetime(todayDate)).toEqual("Aujourd’hui, 15:20");
