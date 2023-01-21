@@ -30,6 +30,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
 
   const handleConceptUuidChange = (concept) => {
     setSelectedConcept(concept.uuid);
+    setConcept(concept);
     setConceptToLookup("");
   };
 
