@@ -1,6 +1,6 @@
 {
   "name": "openmrs",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "bin": "./dist/cli.js",
@@ -30,8 +30,8 @@
   ],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "@openmrs/esm-app-shell": "4.0.2",
-    "@openmrs/webpack-config": "4.0.2",
+    "@openmrs/esm-app-shell": "4.0.3",
+    "@openmrs/webpack-config": "4.0.3",
     "autoprefixer": "^10.4.2",
     "axios": "^0.21.1",
     "browserslist-config-openmrs": "^1.0.1",
