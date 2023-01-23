@@ -124,12 +124,14 @@ function useMergedSwr<T>(
     const mutate = () =>
       Promise.all(swrResponses.map((res) => res.mutate())).then(merge);
     const isValidating = swrResponses.some((res) => res.isValidating);
+    const isLoading = swrResponses.some((res) => res.isLoading);
 
     return {
       data,
       error,
       mutate,
       isValidating,
+      isLoading,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
