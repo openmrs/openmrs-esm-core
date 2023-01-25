@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-offline-tools-app",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "license": "MPL-2.0",
   "description": "The offline tools microfrontend for the OpenMRS SPA",
   "browser": "dist/openmrs-esm-offline-tools-app.js",
@@ -39,7 +39,7 @@
   "dependencies": {
     "@carbon/react": "^1.12.0",
     "lodash-es": "^4.17.21",
-    "swr": "^1.0.1"
+    "swr": "^2.0.1"
   },
   "peerDependencies": {
     "@openmrs/esm-framework": "*",
@@ -50,8 +50,8 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-framework": "^4.0.2",
-    "@openmrs/webpack-config": "^4.0.2",
+    "@openmrs/esm-framework": "^4.0.3",
+    "@openmrs/webpack-config": "^4.0.3",
     "@types/lodash-es": "^4.17.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

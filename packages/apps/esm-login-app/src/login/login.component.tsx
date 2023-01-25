@@ -9,7 +9,14 @@ import {
 } from "@carbon/react";
 import { ArrowLeft, ArrowRight } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
-import { useConfig, interpolateUrl, useSession } from "@openmrs/esm-framework";
+import {
+  useConfig,
+  interpolateUrl,
+  useSession,
+  refetchCurrentUser,
+  clearCurrentUser,
+  getSessionStore,
+} from "@openmrs/esm-framework";
 import { performLogin } from "./login.resource";
 import styles from "./login.scss";
 
@@ -44,7 +51,14 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
 
   useEffect(() => {
     if (user) {
-      navigate("/login/location", { state: location.state });
+      clearCurrentUser();
+      refetchCurrentUser().then(() => {
+        const authenticated =
+          getSessionStore().getState().session.authenticated;
+        if (authenticated) {
+          navigate("/login/location", { state: location.state });
+        }
+      });
     } else if (!username && location.pathname === "/login/confirm") {
       navigate("/login", { state: location.state });
     }
@@ -109,6 +123,8 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
 
         if (!valid) {
           throw new Error("invalidCredentials");
+        } else {
+          navigate("/login/location", { state: location.state });
         }
       } catch (error) {
         setErrorMessage(error.message);
@@ -117,7 +133,15 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
 
       return false;
     },
-    [continueLogin, resetUserNameAndPassword, showPassword, username, password]
+    [
+      showPassword,
+      continueLogin,
+      username,
+      password,
+      navigate,
+      location.state,
+      resetUserNameAndPassword,
+    ]
   );
 
   const logo = config.logo.src ? (

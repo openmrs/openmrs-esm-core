@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-state",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "license": "MPL-2.0",
   "description": "Frontend stores & state management for OpenMRS",
   "browser": "dist/openmrs-esm-state.js",

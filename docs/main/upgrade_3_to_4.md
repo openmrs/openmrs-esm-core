@@ -59,7 +59,7 @@ For a complete look at what needs to be upgraded, please read the relevant docum
 
 - [React 16 to 17](https://reactjs.org/blog/2020/08/10/react-v17-rc.html#other-breaking-changes)
 - [React 17 to 18](https://reactjs.org/blog/2022/03/08/react-18-upgrade-guide.html)
-- [React Router 5 to 6](https://reactrouter.com/docs/en/v6/upgrading/v5)
+- [React Router 5 to 6](https://reactrouter.com/en/main/upgrading/v5)
 - [Carbon 10 to 11](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md)
 - [Jest 26 to 27](https://jestjs.io/blog/2021/05/25/jest-27)
 - [Jest 27 to 28](https://jestjs.io/docs/28.x/migration-guide)
@@ -118,7 +118,7 @@ await user.click(screen.getByRole('button', { name: /click me!/i }));
 
 ### React Router
 
-This is the most involved of the changes. You really just have to follow the [React Router 5 to 6 upgrade guide](https://reactrouter.com/docs/en/v6/upgrading/v5#introduction).
+This is the most involved of the changes. You really just have to follow the [React Router 5 to 6 upgrade guide](https://reactrouter.com/en/main/upgrading/v5).
 
 ### Carbon
 - Change `carbon-components-react` to `@carbon/react`

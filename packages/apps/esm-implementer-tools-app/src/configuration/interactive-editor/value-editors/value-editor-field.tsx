@@ -45,7 +45,7 @@ export function ValueEditorField({
       hideLabel
       labelText=""
       onChange={(event, { checked, id }) => onChange(checked)}
-    ></Checkbox>
+    />
   ) : valueType === Type.ConceptUuid ? (
     <ConceptSearchBox
       value={value}
@@ -67,18 +67,16 @@ export function ValueEditorField({
     <NumberInput
       id={id}
       value={value}
-      onChange={
-        // e.target.value not working properly right now: https://github.com/carbon-design-system/carbon/issues/7457
-        (e) => onChange(Number((e as any).imaginaryTarget.value))
-      }
-    ></NumberInput>
+      onChange={(e, { value }) => onChange(value ? parseInt(value) : 0)}
+      hideSteppers
+    />
   ) : valueType === Type.String || valueType === Type.UUID ? (
     <TextInput
       id={id}
       value={value}
       labelText=""
       onChange={(e) => onChange(e.target.value)}
-    ></TextInput>
+    />
   ) : valueType === "add" ? (
     <ExtensionSlotAdd value={value ?? element._value} setValue={onChange} />
   ) : valueType === "remove" && path ? (

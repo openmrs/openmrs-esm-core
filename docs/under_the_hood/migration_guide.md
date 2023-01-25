@@ -41,7 +41,7 @@ We're currently on React Router v5.3 (released in March 2019). React Router 6 in
   - Discontinued use of regex routes leads to cleaner route syntax and drops `path-to-regexp` dependency reducing bundle size.
 `useNavigate` is more suspense friendly than the old `useHistory`. This provides a smoother experience when a user interaction needs to interrupt a pending route transition.
 
-Important resources: [Migration Guide](https://reactrouter.com/docs/en/v6/upgrading/v5).
+Important resources: [Migration Guide](https://reactrouter.com/en/main/upgrading/v5).
 
 ### Carbon Design System 
 We're currently on Carbon v10 (released in December 2020). Carbon 11 shipped with a host of feature improvements, fixes and enhancements to the developer experience. Notably: 
@@ -167,7 +167,7 @@ At this point you will have a local version of the core app shell running, and o
 
 10. Upgrade React Router Dom to v6
 
-    * Follow the upgrade guide [here](https://reactrouter.com/docs/en/v6/upgrading/v5)
+    * Follow the upgrade guide [here](https://reactrouter.com/en/main/upgrading/v5)
 
 11. Upgrade Jest to v28
 

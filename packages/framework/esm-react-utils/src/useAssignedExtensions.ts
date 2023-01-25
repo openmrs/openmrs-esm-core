@@ -5,7 +5,7 @@ import {
   ExtensionStore,
   getExtensionStore,
 } from "@openmrs/esm-extensions";
-import isEqual from "lodash/isEqual";
+import isEqual from "lodash-es/isEqual";
 
 /**
  * Gets the assigned extensions for a given extension slot name.
