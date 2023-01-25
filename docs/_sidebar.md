@@ -22,6 +22,7 @@
   - [Creating a Distribution](/main/distribution.md)
   - [Upgrade 3 to 4](/main/upgrade_3_to_4.md)
   - [FAQ](/main/faq.md)
+  - [Framework API Reference](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md)
 - Offline
   - [Offline Mode](/offline/offline.md)
   - [Dynamic Offline Data](/offline/dynamic_offline_data.md)
