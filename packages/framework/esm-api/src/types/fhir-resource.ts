@@ -10,7 +10,7 @@ export interface FHIRResource {
     issued: Date;
     referenceRange: any;
     resourceType: string;
-    status: string;ß
+    status: string;
     subject: {
       display: string;
       identifier: { id: string; system: string; use: string; value: string };
