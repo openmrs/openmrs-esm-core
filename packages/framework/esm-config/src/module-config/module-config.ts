@@ -303,11 +303,10 @@ export function getConfigInternal(moduleName: string): Promise<Config> {
 export function processConfig(
   schema: ConfigSchema,
   providedConfig: ConfigObject,
-  keyPathContext: string,
-  devDefaultsAreOn: boolean = false
+  keyPathContext: string
 ) {
   validateStructure(schema, providedConfig, keyPathContext);
-  const config = setDefaults(schema, providedConfig, devDefaultsAreOn);
+  const config = setDefaults(schema, providedConfig);
   runAllValidatorsInConfigTree(schema, config, keyPathContext);
   return config;
 }
@@ -354,11 +353,7 @@ function computeExtensionConfig(
   const schema =
     extensionConfigSchema ?? configState.schemas[extensionModuleName];
   validateStructure(schema, combinedConfig, nameOfSchemaSource);
-  const config = setDefaults(
-    schema,
-    combinedConfig,
-    configState.devDefaultsAreOn
-  );
+  const config = setDefaults(schema, combinedConfig);
   runAllValidatorsInConfigTree(schema, config, nameOfSchemaSource);
   delete config.extensionSlots;
   return config;
@@ -612,7 +607,7 @@ function getConfigForModule(
     getProvidedConfigs(configState, tempConfigState)
   );
   validateStructure(schema, inputConfig, moduleName);
-  const config = setDefaults(schema, inputConfig, configState.devDefaultsAreOn);
+  const config = setDefaults(schema, inputConfig);
   runAllValidatorsInConfigTree(schema, config, moduleName);
   delete config.extensionSlots;
   return config;
@@ -809,11 +804,7 @@ function runValidators(
 }
 
 // Recursively fill in the config with values from the schema.
-const setDefaults = (
-  schema: ConfigSchema,
-  inputConfig: Config,
-  devDefaultsAreOn: boolean
-) => {
+const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   const config = clone(inputConfig);
 
   if (!schema) {
@@ -833,11 +824,7 @@ const setDefaults = (
       // We assume that schemaPart defines a config value, since it has
       // a property `_default`.
       if (!config.hasOwnProperty(key)) {
-        const devDefault = schemaPart["_devDefault"] || schemaPart["_default"];
-
-        (config[key] as any) = devDefaultsAreOn
-          ? devDefault
-          : schemaPart["_default"];
+        (config[key] as any) = schemaPart["_default"];
       }
 
       // We also check if it is an object or array with object elements, in which case we recurse
@@ -846,15 +833,14 @@ const setDefaults = (
       if (configPart && hasObjectSchema(elements)) {
         if (schemaPart._type === Type.Array && Array.isArray(configPart)) {
           const configWithDefaults = configPart.map((conf: Config) =>
-            setDefaults(elements, conf, devDefaultsAreOn)
+            setDefaults(elements, conf)
           );
           config[key] = configWithDefaults;
         } else if (schemaPart._type === Type.Object) {
           for (let objectKey of Object.keys(configPart)) {
             configPart[objectKey] = setDefaults(
               elements,
-              configPart[objectKey],
-              devDefaultsAreOn
+              configPart[objectKey]
             );
           }
         }
@@ -866,11 +852,7 @@ const setDefaults = (
       const selectedConfigPart = config.hasOwnProperty(key) ? configPart : {};
 
       if (isOrdinaryObject(selectedConfigPart)) {
-        config[key] = setDefaults(
-          schemaPart,
-          selectedConfigPart,
-          devDefaultsAreOn
-        );
+        config[key] = setDefaults(schemaPart, selectedConfigPart);
       }
     }
   }

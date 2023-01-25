@@ -245,24 +245,6 @@ describe("getConfig", () => {
     expect(config.foo).toBe("qux");
   });
 
-  it("returns devDefault values when defined when turned on", async () => {
-    configInternalStore.setState({ devDefaultsAreOn: true });
-    Config.defineConfigSchema("testmod", {
-      foo: {
-        _default: "qux",
-      },
-      bar: {
-        _default: "pub",
-        _devDefault: "barcade",
-      },
-    });
-    const config = await Config.getConfig("testmod");
-    expect(config.foo).toBe("qux");
-    expect(config.bar).toBe("barcade");
-    configInternalStore.setState({ devDefaultsAreOn: false });
-    expect(console.error).not.toHaveBeenCalled();
-  });
-
   it("logs an error if config values not defined in the schema", async () => {
     Config.defineConfigSchema("foo-module", { foo: { _default: "qux" } });
     Config.provide({ "foo-module": { bar: "baz" } });

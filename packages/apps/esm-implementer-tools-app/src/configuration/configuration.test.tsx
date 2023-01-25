@@ -111,8 +111,6 @@ describe("Configuration", () => {
 
   it("renders the configuration component inside the implementer tools panel", () => {
     renderConfiguration();
-
-    screen.getByRole("switch", { name: /dev config/i });
     screen.getByRole("switch", { name: /json editor/i });
     screen.getByRole("switch", { name: /ui editor/i });
     screen.getByRole("button", { name: /clear local config/i });

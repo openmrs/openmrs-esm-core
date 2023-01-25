@@ -18,8 +18,6 @@ import cloneDeep from "lodash-es/cloneDeep";
 import isEmpty from "lodash-es/isEmpty";
 import {
   Config,
-  ConfigInternalStore,
-  configInternalStore,
   getExtensionInternalStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
@@ -56,12 +54,6 @@ const actions = {
   },
 };
 
-const configActions = {
-  toggleDevDefaults({ devDefaultsAreOn }: ConfigInternalStore) {
-    return { devDefaultsAreOn: !devDefaultsAreOn };
-  },
-};
-
 interface OpenOrCloseButtonProps {
   isConfigToolbarOpen: boolean;
   toggleIsToolbarOpen(): void;
@@ -94,10 +86,6 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
     isConfigToolbarOpen,
     toggleIsToolbarOpen,
   } = useStoreWithActions(implementerToolsStore, actions);
-  const { devDefaultsAreOn, toggleDevDefaults } = useStoreWithActions(
-    configInternalStore,
-    configActions
-  );
   const { config } = useStore(implementerToolsConfigStore);
   const extensionStore = useStore(getExtensionInternalStore());
   const tempConfigStore = useStore(temporaryConfigStore);
@@ -176,13 +164,6 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   labelText={t("jsonEditor", "JSON Editor")}
                   onToggle={toggleIsJsonModeEnabled}
                   toggled={isJsonModeEnabled}
-                />
-                <Toggle
-                  className={styles.toggle}
-                  id="devConfigSwitch"
-                  labelText={t("devConfig", "Dev Config")}
-                  onToggle={toggleDevDefaults}
-                  toggled={devDefaultsAreOn}
                 />
                 <Toggle
                   className={styles.toggle}

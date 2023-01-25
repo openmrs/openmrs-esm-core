@@ -138,9 +138,7 @@ function instrumentedStore<T>(name: string, store: Store<T>) {
 }
 
 /* esm-config */
-export const configInternalStore = createGlobalStore("config-internal", {
-  devDefaultsAreOn: false,
-});
+export const configInternalStore = createGlobalStore("config-internal", {});
 
 export const implementerToolsConfigStore = createGlobalStore(
   "implementer-tools-config",
