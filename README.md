@@ -163,3 +163,7 @@ will cause GitHub Actions to publish the packages, completing the release proces
 
 > Don't run `npm publish`, `yarn publish`, or `lerna publish`. Use the above process.
 
+## Design Patterns
+
+For documentation about our design patterns, please visit our [design system](https://zeroheight.com/23a080e38/p/880723--introduction) documentation website.
+
