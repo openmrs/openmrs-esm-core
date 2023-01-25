@@ -191,7 +191,7 @@ function setupOpenMRS() {
         meta: {
           columnSpan: 4,
         },
-        online: true,
+        online: false,
         offline: true,
       },
       {
