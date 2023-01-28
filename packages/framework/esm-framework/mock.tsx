@@ -40,6 +40,10 @@ export function isVersionSatisfied() {
   return true;
 }
 
+export function useConnectivity() {
+  return true;
+}
+
 /* esm-api */
 export const setSessionLocation = jest.fn(() => Promise.resolve());
 
