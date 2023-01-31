@@ -3,7 +3,7 @@
 
 ## Prerequisities
 
-:bangbang:	This setup guide is for individuals who want to develop on the O3 Framework. **You will need to set up an O3 instance first.**	*If you do not already have an O3 Instance set up, please **first** follow the guideance at: https://om.rs/o3setup.*
+:bangbang:	This setup guide is for individuals who want to develop on the O3 Framework. **You will need to set up an O3 instance first.**	*If you do not already have an O3 Instance set up, please **first** follow the guidance at: https://om.rs/o3setup.*
 
 You must have git, node, npm, and yarn installed. The versions required are
 - The Node [Active LTS version](https://github.com/nodejs/release#release-schedule)
