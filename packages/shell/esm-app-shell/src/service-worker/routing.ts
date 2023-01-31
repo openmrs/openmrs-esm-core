@@ -3,17 +3,18 @@ import { registerRoute } from "workbox-routing";
 import { getOrCreateDefaultRouter } from "workbox-routing/utils/getOrCreateDefaultRouter";
 import { validMethods } from "workbox-routing/utils/constants";
 import { CacheOnly, NetworkFirst, NetworkOnly } from "workbox-strategies";
-import { indexUrl, omrsCacheName } from "./constants";
+import {
+  indexUrl,
+  omrsCacheName,
+  omrsOfflineCachingStrategyHttpHeaderName,
+} from "./constants";
 import { ServiceWorkerDb } from "./storage";
 import {
   getOmrsHeader,
   parseOmrsOfflineResponseBodyHeader,
   parseOmrsOfflineResponseStatusHeader,
 } from "./http-header-utils";
-import {
-  OmrsOfflineCachingStrategy,
-  omrsOfflineCachingStrategyHttpHeaderName,
-} from "@openmrs/esm-offline/src/service-worker-http-headers";
+import type { OmrsOfflineCachingStrategy } from "@openmrs/esm-offline";
 import uniq from "lodash-es/uniq";
 
 const networkOnly = new NetworkOnly();

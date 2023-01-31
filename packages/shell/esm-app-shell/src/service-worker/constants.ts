@@ -1,5 +1,13 @@
 import uniq from "lodash-es/uniq";
 
+// note that these constants are also defined in @openmrs/esm-offline
+export const omrsOfflineResponseBodyHttpHeaderName =
+  "x-omrs-offline-response-body";
+export const omrsOfflineResponseStatusHttpHeaderName =
+  "x-omrs-offline-response-status";
+export const omrsOfflineCachingStrategyHttpHeaderName =
+  "x-omrs-offline-caching-strategy";
+
 export const omrsCachePrefix = "omrs";
 export const omrsCacheName = `${omrsCachePrefix}-spa-cache-v1`;
 
