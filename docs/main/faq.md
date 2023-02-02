@@ -28,14 +28,13 @@ git checkout package.json
 yarn
 ```
 
-## Refreshing importmap
+### Using a custom importmap
 
-The static importmap file used by `openmrs develop` is manually updated and therefore often out of date containing old versions of the frontend modules. You can submit a PR to update [that file](https://github.com/openmrs/openmrs-esm-core/blob/master/packages/shell/esm-app-shell/src/assets/importmap.json), or you can use an import map from the internet like so:
+By default, when you run `yarn start`, the command will use the importmap from dev3, that is, https://dev3.openmrs.org/openmrs/spa/importmap.json. This is the default importmap for the reference application and generally what you will want to use. However, in some situations, you may want to us a custom importmap, such as a distribution-specific importmap. In this case, you can use the `--importmap` argument to the `yarn start` command to point to any importmap you like:
 
 ```sh
-yarn start --importmap "https://spa-modules.nyc3.digitaloceanspaces.com/import-map.json"
+yarn start --importmap "https://dev3.openmrs.org/openmrs/spa/import-map.json"
 ```
-
 
 ### Clearing out the browser cache
 
