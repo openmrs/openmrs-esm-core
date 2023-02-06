@@ -129,5 +129,5 @@ export function runDevelop(args: DevelopArgs) {
     }
   });
 
-  return new Promise(() => {});
+  return new Promise<void>(() => {});
 }

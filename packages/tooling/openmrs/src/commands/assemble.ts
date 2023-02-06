@@ -3,15 +3,19 @@ import { resolve, dirname, basename } from "path";
 import { prompt, Question } from "inquirer";
 import rimraf from "rimraf";
 import axios from "axios";
+import npmRegistryFetch from "npm-registry-fetch";
 import pacote from "pacote";
 import { logInfo, untar } from "../utils";
 import { createReadStream, existsSync } from "fs";
+import { getNpmRegistryConfiguration } from "../utils/npmConfig";
+
+/* eslint-disable no-console */
 
 export interface AssembleArgs {
   target: string;
   mode: string;
   config: string;
-  registry: string;
+  registry?: string;
   fresh: boolean;
   manifest: boolean;
 }
@@ -34,7 +38,7 @@ interface AssembleConfig {
 async function readConfig(
   mode: string,
   config: string,
-  registry: string
+  fetchOptions: npmRegistryFetch.Options
 ): Promise<AssembleConfig> {
   switch (mode) {
     case "config":
@@ -51,11 +55,9 @@ async function readConfig(
     case "survey":
       logInfo(`Loading available frontend modules ...`);
 
-      const packages = await axios
-        .get<NpmSearchResult>(
-          `${registry}/-/v1/search?text=keywords:openmrs&size=250`
-        )
-        .then((res) => res.data)
+      const packages = await npmRegistryFetch
+        .json("/-/v1/search?text=keywords:openmrs&size=500", fetchOptions)
+        .then((res) => res as unknown as NpmSearchResult)
         .then((res) =>
           res.objects
             .map((m) => ({
@@ -113,7 +115,7 @@ async function downloadPackage(
   esmName: string,
   esmVersion: string,
   baseDir: string,
-  registry: string
+  fetchOptions: npmRegistryFetch.Options
 ) {
   if (esmVersion.startsWith("file:")) {
     const source = resolve(baseDir, esmVersion.substr(5));
@@ -129,9 +131,20 @@ async function downloadPackage(
     return file;
   } else {
     const packageName = `${esmName}@${esmVersion}`;
-    const tarManifest = await pacote.manifest(packageName, { registry });
+    const tarManifest = await pacote.manifest(packageName, fetchOptions);
+
+    if (
+      !Boolean(tarManifest) ||
+      !Boolean(tarManifest._resolved) ||
+      !Boolean(tarManifest._integrity)
+    ) {
+      throw new Error(
+        `Failed to load manifest for ${packageName} from registry ${fetchOptions.registry}`
+      );
+    }
+
     const tarball = await pacote.tarball(tarManifest._resolved, {
-      registry,
+      ...fetchOptions,
       integrity: tarManifest._integrity,
     });
 
@@ -176,7 +189,9 @@ async function extractFiles(sourceFile: string, targetDir: string) {
 }
 
 export async function runAssemble(args: AssembleArgs) {
-  const config = await readConfig(args.mode, args.config, args.registry);
+  const npmConf = getNpmRegistryConfiguration(args.registry);
+  const config = await readConfig(args.mode, args.config, npmConf);
+
   const importmap = {
     imports: {},
   };
@@ -203,8 +218,9 @@ export async function runAssemble(args: AssembleArgs) {
         esmName,
         esmVersion,
         config.baseDir,
-        args.registry
+        npmConf
       );
+
       const dirName = tgzFileName.replace(".tgz", "");
       const [fileName, version] = await extractFiles(
         resolve(cacheDir, tgzFileName),

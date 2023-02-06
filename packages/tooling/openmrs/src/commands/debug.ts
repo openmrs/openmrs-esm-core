@@ -54,5 +54,5 @@ export function runDebug(args: DebugArgs) {
     }
   });
 
-  return new Promise(() => {});
+  return new Promise<void>(() => {});
 }
