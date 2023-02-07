@@ -57,5 +57,5 @@ export function runStart(args: StartArgs) {
     }
   });
 
-  return new Promise(() => {});
+  return new Promise<void>(() => {});
 }

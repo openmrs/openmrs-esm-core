@@ -32,6 +32,7 @@
   "dependencies": {
     "@openmrs/esm-app-shell": "4.1.0",
     "@openmrs/webpack-config": "4.1.0",
+    "@pnpm/npm-conf": "^2.1.0",
     "autoprefixer": "^10.4.2",
     "axios": "^0.21.1",
     "browserslist-config-openmrs": "^1.0.1",
@@ -43,6 +44,7 @@
     "html-webpack-plugin": "^5.5.0",
     "inquirer": "^7.3.3",
     "mini-css-extract-plugin": "^2.4.5",
+    "npm-registry-fetch": "^14.0.3",
     "pacote": "^15.0.0",
     "postcss": "^8.4.6",
     "postcss-loader": "^6.2.1",

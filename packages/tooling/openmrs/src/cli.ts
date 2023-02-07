@@ -257,12 +257,6 @@ yargs.command(
       .describe(
         "importmap",
         "The import map to use. Can be a path to an import map to be taken literally, an URL, or a fixed JSON object."
-      )
-      .boolean("download-coreapps")
-      .default("download-coreapps", false)
-      .describe(
-        "download-coreapps",
-        "Downloads and bundles the core apps. For cases where the core apps are not in the import map."
       ),
   async (args) =>
     runCommand("runBuild", {
@@ -289,7 +283,8 @@ yargs.command(
         coerce: (arg) => resolve(process.cwd(), arg),
       })
       .option("registry", {
-        default: "https://registry.npmjs.org/",
+        alias: "reg",
+        default: "",
         description: "The NPM registry used for getting the packages.",
         type: "string",
         coerce: (arg) => trimEnd(arg, "/"),
