@@ -232,3 +232,8 @@
 .cds--pagination-nav__page:focus {
   outline: 2px solid var(--brand-03);
 }
+
+// Search fields
+.#{$prefix}--search-input {
+  outline: 2px solid #fdab3d; // specify your desired outline color and thickness here
+}
