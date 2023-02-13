@@ -234,6 +234,6 @@
 }
 
 // Search fields
-.#{$prefix}--search-input {
-  outline: 2px solid #fdab3d; // specify your desired outline color and thickness here
+.cds--search-input {
+  outline: 2px solid $color-orange-40; // specify your desired outline color and thickness here
 }
