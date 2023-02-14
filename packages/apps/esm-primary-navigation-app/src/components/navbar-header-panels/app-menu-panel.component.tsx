@@ -25,6 +25,7 @@ const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
       className={styles.headerPanel}
       aria-label="App Menu Panel"
       expanded={expanded}
+      onClick={() => hidePanel()}
     >
       <ExtensionSlot className={styles.menuLink} name="app-menu-slot" />
       {config?.externalRefLinks?.length > 0 && (
