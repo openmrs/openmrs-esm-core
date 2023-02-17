@@ -233,7 +233,7 @@
   outline: 2px solid var(--brand-03);
 }
 
-// Search fields
-.cds--search-input {
-  outline: 2px solid $color-orange-40; // specify your desired outline color and thickness here
+/* Search inputs */
+.cds--search-input:focus {
+  outline: 2px solid colors.$orange-40;
 }
