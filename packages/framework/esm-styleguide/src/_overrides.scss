@@ -232,3 +232,8 @@
 .cds--pagination-nav__page:focus {
   outline: 2px solid var(--brand-03);
 }
+
+/* Search inputs */
+.cds--search-input:focus {
+  outline: 2px solid colors.$orange-40;
+}
