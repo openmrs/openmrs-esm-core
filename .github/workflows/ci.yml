@@ -40,7 +40,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Setup local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v1
+        uses: felixmosh/turborepo-gh-artifacts@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
@@ -79,7 +79,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Setup local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v1
+        uses: felixmosh/turborepo-gh-artifacts@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
