@@ -1,0 +1,30 @@
+@use "@carbon/colors";
+
+/* Content Switcher errored state overrides */
+.errored {
+  :global(.cds--content-switcher-btn) {
+    border: 1px solid colors.$red-60;
+    background-color: colors.$red-10;
+    color: colors.$red-60;
+
+    &:hover {
+      background-color: colors.$red-10-hover;
+    }
+
+    &:first-child {
+      border-right: none;
+    }
+
+    &:last-child {
+      border-left: none;
+    }
+  }
+
+  :global(.cds--content-switcher-btn.cds--content-switcher--selected)::after {
+    background-color: unset;
+  }
+
+  :global(.cds--content-switcher-btn:before) {
+    background-color: unset;
+  }
+}

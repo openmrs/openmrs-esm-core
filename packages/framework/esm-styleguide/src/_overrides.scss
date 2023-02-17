@@ -44,54 +44,31 @@
 
 /* Content Switcher */
 .cds--content-switcher-btn {
-  background-color: $ui-02;
-  border-top: 1px solid #a6c8ff;
-  border-bottom: 1px solid #a6c8ff;
-  color: $text-02;
-
-  &:first-child,
-  &:last-child {
-    border-left: 0.0625rem solid #a6c8ff;
-    border-right: 0.0625rem solid #a6c8ff;
-  }
-
-  &::after {
-    background-color: transparent;
-  }
-
-  &.cds--content-switcher--selected {
-    background-color: $color-blue-10;
-    border: 1px solid $interactive-01;
-    color: $interactive-01;
-
-    &:active {
-      background-color: $color-blue-10;
-    }
-
-    &::after {
-      background-color: $color-blue-10;
-    }
-  }
-
-  &:first-of-type[aria-selected="false"] {
-    border-right: 0;
-  }
-
-  &:last-of-type[aria-selected="false"] {
-    border-left: 0;
-  }
-
-  &:focus,
-  &:hover {
-    background-color: $ui-01;
-    color: $interactive-01;
-  }
+  border: none;
+  border-top: 1px solid colors.$blue-30;
+  border-bottom: 1px solid colors.$blue-30;
 }
 
-.cds--content-switcher-btn:before {
-  background-color: colors.$blue-30;
-  height: 100%;
-  z-index: 0;
+.cds--content-switcher-btn:first-child {
+  border-bottom-left-radius: 0.25rem;
+  border-left: 0.0625rem solid colors.$blue-30;
+  border-top-left-radius: 0.25rem;
+}
+
+.cds--content-switcher-btn:last-child {
+  border-bottom-right-radius: 0.25rem;
+  border-right: 0.0625rem solid colors.$blue-30;
+  border-top-right-radius: 0.25rem;
+}
+
+.cds--content-switcher-btn.cds--content-switcher--selected {
+  border: 1px solid colors.$blue-60;
+  background-color: colors.$blue-10;
+  color: colors.$blue-60;
+
+  &::after {
+    background: none;
+  }
 }
 
 /* Tabs */
