@@ -262,3 +262,8 @@
 .cds--data-table--lg td.cds--table-column-menu {
   width: spacing.$spacing-09;
 }
+
+/* Search inputs */
+.cds--search-input:focus {
+  outline: 2px solid colors.$orange-40;
+}
