@@ -232,3 +232,33 @@
 .cds--pagination-nav__page:focus {
   outline: 2px solid var(--brand-03);
 }
+
+.cds--data-table--xs .cds--overflow-menu {
+  height: spacing.$spacing-07;
+}
+
+.cds--data-table--sm .cds--overflow-menu {
+  height: spacing.$spacing-08;
+}
+
+.cds--data-table--sm .cds--overflow-menu--sm {
+  height: spacing.$spacing-07;
+}
+
+.cds--data-table--xs .cds--overflow-menu {
+  max-height: spacing.$spacing-07;
+}
+
+.cds--data-table-container {
+  padding-top: 0;
+}
+
+.cds--data-table td.cds--table-column-menu {
+  width: spacing.$spacing-08;
+  vertical-align: top;
+  padding-right: 0;
+}
+
+.cds--data-table--lg td.cds--table-column-menu {
+  width: spacing.$spacing-09;
+}
