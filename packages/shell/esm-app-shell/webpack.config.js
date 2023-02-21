@@ -7,7 +7,7 @@ const BundleAnalyzerPlugin =
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
-const { resolve, dirname, basename } = require("path");
+const { resolve } = require("path");
 const { readdirSync, statSync } = require("fs");
 const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
 const { name, version, dependencies } = require("./package.json");
@@ -16,7 +16,6 @@ const frameworkVersion = require("@openmrs/esm-framework/package.json").version;
 
 const timestamp = getTimestamp();
 const production = "production";
-const allowedSuffixes = ["-app", "-widgets"];
 const { ModuleFederationPlugin } = container;
 
 const openmrsAddCookie = process.env.OMRS_ADD_COOKIE;
@@ -102,6 +101,10 @@ module.exports = (env, argv = {}) => {
               const newCookie = `${origCookie};${openmrsAddCookie}`;
               proxyReq.setHeader("cookie", newCookie);
             }
+          },
+          onProxyRes(proxyRes) {
+            proxyRes.headers &&
+              delete proxyRes.headers["content-security-policy"];
           },
         },
       ],
