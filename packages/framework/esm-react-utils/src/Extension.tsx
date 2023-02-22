@@ -143,7 +143,7 @@ export const Extension: React.FC<ExtensionProps> = ({
     />
   );
 
-  if (typeof children == "function" && !React.isValidElement(children)) {
+  if (typeof children === "function" && !React.isValidElement(children)) {
     return <>{children(slot, extension)}</>;
   }
 
