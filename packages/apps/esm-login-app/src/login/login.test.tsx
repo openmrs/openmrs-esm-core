@@ -100,9 +100,11 @@ describe(`<Login />`, () => {
       "yoshi"
     );
     await user.click(screen.getByRole("button", { name: /Continue/i }));
+
+    const loginButton = screen.getByRole("button", { name: /log in/i });
     await screen.findByLabelText(/password/i);
     await user.type(screen.getByLabelText(/password/i), "no-tax-fraud");
-    await user.click(screen.getByRole("button", { name: /log in/i }));
+    await user.click(loginButton);
     await waitFor(() =>
       expect(performLogin).toHaveBeenCalledWith("yoshi", "no-tax-fraud")
     );
