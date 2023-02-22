@@ -20,7 +20,7 @@ export type ExtensionProps = {
 } & Omit<React.HTMLAttributes<HTMLDivElement>, "children"> & {
     children?:
       | React.ReactNode
-      | ((extension: React.ReactNode) => React.ReactNode);
+      | ((slot: React.ReactNode, extension?: ExtensionData) => React.ReactNode);
   };
 
 /**
@@ -54,7 +54,7 @@ export const Extension: React.FC<ExtensionProps> = ({
       );
     }
     // we only warn when component mounts
-    // eslint-disable-next-line eslintreact-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ref = useCallback(
@@ -105,7 +105,7 @@ export const Extension: React.FC<ExtensionProps> = ({
 
     // we intentionally do not re-run this hook if state gets updated
     // state updates are handled in the next useEffect hook
-    // eslint-disable-next-line eslintreact-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     extension?.extensionSlotName,
     extension?.extensionId,
@@ -129,7 +129,7 @@ export const Extension: React.FC<ExtensionProps> = ({
     return () => {
       updatePromise.current = null;
     };
-  }, [parcel.current, state]);
+  }, [state]);
 
   // The extension is rendered into the `<div>`. The `<div>` has relative
   // positioning in order to allow the UI Editor to absolutely position
@@ -143,8 +143,8 @@ export const Extension: React.FC<ExtensionProps> = ({
     />
   );
 
-  if (typeof children == "function" && !React.isValidElement(children)) {
-    return <>{children(slot)}</>;
+  if (typeof children === "function" && !React.isValidElement(children)) {
+    return <>{children(slot, extension)}</>;
   }
 
   return extension && wrap ? wrap(slot, extension) : slot;
