@@ -26,7 +26,7 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
   const referrer = state?.referrer;
   const config = useConfig();
   const { user } = useSession();
-  const { locationData, isLoading } = useLoginLocations(
+  const { locations, isLoading } = useLoginLocations(
     config.chooseLocation.useLoginLocationTag
   );
 
@@ -55,35 +55,29 @@ export const ChooseLocation: React.FC<ChooseLocationProps> = ({
     [referrer, config.links.loginSuccess, returnToUrl]
   );
 
-  // Handle cases where the location picker is disabled, there is only one
-  // location, or there are no locations.
+  // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
     if (!isLoading) {
-      if (!config.chooseLocation.enabled || locationData?.length === 1) {
-        changeLocation(locationData[0]?.resource.id);
+      if (!config.chooseLocation.enabled || locations?.length === 1) {
+        changeLocation(locations[0]?.resource.id);
       }
-      if (!isLoading && !locationData?.length) {
+      if (!isLoading && !locations?.length) {
         changeLocation();
       }
     }
   }, [
-    locationData,
+    locations,
     user,
     changeLocation,
     config.chooseLocation.enabled,
     isLoading,
   ]);
 
-  if (!isLoading && !user) {
-    navigate({ to: "${openmrsSpaBase}/login" });
-    return null;
-  }
-
   if (!isLoading || !isLoginEnabled) {
     return (
       <LocationPicker
-        currentUser={user.display}
-        loginLocations={locationData ?? []}
+        currentUser={user?.display}
+        loginLocations={locations ?? []}
         onChangeLocation={changeLocation}
         isLoginEnabled={isLoginEnabled}
       />

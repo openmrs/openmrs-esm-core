@@ -1,15 +1,16 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   openmrsFetch,
   fhirBaseUrl,
   FetchResponse,
-  reportError,
+  showNotification,
 } from "@openmrs/esm-framework";
 import useSwrInfinite from "swr/infinite";
 import { LocationEntry, LocationResponse } from "../types";
 
 interface LoginLocationData {
-  locationData: Array<LocationEntry>;
+  locations: Array<LocationEntry>;
   isLoading: boolean;
   totalResults: number;
   hasMore: boolean;
@@ -19,14 +20,13 @@ interface LoginLocationData {
   ) => Promise<FetchResponse<LocationResponse>[]>;
 }
 
-const fhirLocationUrl = `${fhirBaseUrl}/Location?_summary=data`;
-
 export function useLoginLocations(
   useLoginLocationTag: boolean,
   count: number = 0,
   searchQuery: string = ""
 ): LoginLocationData {
-  const getUrl = (page, prevPageData: FetchResponse<LocationResponse>) => {
+  const { t } = useTranslation();
+  function constructUrl(page, prevPageData: FetchResponse<LocationResponse>) {
     if (
       prevPageData &&
       !prevPageData?.data?.link?.some((link) => link.relation === "next")
@@ -34,7 +34,7 @@ export function useLoginLocations(
       return null;
     }
 
-    let url = fhirLocationUrl;
+    let url = `${fhirBaseUrl}/Location?_summary=data`;
 
     if (count) {
       url += `&_count=${count}`;
@@ -53,24 +53,28 @@ export function useLoginLocations(
     }
 
     return url;
-  };
-
-  const { data, isValidating, setSize, error } = useSwrInfinite<
-    FetchResponse<LocationResponse>,
-    Error
-  >(getUrl, openmrsFetch);
-
-  if (error) {
-    console.error(error);
-    reportError(error);
   }
 
-  const memoizedLocationData = useMemo(() => {
+  const { data, isLoading, isValidating, setSize, error } = useSwrInfinite<
+    FetchResponse<LocationResponse>,
+    Error
+  >(constructUrl, openmrsFetch);
+
+  if (error) {
+    showNotification({
+      title: t("errorLoadingLoginLocations", "Error loading login locations"),
+      kind: "error",
+      critical: true,
+      description: error?.message,
+    });
+  }
+
+  const memoizedLocations = useMemo(() => {
     return {
-      locationData: data
-        ? [].concat(...data?.map((resp) => resp?.data?.entry ?? []))
+      locations: data?.length
+        ? data?.flatMap((entries) => entries?.data?.entry ?? [])
         : null,
-      isLoading: !data && !error,
+      isLoading,
       totalResults: data?.[0]?.data?.total ?? null,
       hasMore: data?.length
         ? data?.[data.length - 1]?.data?.link.some(
@@ -80,7 +84,7 @@ export function useLoginLocations(
       loadingNewData: isValidating,
       setPage: setSize,
     };
-  }, [data, error, isValidating, setSize, searchQuery]);
+  }, [isLoading, data, isValidating, setSize]);
 
-  return memoizedLocationData;
+  return memoizedLocations;
 }

@@ -31,12 +31,14 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   currentLocationUuid,
   isLoginEnabled,
 }) => {
-  const config = useConfig();
-  const { chooseLocation } = config;
   const { t } = useTranslation();
-  const [pageSize, setPageSize] = useState<number>(chooseLocation.numberToShow);
-  const userDefaultLoginLocation: string = "userDefaultLoginLocationKey";
-  const getDefaultUserLoginLocation = (): string => {
+  const config = useConfig();
+  const searchTimeout = 300;
+  const inputRef = useRef();
+  const { chooseLocation } = config;
+  const userDefaultLoginLocation = "userDefaultLoginLocationKey";
+
+  const getDefaultUserLoginLocation = () => {
     const userLocation = window.localStorage.getItem(
       `${userDefaultLoginLocation}${currentUser}`
     );
@@ -45,13 +47,28 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     );
     return isValidLocation ? userLocation : "";
   };
-  const [activeLocation, setActiveLocation] = useState<string>(
-    getDefaultUserLoginLocation() ?? ""
-  );
-  const [searchTerm, setSearchTerm] = useState("");
+
+  const [activeLocation, setActiveLocation] = useState(() => {
+    if (currentLocationUuid && hideWelcomeMessage) {
+      return currentLocationUuid;
+    }
+
+    return getDefaultUserLoginLocation() ?? "";
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [searchTerm, setSearchTerm] = useState(() => {
+    if (isSubmitting && inputRef.current) {
+      let searchInput: HTMLInputElement = inputRef.current;
+      searchInput.value = "";
+      setSearchTerm(null);
+    }
+    return "";
+  });
 
   const {
-    locationData,
+    locations,
     isLoading,
     hasMore,
     totalResults,
@@ -63,16 +80,12 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     searchTerm
   );
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const inputRef = useRef();
-  const searchTimeout = 300;
-
-  useEffect(() => {
-    if (isSubmitting) {
-      onChangeLocation(activeLocation);
-      setIsSubmitting(false);
+  const [pageSize, setPageSize] = useState(() => {
+    if (!isLoading && totalResults && chooseLocation.numberToShow) {
+      return Math.min(chooseLocation.numberToShow, totalResults);
     }
-  }, [isSubmitting, activeLocation, onChangeLocation]);
+    return chooseLocation.numberToShow;
+  });
 
   useEffect(() => {
     if (activeLocation) {
@@ -84,24 +97,11 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   }, [activeLocation, currentUser]);
 
   useEffect(() => {
-    if (currentLocationUuid && hideWelcomeMessage) {
-      setActiveLocation(currentLocationUuid);
+    if (isSubmitting) {
+      onChangeLocation(activeLocation);
+      setIsSubmitting(false);
     }
-  }, [currentLocationUuid, hideWelcomeMessage]);
-
-  useEffect(() => {
-    if (isSubmitting && inputRef.current) {
-      let searchInput: HTMLInputElement = inputRef.current;
-      searchInput.value = "";
-      setSearchTerm(null);
-    }
-  }, [isSubmitting]);
-
-  useEffect(() => {
-    if (!isLoading && totalResults && chooseLocation.numberToShow) {
-      setPageSize(Math.min(chooseLocation.numberToShow, totalResults));
-    }
-  }, [isLoading, totalResults, chooseLocation.numberToShow]);
+  }, [isSubmitting, activeLocation, onChangeLocation]);
 
   const search = debounce((location: string) => {
     setActiveLocation("");
@@ -113,7 +113,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     setIsSubmitting(true);
   };
 
-  // Infinte scrolling
+  // Infinite scroll
   const observer = useRef(null);
   const loadingIconRef = useCallback(
     (node) => {
@@ -162,7 +162,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             {!isLoading ? (
               <>
                 <div className={styles.locationResultsContainer}>
-                  {locationData?.length > 0 && (
+                  {locations?.length > 0 && (
                     <RadioButtonGroup
                       valueSelected={activeLocation}
                       orientation="vertical"
@@ -171,7 +171,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                         setActiveLocation(ev.toString());
                       }}
                     >
-                      {locationData.map((entry) => (
+                      {locations.map((entry) => (
                         <RadioButton
                           className={styles.locationRadioButton}
                           key={entry.resource.id}
@@ -182,7 +182,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                       ))}
                     </RadioButtonGroup>
                   )}
-                  {locationData?.length === 0 && (
+                  {locations?.length === 0 && (
                     <div className={styles.emptyState}>
                       <p className={styles.locationNotFound}>
                         {t("noResultsToDisplay", "No results to display")}

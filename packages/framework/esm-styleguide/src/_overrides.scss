@@ -179,7 +179,7 @@
 .cds--btn--tertiary:hover,
 .cds--btn--tertiary:active,
 .cds--btn--tertiary:focus {
-  @include brand-01(background-color);
+  @include brand-03(background-color);
 }
 
 .cds--btn--primary:hover {
@@ -266,4 +266,14 @@
 /* Search inputs */
 .cds--search-input:focus {
   outline: 2px solid colors.$orange-40;
+}
+
+.cds--search-input:focus ~ .cds--search-close:hover {
+  outline: none;
+}
+
+/* Radio buttons */
+.cds--radio-button-group--vertical
+  .cds--radio-button-wrapper:not(:last-of-type) {
+  margin-bottom: 0;
 }

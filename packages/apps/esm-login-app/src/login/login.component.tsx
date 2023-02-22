@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
+  InlineLoading,
   InlineNotification,
   PasswordInput,
   TextInput,
@@ -10,6 +11,7 @@ import {
 import { ArrowLeft, ArrowRight } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import {
+  ConfigurableLink,
   useConfig,
   interpolateUrl,
   useSession,
@@ -44,6 +46,7 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -89,7 +92,7 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
     } else {
       field.focus();
     }
-  }, [navigate]);
+  }, [location.state, navigate]);
 
   const changeUsername = useCallback(
     (evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value),
@@ -117,22 +120,25 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
       }
 
       try {
+        setIsLoggingIn(true);
         const loginRes = await performLogin(username, password);
         const authData = loginRes.data;
         const valid = authData && authData.authenticated;
 
-        if (!valid) {
-          throw new Error("invalidCredentials");
-        } else {
+        if (valid) {
           navigate("/login/location", { state: location.state });
+        } else {
+          throw new Error("invalidCredentials");
         }
       } catch (error) {
+        setIsLoggingIn(false);
         setErrorMessage(error.message);
         resetUserNameAndPassword();
       }
 
       return false;
     },
+
     [
       showPassword,
       continueLogin,
@@ -162,8 +168,8 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
       <div className={`canvas ${styles["container"]}`}>
         {errorMessage && (
           <InlineNotification
+            className={styles.errorMessage}
             kind="error"
-            style={{ width: "23rem", marginBottom: "3rem" }}
             /**
              * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
              * t('invalidCredentials')
@@ -260,9 +266,16 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
                   className={styles.continueButton}
                   renderIcon={(props) => <ArrowRight size={24} {...props} />}
                   iconDescription="Log in"
-                  disabled={!isLoginEnabled}
+                  disabled={!isLoginEnabled || isLoggingIn}
                 >
-                  {t("login", "Log in")}
+                  {isLoggingIn ? (
+                    <InlineLoading
+                      className={styles.loader}
+                      description={t("loggingIn", "Logging in") + "..."}
+                    />
+                  ) : (
+                    <span>{t("login", "Log in")}</span>
+                  )}
                 </Button>
               </div>
             )}
@@ -271,9 +284,9 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
         <div className={styles["need-help"]}>
           <p className={styles["need-help-txt"]}>
             {t("needHelp", "Need help?")}
-            <Button kind="ghost">
+            <ConfigurableLink className={styles.link} to="#">
               {t("contactAdmin", "Contact the site administrator")}
-            </Button>
+            </ConfigurableLink>
           </p>
         </div>
         <div className={styles["footer"]}>
