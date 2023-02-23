@@ -1,41 +1,49 @@
 import { useState } from "react";
 import { waitFor, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import {
-  setSessionLocation,
-  useConfig,
-  useSession,
-} from "@openmrs/esm-framework";
-import { performLogin } from "./login.resource";
+import { useConfig, useSession } from "@openmrs/esm-framework";
+import { performLogin } from "../login.resource";
 import { mockConfig } from "../../__mocks__/config.mock";
 import renderWithRouter from "../test-helpers/render-with-router";
 import Login from "./login.component";
 
 const mockedLogin = performLogin as jest.Mock;
-
-jest.mock("./login.resource", () => ({
-  performLogin: jest.fn(),
-}));
-
-const mockedSetSessionLocation = setSessionLocation as jest.Mock;
 const mockedUseConfig = useConfig as jest.Mock;
 const mockedUseSession = useSession as jest.Mock;
+
+jest.mock("@openmrs/esm-framework", () => {
+  const originalModule = jest.requireActual("@openmrs/esm-framework");
+
+  return {
+    ...originalModule,
+    clearCurrentUser: jest.fn(),
+    refetchCurrentUser: jest.fn().mockReturnValue(Promise.resolve()),
+    getSessionStore: jest.fn().mockImplementation(() => {
+      return {
+        getState: jest.fn().mockReturnValue({
+          session: {
+            authenticated: true,
+          },
+        }),
+      };
+    }),
+  };
+});
+
+jest.mock("../login.resource", () => ({
+  performLogin: jest.fn(),
+}));
 
 const loginLocations = [
   { uuid: "111", display: "Earth" },
   { uuid: "222", display: "Mars" },
 ];
 
-describe(`<Login />`, () => {
-  beforeEach(() => {
-    mockedLogin.mockReset();
-    mockedSetSessionLocation.mockReset();
-    mockedUseSession.mockReset();
-    mockedUseSession.mockReturnValue({ authenticated: false });
-    mockedUseConfig.mockReturnValue(mockConfig);
-  });
+mockedUseSession.mockReturnValue({ authenticated: false });
+mockedUseConfig.mockReturnValue(mockConfig);
 
-  it(`renders a login form`, () => {
+describe("Login", () => {
+  it("renders the login form", () => {
     renderWithRouter(Login, {
       loginLocations: loginLocations,
       isLoginEnabled: true,
@@ -47,7 +55,29 @@ describe(`<Login />`, () => {
     screen.getByRole("button", { name: /Continue/i });
   });
 
-  it(`should return user focus to username input when input is invalid`, async () => {
+  it("renders a configurable logo", () => {
+    const customLogoConfig = {
+      src: "https://some-image-host.com/foo.png",
+      alt: "Custom logo",
+    };
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+      logo: customLogoConfig,
+    });
+
+    renderWithRouter(Login, {
+      loginLocations: loginLocations,
+      isLoginEnabled: true,
+    });
+
+    const logo = screen.getByAltText(customLogoConfig.alt);
+
+    expect(screen.queryByTitle(/openmrs logo/i)).not.toBeInTheDocument();
+    expect(logo).toHaveAttribute("src", customLogoConfig.src);
+    expect(logo).toHaveAttribute("alt", customLogoConfig.alt);
+  });
+
+  it("should return user focus to username input when input is invalid", async () => {
     renderWithRouter(
       Login,
       {
@@ -78,7 +108,7 @@ describe(`<Login />`, () => {
     expect(screen.getByLabelText(/password/i)).toHaveFocus();
   });
 
-  it(`makes an API request when you submit the form`, async () => {
+  it("makes an API request when you submit the form", async () => {
     mockedLogin.mockReturnValue(Promise.resolve({ some: "data" }));
 
     renderWithRouter(
@@ -110,7 +140,7 @@ describe(`<Login />`, () => {
     );
   });
 
-  it(`sends the user to the location select page on login if there is more than one location`, async () => {
+  it("sends the user to the location select page on login if there is more than one location", async () => {
     let refreshUser = (user: any) => {};
     mockedLogin.mockImplementation(() => {
       refreshUser({
@@ -148,33 +178,6 @@ describe(`<Login />`, () => {
     await user.click(screen.getByRole("button", { name: /Continue/i }));
     await screen.findByLabelText(/password/i);
     await user.type(screen.getByLabelText(/password/i), "no-tax-fraud");
-    //FIX ME
-    // For some reason this assertion mounts and unmounts causing test to fail, commenting out to do a follow up to fix it
-    // await user.click(screen.getByRole("button", { name: /login/i }));
-    //expect(wrapper.history.location.pathname).toBe("/login/location");
-    //await waitFor(() =>
-    //);
-  });
-
-  it("respects the logo configuration", () => {
-    const customLogoConfig = {
-      src: "https://some-image-host.com/foo.png",
-      alt: "Custom logo",
-    };
-    mockedUseConfig.mockReturnValue({
-      ...mockConfig,
-      logo: customLogoConfig,
-    });
-
-    renderWithRouter(Login, {
-      loginLocations: loginLocations,
-      isLoginEnabled: true,
-    });
-
-    const logo = screen.getByAltText(customLogoConfig.alt);
-
-    expect(screen.queryByTitle(/openmrs logo/i)).not.toBeInTheDocument();
-    expect(logo).toHaveAttribute("src", customLogoConfig.src);
-    expect(logo).toHaveAttribute("alt", customLogoConfig.alt);
+    await user.click(screen.getByRole("button", { name: /log in/i }));
   });
 });

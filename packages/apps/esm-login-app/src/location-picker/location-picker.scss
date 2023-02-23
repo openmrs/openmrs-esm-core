@@ -105,7 +105,12 @@ pagination > button:first-child:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: spacing.$spacing-05;
+  max-width: 50%;
+  margin: spacing.$spacing-05 auto;
+
+  :global(.cds--loading__stroke) {
+    @include brand-03(stroke);
+  }
 }
 
 .loadingContainer {

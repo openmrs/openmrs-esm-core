@@ -1,63 +1,46 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import debounce from "lodash-es/debounce";
+import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import debounce from "lodash-es/debounce";
 import {
   Button,
+  InlineLoading,
   Search,
   RadioButton,
   RadioButtonGroup,
-  Loading,
   RadioButtonSkeleton,
 } from "@carbon/react";
-import { useConfig } from "@openmrs/esm-framework";
-import { LocationEntry } from "../types";
-import { useLoginLocations } from "../choose-location/choose-location.resource";
+import {
+  navigate,
+  setSessionLocation,
+  useConfig,
+  useSession,
+} from "@openmrs/esm-framework";
+import type { LoginReferrer } from "../login/login.component";
+import { useLoginLocations } from "../login.resource";
 import styles from "./location-picker.scss";
 
 interface LocationPickerProps {
-  currentUser: string;
-  loginLocations: Array<LocationEntry>;
-  onChangeLocation(locationUuid: string): void;
   hideWelcomeMessage?: boolean;
   currentLocationUuid?: string;
   isLoginEnabled: boolean;
 }
 
 const LocationPicker: React.FC<LocationPickerProps> = ({
-  currentUser,
-  loginLocations,
-  onChangeLocation,
   hideWelcomeMessage,
   currentLocationUuid,
   isLoginEnabled,
 }) => {
   const { t } = useTranslation();
-  const config = useConfig();
   const searchTimeout = 300;
   const inputRef = useRef();
+  const { user } = useSession();
+  const currentUser = user?.display;
+  const config = useConfig();
   const { chooseLocation } = config;
   const userDefaultLoginLocation = "userDefaultLoginLocationKey";
 
-  const getDefaultUserLoginLocation = () => {
-    const userLocation = window.localStorage.getItem(
-      `${userDefaultLoginLocation}${currentUser}`
-    );
-    const isValidLocation = loginLocations?.some(
-      (location) => location.resource.id === userLocation
-    );
-    return isValidLocation ? userLocation : "";
-  };
-
-  const [activeLocation, setActiveLocation] = useState(() => {
-    if (currentLocationUuid && hideWelcomeMessage) {
-      return currentLocationUuid;
-    }
-
-    return getDefaultUserLoginLocation() ?? "";
-  });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [searchTerm, setSearchTerm] = useState(() => {
     if (isSubmitting && inputRef.current) {
       let searchInput: HTMLInputElement = inputRef.current;
@@ -80,6 +63,53 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     searchTerm
   );
 
+  const { state } = useLocation() as { state: LoginReferrer };
+  const returnToUrl = new URLSearchParams(location?.search).get("returnToUrl");
+  const referrer = state?.referrer;
+
+  const changeLocation = useCallback(
+    (locationUuid?: string) => {
+      const sessionDefined = locationUuid
+        ? setSessionLocation(locationUuid, new AbortController())
+        : Promise.resolve();
+
+      sessionDefined.then(() => {
+        if (
+          referrer &&
+          !["/", "/login", "/login/location"].includes(referrer)
+        ) {
+          navigate({ to: "${openmrsSpaBase}" + referrer });
+          return;
+        }
+        if (returnToUrl && returnToUrl !== "/") {
+          navigate({ to: returnToUrl });
+        } else {
+          navigate({ to: config.links.loginSuccess });
+        }
+        return;
+      });
+    },
+    [referrer, config.links.loginSuccess, returnToUrl]
+  );
+
+  const getDefaultUserLoginLocation = () => {
+    const userLocation = window.localStorage.getItem(
+      `${userDefaultLoginLocation}${currentUser}`
+    );
+    const isValidLocation = locations?.some(
+      (location) => location.resource.id === userLocation
+    );
+    return isValidLocation ? userLocation : "";
+  };
+
+  const [activeLocation, setActiveLocation] = useState(() => {
+    if (currentLocationUuid && hideWelcomeMessage) {
+      return currentLocationUuid;
+    }
+
+    return getDefaultUserLoginLocation() ?? "";
+  });
+
   const [pageSize, setPageSize] = useState(() => {
     if (!isLoading && totalResults && chooseLocation.numberToShow) {
       return Math.min(chooseLocation.numberToShow, totalResults);
@@ -98,10 +128,22 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   useEffect(() => {
     if (isSubmitting) {
-      onChangeLocation(activeLocation);
+      changeLocation(activeLocation);
       setIsSubmitting(false);
     }
-  }, [isSubmitting, activeLocation, onChangeLocation]);
+  }, [isSubmitting, activeLocation, changeLocation]);
+
+  // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
+  useEffect(() => {
+    if (!isLoading) {
+      if (!config.chooseLocation.enabled || locations?.length === 1) {
+        changeLocation(locations[0]?.resource.id);
+      }
+      if (!isLoading && !locations?.length) {
+        changeLocation();
+      }
+    }
+  }, [config.chooseLocation.enabled, isLoading, locations, changeLocation]);
 
   const search = debounce((location: string) => {
     setActiveLocation("");
@@ -159,10 +201,17 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             size="lg"
           />
           <div className={styles.searchResults}>
-            {!isLoading ? (
+            {isLoading ? (
+              <div className={styles.loadingContainer}>
+                <RadioButtonSkeleton
+                  className={styles.radioButtonSkeleton}
+                  role="progressbar"
+                />
+              </div>
+            ) : (
               <>
                 <div className={styles.locationResultsContainer}>
-                  {locations?.length > 0 && (
+                  {locations?.length && (
                     <RadioButtonGroup
                       valueSelected={activeLocation}
                       orientation="vertical"
@@ -192,18 +241,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                 </div>
                 {hasMore && (
                   <div className={styles.loadingIcon} ref={loadingIconRef}>
-                    <Loading
-                      small
-                      withOverlay={false}
-                      description={t("loading", "Loading")}
-                    />
+                    <InlineLoading description={t("loading", "Loading")} />
                   </div>
                 )}
               </>
-            ) : (
-              <div className={styles.loadingContainer}>
-                <RadioButtonSkeleton className={styles.radioButtonSkeleton} />
-              </div>
             )}
           </div>
           <div className={styles.confirmButton}>

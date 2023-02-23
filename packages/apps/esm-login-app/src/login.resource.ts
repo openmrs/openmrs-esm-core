@@ -1,13 +1,34 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import useSwrInfinite from "swr/infinite";
 import {
-  openmrsFetch,
-  fhirBaseUrl,
   FetchResponse,
+  fhirBaseUrl,
+  openmrsFetch,
+  refetchCurrentUser,
+  Session,
   showNotification,
 } from "@openmrs/esm-framework";
-import useSwrInfinite from "swr/infinite";
-import { LocationEntry, LocationResponse } from "../types";
+import { LocationEntry, LocationResponse } from "./types";
+
+export async function performLogin(
+  username: string,
+  password: string
+): Promise<{ data: Session }> {
+  const abortController = new AbortController();
+  const token = window.btoa(`${username}:${password}`);
+  const url = `/ws/rest/v1/session`;
+
+  return openmrsFetch(url, {
+    headers: {
+      Authorization: `Basic ${token}`,
+    },
+    signal: abortController.signal,
+  }).then((res) => {
+    refetchCurrentUser();
+    return res;
+  });
+}
 
 interface LoginLocationData {
   locations: Array<LocationEntry>;
