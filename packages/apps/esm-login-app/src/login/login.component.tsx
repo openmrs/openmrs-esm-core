@@ -11,7 +11,6 @@ import {
 import { ArrowLeft, ArrowRight } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import {
-  ConfigurableLink,
   useConfig,
   interpolateUrl,
   useSession,
@@ -19,7 +18,7 @@ import {
   clearCurrentUser,
   getSessionStore,
 } from "@openmrs/esm-framework";
-import { performLogin } from "./login.resource";
+import { performLogin } from "../login.resource";
 import styles from "./login.scss";
 
 const hidden: React.CSSProperties = {
@@ -281,14 +280,6 @@ const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
             )}
           </form>
         </Tile>
-        <div className={styles["need-help"]}>
-          <p className={styles["need-help-txt"]}>
-            {t("needHelp", "Need help?")}
-            <ConfigurableLink className={styles.link} to="#">
-              {t("contactAdmin", "Contact the site administrator")}
-            </ConfigurableLink>
-          </p>
-        </div>
         <div className={styles["footer"]}>
           <p className={styles["powered-by-txt"]}>
             {t("poweredBy", "Powered by")}

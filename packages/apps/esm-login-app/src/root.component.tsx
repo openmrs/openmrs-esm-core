@@ -1,6 +1,6 @@
 import React from "react";
 import Login from "./login/login.component";
-import ChooseLocation from "./choose-location/choose-location.component";
+import LocationPicker from "./location-picker/location-picker.component";
 import RedirectLogout from "./redirect-logout/redirect-logout.component";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -22,7 +22,7 @@ const Root: React.FC<RootProps> = ({ isLoginEnabled }) => {
         />
         <Route
           path="/login/location"
-          element={<ChooseLocation isLoginEnabled={isLoginEnabled} />}
+          element={<LocationPicker isLoginEnabled={isLoginEnabled} />}
         />
         <Route
           path="/logout"
