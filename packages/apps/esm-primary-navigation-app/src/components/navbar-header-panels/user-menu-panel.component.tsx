@@ -10,7 +10,7 @@ import styles from "../../root.scss";
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   expanded: boolean;
-  user: LoggedInUser;
+  user: LoggedInUser | false | null;
   allowedLocales: any;
   onLogout(): void;
   session: UserSession;

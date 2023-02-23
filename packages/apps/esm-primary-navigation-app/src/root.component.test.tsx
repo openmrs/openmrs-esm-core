@@ -1,6 +1,7 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { of } from "rxjs";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { isDesktop } from "./utils";
 import { mockUser } from "../__mocks__/mock-user";
 import { mockSession } from "../__mocks__/mock-session";
@@ -8,6 +9,7 @@ import Root from "./root.component";
 
 const mockUserObservable = of(mockUser);
 const mockSessionObservable = of({ data: mockSession });
+
 jest.mock("@openmrs/esm-framework", () => ({
   openmrsFetch: jest.fn().mockResolvedValue({}),
   useAssignedExtensions: jest.fn().mockReturnValue([]),
@@ -25,6 +27,7 @@ jest.mock("@openmrs/esm-framework", () => ({
     const { useRef } = require("react");
     return useRef();
   }),
+  useSession: jest.fn().mockReturnValue(mockSession),
   refetchCurrentUser: jest.fn(),
   subscribeConnectivity: jest.fn(),
   navigate: jest.fn(),
@@ -46,23 +49,25 @@ jest.mock("./utils", () => ({
   isDesktop: jest.fn(() => true),
 }));
 
-describe(`<Root />`, () => {
-  beforeEach(() => {
-    render(<Root />);
-  });
-
+describe("Root", () => {
   it("should display navbar with title", async () => {
-    expect(screen.getByRole("button", { name: /Users/i })).toBeInTheDocument();
+    render(<Root />);
+
+    expect(screen.getByRole("button", { name: /users/i })).toBeInTheDocument();
     expect(
-      screen.getByRole("banner", { name: /OpenMRS/i })
+      screen.getByRole("banner", { name: /openmrs/i })
     ).toBeInTheDocument();
-    expect(screen.getByText(/Mock EMR/i)).toBeInTheDocument();
+    expect(screen.getByText(/mock emr/i)).toBeInTheDocument();
   });
 
   it("should open user-menu panel", async () => {
-    const userButton = await screen.findByRole("button", { name: /Users/i });
-    fireEvent.click(userButton);
-    expect(screen.getByLabelText(/Location/i)).toBeInTheDocument();
+    const user = userEvent.setup();
+
+    render(<Root />);
+
+    const userButton = screen.getByRole("button", { name: /users/i });
+    await user.click(userButton);
+    expect(screen.getByLabelText(/location/i)).toBeInTheDocument();
   });
 
   describe("when view is desktop", () => {
