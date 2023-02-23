@@ -117,22 +117,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     return chooseLocation.numberToShow;
   });
 
-  useEffect(() => {
-    if (activeLocation) {
-      window.localStorage.setItem(
-        `${userDefaultLoginLocation}${currentUser}`,
-        activeLocation
-      );
-    }
-  }, [activeLocation, currentUser]);
-
-  useEffect(() => {
-    if (isSubmitting) {
-      changeLocation(activeLocation);
-      setIsSubmitting(false);
-    }
-  }, [isSubmitting, activeLocation, changeLocation]);
-
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
     if (!isLoading) {
@@ -152,7 +136,16 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    if (!activeLocation) return;
+
     setIsSubmitting(true);
+    changeLocation(activeLocation);
+
+    window.localStorage.setItem(
+      `${userDefaultLoginLocation}${currentUser}`,
+      activeLocation
+    );
   };
 
   // Infinite scroll
@@ -251,9 +244,16 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             <Button
               kind="primary"
               type="submit"
-              disabled={!activeLocation || !isLoginEnabled}
+              disabled={!activeLocation || !isLoginEnabled || isSubmitting}
             >
-              {t("confirm", "Confirm")}
+              {isSubmitting ? (
+                <InlineLoading
+                  className={styles.loader}
+                  description={t("submitting", "Submitting")}
+                />
+              ) : (
+                <span>{t("confirm", "Confirm")}</span>
+              )}
             </Button>
           </div>
         </div>

@@ -123,3 +123,7 @@ pagination > button:first-child:hover {
   justify-content: center;
   margin: spacing.$spacing-06 auto 0rem;
 }
+
+.loader {
+  min-height: fit-content;
+}
