@@ -224,12 +224,12 @@ async function setupOffline() {
     );
     await activateOfflineCapability();
     setupOfflineStaticDependencyPrecaching();
-  } catch (e) {
-    console.error("Error while setting up offline mode.", e);
+  } catch (error) {
+    console.error("Error while setting up offline mode.", error);
     showNotification({
-      critical: true,
+      kind: "error",
       title: "Offline Setup Error",
-      description: `There was an error while initializing the website's offline mode. You can try reloading the page later.`,
+      description: error.message,
     });
   }
 }
