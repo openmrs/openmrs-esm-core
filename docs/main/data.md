@@ -55,12 +55,13 @@ interface VisitData {
 export function useVisits() {
   const url = `/ws/rest/v1/visit?includeInactive=false`;
 
-  const { data, error } = useSWR<{ data: VisitData }, Error>(url, openmrsFetch);
+  const { data, error, isLoading, mutate } = useSWR<{ data: VisitData }, Error>(url, openmrsFetch);
 
   return {
     visits: data,
-    isLoading: !data && !error,
-    isError: error,
+    isLoading,
+    error,
+    mutate,
   };
 }
 ```
@@ -74,7 +75,7 @@ const Visits = () => {
   if (isLoading) {
     return <DataTableSkeleton role="progressbar" />
   }
-  if (isError) {
+  if (error) {
     // render error state
   }
   if (visits?.length) {
@@ -86,6 +87,23 @@ const Visits = () => {
 }
 
 export default Visits;
+```
+
+The `mutate` function returned by `useSWR` can be used to update the cache and trigger a re-render of the component. This is useful when we want to update the UI after a successful mutation.
+
+```typescript
+const res = await saveVisitNote(payload);
+
+try {
+  if (res.status === 201) {
+    mutate();
+    closeWorkspace();
+
+    // show success toast
+  }
+} catch (error) {
+  // handle error
+}
 ```
 
 ## Posting data to the server
