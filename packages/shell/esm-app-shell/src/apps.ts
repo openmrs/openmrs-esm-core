@@ -7,6 +7,7 @@ import {
   registerExtension,
   ResourceLoader,
   Lifecycle,
+  defineConfigSchema,
 } from "@openmrs/esm-framework/src/internal";
 import { registerApplication } from "single-spa";
 import { routePrefix, routeRegex, wrapLifecycle } from "./helpers";
@@ -35,7 +36,7 @@ function preprocessActivator(
   }
 }
 
-function trySetup(appName: string, setup: () => any): any {
+function trySetup(appName: string, setup: () => unknown): any {
   try {
     return setup();
   } catch (error) {
@@ -100,6 +101,8 @@ export function registerApp(appName: string, appExports: System.Module) {
   const setup = appExports.setupOpenMRS;
 
   if (typeof setup === "function") {
+    defineConfigSchema(appName, {});
+
     const assets = appExports.assets;
     const result = trySetup(appName, setup);
 
