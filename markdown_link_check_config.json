@@ -6,5 +6,10 @@
         "Accept-Encoding": "zstd, br, gzip, deflate"
       }
     }
+  ],
+  "ignorePatterns": [
+    {
+      "pattern": "^https://dev3.openmrs.org"
+    }
   ]
 }
