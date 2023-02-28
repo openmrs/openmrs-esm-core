@@ -1,4 +1,5 @@
 import {
+  defineConfigSchema,
   getAsyncLifecycle,
   getSyncLifecycle,
   registerBreadcrumbs,
@@ -32,6 +33,7 @@ function setupOpenMRS() {
     moduleName,
   };
 
+  defineConfigSchema(moduleName, {});
   setupOffline();
   setupSynchronizingOfflineActionsNotifications();
 
