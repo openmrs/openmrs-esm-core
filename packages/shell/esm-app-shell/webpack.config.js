@@ -88,7 +88,7 @@ module.exports = (env, argv = {}) => {
       ],
     },
     mode,
-    devtool: isProd ? false : "inline-source-map",
+    devtool: isProd ? "hidden-nosources-source-map" : "eval-source-map",
     module: {
       rules: [
         {
