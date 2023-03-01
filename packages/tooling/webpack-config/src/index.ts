@@ -162,7 +162,6 @@ export default (
       publicPath: "auto",
       path: resolve(root, outDir),
     },
-    target: "web",
     module: {
       rules: [
         merge(
@@ -206,7 +205,8 @@ export default (
       ],
     },
     mode,
-    devtool: mode === production ? false : "inline-source-map",
+    devtool:
+      mode === production ? "hidden-nosources-source-map" : "eval-source-map",
     devServer: {
       headers: {
         "Access-Control-Allow-Origin": "*",
