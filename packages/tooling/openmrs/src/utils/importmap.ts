@@ -150,7 +150,7 @@ export async function runProject(
     } else if (!existsSync(configPath)) {
       // try to locate and run via default webpack
       logWarn(
-        `No "webpack.config.json" found in directory "${sourceDirectory}". Trying to use default config ...`
+        `No "webpack.config.js" found in directory "${sourceDirectory}". Trying to use default config ...`
       );
 
       runProjectWebpack(
