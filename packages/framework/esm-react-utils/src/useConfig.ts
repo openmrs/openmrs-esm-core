@@ -160,7 +160,9 @@ function useNormalConfig(moduleName: string) {
 /**
  * Use this React Hook to obtain your module's configuration.
  */
-export function useConfig() {
+export function useConfig<
+  T = Omit<ConfigObject, "Display conditions" | "Translation overrides">
+>() {
   // This hook uses the config of the MF defining the component.
   // If the component is used in an extension slot then the slot
   // may override (part of) its configuration.
@@ -180,5 +182,5 @@ export function useConfig() {
     [normalConfig, extensionConfig]
   );
 
-  return config;
+  return config as T;
 }

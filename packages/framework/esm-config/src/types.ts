@@ -21,11 +21,11 @@ export interface ConfigSchema {
   _elements?: ConfigSchema;
 }
 
-export interface Config extends Object {
+export interface Config {
   [moduleName: string]: { [key: string]: any };
 }
 
-export interface ConfigObject extends Object {
+export interface ConfigObject {
   [key: string]: any;
   "Display conditions"?: DisplayConditionsConfigObject;
   "Translation overrides"?: Record<string, Record<string, string>>;
