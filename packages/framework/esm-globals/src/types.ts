@@ -1,4 +1,4 @@
-import { LifeCycleFn } from "single-spa";
+import type { LifeCycleFn } from "single-spa";
 
 declare global {
   interface Window {
