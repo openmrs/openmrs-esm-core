@@ -2114,7 +2114,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-error-handling/src/index.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L24)
+[packages/framework/esm-error-handling/src/index.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L30)
 
 ___
 
@@ -2134,7 +2134,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-error-handling/src/index.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L17)
+[packages/framework/esm-error-handling/src/index.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-error-handling/src/index.ts#L23)
 
 ___
 
