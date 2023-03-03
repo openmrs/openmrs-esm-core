@@ -1,4 +1,4 @@
-import { SpaConfig } from "./types";
+import type { SpaConfig } from "./types";
 
 export function setupPaths(config: SpaConfig) {
   window.openmrsBase = config.apiUrl;
