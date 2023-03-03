@@ -1,16 +1,23 @@
 /** @module @category Error Handling */
 import { dispatchNotificationShown } from "@openmrs/esm-globals";
 
-window.onerror = function () {
+window.onerror = function (error) {
+  console.error("Unexpected error: ", error);
   dispatchNotificationShown({
-    description: "Oops! An unexpected error occurred.",
+    description: error ?? "Oops! An unexpected error occurred.",
+    kind: "error",
+    title: "Error",
   });
   return false;
 };
 
-window.onunhandledrejection = function () {
+window.onunhandledrejection = function (event) {
+  console.error("Unhandled rejection: ", event.reason);
   dispatchNotificationShown({
-    description: "Oops! An unexpected error occurred.",
+    description:
+      event.reason ?? "Oops! An unhandled promise rejection occurred.",
+    kind: "error",
+    title: "Error",
   });
 };
 
