@@ -4,17 +4,18 @@ import { dispatchNotificationShown } from "@openmrs/esm-globals";
 window.onerror = function (error) {
   console.error("Unexpected error: ", error);
   dispatchNotificationShown({
-    description: error,
+    description: error ?? "Oops! An unexpected error occurred.",
     kind: "error",
     title: "Error",
   });
   return false;
 };
 
-window.onunhandledrejection = function (error) {
-  console.error("Unhandled rejection: ", error);
+window.onunhandledrejection = function (event) {
+  console.error("Unhandled rejection: ", event.reason);
   dispatchNotificationShown({
-    description: error?.message,
+    description:
+      event.reason ?? "Oops! An unhandled promise rejection occurred.",
     kind: "error",
     title: "Error",
   });
