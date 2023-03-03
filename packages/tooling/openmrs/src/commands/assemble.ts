@@ -117,8 +117,12 @@ async function downloadPackage(
   baseDir: string,
   fetchOptions: npmRegistryFetch.Options
 ) {
+  if (!existsSync(cacheDir)) {
+    await mkdir(cacheDir, { recursive: true });
+  }
+
   if (esmVersion.startsWith("file:")) {
-    const source = resolve(baseDir, esmVersion.substr(5));
+    const source = resolve(baseDir, esmVersion.substring(5));
     const file = basename(source);
     const target = resolve(cacheDir, file);
     await copyFile(source, target);
@@ -152,7 +156,6 @@ async function downloadPackage(
       .replace(/^@/, "")
       .replace(/\//, "-");
 
-    await mkdir(cacheDir, { recursive: true });
     await writeFile(resolve(cacheDir, filename), tarball);
 
     return filename;
