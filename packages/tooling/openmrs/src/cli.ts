@@ -203,70 +203,75 @@ yargs.command(
   "Builds a new app shell.",
   (argv) =>
     argv
-      .string("target")
-      .default("target", "dist")
-      .describe(
-        "target",
-        "The target directory where the build artifacts will be stored."
-      )
-      .string("registry")
-      .default("registry", "https://registry.npmjs.org/")
-      .describe("registry", "The NPM registry used for getting the packages.")
-      .boolean("fresh")
-      .describe(
-        "fresh",
-        "Determines if the output directory should be cleaned before the run."
-      )
-      .boolean("support-offline")
-      .describe(
-        "support-offline",
-        "Determines if a service worker should be installed for offline support."
-      )
-      .default("support-offline", true)
-      .string("build-config")
-      .describe("build-config", "Path to a SPA build config JSON")
-      .string("spa-path")
-      .default("spa-path", "/openmrs/spa/")
-      .describe("spa-path", "The path of the application on the target server.")
-      .string("page-title")
-      .default("page-title", "OpenMRS")
-      .describe(
-        "page-title",
-        "The title of the web app usually displayed in the browser tab."
-      )
-      .string("api-url")
-      .default("api-url", "/openmrs/")
-      .describe(
-        "api-url",
-        "The URL of the API. Can be a path if the API is on the same target server."
-      )
-      .array("config-url")
-      .default("config-url", [])
-      .describe(
-        "config-url",
-        "The URL to a frontend configuration. Can be used multiple times. Resolved by the client during initialization."
-      )
-      .array("config-path")
-      .default("config-path", [])
-      .describe(
-        "config-path",
-        "The path to a frontend configuration file. Can be used multiple times. The file is copied directly into the build directory."
-      )
-      .string("importmap")
-      .default("importmap", "importmap.json")
-      .describe(
-        "importmap",
-        "The import map to use. Can be a path to an import map to be taken literally, an URL, or a fixed JSON object."
-      ),
+      .option("target", {
+        default: "dist",
+        describe:
+          "The target directory where the build artifacts will be stored.",
+        type: "string",
+        coerce: (arg) => resolve(process.cwd(), arg),
+      })
+      .option("registry", {
+        alias: "reg",
+        default: "https://registry.npmjs.org/",
+        describe: "The NPM registry used for getting the packages.",
+        type: "string",
+      })
+      .option("fresh", {
+        default: false,
+        describe:
+          "Whether to clear the output directory before running the build.",
+        type: "boolean",
+      })
+      .option("support-offline", {
+        default: true,
+        describe:
+          "Determines if a service worker should be installed for offline support.",
+        type: "boolean",
+      })
+      .option("build-config", {
+        describe: "Path to the SPA build config JSON",
+        type: "string",
+        coerce: (arg) => resolve(process.cwd(), arg),
+      })
+      .option("spa-path", {
+        default: "/openmrs/spa/",
+        describe: "The path of the application on the target server.",
+        type: "string",
+      })
+      .option("page-title", {
+        default: "OpenMRS",
+        describe:
+          "The title of the web app usually displayed in the browser tab.",
+      })
+      .option("api-url", {
+        default: "/openmrs/",
+        describe:
+          "The URL of the API. Can be a path if the API is on the same target server.",
+        type: "string",
+      })
+      .option("config-url", {
+        default: [],
+        describe:
+          "The URL to a frontend configuration. Can be used multiple times. Resolved by the client during initialization.",
+        type: "array",
+      })
+      .option("config-path", {
+        default: [],
+        describe:
+          "The path to a frontend configuration file. Can be used multiple times. The file is copied directly into the build directory.",
+        type: "array",
+      })
+      .option("importmap", {
+        default: "importmap.json",
+        describe:
+          "The import map to use. Can be a path to an import map to be taken literally, an URL, or a fixed JSON object.",
+        type: "string",
+      }),
   async (args) =>
     runCommand("runBuild", {
       configUrls: args["config-url"],
       configPaths: args["config-path"].map((p) => resolve(process.cwd(), p)),
       ...args,
-      importmap: args.importmap,
-      buildConfig:
-        args["build-config"] && resolve(process.cwd(), args["build-config"]),
-      target: resolve(process.cwd(), args.target),
     })
 );
 
