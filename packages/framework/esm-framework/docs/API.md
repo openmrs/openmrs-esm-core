@@ -516,7 +516,7 @@ ___
 
 #### Index signature
 
-▪ [key: `string`]: `BoundAction`
+▪ [key: `string`]: (...`args`: `any`[]) => `void`
 
 #### Defined in
 
@@ -922,11 +922,11 @@ ___
 
 ### getSessionStore
 
-▸ **getSessionStore**(): `Store`<[`SessionStore`](API.md#sessionstore)\>
+▸ **getSessionStore**(): `StoreApi`<[`SessionStore`](API.md#sessionstore)\>
 
 #### Returns
 
-`Store`<[`SessionStore`](API.md#sessionstore)\>
+`StoreApi`<[`SessionStore`](API.md#sessionstore)\>
 
 #### Defined in
 
@@ -2297,7 +2297,7 @@ ___
 
 ### getExtensionStore
 
-▸ **getExtensionStore**(): `Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
+▸ **getExtensionStore**(): `StoreApi`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
 This returns a [store](https://github.com/developit/unistore#store)
 that modules can use to get information about the state of the
@@ -2305,7 +2305,7 @@ extension system.
 
 #### Returns
 
-`Store`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
+`StoreApi`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
 #### Defined in
 
@@ -2982,13 +2982,13 @@ ___
 
 ### getOfflinePatientDataStore
 
-▸ **getOfflinePatientDataStore**(): `Store`<[`OfflinePatientDataSyncStore`](interfaces/OfflinePatientDataSyncStore.md)\>
+▸ **getOfflinePatientDataStore**(): `StoreApi`<[`OfflinePatientDataSyncStore`](interfaces/OfflinePatientDataSyncStore.md)\>
 
 **`deprecated`** Will be removed once all modules have been migrated to the new dynamic offline data API.
 
 #### Returns
 
-`Store`<[`OfflinePatientDataSyncStore`](interfaces/OfflinePatientDataSyncStore.md)\>
+`StoreApi`<[`OfflinePatientDataSyncStore`](interfaces/OfflinePatientDataSyncStore.md)\>
 
 #### Defined in
 
@@ -3519,7 +3519,7 @@ ___
 
 ### createGlobalStore
 
-▸ **createGlobalStore**<`TState`\>(`name`, `initialState`): `Store`<`TState`\>
+▸ **createGlobalStore**<`T`\>(`name`, `initialState`): `StoreApi`<`T`\>
 
 Creates a Unistore [store](https://github.com/developit/unistore#store).
 
@@ -3527,18 +3527,18 @@ Creates a Unistore [store](https://github.com/developit/unistore#store).
 
 | Name |
 | :------ |
-| `TState` |
+| `T` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `name` | `string` | A name by which the store can be looked up later.    Must be unique across the entire application. |
-| `initialState` | `TState` | An object which will be the initial state of the store. |
+| `initialState` | `T` | An object which will be the initial state of the store. |
 
 #### Returns
 
-`Store`<`TState`\>
+`StoreApi`<`T`\>
 
 The newly created store.
 
@@ -3564,7 +3564,7 @@ Avoid this; generally prefer to have clients use `useStore(yourStore)`
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<`T`\> |
+| `store` | `StoreApi`<`T`\> |
 
 #### Returns
 
@@ -3608,11 +3608,11 @@ ___
 
 ### getAppState
 
-▸ **getAppState**(): `Store`<[`AppState`](interfaces/AppState.md)\>
+▸ **getAppState**(): `StoreApi`<[`AppState`](interfaces/AppState.md)\>
 
 #### Returns
 
-`Store`<[`AppState`](interfaces/AppState.md)\>
+`StoreApi`<[`AppState`](interfaces/AppState.md)\>
 
 The [store](https://github.com/developit/unistore#store) named `app`.
 
@@ -3624,27 +3624,27 @@ ___
 
 ### getGlobalStore
 
-▸ **getGlobalStore**<`TState`\>(`name`, `fallbackState?`): `Store`<`TState`\>
+▸ **getGlobalStore**<`T`\>(`name`, `fallbackState?`): `StoreApi`<`T`\>
 
 Returns the existing [store](https://github.com/developit/unistore#store) named `name`,
 or creates a new store named `name` if none exists.
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `TState` | `any` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `name` | `string` | The name of the store to look up. |
-| `fallbackState?` | `TState` | The initial value of the new store if no store named `name` exists. |
+| `fallbackState?` | `T` | The initial value of the new store if no store named `name` exists. |
 
 #### Returns
 
-`Store`<`TState`\>
+`StoreApi`<`T`\>
 
 The found or newly created store.
 
@@ -3656,7 +3656,7 @@ ___
 
 ### subscribeTo
 
-▸ **subscribeTo**<`T`, `U`\>(`store`, `select`, `handle`): `Unsubscribe`
+▸ **subscribeTo**<`T`, `U`\>(`store`, `select`, `handle`): () => `void`
 
 #### Type parameters
 
@@ -3669,13 +3669,19 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<`T`\> |
+| `store` | `StoreApi`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
 | `handle` | (`subState`: `U`) => `void` |
 
 #### Returns
 
-`Unsubscribe`
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
 
 #### Defined in
 
@@ -3698,7 +3704,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<`T`\> |
+| `store` | `StoreApi`<`T`\> |
 
 #### Returns
 
@@ -3721,7 +3727,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<`T`\> |
+| `store` | `StoreApi`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
 
 #### Returns
@@ -3745,7 +3751,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<`T`\> |
+| `store` | `StoreApi`<`T`\> |
 | `select` | `undefined` |
 | `actions` | [`Actions`](API.md#actions) |
 
@@ -3770,7 +3776,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<`T`\> |
+| `store` | `StoreApi`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
 | `actions` | [`Actions`](API.md#actions) |
 
@@ -3798,7 +3804,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `store` | `Store`<`T`\> |
+| `store` | `StoreApi`<`T`\> |
 | `actions` | [`Actions`](API.md#actions) |
 
 #### Returns
@@ -3807,7 +3813,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L52)
+[packages/framework/esm-react-utils/src/useStore.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L51)
 
 ___
 

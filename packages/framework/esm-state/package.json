@@ -36,6 +36,6 @@
     "access": "public"
   },
   "dependencies": {
-    "unistore": "^3.5.2"
+    "zustand": "^4.3.6"
   }
 }

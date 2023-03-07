@@ -143,14 +143,14 @@ export function getExtensionRegistration(
  */
 export const registerExtension: (
   extensionRegistration: ExtensionRegistration
-) => void = extensionInternalStore.action(
-  (state, extensionRegistration: ExtensionRegistration) => {
+) => void = (extensionRegistration) =>
+  extensionInternalStore.setState((state) => {
     state.extensions[extensionRegistration.name] = {
       ...extensionRegistration,
       instances: [],
     };
-  }
-);
+    return state;
+  });
 
 /**
  * Attach an extension to an extension slot.
@@ -416,47 +416,49 @@ function calculateAssignedIds(
 export const registerExtensionSlot: (
   moduleName: string,
   slotName: string
-) => void = extensionInternalStore.action((state, moduleName, slotName) => {
-  const existingModuleName = state.slots[slotName]?.moduleName;
-  if (existingModuleName && existingModuleName != moduleName) {
-    console.warn(
-      `An extension slot with the name '${slotName}' already exists. Refusing to register the same slot name twice (in "registerExtensionSlot"). The existing one is from module ${existingModuleName}.`
-    );
-    return state;
-  }
-  if (existingModuleName && existingModuleName == moduleName) {
-    // Re-rendering an existing slot
-    return state;
-  }
-  if (state.slots[slotName]) {
+) => void = (moduleName, slotName) =>
+  extensionInternalStore.setState((state) => {
+    const existingModuleName = state.slots[slotName]?.moduleName;
+    if (existingModuleName && existingModuleName != moduleName) {
+      console.warn(
+        `An extension slot with the name '${slotName}' already exists. Refusing to register the same slot name twice (in "registerExtensionSlot"). The existing one is from module ${existingModuleName}.`
+      );
+      return state;
+    }
+    if (existingModuleName && existingModuleName == moduleName) {
+      // Re-rendering an existing slot
+      return state;
+    }
+    if (state.slots[slotName]) {
+      return {
+        ...state,
+        slots: {
+          ...state.slots,
+          [slotName]: {
+            ...state.slots[slotName],
+            moduleName,
+          },
+        },
+      };
+    }
+    const slot = createNewExtensionSlotInfo(slotName, moduleName);
     return {
       ...state,
       slots: {
         ...state.slots,
-        [slotName]: {
-          ...state.slots[slotName],
-          moduleName,
-        },
+        [slotName]: slot,
       },
     };
-  }
-  const slot = createNewExtensionSlotInfo(slotName, moduleName);
-  return {
-    ...state,
-    slots: {
-      ...state.slots,
-      [slotName]: slot,
-    },
-  };
-});
+  });
 
 /**
  * @internal
  * Just for testing.
  */
-export const reset: () => void = extensionStore.action(() => {
-  return {
-    slots: {},
-    extensions: {},
-  };
-});
+export const reset: () => void = () =>
+  extensionStore.setState(() => {
+    return {
+      slots: {},
+      extensions: {},
+    };
+  });

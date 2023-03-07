@@ -95,7 +95,7 @@ function getCurrentUser(
     };
     handler(sessionStore.getState());
     // The observable subscribe function should return an unsubscribe function,
-    // which happens to be exactly what Unistore `subscribe` returns.
+    // which happens to be exactly what `subscribe` returns.
     return sessionStore.subscribe(handler);
   });
 }
