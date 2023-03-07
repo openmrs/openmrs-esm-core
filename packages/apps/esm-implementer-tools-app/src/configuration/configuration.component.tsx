@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
   Button,
   Column,
@@ -9,6 +9,7 @@ import {
 } from "@carbon/react";
 import { useTranslation } from "react-i18next";
 import {
+  Upload,
   ChevronDown,
   ChevronUp,
   Download,
@@ -20,6 +21,8 @@ import {
   Config,
   getExtensionInternalStore,
   implementerToolsConfigStore,
+  showNotification,
+  showToast,
   temporaryConfigStore,
   useStore,
   useStoreWithActions,
@@ -28,6 +31,7 @@ import { ConfigTree } from "./interactive-editor/config-tree.component";
 import { Description } from "./interactive-editor/description.component";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
 import styles from "./configuration.styles.scss";
+import { saveConfig } from "./configuration.resource";
 
 const JsonEditor = React.lazy(
   () => import("./json-editor/json-editor.component")
@@ -183,6 +187,41 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   }}
                 >
                   {t("clearConfig", "Clear Local Config")}
+                </Button>
+                <Button
+                  kind="primary"
+                  iconDescription="push local config"
+                  renderIcon={(props) => <Upload size={16} {...props} />}
+                  onClick={() => {
+                    saveConfig(tempConfig).then(
+                      (response) => {
+                        if (response.ok) {
+                          showToast({
+                            critical: true,
+                            title: t("saveConfig.json", "Save Config.json"),
+                            kind: "success",
+                            description: t(
+                              "config.jsonSavedSuccessfully",
+                              "config.json saved successfully"
+                            ),
+                          });
+                        }
+                      },
+                      (error) => {
+                        showNotification({
+                          title: t(
+                            "saveConfig.jsonError",
+                            "Error saving config.json"
+                          ),
+                          kind: "error",
+                          critical: true,
+                          description: error?.message,
+                        });
+                      }
+                    );
+                  }}
+                >
+                  {t("pushLocalConfig", "Push Local Config")}
                 </Button>
                 <Button
                   kind="secondary"

@@ -2,6 +2,7 @@
   "activeItemSourceText": "The current value comes from ",
   "backendModules": "Backend Modules",
   "clearConfig": "Clear Local Config",
+  "config.jsonSavedSuccessfully": "config.json saved successfully",
   "configuration": "Configuration",
   "downloadConfig": "Download Config",
   "edit": "Edit",
@@ -17,5 +18,8 @@
   "uiEditor": "UI Editor",
   "unknownVersion": "unknown",
   "value": "Value",
-  "view": "View"
+  "view": "View",
+  "pushLocalConfig": "Push Local Config",
+  "saveConfig.jsonError": "Error saving config.json",
+  "saveConfig.json": "Save Config.json"
 }
