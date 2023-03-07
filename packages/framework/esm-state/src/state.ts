@@ -2,7 +2,7 @@
 import { createStore, StoreApi } from "zustand/vanilla";
 
 interface StoreEntity {
-  value: StoreApi<any>;
+  value: StoreApi<unknown>;
   active: boolean;
 }
 
@@ -32,7 +32,7 @@ export function createGlobalStore<T>(
     }
 
     available.active = true;
-    return available.value;
+    return available.value as StoreApi<T>;
   } else {
     const store = createStore<T>()(() => initialState);
 
@@ -68,7 +68,7 @@ export function getGlobalStore<T>(
     return store;
   }
 
-  return available.value;
+  return available.value as StoreApi<T>;
 }
 
 export interface AppState {}

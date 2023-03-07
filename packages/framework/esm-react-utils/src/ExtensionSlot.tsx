@@ -1,5 +1,5 @@
 import React, { useRef, useMemo } from "react";
-import { ConnectedExtension } from "@openmrs/esm-extensions";
+import type { ConnectedExtension } from "@openmrs/esm-extensions";
 import { ComponentContext } from "./ComponentContext";
 import { Extension } from "./Extension";
 import { useExtensionSlot } from "./useExtensionSlot";
