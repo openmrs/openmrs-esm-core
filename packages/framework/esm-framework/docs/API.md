@@ -2299,9 +2299,8 @@ ___
 
 ▸ **getExtensionStore**(): `StoreApi`<[`ExtensionStore`](interfaces/ExtensionStore.md)\>
 
-This returns a [store](https://github.com/developit/unistore#store)
-that modules can use to get information about the state of the
-extension system.
+This returns a store that modules can use to get information about the
+state of the extension system.
 
 #### Returns
 
@@ -2309,7 +2308,7 @@ extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L130)
+[packages/framework/esm-extensions/src/store.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L129)
 
 ___
 
@@ -3521,7 +3520,7 @@ ___
 
 ▸ **createGlobalStore**<`T`\>(`name`, `initialState`): `StoreApi`<`T`\>
 
-Creates a Unistore [store](https://github.com/developit/unistore#store).
+Creates a Zustand store.
 
 #### Type parameters
 
@@ -3626,7 +3625,7 @@ ___
 
 ▸ **getGlobalStore**<`T`\>(`name`, `fallbackState?`): `StoreApi`<`T`\>
 
-Returns the existing [store](https://github.com/developit/unistore#store) named `name`,
+Returns the existing store named `name`,
 or creates a new store named `name` if none exists.
 
 #### Type parameters
