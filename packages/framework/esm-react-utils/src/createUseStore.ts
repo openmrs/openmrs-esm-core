@@ -13,7 +13,17 @@ function bindActions<T>(store: StoreApi<T>, actions: Actions): BoundActions {
   const bound = {};
 
   for (let i in actions) {
-    bound[i] = () => store.setState(actions[i]);
+    bound[i] = () => {
+      const args = arguments;
+      store.setState((state) => {
+        let _args = [state];
+        for (let i = 0; i < args.length; i++) {
+          _args.push(args[i]);
+        }
+
+        return actions[i](_args);
+      });
+    };
   }
 
   return bound;
