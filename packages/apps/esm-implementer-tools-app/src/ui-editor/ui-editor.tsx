@@ -58,7 +58,7 @@ export function SlotOverlay({ slotName }) {
   return (
     <>
       <div className={styles.slotOverlay}></div>
-      <div className={styles.slotName}>{slotName}</div>
+      <div className={styles.slotName}>{"Slot: " + slotName}</div>
     </>
   );
 }
