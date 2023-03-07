@@ -7,14 +7,16 @@ const BundleAnalyzerPlugin =
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
-const { resolve } = require("path");
+const { basename, dirname, resolve } = require("path");
 const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
 const { name, version, dependencies } = require("./package.json");
 const sharedDependencies = require("./dependencies.json");
+const { readdirSync, statSync } = require("fs");
 const frameworkVersion = require("@openmrs/esm-framework/package.json").version;
 
 const timestamp = getTimestamp();
 const production = "production";
+const allowedSuffixes = ["-app", "-widgets"];
 const { ModuleFederationPlugin } = container;
 
 const openmrsAddCookie = process.env.OMRS_ADD_COOKIE;
@@ -33,17 +35,66 @@ const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
+const openmrsCoreApps =
+  process.env.OMRS_ESM_CORE_APPS_DIR || resolve(__dirname, "../../apps");
 const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .split(";")
   .filter((url) => url.length > 0)
   .map((url) => JSON.stringify(url))
   .join(", ");
 
+function checkDirectoryExists(dirName) {
+  if (dirName) {
+    try {
+      return statSync(dirName).isDirectory();
+    } catch {
+      return false;
+    }
+  }
+  return false;
+}
+function checkDirectoryHasContents(dirName) {
+  if (checkDirectoryExists(dirName)) {
+    const contents = readdirSync(dirName);
+    return contents.length > 0;
+  } else {
+    return false;
+  }
+}
+
 module.exports = (env, argv = {}) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? "dist" : "lib";
   const isProd = mode === "production";
   const appPatterns = [];
+
+  const coreImportmap = {
+    imports: {},
+  };
+
+  if (!isProd && checkDirectoryExists(openmrsCoreApps)) {
+    readdirSync(openmrsCoreApps).forEach((dir) => {
+      const appDir = resolve(openmrsCoreApps, dir);
+      if (checkDirectoryExists(appDir)) {
+        const { name, browser } = require(resolve(appDir, "package.json"));
+        const distDir = resolve(appDir, dirname(browser));
+        if (allowedSuffixes.some((suffix) => name.endsWith(suffix))) {
+          if (checkDirectoryHasContents(distDir)) {
+            appPatterns.push({
+              from: distDir,
+              to: dir,
+            });
+            coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
+            console.info(`Serving built artifact for ${name} from ${distDir}`);
+          } else {
+            console.warn(
+              `Not serving ${name} because couldn't find ${distDir}`
+            );
+          }
+        }
+      }
+    });
+  }
 
   return {
     entry: resolve(__dirname, "src/index.ts"),
@@ -178,6 +229,8 @@ module.exports = (env, argv = {}) => {
           openmrsOffline,
           openmrsEnvironment,
           openmrsConfigUrls,
+          openmrsCoreImportmap:
+            appPatterns.length > 0 && JSON.stringify(coreImportmap),
         },
       }),
       new CopyWebpackPlugin({
