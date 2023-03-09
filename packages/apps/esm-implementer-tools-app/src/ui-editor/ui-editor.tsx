@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./styles.css";
 import {
   getExtensionInternalStore,
+  useAssignedExtensions,
   useStore,
   useStoreWithActions,
 } from "@openmrs/esm-framework/src/internal";
@@ -26,7 +27,10 @@ export default function UiEditor() {
                 `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotInfo.moduleName}"]`
               )}
             >
-              <SlotOverlay slotName={slotName} />
+              <SlotOverlay
+                slotName={slotName}
+                moduleName={slotInfo.moduleName}
+              />
             </Portal>
           ))
         : null}
@@ -54,11 +58,33 @@ export default function UiEditor() {
   );
 }
 
-export function SlotOverlay({ slotName }) {
+export function SlotOverlay({ slotName, moduleName }) {
+  const assignedExtensions = useAssignedExtensions(slotName);
+
+  const setActiveExtensionSlot = (mdName, slotName) => {
+    if (!implementerToolsStore.getState().configPathBeingEdited) {
+      implementerToolsStore.setState({
+        activeItemDescription: {
+          path: [mdName, slotName],
+          value: assignedExtensions.map((e) => e.id),
+        },
+      });
+    }
+  };
   return (
     <>
       <div className={styles.slotOverlay}></div>
-      <div className={styles.slotName}>{slotName}</div>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={(event) => {
+          event.preventDefault();
+          setActiveExtensionSlot(slotName, moduleName);
+        }}
+        className={styles.slotName}
+      >
+        {slotName}
+      </div>
     </>
   );
 }
