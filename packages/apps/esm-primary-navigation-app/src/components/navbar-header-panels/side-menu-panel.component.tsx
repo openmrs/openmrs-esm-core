@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useRef } from "react";
-import { LeftNavMenu, usePatient } from "@openmrs/esm-framework";
+import React, { useEffect, useRef } from "react";
+import { LeftNavMenu } from "@openmrs/esm-framework";
 
 interface SideMenuPanelProps {
   expanded: boolean;
@@ -23,7 +23,7 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({
     return () => document.removeEventListener("click", handleClickOutside);
   }, [menuRef, hidePanel]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("popstate", hidePanel);
     return window.addEventListener("popstate", hidePanel);
   }, [hidePanel]);
