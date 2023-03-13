@@ -1,38 +1,58 @@
 @use "@carbon/styles/scss/type";
 @import "../vars";
 
-:global(.active-left-nav-link) {
-  background-color: $ui-03;
-  outline: none;
-  color: $ui-05;
-  border-left: 0.25rem solid var(--brand-01);
-}
-
 .leftNav {
   border-right: 1px solid $ui-03;
+
+  :global(.active-left-nav-link) {
+    background-color: $ui-03;
+    outline: none;
+    color: $ui-05;
+    border-left: 0.25rem solid var(--brand-01);
+
+    :global(.cds--side-nav__link) {
+      padding: 0 0.75rem;
+    }
+  }
+
+  div {
+    &:global(.omrs-breakpoint-gt-tablet) {
+      padding-top: 1rem;
+    }
+
+    a {
+      color: $ui-04;
+      border-left: 0.25rem solid transparent;
+      @include type.type-style("heading-compact-01");
+      color: $text-02;
+
+      &:hover {
+        background-color: $ui-03;
+        color: $ui-05;
+        border-left: var(--brand-01);
+      }
+
+      &:focus {
+        background-color: $ui-03;
+        color: $ui-05;
+        border-left: var(--brand-01);
+      }
+    }
+  }
 }
 
-.leftNav > div a {
-  height: 2.5rem;
-  color: $ui-04;
-  border-left: 0.25rem solid transparent;
-  @include type.type-style("heading-compact-01");
+:global(.omrs-breakpoint-gt-tablet) {
+  div {
+    a {
+      height: 2rem;
+    }
+  }
 }
 
-:global(.omrs-breakpoint-gt-tablet) .leftNav > div {
-  padding-top: 1rem;
-}
-
-.leftNav > div a:hover {
-  background-color: $ui-03;
-  color: $ui-05;
-  border-left: var(--brand-01);
-  padding: 1.2rem 0 1.2rem 1.2rem;
-}
-
-.leftNav > div a:focus {
-  background-color: $ui-03;
-  outline: none;
-  color: $ui-05;
-  border-left: var(--brand-01);
+:global(.omrs-breakpoint-lt-desktop) {
+  div {
+    a {
+      height: 3rem;
+    }
+  }
 }
