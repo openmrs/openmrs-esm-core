@@ -52,6 +52,7 @@ module.exports = (env, argv = {}) => {
       chunkFilename: "[chunkhash].js",
       path: resolve(__dirname, outDir),
       publicPath: "",
+      hashFunction: "xxhash64",
     },
     target: "web",
     devServer: {

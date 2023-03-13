@@ -5,7 +5,7 @@ import rimraf from "rimraf";
 import axios from "axios";
 import npmRegistryFetch from "npm-registry-fetch";
 import pacote from "pacote";
-import { logInfo, untar } from "../utils";
+import { contentHash, logInfo, untar } from "../utils";
 import { createReadStream, existsSync } from "fs";
 import { getNpmRegistryConfiguration } from "../utils/npmConfig";
 
@@ -16,6 +16,7 @@ export interface AssembleArgs {
   mode: string;
   config: string;
   registry?: string;
+  hashImportmap: boolean;
   fresh: boolean;
   manifest: boolean;
 }
@@ -234,7 +235,10 @@ export async function runAssemble(args: AssembleArgs) {
   );
 
   await writeFile(
-    resolve(args.target, "importmap.json"),
+    resolve(
+      args.target,
+      `importmap${args.hashImportmap ? "." + contentHash(importmap) : ""}.json`
+    ),
     JSON.stringify(importmap, undefined, 2),
     "utf8"
   );

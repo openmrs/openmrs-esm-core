@@ -300,6 +300,12 @@ yargs.command(
         type: "string",
         coerce: (arg) => resolve(process.cwd(), arg),
       })
+      .option("hash-importmap", {
+        default: false,
+        description:
+          "Determines whether to include a content-specific hash for the generated importmap. This is useful if you want to be able to cache the importmap.",
+        type: "boolean",
+      })
       .option("fresh", {
         default: false,
         description:

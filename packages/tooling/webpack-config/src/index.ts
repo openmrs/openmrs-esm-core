@@ -158,9 +158,9 @@ export default (
     // only one container context--i.e., if we had an entry point per module,
     // WMF could get confused and not resolve shared dependencies correctly.
     output: {
-      // Use default `libraryTarget`, which is jsonp
       publicPath: "auto",
       path: resolve(root, outDir),
+      hashFunction: "xxhash64",
     },
     module: {
       rules: [
