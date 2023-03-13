@@ -66,6 +66,7 @@ export async function runBuild(args: BuildArgs) {
   // we use the nearest thing. Basically, this is added to support the --hash-importmap assemble option.
   if (importMap.type === "url") {
     if (
+      !/^https?:\/\//.test(importMap.value) &&
       existsSync(args.target) &&
       !existsSync(resolve(args.target, importMap.value))
     ) {
