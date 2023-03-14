@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-breadcrumbs",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "license": "MPL-2.0",
   "description": "The javascript module for breadcrumb registration",
   "browser": "dist/openmrs-esm-breadcrumbs.js",
@@ -42,6 +42,6 @@
     "@openmrs/esm-state": "4.x"
   },
   "devDependencies": {
-    "@openmrs/esm-state": "^4.1.0"
+    "@openmrs/esm-state": "^4.2.0"
   }
 }
