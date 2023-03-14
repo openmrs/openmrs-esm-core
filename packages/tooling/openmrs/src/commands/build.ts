@@ -1,7 +1,13 @@
-import { copyFileSync, existsSync, readFileSync } from "fs";
+import {
+  copyFileSync,
+  existsSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+} from "fs";
 import { getImportmap, loadWebpackConfig, logInfo } from "../utils";
 import rimraf from "rimraf";
-import { basename, join, resolve } from "path";
+import { basename, join, parse, resolve } from "path";
 
 /* eslint-disable no-console */
 
@@ -55,8 +61,29 @@ export async function runBuild(args: BuildArgs) {
     configUrls.push(basename(configPath));
   }
 
+  const importMap = await getImportmap(buildConfig.importmap || args.importmap);
+  // if we're supplying a URL importmap and the dist folder exists and the raw importmap file doesn't exist
+  // we use the nearest thing. Basically, this is added to support the --hash-importmap assemble option.
+  if (importMap.type === "url") {
+    if (
+      !/^https?:\/\//.test(importMap.value) &&
+      existsSync(args.target) &&
+      !existsSync(resolve(args.target, importMap.value))
+    ) {
+      const { name: fileName, ext: extension } = parse(importMap.value);
+      const paths = readdirSync(args.target).filter(
+        (entry) =>
+          entry.startsWith(fileName) &&
+          entry.endsWith(extension) &&
+          statSync(resolve(args.target, entry)).isFile()
+      );
+      if (paths) {
+        importMap.value = paths[0];
+      }
+    }
+  }
   const config = loadWebpackConfig({
-    importmap: await getImportmap(buildConfig.importmap || args.importmap),
+    importmap: importMap,
     env: "production",
     apiUrl: buildConfig.apiUrl || args.apiUrl,
     configUrls: configUrls,
