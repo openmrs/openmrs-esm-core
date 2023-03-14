@@ -32,6 +32,16 @@
   border-right: none;
 }
 
+/* Side nav */
+.cds--side-nav {
+  z-index: 0;
+}
+
+/* Tooltip */
+.cds--tooltip--definition .cds--tooltip__trigger {
+  border-bottom: none;
+}
+
 /* Content Switcher */
 .cds--content-switcher-btn {
   background-color: $ui-02;
