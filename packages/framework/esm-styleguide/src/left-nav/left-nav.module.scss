@@ -3,15 +3,16 @@
 
 .leftNav {
   border-right: 1px solid $ui-03;
+  margin-top: 1rem;
 
   :global(.active-left-nav-link) {
     background-color: $ui-03;
     outline: none;
-    color: $ui-05;
     border-left: 0.25rem solid var(--brand-01);
 
-    :global(.cds--side-nav__link) {
+    > :global(.cds--side-nav__link) {
       padding: 0 0.75rem;
+      color: $ui-05;
     }
   }
 
@@ -22,7 +23,6 @@
 
     a {
       color: $ui-04;
-      border-left: 0.25rem solid transparent;
       @include type.type-style("heading-compact-01");
       color: $text-02;
 
