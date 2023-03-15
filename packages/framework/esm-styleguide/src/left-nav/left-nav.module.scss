@@ -22,6 +22,14 @@
     }
 
     a {
+      :global(.omrs-breakpoint-gt-tablet) {
+        height: 2rem;
+      }
+
+      :global(.omrs-breakpoint-lt-desktop) {
+        height: 3rem;
+      }
+
       color: $ui-04;
       @include type.type-style("heading-compact-01");
       color: $text-02;
@@ -37,22 +45,6 @@
         color: $ui-05;
         border-left: var(--brand-01);
       }
-    }
-  }
-}
-
-:global(.omrs-breakpoint-gt-tablet) {
-  div {
-    a {
-      height: 2rem;
-    }
-  }
-}
-
-:global(.omrs-breakpoint-lt-desktop) {
-  div {
-    a {
-      height: 3rem;
     }
   }
 }
