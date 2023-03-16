@@ -3,48 +3,39 @@
 
 .leftNav {
   border-right: 1px solid $ui-03;
-  margin-top: 1rem;
+  padding-top: 1rem;
 
-  :global(.active-left-nav-link) {
-    background-color: $ui-03;
-    outline: none;
-    border-left: 0.25rem solid var(--brand-01);
+  // Left nav menu item
+  :global(.cds--side-nav__link) {
+    color: $text-02;
+    @include type.type-style("heading-compact-01");
 
-    > :global(.cds--side-nav__link) {
-      padding: 0 0.75rem;
+    &:focus,
+    &:hover {
+      background-color: $ui-01;
+    }
+
+    // Active menu item
+    &:global(.active-left-nav-link) {
       color: $ui-05;
+      border-left: 0.25rem solid var(--brand-01);
+      background-color: $ui-03;
+      outline: none;
+      padding: 0 0.75rem;
     }
   }
+}
 
-  div {
-    &:global(.omrs-breakpoint-gt-tablet) {
-      padding-top: 1rem;
-    }
+/* Desktop */
+:global(.omrs-breakpoint-gt-tablet) {
+  :global(.cds--side-nav__link) {
+    height: 2rem;
+  }
+}
 
-    a {
-      :global(.omrs-breakpoint-gt-tablet) {
-        height: 2rem;
-      }
-
-      :global(.omrs-breakpoint-lt-desktop) {
-        height: 3rem;
-      }
-
-      color: $ui-04;
-      @include type.type-style("heading-compact-01");
-      color: $text-02;
-
-      &:hover {
-        background-color: $ui-03;
-        color: $ui-05;
-        border-left: var(--brand-01);
-      }
-
-      &:focus {
-        background-color: $ui-03;
-        color: $ui-05;
-        border-left: var(--brand-01);
-      }
-    }
+/* Tablet */
+:global(.omrs-breakpoint-lt-desktop) {
+  :global(.cds--side-nav__link) {
+    height: 3rem;
   }
 }
