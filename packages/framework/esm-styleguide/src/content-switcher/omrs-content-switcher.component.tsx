@@ -14,9 +14,10 @@ type OmrsContentSwitcher = {
 export function OmrsContentSwitcher({
   children,
   errored = false,
+  ...rest
 }: OmrsContentSwitcher) {
   return (
-    <ContentSwitcher className={errored && styles.errored}>
+    <ContentSwitcher className={errored && styles.errored} {...rest}>
       {children}
     </ContentSwitcher>
   );
