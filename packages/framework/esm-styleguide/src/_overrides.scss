@@ -44,9 +44,14 @@
 
 /* Content Switcher */
 .cds--content-switcher-btn {
+  background-color: $ui-02;
   border: none;
   border-top: 1px solid colors.$blue-30;
   border-bottom: 1px solid colors.$blue-30;
+
+  &::after {
+    background-color: transparent;
+  }
 
   &:first-child {
     border-bottom-left-radius: 0.25rem;
@@ -60,13 +65,19 @@
     border-top-right-radius: 0.25rem;
   }
 
-  &:cds--content-switcher--selected {
+  &::before {
+    background-color: colors.$blue-30;
+    height: 100%;
+    z-index: 0;
+  }
+
+  &.cds--content-switcher--selected {
     border: 1px solid colors.$blue-60;
     background-color: colors.$blue-10;
     color: colors.$blue-60;
 
     &::after {
-      background: none;
+      background-color: colors.$blue-10;
     }
   }
 }
