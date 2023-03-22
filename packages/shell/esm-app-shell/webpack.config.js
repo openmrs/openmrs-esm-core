@@ -38,6 +38,20 @@ const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
   .filter((url) => url.length > 0)
   .map((url) => JSON.stringify(url))
   .join(", ");
+const openmrsCleanBeforeBuild =
+  (() => {
+    try {
+      return (
+        process.env.OMRS_CLEAN_BEFORE_BUILD === undefined ||
+        (typeof process.env.OMRS_CLEAN_BEFORE_BUILD === "boolean" &&
+          process.env.OMRS_CLEAN_BEFORE_BUILD) ||
+        (typeof process.env.OMRS_CLEAN_BEFORE_BUILD === "string" &&
+          process.env.OMRS_CLEAN_BEFORE_BUILD.toLowerCase() !== "false")
+      );
+    } catch {}
+
+    return undefined;
+  })() ?? true;
 
 module.exports = (env, argv = {}) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
@@ -149,7 +163,7 @@ module.exports = (env, argv = {}) => {
       },
     },
     plugins: [
-      new CleanWebpackPlugin(),
+      openmrsCleanBeforeBuild && new CleanWebpackPlugin(),
       new WebpackPwaManifest({
         name: "OpenMRS",
         short_name: "OpenMRS",

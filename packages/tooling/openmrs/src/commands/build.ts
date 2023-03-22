@@ -90,13 +90,10 @@ export async function runBuild(args: BuildArgs) {
     pageTitle: buildConfig.pageTitle || args.pageTitle,
     supportOffline: buildConfig.supportOffline ?? args.supportOffline,
     spaPath: buildConfig.spaPath || args.spaPath,
+    fresh: args.fresh ?? false,
   });
 
   logInfo(`Running build process ...`);
-
-  if (args.fresh && existsSync(args.target)) {
-    await new Promise((resolve) => rimraf(args.target, resolve));
-  }
 
   const compiler = webpack({
     ...config,

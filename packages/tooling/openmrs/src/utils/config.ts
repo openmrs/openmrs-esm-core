@@ -12,6 +12,7 @@ export interface WebpackOptions {
   env?: string;
   coreAppsDir?: string;
   addCookie?: string;
+  fresh?: boolean;
 }
 
 export function loadWebpackConfig(options: WebpackOptions = {}) {
@@ -63,6 +64,10 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
 
   if (typeof options.coreAppsDir === "string") {
     variables.OMRS_ESM_CORE_APPS_DIR = options.coreAppsDir;
+  }
+
+  if (typeof options.fresh === "boolean") {
+    variables.OMRS_CLEAN_BEFORE_BUILD = options.fresh;
   }
 
   setEnvVariables(variables);
