@@ -119,7 +119,9 @@ describe("openmrsFetch", () => {
       Promise.resolve({
         ok: true,
         status: 200,
-        text: () => Promise.resolve('{ "value": "hi" }'),
+        clone: () => ({
+          text: () => Promise.resolve('{ "value": "hi" }'),
+        }),
       })
     );
 
@@ -152,12 +154,14 @@ describe("openmrsFetch", () => {
         ok: false,
         status: 500,
         statusText: "Internal Server Error",
-        text: () =>
-          Promise.resolve(
-            JSON.stringify({
-              error: "The server is dead",
-            })
-          ),
+        clone: () => ({
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                error: "The server is dead",
+              })
+            ),
+        }),
       })
     );
 
@@ -182,7 +186,9 @@ describe("openmrsFetch", () => {
         ok: false,
         status: 400,
         statusText: "You goofed up",
-        text: () => Promise.resolve("a string response body"),
+        clone: () => ({
+          text: () => Promise.resolve("a string response body"),
+        }),
       })
     );
 
@@ -242,7 +248,9 @@ describe("openmrsObservableFetch", () => {
       Promise.resolve({
         ok: true,
         status: 200,
-        text: () => Promise.resolve('{"value": "hi"}'),
+        clone: () => ({
+          text: () => Promise.resolve('{"value": "hi"}'),
+        }),
       })
     );
 
@@ -255,7 +263,7 @@ describe("openmrsObservableFetch", () => {
         done();
       },
       (err) => {
-        fail(err);
+        done.fail(err);
       }
     );
 
