@@ -264,3 +264,73 @@ function getLocale() {
   }
   return language;
 }
+
+export const generateFormatting = () => {
+  const locale = getLocale();
+  const order = ["m", "d", "Y"];
+  const separator = "/";
+  const parse = (value: string) => {
+    const parts = value.split(separator);
+    const date = new Date("");
+
+    order.forEach((key, index) => {
+      switch (key) {
+        case "d":
+          date.setDate(parseInt(parts[index]));
+          break;
+        case "m":
+          date.setMonth(parseInt(parts[index]) - 1);
+          break;
+        case "Y":
+          date.setFullYear(parseInt(parts[index]));
+          break;
+      }
+    });
+    return date;
+  };
+
+  const format = (date: Date) => {
+    if (date === null) {
+      return "";
+    } else if (!(date instanceof Date)) {
+      return date;
+    } else {
+      const parts: Array<DateInput> = [];
+
+      order.forEach((key, index: number) => {
+        switch (key) {
+          case "d":
+            parts[index] = date.getDate();
+            break;
+          case "m":
+            parts[index] = date.getMonth() + 1;
+            ``;
+            break;
+          case "Y":
+            parts[index] = date.getFullYear();
+            break;
+        }
+      });
+      return new Date(parts.join(separator)).toLocaleDateString(locale);
+    }
+  };
+
+  var formatObj = new Intl.DateTimeFormat(locale).formatToParts(new Date());
+  const placeHolder = formatObj
+    .map((x) => {
+      switch (x.type) {
+        case "day":
+          return "dd";
+        case "month":
+          return "mm";
+        case "year":
+          return "yyy";
+        default:
+          return x.value;
+      }
+    })
+    .join("");
+
+  const dateFormat = order.join(separator);
+  return { parse, format, placeHolder, dateFormat };
+};
