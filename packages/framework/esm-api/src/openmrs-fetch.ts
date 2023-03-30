@@ -303,7 +303,7 @@ export class OpenmrsFetchError extends Error {
   responseBody: string | FetchResponseJson | null;
 }
 
-interface FetchConfig extends Omit<Omit<RequestInit, "body">, "headers"> {
+export interface FetchConfig extends Omit<RequestInit, "body" | "headers"> {
   headers?: FetchHeaders;
   body?: FetchBody | string;
 }

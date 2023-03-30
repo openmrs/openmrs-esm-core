@@ -41,7 +41,8 @@
   },
   "peerDependencies": {
     "@openmrs/esm-config": "4.x",
-    "@openmrs/esm-error-handling": "4.x"
+    "@openmrs/esm-error-handling": "4.x",
+    "@openmrs/esm-offline": "4.x"
   },
   "devDependencies": {
     "@openmrs/esm-config": "^4.3.0",
