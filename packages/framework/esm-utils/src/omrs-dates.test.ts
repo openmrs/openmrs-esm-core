@@ -2,6 +2,7 @@ import {
   toOmrsIsoString,
   toDateObjectStrict,
   isOmrsDateStrict,
+  generateFormatting,
 } from "./omrs-dates";
 import dayjs from "dayjs";
 import timezoneMock from "timezone-mock";
@@ -9,6 +10,26 @@ import { formatDate, formatDatetime, formatTime } from ".";
 import { i18n } from "i18next";
 
 window.i18next = { language: "en" } as i18n;
+
+describe("generateFormatting", () => {
+  it("correctly format a Date object into a formatted string", () => {
+    const date = new Date("2022-12-31");
+    window.i18next.language = "de";
+    const result = generateFormatting().format(date);
+    expect(result).toBe("31.12.2022");
+  });
+
+  it('returns an object with correct "dateFormat" property', () => {
+    const result = generateFormatting();
+    expect(result.dateFormat).toBe("m/d/Y");
+  });
+
+  it('returns an object with correct "placeHolder" property', () => {
+    window.i18next.language = "de";
+    const result = generateFormatting();
+    expect(result.placeHolder).toBe("dd.mm.yyy");
+  });
+});
 
 describe("Openmrs Dates", () => {
   it("converts js Date object to omrs date string version", () => {
