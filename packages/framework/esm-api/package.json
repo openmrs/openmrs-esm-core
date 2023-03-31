@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-api",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "license": "MPL-2.0",
   "description": "The javascript module for interacting with the OpenMRS API",
   "browser": "dist/openmrs-esm-api.js",
@@ -44,9 +44,9 @@
     "@openmrs/esm-error-handling": "4.x"
   },
   "devDependencies": {
-    "@openmrs/esm-config": "^4.2.0",
-    "@openmrs/esm-error-handling": "^4.2.0",
-    "@openmrs/esm-state": "^4.2.0",
+    "@openmrs/esm-config": "^4.3.0",
+    "@openmrs/esm-error-handling": "^4.3.0",
+    "@openmrs/esm-state": "^4.3.0",
     "rxjs": "^6.5.3"
   }
 }
