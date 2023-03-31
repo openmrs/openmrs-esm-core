@@ -1,7 +1,6 @@
 /** @module @category API */
 import { getSynchronizationItems } from "@openmrs/esm-offline";
-import { fhirBaseUrl } from "../fhir";
-import { FetchConfig, openmrsFetch } from "../openmrs-fetch";
+import { FetchConfig, fhirBaseUrl, openmrsFetch } from "../openmrs-fetch";
 import { FetchResponse } from "../types";
 
 export type CurrentPatient = fhir.Patient | FetchResponse<fhir.Patient>;
@@ -28,7 +27,7 @@ export async function fetchCurrentPatient(
     let err: Error | null = null;
     const [onlinePatient, offlinePatient] = await Promise.all([
       openmrsFetch<fhir.Patient>(
-        `${fhirBaseUrl}/Patient/${patientUuid}?_summary=data`,
+        `${fhirBaseUrl}/Patient/${patientUuid}`,
         fetchInit
       ).catch<FetchResponse<fhir.Patient>>((e) => (err = e)),
       includeOfflinePatients
