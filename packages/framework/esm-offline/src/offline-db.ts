@@ -16,9 +16,10 @@ export class OfflineDb extends Dexie {
   constructor() {
     super("EsmOffline");
 
-    this.version(4).stores({
+    this.version(5).stores({
       syncQueue: "++id,userId,type,[userId+type]",
-      dynamicOfflineData: "++id,type,identifier,*users,&[type+identifier]",
+      dynamicOfflineData:
+        "++id,type,identifier,*users,&[type+identifier],*[type+users]",
     });
 
     this.syncQueue = this.table("syncQueue");
