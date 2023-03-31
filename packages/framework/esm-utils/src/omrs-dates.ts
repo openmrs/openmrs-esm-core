@@ -315,7 +315,7 @@ export const generateFormatting = () => {
     }
   };
 
-  var formatObj = new Intl.DateTimeFormat(locale).formatToParts(new Date());
+  const formatObj = new Intl.DateTimeFormat(locale).formatToParts(new Date());
   const placeHolder = formatObj
     .map((x) => {
       switch (x.type) {
