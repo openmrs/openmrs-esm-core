@@ -12,7 +12,7 @@ import { i18n } from "i18next";
 window.i18next = { language: "en" } as i18n;
 
 describe("generateFormatting", () => {
-  it("correctly format a Date object into a formatted string", () => {
+  it("correctly formats a Date object into a formatted string", () => {
     const date = new Date("2022-12-31");
     window.i18next.language = "de";
     const result = generateFormatting().format(date);
