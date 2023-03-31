@@ -28,7 +28,7 @@ export async function fetchCurrentPatient(
     let err: Error | null = null;
     const [onlinePatient, offlinePatient] = await Promise.all([
       openmrsFetch<fhir.Patient>(
-        `${fhirBaseUrl}/Patient/${patientUuid}`,
+        `${fhirBaseUrl}/Patient/${patientUuid}?_summary=data`,
         fetchInit
       ).catch<FetchResponse<fhir.Patient>>((e) => (err = e)),
       includeOfflinePatients
