@@ -21,6 +21,9 @@ export async function postUserPropertiesOnline(
     headers: { "Content-Type": "application/json" },
     signal: abortController.signal,
   });
+
+  // Reload the page
+  window.location.reload();
 }
 
 export type PostSessionLocale = (
