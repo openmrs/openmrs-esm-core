@@ -8,7 +8,7 @@ const NoActionsEmptyState: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Layer>
+    <Layer className={styles.layer}>
       <Tile className={styles.emptyStateContainer}>
         <img
           src={successNotification}

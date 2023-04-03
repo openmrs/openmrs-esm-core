@@ -1,4 +1,5 @@
 {
+  "emptyStateText": "There are no {displayText} to display",
   "home": "Home",
   "homeHeader": "Offline home",
   "homeOverviewCardOfflineActionsFailedToUpload": "Failed to upload",
@@ -25,6 +26,8 @@
   "offlineActionsTableError": "Error",
   "offlineActionsTablePatient": "Patient",
   "offlineActionsUpdateOfflinePatients": "Update offline patients",
+  "offlinePatients": "Offline patients",
+  "offlinePatients_lower": "offline patients",
   "offlinePatientsHeader": "Offline patients",
   "offlinePatientsTableDeleteConfirmationModalCancel": "Cancel",
   "offlinePatientsTableDeleteConfirmationModalConfirm": "Remove patients",

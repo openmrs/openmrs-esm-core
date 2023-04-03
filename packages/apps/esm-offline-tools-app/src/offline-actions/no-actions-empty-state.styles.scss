@@ -2,8 +2,11 @@
 @use "@carbon/styles/scss/type";
 @import "../root.scss";
 
+.layer {
+  margin: spacing.$spacing-06;
+}
+
 .emptyStateContainer {
-  padding: spacing.$spacing-07;
   display: flex;
   flex-direction: column;
   justify-content: center;

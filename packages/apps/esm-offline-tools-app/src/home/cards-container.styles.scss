@@ -3,14 +3,13 @@
 
 .overviewCardContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: spacing.$spacing-05;
-  padding: 0 spacing.$spacing-05 spacing.$spacing-05 spacing.$spacing-05;
+  padding: spacing.$spacing-05;
+  padding-top: 0rem;
   background-color: #ededed;
 }
 
 :global(.omrs-breakpoint-gt-tablet) .overviewCardContainer {
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: repeat(3, 1fr);
 }

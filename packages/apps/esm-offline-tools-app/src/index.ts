@@ -40,17 +40,17 @@ function setupOpenMRS() {
   registerBreadcrumbs([
     {
       path: `${window.spaBase}/${routes.offlineTools}`,
-      title: "Offline tools",
+      title: "Offline Tools",
       parent: `${window.spaBase}/${routes.home}`,
     },
     {
       path: `${window.spaBase}/${routes.offlineToolsPatients}`,
-      title: "Offline patients",
+      title: "Patients",
       parent: `${window.spaBase}/${routes.offlineTools}`,
     },
     {
       path: `${window.spaBase}/${routes.offlineToolsPatientOfflineData}`,
-      title: "Offline data",
+      title: "Data",
       parent: `${window.spaBase}/${routes.offlineToolsPatients}`,
     },
     {
@@ -110,6 +110,7 @@ function setupOpenMRS() {
         ),
         online: true,
         offline: true,
+        order: 0,
       },
       {
         name: "offline-tools-dashboard-actions-card",
@@ -121,6 +122,7 @@ function setupOpenMRS() {
         ),
         online: true,
         offline: true,
+        order: 2,
       },
       {
         name: "offline-tools-page-offline-patients-link",
@@ -129,7 +131,7 @@ function setupOpenMRS() {
           () =>
             OfflineToolsNavLink({
               page: "patients",
-              title: "Offline patients",
+              title: "Patients",
             }),
           options
         ),
@@ -154,8 +156,7 @@ function setupOpenMRS() {
         name: "offline-tools-page-actions-link",
         slot: "offline-tools-page-slot",
         load: getSyncLifecycle(
-          () =>
-            OfflineToolsNavLink({ page: "actions", title: "Offline actions" }),
+          () => OfflineToolsNavLink({ page: "actions", title: "Actions" }),
           options
         ),
         meta: {
