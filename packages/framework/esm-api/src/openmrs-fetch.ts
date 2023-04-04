@@ -96,6 +96,7 @@ export function openmrsFetch<T = any>(
     );
   }
 
+  // ensure path starts with /
   if (path[0] !== "/") {
     path = "/" + path;
   }
@@ -141,7 +142,7 @@ export function openmrsFetch<T = any>(
   }
 
   if (path.startsWith(fhirBaseUrl)) {
-    const urlUrl = new URL(url);
+    const urlUrl = new URL(url, window.location.toString());
     if (!urlUrl.searchParams.has("_summary")) {
       urlUrl.searchParams.set("_summary", "data");
       url = urlUrl.toString();
