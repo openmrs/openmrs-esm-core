@@ -120,7 +120,7 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
     return (
       <EmptyState
         displayText={t("offlinePatients_lower", "offline patients")}
-        headerTitle={t("offlinePatients", "offline patients")}
+        headerTitle={t("offlinePatients", "Offline patients")}
       />
     );
   }
