@@ -10,6 +10,7 @@ module.exports = {
     "@openmrs/esm-state": "<rootDir>/__mocks__/openmrs-esm-state.mock.ts",
     "@openmrs/esm-styleguide":
       "<rootDir>/__mocks__/openmrs-esm-styleguide.mock.tsx",
+    dexie: require.resolve("dexie"),
   },
   testEnvironment: "jsdom",
   testEnvironmentOptions: {

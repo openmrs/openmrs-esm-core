@@ -12,7 +12,6 @@ export * from "./useConfig";
 export * from "./useConnectedExtensions";
 export * from "./useConnectivity";
 export * from "./usePatient";
-export * from "./useCurrentPatient";
 export * from "./useExtensionInternalStore";
 export * from "./useExtensionSlot";
 export * from "./useExtensionSlotMeta";

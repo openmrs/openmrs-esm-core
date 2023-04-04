@@ -116,7 +116,7 @@ export function usePatient(patientUuid?: string) {
         (patient) =>
           active &&
           dispatch({
-            patient: patient.data,
+            patient: patient,
             type: ActionTypes.newPatient,
           }),
         (err) =>

@@ -9,6 +9,7 @@ module.exports = {
     "lodash-es": "lodash",
     "\\.(s?css)$": "identity-obj-proxy",
     "@openmrs/esm-framework": "@openmrs/esm-framework/mock.tsx",
+    dexie: require.resolve("dexie"),
   },
   testEnvironment: "jsdom",
   testEnvironmentOptions: {

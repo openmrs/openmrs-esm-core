@@ -9,9 +9,13 @@ export function usePagination<T>(
 ) {
   const [page, setPage] = useState(1);
   const totalPages = useMemo(
-    () => Math.max(1, Math.ceil(data.length / resultsPerPage)),
+    () =>
+      typeof resultsPerPage === "number" && resultsPerPage > 0
+        ? Math.max(1, Math.ceil(data.length / resultsPerPage))
+        : 1,
     [data.length, resultsPerPage]
   );
+
   const results = useMemo(() => {
     const lowerBound = (page - 1) * resultsPerPage;
     const upperBound = (page + 0) * resultsPerPage;

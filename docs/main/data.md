@@ -23,13 +23,18 @@ which is also part of `@openmrs/esm-framework`. See the
 
 ## FHIR
 
-To use the FHIR API, use the [fhir.js](https://github.com/FHIR/fhir.js#fhirjs)
-client object provided by `@openmrs/esm-framework`:
+To use the FHIR API, we recommend using [SWR](https://swr.vercel.app/docs/data-fetching) based hooks and the [`openmrsFetch`](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#openmrsfetch) fetcher function to retrieve data from the server. SWR offers a host of features that help us deliver an improved user experience.
+
+Here's an example of using SWR to retrieve a patient from the FHIR API.
 
 ```typescript
-import { fhir } from '@openmrs/esm-framework';
+import useSWR from 'swr';
+import { fhirBaseUrl, openmrsFetch, fhir } from '@openmrs/esm-framework';
 
-fhir.read<fhir.Patient>({ type: 'Patient', patient: patientUuid })
+const { data, error, isLoading, mutate } = useSWR<fhir.Patient, Error>(
+  `${fhirBaseUrl}/Patient/${patientUuid}`,
+  openmrsFetch
+);
 ```
 
 If you have questions about FHIR support in OpenMRS, you can ask in the
@@ -38,8 +43,6 @@ If you have questions about FHIR support in OpenMRS, you can ask in the
 ## Other OpenMRS server APIs
 
 Some administrative endpoints will likely never have a proper representation in FHIR (e.g., endpoints for managing encounter types). When no suitable FHIR endpoint is available, you will want to use a different OpenMRS server API. The [REST Web Services API](https://rest.openmrs.org/) is used widely across many of our frontend modules.
-
-We recommend using [SWR](https://swr.vercel.app/docs/data-fetching) based hooks and the [`openmrsFetch`](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#openmrsfetch) fetcher function to retrieve data from the server. SWR offers a host of features that help us deliver an improved user experience.
 
 Here's an example of a custom SWR hook that retrieves visits data.
 
