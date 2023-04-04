@@ -35,6 +35,7 @@ import {
 } from "@openmrs/esm-framework";
 import { useTranslation } from "react-i18next";
 import capitalize from "lodash-es/capitalize";
+import EmptyState from "./empty-state.component";
 import LastUpdatedTableCell from "./last-updated-table-cell.component";
 import PatientNameTableCell from "./patient-name-table-cell.component";
 import {
@@ -110,6 +111,18 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
     offlineRegisteredPatientsSwr.isValidating
   ) {
     return <TableSkeleton showHeader={showHeader} />;
+  }
+
+  if (
+    offlinePatientsSwr?.data?.length === 0 ||
+    offlineRegisteredPatientsSwr?.data?.length === 0
+  ) {
+    return (
+      <EmptyState
+        displayText={t("offlinePatients_lower", "offline patients")}
+        headerTitle={t("offlinePatients", "Offline patients")}
+      />
+    );
   }
 
   return (

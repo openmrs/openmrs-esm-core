@@ -22,7 +22,7 @@ const OverviewCard: React.FC<OverviewCardProps> = ({
     <Layer>
       <Tile className={styles.overviewCard}>
         <div className={styles.headerContainer}>
-          <h3 className={styles.productiveHeading01}>{header}</h3>
+          <h3 className={styles.heading}>{header}</h3>
           <Button
             className={styles.viewButton}
             kind="ghost"
