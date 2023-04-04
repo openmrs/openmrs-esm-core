@@ -1,5 +1,4 @@
-import { fhirBaseUrl } from "../fhir";
-import { openmrsFetch } from "../openmrs-fetch";
+import { fhirBaseUrl, openmrsFetch } from "../openmrs-fetch";
 import { fetchCurrentPatient } from "./current-patient";
 
 jest.mock("../openmrs-fetch", () => ({

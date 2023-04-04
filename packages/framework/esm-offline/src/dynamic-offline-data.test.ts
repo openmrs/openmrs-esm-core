@@ -1,5 +1,4 @@
 import "fake-indexeddb/auto";
-import { getLoggedInUser } from "@openmrs/esm-api";
 import { OfflineDb } from "./offline-db";
 import {
   getDynamicOfflineDataEntries,
