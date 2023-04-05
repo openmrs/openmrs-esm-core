@@ -21,6 +21,9 @@ export async function postUserPropertiesOnline(
     headers: { "Content-Type": "application/json" },
     signal: abortController.signal,
   });
+
+  // Force the reload of the page to ensure all data coming from the backend is fetched in the newly set locale.
+  window.location.reload();
 }
 
 export type PostSessionLocale = (
