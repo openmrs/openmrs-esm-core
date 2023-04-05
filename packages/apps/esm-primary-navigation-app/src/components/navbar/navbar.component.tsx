@@ -171,7 +171,7 @@ const Navbar: React.FC = () => {
     </>
   );
 
-  if (user) {
+  if (user && session) {
     return <HeaderContainer render={memo(HeaderItems)}></HeaderContainer>;
   }
 
