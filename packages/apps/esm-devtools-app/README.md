@@ -19,7 +19,8 @@ section of the developer documentation.
 ## Installation / Usage
 
 The devtools are registered as a
-[single-spa application](https://single-spa.js.org/docs/building-applications.html)
+[single-spa application](https://single-spa.js.org/docs/building-applications/)
+
 that creates a gray or red rectangular button near the bottom right of the 
 screen. The rectangular button will only show up if you run the following 
 command in the browser console:
