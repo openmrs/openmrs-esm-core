@@ -3869,9 +3869,6 @@ __metadata:
     "@openmrs/esm-globals": ^4.3.0
     dayjs: ^1.10.8
     i18next: ^19.6.0
-    jest: 28.1.0
-    jest-cli: 28.1.0
-    jest-environment-jsdom: 28.1.0
     lodash-es: ^4.17.21
     react: ^18.1.0
     react-dom: ^18.1.0
