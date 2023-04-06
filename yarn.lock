@@ -3506,8 +3506,8 @@ __metadata:
   resolution: "@openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell"
   dependencies:
     "@carbon/react": ^1.12.0
-    "@openmrs/esm-framework": 4.3.0
-    "@openmrs/esm-styleguide": 4.3.0
+    "@openmrs/esm-framework": 4.3.1
+    "@openmrs/esm-styleguide": 4.3.1
     cross-env: ^7.0.3
     dayjs: ^1.10.4
     dexie: ^3.0.3
@@ -3657,7 +3657,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-framework@^4.3.0, @openmrs/esm-framework@workspace:packages/framework/esm-framework":
+"@openmrs/esm-framework@4.3.1, @openmrs/esm-framework@^4.3.0, @openmrs/esm-framework@workspace:packages/framework/esm-framework":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-framework@workspace:packages/framework/esm-framework"
   dependencies:
@@ -3678,26 +3678,6 @@ __metadata:
     jest-environment-jsdom: 28.1.0
   languageName: unknown
   linkType: soft
-
-"@openmrs/esm-framework@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@openmrs/esm-framework@npm:4.3.0"
-  dependencies:
-    "@openmrs/esm-api": ^4.3.0
-    "@openmrs/esm-breadcrumbs": ^4.3.0
-    "@openmrs/esm-config": ^4.3.0
-    "@openmrs/esm-error-handling": ^4.3.0
-    "@openmrs/esm-extensions": ^4.3.0
-    "@openmrs/esm-globals": ^4.3.0
-    "@openmrs/esm-offline": ^4.3.0
-    "@openmrs/esm-react-utils": ^4.3.0
-    "@openmrs/esm-state": ^4.3.0
-    "@openmrs/esm-styleguide": ^4.3.0
-    "@openmrs/esm-utils": ^4.3.0
-    dayjs: ^1.10.7
-  checksum: 938ae998e2bc9f4331759f7ad678c39dc705c4c38bc7157417869f7e60b622235a76b33a80f8e3cafa95efb76e90f9e89d834b8b12a7e511273926c6716dee96
-  languageName: node
-  linkType: hard
 
 "@openmrs/esm-globals@^4.3.0, @openmrs/esm-globals@workspace:packages/framework/esm-globals":
   version: 0.0.0-use.local
@@ -3870,7 +3850,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-styleguide@^4.3.0, @openmrs/esm-styleguide@workspace:packages/framework/esm-styleguide":
+"@openmrs/esm-styleguide@4.3.1, @openmrs/esm-styleguide@^4.3.0, @openmrs/esm-styleguide@workspace:packages/framework/esm-styleguide":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-styleguide@workspace:packages/framework/esm-styleguide"
   dependencies:
@@ -3899,25 +3879,6 @@ __metadata:
     rxjs: 6.x
   languageName: unknown
   linkType: soft
-
-"@openmrs/esm-styleguide@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@openmrs/esm-styleguide@npm:4.3.0"
-  dependencies:
-    "@carbon/charts": ^1.6.3
-    "@carbon/react": ^1.12.0
-    d3: ^7.8.0
-    lodash-es: ^4.17.21
-  peerDependencies:
-    "@openmrs/esm-extensions": 4.x
-    "@openmrs/esm-react-utils": 4.x
-    "@openmrs/esm-state": 4.x
-    react: 18.x
-    react-dom: 18.x
-    rxjs: 6.x
-  checksum: 4b2c7379500dde950baf78872a3fd85b64d16d54e274b41f14bbfc9e6a0508a4d41f5575a0da5b767151dfc50807eecdda4c7704af7949969ca28d59c9276353
-  languageName: node
-  linkType: hard
 
 "@openmrs/esm-utils@^4.3.0, @openmrs/esm-utils@workspace:packages/framework/esm-utils":
   version: 0.0.0-use.local
