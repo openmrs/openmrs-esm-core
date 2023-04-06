@@ -68,7 +68,8 @@
   },
   "resolutions": {
     "minipass": "3.3.5",
-    "parse5": "^6"
+    "parse5": "^6",
+    "@openmrs/webpack-config": "workspace:packages/tooling/webpack-config"
   },
   "packageManager": "yarn@3.3.0"
 }

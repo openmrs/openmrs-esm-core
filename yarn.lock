@@ -3963,7 +3963,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/webpack-config@^4.3.0, @openmrs/webpack-config@workspace:packages/tooling/webpack-config":
+"@openmrs/webpack-config@workspace:packages/tooling/webpack-config":
   version: 0.0.0-use.local
   resolution: "@openmrs/webpack-config@workspace:packages/tooling/webpack-config"
   dependencies:
@@ -3988,32 +3988,6 @@ __metadata:
     webpack: 5.x
   languageName: unknown
   linkType: soft
-
-"@openmrs/webpack-config@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@openmrs/webpack-config@npm:4.3.0"
-  dependencies:
-    "@babel/core": ^7.17.9
-    "@babel/types": ^7.17.0
-    "@swc/core": ^1.2.165
-    babel-preset-minify: ^0.5.1
-    clean-webpack-plugin: ^4.0.0
-    css-loader: ^5.2.4
-    fork-ts-checker-webpack-plugin: ^6.5.0
-    lodash: ^4.17.21
-    sass: ^1.44.0
-    sass-loader: ^12.3.0
-    style-loader: ^3.3.1
-    swc-loader: ^0.1.15
-    systemjs-webpack-interop: ^2.3.7
-    webpack: ^5.75.0
-    webpack-bundle-analyzer: ^4.5.0
-    webpack-stats-plugin: ^1.0.3
-  peerDependencies:
-    webpack: 5.x
-  checksum: 162c1761eeaf73b8c83230f47950f23184660568b654d82ba74dc3d711e7692dedde7f679aec09e20f69bf9fe974fe3a98083d9e476c0b15e25171e2f722e583
-  languageName: node
-  linkType: hard
 
 "@pnpm/config.env-replace@npm:^1.0.0":
   version: 1.0.0
