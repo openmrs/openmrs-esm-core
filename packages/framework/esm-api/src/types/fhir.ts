@@ -1,12 +1,9 @@
-import { FetchHeaders } from "../openmrs-fetch";
-
 /*
 Originally taken from https://github.com/FHIR/fhir.js/blob/ec82ccfc125e05dbb645f47c100fe60f2c34bb73/src/fhir.d.ts
 Has been adapted to be even better - if we can get fhir.js to publish a good version to npm with better typedefs,
 we can remove this file in favor of the one they maintain
 */
 
-type ClientFn = (...args: any[]) => Promise<{ data: any }>;
 export type ResourceName =
   | "DomainResource"
   | "Organization"
@@ -103,72 +100,3 @@ export type ResourceName =
   | "Binary"
   | "Bundle"
   | "Parameters";
-interface QueryOptions {
-  $include?: { [key: string]: string | string[] };
-  [key: string]: any;
-}
-
-declare function Create<T extends fhir.DomainResource>(content: {
-  resource: T;
-}): Promise<{ data: T }>;
-declare function Create(content: {
-  type: "Binary";
-  data: Buffer;
-}): Promise<{ data: fhir.Binary }>;
-declare function Create<T extends fhir.DomainResource>(content: {
-  type: ResourceName;
-  data: T;
-}): Promise<{ data: T }>;
-
-declare function Read<T extends fhir.DomainResource>(content: {
-  type: ResourceName;
-  id?: string;
-  patient?: string;
-  headers?: FetchHeaders;
-}): Promise<{ data: T }>;
-
-declare function Patch(content: {
-  type: ResourceName;
-  id: string;
-  data: Array<{
-    op: "replace" | "add" | "remove";
-    path: string;
-    value: string | object;
-  }>;
-}): Promise<{ data: fhir.OperationOutcome }>;
-
-declare function Update<T extends fhir.DomainResource>(content: {
-  resource: T;
-}): Promise<{ data: T }>;
-
-declare function Search(content: {
-  type: ResourceName;
-  count?: number;
-  query?: QueryOptions;
-}): Promise<{ data: fhir.Bundle }>;
-
-declare function NextPage(content: {
-  type: ResourceName;
-  bundle: fhir.Bundle;
-}): Promise<{ data: fhir.Bundle }>;
-
-export interface FhirClient {
-  conformance: ClientFn;
-  document: ClientFn;
-  profile: ClientFn;
-  transaction: ClientFn;
-  history: ClientFn;
-  typeHistory: ClientFn;
-  resourceHistory: ClientFn;
-  read: typeof Read;
-  vread: ClientFn;
-  delete: ClientFn;
-  create: typeof Create;
-  validate: ClientFn;
-  search: typeof Search;
-  update: typeof Update;
-  nextPage: typeof NextPage;
-  prevPage: ClientFn;
-  resolve: ClientFn;
-  patch: typeof Patch;
-}

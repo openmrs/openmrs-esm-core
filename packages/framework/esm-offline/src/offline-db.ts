@@ -1,6 +1,6 @@
 import Dexie, { Table } from "dexie";
-import { DynamicOfflineData } from "./dynamic-offline-data";
-import { SyncItem } from "./sync";
+import type { DynamicOfflineData } from "./dynamic-offline-data";
+import type { SyncItem } from "./sync";
 
 /**
  * Accesses the central IndexedDB used by the `esm-offline` module to persist offline related state.

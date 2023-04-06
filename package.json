@@ -43,7 +43,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-ts-react-important-stuff": "^3.0.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "fake-indexeddb": "^3.1.2",
+    "fake-indexeddb": "^4.0.1",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "husky": "^8.0.1",
     "i18next-parser": "^5.4.0",
