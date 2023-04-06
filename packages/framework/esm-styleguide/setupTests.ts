@@ -4,7 +4,6 @@ declare global {
   interface Window {
     openmrsBase: string;
     spaBase: string;
-    getOpenmrsSpaBase: () => string;
   }
 }
 

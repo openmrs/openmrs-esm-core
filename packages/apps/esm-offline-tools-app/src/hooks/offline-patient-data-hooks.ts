@@ -24,7 +24,7 @@ function useFhirPatients(ids: Array<string>) {
   return useSWR(["fhirPatients", stableIds], () =>
     Promise.all(
       stableIds.map((patientId) =>
-        fetchCurrentPatient(patientId, undefined, false)
+        fetchCurrentPatient(patientId).then((res) => res.data)
       )
     )
   );

@@ -4,11 +4,7 @@ import isPlainObject from "lodash-es/isPlainObject";
 import { getConfig, navigate } from "@openmrs/esm-config";
 import { FetchResponse } from "./types";
 
-export const restBaseUrl = "/ws/rest/v1/";
-
-export const fhirBaseUrl = "/ws/fhir2/R4";
-
-export const sessionEndpoint = `${restBaseUrl}session`;
+export const sessionEndpoint = "/ws/rest/v1/session";
 
 /**
  * Append `path` to the OpenMRS SPA base.
@@ -96,13 +92,9 @@ export function openmrsFetch<T = any>(
     );
   }
 
-  // ensure path starts with /
-  if (path[0] !== "/") {
-    path = "/" + path;
-  }
-
   // Prefix the url with the openmrs spa base
-  let url: string = makeUrl(path);
+  // @ts-ignore
+  const url = makeUrl(path);
 
   // We're going to need some headers
   if (!fetchInit.headers) {
@@ -134,19 +126,8 @@ export function openmrsFetch<T = any>(
    * header. Returning that header is useful when using the API, but
    * not from a UI.
    */
-  if (
-    path.startsWith(restBaseUrl) &&
-    typeof fetchInit.headers["Disable-WWW-Authenticate"] === "undefined"
-  ) {
+  if (typeof fetchInit.headers["Disable-WWW-Authenticate"] === "undefined") {
     fetchInit.headers["Disable-WWW-Authenticate"] = "true";
-  }
-
-  if (path.startsWith(fhirBaseUrl)) {
-    const urlUrl = new URL(url, window.location.toString());
-    if (!urlUrl.searchParams.has("_summary")) {
-      urlUrl.searchParams.set("_summary", "data");
-      url = urlUrl.toString();
-    }
   }
 
   /* We capture the stacktrace before making the request, so that if an error occurs we can
@@ -322,7 +303,7 @@ export class OpenmrsFetchError extends Error {
   responseBody: string | FetchResponseJson | null;
 }
 
-export interface FetchConfig extends Omit<RequestInit, "body" | "headers"> {
+interface FetchConfig extends Omit<Omit<RequestInit, "body">, "headers"> {
   headers?: FetchHeaders;
   body?: FetchBody | string;
 }

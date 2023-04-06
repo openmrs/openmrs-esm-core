@@ -85,11 +85,7 @@ module.exports = (env, argv = {}) => {
       },
       proxy: [
         {
-          context: [
-            `${openmrsApiUrl}/**`,
-            `${openmrsPublicPath}/**`,
-            `!${openmrsPublicPath}/index.html`,
-          ],
+          context: [`${openmrsApiUrl}/**`, `${openmrsPublicPath}/**`],
           target: openmrsProxyTarget,
           changeOrigin: true,
           onProxyReq(proxyReq) {

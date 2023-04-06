@@ -24,6 +24,7 @@
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
+- [useCurrentPatient](API.md#usecurrentpatient)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [useSession](API.md#usesession)
@@ -187,7 +188,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L6)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L5)
 
 ___
 
@@ -585,13 +586,39 @@ ___
 
 ___
 
+### fhir
+
+• `Const` **fhir**: `Object`
+
+The `fhir` object is replicates the API from [fhir.js](https://github.com/FHIR/fhir.js)
+that can be used to call FHIR-compliant OpenMRS APIs. See
+[the docs for fhir.js](https://github.com/FHIR/fhir.js) for more info
+and example usage.
+
+This object should be considered deprecated and may be removed from a future version
+of the framework.
+
+**`deprecated`**
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `read` | <T\>(`options`: [`FHIRRequestOptions`](interfaces/FHIRRequestOptions.md)) => `Promise`<{ `config`: [`FHIRRequestObj`](interfaces/FHIRRequestObj.md) ; `data`: `T` ; `headers`: `Headers` ; `status`: `number`  }\> |
+
+#### Defined in
+
+[packages/framework/esm-api/src/fhir.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/fhir.ts#L45)
+
+___
+
 ### fhirBaseUrl
 
 • `Const` **fhirBaseUrl**: ``"/ws/fhir2/R4"``
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L9)
+[packages/framework/esm-api/src/fhir.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/fhir.ts#L5)
 
 ___
 
@@ -605,23 +632,13 @@ ___
 
 ___
 
-### restBaseUrl
+### sessionEndpoint
 
-• `Const` **restBaseUrl**: ``"/ws/rest/v1/"``
+• `Const` **sessionEndpoint**: ``"/ws/rest/v1/session"``
 
 #### Defined in
 
 [packages/framework/esm-api/src/openmrs-fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L7)
-
-___
-
-### sessionEndpoint
-
-• `Const` **sessionEndpoint**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/openmrs-fetch.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L11)
 
 ___
 
@@ -763,19 +780,18 @@ ___
 
 ### fetchCurrentPatient
 
-▸ **fetchCurrentPatient**(`patientUuid`, `fetchInit?`, `includeOfflinePatients?`): `Promise`<`fhir.Patient` \| ``null``\>
+▸ **fetchCurrentPatient**(`patientUuid`, `contentOverrides?`): `Promise`<{ `config`: [`FHIRRequestObj`](interfaces/FHIRRequestObj.md) ; `data`: `Patient` ; `headers`: `Headers` ; `status`: `number`  }\> \| `Promise`<``null``\>
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `patientUuid` | [`PatientUuid`](API.md#patientuuid) | `undefined` |
-| `fetchInit?` | [`FetchConfig`](interfaces/FetchConfig.md) | `undefined` |
-| `includeOfflinePatients` | `boolean` | `true` |
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
+| `contentOverrides?` | `Partial`<[`FHIRRequestOptions`](interfaces/FHIRRequestOptions.md)\> |
 
 #### Returns
 
-`Promise`<`fhir.Patient` \| ``null``\>
+`Promise`<{ `config`: [`FHIRRequestObj`](interfaces/FHIRRequestObj.md) ; `data`: `Patient` ; `headers`: `Headers` ; `status`: `number`  }\> \| `Promise`<``null``\>
 
 #### Defined in
 
@@ -979,7 +995,7 @@ makeUrl('/foo/bar');
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L23)
+[packages/framework/esm-api/src/openmrs-fetch.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L19)
 
 ___
 
@@ -1003,7 +1019,7 @@ request headers, authentication, authorization, and the API urls.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `path` | `string` | A string url to make the request to. Note that the   openmrs base url (by default `/openmrs`) will be automatically   prepended to the URL, so there is no need to include it. |
-| `fetchInit` | [`FetchConfig`](interfaces/FetchConfig.md) | A [fetch init object](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Syntax).   Note that the `body` property does not need to be `JSON.stringify()`ed   because openmrsFetch will do that for you. |
+| `fetchInit` | `FetchConfig` | A [fetch init object](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Syntax).   Note that the `body` property does not need to be `JSON.stringify()`ed   because openmrsFetch will do that for you. |
 
 #### Returns
 
@@ -1046,7 +1062,7 @@ free up memory and network resources and to prevent race conditions.
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L76)
+[packages/framework/esm-api/src/openmrs-fetch.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L72)
 
 ___
 
@@ -1070,7 +1086,7 @@ preferred or more convenient than a promise.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `url` | `string` | See [openmrsFetch](API.md#openmrsfetch) |
-| `fetchInit` | [`FetchConfig`](interfaces/FetchConfig.md) | See [openmrsFetch](API.md#openmrsfetch) |
+| `fetchInit` | `FetchConfig` | See [openmrsFetch](API.md#openmrsfetch) |
 
 #### Returns
 
@@ -1097,7 +1113,7 @@ To cancel the network request, simply call `subscription.unsubscribe();`
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L270)
+[packages/framework/esm-api/src/openmrs-fetch.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L251)
 
 ___
 
@@ -1228,6 +1244,31 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L60)
+
+___
+
+### useCurrentPatient
+
+▸ **useCurrentPatient**(`patientUuid?`): [`boolean`, `NullablePatient`, [`PatientUuid`](API.md#patientuuid), `Error` \| ``null``]
+
+This React hook returns the current patient, as specified by the current route. It returns
+all the information needed to render a loading state, error state, and normal/success state.
+
+**`deprecated`** Use [usePatient](API.md#usepatient) instead.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | [`PatientUuid`](API.md#patientuuid) |
+
+#### Returns
+
+[`boolean`, `NullablePatient`, [`PatientUuid`](API.md#patientuuid), `Error` \| ``null``]
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useCurrentPatient.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useCurrentPatient.ts#L83)
 
 ___
 
