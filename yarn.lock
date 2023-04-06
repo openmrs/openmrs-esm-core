@@ -3501,36 +3501,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-app-shell@npm:4.3.0":
-  version: 4.3.0
-  resolution: "@openmrs/esm-app-shell@npm:4.3.0"
-  dependencies:
-    "@carbon/react": ^1.12.0
-    "@openmrs/esm-framework": 4.3.0
-    "@openmrs/esm-styleguide": 4.3.0
-    dayjs: ^1.10.4
-    dexie: ^3.0.3
-    i18next: ^19.6.0
-    i18next-browser-languagedetector: ^4.3.1
-    i18next-icu: ^1.4.2
-    import-map-overrides: ^3.0.0
-    lodash-es: 4.17.21
-    react: ^18.1.0
-    react-dom: ^18.1.0
-    react-i18next: ^11.7.0
-    react-router-dom: ^6.3.0
-    rxjs: ^6.5.3
-    single-spa: ^5.9.2
-    systemjs: ^6.8.3
-    workbox-core: ^6.1.5
-    workbox-routing: ^6.1.5
-    workbox-strategies: ^6.1.5
-    workbox-window: ^6.1.5
-  checksum: 646fe93d088d3cbf498658cbf3d1b5d6f5e9a1151836a4c48e6c3cfadcafb73221cb2740d1fa59f7b1c7c0f65921a65d3d3514911aee6fa16e3be8bae08753a3
-  languageName: node
-  linkType: hard
-
-"@openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell":
+"@openmrs/esm-app-shell@4.3.1, @openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell"
   dependencies:
@@ -3963,7 +3934,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/webpack-config@workspace:packages/tooling/webpack-config":
+"@openmrs/webpack-config@4.3.1, @openmrs/webpack-config@^4.3.0, @openmrs/webpack-config@workspace:packages/tooling/webpack-config":
   version: 0.0.0-use.local
   resolution: "@openmrs/webpack-config@workspace:packages/tooling/webpack-config"
   dependencies:
@@ -14703,8 +14674,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "openmrs@workspace:packages/tooling/openmrs"
   dependencies:
-    "@openmrs/esm-app-shell": 4.3.0
-    "@openmrs/webpack-config": 4.3.0
+    "@openmrs/esm-app-shell": 4.3.1
+    "@openmrs/webpack-config": 4.3.1
     "@pnpm/npm-conf": ^2.1.0
     "@types/express": ^4.11.1
     "@types/glob": ^7.1.1
