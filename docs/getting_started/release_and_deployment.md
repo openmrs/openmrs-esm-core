@@ -18,3 +18,6 @@ You can version a frontend module by creating a release in GitHub. This will tri
 GitHub Actions to publish a new version of the package with the `latest` tag.
 Write release notes that explain what's happened since the last release. See
 [an example](https://github.com/openmrs/openmrs-esm-core/releases/tag/v3.1.2).
+
+## Subscribe to Community Release Announcements
+To follow the latest O3 release announcements, join [OpenMRS Slack](https://slack.openmrs.org) and subscribe to the channel [#openmrs3-releaseannouncements](https://openmrs.slack.com/archives/C052500RS0L).
