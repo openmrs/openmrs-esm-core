@@ -119,15 +119,21 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && !searchTerm) {
       if (!config.chooseLocation.enabled || locations?.length === 1) {
         changeLocation(locations[0]?.resource.id);
       }
-      if (!isLoading && !locations?.length) {
+      if (!locations?.length) {
         changeLocation();
       }
     }
-  }, [config.chooseLocation.enabled, isLoading, locations, changeLocation]);
+  }, [
+    config.chooseLocation.enabled,
+    isLoading,
+    locations,
+    changeLocation,
+    searchTerm,
+  ]);
 
   const search = debounce((location: string) => {
     setActiveLocation("");
@@ -196,6 +202,22 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
           <div className={styles.searchResults}>
             {isLoading ? (
               <div className={styles.loadingContainer}>
+                <RadioButtonSkeleton
+                  className={styles.radioButtonSkeleton}
+                  role="progressbar"
+                />
+                <RadioButtonSkeleton
+                  className={styles.radioButtonSkeleton}
+                  role="progressbar"
+                />
+                <RadioButtonSkeleton
+                  className={styles.radioButtonSkeleton}
+                  role="progressbar"
+                />
+                <RadioButtonSkeleton
+                  className={styles.radioButtonSkeleton}
+                  role="progressbar"
+                />
                 <RadioButtonSkeleton
                   className={styles.radioButtonSkeleton}
                   role="progressbar"

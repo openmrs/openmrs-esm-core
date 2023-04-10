@@ -52,7 +52,7 @@
 .locationResultsContainer {
   display: flex;
   overflow-y: auto;
-  padding: 0rem spacing.$spacing-01 0rem;
+  padding: spacing.$spacing-03 spacing.$spacing-01 0rem;
 }
 
 .locationRadioButton {
