@@ -117,6 +117,24 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     return chooseLocation.numberToShow;
   });
 
+  // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
+  useEffect(() => {
+    if (!isLoading && !searchTerm) {
+      if (!config.chooseLocation.enabled || locations?.length === 1) {
+        changeLocation(locations[0]?.resource.id);
+      }
+      if (!locations?.length) {
+        changeLocation();
+      }
+    }
+  }, [
+    config.chooseLocation.enabled,
+    isLoading,
+    locations,
+    changeLocation,
+    searchTerm,
+  ]);
+
   const search = debounce((location: string) => {
     setActiveLocation("");
     setSearchTerm(location);
