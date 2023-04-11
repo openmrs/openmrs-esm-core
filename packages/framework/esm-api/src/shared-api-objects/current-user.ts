@@ -160,8 +160,8 @@ function isSuperUser(user: { roles: Array<Role> }) {
  * refetchCurrentUser()
  * ```
  */
-export async function refetchCurrentUser() {
-  return await new Promise((resolve, reject) => {
+export function refetchCurrentUser() {
+  return new Promise((resolve, reject) => {
     lastFetchTimeMillis = Date.now();
     openmrsFetch(sessionEndpoint)
       .then((res) => {

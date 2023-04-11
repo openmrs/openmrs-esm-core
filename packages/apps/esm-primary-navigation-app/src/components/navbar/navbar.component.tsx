@@ -171,8 +171,10 @@ const Navbar: React.FC = () => {
     </>
   );
 
-  if (user && session && !session.sessionLocation) {
-    return (
+  if (user && session) {
+    return session.sessionLocation ? (
+      <HeaderContainer render={memo(HeaderItems)}></HeaderContainer>
+    ) : (
       <Navigate
         to={`${openmrsSpaBase}login/location`}
         state={{
@@ -184,10 +186,6 @@ const Navbar: React.FC = () => {
         }}
       />
     );
-  }
-
-  if (user && session) {
-    return <HeaderContainer render={memo(HeaderItems)}></HeaderContainer>;
   }
 
   return (
