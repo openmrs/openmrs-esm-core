@@ -160,8 +160,8 @@ function isSuperUser(user: { roles: Array<Role> }) {
  * refetchCurrentUser()
  * ```
  */
-export function refetchCurrentUser() {
-  return new Promise((resolve, reject) => {
+export async function refetchCurrentUser() {
+  return await new Promise((resolve, reject) => {
     lastFetchTimeMillis = Date.now();
     openmrsFetch(sessionEndpoint)
       .then((res) => {
@@ -249,5 +249,5 @@ export async function setSessionLocation(
     signal: abortController.signal,
   });
 
-  refetchCurrentUser();
+  await refetchCurrentUser();
 }
