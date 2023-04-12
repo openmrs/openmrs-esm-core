@@ -172,7 +172,20 @@ const Navbar: React.FC = () => {
   );
 
   if (user && session) {
-    return <HeaderContainer render={memo(HeaderItems)}></HeaderContainer>;
+    return session.sessionLocation ? (
+      <HeaderContainer render={memo(HeaderItems)}></HeaderContainer>
+    ) : (
+      <Navigate
+        to={`${openmrsSpaBase}login/location`}
+        state={{
+          referrer: window.location.pathname.slice(
+            window.location.pathname.indexOf(openmrsSpaBase) +
+              openmrsSpaBase.length -
+              1
+          ),
+        }}
+      />
+    );
   }
 
   return (

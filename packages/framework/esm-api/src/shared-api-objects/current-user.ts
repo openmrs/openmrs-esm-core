@@ -249,5 +249,5 @@ export async function setSessionLocation(
     signal: abortController.signal,
   });
 
-  refetchCurrentUser();
+  await refetchCurrentUser();
 }
