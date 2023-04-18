@@ -38,10 +38,7 @@ export function useVisit(patientUuid: string): VisitReturnType {
 
   const currentVisit = useMemo(
     () =>
-      data?.data.results.find(
-        (visit) =>
-          visit.stopDatetime === null && dayjs(visit.startDatetime).isToday()
-      ) ?? null,
+      data?.data.results.find((visit) => visit.stopDatetime === null) ?? null,
     [data?.data.results]
   );
 
