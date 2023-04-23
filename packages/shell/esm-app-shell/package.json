@@ -50,6 +50,7 @@
     "react-router-dom": "^6.3.0",
     "rxjs": "^6.5.3",
     "single-spa": "^5.9.2",
+    "swc-loader": "^0.2.3",
     "systemjs": "^6.8.3",
     "workbox-core": "^6.1.5",
     "workbox-routing": "^6.1.5",
@@ -58,7 +59,6 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "esbuild-loader": "^2.20.0",
     "webpack": "^5.75.0",
     "webpack-pwa-manifest": "^4.3.0",
     "workbox-webpack-plugin": "^6.1.2"
