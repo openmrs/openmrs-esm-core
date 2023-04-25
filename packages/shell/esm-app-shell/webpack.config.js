@@ -133,24 +133,10 @@ module.exports = (env, argv = {}) => {
           type: "asset/source",
         },
         {
-          test: /\.jsx?$/,
+          test: /\.(j|t)sx?$/,
           use: [
             {
-              loader: require.resolve("esbuild-loader"),
-              options: {
-                loader: "jsx",
-              },
-            },
-          ],
-        },
-        {
-          test: /\.tsx?$/,
-          use: [
-            {
-              loader: require.resolve("esbuild-loader"),
-              options: {
-                loader: "tsx",
-              },
+              loader: require.resolve("swc-loader"),
             },
           ],
         },
