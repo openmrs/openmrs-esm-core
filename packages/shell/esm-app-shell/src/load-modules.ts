@@ -25,6 +25,10 @@ export async function loadModules(modules: Record<string, string>) {
         return [name, {}];
       }
 
+      if (url.startsWith("./")) {
+        url = window.spaBase + url.substring(1);
+      }
+
       try {
         await new Promise((resolve, reject) => {
           loadScript(name, url, resolve, reject);
