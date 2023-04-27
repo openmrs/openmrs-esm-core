@@ -1,6 +1,13 @@
 import type { LifeCycleFn } from "single-spa";
 
 declare global {
+  const __webpack_share_scopes__: Record<
+    string,
+    Record<
+      string,
+      { loaded?: 1; get: () => Promise<unknown>; from: string; eager: boolean }
+    >
+  >;
   interface Window {
     /**
      * Easily copies a text from an element.

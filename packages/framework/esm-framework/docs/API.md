@@ -71,6 +71,11 @@
 - [toOmrsTimeString24](API.md#toomrstimestring24)
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
 
+### Dynamic Loading Functions
+
+- [loadDynamicExport](API.md#loaddynamicexport)
+- [slugify](API.md#slugify)
+
 ### Error Handling Functions
 
 - [createErrorHandler](API.md#createerrorhandler)
@@ -435,7 +440,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L53)
+[packages/framework/esm-globals/src/types.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L60)
 
 ___
 
@@ -2040,6 +2045,68 @@ Formats the input as a date string using the format "DD-MMM".
 #### Defined in
 
 [packages/framework/esm-utils/src/omrs-dates.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L120)
+
+___
+
+## Dynamic Loading Functions
+
+### loadDynamicExport
+
+▸ **loadDynamicExport**<`T`\>(`jsPackage`, `exportName?`, `share?`): `Promise`<`T`\>
+
+Loads the named export from a named package. This might be used like:
+
+```js
+const someComponent = loadDynamicExport("@openmrs/esm-template-app", "someComponent")
+```
+
+This will fetch the named export from the named package and return it, if it exists.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `jsPackage` | `string` | `undefined` | The package to load the export from |
+| `exportName` | `string` | `"default"` | The name of the export (from `index.ts`) to load |
+| `share` | `string` | `"./start"` | Indicates the name of the shared module; this is an advanced feature if the package you are loading   doesn't use the default OpenMRS shared module name "./start" |
+
+#### Returns
+
+`Promise`<`T`\>
+
+#### Defined in
+
+[packages/framework/esm-dynamic-loading/src/index.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/index.ts#L30)
+
+___
+
+### slugify
+
+▸ **slugify**(`name`): `string`
+
+Transforms an ESM module name to a valid JS identifier
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | the name of a module |
+
+#### Returns
+
+`string`
+
+An opaque, equivalent JS identifier for the module
+
+#### Defined in
+
+[packages/framework/esm-dynamic-loading/src/index.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/index.ts#L12)
 
 ___
 
