@@ -1,0 +1,27 @@
+[main]
+host = https://www.transifex.com
+
+
+[openmrs-esm-core.esm-implementer-tools-app]
+file_filter = packages/apps/esm-implementer-tools-app/translations/<lang>.json
+source_file = packages/apps/esm-implementer-tools-app/translations/en.json
+source_lang = en
+type = KEYVALUEJSON
+
+[openmrs-esm-core.esm-login-app]
+file_filter = packages/apps/esm-login-app/translations/<lang>.json
+source_file = packages/apps/esm-login-app/translations/en.json
+source_lang = en
+type = KEYVALUEJSON
+
+[openmrs-esm-core.esm-offline-tools-app]
+file_filter = packages/apps/esm-offline-tools-app/translations/<lang>.json
+source_file = packages/apps/esm-offline-tools-app/translations/en.json
+source_lang = en
+type = KEYVALUEJSON
+
+[openmrs-esm-core.esm-primary-navigation-app]
+file_filter = packages/apps/esm-primary-navigation-app/translations/<lang>.json
+source_file = packages/apps/esm-primary-navigation-app/translations/en.json
+source_lang = en
+type = KEYVALUEJSON
