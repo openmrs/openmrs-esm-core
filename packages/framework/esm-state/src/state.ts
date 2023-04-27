@@ -1,25 +1,25 @@
 /** @module @category Store */
-import createStore, { Store } from "unistore";
+import { createStore, StoreApi } from "zustand/vanilla";
 
 interface StoreEntity {
-  value: Store<any>;
+  value: StoreApi<unknown>;
   active: boolean;
 }
 
 const availableStores: Record<string, StoreEntity> = {};
 
 /**
- * Creates a Unistore [store](https://github.com/developit/unistore#store).
+ * Creates a Zustand store.
  *
  * @param name A name by which the store can be looked up later.
  *    Must be unique across the entire application.
  * @param initialState An object which will be the initial state of the store.
  * @returns The newly created store.
  */
-export function createGlobalStore<TState>(
+export function createGlobalStore<T>(
   name: string,
-  initialState: TState
-): Store<TState> {
+  initialState: T
+): StoreApi<T> {
   const available = availableStores[name];
 
   if (available) {
@@ -32,9 +32,9 @@ export function createGlobalStore<TState>(
     }
 
     available.active = true;
-    return available.value;
+    return available.value as StoreApi<T>;
   } else {
-    const store = createStore(initialState);
+    const store = createStore<T>()(() => initialState);
 
     availableStores[name] = {
       value: store,
@@ -46,21 +46,21 @@ export function createGlobalStore<TState>(
 }
 
 /**
- * Returns the existing [store](https://github.com/developit/unistore#store) named `name`,
+ * Returns the existing store named `name`,
  * or creates a new store named `name` if none exists.
  *
  * @param name The name of the store to look up.
  * @param fallbackState The initial value of the new store if no store named `name` exists.
  * @returns The found or newly created store.
  */
-export function getGlobalStore<TState = any>(
+export function getGlobalStore<T>(
   name: string,
-  fallbackState?: TState
-): Store<TState> {
+  fallbackState?: T
+): StoreApi<T> {
   const available = availableStores[name];
 
   if (!available) {
-    const store = createStore(fallbackState);
+    const store = createStore<T>()(() => fallbackState ?? ({} as unknown as T));
     availableStores[name] = {
       value: store,
       active: false,
@@ -68,7 +68,7 @@ export function getGlobalStore<TState = any>(
     return store;
   }
 
-  return available.value;
+  return available.value as StoreApi<T>;
 }
 
 export interface AppState {}
@@ -88,7 +88,7 @@ export function getAppState() {
 }
 
 export function subscribeTo<T, U>(
-  store: Store<T>,
+  store: StoreApi<T>,
   select: (state: T) => U,
   handle: (subState: U) => void
 ) {

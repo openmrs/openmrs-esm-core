@@ -1,5 +1,4 @@
 import { createGlobalStore } from "@openmrs/esm-framework";
-import { Store } from "unistore";
 
 export interface ImplementerToolsStore {
   activeItemDescription?: ActiveItemDescription;
@@ -19,8 +18,9 @@ export interface ActiveItemDescription {
   source?: string;
 }
 
-export const implementerToolsStore: Store<ImplementerToolsStore> =
-  createGlobalStore("implementer-tools", {
+export const implementerToolsStore = createGlobalStore<ImplementerToolsStore>(
+  "implementer-tools",
+  {
     activeItemDescription: undefined,
     configPathBeingEdited: null,
     isOpen: getIsImplementerToolsOpen(),
@@ -29,25 +29,27 @@ export const implementerToolsStore: Store<ImplementerToolsStore> =
     isConfigToolbarOpen: getIsConfigToolbarOpen(),
     isUIEditorEnabled: getIsUIEditorEnabled(),
     isJsonModeEnabled: getIsJsonModeEnabled(),
-  });
-
-export const setHasAlert = implementerToolsStore.action(
-  (state, value: boolean) => ({
-    ...state,
-    hasAlert: value,
-  })
+  }
 );
 
-export const togglePopup = implementerToolsStore.action((state) => ({
-  ...state,
-  isOpen: !state.isOpen,
-}));
+export const setHasAlert = (value: boolean) =>
+  implementerToolsStore.setState((state) => ({
+    ...state,
+    hasAlert: value,
+  }));
 
-export const showModuleDiagnostics = implementerToolsStore.action((state) => ({
-  ...state,
-  isOpen: true,
-  openTabIndex: 1,
-}));
+export const togglePopup = () =>
+  implementerToolsStore.setState((state) => ({
+    ...state,
+    isOpen: !state.isOpen,
+  }));
+
+export const showModuleDiagnostics = () =>
+  implementerToolsStore.setState((state) => ({
+    ...state,
+    isOpen: true,
+    openTabIndex: 1,
+  }));
 
 /* Set up localStorage-serialized state elements */
 

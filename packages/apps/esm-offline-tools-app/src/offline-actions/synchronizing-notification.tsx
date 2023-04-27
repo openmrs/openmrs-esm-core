@@ -42,8 +42,7 @@ export function setupSynchronizingOfflineActionsNotifications() {
     }
   };
 
-  store.subscribe(onChange);
-  return () => store.unsubscribe(onChange);
+  return store.subscribe(onChange);
 }
 
 function SynchronizingNotification({ mySynchronizationIndex }) {

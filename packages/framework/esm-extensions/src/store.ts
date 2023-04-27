@@ -123,9 +123,8 @@ export function updateInternalExtensionStore(
 }
 
 /**
- * This returns a [store](https://github.com/developit/unistore#store)
- * that modules can use to get information about the state of the
- * extension system.
+ * This returns a store that modules can use to get information about the
+ * state of the extension system.
  */
 export const getExtensionStore = () =>
   getGlobalStore<ExtensionStore>("extensions", {

@@ -8,15 +8,15 @@ import {
   ExtensionsConfigStore,
   getExtensionConfigFromStore,
 } from "@openmrs/esm-config";
-import { ComponentContext, ExtensionData } from "./ComponentContext";
-import { Store } from "unistore";
+import type { StoreApi } from "zustand";
 import isEqual from "lodash-es/isEqual";
+import { ComponentContext, ExtensionData } from "./ComponentContext";
 
 const promises: Record<string, Promise<ConfigObject>> = {};
 const errorMessage = `No ComponentContext has been provided. This should come from "openmrsComponentDecorator".
 Usually this is already applied when using "getAsyncLifecycle" or "getSyncLifecycle".`;
 
-function readInitialConfig(store: Store<ConfigStore>) {
+function readInitialConfig(store: StoreApi<ConfigStore>) {
   return () => {
     const state = store.getState();
 
@@ -29,7 +29,7 @@ function readInitialConfig(store: Store<ConfigStore>) {
 }
 
 function readInitialExtensionConfig(
-  store: Store<ExtensionsConfigStore>,
+  store: StoreApi<ExtensionsConfigStore>,
   extension: ExtensionData | undefined
 ) {
   if (extension) {
@@ -48,7 +48,7 @@ function readInitialExtensionConfig(
   return null;
 }
 
-function createConfigPromise(store: Store<ConfigStore>) {
+function createConfigPromise(store: StoreApi<ConfigStore>) {
   return new Promise<ConfigObject>((resolve) => {
     const unsubscribe = store.subscribe((state) => {
       if (state.loaded && state.config) {
@@ -60,7 +60,7 @@ function createConfigPromise(store: Store<ConfigStore>) {
 }
 
 function createExtensionConfigPromise(
-  store: Store<ExtensionsConfigStore>,
+  store: StoreApi<ExtensionsConfigStore>,
   extension: ExtensionData
 ) {
   return new Promise<ConfigObject>((resolve) => {
@@ -78,7 +78,7 @@ function createExtensionConfigPromise(
   });
 }
 
-function useConfigStore(store: Store<ConfigStore>) {
+function useConfigStore(store: StoreApi<ConfigStore>) {
   const [state, setState] = useState(readInitialConfig(store));
 
   useEffect(() => {
@@ -93,7 +93,7 @@ function useConfigStore(store: Store<ConfigStore>) {
 }
 
 function useExtensionConfigStore(
-  store: Store<ExtensionsConfigStore>,
+  store: StoreApi<ExtensionsConfigStore>,
   extension: ExtensionData | undefined
 ) {
   const [config, setConfig] = useState<ConfigObject | null>(
