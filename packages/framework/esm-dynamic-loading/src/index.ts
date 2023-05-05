@@ -48,7 +48,7 @@ export async function importDynamic<T = any>(
     }
 
     await new Promise((resolve, reject) => {
-      loadScript(jsPackage, importMap.imports[jsPackage], resolve, reject);
+      loadScript(importMap.imports[jsPackage], resolve, reject);
     });
   }
 
@@ -94,16 +94,12 @@ function isFederatedModule(a: unknown): a is FederatedModule {
  * Appends a `<script>` to the DOM with the given URL.
  */
 function loadScript(
-  name: string,
   url: string,
   resolve: (value: unknown) => void,
   reject: (reason?: any) => void
 ) {
   if (!document.head.querySelector(`script[src="${url}"]`)) {
     const element = document.createElement("script");
-    // Webpack uses this attribute to check whether a module has already
-    // been loaded into the application.
-    element.setAttribute("data-webpack", slugify(name));
     element.src = url;
     element.type = "text/javascript";
     element.async = true;
