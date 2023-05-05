@@ -47,8 +47,13 @@ export async function importDynamic<T = any>(
       throw new Error(error);
     }
 
+    let url = importMap.imports[jsPackage];
+    if (url.startsWith("./")) {
+      url = window.spaBase + url.substring(1);
+    }
+
     await new Promise((resolve, reject) => {
-      loadScript(importMap.imports[jsPackage], resolve, reject);
+      loadScript(url, resolve, reject);
     });
   }
 
