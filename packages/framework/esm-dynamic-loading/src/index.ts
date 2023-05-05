@@ -17,10 +17,8 @@ export function slugify(name: string) {
  * Loads the named export from a named package. This might be used like:
  *
  * ```js
- * const someComponent = loadDynamicExport("@openmrs/esm-template-app", "someComponent")
+ * const { someComponent } = importDynamic("@openmrs/esm-template-app")
  * ```
- *
- * This will fetch the named export from the named package and return it, if it exists.
  *
  * @param jsPackage The package to load the export from
  * @param share Indicates the name of the shared module; this is an advanced feature if the package you are loading

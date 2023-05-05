@@ -2057,10 +2057,8 @@ ___
 Loads the named export from a named package. This might be used like:
 
 ```js
-const someComponent = loadDynamicExport("@openmrs/esm-template-app", "someComponent")
+const { someComponent } = importDynamic("@openmrs/esm-template-app")
 ```
-
-This will fetch the named export from the named package and return it, if it exists.
 
 #### Type parameters
 
