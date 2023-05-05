@@ -39,6 +39,7 @@
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { resolve, dirname, basename } from "path";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 import { DefinePlugin, container } from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { StatsWriterPlugin } from "webpack-stats-plugin";
@@ -226,10 +227,6 @@ export default (
         analyzerMode: env && env.analyze ? "server" : "disabled",
       }),
       new DefinePlugin({
-        __VERSION__:
-          mode === production
-            ? JSON.stringify(version)
-            : JSON.stringify(inc(version, "prerelease", "local")),
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new ModuleFederationPlugin({
@@ -255,6 +252,28 @@ export default (
           return obj;
         }, {}),
       }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: "src/metadata.json",
+            transform: {
+              transformer: (content, path) =>
+                JSON.stringify(
+                  JSON.parse(
+                    content
+                      .toString()
+                      .replace(
+                        /__VERSION__/g,
+                        mode === production
+                          ? version
+                          : inc(version, "prerelease", "local")
+                      )
+                  )
+                ),
+            },
+          },
+        ],
+      }),
       new StatsWriterPlugin({
         filename: `${filename}.buildmanifest.json`,
         stats: {
@@ -275,7 +294,7 @@ export default (
       },
     ],
     resolve: {
-      extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],
+      extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".json"],
       alias: {
         "@openmrs/esm-framework": "@openmrs/esm-framework/src/internal",
       },

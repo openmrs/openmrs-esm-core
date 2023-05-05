@@ -3702,6 +3702,7 @@ __metadata:
     react-i18next: ^11.16.9
     rxjs: ^6.5.3
     swr: ^2.0.1
+    webpack: ^5.75.0
   peerDependencies:
     "@openmrs/esm-framework": "*"
     react: 18.x
@@ -3726,6 +3727,7 @@ __metadata:
     react-router-dom: ^6.3.0
     rxjs: ^6.5.3
     swr: ^2.0.1
+    webpack: ^5.75.0
   peerDependencies:
     "@openmrs/esm-framework": "*"
     react: 18.x
@@ -3902,6 +3904,7 @@ __metadata:
     "@swc/core": ^1.2.165
     babel-preset-minify: ^0.5.1
     clean-webpack-plugin: ^4.0.0
+    copy-webpack-plugin: ^11.0.0
     css-loader: ^5.2.4
     fork-ts-checker-webpack-plugin: ^6.5.0
     lodash: ^4.17.21
@@ -7419,6 +7422,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"copy-webpack-plugin@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "copy-webpack-plugin@npm:11.0.0"
+  dependencies:
+    fast-glob: ^3.2.11
+    glob-parent: ^6.0.1
+    globby: ^13.1.1
+    normalize-path: ^3.0.0
+    schema-utils: ^4.0.0
+    serialize-javascript: ^6.0.0
+  peerDependencies:
+    webpack: ^5.1.0
+  checksum: df4f8743f003a29ee7dd3d9b1789998a3a99051c92afb2ba2203d3dacfa696f4e757b275560fafb8f206e520a0aa78af34b990324a0e36c2326cefdeef3ca82e
+  languageName: node
+  linkType: hard
+
 "core-js-compat@npm:^3.25.1":
   version: 3.25.5
   resolution: "core-js-compat@npm:3.25.5"
@@ -9527,7 +9546,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.5, fast-glob@npm:^3.2.7, fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.5, fast-glob@npm:^3.2.7, fast-glob@npm:^3.2.9":
   version: 3.2.12
   resolution: "fast-glob@npm:3.2.12"
   dependencies:
@@ -10355,6 +10374,19 @@ __metadata:
     merge2: ^1.4.1
     slash: ^4.0.0
   checksum: 2539379a7fff3473d3e7c68b4540ba38f36970f43f760e36e301515d5cb98a0c5736554957d90390906bee632327beb2f9518d1acd6911f61e436db11b0da5b5
+  languageName: node
+  linkType: hard
+
+"globby@npm:^13.1.1":
+  version: 13.1.4
+  resolution: "globby@npm:13.1.4"
+  dependencies:
+    dir-glob: ^3.0.1
+    fast-glob: ^3.2.11
+    ignore: ^5.2.0
+    merge2: ^1.4.1
+    slash: ^4.0.0
+  checksum: e8bc13879972082d590cd1b0e27080d90d2e12fff7eeb2cee9329c29115ace14cc5b9f899e3d6beb136ba826307a727016658919a6f383e1511d698acee81741
   languageName: node
   linkType: hard
 
