@@ -23,13 +23,11 @@ export function slugify(name: string) {
  * This will fetch the named export from the named package and return it, if it exists.
  *
  * @param jsPackage The package to load the export from
- * @param exportName The name of the export (from `index.ts`) to load
  * @param share Indicates the name of the shared module; this is an advanced feature if the package you are loading
  *   doesn't use the default OpenMRS shared module name "./start"
  */
-export async function loadDynamicExport<T = any>(
+export async function importDynamic<T = any>(
   jsPackage: string,
-  exportName: string = "default",
   share: string = "./start"
 ): Promise<T> {
   if (typeof jsPackage !== "string" || jsPackage.trim().length === 0) {
@@ -73,13 +71,7 @@ export async function loadDynamicExport<T = any>(
     throw new Error(error);
   }
 
-  if (!module.hasOwnProperty(exportName)) {
-    const error = `The package ${jsPackage} does not have an export named ${exportName}`;
-    console.error(error);
-    throw new Error(error);
-  }
-
-  return module[exportName] as T;
+  return module as unknown as T;
 }
 
 interface FederatedModule {

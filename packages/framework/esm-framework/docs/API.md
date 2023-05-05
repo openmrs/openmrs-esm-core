@@ -73,7 +73,7 @@
 
 ### Dynamic Loading Functions
 
-- [loadDynamicExport](API.md#loaddynamicexport)
+- [importDynamic](API.md#importdynamic)
 - [slugify](API.md#slugify)
 
 ### Error Handling Functions
@@ -2050,9 +2050,9 @@ ___
 
 ## Dynamic Loading Functions
 
-### loadDynamicExport
+### importDynamic
 
-▸ **loadDynamicExport**<`T`\>(`jsPackage`, `exportName?`, `share?`): `Promise`<`T`\>
+▸ **importDynamic**<`T`\>(`jsPackage`, `share?`): `Promise`<`T`\>
 
 Loads the named export from a named package. This might be used like:
 
@@ -2073,7 +2073,6 @@ This will fetch the named export from the named package and return it, if it exi
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
 | `jsPackage` | `string` | `undefined` | The package to load the export from |
-| `exportName` | `string` | `"default"` | The name of the export (from `index.ts`) to load |
 | `share` | `string` | `"./start"` | Indicates the name of the shared module; this is an advanced feature if the package you are loading   doesn't use the default OpenMRS shared module name "./start" |
 
 #### Returns
@@ -2082,7 +2081,7 @@ This will fetch the named export from the named package and return it, if it exi
 
 #### Defined in
 
-[packages/framework/esm-dynamic-loading/src/index.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/index.ts#L30)
+[packages/framework/esm-dynamic-loading/src/index.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/index.ts#L29)
 
 ___
 
