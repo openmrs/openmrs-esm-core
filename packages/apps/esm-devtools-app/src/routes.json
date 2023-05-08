@@ -1,0 +1,11 @@
+{
+  "version": "__VERSION__",
+  "pages": [
+    {
+      "component": "devtools",
+      "routeActivation": "devtoolsActivation",
+      "online": true,
+      "offline": true
+    }
+  ]
+}
