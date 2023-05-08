@@ -40,7 +40,8 @@ const ChangeLocaleWrapper: React.FC<
   );
 };
 
-const ChangeLocale: React.FC<ChangeLocaleProps> = ({
+// exported for tests
+export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   allowedLocales,
   user,
   postUserProperties,
