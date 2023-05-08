@@ -201,6 +201,9 @@ export const ConfigurableLink = jest
     <a href={interpolateUrl(config.to)}>{config.children}</a>
   ));
 
+/* esm-dynamic-loading */
+export const importDynamic = jest.fn();
+
 /* esm-error-handling */
 export const createErrorHandler = () => jest.fn().mockReturnValue(never());
 

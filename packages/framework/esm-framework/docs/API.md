@@ -74,7 +74,6 @@
 ### Dynamic Loading Functions
 
 - [importDynamic](API.md#importdynamic)
-- [slugify](API.md#slugify)
 
 ### Error Handling Functions
 
@@ -2079,31 +2078,7 @@ const { someComponent } = importDynamic("@openmrs/esm-template-app")
 
 #### Defined in
 
-[packages/framework/esm-dynamic-loading/src/index.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/index.ts#L27)
-
-___
-
-### slugify
-
-▸ **slugify**(`name`): `string`
-
-Transforms an ESM module name to a valid JS identifier
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `name` | `string` | the name of a module |
-
-#### Returns
-
-`string`
-
-An opaque, equivalent JS identifier for the module
-
-#### Defined in
-
-[packages/framework/esm-dynamic-loading/src/index.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/index.ts#L12)
+[packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L29)
 
 ___
 
