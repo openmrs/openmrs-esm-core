@@ -45,6 +45,7 @@ import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { StatsWriterPlugin } from "webpack-stats-plugin";
 // eslint-disable-next-line no-restricted-imports
 import { merge, mergeWith, isArray } from "lodash";
+import { existsSync, statSync } from "fs";
 import { postProcessFile } from "./optimize";
 import { inc } from "semver";
 
@@ -78,8 +79,12 @@ function mergeFunction(objValue: any, srcValue: any) {
   }
 }
 
-function slugify(name) {
+function slugify(name: string) {
   return name.replace(/[\/\-@]/g, "_");
+}
+
+function fileExistsSync(name: string) {
+  return existsSync(name) && statSync(name).isFile();
 }
 
 /**
@@ -143,6 +148,8 @@ export default (
   const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
   const frameworkVersion = getFrameworkVersion();
+  const routes = resolve(root, "src/routes.json");
+  const hasRoutesDefined = fileExistsSync(routes);
 
   const cssLoader = {
     loader: "css-loader",
@@ -252,28 +259,29 @@ export default (
           return obj;
         }, {}),
       }),
-      new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: "src/metadata.json",
-            transform: {
-              transformer: (content, path) =>
-                JSON.stringify(
-                  JSON.parse(
-                    content
-                      .toString()
-                      .replace(
-                        /__VERSION__/g,
-                        mode === production
-                          ? version
-                          : inc(version, "prerelease", "local")
-                      )
-                  )
-                ),
+      hasRoutesDefined &&
+        new CopyWebpackPlugin({
+          patterns: [
+            {
+              from: routes,
+              transform: {
+                transformer: (content, path) =>
+                  JSON.stringify(
+                    JSON.parse(
+                      content
+                        .toString()
+                        .replace(
+                          /__VERSION__/g,
+                          mode === production
+                            ? version
+                            : inc(version, "prerelease", "local")
+                        )
+                    )
+                  ),
+              },
             },
-          },
-        ],
-      }),
+          ],
+        }),
       new StatsWriterPlugin({
         filename: `${filename}.buildmanifest.json`,
         stats: {
@@ -292,7 +300,7 @@ export default (
           });
         },
       },
-    ],
+    ].filter(Boolean),
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".json"],
       alias: {
