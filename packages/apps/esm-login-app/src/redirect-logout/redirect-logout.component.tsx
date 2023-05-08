@@ -1,14 +1,18 @@
 import React, { useEffect } from "react";
-import { navigate, useConfig, useSession } from "@openmrs/esm-framework";
+import {
+  navigate,
+  useConfig,
+  useConnectivity,
+  useSession,
+} from "@openmrs/esm-framework";
 import { performLogout } from "./logout.resource";
 
-export interface RedirectLogoutProps {
-  isLoginEnabled: boolean;
-}
+export interface RedirectLogoutProps {}
 
-const RedirectLogout: React.FC<RedirectLogoutProps> = ({ isLoginEnabled }) => {
+const RedirectLogout: React.FC<RedirectLogoutProps> = () => {
   const config = useConfig();
   const session = useSession();
+  const isLoginEnabled = useConnectivity();
 
   useEffect(() => {
     if (!session.authenticated || !isLoginEnabled) {

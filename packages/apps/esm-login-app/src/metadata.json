@@ -7,22 +7,14 @@
     {
       "component": "root",
       "route": "login",
-      "online": {
-        "isLoginEnabled": true
-      },
-      "offline": {
-        "isLoginEnabled": false
-      }
+      "online": true,
+      "offline": true
     },
     {
       "component": "root",
       "route": "logout",
-      "online": {
-        "isLoginEnabled": true
-      },
-      "offline": {
-        "isLoginEnabled": false
-      }
+      "online": true,
+      "offline": true
     }
   ],
   "extensions": [
@@ -30,34 +22,22 @@
       "name": "location-picker",
       "slot": "location-picker",
       "component": "locationPicker",
-      "online": {
-        "isLoginEnabled": true
-      },
-      "offline": {
-        "isLoginEnabled": false
-      }
+      "online": true,
+      "offline": true
     },
     {
       "name": "logout-button",
       "slot": "user-panel-actions-slot",
       "component": "logoutButton",
-      "online": {
-        "isLoginEnabled": true
-      },
-      "offline": {
-        "isLoginEnabled": false
-      }
+      "online": true,
+      "offline": true
     },
     {
       "name": "location-changer",
       "slot": "user-panel-slot",
       "component": "changeLocationLink",
-      "online": {
-        "isLoginEnabled": true
-      },
-      "offline": {
-        "isLoginEnabled": false
-      }
+      "online": true,
+      "offline": true
     }
   ]
 }
