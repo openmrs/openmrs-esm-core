@@ -317,6 +317,12 @@ yargs.command(
         description: "Whether to output a manifest",
         type: "boolean",
       })
+      .option("build-routes", {
+        default: true,
+        description:
+          "Whether to compile all module routes.json into a master routes.json",
+        type: "boolean",
+      })
       .option("mode", {
         choices: ["config", "survey"],
         default: "survey",
