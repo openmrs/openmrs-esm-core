@@ -6,14 +6,14 @@
   "pages": [
     {
       "component": "root",
-      "activator": "rootPageActivator",
+      "routeRegex": "(?!login/?)",
       "online": true,
       "offline": true,
       "order": 0
     },
     {
       "component": "redirect",
-      "activator": "redirectActivator",
+      "routeRegex": "^$",
       "online": true,
       "offline": true,
       "order": 0
