@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://json.openmrs.org/routes.schema.json",
+  "title": "OpenMRS Routes Schema",
+  "description": "This schema defines the expected values of routes.json files provided by OpenMRS frontend modules. These files describe the pages, extensions, and requirements of the frontend module so they can be appropriately consumed by the app shell.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "The version of the module. This should always be the constant __VERSION__.",
+      "default": "__VERSION__",
+      "pattern": "^__VERSION__$"
+    },
+    "backendDependencies": {
+      "type": "object",
+      "description": "A list of backend modules necessary for this frontend module and the corresponding required versions.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "pages": {
+      "type": "array",
+      "description": "An array of all pages supported by this frontend module. Pages are automatically mounted based on a route.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "component": {
+            "type": "string",
+            "description": "The name of the component exported by this frontend module."
+          },
+          "route": {
+            "oneOf": [{ "type": "string" }, { "type": "boolean" }],
+            "description": "Either a string or a boolean.\n If a string value, this is used to indicate that this page should be rendered. For example, \"name\" will match when the current page is ${window.spaBase}/name.\n If a boolean, this either indicates that the component should always be rendered or should never be rendered."
+          },
+          "routeRegex": {
+            "type": "string",
+            "format": "regex",
+            "description": "A regular expression used to match against the current route to determine whether this page should be rendered. Note that ${window.spaBase} will be removed before attempting to match, so setting this to \"^name.+\" will match any route that starts with ${window.spaBase}/name."
+          },
+          "routeFunction": {
+            "type": "string",
+            "description": "If a component requires more complicated routing logic, it can be provided as a function export from the frontend module. This function should take the current location as an argument and return a boolean indicating whether or not the page should be visible at this point."
+          },
+          "online": {
+            "type": "boolean",
+            "description": "Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.",
+            "default": true
+          },
+          "offline": {
+            "type": "boolean",
+            "description": "Determines whether the component renders while the browser is not connected to the internet. If false, this page will never render while offline.",
+            "default": true
+          },
+          "order": {
+            "type": "integer",
+            "description": "Determines the order in which the DOM element rendered this page is rendered. This should be used sparingly, but is sometimes necessary to ensure the resulting mark-up is correct.",
+            "minimum": 0
+          }
+        },
+        "required": ["component"],
+        "oneOf": [
+          { "required": ["route"] },
+          { "required": ["routeRegex"] },
+          { "required": ["routeFunction"] }
+        ]
+      }
+    },
+    "extensions": {
+      "type": "array",
+      "description": "An array of all extensions supported by this frontend module. Extensions can be mounted in extension slots, either via declarations in this file or configuration.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of this extension. This is used to refer to the extension in configuration."
+          },
+          "component": {
+            "type": "string",
+            "description": "The name of the component exported by this frontend module."
+          },
+          "slot": {
+            "type": "string",
+            "description": "If supplied, the slot that this extension is rendered into by default."
+          },
+          "online": {
+            "type": "boolean",
+            "description": "Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.",
+            "default": true
+          },
+          "offline": {
+            "type": "boolean",
+            "description": "Determines whether the component renders while the browser is not connected to the internet. If false, this page will never render while offline.",
+            "default": true
+          },
+          "order": {
+            "type": "integer",
+            "description": "Determines the order in which this component renders in its default extension slot. Note that this can be overridden by configuration.",
+            "minimum": 0
+          },
+          "meta": {
+            "type": "object",
+            "description": "Meta describes any properties that are passed down to the extension when it is loaded"
+          }
+        },
+        "required": ["component", "name"]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "additionalItems": false
+}
