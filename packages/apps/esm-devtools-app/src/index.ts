@@ -13,4 +13,5 @@ export const devtools = getAsyncLifecycle(
 );
 
 export const devtoolsActivation = () =>
-  window.spaEnv === "development" || !!localStorage.getItem("openmrs:devtools");
+  window.spaEnv === "development" ||
+  Boolean(localStorage.getItem("openmrs:devtools"));
