@@ -3,7 +3,7 @@
   "pages": [
     {
       "component": "devtools",
-      "routeActivation": "devtoolsActivation",
+      "routeFunction": "devtoolsActivation",
       "online": true,
       "offline": true
     }
