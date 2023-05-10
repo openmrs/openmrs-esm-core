@@ -11,7 +11,3 @@ export const devtools = getAsyncLifecycle(
   () => import("./devtools/devtools.component"),
   options
 );
-
-export const devtoolsActivation = () =>
-  window.spaEnv === "development" ||
-  Boolean(localStorage.getItem("openmrs:devtools"));

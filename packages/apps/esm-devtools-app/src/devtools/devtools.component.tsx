@@ -4,6 +4,13 @@ import styles from "./devtools.styles.css";
 import { importMapOverridden } from "./import-map.component";
 
 export default function Root(props) {
+  return window.spaEnv === "development" ||
+    Boolean(localStorage.getItem("openmrs:devtools")) ? (
+    <DevTools {...props} />
+  ) : null;
+}
+
+function DevTools() {
   const [devToolsOpen, setDevToolsOpen] = useState(false);
   const [isOverridden, setIsOverridden] = useState(importMapOverridden);
   return (

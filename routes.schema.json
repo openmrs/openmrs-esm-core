@@ -33,10 +33,6 @@
             "format": "regex",
             "description": "A regular expression used to match against the current route to determine whether this page should be rendered. Note that ${window.spaBase} will be removed before attempting to match, so setting this to \"^name.+\" will match any route that starts with ${window.spaBase}/name."
           },
-          "routeFunction": {
-            "type": "string",
-            "description": "If a component requires more complicated routing logic, it can be provided as a function export from the frontend module. This function should take the current location as an argument and return a boolean indicating whether or not the page should be visible at this point."
-          },
           "online": {
             "type": "boolean",
             "description": "Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.",
@@ -54,11 +50,7 @@
           }
         },
         "required": ["component"],
-        "oneOf": [
-          { "required": ["route"] },
-          { "required": ["routeRegex"] },
-          { "required": ["routeFunction"] }
-        ]
+        "oneOf": [{ "required": ["route"] }, { "required": ["routeRegex"] }]
       }
     },
     "extensions": {
