@@ -1,16 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "$id": "http://json.openmrs.org/routes.schema.json",
+  "$comment": "This schema is intended to help guide authors. When parsed, the schema may support additional properties added by our tooling, e.g., the version property.",
   "title": "OpenMRS Routes Schema",
   "description": "This schema defines the expected values of routes.json files provided by OpenMRS frontend modules. These files describe the pages, extensions, and requirements of the frontend module so they can be appropriately consumed by the app shell.",
   "type": "object",
   "properties": {
-    "version": {
-      "type": "string",
-      "description": "The version of the module. This should always be the constant __VERSION__.",
-      "default": "__VERSION__",
-      "pattern": "^__VERSION__$"
-    },
     "backendDependencies": {
       "type": "object",
       "description": "A list of backend modules necessary for this frontend module and the corresponding required versions.",

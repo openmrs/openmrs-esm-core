@@ -1,5 +1,4 @@
 {
-  "version": "__VERSION__",
   "pages": [
     {
       "component": "devtools",

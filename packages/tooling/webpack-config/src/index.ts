@@ -265,18 +265,14 @@ export default (
             {
               from: routes,
               transform: {
-                transformer: (content, path) =>
+                transformer: (content) =>
                   JSON.stringify(
-                    JSON.parse(
-                      content
-                        .toString()
-                        .replace(
-                          /__VERSION__/g,
-                          mode === production
-                            ? version
-                            : inc(version, "prerelease", "local")
-                        )
-                    )
+                    Object.assign({}, JSON.parse(content.toString()), {
+                      version:
+                        mode === production
+                          ? version
+                          : inc(version, "prerelease", "local"),
+                    })
                   ),
               },
             },
