@@ -23,7 +23,7 @@ const options = {
   moduleName,
 };
 
-export function startupOpenMRS() {
+export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
   defineExtensionConfigSchema("link", genericLinkConfigSchema);
 

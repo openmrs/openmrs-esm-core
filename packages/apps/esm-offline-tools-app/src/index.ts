@@ -98,7 +98,7 @@ export const offlineToolsOptInButton = getAsyncLifecycle(
   options
 );
 
-export function startupOpenMRS() {
+export function startupApp() {
   defineConfigSchema(moduleName, {});
   setupOffline();
   setupSynchronizingOfflineActionsNotifications();

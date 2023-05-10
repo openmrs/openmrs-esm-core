@@ -15,7 +15,7 @@ export const importTranslation = require.context(
   "lazy"
 );
 
-export function startupOpenMRS() {
+export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
 }
 
