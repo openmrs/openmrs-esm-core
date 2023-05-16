@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@carbon/react";
 import { Close, Save } from "@carbon/react/icons";
@@ -32,20 +32,23 @@ export function ValueEditor({
 
   const valueType = customType ?? element._type;
 
-  const keyListener = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      handleClose();
-    } else if (e.key === "Enter") {
-      handleSave(JSON.stringify(tmpValue));
-    }
-  };
+  const keyListener = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleClose();
+      } else if (e.key === "Enter") {
+        handleSave(JSON.stringify(tmpValue));
+      }
+    },
+    [handleSave, handleClose, tmpValue]
+  );
 
   useEffect(() => {
     document.addEventListener("keyup", keyListener);
     return () => {
       document.removeEventListener("keyup", keyListener);
     };
-  }, [tmpValue]);
+  }, [keyListener, tmpValue]);
 
   return (
     <div ref={ref} style={{ display: "inherit" }}>

@@ -4,7 +4,7 @@ import {
   getAsyncLifecycle,
   setupOfflineSync,
 } from "@openmrs/esm-framework";
-import { LifeCycles, navigateToUrl } from "single-spa";
+import { Application, navigateToUrl } from "single-spa";
 import { configSchema } from "./config-schema";
 import { moduleName, userPropertyChange } from "./constants";
 import { syncUserLanguagePreference } from "./offline";
@@ -34,18 +34,12 @@ export const root = getAsyncLifecycle(
   options
 );
 
-export const rootPageActivator = (location: Location) =>
-  !location.pathname.startsWith(window.getOpenmrsSpaBase() + "login");
-
-export const redirect: LifeCycles = {
+export const redirect: Application = async () => ({
   bootstrap: async () =>
     await navigateToUrl(window.getOpenmrsSpaBase() + "home"),
   mount: async () => undefined,
   unmount: async () => undefined,
-};
-
-export const redirectPageActivator = (location: Location) =>
-  location.pathname === window.getOpenmrsSpaBase();
+});
 
 export const userPanel = getAsyncLifecycle(
   () =>

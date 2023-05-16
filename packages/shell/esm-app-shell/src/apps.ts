@@ -139,7 +139,7 @@ To fix this, ensure that you define the "component" field inside the page defini
 
   const activityFn = getActivityFn(route);
   const loader = getLoader(page.appName, page.component);
-  registerApplication(appName, loader, (location) => activityFn(location));
+  registerApplication(appName, loader, activityFn);
 }
 
 export function tryRegisterExtension(
