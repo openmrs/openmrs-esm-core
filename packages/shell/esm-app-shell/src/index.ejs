@@ -11,9 +11,6 @@
     >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="importmap-type" content="systemjs-importmap">
-<% if (openmrsCoreImportmap) { %>
-    <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
-<% } %>
     <%= htmlWebpackPlugin.tags.headTags %>
 <% if (openmrsImportmapDef) { %>
     <script type="systemjs-importmap"><%= openmrsImportmapDef %></script>
@@ -25,6 +22,16 @@
       crossorigin="anonymous"
     >
     <script type="systemjs-importmap" src="<%= openmrsImportmapUrl %>"></script>
+  <% if (openmrsCoreImportmap) { %>
+    <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
+  <% } %>
+    <link
+      rel="preload"
+      href="<%= openmrsRoutes %>"
+      as="fetch"
+      crossorigin="anonymous"
+    >
+    <script type="openmrs-routes" src="<%= openmrsRoutes %>"></script>
 <% } %>
   </head>
   <body>

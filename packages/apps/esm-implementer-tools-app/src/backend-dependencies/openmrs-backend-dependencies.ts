@@ -17,7 +17,7 @@ export interface ResolvedDependenciesModule {
 
 interface Module {
   moduleName: string;
-  backendDependencies: Record<string, string>;
+  backendDependencies: Record<string, string> | undefined;
 }
 
 interface BackendModule {
@@ -85,9 +85,13 @@ function fetchInstalledBackendModules() {
 }
 
 function getMissingBackendModules(
-  requiredBackendModules: Record<string, string>,
+  requiredBackendModules: Record<string, string> | undefined,
   installedBackendModules: Array<BackendModule>
 ): Array<BackendModule> {
+  if (!requiredBackendModules) {
+    return [];
+  }
+
   const requiredBackendModulesUuids = Object.keys(requiredBackendModules);
   const installedBackendModuleUuids = installedBackendModules.map(
     (res) => res.uuid
@@ -105,9 +109,13 @@ function getMissingBackendModules(
 }
 
 function getInstalledAndRequiredBackendModules(
-  requiredBackendModules: Record<string, string>,
+  requiredBackendModules: Record<string, string> | undefined,
   installedBackendModules: Array<BackendModule>
 ): Array<BackendModule> {
+  if (!requiredBackendModules) {
+    return [];
+  }
+
   const requiredModules = Object.keys(requiredBackendModules).map((key) => ({
     uuid: key,
     version: requiredBackendModules[key],

@@ -9,5 +9,5 @@ export function useFrontendModules() {
         version: module[1].version,
         name: module[0],
       }));
-  }, [window.installedModules]);
+  }, []);
 }

@@ -1,4 +1,5 @@
 import "@openmrs/esm-styleguide/dist/openmrs-esm-styleguide.css";
+import { run } from "./run";
 import {
   setupPaths,
   setupUtils,
@@ -17,7 +18,6 @@ function wireSpaPaths() {
 
 function runSpa(config: SpaConfig) {
   const { configUrls = [], offline = true } = config;
-  const { run } = require("./run");
   return run(configUrls, offline);
 }
 

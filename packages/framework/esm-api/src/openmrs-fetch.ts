@@ -21,6 +21,13 @@ export const sessionEndpoint = `${restBaseUrl}session`;
  * ```
  */
 export function makeUrl(path: string) {
+  if (path && path.startsWith("http")) {
+    return path;
+  } else if (path[0] !== "/") {
+    // ensure path starts with /
+    path = "/" + path;
+  }
+
   return window.openmrsBase + path;
 }
 
@@ -94,11 +101,6 @@ export function openmrsFetch<T = any>(
     throw Error(
       "@openmrs/api is running in a browser that doesn't have window.openmrsBase, which is provided by openmrs-module-spa's HTML file."
     );
-  }
-
-  // ensure path starts with /
-  if (path[0] !== "/") {
-    path = "/" + path;
   }
 
   // Prefix the url with the openmrs spa base

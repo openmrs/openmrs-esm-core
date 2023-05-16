@@ -32,6 +32,8 @@ const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || "OpenMRS";
 const openmrsFavicon =
   process.env.OMRS_FAVICON || `${openmrsPublicPath}/favicon.ico`;
 const openmrsOffline = process.env.OMRS_OFFLINE !== "disable";
+const openmrsRoutes =
+  process.env.OMRS_ROUTES || `${openmrsPublicPath}/routes.json`;
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
@@ -68,6 +70,7 @@ function checkDirectoryExists(dirName) {
   }
   return false;
 }
+
 function checkDirectoryHasContents(dirName) {
   if (checkDirectoryExists(dirName)) {
     const contents = readdirSync(dirName);
@@ -130,7 +133,7 @@ module.exports = (env, argv = {}) => {
       historyApiFallback: {
         rewrites: [
           {
-            from: new RegExp(`^${openmrsPublicPath}/.*(?!\.(?!html?).+$)`),
+            from: new RegExp(`^${openmrsPublicPath}/.*(?!\.(?!html?|json).+$)`),
             to: `${openmrsPublicPath}/index.html`,
           },
         ],
@@ -157,6 +160,7 @@ module.exports = (env, argv = {}) => {
           },
         },
       ],
+      static: ["src/assets"],
     },
     mode,
     devtool: isProd ? "hidden-nosources-source-map" : "eval-source-map",
@@ -232,6 +236,7 @@ module.exports = (env, argv = {}) => {
           openmrsPageTitle,
           openmrsImportmapDef,
           openmrsImportmapUrl,
+          openmrsRoutes,
           openmrsOffline,
           openmrsEnvironment,
           openmrsConfigUrls,

@@ -4,7 +4,7 @@ import "systemjs/dist/extras/amd";
 import "systemjs/dist/extras/named-exports";
 import "systemjs/dist/extras/named-register";
 import "systemjs/dist/extras/use-default";
-import { start, unregisterApplication, getAppNames } from "single-spa";
+import { start, triggerAppChange } from "single-spa";
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -31,6 +31,7 @@ import {
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
   openmrsFetch,
+  ImportMap,
   interpolateUrl,
 } from "@openmrs/esm-framework/src/internal";
 import {
@@ -39,33 +40,9 @@ import {
   tryRegisterExtension,
 } from "./apps";
 import { setupI18n } from "./locale";
-import { loadModules } from "./load-modules";
 import { appName, getCoreExtensions } from "./ui";
 import { registerModules, sharedDependencies } from "./dependencies";
-
-/**
- * Loads the frontend modules (apps and widgets). Should be done *after*
- * the import maps initialized, i.e., after modules loaded.
- *
- * By convention we call frontend modules registering activation functions
- * apps, and all others widgets. This is not enforced technically.
- */
-function loadApps() {
-  return window.importMapOverrides
-    .getCurrentPageMap()
-    .then((importMap) => loadModules(importMap.imports));
-}
-
-/**
- * Registers the extensions already coming from the app shell itself.
- */
-function registerCoreExtensions() {
-  const extensions = getCoreExtensions();
-
-  for (const extension of extensions) {
-    tryRegisterExtension(appName, extension);
-  }
-}
+import { OpenmrsAppRoutes, OpenmrsRoutes } from "./types";
 
 /**
  * Sets up the frontend modules (apps). Uses the defined export
@@ -74,14 +51,47 @@ function registerCoreExtensions() {
  * That function returns an object that is used to feed Single
  * SPA.
  */
-async function setupApps(modules: Array<[string, System.Module]>) {
-  modules.forEach(([appName, appExports]) => registerApp(appName, appExports));
-  subscribeConnectivity(async () => {
-    const appNames = getAppNames();
-    await Promise.all(appNames.map(unregisterApplication));
-    finishRegisteringAllApps();
-  });
-  window.installedModules = modules;
+async function setupApps() {
+  const scriptTags = document.querySelectorAll<HTMLScriptElement>(
+    "script[type='openmrs-routes']"
+  );
+
+  const promises: Array<Promise<typeof window.installedModules>> = [];
+  for (let i = 0; i < scriptTags.length; i++) {
+    promises.push(
+      (async (scriptTag) => {
+        const modules: typeof window.installedModules = [];
+        let routes: OpenmrsRoutes | undefined = undefined;
+        try {
+          if (scriptTag.textContent) {
+            routes = JSON.parse(scriptTag.textContent) as OpenmrsRoutes;
+          } else if (scriptTag.src) {
+            routes = (await openmrsFetch<OpenmrsRoutes>(scriptTag.src)).data;
+          }
+        } catch (e) {
+          console.error(
+            `Caught error while loading routes from ${
+              scriptTag.src ?? "JSON script tag content"
+            }`,
+            e
+          );
+
+          return [];
+        }
+
+        if (typeof routes === "object") {
+          Object.entries(routes).forEach(([module, routes]) => {
+            modules.push([module, routes]);
+            registerApp(module, routes);
+          });
+        }
+
+        return Promise.resolve(modules);
+      })(scriptTags.item(i))
+    );
+  }
+
+  window.installedModules = (await Promise.all(promises)).flat();
 }
 
 /**
@@ -98,6 +108,9 @@ async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
  */
 function connectivityChanged() {
   const online = navigator.onLine;
+  // NB We do not wait for this to be done; it is simply scheduled
+  triggerAppChange();
+
   dispatchConnectivityChanged(online);
   showToast({
     critical: true,
@@ -212,21 +225,29 @@ function showActionableNotifications() {
   renderActionableNotifications(
     document.querySelector(".omrs-actionable-notifications-container")
   );
-  return;
 }
 
 function showToasts() {
   renderToasts(document.querySelector(".omrs-toasts-container"));
-  return;
 }
 
 function showModals() {
   renderModals(document.querySelector(".omrs-modals-container"));
-  return;
 }
 
 function showLoadingSpinner() {
   return renderLoadingSpinner(document.body);
+}
+
+/**
+ * Registers the extensions coming from the app shell itself.
+ */
+function registerCoreExtensions() {
+  // TODO Support core extensions or move this outside the app shell
+  // const extensions = getCoreExtensions();
+  // for (const extension of extensions) {
+  //   tryRegisterExtension(appName, extension);
+  // }
 }
 
 async function setupOffline() {
@@ -342,8 +363,8 @@ export function run(configUrls: Array<string>, offline: boolean) {
   setupApiModule();
   registerCoreExtensions();
 
-  return loadApps()
-    .then(setupApps)
+  return setupApps()
+    .then(finishRegisteringAllApps)
     .then(setupOfflineCssClasses)
     .then(provideConfigs)
     .then(runShell)

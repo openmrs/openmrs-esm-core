@@ -316,8 +316,7 @@ function getAssignedExtensionsFromSlotData(
     // if the extension has not been registered yet, do not include it
     if (extension) {
       const requiredPrivileges =
-        extensionConfig?.["Display conditions"]?.privileges ??
-        extension.privileges;
+        extensionConfig?.["Display conditions"]?.privileges ?? []; // extension.privileges;
       if (
         requiredPrivileges &&
         (typeof requiredPrivileges === "string" ||
@@ -342,8 +341,6 @@ function getAssignedExtensionsFromSlotData(
         moduleName: extension.moduleName,
         config: extensionConfig,
         meta: extension.meta,
-        online: extension.online,
-        offline: extension.offline,
       });
     }
   }

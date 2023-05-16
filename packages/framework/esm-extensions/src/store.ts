@@ -18,9 +18,6 @@ export interface ExtensionRegistration {
   moduleName: string;
   meta: ExtensionMeta;
   order?: number;
-  online?: boolean | object;
-  offline?: boolean | object;
-  privileges?: string | string[];
 }
 
 export interface ExtensionInfo extends ExtensionRegistration {

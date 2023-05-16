@@ -10,7 +10,7 @@ export function getCoreExtensions() {
 
   return [
     {
-      id: "breadcrumbs-widget",
+      name: "breadcrumbs-widget",
       slot: "breadcrumbs-slot",
       load: getAsyncLifecycle(() => import("./breadcrumbs"), options),
       online: true,

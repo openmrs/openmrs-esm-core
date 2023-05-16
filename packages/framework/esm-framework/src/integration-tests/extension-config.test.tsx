@@ -517,6 +517,6 @@ function registerSimpleExtension(
       }
     ),
     meta: {},
-    privileges,
+    // privileges,
   });
 }
