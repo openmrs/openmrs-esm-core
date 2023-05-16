@@ -33,6 +33,13 @@
             "format": "regex",
             "description": "A regular expression used to match against the current route to determine whether this page should be rendered. Note that ${window.spaBase} will be removed before attempting to match, so setting this to \"^name.+\" will match any route that starts with ${window.spaBase}/name."
           },
+          "privilege": {
+            "oneOf": [
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ],
+            "description": "One or more privileges that a user must have in order for this page to be available."
+          },
           "online": {
             "type": "boolean",
             "description": "Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.",
@@ -71,6 +78,13 @@
           "slot": {
             "type": "string",
             "description": "If supplied, the slot that this extension is rendered into by default."
+          },
+          "privilege": {
+            "oneOf": [
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "string" }
+            ],
+            "description": "One or more privileges that a user must have in order for this extension to be available."
           },
           "online": {
             "type": "boolean",
