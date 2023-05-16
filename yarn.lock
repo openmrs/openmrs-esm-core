@@ -3589,6 +3589,7 @@ __metadata:
     prettier: ^2.0.5
     pretty-quick: ^3.0.0
     swc-loader: ^0.1.15
+    systemjs-webpack-interop: ^2.3.7
     timezone-mock: ^1.2.2
     turbo: ^1.5.5
     typedoc: ^0.22.15
@@ -18016,6 +18017,15 @@ __metadata:
   version: 1.3.1
   resolution: "symlink-or-copy@npm:1.3.1"
   checksum: 430c32ab5606f7b7c946a5a29ea17ce6cb0b34d8cb8394234b7abe710c8c029bf41030df79406cf49c4fc1e49aa979ca950b836767e3b8702acf9efe922a2f74
+  languageName: node
+  linkType: hard
+
+"systemjs-webpack-interop@npm:^2.3.7":
+  version: 2.3.7
+  resolution: "systemjs-webpack-interop@npm:2.3.7"
+  peerDependencies:
+    webpack: "*"
+  checksum: 6a294aa45281b208a43a2e8e358a58e1f37605c322c40180d5cc3bd7a283d4b5c310110274f8b2e96e6d8bf081a101bda6301f962669a1b0722bbd9043ce6933
   languageName: node
   linkType: hard
 

@@ -57,6 +57,7 @@
     "prettier": "^2.0.5",
     "pretty-quick": "^3.0.0",
     "swc-loader": "^0.1.15",
+    "systemjs-webpack-interop": "^2.3.7",
     "timezone-mock": "^1.2.2",
     "turbo": "^1.5.5",
     "typedoc": "^0.22.15",
