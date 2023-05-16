@@ -64,7 +64,6 @@ export async function importDynamic<T = any>(
     throw new Error(error);
   }
 
-  await __webpack_init_sharing__("default");
   container.init(__webpack_share_scopes__.default);
 
   const factory = await container.get(share);
