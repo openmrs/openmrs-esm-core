@@ -46,7 +46,6 @@ import { StatsWriterPlugin } from "webpack-stats-plugin";
 // eslint-disable-next-line no-restricted-imports
 import { merge, mergeWith, isArray } from "lodash";
 import { existsSync, statSync } from "fs";
-import { postProcessFile } from "./optimize";
 import { inc } from "semver";
 
 const production = "production";
@@ -213,8 +212,7 @@ export default (
       ],
     },
     mode,
-    devtool:
-      mode === production ? "hidden-nosources-source-map" : "eval-source-map",
+    devtool: mode === production ? "hidden-nosources-source-map" : "source-map",
     devServer: {
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -285,17 +283,6 @@ export default (
           chunks: true,
         },
       }),
-      {
-        apply(compiler) {
-          compiler.hooks.afterEmit.tap("PostProcessPlugin", (compilation) => {
-            if (mode === "production") {
-              // only post-optimize the bundle in production mode
-              const fn = resolve(root, outDir, filename);
-              postProcessFile(fn);
-            }
-          });
-        },
-      },
     ].filter(Boolean),
     resolve: {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".json"],
