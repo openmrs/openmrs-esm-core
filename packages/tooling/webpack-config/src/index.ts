@@ -150,6 +150,15 @@ export default (
   const routes = resolve(root, "src/routes.json");
   const hasRoutesDefined = fileExistsSync(routes);
 
+  if (!hasRoutesDefined) {
+    console.error(
+      "This app does not define a routes.json. This file is required for this app to be used by the OpenMRS 3 App Shell."
+    );
+    // key-smash error code
+    // so this (hopefully) doesn't interfere with Webpack-specific exit codes
+    process.exit(9819023573289);
+  }
+
   const cssLoader = {
     loader: "css-loader",
     options: {

@@ -58,8 +58,22 @@ function getLoader(
       [k: string]: () => Promise<LifeCycles>;
     }>(appName);
 
-    if (module && Object.hasOwn(module, component)) {
+    if (
+      module &&
+      Object.hasOwn(module, component) &&
+      typeof module[component] === "function"
+    ) {
       return module[component]();
+    } else {
+      if (module && Object.hasOwn(module, component)) {
+        console.warn(
+          `The export ${component} of the app ${appName} is not a function`
+        );
+      } else {
+        console.warn(
+          `The app ${appName} does not define a component called ${component}, this cannot be loaded`
+        );
+      }
     }
 
     return emptyLifecycle;

@@ -6,7 +6,7 @@ import { userPropertyChange } from "../../constants";
 
 export type PostUserProperties = (
   userUuid: string,
-  userProperties: any,
+  userProperties: Record<string, string>,
   abortController?: AbortController
 ) => Promise<void>;
 
