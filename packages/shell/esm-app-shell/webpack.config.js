@@ -9,9 +9,10 @@ const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
 const { basename, dirname, resolve } = require("path");
 const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
+const { readdirSync, statSync } = require("fs");
+
 const { name, version, dependencies } = require("./package.json");
 const sharedDependencies = require("./dependencies.json");
-const { readdirSync, statSync } = require("fs");
 const frameworkVersion = require("@openmrs/esm-framework/package.json").version;
 
 const timestamp = getTimestamp();

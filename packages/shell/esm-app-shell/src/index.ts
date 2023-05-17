@@ -5,6 +5,7 @@ import "systemjs/dist/extras/amd";
 import "systemjs/dist/extras/named-exports";
 import "systemjs/dist/extras/named-register";
 import "systemjs/dist/extras/use-default";
+import "@openmrs/esm-framework";
 import type { SpaConfig } from "@openmrs/esm-framework/src/internal";
 
 export function setupPaths(config: SpaConfig) {
