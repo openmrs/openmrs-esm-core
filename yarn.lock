@@ -3539,7 +3539,6 @@ __metadata:
     "@openmrs/esm-globals": ^4.4.1
     "@openmrs/esm-state": ^4.4.1
     "@types/ramda": ^0.26.44
-    "@types/systemjs": ^6.1.0
     babel-plugin-ramda: ^2.0.0
     ramda: ^0.26.1
     single-spa: ^5.9.2
@@ -3547,7 +3546,6 @@ __metadata:
     "@openmrs/esm-globals": 4.x
     "@openmrs/esm-state": 4.x
     single-spa: 5.x
-    systemjs: 6.x
   languageName: unknown
   linkType: soft
 
@@ -3873,6 +3871,7 @@ __metadata:
     react-dom: ^18.1.0
     rxjs: ^6.5.3
   peerDependencies:
+    "@openmrs/esm-config": 4.x
     "@openmrs/esm-extensions": 4.x
     "@openmrs/esm-react-utils": 4.x
     "@openmrs/esm-state": 4.x
@@ -14427,7 +14426,6 @@ __metadata:
     "@types/pacote": ^11.1.5
     "@types/react": ^18.0.9
     "@types/rimraf": ^2.0.2
-    "@types/systemjs": ^6.1.0
     "@types/tar": ^4.0.3
     autoprefixer: ^10.4.2
     axios: ^0.21.1

@@ -10,6 +10,7 @@
   "scripts": {
     "test": "jest --passWithNoTests",
     "build": "tsc",
+    "build:development": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },
   "repository": {
