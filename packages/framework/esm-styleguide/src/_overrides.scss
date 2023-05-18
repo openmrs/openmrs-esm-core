@@ -42,6 +42,11 @@
   border-bottom: none;
 }
 
+/* Tooltips presently have a higher stacking context than modals, which leads to tooltip buttons rendering above modal content */
+.cds--body--with-modal-open .cds--tooltip {
+  z-index: 0;
+}
+
 /* Content Switcher */
 .cds--content-switcher-btn {
   background-color: $ui-02;
