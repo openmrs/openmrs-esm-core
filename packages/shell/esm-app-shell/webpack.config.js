@@ -220,7 +220,7 @@ module.exports = (env, argv = {}) => {
           test: /\.(j|t)sx?$/,
           use: [
             {
-              loader: require.resolve("swc-loader"),
+              loader: "@swc-node/loader",
             },
           ],
         },

@@ -185,7 +185,7 @@ export default (
             test: /\.m?(js|ts|tsx)$/,
             exclude: /(node_modules|bower_components)/,
             use: {
-              loader: require.resolve("swc-loader"),
+              loader: "@swc-node/loader",
             },
           },
           scriptRuleConfig
