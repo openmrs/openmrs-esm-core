@@ -81,6 +81,11 @@ function checkDirectoryHasContents(dirName) {
   }
 }
 
+/**
+ * @param {*} env
+ * @param {*} argv
+ * @returns {import("webpack").Configuration}
+ */
 module.exports = (env, argv = {}) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? "dist" : "lib";
@@ -134,20 +139,40 @@ module.exports = (env, argv = {}) => {
       historyApiFallback: {
         rewrites: [
           {
-            from: new RegExp(`^${openmrsPublicPath}/.*(?!\.(?!html?|json).+$)`),
+            from: new RegExp(`^${openmrsPublicPath}/.*(?!\.(?!html).+$)`),
             to: `${openmrsPublicPath}/index.html`,
           },
         ],
       },
       proxy: [
         {
-          context: [
-            `${openmrsApiUrl}/**`,
-            `${openmrsPublicPath}/**`,
-            `!${openmrsPublicPath}/index.html`,
-          ],
+          /**
+           * @param {String} path
+           */
+          context(path) {
+            if (!path) {
+              return false;
+            }
+
+            if (path.startsWith(openmrsPublicPath)) {
+              if (basename(path).indexOf(".") >= 0) {
+                return true;
+              } else {
+                return false;
+              }
+            }
+
+            if (path.startsWith(openmrsApiUrl)) {
+              return true;
+            }
+
+            return false;
+          },
           target: openmrsProxyTarget,
           changeOrigin: true,
+          /**
+           * @param {Request} proxyReq
+           */
           onProxyReq(proxyReq) {
             if (openmrsAddCookie) {
               const origCookie = proxyReq.getHeader("cookie");
@@ -155,6 +180,9 @@ module.exports = (env, argv = {}) => {
               proxyReq.setHeader("cookie", newCookie);
             }
           },
+          /**
+           * @param {Response} proxyRes
+           */
           onProxyRes(proxyRes) {
             proxyRes.headers &&
               delete proxyRes.headers["content-security-policy"];
