@@ -57,6 +57,7 @@
     "react-dom": "^18.1.0",
     "react-i18next": "^11.16.9",
     "react-router-dom": "^6.3.0",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.5.3",
+    "webpack": "^5.75.0"
   }
 }
