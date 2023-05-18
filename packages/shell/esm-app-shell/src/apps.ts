@@ -41,6 +41,9 @@ function getActivityFn(
   }
 }
 
+const STARTUP_FUNCTION = "startupApp";
+const initializedApps = new Map<string, Promise<unknown>>();
+
 /**
  * This a page definition from an app's routes and turns returns an
  * appropriate SingleSpa loader function. The loader function is called
@@ -54,16 +57,33 @@ function getLoader(
   component: string
 ): () => Promise<LifeCycles> {
   return async () => {
-    const module = await importDynamic<{
-      [k: string]: () => Promise<LifeCycles>;
-    }>(appName);
+    const module = await importDynamic<
+      {
+        [k: string]: () => LifeCycles | Promise<LifeCycles>;
+      } & { startApp?: Function }
+    >(appName);
 
     if (
       module &&
       Object.hasOwn(module, component) &&
       typeof module[component] === "function"
     ) {
-      return module[component]();
+      if (!(appName in initializedApps)) {
+        await (initializedApps[appName] = new Promise((resolve, reject) => {
+          if (Object.hasOwn(module, STARTUP_FUNCTION)) {
+            const startup = module[STARTUP_FUNCTION];
+            if (typeof startup === "function") {
+              return Promise.resolve(startup()).then(resolve).catch(reject);
+            }
+          }
+
+          resolve(null);
+        }));
+      } else {
+        await initializedApps[appName];
+      }
+
+      return Promise.resolve(module[component]());
     } else {
       if (module && Object.hasOwn(module, component)) {
         console.warn(
