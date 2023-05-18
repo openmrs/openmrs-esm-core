@@ -3616,6 +3616,7 @@ __metadata:
     "@openmrs/webpack-config": ^4.4.1
     react: ^18.1.0
     react-dom: ^18.1.0
+    webpack: ^5.75.0
   peerDependencies:
     "@openmrs/esm-framework": "*"
     react: 18.x
