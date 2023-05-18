@@ -257,7 +257,10 @@ export async function runAssemble(args: AssembleArgs) {
 
   if (args.buildRoutes) {
     await writeFile(
-      resolve(args.target, "routes.json"),
+      resolve(
+        args.target,
+        `routes${args.hashImportmap ? "." + contentHash(routes) : ""}.json`
+      ),
       JSON.stringify(routes, undefined, 2),
       "utf-8"
     );
