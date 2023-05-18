@@ -5,7 +5,7 @@ import {
   registerExtension,
   defineConfigSchema,
   importDynamic,
-} from "@openmrs/esm-framework/src/internal";
+} from "@openmrs/esm-framework";
 import { LifeCycles, registerApplication } from "single-spa";
 import { emptyLifecycle, routePrefix, routeRegex } from "./helpers";
 import type {
@@ -39,6 +39,27 @@ function getActivityFn(
   } else {
     return () => route;
   }
+}
+
+function wrapPageActivityFn(
+  activityFn: ActivityFn,
+  { online, offline }: RegisteredPageDefinition
+) {
+  return (location: Location) => {
+    // basically, if the page should only work online and we're offline or if the
+    // page should only work offline and we're online, defaulting to always rendering
+    // the page
+    if (
+      !(
+        (navigator.onLine && (online ?? true)) ||
+        (!navigator.onLine && (offline ?? true))
+      )
+    ) {
+      return false;
+    }
+
+    return activityFn(location);
+  };
 }
 
 const STARTUP_FUNCTION = "startupApp";
@@ -171,7 +192,7 @@ To fix this, ensure that you define the "component" field inside the page defini
     return;
   }
 
-  const activityFn = getActivityFn(route);
+  const activityFn = wrapPageActivityFn(getActivityFn(route), page);
   const loader = getLoader(page.appName, page.component);
   registerApplication(appName, loader, activityFn);
 }
