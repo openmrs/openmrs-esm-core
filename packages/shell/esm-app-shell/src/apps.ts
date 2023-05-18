@@ -6,7 +6,7 @@ import {
   defineConfigSchema,
   importDynamic,
 } from "@openmrs/esm-framework";
-import { LifeCycles, registerApplication } from "single-spa";
+import { Application, LifeCycles, registerApplication } from "single-spa";
 import { emptyLifecycle, routePrefix, routeRegex } from "./helpers";
 import type {
   Activator as ActivityFn,
@@ -15,16 +15,17 @@ import type {
   OpenmrsAppRoutes,
   RegisteredPageDefinition,
 } from "./types";
-import { appName } from "./ui";
 
 const pages: Array<RegisteredPageDefinition> = [];
 
 /**
- * This takes the pages route definition and turns it into a SingleSpa
- * activity function. This activity function is called by SingleSpa to
- * determine whether or not the page should be rendered.
+ * This takes a page's route definitions and returns a single-spa
+ * activityFn which returns true when the page matches the current
+ * route and false if it does not.
  *
- * @param route The activator to preprocess.
+ * @param route A string or regexp that matches the location when the
+ * page should be displayed or an array of such strings and regexps
+ * @returns An activityFn suitable to use for a single-spa application
  */
 function getActivityFn(
   route: RouteDefinition | Array<RouteDefinition>
@@ -41,6 +42,18 @@ function getActivityFn(
   }
 }
 
+/**
+ * For pages, we also support the activityFn taking into account the online / offline
+ * status. This wraps an existing single-spa activityFn and only allows the page to
+ * be rendered in the appropriate mode.
+ *
+ * By default, we assume that all pages should be rendered when online, but only rendered
+ * offline if specifically configured to do so.
+ *
+ * @param activityFn A standard single-spa activityFn such as that returned by {@link getActivityFn()}
+ * @param pageDefinition The RegisteredPageDefinition object for this page
+ * @returns An activityFn suitable to use for a single-spa application
+ */
 function wrapPageActivityFn(
   activityFn: ActivityFn,
   { online, offline }: RegisteredPageDefinition
@@ -52,7 +65,7 @@ function wrapPageActivityFn(
     if (
       !(
         (navigator.onLine && (online ?? true)) ||
-        (!navigator.onLine && (offline ?? true))
+        (!navigator.onLine && (offline ?? false))
       )
     ) {
       return false;
@@ -66,12 +79,16 @@ const STARTUP_FUNCTION = "startupApp";
 const initializedApps = new Map<string, Promise<unknown>>();
 
 /**
- * This a page definition from an app's routes and turns returns an
- * appropriate SingleSpa loader function. The loader function is called
- * by SingleSpa the first time the application is loaded. The loader
- * function takes no arguments and returns a SingleSpa Application.
+ * This function creates a loader function suitable for use in either a single-spa
+ * application or parcel.
  *
- * @param page
+ * The returned function is lazy and ensures that the appropriate module is loaded,
+ * that the module's `startupApp()` is called before the component is loaded. It
+ * then calls the component function, which should return either a single-spa
+ * {@link LifeCycles} object or a {@link Promise} that will resolve to such an object.
+ *
+ * React-based pages or extensions should generally use the framework's
+ * `getAsyncLifecycle()` or `getSyncLifecycle()` functions.
  */
 function getLoader(
   appName: string,
@@ -121,6 +138,15 @@ function getLoader(
   };
 }
 
+/**
+ * This is the main entry-point for registering an app with the app shell.
+ * Each app has a name and should have a `routes.json` file that defines it's
+ * associated routes.
+ *
+ * @param appName The name of the application, e.g. `@openmrs/esm-my-app`
+ * @param routes A Javascript object that corresponds to the app's  routes.json`
+ * definition.
+ */
 export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
   if (appName && routes && typeof routes === "object") {
     defineConfigSchema(appName, {});
@@ -129,7 +155,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
       routes.extensions ?? [];
 
     routes.pages?.forEach((p) => {
-      pages.push({ ...p, order: p.order ?? Number.MAX_VALUE, appName });
+      pages.push({ ...p, order: p.order ?? Number.MAX_SAFE_INTEGER, appName });
     });
 
     availableExtensions.forEach((ext) => {
@@ -138,6 +164,14 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
   }
 }
 
+/**
+ * This is called by the app shell once all route entries have been processed.
+ * This actually registers the pages with the application. This function is
+ * necessary to ensure that pages are rendered in the DOM according to their
+ * order definition, especially because certain pages _must_ be first in the DOM.
+ *
+ * Each page is rendered into a div with an appropriate name.
+ */
 export function finishRegisteringAllApps() {
   pages.sort((a, b) => a.order - b.order);
 
@@ -163,6 +197,14 @@ export function finishRegisteringAllApps() {
   }
 }
 
+/**
+ * This function actually converts each page definition into a single-spa application
+ * if that's possible. After this point, pages are rendered using single-spa's
+ * routing logic.
+ *
+ * @param appName The name of the app containing this page
+ * @param page A Javascript object that describes the page defintion, derived from `routes.json`
+ */
 export function tryRegisterPage(
   appName: string,
   page: RegisteredPageDefinition
@@ -197,44 +239,73 @@ To fix this, ensure that you define the "component" field inside the page defini
   registerApplication(appName, loader, activityFn);
 }
 
+/**
+ * This function actually registers an extension definition with the framework and will
+ * attach the extension to any configured slots.
+ *
+ * @param appName The name of the app containing this page
+ * @param extension A Javascript object that describes the extension defintion, derived from `routes.json`
+ */
 export function tryRegisterExtension(
-  moduleName: string,
+  appName: string,
   extension: ExtensionDefinition
 ) {
   const name = extension.name;
+  if (!name) {
+    console.warn(
+      `An extension definition in ${appName} is missing an name and thus cannot be
+registered. To fix this, ensure that you define the "name" field inside the
+extension definition.`,
+      extension
+    );
+    return;
+  }
+
+  if (extension.slots && extension.slot) {
+    console.warn(
+      `The extension ${name} from ${appName} declares both a 'slots' property and 
+a 'slot' property. Only the 'slots' property will be honored.`
+    );
+  }
   const slots = extension.slots
     ? extension.slots
     : extension.slot
     ? [extension.slot]
     : [];
 
-  if (!name) {
+  if (!extension.component && extension.load === undefined) {
     console.warn(
-      `A registered extension definition is missing an name and thus cannot be registered.
-To fix this, ensure that you define the "name" (or alternatively the "id") field inside the extension definition.`,
+      `The extension ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
+To fix this, ensure that you define a 'component' field inside the extension definition.`,
       extension
     );
     return;
   }
 
-  if (!extension.component) {
+  let loader;
+  if (extension.component) {
+    loader = getLoader(appName, extension.component);
+  } else if (extension.load) {
+    loader = extension.load;
+  } else {
+    // this should not be possible
     console.warn(
-      `A registered extension definition is missing the component entry and thus cannot be registered.
-To fix this, ensure that you define a "component" function inside the extension definition.`,
+      `The extension ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
+To fix this, ensure that you define a 'component' field inside the extension definition.`,
       extension
     );
     return;
   }
 
-  // registerExtension({
-  //   name,
-  //   load: getLoader(appName, extension.component),
-  //   meta: extension.meta || {},
-  //   order: extension.order,
-  //   moduleName,
-  // });
+  registerExtension({
+    name,
+    load: loader,
+    meta: extension.meta || {},
+    order: extension.order || Number.MAX_SAFE_INTEGER,
+    moduleName: appName,
+  });
 
-  // for (const slot of slots) {
-  //   attach(slot, name);
-  // }
+  for (const slot of slots) {
+    attach(slot, name);
+  }
 }

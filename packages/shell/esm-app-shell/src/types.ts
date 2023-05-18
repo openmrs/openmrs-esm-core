@@ -1,3 +1,5 @@
+import type { Application } from "single-spa";
+
 export interface Activator {
   (location: Location): boolean;
 }
@@ -27,7 +29,7 @@ export type PageDefinition = {
    */
   offline?: boolean;
   /**
-   * Determines the order in which this component renders in its default extension slot. Note that this can be overridden by configuration.
+   * Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.
    */
   order?: number;
 } & (
@@ -76,10 +78,6 @@ export type ExtensionDefinition = {
    */
   name: string;
   /**
-   * The name of the component exported by this frontend module.
-   */
-  component: string;
-  /**
    * If supplied, the slot that this extension is rendered into by default.
    */
   slot?: string;
@@ -105,7 +103,28 @@ export type ExtensionDefinition = {
   meta?: {
     [k: string]: unknown;
   };
-};
+} & (
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component: string;
+      /**
+       * @internal
+       */
+      load?: never;
+    }
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component?: never;
+      /**
+       * @internal
+       */
+      load: Application;
+    }
+);
 
 /**
  * This interface is for the entries in the overall routes.json for an instance of the O3 frontend

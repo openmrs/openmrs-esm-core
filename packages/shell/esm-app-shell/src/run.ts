@@ -25,7 +25,6 @@ import {
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
   openmrsFetch,
-  ImportMap,
   interpolateUrl,
 } from "@openmrs/esm-framework/src/internal";
 import {
@@ -237,11 +236,10 @@ function showLoadingSpinner() {
  * Registers the extensions coming from the app shell itself.
  */
 function registerCoreExtensions() {
-  // TODO Support core extensions or move this outside the app shell
-  // const extensions = getCoreExtensions();
-  // for (const extension of extensions) {
-  //   tryRegisterExtension(appName, extension);
-  // }
+  const extensions = getCoreExtensions();
+  for (const extension of extensions) {
+    tryRegisterExtension(appName, extension);
+  }
 }
 
 async function setupOffline() {
