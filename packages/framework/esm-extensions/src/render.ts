@@ -1,7 +1,7 @@
 /** @module @category Extension */
 import { mountRootParcel, Parcel, ParcelConfig } from "single-spa";
 import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
-import { checkStatus, getCustomProps } from "./helpers";
+import { checkStatus } from "./helpers";
 import { updateInternalExtensionStore } from "./store";
 
 export interface CancelLoading {
@@ -32,9 +32,9 @@ export async function renderExtension(
       );
     }
 
-    const { load, meta, moduleName } = extensionRegistration;
+    const { load, meta, moduleName, online, offline } = extensionRegistration;
 
-    if (/* checkStatus(online, offline) */ true) {
+    if (checkStatus(online, offline)) {
       updateInternalExtensionStore((state) => {
         const instance = {
           domElement,
@@ -59,7 +59,6 @@ export async function renderExtension(
 
       const { default: result, ...lifecycle } = await load();
       parcel = mountRootParcel(renderFunction(result ?? lifecycle), {
-        //...getCustomProps(online, offline),
         ...additionalProps,
         _meta: meta,
         _extensionContext: {

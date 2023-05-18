@@ -98,6 +98,10 @@ export type ExtensionDefinition = {
    */
   order?: number;
   /**
+  
+   */
+  privileges?: string | Array<string>;
+  /**
    * Meta describes any properties that are passed down to the extension when it is loaded
    */
   meta?: {

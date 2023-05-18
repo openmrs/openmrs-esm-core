@@ -313,10 +313,13 @@ function getAssignedExtensionsFromSlotData(
     );
     const name = getExtensionNameFromId(id);
     const extension = internalState.extensions[name];
+
     // if the extension has not been registered yet, do not include it
     if (extension) {
       const requiredPrivileges =
-        extensionConfig?.["Display conditions"]?.privileges ?? []; // extension.privileges;
+        extensionConfig?.["Display conditions"]?.privileges ??
+        extension.privileges ??
+        [];
       if (
         requiredPrivileges &&
         (typeof requiredPrivileges === "string" ||

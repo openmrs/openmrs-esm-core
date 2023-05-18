@@ -286,6 +286,13 @@ To fix this, ensure that you define a 'component' field inside the extension def
   if (extension.component) {
     loader = getLoader(appName, extension.component);
   } else if (extension.load) {
+    if (typeof extension.load !== "function") {
+      console.warn(
+        `The extension ${name} from ${appName} declares a 'load' property that is not a function. This is not
+supported, so the extension will not be loaded.`
+      );
+      return;
+    }
     loader = extension.load;
   } else {
     // this should not be possible
@@ -303,6 +310,7 @@ To fix this, ensure that you define a 'component' field inside the extension def
     meta: extension.meta || {},
     order: extension.order || Number.MAX_SAFE_INTEGER,
     moduleName: appName,
+    privileges: extension.privileges,
   });
 
   for (const slot of slots) {

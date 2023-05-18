@@ -7,6 +7,7 @@ import {
   ExtensionSlotConfigObject,
 } from "@openmrs/esm-config";
 import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
+import { Application } from "single-spa";
 
 export interface ExtensionMeta {
   [_: string]: any;
@@ -18,6 +19,9 @@ export interface ExtensionRegistration {
   moduleName: string;
   meta: ExtensionMeta;
   order?: number;
+  online?: boolean;
+  offline?: boolean;
+  privileges?: string | Array<string>;
 }
 
 export interface ExtensionInfo extends ExtensionRegistration {
