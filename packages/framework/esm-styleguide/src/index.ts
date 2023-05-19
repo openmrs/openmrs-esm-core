@@ -9,6 +9,7 @@ export * from "./toasts";
 export * from "./modals";
 export * from "./left-nav";
 export * from "./error-state";
+export * from "./datepicker";
 
 setupBranding();
 setupLogo();
