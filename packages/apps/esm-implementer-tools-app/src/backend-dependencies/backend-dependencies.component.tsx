@@ -13,11 +13,11 @@ import {
 import { ResolvedDependenciesModule } from "./openmrs-backend-dependencies";
 import styles from "./backend-dependencies.styles.scss";
 
-export interface ModuleDiagnosticsProps {
+export interface BackendDependencies {
   frontendModules: Array<ResolvedDependenciesModule>;
 }
 
-export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
+export const BackendDependencies: React.FC<BackendDependencies> = ({
   frontendModules,
 }) => {
   const { t } = useTranslation();

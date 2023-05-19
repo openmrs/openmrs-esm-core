@@ -31,9 +31,9 @@ export default function Popup({
     } else if (activeTab == 1) {
       return <FrontendModules frontendModules={frontendModules} />;
     } else {
-      return <ModuleDiagnostics frontendModules={backendDependencies} />;
+      return <BackendDependencies frontendModules={backendDependencies} />;
     }
-  }, [activeTab]);
+  }, [activeTab, backendDependencies, frontendModules]);
 
   return (
     <div className={styles.popup}>

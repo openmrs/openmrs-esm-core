@@ -5,16 +5,18 @@ import {
   registerExtension,
   defineConfigSchema,
   importDynamic,
-} from "@openmrs/esm-framework";
-import { Application, LifeCycles, registerApplication } from "single-spa";
-import { emptyLifecycle, routePrefix, routeRegex } from "./helpers";
-import type {
-  Activator as ActivityFn,
-  ActivatorDefinition as RouteDefinition,
+  RegisteredPageDefinition,
   ExtensionDefinition,
   OpenmrsAppRoutes,
-  RegisteredPageDefinition,
-} from "./types";
+  RouteDefinition,
+} from "@openmrs/esm-framework";
+import {
+  ActivityFn,
+  LifeCycles,
+  pathToActiveWhen,
+  registerApplication,
+} from "single-spa";
+import { emptyLifecycle, routeRegex } from "./helpers";
 
 const pages: Array<RegisteredPageDefinition> = [];
 
@@ -34,7 +36,7 @@ function getActivityFn(
     const activators = route.map(getActivityFn);
     return (location) => activators.some((activator) => activator(location));
   } else if (typeof route === "string") {
-    return (location) => routePrefix(route, location);
+    return pathToActiveWhen(window.getOpenmrsSpaBase() + route);
   } else if (route instanceof RegExp) {
     return (location) => routeRegex(route, location);
   } else {

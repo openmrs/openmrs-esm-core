@@ -154,7 +154,7 @@ export async function checkModules(): Promise<
 > {
   if (!cachedFrontendModules) {
     const modules = (window.installedModules ?? [])
-      .filter((module) => module[1].backendDependencies)
+      .filter((module) => Boolean(module[1]?.backendDependencies))
       .map((module) => ({
         backendDependencies: module[1].backendDependencies,
         moduleName: module[0],

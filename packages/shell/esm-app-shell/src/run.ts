@@ -26,6 +26,7 @@ import {
   subscribePrecacheStaticDependencies,
   openmrsFetch,
   interpolateUrl,
+  OpenmrsRoutes,
 } from "@openmrs/esm-framework/src/internal";
 import {
   finishRegisteringAllApps,
@@ -35,7 +36,6 @@ import {
 import { setupI18n } from "./locale";
 import { appName, getCoreExtensions } from "./ui";
 import { registerModules, sharedDependencies } from "./dependencies";
-import { OpenmrsAppRoutes, OpenmrsRoutes } from "./types";
 
 /**
  * Sets up the frontend modules (apps). Uses the defined export

@@ -396,6 +396,18 @@ ___
 
 ___
 
+### ExtensionDefinition
+
+Ƭ **ExtensionDefinition**: { `meta?`: { `[k: string]`: `unknown`;  } ; `name`: `string` ; `offline?`: `boolean` ; `online?`: `boolean` ; `order?`: `number` ; `privileges?`: `string` \| `string`[] ; `slot?`: `string` ; `slots?`: `string`[]  } & { `component`: `string`  } \| { `component?`: `never`  }
+
+A definition of an extension as extracted from an app's routes.json
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:158](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L158)
+
+___
+
 ### ExtensionProps
 
 Ƭ **ExtensionProps**: { `state?`: `Record`<`string`, `any`\> ; `wrap?`: (`slot`: `ReactNode`, `extension`: [`ExtensionData`](interfaces/ExtensionData.md)) => ``null`` \| `ReactElement`<`any`, `any`\>  } & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`slot`: `React.ReactNode`, `extension?`: [`ExtensionData`](interfaces/ExtensionData.md)) => `React.ReactNode`  }
@@ -416,6 +428,31 @@ ___
 
 ___
 
+### OpenmrsRoutes
+
+Ƭ **OpenmrsRoutes**: `Record`<`string`, [`OpenmrsAppRoutes`](interfaces/OpenmrsAppRoutes.md)\>
+
+This interfaces describes the format of the overall rotues.json loaded by the app shell.
+Basically, this is the same as the app routes, with each routes definition keyed by the app's name
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:242](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L242)
+
+___
+
+### PageDefinition
+
+Ƭ **PageDefinition**: { `component`: `string` ; `offline?`: `boolean` ; `online?`: `boolean` ; `order?`: `number`  } & { `route`: `string` \| `boolean` ; `routeRegex?`: `never`  } \| { `route?`: `never` ; `routeRegex`: `string`  }
+
+A definition of a page extracted from an app's routes.json
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L101)
+
+___
+
 ### ProvidedConfig
 
 Ƭ **ProvidedConfig**: `Object`
@@ -433,13 +470,25 @@ ___
 
 ___
 
+### RegisteredPageDefinition
+
+Ƭ **RegisteredPageDefinition**: `Omit`<[`PageDefinition`](API.md#pagedefinition), ``"order"``\> & `AppComponent` & { `order`: `number`  }
+
+A definition of a page after the app has been registered.
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:152](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L152)
+
+___
+
 ### SpaEnvironment
 
 Ƭ **SpaEnvironment**: ``"production"`` \| ``"development"`` \| ``"test"``
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L65)
+[packages/framework/esm-globals/src/types.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L56)
 
 ___
 
