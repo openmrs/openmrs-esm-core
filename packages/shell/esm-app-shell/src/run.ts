@@ -41,7 +41,6 @@ import {
 import { setupI18n } from "./locale";
 import { loadModules } from "./load-modules";
 import { appName, getCoreExtensions } from "./ui";
-import { registerModules, sharedDependencies } from "./dependencies";
 
 /**
  * Loads the frontend modules (apps and widgets). Should be done *after*
