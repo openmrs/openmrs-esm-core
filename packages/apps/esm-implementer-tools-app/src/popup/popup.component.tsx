@@ -7,7 +7,7 @@ import {
   FrontendModule,
   FrontendModules,
 } from "../frontend-modules/frontend-modules.component";
-import { ModuleDiagnostics } from "../backend-dependencies/backend-dependencies.component";
+import { BackendDependencies } from "../backend-dependencies/backend-dependencies.component";
 import type { ResolvedDependenciesModule } from "../backend-dependencies/openmrs-backend-dependencies";
 import styles from "./popup.styles.scss";
 
@@ -31,7 +31,7 @@ export default function Popup({
     } else if (activeTab == 1) {
       return <FrontendModules frontendModules={frontendModules} />;
     } else {
-      return <BackendDependencies frontendModules={backendDependencies} />;
+      return <BackendDependencies backendDependencies={backendDependencies} />;
     }
   }, [activeTab, backendDependencies, frontendModules]);
 
