@@ -44,17 +44,6 @@ export async function loadModules(modules: Record<string, string>) {
         console.warn(
           `${name} failed to be loaded into the webpack container. Perhaps it has been built using openmrs@3.x (or @openmrs/webpack-config@3.x). The current app shell version is 4.x (${window.spaVersion}), therefore frontend modules will need to be built with openmrs@4 (or @openmrs/webpack-config@4). Check the version in ${name}'s package dependencies.`
         );
-
-        try {
-          const module = await System.import(name);
-          return [name, module];
-        } catch (error) {
-          console.error(
-            `Failed to load module ${name} using either the supported mechanism or the legacy loading mechanism.`,
-            error
-          );
-          return [name, {}];
-        }
       }
 
       if (isFederatedModule(app)) {
