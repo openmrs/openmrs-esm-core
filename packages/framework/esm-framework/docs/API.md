@@ -505,7 +505,7 @@ ___
 
 ### Actions
 
-Ƭ **Actions**: `Function` \| { `[key: string]`: `Function`;  }
+Ƭ **Actions**: `Function` \| `Record`<`string`, `Function`\>
 
 #### Defined in
 
