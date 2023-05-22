@@ -41,7 +41,6 @@ import {
 import { setupI18n } from "./locale";
 import { loadModules } from "./load-modules";
 import { appName, getCoreExtensions } from "./ui";
-import { registerModules, sharedDependencies } from "./dependencies";
 
 /**
  * Loads the frontend modules (apps and widgets). Should be done *after*
@@ -336,9 +335,6 @@ export function run(configUrls: Array<string>, offline: boolean) {
   subscribeActionableNotificationShown(showActionableNotification);
   subscribeToastShown(showToast);
   subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
-  // FIXME this is part of a hack to load esm-form-app which depends on the legacy loading for now
-  // Once esm-form-app can be upgraded to Angular 12 and Module Federation, we should be able to ditch this
-  registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
 
