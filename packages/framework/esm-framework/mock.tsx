@@ -272,20 +272,27 @@ export const useExtensionInternalStore = createGlobalStore(
 export const useExtensionStore = getExtensionStore();
 
 const defaultSelect = (x) => x;
-export const useStore = (
-  store: StoreApi<any>,
+export function useStore<T = any>(
+  store: StoreApi<T>,
   select = defaultSelect,
   actions = {}
-) => {
+) {
   const state = select(store.getState());
   return { ...state, ...actions };
-};
+}
 
 export function useStoreWithActions<T>(
   store: StoreApi<T>,
   actions: Function | { [key: string]: Function }
 ): T & { [key: string]: (...args: any[]) => void } {
   return useStore(store, defaultSelect, actions);
+}
+
+export function createUseStore<T = any>(store: StoreApi<T>) {
+  return (actions: Function | Record<string, Function>) => {
+    const state = store.getState();
+    return { ...state, ...actions };
+  };
 }
 
 export const usePagination = jest.fn().mockImplementation(() => ({

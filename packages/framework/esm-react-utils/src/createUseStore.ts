@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { StoreApi } from "zustand";
 
-export type Actions = Function | { [key: string]: Function };
+export type Actions = Function | Record<string, Function>;
 export type BoundActions = { [key: string]: (...args: any[]) => void };
 
 function bindActions<T>(store: StoreApi<T>, actions: Actions): BoundActions {
