@@ -1,12 +1,12 @@
 import { useMemo } from "react";
-import { FrontendModule } from "./frontend-modules.component";
+import type { FrontendModule } from "./types";
 
-export function useFrontendModules() {
-  return useMemo<Array<FrontendModule>>(() => {
+export function useFrontendModules(): Array<FrontendModule> {
+  return useMemo(() => {
     return (window.installedModules ?? [])
       .filter((module) => Boolean(module) && Boolean(module[1]))
       .map((module) => ({
-        version: module[1].version,
+        ...module[1],
         name: module[0],
       }));
   }, []);

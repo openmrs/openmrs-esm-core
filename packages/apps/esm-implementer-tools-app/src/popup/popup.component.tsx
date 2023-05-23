@@ -3,10 +3,8 @@ import { Button, ContentSwitcher, Switch } from "@carbon/react";
 import { Close } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
-import {
-  FrontendModule,
-  FrontendModules,
-} from "../frontend-modules/frontend-modules.component";
+import type { FrontendModule } from "../types";
+import { FrontendModules } from "../frontend-modules/frontend-modules.component";
 import { BackendDependencies } from "../backend-dependencies/backend-dependencies.component";
 import type { ResolvedDependenciesModule } from "../backend-dependencies/openmrs-backend-dependencies";
 import styles from "./popup.styles.scss";

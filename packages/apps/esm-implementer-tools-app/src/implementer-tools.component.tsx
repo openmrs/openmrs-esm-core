@@ -14,7 +14,7 @@ import {
 import { useBackendDependencies } from "./backend-dependencies/useBackendDependencies";
 import { hasInvalidDependencies } from "./backend-dependencies/openmrs-backend-dependencies";
 import { useTranslation } from "react-i18next";
-import { useFrontendModules } from "./frontend-modules/useFrontendModules";
+import { useFrontendModules } from "./hooks";
 
 const Popup = React.lazy(() => import("./popup/popup.component"));
 const UiEditor = React.lazy(() => import("./ui-editor/ui-editor"));

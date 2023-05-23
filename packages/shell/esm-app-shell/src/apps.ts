@@ -1,5 +1,3 @@
-"use strict";
-
 import {
   attach,
   registerExtension,
@@ -26,7 +24,8 @@ const pages: Array<RegisteredPageDefinition> = [];
  * route and false if it does not.
  *
  * @param route A string or regexp that matches the location when the
- * page should be displayed or an array of such strings and regexps
+ * page should be displayed, a boolean constant, or an array of such
+ * strings, regexps, and booleans
  * @returns An activityFn suitable to use for a single-spa application
  */
 function getActivityFn(
@@ -78,6 +77,13 @@ function wrapPageActivityFn(
 }
 
 const STARTUP_FUNCTION = "startupApp";
+/**
+ * @internal
+ *
+ * Used internally to track which apps have had their `startupApp()` initializer called
+ *
+ * Values are promises to support asynchronous loading of the same app multiple times
+ */
 const initializedApps = new Map<string, Promise<unknown>>();
 
 /**
@@ -98,9 +104,10 @@ function getLoader(
 ): () => Promise<LifeCycles> {
   return async () => {
     const module = await importDynamic<
-      {
-        [k: string]: () => LifeCycles | Promise<LifeCycles>;
-      } & { startApp?: Function }
+      Record<
+        Exclude<string, "startupApp">,
+        () => LifeCycles | Promise<LifeCycles>
+      > & { startupApp?: () => unknown }
     >(appName);
 
     if (
@@ -254,7 +261,7 @@ export function tryRegisterExtension(
 ) {
   const name = extension.name;
   if (!name) {
-    console.warn(
+    console.error(
       `An extension definition in ${appName} is missing an name and thus cannot be
 registered. To fix this, ensure that you define the "name" field inside the
 extension definition.`,
@@ -275,8 +282,8 @@ a 'slot' property. Only the 'slots' property will be honored.`
     ? [extension.slot]
     : [];
 
-  if (!extension.component && extension.load === undefined) {
-    console.warn(
+  if (!extension.component && !extension.load) {
+    console.error(
       `The extension ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
 To fix this, ensure that you define a 'component' field inside the extension definition.`,
       extension
@@ -289,21 +296,13 @@ To fix this, ensure that you define a 'component' field inside the extension def
     loader = getLoader(appName, extension.component);
   } else if (extension.load) {
     if (typeof extension.load !== "function") {
-      console.warn(
+      console.error(
         `The extension ${name} from ${appName} declares a 'load' property that is not a function. This is not
 supported, so the extension will not be loaded.`
       );
       return;
     }
     loader = extension.load;
-  } else {
-    // this should not be possible
-    console.warn(
-      `The extension ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
-To fix this, ensure that you define a 'component' field inside the extension definition.`,
-      extension
-    );
-    return;
   }
 
   registerExtension({
