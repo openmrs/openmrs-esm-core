@@ -9,9 +9,9 @@ module.exports = (env) => ({
   entry: [resolve(__dirname, "src/index.ts")],
   devtool: "source-map",
   output: {
-    filename: "openmrs-esm-module-config.js",
+    filename: "openmrs-esm-config.js",
     path: resolve(__dirname, "dist"),
-    libraryTarget: "system",
+    library: { type: "var", name: "_openmrs_esm_config" },
   },
   module: {
     rules: [
@@ -25,7 +25,6 @@ module.exports = (env) => ({
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
   },
-  externals: Object.keys(peerDependencies || {}),
   plugins: [
     new CleanWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),

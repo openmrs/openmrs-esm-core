@@ -1,6 +1,5 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const SystemJSPublicPathWebpackPlugin = require("systemjs-webpack-interop/SystemJSPublicPathWebpackPlugin");
 const { resolve } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -13,7 +12,7 @@ module.exports = (env) => ({
     resolve(__dirname, "src/_all.scss"),
   ],
   output: {
-    libraryTarget: "system",
+    library: { type: "var", name: "_openmrs_esm_styleguide" },
     filename: "openmrs-esm-styleguide.js",
     chunkFilename: "[name].js",
     path: resolve(__dirname, "dist"),
@@ -51,7 +50,6 @@ module.exports = (env) => ({
       "Access-Control-Allow-Origin": "*",
     },
   },
-  externals: Object.keys(peerDependencies || {}),
   resolve: {
     modules: ["node_modules"],
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
@@ -61,7 +59,6 @@ module.exports = (env) => ({
     minimizer: [new CssMinimizerPlugin(), "..."],
   },
   plugins: [
-    new SystemJSPublicPathWebpackPlugin(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: "openmrs-esm-styleguide.css",
