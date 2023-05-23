@@ -8,6 +8,9 @@ declare global {
       { loaded?: 1; get: () => Promise<unknown>; from: string; eager: boolean }
     >
   >;
+
+  var __webpack_init_sharing__: (scope: string) => Promise<void>;
+
   interface Window {
     /**
      * Easily copies a text from an element.

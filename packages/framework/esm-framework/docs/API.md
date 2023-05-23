@@ -439,7 +439,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L60)
+[packages/framework/esm-globals/src/types.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L63)
 
 ___
 
