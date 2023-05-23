@@ -237,6 +237,7 @@ export async function runAssemble(args: AssembleArgs) {
       const routes = resolve(args.target, dirName, "routes.json");
       if (existsSync(routes)) {
         routes[esmName] = JSON.parse(readFileSync(routes).toString());
+        routes[esmName]["version"] = version;
       } else {
         routes[esmName] = {};
       }
@@ -259,7 +260,9 @@ export async function runAssemble(args: AssembleArgs) {
     await writeFile(
       resolve(
         args.target,
-        `routes${args.hashImportmap ? "." + contentHash(routes) : ""}.json`
+        `routes.registry${
+          args.hashRoutes ? "." + contentHash(routes) : ""
+        }.json`
       ),
       JSON.stringify(routes, undefined, 2),
       "utf-8"

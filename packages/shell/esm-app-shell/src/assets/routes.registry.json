@@ -7,7 +7,9 @@
         "online": true,
         "offline": true
       }
-    ]
+    ],
+    "version": "local",
+    "import": "./esm-devtools-app/openmrs-esm-devtools-app.js"
   },
   "@openmrs/esm-implementer-tools-app": {
     "pages": [
@@ -26,7 +28,9 @@
         "slot": "top-nav-actions-slot",
         "component": "implementerToolsButton"
       }
-    ]
+    ],
+    "version": "local",
+    "import": "./esm-implementer-tools-app/openmrs-esm-implementer-tools-app.js"
   },
   "@openmrs/esm-login-app": {
     "backendDependencies": {
@@ -68,7 +72,9 @@
         "online": true,
         "offline": true
       }
-    ]
+    ],
+    "version": "local",
+    "import": "./esm-login-app/openmrs-esm-login-app.js"
   },
   "@openmrs/esm-offline-tools-app": {
     "backendDependencies": {
@@ -181,7 +187,9 @@
         "offline": true,
         "order": 1
       }
-    ]
+    ],
+    "version": "local",
+    "import": "./esm-offline-tools-app/openmrs-esm-offline-tools-app.js"
   },
   "@openmrs/esm-primary-navigation-app": {
     "backendDependencies": {
@@ -226,6 +234,8 @@
         "online": true,
         "offline": true
       }
-    ]
+    ],
+    "version": "local",
+    "import": "./esm-primary-navigation-app/openmrs-esm-primary-navigation-app.js"
   }
 }

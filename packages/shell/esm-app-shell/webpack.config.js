@@ -34,7 +34,7 @@ const openmrsFavicon =
   process.env.OMRS_FAVICON || `${openmrsPublicPath}/favicon.ico`;
 const openmrsOffline = process.env.OMRS_OFFLINE !== "disable";
 const openmrsRoutes =
-  process.env.OMRS_ROUTES || `${openmrsPublicPath}/routes.json`;
+  process.env.OMRS_ROUTES || `${openmrsPublicPath}/routes.registry.json`;
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
