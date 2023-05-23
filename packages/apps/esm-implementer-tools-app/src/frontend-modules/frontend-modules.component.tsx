@@ -56,7 +56,7 @@ export const FrontendModules: React.FC<FrontendModulesProps> = ({
                   <Fragment key={esm.name}>
                     <TableRow>
                       <TableCell>
-                        <strong>{esm.name}</strong>
+                        <span className={styles.moduleHeader}>{esm.name}</span>
                       </TableCell>
                       <TableCell>
                         {esm.version ?? t("unknownVersion", "unknown")}
@@ -65,7 +65,7 @@ export const FrontendModules: React.FC<FrontendModulesProps> = ({
                     {Boolean(esm.extensions) ? (
                       <TableRow key={`${esm.name}-extensions-header`}>
                         <TableCell>
-                          <span style={{ fontStyle: "italic" }}>
+                          <span className={styles.moduleComponentHeader}>
                             Extensions
                           </span>
                         </TableCell>
@@ -75,20 +75,6 @@ export const FrontendModules: React.FC<FrontendModulesProps> = ({
                     {(esm.extensions ?? []).map((extension, i) => (
                       <TableRow key={`${esm.name}-page-${i}`}>
                         <TableCell>{extension.name}</TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
-                    ))}
-                    {Boolean(esm.pages) ? (
-                      <TableRow key={`${esm.name}-pages-header`}>
-                        <TableCell>
-                          <span style={{ fontStyle: "italic" }}>Pages</span>
-                        </TableCell>
-                        <TableCell />
-                      </TableRow>
-                    ) : null}
-                    {(esm.pages ?? []).map((page, i) => (
-                      <TableRow key={`${esm.name}-page-${i}`}>
-                        <TableCell>{page.component}</TableCell>
                         <TableCell></TableCell>
                       </TableRow>
                     ))}
