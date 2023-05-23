@@ -1,10 +1,5 @@
 import "@openmrs/esm-styleguide/dist/openmrs-esm-styleguide.css";
 import "import-map-overrides";
-import "systemjs/dist/system";
-import "systemjs/dist/extras/amd";
-import "systemjs/dist/extras/named-exports";
-import "systemjs/dist/extras/named-register";
-import "systemjs/dist/extras/use-default";
 import "@openmrs/esm-framework";
 import type { SpaConfig } from "@openmrs/esm-framework/src/internal";
 
