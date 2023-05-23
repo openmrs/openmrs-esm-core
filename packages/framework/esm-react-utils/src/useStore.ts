@@ -20,7 +20,7 @@ function bindActions<T>(store: StoreApi<T>, actions: Actions): BoundActions {
           _args.push(args[i]);
         }
 
-        return actions[i](_args);
+        return actions[i](..._args);
       });
     };
   }
