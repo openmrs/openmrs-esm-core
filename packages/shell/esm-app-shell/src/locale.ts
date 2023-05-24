@@ -26,6 +26,10 @@ export function setupI18n() {
     attributes: true,
   });
 
+  window.i18next.on("languageChanged", () => {
+    document.documentElement.setAttribute("dir", window.i18next.dir());
+  });
+
   return window.i18next
     .use(LanguageDetector)
     .use({

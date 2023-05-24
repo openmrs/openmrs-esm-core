@@ -280,3 +280,34 @@
   .cds--radio-button-wrapper:not(:last-of-type) {
   margin-bottom: 0;
 }
+
+html[dir="rtl"] {
+  .cds--header-panel--expanded {
+    right: calc(100vw - var(--omrs-sidenav-width));
+  }
+
+  .active-left-nav-link {
+    border-right: 0.25rem solid var(--brand-01);
+    border-left: unset !important;
+  }
+
+  .omrs-breakpoint-gt-tablet {
+    main {
+      & > section {
+        margin-left: unset;
+        margin-right: var(--omrs-sidenav-width);
+        nav {
+          left: calc(100vw - var(--omrs-sidenav-width));
+          border-left: 1px solid #e0e0e0;
+          border-right: unset;
+        }
+      }
+    }
+  }
+
+  .omrs-breakpoint-lt-desktop {
+    .cds--side-nav {
+      left: unset !important;
+    }
+  }
+}
