@@ -1,0 +1,22 @@
+{
+  "activeItemSourceText": "הערך הנוכחי מגיע מ",
+  "backendModules": "מודולים בצד השרת",
+  "clearConfig": "נקה תצורה מקומית",
+  "configuration": "תצורה",
+  "devConfig": "תצורת פיתוח",
+  "downloadConfig": "הורד תצורה",
+  "edit": "ערוך",
+  "editValueButtonText": "ערוך",
+  "frontendModules": "מודולים בצד הלקוח",
+  "installedVersion": "גרסה מותקנת",
+  "itemDescriptionSourceDefaultText": "הערך הנוכחי הוא הערך המוגדר כברירת מחדל.",
+  "jsonEditor": "עורך JSON",
+  "missing": "חסר",
+  "moduleName": "שם המודול",
+  "requiredVersion": "גרסה נדרשת",
+  "resetToDefaultValueButtonText": "איפוס לברירת מחדל",
+  "uiEditor": "עורך ממשק משתמש",
+  "unknownVersion": "לא ידוע",
+  "value": "ערך",
+  "view": "צפה"
+}
