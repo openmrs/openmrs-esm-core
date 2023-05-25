@@ -1,7 +1,7 @@
 /** @module @category Dynamic Loading */
 "use strict";
 // hack to make the types defined in esm-globals available here
-import type {} from "@openmrs/esm-globals/src/types";
+import type {} from "@openmrs/esm-globals";
 
 /**
  * @internal
@@ -32,7 +32,7 @@ export async function importDynamic<T = any>(
 ): Promise<T> {
   if (typeof jsPackage !== "string" || jsPackage.trim().length === 0) {
     const error =
-      "Attempted to call loadDynamicExport() without supplying a package to load";
+      "Attempted to call importDynamic() without supplying a package to load";
     console.error(error);
     throw new Error(error);
   }
