@@ -1,0 +1,20 @@
+@use "@carbon/styles/scss/spacing";
+@use "@carbon/styles/scss/type";
+@import "~@openmrs/esm-styleguide/src/vars";
+
+.systemAdminPage {
+  background-color: $ui-02;
+  height: 100vh;
+  .breadCrumbsContainer {
+    nav {
+      background-color: $ui-01;
+    }
+  }
+
+  .cardsView {
+    display: flex;
+    background-color: $ui-01;
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+  }
+}

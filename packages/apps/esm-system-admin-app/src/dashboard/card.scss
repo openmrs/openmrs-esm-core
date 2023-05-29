@@ -1,0 +1,30 @@
+@use "@carbon/styles/scss/spacing";
+@use "@carbon/styles/scss/type";
+@import "~@openmrs/esm-styleguide/src/vars";
+
+.productiveHeading01 {
+  @include type.type-style("heading-compact-01");
+}
+.overviewCard {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 1rem;
+  width: 20rem;
+  align-items: center;
+
+  .heading {
+    @extend .productiveHeading01;
+    color: $text-02;
+    font-weight: 700;
+  }
+
+  .viewButton {
+    margin-top: -(spacing.$spacing-02);
+    margin-right: -(spacing.$spacing-05);
+
+    .heading {
+      color: $color-gray-70;
+      font-weight: 600;
+    }
+  }
+}

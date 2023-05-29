@@ -1,0 +1,57 @@
+{
+  "name": "@openmrs/esm-system-admin-app",
+  "version": "4.4.1",
+  "license": "MPL-2.0",
+  "description": "System Admin page for OpenMRS",
+  "browser": "dist/openmrs-esm-system-admin-app.js",
+  "main": "src/index.ts",
+  "source": true,
+  "scripts": {
+    "start": "openmrs develop",
+    "serve": "webpack serve --mode=development",
+    "debug": "npm run serve",
+    "test": "jest --config jest.config.js --passWithNoTests",
+    "build": "webpack --mode=production",
+    "build:development": "webpack --mode=development",
+    "analyze": "webpack --mode=production --env analyze=true",
+    "typescript": "tsc",
+    "lint": "eslint src --ext ts,tsx",
+    "extract-translations": "i18next 'src/**/*.component.tsx'"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@openmrs/esm-framework": "*",
+    "react": "18.x",
+    "react-dom": "18.x",
+    "rxjs": "6.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-framework": "^4.4.1",
+    "@openmrs/webpack-config": "^4.4.1",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "rxjs": "6.x"
+  },
+  "dependencies": {
+    "@carbon/react": "^1.12.0",
+    "lodash-es": "^4.17.21",
+    "react-i18next": "^12.3.1"
+  }
+}
