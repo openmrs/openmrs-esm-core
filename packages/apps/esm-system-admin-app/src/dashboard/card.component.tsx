@@ -10,11 +10,7 @@ export interface LinkCardProps extends TileProps {
   children?: React.ReactNode;
 }
 
-export const LinkCard: React.FC<LinkCardProps> = ({
-  header,
-  viewLink,
-  children,
-}) => {
+export const LinkCard: React.FC<LinkCardProps> = ({ header, viewLink }) => {
   const { t } = useTranslation();
 
   return (
@@ -30,7 +26,7 @@ export const LinkCard: React.FC<LinkCardProps> = ({
           target="_blank"
           rel="no-refferer"
         >
-          {t("homeOverviewCardView", "View")}
+          {t("systemAdminCardView", "View")}
         </Button>
       </Tile>
     </Layer>
