@@ -48,6 +48,7 @@ declare global {
     importMapOverrides: {
       getCurrentPageMap: () => Promise<ImportMap>;
       addOverride(moduleName: string, url: string): void;
+      getOverrideMap(includeDisabled?: boolean): ImportMap;
     };
     /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.

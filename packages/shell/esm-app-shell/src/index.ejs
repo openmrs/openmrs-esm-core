@@ -22,16 +22,18 @@
       crossorigin="anonymous"
     >
     <script type="systemjs-importmap" src="<%= openmrsImportmapUrl %>"></script>
-  <% if (openmrsCoreImportmap) { %>
-    <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
-  <% } %>
-    <link
-      rel="preload"
-      href="<%= openmrsRoutes %>"
-      as="fetch"
-      crossorigin="anonymous"
-    >
-    <script type="openmrs-routes" src="<%= openmrsRoutes %>"></script>
+<% } %>
+<% if (openmrsCoreImportmap) { %>
+  <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
+<% } %>
+<% if (openmrsRoutes) { %>
+  <link
+    rel="preload"
+    href="<%= openmrsRoutes %>"
+    as="fetch"
+    crossorigin="anonymous"
+  >
+  <script type="openmrs-routes" src="<%= openmrsRoutes %>"></script>
 <% } %>
   </head>
   <body>

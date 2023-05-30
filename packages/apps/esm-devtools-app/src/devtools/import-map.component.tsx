@@ -18,7 +18,7 @@ export default function ImportMap(props: ImportMapProps) {
     function handleImportMapChange(evt) {
       props.toggleOverridden(importMapOverridden());
     }
-  }, [importMapListRef.current]);
+  }, [props]);
 
   return (
     <div className={styles.importMap}>
@@ -31,13 +31,12 @@ export default function ImportMap(props: ImportMapProps) {
 
 export function importMapOverridden(): boolean {
   return (
-    Object.keys((window as any).importMapOverrides.getOverrideMap().imports)
-      .length > 0
+    Object.keys(window.importMapOverrides.getOverrideMap().imports).length > 0
   );
 }
 
 export function isOverriddenInImportMap(esmName: string): boolean {
-  return (window as any).importMapOverrides
+  return window.importMapOverrides
     .getOverrideMap()
     .imports.hasOwnProperty(esmName);
 }
