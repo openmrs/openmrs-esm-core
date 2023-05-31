@@ -71,6 +71,10 @@
 - [toOmrsTimeString24](API.md#toomrstimestring24)
 - [toOmrsYearlessDateFormat](API.md#toomrsyearlessdateformat)
 
+### Dynamic Loading Functions
+
+- [importDynamic](API.md#importdynamic)
+
 ### Error Handling Functions
 
 - [createErrorHandler](API.md#createerrorhandler)
@@ -435,7 +439,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L53)
+[packages/framework/esm-globals/src/types.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L63)
 
 ___
 
@@ -501,7 +505,7 @@ ___
 
 ### Actions
 
-Ƭ **Actions**: `Function` \| { `[key: string]`: `Function`;  }
+Ƭ **Actions**: `Function` \| `Record`<`string`, `Function`\>
 
 #### Defined in
 
@@ -2040,6 +2044,41 @@ Formats the input as a date string using the format "DD-MMM".
 #### Defined in
 
 [packages/framework/esm-utils/src/omrs-dates.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L120)
+
+___
+
+## Dynamic Loading Functions
+
+### importDynamic
+
+▸ **importDynamic**<`T`\>(`jsPackage`, `share?`): `Promise`<`T`\>
+
+Loads the named export from a named package. This might be used like:
+
+```js
+const { someComponent } = importDynamic("@openmrs/esm-template-app")
+```
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `any` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `jsPackage` | `string` | `undefined` | The package to load the export from |
+| `share` | `string` | `"./start"` | Indicates the name of the shared module; this is an advanced feature if the package you are loading   doesn't use the default OpenMRS shared module name "./start" |
+
+#### Returns
+
+`Promise`<`T`\>
+
+#### Defined in
+
+[packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L29)
 
 ___
 

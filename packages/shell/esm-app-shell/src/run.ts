@@ -31,6 +31,7 @@ import {
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
   openmrsFetch,
+  interpolateUrl,
 } from "@openmrs/esm-framework/src/internal";
 import {
   finishRegisteringAllApps,
@@ -40,7 +41,6 @@ import {
 import { setupI18n } from "./locale";
 import { loadModules } from "./load-modules";
 import { appName, getCoreExtensions } from "./ui";
-import { registerModules, sharedDependencies } from "./dependencies";
 
 /**
  * Loads the frontend modules (apps and widgets). Should be done *after*
@@ -168,10 +168,21 @@ function clearDevOverrides() {
   location.reload();
 }
 
+function isAbsoluteUrl(url: string): boolean {
+  const absoluteUrlPattern = /^https?:\/\//i;
+  return absoluteUrlPattern.test(url);
+}
+
 function createConfigLoader(configUrls: Array<string>) {
   const loadingConfigs = Promise.all(
-    configUrls.map((configUrl) =>
-      fetch(configUrl)
+    configUrls.map((configUrl) => {
+      const interpolatedUrl = `${interpolateUrl(
+        `\${openmrsSpaBase}${configUrl}`
+      )}`;
+      const url = isAbsoluteUrl(configUrl)
+        ? configUrl
+        : `${window.location.origin}${interpolatedUrl}`;
+      return fetch(url)
         .then((res) => res.json())
         .then((config) => ({
           name: configUrl,
@@ -183,8 +194,8 @@ function createConfigLoader(configUrls: Array<string>) {
             name: configUrl,
             value: {},
           };
-        })
-    )
+        });
+    })
   );
   return () => loadingConfigs.then(loadConfigs);
 }
@@ -324,9 +335,6 @@ export function run(configUrls: Array<string>, offline: boolean) {
   subscribeActionableNotificationShown(showActionableNotification);
   subscribeToastShown(showToast);
   subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
-  // FIXME this is part of a hack to load esm-form-app which depends on the legacy loading for now
-  // Once esm-form-app can be upgraded to Angular 12 and Module Federation, we should be able to ditch this
-  registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
 
