@@ -28,7 +28,7 @@ export async function postUserPropertiesOnline(
 
 export async function postUserPropertiesOffline(
   userUuid: string,
-  userProperties: any
+  userProperties: Record<string, unknown>
 ): Promise<void> {
   await queueSynchronizationItemFor(
     userUuid,
