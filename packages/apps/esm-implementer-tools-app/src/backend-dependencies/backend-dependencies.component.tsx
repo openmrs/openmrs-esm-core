@@ -60,7 +60,7 @@ export const BackendDependencies: React.FC<BackendDependencies> = ({
                   <Fragment key={esm.name}>
                     <TableRow>
                       <TableCell>
-                        <strong>{esm.name}</strong>
+                        <span className={styles.moduleHeader}>{esm.name}</span>
                       </TableCell>
                       <TableCell></TableCell>
                       <TableCell></TableCell>

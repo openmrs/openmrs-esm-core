@@ -6,3 +6,7 @@
     padding-top: 0;
   }
 }
+
+.moduleHeader {
+  @include type.type-style("heading-compact-02");
+}
