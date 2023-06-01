@@ -17,6 +17,7 @@ export interface DevelopArgs {
   backend: string;
   open: boolean;
   importmap: ImportmapDeclaration;
+  routes: Record<string, unknown>;
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
@@ -77,6 +78,13 @@ export function runDevelop(args: DevelopArgs) {
   if (importmap.type === "inline") {
     app.get(`${spaPath}/importmap.json`, (_, res) => {
       res.contentType("application/json").send(importmap.value);
+    });
+  }
+
+  if (args.routes && Object.keys(args.routes).length > 0) {
+    const stringifiedRoutes = JSON.stringify(args.routes);
+    app.get(`${spaPath}/routes.registry.json`, (_, res) => {
+      res.contentType("application/json").send(stringifiedRoutes);
     });
   }
 

@@ -261,7 +261,7 @@ export async function runAssemble(args: AssembleArgs) {
       resolve(
         args.target,
         `routes.registry${
-          args.hashRoutes ? "." + contentHash(routes) : ""
+          args.hashImportmap ? "." + contentHash(routes) : ""
         }.json`
       ),
       JSON.stringify(routes, undefined, 2),

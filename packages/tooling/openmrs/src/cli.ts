@@ -4,9 +4,9 @@ import yargs from "yargs";
 import { fork } from "child_process";
 import { resolve } from "path";
 import {
-  getImportmap,
-  mergeImportmap,
-  proxyImportmap,
+  getImportmapAndRoutes,
+  mergeImportmapAndRoutes,
+  proxyImportmapAndRoutes,
   runProject,
   trimEnd,
 } from "./utils";
@@ -105,15 +105,11 @@ yargs.command(
     runCommand("runDebug", {
       configUrls: args["config-url"],
       ...args,
-      importmap: proxyImportmap(
-        await mergeImportmap(
-          await getImportmap(args.importmap, args.port),
+      ...proxyImportmapAndRoutes(
+        await mergeImportmapAndRoutes(
+          await getImportmapAndRoutes(args.importmap, args.port),
           (args["run-project"] || (args.runProject as boolean)) &&
-            (await runProject(
-              args.port,
-              args["shared-dependencies"],
-              args.sources
-            ))
+            (await runProject(args.port, args.sources))
         ),
         args.backend,
         args.host,
@@ -179,15 +175,11 @@ yargs.command(
     runCommand("runDevelop", {
       configUrls: args["config-url"],
       ...args,
-      importmap: proxyImportmap(
-        await mergeImportmap(
-          await getImportmap(args.importmap, args.port),
+      ...proxyImportmapAndRoutes(
+        await mergeImportmapAndRoutes(
+          await getImportmapAndRoutes(args.importmap, args.port),
           (args.sources[0] as string | boolean) !== false &&
-            (await runProject(
-              args.port,
-              args["shared-dependencies"],
-              args.sources
-            )),
+            (await runProject(args.port, args.sources)),
           args.backend,
           args.spaPath
         ),
