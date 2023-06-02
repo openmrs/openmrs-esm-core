@@ -1,5 +1,6 @@
 import { basename, dirname, resolve } from "path";
 import { existsSync, readFileSync, statSync } from "fs";
+import { inc } from "semver";
 
 export function getSharedDependencies() {
   return require("@openmrs/esm-app-shell/dependencies.json");
@@ -21,7 +22,10 @@ export function getMainBundle(project: any) {
   };
 }
 
-export function getAppRoutes(sourceDirectory: string): Record<string, unknown> {
+export function getAppRoutes(
+  sourceDirectory: string,
+  project: any
+): Record<string, unknown> {
   const routesPath = resolve(sourceDirectory, "src", "routes.json");
 
   if (!existsSync(routesPath)) {
@@ -39,6 +43,10 @@ export function getAppRoutes(sourceDirectory: string): Record<string, unknown> {
   if (!(typeof json === "object")) {
     return {};
   }
+
+  json["version"] = project.version
+    ? inc(project.version, "prerelease", "local")
+    : undefined;
 
   return json;
 }

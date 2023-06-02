@@ -114,7 +114,7 @@ function runProjectWebpack(
 
   startWebpack(configPath, port, sourceDirectory);
   importMap[project.name] = `${host}/${bundle.name}`;
-  routes[project.name] = getAppRoutes(sourceDirectory);
+  routes[project.name] = getAppRoutes(sourceDirectory, project);
 }
 
 export async function runProject(
@@ -129,7 +129,7 @@ export async function runProject(
   const importMap = {};
   const routes = {};
 
-  logInfo("Loading dynamic import map ...");
+  logInfo("Loading dynamic import map and routes ...");
 
   for (let i = 0; i < sourceDirectories.length; i++) {
     const sourceDirectory = resolve(baseDir, sourceDirectories[i]);
@@ -187,7 +187,9 @@ export async function runProject(
   }
 
   logInfo(
-    `Assembled dynamic import map (${Object.keys(importMap).join(", ")}).`
+    `Assembled dynamic import map and routes for packages (${Object.keys(
+      importMap
+    ).join(", ")}).`
   );
 
   return { importMap, routes };
