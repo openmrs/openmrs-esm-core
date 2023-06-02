@@ -1,5 +1,5 @@
 import { basename, dirname, resolve } from "path";
-import { readFileSync, statSync } from "fs";
+import { existsSync, readFileSync, statSync } from "fs";
 
 export function getSharedDependencies() {
   return require("@openmrs/esm-app-shell/dependencies.json");
@@ -23,6 +23,11 @@ export function getMainBundle(project: any) {
 
 export function getAppRoutes(sourceDirectory: string): Record<string, unknown> {
   const routesPath = resolve(sourceDirectory, "src", "routes.json");
+
+  if (!existsSync(routesPath)) {
+    return {};
+  }
+
   const stats = statSync(routesPath);
 
   if (!stats.isFile()) {
