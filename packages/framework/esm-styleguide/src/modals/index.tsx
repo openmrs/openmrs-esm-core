@@ -1,7 +1,6 @@
 /** @module @category UI */
-import { renderExtension } from "@openmrs/esm-extensions";
-import { createGlobalStore } from "@openmrs/esm-state";
-import { Parcel } from "single-spa";
+import { createGlobalStore, renderExtension } from "@openmrs/esm-framework";
+import type { Parcel } from "single-spa";
 
 type ModalInstanceState = "NEW" | "MOUNTED" | "TO_BE_DELETED";
 
