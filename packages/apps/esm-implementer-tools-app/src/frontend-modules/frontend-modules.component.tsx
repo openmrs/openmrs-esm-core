@@ -66,7 +66,7 @@ export const FrontendModules: React.FC<FrontendModulesProps> = ({
                       <TableRow key={`${esm.name}-extensions-header`}>
                         <TableCell>
                           <span className={styles.moduleComponentHeader}>
-                            Extensions
+                            {t("extensions", "Extensions")}
                           </span>
                         </TableCell>
                         <TableCell />
