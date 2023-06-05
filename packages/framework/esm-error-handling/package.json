@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-error-handling",
-  "version": "4.4.1",
+  "version": "4.5.0",
   "license": "MPL-2.0",
   "description": "An ES module to help with error handling",
   "browser": "dist/openmrs-esm-error-handling.js",
@@ -39,6 +39,6 @@
     "@openmrs/esm-globals": "4.x"
   },
   "devDependencies": {
-    "@openmrs/esm-globals": "^4.4.1"
+    "@openmrs/esm-globals": "^4.5.0"
   }
 }
