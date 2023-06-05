@@ -147,7 +147,7 @@ export default (
   const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
   const frameworkVersion = getFrameworkVersion();
-  const routes = resolve(root, "src/routes.json");
+  const routes = resolve(root, "src", "routes.json");
   const hasRoutesDefined = fileExistsSync(routes);
 
   if (!hasRoutesDefined) {
