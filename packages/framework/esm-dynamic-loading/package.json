@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-dynamic-loading",
-  "version": "4.4.1",
+  "version": "4.5.0",
   "license": "MPL-2.0",
   "description": "Utilities for dynamically loading code in OpenMRS",
   "browser": "dist/openmrs-esm-dynamic-loading.js",
@@ -37,7 +37,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@openmrs/esm-globals": "^4.4.1"
+    "@openmrs/esm-globals": "^4.5.0"
   },
   "peerDependencies": {
     "@openmrs/esm-globals": "4.x"
