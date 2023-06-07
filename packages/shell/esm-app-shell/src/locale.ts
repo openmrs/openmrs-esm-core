@@ -19,7 +19,6 @@ export function setupI18n() {
 
   const languageChangeObserver = new MutationObserver(() => {
     const reDetect: any = document.documentElement.getAttribute("lang");
-    console.log("reDetect", reDetect);
     window.i18next
       .changeLanguage(reDetect)
       .catch((e) => console.error("i18next failed to re-detect language", e));
