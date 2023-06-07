@@ -3,7 +3,10 @@ import ICU from "i18next-icu";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import merge from "lodash-es/merge";
-import { getConfigInternal } from "@openmrs/esm-framework/src/internal";
+import {
+  getConfigInternal,
+  openmrsFetch,
+} from "@openmrs/esm-framework/src/internal";
 import { slugify } from "./load-modules";
 declare global {
   interface Window {
@@ -15,7 +18,8 @@ export function setupI18n() {
   window.i18next = i18next.default || i18next;
 
   const languageChangeObserver = new MutationObserver(() => {
-    const reDetect: any = undefined;
+    const reDetect: any = document.documentElement.getAttribute("lang");
+    console.log("reDetect", reDetect);
     window.i18next
       .changeLanguage(reDetect)
       .catch((e) => console.error("i18next failed to re-detect language", e));
@@ -28,6 +32,12 @@ export function setupI18n() {
 
   window.i18next.on("languageChanged", () => {
     document.documentElement.setAttribute("dir", window.i18next.dir());
+  });
+
+  openmrsFetch<{ value: string }>(
+    "/ws/rest/v1/systemsetting/default_locale"
+  ).then((res) => {
+    document.documentElement.setAttribute("lang", res.data.value);
   });
 
   return window.i18next
