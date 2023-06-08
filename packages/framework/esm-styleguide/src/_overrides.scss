@@ -427,4 +427,31 @@ html[dir="rtl"] {
       left: unset !important;
     }
   }
+
+  .form-container {
+    .tab-container {
+      .tab {
+        & > button {
+          text-align: right;
+        }
+        .active {
+          border-left: unset !important;
+          border-right: 0.5rem solid #009d9a;
+        }
+        .enabled {
+          border-left: unset !important;
+          border-right: 0.5rem solid #9ef0f0;
+        }
+      }
+    }
+    .tab-content {
+      margin-left: unset;
+      margin-right: 10rem;
+
+      .pane {
+        padding-left: unset;
+        padding-right: 1rem;
+      }
+    }
+  }
 }
