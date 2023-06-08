@@ -320,6 +320,12 @@ html[dir="rtl"] {
     }
   }
 
+  .cds--btn--ghost.cds--btn--icon-only {
+    svg {
+      margin: unset;
+    }
+  }
+
   .cds--btn--primary {
     padding: calc(0.875rem - 3px) 15px calc(0.875rem - 3px) 63px;
     svg {
@@ -331,6 +337,12 @@ html[dir="rtl"] {
 
   .cds--btn--primary.cds--btn--icon-only {
     padding: unset;
+  }
+
+  .cds--accordion__heading {
+    & > svg {
+      margin: 2px 0 0 1rem;
+    }
   }
 
   .cds--content-switcher {
