@@ -343,6 +343,9 @@ html[dir="rtl"] {
     & > svg {
       margin: 2px 0 0 1rem;
     }
+    p {
+      text-align: right;
+    }
   }
 
   .cds--content-switcher {
