@@ -394,11 +394,25 @@ html[dir="rtl"] {
       right: spacing.$spacing-05;
     }
   }
+
+  .cds--search-close {
+    right: unset;
+    left: 0;
+  }
+
   .cds--search--sm {
     .cds--search-magnifier {
       svg {
         left: unset;
         right: spacing.$spacing-03;
+      }
+    }
+  }
+
+  .cds--tile {
+    & > div:first-child {
+      h4 {
+        text-align: right;
       }
     }
   }
