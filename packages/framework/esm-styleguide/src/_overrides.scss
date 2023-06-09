@@ -310,3 +310,9 @@ html[dir="rtl"] {
     }
   }
 }
+
+.omrs-breakpoint-lt-desktop {
+  .cds--overflow-menu-options__option {
+    height: spacing.$spacing-09;
+  }
+}
