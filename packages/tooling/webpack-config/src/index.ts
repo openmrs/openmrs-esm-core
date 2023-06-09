@@ -123,6 +123,13 @@ export const scssRuleConfig = {};
  */
 export const assetRuleConfig = {};
 
+/**
+ * This object will be merged into the webpack rule governing
+ * the watch options.
+ * Make sure to modify this object and not reassign it.
+ */
+export const watchConfig = {};
+
 export default (
   env: Record<string, string>,
   argv: Record<string, string> = {}
@@ -216,6 +223,12 @@ export default (
       },
       static: [resolve(root, outDir)],
     },
+    watchOptions: merge(
+      {
+        ignored: /\.git/,
+      },
+      watchConfig
+    ),
     performance: {
       hints: mode === production && "warning",
     },
