@@ -32,6 +32,7 @@ const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || "OpenMRS";
 const openmrsFavicon =
   process.env.OMRS_FAVICON || `${openmrsPublicPath}/favicon.ico`;
 const openmrsOffline = process.env.OMRS_OFFLINE !== "disable";
+const openmrsDefaultLanguage = process.env.OMRS_ESM_DEFAULT_LANGUAGE || "en";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
@@ -230,6 +231,7 @@ module.exports = (env, argv = {}) => {
           openmrsPublicPath,
           openmrsFavicon,
           openmrsPageTitle,
+          openmrsDefaultLanguage,
           openmrsImportmapDef,
           openmrsImportmapUrl,
           openmrsOffline,
