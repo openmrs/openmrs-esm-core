@@ -348,6 +348,12 @@ html[dir="rtl"] {
     }
   }
 
+  .cds--select__page-number {
+    .cds--select-input {
+      padding: 0 spacing.$spacing-05 0 2.25rem;
+    }
+  }
+
   .cds--content-switcher {
     & > :last-child {
       border-bottom-left-radius: 0.25rem;
