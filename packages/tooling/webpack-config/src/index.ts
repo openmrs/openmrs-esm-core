@@ -225,7 +225,7 @@ export default (
     },
     watchOptions: merge(
       {
-        ignored: /\.git/,
+        ignored: [".git", "test-results"],
       },
       watchConfig
     ),
