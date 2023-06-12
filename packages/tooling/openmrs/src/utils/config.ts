@@ -3,7 +3,7 @@ import { setEnvVariables } from "./variables";
 
 export interface WebpackOptions {
   backend?: string;
-  defaultLanguage?: string;
+  defaultLocale?: string;
   importmap?: ImportmapDeclaration;
   apiUrl?: string;
   spaPath?: string;
@@ -52,8 +52,8 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
     variables.NODE_ENV = options.env;
   }
 
-  if (typeof options.defaultLanguage === "string") {
-    variables.OMRS_ESM_DEFAULT_LANGUAGE = options.defaultLanguage;
+  if (typeof options.defaultLocale === "string") {
+    variables.OMRS_ESM_DEFAULT_LOCALE = options.defaultLocale;
   }
 
   if (typeof options.importmap === "object") {
