@@ -266,6 +266,12 @@ yargs.command(
         describe:
           "The import map to use. Can be a path to an import map to be taken literally, an URL, or a fixed JSON object.",
         type: "string",
+      })
+      .option("default-locale", {
+        default: "",
+        describe:
+          "The locale to use as a default for this build of the app shell. Should be a value that's valid to use in an HTML lang attribute, e.g., en or en_GB.",
+        type: "string",
       }),
   async (args) =>
     runCommand("runBuild", {

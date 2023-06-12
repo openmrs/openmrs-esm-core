@@ -14,6 +14,7 @@ import { basename, join, parse, resolve } from "path";
 export interface BuildArgs {
   target: string;
   registry: string;
+  defaultLocale: string;
   importmap: string;
   spaPath: string;
   fresh?: boolean;
@@ -29,6 +30,7 @@ export interface BuildConfig {
   apiUrl: string;
   configUrls: Array<string>;
   configPaths: Array<string>;
+  defaultLocale?: string;
   pageTitle: string;
   supportOffline?: boolean;
   importmap: string;
@@ -87,6 +89,7 @@ export async function runBuild(args: BuildArgs) {
     env: "production",
     apiUrl: buildConfig.apiUrl || args.apiUrl,
     configUrls: configUrls,
+    defaultLocale: args.defaultLocale || buildConfig.defaultLocale,
     pageTitle: buildConfig.pageTitle || args.pageTitle,
     supportOffline: buildConfig.supportOffline ?? args.supportOffline,
     spaPath: buildConfig.spaPath || args.spaPath,
