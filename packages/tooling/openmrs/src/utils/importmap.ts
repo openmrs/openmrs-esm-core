@@ -5,8 +5,6 @@ import { exec } from "child_process";
 import { logFail, logInfo, logWarn } from "./logger";
 import { startWebpack } from "./webpack";
 import { getMainBundle, getAppRoutes } from "./dependencies";
-// TODO Replace with fallback to routes.registry.json on dev3
-import coreRoutes from "@openmrs/esm-app-shell/src/assets/routes.registry.json";
 import axios from "axios";
 
 import glob = require("glob");
@@ -261,7 +259,7 @@ export async function getImportmapAndRoutes(
           imports,
         }),
       },
-      routes: coreRoutes,
+      routes: {},
     };
   } else if (!/https?:\/\//.test(importMapPath)) {
     const path = resolve(process.cwd(), importMapPath);
@@ -281,7 +279,7 @@ export async function getImportmapAndRoutes(
           type: "inline",
           value: valid ? content : "",
         },
-        routes: coreRoutes,
+        routes: {},
       };
     } else if (checkImportmapJson(importMapPath)) {
       return {
@@ -289,7 +287,7 @@ export async function getImportmapAndRoutes(
           type: "inline",
           value: importMapPath,
         },
-        routes: coreRoutes,
+        routes: {},
       };
     }
   }
@@ -299,7 +297,7 @@ export async function getImportmapAndRoutes(
       type: "url",
       value: importMapPath,
     },
-    routes: coreRoutes,
+    routes: {},
   };
 }
 
