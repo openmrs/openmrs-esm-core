@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.openmrs.org/routes.schema.json",
   "backendDependencies": {
     "webservices.rest": ">=2.24.0"
   },
