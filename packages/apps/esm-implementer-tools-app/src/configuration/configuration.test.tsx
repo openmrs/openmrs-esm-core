@@ -158,7 +158,7 @@ describe("Configuration", () => {
         { uuid: "61523693-72e2-456d-8c64-8c5293febeb6", display: "Fedora" },
       ],
       error: null,
-      isSearchingConditions: false,
+      isSearchingConcepts: false,
     }));
 
     mockUseGetConceptByUuid.mockImplementation(() => ({
