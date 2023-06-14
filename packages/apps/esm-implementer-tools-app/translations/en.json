@@ -2,11 +2,11 @@
   "activeItemSourceText": "The current value comes from ",
   "backendModules": "Backend Modules",
   "clearConfig": "Clear Local Config",
-  "config.jsonSavedSuccessfully": "config.json saved successfully",
   "configuration": "Configuration",
   "downloadConfig": "Download Config",
   "edit": "Edit",
   "editValueButtonText": "Edit",
+  "errorSavingConfiguration": "Error saving configuration",
   "frontendModules": "Frontend Modules",
   "installedVersion": "Installed Version",
   "itemDescriptionSourceDefaultText": "The current value is the default.",
@@ -20,6 +20,6 @@
   "value": "Value",
   "view": "View",
   "pushLocalConfig": "Push Local Config",
-  "saveConfig.jsonError": "Error saving config.json",
-  "saveConfig.json": "Save Config.json"
+  "savedConfiguration": "Saved configuration",
+  "successfullySavedConfiguration": "Successfully saved configuration"
 }

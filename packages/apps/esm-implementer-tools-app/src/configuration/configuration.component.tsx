@@ -199,11 +199,14 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                         if (response.ok && !response.redirected) {
                           showToast({
                             critical: true,
-                            title: t("saveConfig.json", "Save Config.json"),
+                            title: t(
+                              "savedConfiguration",
+                              "Saved configuration"
+                            ),
                             kind: "success",
                             description: t(
-                              "config.jsonSavedSuccessfully",
-                              "config.json saved successfully"
+                              "successfullySavedConfiguration",
+                              "Successfully saved configuration"
                             ),
                           });
                         } else if (response.ok && response.redirected) {
@@ -213,8 +216,8 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                       (error) => {
                         showNotification({
                           title: t(
-                            "saveConfig.jsonError",
-                            "Error saving config.json"
+                            "errorSavingConfiguration",
+                            "Error saving configuration"
                           ),
                           kind: "error",
                           critical: true,
