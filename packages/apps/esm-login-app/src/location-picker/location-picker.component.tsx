@@ -226,7 +226,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             ) : (
               <>
                 <div className={styles.locationResultsContainer}>
-                  {locations?.length && (
+                  {locations?.length > 0 ? (
                     <RadioButtonGroup
                       valueSelected={activeLocation}
                       orientation="vertical"
@@ -245,8 +245,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                         />
                       ))}
                     </RadioButtonGroup>
-                  )}
-                  {locations?.length === 0 && (
+                  ) : (
                     <div className={styles.emptyState}>
                       <p className={styles.locationNotFound}>
                         {t("noResultsToDisplay", "No results to display")}
