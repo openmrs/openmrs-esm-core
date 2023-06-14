@@ -21,6 +21,7 @@ import {
   Config,
   getExtensionInternalStore,
   implementerToolsConfigStore,
+  navigate,
   showNotification,
   showToast,
   temporaryConfigStore,
@@ -195,7 +196,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   onClick={() => {
                     saveConfig(tempConfig).then(
                       (response) => {
-                        if (response.ok) {
+                        if (response.ok && !response.redirected) {
                           showToast({
                             critical: true,
                             title: t("saveConfig.json", "Save Config.json"),
@@ -205,6 +206,8 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                               "config.json saved successfully"
                             ),
                           });
+                        } else if (response.ok && response.redirected) {
+                          navigate({ to: response.url });
                         }
                       },
                       (error) => {
