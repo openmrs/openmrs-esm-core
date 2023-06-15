@@ -13,13 +13,13 @@
   "jsonEditor": "JSON Editor",
   "missing": "Missing",
   "moduleName": "Module Name",
+  "pushLocalConfig": "Push Local Config",
   "requiredVersion": "Required Version",
   "resetToDefaultValueButtonText": "Reset to default",
+  "savedConfiguration": "Saved configuration",
+  "successfullySavedConfiguration": "Successfully saved configuration",
   "uiEditor": "UI Editor",
   "unknownVersion": "unknown",
   "value": "Value",
-  "view": "View",
-  "pushLocalConfig": "Push Local Config",
-  "savedConfiguration": "Saved configuration",
-  "successfullySavedConfiguration": "Successfully saved configuration"
+  "view": "View"
 }

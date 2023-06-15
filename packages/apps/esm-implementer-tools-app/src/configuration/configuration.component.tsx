@@ -33,6 +33,7 @@ import { Description } from "./interactive-editor/description.component";
 import { implementerToolsStore, ImplementerToolsStore } from "../store";
 import styles from "./configuration.styles.scss";
 import { saveConfig } from "./configuration.resource";
+import { useBackendDependencyCheck } from "../backend-dependencies/openmrs-backend-dependencies";
 
 const JsonEditor = React.lazy(
   () => import("./json-editor/json-editor.component")
@@ -83,6 +84,7 @@ export interface ConfigurationProps {}
 
 export const Configuration: React.FC<ConfigurationProps> = () => {
   const { t } = useTranslation();
+  const isSpaModulePresent = useBackendDependencyCheck("spa");
   const {
     isUIEditorEnabled,
     toggleIsUIEditorEnabled,
@@ -189,46 +191,48 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 >
                   {t("clearConfig", "Clear Local Config")}
                 </Button>
-                <Button
-                  kind="primary"
-                  iconDescription="push local config"
-                  renderIcon={(props) => <Upload size={16} {...props} />}
-                  onClick={() => {
-                    saveConfig(tempConfig).then(
-                      (response) => {
-                        if (response.ok && !response.redirected) {
-                          showToast({
-                            critical: true,
+                {isSpaModulePresent ? (
+                  <Button
+                    kind="primary"
+                    iconDescription="push local config"
+                    renderIcon={(props) => <Upload size={16} {...props} />}
+                    onClick={() => {
+                      saveConfig(tempConfig).then(
+                        (response) => {
+                          if (response.ok && !response.redirected) {
+                            showToast({
+                              critical: true,
+                              title: t(
+                                "savedConfiguration",
+                                "Saved configuration"
+                              ),
+                              kind: "success",
+                              description: t(
+                                "successfullySavedConfiguration",
+                                "Successfully saved configuration"
+                              ),
+                            });
+                          } else if (response.ok && response.redirected) {
+                            navigate({ to: response.url });
+                          }
+                        },
+                        (error) => {
+                          showNotification({
                             title: t(
-                              "savedConfiguration",
-                              "Saved configuration"
+                              "errorSavingConfiguration",
+                              "Error saving configuration"
                             ),
-                            kind: "success",
-                            description: t(
-                              "successfullySavedConfiguration",
-                              "Successfully saved configuration"
-                            ),
+                            kind: "error",
+                            critical: true,
+                            description: error?.message,
                           });
-                        } else if (response.ok && response.redirected) {
-                          navigate({ to: response.url });
                         }
-                      },
-                      (error) => {
-                        showNotification({
-                          title: t(
-                            "errorSavingConfiguration",
-                            "Error saving configuration"
-                          ),
-                          kind: "error",
-                          critical: true,
-                          description: error?.message,
-                        });
-                      }
-                    );
-                  }}
-                >
-                  {t("pushLocalConfig", "Push Local Config")}
-                </Button>
+                      );
+                    }}
+                  >
+                    {t("pushLocalConfig", "Push Local Config")}
+                  </Button>
+                ) : null}
                 <Button
                   kind="secondary"
                   iconDescription="Download config"

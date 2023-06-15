@@ -1,5 +1,6 @@
 import { isVersionSatisfied, openmrsFetch } from "@openmrs/esm-framework";
 import difference from "lodash-es/difference";
+import { useMemo, useState } from "react";
 
 export type ResolvedBackendModuleType = "missing" | "version-mismatch" | "okay";
 
@@ -167,4 +168,24 @@ export function hasInvalidDependencies(
   return frontendModules.some((m) =>
     m.dependencies.some((n) => n.type !== "okay")
   );
+}
+
+export function useBackendDependencyCheck(moduleName: string) {
+  const [backendDependencies, setBackendDependencies] = useState<
+    BackendModule[]
+  >([]);
+
+  useMemo(async () => {
+    const dependencies = await initInstalledBackendModules();
+    setBackendDependencies(dependencies);
+  }, []);
+
+  const isPresent = useMemo(() => {
+    if (backendDependencies) {
+      return backendDependencies.some((module) => module.uuid === moduleName);
+    }
+    return false;
+  }, [backendDependencies, moduleName]);
+
+  return isPresent;
 }
