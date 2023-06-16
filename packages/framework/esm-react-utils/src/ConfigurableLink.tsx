@@ -5,6 +5,7 @@ import React, {
   PropsWithChildren,
 } from "react";
 import { navigate, interpolateUrl, TemplateParams } from "@openmrs/esm-config";
+import { useTranslation } from "react-i18next";
 
 function handleClick(
   event: MouseEvent,
@@ -20,6 +21,13 @@ function handleClick(
     event.preventDefault();
     navigate({ to, templateParams });
   }
+}
+
+function camelize(str) {
+  const camelCaseString = str.replace(/\W+(.)/g, function (match, chr) {
+    return chr.toUpperCase();
+  });
+  return camelCaseString.charAt(0).toLowerCase() + camelCaseString.slice(1);
 }
 
 /**
@@ -45,13 +53,17 @@ export function ConfigurableLink({
   children,
   ...otherProps
 }: PropsWithChildren<ConfigurableLinkProps>) {
+  const { t } = useTranslation();
+
   return (
     <a
       onClick={(event) => handleClick(event, to, templateParams)}
       href={interpolateUrl(to, templateParams)}
       {...otherProps}
     >
-      {children}
+      {typeof children === "string"
+        ? t(camelize(children), children)
+        : children}
     </a>
   );
 }
