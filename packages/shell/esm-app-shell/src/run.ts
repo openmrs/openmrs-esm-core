@@ -168,21 +168,11 @@ function clearDevOverrides() {
   location.reload();
 }
 
-function isAbsoluteUrl(url: string): boolean {
-  const absoluteUrlPattern = /^https?:\/\//i;
-  return absoluteUrlPattern.test(url);
-}
-
 function createConfigLoader(configUrls: Array<string>) {
   const loadingConfigs = Promise.all(
     configUrls.map((configUrl) => {
-      const interpolatedUrl = `${interpolateUrl(
-        `\${openmrsSpaBase}${configUrl}`
-      )}`;
-      const url = isAbsoluteUrl(configUrl)
-        ? configUrl
-        : `${window.location.origin}${interpolatedUrl}`;
-      return fetch(url)
+      const interpolatedUrl = interpolateUrl(configUrl);
+      return fetch(interpolatedUrl)
         .then((res) => res.json())
         .then((config) => ({
           name: configUrl,
