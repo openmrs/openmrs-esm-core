@@ -30,7 +30,13 @@ function runCommand<T extends CommandNames>(
     args,
   });
 
-  ps.on("exit", (code) => process.exit(code || 0));
+  ps.on("exit", (code) => {
+    if (code === 0) {
+      process.exit(0); // Build success, exit with code 0
+    } else {
+      process.exit(1); // Build failure, exit with code 1
+    }
+  });
 }
 
 yargs.command(
