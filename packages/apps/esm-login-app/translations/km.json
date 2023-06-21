@@ -1,0 +1,21 @@
+{
+  "back": "Back",
+  "change": "Change",
+  "confirm": "Confirm",
+  "continue": "Continue",
+  "error": "Error",
+  "invalidCredentials": "",
+  "loading": "Loading",
+  "loggingIn": "Logging in",
+  "login": "Log in",
+  "Logout": "Logout",
+  "noResultsToDisplay": "No results to display",
+  "password": "Password",
+  "poweredBy": "Powered by",
+  "searchForLocation": "Search for a location",
+  "selectYourLocation": "Select your location from the list below. Use the search bar to find your location.",
+  "submitting": "Submitting",
+  "username": "Username",
+  "validValueRequired": "A valid value is required",
+  "welcome": "Welcome"
+}
