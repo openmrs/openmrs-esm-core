@@ -9,7 +9,7 @@ const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
 const { basename, dirname, resolve } = require("path");
 const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
-const { readdirSync, statSync } = require("fs");
+const { readdirSync, statSync, readFileSync } = require("fs");
 
 const { name, version, dependencies } = require("./package.json");
 const sharedDependencies = require("./dependencies.json");
@@ -74,6 +74,17 @@ function checkDirectoryExists(dirName) {
   return false;
 }
 
+function checkFileExists(filename) {
+  if (filename) {
+    try {
+      return statSync(filename).isFile();
+    } catch {
+      return false;
+    }
+  }
+  return false;
+}
+
 function checkDirectoryHasContents(dirName) {
   if (checkDirectoryExists(dirName)) {
     const contents = readdirSync(dirName);
@@ -98,6 +109,8 @@ module.exports = (env, argv = {}) => {
     imports: {},
   };
 
+  const coreRoutes = {};
+
   if (!isProd && checkDirectoryExists(openmrsCoreApps)) {
     readdirSync(openmrsCoreApps).forEach((dir) => {
       const appDir = resolve(openmrsCoreApps, dir);
@@ -110,8 +123,13 @@ module.exports = (env, argv = {}) => {
               from: distDir,
               to: dir,
             });
+
             coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
-            console.info(`Serving built artifact for ${name} from ${distDir}`);
+
+            const routesFile = resolve(distDir, "routes.json");
+            if (checkFileExists(routesFile)) {
+              coreRoutes[name] = JSON.parse(readFileSync(routesFile));
+            }
           } else {
             console.warn(
               `Not serving ${name} because couldn't find ${distDir}`
@@ -275,6 +293,7 @@ module.exports = (env, argv = {}) => {
           openmrsConfigUrls,
           openmrsCoreImportmap:
             appPatterns.length > 0 && JSON.stringify(coreImportmap),
+          openmrsCoreRoutes: coreRoutes && JSON.stringify(coreRoutes),
         },
       }),
       new CopyWebpackPlugin({
