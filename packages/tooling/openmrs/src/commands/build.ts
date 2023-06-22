@@ -7,6 +7,9 @@ import {
 } from "fs";
 import { getImportmapAndRoutes, loadWebpackConfig, logInfo } from "../utils";
 import { basename, join, parse, resolve } from "path";
+import type { webpack } from "webpack";
+
+type WebpackExport = typeof webpack;
 
 /* eslint-disable no-console */
 
@@ -55,7 +58,7 @@ function addConfigFilesFromPaths(
 }
 
 export async function runBuild(args: BuildArgs) {
-  const webpack = require("webpack");
+  const webpack: WebpackExport = require("webpack");
   const buildConfig = loadBuildConfig(args.buildConfig);
   const configUrls = buildConfig.configUrls || args.configUrls;
   for (let configPath of buildConfig.configPaths || args.configPaths) {
@@ -112,11 +115,12 @@ export async function runBuild(args: BuildArgs) {
       if (err) {
         reject(err);
       } else {
-        console.log(
-          stats.toString({
-            colors: true,
-          })
-        );
+        stats &&
+          console.log(
+            stats.toString({
+              colors: true,
+            })
+          );
 
         addConfigFilesFromPaths(
           buildConfig.configPaths || args.configPaths,

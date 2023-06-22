@@ -37,7 +37,8 @@
       "slot": "user-panel-slot",
       "component": "changeLocationLink",
       "online": true,
-      "offline": true
+      "offline": true,
+      "order": 1
     }
   ]
 }

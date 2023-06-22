@@ -22,7 +22,6 @@ describe("LocationPicker", () => {
     renderWithRouter(LocationPicker, {
       currentLocationUuid: "some-location-uuid",
       hideWelcomeMessage: false,
-      isLoginEnabled: true,
     });
 
     await waitForElementToBeRemoved(

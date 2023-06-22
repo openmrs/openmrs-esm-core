@@ -17,7 +17,7 @@ export interface ResolvedDependenciesModule {
 
 interface Module {
   moduleName: string;
-  backendDependencies: Record<string, string> | undefined;
+  backendDependencies?: Record<string, string>;
 }
 
 interface BackendModule {

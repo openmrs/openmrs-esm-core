@@ -1,5 +1,6 @@
 import { ImportmapDeclaration } from "./importmap";
 import { setEnvVariables } from "./variables";
+import type { Configuration as WebpackConfig } from "webpack";
 
 export interface WebpackOptions {
   backend?: string;
@@ -17,7 +18,7 @@ export interface WebpackOptions {
 }
 
 export function loadWebpackConfig(options: WebpackOptions = {}) {
-  const variables: Record<string, any> = {};
+  const variables: Record<string, unknown> = {};
 
   if (typeof options.backend === "string") {
     variables.OMRS_PROXY_TARGET = options.backend;
@@ -77,7 +78,9 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
 
   setEnvVariables(variables);
 
-  const config = require("@openmrs/esm-app-shell/webpack.config.js");
+  const config:
+    | ((env: Record<string, unknown>) => WebpackConfig)
+    | WebpackConfig = require("@openmrs/esm-app-shell/webpack.config.js");
 
   if (typeof config === "function") {
     return config({});

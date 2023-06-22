@@ -26,14 +26,16 @@
 <% if (openmrsCoreImportmap) { %>
   <script type="systemjs-importmap"><%= openmrsCoreImportmap %></script>
 <% } %>
-<% if (openmrsRoutes) { %>
+<% if (openmrsRoutesDef) {%
+  <script type="openmrs-routes"><%= openmrsRoutesDef %></script>
+<% } else if (openmrsRoutesUrl) { %>
   <link
     rel="preload"
-    href="<%= openmrsRoutes %>"
+    href="<%= openmrsRoutesUrl %>"
     as="fetch"
     crossorigin="anonymous"
   >
-  <script type="openmrs-routes" src="<%= openmrsRoutes %>"></script>
+  <script type="openmrs-routes" src="<%= openmrsRoutesUrl %>"></script>
 <% } %>
   </head>
   <body>
