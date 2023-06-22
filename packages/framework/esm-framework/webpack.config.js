@@ -22,7 +22,7 @@ module.exports = (env) => ({
     rules: [
       {
         test: /\.m?(js|ts|tsx)$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: "@swc-node/loader",
       },
       {

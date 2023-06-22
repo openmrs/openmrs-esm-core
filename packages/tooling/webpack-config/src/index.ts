@@ -190,10 +190,8 @@ export default (
         merge(
           {
             test: /\.m?(js|ts|tsx)$/,
-            exclude: /(node_modules|bower_components)/,
-            use: {
-              loader: "@swc-node/loader",
-            },
+            exclude: /node_modules(?![\/\\]@openmrs)/,
+            use: "@swc-node/loader",
           },
           scriptRuleConfig
         ),

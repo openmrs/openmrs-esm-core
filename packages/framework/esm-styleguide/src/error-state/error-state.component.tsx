@@ -1,7 +1,7 @@
 import React from "react";
 import { Tile } from "@carbon/react";
 import { useTranslation } from "react-i18next";
-import { useLayoutType } from "@openmrs/esm-framework";
+import { useLayoutType } from "@openmrs/esm-react-utils";
 import styles from "./error-state.module.scss";
 
 export interface ErrorStateProps {

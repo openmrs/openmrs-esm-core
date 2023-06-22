@@ -10,18 +10,19 @@ module.exports = (env) => ({
   output: {
     filename: basename(browser),
     path: resolve(__dirname, "dist"),
-    library: { type: "var", name: "_openmrs_esm_dynamic_loading" },
+    libraryTarget: "system",
   },
   devtool: "source-map",
   module: {
     rules: [
       {
         test: /\.m?(js|ts|tsx)$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: "@swc-node/loader",
       },
     ],
   },
+  externals: Object.keys(peerDependencies || {}),
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
   },
