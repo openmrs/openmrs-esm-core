@@ -52,7 +52,7 @@ ___
 
 ### offline
 
-• `Optional` **offline**: `boolean` \| `object`
+• `Optional` **offline**: `boolean`
 
 #### Defined in
 
@@ -62,7 +62,7 @@ ___
 
 ### online
 
-• `Optional` **online**: `boolean` \| `object`
+• `Optional` **online**: `boolean`
 
 #### Defined in
 

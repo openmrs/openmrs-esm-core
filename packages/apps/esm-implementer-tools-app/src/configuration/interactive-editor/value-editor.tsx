@@ -32,20 +32,20 @@ export function ValueEditor({
 
   const valueType = customType ?? element._type;
 
-  const keyListener = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      handleClose();
-    } else if (e.key === "Enter") {
-      handleSave(JSON.stringify(tmpValue));
-    }
-  };
-
   useEffect(() => {
+    const keyListener = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleClose();
+      } else if (e.key === "Enter") {
+        handleSave(JSON.stringify(tmpValue));
+      }
+    };
+
     document.addEventListener("keyup", keyListener);
     return () => {
       document.removeEventListener("keyup", keyListener);
     };
-  }, [tmpValue]);
+  }, [handleSave, handleClose, tmpValue]);
 
   return (
     <div ref={ref} style={{ display: "inherit" }}>

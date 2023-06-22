@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { Fragment, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import {
   DataTable,
@@ -11,11 +11,7 @@ import {
   TableRow,
 } from "@carbon/react";
 import styles from "./frontend-modules.scss";
-
-export interface FrontendModule {
-  name: string;
-  version?: string;
-}
+import type { FrontendModule } from "../types";
 
 export interface FrontendModulesProps {
   frontendModules: Array<FrontendModule>;
@@ -57,12 +53,32 @@ export const FrontendModules: React.FC<FrontendModulesProps> = ({
               </TableHead>
               <TableBody>
                 {frontendModules.map((esm) => (
-                  <TableRow key={esm.name}>
-                    <TableCell>{esm.name}</TableCell>
-                    <TableCell>
-                      {esm.version ?? t("unknownVersion", "unknown")}
-                    </TableCell>
-                  </TableRow>
+                  <Fragment key={esm.name}>
+                    <TableRow>
+                      <TableCell>
+                        <span className={styles.moduleHeader}>{esm.name}</span>
+                      </TableCell>
+                      <TableCell>
+                        {esm.version ?? t("unknownVersion", "unknown")}
+                      </TableCell>
+                    </TableRow>
+                    {Boolean(esm.extensions) ? (
+                      <TableRow key={`${esm.name}-extensions-header`}>
+                        <TableCell>
+                          <span className={styles.moduleComponentHeader}>
+                            {t("extensions", "Extensions")}
+                          </span>
+                        </TableCell>
+                        <TableCell />
+                      </TableRow>
+                    ) : null}
+                    {(esm.extensions ?? []).map((extension, i) => (
+                      <TableRow key={`${esm.name}-page-${i}`}>
+                        <TableCell>{extension.name}</TableCell>
+                        <TableCell></TableCell>
+                      </TableRow>
+                    ))}
+                  </Fragment>
                 ))}
               </TableBody>
             </Table>

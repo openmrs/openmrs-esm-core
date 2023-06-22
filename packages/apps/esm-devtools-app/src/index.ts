@@ -1,26 +1,13 @@
 import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
-declare var __VERSION__: string;
-// __VERSION__ is replaced by Webpack with the version from package.json
-const version = __VERSION__;
+export const importTranslation = () => Promise.resolve();
 
-const importTranslation = () => Promise.resolve();
+const options = {
+  featureName: "devtools",
+  moduleName: "@openmrs/esm-devtools-app",
+};
 
-function setupOpenMRS() {
-  const options = {
-    featureName: "devtools",
-    moduleName: "@openmrs/esm-devtools-app",
-  };
-
-  return {
-    lifecycle: getAsyncLifecycle(
-      () => import("./devtools/devtools.component"),
-      options
-    ),
-    activate: () =>
-      window.spaEnv === "development" ||
-      !!localStorage.getItem("openmrs:devtools"),
-  };
-}
-
-export { setupOpenMRS, importTranslation, version };
+export const devtools = getAsyncLifecycle(
+  () => import("./devtools/devtools.component"),
+  options
+);

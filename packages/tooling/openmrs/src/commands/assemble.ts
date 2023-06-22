@@ -6,7 +6,7 @@ import axios from "axios";
 import npmRegistryFetch from "npm-registry-fetch";
 import pacote from "pacote";
 import { contentHash, logInfo, untar } from "../utils";
-import { createReadStream, existsSync } from "fs";
+import { createReadStream, existsSync, readFileSync } from "fs";
 import { getNpmRegistryConfiguration } from "../utils/npmConfig";
 
 /* eslint-disable no-console */
@@ -18,6 +18,7 @@ export interface AssembleArgs {
   registry?: string;
   hashImportmap: boolean;
   fresh: boolean;
+  buildRoutes: boolean;
   manifest: boolean;
 }
 
@@ -198,9 +199,12 @@ export async function runAssemble(args: AssembleArgs) {
   const importmap = {
     imports: {},
   };
+
   const versionManifest = {
     frontendModules: {},
   };
+
+  const routes = {};
 
   logInfo(`Assembling the importmap ...`);
 
@@ -229,6 +233,15 @@ export async function runAssemble(args: AssembleArgs) {
         resolve(cacheDir, tgzFileName),
         resolve(args.target, dirName)
       );
+
+      const routes = resolve(args.target, dirName, "routes.json");
+      if (existsSync(routes)) {
+        routes[esmName] = JSON.parse(readFileSync(routes).toString());
+        routes[esmName]["version"] = version;
+      } else {
+        routes[esmName] = {};
+      }
+
       importmap.imports[esmName] = `${publicUrl}/${dirName}/${fileName}`;
       versionManifest.frontendModules[esmName] = version;
     })
@@ -242,6 +255,19 @@ export async function runAssemble(args: AssembleArgs) {
     JSON.stringify(importmap, undefined, 2),
     "utf8"
   );
+
+  if (args.buildRoutes) {
+    await writeFile(
+      resolve(
+        args.target,
+        `routes.registry${
+          args.hashImportmap ? "." + contentHash(routes) : ""
+        }.json`
+      ),
+      JSON.stringify(routes, undefined, 2),
+      "utf-8"
+    );
+  }
 
   if (args.manifest) {
     await writeFile(

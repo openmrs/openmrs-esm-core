@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json.openmrs.org/routes.schema.json",
+  "backendDependencies": {
+    "webservices.rest": ">=2.2.0"
+  },
+  "pages": [
+    {
+      "component": "root",
+      "routeRegex": "^(?!login/?)",
+      "online": true,
+      "offline": true,
+      "order": 0
+    },
+    {
+      "component": "redirect",
+      "routeRegex": "^$",
+      "online": true,
+      "offline": true,
+      "order": 0
+    }
+  ],
+  "extensions": [
+    {
+      "name": "default-user-panel",
+      "slot": "user-panel-slot",
+      "component": "userPanel",
+      "online": true,
+      "offline": true,
+      "order": 0
+    },
+    {
+      "name": "change-locale",
+      "slot": "user-panel-slot",
+      "component": "localeChanger",
+      "online": true,
+      "offline": true,
+      "order": 1
+    },
+    {
+      "name": "link",
+      "component": "linkComponent",
+      "online": true,
+      "offline": true
+    }
+  ]
+}

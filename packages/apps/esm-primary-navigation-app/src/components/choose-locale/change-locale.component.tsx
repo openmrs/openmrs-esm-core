@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styles from "./change-locale.scss";
 import { Select, SelectItem } from "@carbon/react";
-import { ExtensionSlot, LoggedInUser } from "@openmrs/esm-framework";
+import {
+  ExtensionSlot,
+  LoggedInUser,
+  useConnectivity,
+} from "@openmrs/esm-framework";
 import {
   PostSessionLocale,
   PostUserProperties,
+  postUserPropertiesOnline,
+  postUserPropertiesOffline,
+  postSessionLocaleOnline,
+  postSessionLocaleOffline,
 } from "./change-locale.resource";
 import { useTranslation } from "react-i18next";
 
@@ -15,7 +23,25 @@ export interface ChangeLocaleProps {
   postSessionLocale: PostSessionLocale;
 }
 
-const ChangeLocale: React.FC<ChangeLocaleProps> = ({
+const ChangeLocaleWrapper: React.FC<
+  Pick<ChangeLocaleProps, "allowedLocales" | "user">
+> = (props) => {
+  const isOnline = useConnectivity();
+  const [postUserProperties, postSessionLocale] = useMemo(
+    () =>
+      isOnline
+        ? [postUserPropertiesOnline, postSessionLocaleOnline]
+        : [postUserPropertiesOffline, postSessionLocaleOffline],
+    [isOnline]
+  );
+
+  return (
+    <ChangeLocale {...props} {...{ postUserProperties, postSessionLocale }} />
+  );
+};
+
+// exported for tests
+export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   allowedLocales,
   user,
   postUserProperties,
@@ -37,6 +63,17 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userProps, postUserProperties, postSessionLocale]);
 
+  const onChange = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) =>
+      setUserProps({ ...userProps, defaultLocale: event.target.value }),
+    [userProps, setUserProps]
+  );
+
+  const onClick = useCallback(
+    (event: React.SyntheticEvent) => event.stopPropagation(),
+    []
+  );
+
   return (
     <div className={`omrs-margin-12 ${styles.switcherContainer}`}>
       <Select
@@ -44,10 +81,8 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
         id="selectLocale"
         invalidText="A valid locale value is required"
         labelText={t("selectLocale", "Select locale")}
-        onChange={(event) =>
-          setUserProps({ ...userProps, defaultLocale: event.target.value })
-        }
-        onClick={(event) => event.stopPropagation()}
+        onChange={onChange}
+        onClick={onClick}
         value={userProps.defaultLocale}
       >
         {options}
@@ -57,4 +92,4 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   );
 };
 
-export default ChangeLocale;
+export default ChangeLocaleWrapper;

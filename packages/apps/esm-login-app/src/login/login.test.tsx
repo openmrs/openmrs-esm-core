@@ -44,10 +44,7 @@ mockedUseConfig.mockReturnValue(mockConfig);
 
 describe("Login", () => {
   it("renders the login form", () => {
-    renderWithRouter(Login, {
-      loginLocations: loginLocations,
-      isLoginEnabled: true,
-    });
+    renderWithRouter(Login);
 
     screen.getByRole("img", { name: /OpenMRS logo/i });
     expect(screen.queryByAltText(/logo/i)).not.toBeInTheDocument();
@@ -65,10 +62,7 @@ describe("Login", () => {
       logo: customLogoConfig,
     });
 
-    renderWithRouter(Login, {
-      loginLocations: loginLocations,
-      isLoginEnabled: true,
-    });
+    renderWithRouter(Login);
 
     const logo = screen.getByAltText(customLogoConfig.alt);
 
@@ -80,10 +74,7 @@ describe("Login", () => {
   it("should return user focus to username input when input is invalid", async () => {
     renderWithRouter(
       Login,
-      {
-        loginLocations: loginLocations,
-        isLoginEnabled: true,
-      },
+      {},
       {
         route: "/login",
         routes: ["/login", "/login/confirm"],
@@ -113,10 +104,7 @@ describe("Login", () => {
 
     renderWithRouter(
       Login,
-      {
-        loginLocations: loginLocations,
-        isLoginEnabled: true,
-      },
+      {},
       {
         route: "/login",
         routes: ["/login", "/login/confirm"],
@@ -156,10 +144,7 @@ describe("Login", () => {
 
     renderWithRouter(
       Login,
-      {
-        loginLocations: loginLocations,
-        isLoginEnabled: true,
-      },
+      {},
       {
         routeParams: {
           path: "/login(/confirm)?",

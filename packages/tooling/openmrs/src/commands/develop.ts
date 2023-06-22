@@ -17,6 +17,7 @@ export interface DevelopArgs {
   backend: string;
   open: boolean;
   importmap: ImportmapDeclaration;
+  routes: Record<string, unknown>;
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
@@ -80,6 +81,13 @@ export function runDevelop(args: DevelopArgs) {
     });
   }
 
+  if (args.routes && Object.keys(args.routes).length > 0) {
+    const stringifiedRoutes = JSON.stringify(args.routes);
+    app.get(`${spaPath}/routes.registry.json`, (_, res) => {
+      res.contentType("application/json").send(stringifiedRoutes);
+    });
+  }
+
   // Route for custom `index.html` goes above static assets
   app.get(indexHtmlPathMatcher, (_, res) =>
     res.contentType("text/html").send(indexContent)
@@ -121,11 +129,15 @@ export function runDevelop(args: DevelopArgs) {
     if (open) {
       const open = require("open");
 
-      open(pageUrl, { wait: false }).catch(() => {
-        logWarn(
-          `Unable to open "${pageUrl}" in browser. If you are running in a headless environment, please do not use the --open flag.`
-        );
-      });
+      setTimeout(
+        () =>
+          open(pageUrl, { wait: false }).catch(() => {
+            logWarn(
+              `Unable to open "${pageUrl}" in browser. If you are running in a headless environment, please do not use the --open flag.`
+            );
+          }),
+        2000
+      );
     }
   });
 

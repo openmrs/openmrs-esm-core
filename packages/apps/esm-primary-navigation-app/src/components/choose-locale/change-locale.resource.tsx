@@ -6,15 +6,15 @@ import { userPropertyChange } from "../../constants";
 
 export type PostUserProperties = (
   userUuid: string,
-  userProperties: any,
+  userProperties: Record<string, string>,
   abortController?: AbortController
-) => Promise<any>;
+) => Promise<void>;
 
 export async function postUserPropertiesOnline(
   userUuid: string,
   userProperties: any,
   abortController: AbortController
-): Promise<any> {
+): Promise<void> {
   await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
     method: "POST",
     body: { userProperties },
@@ -26,28 +26,11 @@ export async function postUserPropertiesOnline(
   window.location.reload();
 }
 
-export type PostSessionLocale = (
-  locale: string,
-  abortController: AbortController
-) => Promise<any>;
-
-export async function postSessionLocaleOnline(
-  locale: string,
-  abortController: AbortController
-): Promise<any> {
-  await openmrsFetch(`/ws/rest/v1/session`, {
-    method: "POST",
-    body: { locale },
-    headers: { "Content-Type": "application/json" },
-    signal: abortController.signal,
-  });
-}
-
-export function postUserPropertiesOffline(
+export async function postUserPropertiesOffline(
   userUuid: string,
-  userProperties: any
-): Promise<any> {
-  return queueSynchronizationItemFor(
+  userProperties: Record<string, unknown>
+): Promise<void> {
+  await queueSynchronizationItemFor(
     userUuid,
     userPropertyChange,
     userProperties,
@@ -56,3 +39,25 @@ export function postUserPropertiesOffline(
     }
   );
 }
+
+export type PostSessionLocale = (
+  locale: string,
+  abortController: AbortController
+) => Promise<void>;
+
+export async function postSessionLocaleOnline(
+  locale: string,
+  abortController: AbortController
+): Promise<void> {
+  await openmrsFetch(`/ws/rest/v1/session`, {
+    method: "POST",
+    body: { locale },
+    headers: { "Content-Type": "application/json" },
+    signal: abortController.signal,
+  });
+}
+
+export async function postSessionLocaleOffline(
+  locale: string,
+  abortController: AbortController
+) {}

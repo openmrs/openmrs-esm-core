@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
@@ -41,14 +42,12 @@
   "peerDependencies": {
     "@openmrs/esm-globals": "4.x",
     "@openmrs/esm-state": "4.x",
-    "single-spa": "5.x",
-    "systemjs": "6.x"
+    "single-spa": "5.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "^4.5.0",
     "@openmrs/esm-state": "^4.5.0",
     "@types/ramda": "^0.26.44",
-    "@types/systemjs": "^6.1.0",
     "babel-plugin-ramda": "^2.0.0",
     "single-spa": "^5.9.2"
   }
