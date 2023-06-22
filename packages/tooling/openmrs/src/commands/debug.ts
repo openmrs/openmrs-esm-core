@@ -37,7 +37,7 @@ export function runDebug(args: DebugArgs) {
 
   const { host, port } = args;
   const options = {
-    ...config.devServer,
+    ...(config["devServer"] ?? {}),
     port,
     host,
     publicPath: args.spaPath,
