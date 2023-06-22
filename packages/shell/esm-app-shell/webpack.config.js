@@ -333,6 +333,7 @@ module.exports = (env, argv = {}) => {
             mode === production ? undefined : Number.MAX_SAFE_INTEGER,
           additionalManifestEntries: [
             { url: openmrsImportmapUrl, revision: null },
+            { url: openmrsRoutesUrl, revision: null },
           ],
         }),
     ].filter(Boolean),
