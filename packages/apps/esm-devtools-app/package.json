@@ -46,7 +46,7 @@
     "@openmrs/webpack-config": "^5.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "webpack": "^5.86.0"
+    "webpack": "^5.88.0"
   },
   "dependencies": {
     "@carbon/react": "^1.12.0"

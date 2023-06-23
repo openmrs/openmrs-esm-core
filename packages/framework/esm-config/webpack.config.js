@@ -9,15 +9,15 @@ module.exports = (env) => ({
   entry: [resolve(__dirname, "src/index.ts")],
   devtool: "source-map",
   output: {
-    filename: "openmrs-esm-config.js",
+    filename: "openmrs-esm-module-config.js",
     path: resolve(__dirname, "dist"),
-    library: { type: "var", name: "_openmrs_esm_config" },
+    libraryTarget: "system",
   },
   module: {
     rules: [
       {
         test: /\.m?(js|ts|tsx)$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: "@swc-node/loader",
       },
     ],
@@ -25,6 +25,7 @@ module.exports = (env) => ({
   resolve: {
     extensions: [".ts", ".js", ".tsx", ".jsx"],
   },
+  externals: Object.keys(peerDependencies || {}),
   plugins: [
     new CleanWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),

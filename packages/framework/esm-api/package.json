@@ -49,6 +49,7 @@
     "@openmrs/esm-config": "^5.0.0",
     "@openmrs/esm-error-handling": "^5.0.0",
     "@openmrs/esm-state": "^5.0.0",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.5.3",
+    "webpack": "^5.88.0"
   }
 }
