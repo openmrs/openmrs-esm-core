@@ -10,7 +10,7 @@ module.exports = (env) => ({
   output: {
     filename: basename(browser),
     path: resolve(__dirname, "dist"),
-    libraryTarget: "system",
+    library: { type: "system" },
   },
   devtool: "source-map",
   module: {

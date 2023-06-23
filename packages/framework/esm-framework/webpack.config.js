@@ -15,7 +15,7 @@ module.exports = (env) => ({
   output: {
     filename: "openmrs-esm-framework.js",
     path: resolve(__dirname, "dist"),
-    library: { type: "var", name: "_openmrs_esm_framework" },
+    library: { type: "system" },
   },
   devtool: "source-map",
   module: {

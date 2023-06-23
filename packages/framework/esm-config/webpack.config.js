@@ -11,7 +11,7 @@ module.exports = (env) => ({
   output: {
     filename: "openmrs-esm-module-config.js",
     path: resolve(__dirname, "dist"),
-    libraryTarget: "system",
+    library: { type: "system" },
   },
   module: {
     rules: [
