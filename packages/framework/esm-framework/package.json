@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-framework",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "license": "MPL-2.0",
   "browser": "dist/openmrs-esm-framework.js",
   "main": "src/index.ts",
@@ -36,18 +36,18 @@
     "access": "public"
   },
   "dependencies": {
-    "@openmrs/esm-api": "^5.0.1",
-    "@openmrs/esm-breadcrumbs": "^5.0.1",
-    "@openmrs/esm-config": "^5.0.1",
-    "@openmrs/esm-dynamic-loading": "^5.0.1",
-    "@openmrs/esm-error-handling": "^5.0.1",
-    "@openmrs/esm-extensions": "^5.0.1",
-    "@openmrs/esm-globals": "^5.0.1",
-    "@openmrs/esm-offline": "^5.0.1",
-    "@openmrs/esm-react-utils": "^5.0.1",
-    "@openmrs/esm-state": "^5.0.1",
-    "@openmrs/esm-styleguide": "^5.0.1",
-    "@openmrs/esm-utils": "^5.0.1",
+    "@openmrs/esm-api": "^5.0.2",
+    "@openmrs/esm-breadcrumbs": "^5.0.2",
+    "@openmrs/esm-config": "^5.0.2",
+    "@openmrs/esm-dynamic-loading": "^5.0.2",
+    "@openmrs/esm-error-handling": "^5.0.2",
+    "@openmrs/esm-extensions": "^5.0.2",
+    "@openmrs/esm-globals": "^5.0.2",
+    "@openmrs/esm-offline": "^5.0.2",
+    "@openmrs/esm-react-utils": "^5.0.2",
+    "@openmrs/esm-state": "^5.0.2",
+    "@openmrs/esm-styleguide": "^5.0.2",
+    "@openmrs/esm-utils": "^5.0.2",
     "dayjs": "^1.10.7"
   },
   "peerDependencies": {

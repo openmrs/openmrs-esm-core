@@ -3491,13 +3491,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openmrs/esm-api@^5.0.1, @openmrs/esm-api@workspace:packages/framework/esm-api":
+"@openmrs/esm-api@^5.0.2, @openmrs/esm-api@workspace:packages/framework/esm-api":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-api@workspace:packages/framework/esm-api"
   dependencies:
-    "@openmrs/esm-config": ^5.0.1
-    "@openmrs/esm-error-handling": ^5.0.1
-    "@openmrs/esm-state": ^5.0.1
+    "@openmrs/esm-config": ^5.0.2
+    "@openmrs/esm-error-handling": ^5.0.2
+    "@openmrs/esm-state": ^5.0.2
     "@types/fhir": 0.0.31
     lodash-es: ^4.17.21
     rxjs: ^6.5.3
@@ -3509,13 +3509,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-app-shell@5.0.1, @openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell":
+"@openmrs/esm-app-shell@5.0.2, @openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-app-shell@workspace:packages/shell/esm-app-shell"
   dependencies:
     "@carbon/react": ^1.12.0
-    "@openmrs/esm-framework": 5.0.1
-    "@openmrs/esm-styleguide": 5.0.1
+    "@openmrs/esm-framework": 5.0.2
+    "@openmrs/esm-styleguide": 5.0.2
     "@swc-node/loader": ^1.3.5
     cross-env: ^7.0.3
     dayjs: ^1.10.4
@@ -3543,23 +3543,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-breadcrumbs@^5.0.1, @openmrs/esm-breadcrumbs@workspace:packages/framework/esm-breadcrumbs":
+"@openmrs/esm-breadcrumbs@^5.0.2, @openmrs/esm-breadcrumbs@workspace:packages/framework/esm-breadcrumbs":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-breadcrumbs@workspace:packages/framework/esm-breadcrumbs"
   dependencies:
-    "@openmrs/esm-state": ^5.0.1
+    "@openmrs/esm-state": ^5.0.2
     path-to-regexp: 6.1.0
   peerDependencies:
     "@openmrs/esm-state": 4.x
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-config@^5.0.1, @openmrs/esm-config@workspace:packages/framework/esm-config":
+"@openmrs/esm-config@^5.0.2, @openmrs/esm-config@workspace:packages/framework/esm-config":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-config@workspace:packages/framework/esm-config"
   dependencies:
-    "@openmrs/esm-globals": ^5.0.1
-    "@openmrs/esm-state": ^5.0.1
+    "@openmrs/esm-globals": ^5.0.2
+    "@openmrs/esm-state": ^5.0.2
     "@types/ramda": ^0.26.44
     babel-plugin-ramda: ^2.0.0
     ramda: ^0.26.1
@@ -3625,8 +3625,8 @@ __metadata:
   resolution: "@openmrs/esm-devtools-app@workspace:packages/apps/esm-devtools-app"
   dependencies:
     "@carbon/react": ^1.12.0
-    "@openmrs/esm-framework": ^5.0.1
-    "@openmrs/webpack-config": ^5.0.1
+    "@openmrs/esm-framework": ^5.0.2
+    "@openmrs/webpack-config": ^5.0.2
     react: ^18.1.0
     react-dom: ^18.1.0
     webpack: ^5.88.0
@@ -3638,33 +3638,33 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-dynamic-loading@^5.0.1, @openmrs/esm-dynamic-loading@workspace:packages/framework/esm-dynamic-loading":
+"@openmrs/esm-dynamic-loading@^5.0.2, @openmrs/esm-dynamic-loading@workspace:packages/framework/esm-dynamic-loading":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-dynamic-loading@workspace:packages/framework/esm-dynamic-loading"
   dependencies:
-    "@openmrs/esm-globals": ^5.0.1
+    "@openmrs/esm-globals": ^5.0.2
   peerDependencies:
     "@openmrs/esm-globals": 4.x
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-error-handling@^5.0.1, @openmrs/esm-error-handling@workspace:packages/framework/esm-error-handling":
+"@openmrs/esm-error-handling@^5.0.2, @openmrs/esm-error-handling@workspace:packages/framework/esm-error-handling":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-error-handling@workspace:packages/framework/esm-error-handling"
   dependencies:
-    "@openmrs/esm-globals": ^5.0.1
+    "@openmrs/esm-globals": ^5.0.2
   peerDependencies:
     "@openmrs/esm-globals": 4.x
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-extensions@^5.0.1, @openmrs/esm-extensions@workspace:packages/framework/esm-extensions":
+"@openmrs/esm-extensions@^5.0.2, @openmrs/esm-extensions@workspace:packages/framework/esm-extensions":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-extensions@workspace:packages/framework/esm-extensions"
   dependencies:
-    "@openmrs/esm-api": ^5.0.1
-    "@openmrs/esm-config": ^5.0.1
-    "@openmrs/esm-state": ^5.0.1
+    "@openmrs/esm-api": ^5.0.2
+    "@openmrs/esm-config": ^5.0.2
+    "@openmrs/esm-state": ^5.0.2
     lodash-es: ^4.17.21
     single-spa: ^5.9.2
   peerDependencies:
@@ -3675,22 +3675,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-framework@5.0.1, @openmrs/esm-framework@^5.0.1, @openmrs/esm-framework@workspace:packages/framework/esm-framework":
+"@openmrs/esm-framework@5.0.2, @openmrs/esm-framework@^5.0.2, @openmrs/esm-framework@workspace:packages/framework/esm-framework":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-framework@workspace:packages/framework/esm-framework"
   dependencies:
-    "@openmrs/esm-api": ^5.0.1
-    "@openmrs/esm-breadcrumbs": ^5.0.1
-    "@openmrs/esm-config": ^5.0.1
-    "@openmrs/esm-dynamic-loading": ^5.0.1
-    "@openmrs/esm-error-handling": ^5.0.1
-    "@openmrs/esm-extensions": ^5.0.1
-    "@openmrs/esm-globals": ^5.0.1
-    "@openmrs/esm-offline": ^5.0.1
-    "@openmrs/esm-react-utils": ^5.0.1
-    "@openmrs/esm-state": ^5.0.1
-    "@openmrs/esm-styleguide": ^5.0.1
-    "@openmrs/esm-utils": ^5.0.1
+    "@openmrs/esm-api": ^5.0.2
+    "@openmrs/esm-breadcrumbs": ^5.0.2
+    "@openmrs/esm-config": ^5.0.2
+    "@openmrs/esm-dynamic-loading": ^5.0.2
+    "@openmrs/esm-error-handling": ^5.0.2
+    "@openmrs/esm-extensions": ^5.0.2
+    "@openmrs/esm-globals": ^5.0.2
+    "@openmrs/esm-offline": ^5.0.2
+    "@openmrs/esm-react-utils": ^5.0.2
+    "@openmrs/esm-state": ^5.0.2
+    "@openmrs/esm-styleguide": ^5.0.2
+    "@openmrs/esm-utils": ^5.0.2
     dayjs: ^1.10.7
     jest: 28.1.0
     jest-cli: 28.1.0
@@ -3707,7 +3707,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-globals@^5.0.1, @openmrs/esm-globals@workspace:packages/framework/esm-globals":
+"@openmrs/esm-globals@^5.0.2, @openmrs/esm-globals@workspace:packages/framework/esm-globals":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-globals@workspace:packages/framework/esm-globals"
   dependencies:
@@ -3722,8 +3722,8 @@ __metadata:
   resolution: "@openmrs/esm-implementer-tools-app@workspace:packages/apps/esm-implementer-tools-app"
   dependencies:
     "@carbon/react": ^1.12.0
-    "@openmrs/esm-framework": ^5.0.1
-    "@openmrs/webpack-config": ^5.0.1
+    "@openmrs/esm-framework": ^5.0.2
+    "@openmrs/webpack-config": ^5.0.2
     ace-builds: ^1.4.14
     lodash-es: ^4.17.21
     react: ^18.1.0
@@ -3747,8 +3747,8 @@ __metadata:
   resolution: "@openmrs/esm-login-app@workspace:packages/apps/esm-login-app"
   dependencies:
     "@carbon/react": ^1.12.0
-    "@openmrs/esm-framework": ^5.0.1
-    "@openmrs/webpack-config": ^5.0.1
+    "@openmrs/esm-framework": ^5.0.2
+    "@openmrs/webpack-config": ^5.0.2
     jest: ^28.1.0
     lodash-es: ^4.17.21
     react: ^18.1.0
@@ -3773,8 +3773,8 @@ __metadata:
   resolution: "@openmrs/esm-offline-tools-app@workspace:packages/apps/esm-offline-tools-app"
   dependencies:
     "@carbon/react": ^1.12.0
-    "@openmrs/esm-framework": ^5.0.1
-    "@openmrs/webpack-config": ^5.0.1
+    "@openmrs/esm-framework": ^5.0.2
+    "@openmrs/webpack-config": ^5.0.2
     "@types/lodash-es": ^4.17.5
     jest: ^28.1.0
     lodash-es: ^4.17.21
@@ -3794,14 +3794,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-offline@^5.0.1, @openmrs/esm-offline@workspace:packages/framework/esm-offline":
+"@openmrs/esm-offline@^5.0.2, @openmrs/esm-offline@workspace:packages/framework/esm-offline":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-offline@workspace:packages/framework/esm-offline"
   dependencies:
-    "@openmrs/esm-api": ^5.0.1
-    "@openmrs/esm-globals": ^5.0.1
-    "@openmrs/esm-state": ^5.0.1
-    "@openmrs/esm-styleguide": ^5.0.1
+    "@openmrs/esm-api": ^5.0.2
+    "@openmrs/esm-globals": ^5.0.2
+    "@openmrs/esm-state": ^5.0.2
+    "@openmrs/esm-styleguide": ^5.0.2
     "@types/uuid": ^9.0.1
     dexie: ^3.0.3
     lodash-es: ^4.17.21
@@ -3822,8 +3822,8 @@ __metadata:
   resolution: "@openmrs/esm-primary-navigation-app@workspace:packages/apps/esm-primary-navigation-app"
   dependencies:
     "@carbon/react": ^1.12.0
-    "@openmrs/esm-framework": ^5.0.1
-    "@openmrs/webpack-config": ^5.0.1
+    "@openmrs/esm-framework": ^5.0.2
+    "@openmrs/webpack-config": ^5.0.2
     jest: ^28.1.0
     lodash-es: ^4.17.21
     react: ^18.1.0
@@ -3843,15 +3843,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-react-utils@^5.0.1, @openmrs/esm-react-utils@workspace:packages/framework/esm-react-utils":
+"@openmrs/esm-react-utils@^5.0.2, @openmrs/esm-react-utils@workspace:packages/framework/esm-react-utils":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-react-utils@workspace:packages/framework/esm-react-utils"
   dependencies:
-    "@openmrs/esm-api": ^5.0.1
-    "@openmrs/esm-config": ^5.0.1
-    "@openmrs/esm-error-handling": ^5.0.1
-    "@openmrs/esm-extensions": ^5.0.1
-    "@openmrs/esm-globals": ^5.0.1
+    "@openmrs/esm-api": ^5.0.2
+    "@openmrs/esm-config": ^5.0.2
+    "@openmrs/esm-error-handling": ^5.0.2
+    "@openmrs/esm-extensions": ^5.0.2
+    "@openmrs/esm-globals": ^5.0.2
     dayjs: ^1.10.8
     i18next: ^19.6.0
     lodash-es: ^4.17.21
@@ -3876,7 +3876,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-state@^5.0.1, @openmrs/esm-state@workspace:packages/framework/esm-state":
+"@openmrs/esm-state@^5.0.2, @openmrs/esm-state@workspace:packages/framework/esm-state":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-state@workspace:packages/framework/esm-state"
   dependencies:
@@ -3884,15 +3884,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-styleguide@5.0.1, @openmrs/esm-styleguide@^5.0.1, @openmrs/esm-styleguide@workspace:packages/framework/esm-styleguide":
+"@openmrs/esm-styleguide@5.0.2, @openmrs/esm-styleguide@^5.0.2, @openmrs/esm-styleguide@workspace:packages/framework/esm-styleguide":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-styleguide@workspace:packages/framework/esm-styleguide"
   dependencies:
     "@carbon/charts": ^1.6.3
     "@carbon/react": ^1.12.0
-    "@openmrs/esm-extensions": ^5.0.1
-    "@openmrs/esm-react-utils": ^5.0.1
-    "@openmrs/esm-state": ^5.0.1
+    "@openmrs/esm-extensions": ^5.0.2
+    "@openmrs/esm-react-utils": ^5.0.2
+    "@openmrs/esm-state": ^5.0.2
     autoprefixer: ^9.8.8
     css-minimizer-webpack-plugin: ^1.2.0
     d3: ^7.8.0
@@ -3912,7 +3912,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-utils@^5.0.1, @openmrs/esm-utils@workspace:packages/framework/esm-utils":
+"@openmrs/esm-utils@^5.0.2, @openmrs/esm-utils@workspace:packages/framework/esm-utils":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-utils@workspace:packages/framework/esm-utils"
   dependencies:
@@ -3927,7 +3927,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/webpack-config@5.0.1, @openmrs/webpack-config@^5.0.1, @openmrs/webpack-config@workspace:packages/tooling/webpack-config":
+"@openmrs/webpack-config@5.0.2, @openmrs/webpack-config@^5.0.2, @openmrs/webpack-config@workspace:packages/tooling/webpack-config":
   version: 0.0.0-use.local
   resolution: "@openmrs/webpack-config@workspace:packages/tooling/webpack-config"
   dependencies:
@@ -14371,8 +14371,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "openmrs@workspace:packages/tooling/openmrs"
   dependencies:
-    "@openmrs/esm-app-shell": 5.0.1
-    "@openmrs/webpack-config": 5.0.1
+    "@openmrs/esm-app-shell": 5.0.2
+    "@openmrs/webpack-config": 5.0.2
     "@pnpm/npm-conf": ^2.1.0
     "@swc-node/loader": ^1.3.5
     "@types/express": ^4.11.1
