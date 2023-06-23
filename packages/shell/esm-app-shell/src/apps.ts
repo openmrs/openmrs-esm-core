@@ -187,7 +187,7 @@ export function finishRegisteringAllApps() {
     if (sort != 0) {
       return sort;
     }
-    return a.appName.localeCompare(b.appName);
+    return a.appName.localeCompare(b.appName, "en");
   });
 
   // Create a div for each page. This ensures their DOM order.
