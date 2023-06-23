@@ -54,11 +54,11 @@ Consider exporting the component and using it the normal way.
 
 ## Usage
 
-Extensions are defined in the `setupOpenMRS` function of a module, in an
+Extensions are defined in the `routes.json` file bundled with a module, in an
 `extensions` array. Each element of this array defines an extension, with
 a name and a load function. It may also specify the names of slots to
 attach the extension to by default. It may also specify
-[a number of other things](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/interfaces/ExtensionDefinition.md),
+[a number of other things](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/interfaces/ExtensionRegistration.md),
 some of which will be covered below.
 
 Slots are components. There is an [ExtensionSlot](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#extensionslot)
@@ -164,8 +164,8 @@ Dashboards render these widgets into a grid format. When a dashboard
 receives a widget, the widget informs the dashboard (which is a slot)
 how many grid columns it would like to take up. This happens using `meta`.
 
-Meta is provided by extensions in their definition in the `setupOpenMRS`
-function.
+Meta is provided by extensions in their definition in the `routes.json`
+file.
 
 Slots can access meta through the extension system API, such as by using
 [useExtensionSlotMeta](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-framework/docs/API.md#useextensionslotmeta).
