@@ -32,7 +32,7 @@ module.exports = (env) => ({
       },
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        use: "@swc-node/loader",
+        use: "swc-loader",
       },
       {
         test: /\.(woff|woff2|png)?$/,

@@ -23,7 +23,7 @@ module.exports = (env) => ({
       {
         test: /\.m?(js|ts|tsx)$/,
         exclude: /node_modules/,
-        use: "@swc-node/loader",
+        use: "swc-loader",
       },
       {
         test: /\.s?css$/,

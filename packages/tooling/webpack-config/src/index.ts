@@ -191,7 +191,7 @@ export default (
           {
             test: /\.m?(js|ts|tsx)$/,
             exclude: /node_modules(?![\/\\]@openmrs)/,
-            use: "@swc-node/loader",
+            use: "swc-loader",
           },
           scriptRuleConfig
         ),
