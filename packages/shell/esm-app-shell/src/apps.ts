@@ -182,22 +182,26 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
  * Each page is rendered into a div with an appropriate name.
  */
 export function finishRegisteringAllApps() {
-  pages.sort((a, b) => a.order - b.order);
+  pages.sort((a, b) => {
+    let sort = a.order - b.order;
+    if (sort != 0) {
+      return sort;
+    }
+    return a.appName.localeCompare(b.appName, "en");
+  });
 
   // Create a div for each page. This ensures their DOM order.
   // If we don't do this, Single-SPA 5 will create the DOM element only once
   // the page becomes active, which makes it impossible to guarantee order.
-
-  let index = 0;
-  let lastAppName: string | undefined = undefined;
-
+  let appIndices = new Map();
   for (let page of pages) {
-    if (page.appName !== lastAppName) {
-      index = 0;
-      lastAppName = page.appName;
+    if (!appIndices.has(page.appName)) {
+      appIndices.set(page.appName, 0);
     } else {
-      index++;
+      appIndices.set(page.appName, appIndices.get(page.appName) + 1);
     }
+    const index = appIndices.get(page.appName);
+
     const name = `${page.appName}-page-${index}`;
     const div = document.createElement("div");
     div.id = `single-spa-application:${name}`;

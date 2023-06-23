@@ -38,21 +38,19 @@ import { appName, getCoreExtensions } from "./ui";
 
 /**
  * Sets up the frontend modules (apps). Uses the defined export
- * from the root modules of the apps, which should export a
- * special function called "setupOpenMRS".
- * That function returns an object that is used to feed Single
- * SPA.
+ * from the root modules of the apps. This is done by reading the
+ * list of apps from the routes.registry.json file, which serves
+ * as the registry of all apps in the application.
  */
 async function setupApps() {
   const scriptTags = document.querySelectorAll<HTMLScriptElement>(
     "script[type='openmrs-routes']"
   );
 
-  const promises: Array<Promise<typeof window.installedModules>> = [];
+  const promises: Array<Promise<OpenmrsRoutes>> = [];
   for (let i = 0; i < scriptTags.length; i++) {
     promises.push(
       (async (scriptTag) => {
-        const modules: typeof window.installedModules = [];
         let routes: OpenmrsRoutes | undefined = undefined;
         try {
           if (scriptTag.textContent) {
@@ -68,22 +66,26 @@ async function setupApps() {
             e
           );
 
-          return [];
+          return {};
         }
 
-        if (typeof routes === "object") {
-          Object.entries(routes).forEach(([module, routes]) => {
-            modules.push([module, routes]);
-            registerApp(module, routes);
-          });
-        }
-
-        return Promise.resolve(modules);
+        return Promise.resolve(routes ?? {});
       })(scriptTags.item(i))
     );
   }
 
-  window.installedModules = (await Promise.all(promises)).flat();
+  const routes = (await Promise.all(promises)).reduce(
+    (accumulatedRoutes, routes) => ({ ...accumulatedRoutes, ...routes }),
+    {}
+  );
+
+  const modules: typeof window.installedModules = [];
+  Object.entries(routes).forEach(async ([module, routes]) => {
+    modules.push([module, routes]);
+    registerApp(module, routes);
+  });
+
+  window.installedModules = modules;
 }
 
 /**

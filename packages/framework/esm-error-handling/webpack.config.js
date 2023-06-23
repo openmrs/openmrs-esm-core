@@ -1,5 +1,4 @@
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const SystemJSPublicPathWebpackPlugin = require("systemjs-webpack-interop/SystemJSPublicPathWebpackPlugin");
 const { resolve } = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -10,8 +9,8 @@ module.exports = (env) => ({
   entry: [resolve(__dirname, "src/index.ts")],
   output: {
     filename: "openmrs-esm-error-handling.js",
-    libraryTarget: "system",
     path: resolve(__dirname, "dist"),
+    library: { type: "system" },
   },
   mode: "production",
   module: {
@@ -32,7 +31,6 @@ module.exports = (env) => ({
   },
   externals: Object.keys(peerDependencies || {}),
   plugins: [
-    new SystemJSPublicPathWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
     new CleanWebpackPlugin(),
     new BundleAnalyzerPlugin({
