@@ -313,7 +313,7 @@ supported, so the extension will not be loaded.`
     name,
     load: loader,
     meta: extension.meta || {},
-    order: extension.order || Number.MAX_SAFE_INTEGER,
+    order: extension.order,
     moduleName: appName,
     privileges: extension.privileges,
   });
