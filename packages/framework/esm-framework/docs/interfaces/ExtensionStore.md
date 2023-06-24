@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L66)
+[packages/framework/esm-extensions/src/store.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L67)
