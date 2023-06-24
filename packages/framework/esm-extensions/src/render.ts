@@ -1,5 +1,5 @@
 /** @module @category Extension */
-import { mountRootParcel, Parcel, ParcelConfig } from "single-spa";
+import { LifeCycles, mountRootParcel, Parcel, ParcelConfig } from "single-spa";
 import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
 import { checkStatus } from "./helpers";
 import { updateInternalExtensionStore } from "./store";
@@ -58,17 +58,23 @@ export async function renderExtension(
       });
 
       const { default: result, ...lifecycle } = await load();
-      parcel = mountRootParcel(renderFunction(result ?? lifecycle), {
-        ...additionalProps,
-        _meta: meta,
-        _extensionContext: {
-          extensionId,
-          extensionSlotName,
-          extensionSlotModuleName,
-          extensionModuleName: moduleName,
-        },
-        domElement,
-      });
+      parcel = mountRootParcel(
+        renderFunction({
+          ...(result ?? lifecycle),
+          name: `${extensionName} in ${extensionSlotName}`,
+        }),
+        {
+          ...additionalProps,
+          _meta: meta,
+          _extensionContext: {
+            extensionId,
+            extensionSlotName,
+            extensionSlotModuleName,
+            extensionModuleName: moduleName,
+          },
+          domElement,
+        }
+      );
     }
   } else {
     console.warn(

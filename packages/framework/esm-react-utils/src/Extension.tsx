@@ -41,7 +41,8 @@ export const Extension: React.FC<ExtensionProps> = ({
   const [domElement, setDomElement] = useState<HTMLDivElement>();
   const { extension } = useContext(ComponentContext);
   const parcel = useRef<Parcel | null>(null);
-  const updatePromise = useRef<Promise<null> | null>(null);
+  const updatePromise = useRef<Promise<void> | undefined>();
+  const rendering = useRef<boolean>(false);
 
   useEffect(() => {
     if (wrap) {
@@ -65,7 +66,15 @@ export const Extension: React.FC<ExtensionProps> = ({
   );
 
   useEffect(() => {
-    if (domElement != null && extension && !parcel.current) {
+    if (
+      domElement != null &&
+      extension?.extensionSlotName &&
+      extension.extensionSlotModuleName &&
+      extension.extensionSlotModuleName &&
+      !parcel.current &&
+      !rendering.current
+    ) {
+      rendering.current = true;
       renderExtension(
         domElement,
         extension.extensionSlotName,
@@ -75,6 +84,7 @@ export const Extension: React.FC<ExtensionProps> = ({
         state
       ).then((newParcel) => {
         parcel.current = newParcel;
+        rendering.current = false;
       });
 
       return () => {
@@ -115,19 +125,19 @@ export const Extension: React.FC<ExtensionProps> = ({
 
   useEffect(() => {
     if (parcel.current && parcel.current.update) {
-      if (parcel.current.getStatus() === "MOUNTED") {
-        parcel.current.update({ ...state });
-      } else if (parcel.current.getStatus() === "MOUNTING") {
-        parcel.current.mountPromise.then(() => {
-          if (parcel.current && parcel.current.update) {
+      Promise.all([parcel.current.mountPromise, updatePromise.current]).then(
+        () => {
+          if (parcel?.current?.update) {
             updatePromise.current = parcel.current.update({ ...state });
           }
-        });
-      }
+        }
+      );
     }
 
     return () => {
-      updatePromise.current = null;
+      Promise.resolve(updatePromise.current).then(() => {
+        updatePromise.current = undefined;
+      });
     };
   }, [state]);
 
