@@ -1,5 +1,4 @@
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const SystemJSPublicPathWebpackPlugin = require("systemjs-webpack-interop/SystemJSPublicPathWebpackPlugin");
 const { resolve } = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -11,7 +10,7 @@ module.exports = (env) => ({
   output: {
     filename: "openmrs-esm-extensions.js",
     path: resolve(__dirname, "dist"),
-    libraryTarget: "system",
+    library: { type: "system" },
   },
   devtool: "source-map",
   module: {
@@ -28,7 +27,6 @@ module.exports = (env) => ({
     modules: ["node_modules", resolve(__dirname, "node_modules")],
   },
   plugins: [
-    new SystemJSPublicPathWebpackPlugin(),
     new CleanWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
     new BundleAnalyzerPlugin({

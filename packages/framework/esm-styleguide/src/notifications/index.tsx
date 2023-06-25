@@ -34,11 +34,13 @@ export function renderInlineNotifications(target: HTMLElement | null) {
 }
 
 function isNotEmpty(description: React.ReactNode) {
-  return typeof description === "string"
-    ? description.trim().length > 0
-    : typeof description === "object"
-    ? !isEmpty(description)
-    : false;
+  if (typeof description === "string") {
+    return description.trim().length > 0;
+  } else if (typeof description === "object") {
+    return description instanceof Error || !isEmpty(description);
+  }
+
+  return false;
 }
 
 /**
@@ -47,6 +49,10 @@ function isNotEmpty(description: React.ReactNode) {
  */
 export function showNotification(notification: NotificationDescriptor) {
   if (notification && isNotEmpty(notification.description)) {
+    if (notification.description instanceof Error) {
+      notification.description = notification.description.toLocaleString();
+    }
+
     setTimeout(() => {
       // always use in subsequent cycle
       inlineNotificationsSubject.next({

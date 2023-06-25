@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.openmrs.org/routes.schema.json",
+  "pages": [
+    {
+      "component": "implementerTools",
+      "route": true
+    },
+    {
+      "component": "globalImplementerTools",
+      "route": true
+    }
+  ],
+  "extensions": [
+    {
+      "name": "implementer-tools-button",
+      "slot": "top-nav-actions-slot",
+      "component": "implementerToolsButton"
+    }
+  ]
+}

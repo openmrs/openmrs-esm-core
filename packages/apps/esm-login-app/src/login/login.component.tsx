@@ -17,6 +17,7 @@ import {
   refetchCurrentUser,
   clearCurrentUser,
   getSessionStore,
+  useConnectivity,
 } from "@openmrs/esm-framework";
 import { performLogin } from "../login.resource";
 import styles from "./login.scss";
@@ -32,12 +33,11 @@ export interface LoginReferrer {
   referrer?: string;
 }
 
-export interface LoginProps extends LoginReferrer {
-  isLoginEnabled: boolean;
-}
+export interface LoginProps extends LoginReferrer {}
 
-const Login: React.FC<LoginProps> = ({ isLoginEnabled }) => {
+const Login: React.FC<LoginProps> = () => {
   const config = useConfig();
+  const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
   const location = useLocation();

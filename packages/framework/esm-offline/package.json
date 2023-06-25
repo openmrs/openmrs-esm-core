@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-offline",
-  "version": "4.5.0",
+  "version": "5.0.2",
   "license": "MPL-2.0",
   "description": "Helper utilities for OpenMRS",
   "browser": "dist/openmrs-esm-offline.js",
@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
@@ -36,10 +37,10 @@
     "access": "public"
   },
   "devDependencies": {
-    "@openmrs/esm-api": "^4.5.0",
-    "@openmrs/esm-globals": "^4.5.0",
-    "@openmrs/esm-state": "^4.5.0",
-    "@openmrs/esm-styleguide": "^4.5.0",
+    "@openmrs/esm-api": "^5.0.2",
+    "@openmrs/esm-globals": "^5.0.2",
+    "@openmrs/esm-state": "^5.0.2",
+    "@openmrs/esm-styleguide": "^5.0.2",
     "@types/uuid": "^9.0.1",
     "rxjs": "^6.5.3"
   },

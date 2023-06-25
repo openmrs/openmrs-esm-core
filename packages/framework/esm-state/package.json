@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-state",
-  "version": "4.5.0",
+  "version": "5.0.2",
   "license": "MPL-2.0",
   "description": "Frontend stores & state management for OpenMRS",
   "browser": "dist/openmrs-esm-state.js",
@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"

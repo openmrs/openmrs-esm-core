@@ -9,9 +9,10 @@ const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
 const { basename, dirname, resolve } = require("path");
 const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
+const { readdirSync, statSync, readFileSync } = require("fs");
+
 const { name, version, dependencies } = require("./package.json");
 const sharedDependencies = require("./dependencies.json");
-const { readdirSync, statSync } = require("fs");
 const frameworkVersion = require("@openmrs/esm-framework/package.json").version;
 
 const timestamp = getTimestamp();
@@ -31,12 +32,15 @@ const openmrsProxyTarget =
 const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || "OpenMRS";
 const openmrsFavicon =
   process.env.OMRS_FAVICON || `${openmrsPublicPath}/favicon.ico`;
+const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsOffline = process.env.OMRS_OFFLINE !== "disable";
 const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || "en";
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
-const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || "";
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
+const openmrsRoutesDef = process.env.OMRS_ROUTES;
+const openmrsRoutesUrl =
+  process.env.OMRS_ROUTES_URL || `${openmrsPublicPath}/routes.registry.json`;
 const openmrsCoreApps =
   process.env.OMRS_ESM_CORE_APPS_DIR || resolve(__dirname, "../../apps");
 const openmrsConfigUrls = (process.env.OMRS_CONFIG_URLS || "")
@@ -69,6 +73,18 @@ function checkDirectoryExists(dirName) {
   }
   return false;
 }
+
+function checkFileExists(filename) {
+  if (filename) {
+    try {
+      return statSync(filename).isFile();
+    } catch {
+      return false;
+    }
+  }
+  return false;
+}
+
 function checkDirectoryHasContents(dirName) {
   if (checkDirectoryExists(dirName)) {
     const contents = readdirSync(dirName);
@@ -78,6 +94,11 @@ function checkDirectoryHasContents(dirName) {
   }
 }
 
+/**
+ * @param {*} env
+ * @param {*} argv
+ * @returns {import("webpack").Configuration}
+ */
 module.exports = (env, argv = {}) => {
   const mode = argv.mode || process.env.NODE_ENV || production;
   const outDir = mode === production ? "dist" : "lib";
@@ -87,6 +108,8 @@ module.exports = (env, argv = {}) => {
   const coreImportmap = {
     imports: {},
   };
+
+  const coreRoutes = {};
 
   if (!isProd && checkDirectoryExists(openmrsCoreApps)) {
     readdirSync(openmrsCoreApps).forEach((dir) => {
@@ -100,8 +123,13 @@ module.exports = (env, argv = {}) => {
               from: distDir,
               to: dir,
             });
+
             coreImportmap.imports[name] = `./${dir}/${basename(browser)}`;
-            console.info(`Serving built artifact for ${name} from ${distDir}`);
+
+            const routesFile = resolve(distDir, "routes.json");
+            if (checkFileExists(routesFile)) {
+              coreRoutes[name] = JSON.parse(readFileSync(routesFile));
+            }
           } else {
             console.warn(
               `Not serving ${name} because couldn't find ${distDir}`
@@ -131,20 +159,40 @@ module.exports = (env, argv = {}) => {
       historyApiFallback: {
         rewrites: [
           {
-            from: new RegExp(`^${openmrsPublicPath}/.*(?!\.(?!html?).+$)`),
+            from: new RegExp(`^${openmrsPublicPath}/.*(?!\.(?!html).+$)`),
             to: `${openmrsPublicPath}/index.html`,
           },
         ],
       },
       proxy: [
         {
-          context: [
-            `${openmrsApiUrl}/**`,
-            `${openmrsPublicPath}/**`,
-            `!${openmrsPublicPath}/index.html`,
-          ],
+          /**
+           * @param {String} path
+           */
+          context(path) {
+            if (!path) {
+              return false;
+            }
+
+            if (path.startsWith(openmrsPublicPath)) {
+              if (basename(path).indexOf(".") >= 0) {
+                return true;
+              } else {
+                return false;
+              }
+            }
+
+            if (path.startsWith(openmrsApiUrl)) {
+              return true;
+            }
+
+            return false;
+          },
           target: openmrsProxyTarget,
           changeOrigin: true,
+          /**
+           * @param {Request} proxyReq
+           */
           onProxyReq(proxyReq) {
             if (openmrsAddCookie) {
               const origCookie = proxyReq.getHeader("cookie");
@@ -152,12 +200,16 @@ module.exports = (env, argv = {}) => {
               proxyReq.setHeader("cookie", newCookie);
             }
           },
+          /**
+           * @param {Response} proxyRes
+           */
           onProxyRes(proxyRes) {
             proxyRes.headers &&
               delete proxyRes.headers["content-security-policy"];
           },
         },
       ],
+      static: ["src/assets"],
     },
     mode,
     devtool: isProd ? "hidden-nosources-source-map" : "eval-source-map",
@@ -188,7 +240,7 @@ module.exports = (env, argv = {}) => {
           test: /\.(j|t)sx?$/,
           use: [
             {
-              loader: require.resolve("swc-loader"),
+              loader: "swc-loader",
             },
           ],
         },
@@ -234,11 +286,14 @@ module.exports = (env, argv = {}) => {
           openmrsDefaultLocale,
           openmrsImportmapDef,
           openmrsImportmapUrl,
+          openmrsRoutesDef,
+          openmrsRoutesUrl,
           openmrsOffline,
           openmrsEnvironment,
           openmrsConfigUrls,
           openmrsCoreImportmap:
             appPatterns.length > 0 && JSON.stringify(coreImportmap),
+          openmrsCoreRoutes: coreRoutes && JSON.stringify(coreRoutes),
         },
       }),
       new CopyWebpackPlugin({
@@ -278,6 +333,7 @@ module.exports = (env, argv = {}) => {
             mode === production ? undefined : Number.MAX_SAFE_INTEGER,
           additionalManifestEntries: [
             { url: openmrsImportmapUrl, revision: null },
+            { url: openmrsRoutesUrl, revision: null },
           ],
         }),
     ].filter(Boolean),

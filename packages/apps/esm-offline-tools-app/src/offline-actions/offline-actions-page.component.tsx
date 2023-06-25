@@ -3,6 +3,7 @@ import {
   getOfflineSynchronizationStore,
   isDesktop,
   runSynchronization,
+  useConnectivity,
   useLayoutType,
   useStore,
 } from "@openmrs/esm-framework/src/internal";
@@ -14,14 +15,9 @@ import SharedPageLayout from "../components/shared-page-layout.component";
 import OfflineActions from "./offline-actions.component";
 import styles from "./offline-actions-page.styles.scss";
 
-export interface OfflineActionsPageProps {
-  canSynchronizeOfflineActions: boolean;
-}
-
-const OfflineActionsPage: React.FC<OfflineActionsPageProps> = ({
-  canSynchronizeOfflineActions,
-}) => {
+const OfflineActionsPage: React.FC = () => {
   const { t } = useTranslation();
+  const canSynchronizeOfflineActions = useConnectivity();
   const layout = useLayoutType();
   const syncStore = useStore(getOfflineSynchronizationStore());
   const { mutate: mutatePendingSyncItems } = usePendingSyncItems();

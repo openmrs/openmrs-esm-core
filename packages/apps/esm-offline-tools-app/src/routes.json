@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json.openmrs.org/routes.schema.json",
+  "backendDependencies": {
+    "webservices.rest": "^2.24.0"
+  },
+  "pages": [
+    {
+      "component": "offlineTools",
+      "route": "offline-tools",
+      "online": true,
+      "offline": true
+    }
+  ],
+  "extensions": [
+    {
+      "name": "offline-tools-link",
+      "slot": "app-menu-slot",
+      "component": "offlineToolsLink",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-nav-items",
+      "component": "offlineToolsNavItems",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-confirmation-modal",
+      "component": "offlineToolsConfirmationModal",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-dashboard-patients-card",
+      "slot": "offline-tools-dashboard-cards",
+      "component": "offlineToolsPatientsCard",
+      "online": true,
+      "offline": true,
+      "order": 0
+    },
+    {
+      "name": "offline-tools-dashboard-actions-card",
+      "slot": "offline-tools-dashboard-cards",
+      "component": "offlineToolsActionsCard",
+      "online": true,
+      "offline": true,
+      "order": 2
+    },
+    {
+      "name": "offline-tools-page-offline-patients-link",
+      "slot": "offline-tools-page-slot",
+      "component": "offlineToolsPatientsLink",
+      "meta": {
+        "name": "patients",
+        "slot": "offline-tools-page-offline-patients-slot"
+      },
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-page-offline-patients",
+      "slot": "offline-tools-page-offline-patients-slot",
+      "component": "offlineToolsPatients",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-page-actions",
+      "slot": "offline-tools-page-actions-slot",
+      "component": "offlineToolsPageActions",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-patient-chart-actions-widget",
+      "slot": "patient-chart-summary-dashboard-slot",
+      "component": "offlineToolsPatientChartActions",
+      "meta": {
+        "columnSpan": 4
+      },
+      "online": false,
+      "offline": true,
+      "order": 0
+    },
+    {
+      "name": "offline-tools-patient-chart-actions-dashboard",
+      "slot": "patient-chart-offline-actions-dashboard-slot",
+      "component": "offlineToolsPatientChartActionsDashboard",
+      "online": true,
+      "offline": true,
+      "order": 0
+    },
+    {
+      "name": "offline-tools-patient-chart-actions-dashboard-link",
+      "slot": "patient-chart-dashboard-slot",
+      "component": "offlineToolsPatientChartActionsDashboardLink",
+      "meta": {
+        "columns": 1,
+        "title": "Offline Actions"
+      },
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-opt-in-offline-mode-button",
+      "slot": "user-panel-slot",
+      "component": "offlineToolsOptInButton",
+      "online": true,
+      "offline": true,
+      "order": 1
+    }
+  ]
+}

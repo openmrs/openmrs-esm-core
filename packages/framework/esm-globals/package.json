@@ -1,12 +1,13 @@
 {
   "name": "@openmrs/esm-globals",
-  "version": "4.5.0",
+  "version": "5.0.2",
   "license": "MPL-2.0",
   "browser": "dist/openmrs-esm-globals.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"

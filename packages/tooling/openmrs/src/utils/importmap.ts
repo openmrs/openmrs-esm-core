@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from "fs";
 import { exec } from "child_process";
 import { logFail, logInfo, logWarn } from "./logger";
 import { startWebpack } from "./webpack";
-import { getMainBundle } from "./dependencies";
+import { getMainBundle, getAppRoutes } from "./dependencies";
 import axios from "axios";
 
 import glob = require("glob");
@@ -50,6 +50,11 @@ async function fetchRemoteImportmap(fetchUrl: string) {
 export interface ImportmapDeclaration {
   type: "inline" | "url";
   value: string;
+}
+
+export interface ImportmapAndRoutes {
+  importMap: ImportmapDeclaration;
+  routes: Record<string, unknown>;
 }
 
 export function checkImportmapJson(value: string) {
@@ -99,25 +104,30 @@ function runProjectWebpack(
   port: number,
   project: any,
   sourceDirectory: string,
-  importMap: Record<string, string>
+  importMap: Record<string, string>,
+  routes: Record<string, unknown>
 ) {
   const bundle = getMainBundle(project);
   const host = `http://localhost:${port}`;
 
   startWebpack(configPath, port, sourceDirectory);
   importMap[project.name] = `${host}/${bundle.name}`;
+  routes[project.name] = getAppRoutes(sourceDirectory, project);
 }
 
 export async function runProject(
   basePort: number,
-  sharedDependencies: Array<string>,
   sourceDirectoryPatterns: Array<string>
-): Promise<Record<string, string>> {
+): Promise<{
+  importMap: Record<string, string>;
+  routes: Record<string, unknown>;
+}> {
   const baseDir = process.cwd();
   const sourceDirectories = await matchAny(baseDir, sourceDirectoryPatterns);
   const importMap = {};
+  const routes = {};
 
-  logInfo("Loading dynamic import map ...");
+  logInfo("Loading dynamic import map and routes ...");
 
   for (let i = 0; i < sourceDirectories.length; i++) {
     const sourceDirectory = resolve(baseDir, sourceDirectories[i]);
@@ -158,19 +168,29 @@ export async function runProject(
         port,
         project,
         sourceDirectory,
-        importMap
+        importMap,
+        routes
       );
     } else {
       // run via specialized webpack.config.js
-      runProjectWebpack(configPath, port, project, sourceDirectory, importMap);
+      runProjectWebpack(
+        configPath,
+        port,
+        project,
+        sourceDirectory,
+        importMap,
+        routes
+      );
     }
   }
 
   logInfo(
-    `Assembled dynamic import map (${Object.keys(importMap).join(", ")}).`
+    `Assembled dynamic import map and routes for packages (${Object.keys(
+      importMap
+    ).join(", ")}).`
   );
 
-  return importMap;
+  return { importMap, routes };
 }
 
 /**
@@ -180,21 +200,33 @@ export async function runProject(
  *   there are new imports to add, and if the original import map declaration
  *   had type "url", it is downloaded and resolved to one of type "inline".
  */
-export async function mergeImportmap(
-  decl: ImportmapDeclaration,
-  additionalImports: Record<string, string> | false,
+export async function mergeImportmapAndRoutes(
+  importAndRoutes: ImportmapAndRoutes,
+  additionalImportsAndRoutes:
+    | { importMap: Record<string, string>; routes: Record<string, unknown> }
+    | false,
   backend?: string,
   spaPath?: string
-) {
+): Promise<ImportmapAndRoutes> {
+  const { importMap: importDecl, routes: routesDecl } = importAndRoutes;
+  const { importMap: additionalImports, routes: additionalRoutes } =
+    additionalImportsAndRoutes || {};
+
+  let mergedRoutes = routesDecl;
+
   if (additionalImports && Object.keys(additionalImports).length > 0) {
-    if (decl.type === "url") {
-      decl.type = "inline";
-      decl.value = await readImportmap(decl.value, backend, spaPath);
+    if (importDecl.type === "url") {
+      importDecl.type = "inline";
+      importDecl.value = await readImportmap(
+        importDecl.value,
+        backend,
+        spaPath
+      );
     }
 
-    const map = JSON.parse(decl.value);
+    const map = JSON.parse(importDecl.value);
 
-    decl.value = JSON.stringify({
+    importDecl.value = JSON.stringify({
       imports: {
         ...map.imports,
         ...additionalImports,
@@ -202,28 +234,35 @@ export async function mergeImportmap(
     });
   }
 
-  return decl;
+  if (additionalRoutes && Object.keys(additionalRoutes).length > 0) {
+    mergedRoutes = { ...routesDecl, ...additionalRoutes };
+  }
+
+  return { importMap: importDecl, routes: mergedRoutes };
 }
 
-export async function getImportmap(
-  value: string,
+export async function getImportmapAndRoutes(
+  importMapPath: string,
   basePort?: number
-): Promise<ImportmapDeclaration> {
-  if (value === "@" && basePort) {
+): Promise<ImportmapAndRoutes> {
+  if (importMapPath === "@" && basePort) {
     logWarn(
       'Using the "@" import map is deprecated. Switch to use the "--run-project" flag.'
     );
 
-    const imports = await runProject(basePort, [], ["."]);
+    const imports = await runProject(basePort, ["."]);
 
     return {
-      type: "inline",
-      value: JSON.stringify({
-        imports,
-      }),
+      importMap: {
+        type: "inline",
+        value: JSON.stringify({
+          imports,
+        }),
+      },
+      routes: {},
     };
-  } else if (!/https?:\/\//.test(value)) {
-    const path = resolve(process.cwd(), value);
+  } else if (!/https?:\/\//.test(importMapPath)) {
+    const path = resolve(process.cwd(), importMapPath);
 
     if (existsSync(path)) {
       const content = readFileSync(path, "utf8");
@@ -231,25 +270,34 @@ export async function getImportmap(
 
       if (!valid) {
         logWarn(
-          `The import map provided in "${value}" does not seem right. Skipping.`
+          `The import map provided in "${importMapPath}" does not seem right. Skipping.`
         );
       }
 
       return {
-        type: "inline",
-        value: valid ? content : "",
+        importMap: {
+          type: "inline",
+          value: valid ? content : "",
+        },
+        routes: {},
       };
-    } else if (checkImportmapJson(value)) {
+    } else if (checkImportmapJson(importMapPath)) {
       return {
-        type: "inline",
-        value,
+        importMap: {
+          type: "inline",
+          value: importMapPath,
+        },
+        routes: {},
       };
     }
   }
 
   return {
-    type: "url",
-    value,
+    importMap: {
+      type: "url",
+      value: importMapPath,
+    },
+    routes: {},
   };
 }
 
@@ -261,12 +309,13 @@ export async function getImportmap(
  * @returns The same import map declaration but with all imports from
  *   `backend` changed to import from `http://${host}:${port}`.
  */
-export function proxyImportmap(
-  decl: ImportmapDeclaration,
+export function proxyImportmapAndRoutes(
+  importmapAndRoutes: ImportmapAndRoutes,
   backend: string,
   host: string,
   port: number
 ) {
+  const { importMap: decl, routes } = importmapAndRoutes;
   if (decl.type != "inline") {
     throw new Error(
       "proxyImportMap called on non-inline import map. This is a programming error. Value: " +
@@ -281,5 +330,5 @@ export function proxyImportmap(
     }
   });
   decl.value = JSON.stringify(importmap);
-  return decl;
+  return { importmap: decl, routes };
 }

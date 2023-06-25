@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-styleguide",
-  "version": "4.5.0",
+  "version": "5.0.2",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "browser": "dist/openmrs-esm-styleguide.js",
@@ -11,6 +11,7 @@
     "start:storybook": "start-storybook --port 7000",
     "build:storybook": "build-storybook",
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "lint": "eslint src"
   },
@@ -44,17 +45,15 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-extensions": "4.x",
-    "@openmrs/esm-react-utils": "4.x",
-    "@openmrs/esm-state": "4.x",
+    "@openmrs/esm-framework": "4.x",
     "react": "18.x",
     "react-dom": "18.x",
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-extensions": "^4.5.0",
-    "@openmrs/esm-react-utils": "^4.5.0",
-    "@openmrs/esm-state": "^4.5.0",
+    "@openmrs/esm-extensions": "^5.0.2",
+    "@openmrs/esm-react-utils": "^5.0.2",
+    "@openmrs/esm-state": "^5.0.2",
     "autoprefixer": "^9.8.8",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "i18next": "^19.6.0",

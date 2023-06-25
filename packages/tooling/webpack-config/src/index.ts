@@ -39,12 +39,13 @@
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { resolve, dirname, basename } from "path";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 import { DefinePlugin, container } from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { StatsWriterPlugin } from "webpack-stats-plugin";
 // eslint-disable-next-line no-restricted-imports
 import { merge, mergeWith, isArray } from "lodash";
-import { postProcessFile } from "./optimize";
+import { existsSync, statSync } from "fs";
 import { inc } from "semver";
 
 const production = "production";
@@ -77,8 +78,12 @@ function mergeFunction(objValue: any, srcValue: any) {
   }
 }
 
-function slugify(name) {
+function slugify(name: string) {
   return name.replace(/[\/\-@]/g, "_");
+}
+
+function fileExistsSync(name: string) {
+  return existsSync(name) && statSync(name).isFile();
 }
 
 /**
@@ -149,6 +154,17 @@ export default (
   const srcFile = resolve(root, browser ? main : types);
   const ident = makeIdent(name);
   const frameworkVersion = getFrameworkVersion();
+  const routes = resolve(root, "src", "routes.json");
+  const hasRoutesDefined = fileExistsSync(routes);
+
+  if (!hasRoutesDefined) {
+    console.error(
+      "This app does not define a routes.json. This file is required for this app to be used by the OpenMRS 3 App Shell."
+    );
+    // key-smash error code
+    // so this (hopefully) doesn't interfere with Webpack-specific exit codes
+    process.exit(9819023573289);
+  }
 
   const cssLoader = {
     loader: "css-loader",
@@ -174,10 +190,8 @@ export default (
         merge(
           {
             test: /\.m?(js|ts|tsx)$/,
-            exclude: /(node_modules|bower_components)/,
-            use: {
-              loader: require.resolve("swc-loader"),
-            },
+            exclude: /node_modules(?![\/\\]@openmrs)/,
+            use: "swc-loader",
           },
           scriptRuleConfig
         ),
@@ -212,8 +226,7 @@ export default (
       ],
     },
     mode,
-    devtool:
-      mode === production ? "hidden-nosources-source-map" : "eval-source-map",
+    devtool: mode === production ? "hidden-nosources-source-map" : "source-map",
     devServer: {
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -239,10 +252,6 @@ export default (
         analyzerMode: env && env.analyze ? "server" : "disabled",
       }),
       new DefinePlugin({
-        __VERSION__:
-          mode === production
-            ? JSON.stringify(version)
-            : JSON.stringify(inc(version, "prerelease", "local")),
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new ModuleFederationPlugin({
@@ -268,6 +277,25 @@ export default (
           return obj;
         }, {}),
       }),
+      hasRoutesDefined &&
+        new CopyWebpackPlugin({
+          patterns: [
+            {
+              from: routes,
+              transform: {
+                transformer: (content) =>
+                  JSON.stringify(
+                    Object.assign({}, JSON.parse(content.toString()), {
+                      version:
+                        mode === production
+                          ? version
+                          : inc(version, "prerelease", "local"),
+                    })
+                  ),
+              },
+            },
+          ],
+        }),
       new StatsWriterPlugin({
         filename: `${filename}.buildmanifest.json`,
         stats: {
@@ -275,20 +303,9 @@ export default (
           chunks: true,
         },
       }),
-      {
-        apply(compiler) {
-          compiler.hooks.afterEmit.tap("PostProcessPlugin", (compilation) => {
-            if (mode === "production") {
-              // only post-optimize the bundle in production mode
-              const fn = resolve(root, outDir, filename);
-              postProcessFile(fn);
-            }
-          });
-        },
-      },
-    ],
+    ].filter(Boolean),
     resolve: {
-      extensions: [".tsx", ".ts", ".jsx", ".js", ".scss"],
+      extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".json"],
       alias: {
         "@openmrs/esm-framework": "@openmrs/esm-framework/src/internal",
       },

@@ -5,8 +5,8 @@ import rimraf from "rimraf";
 import axios from "axios";
 import npmRegistryFetch from "npm-registry-fetch";
 import pacote from "pacote";
-import { contentHash, logInfo, untar } from "../utils";
-import { createReadStream, existsSync } from "fs";
+import { contentHash, logInfo, logWarn, untar } from "../utils";
+import { createReadStream, existsSync, readFileSync } from "fs";
 import { getNpmRegistryConfiguration } from "../utils/npmConfig";
 
 /* eslint-disable no-console */
@@ -18,6 +18,7 @@ export interface AssembleArgs {
   registry?: string;
   hashImportmap: boolean;
   fresh: boolean;
+  buildRoutes: boolean;
   manifest: boolean;
 }
 
@@ -177,15 +178,17 @@ async function extractFiles(sourceFile: string, targetDir: string) {
   const fileName = basename(entryModule);
   const sourceDir = dirname(entryModule);
 
-  Object.keys(files)
-    .filter((m) => m.startsWith(`${packageRoot}/${sourceDir}`))
-    .forEach(async (m) => {
-      const content = files[m];
-      const fileName = m.replace(`${packageRoot}/${sourceDir}/`, "");
-      const targetFile = resolve(targetDir, fileName);
-      await mkdir(dirname(targetFile), { recursive: true });
-      await writeFile(targetFile, content);
-    });
+  await Promise.all(
+    Object.keys(files)
+      .filter((m) => m.startsWith(`${packageRoot}/${sourceDir}`))
+      .map(async (m) => {
+        const content = files[m];
+        const fileName = m.replace(`${packageRoot}/${sourceDir}/`, "");
+        const targetFile = resolve(targetDir, fileName);
+        await mkdir(dirname(targetFile), { recursive: true });
+        await writeFile(targetFile, content);
+      })
+  );
 
   await unlink(sourceFile);
   return [fileName, version];
@@ -198,9 +201,12 @@ export async function runAssemble(args: AssembleArgs) {
   const importmap = {
     imports: {},
   };
+
   const versionManifest = {
     frontendModules: {},
   };
+
+  const routes = {};
 
   logInfo(`Assembling the importmap ...`);
 
@@ -229,6 +235,24 @@ export async function runAssemble(args: AssembleArgs) {
         resolve(cacheDir, tgzFileName),
         resolve(args.target, dirName)
       );
+
+      const appRoutes = resolve(args.target, dirName, "routes.json");
+      if (existsSync(appRoutes)) {
+        try {
+          routes[esmName] = JSON.parse(readFileSync(appRoutes).toString());
+          routes[esmName]["version"] = version;
+        } catch (e) {
+          logWarn(
+            `Error while processing routes for ${esmName} using ${appRoutes}: ${e}`
+          );
+        }
+      } else {
+        logWarn(
+          `Routes file ${appRoutes} does not exist. We expect that routes file to be defined by ${esmName}. Note that this means that no pages or extensions for ${esmName} will be available.`
+        );
+        routes[esmName] = {};
+      }
+
       importmap.imports[esmName] = `${publicUrl}/${dirName}/${fileName}`;
       versionManifest.frontendModules[esmName] = version;
     })
@@ -242,6 +266,19 @@ export async function runAssemble(args: AssembleArgs) {
     JSON.stringify(importmap, undefined, 2),
     "utf8"
   );
+
+  if (args.buildRoutes) {
+    await writeFile(
+      resolve(
+        args.target,
+        `routes.registry${
+          args.hashImportmap ? "." + contentHash(routes) : ""
+        }.json`
+      ),
+      JSON.stringify(routes, undefined, 2),
+      "utf-8"
+    );
+  }
 
   if (args.manifest) {
     await writeFile(

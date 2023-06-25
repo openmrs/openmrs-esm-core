@@ -1,52 +1,31 @@
 import { getAsyncLifecycle } from "@openmrs/esm-framework";
 
-declare var __VERSION__: string;
-// __VERSION__ is replaced by Webpack with the version from package.json
-const version = __VERSION__;
-
-function setupOpenMRS() {
-  const moduleName = "@openmrs/esm-implementer-tools-app";
-  const options = {
-    featureName: "Implementer Tools",
-    moduleName,
-  };
-
-  return {
-    pages: [
-      {
-        route: () => true,
-        load: getAsyncLifecycle(
-          () => import("./implementer-tools.component"),
-          options
-        ),
-      },
-      {
-        route: () => true,
-        load: getAsyncLifecycle(
-          () => import("./global-implementer-tools.component"),
-          options
-        ),
-      },
-    ],
-    extensions: [
-      {
-        name: "implementer-tools-button",
-        slot: "top-nav-actions-slot",
-        load: getAsyncLifecycle(
-          () => import("./implementer-tools.button"),
-          options
-        ),
-      },
-    ],
-  };
-}
-
-const importTranslation = require.context(
+export const importTranslation = require.context(
   "../translations",
   false,
   /.json$/,
   "lazy"
 );
 
-export { setupOpenMRS, importTranslation, version };
+const moduleName = "@openmrs/esm-implementer-tools-app";
+const options = {
+  featureName: "Implementer Tools",
+  moduleName,
+};
+
+export const implementerTools = getAsyncLifecycle(
+  () => import("./implementer-tools.component"),
+  options
+);
+
+export const globalImplementerTools = getAsyncLifecycle(
+  () => import("./global-implementer-tools.component"),
+  options
+);
+
+export const implementerToolsButton = getAsyncLifecycle(
+  () => import("./implementer-tools.button"),
+  options
+);
+
 export { default as ConfigEditButton } from "./config-edit-button/config-edit-button.component";

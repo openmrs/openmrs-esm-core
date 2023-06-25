@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.openmrs.org/routes.schema.json",
+  "pages": [
+    {
+      "component": "devtools",
+      "route": true,
+      "online": true,
+      "offline": true
+    }
+  ]
+}

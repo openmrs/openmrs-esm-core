@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-api",
-  "version": "4.5.0",
+  "version": "5.0.2",
   "license": "MPL-2.0",
   "description": "The javascript module for interacting with the OpenMRS API",
   "browser": "dist/openmrs-esm-api.js",
@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
@@ -45,9 +46,10 @@
     "@openmrs/esm-offline": "4.x"
   },
   "devDependencies": {
-    "@openmrs/esm-config": "^4.5.0",
-    "@openmrs/esm-error-handling": "^4.5.0",
-    "@openmrs/esm-state": "^4.5.0",
-    "rxjs": "^6.5.3"
+    "@openmrs/esm-config": "^5.0.2",
+    "@openmrs/esm-error-handling": "^5.0.2",
+    "@openmrs/esm-state": "^5.0.2",
+    "rxjs": "^6.5.3",
+    "webpack": "^5.88.0"
   }
 }

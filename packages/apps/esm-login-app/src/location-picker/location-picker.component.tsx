@@ -14,6 +14,7 @@ import {
   navigate,
   setSessionLocation,
   useConfig,
+  useConnectivity,
   useSession,
 } from "@openmrs/esm-framework";
 import type { LoginReferrer } from "../login/login.component";
@@ -23,13 +24,11 @@ import styles from "./location-picker.scss";
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
   currentLocationUuid?: string;
-  isLoginEnabled: boolean;
 }
 
 const LocationPicker: React.FC<LocationPickerProps> = ({
   hideWelcomeMessage,
   currentLocationUuid,
-  isLoginEnabled,
 }) => {
   const { t } = useTranslation();
   const searchTimeout = 300;
@@ -39,6 +38,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   const config = useConfig();
   const { chooseLocation } = config;
   const userDefaultLoginLocation = "userDefaultLoginLocationKey";
+  const isLoginEnabled = useConnectivity();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchTerm, setSearchTerm] = useState(() => {
@@ -226,7 +226,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             ) : (
               <>
                 <div className={styles.locationResultsContainer}>
-                  {locations?.length && (
+                  {locations?.length > 0 ? (
                     <RadioButtonGroup
                       valueSelected={activeLocation}
                       orientation="vertical"
@@ -245,8 +245,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                         />
                       ))}
                     </RadioButtonGroup>
-                  )}
-                  {locations?.length === 0 && (
+                  ) : (
                     <div className={styles.emptyState}>
                       <p className={styles.locationNotFound}>
                         {t("noResultsToDisplay", "No results to display")}

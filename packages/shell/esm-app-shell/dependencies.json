@@ -7,5 +7,6 @@
   "react-i18next",
   "@openmrs/esm-framework",
   "@openmrs/esm-framework/src/internal",
-  "rxjs"
+  "rxjs",
+  "single-spa"
 ]

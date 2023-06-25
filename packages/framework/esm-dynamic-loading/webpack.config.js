@@ -10,14 +10,14 @@ module.exports = (env) => ({
   output: {
     filename: basename(browser),
     path: resolve(__dirname, "dist"),
-    libraryTarget: "system",
+    library: { type: "system" },
   },
   devtool: "source-map",
   module: {
     rules: [
       {
         test: /\.m?(js|ts|tsx)$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /node_modules/,
         use: "swc-loader",
       },
     ],

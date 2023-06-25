@@ -13,12 +13,12 @@ import {
 import { ResolvedDependenciesModule } from "./openmrs-backend-dependencies";
 import styles from "./backend-dependencies.styles.scss";
 
-export interface ModuleDiagnosticsProps {
-  frontendModules: Array<ResolvedDependenciesModule>;
+export interface BackendDependencies {
+  backendDependencies: Array<ResolvedDependenciesModule>;
 }
 
-export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
-  frontendModules,
+export const BackendDependencies: React.FC<BackendDependencies> = ({
+  backendDependencies,
 }) => {
   const { t } = useTranslation();
 
@@ -56,11 +56,11 @@ export const ModuleDiagnostics: React.FC<ModuleDiagnosticsProps> = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {frontendModules.map((esm) => (
+                {backendDependencies.map((esm) => (
                   <Fragment key={esm.name}>
                     <TableRow>
                       <TableCell>
-                        <strong>{esm.name}</strong>
+                        <span className={styles.moduleHeader}>{esm.name}</span>
                       </TableCell>
                       <TableCell></TableCell>
                       <TableCell></TableCell>
