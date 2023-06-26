@@ -2100,7 +2100,7 @@ ___
 
 ### importDynamic
 
-▸ **importDynamic**<`T`\>(`jsPackage`, `share?`): `Promise`<`T`\>
+▸ **importDynamic**<`T`\>(`jsPackage`, `share?`, `options?`): `Promise`<`T`\>
 
 Loads the named export from a named package. This might be used like:
 
@@ -2120,6 +2120,8 @@ const { someComponent } = importDynamic("@openmrs/esm-template-app")
 | :------ | :------ | :------ | :------ |
 | `jsPackage` | `string` | `undefined` | The package to load the export from |
 | `share` | `string` | `"./start"` | Indicates the name of the shared module; this is an advanced feature if the package you are loading   doesn't use the default OpenMRS shared module name "./start" |
+| `options?` | `Object` | `undefined` | - |
+| `options.importMap?` | [`ImportMap`](interfaces/ImportMap.md) | `undefined` |  |
 
 #### Returns
 

@@ -90,6 +90,7 @@ export const Extension: React.FC<ExtensionProps> = ({
       return () => {
         if (parcel && parcel.current) {
           const status = parcel.current.getStatus();
+          console.log(`Unmounting ${parcel.current}; status: ${status}`);
           switch (status) {
             case "MOUNTING":
               parcel.current.mountPromise.then(parcel.current.unmount);

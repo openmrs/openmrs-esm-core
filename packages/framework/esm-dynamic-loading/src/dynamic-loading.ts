@@ -1,7 +1,7 @@
 /** @module @category Dynamic Loading */
 "use strict";
 // hack to make the types defined in esm-globals available here
-import type {} from "@openmrs/esm-globals";
+import type { ImportMap } from "@openmrs/esm-globals";
 
 /**
  * @internal
@@ -28,38 +28,16 @@ export function slugify(name: string) {
  */
 export async function importDynamic<T = any>(
   jsPackage: string,
-  share: string = "./start"
+  share: string = "./start",
+  options?: { importMap?: ImportMap }
 ): Promise<T> {
-  if (typeof jsPackage !== "string" || jsPackage.trim().length === 0) {
-    const error =
-      "Attempted to call importDynamic() without supplying a package to load";
-    console.error(error);
-    throw new Error(error);
-  }
+  await preloadImport(jsPackage, options?.importMap);
 
   const jsPackageSlug = slugify(jsPackage);
 
-  if (!window[jsPackageSlug]) {
-    const importMap = await window.importMapOverrides.getCurrentPageMap();
-    if (!importMap.imports.hasOwnProperty(jsPackage)) {
-      const error = `Could not find the package ${jsPackage} defined in the current importmap`;
-      console.error(error);
-      throw new Error(error);
-    }
-
-    let url = importMap.imports[jsPackage];
-    if (url.startsWith("./")) {
-      url = window.spaBase + url.substring(1);
-    }
-
-    await new Promise((resolve, reject) => {
-      loadScript(url, resolve, reject);
-    });
-  }
-
   const container = window[jsPackageSlug] as unknown;
   if (!isFederatedModule(container)) {
-    const error = `The global variable ${jsPackageSlug}  does not refer to a federated module`;
+    const error = `The global variable ${jsPackageSlug} does not refer to a federated module`;
     console.error(error);
     throw new Error(error);
   }
@@ -76,6 +54,57 @@ export async function importDynamic<T = any>(
   }
 
   return module as unknown as T;
+}
+
+/**
+ * @internal
+ *
+ * This internal method is used to ensure that the script belonging
+ * to the given package is loaded and added to the head.
+ *
+ * @param jsPackage The package to load
+ * @param importMap The import map to use for loading this package.
+ *  The main reason for specifying this is to avoid needing to call
+ *  `getCurrentPageMap()` for every script when bulk loading.
+ */
+export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
+  if (typeof jsPackage !== "string" || jsPackage.trim().length === 0) {
+    const error =
+      "Attempted to call importDynamic() without supplying a package to load";
+    console.error(error);
+    throw new Error(error);
+  }
+
+  const jsPackageSlug = slugify(jsPackage);
+
+  if (!window[jsPackageSlug]) {
+    const activeImportMap = importMap ?? (await getCurrentImportMap());
+    if (!activeImportMap.imports.hasOwnProperty(jsPackage)) {
+      const error = `Could not find the package ${jsPackage} defined in the current importmap`;
+      console.error(error);
+      throw new Error(error);
+    }
+
+    let url = activeImportMap.imports[jsPackage];
+    if (url.startsWith("./")) {
+      url = window.spaBase + url.substring(1);
+    }
+
+    await new Promise((resolve, reject) => {
+      loadScript(url, resolve, reject);
+    });
+  }
+}
+
+/**
+ * @internal
+ *
+ * Used to load the current import map
+ *
+ * @returns The current page map
+ */
+export async function getCurrentImportMap() {
+  return window.importMapOverrides.getCurrentPageMap();
 }
 
 interface FederatedModule {
@@ -97,7 +126,7 @@ function isFederatedModule(a: unknown): a is FederatedModule {
 // internals to track script loading
 // basically, if we're already loading a script, we should wait until the script is loaded
 // we use a global to track this
-const OPENMRS_SCRIPT_LOADING = "__openmrs_script_loading";
+const OPENMRS_SCRIPT_LOADING = Symbol("__openmrs_script_loading");
 
 /**
  * Appends a `<script>` to the DOM with the given URL.
