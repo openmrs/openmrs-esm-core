@@ -66,6 +66,17 @@
       "offline": true
     },
     {
+      "name": "offline-tools-page-actions-link",
+      "slot": "offline-tools-page-actions-slot",
+      "component": "offlineToolsPatientsLink",
+      "meta": {
+        "name": "actions",
+        "slot": "offline-tools-page-actions-slot"
+      },
+      "online": true,
+      "offline": true
+    },
+    {
       "name": "offline-tools-page-actions",
       "slot": "offline-tools-page-actions-slot",
       "component": "offlineToolsPageActions",
@@ -86,7 +97,7 @@
     {
       "name": "offline-tools-patient-chart-actions-dashboard",
       "slot": "patient-chart-offline-actions-dashboard-slot",
-      "component": "offlineToolsPatientChartActionsDashboard",
+      "component": "offlineToolsPatientChartActions",
       "online": true,
       "offline": true,
       "order": 0
