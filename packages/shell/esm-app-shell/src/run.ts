@@ -27,6 +27,8 @@ import {
   openmrsFetch,
   interpolateUrl,
   OpenmrsRoutes,
+  getCurrentImportMap,
+  importDynamic,
 } from "@openmrs/esm-framework/src/internal";
 import {
   finishRegisteringAllApps,
@@ -35,6 +37,11 @@ import {
 } from "./apps";
 import { setupI18n } from "./locale";
 import { appName, getCoreExtensions } from "./ui";
+
+// @internal
+// used to track when the window.installedModules global is finalised
+// so we can pre-load all modules
+const REGISTRATION_PROMISES = Symbol("openmrs_registration_promises");
 
 /**
  * Sets up the frontend modules (apps). Uses the defined export
@@ -80,11 +87,14 @@ async function setupApps() {
   );
 
   const modules: typeof window.installedModules = [];
-  Object.entries(routes).forEach(async ([module, routes]) => {
-    modules.push([module, routes]);
-    registerApp(module, routes);
-  });
+  const registrationPromises = Object.entries(routes).map(
+    async ([module, routes]) => {
+      modules.push([module, routes]);
+      registerApp(module, routes);
+    }
+  );
 
+  window[REGISTRATION_PROMISES] = Promise.all(registrationPromises);
   window.installedModules = modules;
 }
 
@@ -123,6 +133,17 @@ function runShell() {
   return setupI18n()
     .catch((err) => console.error(`Failed to initialize translations`, err))
     .then(() => start());
+}
+
+async function preloadScripts() {
+  const [, importMap] = await Promise.all([
+    window[REGISTRATION_PROMISES],
+    getCurrentImportMap(),
+  ]);
+
+  window.installedModules.map(async ([module]) => {
+    importDynamic(module, undefined, { importMap });
+  });
 }
 
 function handleInitFailure(e: Error) {
@@ -360,5 +381,6 @@ export function run(configUrls: Array<string>, offline: boolean) {
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(() => (offline ? setupOffline() : undefined));
+    .then(offline ? setupOffline : undefined)
+    .then(preloadScripts);
 }
