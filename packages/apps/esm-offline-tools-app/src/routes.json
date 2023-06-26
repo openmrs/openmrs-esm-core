@@ -99,6 +99,7 @@
         "columns": 1,
         "title": "Offline Actions"
       },
+      "order": 12,
       "online": true,
       "offline": true
     },
