@@ -37,7 +37,7 @@ export async function importDynamic<T = any>(
 
   const container = window[jsPackageSlug] as unknown;
   if (!isFederatedModule(container)) {
-    const error = `The global variable ${jsPackageSlug}  does not refer to a federated module`;
+    const error = `The global variable ${jsPackageSlug} does not refer to a federated module`;
     console.error(error);
     throw new Error(error);
   }
