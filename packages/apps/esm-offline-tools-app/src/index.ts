@@ -89,7 +89,17 @@ export const offlineToolsPatientChartActionsDashboard = getAsyncLifecycle(
 );
 
 export const offlineToolsPatientChartActionsDashboardLink = getSyncLifecycle(
-  createDashboardLink(dashboardMeta),
+  createDashboardLink({
+    ...dashboardMeta,
+    // t('offline_actions_link', 'Offline Actions')
+    title: () =>
+      Promise.resolve(
+        window.i18next?.t("offline_actions_link", {
+          defaultValue: "Offline Actions",
+          ns: moduleName,
+        }) ?? "Offline Actions"
+      ),
+  }),
   options
 );
 
