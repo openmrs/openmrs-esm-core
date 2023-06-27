@@ -5,7 +5,7 @@ import {
   readFileSync,
   statSync,
 } from "fs";
-import { getImportmapAndRoutes, loadWebpackConfig, logInfo } from "../utils";
+import { getImportMap, loadWebpackConfig, logInfo } from "../utils";
 import { basename, join, parse, resolve } from "path";
 import type { webpack } from "webpack";
 
@@ -65,9 +65,7 @@ export async function runBuild(args: BuildArgs) {
     configUrls.push(basename(configPath));
   }
 
-  const { importMap } = await getImportmapAndRoutes(
-    buildConfig.importmap || args.importmap
-  );
+  const importMap = await getImportMap(buildConfig.importmap || args.importmap);
   // if we're supplying a URL importmap and the dist folder exists and the raw importmap file doesn't exist
   // we use the nearest thing. Basically, this is added to support the --hash-importmap assemble option.
   if (importMap.type === "url") {
