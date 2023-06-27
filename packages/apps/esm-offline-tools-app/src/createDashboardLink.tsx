@@ -1,15 +1,16 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import last from "lodash-es/last";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import { ConfigurableLink } from "@openmrs/esm-framework";
-import styles from "./dashboard-link.scss";
-
 interface DashboardLinkConfig {
-  title: string;
+  basePath?: string;
+  path: string;
+  title: string | (() => string | Promise<string>);
 }
 
-const DashboardLink: React.FC<{ basePath: string; title: string }> = ({
+const DashboardLink: React.FC<DashboardLinkConfig> = ({
   basePath,
+  path,
   title,
 }) => {
   const location = useLocation();
@@ -17,26 +18,44 @@ const DashboardLink: React.FC<{ basePath: string; title: string }> = ({
     () => decodeURIComponent(last(location.pathname.split("/"))),
     [location.pathname]
   );
+  const [resolvedTitle, setResolvedTitle] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (typeof title === "function") {
+      Promise.resolve(title())
+        .then((resolvedValue) => {
+          setResolvedTitle(resolvedValue);
+        })
+        .catch((e: Error) => {
+          throw e;
+        });
+    } else {
+      setResolvedTitle(title);
+    }
+  }, [title]);
 
   const activeClassName =
-    title === navLink ? "active-left-nav-link" : "non-active";
+    path === navLink ? "active-left-nav-link" : "non-active";
 
   return (
-    <div key={title} className={activeClassName}>
-      <ConfigurableLink
-        to={`${basePath}/${encodeURIComponent(title)}`}
-        className={"cds--side-nav__link " + styles.link}
-      >
-        {title}
-      </ConfigurableLink>
-    </div>
+    title &&
+    resolvedTitle && (
+      <div key={path} className={activeClassName}>
+        <ConfigurableLink
+          to={`${basePath}/${encodeURIComponent(path)}`}
+          className={`cds--side-nav__link ${activeClassName}`}
+        >
+          {resolvedTitle}
+        </ConfigurableLink>
+      </div>
+    )
   );
 };
 
 export const createDashboardLink = (db: DashboardLinkConfig) => {
   return ({ basePath }: { basePath: string }) => (
     <BrowserRouter>
-      <DashboardLink title={db.title} basePath={basePath} />
+      <DashboardLink basePath={basePath} path={db.path} title={db.title} />
     </BrowserRouter>
   );
 };
