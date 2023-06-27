@@ -27,6 +27,26 @@ async function readImportmap(path: string, backend?: string, spaPath?: string) {
   return '{"imports":{}}';
 }
 
+async function readRoutes(path: string, backend?: string, spaPath?: string) {
+  if (path.startsWith("http://") || path.startsWith("https://")) {
+    return fetchRemoteImportmap(path);
+  } else if (path === "routes.registry.json") {
+    if (backend && spaPath) {
+      try {
+        return await fetchRemoteRoutes(
+          `${backend}${spaPath}routes.registry.json`
+        );
+      } catch {}
+    }
+
+    return fetchRemoteRoutes(
+      "https://dev3.openmrs.org/openmrs/spa/routes.registry.json"
+    );
+  }
+
+  return "{}";
+}
+
 async function fetchRemoteImportmap(fetchUrl: string) {
   return await axios
     .get(fetchUrl)
@@ -47,20 +67,47 @@ async function fetchRemoteImportmap(fetchUrl: string) {
     .then((m) => JSON.stringify(m));
 }
 
+async function fetchRemoteRoutes(fetchUrl: string) {
+  return await axios
+    .get(fetchUrl)
+    .then((res) => res.data)
+    .then((m) => (typeof m === "string" ? JSON.parse(m) : m))
+    .then((m) => JSON.stringify(m));
+}
+
 export interface ImportmapDeclaration {
+  type: "inline" | "url";
+  value: string;
+}
+
+export interface RoutesDeclaration {
   type: "inline" | "url";
   value: string;
 }
 
 export interface ImportmapAndRoutes {
   importMap: ImportmapDeclaration;
-  routes: Record<string, unknown>;
+  routes: RoutesDeclaration;
 }
 
 export function checkImportmapJson(value: string) {
   try {
     const content = JSON.parse(value);
     return typeof content === "object" && typeof content.imports === "object";
+  } catch {
+    return false;
+  }
+}
+
+export function checkRoutesJson(value: string) {
+  try {
+    const content = JSON.parse(value);
+    return (
+      typeof content === "object" &&
+      Object.entries(content).every(
+        ([key, value]) => typeof key === "string" && typeof value === "object"
+      )
+    );
   } catch {
     return false;
   }
@@ -212,8 +259,6 @@ export async function mergeImportmapAndRoutes(
   const { importMap: additionalImports, routes: additionalRoutes } =
     additionalImportsAndRoutes || {};
 
-  let mergedRoutes = routesDecl;
-
   if (additionalImports && Object.keys(additionalImports).length > 0) {
     if (importDecl.type === "url") {
       importDecl.type = "inline";
@@ -235,16 +280,39 @@ export async function mergeImportmapAndRoutes(
   }
 
   if (additionalRoutes && Object.keys(additionalRoutes).length > 0) {
-    mergedRoutes = { ...routesDecl, ...additionalRoutes };
+    if (routesDecl.type === "url") {
+      routesDecl.type = "inline";
+      routesDecl.value = await readRoutes(routesDecl.value, backend, spaPath);
+    }
+
+    const routes = JSON.parse(routesDecl.value);
+
+    routesDecl.value = JSON.stringify({
+      ...routes,
+      ...additionalRoutes,
+    });
   }
 
-  return { importMap: importDecl, routes: mergedRoutes };
+  return { importMap: importDecl, routes: routesDecl };
 }
 
 export async function getImportmapAndRoutes(
   importMapPath: string,
+  routesPath: string,
   basePort?: number
 ): Promise<ImportmapAndRoutes> {
+  return Promise.all([
+    getImportMap(importMapPath, basePort),
+    getRoutes(routesPath),
+  ]).then(([importMap, routes]) => {
+    return { importMap, routes };
+  });
+}
+
+export async function getImportMap(
+  importMapPath: string,
+  basePort?: number
+): Promise<ImportmapAndRoutes["importMap"]> {
   if (importMapPath === "@" && basePort) {
     logWarn(
       'Using the "@" import map is deprecated. Switch to use the "--run-project" flag.'
@@ -253,13 +321,10 @@ export async function getImportmapAndRoutes(
     const imports = await runProject(basePort, ["."]);
 
     return {
-      importMap: {
-        type: "inline",
-        value: JSON.stringify({
-          imports,
-        }),
-      },
-      routes: {},
+      type: "inline",
+      value: JSON.stringify({
+        imports,
+      }),
     };
   } else if (!/https?:\/\//.test(importMapPath)) {
     const path = resolve(process.cwd(), importMapPath);
@@ -275,29 +340,54 @@ export async function getImportmapAndRoutes(
       }
 
       return {
-        importMap: {
-          type: "inline",
-          value: valid ? content : "",
-        },
-        routes: {},
+        type: "inline",
+        value: valid ? content : "",
       };
     } else if (checkImportmapJson(importMapPath)) {
       return {
-        importMap: {
-          type: "inline",
-          value: importMapPath,
-        },
-        routes: {},
+        type: "inline",
+        value: importMapPath,
       };
     }
   }
 
   return {
-    importMap: {
-      type: "url",
-      value: importMapPath,
-    },
-    routes: {},
+    type: "url",
+    value: importMapPath,
+  };
+}
+
+export async function getRoutes(
+  routesPath: string
+): Promise<ImportmapAndRoutes["routes"]> {
+  if (!/https?:\/\//.test(routesPath)) {
+    const path = resolve(process.cwd(), routesPath);
+
+    if (existsSync(path)) {
+      const content = readFileSync(path, "utf8");
+      const valid = checkRoutesJson(content);
+
+      if (!valid) {
+        logWarn(
+          `The routes provided provided in "${routesPath}" does not seem right. Skipping.`
+        );
+      }
+
+      return {
+        type: "inline",
+        value: valid ? content : "",
+      };
+    } else if (checkRoutesJson(routesPath)) {
+      return {
+        type: "inline",
+        value: routesPath,
+      };
+    }
+  }
+
+  return {
+    type: "url",
+    value: routesPath,
   };
 }
 
@@ -315,20 +405,31 @@ export function proxyImportmapAndRoutes(
   host: string,
   port: number
 ) {
-  const { importMap: decl, routes } = importmapAndRoutes;
-  if (decl.type != "inline") {
+  const { importMap: importMapDecl, routes: routesDecl } = importmapAndRoutes;
+  if (importMapDecl.type != "inline") {
     throw new Error(
-      "proxyImportMap called on non-inline import map. This is a programming error. Value: " +
-        decl.value
+      "proxyImportmapAndRoutes called on non-inline import map. This is a programming error. Value: " +
+        importMapDecl.value
     );
   }
-  const importmap = JSON.parse(decl.value);
+
+  if (routesDecl.type != "inline") {
+    throw new Error(
+      "proxyImportmapAndRoutes called on non-inline routes. This is a programming error. Value: " +
+        routesDecl.value
+    );
+  }
+
+  const importmap = JSON.parse(importMapDecl.value);
   Object.keys(importmap.imports).forEach((key) => {
     const url = importmap.imports[key];
     if (url.startsWith(backend)) {
       importmap.imports[key] = url.replace(backend, `http://${host}:${port}`);
     }
   });
-  decl.value = JSON.stringify(importmap);
-  return { importmap: decl, routes };
+  importMapDecl.value = JSON.stringify(importmap);
+
+  const routes: Record<string, unknown> = JSON.parse(routesDecl.value);
+
+  return { importmap: importMapDecl, routes };
 }

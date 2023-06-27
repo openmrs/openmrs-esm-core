@@ -100,14 +100,17 @@ yargs.command(
       .describe(
         "importmap",
         "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
-      ),
+      )
+      .string("routes")
+      .default("routes", "routes.registry.json")
+      .describe("routes", "The routes.registry.json file to use."),
   async (args) =>
     runCommand("runDebug", {
       configUrls: args["config-url"],
       ...args,
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
-          await getImportmapAndRoutes(args.importmap, args.port),
+          await getImportmapAndRoutes(args.importmap, args.routes, args.port),
           (args["run-project"] || (args.runProject as boolean)) &&
             (await runProject(args.port, args.sources))
         ),
@@ -170,14 +173,17 @@ yargs.command(
       .describe(
         "importmap",
         "The import map to use. Can be a path to a valid import map to be taken literally, an URL, or a fixed JSON object."
-      ),
+      )
+      .string("routes")
+      .default("routes", "routes.registry.json")
+      .describe("routes", "The routes.registry.json file to use."),
   async (args) =>
     runCommand("runDevelop", {
       configUrls: args["config-url"],
       ...args,
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(
-          await getImportmapAndRoutes(args.importmap, args.port),
+          await getImportmapAndRoutes(args.importmap, args.routes, args.port),
           (args.sources[0] as string | boolean) !== false &&
             (await runProject(args.port, args.sources)),
           args.backend,
