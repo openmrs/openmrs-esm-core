@@ -3,10 +3,10 @@
   "backendModules": "Modulos backend",
   "clearConfig": "Borrar config",
   "configuration": "Configuración",
-  "devConfig": "Valores defectos experimentales",
   "downloadConfig": "Descargar config",
   "edit": "Editar",
   "editValueButtonText": "Editar",
+  "frontendModules": "Frontend Modules",
   "installedVersion": "Versión instalada",
   "itemDescriptionSourceDefaultText": "El valor coriente es lo predeterminado.",
   "jsonEditor": "Editar como JSON",
@@ -15,6 +15,7 @@
   "requiredVersion": "Versión requerida",
   "resetToDefaultValueButtonText": "Volver al valor predeterminado",
   "uiEditor": "Editór visual",
+  "unknownVersion": "unknown",
   "value": "Valor",
   "view": "Vista"
 }

@@ -1,12 +1,21 @@
 {
-  "login": "Iniciar sesión",
-  "password": "Contraseña",
-  "username": "Nombre de usuario",
+  "back": "Back",
+  "change": "Change",
+  "confirm": "confirmar",
   "continue": "Seguir",
+  "error": "Error",
   "invalidCredentials": "Nombre de usuario o contraseña incorrecta",
-  "welcome": "Bienvenido",
-  "match": "partido",
-  "selectYourLocation": "Seleccione su ubicación de la lista a continuación. Utilice la barra de búsqueda para buscar su ubicación.",
+  "loading": "Loading",
+  "loggingIn": "Logging in",
+  "login": "Iniciar sesión",
+  "Logout": "Logout",
+  "noResultsToDisplay": "No results to display",
+  "password": "Contraseña",
+  "poweredBy": "Powered by",
   "searchForLocation": "Busque una ubicación.",
-  "confirm": "confirmar"
+  "selectYourLocation": "Seleccione su ubicación de la lista a continuación. Utilice la barra de búsqueda para buscar su ubicación.",
+  "submitting": "Submitting",
+  "username": "Nombre de usuario",
+  "validValueRequired": "A valid value is required",
+  "welcome": "Bienvenido"
 }
