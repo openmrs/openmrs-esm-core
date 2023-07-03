@@ -80,7 +80,7 @@ export default function CustomDatePicker({
             : null
         }
         onChange={(e) => {
-          onDateChange([e]);
+          handelChange([onDateChange([e])]);
         }}
       ></DatePicker>
     </Provider>
