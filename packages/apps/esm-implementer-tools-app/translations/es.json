@@ -6,6 +6,7 @@
   "downloadConfig": "Descargar config",
   "edit": "Editar",
   "editValueButtonText": "Editar",
+  "extensions": "Extensions",
   "frontendModules": "Frontend Modules",
   "installedVersion": "Versión instalada",
   "itemDescriptionSourceDefaultText": "El valor coriente es lo predeterminado.",

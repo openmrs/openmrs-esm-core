@@ -8,6 +8,8 @@ export interface CancelLoading {
   (): void;
 }
 
+let parcelCount = 0;
+
 /**
  * Mounts into a DOM node (representing an extension slot)
  * a lazy-loaded component from *any* frontend module
@@ -58,10 +60,11 @@ export async function renderExtension(
       });
 
       const { default: result, ...lifecycle } = await load();
+      const id = parcelCount++;
       parcel = mountRootParcel(
         renderFunction({
           ...(result ?? lifecycle),
-          name: `${extensionName} in ${extensionSlotName}`,
+          name: `${extensionSlotName}/${extensionName}-${id}`,
         }),
         {
           ...additionalProps,
