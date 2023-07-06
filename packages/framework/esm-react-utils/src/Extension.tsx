@@ -92,7 +92,11 @@ export const Extension: React.FC<ExtensionProps> = ({
           const status = parcel.current.getStatus();
           switch (status) {
             case "MOUNTING":
-              parcel.current.mountPromise.then(parcel.current.unmount);
+              parcel.current.mountPromise.then(() => {
+                if (parcel.current?.getStatus() === "MOUNTED") {
+                  parcel.current.unmount();
+                }
+              });
               break;
             case "MOUNTED":
               parcel.current.unmount();
@@ -100,10 +104,7 @@ export const Extension: React.FC<ExtensionProps> = ({
             case "UPDATING":
               if (updatePromise.current) {
                 updatePromise.current.then(() => {
-                  if (
-                    parcel.current &&
-                    parcel.current.getStatus() === "MOUNTED"
-                  ) {
+                  if (parcel.current?.getStatus() === "MOUNTED") {
                     parcel.current.unmount();
                   }
                 });
@@ -124,21 +125,22 @@ export const Extension: React.FC<ExtensionProps> = ({
   ]);
 
   useEffect(() => {
-    if (parcel.current && parcel.current.update) {
+    if (
+      parcel.current &&
+      parcel.current.update &&
+      parcel.current.getStatus() !== "UNMOUNTING"
+    ) {
       Promise.all([parcel.current.mountPromise, updatePromise.current]).then(
         () => {
-          if (parcel?.current?.update) {
+          if (
+            parcel?.current?.getStatus() === "MOUNTED" &&
+            parcel.current.update
+          ) {
             updatePromise.current = parcel.current.update({ ...state });
           }
         }
       );
     }
-
-    return () => {
-      Promise.resolve(updatePromise.current).then(() => {
-        updatePromise.current = undefined;
-      });
-    };
   }, [state]);
 
   // The extension is rendered into the `<div>`. The `<div>` has relative
