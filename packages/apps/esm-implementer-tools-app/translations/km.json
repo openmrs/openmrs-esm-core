@@ -6,6 +6,7 @@
   "downloadConfig": "Download Config",
   "edit": "Edit",
   "editValueButtonText": "Edit",
+  "extensions": "Extensions",
   "frontendModules": "Frontend Modules",
   "installedVersion": "Installed Version",
   "itemDescriptionSourceDefaultText": "The current value is the default.",
