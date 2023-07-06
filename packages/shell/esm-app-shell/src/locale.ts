@@ -42,6 +42,23 @@ export function setupI18n() {
           callback(Error("can't handle translation namespace"), null);
         } else if (namespace === undefined || language === undefined) {
           callback(Error(), null);
+        } else if (namespace === "@openmrs/esm-app-shell") {
+          // currently, we don't have translations in the app shell
+          getConfigInternal(namespace)
+            .then((config) => {
+              let translations = {};
+              if (config && "Translation overrides" in config) {
+                const overrides = config["Translation overrides"];
+                if (language in overrides) {
+                  translations = overrides[language];
+                }
+              }
+
+              callback(null, translations);
+            })
+            .catch((err: Error) => {
+              callback(err, null);
+            });
         } else {
           importDynamic(namespace)
             .then((module) =>
