@@ -113,11 +113,26 @@ export function getSessionStore() {
   return sessionStore;
 }
 
+// NB locale is string only if this returns true
+function isValidLocale(locale: unknown): locale is string {
+  if (locale === undefined || typeof locale !== "string") {
+    return false;
+  }
+
+  try {
+    new Intl.Locale(locale);
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+}
+
 function setUserLanguage(data: Session) {
   const locale = data?.user?.userProperties?.defaultLocale ?? data.locale;
   const htmlLang = document.documentElement.getAttribute("lang");
 
-  if (locale !== htmlLang) {
+  if (isValidLocale(locale) && locale !== htmlLang) {
     document.documentElement.setAttribute("lang", locale);
   }
 }
