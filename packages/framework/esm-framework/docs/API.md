@@ -2386,7 +2386,7 @@ that registered an extension component for this slot.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/render.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L18)
+[packages/framework/esm-extensions/src/render.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/render.ts#L16)
 
 ___
 
