@@ -263,7 +263,7 @@ export async function runAssemble(args: AssembleArgs) {
       args.target,
       `importmap${args.hashImportmap ? "." + contentHash(importmap) : ""}.json`
     ),
-    JSON.stringify(importmap, undefined, 2),
+    JSON.stringify(importmap),
     "utf8"
   );
 
@@ -275,7 +275,7 @@ export async function runAssemble(args: AssembleArgs) {
           args.hashImportmap ? "." + contentHash(routes) : ""
         }.json`
       ),
-      JSON.stringify(routes, undefined, 2),
+      JSON.stringify(routes),
       "utf-8"
     );
   }
@@ -283,7 +283,7 @@ export async function runAssemble(args: AssembleArgs) {
   if (args.manifest) {
     await writeFile(
       resolve(args.target, "spa-module-versions.json"),
-      JSON.stringify(versionManifest, undefined, 2),
+      JSON.stringify(versionManifest),
       "utf8"
     );
   }
