@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
-import _i18n from "i18next";
 import { I18nextProvider } from "react-i18next";
+import type {} from "@openmrs/esm-globals";
 import {
   ComponentConfig,
   ComponentContext,
   ExtensionData,
 } from "./ComponentContext";
 
-const i18n = (_i18n as any).default || _i18n;
+let i18n: typeof window.i18next = window.i18next;
 
 const defaultOpts = {
   strictMode: true,
@@ -33,7 +33,8 @@ const I18nextLoadNamespace: React.FC<I18nextLoadNamespaceProps> = (props) => {
     throw loadNamespaceErrRef.current;
   }
 
-  if (!i18n.hasLoadedNamespace(props.ns)) {
+  // FIXME hasLoadedNamespace() is part of the API but not the current types
+  if (!(i18n as any).hasLoadedNamespace(props.ns)) {
     const timeoutId = setTimeout(() => {
       console.warn(
         `openmrsComponentDecorator: the React suspense promise for i18next.loadNamespaces(['${props.ns}']) did not resolve nor reject after three seconds. This could mean you have multiple versions of i18next and haven't made i18next a webpack external in all projects.`
@@ -70,6 +71,10 @@ export interface OpenmrsReactComponentState {
 }
 
 export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
+  if (typeof i18n === "undefined" && typeof window.i18next !== "undefined") {
+    i18n = window.i18next;
+  }
+
   if (
     typeof userOpts !== "object" ||
     typeof userOpts.featureName !== "string" ||
