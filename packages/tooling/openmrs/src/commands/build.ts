@@ -72,7 +72,7 @@ export async function runBuild(args: BuildArgs) {
     if (
       !/^https?:\/\//.test(importMap.value) &&
       existsSync(args.target) &&
-      !existsSync(resolve(args.target, importMap.value))
+      !existsSync(resolve(args.target, basename(importMap.value)))
     ) {
       const { name: fileName, ext: extension } = parse(importMap.value);
       const paths = readdirSync(args.target).filter(
@@ -81,8 +81,9 @@ export async function runBuild(args: BuildArgs) {
           entry.endsWith(extension) &&
           statSync(resolve(args.target, entry)).isFile()
       );
+
       if (paths) {
-        importMap.value = paths[0];
+        importMap.value = importMap.value.replace(/importmap\.json/i, paths[0]);
       }
     }
   }
