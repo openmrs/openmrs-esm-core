@@ -55,25 +55,27 @@ export function useLoginLocations(
       return null;
     }
 
-    let url = `${fhirBaseUrl}/Location?_summary=data`;
+    let url = `${fhirBaseUrl}/Location?`;
+    let urlSearchParameters = new URLSearchParams();
+    urlSearchParameters.append("_summary", "data");
 
     if (count) {
-      url += `&_count=${count}`;
+      urlSearchParameters.append("_count", "" + count);
     }
 
     if (page) {
-      url += `&_getpagesoffset=${page * count}`;
+      urlSearchParameters.append("_getpagesoffset", "" + page * count);
     }
 
     if (useLoginLocationTag) {
-      url += "&_tag=login location";
+      urlSearchParameters.append("_tag", "Login Location");
     }
 
     if (typeof searchQuery === "string" && searchQuery != "") {
-      url += `&name:contains=${searchQuery}`;
+      urlSearchParameters.append("name:contains", searchQuery);
     }
 
-    return url;
+    return url + urlSearchParameters.toString();
   }
 
   const { data, isLoading, isValidating, setSize, error } = useSwrInfinite<
