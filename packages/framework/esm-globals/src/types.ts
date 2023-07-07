@@ -1,4 +1,5 @@
 import type { Application } from "single-spa";
+import type { i18n } from "i18next";
 
 declare global {
   const __webpack_share_scopes__: Record<
@@ -54,6 +55,10 @@ declare global {
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
      */
     installedModules: Array<[string, OpenmrsAppRoutes]>;
+    /**
+     * The i18next instance for the app.
+     */
+    i18next: i18n;
   }
 }
 
