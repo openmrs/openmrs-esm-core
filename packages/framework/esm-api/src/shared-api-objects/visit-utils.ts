@@ -8,6 +8,7 @@ import {
   UpdateVisitPayload,
   Visit,
 } from "../types";
+import { getGlobalStore } from "@openmrs/esm-state";
 
 export const defaultVisitCustomRepresentation =
   "custom:(uuid,encounters:(uuid,encounterDatetime," +
@@ -17,6 +18,41 @@ export const defaultVisitCustomRepresentation =
   "visitType:(uuid,name,display)," +
   "attributes:(uuid,display,attributeType:(name,datatypeClassname,uuid),value)," +
   "location:(uuid,name,display),startDatetime,stopDatetime)";
+
+export interface VisitStoreState {
+  patientUuid: string | null;
+  manuallySetVisitUuid: string | null;
+}
+
+const initialState = getVisitLocalStorage() || {
+  patientUuid: null,
+  manuallySetVisitUuid: null,
+};
+export function getVisitStore() {
+  return getGlobalStore<VisitStoreState>("visit", initialState);
+}
+
+export function setCurrentVisit(patientUuid: string, visitUuid: string) {
+  getVisitStore().setState({ patientUuid, manuallySetVisitUuid: visitUuid });
+}
+
+getVisitStore().subscribe((state) => {
+  setVisitLocalStorage(state);
+});
+
+function setVisitLocalStorage(value: VisitStoreState) {
+  localStorage.setItem("openmrs:visitStoreState", JSON.stringify(value));
+}
+
+function getVisitLocalStorage(): VisitStoreState | null {
+  try {
+    return JSON.parse(
+      localStorage.getItem("openmrs:visitStoreState") || "null"
+    );
+  } catch (e) {
+    return null;
+  }
+}
 
 export function getVisitsForPatient(
   patientUuid: string,
@@ -72,6 +108,7 @@ export function updateVisit(
   });
 }
 
+/** @deprecated */
 export const getStartedVisit = new BehaviorSubject<VisitItem | null>(null);
 
 export interface VisitItem {

@@ -67,6 +67,8 @@ export const mockSessionStore = createGlobalStore<SessionStore>(
 
 export const getSessionStore = jest.fn(() => mockSessionStore);
 
+export const setCurrentVisit = jest.fn();
+
 export const newWorkspaceItem = jest.fn();
 
 export const fhirBaseUrl = "/ws/fhir2/R4";

@@ -1,6 +1,7 @@
 /** @module @category API */
 import {
   defaultVisitCustomRepresentation,
+  getVisitStore,
   openmrsFetch,
   Visit,
 } from "@openmrs/esm-api";
@@ -8,14 +9,16 @@ import useSWR from "swr";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 import { useMemo } from "react";
+import { useStore } from "./useStore";
 
 dayjs.extend(isToday);
 
-interface VisitReturnType {
+export interface VisitReturnType {
   error: Error;
   mutate: () => void;
   isValidating: boolean;
   currentVisit: Visit | null;
+  isRetrospective: boolean;
   isLoading: boolean;
 }
 
@@ -27,19 +30,31 @@ interface VisitReturnType {
  * @returns Object {`error` `isValidating`, `currentVisit`, `mutate`}
  */
 export function useVisit(patientUuid: string): VisitReturnType {
+  const { patientUuid: visitStorePatientUuid, manuallySetVisitUuid } = useStore(
+    getVisitStore()
+  );
+  // Ignore the visit store data if it is not for this patient
+  const retrospectiveVisitUuid =
+    patientUuid && visitStorePatientUuid == patientUuid
+      ? manuallySetVisitUuid
+      : null;
+  const visitGetUrlSuffix = retrospectiveVisitUuid
+    ? `/${retrospectiveVisitUuid}`
+    : `?patient=${patientUuid}&v=${defaultVisitCustomRepresentation}&includeInactive=false`;
   const { data, error, mutate, isValidating } = useSWR<{
-    data: { results: Array<Visit> };
+    data: Visit | { results: Array<Visit> };
   }>(
-    patientUuid
-      ? `/ws/rest/v1/visit?patient=${patientUuid}&v=${defaultVisitCustomRepresentation}&includeInactive=false`
-      : null,
+    patientUuid ? `/ws/rest/v1/visit${visitGetUrlSuffix}` : null,
     openmrsFetch
   );
 
   const currentVisit = useMemo(
     () =>
-      data?.data.results.find((visit) => visit.stopDatetime === null) ?? null,
-    [data?.data.results]
+      retrospectiveVisitUuid
+        ? data?.data
+        : data?.data.results.find((visit) => visit.stopDatetime === null) ??
+          null,
+    [data]
   );
 
   return {
@@ -47,6 +62,7 @@ export function useVisit(patientUuid: string): VisitReturnType {
     mutate,
     isValidating,
     currentVisit,
+    isRetrospective: Boolean(retrospectiveVisitUuid),
     isLoading: !data && !error,
   };
 }
