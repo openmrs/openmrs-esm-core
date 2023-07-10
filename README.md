@@ -79,9 +79,7 @@ Verification of the existing packages can also be done in one step using `yarn`:
 yarn verify
 ```
 
-### Running
-
-#### The app shell and the framework
+### Running the app shell and the framework
 
 ```sh
 yarn run:shell
@@ -89,7 +87,7 @@ yarn run:shell
 
 `run:shell` will run the latest version of the shell and the framework only.
 
-#### The frontend modules in `apps`
+### Running the frontend modules in `apps`
 
 ```sh
 yarn run:omrs develop --sources packages/apps/<app folder>
@@ -97,7 +95,7 @@ yarn run:omrs develop --sources packages/apps/<app folder>
 
 This will allow you to develop the app similar to the experience of developing other apps.
 
-#### The tooling
+### Running the tooling
 
 ```sh
 cd packages/tooling/openmrs
@@ -105,33 +103,53 @@ yarn build
 ./dist/cli.js
 ```
 
-#### The tests
+### Testing
 
 Run `yarn test` in the directory containing the package you want to test.
 
 Run `yarn lerna run test` to run all the tests in this repository.
 
-#### Linking the framework
+### Linking the framework
 
 If you want to try out changes to a framework library, you will
 probably want to `yarn link` or `npm link` it into a frontend module.
 Note that even though frontend modules import from `@openmrs/esm-framework`,
-the package you need to link is the sub-library; e.g., if you are trying
-to test changes in `packages/framework/esm-api`, you will need to link
-`@openmrs/esm-api`.
+the package you need to link is the sub-library; for example, if you are trying
+to test changes in `packages/framework/esm-api`, you will need to link it:
 
-In order to get your local version of that package to be served in your local
-dev server, you will need to link the app shell as well, and to build it.
+```
+yarn link path/to/openmrs-esm-core/packages/framework/esm-framework
+yarn link path/to/openmrs-esm-core/packages/framework/esm-api
+```
 
-##### Example
-To set up to develop `@openmrs/esm-api` in a dev server for
-the patient chart:
+This satisfies the build tooling, but we must do one more step to get the frontend
+to load these dependencies at runtime
+(see docs on [Runtime Dependencies](https://o3-dev.docs.openmrs.org/#/main/deps)).
+Here, there are two options.
 
-1. Navigate to the patient chart repository. Execute
-`yarn link /path/to/esm-core/packages/framework/esm-api` and then run
-`yarn link /path/to/esm-corepackages/shell/esm-app-shell`.
-2. In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
-Then run your patient chart dev server as usual.
+#### Method 1: Using the frontend dev server
+
+In order to get your local version of the core packages to be served in your local
+dev server, you will need to link the tooling as well.
+
+`yarn link /path/to/esm-core/packages/tooling/openmrs`.
+
+In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
+Then run your patient chart dev server as usual, with `yarn start`.
+
+If you're not able to get this working, try the 
+
+#### Method 2: Using import map overrides
+
+Read the [dev documentation](https://o3-dev.docs.openmrs.org/#/getting_started/setup?id=import-map-overrides)
+about import map overrides if you have not already.
+
+In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient chart
+repository, `cd` into whatever packages you are working on and run `yarn serve`
+from there. Then use the import map override tool in the browser to tell the frontend
+to load your local patient chart packages.
+
+#### Once it's working
 
 Please note that this will result in entries being added to the package.json file
 in the `resolutions` field. These changes must be undone before creating your PR,

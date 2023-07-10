@@ -13,6 +13,7 @@
 - [getLoggedInUser](API.md#getloggedinuser)
 - [getSessionLocation](API.md#getsessionlocation)
 - [getSessionStore](API.md#getsessionstore)
+- [getVisitStore](API.md#getvisitstore)
 - [getVisitTypes](API.md#getvisittypes)
 - [getVisitsForPatient](API.md#getvisitsforpatient)
 - [makeUrl](API.md#makeurl)
@@ -20,6 +21,7 @@
 - [openmrsObservableFetch](API.md#openmrsobservablefetch)
 - [refetchCurrentUser](API.md#refetchcurrentuser)
 - [saveVisit](API.md#savevisit)
+- [setCurrentVisit](API.md#setcurrentvisit)
 - [setSessionLocation](API.md#setsessionlocation)
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
@@ -634,7 +636,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L12)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L13)
 
 ___
 
@@ -652,9 +654,11 @@ ___
 
 • `Const` **getStartedVisit**: `BehaviorSubject`<``null`` \| [`VisitItem`](interfaces/VisitItem.md)\>
 
+**`deprecated`**
+
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L75)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L112)
 
 ___
 
@@ -971,6 +975,20 @@ ___
 
 ___
 
+### getVisitStore
+
+▸ **getVisitStore**(): `StoreApi`<[`VisitStoreState`](interfaces/VisitStoreState.md)\>
+
+#### Returns
+
+`StoreApi`<[`VisitStoreState`](interfaces/VisitStoreState.md)\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L31)
+
+___
+
 ### getVisitTypes
 
 ▸ **getVisitTypes**(): `Observable`<[`VisitType`](interfaces/VisitType.md)[]\>
@@ -1003,7 +1021,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L21)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L57)
 
 ___
 
@@ -1197,7 +1215,28 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L46)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L82)
+
+___
+
+### setCurrentVisit
+
+▸ **setCurrentVisit**(`patientUuid`, `visitUuid`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+| `visitUuid` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L35)
 
 ___
 
@@ -1280,7 +1319,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L60)
+[packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L96)
 
 ___
 
@@ -1354,7 +1393,7 @@ ___
 
 ### useVisit
 
-▸ **useVisit**(`patientUuid`): `VisitReturnType`
+▸ **useVisit**(`patientUuid`): [`VisitReturnType`](interfaces/VisitReturnType.md)
 
 This React hook returns a visit object. If the `patientUuid` is provided
 as a parameter, then the currentVisit, error and mutate function
@@ -1368,13 +1407,13 @@ for that patient visit is returned.
 
 #### Returns
 
-`VisitReturnType`
+[`VisitReturnType`](interfaces/VisitReturnType.md)
 
 Object {`error` `isValidating`, `currentVisit`, `mutate`}
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L29)
+[packages/framework/esm-react-utils/src/useVisit.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L32)
 
 ___
 
