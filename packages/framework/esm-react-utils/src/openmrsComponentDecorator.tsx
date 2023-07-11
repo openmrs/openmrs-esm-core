@@ -7,50 +7,10 @@ import {
   ExtensionData,
 } from "./ComponentContext";
 
-let i18n: typeof window.i18next = window.i18next;
-
 const defaultOpts = {
   strictMode: true,
   throwErrorsToConsole: true,
   disableTranslations: false,
-};
-
-interface I18nextLoadNamespaceProps {
-  forceUpdate(): void;
-  ns: string;
-  children?: React.ReactNode;
-}
-
-const I18nextLoadNamespace: React.FC<I18nextLoadNamespaceProps> = (props) => {
-  useEffect(() => {
-    i18n.on("languageChanged", props.forceUpdate);
-    return () => i18n.off("languageChanged", props.forceUpdate);
-  }, [props.forceUpdate]);
-
-  const loadNamespaceErrRef = useRef(null);
-
-  if (loadNamespaceErrRef.current) {
-    throw loadNamespaceErrRef.current;
-  }
-
-  // FIXME hasLoadedNamespace() is part of the API but not the current types
-  if (!(i18n as any).hasLoadedNamespace(props.ns)) {
-    const timeoutId = setTimeout(() => {
-      console.warn(
-        `openmrsComponentDecorator: the React suspense promise for i18next.loadNamespaces(['${props.ns}']) did not resolve nor reject after three seconds. This could mean you have multiple versions of i18next and haven't made i18next a webpack external in all projects.`
-      );
-    }, 3000);
-
-    throw i18n
-      .loadNamespaces([props.ns])
-      .then(() => clearTimeout(timeoutId))
-      .catch((err) => {
-        clearTimeout(timeoutId);
-        loadNamespaceErrRef.current = err;
-      });
-  }
-
-  return <>{props.children}</>;
 };
 
 export interface ComponentDecoratorOptions {
@@ -71,10 +31,6 @@ export interface OpenmrsReactComponentState {
 }
 
 export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
-  if (typeof i18n === "undefined" && typeof window.i18next !== "undefined") {
-    i18n = window.i18next;
-  }
-
   if (
     typeof userOpts !== "object" ||
     typeof userOpts.featureName !== "string" ||
@@ -134,20 +90,16 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
         } else {
           const content = (
             <ComponentContext.Provider value={this.state.config}>
-              <React.Suspense fallback={null}>
-                {opts.disableTranslations ? (
+              {opts.disableTranslations ? (
+                <Comp {...this.props} />
+              ) : (
+                <I18nextProvider
+                  i18n={window.i18next}
+                  defaultNS={opts.moduleName}
+                >
                   <Comp {...this.props} />
-                ) : (
-                  <I18nextLoadNamespace
-                    ns={opts.moduleName}
-                    forceUpdate={() => this.forceUpdate()}
-                  >
-                    <I18nextProvider i18n={i18n} defaultNS={opts.moduleName}>
-                      <Comp {...this.props} />
-                    </I18nextProvider>
-                  </I18nextLoadNamespace>
-                )}
-              </React.Suspense>
+                </I18nextProvider>
+              )}
             </ComponentContext.Provider>
           );
 
