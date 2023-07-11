@@ -7,11 +7,6 @@ import {
   getConfigInternal,
   importDynamic,
 } from "@openmrs/esm-framework/src/internal";
-declare global {
-  interface Window {
-    i18next: i18next.i18n;
-  }
-}
 
 export function setupI18n() {
   window.i18next = i18next.default || i18next;
@@ -34,7 +29,7 @@ export function setupI18n() {
 
   return window.i18next
     .use(LanguageDetector)
-    .use({
+    .use<i18next.BackendModule>({
       type: "backend",
       init() {},
       read(language, namespace, callback) {
@@ -84,7 +79,7 @@ export function setupI18n() {
             });
         }
       },
-    } as i18next.BackendModule)
+    })
     .use(initReactI18next)
     .use(ICU)
     .init({
