@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { I18nextProvider } from "react-i18next";
 import type {} from "@openmrs/esm-globals";
 import {
@@ -89,18 +89,20 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
           );
         } else {
           const content = (
-            <ComponentContext.Provider value={this.state.config}>
-              {opts.disableTranslations ? (
-                <Comp {...this.props} />
-              ) : (
-                <I18nextProvider
-                  i18n={window.i18next}
-                  defaultNS={opts.moduleName}
-                >
+            <Suspense fallback={null}>
+              <ComponentContext.Provider value={this.state.config}>
+                {opts.disableTranslations ? (
                   <Comp {...this.props} />
-                </I18nextProvider>
-              )}
-            </ComponentContext.Provider>
+                ) : (
+                  <I18nextProvider
+                    i18n={window.i18next}
+                    defaultNS={opts.moduleName}
+                  >
+                    <Comp {...this.props} />
+                  </I18nextProvider>
+                )}
+              </ComponentContext.Provider>
+            </Suspense>
           );
 
           if (opts.strictMode || !React.StrictMode) {
