@@ -9,9 +9,6 @@ import { BackendDependencies } from "../backend-dependencies/backend-dependencie
 import type { ResolvedDependenciesModule } from "../backend-dependencies/openmrs-backend-dependencies";
 import styles from "./popup.styles.scss";
 import { FeatureFlags } from "../feature-flags/feature-flags.component";
-import { useFeatureFlag } from "@openmrs/esm-framework/src/internal";
-import { registerFeatureFlag } from "@openmrs/esm-framework";
-import ImplementerTools from "../implementer-tools.component";
 
 interface DevToolsPopupProps {
   close(): void;
@@ -38,7 +35,6 @@ export default function Popup({
       return <FeatureFlags />;
     }
   }, [activeTab, backendDependencies, frontendModules]);
-  const testFlag = useFeatureFlag("test-flag");
 
   return (
     <div className={styles.popup}>
@@ -67,7 +63,6 @@ export default function Popup({
             />
           </ContentSwitcher>
         </div>
-        {testFlag && <div>testFlag is on!</div>}
         <div>
           <Button
             kind="secondary"
@@ -83,10 +78,3 @@ export default function Popup({
     </div>
   );
 }
-
-registerFeatureFlag(
-  "test-flag",
-  "Test Flag",
-  "Adds a message to the Implementer Tools"
-);
-registerFeatureFlag("test-flag-2", "Test Flag 2", "Does nothing");
