@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-react-utils",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "license": "MPL-2.0",
   "description": "React utilities for OpenMRS.",
   "browser": "dist/openmrs-esm-react-utils.js",
@@ -56,12 +56,12 @@
     "react-i18next": "11.x"
   },
   "devDependencies": {
-    "@openmrs/esm-api": "^5.0.2",
-    "@openmrs/esm-config": "^5.0.2",
-    "@openmrs/esm-error-handling": "^5.0.2",
-    "@openmrs/esm-extensions": "^5.0.2",
-    "@openmrs/esm-feature-flags": "^5.0.2",
-    "@openmrs/esm-globals": "^5.0.2",
+    "@openmrs/esm-api": "^5.1.0",
+    "@openmrs/esm-config": "^5.1.0",
+    "@openmrs/esm-error-handling": "^5.1.0",
+    "@openmrs/esm-extensions": "^5.1.0",
+    "@openmrs/esm-feature-flags": "^5.1.0",
+    "@openmrs/esm-globals": "^5.1.0",
     "dayjs": "^1.10.8",
     "i18next": "^19.6.0",
     "react": "^18.1.0",

@@ -1,6 +1,6 @@
 {
   "name": "openmrs",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "bin": "./dist/cli.js",
@@ -30,8 +30,8 @@
   ],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "@openmrs/esm-app-shell": "5.0.2",
-    "@openmrs/webpack-config": "5.0.2",
+    "@openmrs/esm-app-shell": "5.1.0",
+    "@openmrs/webpack-config": "5.1.0",
     "@pnpm/npm-conf": "^2.1.0",
     "@swc/core": "^1.3.58",
     "autoprefixer": "^10.4.2",
