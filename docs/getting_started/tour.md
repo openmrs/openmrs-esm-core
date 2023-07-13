@@ -52,6 +52,6 @@ to the [`package.json` docs](https://docs.npmjs.com/cli/v7/configuring-npm/packa
 ## The application 💻
 
 Now open
-[`src/index.ts`](https://github.com/openmrs/openmrs-esm-template-app/blob/master/src/index.ts).
+[`src/index.ts`](https://github.com/openmrs/openmrs-esm-template-app/blob/main/src/index.ts).
 The rest of the tour is in the comments in that file and the components
 it uses.

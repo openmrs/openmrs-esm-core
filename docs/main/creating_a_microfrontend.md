@@ -26,7 +26,7 @@ to get your frontend module started.
 
 All frontend modules have an `index.ts` as an
 [entry point](https://webpack.js.org/concepts/entry-points/).
-See the [example](https://github.com/openmrs/openmrs-esm-template-app/blob/master/src/index.ts)
+See the [example](https://github.com/openmrs/openmrs-esm-template-app/blob/main/src/index.ts)
 in openmrs-esm-template-app.
 
 This file is loaded by the app shell and must have a specific structure.
@@ -103,28 +103,6 @@ Here is an example which uses all of the possible keys.
   };
 ```
 
-#### Creating a page
-
-Creating a page is a simple matter of creating the page as an application
-in your framework of choice and then adding a loader to the `pages` array.
-For example, you can create a React application as the default export
-of a file `goodbye.tsx`. See
-[`hello.tsx`](https://github.com/openmrs/openmrs-esm-template-app/blob/master/src/hello.tsx)
-for reference. You could then add this as a page to the application:
-
-```typescript
-    pages: [
-      {
-        load: getAsyncLifecycle(() => import('./hello'), options),
-        route: 'hello',
-      },
-      {
-        load: getAsyncLifecycle(() => import('./goodbye'), options),
-        route: 'goodbye'
-      }
-    ],
-```
-
 ### The `backendDependencies` object
 
 This is an object that tells the frontend application what OpenMRS server modules
@@ -135,7 +113,7 @@ met, administrators will be alerted.
 
 This is required for translations to work. It tells the frontend application
 how to load translation strings. The boilerplate which you will find in
-[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app/blob/master/src/index.ts)
+[openmrs-esm-template-app](https://github.com/openmrs/openmrs-esm-template-app/blob/main/src/index.ts)
 is almost certainly what you want. Note that the first argument to
 `require.context` is a directory, `../translations`.
 That directory must exist at that location relative to the `index.ts` file.
