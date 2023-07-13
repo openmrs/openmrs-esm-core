@@ -6,7 +6,6 @@ import { implementerToolsStore, togglePopup } from "./store";
 import styles from "./implementer-tools.styles.scss";
 
 const GlobalImplementerToolsButton: React.FC = () => {
-  const { t } = useTranslation();
   const { isOpen } = useStore(implementerToolsStore);
 
   return (

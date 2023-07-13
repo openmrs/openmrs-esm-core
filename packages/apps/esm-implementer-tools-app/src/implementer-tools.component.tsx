@@ -50,6 +50,7 @@ function PopupHandler() {
   const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(
     implementerToolsStore
   );
+
   return (
     <>
       {isOpen ? (
