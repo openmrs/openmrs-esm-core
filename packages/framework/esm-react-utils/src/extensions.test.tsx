@@ -181,11 +181,14 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
       );
       const metas = useExtensionSlotMeta("Box");
       const wrapItem = useCallback(
-        (slot: React.ReactNode, extension: ExtensionData) => {
+        (slot: React.ReactNode, extension?: ExtensionData) => {
           return (
             <div>
               <h1>
-                {metas[getExtensionNameFromId(extension.extensionId)].code}
+                {
+                  metas[getExtensionNameFromId(extension?.extensionId ?? "")]
+                    .code
+                }
               </h1>
               {slot}
             </div>
@@ -196,7 +199,7 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
       return (
         <div>
           <ExtensionSlot name="Box">
-            <Extension wrap={wrapItem} state={{ suffix }} />
+            <Extension state={{ suffix }}>{wrapItem}</Extension>
           </ExtensionSlot>
           <button onClick={toggleSuffix}>Toggle suffix</button>
         </div>

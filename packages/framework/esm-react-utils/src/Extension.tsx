@@ -41,7 +41,7 @@ export const Extension: React.FC<ExtensionProps> = ({
   const [domElement, setDomElement] = useState<HTMLDivElement>();
   const { extension } = useContext(ComponentContext);
   const parcel = useRef<Parcel | null>(null);
-  const updatePromise = useRef<Promise<void> | undefined>();
+  const updatePromise = useRef<Promise<void>>(Promise.resolve());
   const rendering = useRef<boolean>(false);
 
   useEffect(() => {
@@ -136,7 +136,19 @@ export const Extension: React.FC<ExtensionProps> = ({
             parcel?.current?.getStatus() === "MOUNTED" &&
             parcel.current.update
           ) {
-            updatePromise.current = parcel.current.update({ ...state });
+            updatePromise.current = parcel.current
+              .update({ ...state })
+              .catch((err) => {
+                // if we were trying to update but the component was unmounted
+                // while this was happening, ignore the error
+                if (
+                  !(err instanceof Error) ||
+                  !err.message.includes("minified message #32") ||
+                  parcel.current?.getStatus() === "MOUNTED"
+                ) {
+                  throw err;
+                }
+              });
           }
         }
       );
