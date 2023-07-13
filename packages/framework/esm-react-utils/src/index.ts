@@ -16,6 +16,7 @@ export * from "./useExtensionInternalStore";
 export * from "./useExtensionSlot";
 export * from "./useExtensionSlotMeta";
 export * from "./useExtensionStore";
+export * from "./useFeatureFlag";
 export * from "./useForceUpdate";
 export * from "./useLayoutType";
 export * from "./useLocations";

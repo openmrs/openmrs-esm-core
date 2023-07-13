@@ -33,6 +33,7 @@ The following common libraries have been developed. They may also be used indepe
 - [@openmrs/esm-config](packages/framework/esm-config): validation and storage of frontend configuration
 - [@openmrs/esm-error-handling](packages/framework/esm-error-handling): handling of errors
 - [@openmrs/esm-extensions](packages/framework/esm-extensions): implementation of a frontend component extension system
+- [@openmrs/esm-feature-flags](packages/framework/esm-feature-flags): hide features that are in progress
 - [@openmrs/esm-globals](packages/framework/esm-globals): useful global variables and types
 - [@openmrs/esm-offline](packages/framework/esm-offline): provides offline functionality
 - [@openmrs/esm-react-utils](packages/framework/esm-react-utils): utilities for React components
