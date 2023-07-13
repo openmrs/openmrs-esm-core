@@ -37,9 +37,9 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "4.x",
-    "@openmrs/esm-config": "4.x",
-    "@openmrs/esm-state": "4.x",
+    "@openmrs/esm-api": "5.x",
+    "@openmrs/esm-config": "5.x",
+    "@openmrs/esm-state": "5.x",
     "single-spa": "5.x"
   },
   "devDependencies": {

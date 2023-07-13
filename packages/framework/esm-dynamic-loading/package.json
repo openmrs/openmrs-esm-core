@@ -41,6 +41,6 @@
     "@openmrs/esm-globals": "^5.0.2"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "4.x"
+    "@openmrs/esm-globals": "5.x"
   }
 }
