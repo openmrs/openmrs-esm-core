@@ -60,6 +60,7 @@
     "@openmrs/esm-config": "^5.0.2",
     "@openmrs/esm-error-handling": "^5.0.2",
     "@openmrs/esm-extensions": "^5.0.2",
+    "@openmrs/esm-feature-flags": "^5.0.2",
     "@openmrs/esm-globals": "^5.0.2",
     "dayjs": "^1.10.8",
     "i18next": "^19.6.0",

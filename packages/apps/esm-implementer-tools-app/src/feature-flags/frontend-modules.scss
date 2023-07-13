@@ -1,0 +1,18 @@
+@use "@carbon/styles/scss/type";
+
+.container {
+  height: 50vh;
+  overflow-y: auto;
+
+  :global(.cds--data-table-container) {
+    padding-top: 0;
+  }
+}
+
+.header {
+  @include type.type-style("heading-compact-02");
+}
+
+.helper {
+  @include type.type-style("helper-text-01");
+}

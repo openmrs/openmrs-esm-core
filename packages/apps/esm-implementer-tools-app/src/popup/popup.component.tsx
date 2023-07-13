@@ -8,6 +8,7 @@ import { FrontendModules } from "../frontend-modules/frontend-modules.component"
 import { BackendDependencies } from "../backend-dependencies/backend-dependencies.component";
 import type { ResolvedDependenciesModule } from "../backend-dependencies/openmrs-backend-dependencies";
 import styles from "./popup.styles.scss";
+import { FeatureFlags } from "../feature-flags/feature-flags.component";
 
 interface DevToolsPopupProps {
   close(): void;
@@ -28,8 +29,10 @@ export default function Popup({
       return <Configuration />;
     } else if (activeTab == 1) {
       return <FrontendModules frontendModules={frontendModules} />;
-    } else {
+    } else if (activeTab == 2) {
       return <BackendDependencies backendDependencies={backendDependencies} />;
+    } else {
+      return <FeatureFlags />;
     }
   }, [activeTab, backendDependencies, frontendModules]);
 
@@ -53,6 +56,10 @@ export default function Popup({
             <Switch
               name="backend-modules-tab"
               text={t("backendModules", "Backend Modules")}
+            />
+            <Switch
+              name="feature-flags-tab"
+              text={t("featureFlags", "Feature Flags")}
             />
           </ContentSwitcher>
         </div>

@@ -3675,6 +3675,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@openmrs/esm-feature-flags@^5.0.2, @openmrs/esm-feature-flags@workspace:packages/framework/esm-feature-flags":
+  version: 0.0.0-use.local
+  resolution: "@openmrs/esm-feature-flags@workspace:packages/framework/esm-feature-flags"
+  dependencies:
+    "@openmrs/esm-globals": ^5.0.2
+    "@openmrs/esm-state": ^5.0.2
+    ramda: ^0.26.1
+  peerDependencies:
+    "@openmrs/esm-globals": 4.x
+    "@openmrs/esm-state": 4.x
+    single-spa: 5.x
+  languageName: unknown
+  linkType: soft
+
 "@openmrs/esm-framework@5.0.2, @openmrs/esm-framework@^5.0.2, @openmrs/esm-framework@workspace:packages/framework/esm-framework":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-framework@workspace:packages/framework/esm-framework"
@@ -3685,6 +3699,7 @@ __metadata:
     "@openmrs/esm-dynamic-loading": ^5.0.2
     "@openmrs/esm-error-handling": ^5.0.2
     "@openmrs/esm-extensions": ^5.0.2
+    "@openmrs/esm-feature-flags": ^5.0.2
     "@openmrs/esm-globals": ^5.0.2
     "@openmrs/esm-offline": ^5.0.2
     "@openmrs/esm-react-utils": ^5.0.2
@@ -3851,6 +3866,7 @@ __metadata:
     "@openmrs/esm-config": ^5.0.2
     "@openmrs/esm-error-handling": ^5.0.2
     "@openmrs/esm-extensions": ^5.0.2
+    "@openmrs/esm-feature-flags": ^5.0.2
     "@openmrs/esm-globals": ^5.0.2
     dayjs: ^1.10.8
     i18next: ^19.6.0

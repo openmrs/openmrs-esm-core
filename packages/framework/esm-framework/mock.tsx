@@ -213,6 +213,13 @@ export const reportError = jest.fn().mockImplementation((error) => {
   throw error;
 });
 
+/* esm-feature-flags */
+export const registerFeatureFlags = jest.fn();
+export const getFeatureFlag = jest.fn().mockReturnValue(true);
+export const subscribeToFeatureFlag = jest.fn((name: string, callback) =>
+  callback(true)
+);
+
 /* esm-extensions */
 
 export const attach = jest.fn();
@@ -272,6 +279,8 @@ export const useExtensionInternalStore = createGlobalStore(
 );
 
 export const useExtensionStore = getExtensionStore();
+
+export const useFeatureFlag = jest.fn().mockReturnValue(true);
 
 const defaultSelect = (x) => x;
 export function useStore<T = any>(

@@ -98,6 +98,11 @@
 - [useExtensionSlotMeta](API.md#useextensionslotmeta)
 - [useExtensionStore](API.md#useextensionstore)
 
+### Feature Flags Functions
+
+- [getFeatureFlag](API.md#getfeatureflag)
+- [registerFeatureFlag](API.md#registerfeatureflag)
+
 ### Framework Functions
 
 - [getAsyncExtensionLifecycle](API.md#getasyncextensionlifecycle)
@@ -2571,6 +2576,59 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
+
+___
+
+## Feature Flags Functions
+
+### getFeatureFlag
+
+▸ **getFeatureFlag**(`flagName`): `boolean`
+
+Use this function to access the current value of the feature flag
+
+If you are using React, use `useFeatureFlag` instead.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `flagName` | `string` |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-feature-flags/src/feature-flags.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L83)
+
+___
+
+### registerFeatureFlag
+
+▸ **registerFeatureFlag**(`flagName`, `label`, `description`): `void`
+
+This function creates a feature flag. Call it in top-level code anywhere. It will
+not reset whether the flag is enabled or not, so it's safe to call it multiple times.
+Once a feature flag is created, it will appear with a toggle in the Implementer Tools.
+It can then be used to turn on or off features in the code.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `flagName` | `string` | A code-friendly name for the flag, which will be used to reference it in code |
+| `label` | `string` | A human-friendly name which will be displayed in the Implementer Tools |
+| `description` | `string` | An explanation of what the flag does, which will be displayed in the Implementer Tools |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-feature-flags/src/feature-flags.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L62)
 
 ___
 

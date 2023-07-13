@@ -4,6 +4,7 @@ export * from "@openmrs/esm-config/src/public";
 export * from "@openmrs/esm-dynamic-loading/src/public";
 export * from "@openmrs/esm-error-handling";
 export * from "@openmrs/esm-extensions/src/public";
+export * from "@openmrs/esm-feature-flags/src/public";
 export * from "@openmrs/esm-globals/src/public";
 export * from "@openmrs/esm-offline/src/public";
 export * from "@openmrs/esm-react-utils/src/public";
