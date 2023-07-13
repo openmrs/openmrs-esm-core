@@ -37,7 +37,7 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "4.x"
+    "@openmrs/esm-globals": "5.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "^5.0.2"

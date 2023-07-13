@@ -56,7 +56,7 @@ function getFrameworkVersion() {
     const { version } = require("@openmrs/esm-framework/package.json");
     return `^${version}`;
   } catch {
-    return "4.x";
+    return "5.x";
   }
 }
 

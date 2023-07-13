@@ -45,10 +45,10 @@
     "rxjs": "^6.5.3"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "4.x",
-    "@openmrs/esm-globals": "4.x",
-    "@openmrs/esm-state": "4.x",
-    "@openmrs/esm-styleguide": "4.x",
+    "@openmrs/esm-api": "5.x",
+    "@openmrs/esm-globals": "5.x",
+    "@openmrs/esm-state": "5.x",
+    "@openmrs/esm-styleguide": "5.x",
     "rxjs": "6.x"
   },
   "dependencies": {

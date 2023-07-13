@@ -41,9 +41,9 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-config": "4.x",
-    "@openmrs/esm-error-handling": "4.x",
-    "@openmrs/esm-offline": "4.x"
+    "@openmrs/esm-config": "5.x",
+    "@openmrs/esm-error-handling": "5.x",
+    "@openmrs/esm-offline": "5.x"
   },
   "devDependencies": {
     "@openmrs/esm-config": "^5.0.2",
