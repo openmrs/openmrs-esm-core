@@ -21,7 +21,7 @@
 // Chevron button - implementer-tools component
 .chevronImplementerToolsButton {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: calc(50vw - spacing.$spacing-05);
   z-index: 9999;
 
@@ -33,8 +33,103 @@
     cursor: pointer;
     transition: all 0.1s ease-in-out;
   }
+}
 
-  div:hover {
-    padding: spacing.$spacing-03 0;
+.spacedLogo {
+  margin-left: 1rem;
+  padding-right: 1rem;
+}
+
+.implementerToolsHeader,
+.implementerToolsGlobalBar {
+  border-bottom: 1px solid $color-gray-90;
+}
+
+.implementerToolsHeader,
+.implementerToolsHeader button,
+.implementerToolsHeader a,
+.implementerToolsHeader nav {
+  background-color: $color-gray-80;
+  color: $ui-03;
+}
+
+.implementerToolsHeader button:hover,
+.implementerToolsHeader button:active,
+.implementerToolsHeader button:focus,
+.implementerToolsHeader a:hover,
+.implementerToolsHeader a:active,
+.implementerToolsHeader a:focus {
+  background-color: $color-gray-70;
+  border-color: transparent !important;
+  color: $ui-02;
+}
+
+.implementerToolsHeader nav::before {
+  background-color: #525252;
+}
+
+.selectElement {
+  position: relative;
+  top: 6.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+}
+
+.selectElement div {
+  height: 12rem;
+}
+
+.selectionText {
+  h5,
+  svg,
+  p {
+    margin-top: 1rem;
+  }
+
+  h5,
+  svg {
+    color: white;
+  }
+
+  p {
+    font-size: small;
+  }
+}
+
+.sideNavComponents {
+  left: 3rem;
+}
+
+.sideRailNav {
+  height: 100%;
+  width: 3rem;
+  position: fixed;
+  z-index: 1;
+  top: 3rem;
+  left: 0;
+  background-color: $color-gray-80;
+  transition: 0.5s ease;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid $color-gray-90;
+
+  div {
+    text-align: center;
+    background-color: $color-gray-80;
+    color: $ui-03;
+    height: 3rem;
+    width: 3rem;
+    display: grid;
+    place-items: center;
+  }
+  div:hover,
+  div:active,
+  div:focus {
+    background-color: $color-gray-70;
+    border-color: transparent !important;
+    color: $ui-02;
   }
 }

@@ -1,6 +1,4 @@
 import React, { useMemo, useState } from "react";
-import { Button, ContentSwitcher, Switch } from "@carbon/react";
-import { Close } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
 import type { FrontendModule } from "../types";
@@ -9,6 +7,9 @@ import { BackendDependencies } from "../backend-dependencies/backend-dependencie
 import type { ResolvedDependenciesModule } from "../backend-dependencies/openmrs-backend-dependencies";
 import styles from "./popup.styles.scss";
 import { FeatureFlags } from "../feature-flags/feature-flags.component";
+import ImplementerNavbar from "../global-implementer-tools-navbar";
+import { useStore, useLayoutType } from "@openmrs/esm-framework";
+import { implementerToolsStore } from "../store";
 
 interface DevToolsPopupProps {
   close(): void;
@@ -24,6 +25,8 @@ export default function Popup({
 }: DevToolsPopupProps) {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(0);
+  const isTablet = useLayoutType() === "tablet";
+
   const tabContent = useMemo(() => {
     if (activeTab == 0) {
       return <Configuration />;
@@ -36,13 +39,63 @@ export default function Popup({
     }
   }, [activeTab, backendDependencies, frontendModules]);
 
-  return (
-    <div className={styles.popup}>
-      <div className={styles.topBar}>
-        <div className={styles.tabs}>
-          <ContentSwitcher
-            onChange={(c) => {
-              setActiveTab((c as any).index);
+  const currentPageURL = window.location.href;
+  const { isOpen } = useStore(implementerToolsStore);
+
+  const iframeContent = useMemo(() => {
+    const homeDivElement = document.querySelector(
+      `div[id^="single-spa-application:@openmrs/esm-home-app-page"]`
+    ) as HTMLDivElement;
+    const applyStyles = () => {
+      if (homeDivElement) {
+        if (isOpen) {
+          homeDivElement.style.display = "none";
+        } else {
+        }
+      }
+    };
+
+    const removeImplementerToolsDiv = (iframeBody: HTMLElement | undefined) => {
+      const divElements = iframeBody?.querySelectorAll(
+        `div[id^="single-spa-application:@openmrs/esm-implementer-tools-app-page"]`
+      ) as Array<HTMLDivElement> | undefined;
+      divElements?.forEach((div) => {
+        div.remove();
+      });
+    };
+    return (
+      <div style={{ backgroundColor: "#525252" }}>
+        <div
+          className={
+            isTablet ? styles.iframeTabletLayout : styles.iframeDesktopLayout
+          }
+        >
+          <iframe
+            className={styles.implementerToolsIframe}
+            title="implementer-tools-iframe"
+            src={currentPageURL}
+            width="100%"
+            loading="lazy"
+            onLoad={(event) => {
+              const iframe = event.target as HTMLIFrameElement;
+              const contentWindow = iframe.contentWindow;
+
+              const iframeMutationObserver = new MutationObserver(() => {
+                // Do something before DOM updates or elements are added within the iframe
+                // For example:
+                removeImplementerToolsDiv(contentWindow?.document?.body);
+              });
+
+              iframeMutationObserver.observe(contentWindow!.document, {
+                childList: true,
+                subtree: true,
+              });
+
+              if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", applyStyles);
+              } else {
+                applyStyles();
+              }
             }}
           >
             <Switch
@@ -74,7 +127,13 @@ export default function Popup({
           />
         </div>
       </div>
-      <div className={styles.content}>{tabContent}</div>
-    </div>
+    );
+  }, [currentPageURL, isOpen, isTablet]);
+
+  return (
+    <>
+      <ImplementerNavbar />
+      {iframeContent}
+    </>
   );
 }

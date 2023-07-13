@@ -23,7 +23,12 @@ function PopupHandler() {
   const frontendModules = useFrontendModules();
   const backendDependencies = useBackendDependencies();
   const [shouldShowNotification, setShouldShowNotification] = useState(false);
+  const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(
+    implementerToolsStore
+  );
+
   const { t } = useTranslation();
+
   useEffect(() => {
     // displaying toast if modules are missing
     setShouldShowNotification(
@@ -50,6 +55,16 @@ function PopupHandler() {
   const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(
     implementerToolsStore
   );
+  useEffect(() => {
+    if (!isOpen) {
+      const homeDivElement = document.querySelector(
+        `div[id^="single-spa-application:@openmrs/esm-home-app-page"]`
+      ) as HTMLDivElement;
+      if (homeDivElement) {
+        homeDivElement.style.display = "unset";
+      }
+    }
+  }, [isOpen]);
 
   return (
     <>
