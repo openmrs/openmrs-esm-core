@@ -3683,8 +3683,8 @@ __metadata:
     "@openmrs/esm-state": ^5.0.2
     ramda: ^0.26.1
   peerDependencies:
-    "@openmrs/esm-globals": 4.x
-    "@openmrs/esm-state": 4.x
+    "@openmrs/esm-globals": 5.x
+    "@openmrs/esm-state": 5.x
     single-spa: 5.x
   languageName: unknown
   linkType: soft
