@@ -42,6 +42,7 @@
     "@openmrs/esm-dynamic-loading": "^5.0.2",
     "@openmrs/esm-error-handling": "^5.0.2",
     "@openmrs/esm-extensions": "^5.0.2",
+    "@openmrs/esm-feature-flags": "^5.0.2",
     "@openmrs/esm-globals": "^5.0.2",
     "@openmrs/esm-offline": "^5.0.2",
     "@openmrs/esm-react-utils": "^5.0.2",

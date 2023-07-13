@@ -1,13 +1,13 @@
 {
-  "name": "@openmrs/esm-error-handling",
+  "name": "@openmrs/esm-feature-flags",
   "version": "5.0.2",
   "license": "MPL-2.0",
-  "description": "An ES module to help with error handling",
-  "browser": "dist/openmrs-esm-error-handling.js",
+  "description": "A feature flag system for the OpenMRS Single-Spa framework.",
+  "browser": "dist/openmrs-esm-feature-flags.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "test": "jest --passWithNoTests",
+    "test": "jest --config jest.config.js --passWithNoTests",
     "build": "webpack --mode=production",
     "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
@@ -36,10 +36,16 @@
   "publishConfig": {
     "access": "public"
   },
+  "dependencies": {
+    "ramda": "^0.26.1"
+  },
   "peerDependencies": {
-    "@openmrs/esm-globals": "5.x"
+    "@openmrs/esm-globals": "5.x",
+    "@openmrs/esm-state": "5.x",
+    "single-spa": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-globals": "^5.0.2"
+    "@openmrs/esm-globals": "^5.0.2",
+    "@openmrs/esm-state": "^5.0.2"
   }
 }
