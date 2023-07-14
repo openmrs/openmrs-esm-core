@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer } from "react";
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import {
   attach,
   ConnectedExtension,
@@ -16,6 +16,10 @@ import {
   ExtensionData,
 } from ".";
 import userEvent from "@testing-library/user-event";
+import {
+  registerFeatureFlag,
+  setFeatureFlag,
+} from "@openmrs/esm-feature-flags";
 
 // For some reason in the text context `isEqual` always returns true
 // when using the import substitution in jest.config.js. Here's a custom
@@ -293,13 +297,63 @@ describe("ExtensionSlot, Extension, and useExtensionSlotMeta", () => {
       "Hindi"
     );
   });
+
+  test("Extensions behind feature flags only render when their feature flag is enabled", async () => {
+    registerSimpleExtension("Arabic", "esm-languages-app");
+    registerSimpleExtension(
+      "Turkish",
+      "esm-languages-app",
+      undefined,
+      undefined,
+      "turkic"
+    );
+    registerSimpleExtension(
+      "Turkmeni",
+      "esm-languages-app",
+      undefined,
+      undefined,
+      "turkic"
+    );
+    registerSimpleExtension(
+      "Kurmanji",
+      "esm-languages-app",
+      undefined,
+      undefined,
+      "kurdish"
+    );
+    attach("Box", "Arabic");
+    attach("Box", "Turkish");
+    attach("Box", "Turkmeni");
+    attach("Box", "Kurmanji");
+    registerFeatureFlag("turkic", "", "");
+    registerFeatureFlag("kurdish", "", "");
+    setFeatureFlag("turkic", true);
+    const App = openmrsComponentDecorator({
+      moduleName: "esm-languages-app",
+      featureName: "Languages",
+      disableTranslations: true,
+    })(() => <ExtensionSlot name="Box" />);
+    render(<App />);
+
+    await waitFor(() =>
+      expect(screen.getByText(/Turkmeni/)).toBeInTheDocument()
+    );
+    expect(screen.getByText("Arabic")).toBeInTheDocument();
+    expect(screen.getByText("Turkish")).toBeInTheDocument();
+    expect(screen.queryByText("Kurmanji")).not.toBeInTheDocument();
+    act(() => setFeatureFlag("kurdish", true));
+    await waitFor(() =>
+      expect(screen.getByText("Kurmanji")).toBeInTheDocument()
+    );
+  });
 });
 
 function registerSimpleExtension(
   name: string,
   moduleName: string,
   Component?: React.ComponentType<any>,
-  meta: object = {}
+  meta: object = {},
+  featureFlag?: string
 ) {
   const SimpleComponent = () => <div>{name}</div>;
   registerExtension({
@@ -311,5 +365,6 @@ function registerSimpleExtension(
       disableTranslations: true,
     }),
     meta,
+    featureFlag,
   });
 }

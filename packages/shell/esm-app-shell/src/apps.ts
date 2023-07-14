@@ -318,6 +318,7 @@ supported, so the extension will not be loaded.`
     privileges: extension.privileges,
     online: extension.online,
     offline: extension.offline,
+    featureFlag: extension.featureFlag,
   });
 
   for (const slot of slots) {

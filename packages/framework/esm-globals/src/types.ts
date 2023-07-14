@@ -190,9 +190,13 @@ export type ExtensionDefinition = {
    */
   order?: number;
   /**
-  
+   * The user must have ANY of these privileges to see this extension.
    */
   privileges?: string | Array<string>;
+  /**
+   * If supplied, the extension will only be rendered when this feature flag is enabled.
+   */
+  featureFlag?: string;
   /**
    * Meta describes any properties that are passed down to the extension when it is loaded
    */

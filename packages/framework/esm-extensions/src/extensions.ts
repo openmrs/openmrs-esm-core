@@ -19,6 +19,7 @@ import {
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
 } from "@openmrs/esm-config";
+import { featureFlagsStore } from "@openmrs/esm-feature-flags";
 import isEqual from "lodash-es/isEqual";
 import isUndefined from "lodash-es/isUndefined";
 import {
@@ -282,16 +283,27 @@ function getOrder(
  *
  * @param assignedExtensions The list of extensions to filter.
  * @param online Whether the app is currently online. If `null`, uses `navigator.onLine`.
+ * @param enabledFeatureFlags The names of all enabled feature flags. If `null`, looks
+ *    up the feature flags using the feature flags API.
  * @returns A list of extensions that should be rendered
  */
 export function getConnectedExtensions(
   assignedExtensions: Array<AssignedExtension>,
-  online: boolean | null = null
+  online: boolean | null = null,
+  enabledFeatureFlags: Array<string> | null = null
 ): Array<ConnectedExtension> {
   const isOnline = online ?? navigator.onLine;
-  return assignedExtensions.filter((e) =>
-    checkStatusFor(isOnline, e.online, e.offline)
-  );
+  const featureFlags =
+    enabledFeatureFlags ??
+    Object.entries(featureFlagsStore.getState().flags)
+      .filter(([, { enabled }]) => enabled)
+      .map(([name]) => name);
+  return assignedExtensions
+    .filter((e) => checkStatusFor(isOnline, e.online, e.offline))
+    .filter(
+      (e) =>
+        e.featureFlag === undefined || featureFlags?.includes(e.featureFlag)
+    );
 }
 
 function getAssignedExtensionsFromSlotData(
@@ -343,6 +355,7 @@ function getAssignedExtensionsFromSlotData(
         name,
         moduleName: extension.moduleName,
         config: extensionConfig,
+        featureFlag: extension.featureFlag,
         meta: extension.meta,
       });
     }

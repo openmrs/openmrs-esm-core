@@ -405,7 +405,7 @@ ___
 
 ### ExtensionDefinition
 
-Ƭ **ExtensionDefinition**: { `meta?`: { `[k: string]`: `unknown`;  } ; `name`: `string` ; `offline?`: `boolean` ; `online?`: `boolean` ; `order?`: `number` ; `privileges?`: `string` \| `string`[] ; `slot?`: `string` ; `slots?`: `string`[]  } & { `component`: `string`  } \| { `component?`: `never`  }
+Ƭ **ExtensionDefinition**: { `featureFlag?`: `string` ; `meta?`: { `[k: string]`: `unknown`;  } ; `name`: `string` ; `offline?`: `boolean` ; `online?`: `boolean` ; `order?`: `number` ; `privileges?`: `string` \| `string`[] ; `slot?`: `string` ; `slots?`: `string`[]  } & { `component`: `string`  } \| { `component?`: `never`  }
 
 A definition of an extension as extracted from an app's routes.json
 
@@ -444,7 +444,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L251)
+[packages/framework/esm-globals/src/types.ts:255](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L255)
 
 ___
 
@@ -2257,7 +2257,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:174](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L174)
+[packages/framework/esm-extensions/src/extensions.ts:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L175)
 
 ___
 
@@ -2280,7 +2280,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L205)
+[packages/framework/esm-extensions/src/extensions.ts:206](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L206)
 
 ___
 
@@ -2302,7 +2302,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L229)
+[packages/framework/esm-extensions/src/extensions.ts:230](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L230)
 
 ___
 
@@ -2326,13 +2326,13 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:360](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L360)
+[packages/framework/esm-extensions/src/extensions.ts:373](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L373)
 
 ___
 
 ### getConnectedExtensions
 
-▸ **getConnectedExtensions**(`assignedExtensions`, `online?`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
+▸ **getConnectedExtensions**(`assignedExtensions`, `online?`, `enabledFeatureFlags?`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
 
 Filters a list of extensions according to whether they support the
 current connectivity status.
@@ -2343,6 +2343,7 @@ current connectivity status.
 | :------ | :------ | :------ | :------ |
 | `assignedExtensions` | [`AssignedExtension`](interfaces/AssignedExtension.md)[] | `undefined` | The list of extensions to filter. |
 | `online` | ``null`` \| `boolean` | `null` | Whether the app is currently online. If `null`, uses `navigator.onLine`. |
+| `enabledFeatureFlags` | ``null`` \| `string`[] | `null` | The names of all enabled feature flags. If `null`, looks    up the feature flags using the feature flags API. |
 
 #### Returns
 
@@ -2352,7 +2353,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:287](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L287)
+[packages/framework/esm-extensions/src/extensions.ts:290](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L290)
 
 ___
 
@@ -2384,7 +2385,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L118)
+[packages/framework/esm-extensions/src/extensions.ts:119](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L119)
 
 ___
 
@@ -2401,7 +2402,7 @@ state of the extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L130)
+[packages/framework/esm-extensions/src/store.ts:132](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L132)
 
 ___
 
@@ -2487,7 +2488,7 @@ ___
 ▸ **useConnectedExtensions**(`slotName`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
 
 Gets the assigned extension for a given extension slot name.
-Considers if offline or online.
+Considers if offline or online, and what feature flags are enabled.
 
 #### Parameters
 
@@ -2501,7 +2502,7 @@ Considers if offline or online.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L15)
+[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L17)
 
 ___
 
