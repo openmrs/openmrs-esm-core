@@ -97,33 +97,6 @@ export default function Popup({
                 applyStyles();
               }
             }}
-          >
-            <Switch
-              name="configuration-tab"
-              text={t("configuration", "Configuration")}
-            />
-            <Switch
-              name="frontend-modules-tab"
-              text={t("frontendModules", "Frontend Modules")}
-            />
-            <Switch
-              name="backend-modules-tab"
-              text={t("backendModules", "Backend Modules")}
-            />
-            <Switch
-              name="feature-flags-tab"
-              text={t("featureFlags", "Feature Flags")}
-            />
-          </ContentSwitcher>
-        </div>
-        <div>
-          <Button
-            kind="secondary"
-            renderIcon={(props) => <Close size={16} {...props} />}
-            iconDescription="Close"
-            onClick={close}
-            hasIconOnly
-            size="sm"
           />
         </div>
       </div>

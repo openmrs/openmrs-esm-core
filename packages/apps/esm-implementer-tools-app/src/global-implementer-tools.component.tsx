@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronUp, ChevronDown } from "@carbon/react/icons";
 import { UserHasAccess, useStore } from "@openmrs/esm-framework";
@@ -7,7 +7,16 @@ import styles from "./implementer-tools.styles.scss";
 
 const GlobalImplementerToolsButton: React.FC = () => {
   const { isOpen } = useStore(implementerToolsStore);
-
+  useEffect(() => {
+    if (!isOpen) {
+      const homeDivElement = document.querySelector(
+        `div[id^="single-spa-application:@openmrs/esm-home-app-page"]`
+      ) as HTMLDivElement;
+      if (homeDivElement) {
+        homeDivElement.style.display = "unset";
+      }
+    }
+  }, [isOpen]);
   return (
     <UserHasAccess privilege="coreapps.systemAdministration">
       <div

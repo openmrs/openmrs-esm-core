@@ -52,20 +52,6 @@ function PopupHandler() {
     }
   }, [t, shouldShowNotification]);
 
-  const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(
-    implementerToolsStore
-  );
-  useEffect(() => {
-    if (!isOpen) {
-      const homeDivElement = document.querySelector(
-        `div[id^="single-spa-application:@openmrs/esm-home-app-page"]`
-      ) as HTMLDivElement;
-      if (homeDivElement) {
-        homeDivElement.style.display = "unset";
-      }
-    }
-  }, [isOpen]);
-
   return (
     <>
       {isOpen ? (
