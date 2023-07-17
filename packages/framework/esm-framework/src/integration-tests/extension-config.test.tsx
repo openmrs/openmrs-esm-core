@@ -253,8 +253,8 @@ describe("Interaction between configuration and extension systems", () => {
     });
 
     await waitFor(() => {
-      expect(screen.queryByText("green")).not.toBeInTheDocument();
       expect(screen.getByTestId("slot")).toHaveTextContent(/black/);
+      expect(screen.queryByText("green")).not.toBeInTheDocument();
     });
   });
 
