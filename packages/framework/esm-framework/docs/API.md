@@ -102,6 +102,7 @@
 
 - [getFeatureFlag](API.md#getfeatureflag)
 - [registerFeatureFlag](API.md#registerfeatureflag)
+- [useFeatureFlag](API.md#usefeatureflag)
 
 ### Framework Functions
 
@@ -2630,6 +2631,39 @@ It can then be used to turn on or off features in the code.
 #### Defined in
 
 [packages/framework/esm-feature-flags/src/feature-flags.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-feature-flags/src/feature-flags.ts#L62)
+
+___
+
+### useFeatureFlag
+
+▸ **useFeatureFlag**(`flagName`): `boolean`
+
+Use this function to tell whether a feature flag is toggled on or off.
+
+Example:
+
+```tsx
+import { useFeatureFlag } from "@openmrs/esm-react-utils";
+
+export function MyComponent() {
+ const isMyFeatureFlagOn = useFeatureFlag("my-feature-flag");
+ return <>{isMyFeatureFlagOn && <ExperimentalFeature />}</>;
+}
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `flagName` | `string` |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useFeatureFlag.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFeatureFlag.ts#L19)
 
 ___
 
