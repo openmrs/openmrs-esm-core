@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-primary-navigation-app",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "license": "MPL-2.0",
   "description": "Main navbar microfrontend for the OpenMRS SPA",
   "browser": "dist/openmrs-esm-primary-navigation-app.js",
@@ -50,8 +50,8 @@
     "single-spa": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-framework": "^5.0.2",
-    "@openmrs/webpack-config": "^5.0.2",
+    "@openmrs/esm-framework": "^5.1.0",
+    "@openmrs/webpack-config": "^5.1.0",
     "jest": "^28.1.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-utils",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "license": "MPL-2.0",
   "description": "Helper utilities for OpenMRS",
   "browser": "dist/openmrs-esm-utils.js",
