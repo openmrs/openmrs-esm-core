@@ -3664,12 +3664,14 @@ __metadata:
   dependencies:
     "@openmrs/esm-api": ^5.0.2
     "@openmrs/esm-config": ^5.0.2
+    "@openmrs/esm-feature-flags": ^5.0.2
     "@openmrs/esm-state": ^5.0.2
     lodash-es: ^4.17.21
     single-spa: ^5.9.2
   peerDependencies:
     "@openmrs/esm-api": 5.x
     "@openmrs/esm-config": 5.x
+    "@openmrs/esm-feature-flags": 5.x
     "@openmrs/esm-state": 5.x
     single-spa: 5.x
   languageName: unknown

@@ -6,6 +6,7 @@
 
 ### Extension Properties
 
+- [featureFlag](ExtensionRegistration.md#featureflag)
 - [meta](ExtensionRegistration.md#meta)
 - [moduleName](ExtensionRegistration.md#modulename)
 - [name](ExtensionRegistration.md#name)
@@ -19,6 +20,16 @@
 - [load](ExtensionRegistration.md#load)
 
 ## Extension Properties
+
+### featureFlag
+
+• `Optional` **featureFlag**: `string`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L25)
+
+___
 
 ### meta
 

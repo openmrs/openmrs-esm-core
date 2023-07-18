@@ -62,6 +62,23 @@ export function getGlobalStore<T>(
   return instrumentedStore(name, available.value);
 }
 
+export function subscribeTo<T, U>(
+  store: StoreApi<T>,
+  select: (state: T) => U,
+  handle: (subState: U) => void
+) {
+  let previous = select(store.getState());
+
+  return store.subscribe((state) => {
+    const current = select(state);
+
+    if (current !== previous) {
+      previous = current;
+      handle(current);
+    }
+  });
+}
+
 function instrumentedStore<T>(name: string, store: StoreApi<T>) {
   return {
     getState: jest.spyOn(store, "getState"),
