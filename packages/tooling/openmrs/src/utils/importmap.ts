@@ -312,7 +312,7 @@ export async function getImportmapAndRoutes(
 export async function getImportMap(
   importMapPath: string,
   basePort?: number
-): Promise<ImportmapAndRoutes["importMap"]> {
+): Promise<ImportmapDeclaration> {
   if (importMapPath === "@" && basePort) {
     logWarn(
       'Using the "@" import map is deprecated. Switch to use the "--run-project" flag.'
@@ -359,7 +359,7 @@ export async function getImportMap(
 
 export async function getRoutes(
   routesPath: string
-): Promise<ImportmapAndRoutes["routes"]> {
+): Promise<RoutesDeclaration> {
   if (!/https?:\/\//.test(routesPath)) {
     const path = resolve(process.cwd(), routesPath);
 

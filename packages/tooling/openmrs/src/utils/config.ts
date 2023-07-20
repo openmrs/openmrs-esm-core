@@ -1,4 +1,4 @@
-import { ImportmapDeclaration } from "./importmap";
+import type { ImportmapDeclaration, RoutesDeclaration } from "./importmap";
 import { setEnvVariables } from "./variables";
 import type { Configuration as WebpackConfig } from "webpack";
 
@@ -6,6 +6,7 @@ export interface WebpackOptions {
   backend?: string;
   defaultLocale?: string;
   importmap?: ImportmapDeclaration;
+  routes?: RoutesDeclaration;
   apiUrl?: string;
   spaPath?: string;
   pageTitle?: string;
@@ -64,6 +65,17 @@ export function loadWebpackConfig(options: WebpackOptions = {}) {
         break;
       case "url":
         variables.OMRS_ESM_IMPORTMAP_URL = options.importmap.value;
+        break;
+    }
+  }
+
+  if (typeof options.routes === "object") {
+    switch (options.routes.type) {
+      case "inline":
+        variables.OMRS_ROUTES = options.routes.value;
+        break;
+      case "url":
+        variables.OMRS_ROUTES_URL = options.routes.value;
         break;
     }
   }
