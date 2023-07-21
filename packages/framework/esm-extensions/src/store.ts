@@ -88,6 +88,7 @@ export interface AssignedExtension {
 export interface ConnectedExtension {
   id: string;
   name: string;
+  moduleName: string;
   meta: ExtensionMeta;
   /** The extension's config. Note that this will be `null` until the slot is mounted. */
   config: ConfigObject | null;
