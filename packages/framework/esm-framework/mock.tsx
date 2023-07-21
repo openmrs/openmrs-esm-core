@@ -269,6 +269,8 @@ export const useLayoutType = jest.fn(() => "desktop");
 
 export const useExtensionSlotMeta = jest.fn(() => ({}));
 
+export const useConnectedExtensions = jest.fn(() => []);
+
 export const UserHasAccess = jest.fn().mockImplementation((props: any) => {
   return props.children;
 });

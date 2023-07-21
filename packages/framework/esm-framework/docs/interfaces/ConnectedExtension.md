@@ -9,6 +9,7 @@
 - [config](ConnectedExtension.md#config)
 - [id](ConnectedExtension.md#id)
 - [meta](ConnectedExtension.md#meta)
+- [moduleName](ConnectedExtension.md#modulename)
 - [name](ConnectedExtension.md#name)
 
 ## Extension Properties
@@ -21,7 +22,7 @@ The extension's config. Note that this will be `null` until the slot is mounted.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L93)
+[packages/framework/esm-extensions/src/store.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L94)
 
 ___
 
@@ -38,6 +39,16 @@ ___
 ### meta
 
 • **meta**: [`ExtensionMeta`](ExtensionMeta.md)
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L92)
+
+___
+
+### moduleName
+
+• **moduleName**: `string`
 
 #### Defined in
 
