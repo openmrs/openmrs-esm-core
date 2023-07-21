@@ -105,7 +105,6 @@ export async function runBuild(args: BuildArgs) {
   const routes = await getRoutes(
     args.routes || buildConfig.routes || "routes.registry.json"
   );
-  console.log(routes);
   // As above, check for a hashed routes.registry.json if --hash-importmap assmeble option was used
   if (routes.type === "url") {
     if (
@@ -130,8 +129,6 @@ export async function runBuild(args: BuildArgs) {
       }
     }
   }
-
-  console.log(routes);
 
   const config = loadWebpackConfig({
     importmap: importMap,
