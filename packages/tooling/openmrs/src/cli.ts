@@ -260,9 +260,15 @@ yargs.command(
         type: "array",
       })
       .option("importmap", {
-        default: "importmap.json",
+        default: undefined,
         describe:
           "The import map to use. Can be a path to an import map to be taken literally, an URL, or a fixed JSON object.",
+        type: "string",
+      })
+      .option("routes", {
+        default: undefined,
+        describe:
+          "The routes registry to use. Can be a path to an routes registry to be taken literally, an URL, or a fixed JSON object.",
         type: "string",
       })
       .option("default-locale", {

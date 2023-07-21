@@ -293,7 +293,8 @@ module.exports = (env, argv = {}) => {
           openmrsConfigUrls,
           openmrsCoreImportmap:
             appPatterns.length > 0 && JSON.stringify(coreImportmap),
-          openmrsCoreRoutes: coreRoutes && JSON.stringify(coreRoutes),
+          openmrsCoreRoutes:
+            Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
         },
       }),
       new CopyWebpackPlugin({
