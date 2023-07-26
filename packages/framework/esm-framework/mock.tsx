@@ -319,6 +319,8 @@ export const useVisit = jest.fn().mockReturnValue({
   mutate: jest.fn(),
   isValidating: true,
   currentVisit: null,
+  activeVisit: null,
+  currentVisitIsRetrospective: false,
 });
 
 export const useVisitTypes = jest.fn(() => []);

@@ -6,10 +6,11 @@
 
 ### API Properties
 
+- [activeVisit](VisitReturnType.md#activevisit)
 - [currentVisit](VisitReturnType.md#currentvisit)
+- [currentVisitIsRetrospective](VisitReturnType.md#currentvisitisretrospective)
 - [error](VisitReturnType.md#error)
 - [isLoading](VisitReturnType.md#isloading)
-- [isRetrospective](VisitReturnType.md#isretrospective)
 - [isValidating](VisitReturnType.md#isvalidating)
 
 ### API Methods
@@ -18,13 +19,33 @@
 
 ## API Properties
 
+### activeVisit
+
+• **activeVisit**: ``null`` \| [`Visit`](Visit.md)
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useVisit.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L20)
+
+___
+
 ### currentVisit
 
 • **currentVisit**: ``null`` \| [`Visit`](Visit.md)
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L20)
+[packages/framework/esm-react-utils/src/useVisit.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L21)
+
+___
+
+### currentVisitIsRetrospective
+
+• **currentVisitIsRetrospective**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useVisit.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L22)
 
 ___
 
@@ -44,17 +65,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L22)
-
-___
-
-### isRetrospective
-
-• **isRetrospective**: `boolean`
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useVisit.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L21)
+[packages/framework/esm-react-utils/src/useVisit.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L23)
 
 ___
 
