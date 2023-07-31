@@ -20,11 +20,16 @@
     "verify": "turbo run lint && turbo run test && turbo run typescript",
     "prettier": "prettier \"packages/**/src/**/*\" --write",
     "postinstall": "husky install",
-    "extract-translations": "lerna run extract-translations -- --config ../../../tools/i18next-parser.config.js"
+    "extract-translations": "lerna run extract-translations -- --config ../../../tools/i18next-parser.config.js",
+    "test": "cross-env TZ=UTC jest --config jest.config.json --verbose false --passWithNoTests",
+    "test-watch": "cross-env TZ=UTC jest --watch --config jest.config.json",
+    "test-e2e": "playwright test",
+    "coverage": "yarn test --coverage"
   },
   "devDependencies": {
     "@babel/highlight": "^7.18.6",
     "@jest/types": "^28.1.3",
+    "@playwright/test": "^1.30.0",
     "@swc/core": "^1.3.58",
     "@swc/jest": "^0.2.22",
     "@testing-library/dom": "^8.16.0",
@@ -38,6 +43,7 @@
     "autoprefixer": "^10.4.2",
     "cross-env": "7.0.2",
     "docsify": "^4.12.2",
+    "dotenv": "^16.0.3",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-ts-react-important-stuff": "^3.0.0",
