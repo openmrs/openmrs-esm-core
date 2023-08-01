@@ -4330,14 +4330,14 @@ ___
 | Name | Type |
 | :------ | :------ |
 | `currentPage` | `number` |
+| `goTo` | (`page`: `number`) => `void` |
+| `goToNext` | () => `void` |
+| `goToPrevious` | () => `void` |
 | `paginated` | `boolean` |
 | `results` | `T`[] |
 | `showNextButton` | `boolean` |
 | `showPreviousButton` | `boolean` |
 | `totalPages` | `number` |
-| `goTo` | (`page`: `number`) => `void` |
-| `goToNext` | () => `void` |
-| `goToPrevious` | () => `void` |
 
 #### Defined in
 
