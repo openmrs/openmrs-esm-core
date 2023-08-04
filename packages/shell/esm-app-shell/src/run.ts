@@ -142,7 +142,8 @@ async function preloadScripts() {
   ]);
 
   window.installedModules.map(async ([module]) => {
-    importDynamic(module, undefined, { importMap });
+    // we simply swallow the error here since this is only a preload
+    importDynamic(module, undefined, { importMap }).catch();
   });
 }
 

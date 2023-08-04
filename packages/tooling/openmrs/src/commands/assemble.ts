@@ -250,7 +250,10 @@ export async function runAssemble(args: AssembleArgs) {
         logWarn(
           `Routes file ${appRoutes} does not exist. We expect that routes file to be defined by ${esmName}. Note that this means that no pages or extensions for ${esmName} will be available.`
         );
-        routes[esmName] = {};
+
+        if (routes.hasOwnProperty(esmName)) {
+          delete routes[esmName];
+        }
       }
 
       importmap.imports[esmName] = `${publicUrl}/${dirName}/${fileName}`;
