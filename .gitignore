@@ -56,7 +56,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-
+.env
 
 # next.js build output
 .next
@@ -86,3 +86,4 @@ package-lock.json
 /test-results/
 /playwright-report/
 /playwright/.cache/
+e2e/storageState.json
