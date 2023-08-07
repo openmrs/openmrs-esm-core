@@ -35,13 +35,13 @@ jobs:
       
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install --immutable
+        run: yarn setup
 
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
 
       - name: Run dev server
-        run: yarn run:omrs develop --sources packages/apps/esm-*-app --port 8180 & # Refer to O3-1994
+        run: yarn run:omrs develop --sources packages/apps/* --port 8180 & # Refer to O3-1994
 
       - name: Run E2E tests
         run: yarn playwright test
@@ -81,7 +81,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn install --immutable
+        run: yarn setup
 
       - name: Install Playwright Browsers
         run: npx playwright install chromium --with-deps
