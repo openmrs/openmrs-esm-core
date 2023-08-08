@@ -131,4 +131,20 @@ describe("Openmrs Dates", () => {
     expect(formatDatetime(testDate)).toEqual("09 févr. 2022, 13:15");
     expect(formatDatetime(todayDate)).toEqual("Aujourd’hui, 15:20");
   });
+
+  it("does not handle today specially when `noToday` is passed", () => {
+    const testDate = new Date();
+    testDate.setHours(15);
+    testDate.setMinutes(22);
+    window.i18next.language = "en";
+    const expected =
+      testDate
+        .toLocaleDateString("en-GB", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+        })
+        .replace(/ /g, "-") + ", 03:22 PM";
+    expect(formatDate(testDate, { noToday: true })).toEqual(expected);
+  });
 });
