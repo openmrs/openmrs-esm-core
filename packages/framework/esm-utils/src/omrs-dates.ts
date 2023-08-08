@@ -21,7 +21,7 @@ export type DateInput = string | number | Date;
 const isoFormat = "YYYY-MM-DDTHH:mm:ss.SSSZZ";
 
 /**
- * This function is STRICT on checking whether a date string is the openmrs format.
+ * This function checks whether a date string is the OpenMRS ISO format.
  * The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
  */
 export function isOmrsDateStrict(omrsPayloadString: string): boolean {
@@ -66,7 +66,8 @@ export function isOmrsDateToday(date: DateInput) {
 }
 
 /**
- * Converts the object to a date object if it is a valid ISO date time string.
+ * Converts the object to a date object if it is an OpenMRS ISO date time string.
+ * Otherwise returns null.
  */
 export function toDateObjectStrict(omrsDateString: string): Date | null {
   if (!isOmrsDateStrict(omrsDateString)) {
@@ -77,7 +78,7 @@ export function toDateObjectStrict(omrsDateString: string): Date | null {
 }
 
 /**
- * Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SSSZZ".
+ * Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
  */
 export function toOmrsIsoString(date: DateInput, toUTC = false): string {
   let d = dayjs(date);
@@ -154,6 +155,13 @@ export type FormatDateOptions = {
   day: boolean;
   /** Whether to include the year */
   year: boolean;
+  /**
+   * Disables the special handling of dates that are today. If false
+   * (the default), then dates that are today will be formatted as "Today"
+   * in the locale language. If true, then dates that are today will be
+   * formatted the same as all other dates.
+   */
+  noToday: boolean;
 };
 
 const defaultOptions: FormatDateOptions = {
@@ -161,6 +169,7 @@ const defaultOptions: FormatDateOptions = {
   time: "for today",
   day: true,
   year: true,
+  noToday: false,
 };
 
 /**
@@ -172,8 +181,10 @@ const defaultOptions: FormatDateOptions = {
  *  - time: "for today",
  *  - day: true,
  *  - year: true
+ *  - noToday: false
  *
  * If the date is today then "Today" is produced (in the locale language).
+ * This behavior can be disabled with `noToday: true`.
  *
  * When time is included, it is appended with a comma and a space. This
  * agrees with the output of `Date.prototype.toLocaleString` for *most*
@@ -182,7 +193,7 @@ const defaultOptions: FormatDateOptions = {
  * TODO: Shouldn't throw on null input
  */
 export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
-  const { mode, time, day, year }: FormatDateOptions = {
+  const { mode, time, day, year, noToday }: FormatDateOptions = {
     ...defaultOptions,
     ...options,
   };
@@ -194,7 +205,7 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
   let locale = getLocale();
   let localeString: string;
   const isToday = dayjs(date).isToday();
-  if (isToday) {
+  if (isToday && !noToday) {
     // This produces the word "Today" in the language of `locale`
     const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
     localeString = rtf.format(0, "day");

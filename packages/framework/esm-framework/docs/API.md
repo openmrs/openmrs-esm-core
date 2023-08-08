@@ -285,7 +285,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L140)
+[packages/framework/esm-utils/src/omrs-dates.ts:141](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L141)
 
 ___
 
@@ -299,12 +299,13 @@ ___
 | :------ | :------ | :------ |
 | `day` | `boolean` | Whether to include the day number |
 | `mode` | [`FormatDateMode`](API.md#formatdatemode) | - `standard`: "03 Feb 2022" - `wide`:     "03 — Feb — 2022" |
+| `noToday` | `boolean` | Disables the special handling of dates that are today. If false (the default), then dates that are today will be formatted as "Today" in the locale language. If true, then dates that are today will be formatted the same as all other dates. |
 | `time` | `boolean` \| ``"for today"`` | Whether the time should be included in the output always (`true`), never (`false`), or only when the input date is today (`for today`). |
 | `year` | `boolean` | Whether to include the year |
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L142)
+[packages/framework/esm-utils/src/omrs-dates.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L143)
 
 ___
 
@@ -1846,8 +1847,10 @@ Default options:
  - time: "for today",
  - day: true,
  - year: true
+ - noToday: false
 
 If the date is today then "Today" is produced (in the locale language).
+This behavior can be disabled with `noToday: true`.
 
 When time is included, it is appended with a comma and a space. This
 agrees with the output of `Date.prototype.toLocaleString` for *most*
@@ -1868,7 +1871,7 @@ TODO: Shouldn't throw on null input
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:184](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L184)
+[packages/framework/esm-utils/src/omrs-dates.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L195)
 
 ___
 
@@ -1897,7 +1900,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L251)
+[packages/framework/esm-utils/src/omrs-dates.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L262)
 
 ___
 
@@ -1920,7 +1923,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L235)
+[packages/framework/esm-utils/src/omrs-dates.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L246)
 
 ___
 
@@ -1928,7 +1931,7 @@ ___
 
 ▸ **isOmrsDateStrict**(`omrsPayloadString`): `boolean`
 
-This function is STRICT on checking whether a date string is the openmrs format.
+This function checks whether a date string is the OpenMRS ISO format.
 The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 #### Parameters
@@ -1986,7 +1989,7 @@ Uses `dayjs(dateString)`.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L136)
+[packages/framework/esm-utils/src/omrs-dates.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L137)
 
 ___
 
@@ -1994,7 +1997,8 @@ ___
 
 ▸ **toDateObjectStrict**(`omrsDateString`): `Date` \| ``null``
 
-Converts the object to a date object if it is a valid ISO date time string.
+Converts the object to a date object if it is an OpenMRS ISO date time string.
+Otherwise returns null.
 
 #### Parameters
 
@@ -2008,7 +2012,7 @@ Converts the object to a date object if it is a valid ISO date time string.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L71)
+[packages/framework/esm-utils/src/omrs-dates.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L72)
 
 ___
 
@@ -2032,7 +2036,7 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:128](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L128)
+[packages/framework/esm-utils/src/omrs-dates.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L129)
 
 ___
 
@@ -2055,7 +2059,7 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L112)
+[packages/framework/esm-utils/src/omrs-dates.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L113)
 
 ___
 
@@ -2063,7 +2067,7 @@ ___
 
 ▸ **toOmrsIsoString**(`date`, `toUTC?`): `string`
 
-Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SSSZZ".
+Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
 #### Parameters
 
@@ -2078,7 +2082,7 @@ Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SS
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L82)
+[packages/framework/esm-utils/src/omrs-dates.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L83)
 
 ___
 
@@ -2101,7 +2105,7 @@ Formats the input as a time string using the format "HH:mm A".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L104)
+[packages/framework/esm-utils/src/omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L105)
 
 ___
 
@@ -2124,7 +2128,7 @@ Formats the input as a time string using the format "HH:mm".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L96)
+[packages/framework/esm-utils/src/omrs-dates.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L97)
 
 ___
 
@@ -2147,7 +2151,7 @@ Formats the input as a date string using the format "DD-MMM".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L120)
+[packages/framework/esm-utils/src/omrs-dates.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L121)
 
 ___
 
