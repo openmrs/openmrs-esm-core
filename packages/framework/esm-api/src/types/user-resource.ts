@@ -13,7 +13,23 @@ export interface LoggedInUser {
   display: string;
   username: string;
   systemId: string;
-  userProperties: { [key: string]: any } | null;
+  userProperties: {
+    /**
+     * The UUIDs of patients the user has visited
+     * Separated by commas
+     * To get the array, do `user.userProperties.patientsVisited.split(',')`
+     * To store the array, do `patientsVisited: patientsVisited.join(',')`
+     */
+    patientsVisited?: string;
+    /**
+     * The UUIDs of patient lists the user has starred
+     * Separated by commas
+     * To get the array, do `user.userProperties.starredPatientLists.split(',')`
+     * To store the array, perform `starredPatientLists: starredPatientLists.join(',')`
+     */
+    starredPatientLists?: string;
+    [key: string]: string | undefined;
+  } | null;
   person: Person;
   privileges: Array<Privilege>;
   roles: Array<Role>;
