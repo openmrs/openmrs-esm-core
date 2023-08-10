@@ -16,14 +16,14 @@ export interface LoggedInUser {
   userProperties: {
     /**
      * The UUIDs of patients the user has visited
-     * Seprataed by commas
+     * Separated by commas
      * To get the array, do `user.userProperties.patientsVisited.split(',')`
      * To store the array, do `patientsVisited: patientsVisited.join(',')`
      */
     patientsVisited?: string;
     /**
      * The UUIDs of patient lists the user has starred
-     * Seprataed by commas
+     * Separated by commas
      * To get the array, do `user.userProperties.starredPatientLists.split(',')`
      * To store the array, perform `starredPatientLists: starredPatientLists.join(',')`
      */
