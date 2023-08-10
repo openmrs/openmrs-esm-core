@@ -216,7 +216,17 @@ module.exports = (env, argv = {}) => {
     module: {
       rules: [
         {
+          test: /openmrs-esm-styleguide\.css$/,
+          use: [
+            isProd
+              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              : { loader: require.resolve("style-loader") },
+            { loader: require.resolve("css-loader") },
+          ],
+        },
+        {
           test: /\.s?css$/,
+          exclude: [/openmrs-esm-styleguide\.css$/],
           use: [
             isProd
               ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
