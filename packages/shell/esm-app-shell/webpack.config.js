@@ -216,7 +216,16 @@ module.exports = (env, argv = {}) => {
     module: {
       rules: [
         {
-          test: /\.s?css$/,
+          test: /\.css$/,
+          use: [
+            isProd
+              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
+              : { loader: require.resolve("style-loader") },
+            { loader: require.resolve("css-loader") },
+          ],
+        },
+        {
+          test: /\.scss$/,
           use: [
             isProd
               ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
