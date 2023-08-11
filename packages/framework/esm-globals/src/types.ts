@@ -28,19 +28,19 @@ declare global {
      */
     initializeSpa(config: SpaConfig): void;
     /**
-     * Gets the API base path.
+     * Gets the API base path, e.g. /openmrs
      */
     openmrsBase: string;
     /**
-     * Gets the SPA base path.
+     * Gets the SPA base path, e.g. /openmrs/spa
      */
     spaBase: string;
     /**
-     * Gets the determined SPA environment.
+     * Set by the app shell. Indicates whether the app shell is running in production, development, or test mode.
      */
     spaEnv: SpaEnvironment;
     /**
-     * Gets the published SPA version.
+     * The build number of the app shell. Set when the app shell is built by webpack.
      */
     spaVersion?: string;
     /**

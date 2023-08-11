@@ -3899,6 +3899,8 @@ __metadata:
   resolution: "@openmrs/esm-state@workspace:packages/framework/esm-state"
   dependencies:
     zustand: ^4.3.6
+  peerDependencies:
+    "@openmrs/esm-globals": 5.x
   languageName: unknown
   linkType: soft
 

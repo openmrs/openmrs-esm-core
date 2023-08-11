@@ -1,5 +1,6 @@
 /** @module @category Store */
 import { createStore, StoreApi } from "zustand/vanilla";
+import type {} from "@openmrs/esm-globals";
 
 interface StoreEntity {
   value: StoreApi<unknown>;
@@ -7,6 +8,14 @@ interface StoreEntity {
 }
 
 const availableStores: Record<string, StoreEntity> = {};
+
+// spaEnv isn't available immediately. Wait a bit before making stores available
+// on window in development mode.
+setTimeout(() => {
+  if (window.spaEnv === "development") {
+    window["stores"] = availableStores;
+  }
+}, 1000);
 
 /**
  * Creates a Zustand store.
@@ -72,20 +81,6 @@ export function getGlobalStore<T>(
 }
 
 export interface AppState {}
-
-/**
- * @internal
- */
-export function createAppState(initialState: AppState) {
-  return createGlobalStore("app", initialState);
-}
-
-/**
- * @returns The [store](https://github.com/developit/unistore#store) named `app`.
- */
-export function getAppState() {
-  return getGlobalStore<AppState>("app", {});
-}
 
 export function subscribeTo<T, U>(
   store: StoreApi<T>,

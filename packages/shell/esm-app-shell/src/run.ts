@@ -2,7 +2,6 @@ import { start, triggerAppChange } from "single-spa";
 import {
   setupApiModule,
   renderLoadingSpinner,
-  createAppState,
   Config,
   provide,
   showNotification,
@@ -357,7 +356,6 @@ export function run(configUrls: Array<string>, offline: boolean) {
   showModals();
   showNotifications();
   showActionableNotifications();
-  createAppState({});
   subscribeNotificationShown(showNotification);
   subscribeActionableNotificationShown(showActionableNotification);
   subscribeToastShown(showToast);

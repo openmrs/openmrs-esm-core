@@ -2,7 +2,7 @@ import {
   ExtensionInternalStore,
   getExtensionInternalStore,
 } from "@openmrs/esm-extensions";
-import { createUseStore } from "./createUseStore";
+import { createUseStore } from "./useStore";
 
 /** @internal
  * @deprecated Use `useStore(getExtensionInternalStore())`
