@@ -6,11 +6,6 @@ import { i18n } from "i18next";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import isToday from "dayjs/plugin/isToday";
-import {
-  EthiopicCalendar,
-  toCalendar,
-  CalendarDate,
-} from "@internationalized/date";
 
 dayjs.extend(utc);
 dayjs.extend(isToday);
@@ -176,12 +171,6 @@ const defaultOptions: FormatDateOptions = {
   year: true,
   noToday: false,
 };
-function formatDigit(number) {
-  return parseInt(number, 10).toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  });
-}
 
 /**
  * Formats the input date according to the current locale and the
@@ -233,25 +222,6 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
       // Custom formatting for English. Use hyphens instead of spaces.
       localeString = localeString.replace(/ /g, "-");
     }
-    if (locale == "am") {
-      let dmy = new Date(date.toString())
-        .toLocaleDateString("en-US")
-        .split("/");
-      if (dmy.length == 3) {
-        let year = parseInt(dmy[2], 10);
-        let month = parseInt(dmy[0], 10);
-        let day = parseInt(dmy[1], 10);
-        let gregorianDate = new CalendarDate(year, month, day);
-        let ethiopianDate = toCalendar(gregorianDate, new EthiopicCalendar());
-        let finalDate =
-          ethiopianDate.year +
-          "-" +
-          formatDigit(ethiopianDate.month) +
-          "-" +
-          formatDigit(ethiopianDate.day);
-        localeString = finalDate;
-      } else localeString = "--";
-    }
     if (mode == "wide") {
       localeString = localeString.replace(/ /g, " — "); // space-emdash-space
       if (/ru.*/.test(locale)) {
@@ -296,7 +266,7 @@ export function formatDatetime(
   return formatDate(date, { ...options, time: true });
 }
 
-function getLocale() {
+export function getLocale() {
   let language = window.i18next.language;
   language = language.replace("_", "-"); // just in case
   // hack for `ht` until https://unicode-org.atlassian.net/browse/CLDR-14956 is fixed
