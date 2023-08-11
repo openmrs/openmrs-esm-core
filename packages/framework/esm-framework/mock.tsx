@@ -17,7 +17,6 @@ export {
   validators,
   validator,
 } from "@openmrs/esm-config";
-export { isDesktop } from "@openmrs/esm-react-utils";
 
 window.i18next = { ...window.i18next, language: "en" };
 
@@ -284,29 +283,12 @@ export const useExtensionStore = getExtensionStore();
 
 export const useFeatureFlag = jest.fn().mockReturnValue(true);
 
-const defaultSelect = (x) => x;
-export function useStore<T = any>(
-  store: StoreApi<T>,
-  select = defaultSelect,
-  actions = {}
-) {
-  const state = select(store.getState());
-  return { ...state, ...actions };
-}
-
-export function useStoreWithActions<T>(
-  store: StoreApi<T>,
-  actions: Function | { [key: string]: Function }
-): T & { [key: string]: (...args: any[]) => void } {
-  return useStore(store, defaultSelect, actions);
-}
-
-export function createUseStore<T = any>(store: StoreApi<T>) {
-  return (actions: Function | Record<string, Function>) => {
-    const state = store.getState();
-    return { ...state, ...actions };
-  };
-}
+export {
+  isDesktop,
+  useStore,
+  useStoreWithActions,
+  createUseStore,
+} from "@openmrs/esm-react-utils";
 
 export const usePagination = jest.fn().mockImplementation(() => ({
   currentPage: 1,

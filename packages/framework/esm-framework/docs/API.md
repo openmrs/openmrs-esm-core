@@ -3770,7 +3770,7 @@ The newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L29)
+[packages/framework/esm-state/src/state.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L28)
 
 ___
 
@@ -3861,7 +3861,7 @@ The found or newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L66)
+[packages/framework/esm-state/src/state.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L65)
 
 ___
 
@@ -3896,7 +3896,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L86)
+[packages/framework/esm-state/src/state.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L85)
 
 ___
 
