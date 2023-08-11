@@ -1,6 +1,5 @@
 export { type ExtensionData } from "./ComponentContext";
 export * from "./ConfigurableLink";
-export * from "./createUseStore";
 export * from "./Extension";
 export * from "./ExtensionSlot";
 export * from "./getLifecycle";

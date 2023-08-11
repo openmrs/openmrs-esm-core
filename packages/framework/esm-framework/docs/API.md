@@ -560,13 +560,50 @@ ___
 
 ## Store Type Aliases
 
-### Actions
+### ActionFunction
 
-Ƭ **Actions**: `Function` \| `Record`<`string`, `Function`\>
+Ƭ **ActionFunction**<`T`\>: (`state`: `T`, ...`args`: `any`[]) => `Partial`<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Type declaration
+
+▸ (`state`, ...`args`): `Partial`<`T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `state` | `T` |
+| `...args` | `any`[] |
+
+##### Returns
+
+`Partial`<`T`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/createUseStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/createUseStore.ts#L5)
+[packages/framework/esm-react-utils/src/useStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L6)
+
+___
+
+### Actions
+
+Ƭ **Actions**<`T`\>: (`store`: `StoreApi`<`T`\>) => `Record`<`string`, [`ActionFunction`](API.md#actionfunction)<`T`\>\> \| `Record`<`string`, [`ActionFunction`](API.md#actionfunction)<`T`\>\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useStore.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L7)
 
 ___
 
@@ -580,7 +617,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/createUseStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/createUseStore.ts#L6)
+[packages/framework/esm-react-utils/src/useStore.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L10)
 
 ___
 
@@ -2563,7 +2600,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [`Actions`](API.md#actions) |
+| `actions` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
 
 #### Returns
 
@@ -2579,7 +2616,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [`Actions`](API.md#actions) |
+| `actions?` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
 
 #### Returns
 
@@ -3740,9 +3777,10 @@ ___
 
 ### createUseStore
 
-▸ **createUseStore**<`T`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)(`actions?`: [`Actions`](API.md#actions)) => `T` & [`BoundActions`](API.md#boundactions)
+▸ **createUseStore**<`T`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)<`T`\>) => `T` & [`BoundActions`](API.md#boundactions)(`actions?`: [`Actions`](API.md#actions)<`T`\>) => `T` & [`BoundActions`](API.md#boundactions)
 
-Avoid this; generally prefer to have clients use `useStore(yourStore)`
+Whenever possible, use `useStore(yourStore)` instead. This function is for creating a
+custom hook for a specific store.
 
 #### Type parameters
 
@@ -3772,7 +3810,7 @@ Avoid this; generally prefer to have clients use `useStore(yourStore)`
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [`Actions`](API.md#actions) |
+| `actions` | [`Actions`](API.md#actions)<`T`\> |
 
 ##### Returns
 
@@ -3784,7 +3822,7 @@ Avoid this; generally prefer to have clients use `useStore(yourStore)`
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [`Actions`](API.md#actions) |
+| `actions?` | [`Actions`](API.md#actions)<`T`\> |
 
 ##### Returns
 
@@ -3792,7 +3830,7 @@ Avoid this; generally prefer to have clients use `useStore(yourStore)`
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/createUseStore.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/createUseStore.ts#L33)
+[packages/framework/esm-react-utils/src/useStore.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L83)
 
 ___
 
@@ -3902,7 +3940,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L33)
+[packages/framework/esm-react-utils/src/useStore.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L38)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`): `U`
 
@@ -3926,7 +3964,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L34)
+[packages/framework/esm-react-utils/src/useStore.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L39)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
 
@@ -3943,7 +3981,7 @@ ___
 | :------ | :------ |
 | `store` | `StoreApi`<`T`\> |
 | `select` | `undefined` |
-| `actions` | [`Actions`](API.md#actions) |
+| `actions` | [`Actions`](API.md#actions)<`T`\> |
 
 #### Returns
 
@@ -3951,7 +3989,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L35)
+[packages/framework/esm-react-utils/src/useStore.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L40)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)
 
@@ -3968,7 +4006,7 @@ ___
 | :------ | :------ |
 | `store` | `StoreApi`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
-| `actions` | [`Actions`](API.md#actions) |
+| `actions` | [`Actions`](API.md#actions)<`T`\> |
 
 #### Returns
 
@@ -3976,7 +4014,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L40)
+[packages/framework/esm-react-utils/src/useStore.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L45)
 
 ___
 
@@ -3992,10 +4030,10 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `store` | `StoreApi`<`T`\> |
-| `actions` | [`Actions`](API.md#actions) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `store` | `StoreApi`<`T`\> | A zustand store |
+| `actions` | [`Actions`](API.md#actions)<`T`\> |  |
 
 #### Returns
 
@@ -4003,7 +4041,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L61)
+[packages/framework/esm-react-utils/src/useStore.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L72)
 
 ___
 
