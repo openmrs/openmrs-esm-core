@@ -13,7 +13,6 @@ const availableStores: Record<string, StoreEntity> = {};
 // on window in development mode.
 setTimeout(() => {
   if (window.spaEnv === "development") {
-    console.log("setting stores on window");
     window["stores"] = availableStores;
   }
 }, 1000);
