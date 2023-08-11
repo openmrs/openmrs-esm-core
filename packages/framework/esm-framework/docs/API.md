@@ -159,7 +159,6 @@
 
 - [createGlobalStore](API.md#createglobalstore)
 - [createUseStore](API.md#createusestore)
-- [getAppState](API.md#getappstate)
 - [getGlobalStore](API.md#getglobalstore)
 - [subscribeTo](API.md#subscribeto)
 - [useStore](API.md#usestore)
@@ -3771,7 +3770,7 @@ The newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L19)
+[packages/framework/esm-state/src/state.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L29)
 
 ___
 
@@ -3834,22 +3833,6 @@ custom hook for a specific store.
 
 ___
 
-### getAppState
-
-▸ **getAppState**(): `StoreApi`<[`AppState`](interfaces/AppState.md)\>
-
-#### Returns
-
-`StoreApi`<[`AppState`](interfaces/AppState.md)\>
-
-The [store](https://github.com/developit/unistore#store) named `app`.
-
-#### Defined in
-
-[packages/framework/esm-state/src/state.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L86)
-
-___
-
 ### getGlobalStore
 
 ▸ **getGlobalStore**<`T`\>(`name`, `fallbackState?`): `StoreApi`<`T`\>
@@ -3878,7 +3861,7 @@ The found or newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L56)
+[packages/framework/esm-state/src/state.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L66)
 
 ___
 
@@ -3913,7 +3896,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L90)
+[packages/framework/esm-state/src/state.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L86)
 
 ___
 
