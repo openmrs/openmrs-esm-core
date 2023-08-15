@@ -1,8 +1,8 @@
 /** @module @category Navigation */
 import React, {
-  MouseEvent,
-  AnchorHTMLAttributes,
-  PropsWithChildren,
+  type MouseEvent,
+  type AnchorHTMLAttributes,
+  type PropsWithChildren,
 } from "react";
 import { navigate, interpolateUrl, TemplateParams } from "@openmrs/esm-config";
 

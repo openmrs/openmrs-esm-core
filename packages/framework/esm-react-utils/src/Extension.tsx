@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useRef,
   useState,
+  type ReactElement,
 } from "react";
 import type { Parcel } from "single-spa";
 import { ComponentContext } from ".";
@@ -16,7 +17,7 @@ export type ExtensionProps = {
   wrap?(
     slot: React.ReactNode,
     extension: ExtensionData
-  ): React.ReactElement<any, any> | null;
+  ): ReactElement<any, any> | null;
 } & Omit<React.HTMLAttributes<HTMLDivElement>, "children"> & {
     children?:
       | React.ReactNode

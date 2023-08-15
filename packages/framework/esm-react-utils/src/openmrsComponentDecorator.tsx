@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { type ComponentType, Suspense } from "react";
 import { I18nextProvider } from "react-i18next";
 import type {} from "@openmrs/esm-globals";
 import {
@@ -42,8 +42,8 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
   const opts = Object.assign({}, defaultOpts, userOpts);
 
   return function decorateComponent(
-    Comp: React.ComponentType<any>
-  ): React.ComponentType<any> {
+    Comp: ComponentType<any>
+  ): ComponentType<any> {
     return class OpenmrsReactComponent extends React.Component<
       OpenmrsReactComponentProps,
       OpenmrsReactComponentState
