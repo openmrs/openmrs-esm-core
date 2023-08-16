@@ -160,26 +160,28 @@ function useNormalConfig(moduleName: string) {
 /**
  * Use this React Hook to obtain your module's configuration.
  */
-export function useConfig<
-  T = Omit<ConfigObject, "Display conditions" | "Translation overrides">
->() {
+export function useConfig<T = Record<string, any>>(
+  moduleName: string | null | undefined = undefined
+) {
   // This hook uses the config of the MF defining the component.
   // If the component is used in an extension slot then the slot
   // may override (part of) its configuration.
-  const { moduleName, extension } = useContext(ComponentContext);
+  const { moduleName: contextModuleName, extension } =
+    useContext(ComponentContext);
+  const finalModuleName = moduleName ?? contextModuleName;
 
-  if (!moduleName && !extension) {
+  if (!finalModuleName && !extension) {
     throw Error(errorMessage);
   }
 
-  const normalConfig = useNormalConfig(moduleName);
+  const normalConfig = useNormalConfig(finalModuleName);
   const extensionConfig = useExtensionConfig(extension);
   const config = useMemo(
-    () => ({
-      ...normalConfig,
-      ...extensionConfig,
-    }),
-    [normalConfig, extensionConfig]
+    () =>
+      finalModuleName === moduleName
+        ? { ...normalConfig }
+        : { ...normalConfig, ...extensionConfig },
+    [moduleName, finalModuleName, normalConfig, extensionConfig]
   );
 
   return config as T;

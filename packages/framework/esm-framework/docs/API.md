@@ -1715,7 +1715,7 @@ ___
 
 ### useConfig
 
-▸ **useConfig**<`T`\>(): `T`
+▸ **useConfig**<`T`\>(`moduleName?`): `T`
 
 Use this React Hook to obtain your module's configuration.
 
@@ -1723,7 +1723,13 @@ Use this React Hook to obtain your module's configuration.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `Omit`<[`ConfigObject`](interfaces/ConfigObject.md), ``"Display conditions"`` \| ``"Translation overrides"``\> |
+| `T` | `Record`<`string`, `any`\> |
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `moduleName` | `undefined` \| ``null`` \| `string` | `undefined` |
 
 #### Returns
 
