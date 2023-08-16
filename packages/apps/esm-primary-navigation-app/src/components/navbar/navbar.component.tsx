@@ -87,10 +87,6 @@ const Navbar: React.FC = () => {
           className={styles.dividerOverride}
           name="top-nav-info-slot"
         />
-        <ExtensionSlot
-          className={styles.dividerOverride}
-          name="top-nav-info-slot"
-        />
         <HeaderGlobalBar className={styles.headerGlobalBar}>
           <ExtensionSlot
             name="top-nav-actions-slot"
