@@ -88,30 +88,17 @@ export function createGlobalStore<T>(
   name: string,
   initialState: T
 ): StoreApi<T> {
-  const available = availableStores[name];
+  // We ignore whether there's already a store with this name so that tests
+  // don't have to worry about clearing old stores before re-creating them.
+  const store = createStore<T>()(() => initialState);
+  initialStates[name] = initialState;
 
-  if (available) {
-    if (available.active) {
-      console.error(
-        "Cannot override an existing store. Make sure that stores are only created once."
-      );
-    } else {
-      available.value.setState(initialState, true);
-    }
+  availableStores[name] = {
+    value: store,
+    active: true,
+  };
 
-    available.active = true;
-    return available.value;
-  } else {
-    const store = createStore<T>()(() => initialState);
-    initialStates[name] = initialState;
-
-    availableStores[name] = {
-      value: store,
-      active: true,
-    };
-
-    return instrumentedStore(name, store);
-  }
+  return instrumentedStore(name, store);
 }
 
 export function getGlobalStore<T>(
