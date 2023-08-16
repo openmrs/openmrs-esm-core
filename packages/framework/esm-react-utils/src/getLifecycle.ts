@@ -1,5 +1,5 @@
 /** @module @category Framework */
-import React from "react";
+import React, { ComponentType } from "react";
 import ReactDOMClient from "react-dom/client";
 import singleSpaReact from "single-spa-react";
 import {
@@ -8,7 +8,7 @@ import {
 } from "./openmrsComponentDecorator";
 
 export function getLifecycle<T>(
-  Component: React.ComponentType<T>,
+  Component: ComponentType<T>,
   options: ComponentDecoratorOptions
 ) {
   return singleSpaReact({
@@ -19,7 +19,7 @@ export function getLifecycle<T>(
 }
 
 export function getAsyncLifecycle<T>(
-  lazy: () => Promise<{ default: React.ComponentType<T> }>,
+  lazy: () => Promise<{ default: ComponentType<T> }>,
   options: ComponentDecoratorOptions
 ) {
   return () =>
@@ -27,7 +27,7 @@ export function getAsyncLifecycle<T>(
 }
 
 export function getSyncLifecycle<T>(
-  Component: React.ComponentType<T>,
+  Component: ComponentType<T>,
   options: ComponentDecoratorOptions
 ) {
   return () => Promise.resolve(getLifecycle(Component, options));
