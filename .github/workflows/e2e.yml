@@ -25,13 +25,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-#
-#      - name: Cache dependencies
-#        id: cache
-#        uses: actions/cache@v3
-#        with:
-#          path: '**/node_modules'
-#          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn setup
@@ -71,12 +71,12 @@ jobs:
         with:
           node-version: 16
 
-#      - name: Cache dependencies
-#        id: cache
-#        uses: actions/cache@v3
-#        with:
-#          path: '**/node_modules'
-#          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
         run: yarn setup
