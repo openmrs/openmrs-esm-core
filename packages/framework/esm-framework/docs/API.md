@@ -1715,7 +1715,7 @@ ___
 
 ### useConfig
 
-▸ **useConfig**<`T`\>(): `T`
+▸ **useConfig**<`T`\>(`options?`): `T`
 
 Use this React Hook to obtain your module's configuration.
 
@@ -1723,7 +1723,13 @@ Use this React Hook to obtain your module's configuration.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `Omit`<[`ConfigObject`](interfaces/ConfigObject.md), ``"Display conditions"`` \| ``"Translation overrides"``\> |
+| `T` | `Record`<`string`, `any`\> |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options?` | `UseConfigOptions` | Additional options that can be passed to useConfig() |
 
 #### Returns
 
@@ -1731,7 +1737,7 @@ Use this React Hook to obtain your module's configuration.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConfig.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L163)
+[packages/framework/esm-react-utils/src/useConfig.ts:171](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConfig.ts#L171)
 
 ___
 

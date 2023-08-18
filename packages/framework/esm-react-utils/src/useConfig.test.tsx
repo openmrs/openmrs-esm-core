@@ -20,6 +20,12 @@ function RenderConfig(props) {
   return <button>{config[props.configKey]}</button>;
 }
 
+function RenderExternalConfig(props) {
+  const config = useConfig({ externalModuleName: props.externalModuleName });
+
+  return <button>{config[props.configKey]}</button>;
+}
+
 function clearConfig() {
   mockConfigInternalStore.resetMock();
 }
@@ -296,5 +302,41 @@ describe(`useConfig in an extension`, () => {
     await waitFor(() =>
       expect(screen.findByText("Yet another thing")).toBeTruthy()
     );
+  });
+
+  it("can optionally load an external module's configuration", async () => {
+    defineConfigSchema("first-module", {
+      thing: {
+        _default: "first thing",
+      },
+    });
+
+    defineConfigSchema("second-module", {
+      thing: {
+        _default: "second thing",
+      },
+    });
+
+    render(
+      <React.Suspense fallback={<div>Suspense!</div>}>
+        <ComponentContext.Provider
+          value={{
+            moduleName: "first-module",
+            extension: {
+              extensionSlotName: "fooSlot",
+              extensionSlotModuleName: "slot-mod",
+              extensionId: "fooExt#id1",
+            },
+          }}
+        >
+          <RenderExternalConfig
+            externalModuleName="second-module"
+            configKey="thing"
+          />
+        </ComponentContext.Provider>
+      </React.Suspense>
+    );
+
+    await waitFor(() => expect(screen.findByText("second thing")).toBeTruthy());
   });
 });

@@ -157,16 +157,24 @@ function useNormalConfig(moduleName: string) {
   return state;
 }
 
+interface UseConfigOptions {
+  /** An external module to load the configuration from. This option should only be used if
+      absolutely necessary as it can end up making frontend modules coupled to one another. */
+  externalModuleName?: string;
+}
+
 /**
  * Use this React Hook to obtain your module's configuration.
+ *
+ * @param options Additional options that can be passed to useConfig()
  */
-export function useConfig<
-  T = Omit<ConfigObject, "Display conditions" | "Translation overrides">
->() {
+export function useConfig<T = Record<string, any>>(options?: UseConfigOptions) {
   // This hook uses the config of the MF defining the component.
   // If the component is used in an extension slot then the slot
   // may override (part of) its configuration.
-  const { moduleName, extension } = useContext(ComponentContext);
+  const { moduleName: contextModuleName, extension } =
+    useContext(ComponentContext);
+  const moduleName = options?.externalModuleName ?? contextModuleName;
 
   if (!moduleName && !extension) {
     throw Error(errorMessage);
@@ -175,11 +183,11 @@ export function useConfig<
   const normalConfig = useNormalConfig(moduleName);
   const extensionConfig = useExtensionConfig(extension);
   const config = useMemo(
-    () => ({
-      ...normalConfig,
-      ...extensionConfig,
-    }),
-    [normalConfig, extensionConfig]
+    () =>
+      options?.externalModuleName && moduleName === options.externalModuleName
+        ? { ...normalConfig }
+        : { ...normalConfig, ...extensionConfig },
+    [moduleName, options?.externalModuleName, normalConfig, extensionConfig]
   );
 
   return config as T;
