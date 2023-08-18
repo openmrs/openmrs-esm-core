@@ -18,7 +18,7 @@ Then, in a separate terminal, run:
 yarn test-e2e --headed
 ```
 
-By default, the test suite will run against the (http://localhost:8080).
+By default, the test suite will run against the `http://localhost:8080`.
 You can override this by exporting `E2E_BASE_URL` environment variables beforehand:
 
 ```sh
