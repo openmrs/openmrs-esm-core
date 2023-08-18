@@ -104,11 +104,51 @@ yarn build
 ./dist/cli.js
 ```
 
-### Testing
+### Running tests
 
-Run `yarn test` in the directory containing the package you want to test.
+To run tests for all packages, run:
 
-Run `yarn lerna run test` to run all the tests in this repository.
+```bash
+yarn turbo test
+```
+
+To run tests in `watch` mode, run:
+
+```bash
+yarn turbo test:watch
+```
+
+To run tests for a specific package, pass the package name to the `--filter` flag. For example, to run tests for `esm-patient-conditions-app`, run:
+
+```bash
+yarn turbo test --filter="esm-patient-conditions-app"
+```
+
+To run a specific test file, run:
+
+```bash
+yarn turbo test -- login
+```
+
+The above command will only run tests in the file or files that match the provided string.
+
+You can also run the matching tests from above in watch mode by running:
+
+```bash
+yarn turbo test:watch -- login.test
+```
+
+To generate a `coverage` report, run:
+
+```bash
+yarn turbo coverage
+```
+
+By default, `turbo` will cache test runs. This means that re-running tests wihout changing any of the related files will return the cached logs from the last run. To bypass the cache, run tests with the `force` flag, as follows:
+
+```bash
+yarn turbo test --force
+```
 
 ### Linking the framework
 
