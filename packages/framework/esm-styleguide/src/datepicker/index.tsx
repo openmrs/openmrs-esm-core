@@ -93,7 +93,9 @@ export const OpenmrsDatePicker: React.FC<OpenmrsDatePickerProps> = ({
         label={labelText}
         value={parseToCalendarDate(value)}
         onChange={(calendarDate) => {
-          onChange?.(calendarDate.toDate("UTC"));
+          onChange?.(
+            new Date(calendarDate.year, calendarDate.month, calendarDate.day)
+          );
         }}
         defaultValue={parseToCalendarDate(defaultValue)}
         minValue={
