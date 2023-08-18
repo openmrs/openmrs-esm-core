@@ -18,7 +18,7 @@ Then, in a separate terminal, run:
 yarn test-e2e --headed
 ```
 
-By default, the test suite will run against the http://localhost:8080.
+By default, the test suite will run against the (http://localhost:8080).
 You can override this by exporting `E2E_BASE_URL` environment variables beforehand:
 
 ```sh
@@ -35,7 +35,7 @@ yarn test-e2e --headed -g "title of the test"
 Check [this documentation](https://playwright.dev/docs/running-tests#command-line) for more running options.  
 
 It is also highly recommended to install the companion VS Code extension:
-https://playwright.dev/docs/getting-started-vscode
+(https://playwright.dev/docs/getting-started-vscode)
 
 
 ## Writing New Tests
