@@ -20,6 +20,9 @@ test("Should login as Admin", async ({ page }) => {
     await page
       .locator("#password")
       .fill(`${process.env.E2E_USER_ADMIN_PASSWORD}`);
+  });
+
+  await test.step("And I click login buttion", async () => {
     await page.getByText("Log in").click();
   });
 
