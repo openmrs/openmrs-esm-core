@@ -17,7 +17,7 @@ Then, in a separate terminal, run:
 ```sh
 yarn test-e2e --headed
 ```
-
+<!-- markdown-link-check-disable-next-line -->
 By default, the test suite will run against the `http://localhost:8080`.
 You can override this by exporting `E2E_BASE_URL` environment variables beforehand:
 
