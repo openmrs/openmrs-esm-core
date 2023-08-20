@@ -26,8 +26,15 @@ jobs:
         with:
           node-version: 16
 
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
-        run: yarn install
+        run: yarn setup
 
       - name: Install Playwright Browsers
         run: yarn playwright install chromium --with-deps
@@ -64,8 +71,15 @@ jobs:
         with:
           node-version: 16
 
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
-        run: yarn install
+        run: yarn setup
 
       - name: Install Playwright Browsers
         run: yarn playwright install chromium --with-deps
