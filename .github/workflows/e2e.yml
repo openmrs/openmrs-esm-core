@@ -27,7 +27,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: yarn setup
+        run: yarn install
 
       - name: Install Playwright Browsers
         run: yarn playwright install chromium --with-deps
@@ -65,7 +65,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: yarn setup
+        run: yarn install
 
       - name: Install Playwright Browsers
         run: yarn playwright install chromium --with-deps
