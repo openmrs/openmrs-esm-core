@@ -62,7 +62,7 @@ For a complete look at what needs to be upgraded, please read the relevant docum
 - [React Router 5 to 6](https://reactrouter.com/en/main/upgrading/v5)
 - [Carbon 10 to 11](https://github.com/carbon-design-system/carbon/blob/main/docs/migration/v11.md)
 - [Jest 26 to 27](https://jestjs.io/blog/2021/05/25/jest-27)
-- [Jest 27 to 28](https://jestjs.io/docs/28.x/migration-guide)
+- [Jest 27 to 28](https://jestjs.io/blog/2022/04/25/jest-28)
 - [User Event 12 to 13](https://github.com/testing-library/user-event/releases/tag/v12.0.0)
 - [User Event 13 to 14](https://github.com/testing-library/user-event/releases/tag/v14.0.0)
 
