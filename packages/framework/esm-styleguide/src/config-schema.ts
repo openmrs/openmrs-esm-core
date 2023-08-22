@@ -13,10 +13,10 @@ export const esmStyleGuideSchema = {
     _default: "#007d79",
     _type: Type.String,
   },
-  datePicker: {
-    preferredEthiopicLocale: {
-      _default: "am-AM-u-ca-ethiopic",
-      _type: Type.String,
+  preferredCalendar: {
+    _type: Type.Object,
+    _default: {
+      am: "ethiopic",
     },
   },
 };

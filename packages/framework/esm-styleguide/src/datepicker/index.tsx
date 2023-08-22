@@ -65,24 +65,21 @@ export const OpenmrsDatePicker: React.FC<OpenmrsDatePickerProps> = ({
   invalidText,
   onChange,
 }) => {
-  const [preferredEthiopicLocale, setPreferredEthiopicLocale] = useState();
+  const [preferredCalendar, setPreferredCalendar] = useState();
 
   const locale = useMemo(() => {
-    if (preferredLocale) {
-      return preferredLocale;
-    }
-    const currentLocale = getLocale();
-    if (currentLocale === "am" && preferredEthiopicLocale) {
-      return preferredEthiopicLocale;
+    const currentLocale = preferredLocale || getLocale();
+    if (preferredCalendar?.[currentLocale]) {
+      return new Intl.Locale(currentLocale, {
+        calendar: preferredCalendar[currentLocale],
+      }).toString();
     }
     return currentLocale;
-  }, [preferredLocale, preferredEthiopicLocale]);
+  }, [preferredLocale, preferredCalendar]);
 
   getConfigStore("@openmrs/esm-styleguide").subscribe((store) => {
     if (store.loaded && store.config) {
-      setPreferredEthiopicLocale(
-        store.config["datePicker"].preferredEthiopicLocale
-      );
+      setPreferredCalendar(store.config["preferredCalendar"]);
     }
   });
 
