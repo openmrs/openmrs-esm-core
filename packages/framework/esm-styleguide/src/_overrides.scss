@@ -479,3 +479,8 @@ html[dir="rtl"] {
     }
   }
 }
+
+// Tabs should expand to the width of their content
+.cds--tabs .cds--tabs__nav-link {
+  max-width: max-content;
+}
