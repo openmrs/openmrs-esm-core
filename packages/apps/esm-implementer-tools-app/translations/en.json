@@ -1,6 +1,7 @@
 {
   "activeItemSourceText": "The current value comes from ",
   "backendModules": "Backend Modules",
+  "checkImplementerToolsMessage": "Check the Backend Modules tab in the Implementer Tools for more details",
   "clearConfig": "Clear Local Config",
   "configuration": "Configuration",
   "description": "Description",
@@ -17,10 +18,11 @@
   "jsonEditor": "JSON Editor",
   "missing": "Missing",
   "moduleName": "Module Name",
+  "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
   "requiredVersion": "Required Version",
   "resetToDefaultValueButtonText": "Reset to default",
   "uiEditor": "UI Editor",
   "unknownVersion": "unknown",
   "value": "Value",
-  "view": "View"
+  "viewModules": "View modules"
 }

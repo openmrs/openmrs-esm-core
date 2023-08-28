@@ -1,6 +1,7 @@
 {
   "activeItemSourceText": "El valor coriente viene de ",
   "backendModules": "Modulos backend",
+  "checkImplementerToolsMessage": "Check the Backend Modules tab in the Implementer Tools for more details",
   "clearConfig": "Borrar config",
   "configuration": "Configuración",
   "description": "Description",
@@ -17,10 +18,11 @@
   "jsonEditor": "Editar como JSON",
   "missing": "Falta",
   "moduleName": "Nombre de modulo",
+  "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
   "requiredVersion": "Versión requerida",
   "resetToDefaultValueButtonText": "Volver al valor predeterminado",
   "uiEditor": "Editór visual",
   "unknownVersion": "unknown",
   "value": "Valor",
-  "view": "Vista"
+  "viewModules": "View modules"
 }
