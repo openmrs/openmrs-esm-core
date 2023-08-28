@@ -1,6 +1,7 @@
 {
   "activeItemSourceText": "הערך הנוכחי מגיע מ",
   "backendModules": "מודולים בצד השרת",
+  "checkImplementerToolsMessage": "Check the Backend Modules tab in the Implementer Tools for more details",
   "clearConfig": "נקה תצורה מקומית",
   "configuration": "תצורה",
   "description": "Description",
@@ -17,10 +18,11 @@
   "jsonEditor": "עורך JSON",
   "missing": "חסר",
   "moduleName": "שם המודול",
+  "modulesWithMissingDependenciesWarning": "Some modules have unresolved backend dependencies",
   "requiredVersion": "גרסה נדרשת",
   "resetToDefaultValueButtonText": "איפוס לברירת מחדל",
   "uiEditor": "עורך ממשק משתמש",
   "unknownVersion": "לא ידוע",
   "value": "ערך",
-  "view": "צפה"
+  "viewModules": "View modules"
 }

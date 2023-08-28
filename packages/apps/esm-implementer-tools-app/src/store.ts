@@ -42,13 +42,14 @@ export const togglePopup = () =>
   implementerToolsStore.setState((state) => ({
     ...state,
     isOpen: !state.isOpen,
+    openTabIndex: 0,
   }));
 
 export const showModuleDiagnostics = () =>
   implementerToolsStore.setState((state) => ({
     ...state,
     isOpen: true,
-    openTabIndex: 1,
+    openTabIndex: 2,
   }));
 
 /* Set up localStorage-serialized state elements */

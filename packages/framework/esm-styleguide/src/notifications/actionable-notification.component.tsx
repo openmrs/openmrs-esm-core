@@ -48,24 +48,20 @@ export const ActionableNotificationComponent: React.FC<
 
   const handleActionClick = () => {
     onActionButtonClick();
-    progressActionLabel
-      ? setActionText(progressActionLabel)
-      : setActionText("Taking Action..");
+    progressActionLabel && setActionText(progressActionLabel);
   };
 
   return (
     <ActionableNotification
       kind={kind || "info"}
       actionButtonLabel={actionText}
-      ariaLabel="closes notification"
+      ariaLabel="Closes actionable notification"
       onActionButtonClick={handleActionClick}
-      onClose={function noRefCheck() {}}
-      onCloseButtonClick={function noRefCheck() {}}
-      statusIconDescription="notification"
+      statusIconDescription="Actionable notification"
       subtitle={subtitle}
       title={title}
       lowContrast={critical}
-      inline={true}
+      inline
       {...props}
     />
   );
