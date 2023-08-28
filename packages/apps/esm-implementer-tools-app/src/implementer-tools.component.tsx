@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { NotificationActionButton } from "@carbon/react";
 import {
-  showNotification,
+  showActionableNotification,
   UserHasAccess,
   useStore,
 } from "@openmrs/esm-framework";
@@ -24,8 +23,9 @@ function PopupHandler() {
   const backendDependencies = useBackendDependencies();
   const [shouldShowNotification, setShouldShowNotification] = useState(false);
   const { t } = useTranslation();
+
   useEffect(() => {
-    // displaying toast if modules are missing
+    // displaying actionable notification if backend modules have missing dependencies
     setShouldShowNotification(
       (alreadyShowing) =>
         alreadyShowing || hasInvalidDependencies(backendDependencies)
@@ -35,14 +35,19 @@ function PopupHandler() {
   useEffect(() => {
     // only show notification max. 1 time
     if (shouldShowNotification) {
-      showNotification({
-        description: "Found modules with unresolved backend dependencies.",
-        action: (
-          <NotificationActionButton onClick={showModuleDiagnostics}>
-            {t("view", "View")}
-          </NotificationActionButton>
-        ),
+      showActionableNotification({
+        critical: false,
         kind: "error",
+        subtitle: t(
+          "checkImplementerToolsMessage",
+          "Check the Backend Modules tab in the Implementer Tools for more details"
+        ),
+        title: t(
+          "modulesWithMissingDependenciesWarning",
+          "Some modules have unresolved backend dependencies"
+        ),
+        actionButtonLabel: t("viewModules", "View modules"),
+        onActionButtonClick: showModuleDiagnostics,
       });
     }
   }, [t, shouldShowNotification]);
