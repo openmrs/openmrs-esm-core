@@ -28,6 +28,7 @@ describe(`<ChangeLocale />`, () => {
 
     render(
       <ChangeLocale
+        locale={"fr"}
         allowedLocales={allowedLocales}
         user={user}
         postUserProperties={postUserPropertiesMock}
