@@ -266,7 +266,7 @@ export function formatDatetime(
   return formatDate(date, { ...options, time: true });
 }
 
-function getLocale() {
+export function getLocale() {
   let language = window.i18next.language;
   language = language.replace("_", "-"); // just in case
   // hack for `ht` until https://unicode-org.atlassian.net/browse/CLDR-14956 is fixed
