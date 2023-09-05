@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
  * value of a controlled input, while the return value of this hook is used for making
  * a request.
  * 
- * For example,
+ * @example
  * 
  * ```tsx
  * import { useDebounce } from "@openmrs/esm-react-utils";
