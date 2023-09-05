@@ -304,3 +304,4 @@ export const showModal = jest.fn();
 export const LeftNavMenu = jest.fn();
 export const setLeftNav = jest.fn();
 export const unsetLeftNav = jest.fn();
+export const useDebounce = jest.fn().mockImplementation((value) => value);
