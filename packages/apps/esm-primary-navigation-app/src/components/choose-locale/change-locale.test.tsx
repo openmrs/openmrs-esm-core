@@ -46,6 +46,7 @@ describe(`<ChangeLocale />`, () => {
         locale={"en"}
         allowedLocales={allowedLocales}
         user={{
+          ...user,
           userProperties: {},
         }}
         postUserProperties={postUserPropertiesMock}
