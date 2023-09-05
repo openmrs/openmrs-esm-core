@@ -154,6 +154,7 @@
 ### Other Functions
 
 - [ExtensionSlot](API.md#extensionslot)
+- [useDebounce](API.md#usedebounce)
 
 ### Store Functions
 
@@ -3748,6 +3749,60 @@ Passing a function as children
 #### Defined in
 
 [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L85)
+
+___
+
+### useDebounce
+
+▸ **useDebounce**<`T`\>(`value`, `delay?`): `T`
+
+This hook debounces a state variable. That state variable can then be used as the
+value of a controlled input, while the return value of this hook is used for making
+a request.
+
+For example,
+
+```tsx
+import { useDebounce } from "@openmrs/esm-react-utils";
+
+function MyComponent() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
+  const swrResult = useSWR(`/api/search?q=${debouncedSearchTerm}`) 
+
+ return (
+   <Search
+labelText={t('search', 'Search')}
+onChange={(e) => setSearchTerm(e.target.value)}
+value={searchTerm}
+/>
+ )
+}
+
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `T` | `undefined` | - |
+| `delay` | `number` | `300` | number = 300: The number of milliseconds to wait before updating `debounceValue` |
+
+#### Returns
+
+`T`
+
+debounceValue: The debounced value
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useDebounce.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDebounce.ts#L33)
 
 ___
 
