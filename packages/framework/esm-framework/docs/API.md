@@ -3760,7 +3760,7 @@ This hook debounces a state variable. That state variable can then be used as th
 value of a controlled input, while the return value of this hook is used for making
 a request.
 
-For example,
+**`example`**
 
 ```tsx
 import { useDebounce } from "@openmrs/esm-react-utils";
