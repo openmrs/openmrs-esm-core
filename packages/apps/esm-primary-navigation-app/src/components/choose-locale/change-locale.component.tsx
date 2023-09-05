@@ -71,8 +71,7 @@ export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
       postSessionLocale(selectedLocale, ac);
       return () => ac.abort();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLocale, postUserProperties, postSessionLocale]);
+  }, [selectedLocale, postUserProperties, user, postSessionLocale]);
 
   const onChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
