@@ -4,28 +4,26 @@ import { useEffect, useState } from "react";
  * This hook debounces a state variable. That state variable can then be used as the
  * value of a controlled input, while the return value of this hook is used for making
  * a request.
- * 
+ *
  * @example
- * 
  * ```tsx
  * import { useDebounce } from "@openmrs/esm-react-utils";
- * 
+ *
  * function MyComponent() {
  *   const [searchTerm, setSearchTerm] = useState('');
  *   const debouncedSearchTerm = useDebounce(searchTerm);
- *   const swrResult = useSWR(`/api/search?q=${debouncedSearchTerm}`) 
- * 
+ *   const swrResult = useSWR(`/api/search?q=${debouncedSearchTerm}`)
+ *
  *  return (
  *    <Search
-        labelText={t('search', 'Search')}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        value={searchTerm}
-      />
+ *      labelText={t('search', 'Search')}
+ *      onChange={(e) => setSearchTerm(e.target.value)}
+ *      value={searchTerm}
+ *    />
  *  )
  * }
- * 
  * ```
- * 
+ *
  * @param value: The value that will be used to set `debounceValue`
  * @param delay number = 300: The number of milliseconds to wait before updating `debounceValue`
  * @returns debounceValue: The debounced value
