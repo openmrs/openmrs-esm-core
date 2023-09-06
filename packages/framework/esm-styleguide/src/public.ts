@@ -16,3 +16,4 @@ export {
 } from "./toasts/toast.component";
 export * from "./left-nav";
 export * from "./error-state";
+export * from "./datepicker";

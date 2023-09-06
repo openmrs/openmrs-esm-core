@@ -5,9 +5,11 @@
   position: fixed;
   width: 100%;
   display: flex;
+  bottom: 2rem;
+  display: flex;
   flex-direction: column;
-  margin-left: 0.2rem;
-  bottom: spacing.$spacing-07;
+  align-items: center;
+  justify-content: center;
 }
 
 .omrs-actionable-notification-mounting,

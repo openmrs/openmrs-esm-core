@@ -3,12 +3,12 @@ import { Button, ContentSwitcher, Switch } from "@carbon/react";
 import { Close } from "@carbon/react/icons";
 import { useTranslation } from "react-i18next";
 import { Configuration } from "../configuration/configuration.component";
-import type { FrontendModule } from "../types";
 import { FrontendModules } from "../frontend-modules/frontend-modules.component";
 import { BackendDependencies } from "../backend-dependencies/backend-dependencies.component";
+import { FeatureFlags } from "../feature-flags/feature-flags.component";
+import type { FrontendModule } from "../types";
 import type { ResolvedDependenciesModule } from "../backend-dependencies/openmrs-backend-dependencies";
 import styles from "./popup.styles.scss";
-import { FeatureFlags } from "../feature-flags/feature-flags.component";
 
 interface DevToolsPopupProps {
   close(): void;
@@ -17,19 +17,28 @@ interface DevToolsPopupProps {
   visibleTabIndex?: number;
 }
 
+interface SwitcherItem {
+  index: number;
+  name: string;
+  text: string;
+}
+
 export default function Popup({
   close,
   frontendModules,
   backendDependencies,
+  visibleTabIndex = 0,
 }: DevToolsPopupProps) {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(
+    visibleTabIndex ? visibleTabIndex : 0
+  );
   const tabContent = useMemo(() => {
     if (activeTab == 0) {
       return <Configuration />;
-    } else if (activeTab == 1) {
+    } else if (activeTab === 1) {
       return <FrontendModules frontendModules={frontendModules} />;
-    } else if (activeTab == 2) {
+    } else if (activeTab === 2) {
       return <BackendDependencies backendDependencies={backendDependencies} />;
     } else {
       return <FeatureFlags />;
@@ -41,8 +50,9 @@ export default function Popup({
       <div className={styles.topBar}>
         <div className={styles.tabs}>
           <ContentSwitcher
-            onChange={(c) => {
-              setActiveTab((c as any).index);
+            selectedIndex={activeTab}
+            onChange={(switcherItem: SwitcherItem) => {
+              setActiveTab(switcherItem.index);
             }}
           >
             <Switch
