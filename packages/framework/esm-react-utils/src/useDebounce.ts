@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
 /**
- * This hook will help us out in getting the debounced value of a state variable,
- * which then makes a request to the backend.
+ * This hook debounces a state variable. That state variable can then be used as the
+ * value of a controlled input, while the return value of this hook is used for making
+ * a request.
  * 
- * For example,
- * 
+ * @example
  * ```tsx
- * import { useDebounceValue } from "@openmrs/esm-react-utils";
+ * import { useDebounce } from "@openmrs/esm-react-utils";
  * 
  * function MyComponent() {
  *   const [searchTerm, setSearchTerm] = useState('');
@@ -16,20 +16,19 @@ import { useEffect, useState } from "react";
  * 
  *  return (
  *    <Search
-        labelText={t('search', 'Search')}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        value={searchTerm}
-      />
+ *      labelText={t('search', 'Search')}
+ *      onChange={(e) => setSearchTerm(e.target.value)}
+ *      value={searchTerm}
+ *    />
  *  )
  * }
- * 
  * ```
  * 
- * @param value
- * @param delay number = 300
- * @returns debounceValue
+ * @param value: The value that will be used to set `debounceValue`
+ * @param delay number = 300: The number of milliseconds to wait before updating `debounceValue`
+ * @returns debounceValue: The debounced value
  */
-export function useDebounceValue<T>(value: T, delay: number = 300) {
+export function useDebounce<T>(value: T, delay: number = 300) {
   const [debounceValue, setDebounceValue] = useState<T>(value);
   useEffect(() => {
     const timer = setTimeout(() => {
