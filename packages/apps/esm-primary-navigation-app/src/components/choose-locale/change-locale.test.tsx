@@ -22,25 +22,54 @@ describe(`<ChangeLocale />`, () => {
     Promise.resolve()
   );
 
-  beforeEach(() => {
+  it("should have user's defaultLocale as initial value", async () => {
     postUserPropertiesMock = jest.fn(() => Promise.resolve());
     postSessionLocaleMock = jest.fn(() => Promise.resolve());
 
     render(
       <ChangeLocale
+        locale={"en"}
         allowedLocales={allowedLocales}
         user={user}
         postUserProperties={postUserPropertiesMock}
         postSessionLocale={postSessionLocaleMock}
       />
     );
-  });
-
-  it("should have user's defaultLocale as initial value", async () => {
     expect(screen.getByLabelText(/Select locale/)).toHaveValue("fr");
   });
 
+  it("should have session locale as initial value if no defaultLocale for user found", async () => {
+    postUserPropertiesMock = jest.fn(() => Promise.resolve());
+    postSessionLocaleMock = jest.fn(() => Promise.resolve());
+    const wrapper = render(
+      <ChangeLocale
+        locale={"en"}
+        allowedLocales={allowedLocales}
+        user={{
+          ...user,
+          userProperties: {},
+        }}
+        postUserProperties={postUserPropertiesMock}
+        postSessionLocale={postSessionLocaleMock}
+      />
+    );
+    expect(wrapper.getByLabelText(/Select locale/)).toHaveValue("en");
+  });
+
   it("should change user locale", async () => {
+    postUserPropertiesMock = jest.fn(() => Promise.resolve());
+    postSessionLocaleMock = jest.fn(() => Promise.resolve());
+
+    render(
+      <ChangeLocale
+        locale={"en"}
+        allowedLocales={allowedLocales}
+        user={user}
+        postUserProperties={postUserPropertiesMock}
+        postSessionLocale={postSessionLocaleMock}
+      />
+    );
+    expect(screen.getByLabelText(/Select locale/)).toHaveValue("fr");
     fireEvent.change(screen.getByLabelText(/Select locale/i), {
       target: { value: "en" },
     });

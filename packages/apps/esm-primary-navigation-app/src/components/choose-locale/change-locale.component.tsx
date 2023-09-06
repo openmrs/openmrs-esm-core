@@ -19,12 +19,13 @@ import { useTranslation } from "react-i18next";
 export interface ChangeLocaleProps {
   allowedLocales: Array<string>;
   user: LoggedInUser;
+  locale: string;
   postUserProperties: PostUserProperties;
   postSessionLocale: PostSessionLocale;
 }
 
 const ChangeLocaleWrapper: React.FC<
-  Pick<ChangeLocaleProps, "allowedLocales" | "user">
+  Pick<ChangeLocaleProps, "allowedLocales" | "user" | "locale">
 > = (props) => {
   const isOnline = useConnectivity();
   const [postUserProperties, postSessionLocale] = useMemo(
@@ -43,30 +44,39 @@ const ChangeLocaleWrapper: React.FC<
 // exported for tests
 export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   allowedLocales,
+  locale,
   user,
   postUserProperties,
   postSessionLocale,
 }) => {
   const { t } = useTranslation();
-  const [userProps, setUserProps] = useState(user.userProperties);
+  const [selectedLocale, setSelectedLocale] = useState(
+    user?.userProperties?.defaultLocale ?? locale
+  );
   const options = allowedLocales?.map((locale) => (
     <SelectItem text={locale} value={locale} key={locale} />
   ));
 
   useEffect(() => {
-    if (user.userProperties.defaultLocale !== userProps.defaultLocale) {
+    if (user.userProperties.defaultLocale !== selectedLocale) {
       const ac = new AbortController();
-      postUserProperties(user.uuid, userProps, ac);
-      postSessionLocale(userProps.defaultLocale, ac);
+      postUserProperties(
+        user.uuid,
+        {
+          ...(user.userProperties ?? {}),
+          defaultLocale: selectedLocale,
+        },
+        ac
+      );
+      postSessionLocale(selectedLocale, ac);
       return () => ac.abort();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProps, postUserProperties, postSessionLocale]);
+  }, [selectedLocale, postUserProperties, user, postSessionLocale]);
 
   const onChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) =>
-      setUserProps({ ...userProps, defaultLocale: event.target.value }),
-    [userProps, setUserProps]
+      setSelectedLocale(event.target.value),
+    [setSelectedLocale]
   );
 
   const onClick = useCallback(
@@ -83,7 +93,7 @@ export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
         labelText={t("selectLocale", "Select locale")}
         onChange={onChange}
         onClick={onClick}
-        value={userProps.defaultLocale}
+        value={selectedLocale}
       >
         {options}
       </Select>
