@@ -316,8 +316,8 @@ supported, so the extension will not be loaded.`
     order: extension.order,
     moduleName: appName,
     privileges: extension.privileges,
-    online: extension.online,
-    offline: extension.offline,
+    online: extension.online ?? true,
+    offline: extension.offline ?? false,
     featureFlag: extension.featureFlag,
   });
 
