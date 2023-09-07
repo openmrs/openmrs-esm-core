@@ -305,5 +305,4 @@ export const LeftNavMenu = jest.fn();
 export const setLeftNav = jest.fn();
 export const unsetLeftNav = jest.fn();
 
-/* Components */
-export {OpenmrsDatePicker} from "@openmrs/esm-styleguide";
+export { OpenmrsDatePicker } from "@openmrs/esm-styleguide";
