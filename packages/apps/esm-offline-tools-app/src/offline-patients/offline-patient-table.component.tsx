@@ -114,7 +114,7 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
   }
 
   if (
-    offlinePatientsSwr?.data?.length === 0 ||
+    offlinePatientsSwr?.data?.length === 0 &&
     offlineRegisteredPatientsSwr?.data?.length === 0
   ) {
     return (
