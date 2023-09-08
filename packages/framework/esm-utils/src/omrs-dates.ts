@@ -6,6 +6,7 @@ import { i18n } from "i18next";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import isToday from "dayjs/plugin/isToday";
+import { convertToEthiopianDate } from "./ethiopian-calendar-conversion";
 
 dayjs.extend(utc);
 dayjs.extend(isToday);
@@ -205,6 +206,17 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
   let locale = getLocale();
   let localeString: string;
   const isToday = dayjs(date).isToday();
+  if (locale == "am") {
+    const formattedDate = convertToEthiopianDate(date, {
+      mode,
+      time,
+      day,
+      year,
+      noToday,
+    });
+    return formattedDate;
+  }
+
   if (isToday && !noToday) {
     // This produces the word "Today" in the language of `locale`
     const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });

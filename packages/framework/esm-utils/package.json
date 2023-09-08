@@ -48,6 +48,7 @@
     "rxjs": "6.x"
   },
   "dependencies": {
+    "@adobe/react-spectrum": "^3.29.0",
     "semver": "7.3.2"
   }
 }

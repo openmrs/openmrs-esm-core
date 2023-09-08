@@ -74,6 +74,14 @@ describe("Openmrs Dates", () => {
     expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
       "09 — Dec"
     );
+    window.i18next.language = "am";
+    expect(formatDate(testDate)).toEqual("30-Hidar-2014");
+    expect(formatDate(testDate, { day: false })).toEqual("Hidar 2014");
+    expect(formatDate(testDate, { year: false })).toEqual("30 Hidar");
+    expect(formatDate(testDate, { mode: "wide" })).toEqual("30 — Hidar — 2014");
+    expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
+      "30 — Hidar"
+    );
     window.i18next.language = "fr";
     expect(formatDate(testDate)).toEqual("09 déc. 2021");
     expect(formatDate(testDate, { day: false })).toEqual("déc. 2021");
