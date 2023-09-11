@@ -304,5 +304,3 @@ export const showModal = jest.fn();
 export const LeftNavMenu = jest.fn();
 export const setLeftNav = jest.fn();
 export const unsetLeftNav = jest.fn();
-
-export { OpenmrsDatePicker } from "@openmrs/esm-styleguide";
