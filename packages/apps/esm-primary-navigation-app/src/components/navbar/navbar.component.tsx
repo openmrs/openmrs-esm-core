@@ -15,6 +15,7 @@ import {
   ConfigurableLink,
   useAssignedExtensions,
   useSession,
+  useConfig,
 } from "@openmrs/esm-framework";
 import { isDesktop } from "../../utils";
 import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
@@ -27,6 +28,7 @@ import styles from "./navbar.scss";
 
 const Navbar: React.FC = () => {
   const session = useSession();
+  const config = useConfig();
   const [user, setUser] = useState<LoggedInUser | null | false>(
     session?.user ?? null
   );
@@ -78,7 +80,7 @@ const Navbar: React.FC = () => {
             isActive={isActivePanel("sideMenu")}
           />
         )}
-        <ConfigurableLink to="${openmrsSpaBase}/home">
+        <ConfigurableLink to={config.logo.link}>
           <div className={showHamburger ? "" : styles.spacedLogo}>
             <Logo />
           </div>

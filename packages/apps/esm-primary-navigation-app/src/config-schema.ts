@@ -7,6 +7,7 @@ export const configSchema = {
       _default: null,
       _description:
         "A path or URL to an image. Defaults to the OpenMRS SVG sprite.",
+      _validators: [validators.isUrl],
     },
     alt: {
       _type: Type.String,
@@ -17,6 +18,11 @@ export const configSchema = {
       _type: Type.String,
       _default: null,
       _description: "The organization name displayed when image is absent",
+    },
+    link: {
+      _type: Type.String,
+      _default: "${openmrsSpaBase}/home",
+      _description: "The link to redirect to when the logo is clicked",
     },
   },
   externalRefLinks: {
