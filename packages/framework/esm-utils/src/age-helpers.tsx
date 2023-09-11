@@ -1,5 +1,7 @@
 /** @module @category Utility */
 
+import { getLocale } from "./omrs-dates";
+
 /**
  * Gets the number of days in the year of the given date.
  * @param date The date to compute the days within the year.
@@ -55,7 +57,6 @@ export function age(dateString: string): string {
   if (dateDifference < 0) {
     monthsAgo--;
   }
-  const monthsAgoStr = monthsAgo > 0 ? `${monthsAgo} mo` : "";
 
   // For patients less than a year old, we calculate the number of days/weeks they have been alive
   let totalDaysAgo = daysIntoYear(today) - daysIntoYear(birthDate);
@@ -67,24 +68,64 @@ export function age(dateString: string): string {
   // The "remainder" number of days after the weeksAgo number of weeks
   const remainderDaysInWeek = totalDaysAgo - weeksAgo * 7;
 
+  const rtf = new Intl.RelativeTimeFormat(getLocale(), { numeric: "auto" });
+
+  const totalDaysAgoStr =
+    totalDaysAgo > 0
+      ? new Intl.NumberFormat(getLocale(), {
+          style: "unit",
+          unit: "day",
+          unitDisplay: "short",
+        }).format(totalDaysAgo)
+      : "";
+
+  const remainderDaysAgoStr = remainderDaysInWeek
+    ? new Intl.NumberFormat(getLocale(), {
+        style: "unit",
+        unit: "day",
+        unitDisplay: "short",
+      }).format(remainderDaysInWeek)
+    : "";
+
+  const weeksAgoStr =
+    weeksAgo > 0
+      ? new Intl.NumberFormat(getLocale(), {
+          style: "unit",
+          unit: "week",
+          unitDisplay: "short",
+        }).format(weeksAgo)
+      : "";
+
+  const monthsAgoStr =
+    monthsAgo > 0
+      ? new Intl.NumberFormat(getLocale(), {
+          style: "unit",
+          unit: "month",
+          unitDisplay: "short",
+        }).format(monthsAgo)
+      : "";
+
+  const yearsAgoStr =
+    age > 0
+      ? new Intl.NumberFormat(getLocale(), {
+          style: "unit",
+          unit: "year",
+          unitDisplay: "short",
+        }).format(age)
+      : "";
+
   // Depending on their age, return a different representation of their age.
   if (age === 0) {
     if (isSameDay(today, birthDate)) {
-      return `Today`;
+      return rtf.format(0, "day");
     } else if (weeksAgo < 4) {
-      return `${totalDaysAgo} day`;
-    } else if (weeksAgo === 0) {
-      return `${totalDaysAgo} day`;
-    } else if (remainderDaysInWeek > 0) {
-      return `${weeksAgo} wk ${remainderDaysInWeek} d`;
+      return totalDaysAgoStr;
     } else {
-      return `${weeksAgo} week`;
+      return `${weeksAgoStr} ${remainderDaysAgoStr}}`.trim();
     }
-  } else if (age < 2) {
-    return `${monthsAgoStr} ${age} yr`.trim();
   } else if (age < 18) {
-    return `${age} yr ${monthsAgoStr}`.trim();
+    return `${yearsAgoStr} ${monthsAgoStr}`.trim();
   } else {
-    return `${age} years`;
+    return yearsAgoStr;
   }
 }
