@@ -15,7 +15,7 @@ import {
   ConfigurableLink,
   useSession,
   useConnectedExtensions,
-  useConfig
+  useConfig,
 } from "@openmrs/esm-framework";
 import { isDesktop } from "../../utils";
 import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
