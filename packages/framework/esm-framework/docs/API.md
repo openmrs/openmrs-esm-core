@@ -62,6 +62,7 @@
 - [formatDate](API.md#formatdate)
 - [formatDatetime](API.md#formatdatetime)
 - [formatTime](API.md#formattime)
+- [getLocale](API.md#getlocale)
 - [isOmrsDateStrict](API.md#isomrsdatestrict)
 - [isOmrsDateToday](API.md#isomrsdatetoday)
 - [parseDate](API.md#parsedate)
@@ -818,6 +819,16 @@ and *must* only be used once within that `<ExtensionSlot>`.
 
 ___
 
+### OpenmrsDatePicker
+
+• `Const` **OpenmrsDatePicker**: `React.FC`<`OpenmrsDatePickerProps`\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L41)
+
+___
+
 ### backendDependencies
 
 • `Const` **backendDependencies**: `Object`
@@ -839,7 +850,7 @@ ___
 
 ### LeftNavMenu
 
-• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`Pick`<`SideNavProps`, `string` \| `number` \| `symbol`\> & `RefAttributes`<`HTMLElement`\>\>
+• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`RefAttributes`<`HTMLElement`\>\>
 
 #### Defined in
 
@@ -1969,6 +1980,20 @@ Formats the input as a time, according to the current locale.
 
 ___
 
+### getLocale
+
+▸ **getLocale**(): `string`
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L269)
+
+___
+
 ### isOmrsDateStrict
 
 ▸ **isOmrsDateStrict**(`omrsPayloadString`): `boolean`
@@ -2383,7 +2408,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:373](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L373)
+[packages/framework/esm-extensions/src/extensions.ts:375](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L375)
 
 ___
 

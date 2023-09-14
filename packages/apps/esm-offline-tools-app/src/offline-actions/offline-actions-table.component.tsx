@@ -3,9 +3,7 @@ import { useTranslation } from "react-i18next";
 import {
   Button,
   DataTable,
-  DataTableHeader,
   DataTableSkeleton,
-  FilterRowsData,
   Layer,
   Link,
   Pagination,
@@ -38,11 +36,7 @@ export interface SyncItemWithPatient {
   patient?: fhir.Patient;
 }
 
-export type OfflineActionsTableHeaders =
-  | "createdOn"
-  | "patient"
-  | "action"
-  | "error";
+type OfflineActionsTableHeaders = "createdOn" | "patient" | "action" | "error";
 
 export interface OfflineActionsTableProps {
   data?: Array<SyncItemWithPatient>;
@@ -65,8 +59,13 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
   const [pageSize, setPageSize] = useState(10);
   const { results, currentPage, goTo } = usePagination(data);
   const layout = useLayoutType();
+
   const toolbarItemSize = isDesktop(layout) ? "sm" : undefined;
-  const defaultHeaders: Array<DataTableHeader<OfflineActionsTableHeaders>> = [
+
+  const defaultHeaders: Array<{
+    key: OfflineActionsTableHeaders;
+    header: string;
+  }> = [
     {
       key: "createdOn",
       header: t("offlineActionsTableCreatedOn", "Date & Time"),
@@ -280,7 +279,7 @@ function filterTableRows({
   inputValue,
   // @ts-ignore `getCellId` is not in the types, but present in Carbon.
   getCellId,
-}: FilterRowsData) {
+}) {
   return rowIds.filter((rowId) =>
     headers.some(({ key }) => {
       const cellId = getCellId(rowId, key);
