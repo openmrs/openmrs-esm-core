@@ -18,6 +18,7 @@ import {
   clearCurrentUser,
   getSessionStore,
   useConnectivity,
+  navigate as openmrsNavigate,
 } from "@openmrs/esm-framework";
 import { performLogin } from "../login.resource";
 import styles from "./login.scss";
@@ -78,8 +79,7 @@ const Login: React.FC<LoginProps> = () => {
 
   useEffect(() => {
     if (!user && config.provider.type === "oauth2") {
-      const loginUrl = config.provider.loginUrl;
-      window.location.href = loginUrl;
+      openmrsNavigate({ to: config.provider.loginUrl });
     }
   }, [config, user]);
 
