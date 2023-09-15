@@ -294,6 +294,8 @@ export const useVisit = jest.fn().mockReturnValue({
 
 export const useVisitTypes = jest.fn(() => []);
 
+export const useDebounce = jest.fn().mockImplementation((value) => value);
+
 /* esm-styleguide */
 
 export const showNotification = jest.fn();
