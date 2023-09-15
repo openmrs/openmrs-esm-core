@@ -1,3 +1,4 @@
+/** @module @category API */
 import { useEffect, useState } from "react";
 
 /**
@@ -24,7 +25,7 @@ import { useEffect, useState } from "react";
  * }
  * ```
  *
- * @param value: The value that will be used to set `debounceValue`
+ * @param value T: The value that will be used to set `debounceValue`
  * @param delay number = 300: The number of milliseconds to wait before updating `debounceValue`
  * @returns debounceValue: The debounced value
  */

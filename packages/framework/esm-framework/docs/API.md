@@ -26,6 +26,7 @@
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
+- [useDebounce](API.md#usedebounce)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [useSession](API.md#usesession)
@@ -62,6 +63,7 @@
 - [formatDate](API.md#formatdate)
 - [formatDatetime](API.md#formatdatetime)
 - [formatTime](API.md#formattime)
+- [getLocale](API.md#getlocale)
 - [isOmrsDateStrict](API.md#isomrsdatestrict)
 - [isOmrsDateToday](API.md#isomrsdatetoday)
 - [parseDate](API.md#parsedate)
@@ -154,7 +156,6 @@
 ### Other Functions
 
 - [ExtensionSlot](API.md#extensionslot)
-- [useDebounce](API.md#usedebounce)
 
 ### Store Functions
 
@@ -819,6 +820,16 @@ and *must* only be used once within that `<ExtensionSlot>`.
 
 ___
 
+### OpenmrsDatePicker
+
+• `Const` **OpenmrsDatePicker**: `React.FC`<`OpenmrsDatePickerProps`\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L41)
+
+___
+
 ### backendDependencies
 
 • `Const` **backendDependencies**: `Object`
@@ -1364,6 +1375,58 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L96)
+
+___
+
+### useDebounce
+
+▸ **useDebounce**<`T`\>(`value`, `delay?`): `T`
+
+This hook debounces a state variable. That state variable can then be used as the
+value of a controlled input, while the return value of this hook is used for making
+a request.
+
+**`example`**
+```tsx
+import { useDebounce } from "@openmrs/esm-react-utils";
+
+function MyComponent() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
+  const swrResult = useSWR(`/api/search?q=${debouncedSearchTerm}`)
+
+ return (
+   <Search
+     labelText={t('search', 'Search')}
+     onChange={(e) => setSearchTerm(e.target.value)}
+     value={searchTerm}
+   />
+ )
+}
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `T` | `undefined` | T: The value that will be used to set `debounceValue` |
+| `delay` | `number` | `300` | number = 300: The number of milliseconds to wait before updating `debounceValue` |
+
+#### Returns
+
+`T`
+
+debounceValue: The debounced value
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useDebounce.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDebounce.ts#L32)
 
 ___
 
@@ -1967,6 +2030,20 @@ Formats the input as a time, according to the current locale.
 #### Defined in
 
 [packages/framework/esm-utils/src/omrs-dates.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L246)
+
+___
+
+### getLocale
+
+▸ **getLocale**(): `string`
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L269)
 
 ___
 
@@ -3749,60 +3826,6 @@ Passing a function as children
 #### Defined in
 
 [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L85)
-
-___
-
-### useDebounce
-
-▸ **useDebounce**<`T`\>(`value`, `delay?`): `T`
-
-This hook debounces a state variable. That state variable can then be used as the
-value of a controlled input, while the return value of this hook is used for making
-a request.
-
-**`example`**
-
-```tsx
-import { useDebounce } from "@openmrs/esm-react-utils";
-
-function MyComponent() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm);
-  const swrResult = useSWR(`/api/search?q=${debouncedSearchTerm}`) 
-
- return (
-   <Search
-labelText={t('search', 'Search')}
-onChange={(e) => setSearchTerm(e.target.value)}
-value={searchTerm}
-/>
- )
-}
-
-```
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `value` | `T` | `undefined` | - |
-| `delay` | `number` | `300` | number = 300: The number of milliseconds to wait before updating `debounceValue` |
-
-#### Returns
-
-`T`
-
-debounceValue: The debounced value
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useDebounce.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDebounce.ts#L33)
 
 ___
 
