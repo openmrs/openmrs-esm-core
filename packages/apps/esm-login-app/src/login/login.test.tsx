@@ -27,6 +27,8 @@ jest.mock("@openmrs/esm-framework", () => {
         }),
       };
     }),
+    // mock only the happy path
+    interpolateUrl: jest.fn().mockImplementation((url: string) => url),
   };
 });
 
