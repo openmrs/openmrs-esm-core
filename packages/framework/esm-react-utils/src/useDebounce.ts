@@ -25,9 +25,9 @@ import { useEffect, useState } from "react";
  * }
  * ```
  *
- * @param value T: The value that will be used to set `debounceValue`
- * @param delay number = 300: The number of milliseconds to wait before updating `debounceValue`
- * @returns debounceValue: The debounced value
+ * @param value The value that will be used to set `debounceValue`
+ * @param delay The number of milliseconds to wait before updating `debounceValue`
+ * @returns The debounced value
  */
 export function useDebounce<T>(value: T, delay: number = 300) {
   const [debounceValue, setDebounceValue] = useState<T>(value);

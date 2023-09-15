@@ -1415,14 +1415,14 @@ function MyComponent() {
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `value` | `T` | `undefined` | T: The value that will be used to set `debounceValue` |
-| `delay` | `number` | `300` | number = 300: The number of milliseconds to wait before updating `debounceValue` |
+| `value` | `T` | `undefined` | The value that will be used to set `debounceValue` |
+| `delay` | `number` | `300` | The number of milliseconds to wait before updating `debounceValue` |
 
 #### Returns
 
 `T`
 
-debounceValue: The debounced value
+The debounced value
 
 #### Defined in
 
