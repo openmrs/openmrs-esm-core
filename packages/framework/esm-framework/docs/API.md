@@ -2037,13 +2037,17 @@ ___
 
 ▸ **getLocale**(): `string`
 
+Returns the current locale of the application.
+
 #### Returns
 
 `string`
 
+string
+
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L269)
+[packages/framework/esm-utils/src/omrs-dates.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L273)
 
 ___
 
