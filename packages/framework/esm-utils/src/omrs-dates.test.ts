@@ -145,6 +145,8 @@ describe("Openmrs Dates", () => {
           day: "2-digit",
         })
         .replace(/ /g, "-") + ", 03:22 PM";
-    expect(formatDate(testDate, { noToday: true })).toEqual(expected);
+    expect(
+      formatDate(testDate, { noToday: true }).replaceAll(/[\u202F]/g, " ")
+    ).toEqual(expected);
   });
 });

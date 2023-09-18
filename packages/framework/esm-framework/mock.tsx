@@ -1,7 +1,7 @@
 import React from "react";
 import type {} from "@openmrs/esm-globals";
 import { createStore, StoreApi } from "zustand";
-import { never, of } from "rxjs";
+import { NEVER, of } from "rxjs";
 import { interpolateUrl } from "@openmrs/esm-config";
 import { SessionStore } from "@openmrs/esm-api";
 export {
@@ -193,7 +193,7 @@ export const ConfigurableLink = jest
 export const importDynamic = jest.fn();
 
 /* esm-error-handling */
-export const createErrorHandler = () => jest.fn().mockReturnValue(never());
+export const createErrorHandler = () => jest.fn().mockReturnValue(NEVER);
 
 export const reportError = jest.fn().mockImplementation((error) => {
   throw error;
@@ -293,6 +293,8 @@ export const useVisit = jest.fn().mockReturnValue({
 });
 
 export const useVisitTypes = jest.fn(() => []);
+
+export const useDebounce = jest.fn().mockImplementation((value) => value);
 
 /* esm-styleguide */
 

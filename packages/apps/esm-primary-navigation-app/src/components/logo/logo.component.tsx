@@ -1,5 +1,5 @@
 import React from "react";
-import { useConfig } from "@openmrs/esm-framework";
+import { interpolateUrl, useConfig } from "@openmrs/esm-framework";
 import styles from "./logo.scss";
 
 const Logo: React.FC = () => {
@@ -10,7 +10,7 @@ const Logo: React.FC = () => {
       {logo?.src ? (
         <img
           className={styles.logo}
-          src={logo.src}
+          src={interpolateUrl(logo.src)}
           alt={logo.alt}
           width={110}
           height={40}

@@ -7,6 +7,7 @@ const mockUseConfig = useConfig as jest.Mock;
 
 jest.mock("@openmrs/esm-framework", () => ({
   useConfig: jest.fn(),
+  interpolateUrl: jest.fn(),
 }));
 
 describe("<Logo/>", () => {

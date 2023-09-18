@@ -26,6 +26,7 @@
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
+- [useDebounce](API.md#usedebounce)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [useSession](API.md#usesession)
@@ -1377,6 +1378,58 @@ ___
 
 ___
 
+### useDebounce
+
+▸ **useDebounce**<`T`\>(`value`, `delay?`): `T`
+
+This hook debounces a state variable. That state variable can then be used as the
+value of a controlled input, while the return value of this hook is used for making
+a request.
+
+**`example`**
+```tsx
+import { useDebounce } from "@openmrs/esm-react-utils";
+
+function MyComponent() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
+  const swrResult = useSWR(`/api/search?q=${debouncedSearchTerm}`)
+
+ return (
+   <Search
+     labelText={t('search', 'Search')}
+     onChange={(e) => setSearchTerm(e.target.value)}
+     value={searchTerm}
+   />
+ )
+}
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `T` | `undefined` | The value that will be used to set `debounceValue` |
+| `delay` | `number` | `300` | The number of milliseconds to wait before updating `debounceValue` |
+
+#### Returns
+
+`T`
+
+The debounced value
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useDebounce.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDebounce.ts#L32)
+
+___
+
 ### useLocations
 
 ▸ **useLocations**(): [`Location`](interfaces/Location.md)[]
@@ -1984,17 +2037,13 @@ ___
 
 ▸ **getLocale**(): `string`
 
-Returns the current locale of the application.
-
 #### Returns
 
 `string`
 
-string
-
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L273)
+[packages/framework/esm-utils/src/omrs-dates.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L269)
 
 ___
 
