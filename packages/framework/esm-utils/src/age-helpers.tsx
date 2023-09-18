@@ -34,13 +34,12 @@ export function isSameDay(firstDate: Date, secondDate: Date) {
 }
 
 /**
- * Gets a human readable age represention of the provided date string.
+ * Gets a human readable and locale supported age represention of the provided date string.
  * @param dateString The stringified date.
  * @returns A human-readable string version of the age.
  */
 export function age(dateString: string): string {
-  // Based on http://www.gregoryschmidt.ca/writing/patient-age-display-ehr-conventions,
-  // which is different from npm packages such as https://www.npmjs.com/package/timeago
+  // Different from npm packages such as https://www.npmjs.com/package/timeago
 
   // First calculate the age in years
   const today = new Date();
@@ -118,13 +117,13 @@ export function age(dateString: string): string {
   if (age === 0) {
     if (isSameDay(today, birthDate)) {
       return rtf.format(0, "day");
-    } else if (weeksAgo < 4) {
+    } else if (totalDaysAgo < 31) {
       return totalDaysAgoStr;
     } else {
       return `${weeksAgoStr} ${remainderDaysAgoStr}}`.trim();
     }
-  } else if (age < 18) {
-    return `${yearsAgoStr} ${monthsAgoStr}`.trim();
+  } else if (age < 2) {
+    return monthsAgoStr;
   } else {
     return yearsAgoStr;
   }

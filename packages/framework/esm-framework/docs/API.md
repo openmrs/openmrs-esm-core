@@ -62,6 +62,7 @@
 - [formatDate](API.md#formatdate)
 - [formatDatetime](API.md#formatdatetime)
 - [formatTime](API.md#formattime)
+- [getLocale](API.md#getlocale)
 - [isOmrsDateStrict](API.md#isomrsdatestrict)
 - [isOmrsDateToday](API.md#isomrsdatetoday)
 - [parseDate](API.md#parsedate)
@@ -815,6 +816,16 @@ and *must* only be used once within that `<ExtensionSlot>`.
 #### Defined in
 
 [packages/framework/esm-react-utils/src/Extension.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L36)
+
+___
+
+### OpenmrsDatePicker
+
+• `Const` **OpenmrsDatePicker**: `React.FC`<`OpenmrsDatePickerProps`\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L41)
 
 ___
 
@@ -1969,6 +1980,24 @@ Formats the input as a time, according to the current locale.
 
 ___
 
+### getLocale
+
+▸ **getLocale**(): `string`
+
+Returns the current locale of the application.
+
+#### Returns
+
+`string`
+
+string
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L273)
+
+___
+
 ### isOmrsDateStrict
 
 ▸ **isOmrsDateStrict**(`omrsPayloadString`): `boolean`
@@ -2383,7 +2412,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:373](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L373)
+[packages/framework/esm-extensions/src/extensions.ts:375](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L375)
 
 ___
 
@@ -4382,7 +4411,7 @@ ___
 
 ▸ **age**(`dateString`): `string`
 
-Gets a human readable age represention of the provided date string.
+Gets a human readable and locale supported age represention of the provided date string.
 
 #### Parameters
 
@@ -4398,7 +4427,7 @@ A human-readable string version of the age.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L39)
+[packages/framework/esm-utils/src/age-helpers.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L41)
 
 ___
 
@@ -4422,7 +4451,7 @@ The number of days.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L8)
+[packages/framework/esm-utils/src/age-helpers.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L10)
 
 ___
 
@@ -4447,7 +4476,7 @@ True if both are located on the same day.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L25)
+[packages/framework/esm-utils/src/age-helpers.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L27)
 
 ___
 
