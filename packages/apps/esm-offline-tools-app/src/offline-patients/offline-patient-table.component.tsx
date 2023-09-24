@@ -2,10 +2,7 @@ import React, { useMemo, useState } from "react";
 import {
   Button,
   DataTable,
-  DataTableCustomRenderProps,
   DataTableSkeleton,
-  DenormalizedRow,
-  FilterRowsData,
   Layer,
   Search,
   SearchSkeleton,
@@ -53,6 +50,7 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
   isInteractive,
   showHeader,
 }) => {
+  // TODO: Restore @carbon/react type annotations
   const { t } = useTranslation();
   const layout = useLayoutType();
   const offlinePatientsSwr = useOfflinePatientsWithEntries();
@@ -64,9 +62,7 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
   const headers = useOfflinePatientTableHeaders();
   const rows = useOfflinePatientTableRows(syncingPatientUuids);
 
-  const handleUpdateSelectedPatientsClick = async (
-    selectedRows: ReadonlyArray<DenormalizedRow>
-  ) => {
+  const handleUpdateSelectedPatientsClick = async (selectedRows) => {
     const selectedPatientUuids = selectedRows.map((row) => row.id);
     setSyncingPatientUuids(selectedPatientUuids);
     await syncSelectedOfflinePatients(selectedPatientUuids).finally(() =>
@@ -77,9 +73,7 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
     offlineRegisteredPatientsSwr.mutate();
   };
 
-  const handleRemovePatientsFromOfflineListClick = async (
-    selectedRows: ReadonlyArray<DenormalizedRow>
-  ) => {
+  const handleRemovePatientsFromOfflineListClick = async (selectedRows) => {
     const closeModal = showModal("offline-tools-confirmation-modal", {
       title: t(
         "offlinePatientsTableDeleteConfirmationModalTitle",
@@ -138,7 +132,7 @@ const OfflinePatientTable: React.FC<OfflinePatientTableProps> = ({
           getSelectionProps,
           onInputChange,
           selectedRows,
-        }: DataTableCustomRenderProps) => (
+        }) => (
           <TableContainer
             className={styles.tableContainer}
             {...getTableContainerProps()}
@@ -254,7 +248,7 @@ function filterTableRows({
   inputValue,
   // @ts-ignore `getCellId` is not in the types, but present in Carbon.
   getCellId,
-}: FilterRowsData) {
+}) {
   return rowIds.filter((rowId) =>
     headers.some(({ key }) => {
       const cellId = getCellId(rowId, key);

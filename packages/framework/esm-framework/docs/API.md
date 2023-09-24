@@ -851,7 +851,7 @@ ___
 
 ### LeftNavMenu
 
-• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`Pick`<`SideNavProps`, `string` \| `number` \| `symbol`\> & `RefAttributes`<`HTMLElement`\>\>
+• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`RefAttributes`<`HTMLElement`\>\>
 
 #### Defined in
 
