@@ -1,4 +1,5 @@
 @use "@carbon/styles/scss/spacing";
+@use "@carbon/styles/scss/utilities/layout";
 @use "@carbon/colors";
 
 /* UI Shell Header */
@@ -49,6 +50,10 @@
 }
 
 /* Content Switcher */
+.cds--content-switcher {
+  @include layout.use("size", $default: "sm");
+}
+
 .cds--content-switcher-btn {
   background-color: $ui-02;
   border: none;
