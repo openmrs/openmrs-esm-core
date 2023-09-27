@@ -8,5 +8,6 @@
   "@openmrs/esm-framework",
   "@openmrs/esm-framework/src/internal",
   "rxjs",
-  "single-spa"
+  "single-spa",
+  "swr"
 ]

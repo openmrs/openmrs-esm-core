@@ -3667,8 +3667,10 @@ __metadata:
     react-i18next: ^11.7.0
     react-router-dom: ^6.3.0
     rxjs: ^6.5.3
+    semver: ^7.3.4
     single-spa: ^5.9.2
     swc-loader: ^0.2.3
+    swr: ^2.2.2
     systemjs: ^6.8.3
     webpack: ^5.88.0
     webpack-pwa-manifest: ^4.3.0
@@ -3860,6 +3862,7 @@ __metadata:
     react-i18next: 11.x
     rxjs: 6.x
     single-spa: 5.x
+    swr: 2.x
   languageName: unknown
   linkType: soft
 
@@ -3887,7 +3890,7 @@ __metadata:
     react-dom: ^18.1.0
     react-i18next: ^11.16.9
     rxjs: ^6.5.3
-    swr: ^2.0.1
+    swr: ^2.2.2
     webpack: ^5.88.0
   peerDependencies:
     "@openmrs/esm-framework": "*"
@@ -3895,6 +3898,7 @@ __metadata:
     react-dom: 18.x
     react-i18next: 11.x
     rxjs: 6.x
+    swr: 2.x
   languageName: unknown
   linkType: soft
 
@@ -3912,7 +3916,7 @@ __metadata:
     react-i18next: ^11.16.9
     react-router-dom: ^6.3.0
     rxjs: ^6.5.3
-    swr: ^2.0.1
+    swr: ^2.2.2
     webpack: ^5.88.0
   peerDependencies:
     "@openmrs/esm-framework": "*"
@@ -3921,6 +3925,7 @@ __metadata:
     react-i18next: 11.x
     react-router-dom: 6.x
     rxjs: 6.x
+    swr: 2.x
   languageName: unknown
   linkType: soft
 
@@ -3939,7 +3944,7 @@ __metadata:
     react-i18next: ^11.16.9
     react-router-dom: ^6.3.0
     rxjs: ^6.5.3
-    swr: ^2.0.1
+    swr: ^2.2.2
   peerDependencies:
     "@openmrs/esm-framework": "*"
     react: 18.x
@@ -3947,6 +3952,7 @@ __metadata:
     react-i18next: 11.x
     react-router-dom: 6.x
     rxjs: 6.x
+    swr: 2.x
   languageName: unknown
   linkType: soft
 
@@ -4017,7 +4023,7 @@ __metadata:
     react-i18next: ^11.16.9
     rxjs: ^6.5.3
     single-spa-react: ~5.0.0
-    swr: ^2.0.1
+    swr: ^2.2.2
     webpack: ^5.88.0
   peerDependencies:
     "@openmrs/esm-api": 5.x
@@ -4030,6 +4036,7 @@ __metadata:
     react: 18.x
     react-dom: 18.x
     react-i18next: 11.x
+    swr: 2.x
   languageName: unknown
   linkType: soft
 
@@ -7882,6 +7889,13 @@ __metadata:
   version: 3.0.0
   resolution: "cli-width@npm:3.0.0"
   checksum: 4c94af3769367a70e11ed69aa6095f1c600c0ff510f3921ab4045af961820d57c0233acfa8b6396037391f31b4c397e1f614d234294f979ff61430a6c166c3f6
+  languageName: node
+  linkType: hard
+
+"client-only@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "client-only@npm:0.0.1"
+  checksum: 0c16bf660dadb90610553c1d8946a7fdfb81d624adea073b8440b7d795d5b5b08beb3c950c6a2cf16279365a3265158a236876d92bce16423c485c322d7dfaf8
   languageName: node
   linkType: hard
 
@@ -18982,14 +18996,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "swr@npm:2.0.1"
+"swr@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "swr@npm:2.2.2"
   dependencies:
+    client-only: ^0.0.1
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^16.11.0 || ^17.0.0 || ^18.0.0
-  checksum: 5466e46a80bccf722c212ea3f14668b4e7f047d958f3da7252fba3529e6b1773a1762aa4bbf43aec104cc50625dbd55380539eeef59fd5ad9ebca6ad0552f45d
+  checksum: afb3d4824f7631bc3a045483f4e4beb5ca9bfa82b64690b3d1133cdf0666ad8e4a9a879657fac5b34dbf19ea9a1503cf92c9bde972f3d40cefe434c73bd9627a
   languageName: node
   linkType: hard
 

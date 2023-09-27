@@ -40,8 +40,7 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "single-spa-react": "~5.0.0",
-    "swr": "^2.0.1"
+    "single-spa-react": "~5.0.0"
   },
   "peerDependencies": {
     "@openmrs/esm-api": "5.x",
@@ -53,7 +52,8 @@
     "i18next": "19.x",
     "react": "18.x",
     "react-dom": "18.x",
-    "react-i18next": "11.x"
+    "react-i18next": "11.x",
+    "swr": "2.x"
   },
   "devDependencies": {
     "@openmrs/esm-api": "^5.1.0",
@@ -68,6 +68,7 @@
     "react-dom": "^18.1.0",
     "react-i18next": "^11.16.9",
     "rxjs": "^6.5.3",
+    "swr": "^2.2.2",
     "webpack": "^5.88.0"
   }
 }
