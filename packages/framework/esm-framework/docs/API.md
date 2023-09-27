@@ -3176,10 +3176,16 @@ ___
 
 ### getDynamicOfflineDataEntries
 
-▸ **getDynamicOfflineDataEntries**(`type?`): `Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
+▸ **getDynamicOfflineDataEntries**<`T`\>(`type?`): `Promise`<`T`[]\>
 
 Returns all [DynamicOfflineData](interfaces/DynamicOfflineData.md) entries which registered for the currently logged in user.
 Optionally returns only entries of a given type.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`DynamicOfflineData`](interfaces/DynamicOfflineData.md) |
 
 #### Parameters
 
@@ -3189,7 +3195,7 @@ Optionally returns only entries of a given type.
 
 #### Returns
 
-`Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
+`Promise`<`T`[]\>
 
 #### Defined in
 
@@ -3199,10 +3205,16 @@ ___
 
 ### getDynamicOfflineDataEntriesFor
 
-▸ **getDynamicOfflineDataEntriesFor**(`userId`, `type?`): `Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
+▸ **getDynamicOfflineDataEntriesFor**<`T`\>(`userId`, `type?`): `Promise`<`T`[]\>
 
 Returns all [DynamicOfflineData](interfaces/DynamicOfflineData.md) entries which registered for the given user.
 Optionally returns only entries of a given type.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`DynamicOfflineData`](interfaces/DynamicOfflineData.md) |
 
 #### Parameters
 
@@ -3213,7 +3225,7 @@ Optionally returns only entries of a given type.
 
 #### Returns
 
-`Promise`<[`DynamicOfflineData`](interfaces/DynamicOfflineData.md)[]\>
+`Promise`<`T`[]\>
 
 #### Defined in
 
@@ -3432,7 +3444,7 @@ should be made available offline for the currently logged in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:162](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L162)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:161](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L161)
 
 ___
 
@@ -3457,7 +3469,7 @@ should be made available offline for the user with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L177)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:176](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L176)
 
 ___
 
@@ -3534,7 +3546,7 @@ no longer needs to be available offline for the currently logged in user.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L213)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:212](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L212)
 
 ___
 
@@ -3559,7 +3571,7 @@ no longer needs to be available offline for the user with the given ID.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L228)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L227)
 
 ___
 
@@ -3714,7 +3726,7 @@ Synchronizes all offline data entries of the given [type](interfaces/FetchRespon
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L262)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L261)
 
 ___
 
@@ -3738,7 +3750,7 @@ Synchronizes a single offline data entry of the given [type](interfaces/FetchRes
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:280](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L280)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:279](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L279)
 
 ___
 

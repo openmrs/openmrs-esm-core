@@ -8,8 +8,9 @@ const WebpackPwaManifest = require("webpack-pwa-manifest");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const { DefinePlugin, container } = require("webpack");
 const { basename, dirname, resolve } = require("path");
-const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
 const { readdirSync, statSync, readFileSync } = require("fs");
+const semver = require("semver");
+const { removeTrailingSlash, getTimestamp } = require("./tools/helpers");
 
 const { name, version, dependencies } = require("./package.json");
 const sharedDependencies = require("./dependencies.json");
@@ -313,14 +314,42 @@ module.exports = (env, argv = {}) => {
       new ModuleFederationPlugin({
         name,
         shared: sharedDependencies.reduce((obj, depName) => {
-          obj[depName] = {
-            requiredVersion: dependencies[depName] ?? false,
-            singleton: true,
-            eager: true,
-            import: depName,
-            shareKey: depName,
-            shareScope: "default",
-          };
+          // This just attempts to align the requiredVersion with what we usually have in peerDependencies
+          let version = dependencies[depName];
+
+          if (version) {
+            if (version.startsWith("^")) {
+              version = `${semver.parse(version.slice(1)).major}.x`;
+            } else if (version.startsWith("~")) {
+              const semVer = semver.parse(version.slice(1));
+              version = `${semVer.major}.${semVer.minor}.x`;
+            } else if (depName === "@openmrs/esm-framework") {
+              version = `${semver.parse(version).major}.x`;
+            }
+          }
+
+          if (depName === "swr") {
+            // SWR is annoying with Module Federation
+            // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
+            obj["swr/"] = {
+              requiredVersion: version,
+              singleton: true,
+              eager: true,
+              import: "swr/",
+              shareKey: "swr/",
+              shareScope: "default",
+              version: require("swr/package.json").version,
+            };
+          } else {
+            obj[depName] = {
+              requiredVersion: version ?? false,
+              singleton: true,
+              eager: true,
+              import: depName,
+              shareKey: depName,
+              shareScope: "default",
+            };
+          }
           return obj;
         }, {}),
       }),

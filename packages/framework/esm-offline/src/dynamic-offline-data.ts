@@ -128,11 +128,11 @@ export function setupDynamicOfflineDataHandler(
  * Optionally returns only entries of a given type.
  * @param type The type of the entries to be returned. If `undefined`, returns all types.
  */
-export async function getDynamicOfflineDataEntries(
-  type?: string
-): Promise<Array<DynamicOfflineData>> {
+export async function getDynamicOfflineDataEntries<
+  T extends DynamicOfflineData
+>(type?: string): Promise<Array<T>> {
   const userId = await getCurrentUserId();
-  return await getDynamicOfflineDataEntriesFor(userId, type);
+  return await getDynamicOfflineDataEntriesFor<T>(userId, type);
 }
 
 /**
@@ -141,16 +141,15 @@ export async function getDynamicOfflineDataEntries(
  * @param userId The ID of the user whose entries are to be retrieved.
  * @param type The type of the entries to be returned. If `undefined`, returns all types.
  */
-export async function getDynamicOfflineDataEntriesFor(
-  userId: string,
-  type?: string
-): Promise<Array<DynamicOfflineData>> {
+export async function getDynamicOfflineDataEntriesFor<
+  T extends DynamicOfflineData
+>(userId: string, type?: string): Promise<Array<T>> {
   const filter = type ? { type, users: userId } : { users: userId };
   const db = new OfflineDb();
-  return await db.dynamicOfflineData
+  return (await db.dynamicOfflineData
     .where(filter)
     .toArray()
-    .catch(Dexie.errnames.DatabaseClosed, () => []);
+    .catch(Dexie.errnames.DatabaseClosed, () => [])) as Array<T>;
 }
 
 /**

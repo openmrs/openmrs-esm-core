@@ -121,8 +121,11 @@ function useMergedSwr<T>(
     const areAllLoaded = swrResponses.every((res) => !!res.data);
     const data = areAllLoaded ? merge() : null;
     const error = swrResponses.find((res) => res.error);
-    const mutate = () =>
-      Promise.all(swrResponses.map((res) => res.mutate())).then(merge);
+    const mutate: () => Promise<undefined> = () =>
+      Promise.all(swrResponses.map((res) => res.mutate())).then(() => {
+        merge();
+        return undefined;
+      });
     const isValidating = swrResponses.some((res) => res.isValidating);
     const isLoading = swrResponses.some((res) => res.isLoading);
 
@@ -133,10 +136,5 @@ function useMergedSwr<T>(
       isValidating,
       isLoading,
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    merge,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    ...swrResponses.flatMap((res) => [res.data, res.error, res.isValidating]),
-  ]);
+  }, [merge, swrResponses]);
 }
