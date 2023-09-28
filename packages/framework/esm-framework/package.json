@@ -59,7 +59,8 @@
     "react-dom": "18.x",
     "react-i18next": "11.x",
     "rxjs": "6.x",
-    "single-spa": "5.x"
+    "single-spa": "5.x",
+    "swr": "2.x"
   },
   "devDependencies": {
     "jest": "28.1.0",

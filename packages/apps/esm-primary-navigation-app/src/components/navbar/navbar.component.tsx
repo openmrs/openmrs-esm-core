@@ -190,7 +190,7 @@ const Navbar: React.FC = () => {
       <HeaderContainer render={memo(HeaderItems)}></HeaderContainer>
     ) : (
       <Navigate
-        to={`${openmrsSpaBase}login/location`}
+        to={`/login/location`}
         state={{
           referrer: window.location.pathname.slice(
             window.location.pathname.indexOf(openmrsSpaBase) +
@@ -204,7 +204,7 @@ const Navbar: React.FC = () => {
 
   return (
     <Navigate
-      to={`${openmrsSpaBase}login`}
+      to={`/login`}
       state={{
         referrer: window.location.pathname.slice(
           window.location.pathname.indexOf(openmrsSpaBase) +

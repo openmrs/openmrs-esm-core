@@ -34,7 +34,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.12.0",
+    "@carbon/react": "^1.37.0",
     "@openmrs/esm-framework": "5.1.0",
     "@openmrs/esm-styleguide": "5.1.0",
     "dayjs": "^1.10.4",
@@ -50,8 +50,10 @@
     "react-i18next": "^11.7.0",
     "react-router-dom": "^6.3.0",
     "rxjs": "^6.5.3",
+    "semver": "^7.3.4",
     "single-spa": "^5.9.2",
     "swc-loader": "^0.2.3",
+    "swr": "^2.2.2",
     "systemjs": "^6.8.3",
     "webpack": "^5.88.0",
     "webpack-pwa-manifest": "^4.3.0",

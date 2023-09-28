@@ -267,13 +267,27 @@ export default (
           ...Object.keys(peerDependencies),
           "@openmrs/esm-framework/src/internal",
         ].reduce((obj, depName) => {
-          obj[depName] = {
-            requiredVersion: peerDependencies[depName] ?? false,
-            singleton: true,
-            import: depName,
-            shareKey: depName,
-            shareScope: "default",
-          };
+          if (depName === "swr") {
+            // SWR is annoying with Module Federation
+            // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
+            obj["swr/"] = {
+              requiredVersion: version,
+              singleton: true,
+              import: "swr/",
+              shareKey: "swr/",
+              shareScope: "default",
+              version: require("swr/package.json").version,
+            };
+          } else {
+            obj[depName] = {
+              requiredVersion: peerDependencies[depName] ?? false,
+              singleton: true,
+              import: depName,
+              shareKey: depName,
+              shareScope: "default",
+            };
+          }
+
           return obj;
         }, {}),
       }),

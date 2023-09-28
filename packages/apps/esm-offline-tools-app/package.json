@@ -38,9 +38,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.12.0",
+    "@carbon/react": "^1.37.0",
     "lodash-es": "^4.17.21",
-    "swr": "^2.0.1"
+    "swr": "^2.2.2"
   },
   "peerDependencies": {
     "@openmrs/esm-framework": "*",
@@ -48,7 +48,8 @@
     "react-dom": "18.x",
     "react-i18next": "11.x",
     "react-router-dom": "6.x",
-    "rxjs": "6.x"
+    "rxjs": "6.x",
+    "swr": "2.x"
   },
   "devDependencies": {
     "@openmrs/esm-framework": "^5.1.0",

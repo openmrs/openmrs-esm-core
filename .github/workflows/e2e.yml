@@ -32,7 +32,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
-        run: yarn setup
+        run: yarn install --immutable
 
       - name: Install Playwright Browsers
         run: yarn playwright install chromium --with-deps

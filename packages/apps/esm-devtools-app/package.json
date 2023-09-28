@@ -50,6 +50,6 @@
     "webpack": "^5.88.0"
   },
   "dependencies": {
-    "@carbon/react": "^1.12.0"
+    "@carbon/react": "^1.37.0"
   }
 }

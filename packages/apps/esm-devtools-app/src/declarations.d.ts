@@ -1,3 +1,5 @@
+declare module "@carbon/react";
+
 declare namespace JSX {
   interface IntrinsicElements {
     "import-map-overrides-list": any;
@@ -13,3 +15,5 @@ declare module "*.scss" {
   const styles: any;
   export default styles;
 }
+
+declare type SideNavProps = {};

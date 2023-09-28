@@ -47,12 +47,20 @@ export function useLoginLocations(
   searchQuery: string = ""
 ): LoginLocationData {
   const { t } = useTranslation();
-  function constructUrl(page, prevPageData: FetchResponse<LocationResponse>) {
-    if (
-      prevPageData &&
-      !prevPageData?.data?.link?.some((link) => link.relation === "next")
-    ) {
-      return null;
+  function constructUrl(
+    page: number,
+    prevPageData: FetchResponse<LocationResponse>
+  ) {
+    if (prevPageData) {
+      const nextLink = prevPageData.data?.link?.find(
+        (link) => link.relation === "next"
+      );
+
+      if (!nextLink) {
+        return null;
+      }
+
+      return nextLink.url;
     }
 
     let url = `${fhirBaseUrl}/Location?`;
