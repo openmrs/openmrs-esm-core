@@ -92,7 +92,7 @@ export function age(dateString: string): string {
       style: "unit",
       unit: "month",
       unitDisplay: "short",
-    }).format(monthsAgo);
+    }).format(monthsAgo + 12);
 
     return monthsAgoStr;
   } else {
