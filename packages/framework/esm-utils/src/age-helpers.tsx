@@ -64,67 +64,43 @@ export function age(dateString: string): string {
   }
   const weeksAgo = Math.floor(totalDaysAgo / 7);
 
-  // The "remainder" number of days after the weeksAgo number of weeks
-  const remainderDaysInWeek = totalDaysAgo - weeksAgo * 7;
-
-  const rtf = new Intl.RelativeTimeFormat(getLocale(), { numeric: "auto" });
-
-  const totalDaysAgoStr =
-    totalDaysAgo > 0
-      ? new Intl.NumberFormat(getLocale(), {
-          style: "unit",
-          unit: "day",
-          unitDisplay: "short",
-        }).format(totalDaysAgo)
-      : "";
-
-  const remainderDaysAgoStr = remainderDaysInWeek
-    ? new Intl.NumberFormat(getLocale(), {
-        style: "unit",
-        unit: "day",
-        unitDisplay: "short",
-      }).format(remainderDaysInWeek)
-    : "";
-
-  const weeksAgoStr =
-    weeksAgo > 0
-      ? new Intl.NumberFormat(getLocale(), {
-          style: "unit",
-          unit: "week",
-          unitDisplay: "short",
-        }).format(weeksAgo)
-      : "";
-
-  const monthsAgoStr =
-    monthsAgo > 0
-      ? new Intl.NumberFormat(getLocale(), {
-          style: "unit",
-          unit: "month",
-          unitDisplay: "short",
-        }).format(monthsAgo)
-      : "";
-
-  const yearsAgoStr =
-    age > 0
-      ? new Intl.NumberFormat(getLocale(), {
-          style: "unit",
-          unit: "year",
-          unitDisplay: "short",
-        }).format(age)
-      : "";
+  const locale = getLocale();
 
   // Depending on their age, return a different representation of their age.
   if (age === 0) {
     if (isSameDay(today, birthDate)) {
+      const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
       return rtf.format(0, "day");
     } else if (totalDaysAgo < 31) {
+      const totalDaysAgoStr = new Intl.NumberFormat(locale, {
+        style: "unit",
+        unit: "day",
+        unitDisplay: "short",
+      }).format(totalDaysAgo);
+
       return totalDaysAgoStr;
     } else {
-      return `${weeksAgoStr} ${remainderDaysAgoStr}}`.trim();
+      const weeksAgoStr = new Intl.NumberFormat(locale, {
+        style: "unit",
+        unit: "week",
+        unitDisplay: "short",
+      }).format(weeksAgo);
+      return weeksAgoStr;
     }
   } else if (age < 2) {
+    const monthsAgoStr = new Intl.NumberFormat(locale, {
+      style: "unit",
+      unit: "month",
+      unitDisplay: "short",
+    }).format(monthsAgo);
+
     return monthsAgoStr;
   } else {
+    const yearsAgoStr = new Intl.NumberFormat(locale, {
+      style: "unit",
+      unit: "year",
+      unitDisplay: "short",
+    }).format(age);
     return yearsAgoStr;
   }
 }
