@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-app-shell",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "license": "MPL-2.0",
   "main": "dist/openmrs.js",
   "scripts": {
@@ -35,8 +35,8 @@
   },
   "dependencies": {
     "@carbon/react": "^1.37.0",
-    "@openmrs/esm-framework": "5.1.0",
-    "@openmrs/esm-styleguide": "5.1.0",
+    "@openmrs/esm-framework": "5.2.0",
+    "@openmrs/esm-styleguide": "5.2.0",
     "dayjs": "^1.10.4",
     "dexie": "^3.0.3",
     "html-webpack-plugin": "^5.5.0",
