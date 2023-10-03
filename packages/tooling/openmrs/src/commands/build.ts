@@ -155,8 +155,8 @@ export async function runBuild(args: BuildArgs) {
 
   return await new Promise<void>((resolve, reject) => {
     compiler.run((err, stats) => {
-      if (err) {
-        reject(err);
+      if (err || stats?.hasErrors()) {
+        reject(err ?? stats?.compilation.errors);
       } else {
         stats &&
           console.log(
