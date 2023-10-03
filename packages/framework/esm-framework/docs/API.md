@@ -2037,13 +2037,17 @@ ___
 
 ▸ **getLocale**(): `string`
 
+Returns the current locale of the application.
+
 #### Returns
 
 `string`
 
+string
+
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L269)
+[packages/framework/esm-utils/src/omrs-dates.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L273)
 
 ___
 
@@ -4472,7 +4476,7 @@ ___
 
 ▸ **age**(`dateString`): `string`
 
-Gets a human readable age represention of the provided date string.
+Gets a human readable and locale supported age represention of the provided date string.
 
 #### Parameters
 
@@ -4488,7 +4492,7 @@ A human-readable string version of the age.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L39)
+[packages/framework/esm-utils/src/age-helpers.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L41)
 
 ___
 
@@ -4512,7 +4516,7 @@ The number of days.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L8)
+[packages/framework/esm-utils/src/age-helpers.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L10)
 
 ___
 
@@ -4537,7 +4541,7 @@ True if both are located on the same day.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L25)
+[packages/framework/esm-utils/src/age-helpers.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L27)
 
 ___
 
