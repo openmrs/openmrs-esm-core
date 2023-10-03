@@ -22,7 +22,15 @@ module.exports = (env) => ({
   module: {
     rules: [
       {
-        test: /\.s?[ac]ss$/i,
+        test: /\.css$/i,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          "css-loader",
+          { loader: require.resolve("postcss-loader") },
+        ],
+      },
+      {
+        test: /\.s[ac]ss$/i,
         use: [
           { loader: MiniCssExtractPlugin.loader },
           "css-loader",

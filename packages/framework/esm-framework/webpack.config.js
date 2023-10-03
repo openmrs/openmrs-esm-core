@@ -26,7 +26,14 @@ module.exports = (env) => ({
         use: "swc-loader",
       },
       {
-        test: /\.s?css$/,
+        test: /\.css$/,
+        use: [
+          { loader: require.resolve("style-loader") },
+          { loader: require.resolve("css-loader") },
+        ],
+      },
+      {
+        test: /\.scss$/,
         use: [
           { loader: require.resolve("style-loader") },
           { loader: require.resolve("css-loader") },
