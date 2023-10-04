@@ -22,10 +22,20 @@ export interface DevelopArgs {
   apiUrl: string;
   configUrls: Array<string>;
   addCookie: string;
+  supportOffline: boolean;
 }
 
 export function runDevelop(args: DevelopArgs) {
-  const { backend, host, port, open, importmap, configUrls, addCookie } = args;
+  const {
+    backend,
+    host,
+    port,
+    open,
+    importmap,
+    configUrls,
+    addCookie,
+    supportOffline,
+  } = args;
   const apiUrl = removeTrailingSlash(args.apiUrl);
   const spaPath = removeTrailingSlash(args.spaPath);
   const app = express();
@@ -44,7 +54,7 @@ export function runDevelop(args: DevelopArgs) {
           apiUrl: ${JSON.stringify(apiUrl)},
           spaPath: ${JSON.stringify(spaPath)},
           env: "development",
-          offline: true,
+          offline: ${supportOffline},
           configUrls: ${JSON.stringify(configUrls)},
         });
     </script>
@@ -96,9 +106,11 @@ export function runDevelop(args: DevelopArgs) {
   }
 
   // Route for custom `service-worker.js` before most things
-  app.get(`${spaPath}/service-worker.js`, (_, res) => {
-    res.contentType("js").send(swContent);
-  });
+  if (supportOffline) {
+    app.get(`${spaPath}/service-worker.js`, (_, res) => {
+      res.contentType("js").send(swContent);
+    });
+  }
 
   // Route for custom `index.html` goes above static assets
   app.get(indexHtmlPathMatcher, (_, res) =>

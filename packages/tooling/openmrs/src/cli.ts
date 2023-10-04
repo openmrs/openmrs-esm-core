@@ -176,7 +176,13 @@ yargs.command(
       )
       .string("routes")
       .default("routes", "routes.registry.json")
-      .describe("routes", "The routes.registry.json file to use."),
+      .describe("routes", "The routes.registry.json file to use.")
+      .boolean("support-offline")
+      .default("support-offline", false)
+      .describe(
+        "support-offline",
+        "Determines if a service worker should be installed for offline support."
+      ),
   async (args) =>
     runCommand("runDevelop", {
       configUrls: args["config-url"],
