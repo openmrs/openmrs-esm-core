@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import {
   navigate,
+  setUserLanguage,
   useConfig,
   useConnectivity,
   useSession,
@@ -19,6 +20,13 @@ const RedirectLogout: React.FC<RedirectLogoutProps> = () => {
       navigate({ to: "${openmrsSpaBase}/login" });
     } else {
       performLogout().then(() => {
+        const defaultLang =
+          document.documentElement.getAttribute("defaultLang");
+        setUserLanguage({
+          locale: defaultLang,
+          authenticated: false,
+          sessionId: "",
+        });
         if (config.provider.type === "oauth2") {
           navigate({ to: config.provider.logoutUrl });
         } else {

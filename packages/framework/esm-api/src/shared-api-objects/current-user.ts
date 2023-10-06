@@ -128,7 +128,7 @@ function isValidLocale(locale: unknown): locale is string {
   return true;
 }
 
-function setUserLanguage(data: Session) {
+export function setUserLanguage(data: Session) {
   const locale = data?.user?.userProperties?.defaultLocale ?? data.locale;
   const htmlLang = document.documentElement.getAttribute("lang");
 
