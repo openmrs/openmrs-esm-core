@@ -3,8 +3,8 @@ import styles from "./change-locale.scss";
 import { Select, SelectItem } from "@carbon/react";
 import {
   ExtensionSlot,
-  LoggedInUser,
   useConnectivity,
+  useSession,
 } from "@openmrs/esm-framework";
 import {
   PostSessionLocale,
@@ -17,16 +17,11 @@ import {
 import { useTranslation } from "react-i18next";
 
 export interface ChangeLocaleProps {
-  allowedLocales: Array<string>;
-  user: LoggedInUser;
-  locale: string;
   postUserProperties: PostUserProperties;
   postSessionLocale: PostSessionLocale;
 }
 
-const ChangeLocaleWrapper: React.FC<
-  Pick<ChangeLocaleProps, "allowedLocales" | "user" | "locale">
-> = (props) => {
+const ChangeLocaleWrapper: React.FC<{}> = () => {
   const isOnline = useConnectivity();
   const [postUserProperties, postSessionLocale] = useMemo(
     () =>
@@ -36,20 +31,16 @@ const ChangeLocaleWrapper: React.FC<
     [isOnline]
   );
 
-  return (
-    <ChangeLocale {...props} {...{ postUserProperties, postSessionLocale }} />
-  );
+  return <ChangeLocale {...{ postUserProperties, postSessionLocale }} />;
 };
 
 // exported for tests
 export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
-  allowedLocales,
-  locale,
-  user,
   postUserProperties,
   postSessionLocale,
 }) => {
   const { t } = useTranslation();
+  const { user, locale, allowedLocales } = useSession();
   const [selectedLocale, setSelectedLocale] = useState(
     user?.userProperties?.defaultLocale ?? locale
   );
