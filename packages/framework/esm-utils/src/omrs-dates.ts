@@ -50,7 +50,7 @@ export function isOmrsDateStrict(omrsPayloadString: string): boolean {
   }
 
   // checking UTC offset format
-  if (!(omrsPayloadString[23] === "+" && omrsPayloadString[26] !== ":")) {
+  if (!(omrsPayloadString[23] === "+" || omrsPayloadString[23] === "-")) {
     return false;
   }
 

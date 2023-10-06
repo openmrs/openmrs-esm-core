@@ -22,6 +22,7 @@ describe("Openmrs Dates", () => {
   it("checks if a string is openmrs date", () => {
     expect(isOmrsDateStrict("2018-03-19T00:00:00.000+0300")).toEqual(true);
     expect(isOmrsDateStrict(" 2018-03-19T00:00:00.000+0300 ")).toEqual(true);
+    expect(isOmrsDateStrict("2023-10-06T12:56:56.065-0400")).toEqual(true);
     // the exclusion test cases are important for strictness
     expect(isOmrsDateStrict("2018-03-19 00:00:00.000+0300")).toEqual(false);
     expect(isOmrsDateStrict("2018-03-19T00:00:00.000+03:00")).toEqual(false);
