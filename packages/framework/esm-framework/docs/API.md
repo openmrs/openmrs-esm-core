@@ -23,6 +23,7 @@
 - [saveVisit](API.md#savevisit)
 - [setCurrentVisit](API.md#setcurrentvisit)
 - [setSessionLocation](API.md#setsessionlocation)
+- [setUserLanguage](API.md#setuserlanguage)
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
@@ -1313,6 +1314,26 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-user.ts:254](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L254)
+
+___
+
+### setUserLanguage
+
+▸ **setUserLanguage**(`data`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`Session`](interfaces/Session.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L131)
 
 ___
 
