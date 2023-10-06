@@ -261,7 +261,7 @@ function PatientLink({ patientUuid, patientName }) {
     <Link
       onClick={() =>
         navigate({
-          to: `${window.getOpenmrsSpaBase()}patient/${patientUuid}/chart`,
+          to: `${window.getOpenmrsSpaBase()}patient/${patientUuid}/chart/Patient Summary`,
         })
       }
     >

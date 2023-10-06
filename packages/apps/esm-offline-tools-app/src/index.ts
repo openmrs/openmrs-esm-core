@@ -66,6 +66,20 @@ export const offlineToolsPatientsLink = getSyncLifecycle(
   options
 );
 
+export const offlineToolsActionsLink = getSyncLifecycle(
+  () =>
+    OfflineToolsNavLink({
+      page: "actions",
+      title: "Actions",
+    }),
+  options
+);
+
+export const offlineToolsActions = getAsyncLifecycle(
+  () => import("./offline-actions/offline-actions.component"),
+  options
+);
+
 export const offlineToolsPatients = getAsyncLifecycle(
   () => import("./offline-patients/offline-patients.component"),
   options

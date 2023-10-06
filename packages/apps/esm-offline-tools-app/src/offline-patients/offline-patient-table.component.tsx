@@ -343,7 +343,9 @@ function useOfflinePatientTableRows(syncingPatientUuids: Array<string>) {
 async function syncSelectedOfflinePatients(
   selectedPatientUuids: Array<string>
 ) {
-  const offlinePatientEntries = await getDynamicOfflineDataEntries("patient");
+  const offlinePatientEntries = await getDynamicOfflineDataEntries(
+    "patient-registration"
+  );
   const syncablePatientUuids = offlinePatientEntries.map(
     (entry) => entry.identifier
   );
