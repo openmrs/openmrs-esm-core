@@ -23,15 +23,16 @@ const ethiopianCalendarMonths = {
 };
 
 export function convertToEthiopianDate(date, options: FormatDateOptions) {
-  const splittedDate = dayjs(date).format("MM/DD/YYYY").split("/");
-  if (splittedDate.length === 3) {
-    let yearValue = parseInt(splittedDate[2]);
-    let monthValue = parseInt(splittedDate[0]);
-    let dayValue = parseInt(splittedDate[1]);
+  const parsedDate = dayjs(date);
+  if (parsedDate != null) {
+    let yearValue = parsedDate.get("year");
+    let monthValue = parsedDate.get("month") + 1;
+    let dayValue = parsedDate.get("date");
     let gregorianDate = new CalendarDate(yearValue, monthValue, dayValue);
     let ethiopianDate = toCalendar(gregorianDate, new EthiopicCalendar());
     return formatDate(ethiopianDate, options);
-  } else return null;
+  }
+  return null;
 }
 
 function formatDate(ethiopianDate, options) {
