@@ -1,4 +1,5 @@
 {
+  "actions": "Actions",
   "emptyStateText": "There are no {displayText} to display",
   "home": "Accueil",
   "homeHeader": "Accueil hors ligne",
@@ -55,5 +56,6 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Erreur inconnue.",
   "offlinePatientSyncDetailsHeader": "Détails des patients hors ligne",
   "offlineReady": "Prêt pour être hors ligne",
-  "offlineToolsAppMenuLink": "Outils hors ligne"
+  "offlineToolsAppMenuLink": "Outils hors ligne",
+  "patients": "Les patients"
 }
