@@ -64,7 +64,7 @@
     "autoprefixer": "^9.8.8",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "i18next": "^21.10.0",
-    "jest": "^28.1.2",
+    "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.6",
     "react": "^18.1.0",
