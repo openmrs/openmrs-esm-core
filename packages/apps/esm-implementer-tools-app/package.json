@@ -17,7 +17,7 @@
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx",
-    "extract-translations": "i18next 'src/**/*.component.tsx'"
+    "extract-translations": "i18next 'src/**/*.component.tsx' --config='../../../tools/i18next-parser.config.js'"
   },
   "keywords": [
     "openmrs",
@@ -56,7 +56,7 @@
     "react": "^18.1.0",
     "react-ace": "^9.5.0",
     "react-dom": "^18.1.0",
-    "react-i18next": "^11.16.9",
+    "react-i18next": "^11.18.6",
     "rxjs": "^6.5.3",
     "swr": "^2.2.2",
     "webpack": "^5.88.0"

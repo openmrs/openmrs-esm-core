@@ -4412,7 +4412,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `HTMLElement` = `HTMLElement` |
+| `T` | extends `HTMLElement`<`T`\> = `HTMLElement` |
 
 #### Parameters
 
