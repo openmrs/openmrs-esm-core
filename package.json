@@ -20,7 +20,6 @@
     "verify": "turbo run lint && turbo run test && turbo run typescript",
     "prettier": "prettier \"packages/**/src/**/*\" --write",
     "postinstall": "husky install",
-    "extract-translations": "lerna run extract-translations -- --config ../../../tools/i18next-parser.config.js",
     "test": "cross-env TZ=UTC jest --config jest.config.json --verbose false --passWithNoTests",
     "test-watch": "cross-env TZ=UTC jest --watch --config jest.config.json",
     "test-e2e": "playwright test",
