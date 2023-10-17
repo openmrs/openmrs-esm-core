@@ -70,7 +70,7 @@ describe(`<ChangeLocale />`, () => {
       />
     );
     expect(screen.getByLabelText(/Select locale/)).toHaveValue("fr");
-    await fireEvent.change(screen.getByLabelText(/Select locale/i), {
+    fireEvent.change(screen.getByLabelText(/Select locale/i), {
       target: { value: "en" },
     });
     await waitFor(() => {
