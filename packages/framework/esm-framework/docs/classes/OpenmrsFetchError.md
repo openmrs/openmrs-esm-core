@@ -164,7 +164,7 @@ Error.prepareStackTrace
 
 #### Defined in
 
-packages/framework/esm-framework/node_modules/@types/node/ts4.8/globals.d.ts:11
+node_modules/@types/node/ts4.8/globals.d.ts:11
 
 ___
 
@@ -178,7 +178,7 @@ Error.stackTraceLimit
 
 #### Defined in
 
-packages/framework/esm-framework/node_modules/@types/node/ts4.8/globals.d.ts:13
+node_modules/@types/node/ts4.8/globals.d.ts:13
 
 ## Methods
 
@@ -205,4 +205,4 @@ Error.captureStackTrace
 
 #### Defined in
 
-packages/framework/esm-framework/node_modules/@types/node/ts4.8/globals.d.ts:4
+node_modules/@types/node/ts4.8/globals.d.ts:4
