@@ -65,15 +65,6 @@ module.exports = {
   sort: true,
   // Whether or not to sort the catalog
 
-  skipDefaultValues: false,
-  // Whether to ignore default values
-  // You may also specify a function accepting the locale and namespace as arguments
-
-  useKeysAsDefaultValue: false,
-  // Whether to use the keys as the default value; ex. "Hello": "Hello", "World": "World"
-  // This option takes precedence over the `defaultValue` and `skipDefaultValues` options
-  // You may also specify a function accepting the locale and namespace as arguments
-
   verbose: false,
   // Display info about the parsing including some stats
 

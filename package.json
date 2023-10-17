@@ -51,11 +51,11 @@
     "fake-indexeddb": "^4.0.1",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "husky": "^8.0.1",
-    "i18next-parser": "^5.4.0",
+    "i18next-parser": "^6.6.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^28.1.0",
     "jest-cli": "^28.1.0",
-    "jest-environment-jsdom": "^28.1.0",
+    "jest-environment-jsdom": "^29.7.0",
     "lerna": "^4.0.0",
     "openmrs": "workspace:^",
     "postcss": "^8.4.6",
@@ -73,8 +73,7 @@
     "webpack": "^5.88.0"
   },
   "resolutions": {
-    "minipass": "3.3.5",
-    "parse5": "^6"
+    "minipass": "3.3.5"
   },
   "packageManager": "yarn@3.3.0"
 }
