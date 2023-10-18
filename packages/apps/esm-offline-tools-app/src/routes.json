@@ -59,6 +59,24 @@
       "offline": true
     },
     {
+      "name": "offline-tools-page-offline-actions-link",
+      "slot": "offline-tools-page-slot",
+      "component": "offlineToolsActionsLink",
+      "meta": {
+        "name": "actions",
+        "slot": "offline-tools-page-offline-actions-slot"
+      },
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-page-offline-actions",
+      "slot": "offline-tools-page-offline-actions-slot",
+      "component": "offlineToolsPageActions",
+      "online": true,
+      "offline": true
+    },
+    {
       "name": "offline-tools-page-offline-patients",
       "slot": "offline-tools-page-offline-patients-slot",
       "component": "offlineToolsPatients",

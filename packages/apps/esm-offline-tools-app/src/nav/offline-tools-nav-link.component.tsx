@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { ConfigurableLink } from "@openmrs/esm-framework";
 import { routes } from "../constants";
 
@@ -11,6 +12,8 @@ export default function OfflineToolsNavLink({
   page,
   title,
 }: OfflineToolsNavLinkProps) {
+  const { t } = useTranslation();
+
   return (
     <div key={page}>
       <ConfigurableLink
@@ -19,7 +22,7 @@ export default function OfflineToolsNavLink({
         }
         className="cds--side-nav__link"
       >
-        {title}
+        {t(title)}
       </ConfigurableLink>
     </div>
   );

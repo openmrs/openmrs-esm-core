@@ -1,4 +1,5 @@
 {
+  "actions": "Actions",
   "emptyStateText": "There are no {displayText} to display",
   "home": "Home",
   "homeHeader": "Offline home",
@@ -54,5 +55,6 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Unknown error.",
   "offlinePatientSyncDetailsHeader": "Offline patient details",
   "offlineReady": "Offline Ready",
-  "offlineToolsAppMenuLink": "Offline tools"
+  "offlineToolsAppMenuLink": "Offline tools",
+  "patients": "Patients"
 }
