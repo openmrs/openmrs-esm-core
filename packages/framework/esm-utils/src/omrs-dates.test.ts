@@ -88,6 +88,46 @@ describe("Openmrs Dates", () => {
     );
   });
 
+  it("formats dates with respect to the active calendar", () => {
+    timezoneMock.register("UTC");
+    const testDate = new Date("2021-12-09T13:15:33");
+    window.i18next.language = "am";
+    expect(formatDate(testDate)).toEqual("30-Hedar-2014");
+    expect(formatDate(testDate, { day: false })).toEqual("Hedar 2014");
+    expect(formatDate(testDate, { year: false })).toEqual("30 Hedar");
+    expect(formatDate(testDate, { mode: "wide" })).toEqual("30 — Hedar — 2014");
+    expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
+      "30 — Hedar"
+    );
+
+    window.i18next.language = "am-ET";
+    expect(formatDate(testDate)).toEqual("30-Hedar-2014");
+    expect(formatDate(testDate, { day: false })).toEqual("Hedar 2014");
+    expect(formatDate(testDate, { year: false })).toEqual("30 Hedar");
+    expect(formatDate(testDate, { mode: "wide" })).toEqual("30 — Hedar — 2014");
+    expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
+      "30 — Hedar"
+    );
+
+    window.i18next.language = "en-u-ca-ethiopic";
+    expect(formatDate(testDate)).toEqual("30-Hedar-2014");
+    expect(formatDate(testDate, { day: false })).toEqual("Hedar 2014");
+    expect(formatDate(testDate, { year: false })).toEqual("30 Hedar");
+    expect(formatDate(testDate, { mode: "wide" })).toEqual("30 — Hedar — 2014");
+    expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
+      "30 — Hedar"
+    );
+
+    window.i18next.language = "th-TH";
+    expect(formatDate(testDate)).toEqual("09 ธ.ค. 2564");
+    expect(formatDate(testDate, { day: false })).toEqual("ธ.ค. 2564");
+    expect(formatDate(testDate, { year: false })).toEqual("09 ธ.ค.");
+    expect(formatDate(testDate, { mode: "wide" })).toEqual("09 — ธ.ค. — 2564");
+    expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
+      "09 — ธ.ค."
+    );
+  });
+
   it("respects the `time` option", () => {
     timezoneMock.register("UTC");
     const testDate = new Date("2021-12-09T13:15:33");

@@ -142,6 +142,10 @@ export type FormatDateMode = "standard" | "wide";
 
 export type FormatDateOptions = {
   /**
+   * The calendar to use when formatting this date.
+   */
+  calendar?: string;
+  /**
    * - `standard`: "03 Feb 2022"
    * - `wide`:     "03 — Feb — 2022"
    */
@@ -173,6 +177,69 @@ const defaultOptions: FormatDateOptions = {
 };
 
 /**
+ * Internal cache for per-locale calendars
+ */
+class LocaleCalendars {
+  #registry = new Map<string, string>();
+
+  constructor() {
+    this.#registry.set("am", "ethiopic");
+  }
+
+  register(locale: string, calendar: string) {
+    this.#registry.set(locale, calendar);
+  }
+
+  getCalendar(locale: Intl.Locale) {
+    if (!Boolean(locale)) {
+      return undefined;
+    }
+
+    if (locale.calendar) {
+      return locale.calendar;
+    }
+
+    if (locale.region) {
+      const key = `${locale.language}-${locale.region}`;
+      if (this.#registry.has(key)) {
+        return this.#registry.get(key);
+      }
+    }
+
+    if (locale.language && this.#registry.has(locale.language)) {
+      return this.#registry.get(locale.language);
+    }
+
+    const defaultCalendar = new Intl.DateTimeFormat(
+      locale.toString()
+    ).resolvedOptions().calendar;
+
+    // cache this result
+    this.#registry.set(
+      `${locale.language}${locale.region ? `-${locale.region}` : ""}`,
+      defaultCalendar
+    );
+
+    return defaultCalendar;
+  }
+}
+
+const registeredLocaleCalendars = new LocaleCalendars();
+
+/**
+ * Provides the name of the calendar to associate, as a default, with the given base locale.
+ *
+ * For example:
+ * `registerDefaultCalendar('en', 'buddhist')` sets the default calendar for the 'en' locale to Buddhist.
+ *
+ * @param baseLocale the locale to register this calendar for
+ * @param calendar the calendar to use for this registration
+ */
+export function registerDefaultCalendar(locale: string, calendar: string) {
+  registeredLocaleCalendars.register(locale, calendar);
+}
+
+/**
  * Formats the input date according to the current locale and the
  * given options.
  *
@@ -189,20 +256,28 @@ const defaultOptions: FormatDateOptions = {
  * When time is included, it is appended with a comma and a space. This
  * agrees with the output of `Date.prototype.toLocaleString` for *most*
  * locales.
- *
- * TODO: Shouldn't throw on null input
  */
+// TODO: Shouldn't throw on null input
 export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
-  const { mode, time, day, year, noToday }: FormatDateOptions = {
+  let locale = getLocale();
+  const _locale = new Intl.Locale(locale);
+
+  const { calendar, mode, time, day, year, noToday }: FormatDateOptions = {
     ...defaultOptions,
+    ...{ noToday: _locale.language === "am" ? true : false },
     ...options,
   };
+
+  const formatCalendar =
+    calendar ?? registeredLocaleCalendars.getCalendar(_locale);
+
   const formatterOptions: Intl.DateTimeFormatOptions = {
+    calendar: formatCalendar,
     year: year ? "numeric" : undefined,
     month: "short",
     day: day ? "2-digit" : undefined,
   };
-  let locale = getLocale();
+
   let localeString: string;
   const isToday = dayjs(date).isToday();
   if (isToday && !noToday) {
@@ -212,16 +287,36 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
     localeString =
       localeString[0].toLocaleUpperCase(locale) + localeString.slice(1);
   } else {
-    if (locale == "en") {
+    if (_locale.language === "en") {
       // This locale override is here rather than in `getLocale`
       // because Americans should see AM/PM for times.
       locale = "en-GB";
     }
+
+    if (_locale.language === "am") {
+      // Hack to keep month names in English
+      locale = "en-GB";
+    }
+
     localeString = date.toLocaleDateString(locale, formatterOptions);
-    if (locale == "en-GB" && mode == "standard" && year && day) {
-      // Custom formatting for English. Use hyphens instead of spaces.
+
+    if (formatterOptions.calendar === "ethiopic") {
+      // Hack to remove ` ERA1` from the end of strings when using the Ethiopic calendar
+      if (localeString.endsWith(" ERA1")) {
+        localeString = localeString.slice(0, -5);
+      }
+    }
+
+    if (
+      (_locale.language === "en" || _locale.language === "am") &&
+      mode == "standard" &&
+      year &&
+      day
+    ) {
+      // Custom formatting for English and Amharic. Use hyphens instead of spaces.
       localeString = localeString.replace(/ /g, "-");
     }
+
     if (mode == "wide") {
       localeString = localeString.replace(/ /g, " — "); // space-emdash-space
       if (/ru.*/.test(locale)) {
@@ -277,5 +372,6 @@ export function getLocale() {
   if (language === "ht") {
     language = "fr-HT";
   }
+
   return language;
 }
