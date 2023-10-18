@@ -298,14 +298,8 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
       locale = "en-GB";
     }
 
-    localeString = date.toLocaleDateString(locale, formatterOptions);
-
-    if (formatterOptions.calendar === "ethiopic") {
-      // Hack to remove ` ERA1` from the end of strings when using the Ethiopic calendar
-      if (localeString.endsWith(" ERA1")) {
-        localeString = localeString.slice(0, -5);
-      }
-    }
+    const formatter = new Intl.DateTimeFormat(locale, formatterOptions);
+    let parts = formatter.formatToParts(date);
 
     if (
       (_locale.language === "en" || _locale.language === "am") &&
@@ -314,25 +308,55 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
       day
     ) {
       // Custom formatting for English and Amharic. Use hyphens instead of spaces.
-      localeString = localeString.replace(/ /g, "-");
+      parts = parts.map(formatParts("-"));
     }
 
     if (mode == "wide") {
-      localeString = localeString.replace(/ /g, " — "); // space-emdash-space
-      if (/ru.*/.test(locale)) {
-        // Remove the extra em-dash that gets added between the year and the suffix 'r.'
-        const len = localeString.length;
-        localeString =
-          localeString.slice(0, len - 5) +
-          localeString.slice(len - 5).replace(" — ", " ");
-      }
+      parts = parts.map(formatParts(" — ")); // space-emdash-space
     }
+
+    // omit the era when using the Ethiopic calendar
+    if (formatterOptions.calendar === "ethiopic") {
+      parts = parts.filter((part, idx, values) => {
+        if (
+          part.type === "era" ||
+          (part.type === "literal" &&
+            idx < values.length - 1 &&
+            values[idx + 1].type === "era")
+        ) {
+          return false;
+        }
+
+        return true;
+      });
+    }
+
+    localeString = parts.map((p) => p.value).join("");
   }
   if (time === true || (isToday && time === "for today")) {
     localeString += `, ${formatTime(date)}`;
   }
   return localeString;
 }
+
+// Internal curried call-back for map()
+const formatParts = (separator: string) => {
+  return (
+    part: Intl.DateTimeFormatPart,
+    idx: number,
+    values: Array<Intl.DateTimeFormatPart>
+  ) => {
+    if (part.type !== "literal" || part.value !== " ") {
+      return part;
+    }
+
+    if (idx < values.length - 1 && values[idx + 1].type === "era") {
+      return part;
+    }
+
+    return { type: "literal", value: separator } as Intl.DateTimeFormatPart;
+  };
+};
 
 /**
  * Formats the input as a time, according to the current locale.

@@ -2006,7 +2006,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:357](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L357)
+[packages/framework/esm-utils/src/omrs-dates.ts:381](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L381)
 
 ___
 
@@ -2029,7 +2029,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:341](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L341)
+[packages/framework/esm-utils/src/omrs-dates.ts:365](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L365)
 
 ___
 
@@ -2047,7 +2047,7 @@ string
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:368](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L368)
+[packages/framework/esm-utils/src/omrs-dates.ts:392](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L392)
 
 ___
 
