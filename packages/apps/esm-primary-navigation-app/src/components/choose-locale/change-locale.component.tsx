@@ -58,9 +58,8 @@ export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
           },
           ac
         );
-        return () => ac.abort();
+        setSelectedLocale(newLocale);
       }
-      setSelectedLocale(newLocale);
     },
     [postUserProperties, user.userProperties, user.uuid, selectedLocale]
   );

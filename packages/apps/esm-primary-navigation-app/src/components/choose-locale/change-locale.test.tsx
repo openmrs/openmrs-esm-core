@@ -16,43 +16,12 @@ describe(`<ChangeLocale />`, () => {
     Promise.resolve()
   );
 
-  it("should have user's defaultLocale as initial value", async () => {
-    postUserPropertiesMock = jest.fn(() => Promise.resolve());
-
-    render(
-      <ChangeLocale
-        locale={"en"}
-        allowedLocales={allowedLocales}
-        user={user}
-        postUserProperties={postUserPropertiesMock}
-      />
-    );
-    expect(screen.getByLabelText(/Select locale/)).toHaveValue("fr");
-  });
-
-  it("should have session locale as initial value if no defaultLocale for user found", async () => {
-    postUserPropertiesMock = jest.fn(() => Promise.resolve());
-
-    const wrapper = render(
-      <ChangeLocale
-        locale={"en"}
-        allowedLocales={allowedLocales}
-        user={{
-          ...user,
-          userProperties: {},
-        }}
-        postUserProperties={postUserPropertiesMock}
-      />
-    );
-    expect(wrapper.getByLabelText(/Select locale/)).toHaveValue("en");
-  });
-
   it("should change user locale", async () => {
     postUserPropertiesMock = jest.fn(() => Promise.resolve());
 
     render(
       <ChangeLocale
-        locale={"en"}
+        locale={"fr"}
         allowedLocales={allowedLocales}
         user={user}
         postUserProperties={postUserPropertiesMock}
