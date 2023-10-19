@@ -128,6 +128,20 @@ describe("Openmrs Dates", () => {
     );
   });
 
+  it("handles leap years correctly in Ethiopian locales", () => {
+    timezoneMock.register("UTC");
+    const dateBeforeLeapYear = new Date("2023-09-11T09:00:00");
+
+    window.i18next.language = "en";
+    expect(formatDate(dateBeforeLeapYear)).toEqual("11-Sept-2023");
+
+    window.i18next.language = "am";
+    expect(formatDate(dateBeforeLeapYear)).toEqual("06-Pagumen-2015");
+
+    const dateAfterLeapYear = new Date("2023-09-12T09:00:00");
+    expect(formatDate(dateAfterLeapYear)).toEqual("01-Meskerem-2016");
+  });
+
   it("respects the `time` option", () => {
     timezoneMock.register("UTC");
     const testDate = new Date("2021-12-09T13:15:33");
