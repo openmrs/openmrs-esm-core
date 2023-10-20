@@ -39,15 +39,15 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 }) => {
   const { t } = useTranslation();
   const { user, sessionLocation } = useSession();
-  const { currentUser, userUuid, userProperties } = useMemo(() => {
-    // console.log("setting user");
-    return {
+  const { currentUser, userUuid, userProperties } = useMemo(
+    () => ({
       currentUser: user?.display,
       userUuid: user?.uuid,
       userProperties: user?.userProperties,
-    };
+    }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    []
+  );
   const config = useConfig();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
@@ -58,7 +58,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     if (currentLocationUuid && hideWelcomeMessage) {
       return currentLocationUuid;
     }
-    return sessionLocation?.uuid;
+    return sessionLocation?.uuid ?? userProperties?.defaultLoginLocation;
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -98,7 +98,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   const changeLocation = useCallback(
     (locationUuid?: string) => {
-      // console.log("changeLocation Called");
       const referrer = state?.referrer;
       const returnToUrl = new URLSearchParams(location?.search).get(
         "returnToUrl"
@@ -129,7 +128,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   );
 
   const getDefaultUserLoginLocation = useCallback(() => {
-    // console.log("changing getDefaultUserLoginLocation");
     const userLocation = userProperties?.defaultLoginLocation;
     const isValidLocation =
       !!userLocation &&
@@ -156,7 +154,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   ]);
 
   useEffect(() => {
-    // console.log("hitting useEffect");
     const isUpdateFlow =
       new URLSearchParams(location?.search).get("update") === "true";
     if (isUpdateFlow) {
@@ -268,6 +265,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                           className={styles.locationRadioButton}
                           key={entry.resource.id}
                           id={entry.resource.name}
+                          name={entry.resource.name}
                           labelText={entry.resource.name}
                           value={entry.resource.id}
                         />
