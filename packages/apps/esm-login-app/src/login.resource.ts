@@ -8,6 +8,7 @@ import {
   refetchCurrentUser,
   Session,
   showNotification,
+  useDebounce,
 } from "@openmrs/esm-framework";
 import { LocationEntry, LocationResponse } from "./types";
 
@@ -47,6 +48,7 @@ export function useLoginLocations(
   searchQuery: string = ""
 ): LoginLocationData {
   const { t } = useTranslation();
+  const debouncedSearchQuery = useDebounce(searchQuery);
   function constructUrl(
     page: number,
     prevPageData: FetchResponse<LocationResponse>
@@ -79,8 +81,11 @@ export function useLoginLocations(
       urlSearchParameters.append("_tag", "Login Location");
     }
 
-    if (typeof searchQuery === "string" && searchQuery != "") {
-      urlSearchParameters.append("name:contains", searchQuery);
+    if (
+      typeof debouncedSearchQuery === "string" &&
+      debouncedSearchQuery != ""
+    ) {
+      urlSearchParameters.append("name:contains", debouncedSearchQuery);
     }
 
     return url + urlSearchParameters.toString();

@@ -18,7 +18,7 @@ const ChangeLocationLink: React.FC<ChangeLocationLinkProps> = ({
 
   const changeLocation = () => {
     navigate({
-      to: `\${openmrsSpaBase}/login/location?returnToUrl=${referer}`,
+      to: `\${openmrsSpaBase}/login/location?returnToUrl=${referer}&update=true`,
     });
   };
 
@@ -27,7 +27,9 @@ const ChangeLocationLink: React.FC<ChangeLocationLinkProps> = ({
       <Location size={20} />
       <div>
         {currentLocation}
-        <Button onClick={changeLocation}>{t("change", "Change")}</Button>
+        <Button kind="ghost" onClick={changeLocation}>
+          {t("change", "Change")}
+        </Button>
       </div>
     </div>
   );

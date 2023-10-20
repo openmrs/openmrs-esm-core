@@ -68,9 +68,16 @@
   margin-bottom: spacing.$spacing-05;
 }
 
-.confirmButton button {
-  margin: spacing.$spacing-06;
-  width: 20rem;
+.confirmButton {
+  padding: spacing.$spacing-06;
+
+  .savePreferenceCheckbox {
+    padding-bottom: spacing.$spacing-05 !important;
+  }
+
+  button {
+    width: 100%;
+  }
 }
 
 .radioButtonSkeleton {

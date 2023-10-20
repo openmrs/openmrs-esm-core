@@ -266,3 +266,25 @@ export async function setSessionLocation(
 
   await refetchCurrentUser();
 }
+
+export async function setUserProperties(
+  userUuid: string,
+  userProperties: {
+    [x: string]: string;
+  },
+  abortController?: AbortController
+): Promise<any> {
+  if (!abortController) {
+    abortController = new AbortController();
+  }
+  await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
+    method: "POST",
+    body: { userProperties },
+    headers: {
+      "Content-Type": "application/json",
+    },
+    signal: abortController.signal,
+  });
+
+  await refetchCurrentUser();
+}

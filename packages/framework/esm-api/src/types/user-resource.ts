@@ -28,6 +28,10 @@ export interface LoggedInUser {
      * To store the array, perform `starredPatientLists: starredPatientLists.join(',')`
      */
     starredPatientLists?: string;
+    /**
+     * The UUID of the location the user has set preference to use for next logins
+     */
+    defaultLoginLocation?: string;
     [key: string]: string | undefined;
   } | null;
   person: Person;
