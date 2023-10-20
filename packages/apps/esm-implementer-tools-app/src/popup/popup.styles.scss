@@ -18,10 +18,14 @@
 }
 
 .tabs {
-  width: 30em;
+  min-width: 30rem;
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
+
+  :global(.cds--content-switcher-btn) {
+    min-width: fit-content;
+  }
 }
 
 .topBar {
