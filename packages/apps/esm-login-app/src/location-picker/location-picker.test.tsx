@@ -175,8 +175,6 @@ describe("LocationPicker", () => {
   });
 
   it("should not redirect if the login location page has a searchParam `update`", async () => {
-    console.log("test");
-
     Object.defineProperty(window, "location", {
       value: {
         search: "?update=true",
@@ -206,8 +204,6 @@ describe("LocationPicker", () => {
   });
 
   it("should remove the saved preference if the login location page has a searchParam `update=true` and when submitting the user unchecks the checkbox ", async () => {
-    console.log("test");
-
     Object.defineProperty(window, "location", {
       value: {
         search: "?update=true",
