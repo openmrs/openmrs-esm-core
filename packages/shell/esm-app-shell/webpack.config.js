@@ -364,16 +364,23 @@ module.exports = (env, argv = {}) => {
       new BundleAnalyzerPlugin({
         analyzerMode: env?.analyze ? 'static' : 'disabled',
       }),
-      openmrsOffline &&
-        new InjectManifest({
-          swSrc: resolve(__dirname, './src/service-worker/index.ts'),
-          swDest: 'service-worker.js',
-          maximumFileSizeToCacheInBytes: mode === production ? undefined : Number.MAX_SAFE_INTEGER,
-          additionalManifestEntries: [
-            { url: openmrsImportmapUrl, revision: null },
-            { url: openmrsRoutesUrl, revision: null },
-          ],
-        }),
+      openmrsOffline
+        ? new InjectManifest({
+            swSrc: resolve(__dirname, "./src/service-worker/index.ts"),
+            swDest: "service-worker.js",
+            maximumFileSizeToCacheInBytes:
+              mode === production ? undefined : Number.MAX_SAFE_INTEGER,
+            additionalManifestEntries: [
+              { url: openmrsImportmapUrl, revision: null },
+              { url: openmrsRoutesUrl, revision: null },
+            ],
+          })
+        : new InjectManifest({
+            swSrc: resolve(__dirname, "./src/service-worker/noop.ts"),
+            swDest: "service-worker.js",
+            maximumFileSizeToCacheInBytes:
+              mode === production ? undefined : Number.MAX_SAFE_INTEGER,
+          }),
     ].filter(Boolean),
     ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };
