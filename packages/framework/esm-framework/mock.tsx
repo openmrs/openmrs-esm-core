@@ -46,7 +46,7 @@ export function useConnectivity() {
 /* esm-api */
 export const setSessionLocation = jest.fn(() => Promise.resolve());
 
-export const openmrsFetch = jest.fn(() => new Promise(() => {}));
+export const openmrsFetch = jest.fn((url?: string) => new Promise(() => {}));
 
 export const openmrsObservableFetch = jest.fn(() =>
   of({ data: { entry: [] } })
@@ -293,6 +293,25 @@ export const useVisit = jest.fn().mockReturnValue({
 });
 
 export const useVisitTypes = jest.fn(() => []);
+
+export const useAbortController = jest.fn().mockReturnValue(() => {
+  let aborted = false;
+  return jest.fn(
+    () =>
+      ({
+        abort: () => {
+          aborted = true;
+        },
+        signal: {
+          aborted,
+        },
+      } as AbortController)
+  );
+});
+
+export function useOpenmrsSWR(key: string | Array<any>) {
+  return { data: openmrsFetch(key.toString()) };
+}
 
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
