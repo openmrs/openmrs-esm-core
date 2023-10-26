@@ -1,5 +1,4 @@
 /** @module @category Utility */
-
 import { getLocale } from "./omrs-dates";
 
 /**
