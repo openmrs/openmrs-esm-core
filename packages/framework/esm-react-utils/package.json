@@ -63,10 +63,10 @@
     "@openmrs/esm-feature-flags": "^5.2.0",
     "@openmrs/esm-globals": "^5.2.0",
     "dayjs": "^1.10.8",
-    "i18next": "^19.6.0",
+    "i18next": "^21.10.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-i18next": "^11.16.9",
+    "react-i18next": "^11.18.6",
     "rxjs": "^6.5.3",
     "swr": "^2.2.2",
     "webpack": "^5.88.0"

@@ -1,0 +1,21 @@
+{
+  "back": "رجوع",
+  "change": "تغيير",
+  "confirm": "تأكيد",
+  "continue": "استمرار",
+  "error": "خطأ",
+  "invalidCredentials": "بيانات الدخول غير صحيحة",
+  "loading": "جار التحميل",
+  "loggingIn": "جار الدخول",
+  "login": "تسجيل الدخول",
+  "Logout": "تسجيل الخروج",
+  "noResultsToDisplay": "لا توجد نتائج للعرض",
+  "password": "كلمة المرور",
+  "poweredBy": "مدعوم من",
+  "searchForLocation": "ابحث عن موقع",
+  "selectYourLocation": "اختر موقعك من القائمة أدناه. استخدم شريط البحث للعثور على موقعك.",
+  "submitting": "جار الإرسال",
+  "username": "اسم المستخدم",
+  "validValueRequired": "قيمة صالحة مطلوبة",
+  "welcome": "مرحبا"
+}
