@@ -52,7 +52,7 @@ describe("Testing Logout", () => {
       },
     });
   });
-  it("should render Logout and redirect to login page ig provider.type !== oauth2", async () => {
+  it("should render Logout and redirect to login page", async () => {
     render(<RedirectLogout />);
     expect(openmrsFetch).toBeCalledWith("/ws/rest/v1/session", {
       method: "DELETE",
