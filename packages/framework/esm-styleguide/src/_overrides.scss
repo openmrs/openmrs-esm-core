@@ -33,6 +33,10 @@
   border-right: none;
 }
 
+.cds--side-nav__overlay-active {
+  display: none;
+}
+
 /* Icon button */
 .cds--btn--icon-only {
   // Apply a size layout token that sets the default size of the icon-only button to `sm`
