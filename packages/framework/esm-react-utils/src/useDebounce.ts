@@ -1,4 +1,4 @@
-/** @module @category API */
+/** @module @category Utility */
 import { useEffect, useState } from "react";
 
 /**
@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
  *
  * @example
  * ```tsx
- * import { useDebounce } from "@openmrs/esm-react-utils";
+ * import { useDebounce } from "@openmrs/esm-framework";
  *
  * function MyComponent() {
  *   const [searchTerm, setSearchTerm] = useState('');
@@ -35,6 +35,7 @@ export function useDebounce<T>(value: T, delay: number = 300) {
     const timer = setTimeout(() => {
       setDebounceValue(value);
     }, delay);
+
     return () => {
       clearTimeout(timer);
     };

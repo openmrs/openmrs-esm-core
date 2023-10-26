@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { act, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { useSession, __cleanup } from "./useSession.tsx";
+import { useSession, __cleanup } from "./useSession";
 import { createGlobalStore } from "@openmrs/esm-state";
 import { SessionStore } from "@openmrs/esm-api";
 
