@@ -21,7 +21,7 @@ const RedirectLogout: React.FC<RedirectLogoutProps> = () => {
     } else {
       performLogout().then(() => {
         const defaultLang =
-          document.documentElement.getAttribute("defaultLang");
+          document.documentElement.getAttribute("data-default-lang");
         setUserLanguage({
           locale: defaultLang,
           authenticated: false,
