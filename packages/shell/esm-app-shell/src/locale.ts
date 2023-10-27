@@ -1,5 +1,4 @@
 import * as i18next from "i18next";
-import ICU from "i18next-icu";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import merge from "lodash-es/merge";
@@ -81,7 +80,6 @@ export function setupI18n() {
       },
     })
     .use(initReactI18next)
-    .use(ICU)
     .init({
       detection: {
         order: ["querystring", "htmlTag", "localStorage", "navigator"],

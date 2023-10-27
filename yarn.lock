@@ -3709,7 +3709,6 @@ __metadata:
     html-webpack-plugin: ^5.5.0
     i18next: ^21.10.0
     i18next-browser-languagedetector: ^6.1.8
-    i18next-icu: ^2.3.0
     import-map-overrides: ^3.0.0
     lodash-es: 4.17.21
     react: ^18.1.0
@@ -12058,15 +12057,6 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.19.0
   checksum: dd84d3c9cb693a70662436b06f5554898815df33b7641249a64876c74c38960f11ef17b4d7f49ee2da7262abe0f3ae73abe7f3a3b435a344d0d07e4ca7cb24c6
-  languageName: node
-  linkType: hard
-
-"i18next-icu@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "i18next-icu@npm:2.3.0"
-  peerDependencies:
-    intl-messageformat: ^10.3.3
-  checksum: da5cbf1fed795921dc903f8bd9129b5ad8ef4c5acd9cdea00c096a2dd4fafc8007cdc0501c11db5f86c7bfda8cde71896f8a4321129ead3557196a76fd4ad2d0
   languageName: node
   linkType: hard
 
