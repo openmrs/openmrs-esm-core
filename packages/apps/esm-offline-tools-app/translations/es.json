@@ -1,5 +1,4 @@
 {
-  "actions": "Acciones",
   "emptyStateText": "No hay {{displayText}} para mostrar",
   "home": "Inicio",
   "homeHeader": "Inicio offline",
@@ -55,6 +54,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Error desconocido.",
   "offlinePatientSyncDetailsHeader": "Detalles de pacientes offline",
   "offlineReady": "Listo offline",
-  "offlineToolsAppMenuLink": "Herramientas offline",
-  "patients": "Pacientes"
+  "offlineToolsAppMenuLink": "Herramientas offline"
 }
