@@ -86,6 +86,10 @@ export function setupI18n() {
         lookupQuerystring: "lang",
       },
       fallbackLng: "en",
+      interpolation: {
+        prefix: "{",
+        suffix: "}",
+      },
     });
 }
 
