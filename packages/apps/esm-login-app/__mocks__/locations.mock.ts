@@ -373,6 +373,133 @@ export const mockLoginLocations = {
   },
 };
 
+export const mockLocationResponseWithOneEntry = {
+  data: {
+    resourceType: "Bundle",
+    id: "301b3ad6-868a-48a6-bc3f-aaa8aa3f89a6",
+    meta: {
+      lastUpdated: "2022-03-17T07:47:02.272+00:00",
+      tag: [
+        {
+          system: "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+          code: "SUBSETTED",
+          display: "Resource encoded in summary mode",
+        },
+      ],
+    },
+    type: "searchset",
+    total: 1,
+    link: [
+      {
+        relation: "self",
+        url: "http://openmrs:8080/openmrs/ws/fhir2/R4/Location?_count=50&_summary=data&_tag=login%20location",
+      },
+    ],
+    entry: [
+      {
+        fullUrl:
+          "http://openmrs:8080/openmrs/ws/fhir2/R4/Location/44c3efb0-2583-4c80-a79e-1f756a03c0a1",
+        resource: {
+          resourceType: "Location",
+          id: "44c3efb0-2583-4c80-a79e-1f756a03c0a1",
+          meta: {
+            tag: [
+              {
+                system: "http://fhir.openmrs.org/ext/location-tag",
+                code: "Login Location",
+                display:
+                  "When a user logs in and chooses a session location, they may only choose one with this tag",
+              },
+              {
+                system: "http://fhir.openmrs.org/ext/location-tag",
+                code: "Facility Location",
+              },
+              {
+                system:
+                  "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                code: "SUBSETTED",
+                display: "Resource encoded in summary mode",
+              },
+            ],
+          },
+          contained: [
+            {
+              resourceType: "Provenance",
+              id: "e6f5d190-5a5a-4e1f-b34b-20a3480a6e1b",
+              meta: {
+                tag: [
+                  {
+                    system:
+                      "http://terminology.hl7.org/CodeSystem/v3-ObservationValue",
+                    code: "SUBSETTED",
+                    display: "Resource encoded in summary mode",
+                  },
+                ],
+              },
+              recorded: "2022-02-23T22:44:33.000+00:00",
+              activity: {
+                coding: [
+                  {
+                    system:
+                      "http://terminology.hl7.org/CodeSystemv3-DataOperation",
+                    code: "CREATE",
+                    display: "create",
+                  },
+                ],
+              },
+              agent: [
+                {
+                  type: {
+                    coding: [
+                      {
+                        system:
+                          "http://terminology.hl7.org/CodeSystemprovenance-participant-type",
+                        code: "author",
+                        display: "Author",
+                      },
+                    ],
+                  },
+                  role: [
+                    {
+                      coding: [
+                        {
+                          system:
+                            "http://terminology.hl7.org/CodeSystemv3-ParticipationType",
+                          code: "AUT",
+                          display: "author",
+                        },
+                      ],
+                    },
+                  ],
+                  who: {
+                    reference:
+                      "Practitioner/A4F30A1B-5EB9-11DF-A648-37A07F9C90FB",
+                    type: "Practitioner",
+                    display: "Super User",
+                  },
+                },
+              ],
+            },
+          ],
+          status: "active",
+          name: "Outpatient Clinic",
+          description: "Outpatient Clinic",
+        },
+      },
+    ],
+  },
+};
+
+export const validatingLocationSuccessResponse = {
+  ok: true,
+  data: {},
+};
+
+export const validatingLocationFailureResponse = {
+  ok: false,
+  data: {},
+};
+
 export const mockSoleLoginLocation = {
   data: {
     id: "301b3ad6-868a-48a6-bc3f-aaa8aa3f891z",

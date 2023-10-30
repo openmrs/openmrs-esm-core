@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import useSwrInfinite from "swr/infinite";
+import useSwrImmutable from "swr/immutable";
 import {
   FetchResponse,
   fhirBaseUrl,
@@ -113,7 +114,7 @@ export function useLoginLocations(
       isLoading,
       totalResults: data?.[0]?.data?.total ?? null,
       hasMore: data?.length
-        ? data?.[data.length - 1]?.data?.link.some(
+        ? data?.[data.length - 1]?.data?.link?.some(
             (link) => link.relation === "next"
           )
         : false,
@@ -123,4 +124,25 @@ export function useLoginLocations(
   }, [isLoading, data, isValidating, setSize]);
 
   return memoizedLocations;
+}
+
+export function useLoginLocation(userPreferredLocationUuid: string) {
+  const url = userPreferredLocationUuid
+    ? `/ws/rest/v1/location/${userPreferredLocationUuid}`
+    : null;
+  const { data, error, isLoading } = useSwrImmutable<
+    FetchResponse<LocationResponse>
+  >(url, openmrsFetch, {
+    errorRetryCount: 0,
+  });
+  const results = useMemo(
+    () => ({
+      isUserPreferredLocationPresent: data?.ok,
+      userPreferredLocation: data?.data,
+      error,
+      isLoading,
+    }),
+    [data, isLoading, error]
+  );
+  return results;
 }

@@ -20,12 +20,13 @@ import {
   navigate,
   setSessionLocation,
   setUserProperties,
+  showToast,
   useConfig,
   useConnectivity,
   useSession,
 } from "@openmrs/esm-framework";
 import type { LoginReferrer } from "../login/login.component";
-import { useLoginLocations } from "../login.resource";
+import { useLoginLocation, useLoginLocations } from "../login.resource";
 import styles from "./location-picker.scss";
 
 interface LocationPickerProps {
@@ -38,21 +39,37 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   currentLocationUuid,
 }) => {
   const { t } = useTranslation();
-  const { user, sessionLocation } = useSession();
-  const { currentUser, userUuid, userProperties } = useMemo(
-    () => ({
-      currentUser: user?.display,
-      userUuid: user?.uuid,
-      userProperties: user?.userProperties,
-    }),
-    [user]
-  );
-
   const config = useConfig();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
+
+  const [searchTerm, setSearchTerm] = useState(null);
+
+  const { user, sessionLocation } = useSession();
+  const { currentUser, userUuid, userProperties, userPreferredLocationUuid } =
+    useMemo(
+      () => ({
+        currentUser: user?.display,
+        userUuid: user?.uuid,
+        userProperties: user?.userProperties,
+        userPreferredLocationUuid: user?.userProperties?.defaultLoginLocation,
+      }),
+      [user]
+    );
+
+  const { isUserPreferredLocationPresent } = useLoginLocation(
+    userPreferredLocationUuid
+  );
+
+  const { locations, isLoading, hasMore, loadingNewData, setPage } =
+    useLoginLocations(
+      chooseLocation.useLoginLocationTag,
+      chooseLocation.locationsPerRequest,
+      searchTerm
+    );
+
   const [savePreference, setSavePreference] = useState(
-    !!userProperties?.defaultLoginLocation
+    !!userPreferredLocationUuid
   );
   const [activeLocation, setActiveLocation] = useState(() => {
     if (currentLocationUuid && hideWelcomeMessage) {
@@ -62,33 +79,43 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(null);
-
-  const { locations, isLoading, hasMore, loadingNewData, setPage } =
-    useLoginLocations(
-      chooseLocation.useLoginLocationTag,
-      chooseLocation.locationsPerRequest,
-      searchTerm
-    );
 
   const { state } = useLocation() as { state: LoginReferrer };
 
   const updateUserPreference = useCallback(
     (locationUuid: string, saveUserPreference: boolean) => {
-      if (
-        saveUserPreference &&
-        locationUuid !== userProperties.defaultLoginLocation
-      ) {
+      if (saveUserPreference) {
+        if (locationUuid === userProperties.defaultLoginLocation) {
+          return;
+        }
         // If the user checks the checkbox for saving the preference
         const updatedUserProperties = {
           ...userProperties,
           defaultLoginLocation: locationUuid,
         };
-        setUserProperties(userUuid, updatedUserProperties);
-      } else if (
-        !saveUserPreference &&
-        !!userProperties?.defaultLoginLocation
-      ) {
+        const isUpdateFlow =
+          new URLSearchParams(location?.search).get("update") === "true";
+        setUserProperties(userUuid, updatedUserProperties).then(() => {
+          showToast({
+            title: !isUpdateFlow
+              ? t(
+                  "locationPreferenceAdded",
+                  "Selected location will be used for your next logins"
+                )
+              : t(
+                  "locationPreferenceUpdated",
+                  "Login location preference updated"
+                ),
+            description: !isUpdateFlow
+              ? t(
+                  "selectedLocationPreferenceSetMessage",
+                  "You can change your preference from the user dashboard"
+                )
+              : null,
+            kind: "success",
+          });
+        });
+      } else if (!!userProperties?.defaultLoginLocation) {
         // If the user doesn't want to save the preference,
         // the old preference should be deleted
         const updatedUserProperties = Object.fromEntries(
@@ -96,10 +123,18 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             ([key]) => key !== "defaultLoginLocation"
           )
         );
-        setUserProperties(userUuid, updatedUserProperties);
+        setUserProperties(userUuid, updatedUserProperties).then(() => {
+          showToast({
+            description: t(
+              "removedLoginLocationPreference",
+              "The login location preference has been removed."
+            ),
+            kind: "success",
+          });
+        });
       }
     },
-    [userProperties, userUuid]
+    [userProperties, userUuid, t]
   );
 
   const changeLocation = useCallback(
@@ -135,14 +170,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     [state?.referrer, config.links.loginSuccess, updateUserPreference]
   );
 
-  const getDefaultUserLoginLocation = useCallback(() => {
-    const userLocation = userProperties?.defaultLoginLocation;
-    const isValidLocation =
-      !!userLocation &&
-      locations?.some((location) => location.resource.id === userLocation);
-    return isValidLocation ? userLocation : "";
-  }, [locations, userProperties?.defaultLoginLocation]);
-
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
     if (!isLoading && !searchTerm) {
@@ -161,19 +188,25 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     searchTerm,
   ]);
 
+  // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
     const isUpdateFlow =
       new URLSearchParams(location?.search).get("update") === "true";
+
     if (isUpdateFlow) {
       return;
     }
-    const userPreferredLocation = getDefaultUserLoginLocation();
-    if (!!userPreferredLocation && !isSubmitting) {
-      setActiveLocation(userPreferredLocation);
+    if (isUserPreferredLocationPresent && !isSubmitting) {
+      setActiveLocation(userPreferredLocationUuid);
       setSavePreference(true);
-      changeLocation(userPreferredLocation, true);
+      changeLocation(userPreferredLocationUuid, true);
     }
-  }, [changeLocation, getDefaultUserLoginLocation, isSubmitting]);
+  }, [
+    changeLocation,
+    isSubmitting,
+    isUserPreferredLocationPresent,
+    userPreferredLocationUuid,
+  ]);
 
   const search = (location: string) => {
     setActiveLocation("");
@@ -264,7 +297,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                     <RadioButtonGroup
                       valueSelected={activeLocation}
                       orientation="vertical"
-                      name={activeLocation}
+                      name="Login locations"
                       onChange={(ev) => {
                         setActiveLocation(ev.toString());
                       }}
