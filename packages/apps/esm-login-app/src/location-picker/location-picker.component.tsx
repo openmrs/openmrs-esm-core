@@ -45,9 +45,9 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       userUuid: user?.uuid,
       userProperties: user?.userProperties,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [user]
   );
+
   const config = useConfig();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
@@ -74,15 +74,21 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   const { state } = useLocation() as { state: LoginReferrer };
 
   const updateUserPreference = useCallback(
-    (locationUuid: string) => {
-      if (savePreference) {
+    (locationUuid: string, saveUserPreference: boolean) => {
+      if (
+        saveUserPreference &&
+        locationUuid !== userProperties.defaultLoginLocation
+      ) {
         // If the user checks the checkbox for saving the preference
         const updatedUserProperties = {
           ...userProperties,
           defaultLoginLocation: locationUuid,
         };
         setUserProperties(userUuid, updatedUserProperties);
-      } else if (!!userProperties?.defaultLoginLocation) {
+      } else if (
+        !saveUserPreference &&
+        !!userProperties?.defaultLoginLocation
+      ) {
         // If the user doesn't want to save the preference,
         // the old preference should be deleted
         const updatedUserProperties = Object.fromEntries(
@@ -93,11 +99,13 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         setUserProperties(userUuid, updatedUserProperties);
       }
     },
-    [savePreference, userProperties, userUuid]
+    [userProperties, userUuid]
   );
 
   const changeLocation = useCallback(
-    (locationUuid?: string) => {
+    (locationUuid?: string, saveUserPreference?: boolean) => {
+      setIsSubmitting(true);
+
       const referrer = state?.referrer;
       const returnToUrl = new URLSearchParams(location?.search).get(
         "returnToUrl"
@@ -107,7 +115,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         ? setSessionLocation(locationUuid, new AbortController())
         : Promise.resolve();
 
-      updateUserPreference(locationUuid);
+      updateUserPreference(locationUuid, saveUserPreference);
       sessionDefined.then(() => {
         if (
           referrer &&
@@ -139,7 +147,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   useEffect(() => {
     if (!isLoading && !searchTerm) {
       if (!config.chooseLocation.enabled || locations?.length === 1) {
-        changeLocation(locations[0]?.resource.id);
+        changeLocation(locations[0]?.resource.id, false);
       }
       if (!locations?.length) {
         changeLocation();
@@ -160,10 +168,12 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       return;
     }
     const userPreferredLocation = getDefaultUserLoginLocation();
-    if (!!userPreferredLocation) {
-      changeLocation(userPreferredLocation);
+    if (!!userPreferredLocation && !isSubmitting) {
+      setActiveLocation(userPreferredLocation);
+      setSavePreference(true);
+      changeLocation(userPreferredLocation, true);
     }
-  }, [changeLocation, getDefaultUserLoginLocation]);
+  }, [changeLocation, getDefaultUserLoginLocation, isSubmitting]);
 
   const search = (location: string) => {
     setActiveLocation("");
@@ -175,8 +185,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
     if (!activeLocation) return;
 
-    setIsSubmitting(true);
-    changeLocation(activeLocation);
+    changeLocation(activeLocation, savePreference);
   };
 
   // Infinite scroll
@@ -292,8 +301,8 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
               id="checkbox"
               className={styles.savePreferenceCheckbox}
               labelText={t(
-                "preferLocationForNextLogins",
-                "Prefer selected location for next logins"
+                "rememberLocationForFutureLogins",
+                "Remember my location for future logins"
               )}
               checked={savePreference}
               onChange={(_, { checked }) => setSavePreference(checked)}
