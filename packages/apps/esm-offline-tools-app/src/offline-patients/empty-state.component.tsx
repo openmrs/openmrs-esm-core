@@ -1,5 +1,5 @@
 import React from "react";
-import { Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { Layer, Tile } from "@carbon/react";
 import { useLayoutType } from "@openmrs/esm-framework";
 import { EmptyDataIllustration } from "./empty-data-illustration.component";
@@ -14,6 +14,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   displayText,
   headerTitle,
 }) => {
+  const { t } = useTranslation();
   const isTablet = useLayoutType() === "tablet";
   return (
     <Layer>
@@ -25,9 +26,9 @@ const EmptyState: React.FC<EmptyStateProps> = ({
         </div>
         <EmptyDataIllustration />
         <p className={styles.content}>
-          <Trans i18nKey="emptyStateText" values={{ displayText: displayText }}>
-            There are no {displayText} to display
-          </Trans>
+          {t("emptyStateText", "There are no {{displayText}} to display", {
+            displayText,
+          })}
         </p>
       </Tile>
     </Layer>

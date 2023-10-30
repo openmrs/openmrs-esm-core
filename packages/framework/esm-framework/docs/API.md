@@ -24,10 +24,10 @@
 - [setCurrentVisit](API.md#setcurrentvisit)
 - [setSessionLocation](API.md#setsessionlocation)
 - [setUserProperties](API.md#setuserproperties)
+- [setUserLanguage](API.md#setuserlanguage)
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
-- [useDebounce](API.md#usedebounce)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [useSession](API.md#usesession)
@@ -191,7 +191,11 @@
 - [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [retry](API.md#retry)
+- [shallowEqual](API.md#shallowequal)
 - [translateFrom](API.md#translatefrom)
+- [useAbortController](API.md#useabortcontroller)
+- [useDebounce](API.md#usedebounce)
+- [useOpenmrsSWR](API.md#useopenmrsswr)
 
 ## API Type Aliases
 
@@ -663,6 +667,47 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L26)
+
+___
+
+## Utility Type Aliases
+
+### ArgumentsTuple
+
+Ƭ **ArgumentsTuple**: [`any`, ...unknown[]]
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L7)
+
+___
+
+### Key
+
+Ƭ **Key**: `string` \| [`ArgumentsTuple`](API.md#argumentstuple) \| `undefined` \| ``null``
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L8)
+
+___
+
+### UseOpenmrsSWROptions
+
+Ƭ **UseOpenmrsSWROptions**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `abortController?` | `AbortController` |
+| `fetchInit?` | [`FetchConfig`](interfaces/FetchConfig.md) |
+| `swrConfig?` | `SWRConfiguration` |
+| `url?` | `string` \| (`key`: [`Key`](API.md#key)) => `string` |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L9)
 
 ## API Variables
 
@@ -1320,6 +1365,9 @@ ___
 ### setUserProperties
 
 ▸ **setUserProperties**(`userUuid`, `userProperties`, `abortController?`): `Promise`<`any`\>
+### setUserLanguage
+
+▸ **setUserLanguage**(`data`): `void`
 
 #### Parameters
 
@@ -1336,6 +1384,15 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-user.ts:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L270)
+| `data` | [`Session`](interfaces/Session.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L131)
 
 ___
 
@@ -1398,58 +1455,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L96)
-
-___
-
-### useDebounce
-
-▸ **useDebounce**<`T`\>(`value`, `delay?`): `T`
-
-This hook debounces a state variable. That state variable can then be used as the
-value of a controlled input, while the return value of this hook is used for making
-a request.
-
-**`example`**
-```tsx
-import { useDebounce } from "@openmrs/esm-react-utils";
-
-function MyComponent() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm);
-  const swrResult = useSWR(`/api/search?q=${debouncedSearchTerm}`)
-
- return (
-   <Search
-     labelText={t('search', 'Search')}
-     onChange={(e) => setSearchTerm(e.target.value)}
-     value={searchTerm}
-   />
- )
-}
-```
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `value` | `T` | `undefined` | The value that will be used to set `debounceValue` |
-| `delay` | `number` | `300` | The number of milliseconds to wait before updating `debounceValue` |
-
-#### Returns
-
-`T`
-
-The debounced value
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useDebounce.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDebounce.ts#L32)
 
 ___
 
@@ -1517,7 +1522,7 @@ Current user session information
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useSession.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.tsx#L17)
+[packages/framework/esm-react-utils/src/useSession.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L17)
 
 ___
 
@@ -4450,7 +4455,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOnClickOutside.tsx:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.tsx#L4)
+[packages/framework/esm-react-utils/src/useOnClickOutside.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.ts#L4)
 
 ___
 
@@ -4515,7 +4520,7 @@ A human-readable string version of the age.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L41)
+[packages/framework/esm-utils/src/age-helpers.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L40)
 
 ___
 
@@ -4539,7 +4544,7 @@ The number of days.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L10)
+[packages/framework/esm-utils/src/age-helpers.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L9)
 
 ___
 
@@ -4564,7 +4569,7 @@ True if both are located on the same day.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.tsx#L27)
+[packages/framework/esm-utils/src/age-helpers.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L26)
 
 ___
 
@@ -4627,6 +4632,34 @@ The result of successfully executing `fn`.
 
 ___
 
+### shallowEqual
+
+▸ **shallowEqual**(`objA`, `objB`): `boolean`
+
+Checks whether two objects are equal, using a shallow comparison, similar to React.
+
+In essence, shallowEquals ensures two objects have the same own properties and that the values
+of these are equal (===) to each other.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `objA` | `unknown` | The first object to compare |
+| `objB` | `unknown` | The second object to compare |
+
+#### Returns
+
+`boolean`
+
+true if the objects are shallowly equal to each other
+
+#### Defined in
+
+[packages/framework/esm-utils/src/shallowEqual.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/shallowEqual.ts#L13)
+
+___
+
 ### translateFrom
 
 ▸ **translateFrom**(`moduleName`, `key`, `fallback?`, `options?`): `string`
@@ -4647,3 +4680,145 @@ ___
 #### Defined in
 
 [packages/framework/esm-utils/src/translate.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/translate.ts#L4)
+
+___
+
+### useAbortController
+
+▸ **useAbortController**(): `AbortController`
+
+**`beta`**
+
+This hook creates an AbortController that lasts either until the previous AbortController
+is aborted or until the component unmounts. This can be used to ensure that all fetch requests
+are cancelled when a component is unmounted.
+
+**`example`**
+```tsx
+import { useAbortController } from "@openmrs/esm-framework";
+
+function MyComponent() {
+ const abortController = useAbortController();
+ const { data } = useSWR(key, (key) => openmrsFetch(key, { signal: abortController.signal }));
+
+ return (
+   // render something with data
+ );
+}
+```
+
+#### Returns
+
+`AbortController`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useAbortController.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAbortController.ts#L25)
+
+___
+
+### useDebounce
+
+▸ **useDebounce**<`T`\>(`value`, `delay?`): `T`
+
+This hook debounces a state variable. That state variable can then be used as the
+value of a controlled input, while the return value of this hook is used for making
+a request.
+
+**`example`**
+```tsx
+import { useDebounce } from "@openmrs/esm-framework";
+
+function MyComponent() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
+  const swrResult = useSWR(`/api/search?q=${debouncedSearchTerm}`)
+
+ return (
+   <Search
+     labelText={t('search', 'Search')}
+     onChange={(e) => setSearchTerm(e.target.value)}
+     value={searchTerm}
+   />
+ )
+}
+```
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `value` | `T` | `undefined` | The value that will be used to set `debounceValue` |
+| `delay` | `number` | `300` | The number of milliseconds to wait before updating `debounceValue` |
+
+#### Returns
+
+`T`
+
+The debounced value
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useDebounce.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDebounce.ts#L32)
+
+___
+
+### useOpenmrsSWR
+
+▸ **useOpenmrsSWR**(`key`, `options?`): `SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>, `any`, `undefined` \| `Partial`<`PublicConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>\>\>
+
+**`beta`**
+
+This hook is intended to simplify using openmrsFetch in useSWR, while also ensuring that
+all useSWR usages properly use an abort controller, so that fetch requests are cancelled
+if the React component unmounts.
+
+**`example`**
+```tsx
+import { useOpenmrsSWR } from "@openmrs/esm-framework";
+
+function MyComponent() {
+ const { data } = useOpenmrsSWR(key);
+
+ return (
+   // render something with data
+ );
+}
+```
+
+Note that if you are using a complex SWR key you must provide a url function to the options parameter,
+which translates the key into a URL to be sent to `openmrsFetch()`
+
+**`example`**
+```tsx
+import { useOpenmrsSWR } from "@openmrs/esm-framework";
+
+function MyComponent() {
+ const { data } = useOpenmrsSWR(['key', 'url'], { url: (key) => key[1] });
+
+ return (
+   // render something with data
+ );
+}
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | [`Key`](API.md#key) | The SWR key to use |
+| `options` | [`UseOpenmrsSWROptions`](API.md#useopenmrsswroptions) | An object of optional parameters to provide, including a [FetchConfig](interfaces/FetchConfig.md) object   to pass to [openmrsFetch](API.md#openmrsfetch) or options to pass to SWR |
+
+#### Returns
+
+`SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>, `any`, `undefined` \| `Partial`<`PublicConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L69)

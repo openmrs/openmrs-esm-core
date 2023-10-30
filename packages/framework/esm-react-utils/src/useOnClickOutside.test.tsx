@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { useOnClickOutside } from "./useOnClickOutside";
 
@@ -8,7 +8,7 @@ describe("useOnClickOutside", () => {
 
   it("should call the handler when clicking outside", () => {
     // setup
-    const Component: React.FC = ({ children }) => {
+    const Component: React.FC<PropsWithChildren> = ({ children }) => {
       const ref = useOnClickOutside<HTMLDivElement>(handler);
       return <div ref={ref}>{children}</div>;
     };
@@ -23,11 +23,11 @@ describe("useOnClickOutside", () => {
 
   it("should not call the handler when clicking on the element", () => {
     // setup
-    const Component: React.FC = ({ children }) => {
+    const Component: React.FC<PropsWithChildren> = ({ children }) => {
       const ref = useOnClickOutside<HTMLDivElement>(handler);
       return <div ref={ref}>{children}</div>;
     };
-    const mutableRef: { current: HTMLDivElement } = { current: undefined };
+    const mutableRef: { current: HTMLDivElement | null } = { current: null };
     render(
       <Component>
         <div ref={mutableRef}></div>
@@ -35,7 +35,9 @@ describe("useOnClickOutside", () => {
     );
 
     // act
-    fireEvent.click(mutableRef.current);
+    if (mutableRef.current) {
+      fireEvent.click(mutableRef.current);
+    }
 
     // verify
     expect(handler).not.toHaveBeenCalled();
@@ -43,7 +45,7 @@ describe("useOnClickOutside", () => {
 
   it("should unregister the event listener when unmounted", () => {
     // setup
-    const Component: React.FC = ({ children }) => {
+    const Component: React.FC<PropsWithChildren> = ({ children }) => {
       const ref = useOnClickOutside<HTMLDivElement>(handler);
       return <div ref={ref}>{children}</div>;
     };
