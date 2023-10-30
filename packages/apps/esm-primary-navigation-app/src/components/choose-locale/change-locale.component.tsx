@@ -7,12 +7,9 @@ import {
   useConnectivity,
 } from "@openmrs/esm-framework";
 import {
-  PostSessionLocale,
   PostUserProperties,
   postUserPropertiesOnline,
   postUserPropertiesOffline,
-  postSessionLocaleOnline,
-  postSessionLocaleOffline,
 } from "./change-locale.resource";
 import { useTranslation } from "react-i18next";
 
@@ -21,24 +18,18 @@ export interface ChangeLocaleProps {
   user: LoggedInUser;
   locale: string;
   postUserProperties: PostUserProperties;
-  postSessionLocale: PostSessionLocale;
 }
 
 const ChangeLocaleWrapper: React.FC<
   Pick<ChangeLocaleProps, "allowedLocales" | "user" | "locale">
 > = (props) => {
   const isOnline = useConnectivity();
-  const [postUserProperties, postSessionLocale] = useMemo(
-    () =>
-      isOnline
-        ? [postUserPropertiesOnline, postSessionLocaleOnline]
-        : [postUserPropertiesOffline, postSessionLocaleOffline],
+  const postUserProperties = useMemo(
+    () => (isOnline ? postUserPropertiesOnline : postUserPropertiesOffline),
     [isOnline]
   );
 
-  return (
-    <ChangeLocale {...props} {...{ postUserProperties, postSessionLocale }} />
-  );
+  return <ChangeLocale {...props} postUserProperties={postUserProperties} />;
 };
 
 // exported for tests
@@ -47,36 +38,30 @@ export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   locale,
   user,
   postUserProperties,
-  postSessionLocale,
 }) => {
   const { t } = useTranslation();
-  const [selectedLocale, setSelectedLocale] = useState(
-    user?.userProperties?.defaultLocale ?? locale
-  );
+  const [selectedLocale, setSelectedLocale] = useState(locale);
   const options = allowedLocales?.map((locale) => (
     <SelectItem text={locale} value={locale} key={locale} />
   ));
 
-  useEffect(() => {
-    if (user.userProperties.defaultLocale !== selectedLocale) {
-      const ac = new AbortController();
-      postUserProperties(
-        user.uuid,
-        {
-          ...(user.userProperties ?? {}),
-          defaultLocale: selectedLocale,
-        },
-        ac
-      );
-      postSessionLocale(selectedLocale, ac);
-      return () => ac.abort();
-    }
-  }, [selectedLocale, postUserProperties, user, postSessionLocale]);
-
   const onChange = useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) =>
-      setSelectedLocale(event.target.value),
-    [setSelectedLocale]
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const newLocale = event.target.value;
+      if (newLocale !== selectedLocale) {
+        const ac = new AbortController();
+        postUserProperties(
+          user.uuid,
+          {
+            ...(user.userProperties ?? {}),
+            defaultLocale: newLocale,
+          },
+          ac
+        );
+        setSelectedLocale(newLocale);
+      }
+    },
+    [postUserProperties, user.userProperties, user.uuid, selectedLocale]
   );
 
   const onClick = useCallback(
