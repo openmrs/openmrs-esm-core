@@ -44,6 +44,6 @@
     "@openmrs/esm-state": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-state": "^5.2.0"
+    "@openmrs/esm-state": "workspace:*"
   }
 }

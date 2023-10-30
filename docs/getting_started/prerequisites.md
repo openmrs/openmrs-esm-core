@@ -18,13 +18,6 @@ If the repository you're looking at has a `yarn.lock` file, then it uses `yarn`,
 and you'll want to read the [Yarn docs](https://classic.yarnpkg.com/en/docs/getting-started).
 Otherwise it uses `npm`. Yarn and npm are exclusive of each other within a repository.
 
-### Lerna
-
-Most OpenMRS 3 projects use Lerna. If the repository you're looking
-at has a `packages` directory at the top level,
-then it is a "monorepo" and is using Lerna, and you'll want to read the
-[Lerna docs](https://github.com/lerna/lerna#readme).
-
 ## React
 
 You should know everything from [React Main Concepts](https://reactjs.org/docs/hello-world.html),

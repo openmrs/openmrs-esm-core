@@ -46,7 +46,8 @@
     "single-spa": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-globals": "^5.2.0",
-    "@openmrs/esm-state": "^5.2.0"
+    "@openmrs/esm-globals": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
+    "single-spa": "^5.9.2"
   }
 }

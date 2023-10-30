@@ -332,8 +332,10 @@ module.exports = (env, argv = {}) => {
             } else if (version.startsWith("~")) {
               const semVer = semver.parse(version.slice(1));
               version = `${semVer.major}.${semVer.minor}.x`;
-            } else if (depName === "@openmrs/esm-framework") {
-              version = `${semver.parse(version).major}.x`;
+            } else if (version === "workspace:*") {
+              version = `${
+                semver.parse(require(`${depName}/package.json`).version).major
+              }.X`;
             }
           }
 
