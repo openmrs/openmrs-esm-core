@@ -23,8 +23,8 @@
 - [saveVisit](API.md#savevisit)
 - [setCurrentVisit](API.md#setcurrentvisit)
 - [setSessionLocation](API.md#setsessionlocation)
-- [setUserProperties](API.md#setuserproperties)
 - [setUserLanguage](API.md#setuserlanguage)
+- [setUserProperties](API.md#setuserproperties)
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
@@ -1362,12 +1362,29 @@ ___
 
 ___
 
-### setUserProperties
-
-▸ **setUserProperties**(`userUuid`, `userProperties`, `abortController?`): `Promise`<`any`\>
 ### setUserLanguage
 
 ▸ **setUserLanguage**(`data`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`Session`](interfaces/Session.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L131)
+
+___
+
+### setUserProperties
+
+▸ **setUserProperties**(`userUuid`, `userProperties`, `abortController?`): `Promise`<`any`\>
 
 #### Parameters
 
@@ -1384,15 +1401,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-user.ts:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L270)
-| `data` | [`Session`](interfaces/Session.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:131](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L131)
 
 ___
 
