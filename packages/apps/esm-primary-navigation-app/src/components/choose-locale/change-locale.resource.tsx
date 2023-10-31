@@ -39,25 +39,3 @@ export async function postUserPropertiesOffline(
     }
   );
 }
-
-export type PostSessionLocale = (
-  locale: string,
-  abortController: AbortController
-) => Promise<void>;
-
-export async function postSessionLocaleOnline(
-  locale: string,
-  abortController: AbortController
-): Promise<void> {
-  await openmrsFetch(`/ws/rest/v1/session`, {
-    method: "POST",
-    body: { locale },
-    headers: { "Content-Type": "application/json" },
-    signal: abortController.signal,
-  });
-}
-
-export async function postSessionLocaleOffline(
-  locale: string,
-  abortController: AbortController
-) {}
