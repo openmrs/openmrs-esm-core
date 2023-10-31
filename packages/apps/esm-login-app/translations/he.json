@@ -7,6 +7,7 @@
   "invalidCredentials": "שם משתמש או סיסמה לא תקינים",
   "loading": "טוען",
   "locationPreferenceAdded": "Selected location will be used for your next logins",
+  "locationPreferenceRemoved": "Login location preference removed",
   "locationPreferenceUpdated": "Login location preference updated",
   "loggingIn": "Logging in",
   "login": "התחברות",

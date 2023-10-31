@@ -111,7 +111,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                   "selectedLocationPreferenceSetMessage",
                   "You can change your preference from the user dashboard"
                 )
-              : null,
+              : t(
+                  "locationPreferenceAdded",
+                  "Selected location will be used for your next logins"
+                ),
             kind: "success",
           });
         });
@@ -125,6 +128,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         );
         setUserProperties(userUuid, updatedUserProperties).then(() => {
           showToast({
+            title: t(
+              "locationPreferenceRemoved",
+              "Login location preference removed"
+            ),
             description: t(
               "removedLoginLocationPreference",
               "The login location preference has been removed."

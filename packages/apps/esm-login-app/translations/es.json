@@ -7,6 +7,7 @@
   "invalidCredentials": "Nombre de usuario o contraseña inválidos",
   "loading": "Cargando",
   "locationPreferenceAdded": "Selected location will be used for your next logins",
+  "locationPreferenceRemoved": "Login location preference removed",
   "locationPreferenceUpdated": "Login location preference updated",
   "loggingIn": "Iniciando sesión",
   "login": "Iniciar sesión",

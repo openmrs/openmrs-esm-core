@@ -7,6 +7,7 @@
   "invalidCredentials": "Nom d'utilisateur ou mot de passe invalide",
   "loading": "En cours de chargement",
   "locationPreferenceAdded": "Selected location will be used for your next logins",
+  "locationPreferenceRemoved": "Login location preference removed",
   "locationPreferenceUpdated": "Login location preference updated",
   "loggingIn": "Logging in",
   "login": "S'identifier",
