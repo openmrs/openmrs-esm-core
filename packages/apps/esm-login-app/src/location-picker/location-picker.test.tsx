@@ -321,6 +321,7 @@ describe("LocationPicker", () => {
 
       await waitFor(() =>
         expect(showToast).toBeCalledWith({
+          title: "Login location preference removed",
           kind: "success",
           description: "The login location preference has been removed.",
         })
@@ -367,7 +368,7 @@ describe("LocationPicker", () => {
       );
       await waitFor(() =>
         expect(showToast).toBeCalledWith({
-          description: null,
+          description: "Selected location will be used for your next logins",
           kind: "success",
           title: "Login location preference updated",
         })
