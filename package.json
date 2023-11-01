@@ -14,7 +14,7 @@
     "run:shell": "turbo run watch --filter=@openmrs/esm-app-shell --parallel --no-cache",
     "ci:publish-next": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --access public --tag latest",
     "ci:publish": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --access public --tag latest",
-    "release": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core version",
+    "release": "yarn workspaces foreach --all --topological version",
     "build": "turbo run build",
     "build:apps": "turbo run build --filter='@openmrs/*-app'",
     "setup": "yarn install && turbo run build && lerna clean --yes && yarn install --immutable",
