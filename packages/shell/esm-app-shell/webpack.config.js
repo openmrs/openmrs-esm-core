@@ -279,20 +279,6 @@ module.exports = (env, argv = {}) => {
     },
     plugins: [
       openmrsCleanBeforeBuild && new CleanWebpackPlugin(),
-      new WebpackPwaManifest({
-        name: "OpenMRS",
-        short_name: "OpenMRS",
-        description:
-          "Open source Health IT by and for the entire planet, starting with the developing world.",
-        background_color: "#ffffff",
-        theme_color: "#000000",
-        icons: [
-          {
-            src: resolve(__dirname, "src/assets/logo-512.png"),
-            sizes: [96, 128, 144, 192, 256, 384, 512],
-          },
-        ],
-      }),
       new HtmlWebpackPlugin({
         inject: false,
         scriptLoading: "blocking",
@@ -316,6 +302,21 @@ module.exports = (env, argv = {}) => {
           openmrsCoreRoutes:
             Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
         },
+      }),
+      new WebpackPwaManifest({
+        name: "OpenMRS",
+        short_name: "OpenMRS",
+        publicPath: openmrsPublicPath,
+        description:
+          "Open source Health IT by and for the entire planet, starting with the developing world.",
+        background_color: "#ffffff",
+        theme_color: "#000000",
+        icons: [
+          {
+            src: resolve(__dirname, "src/assets/logo-512.png"),
+            sizes: [96, 128, 144, 192, 256, 384, 512],
+          },
+        ],
       }),
       new CopyWebpackPlugin({
         patterns: [{ from: resolve(__dirname, "src/assets") }, ...appPatterns],
