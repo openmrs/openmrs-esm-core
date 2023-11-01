@@ -87,7 +87,7 @@ jobs:
 
       - name: Version
         # This command CANNOT be run in parallel
-        run: yarn workspaces foreach --all --toplogical version "$(node -e "console.log(require('semver').inc(require('./package.json').version, 'patch'))")-pre.${{ github.run_number }}"
+        run: yarn workspaces foreach --all --topological version "$(node -e "console.log(require('semver').inc(require('./package.json').version, 'patch'))")-pre.${{ github.run_number }}"
 
       - name: Build
         run: yarn turbo run build --color --concurrency=5
