@@ -55,7 +55,7 @@ rm -rf node_modules/
 yarn
 ```
 
-This will only delete the root `node_modules` folder. You may also want to delete the `node_modules` of all packages in a monorepo. If the monorepo has Lerna you can simply run `npx lerna clean` followed by `yarn`. Otherwise delete these manually, then run `yarn`.
+This will only delete the root `node_modules` folder. You may also want to delete the `node_modules` of all packages in a monorepo.
 
 Yarn is smart and will quickly compile the new `node_modules` folder from its internal cache. If you are worried that yarn has cached an invalid version of a package you can clear yarn cache to force it to download the packages again
 

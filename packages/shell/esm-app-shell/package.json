@@ -12,8 +12,7 @@
     "build:development": "cross-env OMRS_OFFLINE=\"enable\" OMRS_CLEAN_BEFORE_BUILD=\"true\" NODE_ENV=\"development\" webpack --mode development",
     "build": "npm run build:production && npm run build:development",
     "analyze": "webpack --mode=production --env analyze=true",
-    "lint": "eslint src --ext ts,tsx",
-    "version": "yarn add @openmrs/esm-framework@$npm_package_version --exact @openmrs/esm-styleguide@$npm_package_version --exact"
+    "lint": "eslint src --ext ts,tsx"
   },
   "keywords": [
     "openmrs",
@@ -35,8 +34,8 @@
   },
   "dependencies": {
     "@carbon/react": "^1.37.0",
-    "@openmrs/esm-framework": "5.2.0",
-    "@openmrs/esm-styleguide": "5.2.0",
+    "@openmrs/esm-framework": "workspace:*",
+    "@openmrs/esm-styleguide": "workspace:*",
     "dayjs": "^1.10.4",
     "dexie": "^3.0.3",
     "html-webpack-plugin": "^5.5.0",

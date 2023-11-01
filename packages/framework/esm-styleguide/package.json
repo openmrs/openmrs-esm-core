@@ -58,9 +58,9 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-extensions": "^5.2.0",
-    "@openmrs/esm-react-utils": "^5.2.0",
-    "@openmrs/esm-state": "^5.2.0",
+    "@openmrs/esm-extensions": "workspace:*",
+    "@openmrs/esm-react-utils": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
     "autoprefixer": "^9.8.8",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "i18next": "^21.10.0",

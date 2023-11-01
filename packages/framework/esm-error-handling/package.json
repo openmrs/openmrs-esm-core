@@ -40,6 +40,6 @@
     "@openmrs/esm-globals": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-globals": "^5.2.0"
+    "@openmrs/esm-globals": "workspace:*"
   }
 }
