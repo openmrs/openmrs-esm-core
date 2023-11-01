@@ -271,7 +271,7 @@ export default (
             // SWR is annoying with Module Federation
             // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
             obj["swr/"] = {
-              requiredVersion: version,
+              requiredVersion: peerDependencies["swr"] ?? false,
               singleton: true,
               import: "swr/",
               shareKey: "swr/",
