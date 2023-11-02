@@ -255,7 +255,7 @@ export default (
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new ModuleFederationPlugin({
-        // See `esm-app-shell/src/load-modules.ts` for an explanation of how modules
+        // Look in the `esm-dynamic-loading` framework package for an explanation of how modules
         // get loaded into the application.
         name,
         library: { type: "var", name: slugify(name) },
