@@ -81,4 +81,25 @@ describe("useSession", () => {
     );
     expect(screen.getByText(/"authenticated":false/)).toBeInTheDocument();
   });
+
+  it("supports multiple instances of useSession that all receive updates", async () => {
+    mockSessionStore.setState({
+      loaded: true,
+      session: { authenticated: false, sessionId: "test2" },
+    });
+    render(<Suspense fallback={"suspended"}>
+      <div data-testid="component1"><Component /></div>
+      <div data-testid="component2"><Component /></div>
+      </Suspense>)
+    expect(screen.getByTestId("component1")).toHaveTextContent(/"authenticated":false/)
+    expect(screen.getByTestId("component2")).toHaveTextContent(/"authenticated":false/)
+    act(() => {
+      mockSessionStore.setState({
+        loaded: true,
+        session: { authenticated: true, sessionId: "test3" },
+      });
+    });
+    expect(screen.getByTestId("component1")).toHaveTextContent(/"authenticated":true/)
+    expect(screen.getByTestId("component2")).toHaveTextContent(/"authenticated":true/)
+  });
 });
