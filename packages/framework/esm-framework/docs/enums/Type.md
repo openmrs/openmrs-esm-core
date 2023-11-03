@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:2](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L2)
+[packages/framework/esm-config/src/types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L2)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:3](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L3)
+[packages/framework/esm-config/src/types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L3)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:4](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L4)
+[packages/framework/esm-config/src/types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L4)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:5](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L5)
+[packages/framework/esm-config/src/types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L5)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:6](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L6)
+[packages/framework/esm-config/src/types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L6)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:10](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L10)
+[packages/framework/esm-config/src/types.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L10)
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:9](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L9)
+[packages/framework/esm-config/src/types.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L9)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:7](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L7)
+[packages/framework/esm-config/src/types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L7)
 
 ___
 
@@ -104,4 +104,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:8](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L8)
+[packages/framework/esm-config/src/types.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L8)

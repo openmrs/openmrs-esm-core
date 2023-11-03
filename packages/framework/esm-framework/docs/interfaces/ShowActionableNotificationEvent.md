@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:79](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L79)
+[packages/framework/esm-globals/src/events.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L79)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:71](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L71)
+[packages/framework/esm-globals/src/events.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L71)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:81](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L81)
+[packages/framework/esm-globals/src/events.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L81)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:70](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L70)
+[packages/framework/esm-globals/src/events.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L70)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:78](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L78)
+[packages/framework/esm-globals/src/events.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L78)
 
 ## Methods
 
@@ -78,4 +78,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:80](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L80)
+[packages/framework/esm-globals/src/events.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L80)

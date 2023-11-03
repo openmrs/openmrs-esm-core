@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:28](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L28)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L28)
