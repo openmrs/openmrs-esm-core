@@ -4,6 +4,7 @@
   "confirm": "تأكيد",
   "continue": "استمرار",
   "error": "خطأ",
+  "errorLoadingLoginLocations": "Error loading login locations",
   "invalidCredentials": "بيانات الدخول غير صحيحة",
   "loading": "جار التحميل",
   "locationPreferenceAdded": "Selected location will be used for your next logins",

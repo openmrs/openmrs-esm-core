@@ -134,7 +134,7 @@ describe("LocationPicker", () => {
       expect(setUserProperties).toBeCalledWith(
         "90bd24b3-e700-46b0-a5ef-c85afdfededd",
         {
-          defaultLoginLocation: "1ce1b7d4-c865-4178-82b0-5932e51503d6",
+          defaultLocation: "1ce1b7d4-c865-4178-82b0-5932e51503d6",
         }
       );
       await waitFor(() =>
@@ -173,7 +173,7 @@ describe("LocationPicker", () => {
           display: "Testy McTesterface",
           uuid: "90bd24b3-e700-46b0-a5ef-c85afdfededd",
           userProperties: {
-            defaultLoginLocation: validLocationUuid,
+            defaultLocation: validLocationUuid,
           },
         },
       });
@@ -203,7 +203,7 @@ describe("LocationPicker", () => {
       expect(setUserProperties).not.toBeCalledWith(
         "90bd24b3-e700-46b0-a5ef-c85afdfededd",
         {
-          defaultLoginLocation: "1ce1b7d4-c865-4178-82b0-5932e51503d6",
+          defaultLocation: "1ce1b7d4-c865-4178-82b0-5932e51503d6",
         }
       );
     });
@@ -214,7 +214,7 @@ describe("LocationPicker", () => {
           display: "Testy McTesterface",
           uuid: "90bd24b3-e700-46b0-a5ef-c85afdfededd",
           userProperties: {
-            defaultLoginLocation: invalidLocationUuid,
+            defaultLocation: invalidLocationUuid,
           },
         },
       });
@@ -253,7 +253,7 @@ describe("LocationPicker", () => {
           display: "Testy McTesterface",
           uuid: "90bd24b3-e700-46b0-a5ef-c85afdfededd",
           userProperties: {
-            defaultLoginLocation: validLocationUuid,
+            defaultLocation: validLocationUuid,
           },
         },
       });
@@ -284,7 +284,7 @@ describe("LocationPicker", () => {
           display: "Testy McTesterface",
           uuid: "90bd24b3-e700-46b0-a5ef-c85afdfededd",
           userProperties: {
-            defaultLoginLocation: "1ce1b7d4-c865-4178-82b0-5932e51503d6",
+            defaultLocation: "1ce1b7d4-c865-4178-82b0-5932e51503d6",
           },
         },
       });
@@ -339,7 +339,7 @@ describe("LocationPicker", () => {
           display: "Testy McTesterface",
           uuid: "90bd24b3-e700-46b0-a5ef-c85afdfededd",
           userProperties: {
-            defaultLoginLocation: validLocationUuid,
+            defaultLocation: validLocationUuid,
           },
         },
       });
@@ -364,7 +364,7 @@ describe("LocationPicker", () => {
       );
       expect(setUserProperties).toBeCalledWith(
         "90bd24b3-e700-46b0-a5ef-c85afdfededd",
-        { defaultLoginLocation: "8d9045ad-50f0-45b8-93c8-3ed4bce19dbf" }
+        { defaultLocation: "8d9045ad-50f0-45b8-93c8-3ed4bce19dbf" }
       );
       await waitFor(() =>
         expect(showToast).toBeCalledWith({
@@ -386,7 +386,7 @@ describe("LocationPicker", () => {
           display: "Testy McTesterface",
           uuid: "90bd24b3-e700-46b0-a5ef-c85afdfededd",
           userProperties: {
-            defaultLoginLocation: validLocationUuid,
+            defaultLocation: validLocationUuid,
           },
         },
       });

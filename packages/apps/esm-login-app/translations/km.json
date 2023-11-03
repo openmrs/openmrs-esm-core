@@ -4,6 +4,7 @@
   "confirm": "បញ្ជាក់",
   "continue": "បន្ត",
   "error": "មានកំហុស",
+  "errorLoadingLoginLocations": "Error loading login locations",
   "invalidCredentials": "ឈ្មោះអ្នកប្រើប្រាស់ និងលេខកូដសំងាត់មិនត្រឹមត្រូវ",
   "loading": "កំពុងទាញទិន្ន័យ",
   "locationPreferenceAdded": "Selected location will be used for your next logins",

@@ -31,7 +31,7 @@ export interface LoggedInUser {
     /**
      * The UUID of the location the user has set preference to use for next logins
      */
-    defaultLoginLocation?: string;
+    defaultLocation?: string;
     [key: string]: string | undefined;
   } | null;
   person: Person;

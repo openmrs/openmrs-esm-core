@@ -19,46 +19,50 @@ import {
 import {
   navigate,
   setSessionLocation,
-  setUserProperties,
-  showToast,
   useConfig,
   useConnectivity,
   useSession,
 } from "@openmrs/esm-framework";
 import type { LoginReferrer } from "../login/login.component";
-import { useLoginLocation, useLoginLocations } from "../login.resource";
+import { useLoginLocations } from "../login.resource";
 import styles from "./location-picker.scss";
+import { useDefaultLocation } from "./location-picker.resource";
+import { ConfigSchema } from "../config-schema";
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
   currentLocationUuid?: string;
 }
 
+const isUpdateFlow =
+  new URLSearchParams(location?.search).get("update") === "true";
+
 const LocationPicker: React.FC<LocationPickerProps> = ({
   hideWelcomeMessage,
   currentLocationUuid,
 }) => {
   const { t } = useTranslation();
-  const config = useConfig();
+  const config: ConfigSchema = useConfig();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
+  const {
+    defaultLocation,
+    savingPreferenceAllowed,
+    updateUserPreference,
+    savePreference,
+    setSavePreference,
+  } = useDefaultLocation();
 
   const [searchTerm, setSearchTerm] = useState(null);
 
   const { user, sessionLocation } = useSession();
-  const { currentUser, userUuid, userProperties, userPreferredLocationUuid } =
-    useMemo(
-      () => ({
-        currentUser: user?.display,
-        userUuid: user?.uuid,
-        userProperties: user?.userProperties,
-        userPreferredLocationUuid: user?.userProperties?.defaultLoginLocation,
-      }),
-      [user]
-    );
-
-  const { isUserPreferredLocationPresent } = useLoginLocation(
-    userPreferredLocationUuid
+  const { currentUser, userProperties } = useMemo(
+    () => ({
+      currentUser: user?.display,
+      userUuid: user?.uuid,
+      userProperties: user?.userProperties,
+    }),
+    [user]
   );
 
   const { locations, isLoading, hasMore, loadingNewData, setPage } =
@@ -68,81 +72,16 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       searchTerm
     );
 
-  const [savePreference, setSavePreference] = useState(
-    !!userPreferredLocationUuid
-  );
   const [activeLocation, setActiveLocation] = useState(() => {
     if (currentLocationUuid && hideWelcomeMessage) {
       return currentLocationUuid;
     }
-    return sessionLocation?.uuid ?? userProperties?.defaultLoginLocation;
+    return sessionLocation?.uuid ?? defaultLocation;
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { state } = useLocation() as { state: LoginReferrer };
-
-  const updateUserPreference = useCallback(
-    (locationUuid: string, saveUserPreference: boolean) => {
-      if (saveUserPreference) {
-        if (locationUuid === userProperties.defaultLoginLocation) {
-          return;
-        }
-        // If the user checks the checkbox for saving the preference
-        const updatedUserProperties = {
-          ...userProperties,
-          defaultLoginLocation: locationUuid,
-        };
-        const isUpdateFlow =
-          new URLSearchParams(location?.search).get("update") === "true";
-        setUserProperties(userUuid, updatedUserProperties).then(() => {
-          showToast({
-            title: !isUpdateFlow
-              ? t(
-                  "locationPreferenceAdded",
-                  "Selected location will be used for your next logins"
-                )
-              : t(
-                  "locationPreferenceUpdated",
-                  "Login location preference updated"
-                ),
-            description: !isUpdateFlow
-              ? t(
-                  "selectedLocationPreferenceSetMessage",
-                  "You can change your preference from the user dashboard"
-                )
-              : t(
-                  "locationPreferenceAdded",
-                  "Selected location will be used for your next logins"
-                ),
-            kind: "success",
-          });
-        });
-      } else if (!!userProperties?.defaultLoginLocation) {
-        // If the user doesn't want to save the preference,
-        // the old preference should be deleted
-        const updatedUserProperties = Object.fromEntries(
-          Object.entries(userProperties).filter(
-            ([key]) => key !== "defaultLoginLocation"
-          )
-        );
-        setUserProperties(userUuid, updatedUserProperties).then(() => {
-          showToast({
-            title: t(
-              "locationPreferenceRemoved",
-              "Login location preference removed"
-            ),
-            description: t(
-              "removedLoginLocationPreference",
-              "The login location preference has been removed."
-            ),
-            kind: "success",
-          });
-        });
-      }
-    },
-    [userProperties, userUuid, t]
-  );
 
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
@@ -197,23 +136,14 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
-    const isUpdateFlow =
-      new URLSearchParams(location?.search).get("update") === "true";
-
     if (isUpdateFlow) {
       return;
     }
-    if (isUserPreferredLocationPresent && !isSubmitting) {
-      setActiveLocation(userPreferredLocationUuid);
-      setSavePreference(true);
-      changeLocation(userPreferredLocationUuid, true);
+    if (defaultLocation && !isSubmitting) {
+      setActiveLocation(defaultLocation);
+      changeLocation(defaultLocation, true);
     }
-  }, [
-    changeLocation,
-    isSubmitting,
-    isUserPreferredLocationPresent,
-    userPreferredLocationUuid,
-  ]);
+  }, [changeLocation, isSubmitting, defaultLocation, setSavePreference]);
 
   const search = (location: string) => {
     setActiveLocation("");
@@ -337,16 +267,18 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             )}
           </div>
           <div className={styles.confirmButton}>
-            <Checkbox
-              id="checkbox"
-              className={styles.savePreferenceCheckbox}
-              labelText={t(
-                "rememberLocationForFutureLogins",
-                "Remember my location for future logins"
-              )}
-              checked={savePreference}
-              onChange={(_, { checked }) => setSavePreference(checked)}
-            />
+            {savingPreferenceAllowed && (
+              <Checkbox
+                id="checkbox"
+                className={styles.savePreferenceCheckbox}
+                labelText={t(
+                  "rememberLocationForFutureLogins",
+                  "Remember my location for future logins"
+                )}
+                checked={savePreference}
+                onChange={(_, { checked }) => setSavePreference(checked)}
+              />
+            )}
             <Button
               kind="primary"
               type="submit"

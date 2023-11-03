@@ -4,6 +4,7 @@
   "confirm": "Confirm",
   "continue": "Continue",
   "error": "Error",
+  "errorLoadingLoginLocations": "Error loading login locations",
   "invalidCredentials": "",
   "loading": "Loading",
   "locationPreferenceAdded": "Selected location will be used for your next logins",

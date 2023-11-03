@@ -106,7 +106,7 @@ ___
 
 ### userProperties
 
-• **userProperties**: ``null`` \| { `[key: string]`: `string` \| `undefined`; `defaultLoginLocation?`: `string` ; `patientsVisited?`: `string` ; `starredPatientLists?`: `string`  }
+• **userProperties**: ``null`` \| { `[key: string]`: `string` \| `undefined`; `defaultLocation?`: `string` ; `patientsVisited?`: `string` ; `starredPatientLists?`: `string`  }
 
 #### Defined in
 

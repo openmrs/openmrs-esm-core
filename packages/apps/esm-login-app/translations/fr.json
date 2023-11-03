@@ -4,6 +4,7 @@
   "confirm": "Vérifier",
   "continue": "Continuer",
   "error": "Erreur",
+  "errorLoadingLoginLocations": "Error loading login locations",
   "invalidCredentials": "Nom d'utilisateur ou mot de passe invalide",
   "loading": "En cours de chargement",
   "locationPreferenceAdded": "Selected location will be used for your next logins",

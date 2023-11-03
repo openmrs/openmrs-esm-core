@@ -48,6 +48,24 @@ export const configSchema = {
       _description:
         "Whether to show only locations with the 'Login Location' tag. If false, shows all locations.",
     },
+    saveLocationPreference: {
+      allowed: {
+        _type: Type.Boolean,
+        _default: true,
+        _description:
+          "Whether to allow users to set preference for login locations for their future preference",
+      },
+      savePreferenceOnComputer: {
+        _type: Type.Boolean,
+        _default: true,
+        _description: "Whether to save preference on the system only.",
+      },
+      savePreferenceAsUserProp: {
+        _type: Type.Boolean,
+        _default: true,
+        _description: "Whether to save preference as a user property.",
+      },
+    },
   },
   links: {
     loginSuccess: {
@@ -72,3 +90,29 @@ export const configSchema = {
     },
   },
 };
+
+export interface ConfigSchema {
+  provider: {
+    type: string;
+    loginUrl: string;
+    logoutUrl: string;
+  };
+  chooseLocation: {
+    enabled: boolean;
+    numberToShow: boolean;
+    locationsPerRequest: number;
+    useLoginLocationTag: boolean;
+    saveLocationPreference: {
+      allowed: boolean;
+      savePreferenceOnComputer: boolean;
+      savePreferenceAsUserProp: boolean;
+    };
+  };
+  links: {
+    loginSuccess: string;
+  };
+  logo: {
+    src: string;
+    alt: string;
+  };
+}

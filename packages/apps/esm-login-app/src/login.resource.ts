@@ -126,7 +126,7 @@ export function useLoginLocations(
   return memoizedLocations;
 }
 
-export function useLoginLocation(userPreferredLocationUuid: string) {
+export function useValidateLocationUuid(userPreferredLocationUuid: string) {
   const url = userPreferredLocationUuid
     ? `/ws/rest/v1/location/${userPreferredLocationUuid}`
     : null;
@@ -137,7 +137,7 @@ export function useLoginLocation(userPreferredLocationUuid: string) {
   });
   const results = useMemo(
     () => ({
-      isUserPreferredLocationPresent: data?.ok,
+      isLocationValid: data?.ok,
       userPreferredLocation: data?.data,
       error,
       isLoading,
