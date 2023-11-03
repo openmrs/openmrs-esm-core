@@ -1,15 +1,25 @@
 import {
   defineConfigSchema,
-  getAsyncLifecycle,
   getSyncLifecycle,
   registerBreadcrumbs,
 } from "@openmrs/esm-framework";
 import { routes } from "./constants";
 import { createDashboardLink } from "./createDashboardLink";
 import { dashboardMeta } from "./dashboard.meta";
-import OfflineToolsNavLink from "./nav/offline-tools-nav-link.component";
 import { setupOffline } from "./offline";
 import { setupSynchronizingOfflineActionsNotifications } from "./offline-actions/synchronizing-notification";
+import offlineToolsComponent from "./root.component";
+import offlineToolsLinkComponent from "./offline-tools-app-menu-link.component";
+import offlineToolsNavItemsComponent from "./nav/offline-tools-nav-menu.component";
+import offlineToolsConfirmationModalComponent from "./components/confirmation-modal.component";
+import offlineToolsPatientsCardComponent from "./offline-patients/patients-overview-card.component";
+import offlineToolsActionsCardComponent from "./offline-actions/offline-actions-overview-card.component";
+import offlineToolsActionsComponent from "./offline-actions/offline-actions.component";
+import offlineToolsPatientsComponent from "./offline-patients/offline-patients.component";
+import offlineToolsPageActionsComponent from "./offline-actions/offline-actions-page.component";
+import offlineToolsPatientChartComponent from "./offline-actions/offline-actions-patient-chart-widget.component";
+import offlineToolsOptInButtonComponent from "./offline-actions/offline-actions-mode-button.component";
+import OfflineToolsNavLink from "./nav/offline-tools-nav-link.component";
 
 export const importTranslation = require.context(
   "../translations",
@@ -24,36 +34,33 @@ const options = {
   moduleName,
 };
 
-export const offlineTools = getAsyncLifecycle(
-  () => import("./root.component"),
+export const offlineTools = getSyncLifecycle(offlineToolsComponent, options);
+
+export const offlineToolsLink = getSyncLifecycle(
+  offlineToolsLinkComponent,
   options
 );
 
-export const offlineToolsLink = getAsyncLifecycle(
-  () => import("./offline-tools-app-menu-link.component"),
-  options
-);
-
-export const offlineToolsNavItems = getAsyncLifecycle(
-  () => import("./nav/offline-tools-nav-menu.component"),
+export const offlineToolsNavItems = getSyncLifecycle(
+  offlineToolsNavItemsComponent,
   {
     featureName: "nav-items",
     moduleName,
   }
 );
 
-export const offlineToolsConfirmationModal = getAsyncLifecycle(
-  () => import("./components/confirmation-modal.component"),
+export const offlineToolsConfirmationModal = getSyncLifecycle(
+  offlineToolsConfirmationModalComponent,
   options
 );
 
-export const offlineToolsPatientsCard = getAsyncLifecycle(
-  () => import("./offline-patients/patients-overview-card.component"),
+export const offlineToolsPatientsCard = getSyncLifecycle(
+  offlineToolsPatientsCardComponent,
   options
 );
 
-export const offlineToolsActionsCard = getAsyncLifecycle(
-  () => import("./offline-actions/offline-actions-overview-card.component"),
+export const offlineToolsActionsCard = getSyncLifecycle(
+  offlineToolsActionsCardComponent,
   options
 );
 
@@ -75,30 +82,23 @@ export const offlineToolsActionsLink = getSyncLifecycle(
   options
 );
 
-export const offlineToolsActions = getAsyncLifecycle(
-  () => import("./offline-actions/offline-actions.component"),
+export const offlineToolsActions = getSyncLifecycle(
+  offlineToolsActionsComponent,
   options
 );
 
-export const offlineToolsPatients = getAsyncLifecycle(
-  () => import("./offline-patients/offline-patients.component"),
+export const offlineToolsPatients = getSyncLifecycle(
+  offlineToolsPatientsComponent,
   options
 );
 
-export const offlineToolsPageActions = getAsyncLifecycle(
-  () => import("./offline-actions/offline-actions-page.component"),
+export const offlineToolsPageActions = getSyncLifecycle(
+  offlineToolsPageActionsComponent,
   options
 );
 
-export const offlineToolsPatientChartActions = getAsyncLifecycle(
-  () =>
-    import("./offline-actions/offline-actions-patient-chart-widget.component"),
-  options
-);
-
-export const offlineToolsPatientChartActionsDashboard = getAsyncLifecycle(
-  () =>
-    import("./offline-actions/offline-actions-patient-chart-widget.component"),
+export const offlineToolsPatientChartActions = getSyncLifecycle(
+  offlineToolsPatientChartComponent,
   options
 );
 
@@ -117,8 +117,8 @@ export const offlineToolsPatientChartActionsDashboardLink = getSyncLifecycle(
   options
 );
 
-export const offlineToolsOptInButton = getAsyncLifecycle(
-  () => import("./offline-actions/offline-actions-mode-button.component"),
+export const offlineToolsOptInButton = getSyncLifecycle(
+  offlineToolsOptInButtonComponent,
   options
 );
 

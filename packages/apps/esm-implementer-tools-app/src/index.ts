@@ -1,4 +1,7 @@
-import { getAsyncLifecycle } from "@openmrs/esm-framework";
+import { getSyncLifecycle } from "@openmrs/esm-framework";
+import implementerToolsComponent from "./implementer-tools.component";
+import globalImplementerToolsComponent from "./global-implementer-tools.component";
+import implementerToolsButtonComponent from "./implementer-tools.button";
 
 export const importTranslation = require.context(
   "../translations",
@@ -13,18 +16,18 @@ const options = {
   moduleName,
 };
 
-export const implementerTools = getAsyncLifecycle(
-  () => import("./implementer-tools.component"),
+export const implementerTools = getSyncLifecycle(
+  implementerToolsComponent,
   options
 );
 
-export const globalImplementerTools = getAsyncLifecycle(
-  () => import("./global-implementer-tools.component"),
+export const globalImplementerTools = getSyncLifecycle(
+  globalImplementerToolsComponent,
   options
 );
 
-export const implementerToolsButton = getAsyncLifecycle(
-  () => import("./implementer-tools.button"),
+export const implementerToolsButton = getSyncLifecycle(
+  implementerToolsButtonComponent,
   options
 );
 
