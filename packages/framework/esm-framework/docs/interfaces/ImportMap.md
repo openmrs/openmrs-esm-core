@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L68)
+[packages/framework/esm-globals/src/types.ts:68](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L68)

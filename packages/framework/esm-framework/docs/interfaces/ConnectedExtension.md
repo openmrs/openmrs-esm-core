@@ -22,7 +22,7 @@ The extension's config. Note that this will be `null` until the slot is mounted.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L94)
+[packages/framework/esm-extensions/src/store.ts:94](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L94)
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L89)
+[packages/framework/esm-extensions/src/store.ts:89](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L89)
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L92)
+[packages/framework/esm-extensions/src/store.ts:92](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L92)
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L91)
+[packages/framework/esm-extensions/src/store.ts:91](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L91)
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L90)
+[packages/framework/esm-extensions/src/store.ts:90](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L90)

@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L2)
+[packages/framework/esm-api/src/types/user-resource.ts:2](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L2)
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L3)
+[packages/framework/esm-api/src/types/user-resource.ts:3](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L3)
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L7)
+[packages/framework/esm-api/src/types/user-resource.ts:7](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L7)
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L4)
+[packages/framework/esm-api/src/types/user-resource.ts:4](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L4)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L5)
+[packages/framework/esm-api/src/types/user-resource.ts:5](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L5)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L8)
+[packages/framework/esm-api/src/types/user-resource.ts:8](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L8)
 
 ___
 
@@ -89,4 +89,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L6)
+[packages/framework/esm-api/src/types/user-resource.ts:6](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L6)

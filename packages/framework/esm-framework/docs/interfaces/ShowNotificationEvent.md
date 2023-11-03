@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L65)
+[packages/framework/esm-globals/src/events.ts:65](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L65)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L56)
+[packages/framework/esm-globals/src/events.ts:56](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L56)
 
 ___
 
@@ -40,7 +40,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L57)
+[packages/framework/esm-globals/src/events.ts:57](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L57)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L66)
+[packages/framework/esm-globals/src/events.ts:66](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L66)
 
 ___
 
@@ -60,4 +60,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L64)
+[packages/framework/esm-globals/src/events.ts:64](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L64)

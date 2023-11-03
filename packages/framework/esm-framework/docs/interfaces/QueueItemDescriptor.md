@@ -24,7 +24,7 @@ locations to better represent the sync item, e.g. in the UI.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L33)
+[packages/framework/esm-offline/src/sync.ts:33](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L33)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L38)
+[packages/framework/esm-offline/src/sync.ts:38](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L38)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L32)
+[packages/framework/esm-offline/src/sync.ts:32](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L32)
 
 ___
 
@@ -54,4 +54,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L37)
+[packages/framework/esm-offline/src/sync.ts:37](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L37)

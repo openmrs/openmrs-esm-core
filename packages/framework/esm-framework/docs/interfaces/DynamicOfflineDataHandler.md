@@ -29,7 +29,7 @@ If provided, the handler can be rendered in the UI using that string.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L24)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:24](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L24)
 
 ___
 
@@ -41,7 +41,7 @@ A string uniquely identifying the handler.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L14)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:14](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L14)
 
 ___
 
@@ -54,7 +54,7 @@ See [DynamicOfflineData.type](DynamicOfflineData.md#type) for details.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L19)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:19](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L19)
 
 ## Methods
 
@@ -79,7 +79,7 @@ If `false`, the handler would have to (re-)sync the data in order for offline mo
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L32)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:32](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L32)
 
 ___
 
@@ -102,4 +102,4 @@ Synchronizes the given offline data.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L38)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:38](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L38)

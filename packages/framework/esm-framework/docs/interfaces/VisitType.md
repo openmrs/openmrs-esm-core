@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L39)
+[packages/framework/esm-api/src/types/visit-resource.ts:39](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L39)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L40)
+[packages/framework/esm-api/src/types/visit-resource.ts:40](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L40)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/visit-resource.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L38)
+[packages/framework/esm-api/src/types/visit-resource.ts:38](https://github.com/jona42-ui/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/visit-resource.ts#L38)
