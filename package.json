@@ -73,5 +73,8 @@
   "resolutions": {
     "minipass": "3.3.5"
   },
-  "packageManager": "yarn@4.0.1"
+  "packageManager": "yarn@4.0.1",
+  "dependencies": {
+    "classnames": "^2.3.2"
+  }
 }

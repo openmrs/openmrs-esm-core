@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
+import classNames from "classnames";
 import last from "lodash-es/last";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import { ConfigurableLink } from "@openmrs/esm-framework";
+
 interface DashboardLinkConfig {
   basePath?: string;
   path: string;
@@ -42,8 +44,8 @@ const DashboardLink: React.FC<DashboardLinkConfig> = ({
     resolvedTitle && (
       <div key={path} className={activeClassName}>
         <ConfigurableLink
+          className={classNames("cds--side-nav__link", activeClassName)}
           to={`${basePath}/${encodeURIComponent(path)}`}
-          className={`cds--side-nav__link ${activeClassName}`}
         >
           {resolvedTitle}
         </ConfigurableLink>
