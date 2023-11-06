@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import classNames from "classnames";
+import { importMapOverridden } from "./import-map.component";
 import DevToolsPopup from "./devtools-popup.component";
 import styles from "./devtools.styles.css";
-import { importMapOverridden } from "./import-map.component";
 
 export default function Root(props) {
   return window.spaEnv === "development" ||
@@ -19,9 +20,9 @@ function DevTools() {
         role="button"
         tabIndex={0}
         onClick={toggleDevTools}
-        className={`${styles.devtoolsTriggerButton} ${
-          styles.overridden ? isOverridden : ""
-        }`}
+        className={classNames(styles.devtoolsTriggerButton, {
+          [styles.overridden]: isOverridden,
+        })}
       />
       {devToolsOpen && (
         <DevToolsPopup

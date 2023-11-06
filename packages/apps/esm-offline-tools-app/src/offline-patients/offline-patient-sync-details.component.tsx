@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Layer, Tile } from "@carbon/react";
@@ -64,7 +65,10 @@ const OfflinePatientSyncDetails: React.FC = () => {
                   </span>
                   <WarningFilled size={16} className={styles.failedTileIcon} />
                   <span
-                    className={`${styles.failedTileErrorMessage} ${styles.label01}`}
+                    className={classNames(
+                      styles.failedTileErrorMessage,
+                      styles.label01
+                    )}
                   >
                     {lastSyncState.errors.find(
                       (error) => error.handlerId === id

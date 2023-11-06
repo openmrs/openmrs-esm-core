@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
+import classNames from "classnames";
 import {
   HeaderContainer,
   Header,
@@ -113,11 +114,10 @@ const Navbar: React.FC = () => {
             <HeaderGlobalAction
               aria-label="Users"
               aria-labelledby="Users Avatar Icon"
-              className={`${
-                isActivePanel("userMenu")
-                  ? styles.headerGlobalBarButton
-                  : styles.activePanel
-              }`}
+              className={classNames({
+                [styles.headerGlobalBarButton]: isActivePanel("userMenu"),
+                [styles.activePanel]: !isActivePanel("userMenu"),
+              })}
               enterDelayMs={500}
               name="Users"
               isActive={isActivePanel("userMenu")}
@@ -137,14 +137,13 @@ const Navbar: React.FC = () => {
             <HeaderGlobalAction
               aria-label="App Menu"
               aria-labelledby="App Menu"
+              className={classNames({
+                [styles.headerGlobalBarButton]: isActivePanel("appMenu"),
+                [styles.activePanel]: !isActivePanel("appMenu"),
+              })}
               enterDelayMs={500}
               isActive={isActivePanel("appMenu")}
               tooltipAlignment="end"
-              className={`${
-                isActivePanel("appMenu")
-                  ? styles.headerGlobalBarButton
-                  : styles.activePanel
-              }`}
               onClick={(event) => {
                 togglePanel("appMenu");
                 event.stopPropagation();

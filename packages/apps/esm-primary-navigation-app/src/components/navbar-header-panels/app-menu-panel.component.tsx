@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import { HeaderPanel } from "@carbon/react";
 import { Launch } from "@carbon/react/icons";
@@ -29,7 +30,7 @@ const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
     >
       <ExtensionSlot className={styles.menuLink} name="app-menu-slot" />
       {config?.externalRefLinks?.length > 0 && (
-        <div className={`${styles.menuLink} ${styles.externalLinks}`}>
+        <div className={classNames(styles.menuLink, styles.externalLinks)}>
           {config?.externalRefLinks?.map((link) => (
             <a target="_blank" rel="noopener noreferrer" href={link?.redirect}>
               {t(link?.title)}

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import styles from "./change-locale.scss";
+import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 import { Select, SelectItem } from "@carbon/react";
 import {
   ExtensionSlot,
@@ -11,7 +12,7 @@ import {
   postUserPropertiesOnline,
   postUserPropertiesOffline,
 } from "./change-locale.resource";
-import { useTranslation } from "react-i18next";
+import styles from "./change-locale.scss";
 
 export interface ChangeLocaleProps {
   allowedLocales: Array<string>;
@@ -70,7 +71,7 @@ export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   );
 
   return (
-    <div className={`omrs-margin-12 ${styles.switcherContainer}`}>
+    <div className={classNames("omrs-margin-12", styles.switcherContainer)}>
       <Select
         name="selectLocale"
         id="selectLocale"
