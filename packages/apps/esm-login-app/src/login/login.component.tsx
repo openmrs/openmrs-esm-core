@@ -123,9 +123,14 @@ const Login: React.FC<LoginProps> = () => {
         const loginRes = await performLogin(username, password);
         const authData = loginRes.data;
         const valid = authData && authData.authenticated;
+        const sessionLocationPresent = !!authData.sessionLocation;
 
         if (valid) {
-          navigate("/login/location", { state: location.state });
+          if (sessionLocationPresent && config?.links?.loginSuccess) {
+            navigate(config?.links?.loginSuccess);
+          } else {
+            navigate("/login/location", { state: location.state });
+          }
         } else {
           throw new Error("invalidCredentials");
         }
@@ -139,6 +144,7 @@ const Login: React.FC<LoginProps> = () => {
     },
 
     [
+      config?.links?.loginSuccess,
       showPassword,
       continueLogin,
       username,

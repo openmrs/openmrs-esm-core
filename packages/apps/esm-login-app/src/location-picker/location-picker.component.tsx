@@ -34,9 +34,6 @@ interface LocationPickerProps {
   currentLocationUuid?: string;
 }
 
-const isUpdateFlow =
-  new URLSearchParams(location?.search).get("update") === "true";
-
 const LocationPicker: React.FC<LocationPickerProps> = ({
   hideWelcomeMessage,
   currentLocationUuid,
@@ -136,6 +133,8 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
+    const isUpdateFlow =
+      new URLSearchParams(location?.search).get("update") === "true";
     if (isUpdateFlow) {
       return;
     }

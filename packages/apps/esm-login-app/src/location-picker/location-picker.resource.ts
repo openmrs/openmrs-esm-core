@@ -32,11 +32,10 @@ export function useDefaultLocation() {
     savingPreferenceAllowed,
   } = useMemo(
     () => ({
-      savingPreferenceAllowed: saveLocationPreference?.allowed,
+      savingPreferenceAllowed: !!saveLocationPreference?.includes("none"),
       savePreferenceOnComputer:
-        saveLocationPreference?.savePreferenceOnComputer,
-      savePreferenceAsUserProp:
-        saveLocationPreference?.savePreferenceAsUserProp,
+        !!saveLocationPreference?.includes("localStorage"),
+      savePreferenceAsUserProp: !!saveLocationPreference?.includes("userProp"),
     }),
     [saveLocationPreference]
   );
