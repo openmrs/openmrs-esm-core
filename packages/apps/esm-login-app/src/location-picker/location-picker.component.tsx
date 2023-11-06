@@ -44,7 +44,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   const isLoginEnabled = useConnectivity();
   const {
     defaultLocation,
-    savingPreferenceAllowed,
     updateUserPreference,
     savePreference,
     setSavePreference,
@@ -266,18 +265,16 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             )}
           </div>
           <div className={styles.confirmButton}>
-            {savingPreferenceAllowed && (
-              <Checkbox
-                id="checkbox"
-                className={styles.savePreferenceCheckbox}
-                labelText={t(
-                  "rememberLocationForFutureLogins",
-                  "Remember my location for future logins"
-                )}
-                checked={savePreference}
-                onChange={(_, { checked }) => setSavePreference(checked)}
-              />
-            )}
+            <Checkbox
+              id="checkbox"
+              className={styles.savePreferenceCheckbox}
+              labelText={t(
+                "rememberLocationForFutureLogins",
+                "Remember my location for future logins"
+              )}
+              checked={savePreference}
+              onChange={(_, { checked }) => setSavePreference(checked)}
+            />
             <Button
               kind="primary"
               type="submit"

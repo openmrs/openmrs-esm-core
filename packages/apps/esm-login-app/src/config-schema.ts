@@ -48,16 +48,6 @@ export const configSchema = {
       _description:
         "Whether to show only locations with the 'Login Location' tag. If false, shows all locations.",
     },
-    saveLocationPreference: {
-      _type: Type.Array,
-      _default: ["userProp"],
-      _description:
-        "Whether to allow users to set preference for login locations for their future logins",
-      _elements: {
-        _type: Type.String,
-        _validators: [validators.oneOf(["none", "userProp", "localStorage"])],
-      },
-    },
   },
   links: {
     loginSuccess: {
@@ -94,7 +84,6 @@ export interface ConfigSchema {
     numberToShow: boolean;
     locationsPerRequest: number;
     useLoginLocationTag: boolean;
-    saveLocationPreference: Array<"none" | "userProp" | "localStorage">;
   };
   links: {
     loginSuccess: string;

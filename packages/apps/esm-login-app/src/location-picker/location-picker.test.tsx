@@ -1,10 +1,4 @@
-import {
-  cleanup,
-  fireEvent,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { cleanup, fireEvent, screen, waitFor } from "@testing-library/react";
 import {
   openmrsFetch,
   useConfig,
