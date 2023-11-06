@@ -1507,7 +1507,7 @@ Current user session information
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useSession.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L17)
+[packages/framework/esm-react-utils/src/useSession.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L16)
 
 ___
 
