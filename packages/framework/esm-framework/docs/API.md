@@ -63,10 +63,12 @@
 - [formatDate](API.md#formatdate)
 - [formatDatetime](API.md#formatdatetime)
 - [formatTime](API.md#formattime)
+- [getDefaultCalendar](API.md#getdefaultcalendar)
 - [getLocale](API.md#getlocale)
 - [isOmrsDateStrict](API.md#isomrsdatestrict)
 - [isOmrsDateToday](API.md#isomrsdatetoday)
 - [parseDate](API.md#parsedate)
+- [registerDefaultCalendar](API.md#registerdefaultcalendar)
 - [toDateObjectStrict](API.md#todateobjectstrict)
 - [toOmrsDateFormat](API.md#toomrsdateformat)
 - [toOmrsDayDateFormat](API.md#toomrsdaydateformat)
@@ -302,6 +304,7 @@ ___
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
+| `calendar?` | `string` | The calendar to use when formatting this date. |
 | `day` | `boolean` | Whether to include the day number |
 | `mode` | [`FormatDateMode`](API.md#formatdatemode) | - `standard`: "03 Feb 2022" - `wide`:     "03 — Feb — 2022" |
 | `noToday` | `boolean` | Disables the special handling of dates that are today. If false (the default), then dates that are today will be formatted as "Today" in the locale language. If true, then dates that are today will be formatted the same as all other dates. |
@@ -1975,8 +1978,6 @@ When time is included, it is appended with a comma and a space. This
 agrees with the output of `Date.prototype.toLocaleString` for *most*
 locales.
 
-TODO: Shouldn't throw on null input
-
 #### Parameters
 
 | Name | Type |
@@ -1990,7 +1991,7 @@ TODO: Shouldn't throw on null input
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L195)
+[packages/framework/esm-utils/src/omrs-dates.ts:276](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L276)
 
 ___
 
@@ -2019,7 +2020,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L262)
+[packages/framework/esm-utils/src/omrs-dates.ts:390](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L390)
 
 ___
 
@@ -2042,7 +2043,29 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L246)
+[packages/framework/esm-utils/src/omrs-dates.ts:374](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L374)
+
+___
+
+### getDefaultCalendar
+
+▸ **getDefaultCalendar**(`locale`): `undefined` \| `string`
+
+Retrieves the default calendar for the specified locale if any.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `locale` | `undefined` \| `string` \| `Locale` | the locale to look-up |
+
+#### Returns
+
+`undefined` \| `string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:249](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L249)
 
 ___
 
@@ -2060,7 +2083,7 @@ string
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L273)
+[packages/framework/esm-utils/src/omrs-dates.ts:401](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L401)
 
 ___
 
@@ -2127,6 +2150,34 @@ Uses `dayjs(dateString)`.
 #### Defined in
 
 [packages/framework/esm-utils/src/omrs-dates.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L137)
+
+___
+
+### registerDefaultCalendar
+
+▸ **registerDefaultCalendar**(`locale`, `calendar`): `void`
+
+Provides the name of the calendar to associate, as a default, with the given base locale.
+
+**`example`**
+```
+registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the 'en' locale to Buddhist.
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `locale` | `string` | - |
+| `calendar` | `string` | the calendar to use for this registration |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:240](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L240)
 
 ___
 

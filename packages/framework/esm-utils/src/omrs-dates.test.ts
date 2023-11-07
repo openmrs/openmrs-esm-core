@@ -88,6 +88,60 @@ describe("Openmrs Dates", () => {
     );
   });
 
+  it("formats dates with respect to the active calendar", () => {
+    timezoneMock.register("UTC");
+    const testDate = new Date("2021-12-09T13:15:33");
+    window.i18next.language = "am";
+    expect(formatDate(testDate)).toEqual("30-ኅዳር-2014");
+    expect(formatDate(testDate, { day: false })).toEqual("ኅዳር 2014");
+    expect(formatDate(testDate, { year: false })).toEqual("ኅዳር 30");
+    expect(formatDate(testDate, { mode: "wide" })).toEqual("30 — ኅዳር — 2014");
+    expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
+      "ኅዳር — 30"
+    );
+
+    window.i18next.language = "am-ET";
+    expect(formatDate(testDate)).toEqual("30-ኅዳር-2014");
+    expect(formatDate(testDate, { day: false })).toEqual("ኅዳር 2014");
+    expect(formatDate(testDate, { year: false })).toEqual("ኅዳር 30");
+    expect(formatDate(testDate, { mode: "wide" })).toEqual("30 — ኅዳር — 2014");
+    expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
+      "ኅዳር — 30"
+    );
+
+    window.i18next.language = "en-u-ca-ethiopic";
+    expect(formatDate(testDate)).toEqual("30-Hedar-2014");
+    expect(formatDate(testDate, { day: false })).toEqual("Hedar 2014");
+    expect(formatDate(testDate, { year: false })).toEqual("30 Hedar");
+    expect(formatDate(testDate, { mode: "wide" })).toEqual("30 — Hedar — 2014");
+    expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
+      "30 — Hedar"
+    );
+
+    window.i18next.language = "th-TH";
+    expect(formatDate(testDate)).toEqual("09 ธ.ค. 2564");
+    expect(formatDate(testDate, { day: false })).toEqual("ธ.ค. 2564");
+    expect(formatDate(testDate, { year: false })).toEqual("09 ธ.ค.");
+    expect(formatDate(testDate, { mode: "wide" })).toEqual("09 — ธ.ค. — 2564");
+    expect(formatDate(testDate, { mode: "wide", year: false })).toEqual(
+      "09 — ธ.ค."
+    );
+  });
+
+  it("handles leap years correctly in Ethiopian locales", () => {
+    timezoneMock.register("UTC");
+    const dateBeforeLeapYear = new Date("2023-09-11T09:00:00");
+
+    window.i18next.language = "en";
+    expect(formatDate(dateBeforeLeapYear)).toEqual("11-Sept-2023");
+
+    window.i18next.language = "am";
+    expect(formatDate(dateBeforeLeapYear)).toEqual("06-ጳጉሜን-2015");
+
+    const dateAfterLeapYear = new Date("2023-09-12T09:00:00");
+    expect(formatDate(dateAfterLeapYear)).toEqual("01-መስከረም-2016");
+  });
+
   it("respects the `time` option", () => {
     timezoneMock.register("UTC");
     const testDate = new Date("2021-12-09T13:15:33");
