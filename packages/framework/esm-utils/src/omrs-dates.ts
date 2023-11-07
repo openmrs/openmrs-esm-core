@@ -229,14 +229,29 @@ const registeredLocaleCalendars = new LocaleCalendars();
 /**
  * Provides the name of the calendar to associate, as a default, with the given base locale.
  *
- * For example:
- * `registerDefaultCalendar('en', 'buddhist')` sets the default calendar for the 'en' locale to Buddhist.
+ * @example
+ * ```
+ * registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the 'en' locale to Buddhist.
+ * ```
  *
  * @param baseLocale the locale to register this calendar for
  * @param calendar the calendar to use for this registration
  */
 export function registerDefaultCalendar(locale: string, calendar: string) {
   registeredLocaleCalendars.register(locale, calendar);
+}
+
+/**
+ * Retrieves the default calendar for the specified locale if any.
+ *
+ * @param locale the locale to look-up
+ */
+export function getDefaultCalendar(locale: Intl.Locale | string | undefined) {
+  const locale_ = locale ?? getLocale();
+
+  return registeredLocaleCalendars.getCalendar(
+    locale_ instanceof Intl.Locale ? locale_ : new Intl.Locale(locale_)
+  );
 }
 
 /**
@@ -268,8 +283,7 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
     ...options,
   };
 
-  const formatCalendar =
-    calendar ?? registeredLocaleCalendars.getCalendar(_locale);
+  const formatCalendar = calendar ?? getDefaultCalendar(_locale);
 
   const formatterOptions: Intl.DateTimeFormatOptions = {
     calendar: formatCalendar,
@@ -290,11 +304,6 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
     if (_locale.language === "en") {
       // This locale override is here rather than in `getLocale`
       // because Americans should see AM/PM for times.
-      locale = "en-GB";
-    }
-
-    if (_locale.language === "am") {
-      // Hack to keep month names in English
       locale = "en-GB";
     }
 
