@@ -1,20 +1,21 @@
 /** @module @category UI */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ActionableNotification } from "@carbon/react";
 
 export interface SnackBarProps {
-  notification: SnackBarMeta;
+  snackBar: SnackBarMeta;
+  closeSnackBar(): void;
 }
 
 export interface SnackBarDescriptor {
   actionButtonLabel?: string;
   onActionButtonClick?: () => void;
-  onClose?: () => void;
   subtitle?: string;
   title: string;
   kind?: SnackBarType | string;
   critical?: boolean;
   progressActionLabel?: string;
+  duration?: number;
 }
 
 export interface SnackBarMeta extends SnackBarDescriptor {
@@ -30,7 +31,8 @@ export type SnackBarType =
   | "warning-alt";
 
 export const SnackBarComponent: React.FC<SnackBarProps> = ({
-  notification,
+  snackBar,
+  closeSnackBar,
 }) => {
   const {
     actionButtonLabel,
@@ -40,15 +42,24 @@ export const SnackBarComponent: React.FC<SnackBarProps> = ({
     title,
     critical,
     progressActionLabel,
+    duration,
     ...props
-  } = notification;
+  } = snackBar;
 
   const [actionText, setActionText] = useState(actionButtonLabel);
 
   const handleActionClick = () => {
     onActionButtonClick();
+    closeSnackBar();
     progressActionLabel && setActionText(progressActionLabel);
   };
+
+  useEffect(() => {
+    if (duration) {
+      const timeoutId = setTimeout(closeSnackBar, duration);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [duration]);
 
   return (
     <ActionableNotification
@@ -60,6 +71,7 @@ export const SnackBarComponent: React.FC<SnackBarProps> = ({
       subtitle={subtitle || ""}
       title={title}
       lowContrast={critical}
+      onClose={closeSnackBar}
       inline
       {...props}
     />
