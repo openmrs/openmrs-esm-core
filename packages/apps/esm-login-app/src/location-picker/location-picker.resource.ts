@@ -1,16 +1,16 @@
 import {
   setUserProperties,
   showToast,
-  useConfig,
   useSession,
 } from "@openmrs/esm-framework";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ConfigSchema } from "../config-schema";
 import { useValidateLocationUuid } from "../login.resource";
+import { useSearchParams } from "react-router-dom";
 
 export function useDefaultLocation() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   const [savePreference, setSavePreference] = useState(false);
   const { user } = useSession();
   const { userUuid, userProperties } = useMemo(
@@ -61,8 +61,7 @@ export function useDefaultLocation() {
 
       updateUserPropsWithPreference(locationUuid, saveUserPreference).then(
         () => {
-          const isUpdateFlow =
-            new URLSearchParams(location?.search).get("update") === "true";
+          const isUpdateFlow = searchParams.get("update") === "true";
           if (saveUserPreference) {
             showToast({
               title: !isUpdateFlow
@@ -101,7 +100,13 @@ export function useDefaultLocation() {
         }
       );
     },
-    [savePreference, defaultLocation, updateUserPropsWithPreference, t]
+    [
+      savePreference,
+      defaultLocation,
+      updateUserPropsWithPreference,
+      t,
+      searchParams,
+    ]
   );
 
   return {

@@ -237,11 +237,6 @@ describe("LocationPicker", () => {
 
   describe("Testing updating user preference workflow", () => {
     it("should not redirect if the login location page has a searchParam `update`", async () => {
-      Object.defineProperty(window, "location", {
-        value: {
-          search: "?update=true",
-        },
-      });
       mockUseSession.mockReturnValue({
         user: {
           display: "Testy McTesterface",
@@ -252,7 +247,7 @@ describe("LocationPicker", () => {
         },
       });
       await act(() => {
-        renderWithRouter(LocationPicker, {});
+        renderWithRouter(LocationPicker, {}, { routes: ["?update=true"] });
       });
 
       const checkbox = await screen.findByLabelText(
@@ -268,11 +263,6 @@ describe("LocationPicker", () => {
     });
 
     it("should remove the saved preference if the login location page has a searchParam `update=true` and when submitting the user unchecks the checkbox ", async () => {
-      Object.defineProperty(window, "location", {
-        value: {
-          search: "?update=true",
-        },
-      });
       mockUseSession.mockReturnValue({
         user: {
           display: "Testy McTesterface",
@@ -283,7 +273,7 @@ describe("LocationPicker", () => {
         },
       });
       await act(() => {
-        renderWithRouter(LocationPicker, {});
+        renderWithRouter(LocationPicker, {}, { routes: ["?update=true"] });
       });
 
       const checkbox = await screen.findByLabelText(
@@ -323,11 +313,6 @@ describe("LocationPicker", () => {
     });
 
     it("should update the user preference with new selection", async () => {
-      Object.defineProperty(window, "location", {
-        value: {
-          search: "?update=true",
-        },
-      });
       mockUseSession.mockReturnValue({
         user: {
           display: "Testy McTesterface",
@@ -338,7 +323,7 @@ describe("LocationPicker", () => {
         },
       });
       await act(() => {
-        renderWithRouter(LocationPicker, {});
+        renderWithRouter(LocationPicker, {}, { routes: ["?update=true"] });
       });
 
       const checkbox = await screen.findByLabelText(
@@ -370,11 +355,6 @@ describe("LocationPicker", () => {
     });
 
     it("should not update the user preference with same selection", async () => {
-      Object.defineProperty(window, "location", {
-        value: {
-          search: "?update=true",
-        },
-      });
       mockUseSession.mockReturnValue({
         user: {
           display: "Testy McTesterface",
@@ -385,7 +365,7 @@ describe("LocationPicker", () => {
         },
       });
       await act(() => {
-        renderWithRouter(LocationPicker, {});
+        renderWithRouter(LocationPicker, {}, { routes: ["?update=true"] });
       });
 
       const checkbox = await screen.findByLabelText(
