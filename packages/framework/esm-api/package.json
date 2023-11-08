@@ -47,9 +47,9 @@
     "@openmrs/esm-offline": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-config": "^5.2.0",
-    "@openmrs/esm-error-handling": "^5.2.0",
-    "@openmrs/esm-state": "^5.2.0",
+    "@openmrs/esm-config": "workspace:*",
+    "@openmrs/esm-error-handling": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
     "rxjs": "^6.5.3",
     "webpack": "^5.88.0"
   }

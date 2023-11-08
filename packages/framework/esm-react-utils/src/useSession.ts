@@ -1,9 +1,8 @@
 /** @module @category API */
 import { getSessionStore, Session } from "@openmrs/esm-api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 let promise: undefined | Promise<Session>;
-let unsubscribe: undefined | (() => void);
 
 /**
  * Gets the current user session information. Returns an object with
@@ -35,24 +34,29 @@ export function useSession(): Session {
   //
   // `stateSession` is React state, which is needed to update components using
   // this hook when the session changes.
+  const unsubscribe = useRef<undefined | (() => void)>();
   const [stateSession, setStateSession] = useState<Session | null>(null);
   let session: Session | null = null;
 
   if (!stateSession) {
     if (!promise) {
       // If we haven't created a promise to throw yet, do that.
+      // current-user.ts handles the initial session fetch as soon as `getSessionStore()`
+      // is called. We just need to call it and set up a listener for when session data
+      // is loaded. As soon as we have the initial session data, we remove this initial
+      // store subscription so we can set up the "ongoing" one later.
       promise = new Promise<Session>((resolve) => {
         const handleNewSession = ({ loaded, session: newSession }) => {
           if (loaded) {
             resolve(newSession);
             session = newSession;
-            unsubscribe && unsubscribe();
-            unsubscribe = undefined;
+            unsubscribe.current && unsubscribe.current();
+            unsubscribe.current = undefined;
           }
         };
         handleNewSession(getSessionStore().getState());
         if (!session) {
-          unsubscribe = getSessionStore().subscribe(handleNewSession);
+          unsubscribe.current = getSessionStore().subscribe(handleNewSession);
         }
       });
     } else {
@@ -76,10 +80,12 @@ export function useSession(): Session {
 
   // Once this hook is established (no longer throwing and getting re-created)
   // we need to set up a subscription that will update its value the good
-  // old-fashioned React way.
+  // old-fashioned React way. We are re-using the `unsubscribe` ref from the
+  // initial subscription, which should have been vacated by the first time we
+  // get here.
   useEffect(() => {
-    if (!unsubscribe) {
-      unsubscribe = getSessionStore().subscribe(
+    if (!unsubscribe.current) {
+      unsubscribe.current = getSessionStore().subscribe(
         ({ loaded, session: newSession }) => {
           if (loaded) {
             session = newSession;
@@ -89,8 +95,8 @@ export function useSession(): Session {
       );
     }
     return () => {
-      unsubscribe && unsubscribe();
-      unsubscribe = undefined;
+      unsubscribe.current && unsubscribe.current();
+      unsubscribe.current = undefined;
     };
   }, []);
 
@@ -113,5 +119,4 @@ export function useSession(): Session {
  */
 export function __cleanup() {
   promise = undefined;
-  unsubscribe = undefined;
 }

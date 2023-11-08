@@ -40,13 +40,23 @@ import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { resolve, dirname, basename } from "path";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
-import { DefinePlugin, container } from "webpack";
+import {
+  DefinePlugin,
+  container,
+  type ModuleOptions,
+  type WebpackOptionsNormalized as WebpackConfiguration,
+  type RuleSetRule,
+} from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { StatsWriterPlugin } from "webpack-stats-plugin";
 // eslint-disable-next-line no-restricted-imports
 import { merge, mergeWith, isArray } from "lodash";
 import { existsSync, statSync } from "fs";
 import { inc } from "semver";
+
+type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, "module"> & {
+  module: ModuleOptions;
+};
 
 const production = "production";
 const { ModuleFederationPlugin } = container;
@@ -91,49 +101,57 @@ function fileExistsSync(name: string) {
  * Array values will be concatenated with the existing array.
  * Make sure to modify this object and not reassign it.
  */
-export const overrides = {};
+export const overrides: Partial<OpenmrsWebpackConfig> = {};
 
 /**
  * The keys of this object will override the top-level keys
  * of the webpack config.
  * Make sure to modify this object and not reassign it.
  */
-export const additionalConfig = {};
+export const additionalConfig: Partial<OpenmrsWebpackConfig> = {};
 
 /**
  * This object will be merged into the webpack rule governing
  * the loading of JS, JSX, TS, etc. files.
  * Make sure to modify this object and not reassign it.
  */
-export const scriptRuleConfig = {};
+export const scriptRuleConfig: Partial<RuleSetRule> = {};
 
 /**
  * This object will be merged into the webpack rule governing
  * the loading of CSS files.
  * Make sure to modify this object and not reassign it.
  */
-export const cssRuleConfig = {};
+export const cssRuleConfig: Partial<RuleSetRule> = {};
 
 /**
  * This object will be merged into the webpack rule governing
  * the loading of SCSS files.
  * Make sure to modify this object and not reassign it.
  */
-export const scssRuleConfig = {};
+export const scssRuleConfig: Partial<RuleSetRule> = {};
 
 /**
  * This object will be merged into the webpack rule governing
  * the loading of static asset files.
  * Make sure to modify this object and not reassign it.
  */
-export const assetRuleConfig = {};
+export const assetRuleConfig: Partial<RuleSetRule> = {};
 
 /**
  * This object will be merged into the webpack rule governing
  * the watch options.
  * Make sure to modify this object and not reassign it.
  */
-export const watchConfig = {};
+export const watchConfig: Partial<WebpackConfiguration["watchOptions"]> = {};
+
+/**
+ * This object will be merged with the webpack optimization
+ * object.
+ * Make sure to modify this object and not reassign it.
+ */
+export const optimizationConfig: Partial<WebpackConfiguration["optimization"]> =
+  {};
 
 export default (
   env: Record<string, string>,
@@ -148,7 +166,10 @@ export default (
     main,
     types,
   } = require(resolve(root, "package.json"));
-  const mode = argv.mode || process.env.NODE_ENV || "development";
+  // this typing is provably incorrect, but actually works
+  const mode = (argv.mode ||
+    process.env.NODE_ENV ||
+    "development") as WebpackConfiguration["mode"];
   const filename = basename(browser || main);
   const outDir = dirname(browser || main);
   const srcFile = resolve(root, browser ? main : types);
@@ -175,7 +196,7 @@ export default (
     },
   };
 
-  const baseConfig = {
+  const baseConfig: OpenmrsWebpackConfig = {
     // The only `entry` in the application is the app shell. Everything else is
     // a Webpack Module Federation "remote." This ensures that there is always
     // only one container context--i.e., if we had an entry point per module,
@@ -245,6 +266,17 @@ export default (
     performance: {
       hints: mode === production && "warning",
     },
+    optimization: merge(
+      {
+        // The defaults for both of these are 30; however, due to the modular nature of
+        // the frontend, we want each app to produce substantially
+        splitChunks: {
+          maxAsyncRequests: 3,
+          maxInitialRequests: 1,
+        },
+      },
+      optimizationConfig
+    ),
     plugins: [
       new ForkTsCheckerWebpackPlugin(),
       new CleanWebpackPlugin(),
@@ -255,7 +287,7 @@ export default (
         "process.env.FRAMEWORK_VERSION": JSON.stringify(frameworkVersion),
       }),
       new ModuleFederationPlugin({
-        // See `esm-app-shell/src/load-modules.ts` for an explanation of how modules
+        // Look in the `esm-dynamic-loading` framework package for an explanation of how modules
         // get loaded into the application.
         name,
         library: { type: "var", name: slugify(name) },
@@ -271,7 +303,7 @@ export default (
             // SWR is annoying with Module Federation
             // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
             obj["swr/"] = {
-              requiredVersion: version,
+              requiredVersion: peerDependencies["swr"] ?? false,
               singleton: true,
               import: "swr/",
               shareKey: "swr/",

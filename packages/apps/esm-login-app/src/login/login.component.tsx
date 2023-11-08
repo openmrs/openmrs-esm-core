@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import classNames from "classnames";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -170,7 +171,7 @@ const Login: React.FC<LoginProps> = () => {
 
   if (config.provider.type === "basic") {
     return (
-      <div className={`canvas ${styles["container"]}`}>
+      <div className={classNames("canvas", styles["container"])}>
         {errorMessage && (
           <InlineNotification
             className={styles.errorMessage}

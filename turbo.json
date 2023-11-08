@@ -9,6 +9,9 @@
       "dependsOn": ["^build:development"],
       "outputs": ["dist/**"]
     },
+    "document": {
+      "outputs": ["docs/**"]
+    },
     "test": {},
     "test:watch": {},
     "watch": {},

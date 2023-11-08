@@ -38,10 +38,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
-    "@openmrs/esm-globals": "^5.2.0"
-  },
   "peerDependencies": {
     "@openmrs/esm-globals": "5.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-globals": "workspace:*"
   }
 }

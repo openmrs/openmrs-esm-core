@@ -1,5 +1,9 @@
-import { getAsyncLifecycle, defineConfigSchema } from "@openmrs/esm-framework";
+import { defineConfigSchema, getSyncLifecycle } from "@openmrs/esm-framework";
 import { configSchema } from "./config-schema";
+import rootComponent from "./root.component";
+import locationPickerComponent from "./location-picker/location-picker.component";
+import changeLocationLinkComponent from "./change-location-link/change-location-link.component";
+import logoutButtonComponent from "./logout/logout.component";
 
 const moduleName = "@openmrs/esm-login-app";
 
@@ -19,19 +23,13 @@ export function startupApp() {
   defineConfigSchema(moduleName, configSchema);
 }
 
-export const root = getAsyncLifecycle(
-  () => import("./root.component"),
+export const root = getSyncLifecycle(rootComponent, options);
+export const locationPicker = getSyncLifecycle(
+  locationPickerComponent,
   options
 );
-export const locationPicker = getAsyncLifecycle(
-  () => import("./location-picker/location-picker.component"),
-  options
-);
-export const logoutButton = getAsyncLifecycle(
-  () => import("./logout/logout.component"),
-  options
-);
-export const changeLocationLink = getAsyncLifecycle(
-  () => import("./change-location-link/change-location-link.component"),
+export const logoutButton = getSyncLifecycle(logoutButtonComponent, options);
+export const changeLocationLink = getSyncLifecycle(
+  changeLocationLinkComponent,
   options
 );

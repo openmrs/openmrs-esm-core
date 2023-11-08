@@ -279,20 +279,6 @@ module.exports = (env, argv = {}) => {
     },
     plugins: [
       openmrsCleanBeforeBuild && new CleanWebpackPlugin(),
-      new WebpackPwaManifest({
-        name: "OpenMRS",
-        short_name: "OpenMRS",
-        description:
-          "Open source Health IT by and for the entire planet, starting with the developing world.",
-        background_color: "#ffffff",
-        theme_color: "#000000",
-        icons: [
-          {
-            src: resolve(__dirname, "src/assets/logo-512.png"),
-            sizes: [96, 128, 144, 192, 256, 384, 512],
-          },
-        ],
-      }),
       new HtmlWebpackPlugin({
         inject: false,
         scriptLoading: "blocking",
@@ -317,6 +303,21 @@ module.exports = (env, argv = {}) => {
             Object.keys(coreRoutes).length > 0 && JSON.stringify(coreRoutes),
         },
       }),
+      new WebpackPwaManifest({
+        name: "OpenMRS",
+        short_name: "OpenMRS",
+        publicPath: openmrsPublicPath,
+        description:
+          "Open source Health IT by and for the entire planet, starting with the developing world.",
+        background_color: "#ffffff",
+        theme_color: "#000000",
+        icons: [
+          {
+            src: resolve(__dirname, "src/assets/logo-512.png"),
+            sizes: [96, 128, 144, 192, 256, 384, 512],
+          },
+        ],
+      }),
       new CopyWebpackPlugin({
         patterns: [{ from: resolve(__dirname, "src/assets") }, ...appPatterns],
       }),
@@ -332,8 +333,10 @@ module.exports = (env, argv = {}) => {
             } else if (version.startsWith("~")) {
               const semVer = semver.parse(version.slice(1));
               version = `${semVer.major}.${semVer.minor}.x`;
-            } else if (depName === "@openmrs/esm-framework") {
-              version = `${semver.parse(version).major}.x`;
+            } else if (version === "workspace:*") {
+              version = `${
+                semver.parse(require(`${depName}/package.json`).version).major
+              }.X`;
             }
           }
 

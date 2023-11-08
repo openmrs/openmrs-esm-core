@@ -37,14 +37,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
-    "@openmrs/esm-api": "^5.2.0",
-    "@openmrs/esm-globals": "^5.2.0",
-    "@openmrs/esm-state": "^5.2.0",
-    "@openmrs/esm-styleguide": "^5.2.0",
-    "@types/uuid": "^9.0.1",
-    "rxjs": "^6.5.3"
-  },
   "peerDependencies": {
     "@openmrs/esm-api": "5.x",
     "@openmrs/esm-globals": "5.x",
@@ -57,5 +49,13 @@
     "lodash-es": "^4.17.21",
     "uuid": "^9.0.0",
     "workbox-window": "^6.1.5"
+  },
+  "devDependencies": {
+    "@openmrs/esm-api": "workspace:*",
+    "@openmrs/esm-globals": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
+    "@openmrs/esm-styleguide": "workspace:*",
+    "@types/uuid": "^9.0.1",
+    "rxjs": "^6.5.3"
   }
 }

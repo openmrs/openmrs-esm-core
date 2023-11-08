@@ -142,6 +142,10 @@ export type FormatDateMode = "standard" | "wide";
 
 export type FormatDateOptions = {
   /**
+   * The calendar to use when formatting this date.
+   */
+  calendar?: string;
+  /**
    * - `standard`: "03 Feb 2022"
    * - `wide`:     "03 — Feb — 2022"
    */
@@ -173,6 +177,84 @@ const defaultOptions: FormatDateOptions = {
 };
 
 /**
+ * Internal cache for per-locale calendars
+ */
+class LocaleCalendars {
+  #registry = new Map<string, string>();
+
+  constructor() {
+    this.#registry.set("am", "ethiopic");
+  }
+
+  register(locale: string, calendar: string) {
+    this.#registry.set(locale, calendar);
+  }
+
+  getCalendar(locale: Intl.Locale) {
+    if (!Boolean(locale)) {
+      return undefined;
+    }
+
+    if (locale.calendar) {
+      return locale.calendar;
+    }
+
+    if (locale.region) {
+      const key = `${locale.language}-${locale.region}`;
+      if (this.#registry.has(key)) {
+        return this.#registry.get(key);
+      }
+    }
+
+    if (locale.language && this.#registry.has(locale.language)) {
+      return this.#registry.get(locale.language);
+    }
+
+    const defaultCalendar = new Intl.DateTimeFormat(
+      locale.toString()
+    ).resolvedOptions().calendar;
+
+    // cache this result
+    this.#registry.set(
+      `${locale.language}${locale.region ? `-${locale.region}` : ""}`,
+      defaultCalendar
+    );
+
+    return defaultCalendar;
+  }
+}
+
+const registeredLocaleCalendars = new LocaleCalendars();
+
+/**
+ * Provides the name of the calendar to associate, as a default, with the given base locale.
+ *
+ * @example
+ * ```
+ * registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the 'en' locale to Buddhist.
+ * ```
+ *
+ * @param baseLocale the locale to register this calendar for
+ * @param calendar the calendar to use for this registration
+ */
+export function registerDefaultCalendar(locale: string, calendar: string) {
+  registeredLocaleCalendars.register(locale, calendar);
+}
+
+/**
+ * Retrieves the default calendar for the specified locale if any.
+ *
+ * @param locale the locale to look-up
+ */
+export function getDefaultCalendar(locale: Intl.Locale | string | undefined) {
+  const locale_ = locale ?? getLocale();
+
+  return registeredLocaleCalendars.getCalendar(
+    locale_ instanceof Intl.Locale ? locale_ : new Intl.Locale(locale_)
+  );
+}
+
+/**
  * Formats the input date according to the current locale and the
  * given options.
  *
@@ -189,20 +271,27 @@ const defaultOptions: FormatDateOptions = {
  * When time is included, it is appended with a comma and a space. This
  * agrees with the output of `Date.prototype.toLocaleString` for *most*
  * locales.
- *
- * TODO: Shouldn't throw on null input
  */
+// TODO: Shouldn't throw on null input
 export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
-  const { mode, time, day, year, noToday }: FormatDateOptions = {
+  let locale = getLocale();
+  const _locale = new Intl.Locale(locale);
+
+  const { calendar, mode, time, day, year, noToday }: FormatDateOptions = {
     ...defaultOptions,
+    ...{ noToday: _locale.language === "am" ? true : false },
     ...options,
   };
+
+  const formatCalendar = calendar ?? getDefaultCalendar(_locale);
+
   const formatterOptions: Intl.DateTimeFormatOptions = {
+    calendar: formatCalendar,
     year: year ? "numeric" : undefined,
     month: "short",
     day: day ? "2-digit" : undefined,
   };
-  let locale = getLocale();
+
   let localeString: string;
   const isToday = dayjs(date).isToday();
   if (isToday && !noToday) {
@@ -212,32 +301,71 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
     localeString =
       localeString[0].toLocaleUpperCase(locale) + localeString.slice(1);
   } else {
-    if (locale == "en") {
+    if (_locale.language === "en") {
       // This locale override is here rather than in `getLocale`
       // because Americans should see AM/PM for times.
       locale = "en-GB";
     }
-    localeString = date.toLocaleDateString(locale, formatterOptions);
-    if (locale == "en-GB" && mode == "standard" && year && day) {
-      // Custom formatting for English. Use hyphens instead of spaces.
-      localeString = localeString.replace(/ /g, "-");
+
+    const formatter = new Intl.DateTimeFormat(locale, formatterOptions);
+    let parts = formatter.formatToParts(date);
+
+    if (
+      (_locale.language === "en" || _locale.language === "am") &&
+      mode == "standard" &&
+      year &&
+      day
+    ) {
+      // Custom formatting for English and Amharic. Use hyphens instead of spaces.
+      parts = parts.map(formatParts("-"));
     }
+
     if (mode == "wide") {
-      localeString = localeString.replace(/ /g, " — "); // space-emdash-space
-      if (/ru.*/.test(locale)) {
-        // Remove the extra em-dash that gets added between the year and the suffix 'r.'
-        const len = localeString.length;
-        localeString =
-          localeString.slice(0, len - 5) +
-          localeString.slice(len - 5).replace(" — ", " ");
-      }
+      parts = parts.map(formatParts(" — ")); // space-emdash-space
     }
+
+    // omit the era when using the Ethiopic calendar
+    if (formatterOptions.calendar === "ethiopic") {
+      parts = parts.filter((part, idx, values) => {
+        if (
+          part.type === "era" ||
+          (part.type === "literal" &&
+            idx < values.length - 1 &&
+            values[idx + 1].type === "era")
+        ) {
+          return false;
+        }
+
+        return true;
+      });
+    }
+
+    localeString = parts.map((p) => p.value).join("");
   }
   if (time === true || (isToday && time === "for today")) {
     localeString += `, ${formatTime(date)}`;
   }
   return localeString;
 }
+
+// Internal curried call-back for map()
+const formatParts = (separator: string) => {
+  return (
+    part: Intl.DateTimeFormatPart,
+    idx: number,
+    values: Array<Intl.DateTimeFormatPart>
+  ) => {
+    if (part.type !== "literal" || part.value !== " ") {
+      return part;
+    }
+
+    if (idx < values.length - 1 && values[idx + 1].type === "era") {
+      return part;
+    }
+
+    return { type: "literal", value: separator } as Intl.DateTimeFormatPart;
+  };
+};
 
 /**
  * Formats the input as a time, according to the current locale.
@@ -277,5 +405,6 @@ export function getLocale() {
   if (language === "ht") {
     language = "fr-HT";
   }
+
   return language;
 }

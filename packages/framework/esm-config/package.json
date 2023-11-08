@@ -46,10 +46,9 @@
     "single-spa": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-globals": "^5.2.0",
-    "@openmrs/esm-state": "^5.2.0",
+    "@openmrs/esm-globals": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
     "@types/ramda": "^0.26.44",
-    "babel-plugin-ramda": "^2.0.0",
     "single-spa": "^5.9.2"
   }
 }
