@@ -34,7 +34,7 @@ services:
       API_URL: /openmrs
       SPA_CONFIG_URLS:
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/"]
+      test: [ "CMD", "curl", "-f", "http://localhost/" ]
       timeout: 5s
     depends_on:
       - backend
