@@ -60,7 +60,17 @@ export function useLoginLocations(
         return null;
       }
 
-      return nextLink.url;
+      const nextUrl = new URL(nextLink.url);
+      // default for production
+      if (nextUrl.origin === window.location.origin) {
+        return nextLink.url;
+      }
+
+      // in development, the request should be funnelled through the local proxy
+      return new URL(
+        `${nextUrl.pathname}${nextUrl.search ? `?${nextUrl.search}` : ""}`,
+        window.location.origin
+      ).toString();
     }
 
     let url = `${fhirBaseUrl}/Location?`;
