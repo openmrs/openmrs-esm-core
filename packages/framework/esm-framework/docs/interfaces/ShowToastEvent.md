@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L85)
+[packages/framework/esm-globals/src/events.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L86)
 
 ___
 

@@ -1,34 +1,39 @@
-[@openmrs/esm-framework](../API.md) / SnackBarDescriptor
+[@openmrs/esm-framework](../API.md) / SnackBarMeta
 
-# Interface: SnackBarDescriptor
+# Interface: SnackBarMeta
 
 ## Hierarchy
 
-- **`SnackBarDescriptor`**
+- [`SnackBarDescriptor`](SnackBarDescriptor.md)
 
-  ↳ [`SnackBarMeta`](SnackBarMeta.md)
+  ↳ **`SnackBarMeta`**
 
 ## Table of contents
 
 ### UI Properties
 
-- [actionButtonLabel](SnackBarDescriptor.md#actionbuttonlabel)
-- [critical](SnackBarDescriptor.md#critical)
-- [kind](SnackBarDescriptor.md#kind)
-- [progressActionLabel](SnackBarDescriptor.md#progressactionlabel)
-- [subtitle](SnackBarDescriptor.md#subtitle)
-- [title](SnackBarDescriptor.md#title)
+- [actionButtonLabel](SnackBarMeta.md#actionbuttonlabel)
+- [critical](SnackBarMeta.md#critical)
+- [id](SnackBarMeta.md#id)
+- [kind](SnackBarMeta.md#kind)
+- [progressActionLabel](SnackBarMeta.md#progressactionlabel)
+- [subtitle](SnackBarMeta.md#subtitle)
+- [title](SnackBarMeta.md#title)
 
 ### UI Methods
 
-- [onActionButtonClick](SnackBarDescriptor.md#onactionbuttonclick)
-- [onClose](SnackBarDescriptor.md#onclose)
+- [onActionButtonClick](SnackBarMeta.md#onactionbuttonclick)
+- [onClose](SnackBarMeta.md#onclose)
 
 ## UI Properties
 
 ### actionButtonLabel
 
 • `Optional` **actionButtonLabel**: `string`
+
+#### Inherited from
+
+[SnackBarDescriptor](SnackBarDescriptor.md).[actionButtonLabel](SnackBarDescriptor.md#actionbuttonlabel)
 
 #### Defined in
 
@@ -40,15 +45,33 @@ ___
 
 • `Optional` **critical**: `boolean`
 
+#### Inherited from
+
+[SnackBarDescriptor](SnackBarDescriptor.md).[critical](SnackBarDescriptor.md#critical)
+
 #### Defined in
 
 [packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L16)
 
 ___
 
+### id
+
+• **id**: `number`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L21)
+
+___
+
 ### kind
 
 • `Optional` **kind**: `string`
+
+#### Inherited from
+
+[SnackBarDescriptor](SnackBarDescriptor.md).[kind](SnackBarDescriptor.md#kind)
 
 #### Defined in
 
@@ -60,6 +83,10 @@ ___
 
 • `Optional` **progressActionLabel**: `string`
 
+#### Inherited from
+
+[SnackBarDescriptor](SnackBarDescriptor.md).[progressActionLabel](SnackBarDescriptor.md#progressactionlabel)
+
 #### Defined in
 
 [packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L17)
@@ -70,6 +97,10 @@ ___
 
 • `Optional` **subtitle**: `string`
 
+#### Inherited from
+
+[SnackBarDescriptor](SnackBarDescriptor.md).[subtitle](SnackBarDescriptor.md#subtitle)
+
 #### Defined in
 
 [packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L13)
@@ -79,6 +110,10 @@ ___
 ### title
 
 • **title**: `string`
+
+#### Inherited from
+
+[SnackBarDescriptor](SnackBarDescriptor.md).[title](SnackBarDescriptor.md#title)
 
 #### Defined in
 
@@ -94,6 +129,10 @@ ___
 
 `void`
 
+#### Inherited from
+
+[SnackBarDescriptor](SnackBarDescriptor.md).[onActionButtonClick](SnackBarDescriptor.md#onactionbuttonclick)
+
 #### Defined in
 
 [packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L11)
@@ -107,6 +146,10 @@ ___
 #### Returns
 
 `void`
+
+#### Inherited from
+
+[SnackBarDescriptor](SnackBarDescriptor.md).[onClose](SnackBarDescriptor.md#onclose)
 
 #### Defined in
 

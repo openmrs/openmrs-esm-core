@@ -6,22 +6,25 @@
 
 ### Properties
 
-- [title](ShowSnackBarEvent.md#description)
 - [actionButtonLabel](ShowSnackBarEvent.md#actionbuttonlabel)
 - [kind](ShowSnackBarEvent.md#kind)
 - [progressActionLabel](ShowSnackBarEvent.md#progressactionlabel)
 - [subtitle](ShowSnackBarEvent.md#subtitle)
 - [title](ShowSnackBarEvent.md#title)
 
+### Methods
+
+- [onActionButtonClick](ShowSnackBarEvent.md#onactionbuttonclick)
+
 ## Properties
 
-### description
+### actionButtonLabel
 
-• **description**: `any`
+• `Optional` **actionButtonLabel**: `any`
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L99)
+[packages/framework/esm-globals/src/events.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L109)
 
 ___
 
@@ -35,10 +38,44 @@ ___
 
 ___
 
+### progressActionLabel
+
+• `Optional` **progressActionLabel**: `string`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L111)
+
+___
+
+### subtitle
+
+• `Optional` **subtitle**: `any`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L100)
+
+___
+
 ### title
 
-• `Optional` **title**: `string`
+• **title**: `string`
 
 #### Defined in
 
 [packages/framework/esm-globals/src/events.ts:108](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L108)
+
+## Methods
+
+### onActionButtonClick
+
+▸ `Optional` **onActionButtonClick**(): `void`
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L110)

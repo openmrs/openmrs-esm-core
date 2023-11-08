@@ -173,12 +173,12 @@
 - [showActionableNotification](API.md#showactionablenotification)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
-- [showToast](API.md#showtoast)
 - [showSnackBar](API.md#showsnackbar)
+- [showToast](API.md#showtoast)
 - [subscribeActionableNotificationShown](API.md#subscribeactionablenotificationshown)
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
-- [subscribeToastShown](API.md#subscribetoastshown)
 - [subscribeSnackBarShown](API.md#subscribesnackbarshown)
+- [subscribeToastShown](API.md#subscribetoastshown)
 - [unsetLeftNav](API.md#unsetleftnav)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useLayoutType](API.md#uselayouttype)
@@ -661,16 +661,6 @@ ___
 
 ___
 
-### ToastType
-
-Ƭ **ToastType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L26)
-
-___
-
 ### SnackBarType
 
 Ƭ **SnackBarType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
@@ -678,6 +668,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L24)
+
+___
+
+### ToastType
+
+Ƭ **ToastType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L26)
 
 ___
 
@@ -1519,7 +1519,7 @@ Current user session information
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useSession.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L17)
+[packages/framework/esm-react-utils/src/useSession.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useSession.ts#L16)
 
 ___
 
@@ -4275,6 +4275,28 @@ Displays an inline notification in the UI.
 
 ___
 
+### showSnackBar
+
+▸ **showSnackBar**(`snackBar`): `void`
+
+Displays a snack bar notification in the UI.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `snackBar` | [`SnackBarDescriptor`](interfaces/SnackBarDescriptor.md) |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/index.tsx#L32)
+
+___
+
 ### showToast
 
 ▸ **showToast**(`toast`): `void`
@@ -4294,28 +4316,6 @@ Displays a toast notification in the UI.
 #### Defined in
 
 [packages/framework/esm-styleguide/src/toasts/index.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/index.tsx#L36)
-
-___
-
-### showSnackBar
-
-▸ **showSnackBar**(`snackBar`): `void`
-
-Displays a snack bar notification in the UI.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `snackBar` | [`SnackBarDescriptor`](interfaces/SnackBarDescriptor.md) | The description of the snack bar to display. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/snackbars/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/index.tsx#L32)
 
 ___
 
@@ -4371,32 +4371,6 @@ ___
 
 ___
 
-### subscribeToastShown
-
-▸ **subscribeToastShown**(`cb`): () => `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `cb` | (`data`: [`ShowToastEvent`](interfaces/ShowToastEvent.md)) => `void` |
-
-#### Returns
-
-`fn`
-
-▸ (): `void`
-
-##### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/events.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L157)
-
-___
-
 ### subscribeSnackBarShown
 
 ▸ **subscribeSnackBarShown**(`cb`): () => `void`
@@ -4420,6 +4394,32 @@ ___
 #### Defined in
 
 [packages/framework/esm-globals/src/events.ts:164](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L164)
+
+___
+
+### subscribeToastShown
+
+▸ **subscribeToastShown**(`cb`): () => `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [`ShowToastEvent`](interfaces/ShowToastEvent.md)) => `void` |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L157)
 
 ___
 
