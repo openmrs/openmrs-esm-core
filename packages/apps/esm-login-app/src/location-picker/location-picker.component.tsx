@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -39,7 +39,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   currentLocationUuid,
 }) => {
   const { t } = useTranslation();
-  const config: ConfigSchema = useConfig();
+  const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
   const {
@@ -51,6 +51,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   } = useDefaultLocation();
 
   const [searchTerm, setSearchTerm] = useState(null);
+  const [searchParams] = useSearchParams();
 
   const { user, sessionLocation } = useSession();
   const { currentUser, userProperties } = useMemo(
@@ -150,8 +151,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
-    const isUpdateFlow =
-      new URLSearchParams(location?.search).get("update") === "true";
+    const isUpdateFlow = searchParams.get("update") === "true";
     if (isUpdateFlow) {
       return;
     }
@@ -159,7 +159,13 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       setActiveLocation(defaultLocation);
       changeLocation(defaultLocation, true);
     }
-  }, [changeLocation, isSubmitting, defaultLocation, setSavePreference]);
+  }, [
+    changeLocation,
+    isSubmitting,
+    defaultLocation,
+    setSavePreference,
+    searchParams,
+  ]);
 
   const search = (location: string) => {
     setActiveLocation("");

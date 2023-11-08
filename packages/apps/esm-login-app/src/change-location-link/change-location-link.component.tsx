@@ -17,6 +17,8 @@ const ChangeLocationLink: React.FC<ChangeLocationLinkProps> = ({
   const { t } = useTranslation();
 
   const changeLocation = () => {
+    // update=true is passed as a query param for updating the location preference,
+    // The location picker won't redirect with default location on finding the update=true param.
     navigate({
       to: `\${openmrsSpaBase}/login/location?returnToUrl=${referer}&update=true`,
     });
