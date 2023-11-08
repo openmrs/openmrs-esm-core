@@ -7,14 +7,17 @@ import {
   showNotification,
   showActionableNotification,
   showToast,
+  showSnackBar,
   renderInlineNotifications,
   renderActionableNotifications,
   renderToasts,
+  renderSnackBars,
   integrateBreakpoints,
   dispatchConnectivityChanged,
   subscribeNotificationShown,
   subscribeActionableNotificationShown,
   subscribeToastShown,
+  subscribeSnackBarShown,
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
   subscribeConnectivity,
@@ -236,6 +239,10 @@ function showToasts() {
   renderToasts(document.querySelector(".omrs-toasts-container"));
 }
 
+function showSnackBars() {
+  renderSnackBars(document.querySelector(".omrs-snack-bars-container"));
+}
+
 function showModals() {
   renderModals(document.querySelector(".omrs-modals-container"));
 }
@@ -356,9 +363,11 @@ export function run(configUrls: Array<string>, offline: boolean) {
   showModals();
   showNotifications();
   showActionableNotifications();
+  showSnackBars();
   subscribeNotificationShown(showNotification);
   subscribeActionableNotificationShown(showActionableNotification);
   subscribeToastShown(showToast);
+  subscribeSnackBarShown(showSnackBar);
   subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
   setupApiModule();
   registerCoreExtensions();

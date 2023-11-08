@@ -174,9 +174,11 @@
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showToast](API.md#showtoast)
+- [showSnackBar](API.md#showsnackbar)
 - [subscribeActionableNotificationShown](API.md#subscribeactionablenotificationshown)
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
 - [subscribeToastShown](API.md#subscribetoastshown)
+- [subscribeSnackBarShown](API.md#subscribesnackbarshown)
 - [unsetLeftNav](API.md#unsetleftnav)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useLayoutType](API.md#uselayouttype)
@@ -666,6 +668,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/toasts/toast.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L26)
+
+___
+
+### SnackBarType
+
+Ƭ **SnackBarType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L24)
 
 ___
 
@@ -4285,6 +4297,28 @@ Displays a toast notification in the UI.
 
 ___
 
+### showSnackBar
+
+▸ **showSnackBar**(`snackBar`): `void`
+
+Displays a snack bar notification in the UI.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `snackBar` | [`SnackBarDescriptor`](interfaces/SnackBarDescriptor.md) | The description of the snack bar to display. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/index.tsx#L32)
+
+___
+
 ### subscribeActionableNotificationShown
 
 ▸ **subscribeActionableNotificationShown**(`cb`): () => `void`
@@ -4307,7 +4341,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:126](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L126)
+[packages/framework/esm-globals/src/events.ts:147](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L147)
 
 ___
 
@@ -4333,7 +4367,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L117)
+[packages/framework/esm-globals/src/events.ts:138](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L138)
 
 ___
 
@@ -4359,7 +4393,33 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L136)
+[packages/framework/esm-globals/src/events.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L157)
+
+___
+
+### subscribeSnackBarShown
+
+▸ **subscribeSnackBarShown**(`cb`): () => `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cb` | (`data`: [`ShowSnackBarEvent`](interfaces/ShowSnackBarEvent.md)) => `void` |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:164](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L164)
 
 ___
 

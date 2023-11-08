@@ -1,0 +1,29 @@
+@use "@carbon/styles/scss/spacing";
+
+.omrs-snack-bars-container {
+  z-index: 1000;
+  position: fixed;
+  width: 35%;
+  display: flex;
+  bottom: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  :global(.cds--actionable-notification) {
+    max-width: 35rem;
+    width: fit-content;
+  }
+}
+
+.omrs-snack-bar-mounting,
+.omrs-snack-bar-mounting > * {
+  padding: 0;
+}
+
+.omrs-snack-bar-closing,
+.omrs-snack-bar-mounting {
+  opacity: 0;
+}

@@ -14,6 +14,12 @@ export {
   type ToastType,
   type ToastNotificationMeta,
 } from "./toasts/toast.component";
+export { showSnackBar } from "./snackbars";
+export {
+  type SnackBarDescriptor,
+  type SnackBarType,
+  type SnackBarMeta,
+} from "./snackbars/snack-bar.component";
 export * from "./left-nav";
 export * from "./error-state";
 export * from "./datepicker";
