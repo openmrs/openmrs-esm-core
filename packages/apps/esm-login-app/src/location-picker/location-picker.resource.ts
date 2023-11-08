@@ -25,7 +25,8 @@ export function useDefaultLocation() {
     return userProperties?.defaultLocation;
   }, [userProperties?.defaultLocation]);
 
-  const { isLocationValid } = useValidateLocationUuid(defaultLocation);
+  const { isLocationValid, defaultLocation: defaultLocationFhir } =
+    useValidateLocationUuid(defaultLocation);
 
   useEffect(() => {
     if (defaultLocation) {
@@ -104,6 +105,7 @@ export function useDefaultLocation() {
   );
 
   return {
+    defaultLocationFhir,
     defaultLocation: isLocationValid ? defaultLocation : null,
     updateUserPreference,
     savePreference,

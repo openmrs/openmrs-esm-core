@@ -128,7 +128,7 @@ export function useLoginLocations(
 
 export function useValidateLocationUuid(userPreferredLocationUuid: string) {
   const url = userPreferredLocationUuid
-    ? `/ws/rest/v1/location/${userPreferredLocationUuid}`
+    ? `/ws/fhir2/R4/Location?_id=${userPreferredLocationUuid}`
     : null;
   const { data, error, isLoading } = useSwrImmutable<
     FetchResponse<LocationResponse>
@@ -137,8 +137,8 @@ export function useValidateLocationUuid(userPreferredLocationUuid: string) {
   });
   const results = useMemo(
     () => ({
-      isLocationValid: data?.ok,
-      userPreferredLocation: data?.data,
+      isLocationValid: data?.ok && data?.data?.total > 0,
+      defaultLocation: data?.data?.entry ?? [],
       error,
       isLoading,
     }),

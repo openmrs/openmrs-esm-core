@@ -47,6 +47,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     updateUserPreference,
     savePreference,
     setSavePreference,
+    defaultLocationFhir,
   } = useDefaultLocation();
 
   const [searchTerm, setSearchTerm] = useState(null);
@@ -61,12 +62,29 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     [user]
   );
 
-  const { locations, isLoading, hasMore, loadingNewData, setPage } =
-    useLoginLocations(
-      chooseLocation.useLoginLocationTag,
-      chooseLocation.locationsPerRequest,
-      searchTerm
-    );
+  const {
+    locations: fetchedLocations,
+    isLoading,
+    hasMore,
+    loadingNewData,
+    setPage,
+  } = useLoginLocations(
+    chooseLocation.useLoginLocationTag,
+    chooseLocation.locationsPerRequest,
+    searchTerm
+  );
+
+  const locations = useMemo(() => {
+    if (!defaultLocationFhir?.length || !fetchedLocations) {
+      return fetchedLocations;
+    }
+    return [
+      ...(defaultLocationFhir ?? []),
+      ...fetchedLocations?.filter(
+        ({ resource }) => resource.id !== defaultLocationFhir?.[0].resource.id
+      ),
+    ];
+  }, [defaultLocationFhir, fetchedLocations]);
 
   const [activeLocation, setActiveLocation] = useState(() => {
     if (currentLocationUuid && hideWelcomeMessage) {

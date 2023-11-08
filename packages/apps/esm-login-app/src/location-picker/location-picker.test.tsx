@@ -33,10 +33,10 @@ mockUseSession.mockReturnValue({
   },
 });
 mockedOpenmrsFetch.mockImplementation((url) => {
-  if (url === `/ws/rest/v1/location/${validLocationUuid}`) {
+  if (url === `/ws/fhir2/R4/Location?_id=${validLocationUuid}`) {
     return validatingLocationSuccessResponse;
   }
-  if (url === `/ws/rest/v1/location/${invalidLocationUuid}`) {
+  if (url === `/ws/fhir2/R4/Location?_id=${invalidLocationUuid}`) {
     return validatingLocationFailureResponse;
   }
 
@@ -405,5 +405,29 @@ describe("LocationPicker", () => {
       );
       expect(setUserProperties).not.toBeCalled();
     });
+  });
+
+  it("should have the defaultLocation presented at the top of the list", async () => {
+    Object.defineProperty(window, "location", {
+      value: {
+        search: "?update=true",
+      },
+    });
+    mockUseSession.mockReturnValue({
+      user: {
+        display: "Testy McTesterface",
+        uuid: "90bd24b3-e700-46b0-a5ef-c85afdfededd",
+        userProperties: {
+          defaultLocation: validLocationUuid,
+        },
+      },
+    });
+    await act(() => {
+      renderWithRouter(LocationPicker, {});
+    });
+
+    const radios = screen.getAllByRole("radio");
+    expect(radios[0].getAttribute("id")).toBe("Community Outreach");
+    expect(radios[0]).toHaveAttribute("checked");
   });
 });
