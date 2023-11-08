@@ -18,6 +18,7 @@
 - [progressActionLabel](SnackBarDescriptor.md#progressactionlabel)
 - [subtitle](SnackBarDescriptor.md#subtitle)
 - [title](SnackBarDescriptor.md#title)
+- [duration](SnackBarDescriptor.md#duration)
 
 ### UI Methods
 
@@ -83,6 +84,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L14)
+
+___
+
+### duration
+
+• `Optional` **duration**: `number(milliseconds)`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L18)
 
 ## UI Methods
 

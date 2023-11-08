@@ -667,7 +667,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L24)
+[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L25)
 
 ___
 
