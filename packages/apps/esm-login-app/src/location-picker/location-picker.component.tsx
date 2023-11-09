@@ -1,5 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  LegacyRef,
+  useMemo,
+} from "react";
+import { useLocation, type Location } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash-es/debounce";
 import {
@@ -50,21 +57,24 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     return "";
   });
 
-  const {
-    locations,
-    isLoading,
-    hasMore,
-    totalResults,
-    loadingNewData,
-    setPage,
-  } = useLoginLocations(
-    chooseLocation.useLoginLocationTag,
-    chooseLocation.locationsPerRequest,
-    searchTerm
-  );
+  const { locations, isLoading, hasMore, loadingNewData, setPage } =
+    useLoginLocations(
+      chooseLocation.useLoginLocationTag,
+      chooseLocation.locationsPerRequest,
+      searchTerm
+    );
 
-  const { state } = useLocation() as { state: LoginReferrer };
-  const returnToUrl = new URLSearchParams(location?.search).get("returnToUrl");
+  const { search: searchParams, state } = useLocation() as Omit<
+    Location,
+    "state"
+  > & { state: LoginReferrer };
+  const returnToUrl = useMemo(
+    () =>
+      searchParams
+        ? new URLSearchParams(searchParams).get("returnToUrl")
+        : undefined,
+    [searchParams]
+  );
   const referrer = state?.referrer;
 
   const changeLocation = useCallback(
@@ -110,13 +120,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     return getDefaultUserLoginLocation() ?? "";
   });
 
-  const [pageSize, setPageSize] = useState(() => {
-    if (!isLoading && totalResults && chooseLocation.numberToShow) {
-      return Math.min(chooseLocation.numberToShow, totalResults);
-    }
-    return chooseLocation.numberToShow;
-  });
-
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
     if (!isLoading && !searchTerm) {
@@ -140,24 +143,27 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     setSearchTerm(location);
   }, searchTimeout);
 
-  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const handleSubmit = useCallback(
+    (evt: React.FormEvent<HTMLFormElement>) => {
+      evt.preventDefault();
 
-    if (!activeLocation) return;
+      if (!activeLocation) return;
 
-    setIsSubmitting(true);
-    changeLocation(activeLocation);
+      setIsSubmitting(true);
+      changeLocation(activeLocation);
 
-    window.localStorage.setItem(
-      `${userDefaultLoginLocation}${currentUser}`,
-      activeLocation
-    );
-  };
+      window.localStorage.setItem(
+        `${userDefaultLoginLocation}${currentUser}`,
+        activeLocation
+      );
+    },
+    [activeLocation, userDefaultLoginLocation, currentUser, changeLocation]
+  );
 
   // Infinite scroll
   const observer = useRef(null);
   const loadingIconRef = useCallback(
-    (node) => {
+    (node: HTMLDivElement) => {
       if (loadingNewData) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(
@@ -174,6 +180,8 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     },
     [loadingNewData, hasMore, setPage]
   );
+
+  const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
 
   return (
     <div className={styles.locationPickerContainer}>
@@ -235,13 +243,14 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                         setActiveLocation(ev.toString());
                       }}
                     >
-                      {locations.map((entry) => (
+                      {locations.map((entry, i) => (
                         <RadioButton
                           className={styles.locationRadioButton}
                           key={entry.resource.id}
                           id={entry.resource.name}
                           labelText={entry.resource.name}
                           value={entry.resource.id}
+                          ref={i === reloadIndex ? loadingIconRef : null}
                         />
                       ))}
                     </RadioButtonGroup>
@@ -254,7 +263,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                   )}
                 </div>
                 {hasMore && (
-                  <div className={styles.loadingIcon} ref={loadingIconRef}>
+                  <div className={styles.loadingIcon}>
                     <InlineLoading description={t("loading", "Loading")} />
                   </div>
                 )}
