@@ -2,27 +2,27 @@
 import React, { useState, useEffect } from "react";
 import { ActionableNotification } from "@carbon/react";
 
-export interface SnackBarProps {
-  snackBar: SnackBarMeta;
-  closeSnackBar(): void;
+export interface SnackbarProps {
+  snackbar: SnackbarMeta;
+  closeSnackbar(): void;
 }
 
-export interface SnackBarDescriptor {
+export interface SnackbarDescriptor {
   actionButtonLabel?: string;
   onActionButtonClick?: () => void;
   subtitle?: string;
   title: string;
-  kind?: SnackBarType | string;
+  kind?: SnackbarType | string;
   critical?: boolean;
   progressActionLabel?: string;
   duration?: number;
 }
 
-export interface SnackBarMeta extends SnackBarDescriptor {
+export interface SnackbarMeta extends SnackbarDescriptor {
   id: number;
 }
 
-export type SnackBarType =
+export type SnackbarType =
   | "error"
   | "info"
   | "info-square"
@@ -30,9 +30,9 @@ export type SnackBarType =
   | "warning"
   | "warning-alt";
 
-export const SnackBarComponent: React.FC<SnackBarProps> = ({
-  snackBar,
-  closeSnackBar,
+export const SnackbarComponent: React.FC<SnackbarProps> = ({
+  snackbar,
+  closeSnackbar,
 }) => {
   const {
     actionButtonLabel,
@@ -44,19 +44,19 @@ export const SnackBarComponent: React.FC<SnackBarProps> = ({
     progressActionLabel,
     duration,
     ...props
-  } = snackBar;
+  } = snackbar;
 
   const [actionText, setActionText] = useState(actionButtonLabel);
 
   const handleActionClick = () => {
     onActionButtonClick();
-    closeSnackBar();
+    closeSnackbar();
     progressActionLabel && setActionText(progressActionLabel);
   };
 
   useEffect(() => {
     if (duration) {
-      const timeoutId = setTimeout(closeSnackBar, duration);
+      const timeoutId = setTimeout(closeSnackbar, duration);
       return () => clearTimeout(timeoutId);
     }
   }, [duration]);
@@ -71,7 +71,7 @@ export const SnackBarComponent: React.FC<SnackBarProps> = ({
       subtitle={subtitle || ""}
       title={title}
       lowContrast={critical}
-      onClose={closeSnackBar}
+      onClose={closeSnackbar}
       inline
       {...props}
     />

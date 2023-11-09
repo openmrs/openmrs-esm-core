@@ -1,28 +1,28 @@
-[@openmrs/esm-framework](../API.md) / SnackBarDescriptor
+[@openmrs/esm-framework](../API.md) / SnackbarDescriptor
 
-# Interface: SnackBarDescriptor
+# Interface: SnackbarDescriptor
 
 ## Hierarchy
 
-- **`SnackBarDescriptor`**
+- **`SnackbarDescriptor`**
 
-  ↳ [`SnackBarMeta`](SnackBarMeta.md)
+  ↳ [`SnackbarMeta`](SnackbarMeta.md)
 
 ## Table of contents
 
 ### UI Properties
 
-- [actionButtonLabel](SnackBarDescriptor.md#actionbuttonlabel)
-- [critical](SnackBarDescriptor.md#critical)
-- [duration](SnackBarDescriptor.md#duration)
-- [kind](SnackBarDescriptor.md#kind)
-- [progressActionLabel](SnackBarDescriptor.md#progressactionlabel)
-- [subtitle](SnackBarDescriptor.md#subtitle)
-- [title](SnackBarDescriptor.md#title)
+- [actionButtonLabel](SnackbarDescriptor.md#actionbuttonlabel)
+- [critical](SnackbarDescriptor.md#critical)
+- [duration](SnackbarDescriptor.md#duration)
+- [kind](SnackbarDescriptor.md#kind)
+- [progressActionLabel](SnackbarDescriptor.md#progressactionlabel)
+- [subtitle](SnackbarDescriptor.md#subtitle)
+- [title](SnackbarDescriptor.md#title)
 
 ### UI Methods
 
-- [onActionButtonClick](SnackBarDescriptor.md#onactionbuttonclick)
+- [onActionButtonClick](SnackbarDescriptor.md#onactionbuttonclick)
 
 ## UI Properties
 

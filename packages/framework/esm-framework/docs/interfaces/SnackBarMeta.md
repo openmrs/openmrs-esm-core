@@ -1,29 +1,29 @@
-[@openmrs/esm-framework](../API.md) / SnackBarMeta
+[@openmrs/esm-framework](../API.md) / SnackbarMeta
 
-# Interface: SnackBarMeta
+# Interface: SnackbarMeta
 
 ## Hierarchy
 
-- [`SnackBarDescriptor`](SnackBarDescriptor.md)
+- [`SnackbarDescriptor`](SnackbarDescriptor.md)
 
-  ↳ **`SnackBarMeta`**
+  ↳ **`SnackbarMeta`**
 
 ## Table of contents
 
 ### UI Properties
 
-- [actionButtonLabel](SnackBarMeta.md#actionbuttonlabel)
-- [critical](SnackBarMeta.md#critical)
-- [duration](SnackBarMeta.md#duration)
-- [id](SnackBarMeta.md#id)
-- [kind](SnackBarMeta.md#kind)
-- [progressActionLabel](SnackBarMeta.md#progressactionlabel)
-- [subtitle](SnackBarMeta.md#subtitle)
-- [title](SnackBarMeta.md#title)
+- [actionButtonLabel](SnackbarMeta.md#actionbuttonlabel)
+- [critical](SnackbarMeta.md#critical)
+- [duration](SnackbarMeta.md#duration)
+- [id](SnackbarMeta.md#id)
+- [kind](SnackbarMeta.md#kind)
+- [progressActionLabel](SnackbarMeta.md#progressactionlabel)
+- [subtitle](SnackbarMeta.md#subtitle)
+- [title](SnackbarMeta.md#title)
 
 ### UI Methods
 
-- [onActionButtonClick](SnackBarMeta.md#onactionbuttonclick)
+- [onActionButtonClick](SnackbarMeta.md#onactionbuttonclick)
 
 ## UI Properties
 
@@ -33,7 +33,7 @@
 
 #### Inherited from
 
-[SnackBarDescriptor](SnackBarDescriptor.md).[actionButtonLabel](SnackBarDescriptor.md#actionbuttonlabel)
+[SnackbarDescriptor](SnackbarDescriptor.md).[actionButtonLabel](SnackbarDescriptor.md#actionbuttonlabel)
 
 #### Defined in
 
@@ -47,7 +47,7 @@ ___
 
 #### Inherited from
 
-[SnackBarDescriptor](SnackBarDescriptor.md).[critical](SnackBarDescriptor.md#critical)
+[SnackbarDescriptor](SnackbarDescriptor.md).[critical](SnackbarDescriptor.md#critical)
 
 #### Defined in
 
@@ -61,7 +61,7 @@ ___
 
 #### Inherited from
 
-[SnackBarDescriptor](SnackBarDescriptor.md).[duration](SnackBarDescriptor.md#duration)
+[SnackbarDescriptor](SnackbarDescriptor.md).[duration](SnackbarDescriptor.md#duration)
 
 #### Defined in
 
@@ -85,7 +85,7 @@ ___
 
 #### Inherited from
 
-[SnackBarDescriptor](SnackBarDescriptor.md).[kind](SnackBarDescriptor.md#kind)
+[SnackbarDescriptor](SnackbarDescriptor.md).[kind](SnackbarDescriptor.md#kind)
 
 #### Defined in
 
@@ -99,7 +99,7 @@ ___
 
 #### Inherited from
 
-[SnackBarDescriptor](SnackBarDescriptor.md).[progressActionLabel](SnackBarDescriptor.md#progressactionlabel)
+[SnackbarDescriptor](SnackbarDescriptor.md).[progressActionLabel](SnackbarDescriptor.md#progressactionlabel)
 
 #### Defined in
 
@@ -113,7 +113,7 @@ ___
 
 #### Inherited from
 
-[SnackBarDescriptor](SnackBarDescriptor.md).[subtitle](SnackBarDescriptor.md#subtitle)
+[SnackbarDescriptor](SnackbarDescriptor.md).[subtitle](SnackbarDescriptor.md#subtitle)
 
 #### Defined in
 
@@ -127,7 +127,7 @@ ___
 
 #### Inherited from
 
-[SnackBarDescriptor](SnackBarDescriptor.md).[title](SnackBarDescriptor.md#title)
+[SnackbarDescriptor](SnackbarDescriptor.md).[title](SnackbarDescriptor.md#title)
 
 #### Defined in
 
@@ -145,7 +145,7 @@ ___
 
 #### Inherited from
 
-[SnackBarDescriptor](SnackBarDescriptor.md).[onActionButtonClick](SnackBarDescriptor.md#onactionbuttonclick)
+[SnackbarDescriptor](SnackbarDescriptor.md).[onActionButtonClick](SnackbarDescriptor.md#onactionbuttonclick)
 
 #### Defined in
 

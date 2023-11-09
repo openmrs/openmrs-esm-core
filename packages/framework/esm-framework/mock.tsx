@@ -320,7 +320,7 @@ export const useDebounce = jest.fn().mockImplementation((value) => value);
 export const showNotification = jest.fn();
 export const showActionableNotification = jest.fn();
 export const showToast = jest.fn();
-export const showSnackBar = jest.fn();
+export const showSnackbar = jest.fn();
 export const showModal = jest.fn();
 
 export const LeftNavMenu = jest.fn();

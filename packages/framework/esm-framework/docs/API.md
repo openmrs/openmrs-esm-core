@@ -173,11 +173,11 @@
 - [showActionableNotification](API.md#showactionablenotification)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
-- [showSnackBar](API.md#showsnackbar)
+- [showSnackbar](API.md#showSnackbar)
 - [showToast](API.md#showtoast)
 - [subscribeActionableNotificationShown](API.md#subscribeactionablenotificationshown)
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
-- [subscribeSnackBarShown](API.md#subscribesnackbarshown)
+- [subscribeSnackbarShown](API.md#subscribeSnackbarshown)
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [unsetLeftNav](API.md#unsetleftnav)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
@@ -661,9 +661,9 @@ ___
 
 ___
 
-### SnackBarType
+### SnackbarType
 
-Ƭ **SnackBarType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
+Ƭ **SnackbarType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
 
 #### Defined in
 
@@ -4275,9 +4275,9 @@ Displays an inline notification in the UI.
 
 ___
 
-### showSnackBar
+### showSnackbar
 
-▸ **showSnackBar**(`snackBar`): `void`
+▸ **showSnackbar**(`Snackbar`): `void`
 
 Displays a snack bar notification in the UI.
 
@@ -4285,7 +4285,7 @@ Displays a snack bar notification in the UI.
 
 | Name | Type |
 | :------ | :------ |
-| `snackBar` | [`SnackBarDescriptor`](interfaces/SnackBarDescriptor.md) |
+| `Snackbar` | [`SnackbarDescriptor`](interfaces/SnackbarDescriptor.md) |
 
 #### Returns
 
@@ -4293,7 +4293,7 @@ Displays a snack bar notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/index.tsx#L32)
+[packages/framework/esm-styleguide/src/Snackbars/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/Snackbars/index.tsx#L32)
 
 ___
 
@@ -4371,15 +4371,15 @@ ___
 
 ___
 
-### subscribeSnackBarShown
+### subscribeSnackbarShown
 
-▸ **subscribeSnackBarShown**(`cb`): () => `void`
+▸ **subscribeSnackbarShown**(`cb`): () => `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `cb` | (`data`: [`ShowSnackBarEvent`](interfaces/ShowSnackBarEvent.md)) => `void` |
+| `cb` | (`data`: [`ShowSnackbarEvent`](interfaces/ShowSnackbarEvent.md)) => `void` |
 
 #### Returns
 

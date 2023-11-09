@@ -96,7 +96,7 @@ export interface ShowToastEvent {
 }
 
 /** @category UI */
-export interface ShowSnackBarEvent {
+export interface ShowSnackbarEvent {
   subtitle?: any;
   kind?:
     | "error"
@@ -114,7 +114,7 @@ export interface ShowSnackBarEvent {
 const notificationShownName = "openmrs:notification-shown";
 const actionableNotificationShownName = "openmrs:actionable-notification-shown";
 const toastShownName = "openmrs:toast-shown";
-const snackBarShownName = "openmrs:snack-bar-shown";
+const SnackbarShownName = "openmrs:snack-bar-shown";
 
 export function dispatchNotificationShown(data: ShowNotificationEvent) {
   window.dispatchEvent(
@@ -130,8 +130,8 @@ export function dispatchActionableNotificationShown(
   );
 }
 
-export function dispatchSnackBarShown(data: ShowSnackBarEvent) {
-  window.dispatchEvent(new CustomEvent(snackBarShownName, { detail: data }));
+export function dispatchSnackbarShown(data: ShowSnackbarEvent) {
+  window.dispatchEvent(new CustomEvent(SnackbarShownName, { detail: data }));
 }
 
 /** @category UI */
@@ -161,8 +161,8 @@ export function subscribeToastShown(cb: (data: ShowToastEvent) => void) {
 }
 
 /** @category UI */
-export function subscribeSnackBarShown(cb: (data: ShowSnackBarEvent) => void) {
+export function subscribeSnackbarShown(cb: (data: ShowSnackbarEvent) => void) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
-  window.addEventListener(snackBarShownName, handler);
-  return () => window.removeEventListener(snackBarShownName, handler);
+  window.addEventListener(SnackbarShownName, handler);
+  return () => window.removeEventListener(SnackbarShownName, handler);
 }

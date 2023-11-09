@@ -1,6 +1,6 @@
 @use "@carbon/styles/scss/spacing";
 
-.omrs-snack-bars-container {
+.omrs-snackbars-container {
   z-index: 1000;
   position: fixed;
   width: 20rem;
@@ -14,12 +14,12 @@
   justify-content: center;
 }
 
-.omrs-snack-bar-mounting,
-.omrs-snack-bar-mounting > * {
+.omrs-snackbar-mounting,
+.omrs-snackbar-mounting > * {
   padding: 0;
 }
 
-.omrs-snack-bar-closing,
-.omrs-snack-bar-mounting {
+.omrs-snackbar-closing,
+.omrs-snackbar-mounting {
   opacity: 0;
 }

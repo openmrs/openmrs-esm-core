@@ -1,20 +1,20 @@
-[@openmrs/esm-framework](../API.md) / ShowSnackBarEvent
+[@openmrs/esm-framework](../API.md) / ShowSnackbarEvent
 
-# Interface: ShowSnackBarEvent
+# Interface: ShowSnackbarEvent
 
 ## Table of contents
 
 ### Properties
 
-- [actionButtonLabel](ShowSnackBarEvent.md#actionbuttonlabel)
-- [kind](ShowSnackBarEvent.md#kind)
-- [progressActionLabel](ShowSnackBarEvent.md#progressactionlabel)
-- [subtitle](ShowSnackBarEvent.md#subtitle)
-- [title](ShowSnackBarEvent.md#title)
+- [actionButtonLabel](ShowSnackbarEvent.md#actionbuttonlabel)
+- [kind](ShowSnackbarEvent.md#kind)
+- [progressActionLabel](ShowSnackbarEvent.md#progressactionlabel)
+- [subtitle](ShowSnackbarEvent.md#subtitle)
+- [title](ShowSnackbarEvent.md#title)
 
 ### Methods
 
-- [onActionButtonClick](ShowSnackBarEvent.md#onactionbuttonclick)
+- [onActionButtonClick](ShowSnackbarEvent.md#onactionbuttonclick)
 
 ## Properties
 
