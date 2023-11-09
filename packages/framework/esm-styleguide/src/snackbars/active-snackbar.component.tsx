@@ -36,7 +36,7 @@ const ActiveSnackbars: React.FC<ActiveSnackbarProps> = ({ subject }) => {
       {snackbars.map((snackbar) => (
         <SnackbarComponent
           key={snackbar.id}
-          Snackbar={snackbar}
+          snackbar={snackbar}
           closeSnackbar={() => closeSnackbar(snackbar)}
         />
       ))}

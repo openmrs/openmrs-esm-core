@@ -173,11 +173,11 @@
 - [showActionableNotification](API.md#showactionablenotification)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
-- [showSnackbar](API.md#showSnackbar)
+- [showSnackbar](API.md#showsnackbar)
 - [showToast](API.md#showtoast)
 - [subscribeActionableNotificationShown](API.md#subscribeactionablenotificationshown)
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
-- [subscribeSnackbarShown](API.md#subscribeSnackbarshown)
+- [subscribeSnackbarShown](API.md#subscribesnackbarshown)
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [unsetLeftNav](API.md#unsetleftnav)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
@@ -667,7 +667,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L25)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L25)
 
 ___
 
@@ -4277,15 +4277,15 @@ ___
 
 ### showSnackbar
 
-▸ **showSnackbar**(`Snackbar`): `void`
+▸ **showSnackbar**(`snackbar`): `void`
 
 Displays a snack bar notification in the UI.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `Snackbar` | [`SnackbarDescriptor`](interfaces/SnackbarDescriptor.md) |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `snackbar` | [`SnackbarDescriptor`](interfaces/SnackbarDescriptor.md) | The description of the snack bar to display. |
 
 #### Returns
 
@@ -4293,7 +4293,7 @@ Displays a snack bar notification in the UI.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/Snackbars/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/Snackbars/index.tsx#L32)
+[packages/framework/esm-styleguide/src/snackbars/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/index.tsx#L32)
 
 ___
 
