@@ -14,16 +14,15 @@
 
 - [actionButtonLabel](SnackBarDescriptor.md#actionbuttonlabel)
 - [critical](SnackBarDescriptor.md#critical)
+- [duration](SnackBarDescriptor.md#duration)
 - [kind](SnackBarDescriptor.md#kind)
 - [progressActionLabel](SnackBarDescriptor.md#progressactionlabel)
 - [subtitle](SnackBarDescriptor.md#subtitle)
 - [title](SnackBarDescriptor.md#title)
-- [duration](SnackBarDescriptor.md#duration)
 
 ### UI Methods
 
 - [onActionButtonClick](SnackBarDescriptor.md#onactionbuttonclick)
-- [onClose](SnackBarDescriptor.md#onclose)
 
 ## UI Properties
 
@@ -33,7 +32,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L10)
+[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L11)
 
 ___
 
@@ -44,6 +43,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L16)
+
+___
+
+### duration
+
+• `Optional` **duration**: `number`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L18)
 
 ___
 
@@ -85,35 +94,11 @@ ___
 
 [packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L14)
 
-___
-
-### duration
-
-• `Optional` **duration**: `number(milliseconds)`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L18)
-
 ## UI Methods
 
 ### onActionButtonClick
 
 ▸ `Optional` **onActionButtonClick**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L11)
-
-___
-
-### onClose
-
-▸ `Optional` **onClose**(): `void`
 
 #### Returns
 

@@ -14,6 +14,7 @@
 
 - [actionButtonLabel](SnackBarMeta.md#actionbuttonlabel)
 - [critical](SnackBarMeta.md#critical)
+- [duration](SnackBarMeta.md#duration)
 - [id](SnackBarMeta.md#id)
 - [kind](SnackBarMeta.md#kind)
 - [progressActionLabel](SnackBarMeta.md#progressactionlabel)
@@ -23,7 +24,6 @@
 ### UI Methods
 
 - [onActionButtonClick](SnackBarMeta.md#onactionbuttonclick)
-- [onClose](SnackBarMeta.md#onclose)
 
 ## UI Properties
 
@@ -37,7 +37,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L10)
+[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L11)
 
 ___
 
@@ -55,13 +55,27 @@ ___
 
 ___
 
+### duration
+
+• `Optional` **duration**: `number`
+
+#### Inherited from
+
+[SnackBarDescriptor](SnackBarDescriptor.md).[duration](SnackBarDescriptor.md#duration)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L18)
+
+___
+
 ### id
 
 • **id**: `number`
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L21)
+[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L22)
 
 ___
 
@@ -132,24 +146,6 @@ ___
 #### Inherited from
 
 [SnackBarDescriptor](SnackBarDescriptor.md).[onActionButtonClick](SnackBarDescriptor.md#onactionbuttonclick)
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snack-bar.component.tsx#L11)
-
-___
-
-### onClose
-
-▸ `Optional` **onClose**(): `void`
-
-#### Returns
-
-`void`
-
-#### Inherited from
-
-[SnackBarDescriptor](SnackBarDescriptor.md).[onClose](SnackBarDescriptor.md#onclose)
 
 #### Defined in
 
