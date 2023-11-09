@@ -42,16 +42,20 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
+  const [searchParams] = useSearchParams();
+  const isUpdateFlow = useMemo(
+    () => searchParams.get("update") === "true",
+    [searchParams]
+  );
   const {
     defaultLocation,
-    updateUserPreference,
+    updateDefaultLocation,
     savePreference,
     setSavePreference,
     defaultLocationFhir,
-  } = useDefaultLocation();
+  } = useDefaultLocation(isUpdateFlow);
 
   const [searchTerm, setSearchTerm] = useState(null);
-  const [searchParams] = useSearchParams();
 
   const { user, sessionLocation } = useSession();
   const { currentUser, userProperties } = useMemo(
@@ -111,7 +115,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         ? setSessionLocation(locationUuid, new AbortController())
         : Promise.resolve();
 
-      updateUserPreference(locationUuid, saveUserPreference);
+      updateDefaultLocation(locationUuid, saveUserPreference);
       sessionDefined.then(() => {
         if (
           referrer &&
@@ -128,7 +132,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         return;
       });
     },
-    [state?.referrer, config.links.loginSuccess, updateUserPreference]
+    [state?.referrer, config.links.loginSuccess, updateDefaultLocation]
   );
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
@@ -151,7 +155,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
-    const isUpdateFlow = searchParams.get("update") === "true";
     if (isUpdateFlow) {
       return;
     }
@@ -159,13 +162,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       setActiveLocation(defaultLocation);
       changeLocation(defaultLocation, true);
     }
-  }, [
-    changeLocation,
-    isSubmitting,
-    defaultLocation,
-    setSavePreference,
-    searchParams,
-  ]);
+  }, [changeLocation, isSubmitting, defaultLocation, isUpdateFlow]);
 
   const search = (location: string) => {
     setActiveLocation("");

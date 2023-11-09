@@ -133,7 +133,12 @@ export function useValidateLocationUuid(userPreferredLocationUuid: string) {
   const { data, error, isLoading } = useSwrImmutable<
     FetchResponse<LocationResponse>
   >(url, openmrsFetch, {
-    errorRetryCount: 0,
+    shouldRetryOnError(err) {
+      if (err?.response?.status) {
+        return err.response.status >= 500;
+      }
+      return false;
+    },
   });
   const results = useMemo(
     () => ({

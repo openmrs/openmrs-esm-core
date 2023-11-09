@@ -6,11 +6,9 @@ import {
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useValidateLocationUuid } from "../login.resource";
-import { useSearchParams } from "react-router-dom";
 
-export function useDefaultLocation() {
+export function useDefaultLocation(isUpdateFlow: boolean) {
   const { t } = useTranslation();
-  const [searchParams] = useSearchParams();
   const [savePreference, setSavePreference] = useState(false);
   const { user } = useSession();
   const { userUuid, userProperties } = useMemo(
@@ -34,9 +32,9 @@ export function useDefaultLocation() {
     }
   }, [setSavePreference, defaultLocation]);
 
-  const updateUserPropsWithPreference = useCallback(
-    async (locationUuid: string, saveUserPreference: boolean) => {
-      if (saveUserPreference) {
+  const updateUserPropsWithDefaultLocation = useCallback(
+    async (locationUuid: string, saveDefaultLocation: boolean) => {
+      if (saveDefaultLocation) {
         // If the user checks the checkbox for saving the preference
         const updatedUserProperties = {
           ...userProperties,
@@ -53,66 +51,66 @@ export function useDefaultLocation() {
     [userProperties, userUuid]
   );
 
-  const updateUserPreference = useCallback(
-    async (locationUuid: string, saveUserPreference: boolean) => {
+  const updateDefaultLocation = useCallback(
+    async (locationUuid: string, saveDefaultLocation: boolean) => {
       if (savePreference && locationUuid === defaultLocation) {
         return;
       }
 
-      updateUserPropsWithPreference(locationUuid, saveUserPreference).then(
-        () => {
-          const isUpdateFlow = searchParams.get("update") === "true";
-          if (saveUserPreference) {
-            showToast({
-              title: !isUpdateFlow
-                ? t(
-                    "locationPreferenceAdded",
-                    "Selected location will be used for your next logins"
-                  )
-                : t(
-                    "locationPreferenceUpdated",
-                    "Login location preference updated"
-                  ),
-              description: !isUpdateFlow
-                ? t(
-                    "selectedLocationPreferenceSetMessage",
-                    "You can change your preference from the user dashboard"
-                  )
-                : t(
-                    "locationPreferenceAdded",
-                    "Selected location will be used for your next logins"
-                  ),
-              kind: "success",
-            });
-          } else {
-            showToast({
-              title: t(
-                "locationPreferenceRemoved",
-                "Login location preference removed"
-              ),
-              description: t(
-                "removedLoginLocationPreference",
-                "The login location preference has been removed."
-              ),
-              kind: "success",
-            });
-          }
+      updateUserPropsWithDefaultLocation(
+        locationUuid,
+        saveDefaultLocation
+      ).then(() => {
+        if (saveDefaultLocation) {
+          showToast({
+            title: !isUpdateFlow
+              ? t(
+                  "locationPreferenceAdded",
+                  "Selected location will be used for your next logins"
+                )
+              : t(
+                  "locationPreferenceUpdated",
+                  "Login location preference updated"
+                ),
+            description: !isUpdateFlow
+              ? t(
+                  "selectedLocationPreferenceSetMessage",
+                  "You can change your preference from the user dashboard"
+                )
+              : t(
+                  "locationPreferenceAdded",
+                  "Selected location will be used for your next logins"
+                ),
+            kind: "success",
+          });
+        } else {
+          showToast({
+            title: t(
+              "locationPreferenceRemoved",
+              "Login location preference removed"
+            ),
+            description: t(
+              "removedLoginLocationPreference",
+              "The login location preference has been removed."
+            ),
+            kind: "success",
+          });
         }
-      );
+      });
     },
     [
       savePreference,
       defaultLocation,
-      updateUserPropsWithPreference,
+      updateUserPropsWithDefaultLocation,
       t,
-      searchParams,
+      isUpdateFlow,
     ]
   );
 
   return {
     defaultLocationFhir,
     defaultLocation: isLocationValid ? defaultLocation : null,
-    updateUserPreference,
+    updateDefaultLocation,
     savePreference,
     setSavePreference,
   };
