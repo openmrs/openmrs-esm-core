@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import useSwrInfinite from "swr/infinite";
+import useSwrImmutable from "swr/immutable";
 import {
   FetchResponse,
   fhirBaseUrl,
@@ -8,6 +9,7 @@ import {
   refetchCurrentUser,
   Session,
   showNotification,
+  useDebounce,
 } from "@openmrs/esm-framework";
 import { LocationEntry, LocationResponse } from "./types";
 
@@ -47,6 +49,7 @@ export function useLoginLocations(
   searchQuery: string = ""
 ): LoginLocationData {
   const { t } = useTranslation();
+  const debouncedSearchQuery = useDebounce(searchQuery);
   function constructUrl(
     page: number,
     prevPageData: FetchResponse<LocationResponse>
@@ -89,8 +92,11 @@ export function useLoginLocations(
       urlSearchParameters.append("_tag", "Login Location");
     }
 
-    if (typeof searchQuery === "string" && searchQuery != "") {
-      urlSearchParameters.append("name:contains", searchQuery);
+    if (
+      typeof debouncedSearchQuery === "string" &&
+      debouncedSearchQuery != ""
+    ) {
+      urlSearchParameters.append("name:contains", debouncedSearchQuery);
     }
 
     return url + urlSearchParameters.toString();
@@ -118,7 +124,7 @@ export function useLoginLocations(
       isLoading,
       totalResults: data?.[0]?.data?.total ?? null,
       hasMore: data?.length
-        ? data?.[data.length - 1]?.data?.link.some(
+        ? data?.[data.length - 1]?.data?.link?.some(
             (link) => link.relation === "next"
           )
         : false,
@@ -128,4 +134,30 @@ export function useLoginLocations(
   }, [isLoading, data, isValidating, setSize]);
 
   return memoizedLocations;
+}
+
+export function useValidateLocationUuid(userPreferredLocationUuid: string) {
+  const url = userPreferredLocationUuid
+    ? `/ws/fhir2/R4/Location?_id=${userPreferredLocationUuid}`
+    : null;
+  const { data, error, isLoading } = useSwrImmutable<
+    FetchResponse<LocationResponse>
+  >(url, openmrsFetch, {
+    shouldRetryOnError(err) {
+      if (err?.response?.status) {
+        return err.response.status >= 500;
+      }
+      return false;
+    },
+  });
+  const results = useMemo(
+    () => ({
+      isLocationValid: data?.ok && data?.data?.total > 0,
+      defaultLocation: data?.data?.entry ?? [],
+      error,
+      isLoading,
+    }),
+    [data, isLoading, error]
+  );
+  return results;
 }

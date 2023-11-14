@@ -20,6 +20,7 @@ import {
   getSessionStore,
   useConnectivity,
   navigate as openmrsNavigate,
+  Session,
 } from "@openmrs/esm-framework";
 import { performLogin } from "../login.resource";
 import styles from "./login.scss";
@@ -53,6 +54,21 @@ const Login: React.FC<LoginProps> = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const showPassword = location.pathname === "/login/confirm";
 
+  const handleLogin = useCallback(
+    (session: Session) => {
+      if (session.sessionLocation) {
+        openmrsNavigate({
+          to: location?.state?.referrer
+            ? `\${openmrsSpaBase}${location.state.referrer}`
+            : config?.links?.loginSuccess,
+        });
+      } else {
+        navigate("/login/location", { state: location.state });
+      }
+    },
+    [config?.links?.loginSuccess, location.state, navigate]
+  );
+
   useEffect(() => {
     if (user) {
       clearCurrentUser();
@@ -60,13 +76,13 @@ const Login: React.FC<LoginProps> = () => {
         const authenticated =
           getSessionStore().getState().session.authenticated;
         if (authenticated) {
-          navigate("/login/location", { state: location.state });
+          handleLogin(getSessionStore().getState().session);
         }
       });
     } else if (!username && location.pathname === "/login/confirm") {
       navigate("/login", { state: location.state });
     }
-  }, [username, navigate, location, user]);
+  }, [username, navigate, location, user, handleLogin]);
 
   useEffect(() => {
     const field = showPassword
@@ -126,7 +142,7 @@ const Login: React.FC<LoginProps> = () => {
         const valid = authData && authData.authenticated;
 
         if (valid) {
-          navigate("/login/location", { state: location.state });
+          handleLogin(authData);
         } else {
           throw new Error("invalidCredentials");
         }
@@ -144,8 +160,7 @@ const Login: React.FC<LoginProps> = () => {
       continueLogin,
       username,
       password,
-      navigate,
-      location.state,
+      handleLogin,
       resetUserNameAndPassword,
     ]
   );
