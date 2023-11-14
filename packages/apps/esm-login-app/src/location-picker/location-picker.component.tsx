@@ -3,9 +3,10 @@ import React, {
   useEffect,
   useRef,
   useCallback,
+  LegacyRef,
   useMemo,
 } from "react";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { useLocation, type Location, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -100,7 +101,9 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { state } = useLocation() as { state: LoginReferrer };
+  const { state } = useLocation() as unknown as Omit<Location, "state"> & {
+    state: LoginReferrer;
+  };
 
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
@@ -169,18 +172,21 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     setSearchTerm(location);
   };
 
-  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  const handleSubmit = useCallback(
+    (evt: React.FormEvent<HTMLFormElement>) => {
+      evt.preventDefault();
 
-    if (!activeLocation) return;
+      if (!activeLocation) return;
 
-    changeLocation(activeLocation, savePreference);
-  };
+      changeLocation(activeLocation, savePreference);
+    },
+    [activeLocation, changeLocation, savePreference]
+  );
 
   // Infinite scroll
   const observer = useRef(null);
   const loadingIconRef = useCallback(
-    (node) => {
+    (node: HTMLDivElement) => {
       if (loadingNewData) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(
@@ -197,6 +203,8 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     },
     [loadingNewData, hasMore, setPage]
   );
+
+  const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
 
   return (
     <div className={styles.locationPickerContainer}>
@@ -258,7 +266,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                         setActiveLocation(ev.toString());
                       }}
                     >
-                      {locations.map((entry) => (
+                      {locations.map((entry, i) => (
                         <RadioButton
                           className={styles.locationRadioButton}
                           key={entry.resource.id}
@@ -266,6 +274,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                           name={entry.resource.name}
                           labelText={entry.resource.name}
                           value={entry.resource.id}
+                          ref={i === reloadIndex ? loadingIconRef : null}
                         />
                       ))}
                     </RadioButtonGroup>
@@ -278,7 +287,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                   )}
                 </div>
                 {hasMore && (
-                  <div className={styles.loadingIcon} ref={loadingIconRef}>
+                  <div className={styles.loadingIcon}>
                     <InlineLoading description={t("loading", "Loading")} />
                   </div>
                 )}
