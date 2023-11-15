@@ -13,11 +13,11 @@
 ### UI Properties
 
 - [actionButtonLabel](SnackbarDescriptor.md#actionbuttonlabel)
-- [isLowContrast](SnackbarDescriptor.md#isLowContrast)
-- [duration](SnackbarDescriptor.md#duration)
+- [isLowContrast](SnackbarDescriptor.md#islowcontrast)
 - [kind](SnackbarDescriptor.md#kind)
 - [progressActionLabel](SnackbarDescriptor.md#progressactionlabel)
 - [subtitle](SnackbarDescriptor.md#subtitle)
+- [timeoutInMs](SnackbarDescriptor.md#timeoutinms)
 - [title](SnackbarDescriptor.md#title)
 
 ### UI Methods
@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L11)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L14)
 
 ___
 
@@ -42,17 +42,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L16)
-
-___
-
-### duration
-
-• `Optional` **duration**: `number`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L18)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L15)
 
 ___
 
@@ -62,7 +52,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L15)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L16)
 
 ___
 
@@ -72,7 +62,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L17)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L18)
 
 ___
 
@@ -82,7 +72,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L13)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L19)
+
+___
+
+### timeoutInMs
+
+• `Optional` **timeoutInMs**: `number`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L20)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L14)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
 
 ## UI Methods
 
@@ -106,4 +106,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L12)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L17)

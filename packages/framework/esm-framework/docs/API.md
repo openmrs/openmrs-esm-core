@@ -667,7 +667,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L25)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L28)
 
 ___
 
@@ -4341,7 +4341,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:147](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L147)
+[packages/framework/esm-globals/src/events.ts:149](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L149)
 
 ___
 
@@ -4367,7 +4367,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:138](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L138)
+[packages/framework/esm-globals/src/events.ts:140](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L140)
 
 ___
 
@@ -4393,7 +4393,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:164](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L164)
+[packages/framework/esm-globals/src/events.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L166)
 
 ___
 
@@ -4419,7 +4419,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:157](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L157)
+[packages/framework/esm-globals/src/events.ts:159](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L159)
 
 ___
 
