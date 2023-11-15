@@ -109,6 +109,8 @@ export interface ShowSnackbarEvent {
   actionButtonLabel?: string | any;
   onActionButtonClick?: () => void;
   progressActionLabel?: string;
+  isLowContrast?: boolean;
+  duration?: number;
 }
 
 const notificationShownName = "openmrs:notification-shown";

@@ -11,6 +11,7 @@
 - [progressActionLabel](ShowSnackbarEvent.md#progressactionlabel)
 - [subtitle](ShowSnackbarEvent.md#subtitle)
 - [title](ShowSnackbarEvent.md#title)
+- [isLowContrast](ShowSnackbarEvent.md#isLowContrast)
 
 ### Methods
 
@@ -55,6 +56,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-globals/src/events.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L100)
+
+___
+
+### isLowContrast
+
+• `Optional` **isLowContrast**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:112](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L112)
 
 ___
 

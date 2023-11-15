@@ -240,7 +240,7 @@ function showToasts() {
 }
 
 function showSnackbars() {
-  renderSnackbars(document.querySelector(".omrs-snack-bars-container"));
+  renderSnackbars(document.querySelector(".omrs-snackbars-container"));
 }
 
 function showModals() {

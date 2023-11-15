@@ -1,7 +1,10 @@
 /** @module @category UI */
 import React, { useState, useEffect } from "react";
 import { ActionableNotification } from "@carbon/react";
+import classnames from "classnames";
+import styles from "./snackbar.module.scss";
 
+// Design documentation for Snackbars https://zeroheight.com/23a080e38/p/683580-notifications/t/468baf
 export interface SnackbarProps {
   snackbar: SnackbarMeta;
   closeSnackbar(): void;
@@ -9,13 +12,13 @@ export interface SnackbarProps {
 
 export interface SnackbarDescriptor {
   actionButtonLabel?: string;
-  onActionButtonClick?: () => void;
-  subtitle?: string;
-  title: string;
+  isLowContrast?: boolean;
   kind?: SnackbarType | string;
-  critical?: boolean;
+  onActionButtonClick?: () => void;
   progressActionLabel?: string;
-  duration?: number;
+  subtitle?: string;
+  timeoutInMs?: number;
+  title: string;
 }
 
 export interface SnackbarMeta extends SnackbarDescriptor {
@@ -30,49 +33,69 @@ export type SnackbarType =
   | "warning"
   | "warning-alt";
 
-export const SnackbarComponent: React.FC<SnackbarProps> = ({
+export const Snackbar: React.FC<SnackbarProps> = ({
   snackbar,
   closeSnackbar,
 }) => {
   const {
     actionButtonLabel,
-    onActionButtonClick = () => {},
-    subtitle,
+    isLowContrast,
     kind,
-    title,
-    critical,
+    onActionButtonClick = () => {},
     progressActionLabel,
-    duration,
+    subtitle,
+    timeoutInMs,
+    title,
     ...props
   } = snackbar;
 
   const [actionText, setActionText] = useState(actionButtonLabel);
+  const [applyAnimation, setApplyAnimation] = useState(true);
+
+  const [isClosing, setIsClosing] = useState(false);
+
+  const onCloseSnackbar = () => {
+    setIsClosing(true);
+    closeSnackbar();
+  };
 
   const handleActionClick = () => {
     onActionButtonClick();
-    closeSnackbar();
+    onCloseSnackbar();
     progressActionLabel && setActionText(progressActionLabel);
   };
 
   useEffect(() => {
-    if (duration) {
-      const timeoutId = setTimeout(closeSnackbar, duration);
+    if (timeoutInMs) {
+      const timeoutId = setTimeout(onCloseSnackbar, timeoutInMs);
       return () => clearTimeout(timeoutId);
     }
-  }, [duration]);
+  }, [timeoutInMs]);
+
+  useEffect(() => {
+    setApplyAnimation(false);
+
+    window.setTimeout(() => {
+      setApplyAnimation(true);
+    }, 0);
+  }, []);
 
   return (
     <ActionableNotification
-      kind={kind || "info"}
       actionButtonLabel={actionText || ""}
-      ariaLabel="Closes actionable snack bar"
+      ariaLabel="Close snackbar"
+      className={classnames(styles.slideIn, {
+        [styles.animated]: applyAnimation,
+        [styles.slideOut]: isClosing,
+      })}
+      inline
+      kind={kind || "info"}
+      lowContrast={isLowContrast}
       onActionButtonClick={handleActionClick}
-      statusIconDescription="Actionable snack bar"
+      onClose={closeSnackbar}
+      statusIconDescription="Snackbar notification"
       subtitle={subtitle || ""}
       title={title}
-      lowContrast={critical}
-      onClose={closeSnackbar}
-      inline
       {...props}
     />
   );

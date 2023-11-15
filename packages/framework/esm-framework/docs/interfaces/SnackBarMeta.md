@@ -13,7 +13,7 @@
 ### UI Properties
 
 - [actionButtonLabel](SnackbarMeta.md#actionbuttonlabel)
-- [critical](SnackbarMeta.md#critical)
+- [isLowContrast](SnackbarMeta.md#isLowContrast)
 - [duration](SnackbarMeta.md#duration)
 - [id](SnackbarMeta.md#id)
 - [kind](SnackbarMeta.md#kind)
@@ -41,13 +41,13 @@
 
 ___
 
-### critical
+### isLowContast
 
 • `Optional` **critical**: `boolean`
 
 #### Inherited from
 
-[SnackbarDescriptor](SnackbarDescriptor.md).[critical](SnackbarDescriptor.md#critical)
+[SnackbarDescriptor](SnackbarDescriptor.md).[isLowContrast](SnackbarDescriptor.md#isLowContrast)
 
 #### Defined in
 

@@ -13,7 +13,7 @@
 ### UI Properties
 
 - [actionButtonLabel](SnackbarDescriptor.md#actionbuttonlabel)
-- [critical](SnackbarDescriptor.md#critical)
+- [isLowContrast](SnackbarDescriptor.md#isLowContrast)
 - [duration](SnackbarDescriptor.md#duration)
 - [kind](SnackbarDescriptor.md#kind)
 - [progressActionLabel](SnackbarDescriptor.md#progressactionlabel)
@@ -36,9 +36,9 @@
 
 ___
 
-### critical
+### isLowContrast
 
-• `Optional` **critical**: `boolean`
+• `Optional` **isLowContrast**: `boolean`
 
 #### Defined in
 
