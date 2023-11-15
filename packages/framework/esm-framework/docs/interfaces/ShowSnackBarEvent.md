@@ -7,11 +7,11 @@
 ### Properties
 
 - [actionButtonLabel](ShowSnackbarEvent.md#actionbuttonlabel)
-- [duration](ShowSnackbarEvent.md#duration)
 - [isLowContrast](ShowSnackbarEvent.md#islowcontrast)
 - [kind](ShowSnackbarEvent.md#kind)
 - [progressActionLabel](ShowSnackbarEvent.md#progressactionlabel)
 - [subtitle](ShowSnackbarEvent.md#subtitle)
+- [timeoutInMs](ShowSnackbarEvent.md#timeoutinms)
 - [title](ShowSnackbarEvent.md#title)
 
 ### Methods
@@ -27,16 +27,6 @@
 #### Defined in
 
 [packages/framework/esm-globals/src/events.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L109)
-
-___
-
-### duration
-
-• `Optional` **duration**: `number`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/events.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L113)
 
 ___
 
@@ -77,6 +67,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-globals/src/events.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L100)
+
+___
+
+### timeoutInMs
+
+• `Optional` **timeoutInMs**: `number`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L113)
 
 ___
 
