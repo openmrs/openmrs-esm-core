@@ -3139,10 +3139,13 @@ __metadata:
     react: "npm:^18.1.0"
     react-dom: "npm:^18.1.0"
     rxjs: "npm:^6.5.3"
+    webpack: "npm:^5.88.0"
   peerDependencies:
     "@openmrs/esm-extensions": 5.x
+    "@openmrs/esm-framework": 5.x
     "@openmrs/esm-react-utils": 5.x
     "@openmrs/esm-state": 5.x
+    dayjs: 1.x
     react: 18.x
     react-dom: 18.x
     rxjs: 6.x

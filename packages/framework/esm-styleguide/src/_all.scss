@@ -1,4 +1,4 @@
-@import "~@carbon/styles";
+@import "@carbon/styles";
 @import "@carbon/charts/styles.css";
 @import "./vars";
 
@@ -13,6 +13,7 @@
 @import "./notifications/notifications";
 @import "./notifications/actionable-notifications";
 @import "./toasts/toasts";
+@import "./snackbars/snackbars";
 @import "./modals/modals";
 
 @import "./overrides";
