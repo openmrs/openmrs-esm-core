@@ -1,5 +1,5 @@
 /** @module @category UI */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ActionableNotification } from "@carbon/react";
 import classnames from "classnames";
 import styles from "./snackbar.module.scss";
