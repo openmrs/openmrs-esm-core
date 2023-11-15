@@ -54,10 +54,10 @@ export const Snackbar: React.FC<SnackbarProps> = ({
 
   const [isClosing, setIsClosing] = useState(false);
 
-  const onCloseSnackbar = () => {
+  const onCloseSnackbar = useCallback(() => {
     setIsClosing(true);
     closeSnackbar();
-  };
+  }, [closeSnackbar]);
 
   const handleActionClick = () => {
     onActionButtonClick();
@@ -70,7 +70,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
       const timeoutId = setTimeout(onCloseSnackbar, timeoutInMs);
       return () => clearTimeout(timeoutId);
     }
-  }, [timeoutInMs]);
+  }, [timeoutInMs, onCloseSnackbar]);
 
   useEffect(() => {
     setApplyAnimation(false);
