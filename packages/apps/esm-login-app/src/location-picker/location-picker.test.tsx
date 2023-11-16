@@ -159,6 +159,7 @@ describe("LocationPicker", () => {
       );
 
       expect(setUserProperties).not.toBeCalled();
+      expect(showToast).not.toBeCalled();
     });
 
     it("should redirect to home if user preference in the userProperties is present and the location preference is valid", async () => {

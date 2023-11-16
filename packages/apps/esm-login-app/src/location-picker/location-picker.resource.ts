@@ -83,7 +83,7 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
                 ),
             kind: "success",
           });
-        } else {
+        } else if (defaultLocation) {
           showToast({
             title: t(
               "locationPreferenceRemoved",
