@@ -1,5 +1,5 @@
-import type { Application } from 'single-spa';
-import type { i18n } from 'i18next';
+import type { LifeCycles } from "single-spa";
+import type { i18n } from "i18next";
 
 declare global {
   const __webpack_share_scopes__: Record<
@@ -44,9 +44,17 @@ declare global {
      * Gets a set of options from the import-map-overrides package.
      */
     importMapOverrides: {
-      getCurrentPageMap: () => Promise<ImportMap>;
+      addOverride(moduleName: string, url: string): void;
+      enableOverride(moduleName: string): void;
+      getCurrentPageMap(): Promise<ImportMap>;
+      getDefaultMap(): Promise<ImportMap>;
+      getNextPageMap(): Promise<ImportMap>;
       addOverride(moduleName: string, url: string): void;
       getOverrideMap(includeDisabled?: boolean): ImportMap;
+      getDisabledOverrides(): Array<string>;
+      isDisabled(moduleName: string): boolean;
+      removeOverride(moduleName: string): void;
+      resetOverrides(): void;
     };
     /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
@@ -218,7 +226,7 @@ export type ExtensionDefinition = {
       /**
        * @internal
        */
-      load: Application;
+      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
     }
 );
 

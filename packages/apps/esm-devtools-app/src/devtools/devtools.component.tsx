@@ -22,8 +22,15 @@ function DevTools() {
         className={classNames(styles.devtoolsTriggerButton, {
           [styles.overridden]: isOverridden,
         })}
-      />
-      {devToolsOpen && <DevToolsPopup close={toggleDevTools} toggleOverridden={toggleOverridden} />}
+      >
+        {"{\u00B7\u00B7\u00B7}"}
+      </div>
+      {devToolsOpen && (
+        <DevToolsPopup
+          close={toggleDevTools}
+          toggleOverridden={toggleOverridden}
+        />
+      )}
     </>
   );
 

@@ -47,6 +47,7 @@
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-offline": "workspace:*",
     "@openmrs/esm-react-utils": "workspace:*",
+    "@openmrs/esm-routes": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
     "@openmrs/esm-styleguide": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",

@@ -1,21 +1,22 @@
-import React, { useRef, useEffect } from 'react';
-import styles from './import-map.styles.css';
+import React, { useRef, useEffect } from "react";
+import ImportMapList from "./import-map-list/list.component";
+import styles from "./import-map.styles.css";
 
 export default function ImportMap(props: ImportMapProps) {
-  const importMapListRef = useRef<HTMLElement>(null);
+  const importMapListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     window.addEventListener('import-map-overrides:change', handleImportMapChange);
     return () => window.removeEventListener('import-map-overrides:change', handleImportMapChange);
 
-    function handleImportMapChange(evt) {
+    function handleImportMapChange() {
       props.toggleOverridden(importMapOverridden());
     }
   }, [props]);
 
   return (
     <div className={styles.importMap}>
-      <import-map-overrides-list ref={importMapListRef}></import-map-overrides-list>
+      <ImportMapList ref={importMapListRef} />
     </div>
   );
 }
