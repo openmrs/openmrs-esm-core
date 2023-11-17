@@ -55,6 +55,7 @@ export function addRoutesOverride(
  * Used to remove an existing routes override from local storage. These are read as the routes registry
  * is assembled, so the app must be reloaded for new overrides to take effect.
  *
+ * @internal
  * @param moduleName The module to remove the overrides for
  */
 export function removeRoutesOverride(moduleName: string) {
