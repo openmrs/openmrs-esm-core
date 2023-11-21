@@ -45,11 +45,11 @@ export const redirect: Application = async () => ({
   unmount: async () => undefined,
 });
 
-export const offlineBanner = getSyncLifecycle(OfflineBanner, options);
-
 export const userPanel = getSyncLifecycle(userPanelComponent, options);
 
 export const localeChanger = getSyncLifecycle(localeChangerComponent, options);
+
+export const offlineBannerComponent = getSyncLifecycle(OfflineBanner, options);
 
 export const linkComponent = getSyncLifecycle(genericLinkComponent, {
   featureName: "Link",

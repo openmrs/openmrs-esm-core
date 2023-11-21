@@ -39,7 +39,7 @@
     {
       "name": "offline-banner",
       "slot": "user-panel-slot",
-      "component": "offlineBanner",
+      "component": "offlineBannerComponent",
       "online": false,
       "offline": true,
       "order": 1
