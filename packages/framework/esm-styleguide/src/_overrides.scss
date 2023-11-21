@@ -292,6 +292,11 @@
   width: spacing.$spacing-09;
 }
 
+.cds--overflow-menu {
+  // overflow menu buttons shouldn't have a background color
+  background: none;
+}
+
 /* Search inputs */
 .cds--search-input:focus {
   outline: 2px solid colors.$orange-40;
