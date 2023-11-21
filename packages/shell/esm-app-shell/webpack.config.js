@@ -95,6 +95,12 @@ function checkDirectoryHasContents(dirName) {
   }
 }
 
+// taken from: https://stackoverflow.com/a/6969486
+// this function is CC BY-SA 4.0
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 /**
  * @param {*} env
  * @param {*} argv
@@ -160,7 +166,9 @@ module.exports = (env, argv = {}) => {
       historyApiFallback: {
         rewrites: [
           {
-            from: new RegExp(`^${openmrsPublicPath}/.*(?!\.(?!html).+$)`),
+            from: new RegExp(
+              `^${escapeRegExp(openmrsPublicPath)}/.*(?!\\.(?!html).+$)`
+            ),
             to: `${openmrsPublicPath}/index.html`,
           },
         ],
