@@ -1,4 +1,6 @@
-export const mockConfig = {
+import { ConfigSchema } from "../src/config-schema";
+
+export const mockConfig: ConfigSchema = {
   provider: {
     type: "basic",
     loginUrl: "",
@@ -8,6 +10,7 @@ export const mockConfig = {
     enabled: true,
     numberToShow: 3,
     useLoginLocationTag: true,
+    locationsPerRequest: 50,
   },
   logo: {
     src: null,
@@ -16,4 +19,5 @@ export const mockConfig = {
   links: {
     loginSuccess: "${openmrsSpaBase}/home",
   },
+  passwordOnSeparateScreen: true,
 };

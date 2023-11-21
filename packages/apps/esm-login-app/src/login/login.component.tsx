@@ -40,6 +40,7 @@ export interface LoginProps extends LoginReferrer {}
 
 const Login: React.FC<LoginProps> = () => {
   const config = useConfig();
+  const { passwordOnSeparateScreen } = config;
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -52,7 +53,10 @@ const Login: React.FC<LoginProps> = () => {
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const showPassword = location.pathname === "/login/confirm";
+
+  const showUsername = location.pathname === "/login";
+  const showPassword =
+    !passwordOnSeparateScreen || location.pathname === "/login/confirm";
 
   const handleLogin = useCallback(
     (session: Session) => {
@@ -195,7 +199,7 @@ const Login: React.FC<LoginProps> = () => {
           />
         )}
         <Tile className={styles["login-card"]}>
-          {showPassword ? (
+          {passwordOnSeparateScreen && showPassword ? (
             <div className={styles["back-button-div"]}>
               <Button
                 className={styles["back-button"]}
@@ -216,7 +220,7 @@ const Login: React.FC<LoginProps> = () => {
           ) : null}
           <div className={styles["center"]}>{logo}</div>
           <form onSubmit={handleSubmit} ref={formRef}>
-            {!showPassword && (
+            {showUsername && (
               <div className={styles["input-group"]}>
                 <TextInput
                   id="username"
@@ -229,38 +233,22 @@ const Login: React.FC<LoginProps> = () => {
                   autoFocus
                   required
                 />
-                <input
-                  id="password"
-                  style={hidden}
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={changePassword}
-                />
-                <Button
-                  className={styles.continueButton}
-                  renderIcon={(props) => <ArrowRight size={24} {...props} />}
-                  type="submit"
-                  iconDescription="Continue to login"
-                  onClick={continueLogin}
-                  disabled={!isLoginEnabled}
-                >
-                  {t("continue", "Continue")}
-                </Button>
+                {passwordOnSeparateScreen && (
+                  <Button
+                    className={styles.continueButton}
+                    renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                    type="submit"
+                    iconDescription="Continue to login"
+                    onClick={continueLogin}
+                    disabled={!isLoginEnabled}
+                  >
+                    {t("continue", "Continue")}
+                  </Button>
+                )}
               </div>
             )}
             {showPassword && (
               <div className={styles["input-group"]}>
-                <input
-                  id="username"
-                  type="text"
-                  name="username"
-                  style={hidden}
-                  value={username}
-                  onChange={changeUsername}
-                  required
-                />
-
                 <PasswordInput
                   id="password"
                   invalidText={t(

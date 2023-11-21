@@ -96,6 +96,10 @@
   :global(.cds--text-input__field-outer-wrapper) {
     width: 18rem;
   }
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 }
 
 .continueButton {

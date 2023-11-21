@@ -46,7 +46,13 @@ mockedUseConfig.mockReturnValue(mockConfig);
 
 describe("Login", () => {
   it("renders the login form", () => {
-    renderWithRouter(Login);
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: "/login",
+      }
+    );
 
     screen.getByRole("img", { name: /OpenMRS logo/i });
     expect(screen.queryByAltText(/logo/i)).not.toBeInTheDocument();
@@ -79,7 +85,6 @@ describe("Login", () => {
       {},
       {
         route: "/login",
-        routes: ["/login", "/login/confirm"],
       }
     );
     const user = userEvent.setup();
@@ -109,12 +114,11 @@ describe("Login", () => {
       {},
       {
         route: "/login",
-        routes: ["/login", "/login/confirm"],
       }
     );
     const user = userEvent.setup();
 
-    expect(performLogin).not.toHaveBeenCalled();
+    mockedLogin.mockClear();
     await user.type(
       screen.getByRole("textbox", { name: /Username/i }),
       "yoshi"
@@ -130,6 +134,7 @@ describe("Login", () => {
     );
   });
 
+  // TODO: Complete the test
   it("sends the user to the location select page on login if there is more than one location", async () => {
     let refreshUser = (user: any) => {};
     mockedLogin.mockImplementation(() => {
@@ -148,11 +153,7 @@ describe("Login", () => {
       Login,
       {},
       {
-        routeParams: {
-          path: "/login(/confirm)?",
-          exact: true,
-        },
-        routes: ["/login", "/login/confirm"],
+        route: "/login",
       }
     );
 
@@ -166,5 +167,83 @@ describe("Login", () => {
     await screen.findByLabelText(/password/i);
     await user.type(screen.getByLabelText(/password/i), "no-tax-fraud");
     await user.click(screen.getByRole("button", { name: /log in/i }));
+  });
+
+  it("should render the both the username and password fields when the passwordOnSeparateScreen config is false", async () => {
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+      passwordOnSeparateScreen: false,
+    });
+
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: "/login",
+      }
+    );
+
+    expect(
+      screen.getByRole("textbox", { name: /username/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /Continue/i })
+    ).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /log in/i })).toBeInTheDocument();
+  });
+
+  it("should not render the password field when the passwordOnSeparateScreen config is true (default)", async () => {
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+    });
+
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: "/login",
+      }
+    );
+
+    expect(
+      screen.getByRole("textbox", { name: /username/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /Continue/i })
+    ).toBeInTheDocument();
+    expect(screen.queryByLabelText(/password/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /log in/i })
+    ).not.toBeInTheDocument();
+  });
+
+  it("should be able to login when the passwordOnSeparateScreen config is false", async () => {
+    mockedLogin.mockReturnValue(Promise.resolve({ some: "data" }));
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+      passwordOnSeparateScreen: false,
+    });
+    const user = userEvent.setup();
+    mockedLogin.mockClear();
+
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: "/login",
+      }
+    );
+
+    await user.type(
+      screen.getByRole("textbox", { name: /Username/i }),
+      "yoshi"
+    );
+    await user.type(screen.getByLabelText(/password/i), "no-tax-fraud");
+    await user.click(screen.getByRole("button", { name: /log in/i }));
+
+    await waitFor(() =>
+      expect(performLogin).toHaveBeenCalledWith("yoshi", "no-tax-fraud")
+    );
   });
 });

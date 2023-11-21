@@ -71,6 +71,12 @@ export const configSchema = {
       _description: "Alt text, shown on hover",
     },
   },
+  passwordOnSeparateScreen: {
+    _type: Type.Boolean,
+    _default: true,
+    _description:
+      "Whether to show the password field on a separate screen. If false, the password field will be shown on the same screen.",
+  },
 };
 
 export interface ConfigSchema {
@@ -81,7 +87,7 @@ export interface ConfigSchema {
   };
   chooseLocation: {
     enabled: boolean;
-    numberToShow: boolean;
+    numberToShow: number;
     locationsPerRequest: number;
     useLoginLocationTag: boolean;
   };
@@ -92,4 +98,5 @@ export interface ConfigSchema {
     src: string;
     alt: string;
   };
+  passwordOnSeparateScreen: boolean;
 }
