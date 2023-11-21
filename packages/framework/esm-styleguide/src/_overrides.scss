@@ -293,8 +293,7 @@
 }
 
 .cds--overflow-menu {
-  // overflow menu buttons shouldn't have a background color
-  background: none;
+  background-color: unset;
 }
 
 /* Search inputs */
