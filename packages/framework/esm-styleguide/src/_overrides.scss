@@ -292,6 +292,10 @@
   width: spacing.$spacing-09;
 }
 
+.cds--overflow-menu {
+  background-color: unset;
+}
+
 /* Search inputs */
 .cds--search-input:focus {
   outline: 2px solid colors.$orange-40;
