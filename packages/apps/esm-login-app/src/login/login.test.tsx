@@ -183,14 +183,15 @@ describe("Login", () => {
       }
     );
 
-    expect(
-      screen.getByRole("textbox", { name: /username/i })
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByRole("button", { name: /Continue/i })
-    ).not.toBeInTheDocument();
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /log in/i })).toBeInTheDocument();
+    const usernameInput = screen.queryByRole("textbox", { name: /username/i });
+    const continueButton = screen.queryByRole("button", { name: /Continue/i });
+    const passwordInput = screen.queryByLabelText(/password/i);
+    const loginButton = screen.queryByRole("button", { name: /log in/i });
+
+    expect(usernameInput).toBeInTheDocument();
+    expect(continueButton).not.toBeInTheDocument();
+    expect(passwordInput).toBeInTheDocument();
+    expect(loginButton).toBeInTheDocument();
   });
 
   it("should not render the password field when the passwordOnSeparateScreen config is true (default)", async () => {
@@ -206,16 +207,15 @@ describe("Login", () => {
       }
     );
 
-    expect(
-      screen.getByRole("textbox", { name: /username/i })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /Continue/i })
-    ).toBeInTheDocument();
-    expect(screen.queryByLabelText(/password/i)).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole("button", { name: /log in/i })
-    ).not.toBeInTheDocument();
+    const usernameInput = screen.queryByRole("textbox", { name: /username/i });
+    const continueButton = screen.queryByRole("button", { name: /Continue/i });
+    const passwordInput = screen.queryByLabelText(/password/i);
+    const loginButton = screen.queryByRole("button", { name: /log in/i });
+
+    expect(usernameInput).toBeInTheDocument();
+    expect(continueButton).toBeInTheDocument();
+    expect(passwordInput).not.toBeInTheDocument();
+    expect(loginButton).not.toBeInTheDocument();
   });
 
   it("should be able to login when the passwordOnSeparateScreen config is false", async () => {
@@ -235,12 +235,13 @@ describe("Login", () => {
       }
     );
 
-    await user.type(
-      screen.getByRole("textbox", { name: /Username/i }),
-      "yoshi"
-    );
-    await user.type(screen.getByLabelText(/password/i), "no-tax-fraud");
-    await user.click(screen.getByRole("button", { name: /log in/i }));
+    const usernameInput = screen.getByRole("textbox", { name: /username/i });
+    const passwordInput = screen.getByLabelText(/password/i);
+    const loginButton = screen.getByRole("button", { name: /log in/i });
+
+    await user.type(usernameInput, "yoshi");
+    await user.type(passwordInput, "no-tax-fraud");
+    await user.click(loginButton);
 
     await waitFor(() =>
       expect(performLogin).toHaveBeenCalledWith("yoshi", "no-tax-fraud")
