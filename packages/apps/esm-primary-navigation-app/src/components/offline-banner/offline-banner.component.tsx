@@ -5,7 +5,7 @@ import styles from "./offline-banner.scss";
 
 export interface OfflineBannerProps {}
 
-const OfflineBanner: React.FC<OfflineBannerProps> = () => {
+const OfflineBannerComponent: React.FC<OfflineBannerProps> = () => {
   const lastUpdated = useLastUpdated();
 
   return (
@@ -64,4 +64,4 @@ function useLastUpdated() {
   return lastUpdated;
 }
 
-export default OfflineBanner;
+export default OfflineBannerComponent;
