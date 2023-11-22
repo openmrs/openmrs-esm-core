@@ -1,0 +1,24 @@
+@use "@carbon/styles/scss/spacing";
+
+.omrs-actionable-toasts-container {
+  z-index: 1000;
+  position: fixed;
+  width: 20rem;
+  top: 4rem;
+  right: 1rem;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.omrs-actionable-toast-mounting,
+.omrs-actionable-toast-mounting > * {
+  padding: 0;
+}
+
+.omrs-actionable-toast-closing,
+.omrs-actionable-toast-mounting {
+  opacity: 0;
+}
