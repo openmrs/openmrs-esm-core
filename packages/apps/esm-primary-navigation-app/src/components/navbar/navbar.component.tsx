@@ -22,7 +22,7 @@ import { isDesktop } from "../../utils";
 import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
 import Logo from "../logo/logo.component";
 import NotificationsMenuPanel from "../navbar-header-panels/notifications-menu-panel.component";
-import OfflineBannerComponent from "../offline-banner/offline-banner.component";
+import OfflineBanner from "../offline-banner/offline-banner.component";
 import UserMenuPanel from "../navbar-header-panels/user-menu-panel.component";
 import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
 import styles from "./navbar.scss";
@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
   );
   const HeaderItems = () => (
     <>
-      <OfflineBannerComponent />
+      <OfflineBanner />
       <Header aria-label="OpenMRS">
         {showHamburger && (
           <HeaderMenuButton
