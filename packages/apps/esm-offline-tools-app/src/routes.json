@@ -32,6 +32,12 @@
       "offline": true
     },
     {
+      "name": "offline-tools-offline-ready-modal",
+      "component": "offlineToolsOfflineReadyModal",
+      "online": true,
+      "offline": true
+    },
+    {
       "name": "offline-tools-dashboard-patients-card",
       "slot": "offline-tools-dashboard-cards",
       "component": "offlineToolsPatientsCard",

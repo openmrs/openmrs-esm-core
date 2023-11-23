@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Toggle } from "@carbon/react";
+import { Toggle, Button, DefinitionTooltip } from "@carbon/react";
 import { Network_3 } from "@carbon/react/icons";
 import {
   getCurrentOfflineMode,
-  setCurrentOfflineMode,
+  showModal,
 } from "@openmrs/esm-framework/src/internal";
 import styles from "./offline-actions-mode-button.scss";
 
@@ -14,30 +14,77 @@ function doNotCloseMenu(ev: React.SyntheticEvent) {
 
 const OfflineActionsModeButton: React.FC = () => {
   const { t } = useTranslation();
-  const [active, setActive] = React.useState(
-    () => getCurrentOfflineMode().active
+
+  //TODO: USE FRAMEWORK FUNCTIONS (getCurrentOfflineMode...)
+  const [lastRun, setLastRun] = useState<string>(() =>
+    localStorage.getItem("openmrs3:offline-last-run")
   );
-  const toggle = React.useCallback(() => {
-    setActive((value) => {
-      const active = !value;
-      setCurrentOfflineMode(active ? "on" : "off");
-      return active;
-    });
-  }, []);
+  const [active, setActive] = useState(
+    () => localStorage.getItem("openmrs3:offline-mode") === "active"
+  );
+
+  const toggle = useCallback(() => {
+    if (window.installedModules && window.installedModules.length > 0) {
+      const dispose = showModal("offline-tools-offline-ready-modal", {
+        items: window.installedModules
+          .filter((app) => app.length >= 3)
+          .map((app) => app[2]),
+        closeModal: (result) => {
+          setActive(result);
+
+          const lastRunTimestamp = new Date().toLocaleString();
+
+          if (result) {
+            setLastRun(lastRunTimestamp);
+          }
+
+          //TODO: USE FRAMEWORK FUNCTIONS (getCurrentOfflineMode...)
+          localStorage.setItem(
+            "openmrs3:offline-mode",
+            result ? "active" : "disabled"
+          );
+
+          localStorage.setItem(
+            "openmrs3:offline-last-run",
+            result ? lastRunTimestamp : ""
+          );
+
+          dispose();
+        },
+      });
+    } else {
+      console.warn("No installed modules found.");
+    }
+  }, [setActive]);
+
+  const handleRefresh = useCallback(() => {
+    toggle();
+  }, [toggle]);
 
   return (
-    <div className={styles.offlineModeButtonContainer}>
-      <Network_3 size={20} />
-      <div onClick={doNotCloseMenu} role="none">
-        <span>{t("offlineReady", "Offline Ready")}</span>
-        <Toggle
-          className={styles.toggle}
-          id="offlineModeSwitch"
-          toggled={active}
-          onToggle={toggle}
-        />
+    <>
+      <div className={styles.offlineModeButtonContainer}>
+        <Network_3 size={20} />
+        <div>
+          <DefinitionTooltip
+            openOnHover
+            align="top"
+            definition={`${t("lastRun", "Last Run")}: ${
+              active ? lastRun : t("never", "Never")
+            }`}
+          >
+            {t("offlineReady", "Offline Ready")}
+          </DefinitionTooltip>
+          {active ? (
+            <Button kind="ghost" onClick={handleRefresh}>
+              {t("refresh", "Refresh")}
+            </Button>
+          ) : (
+            <Toggle toggled={active} onToggle={toggle} />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

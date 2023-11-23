@@ -24,6 +24,10 @@
     color: $ui-02;
   }
 
+  :global(.cds--definition-term) {
+    color: $ui-02;
+  }
+
   svg {
     margin: 0rem 0.75rem;
     fill: $field-01;
@@ -34,5 +38,15 @@
     flex-direction: row;
     width: fit-content;
     align-items: center;
+  }
+
+  button,
+  button:hover {
+    color: $inverse-link;
+  }
+
+  button :hover {
+    @include brand-03(background-color);
+    color: $inverse-link;
   }
 }

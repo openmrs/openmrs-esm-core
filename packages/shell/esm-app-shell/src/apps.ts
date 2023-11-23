@@ -147,6 +147,36 @@ function getLoader(
   };
 }
 
+//TODO: MOCK asyncTask
+const OFFLINE_READY_FUNCTION = "offlineReady";
+
+const asyncTask = async (abortController) => {
+  return new Promise((resolve, reject) => {
+    const timeoutId = setTimeout(() => {
+      console.warn("Task completed");
+      resolve("Task completed");
+    }, Math.floor(Math.random() * (7000 - 1000 + 1)) + 1000);
+    abortController.signal.addEventListener("abort", () => {
+      clearTimeout(timeoutId);
+      console.warn("Operation aborted");
+      reject("Operation aborted");
+    });
+  });
+};
+
+/**
+ * This function creates a loader function suitable for use in either a single-spa
+ * application or parcel.
+ *
+ * This function returns a function responsible for executing the actions required
+ * to prepare the module for offline mode.
+ */
+
+export function getOfflineReadyLoader(appName: string) {
+  //TODO dynamic import
+  return asyncTask;
+}
+
 /**
  * This is the main entry-point for registering an app with the app shell.
  * Each app has a name and should have a `routes.json` file that defines it's

@@ -1,4 +1,6 @@
 {
+  "cancel": "Cancel",
+  "confirm": "Confirm",
   "emptyStateText": "There are no {{displayText}} to display",
   "home": "Home",
   "homeHeader": "Offline home",
@@ -9,6 +11,8 @@
   "homeOverviewCardPatientsHeader": "Patients",
   "homeOverviewCardPatientsNewlyRegistered": "Newly registered",
   "homeOverviewCardView": "View",
+  "lastRun": "Last Run",
+  "never": "Never",
   "offlineActions": "Offline Actions",
   "offlineActionsDeleteConfirmationModalCancel": "Cancel",
   "offlineActionsDeleteConfirmationModalConfirm": "Delete forever",
@@ -26,8 +30,8 @@
   "offlineActionsTablePatient": "Patient",
   "offlineActionsUpdateOfflinePatients": "Update offline patients",
   "offlinePatients": "Offline patients",
-  "offlinePatients_lower": "offline patients",
   "offlinePatientsHeader": "Offline patients",
+  "offlinePatients_lower": "offline patients",
   "offlinePatientsTableDeleteConfirmationModalCancel": "Cancel",
   "offlinePatientsTableDeleteConfirmationModalConfirm": "Remove patients",
   "offlinePatientsTableDeleteConfirmationModalContent": "Are you sure that you want to remove all selected patients from the offline list? Their charts will no longer be available in offline mode and any newly registered patient will be permanently deleted.",
@@ -53,5 +57,8 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Unknown error.",
   "offlinePatientSyncDetailsHeader": "Offline patient details",
   "offlineReady": "Offline Ready",
-  "offlineToolsAppMenuLink": "Offline tools"
+  "offlineToolsAppMenuLink": "Offline tools",
+  "preparingOfflineMode": "Preparing for offline mode",
+  "progressBarLabel": "{{progress}}% Complete",
+  "refresh": "Refresh"
 }
