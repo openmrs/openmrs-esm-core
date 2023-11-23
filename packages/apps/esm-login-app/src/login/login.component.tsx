@@ -233,6 +233,17 @@ const Login: React.FC<LoginProps> = () => {
                   autoFocus
                   required
                 />
+                {/* For password managers */}
+                {passwordOnSeparateScreen && (
+                  <input
+                    id="password"
+                    style={hidden}
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={changePassword}
+                  />
+                )}
                 {passwordOnSeparateScreen && (
                   <Button
                     className={styles.continueButton}
@@ -263,7 +274,18 @@ const Login: React.FC<LoginProps> = () => {
                   required
                   showPasswordLabel="Show password"
                 />
-
+                {/* For password managers */}
+                {passwordOnSeparateScreen && (
+                  <input
+                    id="username"
+                    type="text"
+                    name="username"
+                    style={hidden}
+                    value={username}
+                    onChange={changeUsername}
+                    required
+                  />
+                )}
                 <Button
                   type="submit"
                   className={styles.continueButton}
