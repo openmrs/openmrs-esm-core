@@ -1,4 +1,6 @@
 {
+  "cancel": "Cancel",
+  "confirm": "Confirm",
   "emptyStateText": "There are no {{displayText}} to display",
   "home": "דף הבית",
   "homeHeader": "דף הבית במצב לא מקוון",
@@ -9,6 +11,9 @@
   "homeOverviewCardPatientsHeader": "מטופלים",
   "homeOverviewCardPatientsNewlyRegistered": "רשומים חדשים",
   "homeOverviewCardView": "צפה",
+  "lastRun": "Last Run",
+  "never": "Never",
+  "offline": "Offline",
   "offlineActions": "פעולות לא מקוונות",
   "offlineActionsDeleteConfirmationModalCancel": "ביטול",
   "offlineActionsDeleteConfirmationModalConfirm": "מחיקה לצמיתות",
@@ -27,6 +32,7 @@
   "offlineActionsTableError": "שגיאה",
   "offlineActionsTablePatient": "מטופל",
   "offlineActionsUpdateOfflinePatients": "עדכן מטופלים לא מקוונים",
+  "offlineModeIsReady": "Offline mode is ready",
   "offlinePatients": "Offline patients",
   "offlinePatients_lower": "offline patients",
   "offlinePatientsHeader": "מטופלים לא מקוונים",
@@ -54,6 +60,11 @@
   "offlinePatientSyncDetailsFailedHeader": "אירעה שגיאה בהורדת הפריטים הבאים",
   "offlinePatientSyncDetailsFallbackErrorMessage": "שגיאה לא ידועה.",
   "offlinePatientSyncDetailsHeader": "פרטי מטופל לא מקוון",
+  "offlinePreparationCanceled": "Offline preparation canceled",
   "offlineReady": "מצב לא מקוון מוכן",
-  "offlineToolsAppMenuLink": "כלי לא מקוונים"
+  "offlineToolsAppMenuLink": "כלי לא מקוונים",
+  "preparingOfflineMode": "Preparing for offline mode",
+  "progressBarLabel": "{progress}% Complete",
+  "refresh": "Refresh",
+  "unavailableOfflineFeatures": "Some features may not be available offline."
 }

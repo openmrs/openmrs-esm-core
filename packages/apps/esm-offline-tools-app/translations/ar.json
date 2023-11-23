@@ -1,4 +1,6 @@
 {
+  "cancel": "Cancel",
+  "confirm": "Confirm",
   "emptyStateText": "لا يوجد {{displayText}} لعرضه",
   "home": "الرئيسية",
   "homeHeader": "الصفحة الرئيسية بدون اتصال",
@@ -9,6 +11,9 @@
   "homeOverviewCardPatientsHeader": "المرضى",
   "homeOverviewCardPatientsNewlyRegistered": "مُسجل حديثًا",
   "homeOverviewCardView": "عرض",
+  "lastRun": "Last Run",
+  "never": "Never",
+  "offline": "Offline",
   "offlineActions": "الأنشطة بدون اتصال",
   "offlineActionsDeleteConfirmationModalCancel": "إلغاء",
   "offlineActionsDeleteConfirmationModalConfirm": "حذف نهائي",
@@ -29,6 +34,7 @@
   "offlineActionsTableError": "خطأ",
   "offlineActionsTablePatient": "المريض",
   "offlineActionsUpdateOfflinePatients": "تحديث المرضى بدون اتصال",
+  "offlineModeIsReady": "Offline mode is ready",
   "offlinePatients": "المرضى بدون اتصال",
   "offlinePatients_lower": "المرضى بدون اتصال",
   "offlinePatientsHeader": "المرضى بدون اتصال",
@@ -56,6 +62,11 @@
   "offlinePatientSyncDetailsFailedHeader": "حدث خطأ أثناء تحميل العناصر التالية",
   "offlinePatientSyncDetailsFallbackErrorMessage": "خطأ غير معروف.",
   "offlinePatientSyncDetailsHeader": "تفاصيل المريض بدون اتصال",
+  "offlinePreparationCanceled": "Offline preparation canceled",
   "offlineReady": "جاهز للعمل بدون اتصال",
-  "offlineToolsAppMenuLink": "أدوات العمل بدون اتصال"
+  "offlineToolsAppMenuLink": "أدوات العمل بدون اتصال",
+  "preparingOfflineMode": "Preparing for offline mode",
+  "progressBarLabel": "{progress}% Complete",
+  "refresh": "Refresh",
+  "unavailableOfflineFeatures": "Some features may not be available offline."
 }

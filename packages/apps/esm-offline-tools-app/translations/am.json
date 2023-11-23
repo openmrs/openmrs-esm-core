@@ -1,4 +1,6 @@
 {
+  "cancel": "Cancel",
+  "confirm": "Confirm",
   "emptyStateText": "There are no {{displayText}} to display",
   "home": "Home",
   "homeHeader": "Offline home",
@@ -9,6 +11,9 @@
   "homeOverviewCardPatientsHeader": "Patients",
   "homeOverviewCardPatientsNewlyRegistered": "Newly registered",
   "homeOverviewCardView": "View",
+  "lastRun": "Last Run",
+  "never": "Never",
+  "offline": "Offline",
   "offlineActions": "Offline actions",
   "offlineActionsDeleteConfirmationModalCancel": "Cancel",
   "offlineActionsDeleteConfirmationModalConfirm": "Delete forever",
@@ -25,6 +30,7 @@
   "offlineActionsTableError": "Error",
   "offlineActionsTablePatient": "Patient",
   "offlineActionsUpdateOfflinePatients": "Update offline patients",
+  "offlineModeIsReady": "Offline mode is ready",
   "offlinePatients": "Offline patients",
   "offlinePatients_lower": "offline patients",
   "offlinePatientsHeader": "Offline patients",
@@ -52,6 +58,11 @@
   "offlinePatientSyncDetailsFailedHeader": "There was an error downloading the following items",
   "offlinePatientSyncDetailsFallbackErrorMessage": "Unknown error.",
   "offlinePatientSyncDetailsHeader": "Offline patient details",
+  "offlinePreparationCanceled": "Offline preparation canceled",
   "offlineReady": "Offline Ready",
-  "offlineToolsAppMenuLink": "Offline tools"
+  "offlineToolsAppMenuLink": "Offline tools",
+  "preparingOfflineMode": "Preparing for offline mode",
+  "progressBarLabel": "{progress}% Complete",
+  "refresh": "Refresh",
+  "unavailableOfflineFeatures": "Some features may not be available offline."
 }
