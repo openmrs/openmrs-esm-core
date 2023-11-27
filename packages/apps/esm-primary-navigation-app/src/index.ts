@@ -13,6 +13,7 @@ import { syncUserLanguagePreference } from "./offline";
 import primaryNavRootComponent from "./root.component";
 import userPanelComponent from "./components/user-panel-switcher-item/user-panel-switcher.component";
 import localeChangerComponent from "./components/choose-locale/change-locale.component";
+import offlineBannerComponent from "./components/offline-banner/offline-banner.component";
 import genericLinkComponent, {
   genericLinkConfigSchema,
 } from "./components/generic-link/generic-link.component";
@@ -47,6 +48,8 @@ export const redirect: Application = async () => ({
 export const userPanel = getSyncLifecycle(userPanelComponent, options);
 
 export const localeChanger = getSyncLifecycle(localeChangerComponent, options);
+
+export const offlineBanner = getSyncLifecycle(offlineBannerComponent, options);
 
 export const linkComponent = getSyncLifecycle(genericLinkComponent, {
   featureName: "Link",

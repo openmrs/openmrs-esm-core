@@ -37,6 +37,14 @@
       "order": 1
     },
     {
+      "name": "offline-banner",
+      "slot": "user-panel-slot",
+      "component": "offlineBanner",
+      "online": false,
+      "offline": true,
+      "order": 1
+    },
+    {
       "name": "link",
       "component": "linkComponent",
       "online": true,
