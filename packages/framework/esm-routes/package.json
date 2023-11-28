@@ -2,7 +2,7 @@
   "name": "@openmrs/esm-routes",
   "version": "5.2.0",
   "license": "MPL-2.0",
-  "description": "Helper utilities for OpenMRS",
+  "description": "Utilities for working with the routes registry",
   "browser": "dist/openmrs-esm-routes.js",
   "main": "src/index.ts",
   "source": true,
