@@ -1,5 +1,6 @@
 import { dirname } from "path";
-import { logInfo, logWarn } from "./logger";
+import { logInfo } from "./logger";
+import type { Configuration } from "webpack";
 
 function getWebpackEnv() {
   return {
@@ -11,7 +12,9 @@ function getWebpackEnv() {
 }
 
 function loadConfig(configPath: string) {
-  const content = require(configPath);
+  const content:
+    | Configuration
+    | ((env: unknown) => Configuration) = require(configPath);
   if (typeof content === "function") {
     return content(getWebpackEnv());
   }
@@ -19,8 +22,8 @@ function loadConfig(configPath: string) {
 }
 
 function debug(configPath: string, port: number) {
-  const Webpack = require("webpack");
-  const WebpackDevServer = require("webpack-dev-server");
+  const Webpack: typeof import("webpack") = require("webpack");
+  const WebpackDevServer: typeof import("webpack-dev-server") = require("webpack-dev-server");
   const config = loadConfig(configPath);
 
   const compiler = Webpack(config);
@@ -37,4 +40,6 @@ function debug(configPath: string, port: number) {
   });
 }
 
-process.on("message", ({ source, port }) => debug(source, port));
+process.on("message", ({ source, port }: { source: string; port: number }) =>
+  debug(source, port)
+);

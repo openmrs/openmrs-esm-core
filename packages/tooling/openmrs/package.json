@@ -43,6 +43,7 @@
     "html-webpack-plugin": "^5.5.0",
     "inquirer": "^7.3.3",
     "mini-css-extract-plugin": "^2.4.5",
+    "node-watch": "^0.7.4",
     "npm-registry-fetch": "^14.0.3",
     "pacote": "^15.0.0",
     "postcss": "^8.4.6",

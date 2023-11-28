@@ -55,7 +55,7 @@ yargs.command(
         "support-offline",
         "Determines if a service worker should be installed for offline support."
       )
-      .default("support-offline", true)
+      .default("support-offline", false)
       .string("spa-path")
       .default("spa-path", "/openmrs/spa/")
       .describe("spa-path", "The path of the application on the target server.")
