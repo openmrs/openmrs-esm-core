@@ -41,16 +41,19 @@ export interface OfflineModeResult {
   current: OfflineMode;
   notAvailable: boolean;
   active: boolean;
+  lastRun: string;
 }
 
-const offlineModeStorageKey = "openmrs3:offline-mode";
+const offlineModeStorageKey = "openmrs:offline-mode";
 let offlineMode: OfflineMode = "unavailable";
+let lastRun: string = "";
 
 export function getCurrentOfflineMode(): OfflineModeResult {
   return {
     current: offlineMode,
     notAvailable: offlineMode === "unavailable",
     active: offlineMode === "on",
+    lastRun: lastRun,
   };
 }
 
@@ -60,6 +63,7 @@ export function setCurrentOfflineMode(mode: OfflineMode) {
       offlineModeStorageKey,
       mode === "on" ? "active" : "disabled"
     );
+    lastRun = new Date().toLocaleString();
     offlineMode = mode;
   }
 }

@@ -1,10 +1,12 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Toggle, Button, DefinitionTooltip } from "@carbon/react";
 import { Network_3 } from "@carbon/react/icons";
 import {
   getCurrentOfflineMode,
+  setCurrentOfflineMode,
   showModal,
+  useConnectivity,
 } from "@openmrs/esm-framework/src/internal";
 import styles from "./offline-actions-mode-button.scss";
 
@@ -14,14 +16,11 @@ function doNotCloseMenu(ev: React.SyntheticEvent) {
 
 const OfflineActionsModeButton: React.FC = () => {
   const { t } = useTranslation();
-
-  //TODO: USE FRAMEWORK FUNCTIONS (getCurrentOfflineMode...)
-  const [lastRun, setLastRun] = useState<string>(() =>
-    localStorage.getItem("openmrs3:offline-last-run")
+  const isOnline = useConnectivity();
+  const [lastRun, setLastRun] = useState<string>(
+    () => getCurrentOfflineMode().lastRun
   );
-  const [active, setActive] = useState(
-    () => localStorage.getItem("openmrs3:offline-mode") === "active"
-  );
+  const [active, setActive] = useState(() => getCurrentOfflineMode().active);
 
   const toggle = useCallback(() => {
     if (window.installedModules && window.installedModules.length > 0) {
@@ -31,24 +30,7 @@ const OfflineActionsModeButton: React.FC = () => {
           .map((app) => app[2]),
         closeModal: (result) => {
           setActive(result);
-
-          const lastRunTimestamp = new Date().toLocaleString();
-
-          if (result) {
-            setLastRun(lastRunTimestamp);
-          }
-
-          //TODO: USE FRAMEWORK FUNCTIONS (getCurrentOfflineMode...)
-          localStorage.setItem(
-            "openmrs3:offline-mode",
-            result ? "active" : "disabled"
-          );
-
-          localStorage.setItem(
-            "openmrs3:offline-last-run",
-            result ? lastRunTimestamp : ""
-          );
-
+          setCurrentOfflineMode(result ? "on" : "off");
           dispose();
         },
       });
@@ -62,7 +44,7 @@ const OfflineActionsModeButton: React.FC = () => {
   }, [toggle]);
 
   return (
-    <>
+    isOnline && (
       <div className={styles.offlineModeButtonContainer}>
         <Network_3 size={20} />
         <div>
@@ -84,7 +66,7 @@ const OfflineActionsModeButton: React.FC = () => {
           )}
         </div>
       </div>
-    </>
+    )
   );
 };
 
