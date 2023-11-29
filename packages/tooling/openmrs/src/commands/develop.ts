@@ -28,18 +28,6 @@ export interface DevelopArgs {
   supportOffline: boolean;
 }
 
-function waitFor(predicate: () => boolean) {
-  const poll = (resolve: (value: unknown) => void) => {
-    if (predicate()) {
-      resolve(undefined);
-    } else {
-      setTimeout(() => poll(resolve), 100);
-    }
-  };
-
-  return new Promise(poll);
-}
-
 export async function runDevelop(args: DevelopArgs) {
   const {
     backend,
@@ -116,7 +104,6 @@ export async function runDevelop(args: DevelopArgs) {
   }
 
   if (routes.type === "inline") {
-    let isUpdatingRoutes = false;
     let stringifiedRoutes = routes.value;
     if (watchedRoutesPaths && !!Object.keys(watchedRoutesPaths).length) {
       // watchedRoutesPath is keyed from package to path, but here we need to go from
@@ -133,30 +120,24 @@ export async function runDevelop(args: DevelopArgs) {
         Object.keys(watchedRoutesByPath),
         { delay: 0 },
         async (event, name) => {
-          isUpdatingRoutes = true;
-          try {
-            if (event === "update") {
-              const updatedApp = watchedRoutesByPath[name];
-              if (updatedApp) {
-                const jsonRoutes = JSON.parse(stringifiedRoutes);
-                const version = jsonRoutes[updatedApp]?.version;
-                jsonRoutes[updatedApp] = {
-                  ...JSON.parse(await readFile(name, "utf8")),
-                  version,
-                };
-                stringifiedRoutes = JSON.stringify(jsonRoutes);
-                logInfo(`Updated routes for ${updatedApp}`);
-              }
+          if (event === "update") {
+            const updatedApp = watchedRoutesByPath[name];
+            if (updatedApp) {
+              const jsonRoutes = JSON.parse(stringifiedRoutes);
+              const version = jsonRoutes[updatedApp]?.version;
+              jsonRoutes[updatedApp] = {
+                ...JSON.parse(await readFile(name, "utf8")),
+                version,
+              };
+              stringifiedRoutes = JSON.stringify(jsonRoutes);
+              logInfo(`Updated routes for ${updatedApp}`);
             }
-          } finally {
-            isUpdatingRoutes = false;
           }
         }
       );
     }
 
     app.get(`${spaPath}/routes.registry.json`, (_, res) => {
-      waitFor(() => !isUpdatingRoutes);
       res.contentType("application/json").send(stringifiedRoutes);
     });
   }
