@@ -1,4 +1,4 @@
-:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/). You may find the [Map of the Project](https://openmrs.github.io/openmrs-esm-core/#/main/map) especially helpful.
+:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://o3-docs.openmrs.org/). You may find the [Introduction](https://o3-docs.openmrs.org/docs/introduction) especially helpful.
 
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
