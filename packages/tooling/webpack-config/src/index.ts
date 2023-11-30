@@ -49,6 +49,7 @@ import {
 } from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { StatsWriterPlugin } from "webpack-stats-plugin";
+import { SwcMinifyWebpackPlugin } from "swc-minify-webpack-plugin";
 // eslint-disable-next-line no-restricted-imports
 import { merge, mergeWith, isArray } from "lodash";
 import { existsSync, statSync } from "fs";
@@ -274,7 +275,9 @@ export default (
           maxAsyncRequests: 3,
           maxInitialRequests: 1,
         },
-      },
+        minimize: true,
+        minimizer: [new SwcMinifyWebpackPlugin()],
+      } as WebpackConfiguration["optimization"],
       optimizationConfig
     ),
     plugins: [

@@ -41,6 +41,7 @@
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
     "swc-loader": "^0.2.3",
+    "swc-minify-webpack-plugin": "^2.1.1",
     "webpack": "^5.88.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-stats-plugin": "^1.0.3"

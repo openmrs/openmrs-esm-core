@@ -3,6 +3,7 @@ const { resolve, basename } = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { ModuleFederationPlugin } = require("webpack").container;
+const { SwcMinifyWebpackPlugin } = require("swc-minify-webpack-plugin");
 
 const { name, browser, main, peerDependencies } = require("./package.json");
 
@@ -18,6 +19,10 @@ module.exports = (env) => ({
     library: { type: "system" },
   },
   devtool: "source-map",
+  optimization: {
+    minimize: true,
+    minimizer: [new SwcMinifyWebpackPlugin()],
+  },
   module: {
     rules: [
       {

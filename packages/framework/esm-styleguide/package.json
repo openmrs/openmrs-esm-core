@@ -72,6 +72,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "rxjs": "^6.5.3",
+    "swc-minify-webpack-plugin": "^2.1.1",
     "webpack": "^5.88.0"
   }
 }

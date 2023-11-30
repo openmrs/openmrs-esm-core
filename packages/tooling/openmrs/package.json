@@ -49,6 +49,7 @@
     "postcss-loader": "^6.2.1",
     "rimraf": "^3.0.2",
     "swc-loader": "^0.2.3",
+    "swc-minify-webpack-plugin": "^2.1.1",
     "tar": "^6.0.5",
     "typescript": "^4.6.4",
     "webpack": "^5.88.0",

@@ -3,6 +3,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { resolve } = require("path");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { SwcMinifyWebpackPlugin } = require("swc-minify-webpack-plugin");
 
 const { peerDependencies } = require("./package.json");
 
@@ -65,7 +66,7 @@ module.exports = (env) => ({
   },
   optimization: {
     minimize: true,
-    minimizer: [new CssMinimizerPlugin(), "..."],
+    minimizer: [new CssMinimizerPlugin(), new SwcMinifyWebpackPlugin()],
   },
   plugins: [
     new CleanWebpackPlugin(),

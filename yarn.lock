@@ -2916,6 +2916,7 @@ __metadata:
     jest: "npm:^29.7.0"
     jest-cli: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
+    swc-minify-webpack-plugin: "npm:^2.1.1"
     webpack: "npm:^5.88.0"
   peerDependencies:
     dayjs: 1.x
@@ -3139,6 +3140,7 @@ __metadata:
     react: "npm:^18.1.0"
     react-dom: "npm:^18.1.0"
     rxjs: "npm:^6.5.3"
+    swc-minify-webpack-plugin: "npm:^2.1.1"
     webpack: "npm:^5.88.0"
   peerDependencies:
     "@openmrs/esm-extensions": 5.x
@@ -3181,6 +3183,7 @@ __metadata:
     sass-loader: "npm:^12.3.0"
     style-loader: "npm:^3.3.1"
     swc-loader: "npm:^0.2.3"
+    swc-minify-webpack-plugin: "npm:^2.1.1"
     typescript: "npm:^4.6.4"
     webpack: "npm:^5.88.0"
     webpack-bundle-analyzer: "npm:^4.5.0"
@@ -12963,6 +12966,7 @@ __metadata:
     postcss-loader: "npm:^6.2.1"
     rimraf: "npm:^3.0.2"
     swc-loader: "npm:^0.2.3"
+    swc-minify-webpack-plugin: "npm:^2.1.1"
     tar: "npm:^6.0.5"
     typescript: "npm:^4.6.4"
     webpack: "npm:^5.88.0"
@@ -16017,6 +16021,16 @@ __metadata:
     "@swc/core": ^1.2.147
     webpack: ">=2"
   checksum: 010d84d399525c0185d36d62c86c55ae017e7a90046bc8a39be4b7e07526924037868049f6037bc966da98151cb2600934b96a66279b742d3c413a718b427251
+  languageName: node
+  linkType: hard
+
+"swc-minify-webpack-plugin@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "swc-minify-webpack-plugin@npm:2.1.1"
+  peerDependencies:
+    "@swc/core": ^1.0.0
+    webpack: ^5.0.0
+  checksum: 700b763bda9d77882b36600f14bf1859c9bd44a6953a7c0ae4ad4c21a924f2993427ca1d6c83a5dd502309d84009ead873d4033ac050718959f84a9e552df0b4
   languageName: node
   linkType: hard
 
