@@ -33,7 +33,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.37.0",
+    "@carbon/react": "~1.37.0",
     "@openmrs/esm-framework": "workspace:*",
     "@openmrs/esm-styleguide": "workspace:*",
     "dayjs": "^1.10.4",
