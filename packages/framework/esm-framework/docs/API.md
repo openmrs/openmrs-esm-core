@@ -3030,7 +3030,7 @@ ___
 
 ### getAsyncExtensionLifecycle
 
-▸ **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
+▸ **getAsyncExtensionLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`any`\>
 
 **`deprecated`** Use getAsyncLifecycle instead.
 
@@ -3051,21 +3051,21 @@ ___
 
 `fn`
 
-▸ (): `Promise`<`ReactAppOrParcel`<`any`\>\>
+▸ (): `Promise`<`any`\>
 
 ##### Returns
 
-`Promise`<`ReactAppOrParcel`<`any`\>\>
+`Promise`<`any`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L31)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L32)
 
 ___
 
 ### getAsyncLifecycle
 
-▸ **getAsyncLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
+▸ **getAsyncLifecycle**<`T`\>(`lazy`, `options`): () => `Promise`<`any`\>
 
 #### Type parameters
 
@@ -3084,21 +3084,21 @@ ___
 
 `fn`
 
-▸ (): `Promise`<`ReactAppOrParcel`<`any`\>\>
+▸ (): `Promise`<`any`\>
 
 ##### Returns
 
-`Promise`<`ReactAppOrParcel`<`any`\>\>
+`Promise`<`any`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L17)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L18)
 
 ___
 
 ### getLifecycle
 
-▸ **getLifecycle**<`T`\>(`Component`, `options`): `ReactAppOrParcel`<`any`\>
+▸ **getLifecycle**<`T`\>(`Component`, `options`): `any`
 
 #### Type parameters
 
@@ -3115,17 +3115,17 @@ ___
 
 #### Returns
 
-`ReactAppOrParcel`<`any`\>
+`any`
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L9)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L10)
 
 ___
 
 ### getSyncLifecycle
 
-▸ **getSyncLifecycle**<`T`\>(`Component`, `options`): () => `Promise`<`ReactAppOrParcel`<`any`\>\>
+▸ **getSyncLifecycle**<`T`\>(`Component`, `options`): () => `Promise`<`any`\>
 
 #### Type parameters
 
@@ -3144,15 +3144,15 @@ ___
 
 `fn`
 
-▸ (): `Promise`<`ReactAppOrParcel`<`any`\>\>
+▸ (): `Promise`<`any`\>
 
 ##### Returns
 
-`Promise`<`ReactAppOrParcel`<`any`\>\>
+`Promise`<`any`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/getLifecycle.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L24)
+[packages/framework/esm-react-utils/src/getLifecycle.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/getLifecycle.ts#L25)
 
 ___
 
