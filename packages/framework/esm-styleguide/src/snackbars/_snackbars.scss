@@ -1,7 +1,7 @@
 @use "@carbon/styles/scss/spacing";
 
 .omrs-snackbars-container {
-  z-index: 10000;
+  z-index: 1000;
   position: fixed;
   width: 20rem;
   display: flex;
@@ -12,6 +12,13 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+}
+
+/* Tablet */
+.omrs-breakpoint-lt-desktop {
+  .omrs-snackbars-container {
+    bottom: 5rem;
+  }
 }
 
 .omrs-snackbar-mounting,
