@@ -67,5 +67,8 @@
     "@types/react": "^18.0.9",
     "@types/rimraf": "^2.0.2",
     "@types/tar": "^4.0.3"
+  },
+  "overrides": {
+    "@carbon/icons-react": "11.26.0"
   }
 }
