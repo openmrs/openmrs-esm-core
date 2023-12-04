@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: row;
   width: 16rem;
-  justify-content: flex-start;
+  justify-content: space-between;
   color: $field-01;
   align-items: center;
   @extend .bodyLong01;
@@ -17,7 +17,7 @@
   }
 
   :global(.cds--toggle) {
-    margin: 0 0 1rem 1rem;
+    margin: 0 1rem;
   }
 
   :global(.cds--toggle__text) {
