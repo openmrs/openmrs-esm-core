@@ -20,7 +20,12 @@ import {
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import fuzzy from "fuzzy";
-import { useDebounce, type ImportMap, showModal } from "@openmrs/esm-framework";
+import {
+  useDebounce,
+  type ImportMap,
+  showModal,
+  resetAllRoutesOverrides,
+} from "@openmrs/esm-framework/src/internal";
 import type { Module } from "./types";
 import styles from "./list.scss";
 
@@ -38,7 +43,8 @@ type ImportMapDispatchAction =
   | SetNextDispatchAction
   | ShowNewModuleDialogAction
   | ShowEditModuleDialogAction
-  | HideEditModuleDialogAction;
+  | HideEditModuleDialogAction
+  | ResetAllOverridesAction;
 
 interface SetDefaultMapAction {
   type: "set_default_map";
@@ -66,6 +72,10 @@ interface ShowEditModuleDialogAction {
 
 interface HideEditModuleDialogAction {
   type: "hide_edit_module_dialog";
+}
+
+interface ResetAllOverridesAction {
+  type: "reset_all_overrides";
 }
 
 const initialImportMapState: ImportMapListState = {
@@ -106,6 +116,10 @@ function reducer(state: ImportMapListState, action: ImportMapDispatchAction) {
         ...state,
         dialogModule: null,
       };
+    case "reset_all_overrides":
+      window.importMapOverrides.resetOverrides();
+      resetAllRoutesOverrides();
+      return state;
   }
 }
 
@@ -229,7 +243,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
           </Button>
         </div>
         <div>
-          <Button onClick={() => window.importMapOverrides.resetOverrides()}>
+          <Button onClick={() => dispatch({ type: "reset_all_overrides" })}>
             {t("resetOverrides", "Reset all overrides")}
           </Button>
         </div>

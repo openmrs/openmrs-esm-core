@@ -53,7 +53,7 @@ export function addRoutesOverride(
 
 /**
  * Used to remove an existing routes override from local storage. These are read as the routes registry
- * is assembled, so the app must be reloaded for new overrides to take effect.
+ * is assembled, so the app must be reloaded for removed override to be removed.
  *
  * @internal
  * @param moduleName The module to remove the overrides for
@@ -65,6 +65,26 @@ export function removeRoutesOverride(moduleName: string) {
 
   const key = localStorageRoutesPrefix + moduleName;
   localStorage.removeItem(key);
+}
+
+/**
+ * Used to remove all existing routes overrides from local storage. These are read as the routes registry
+ * is assembled, so the app must be reloaded for the removed overrides to appear to be removed.
+ *
+ * @internal
+ */
+export function resetAllRoutesOverrides() {
+  if (!isEnabled) {
+    return;
+  }
+
+  const localStorage = window.localStorage;
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key?.startsWith(localStorageRoutesPrefix)) {
+      localStorage.removeItem(key);
+    }
+  }
 }
 
 function addRouteOverrideInternal(
