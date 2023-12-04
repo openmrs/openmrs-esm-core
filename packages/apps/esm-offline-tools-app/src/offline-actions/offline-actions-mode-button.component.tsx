@@ -27,16 +27,18 @@ const OfflineActionsModeButton: React.FC = () => {
 
   return (
     <div className={styles.offlineModeButtonContainer}>
-      <Network_3 size={20} />
-      <div onClick={doNotCloseMenu} role="none">
-        <span>{t("offlineReady", "Offline Ready")}</span>
-        <Toggle
-          className={styles.toggle}
-          id="offlineModeSwitch"
-          toggled={active}
-          onToggle={toggle}
-        />
+      <div>
+        <Network_3 size={20} />
+        <span onClick={doNotCloseMenu} role="none">
+          {t("offlineReady", "Offline Ready")}
+        </span>
       </div>
+      <Toggle
+        className={styles.toggle}
+        id="offlineModeSwitch"
+        toggled={active}
+        onToggle={toggle}
+      />
     </div>
   );
 };
