@@ -44,29 +44,20 @@ const OfflineActionsModeButton: React.FC = () => {
   }, [toggle]);
 
   return (
-    isOnline && (
-      <div className={styles.offlineModeButtonContainer}>
+    <div className={styles.offlineModeButtonContainer}>
+      <div>
         <Network_3 size={20} />
-        <div>
-          <DefinitionTooltip
-            openOnHover
-            align="top"
-            definition={`${t("lastRun", "Last Run")}: ${
-              active ? lastRun : t("never", "Never")
-            }`}
-          >
-            {t("offlineReady", "Offline Ready")}
-          </DefinitionTooltip>
-          {active ? (
-            <Button kind="ghost" onClick={handleRefresh}>
-              {t("refresh", "Refresh")}
-            </Button>
-          ) : (
-            <Toggle toggled={active} onToggle={toggle} />
-          )}
-        </div>
+        <span onClick={doNotCloseMenu} role="none">
+          {t("offlineReady", "Offline Ready")}
+        </span>
       </div>
-    )
+      <Toggle
+        className={styles.toggle}
+        id="offlineModeSwitch"
+        toggled={active}
+        onToggle={toggle}
+      />
+    </div>
   );
 };
 

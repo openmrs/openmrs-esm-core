@@ -14,6 +14,13 @@
   justify-content: center;
 }
 
+/* Tablet */
+.omrs-breakpoint-lt-desktop {
+  .omrs-snackbars-container {
+    bottom: 5.5rem;
+  }
+}
+
 .omrs-snackbar-mounting,
 .omrs-snackbar-mounting > * {
   padding: 0;

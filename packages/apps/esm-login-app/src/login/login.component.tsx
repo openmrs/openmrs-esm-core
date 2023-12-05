@@ -69,20 +69,30 @@ const Login: React.FC<LoginProps> = () => {
     [config?.links?.loginSuccess, location.state, navigate]
   );
 
+  const handleUpdateSessionStore = useCallback(() => {
+    refetchCurrentUser().then(() => {
+      const authenticated = getSessionStore().getState().session.authenticated;
+      if (authenticated) {
+        handleLogin(getSessionStore().getState().session);
+      }
+    });
+  }, [handleLogin]);
+
   useEffect(() => {
     if (user) {
       clearCurrentUser();
-      refetchCurrentUser().then(() => {
-        const authenticated =
-          getSessionStore().getState().session.authenticated;
-        if (authenticated) {
-          handleLogin(getSessionStore().getState().session);
-        }
-      });
+      handleUpdateSessionStore();
     } else if (!username && location.pathname === "/login/confirm") {
       navigate("/login", { state: location.state });
     }
-  }, [username, navigate, location, user, handleLogin]);
+  }, [
+    username,
+    navigate,
+    location,
+    user,
+    handleLogin,
+    handleUpdateSessionStore,
+  ]);
 
   useEffect(() => {
     const field = showPassword
@@ -142,7 +152,7 @@ const Login: React.FC<LoginProps> = () => {
         const valid = authData && authData.authenticated;
 
         if (valid) {
-          handleLogin(authData);
+          handleUpdateSessionStore();
         } else {
           throw new Error("invalidCredentials");
         }
@@ -160,7 +170,7 @@ const Login: React.FC<LoginProps> = () => {
       continueLogin,
       username,
       password,
-      handleLogin,
+      handleUpdateSessionStore,
       resetUserNameAndPassword,
     ]
   );
