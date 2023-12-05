@@ -1423,7 +1423,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@carbon/icons-react@npm:^11.26.0":
+"@carbon/icons-react@npm:11.26.0, @carbon/icons-react@npm:^11.26.0":
   version: 11.26.0
   resolution: "@carbon/icons-react@npm:11.26.0"
   dependencies:
@@ -12659,6 +12659,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "openmrs@workspace:packages/tooling/openmrs"
   dependencies:
+    "@carbon/icons-react": "npm:11.26.0"
     "@openmrs/esm-app-shell": "workspace:*"
     "@openmrs/webpack-config": "workspace:*"
     "@pnpm/npm-conf": "npm:^2.1.0"
