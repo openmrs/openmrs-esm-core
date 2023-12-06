@@ -1,5 +1,5 @@
 /** @module @category UI */
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 import { ActionableNotification } from "@carbon/react";
 
 // Design documentation for Actionable Toast https://zeroheight.com/23a080e38/p/683580-notifications/t/26d1c7
@@ -10,11 +10,10 @@ export interface ActionableToastProps {
 
 export interface ActionableToastDescriptor {
   actionButtonLabel?: string;
-  isLowContrast?: boolean;
+  critical?: boolean;
   kind?: ActionableToastType | string;
   onActionButtonClick?: () => void;
-  progressActionLabel?: string;
-  subtitle?: string;
+  description: React.ReactNode;
   title: string;
 }
 
@@ -36,33 +35,29 @@ export const ActionableToast: React.FC<ActionableToastProps> = ({
 }) => {
   const {
     actionButtonLabel,
-    isLowContrast,
+    critical,
     kind,
     onActionButtonClick = () => {},
-    progressActionLabel,
-    subtitle,
+    description,
     title,
     ...props
   } = actionableToast;
 
-  const [actionText, setActionText] = useState(actionButtonLabel);
-
-  const handleActionClick = () => {
+  const handleActionClick = useCallback(() => {
     onActionButtonClick();
     closeActionableToast();
-    progressActionLabel && setActionText(progressActionLabel);
-  };
+  }, [closeActionableToast, onActionButtonClick]);
 
   return (
     <ActionableNotification
-      actionButtonLabel={actionText || ""}
+      actionButtonLabel={actionButtonLabel}
       ariaLabel="Close actionable toast"
       kind={kind || "info"}
-      lowContrast={isLowContrast}
+      lowContrast={critical}
       onActionButtonClick={handleActionClick}
       onClose={closeActionableToast}
       statusIconDescription="Actionable toast notification"
-      subtitle={subtitle || ""}
+      subtitle={description}
       title={title}
       {...props}
     />

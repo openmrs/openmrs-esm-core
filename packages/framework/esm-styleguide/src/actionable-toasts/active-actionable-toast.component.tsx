@@ -27,7 +27,7 @@ const ActiveActionableToasts: React.FC<ActiveActionableToastProps> = ({
       setActionableToasts((actionableToasts) => [
         ...actionableToasts.filter(
           (n) =>
-            n.subtitle !== actionableToast.subtitle ||
+            n.description !== actionableToast.description ||
             n.actionButtonLabel !== actionableToast.actionButtonLabel ||
             n.onActionButtonClick !== actionableToast.onActionButtonClick ||
             n.kind !== actionableToast.kind ||
