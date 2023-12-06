@@ -1,1 +1,1 @@
-export * from "./dynamic-loading";
+export * from './dynamic-loading';

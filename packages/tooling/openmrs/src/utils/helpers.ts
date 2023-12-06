@@ -1,4 +1,4 @@
-import { util } from "webpack";
+import { util } from 'webpack';
 
 export function trimEnd(text: string, chr: string) {
   while (text.endsWith(chr)) {
@@ -10,11 +10,11 @@ export function trimEnd(text: string, chr: string) {
 
 export function removeTrailingSlash(path: string) {
   const i = path.length - 1;
-  return path[i] === "/" ? removeTrailingSlash(path.substr(0, i)) : path;
+  return path[i] === '/' ? removeTrailingSlash(path.substr(0, i)) : path;
 }
 
 export function contentHash(obj: object) {
-  const hash = util.createHash("xxhash64");
-  hash.update(JSON.stringify(obj), "UTF-8");
-  return hash.digest().toString("hex");
+  const hash = util.createHash('xxhash64');
+  hash.update(JSON.stringify(obj), 'UTF-8');
+  return hash.digest().toString('hex');
 }

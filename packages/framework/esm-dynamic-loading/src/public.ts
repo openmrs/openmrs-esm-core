@@ -1,1 +1,1 @@
-export { importDynamic } from "./dynamic-loading";
+export { importDynamic } from './dynamic-loading';

@@ -6,23 +6,23 @@
  *
  * This approach is known as "svg sprites"
  */
-const svgContainer = document.createElement("div");
+const svgContainer = document.createElement('div');
 const appendContainer = () => {
   document.body.appendChild(svgContainer);
 };
-svgContainer.id = "omrs-svgs-container";
-svgContainer.style.display = "none";
+svgContainer.id = 'omrs-svgs-container';
+svgContainer.style.display = 'none';
 
-if (document.readyState === "complete") {
+if (document.readyState === 'complete') {
   appendContainer();
 } else {
-  window.addEventListener("load", appendContainer);
+  window.addEventListener('load', appendContainer);
 }
 
 export function addSvg(htmlId: string, svgString: string) {
   const domParser = new DOMParser();
-  const dom = domParser.parseFromString(svgString, "text/html");
-  const svgElement = dom.querySelector("svg");
+  const dom = domParser.parseFromString(svgString, 'text/html');
+  const svgElement = dom.querySelector('svg');
 
   if (svgElement) {
     svgElement.id = htmlId;

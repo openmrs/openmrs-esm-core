@@ -1,5 +1,5 @@
 /** @module @category Utility */
-import { getLocale } from "./omrs-dates";
+import { getLocale } from './omrs-dates';
 
 /**
  * Gets the number of days in the year of the given date.
@@ -8,8 +8,7 @@ import { getLocale } from "./omrs-dates";
  */
 export function daysIntoYear(date: Date) {
   return (
-    (Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) -
-      Date.UTC(date.getUTCFullYear(), 0, 0)) /
+    (Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) - Date.UTC(date.getUTCFullYear(), 0, 0)) /
     24 /
     60 /
     60 /
@@ -26,10 +25,7 @@ export function daysIntoYear(date: Date) {
 export function isSameDay(firstDate: Date, secondDate: Date) {
   const firstISO = firstDate.toISOString();
   const secondISO = secondDate.toISOString();
-  return (
-    firstISO.slice(0, firstISO.indexOf("T")) ===
-    secondISO.slice(0, secondISO.indexOf("T"))
-  );
+  return firstISO.slice(0, firstISO.indexOf('T')) === secondISO.slice(0, secondISO.indexOf('T'));
 }
 
 /**
@@ -68,37 +64,37 @@ export function age(dateString: string): string {
   // Depending on their age, return a different representation of their age.
   if (age === 0) {
     if (isSameDay(today, birthDate)) {
-      const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
-      return rtf.format(0, "day");
+      const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+      return rtf.format(0, 'day');
     } else if (totalDaysAgo < 31) {
       const totalDaysAgoStr = new Intl.NumberFormat(locale, {
-        style: "unit",
-        unit: "day",
-        unitDisplay: "short",
+        style: 'unit',
+        unit: 'day',
+        unitDisplay: 'short',
       }).format(totalDaysAgo);
 
       return totalDaysAgoStr;
     } else {
       const weeksAgoStr = new Intl.NumberFormat(locale, {
-        style: "unit",
-        unit: "week",
-        unitDisplay: "short",
+        style: 'unit',
+        unit: 'week',
+        unitDisplay: 'short',
       }).format(weeksAgo);
       return weeksAgoStr;
     }
   } else if (age < 2) {
     const monthsAgoStr = new Intl.NumberFormat(locale, {
-      style: "unit",
-      unit: "month",
-      unitDisplay: "short",
+      style: 'unit',
+      unit: 'month',
+      unitDisplay: 'short',
     }).format(monthsAgo + 12);
 
     return monthsAgoStr;
   } else {
     const yearsAgoStr = new Intl.NumberFormat(locale, {
-      style: "unit",
-      unit: "year",
-      unitDisplay: "short",
+      style: 'unit',
+      unit: 'year',
+      unitDisplay: 'short',
     }).format(age);
     return yearsAgoStr;
   }

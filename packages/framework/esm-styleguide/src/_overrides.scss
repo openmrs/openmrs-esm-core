@@ -1,6 +1,6 @@
-@use "@carbon/styles/scss/spacing";
-@use "@carbon/styles/scss/utilities/layout";
-@use "@carbon/colors";
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/utilities/layout';
+@use '@carbon/colors';
 
 /* UI Shell Header */
 .cds--header {
@@ -40,7 +40,7 @@
 /* Icon button */
 .cds--btn--icon-only {
   // Apply a size layout token that sets the default size of the icon-only button to `sm`
-  @include layout.use("size", $default: "sm");
+  @include layout.use('size', $default: 'sm');
   // Remove extraneous top padding from the icon-only button
   padding-block-start: 0;
 }
@@ -63,7 +63,7 @@
 
 /* Content Switcher */
 .cds--content-switcher {
-  @include layout.use("size", $default: "sm");
+  @include layout.use('size', $default: 'sm');
 }
 
 .cds--content-switcher-btn {
@@ -114,15 +114,9 @@
 }
 
 /* Tabs */
-.cds--tabs--scrollable
-  .cds--tabs--scrollable__nav-item--selected
-  .cds--tabs--scrollable__nav-link,
-.cds--tabs--scrollable
-  .cds--tabs--scrollable__nav-item--selected
-  .cds--tabs--scrollable__nav-link:active,
-.cds--tabs--scrollable
-  .cds--tabs--scrollable__nav-item--selected
-  .cds--tabs--scrollable__nav-link:focus {
+.cds--tabs--scrollable .cds--tabs--scrollable__nav-item--selected .cds--tabs--scrollable__nav-link,
+.cds--tabs--scrollable .cds--tabs--scrollable__nav-item--selected .cds--tabs--scrollable__nav-link:active,
+.cds--tabs--scrollable .cds--tabs--scrollable__nav-item--selected .cds--tabs--scrollable__nav-link:focus {
   border-bottom: 2px solid var(--brand-03);
 }
 
@@ -241,7 +235,7 @@
 }
 
 .cds--overflow-menu--flip {
-  &.cds--overflow-menu-options[data-floating-menu-direction="bottom"] {
+  &.cds--overflow-menu-options[data-floating-menu-direction='bottom'] {
     &::after {
       top: 0;
       height: 0;
@@ -306,12 +300,11 @@
 }
 
 /* Radio buttons */
-.cds--radio-button-group--vertical
-  .cds--radio-button-wrapper:not(:last-of-type) {
+.cds--radio-button-group--vertical .cds--radio-button-wrapper:not(:last-of-type) {
   margin-bottom: 0;
 }
 
-html[dir="rtl"] {
+html[dir='rtl'] {
   .cds--header {
     & > a:first-child {
       & > div {

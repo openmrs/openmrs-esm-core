@@ -1,17 +1,17 @@
-declare module "@carbon/react";
+declare module '@carbon/react';
 
 declare namespace JSX {
   interface IntrinsicElements {
-    "import-map-overrides-list": any;
+    'import-map-overrides-list': any;
   }
 }
 
-declare module "*.css" {
+declare module '*.css' {
   const styles: any;
   export default styles;
 }
 
-declare module "*.scss" {
+declare module '*.scss' {
   const styles: any;
   export default styles;
 }

@@ -1,12 +1,12 @@
 module.exports = {
   transform: {
-    "^.+\\.(j|t)sx?$": ["@swc/jest"],
+    '^.+\\.(j|t)sx?$': ['@swc/jest'],
   },
   moduleNameMapper: {
-    "lodash-es": "lodash",
+    'lodash-es': 'lodash',
   },
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    url: "http://localhost/",
+    url: 'http://localhost/',
   },
 };

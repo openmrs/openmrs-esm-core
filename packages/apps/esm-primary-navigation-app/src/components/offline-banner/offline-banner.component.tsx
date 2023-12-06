@@ -1,7 +1,7 @@
-import React from "react";
-import { ConnectionSignalOff } from "@carbon/react/icons";
-import { subscribeConnectivity } from "@openmrs/esm-framework";
-import styles from "./offline-banner.scss";
+import React from 'react';
+import { ConnectionSignalOff } from '@carbon/react/icons';
+import { subscribeConnectivity } from '@openmrs/esm-framework';
+import styles from './offline-banner.scss';
 
 export interface OfflineBannerProps {}
 
@@ -24,13 +24,13 @@ const OfflineBanner: React.FC<OfflineBannerProps> = () => {
 
 function formatLastUpdated(lastUpdated: Date) {
   const date = lastUpdated.toLocaleDateString(undefined, {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
   });
   const time = lastUpdated.toLocaleTimeString(undefined, {
-    hour: "2-digit",
-    minute: "2-digit",
+    hour: '2-digit',
+    minute: '2-digit',
   });
   return `${date} @ ${time}`;
 }
@@ -39,13 +39,13 @@ function useLastUpdated() {
   const [lastUpdated, setLastUpdated] = React.useState(new Date());
 
   const readAndSetLastUpdated = () => {
-    const value = localStorage.getItem("offline-last-updated");
+    const value = localStorage.getItem('offline-last-updated');
     const date = value ? new Date(value) : new Date();
     setLastUpdated(date);
   };
 
   const writeLastUpdated = (date = new Date()) => {
-    localStorage.setItem("offline-last-updated", date.toISOString());
+    localStorage.setItem('offline-last-updated', date.toISOString());
   };
 
   React.useEffect(() => {

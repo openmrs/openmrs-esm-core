@@ -21,7 +21,7 @@ export interface Resource {
   id: string;
   name: string;
   resourceType: string;
-  status: "active" | "inactive";
+  status: 'active' | 'inactive';
   meta?: {
     tag?: Array<{
       code: string;

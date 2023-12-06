@@ -1,9 +1,9 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import CardsContainer from "./cards-container.component";
-import OfflinePatientTable from "../offline-patients/offline-patient-table.component";
-import SharedPageLayout from "../components/shared-page-layout.component";
-import styles from "./home.styles.scss";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import CardsContainer from './cards-container.component';
+import OfflinePatientTable from '../offline-patients/offline-patient-table.component';
+import SharedPageLayout from '../components/shared-page-layout.component';
+import styles from './home.styles.scss';
 
 /**
  * The offline tool's home/dashboard page.
@@ -15,8 +15,8 @@ const Home: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <SharedPageLayout header={t("homeHeader", "Offline home")}>
-      <div style={{ backgroundColor: "#ededed" }}>
+    <SharedPageLayout header={t('homeHeader', 'Offline home')}>
+      <div style={{ backgroundColor: '#ededed' }}>
         <CardsContainer />
       </div>
 

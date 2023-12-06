@@ -1,4 +1,4 @@
-import { LifeCycles } from "single-spa";
+import { LifeCycles } from 'single-spa';
 
 export const emptyLifecycle: LifeCycles<never> = {
   bootstrap() {
@@ -13,8 +13,6 @@ export const emptyLifecycle: LifeCycles<never> = {
 };
 
 export function routeRegex(regex: RegExp, location: Location) {
-  const result = regex.test(
-    location.pathname.replace(window.getOpenmrsSpaBase(), "")
-  );
+  const result = regex.test(location.pathname.replace(window.getOpenmrsSpaBase(), ''));
   return result;
 }

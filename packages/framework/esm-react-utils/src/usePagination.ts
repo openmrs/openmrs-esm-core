@@ -1,19 +1,16 @@
 /** @module @category UI */
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from 'react';
 
 const defaultResultsPerPage = 10;
 
-export function usePagination<T>(
-  data: Array<T> = [],
-  resultsPerPage = defaultResultsPerPage
-) {
+export function usePagination<T>(data: Array<T> = [], resultsPerPage = defaultResultsPerPage) {
   const [page, setPage] = useState(1);
   const totalPages = useMemo(
     () =>
-      typeof resultsPerPage === "number" && resultsPerPage > 0
+      typeof resultsPerPage === 'number' && resultsPerPage > 0
         ? Math.max(1, Math.ceil(data.length / resultsPerPage))
         : 1,
-    [data.length, resultsPerPage]
+    [data.length, resultsPerPage],
   );
 
   const results = useMemo(() => {
@@ -26,7 +23,7 @@ export function usePagination<T>(
     (page: number) => {
       setPage(Math.max(1, Math.min(totalPages, page)));
     },
-    [setPage, totalPages]
+    [setPage, totalPages],
   );
   const goToNext = useCallback(() => {
     if (page < totalPages) {
@@ -52,16 +49,7 @@ export function usePagination<T>(
       goToNext,
       goToPrevious,
     }),
-    [
-      results,
-      totalPages,
-      data.length,
-      resultsPerPage,
-      page,
-      goTo,
-      goToNext,
-      goToPrevious,
-    ]
+    [results, totalPages, data.length, resultsPerPage, page, goTo, goToNext, goToPrevious],
   );
 
   return memoisedPaginatedData;

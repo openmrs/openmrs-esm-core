@@ -1,6 +1,6 @@
 /** @module @category API */
-import { useEffect, useReducer } from "react";
-import { fetchCurrentPatient, PatientUuid } from "@openmrs/esm-api";
+import { useEffect, useReducer } from 'react';
+import { fetchCurrentPatient, PatientUuid } from '@openmrs/esm-api';
 
 export type NullablePatient = fhir.Patient | null;
 
@@ -30,9 +30,9 @@ interface PatientLoadError {
 type Action = LoadPatient | NewPatient | PatientLoadError;
 
 enum ActionTypes {
-  loadPatient = "loadPatient",
-  newPatient = "newPatient",
-  loadError = "patientLoadError",
+  loadPatient = 'loadPatient',
+  newPatient = 'newPatient',
+  loadError = 'patientLoadError',
 }
 
 const initialState: CurrentPatientState = {
@@ -48,10 +48,7 @@ function getPatientUuidFromUrl(): PatientUuid {
   return match && match[1];
 }
 
-function reducer(
-  state: CurrentPatientState,
-  action: Action
-): CurrentPatientState {
+function reducer(state: CurrentPatientState, action: Action): CurrentPatientState {
   switch (action.type) {
     case ActionTypes.loadPatient:
       return {
@@ -124,7 +121,7 @@ export function usePatient(patientUuid?: string) {
           dispatch({
             err,
             type: ActionTypes.loadError,
-          })
+          }),
       );
     }
     return () => {
@@ -142,9 +139,8 @@ export function usePatient(patientUuid?: string) {
         });
       }
     };
-    window.addEventListener("single-spa:routing-event", handleRouteUpdate);
-    return () =>
-      window.removeEventListener("single-spa:routing-event", handleRouteUpdate);
+    window.addEventListener('single-spa:routing-event', handleRouteUpdate);
+    return () => window.removeEventListener('single-spa:routing-event', handleRouteUpdate);
   }, [state.patientUuid]);
 
   return {

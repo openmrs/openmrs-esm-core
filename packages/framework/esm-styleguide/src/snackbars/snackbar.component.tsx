@@ -1,8 +1,8 @@
 /** @module @category UI */
-import React, { useState, useEffect, useCallback } from "react";
-import { ActionableNotification } from "@carbon/react";
-import classnames from "classnames";
-import styles from "./snackbar.module.scss";
+import React, { useState, useEffect, useCallback } from 'react';
+import { ActionableNotification } from '@carbon/react';
+import classnames from 'classnames';
+import styles from './snackbar.module.scss';
 
 // Design documentation for Snackbars https://zeroheight.com/23a080e38/p/683580-notifications/t/468baf
 export interface SnackbarProps {
@@ -25,18 +25,9 @@ export interface SnackbarMeta extends SnackbarDescriptor {
   id: number;
 }
 
-export type SnackbarType =
-  | "error"
-  | "info"
-  | "info-square"
-  | "success"
-  | "warning"
-  | "warning-alt";
+export type SnackbarType = 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
 
-export const Snackbar: React.FC<SnackbarProps> = ({
-  snackbar,
-  closeSnackbar,
-}) => {
+export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) => {
   const {
     actionButtonLabel,
     isLowContrast,
@@ -82,19 +73,19 @@ export const Snackbar: React.FC<SnackbarProps> = ({
 
   return (
     <ActionableNotification
-      actionButtonLabel={actionText || ""}
+      actionButtonLabel={actionText || ''}
       ariaLabel="Close snackbar"
       className={classnames(styles.slideIn, {
         [styles.animated]: applyAnimation,
         [styles.slideOut]: isClosing,
       })}
       inline
-      kind={kind || "info"}
+      kind={kind || 'info'}
       lowContrast={isLowContrast}
       onActionButtonClick={handleActionClick}
       onClose={closeSnackbar}
       statusIconDescription="Snackbar notification"
-      subtitle={subtitle || ""}
+      subtitle={subtitle || ''}
       title={title}
       {...props}
     />

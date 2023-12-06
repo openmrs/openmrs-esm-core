@@ -4,5 +4,5 @@
 set -e  # die on error
 
 yarn turbo extract-translations
-yarn pretty-quick --staged
+yarn prettier && npx lint-staged
 yarn turbo document --since main

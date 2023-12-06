@@ -1,5 +1,5 @@
 /** @module @category Config Validation */
-import { validator } from "./validator";
+import { validator } from './validator';
 
 /**
  * Verifies that the value is between the provided minimum and maximum
@@ -8,10 +8,7 @@ import { validator } from "./validator";
  * @param max Maximum acceptable value
  */
 export const inRange = (min: number, max: number) => {
-  return validator(
-    (val) => min <= val && val <= max,
-    `must be between ${min} and ${max}`
-  );
+  return validator((val) => min <= val && val <= max, `must be between ${min} and ${max}`);
 };
 
 /**
@@ -21,31 +18,30 @@ export const inRange = (min: number, max: number) => {
  * @param allowedTemplateParameters To be added to `openmrsBase` and `openmrsSpaBase`
  * @category Navigation
  */
-export const isUrlWithTemplateParameters = (
-  allowedTemplateParameters: string[]
-) => {
-  const allowedParams = allowedTemplateParameters.concat([
-    "openmrsBase",
-    "openmrsSpaBase",
-  ]);
-  return validator((val) => {
-    if (!val || typeof val != "string") {
-      return false;
-    }
-
-    const rx = /\${(.*?)}/g;
-    let match = rx.exec(val);
-
-    while (match) {
-      if (!allowedParams.includes(match[1])) {
+export const isUrlWithTemplateParameters = (allowedTemplateParameters: string[]) => {
+  const allowedParams = allowedTemplateParameters.concat(['openmrsBase', 'openmrsSpaBase']);
+  return validator(
+    (val) => {
+      if (!val || typeof val != 'string') {
         return false;
       }
 
-      match = rx.exec(val);
-    }
+      const rx = /\${(.*?)}/g;
+      let match = rx.exec(val);
 
-    return true;
-  }, "Should be a URL or path. The allowed template parameters are " + allowedParams.map((p) => "${" + p + "}").join(", "));
+      while (match) {
+        if (!allowedParams.includes(match[1])) {
+          return false;
+        }
+
+        match = rx.exec(val);
+      }
+
+      return true;
+    },
+    'Should be a URL or path. The allowed template parameters are ' +
+      allowedParams.map((p) => '${' + p + '}').join(', '),
+  );
 };
 
 /**
@@ -62,7 +58,7 @@ export const isUrl = isUrlWithTemplateParameters([]);
 export const oneOf = (allowedValues: Array<any>) => {
   return validator(
     (val) => allowedValues.includes(val),
-    `Must be one of the following: '${allowedValues.join("', '")}'.`
+    `Must be one of the following: '${allowedValues.join("', '")}'.`,
   );
 };
 

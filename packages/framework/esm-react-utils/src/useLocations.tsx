@@ -1,6 +1,6 @@
 /** @module @category API */
-import { getLocations, Location } from "@openmrs/esm-api";
-import { useState, useEffect } from "react";
+import { getLocations, Location } from '@openmrs/esm-api';
+import { useState, useEffect } from 'react';
 
 export function useLocations() {
   const [locations, setLocations] = useState<Array<Location>>([]);
@@ -12,7 +12,7 @@ export function useLocations() {
       },
       (error) => {
         console.error(error);
-      }
+      },
     );
     return () => locationSub.unsubscribe();
   }, []);

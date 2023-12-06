@@ -1,4 +1,4 @@
-@use "@carbon/styles/scss/type";
+@use '@carbon/styles/scss/type';
 
 .container {
   height: 50vh;
@@ -10,5 +10,5 @@
 }
 
 .moduleHeader {
-  @include type.type-style("heading-compact-02");
+  @include type.type-style('heading-compact-02');
 }

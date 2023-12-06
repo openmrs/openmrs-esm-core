@@ -1,7 +1,7 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./components/navbar/navbar.component";
-import styles from "./root.scss";
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Navbar from './components/navbar/navbar.component';
+import styles from './root.scss';
 
 export interface RootProps {}
 

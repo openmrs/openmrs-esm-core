@@ -1,7 +1,7 @@
 /** @module @category Navigation */
 
 function trimTrailingSlash(str: string) {
-  return str.replace(/\/$/, "");
+  return str.replace(/\/$/, '');
 }
 
 /**
@@ -33,16 +33,13 @@ function trimTrailingSlash(str: string) {
  * @param template A string to interpolate
  * @param additionalParams Additional values to interpolate into the string template
  */
-export function interpolateUrl(
-  template: string,
-  additionalParams?: { [key: string]: string }
-): string {
+export function interpolateUrl(template: string, additionalParams?: { [key: string]: string }): string {
   const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());
   return interpolateString(template, {
     openmrsBase: window.openmrsBase,
     openmrsSpaBase: openmrsSpaBase,
     ...additionalParams,
-  }).replace(/^\/\//, "/"); // remove extra initial slash if present
+  }).replace(/^\/\//, '/'); // remove extra initial slash if present
 }
 
 /**
@@ -60,13 +57,7 @@ export function interpolateUrl(
  * @param template With optional params wrapped in `${ }`
  * @param params Values to interpolate into the string template
  */
-export function interpolateString(
-  template: string,
-  params: { [key: string]: string }
-): string {
+export function interpolateString(template: string, params: { [key: string]: string }): string {
   const names = Object.keys(params);
-  return names.reduce(
-    (prev, curr) => prev.split("${" + curr + "}").join(params[curr]),
-    template
-  );
+  return names.reduce((prev, curr) => prev.split('${' + curr + '}').join(params[curr]), template);
 }

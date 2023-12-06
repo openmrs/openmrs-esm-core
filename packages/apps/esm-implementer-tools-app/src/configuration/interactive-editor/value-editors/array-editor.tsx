@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
-import cloneDeep from "lodash-es/cloneDeep";
-import uniqueId from "lodash-es/uniqueId";
-import { Type } from "@openmrs/esm-framework";
+import React, { useMemo } from 'react';
+import cloneDeep from 'lodash-es/cloneDeep';
+import uniqueId from 'lodash-es/uniqueId';
+import { Type } from '@openmrs/esm-framework';
 import {
   Button,
   Tile,
@@ -9,11 +9,11 @@ import {
   StructuredListCell,
   StructuredListRow,
   StructuredListWrapper,
-} from "@carbon/react";
-import { Add, TrashCan } from "@carbon/react/icons";
-import { ValueEditorField } from "./value-editor-field";
-import { ConfigValueDescriptor } from "../editable-value.component";
-import styles from "./array-editor.styles.css";
+} from '@carbon/react';
+import { Add, TrashCan } from '@carbon/react/icons';
+import { ValueEditorField } from './value-editor-field';
+import { ConfigValueDescriptor } from '../editable-value.component';
+import styles from './array-editor.styles.css';
 
 interface ArrayEditorProps {
   element: ConfigValueDescriptor;
@@ -21,12 +21,8 @@ interface ArrayEditorProps {
   setValue: (value: Array<any>) => void;
 }
 
-export function ArrayEditor({
-  element,
-  valueArray,
-  setValue,
-}: ArrayEditorProps) {
-  const arrayKey = useMemo(() => uniqueId("array-editor-"), []);
+export function ArrayEditor({ element, valueArray, setValue }: ArrayEditorProps) {
+  const arrayKey = useMemo(() => uniqueId('array-editor-'), []);
   return (
     <Tile className={styles.arrayEditor}>
       <StructuredListWrapper>
@@ -74,10 +70,7 @@ export function ArrayEditor({
                 hasIconOnly
                 onClick={() => {
                   const newValueArray = cloneDeep(valueArray);
-                  const newValue =
-                    (element._elements?._type ?? Type.Object) == Type.Object
-                      ? {}
-                      : null;
+                  const newValue = (element._elements?._type ?? Type.Object) == Type.Object ? {} : null;
                   newValueArray.push(newValue);
                   setValue(newValueArray);
                 }}

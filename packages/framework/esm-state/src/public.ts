@@ -1,6 +1,1 @@
-export {
-  type AppState,
-  createGlobalStore,
-  getGlobalStore,
-  subscribeTo,
-} from "./state";
+export { type AppState, createGlobalStore, getGlobalStore, subscribeTo } from './state';

@@ -2,9 +2,9 @@ import { ConfigSchema } from "../src/config-schema";
 
 export const mockConfig: ConfigSchema = {
   provider: {
-    type: "basic",
-    loginUrl: "",
-    logoutUrl: "",
+    type: 'basic',
+    loginUrl: '',
+    logoutUrl: '',
   },
   chooseLocation: {
     enabled: true,
@@ -14,10 +14,10 @@ export const mockConfig: ConfigSchema = {
   },
   logo: {
     src: null,
-    alt: "Logo",
+    alt: 'Logo',
   },
   links: {
-    loginSuccess: "${openmrsSpaBase}/home",
+    loginSuccess: '${openmrsSpaBase}/home',
   },
   showPasswordOnSeparateScreen: true,
 };

@@ -7,11 +7,11 @@
  * comparison of the exports of the two modules.
  */
 
-import * as real from "./index";
-import * as mock from "../mock";
+import * as real from './index';
+import * as mock from '../mock';
 
-describe("@openmrs/esm-framework/mock", () => {
-  xit("should have the same exports as @openmrs/esm-framework", () => {
+describe('@openmrs/esm-framework/mock', () => {
+  xit('should have the same exports as @openmrs/esm-framework', () => {
     expect(new Set(Object.keys(real))).toEqual(new Set(Object.keys(mock)));
   });
 });

@@ -1,13 +1,10 @@
-import type { Application } from "single-spa";
-import type { i18n } from "i18next";
+import type { Application } from 'single-spa';
+import type { i18n } from 'i18next';
 
 declare global {
   const __webpack_share_scopes__: Record<
     string,
-    Record<
-      string,
-      { loaded?: 1; get: () => Promise<unknown>; from: string; eager: boolean }
-    >
+    Record<string, { loaded?: 1; get: () => Promise<unknown>; from: string; eager: boolean }>
   >;
 
   var __webpack_init_sharing__: (scope: string) => Promise<void>;
@@ -62,7 +59,7 @@ declare global {
   }
 }
 
-export type SpaEnvironment = "production" | "development" | "test";
+export type SpaEnvironment = 'production' | 'development' | 'test';
 
 export interface ImportMap {
   imports: Record<string, string>;
@@ -158,8 +155,7 @@ export type PageDefinition = {
 /**
  * A definition of a page after the app has been registered.
  */
-export type RegisteredPageDefinition = Omit<PageDefinition, "order"> &
-  AppComponent & { order: number };
+export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
 
 /**
  * A definition of an extension as extracted from an app's routes.json

@@ -1,11 +1,7 @@
-import {
-  setUserProperties,
-  showToast,
-  useSession,
-} from "@openmrs/esm-framework";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useValidateLocationUuid } from "../login.resource";
+import { setUserProperties, showToast, useSession } from '@openmrs/esm-framework';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useValidateLocationUuid } from '../login.resource';
 
 export function useDefaultLocation(isUpdateFlow: boolean) {
   const { t } = useTranslation();
@@ -16,15 +12,14 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
       userUuid: user?.uuid,
       userProperties: user?.userProperties,
     }),
-    [user]
+    [user],
   );
 
   const defaultLocation = useMemo(() => {
     return userProperties?.defaultLocation;
   }, [userProperties?.defaultLocation]);
 
-  const { isLocationValid, defaultLocation: defaultLocationFhir } =
-    useValidateLocationUuid(defaultLocation);
+  const { isLocationValid, defaultLocation: defaultLocationFhir } = useValidateLocationUuid(defaultLocation);
 
   useEffect(() => {
     if (defaultLocation) {
@@ -48,7 +43,7 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
         await setUserProperties(userUuid, userProperties);
       }
     },
-    [userProperties, userUuid]
+    [userProperties, userUuid],
   );
 
   const updateDefaultLocation = useCallback(
@@ -57,54 +52,27 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
         return;
       }
 
-      updateUserPropsWithDefaultLocation(
-        locationUuid,
-        saveDefaultLocation
-      ).then(() => {
+      updateUserPropsWithDefaultLocation(locationUuid, saveDefaultLocation).then(() => {
         if (saveDefaultLocation) {
           showToast({
             title: !isUpdateFlow
-              ? t(
-                  "locationPreferenceAdded",
-                  "Selected location will be used for your next logins"
-                )
-              : t(
-                  "locationPreferenceUpdated",
-                  "Login location preference updated"
-                ),
+              ? t('locationPreferenceAdded', 'Selected location will be used for your next logins')
+              : t('locationPreferenceUpdated', 'Login location preference updated'),
             description: !isUpdateFlow
-              ? t(
-                  "selectedLocationPreferenceSetMessage",
-                  "You can change your preference from the user dashboard"
-                )
-              : t(
-                  "locationPreferenceAdded",
-                  "Selected location will be used for your next logins"
-                ),
-            kind: "success",
+              ? t('selectedLocationPreferenceSetMessage', 'You can change your preference from the user dashboard')
+              : t('locationPreferenceAdded', 'Selected location will be used for your next logins'),
+            kind: 'success',
           });
         } else if (defaultLocation) {
           showToast({
-            title: t(
-              "locationPreferenceRemoved",
-              "Login location preference removed"
-            ),
-            description: t(
-              "removedLoginLocationPreference",
-              "The login location preference has been removed."
-            ),
-            kind: "success",
+            title: t('locationPreferenceRemoved', 'Login location preference removed'),
+            description: t('removedLoginLocationPreference', 'The login location preference has been removed.'),
+            kind: 'success',
           });
         }
       });
     },
-    [
-      savePreference,
-      defaultLocation,
-      updateUserPropsWithDefaultLocation,
-      t,
-      isUpdateFlow,
-    ]
+    [savePreference, defaultLocation, updateUserPropsWithDefaultLocation, t, isUpdateFlow],
   );
 
   return {

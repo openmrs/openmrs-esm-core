@@ -1,8 +1,8 @@
 /** @module @category Extension */
-import { LifeCycles, mountRootParcel, Parcel, ParcelConfig } from "single-spa";
-import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
-import { checkStatus } from "./helpers";
-import { updateInternalExtensionStore } from "./store";
+import { LifeCycles, mountRootParcel, Parcel, ParcelConfig } from 'single-spa';
+import { getExtensionNameFromId, getExtensionRegistration } from './extensions';
+import { checkStatus } from './helpers';
+import { updateInternalExtensionStore } from './store';
 
 export interface CancelLoading {
   (): void;
@@ -21,7 +21,7 @@ export async function renderExtension(
   extensionSlotModuleName: string,
   extensionId: string,
   renderFunction: (application: ParcelConfig) => ParcelConfig = (x) => x,
-  additionalProps: Record<string, any> = {}
+  additionalProps: Record<string, any> = {},
 ): Promise<Parcel | null> {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionRegistration = getExtensionRegistration(extensionId);
@@ -29,9 +29,7 @@ export async function renderExtension(
 
   if (domElement) {
     if (!extensionRegistration) {
-      throw Error(
-        `Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`
-      );
+      throw Error(`Couldn't find extension '${extensionName}' to attach to '${extensionSlotName}'`);
     }
 
     const { load, meta, moduleName, online, offline } = extensionRegistration;
@@ -50,10 +48,7 @@ export async function renderExtension(
             ...state.extensions,
             [extensionName]: {
               ...state.extensions[extensionName],
-              instances: [
-                ...state.extensions[extensionName].instances,
-                instance,
-              ],
+              instances: [...state.extensions[extensionName].instances, instance],
             },
           },
         };
@@ -76,13 +71,11 @@ export async function renderExtension(
             extensionModuleName: moduleName,
           },
           domElement,
-        }
+        },
       );
     }
   } else {
-    console.warn(
-      `Tried to render ${extensionId} into ${extensionSlotName} but no DOM element was available.`
-    );
+    console.warn(`Tried to render ${extensionId} into ${extensionSlotName} but no DOM element was available.`);
   }
 
   return parcel;

@@ -1,10 +1,10 @@
 /** @module @category UI */
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { Subject } from "rxjs";
-import { ToastDescriptor, ToastNotificationMeta } from "./toast.component";
-import ActiveToasts from "./active-toasts.component";
-import isEmpty from "lodash-es/isEmpty";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Subject } from 'rxjs';
+import { ToastDescriptor, ToastNotificationMeta } from './toast.component';
+import ActiveToasts from './active-toasts.component';
+import isEmpty from 'lodash-es/isEmpty';
 
 const toastsSubject = new Subject<ToastNotificationMeta>();
 let toastId = 0;
@@ -22,11 +22,11 @@ export function renderToasts(target: HTMLElement | null) {
 }
 
 function isNotEmpty(description: React.ReactNode) {
-  return typeof description === "string"
+  return typeof description === 'string'
     ? description.trim().length > 0
-    : typeof description === "object"
-    ? !isEmpty(description)
-    : false;
+    : typeof description === 'object'
+      ? !isEmpty(description)
+      : false;
 }
 
 /**
@@ -44,7 +44,7 @@ export function showToast(toast: ToastDescriptor) {
     }, 0);
   } else {
     console.error(
-      `showToast must be called with an object having a 'description' property that is a non-empty string or object`
+      `showToast must be called with an object having a 'description' property that is a non-empty string or object`,
     );
   }
 }

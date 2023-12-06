@@ -1,5 +1,5 @@
 /** @module @category Feature Flags */
-import { getGlobalStore } from "@openmrs/esm-state";
+import { getGlobalStore } from '@openmrs/esm-state';
 
 export interface FeatureFlagsStore {
   flags: { [flagName: string]: FeatureFlag };
@@ -14,20 +14,14 @@ export interface FeatureFlag {
 const initialFeatureFlags = { flags: getFeatureFlagsFromLocalStorage() };
 
 /** @internal */
-export const featureFlagsStore = getGlobalStore<FeatureFlagsStore>(
-  "feature-flags",
-  initialFeatureFlags
-);
+export const featureFlagsStore = getGlobalStore<FeatureFlagsStore>('feature-flags', initialFeatureFlags);
 
 featureFlagsStore.subscribe((state) => {
   for (const [flagName, flag] of Object.entries(state.flags)) {
-    localStorage.setItem(
-      `openmrs:feature-flag:${flagName}`,
-      flag.enabled.toString()
-    );
+    localStorage.setItem(`openmrs:feature-flag:${flagName}`, flag.enabled.toString());
     localStorage.setItem(
       `openmrs:feature-flag-meta:${flagName}`,
-      JSON.stringify({ label: flag.label, description: flag.description })
+      JSON.stringify({ label: flag.label, description: flag.description }),
     );
   }
 });
@@ -35,13 +29,11 @@ featureFlagsStore.subscribe((state) => {
 function getFeatureFlagsFromLocalStorage() {
   const flags = {};
   for (const key of Object.keys(localStorage)) {
-    if (key.startsWith("openmrs:feature-flag:")) {
-      const flagName = key.replace("openmrs:feature-flag:", "");
-      const meta = JSON.parse(
-        localStorage.getItem(`openmrs:feature-flag-meta:${flagName}`) || "{}"
-      );
+    if (key.startsWith('openmrs:feature-flag:')) {
+      const flagName = key.replace('openmrs:feature-flag:', '');
+      const meta = JSON.parse(localStorage.getItem(`openmrs:feature-flag-meta:${flagName}`) || '{}');
       flags[flagName] = {
-        enabled: localStorage.getItem(key) === "true",
+        enabled: localStorage.getItem(key) === 'true',
         ...meta,
       };
     }
@@ -59,11 +51,7 @@ function getFeatureFlagsFromLocalStorage() {
  * @param label A human-friendly name which will be displayed in the Implementer Tools
  * @param description An explanation of what the flag does, which will be displayed in the Implementer Tools
  */
-export function registerFeatureFlag(
-  flagName: string,
-  label: string,
-  description: string
-) {
+export function registerFeatureFlag(flagName: string, label: string, description: string) {
   featureFlagsStore.setState((state) => ({
     flags: {
       ...state.flags,
@@ -88,10 +76,7 @@ export function getFeatureFlag(flagName: string) {
  *
  * If you are using React, use `useFeatureFlag` instead.
  */
-export function subscribeToFeatureFlag(
-  flagName: string,
-  callback: (value: boolean) => void
-) {
+export function subscribeToFeatureFlag(flagName: string, callback: (value: boolean) => void) {
   featureFlagsStore.subscribe((state) => {
     callback(state.flags[flagName].enabled);
   });
