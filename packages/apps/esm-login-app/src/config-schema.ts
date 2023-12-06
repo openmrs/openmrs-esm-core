@@ -71,7 +71,7 @@ export const configSchema = {
       _description: "Alt text, shown on hover",
     },
   },
-  passwordOnSeparateScreen: {
+  showPasswordOnSeparateScreen: {
     _type: Type.Boolean,
     _default: true,
     _description:
@@ -98,5 +98,5 @@ export interface ConfigSchema {
     src: string;
     alt: string;
   };
-  passwordOnSeparateScreen: boolean;
+  showPasswordOnSeparateScreen: boolean;
 }

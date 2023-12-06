@@ -169,10 +169,10 @@ describe("Login", () => {
     await user.click(screen.getByRole("button", { name: /log in/i }));
   });
 
-  it("should render the both the username and password fields when the passwordOnSeparateScreen config is false", async () => {
+  it("should render the both the username and password fields when the showPasswordOnSeparateScreen config is false", async () => {
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
-      passwordOnSeparateScreen: false,
+      showPasswordOnSeparateScreen: false,
     });
 
     renderWithRouter(
@@ -194,7 +194,7 @@ describe("Login", () => {
     expect(loginButton).toBeInTheDocument();
   });
 
-  it("should not render the password field when the passwordOnSeparateScreen config is true (default)", async () => {
+  it("should not render the password field when the showPasswordOnSeparateScreen config is true (default)", async () => {
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
     });
@@ -218,11 +218,11 @@ describe("Login", () => {
     expect(loginButton).not.toBeInTheDocument();
   });
 
-  it("should be able to login when the passwordOnSeparateScreen config is false", async () => {
+  it("should be able to login when the showPasswordOnSeparateScreen config is false", async () => {
     mockedLogin.mockReturnValue(Promise.resolve({ some: "data" }));
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
-      passwordOnSeparateScreen: false,
+      showPasswordOnSeparateScreen: false,
     });
     const user = userEvent.setup();
     mockedLogin.mockClear();

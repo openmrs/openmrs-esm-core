@@ -19,5 +19,5 @@ export const mockConfig: ConfigSchema = {
   links: {
     loginSuccess: "${openmrsSpaBase}/home",
   },
-  passwordOnSeparateScreen: true,
+  showPasswordOnSeparateScreen: true,
 };

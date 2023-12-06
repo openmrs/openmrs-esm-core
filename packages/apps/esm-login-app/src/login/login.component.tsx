@@ -40,7 +40,7 @@ export interface LoginProps extends LoginReferrer {}
 
 const Login: React.FC<LoginProps> = () => {
   const config = useConfig();
-  const { passwordOnSeparateScreen } = config;
+  const { showPasswordOnSeparateScreen } = config;
   const isLoginEnabled = useConnectivity();
   const { t } = useTranslation();
   const { user } = useSession();
@@ -56,7 +56,7 @@ const Login: React.FC<LoginProps> = () => {
 
   const showUsername = location.pathname === "/login";
   const showPassword =
-    !passwordOnSeparateScreen || location.pathname === "/login/confirm";
+    !showPasswordOnSeparateScreen || location.pathname === "/login/confirm";
 
   const handleLogin = useCallback(
     (session: Session) => {
@@ -199,7 +199,7 @@ const Login: React.FC<LoginProps> = () => {
           />
         )}
         <Tile className={styles["login-card"]}>
-          {passwordOnSeparateScreen && showPassword ? (
+          {showPasswordOnSeparateScreen && showPassword ? (
             <div className={styles["back-button-div"]}>
               <Button
                 className={styles["back-button"]}
@@ -234,7 +234,7 @@ const Login: React.FC<LoginProps> = () => {
                   required
                 />
                 {/* For password managers */}
-                {passwordOnSeparateScreen && (
+                {showPasswordOnSeparateScreen && (
                   <input
                     id="password"
                     style={hidden}
@@ -244,7 +244,7 @@ const Login: React.FC<LoginProps> = () => {
                     onChange={changePassword}
                   />
                 )}
-                {passwordOnSeparateScreen && (
+                {showPasswordOnSeparateScreen && (
                   <Button
                     className={styles.continueButton}
                     renderIcon={(props) => <ArrowRight size={24} {...props} />}
@@ -275,7 +275,7 @@ const Login: React.FC<LoginProps> = () => {
                   showPasswordLabel="Show password"
                 />
                 {/* For password managers */}
-                {passwordOnSeparateScreen && (
+                {showPasswordOnSeparateScreen && (
                   <input
                     id="username"
                     type="text"
