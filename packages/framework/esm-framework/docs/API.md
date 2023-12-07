@@ -654,7 +654,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L25)
+[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L24)
 
 ___
 

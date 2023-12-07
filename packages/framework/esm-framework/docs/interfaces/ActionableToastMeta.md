@@ -13,11 +13,10 @@
 ### UI Properties
 
 - [actionButtonLabel](ActionableToastMeta.md#actionbuttonlabel)
+- [critical](ActionableToastMeta.md#critical)
+- [description](ActionableToastMeta.md#description)
 - [id](ActionableToastMeta.md#id)
-- [isLowContrast](ActionableToastMeta.md#islowcontrast)
 - [kind](ActionableToastMeta.md#kind)
-- [progressActionLabel](ActionableToastMeta.md#progressactionlabel)
-- [subtitle](ActionableToastMeta.md#subtitle)
 - [title](ActionableToastMeta.md#title)
 
 ### UI Methods
@@ -40,27 +39,41 @@
 
 ___
 
+### critical
+
+• `Optional` **critical**: `boolean`
+
+#### Inherited from
+
+[ActionableToastDescriptor](ActionableToastDescriptor.md).[critical](ActionableToastDescriptor.md#critical)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L13)
+
+___
+
+### description
+
+• **description**: `ReactNode`
+
+#### Inherited from
+
+[ActionableToastDescriptor](ActionableToastDescriptor.md).[description](ActionableToastDescriptor.md#description)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L16)
+
+___
+
 ### id
 
 • **id**: `number`
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L22)
-
-___
-
-### isLowContrast
-
-• `Optional` **isLowContrast**: `boolean`
-
-#### Inherited from
-
-[ActionableToastDescriptor](ActionableToastDescriptor.md).[isLowContrast](ActionableToastDescriptor.md#islowcontrast)
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L13)
+[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L21)
 
 ___
 
@@ -78,34 +91,6 @@ ___
 
 ___
 
-### progressActionLabel
-
-• `Optional` **progressActionLabel**: `string`
-
-#### Inherited from
-
-[ActionableToastDescriptor](ActionableToastDescriptor.md).[progressActionLabel](ActionableToastDescriptor.md#progressactionlabel)
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L16)
-
-___
-
-### subtitle
-
-• `Optional` **subtitle**: `string`
-
-#### Inherited from
-
-[ActionableToastDescriptor](ActionableToastDescriptor.md).[subtitle](ActionableToastDescriptor.md#subtitle)
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L17)
-
-___
-
 ### title
 
 • **title**: `string`
@@ -116,7 +101,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L18)
+[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L17)
 
 ## UI Methods
 

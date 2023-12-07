@@ -13,10 +13,9 @@
 ### UI Properties
 
 - [actionButtonLabel](ActionableToastDescriptor.md#actionbuttonlabel)
-- [isLowContrast](ActionableToastDescriptor.md#islowcontrast)
+- [critical](ActionableToastDescriptor.md#critical)
+- [description](ActionableToastDescriptor.md#description)
 - [kind](ActionableToastDescriptor.md#kind)
-- [progressActionLabel](ActionableToastDescriptor.md#progressactionlabel)
-- [subtitle](ActionableToastDescriptor.md#subtitle)
 - [title](ActionableToastDescriptor.md#title)
 
 ### UI Methods
@@ -35,13 +34,23 @@
 
 ___
 
-### isLowContrast
+### critical
 
-• `Optional` **isLowContrast**: `boolean`
+• `Optional` **critical**: `boolean`
 
 #### Defined in
 
 [packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L13)
+
+___
+
+### description
+
+• **description**: `ReactNode`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L16)
 
 ___
 
@@ -55,33 +64,13 @@ ___
 
 ___
 
-### progressActionLabel
-
-• `Optional` **progressActionLabel**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L16)
-
-___
-
-### subtitle
-
-• `Optional` **subtitle**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L17)
-
-___
-
 ### title
 
 • **title**: `string`
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L18)
+[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L17)
 
 ## UI Methods
 
