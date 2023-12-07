@@ -1,13 +1,12 @@
-import { URL } from "url";
-import { basename, resolve } from "path";
-import { existsSync, readFileSync } from "fs";
+import axios from "axios";
+import glob from "glob";
+import { URL } from "node:url";
+import { basename, resolve } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
 import { exec } from "child_process";
 import { logFail, logInfo, logWarn } from "./logger";
 import { startWebpack } from "./webpack";
 import { getMainBundle, getAppRoutes } from "./dependencies";
-import axios from "axios";
-
-import glob = require("glob");
 
 async function readImportmap(path: string, backend?: string, spaPath?: string) {
   if (path.startsWith("http://") || path.startsWith("https://")) {
