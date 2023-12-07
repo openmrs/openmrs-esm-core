@@ -173,8 +173,6 @@ dev server, you will need to link the tooling as well.
 In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
 Then run your patient chart dev server as usual, with `yarn start`.
 
-If you're not able to get this working, try the 
-
 #### Method 2: Using import map overrides
 
 Read the [dev documentation](https://o3-dev.docs.openmrs.org/#/getting_started/setup?id=import-map-overrides)
