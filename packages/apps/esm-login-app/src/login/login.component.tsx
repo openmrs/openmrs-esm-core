@@ -89,14 +89,15 @@ const Login: React.FC<LoginProps> = () => {
   }, [username, navigate, location, user, handleLogin]);
 
   useEffect(() => {
-    const field = showPassword
-      ? passwordInputRef.current
-      : usernameInputRef.current;
+    const fieldToFocus =
+      showPasswordOnSeparateScreen && showPassword
+        ? passwordInputRef.current
+        : usernameInputRef.current;
 
-    if (field) {
-      field.focus();
+    if (fieldToFocus) {
+      fieldToFocus.focus();
     }
-  }, [showPassword]);
+  }, [showPassword, showPasswordOnSeparateScreen]);
 
   useEffect(() => {
     if (!user && config.provider.type === "oauth2") {

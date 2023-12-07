@@ -247,4 +247,64 @@ describe("Login", () => {
       expect(performLogin).toHaveBeenCalledWith("yoshi", "no-tax-fraud")
     );
   });
+
+  it("should focus the username input", async () => {
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+    });
+
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: "/login",
+      }
+    );
+
+    const usernameInput = screen.getByRole("textbox", { name: /username/i });
+    expect(usernameInput).toHaveFocus();
+  });
+
+  it("should focus the password input in the password screen", async () => {
+    const user = userEvent.setup();
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+    });
+
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: "/login",
+      }
+    );
+
+    const usernameInput = screen.getByRole("textbox", { name: /username/i });
+    const continueButton = screen.getByRole("button", { name: /Continue/i });
+
+    await user.type(usernameInput, "yoshi");
+    await user.click(continueButton);
+
+    const passwordInput = screen.getByLabelText(/password/i);
+    expect(passwordInput).toHaveFocus();
+  });
+
+  it("should focus the username input when the showPasswordOnSeparateScreen config is false", async () => {
+    mockedUseConfig.mockReturnValue({
+      ...mockConfig,
+      showPasswordOnSeparateScreen: false,
+    });
+
+    renderWithRouter(
+      Login,
+      {},
+      {
+        route: "/login",
+      }
+    );
+
+    const usernameInput = screen.getByRole("textbox", { name: /username/i });
+
+    expect(usernameInput).toHaveFocus();
+  });
 });
