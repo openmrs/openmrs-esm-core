@@ -9,7 +9,6 @@
     "packages/tooling/*"
   ],
   "scripts": {
-    "run:docs": "docsify serve docs",
     "run:omrs": "openmrs",
     "run:shell": "turbo run watch --filter=@openmrs/esm-app-shell --parallel --no-cache",
     "ci:publish-next": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --access public --tag next",
@@ -42,7 +41,6 @@
     "autoprefixer": "^10.4.2",
     "classnames": "^2.3.2",
     "cross-env": "7.0.2",
-    "docsify": "^4.12.2",
     "dotenv": "^16.0.3",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.11.0",

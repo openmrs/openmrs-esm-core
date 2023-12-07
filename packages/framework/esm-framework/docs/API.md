@@ -1729,7 +1729,7 @@ This defines a configuration schema for a module. The schema tells the
 configuration system how the module can be configured. It specifies
 what makes configuration valid or invalid.
 
-See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+See [Configuration System](https://o3-docs.openmrs.org/docs/configuration-system)
 for more information about defining a config schema.
 
 #### Parameters
@@ -1761,7 +1761,7 @@ in which it is defined.
 The schema tells the configuration system how the module can be configured.
 It specifies what makes configuration valid or invalid.
 
-See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+See [Configuration System](https://o3-docs.openmrs.org/docs/configuration-system)
 for more information about defining a config schema.
 
 #### Parameters
@@ -3899,7 +3899,7 @@ ___
 
 ▸ **ExtensionSlot**(`__namedParameters`): `Element`
 
-An [extension slot](https://o3-dev.docs.openmrs.org/#/main/extensions).
+An [extension slot](https://o3-docs.openmrs.org/docs/extension-system).
 A place with a name. Extensions that get connected to that name
 will be rendered into this.
 
