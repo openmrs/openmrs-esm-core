@@ -36,6 +36,7 @@ async function isPrivateBrowsing() {
 }
 
 export type OfflineMode = "on" | "off" | "unavailable";
+export type OfflineHandler = () => void | Promise<void>;
 
 export interface OfflineModeResult {
   current: OfflineMode;
@@ -65,6 +66,14 @@ export function setCurrentOfflineMode(mode: OfflineMode) {
     );
     lastRun = new Date().toLocaleString();
     offlineMode = mode;
+  }
+}
+
+export function registerOfflineHandler(setupOffline: OfflineHandler) {
+  window.addEventListener("openmrs:offline-enabled", setupOffline);
+  const offlineMode = getCurrentOfflineMode();
+  if (offlineMode.active) {
+    setupOffline();
   }
 }
 

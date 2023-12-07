@@ -133,6 +133,8 @@ export function startupApp() {
   setupOffline();
   setupSynchronizingOfflineActionsNotifications();
 
+  // registerOfflineHandler(setupOffline);
+
   registerBreadcrumbs([
     {
       path: `${window.spaBase}/${routes.offlineTools}`,

@@ -23,20 +23,13 @@ const OfflineActionsModeButton: React.FC = () => {
   const [active, setActive] = useState(() => getCurrentOfflineMode().active);
 
   const toggle = useCallback(() => {
-    if (window.installedModules && window.installedModules.length > 0) {
-      const dispose = showModal("offline-tools-offline-ready-modal", {
-        items: window.installedModules
-          .filter((app) => app.length >= 3)
-          .map((app) => app[2]),
-        closeModal: (result) => {
-          setActive(result);
-          setCurrentOfflineMode(result ? "on" : "off");
-          dispose();
-        },
-      });
-    } else {
-      console.warn("No installed modules found.");
-    }
+    const dispose = showModal("offline-tools-offline-ready-modal", {
+      closeModal: (result) => {
+        setActive(result);
+        setCurrentOfflineMode(result ? "on" : "off");
+        dispose();
+      },
+    });
   }, [setActive]);
 
   const handleRefresh = useCallback(() => {
@@ -44,20 +37,37 @@ const OfflineActionsModeButton: React.FC = () => {
   }, [toggle]);
 
   return (
-    <div className={styles.offlineModeButtonContainer}>
-      <div>
-        <Network_3 size={20} />
-        <span onClick={doNotCloseMenu} role="none">
-          {t("offlineReady", "Offline Ready")}
-        </span>
+    isOnline && (
+      <div className={styles.offlineModeButtonContainer}>
+        <div>
+          <Network_3 size={20} />
+          <span onClick={doNotCloseMenu} role="none">
+            {t("offlineReady", "Offline Ready")}
+          </span>
+        </div>
+        <DefinitionTooltip
+          openOnHover
+          align="top"
+          definition={`${t("lastRun", "Last Run")}: ${
+            active ? lastRun : t("never", "Never")
+          }`}
+        >
+          {active && (
+            <Button kind="ghost" onClick={handleRefresh}>
+              {t("refresh", "Refresh")}
+            </Button>
+          )}
+        </DefinitionTooltip>
+        {!active && (
+          <Toggle
+            className={styles.toggle}
+            id="offlineModeSwitch"
+            toggled={active}
+            onToggle={toggle}
+          />
+        )}
       </div>
-      <Toggle
-        className={styles.toggle}
-        id="offlineModeSwitch"
-        toggled={active}
-        onToggle={toggle}
-      />
-    </div>
+    )
   );
 };
 

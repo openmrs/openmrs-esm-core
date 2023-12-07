@@ -54,15 +54,13 @@ declare global {
     /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
      */
-    installedModules: Array<[string, OpenmrsAppRoutes, OfflineReadyFunction]>;
+    installedModules: Array<[string, OpenmrsAppRoutes]>;
     /**
      * The i18next instance for the app.
      */
     i18next: i18n;
   }
 }
-
-export type OfflineReadyFunction = (abortController: AbortController) => void;
 
 export type SpaEnvironment = "production" | "development" | "test";
 

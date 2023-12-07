@@ -4,10 +4,10 @@ import {
   ModalFooter,
   ModalHeader,
   Button,
-  ProgressBar,
+  InlineLoading,
 } from "@carbon/react";
 import { useTranslation } from "react-i18next";
-import { showToast } from "@openmrs/esm-framework";
+import { getCurrentOfflineMode, showToast } from "@openmrs/esm-framework";
 
 export interface OfflineActionsProgressModalProps {
   items?: Array<any>;
@@ -19,40 +19,29 @@ const OfflineReadyModal: React.FC<OfflineActionsProgressModalProps> = ({
   items,
 }) => {
   const { t } = useTranslation();
-  const [progress, setProgress] = useState(0);
+  const [isRunning, setIsRunning] = useState(true);
   const [abortController, setAbortController] = useState(
     () => new AbortController()
   );
 
-  async function runAsyncFunctionsInParallel(asyncFunctions) {
-    const totalFunctions = asyncFunctions.length;
+  async function dispatchOfflineEvent() {
+    //TODO CHANGE MODE
+    let mode = getCurrentOfflineMode().active;
+    window.dispatchEvent(
+      new CustomEvent(`openmrs:offline-${mode ? "enabled" : "disabled"}`, {
+        detail: getCurrentOfflineMode(),
+      })
+    );
 
-    if (totalFunctions === 0) {
-      console.warn("No tasks to run.");
-      setProgress(100);
-      return;
-    }
-
-    let completedFunctions = 0;
-
-    const promises = asyncFunctions.map(async (asyncFunction) => {
-      await asyncFunction(abortController);
-      completedFunctions++;
-      const progress = (completedFunctions / totalFunctions) * 100;
-      setProgress(progress);
-    });
-
-    await Promise.all(promises);
-
-    console.warn("All tasks completed!");
+    setIsRunning(false);
   }
 
   useEffect(() => {
-    runAsyncFunctionsInParallel(items || []);
+    dispatchOfflineEvent();
   }, [abortController, items]);
 
   const handleClose = useCallback(() => {
-    if (progress < 100) {
+    if (isRunning) {
       abortController.abort();
 
       showToast({
@@ -74,7 +63,7 @@ const OfflineReadyModal: React.FC<OfflineActionsProgressModalProps> = ({
       });
       closeModal(true);
     }
-  }, [abortController, closeModal, progress, t]);
+  }, [abortController, closeModal, isRunning, t]);
 
   return (
     <>
@@ -83,25 +72,18 @@ const OfflineReadyModal: React.FC<OfflineActionsProgressModalProps> = ({
         closeModal={handleClose}
       />
       <ModalBody>
-        <ProgressBar
-          id="progress-bar"
-          value={progress}
-          status={progress === 100 ? "finished" : "active"}
-          max={100}
-          label={t("progressBarLabel", "{progress}% Complete", {
-            progress: Math.round(progress),
-          })}
-        />
+        {isRunning && (
+          <InlineLoading
+            // className={styles.loader}
+            description={t("loading", "Loading") + "..."}
+          />
+        )}
       </ModalBody>
       <ModalFooter>
-        <Button kind="danger" onClick={handleClose} disabled={progress === 100}>
+        <Button kind="danger" onClick={handleClose} disabled={!isRunning}>
           {t("cancel", "Cancel")}
         </Button>
-        <Button
-          kind="primary"
-          onClick={handleClose}
-          disabled={progress !== 100}
-        >
+        <Button kind="primary" onClick={handleClose} disabled={isRunning}>
           {t("confirm", "Confirm")}
         </Button>
       </ModalFooter>

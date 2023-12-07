@@ -36,7 +36,6 @@ import {
   finishRegisteringAllApps,
   registerApp,
   tryRegisterExtension,
-  getOfflineReadyLoader,
 } from "./apps";
 import { setupI18n } from "./locale";
 import { appName, getCoreExtensions } from "./ui";
@@ -92,8 +91,7 @@ async function setupApps() {
   const modules: typeof window.installedModules = [];
   const registrationPromises = Object.entries(routes).map(
     async ([module, routes]) => {
-      const offlineLoader = getOfflineReadyLoader(module);
-      modules.push([module, routes, offlineLoader]);
+      modules.push([module, routes]);
       registerApp(module, routes);
     }
   );
