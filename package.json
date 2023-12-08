@@ -18,7 +18,7 @@
     "build": "turbo run build",
     "build:apps": "turbo run build --filter='@openmrs/*-app'",
     "setup": "yarn install && turbo run build",
-    "start": "openmrs develop --sources packages/apps/esm-*-app",
+    "start": "openmrs develop",
     "verify": "turbo run lint && turbo run test && turbo run typescript",
     "prettier": "prettier \"packages/**/src/**/*\" --write",
     "postinstall": "husky install",
