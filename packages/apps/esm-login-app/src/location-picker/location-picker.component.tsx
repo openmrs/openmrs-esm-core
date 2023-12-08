@@ -1,13 +1,6 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  LegacyRef,
-  useMemo,
-} from "react";
-import { useLocation, type Location, useSearchParams } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import React, { useState, useEffect, useRef, useCallback, LegacyRef, useMemo } from 'react';
+import { useLocation, type Location, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   Checkbox,
@@ -16,45 +9,28 @@ import {
   RadioButton,
   RadioButtonGroup,
   RadioButtonSkeleton,
-} from "@carbon/react";
-import {
-  navigate,
-  setSessionLocation,
-  useConfig,
-  useConnectivity,
-  useSession,
-} from "@openmrs/esm-framework";
-import type { LoginReferrer } from "../login/login.component";
-import { useLoginLocations } from "../login.resource";
-import styles from "./location-picker.scss";
-import { useDefaultLocation } from "./location-picker.resource";
-import { ConfigSchema } from "../config-schema";
+} from '@carbon/react';
+import { navigate, setSessionLocation, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+import type { LoginReferrer } from '../login/login.component';
+import { useLoginLocations } from '../login.resource';
+import styles from './location-picker.scss';
+import { useDefaultLocation } from './location-picker.resource';
+import { ConfigSchema } from '../config-schema';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
   currentLocationUuid?: string;
 }
 
-const LocationPicker: React.FC<LocationPickerProps> = ({
-  hideWelcomeMessage,
-  currentLocationUuid,
-}) => {
+const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, currentLocationUuid }) => {
   const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
   const [searchParams] = useSearchParams();
-  const isUpdateFlow = useMemo(
-    () => searchParams.get("update") === "true",
-    [searchParams]
-  );
-  const {
-    defaultLocation,
-    updateDefaultLocation,
-    savePreference,
-    setSavePreference,
-    defaultLocationFhir,
-  } = useDefaultLocation(isUpdateFlow);
+  const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
+  const { defaultLocation, updateDefaultLocation, savePreference, setSavePreference, defaultLocationFhir } =
+    useDefaultLocation(isUpdateFlow);
 
   const [searchTerm, setSearchTerm] = useState(null);
 
@@ -65,7 +41,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       userUuid: user?.uuid,
       userProperties: user?.userProperties,
     }),
-    [user]
+    [user],
   );
 
   const {
@@ -74,11 +50,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     hasMore,
     loadingNewData,
     setPage,
-  } = useLoginLocations(
-    chooseLocation.useLoginLocationTag,
-    chooseLocation.locationsPerRequest,
-    searchTerm
-  );
+  } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
 
   const locations = useMemo(() => {
     if (!defaultLocationFhir?.length || !fetchedLocations) {
@@ -86,9 +58,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
     }
     return [
       ...(defaultLocationFhir ?? []),
-      ...fetchedLocations?.filter(
-        ({ resource }) => resource.id !== defaultLocationFhir?.[0].resource.id
-      ),
+      ...fetchedLocations?.filter(({ resource }) => resource.id !== defaultLocationFhir?.[0].resource.id),
     ];
   }, [defaultLocationFhir, fetchedLocations]);
 
@@ -101,7 +71,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { state } = useLocation() as unknown as Omit<Location, "state"> & {
+  const { state } = useLocation() as unknown as Omit<Location, 'state'> & {
     state: LoginReferrer;
   };
 
@@ -110,24 +80,17 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
       setIsSubmitting(true);
 
       const referrer = state?.referrer;
-      const returnToUrl = new URLSearchParams(location?.search).get(
-        "returnToUrl"
-      );
+      const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
 
-      const sessionDefined = locationUuid
-        ? setSessionLocation(locationUuid, new AbortController())
-        : Promise.resolve();
+      const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
 
       updateDefaultLocation(locationUuid, saveUserPreference);
       sessionDefined.then(() => {
-        if (
-          referrer &&
-          !["/", "/login", "/login/location"].includes(referrer)
-        ) {
-          navigate({ to: "${openmrsSpaBase}" + referrer });
+        if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
+          navigate({ to: '${openmrsSpaBase}' + referrer });
           return;
         }
-        if (returnToUrl && returnToUrl !== "/") {
+        if (returnToUrl && returnToUrl !== '/') {
           navigate({ to: returnToUrl });
         } else {
           navigate({ to: config.links.loginSuccess });
@@ -135,7 +98,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         return;
       });
     },
-    [state?.referrer, config.links.loginSuccess, updateDefaultLocation]
+    [state?.referrer, config.links.loginSuccess, updateDefaultLocation],
   );
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
@@ -148,13 +111,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         changeLocation();
       }
     }
-  }, [
-    changeLocation,
-    config.chooseLocation.enabled,
-    isLoading,
-    locations,
-    searchTerm,
-  ]);
+  }, [changeLocation, config.chooseLocation.enabled, isLoading, locations, searchTerm]);
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
@@ -168,7 +125,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
   }, [changeLocation, isSubmitting, defaultLocation, isUpdateFlow]);
 
   const search = (location: string) => {
-    setActiveLocation("");
+    setActiveLocation('');
     setSearchTerm(location);
   };
 
@@ -180,7 +137,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
 
       changeLocation(activeLocation, savePreference);
     },
-    [activeLocation, changeLocation, savePreference]
+    [activeLocation, changeLocation, savePreference],
   );
 
   // Infinite scroll
@@ -197,11 +154,11 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         },
         {
           threshold: 1,
-        }
+        },
       );
       if (node) observer.current.observe(node);
     },
-    [loadingNewData, hasMore, setPage]
+    [loadingNewData, hasMore, setPage],
   );
 
   const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
@@ -212,20 +169,20 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
         <div className={styles.locationCard}>
           <div className={styles.paddedContainer}>
             <p className={styles.welcomeTitle}>
-              {t("welcome", "Welcome")} {currentUser}
+              {t('welcome', 'Welcome')} {currentUser}
             </p>
             <p className={styles.welcomeMessage}>
               {t(
-                "selectYourLocation",
-                "Select your location from the list below. Use the search bar to find your location."
+                'selectYourLocation',
+                'Select your location from the list below. Use the search bar to find your location.',
               )}
             </p>
           </div>
           <Search
             autoFocus
-            labelText={t("searchForLocation", "Search for a location")}
+            labelText={t('searchForLocation', 'Search for a location')}
             id="search-1"
-            placeholder={t("searchForLocation", "Search for a location")}
+            placeholder={t('searchForLocation', 'Search for a location')}
             onChange={(event) => search(event.target.value)}
             name="searchForLocation"
             size="lg"
@@ -233,26 +190,11 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
           <div className={styles.searchResults}>
             {isLoading ? (
               <div className={styles.loadingContainer}>
-                <RadioButtonSkeleton
-                  className={styles.radioButtonSkeleton}
-                  role="progressbar"
-                />
-                <RadioButtonSkeleton
-                  className={styles.radioButtonSkeleton}
-                  role="progressbar"
-                />
-                <RadioButtonSkeleton
-                  className={styles.radioButtonSkeleton}
-                  role="progressbar"
-                />
-                <RadioButtonSkeleton
-                  className={styles.radioButtonSkeleton}
-                  role="progressbar"
-                />
-                <RadioButtonSkeleton
-                  className={styles.radioButtonSkeleton}
-                  role="progressbar"
-                />
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
               </div>
             ) : (
               <>
@@ -280,15 +222,13 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
                     </RadioButtonGroup>
                   ) : (
                     <div className={styles.emptyState}>
-                      <p className={styles.locationNotFound}>
-                        {t("noResultsToDisplay", "No results to display")}
-                      </p>
+                      <p className={styles.locationNotFound}>{t('noResultsToDisplay', 'No results to display')}</p>
                     </div>
                   )}
                 </div>
                 {hasMore && (
                   <div className={styles.loadingIcon}>
-                    <InlineLoading description={t("loading", "Loading")} />
+                    <InlineLoading description={t('loading', 'Loading')} />
                   </div>
                 )}
               </>
@@ -298,25 +238,15 @@ const LocationPicker: React.FC<LocationPickerProps> = ({
             <Checkbox
               id="checkbox"
               className={styles.savePreferenceCheckbox}
-              labelText={t(
-                "rememberLocationForFutureLogins",
-                "Remember my location for future logins"
-              )}
+              labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
               checked={savePreference}
               onChange={(_, { checked }) => setSavePreference(checked)}
             />
-            <Button
-              kind="primary"
-              type="submit"
-              disabled={!activeLocation || !isLoginEnabled || isSubmitting}
-            >
+            <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
               {isSubmitting ? (
-                <InlineLoading
-                  className={styles.loader}
-                  description={t("submitting", "Submitting")}
-                />
+                <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
               ) : (
-                <span>{t("confirm", "Confirm")}</span>
+                <span>{t('confirm', 'Confirm')}</span>
               )}
             </Button>
           </div>

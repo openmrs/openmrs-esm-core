@@ -1,5 +1,5 @@
-import React, { Fragment, useMemo } from "react";
-import { useTranslation } from "react-i18next";
+import React, { Fragment, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DataTable,
   Table,
@@ -10,13 +10,10 @@ import {
   TableHeader,
   TableRow,
   Toggle,
-} from "@carbon/react";
-import styles from "./frontend-modules.scss";
-import { registerFeatureFlag, useStore } from "@openmrs/esm-framework";
-import {
-  featureFlagsStore,
-  setFeatureFlag,
-} from "@openmrs/esm-framework/src/internal";
+} from '@carbon/react';
+import styles from './frontend-modules.scss';
+import { registerFeatureFlag, useStore } from '@openmrs/esm-framework';
+import { featureFlagsStore, setFeatureFlag } from '@openmrs/esm-framework/src/internal';
 
 export function FeatureFlags() {
   const { flags } = useStore(featureFlagsStore);
@@ -25,19 +22,19 @@ export function FeatureFlags() {
   const headers = useMemo(
     () => [
       {
-        key: "label",
-        header: t("featureFlag", "Feature Flag"),
+        key: 'label',
+        header: t('featureFlag', 'Feature Flag'),
       },
       {
-        key: "description",
-        header: t("description", "Description"),
+        key: 'description',
+        header: t('description', 'Description'),
       },
       {
-        key: "enabled",
-        header: t("enabled", "Enabled"),
+        key: 'enabled',
+        header: t('enabled', 'Enabled'),
       },
     ],
-    [t]
+    [t],
   );
 
   const rows = useMemo(() => {
@@ -62,9 +59,7 @@ export function FeatureFlags() {
               <TableHead>
                 <TableRow>
                   {headers.map((header) => (
-                    <TableHeader {...getHeaderProps({ header })}>
-                      {header.header}
-                    </TableHeader>
+                    <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
                   ))}
                 </TableRow>
               </TableHead>
@@ -73,10 +68,7 @@ export function FeatureFlags() {
                   <Fragment key={flag.name}>
                     <TableRow>
                       <TableCell>
-                        <div
-                          id={`flag-label-${flag.name}`}
-                          className={styles.header}
-                        >
+                        <div id={`flag-label-${flag.name}`} className={styles.header}>
                           {flag.label}
                         </div>
                         <div className={styles.helper}>{flag.name}</div>
@@ -91,9 +83,7 @@ export function FeatureFlags() {
                           labelText="" // using aria-labelledby instead
                           hideLabel={true}
                           toggled={flag.enabled}
-                          onToggle={() =>
-                            setFeatureFlag(flag.name, !flag.enabled)
-                          }
+                          onToggle={() => setFeatureFlag(flag.name, !flag.enabled)}
                         />
                       </TableCell>
                     </TableRow>

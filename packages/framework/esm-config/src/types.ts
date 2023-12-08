@@ -1,13 +1,13 @@
 export enum Type {
-  Array = "Array",
-  Boolean = "Boolean",
-  ConceptUuid = "ConceptUuid",
-  Number = "Number",
-  Object = "Object",
-  String = "String",
-  UUID = "UUID",
-  PersonAttributeTypeUuid = "PersonAttributeTypeUuid",
-  PatientIdentifierTypeUuid = "PatientIdentifierTypeUuid",
+  Array = 'Array',
+  Boolean = 'Boolean',
+  ConceptUuid = 'ConceptUuid',
+  Number = 'Number',
+  Object = 'Object',
+  String = 'String',
+  UUID = 'UUID',
+  PersonAttributeTypeUuid = 'PersonAttributeTypeUuid',
+  PatientIdentifierTypeUuid = 'PatientIdentifierTypeUuid',
 }
 
 // Full-powered typing for Config and Schema trees depends on being able to
@@ -27,21 +27,15 @@ export interface Config {
 
 export interface ConfigObject {
   [key: string]: any;
-  "Display conditions"?: DisplayConditionsConfigObject;
-  "Translation overrides"?: Record<string, Record<string, string>>;
+  'Display conditions'?: DisplayConditionsConfigObject;
+  'Translation overrides'?: Record<string, Record<string, string>>;
 }
 
 export interface DisplayConditionsConfigObject {
   privileges?: string[];
 }
 
-export type ConfigValue =
-  | string
-  | number
-  | boolean
-  | void
-  | Array<any>
-  | object;
+export type ConfigValue = string | number | boolean | void | Array<any> | object;
 
 export interface ExtensionSlotConfig {
   add?: Array<string>;

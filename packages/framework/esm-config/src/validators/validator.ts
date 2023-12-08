@@ -1,5 +1,5 @@
 /** @module @category Config Validation */
-import { Validator, ValidatorFunction } from "../types";
+import { Validator, ValidatorFunction } from '../types';
 
 /**
  * Constructs a custom validator.
@@ -24,11 +24,11 @@ import { Validator, ValidatorFunction } from "../types";
  */
 export function validator(
   validationFunction: ValidatorFunction,
-  message: string | ((value: any) => string)
+  message: string | ((value: any) => string),
 ): Validator {
   return (value) => {
     if (!validationFunction(value)) {
-      if (typeof message === "function") {
+      if (typeof message === 'function') {
         return message(value);
       } else {
         return message;

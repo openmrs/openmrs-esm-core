@@ -37,7 +37,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:340](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L340)
+[packages/framework/esm-api/src/openmrs-fetch.ts:309](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L309)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:339](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L339)
+[packages/framework/esm-api/src/openmrs-fetch.ts:308](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L308)
 
 ___
 

@@ -1,19 +1,16 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { navigate } from "@openmrs/esm-framework";
-import { Button } from "@carbon/react";
-import { Location } from "@carbon/react/icons";
-import styles from "./change-location-link.scss";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { navigate } from '@openmrs/esm-framework';
+import { Button } from '@carbon/react';
+import { Location } from '@carbon/react/icons';
+import styles from './change-location-link.scss';
 
 interface ChangeLocationLinkProps {
   referer?: string;
   currentLocation: string;
 }
 
-const ChangeLocationLink: React.FC<ChangeLocationLinkProps> = ({
-  referer,
-  currentLocation,
-}) => {
+const ChangeLocationLink: React.FC<ChangeLocationLinkProps> = ({ referer, currentLocation }) => {
   const { t } = useTranslation();
 
   const changeLocation = () => {
@@ -30,7 +27,7 @@ const ChangeLocationLink: React.FC<ChangeLocationLinkProps> = ({
       <div>
         {currentLocation}
         <Button kind="ghost" onClick={changeLocation}>
-          {t("change", "Change")}
+          {t('change', 'Change')}
         </Button>
       </div>
     </div>

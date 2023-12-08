@@ -1,14 +1,8 @@
-import React, { memo, useCallback, useMemo, useState } from "react";
-import { Navigate } from "react-router-dom";
-import classNames from "classnames";
-import {
-  HeaderContainer,
-  Header,
-  HeaderMenuButton,
-  HeaderGlobalBar,
-  HeaderGlobalAction,
-} from "@carbon/react";
-import { Close, Switcher, UserAvatarFilledAlt } from "@carbon/react/icons";
+import React, { memo, useCallback, useMemo, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import classNames from 'classnames';
+import { HeaderContainer, Header, HeaderMenuButton, HeaderGlobalBar, HeaderGlobalAction } from '@carbon/react';
+import { Close, Switcher, UserAvatarFilledAlt } from '@carbon/react/icons';
 import {
   LoggedInUser,
   useLayoutType,
@@ -17,42 +11,33 @@ import {
   useSession,
   useConnectedExtensions,
   useConfig,
-} from "@openmrs/esm-framework";
-import { isDesktop } from "../../utils";
-import AppMenuPanel from "../navbar-header-panels/app-menu-panel.component";
-import Logo from "../logo/logo.component";
-import NotificationsMenuPanel from "../navbar-header-panels/notifications-menu-panel.component";
-import OfflineBanner from "../offline-banner/offline-banner.component";
-import UserMenuPanel from "../navbar-header-panels/user-menu-panel.component";
-import SideMenuPanel from "../navbar-header-panels/side-menu-panel.component";
-import styles from "./navbar.scss";
+} from '@openmrs/esm-framework';
+import { isDesktop } from '../../utils';
+import AppMenuPanel from '../navbar-header-panels/app-menu-panel.component';
+import Logo from '../logo/logo.component';
+import NotificationsMenuPanel from '../navbar-header-panels/notifications-menu-panel.component';
+import OfflineBanner from '../offline-banner/offline-banner.component';
+import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
+import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
+import styles from './navbar.scss';
 
 const Navbar: React.FC = () => {
   const session = useSession();
   const config = useConfig();
-  const [user, setUser] = useState<LoggedInUser | null | false>(
-    session?.user ?? null
-  );
+  const [user, setUser] = useState<LoggedInUser | null | false>(session?.user ?? null);
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
   const allowedLocales = session?.allowedLocales ?? null;
   const layout = useLayoutType();
-  const navMenuItems = useConnectedExtensions(
-    "patient-chart-dashboard-slot"
-  ).map((e) => e.id);
-  const openmrsSpaBase = window["getOpenmrsSpaBase"]();
-  const appMenuItems = useConnectedExtensions("app-menu-slot");
-  const userMenuItems = useConnectedExtensions("user-panel-slot");
-  const isActivePanel = useCallback(
-    (panelName: string) => activeHeaderPanel === panelName,
-    [activeHeaderPanel]
-  );
+  const navMenuItems = useConnectedExtensions('patient-chart-dashboard-slot').map((e) => e.id);
+  const openmrsSpaBase = window['getOpenmrsSpaBase']();
+  const appMenuItems = useConnectedExtensions('app-menu-slot');
+  const userMenuItems = useConnectedExtensions('user-panel-slot');
+  const isActivePanel = useCallback((panelName: string) => activeHeaderPanel === panelName, [activeHeaderPanel]);
 
   const togglePanel = useCallback(
     (panelName: string) =>
-      setActiveHeaderPanel((activeHeaderPanel) =>
-        activeHeaderPanel === panelName ? null : panelName
-      ),
-    []
+      setActiveHeaderPanel((activeHeaderPanel) => (activeHeaderPanel === panelName ? null : panelName)),
+    [],
   );
 
   const logout = useCallback(() => setUser(false), []);
@@ -61,18 +46,9 @@ const Navbar: React.FC = () => {
     setActiveHeaderPanel(null);
   }, []);
 
-  const showHamburger = useMemo(
-    () => !isDesktop(layout) && navMenuItems.length > 0,
-    [navMenuItems.length, layout]
-  );
-  const showAppMenu = useMemo(
-    () => appMenuItems.length > 0,
-    [appMenuItems.length]
-  );
-  const showUserMenu = useMemo(
-    () => userMenuItems.length > 0,
-    [userMenuItems.length]
-  );
+  const showHamburger = useMemo(() => !isDesktop(layout) && navMenuItems.length > 0, [navMenuItems.length, layout]);
+  const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
+  const showUserMenu = useMemo(() => userMenuItems.length > 0, [userMenuItems.length]);
   const HeaderItems = () => (
     <>
       <OfflineBanner />
@@ -83,26 +59,20 @@ const Navbar: React.FC = () => {
             isCollapsible
             className={styles.headerMenuButton}
             onClick={(event) => {
-              togglePanel("sideMenu");
+              togglePanel('sideMenu');
               event.stopPropagation();
             }}
-            isActive={isActivePanel("sideMenu")}
+            isActive={isActivePanel('sideMenu')}
           />
         )}
         <ConfigurableLink to={config.logo.link}>
-          <div className={showHamburger ? "" : styles.spacedLogo}>
+          <div className={showHamburger ? '' : styles.spacedLogo}>
             <Logo />
           </div>
         </ConfigurableLink>
-        <ExtensionSlot
-          className={styles.dividerOverride}
-          name="top-nav-info-slot"
-        />
+        <ExtensionSlot className={styles.dividerOverride} name="top-nav-info-slot" />
         <HeaderGlobalBar className={styles.headerGlobalBar}>
-          <ExtensionSlot
-            name="top-nav-actions-slot"
-            className={styles.topNavActionsSlot}
-          />
+          <ExtensionSlot name="top-nav-actions-slot" className={styles.topNavActionsSlot} />
           <ExtensionSlot
             name="notifications-menu-button-slot"
             state={{
@@ -115,22 +85,18 @@ const Navbar: React.FC = () => {
               aria-label="Users"
               aria-labelledby="Users Avatar Icon"
               className={classNames({
-                [styles.headerGlobalBarButton]: isActivePanel("userMenu"),
-                [styles.activePanel]: !isActivePanel("userMenu"),
+                [styles.headerGlobalBarButton]: isActivePanel('userMenu'),
+                [styles.activePanel]: !isActivePanel('userMenu'),
               })}
               enterDelayMs={500}
               name="Users"
-              isActive={isActivePanel("userMenu")}
+              isActive={isActivePanel('userMenu')}
               onClick={(event) => {
-                togglePanel("userMenu");
+                togglePanel('userMenu');
                 event.stopPropagation();
               }}
             >
-              {isActivePanel("userMenu") ? (
-                <Close size={20} />
-              ) : (
-                <UserAvatarFilledAlt size={20} />
-              )}
+              {isActivePanel('userMenu') ? <Close size={20} /> : <UserAvatarFilledAlt size={20} />}
             </HeaderGlobalAction>
           )}
           {showAppMenu && (
@@ -138,43 +104,29 @@ const Navbar: React.FC = () => {
               aria-label="App Menu"
               aria-labelledby="App Menu"
               className={classNames({
-                [styles.headerGlobalBarButton]: isActivePanel("appMenu"),
-                [styles.activePanel]: !isActivePanel("appMenu"),
+                [styles.headerGlobalBarButton]: isActivePanel('appMenu'),
+                [styles.activePanel]: !isActivePanel('appMenu'),
               })}
               enterDelayMs={500}
-              isActive={isActivePanel("appMenu")}
+              isActive={isActivePanel('appMenu')}
               tooltipAlignment="end"
               onClick={(event) => {
-                togglePanel("appMenu");
+                togglePanel('appMenu');
                 event.stopPropagation();
               }}
             >
-              {isActivePanel("appMenu") ? (
-                <Close size={20} />
-              ) : (
-                <Switcher size={20} />
-              )}
+              {isActivePanel('appMenu') ? <Close size={20} /> : <Switcher size={20} />}
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>
-        {!isDesktop(layout) && (
-          <SideMenuPanel
-            hidePanel={hidePanel}
-            expanded={isActivePanel("sideMenu")}
-          />
-        )}
-        {showAppMenu && (
-          <AppMenuPanel
-            expanded={isActivePanel("appMenu")}
-            hidePanel={hidePanel}
-          />
-        )}
-        <NotificationsMenuPanel expanded={isActivePanel("notificationsMenu")} />
+        {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel} expanded={isActivePanel('sideMenu')} />}
+        {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel} />}
+        <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
         {showUserMenu && (
           <UserMenuPanel
             user={user}
             session={session}
-            expanded={isActivePanel("userMenu")}
+            expanded={isActivePanel('userMenu')}
             allowedLocales={allowedLocales}
             onLogout={logout}
             hidePanel={hidePanel}
@@ -192,9 +144,7 @@ const Navbar: React.FC = () => {
         to={`/login/location`}
         state={{
           referrer: window.location.pathname.slice(
-            window.location.pathname.indexOf(openmrsSpaBase) +
-              openmrsSpaBase.length -
-              1
+            window.location.pathname.indexOf(openmrsSpaBase) + openmrsSpaBase.length - 1,
           ),
         }}
       />
@@ -206,9 +156,7 @@ const Navbar: React.FC = () => {
       to={`/login`}
       state={{
         referrer: window.location.pathname.slice(
-          window.location.pathname.indexOf(openmrsSpaBase) +
-            openmrsSpaBase.length -
-            1
+          window.location.pathname.indexOf(openmrsSpaBase) + openmrsSpaBase.length - 1,
         ),
       }}
     />

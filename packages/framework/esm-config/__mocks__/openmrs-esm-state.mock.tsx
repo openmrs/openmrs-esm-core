@@ -1,4 +1,4 @@
-import { createStore, StoreApi } from "zustand";
+import { createStore, StoreApi } from 'zustand';
 interface StoreEntity {
   value: StoreApi<any>;
   active: boolean;
@@ -13,17 +13,12 @@ const availableStores: Record<string, StoreEntity> = {};
 
 export const mockStores = availableStores;
 
-export function createGlobalStore<T>(
-  name: string,
-  initialState: T
-): StoreApi<T> {
+export function createGlobalStore<T>(name: string, initialState: T): StoreApi<T> {
   const available = availableStores[name];
 
   if (available) {
     if (available.active) {
-      console.error(
-        "Cannot override an existing store. Make sure that stores are only created once."
-      );
+      console.error('Cannot override an existing store. Make sure that stores are only created once.');
     } else {
       available.value.setState(initialState, true);
     }
@@ -43,10 +38,7 @@ export function createGlobalStore<T>(
   }
 }
 
-export function getGlobalStore<T>(
-  name: string,
-  fallbackState?: T
-): StoreApi<T> {
+export function getGlobalStore<T>(name: string, fallbackState?: T): StoreApi<T> {
   const available = availableStores[name];
 
   if (!available) {
@@ -64,9 +56,9 @@ export function getGlobalStore<T>(
 
 function instrumentedStore<T>(name: string, store: StoreApi<T>) {
   return {
-    getState: jest.spyOn(store, "getState"),
-    setState: jest.spyOn(store, "setState"),
-    subscribe: jest.spyOn(store, "subscribe"),
+    getState: jest.spyOn(store, 'getState'),
+    setState: jest.spyOn(store, 'setState'),
+    subscribe: jest.spyOn(store, 'subscribe'),
     resetMock: () => store.setState(initialStates[name]),
   } as any as MockedStore<T>;
 }

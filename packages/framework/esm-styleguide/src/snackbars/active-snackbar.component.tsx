@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { Subject } from "rxjs";
-import { Snackbar, SnackbarMeta } from "./snackbar.component";
+import React, { useEffect, useState, useCallback } from 'react';
+import { Subject } from 'rxjs';
+import { Snackbar, SnackbarMeta } from './snackbar.component';
 
 interface ActiveSnackbarProps {
   subject: Subject<SnackbarMeta>;
@@ -22,10 +22,10 @@ const ActiveSnackbars: React.FC<ActiveSnackbarProps> = ({ subject }) => {
             n.actionButtonLabel !== snackbar.actionButtonLabel ||
             n.onActionButtonClick !== snackbar.onActionButtonClick ||
             n.kind !== snackbar.kind ||
-            n.title !== snackbar.title
+            n.title !== snackbar.title,
         ),
         snackbar,
-      ])
+      ]),
     );
 
     return () => subscription.unsubscribe();
@@ -34,11 +34,7 @@ const ActiveSnackbars: React.FC<ActiveSnackbarProps> = ({ subject }) => {
   return (
     <>
       {snackbars.map((snackbar) => (
-        <Snackbar
-          key={snackbar.id}
-          snackbar={snackbar}
-          closeSnackbar={() => closeSnackbar(snackbar)}
-        />
+        <Snackbar key={snackbar.id} snackbar={snackbar} closeSnackbar={() => closeSnackbar(snackbar)} />
       ))}
     </>
   );

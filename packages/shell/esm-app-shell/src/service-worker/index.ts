@@ -1,8 +1,8 @@
-import { setCacheNameDetails } from "workbox-core";
-import { handleMessage } from "./message";
-import { precacheAppShell } from "./caching";
-import { registerAllOmrsRoutes } from "./routing";
-import { omrsCachePrefix } from "./constants";
+import { setCacheNameDetails } from 'workbox-core';
+import { handleMessage } from './message';
+import { precacheAppShell } from './caching';
+import { registerAllOmrsRoutes } from './routing';
+import { omrsCachePrefix } from './constants';
 
 self.__WB_DISABLE_DEV_LOGS = true;
 
@@ -11,9 +11,9 @@ setCacheNameDetails({ prefix: omrsCachePrefix });
 
 registerAllOmrsRoutes();
 
-self.addEventListener("message", handleMessage);
+self.addEventListener('message', handleMessage);
 
-self.addEventListener("install", (e) => {
+self.addEventListener('install', (e) => {
   self.skipWaiting();
 
   // The app shell files are special in the sense that they can immediately be cached during SW installation.
@@ -22,6 +22,6 @@ self.addEventListener("install", (e) => {
   e.waitUntil(precacheAppShell());
 });
 
-self.addEventListener("activate", (e) => {
+self.addEventListener('activate', (e) => {
   e.waitUntil(self.clients.claim());
 });

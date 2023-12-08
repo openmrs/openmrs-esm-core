@@ -1,6 +1,6 @@
-import React from "react";
-import EditableValue from "./editable-value.component";
-import { ExtensionSlotConfigureValueObject } from "@openmrs/esm-framework";
+import React from 'react';
+import EditableValue from './editable-value.component';
+import { ExtensionSlotConfigureValueObject } from '@openmrs/esm-framework';
 
 export interface ExtensionConfigureTreeProps {
   moduleName: string;
@@ -8,18 +8,14 @@ export interface ExtensionConfigureTreeProps {
   config?: ExtensionSlotConfigureValueObject;
 }
 
-export function ExtensionConfigureTree({
-  moduleName,
-  slotName,
-  config,
-}: ExtensionConfigureTreeProps) {
+export function ExtensionConfigureTree({ moduleName, slotName, config }: ExtensionConfigureTreeProps) {
   return (
     <EditableValue
-      path={[moduleName, slotName, "configure"]}
+      path={[moduleName, slotName, 'configure']}
       element={
         config && Object.keys(config).length
-          ? { _value: config, _source: "", _default: {} }
-          : { _value: undefined, _source: "default", _default: {} }
+          ? { _value: config, _source: '', _default: {} }
+          : { _value: undefined, _source: 'default', _default: {} }
       }
       customType="configure"
     />

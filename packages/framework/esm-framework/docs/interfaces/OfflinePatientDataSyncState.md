@@ -26,7 +26,7 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L20)
+[packages/framework/esm-offline/src/offline-patient-data.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L17)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L19)
+[packages/framework/esm-offline/src/offline-patient-data.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L16)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L18)
+[packages/framework/esm-offline/src/offline-patient-data.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L15)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L17)
+[packages/framework/esm-offline/src/offline-patient-data.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L14)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L16)
+[packages/framework/esm-offline/src/offline-patient-data.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L13)
 
 ## Methods
 
@@ -80,4 +80,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L21)
+[packages/framework/esm-offline/src/offline-patient-data.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L18)

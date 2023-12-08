@@ -53,7 +53,7 @@ Error.constructor
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L321)
+[packages/framework/esm-api/src/openmrs-fetch.ts:295](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L295)
 
 ## API Properties
 
@@ -63,7 +63,7 @@ Error.constructor
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L334)
+[packages/framework/esm-api/src/openmrs-fetch.ts:303](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L303)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:335](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L335)
+[packages/framework/esm-api/src/openmrs-fetch.ts:304](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L304)
 
 ___
 

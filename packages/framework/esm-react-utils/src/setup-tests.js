@@ -1,5 +1,5 @@
-import "@testing-library/jest-dom/extend-expect";
+import '@testing-library/jest-dom/extend-expect';
 
-window.openmrsBase = "/openmrs";
-window.spaBase = "/spa";
-window.getOpenmrsSpaBase = () => "/openmrs/spa/";
+window.openmrsBase = '/openmrs';
+window.spaBase = '/spa';
+window.getOpenmrsSpaBase = () => '/openmrs/spa/';

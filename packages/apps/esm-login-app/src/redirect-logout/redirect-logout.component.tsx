@@ -1,12 +1,6 @@
-import React, { useEffect } from "react";
-import {
-  navigate,
-  setUserLanguage,
-  useConfig,
-  useConnectivity,
-  useSession,
-} from "@openmrs/esm-framework";
-import { performLogout } from "./logout.resource";
+import React, { useEffect } from 'react';
+import { navigate, setUserLanguage, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+import { performLogout } from './logout.resource';
 
 export interface RedirectLogoutProps {}
 
@@ -17,20 +11,19 @@ const RedirectLogout: React.FC<RedirectLogoutProps> = () => {
 
   useEffect(() => {
     if (!session.authenticated || !isLoginEnabled) {
-      navigate({ to: "${openmrsSpaBase}/login" });
+      navigate({ to: '${openmrsSpaBase}/login' });
     } else {
       performLogout().then(() => {
-        const defaultLang =
-          document.documentElement.getAttribute("data-default-lang");
+        const defaultLang = document.documentElement.getAttribute('data-default-lang');
         setUserLanguage({
           locale: defaultLang,
           authenticated: false,
-          sessionId: "",
+          sessionId: '',
         });
-        if (config.provider.type === "oauth2") {
+        if (config.provider.type === 'oauth2') {
           navigate({ to: config.provider.logoutUrl });
         } else {
-          navigate({ to: "${openmrsSpaBase}/login" });
+          navigate({ to: '${openmrsSpaBase}/login' });
         }
       });
     }

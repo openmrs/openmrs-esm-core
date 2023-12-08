@@ -1,6 +1,6 @@
-import React from "react";
-import ImportMap from "./import-map.component";
-import styles from "./devtools-popup.styles.css";
+import React from 'react';
+import ImportMap from './import-map.component';
+import styles from './devtools-popup.styles.css';
 
 export default function DevToolsPopup(props: DevToolsPopupProps) {
   return (
@@ -8,7 +8,7 @@ export default function DevToolsPopup(props: DevToolsPopupProps) {
       <ImportMap toggleOverridden={props.toggleOverridden} />
       <div className={styles.farRight}>
         <button onClick={props.close} className={styles.closeButton}>
-          {"\u24e7"}
+          {'\u24e7'}
         </button>
       </div>
     </div>

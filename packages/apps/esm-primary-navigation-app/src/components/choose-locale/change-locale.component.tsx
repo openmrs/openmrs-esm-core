@@ -1,18 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import classNames from "classnames";
-import { useTranslation } from "react-i18next";
-import { Select, SelectItem } from "@carbon/react";
-import {
-  ExtensionSlot,
-  LoggedInUser,
-  useConnectivity,
-} from "@openmrs/esm-framework";
-import {
-  PostUserProperties,
-  postUserPropertiesOnline,
-  postUserPropertiesOffline,
-} from "./change-locale.resource";
-import styles from "./change-locale.scss";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { Select, SelectItem } from '@carbon/react';
+import { ExtensionSlot, LoggedInUser, useConnectivity } from '@openmrs/esm-framework';
+import { PostUserProperties, postUserPropertiesOnline, postUserPropertiesOffline } from './change-locale.resource';
+import styles from './change-locale.scss';
 
 export interface ChangeLocaleProps {
   allowedLocales: Array<string>;
@@ -21,30 +13,21 @@ export interface ChangeLocaleProps {
   postUserProperties: PostUserProperties;
 }
 
-const ChangeLocaleWrapper: React.FC<
-  Pick<ChangeLocaleProps, "allowedLocales" | "user" | "locale">
-> = (props) => {
+const ChangeLocaleWrapper: React.FC<Pick<ChangeLocaleProps, 'allowedLocales' | 'user' | 'locale'>> = (props) => {
   const isOnline = useConnectivity();
   const postUserProperties = useMemo(
     () => (isOnline ? postUserPropertiesOnline : postUserPropertiesOffline),
-    [isOnline]
+    [isOnline],
   );
 
   return <ChangeLocale {...props} postUserProperties={postUserProperties} />;
 };
 
 // exported for tests
-export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
-  allowedLocales,
-  locale,
-  user,
-  postUserProperties,
-}) => {
+export const ChangeLocale: React.FC<ChangeLocaleProps> = ({ allowedLocales, locale, user, postUserProperties }) => {
   const { t } = useTranslation();
   const [selectedLocale, setSelectedLocale] = useState(locale);
-  const options = allowedLocales?.map((locale) => (
-    <SelectItem text={locale} value={locale} key={locale} />
-  ));
+  const options = allowedLocales?.map((locale) => <SelectItem text={locale} value={locale} key={locale} />);
 
   const onChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -57,26 +40,23 @@ export const ChangeLocale: React.FC<ChangeLocaleProps> = ({
             ...(user.userProperties ?? {}),
             defaultLocale: newLocale,
           },
-          ac
+          ac,
         );
         setSelectedLocale(newLocale);
       }
     },
-    [postUserProperties, user.userProperties, user.uuid, selectedLocale]
+    [postUserProperties, user.userProperties, user.uuid, selectedLocale],
   );
 
-  const onClick = useCallback(
-    (event: React.SyntheticEvent) => event.stopPropagation(),
-    []
-  );
+  const onClick = useCallback((event: React.SyntheticEvent) => event.stopPropagation(), []);
 
   return (
-    <div className={classNames("omrs-margin-12", styles.switcherContainer)}>
+    <div className={classNames('omrs-margin-12', styles.switcherContainer)}>
       <Select
         name="selectLocale"
         id="selectLocale"
         invalidText="A valid locale value is required"
-        labelText={t("selectLocale", "Select locale")}
+        labelText={t('selectLocale', 'Select locale')}
         onChange={onChange}
         onClick={onClick}
         value={selectedLocale}

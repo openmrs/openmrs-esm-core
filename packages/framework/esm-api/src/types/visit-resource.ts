@@ -1,4 +1,4 @@
-import { OpenmrsResource } from "./openmrs-resource";
+import { OpenmrsResource } from './openmrs-resource';
 
 export interface NewVisitPayload {
   uuid?: string;

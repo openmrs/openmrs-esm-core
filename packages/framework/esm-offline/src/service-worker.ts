@@ -1,4 +1,4 @@
-import { Workbox } from "workbox-window";
+import { Workbox } from 'workbox-window';
 
 let workboxRegistration: Promise<Workbox> | undefined = undefined;
 
@@ -9,21 +9,16 @@ let workboxRegistration: Promise<Workbox> | undefined = undefined;
  * @param [registerOptions] The service worker options associated with this instance.
  * @returns A promise which resolves to the registered {@link Workbox} instance which manages the SW.
  */
-export function registerOmrsServiceWorker(
-  scriptUrl: string,
-  registerOptions?: object
-) {
+export function registerOmrsServiceWorker(scriptUrl: string, registerOptions?: object) {
   if (workboxRegistration !== undefined) {
     console.warn(
-      `The application's Service Worker has already been registered. The new service worker at ${scriptUrl} will not be registered.`
+      `The application's Service Worker has already been registered. The new service worker at ${scriptUrl} will not be registered.`,
     );
     return workboxRegistration;
   }
 
-  if (!("serviceWorker" in navigator)) {
-    throw new Error(
-      "Registering the Service Worker is not possible due to missing browser capabilities."
-    );
+  if (!('serviceWorker' in navigator)) {
+    throw new Error('Registering the Service Worker is not possible due to missing browser capabilities.');
   }
 
   const wb = new Workbox(scriptUrl, registerOptions);

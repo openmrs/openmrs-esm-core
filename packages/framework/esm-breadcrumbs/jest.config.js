@@ -1,10 +1,10 @@
 module.exports = {
   transform: {
-    "^.+\\.tsx?$": ["@swc/jest"],
+    '^.+\\.tsx?$': ['@swc/jest'],
   },
   moduleNameMapper: {},
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    url: "http://localhost/",
+    url: 'http://localhost/',
   },
 };

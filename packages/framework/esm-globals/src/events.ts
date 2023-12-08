@@ -2,65 +2,44 @@ export interface ConnectivityChangedEvent {
   online: boolean;
 }
 
-const connectivityChangedEventName = "openmrs:connectivity-changed";
+const connectivityChangedEventName = 'openmrs:connectivity-changed';
 
 export function dispatchConnectivityChanged(online: boolean) {
-  window.dispatchEvent(
-    new CustomEvent(connectivityChangedEventName, { detail: { online } })
-  );
+  window.dispatchEvent(new CustomEvent(connectivityChangedEventName, { detail: { online } }));
 }
 
 /** @category Offline */
-export function subscribeConnectivityChanged(
-  cb: (ev: ConnectivityChangedEvent) => void
-) {
+export function subscribeConnectivityChanged(cb: (ev: ConnectivityChangedEvent) => void) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
   window.addEventListener(connectivityChangedEventName, handler);
-  return () =>
-    window.removeEventListener(connectivityChangedEventName, handler);
+  return () => window.removeEventListener(connectivityChangedEventName, handler);
 }
 
 /** @category Offline */
-export function subscribeConnectivity(
-  cb: (ev: ConnectivityChangedEvent) => void
-) {
+export function subscribeConnectivity(cb: (ev: ConnectivityChangedEvent) => void) {
   cb({ online: navigator.onLine });
   return subscribeConnectivityChanged(cb);
 }
 
 export interface PrecacheStaticDependenciesEvent {}
 
-const precacheStaticDependenciesEventName =
-  "openmrs:precache-static-dependencies";
+const precacheStaticDependenciesEventName = 'openmrs:precache-static-dependencies';
 
-export function dispatchPrecacheStaticDependencies(
-  data: PrecacheStaticDependenciesEvent = {}
-) {
-  window.dispatchEvent(
-    new CustomEvent(precacheStaticDependenciesEventName, { detail: data })
-  );
+export function dispatchPrecacheStaticDependencies(data: PrecacheStaticDependenciesEvent = {}) {
+  window.dispatchEvent(new CustomEvent(precacheStaticDependenciesEventName, { detail: data }));
 }
 
 /** @category Offline */
-export function subscribePrecacheStaticDependencies(
-  cb: (data: PrecacheStaticDependenciesEvent) => void
-) {
+export function subscribePrecacheStaticDependencies(cb: (data: PrecacheStaticDependenciesEvent) => void) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
   window.addEventListener(precacheStaticDependenciesEventName, handler);
-  return () =>
-    window.removeEventListener(precacheStaticDependenciesEventName, handler);
+  return () => window.removeEventListener(precacheStaticDependenciesEventName, handler);
 }
 
 /** @category UI */
 export interface ShowNotificationEvent {
   description: any;
-  kind?:
-    | "error"
-    | "info"
-    | "info-square"
-    | "success"
-    | "warning"
-    | "warning-alt";
+  kind?: 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
   title?: string;
   action?: any;
   millis?: number;
@@ -68,13 +47,7 @@ export interface ShowNotificationEvent {
 
 export interface ShowActionableNotificationEvent {
   subtitle: any;
-  kind?:
-    | "error"
-    | "info"
-    | "info-square"
-    | "success"
-    | "warning"
-    | "warning-alt";
+  kind?: 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
   title?: string;
   actionButtonLabel: string | any;
   onActionButtonClick: () => void;
@@ -84,13 +57,7 @@ export interface ShowActionableNotificationEvent {
 /** @category UI */
 export interface ShowToastEvent {
   description: any;
-  kind?:
-    | "error"
-    | "info"
-    | "info-square"
-    | "success"
-    | "warning"
-    | "warning-alt";
+  kind?: 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
   title?: string;
   millis?: number;
 }
@@ -98,13 +65,7 @@ export interface ShowToastEvent {
 /** @category UI */
 export interface ShowSnackbarEvent {
   subtitle?: any;
-  kind?:
-    | "error"
-    | "info"
-    | "info-square"
-    | "success"
-    | "warning"
-    | "warning-alt";
+  kind?: 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
   title: string;
   actionButtonLabel?: string | any;
   onActionButtonClick?: () => void;
@@ -113,23 +74,17 @@ export interface ShowSnackbarEvent {
   timeoutInMs?: number;
 }
 
-const notificationShownName = "openmrs:notification-shown";
-const actionableNotificationShownName = "openmrs:actionable-notification-shown";
-const toastShownName = "openmrs:toast-shown";
-const SnackbarShownName = "openmrs:snack-bar-shown";
+const notificationShownName = 'openmrs:notification-shown';
+const actionableNotificationShownName = 'openmrs:actionable-notification-shown';
+const toastShownName = 'openmrs:toast-shown';
+const SnackbarShownName = 'openmrs:snack-bar-shown';
 
 export function dispatchNotificationShown(data: ShowNotificationEvent) {
-  window.dispatchEvent(
-    new CustomEvent(notificationShownName, { detail: data })
-  );
+  window.dispatchEvent(new CustomEvent(notificationShownName, { detail: data }));
 }
 
-export function dispatchActionableNotificationShown(
-  data: ShowActionableNotificationEvent
-) {
-  window.dispatchEvent(
-    new CustomEvent(actionableNotificationShownName, { detail: data })
-  );
+export function dispatchActionableNotificationShown(data: ShowActionableNotificationEvent) {
+  window.dispatchEvent(new CustomEvent(actionableNotificationShownName, { detail: data }));
 }
 
 export function dispatchSnackbarShown(data: ShowSnackbarEvent) {
@@ -137,22 +92,17 @@ export function dispatchSnackbarShown(data: ShowSnackbarEvent) {
 }
 
 /** @category UI */
-export function subscribeNotificationShown(
-  cb: (data: ShowNotificationEvent) => void
-) {
+export function subscribeNotificationShown(cb: (data: ShowNotificationEvent) => void) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
   window.addEventListener(notificationShownName, handler);
   return () => window.removeEventListener(notificationShownName, handler);
 }
 
 /** @category UI */
-export function subscribeActionableNotificationShown(
-  cb: (data: ShowActionableNotificationEvent) => void
-) {
+export function subscribeActionableNotificationShown(cb: (data: ShowActionableNotificationEvent) => void) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
   window.addEventListener(actionableNotificationShownName, handler);
-  return () =>
-    window.removeEventListener(actionableNotificationShownName, handler);
+  return () => window.removeEventListener(actionableNotificationShownName, handler);
 }
 
 /** @category UI */

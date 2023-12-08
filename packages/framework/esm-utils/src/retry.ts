@@ -37,10 +37,7 @@ export interface RetryOptions {
  * @returns The result of successfully executing `fn`.
  * @throws Rethrows the final error of running `fn` when the function stops retrying.
  */
-export async function retry<T>(
-  fn: () => Promise<T>,
-  options: RetryOptions = {}
-) {
+export async function retry<T>(fn: () => Promise<T>, options: RetryOptions = {}) {
   let { shouldRetry, getDelay, onError } = options;
   shouldRetry = shouldRetry ?? ((attempt) => limitAttempts(attempt, 5));
   getDelay = getDelay ?? ((attempt) => getExponentialDelay(attempt, 1000));
@@ -67,11 +64,7 @@ function limitAttempts(attempt: number, maxAttempts: number) {
   return attempt <= maxAttempts;
 }
 
-function getExponentialDelay(
-  attempt: number,
-  startingDelay: number,
-  initialDelay = false
-) {
+function getExponentialDelay(attempt: number, startingDelay: number, initialDelay = false) {
   const exponent = initialDelay ? attempt + 1 : attempt;
   return startingDelay * Math.pow(2, exponent);
 }

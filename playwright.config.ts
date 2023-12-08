@@ -1,10 +1,10 @@
-import { devices, PlaywrightTestConfig } from "@playwright/test";
-import * as dotenv from "dotenv";
+import { devices, PlaywrightTestConfig } from '@playwright/test';
+import * as dotenv from 'dotenv';
 dotenv.config();
 
 // See https://playwright.dev/docs/test-configuration.
 const config: PlaywrightTestConfig = {
-  testDir: "./e2e/specs",
+  testDir: './e2e/specs',
   timeout: 3 * 60 * 1000,
   expect: {
     timeout: 40 * 1000,
@@ -12,19 +12,17 @@ const config: PlaywrightTestConfig = {
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
-  reporter: process.env.CI
-    ? [["junit", { outputFile: "results.xml" }], ["html"]]
-    : [["html"]],
+  reporter: process.env.CI ? [['junit', { outputFile: 'results.xml' }], ['html']] : [['html']],
   use: {
     baseURL: `${process.env.E2E_BASE_URL}/spa/`,
-    trace: "retain-on-failure",
-    video: "retain-on-failure",
+    trace: 'retain-on-failure',
+    video: 'retain-on-failure',
   },
   projects: [
     {
-      name: "chromium",
+      name: 'chromium',
       use: {
-        ...devices["Desktop Chrome"],
+        ...devices['Desktop Chrome'],
       },
     },
   ],

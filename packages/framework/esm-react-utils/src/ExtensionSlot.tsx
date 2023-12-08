@@ -1,8 +1,8 @@
-import React, { useRef, useMemo } from "react";
-import type { ConnectedExtension } from "@openmrs/esm-extensions";
-import { ComponentContext } from "./ComponentContext";
-import { Extension } from "./Extension";
-import { useExtensionSlot } from "./useExtensionSlot";
+import React, { useRef, useMemo } from 'react';
+import type { ConnectedExtension } from '@openmrs/esm-extensions';
+import { ComponentContext } from './ComponentContext';
+import { Extension } from './Extension';
+import { useExtensionSlot } from './useExtensionSlot';
 
 export interface ExtensionSlotBaseProps {
   name: string;
@@ -20,14 +20,9 @@ export interface OldExtensionSlotBaseProps {
   state?: Record<string, any>;
 }
 
-export type ExtensionSlotProps = (
-  | OldExtensionSlotBaseProps
-  | ExtensionSlotBaseProps
-) &
-  Omit<React.HTMLAttributes<HTMLDivElement>, "children"> & {
-    children?:
-      | React.ReactNode
-      | ((extension: ConnectedExtension) => React.ReactNode);
+export type ExtensionSlotProps = (OldExtensionSlotBaseProps | ExtensionSlotBaseProps) &
+  Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> & {
+    children?: React.ReactNode | ((extension: ConnectedExtension) => React.ReactNode);
   };
 
 function defaultSelect(extensions: Array<ConnectedExtension>) {
@@ -93,7 +88,7 @@ export function ExtensionSlot({
 }: ExtensionSlotProps) {
   if (children && state) {
     throw new Error(
-      "Both children and state have been provided. If children are provided, the state must be passed as a prop to the `Extension` component."
+      'Both children and state have been provided. If children are provided, the state must be passed as a prop to the `Extension` component.',
     );
   }
 
@@ -101,13 +96,10 @@ export function ExtensionSlot({
   const slotRef = useRef(null);
   const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
 
-  const extensionsToRender = useMemo(
-    () => select(extensions),
-    [select, extensions]
-  );
+  const extensionsToRender = useMemo(() => select(extensions), [select, extensions]);
 
   const extensionsFromChildrenFunction = useMemo(() => {
-    if (typeof children == "function" && !React.isValidElement(children)) {
+    if (typeof children == 'function' && !React.isValidElement(children)) {
       return extensionsToRender.map((extension) => children(extension));
     }
   }, [children, extensionsToRender]);
@@ -117,7 +109,7 @@ export function ExtensionSlot({
       ref={slotRef}
       data-extension-slot-name={name}
       data-extension-slot-module-name={extensionSlotModuleName}
-      style={{ ...style, position: "relative" }}
+      style={{ ...style, position: 'relative' }}
       {...divProps}
     >
       {name &&
@@ -133,10 +125,9 @@ export function ExtensionSlot({
               },
             }}
           >
-            {extensionsFromChildrenFunction?.[i] ??
-              (typeof children != "function" ? children : null) ?? (
-                <Extension state={state} />
-              )}
+            {extensionsFromChildrenFunction?.[i] ?? (typeof children != 'function' ? children : null) ?? (
+              <Extension state={state} />
+            )}
           </ComponentContext.Provider>
         ))}
     </div>

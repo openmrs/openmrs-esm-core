@@ -1,5 +1,5 @@
 /** @module @category Utility */
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 /**
  * This hook debounces a state variable. That state variable can then be used as the

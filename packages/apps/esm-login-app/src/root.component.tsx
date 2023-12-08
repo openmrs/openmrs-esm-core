@@ -1,8 +1,8 @@
-import React from "react";
-import Login from "./login/login.component";
-import LocationPicker from "./location-picker/location-picker.component";
-import RedirectLogout from "./redirect-logout/redirect-logout.component";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React from 'react';
+import Login from './login/login.component';
+import LocationPicker from './location-picker/location-picker.component';
+import RedirectLogout from './redirect-logout/redirect-logout.component';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export interface RootProps {}
 
