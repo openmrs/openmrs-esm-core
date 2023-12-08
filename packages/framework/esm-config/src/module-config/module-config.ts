@@ -133,7 +133,7 @@ function computeExtensionConfigs(
  * configuration system how the module can be configured. It specifies
  * what makes configuration valid or invalid.
  *
- * See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+ * See [Configuration System](https://o3-docs.openmrs.org/docs/configuration-system)
  * for more information about defining a config schema.
  *
  * @param moduleName Name of the module the schema is being defined for. Generally
@@ -159,7 +159,7 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
  * The schema tells the configuration system how the module can be configured.
  * It specifies what makes configuration valid or invalid.
  *
- * See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+ * See [Configuration System](https://o3-docs.openmrs.org/docs/configuration-system)
  * for more information about defining a config schema.
  *
  * @param extensionName Name of the extension the schema is being defined for.

@@ -30,7 +30,7 @@ function defaultSelect(extensions: Array<ConnectedExtension>) {
 }
 
 /**
- * An [extension slot](https://o3-dev.docs.openmrs.org/#/main/extensions).
+ * An [extension slot](https://o3-docs.openmrs.org/docs/extension-system).
  * A place with a name. Extensions that get connected to that name
  * will be rendered into this.
  *
