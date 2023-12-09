@@ -2,5 +2,5 @@
 
 openmrs-esm-api exports functions that interact with the OpenMRS API.
 
-See the [Retrieving and posting data](https://openmrs.github.io/openmrs-esm-core/#/main/data)
+See the [Retrieving and posting data](https://o3-docs.openmrs.org/docs/recipes/retrieving-and-posting-data)
 page of the Developer Documentation.

@@ -1,4 +1,4 @@
-import { ConfigSchema } from "../src/config-schema";
+import { ConfigSchema } from '../src/config-schema';
 
 export const mockConfig: ConfigSchema = {
   provider: {

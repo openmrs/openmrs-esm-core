@@ -6,4 +6,4 @@ openmrs-esm-state provides functions for managing OpenMRS state using
 It also provides a global Unistore store called `app`.
 
 Please see the Developer Documentation page on
-[Managing State](https://openmrs.github.io/openmrs-esm-core/#/main/state).
+[Storing values](https://o3-docs.openmrs.org/docs/storing-values).
