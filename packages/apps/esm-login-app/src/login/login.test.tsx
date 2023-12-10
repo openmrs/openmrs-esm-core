@@ -44,14 +44,14 @@ const loginLocations = [
 mockedUseSession.mockReturnValue({ authenticated: false });
 mockedUseConfig.mockReturnValue(mockConfig);
 
-describe("Login", () => {
-  it("renders the login form", () => {
+describe('Login', () => {
+  it('renders the login form', () => {
     renderWithRouter(
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
 
     screen.getByRole('img', { name: /OpenMRS logo/i });
@@ -84,8 +84,8 @@ describe("Login", () => {
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
     const user = userEvent.setup();
 
@@ -108,17 +108,14 @@ describe("Login", () => {
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
     const user = userEvent.setup();
 
     mockedLogin.mockClear();
-    await user.type(
-      screen.getByRole("textbox", { name: /Username/i }),
-      "yoshi"
-    );
-    await user.click(screen.getByRole("button", { name: /Continue/i }));
+    await user.type(screen.getByRole('textbox', { name: /Username/i }), 'yoshi');
+    await user.click(screen.getByRole('button', { name: /Continue/i }));
 
     const loginButton = screen.getByRole('button', { name: /log in/i });
     await screen.findByLabelText(/password/i);
@@ -128,7 +125,7 @@ describe("Login", () => {
   });
 
   // TODO: Complete the test
-  it("sends the user to the location select page on login if there is more than one location", async () => {
+  it('sends the user to the location select page on login if there is more than one location', async () => {
     let refreshUser = (user: any) => {};
     mockedLogin.mockImplementation(() => {
       refreshUser({
@@ -146,8 +143,8 @@ describe("Login", () => {
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
 
     const user = userEvent.setup();
@@ -159,7 +156,7 @@ describe("Login", () => {
     await user.click(screen.getByRole('button', { name: /log in/i }));
   });
 
-  it("should render the both the username and password fields when the showPasswordOnSeparateScreen config is false", async () => {
+  it('should render the both the username and password fields when the showPasswordOnSeparateScreen config is false', async () => {
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
       showPasswordOnSeparateScreen: false,
@@ -169,14 +166,14 @@ describe("Login", () => {
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
 
-    const usernameInput = screen.queryByRole("textbox", { name: /username/i });
-    const continueButton = screen.queryByRole("button", { name: /Continue/i });
+    const usernameInput = screen.queryByRole('textbox', { name: /username/i });
+    const continueButton = screen.queryByRole('button', { name: /Continue/i });
     const passwordInput = screen.queryByLabelText(/password/i);
-    const loginButton = screen.queryByRole("button", { name: /log in/i });
+    const loginButton = screen.queryByRole('button', { name: /log in/i });
 
     expect(usernameInput).toBeInTheDocument();
     expect(continueButton).not.toBeInTheDocument();
@@ -184,7 +181,7 @@ describe("Login", () => {
     expect(loginButton).toBeInTheDocument();
   });
 
-  it("should not render the password field when the showPasswordOnSeparateScreen config is true (default)", async () => {
+  it('should not render the password field when the showPasswordOnSeparateScreen config is true (default)', async () => {
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
     });
@@ -193,14 +190,14 @@ describe("Login", () => {
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
 
-    const usernameInput = screen.queryByRole("textbox", { name: /username/i });
-    const continueButton = screen.queryByRole("button", { name: /Continue/i });
+    const usernameInput = screen.queryByRole('textbox', { name: /username/i });
+    const continueButton = screen.queryByRole('button', { name: /Continue/i });
     const passwordInput = screen.queryByLabelText(/password/i);
-    const loginButton = screen.queryByRole("button", { name: /log in/i });
+    const loginButton = screen.queryByRole('button', { name: /log in/i });
 
     expect(usernameInput).toBeInTheDocument();
     expect(continueButton).toBeInTheDocument();
@@ -208,8 +205,8 @@ describe("Login", () => {
     expect(loginButton).not.toBeInTheDocument();
   });
 
-  it("should be able to login when the showPasswordOnSeparateScreen config is false", async () => {
-    mockedLogin.mockReturnValue(Promise.resolve({ some: "data" }));
+  it('should be able to login when the showPasswordOnSeparateScreen config is false', async () => {
+    mockedLogin.mockReturnValue(Promise.resolve({ some: 'data' }));
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
       showPasswordOnSeparateScreen: false,
@@ -221,24 +218,22 @@ describe("Login", () => {
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
 
-    const usernameInput = screen.getByRole("textbox", { name: /username/i });
+    const usernameInput = screen.getByRole('textbox', { name: /username/i });
     const passwordInput = screen.getByLabelText(/password/i);
-    const loginButton = screen.getByRole("button", { name: /log in/i });
+    const loginButton = screen.getByRole('button', { name: /log in/i });
 
-    await user.type(usernameInput, "yoshi");
-    await user.type(passwordInput, "no-tax-fraud");
+    await user.type(usernameInput, 'yoshi');
+    await user.type(passwordInput, 'no-tax-fraud');
     await user.click(loginButton);
 
-    await waitFor(() =>
-      expect(performLogin).toHaveBeenCalledWith("yoshi", "no-tax-fraud")
-    );
+    await waitFor(() => expect(performLogin).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
 
-  it("should focus the username input", async () => {
+  it('should focus the username input', async () => {
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
     });
@@ -247,15 +242,15 @@ describe("Login", () => {
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
 
-    const usernameInput = screen.getByRole("textbox", { name: /username/i });
+    const usernameInput = screen.getByRole('textbox', { name: /username/i });
     expect(usernameInput).toHaveFocus();
   });
 
-  it("should focus the password input in the password screen", async () => {
+  it('should focus the password input in the password screen', async () => {
     const user = userEvent.setup();
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
@@ -265,21 +260,21 @@ describe("Login", () => {
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
 
-    const usernameInput = screen.getByRole("textbox", { name: /username/i });
-    const continueButton = screen.getByRole("button", { name: /Continue/i });
+    const usernameInput = screen.getByRole('textbox', { name: /username/i });
+    const continueButton = screen.getByRole('button', { name: /Continue/i });
 
-    await user.type(usernameInput, "yoshi");
+    await user.type(usernameInput, 'yoshi');
     await user.click(continueButton);
 
     const passwordInput = screen.getByLabelText(/password/i);
     expect(passwordInput).toHaveFocus();
   });
 
-  it("should focus the username input when the showPasswordOnSeparateScreen config is false", async () => {
+  it('should focus the username input when the showPasswordOnSeparateScreen config is false', async () => {
     mockedUseConfig.mockReturnValue({
       ...mockConfig,
       showPasswordOnSeparateScreen: false,
@@ -289,11 +284,11 @@ describe("Login", () => {
       Login,
       {},
       {
-        route: "/login",
-      }
+        route: '/login',
+      },
     );
 
-    const usernameInput = screen.getByRole("textbox", { name: /username/i });
+    const usernameInput = screen.getByRole('textbox', { name: /username/i });
 
     expect(usernameInput).toHaveFocus();
   });
