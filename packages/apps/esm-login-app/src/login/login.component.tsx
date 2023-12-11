@@ -23,6 +23,8 @@ import {
   Session,
 } from "@openmrs/esm-framework";
 import { performLogin } from "../login.resource";
+import ForgotPassword from "../forgot Password/forgot-password";
+import ChangePassword from "./changePassword.component";
 import styles from "./login.scss";
 
 const hidden: React.CSSProperties = {
@@ -292,9 +294,22 @@ const Login: React.FC<LoginProps> = () => {
                     <span>{t("login", "Log in")}</span>
                   )}
                 </Button>
+
+                {/* Forgot Password Link  */}
+                <div className={styles["forgot-password-link"]}>
+                  <a href={"../forgot Password/forgot-password"}>
+                    {t("forgotPassword", "Forgot Password?")}
+                  </a>
+                </div>
               </div>
             )}
           </form>
+
+          {user ? (
+            <div className={styles["change-password"]}>
+              <ChangePassword onSuccess={resetUserNameAndPassword} />
+            </div>
+          ) : null}
         </Tile>
         <div className={styles["footer"]}>
           <p className={styles["powered-by-txt"]}>

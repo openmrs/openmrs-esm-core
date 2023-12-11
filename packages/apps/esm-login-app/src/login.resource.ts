@@ -12,6 +12,7 @@ import {
   useDebounce,
 } from "@openmrs/esm-framework";
 import { LocationEntry, LocationResponse } from "./types";
+import axios from "axios";
 
 export async function performLogin(
   username: string,
@@ -160,4 +161,25 @@ export function useValidateLocationUuid(userPreferredLocationUuid: string) {
     [data, isLoading, error]
   );
   return results;
+}
+
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string
+) {
+  // Implementation of the function...
+  try {
+    const response = await axios.post("/api/changePassword", {
+      currentPassword,
+      newPassword,
+    });
+
+    if (response.status === 200) {
+      return { success: true, message: "Password changed successfully" };
+    } else {
+      return { success: false, message: "Failed to change password" };
+    }
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
 }
