@@ -117,8 +117,8 @@ export function useLoginLocations(
   return memoizedLocations;
 }
 
-export function useValidateLocationUuid(userPreferredLocationUuid: string) {
-  const url = userPreferredLocationUuid ? `/ws/fhir2/R4/Location?_id=${userPreferredLocationUuid}` : null;
+export function useValidateLocationUuid(locationUuid: string) {
+  const url = locationUuid ? `/ws/fhir2/R4/Location?_id=${locationUuid}` : null;
   const { data, error, isLoading } = useSwrImmutable<FetchResponse<LocationResponse>>(url, openmrsFetch, {
     shouldRetryOnError(err) {
       if (err?.response?.status) {

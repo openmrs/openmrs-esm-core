@@ -15,17 +15,17 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
     [user],
   );
 
-  const defaultLocation = useMemo(() => {
+  const userDefaultLocationUuid = useMemo(() => {
     return userProperties?.defaultLocation;
   }, [userProperties?.defaultLocation]);
 
-  const { isLocationValid, defaultLocation: defaultLocationFhir } = useValidateLocationUuid(defaultLocation);
+  const { isLocationValid, defaultLocation: defaultLocationFhir } = useValidateLocationUuid(userDefaultLocationUuid);
 
   useEffect(() => {
-    if (defaultLocation) {
+    if (userDefaultLocationUuid) {
       setSavePreference(true);
     }
-  }, [setSavePreference, defaultLocation]);
+  }, [setSavePreference, userDefaultLocationUuid]);
 
   const updateUserPropsWithDefaultLocation = useCallback(
     async (locationUuid: string, saveDefaultLocation: boolean) => {
@@ -48,7 +48,7 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
 
   const updateDefaultLocation = useCallback(
     async (locationUuid: string, saveDefaultLocation: boolean) => {
-      if (savePreference && locationUuid === defaultLocation) {
+      if (savePreference && locationUuid === userDefaultLocationUuid) {
         return;
       }
 
@@ -63,7 +63,7 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
               : t('locationPreferenceAdded', 'Selected location will be used for your next logins'),
             kind: 'success',
           });
-        } else if (defaultLocation) {
+        } else if (userDefaultLocationUuid) {
           showToast({
             title: t('locationPreferenceRemoved', 'Login location preference removed'),
             description: t('removedLoginLocationPreference', 'The login location preference has been removed.'),
@@ -72,12 +72,12 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
         }
       });
     },
-    [savePreference, defaultLocation, updateUserPropsWithDefaultLocation, t, isUpdateFlow],
+    [savePreference, userDefaultLocationUuid, updateUserPropsWithDefaultLocation, t, isUpdateFlow],
   );
 
   return {
     defaultLocationFhir,
-    defaultLocation: isLocationValid ? defaultLocation : null,
+    userDefaultLocationUuid: isLocationValid ? userDefaultLocationUuid : null,
     updateDefaultLocation,
     savePreference,
     setSavePreference,
