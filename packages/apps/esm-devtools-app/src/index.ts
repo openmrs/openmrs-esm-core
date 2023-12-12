@@ -7,12 +7,9 @@ const options = {
   moduleName: '@openmrs/esm-devtools-app',
 };
 
-export const devtools = getAsyncLifecycle(
-  () => import("./devtools/devtools.component"),
-  options
-);
+export const devtools = getAsyncLifecycle(() => import('./devtools/devtools.component'), options);
 
 export const importmapOverrideModal = getAsyncLifecycle(
-  () => import("./devtools/import-map-list/modal.component"),
-  options
+  () => import('./devtools/import-map-list/modal.component'),
+  options,
 );

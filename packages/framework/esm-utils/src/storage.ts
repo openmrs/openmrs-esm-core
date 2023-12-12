@@ -10,7 +10,7 @@
  */
 export function canAccessStorage(storage: Storage = window.localStorage) {
   try {
-    storage.getItem("test");
+    storage.getItem('test');
     return true;
   } catch {
     return false;

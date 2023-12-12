@@ -1,6 +1,6 @@
-@use "@carbon/styles/scss/colors";
-@use "@carbon/styles/scss/spacing";
-@use "@carbon/styles/scss/type";
+@use '@carbon/styles/scss/colors';
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
 
 .imoListContainer {
   margin: 0 spacing.$spacing-04 0 spacing.$spacing-04;
@@ -12,14 +12,15 @@
   align-items: center;
   justify-content: left;
 
-  .imoSearchBox ~ * {
-    margin-left: spacing.$spacing-02;
+  > * + * {
+    margin: 0 spacing.$spacing-03;
   }
 }
 
 .imoSearchBox {
   width: auto;
   min-width: 12rem;
+  margin-right: spacing.$spacing-03;
 }
 
 .imoTable {
@@ -40,20 +41,40 @@
   background-color: colors.$red-90;
 }
 
+.imoNextOverrideText {
+  color: colors.$red-90;
+}
+
 .imoNextDefault {
   background-color: colors.$yellow-70;
+}
+
+.imoNextDefaultText {
+  color: colors.$yellow-70;
 }
 
 .imoDisabledOverride {
   background-color: colors.$cyan-30;
 }
 
+.imoDisabledOverrideText {
+  color: colors.$cyan-30;
+}
+
 .imoCurrentOverride {
   background-color: colors.$red-40;
 }
 
+.imoCurrentOverrideText {
+  color: colors.$red-40;
+}
+
 .imoExternalOverride {
   background-color: colors.$orange-50;
+}
+
+.imoExternalOverrideText {
+  color: colors.$orange-50;
 }
 
 .imoDefaultModule {

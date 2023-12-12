@@ -8,14 +8,9 @@ import {
   OpenmrsAppRoutes,
   RouteDefinition,
   ExtensionRegistration,
-} from "@openmrs/esm-framework";
-import {
-  type ActivityFn,
-  type LifeCycles,
-  pathToActiveWhen,
-  registerApplication,
-} from "single-spa";
-import { emptyLifecycle, routeRegex } from "./helpers";
+} from '@openmrs/esm-framework';
+import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
+import { emptyLifecycle, routeRegex } from './helpers';
 
 const pages: Array<RegisteredPageDefinition> = [];
 
@@ -142,11 +137,9 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     routes.pages?.forEach((p) => {
       if (
         p &&
-        typeof p === "object" &&
-        Object.hasOwn(p, "component") &&
-        (Object.hasOwn(p, "route") ||
-          Object.hasOwn(p, "routeRegex") ||
-          Object.hasOwn(p, "routes"))
+        typeof p === 'object' &&
+        Object.hasOwn(p, 'component') &&
+        (Object.hasOwn(p, 'route') || Object.hasOwn(p, 'routeRegex') || Object.hasOwn(p, 'routes'))
       ) {
         pages.push({
           ...p,
@@ -156,23 +149,18 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
       } else {
         console.warn(
           `A page for ${appName} could not be registered as it does not appear to have the required properties`,
-          p
+          p,
         );
       }
     });
 
     availableExtensions.forEach((ext) => {
-      if (
-        ext &&
-        typeof ext === "object" &&
-        Object.hasOwn(ext, "name") &&
-        Object.hasOwn(ext, "component")
-      ) {
+      if (ext && typeof ext === 'object' && Object.hasOwn(ext, 'name') && Object.hasOwn(ext, 'component')) {
         tryRegisterExtension(appName, ext);
       } else {
         console.warn(
           `An extension for ${appName} could not be registered as it does not appear to have the required properties`,
-          ext
+          ext,
         );
       }
     });
@@ -291,7 +279,7 @@ To fix this, ensure that you define a 'component' field inside the extension def
     return;
   }
 
-  let loader: ExtensionRegistration["load"] | undefined = undefined;
+  let loader: ExtensionRegistration['load'] | undefined = undefined;
   if (extension.component) {
     loader = getLoader(appName, extension.component);
   } else if (extension.load) {

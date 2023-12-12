@@ -36,14 +36,10 @@ import {
   OpenmrsAppRoutes,
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
-} from "@openmrs/esm-framework/src/internal";
-import {
-  finishRegisteringAllApps,
-  registerApp,
-  tryRegisterExtension,
-} from "./apps";
-import { setupI18n } from "./locale";
-import { appName, getCoreExtensions } from "./ui";
+} from '@openmrs/esm-framework/src/internal';
+import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
+import { setupI18n } from './locale';
+import { appName, getCoreExtensions } from './ui';
 
 // @internal
 // used to track when the window.installedModules global is finalised
@@ -94,46 +90,39 @@ async function setupApps() {
             if (isOpenmrsAppRoutes(maybeOpenmrsRoutes)) {
               promises.push(
                 Promise.resolve<OpenmrsRoutes>({
-                  [key.slice(localStorageRoutesPrefix.length)]:
-                    maybeOpenmrsRoutes,
-                })
+                  [key.slice(localStorageRoutesPrefix.length)]: maybeOpenmrsRoutes,
+                }),
               );
-            } else if (
-              typeof maybeOpenmrsRoutes === "string" &&
-              maybeOpenmrsRoutes.startsWith("http")
-            ) {
+            } else if (typeof maybeOpenmrsRoutes === 'string' && maybeOpenmrsRoutes.startsWith('http')) {
               promises.push(
                 openmrsFetch<OpenmrsAppRoutes>(maybeOpenmrsRoutes)
                   .then((response) => {
                     if (isOpenmrsAppRoutes(response.data)) {
                       return Promise.resolve({
-                        [key.slice(localStorageRoutesPrefix.length)]:
-                          response.data,
+                        [key.slice(localStorageRoutesPrefix.length)]: response.data,
                       });
                     }
 
                     return Promise.reject(
-                      `${maybeOpenmrsRoutes} did not resolve to a valid OpenmrsAppRoutes JSON object`
+                      `${maybeOpenmrsRoutes} did not resolve to a valid OpenmrsAppRoutes JSON object`,
                     );
                   })
                   .catch((reason) => {
                     console.warn(
-                      `Failed to fetch route overrides for ${key.slice(
-                        localStorageRoutesPrefix.length
-                      )}`,
-                      reason
+                      `Failed to fetch route overrides for ${key.slice(localStorageRoutesPrefix.length)}`,
+                      reason,
                     );
 
                     // still fail the promise
                     throw reason;
-                  })
+                  }),
               );
             } else {
               console.warn(
                 `Route override for ${key.slice(
-                  localStorageRoutesPrefix.length
+                  localStorageRoutesPrefix.length,
                 )} could not be handled as it was neither a JSON object nor a URL string`,
-                localOverride
+                localOverride,
               );
             }
           } catch (e) {
@@ -145,7 +134,7 @@ async function setupApps() {
   }
 
   const routes: OpenmrsRoutes = (await Promise.allSettled(promises))
-    .filter((p) => p.status === "fulfilled")
+    .filter((p) => p.status === 'fulfilled')
     .map((p) => (p as PromiseFulfilledResult<OpenmrsRoutes>).value)
     .filter(isOpenmrsRoutes)
     .reduce(
@@ -153,7 +142,7 @@ async function setupApps() {
         ...accumulatedRoutes,
         ...routes,
       }),
-      {}
+      {},
     );
 
   const modules: typeof window.installedModules = [];

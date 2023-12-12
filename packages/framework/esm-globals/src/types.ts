@@ -1,5 +1,5 @@
-import type { LifeCycles } from "single-spa";
-import type { i18n } from "i18next";
+import type { LifeCycles } from 'single-spa';
+import type { i18n } from 'i18next';
 
 declare global {
   const __webpack_share_scopes__: Record<

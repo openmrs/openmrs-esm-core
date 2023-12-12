@@ -1,33 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  addRoutesOverride,
-  removeRoutesOverride,
-} from "@openmrs/esm-framework/src/internal";
-import {
-  Button,
-  Form,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  TextInput,
-} from "@carbon/react";
-import { Module } from "./types";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { addRoutesOverride, removeRoutesOverride } from '@openmrs/esm-framework/src/internal';
+import { Button, Form, ModalHeader, ModalBody, ModalFooter, TextInput } from '@carbon/react';
+import { Module } from './types';
+import styles from './modal.scss';
 
-type ImportMapModalProps = (
-  | { module: Module; isNew: false }
-  | { module: never; isNew: true }
-) & { close: () => void };
+type ImportMapModalProps = ({ module: Module; isNew: false } | { module: never; isNew: true }) & { close: () => void };
 
-const ImportMapModal: React.FC<ImportMapModalProps> = ({
-  module,
-  isNew,
-  close,
-}) => {
+const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close }) => {
   const { t } = useTranslation();
-  const [moduleName, setModuleName] = useState<string | undefined>(
-    module?.moduleName
-  );
+  const [moduleName, setModuleName] = useState<string | undefined>(module?.moduleName);
   const moduleNameRef = useRef<HTMLInputElement>();
   const inputRef = useRef<HTMLInputElement>();
   const handleSubmit = useCallback(
@@ -46,8 +28,8 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({
         const newUrl = inputRef.current.value || null;
         if (newUrl) {
           window.importMapOverrides.addOverride(moduleName, newUrl);
-          const baseUrl = newUrl.substring(0, newUrl.lastIndexOf("/"));
-          addRoutesOverride(moduleName, new URL("routes.json", baseUrl));
+          const baseUrl = newUrl.substring(0, newUrl.lastIndexOf('/'));
+          addRoutesOverride(moduleName, new URL('routes.json', baseUrl));
         }
       } else {
         const newUrl = inputRef.current.value || null;
@@ -56,21 +38,21 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({
           removeRoutesOverride(moduleName);
         } else {
           window.importMapOverrides.addOverride(moduleName, newUrl);
-          const baseUrl = newUrl.substring(0, newUrl.lastIndexOf("/"));
-          addRoutesOverride(moduleName, new URL("routes.json", baseUrl));
+          const baseUrl = newUrl.substring(0, newUrl.lastIndexOf('/'));
+          addRoutesOverride(moduleName, new URL('routes.json', baseUrl));
         }
       }
 
       close();
     },
-    [moduleName, isNew, close]
+    [moduleName, isNew, close],
   );
 
   useEffect(
     () => (isNew ? moduleNameRef.current?.focus() : inputRef.current?.focus()),
     // Only fired on initial mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   return (
@@ -78,8 +60,8 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({
       <ModalHeader
         title={
           isNew
-            ? t("addModule", "Add Module")
-            : t("editModule", "Edit Module {{- moduleName}}", {
+            ? t('addModule', 'Add Module')
+            : t('editModule', 'Edit Module {{- moduleName}}', {
                 moduleName: moduleName,
               })
         }
@@ -94,28 +76,20 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({
                 evt.preventDefault();
                 setModuleName(evt.target.value);
               }}
-              labelText={t("moduleName", "Module Name")}
+              labelText={t('moduleName', 'Module Name')}
             />
           )}
           {!isNew && (
-            <TextInput
-              id="default-url"
-              labelText={t("defaultUrl", "Default URL")}
-              value={module.defaultUrl}
-              readOnly
-            />
+            <TextInput id="default-url" labelText={t('defaultUrl', 'Default URL')} value={module.defaultUrl} readOnly />
           )}
-          <TextInput
-            id="override-url"
-            ref={inputRef}
-            labelText={t("overrideUrl", "Override URL")}
-          />
+          <div className={styles.spacer} />
+          <TextInput id="override-url" ref={inputRef} labelText={t('overrideUrl', 'Override URL')} />
         </ModalBody>
         <ModalFooter>
           <Button kind="secondary" onClick={close}>
-            {t("cancel", "Cancel")}
+            {t('cancel', 'Cancel')}
           </Button>
-          <Button type="submit">{t("apply", "Apply")}</Button>
+          <Button type="submit">{t('apply', 'Apply')}</Button>
         </ModalFooter>
       </Form>
     </>

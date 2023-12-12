@@ -1,1 +1,1 @@
-export const localStorageRoutesPrefix = "openmrs-routes:";
+export const localStorageRoutesPrefix = 'openmrs-routes:';

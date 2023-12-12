@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  forwardRef,
-  useReducer,
-  type Dispatch,
-  useState,
-  useRef,
-} from "react";
+import React, { useEffect, forwardRef, useReducer, type Dispatch, useState, useRef } from 'react';
 import {
   Button,
   Search,
@@ -16,18 +9,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@carbon/react";
-import classNames from "classnames";
-import { useTranslation } from "react-i18next";
-import fuzzy from "fuzzy";
-import {
-  useDebounce,
-  type ImportMap,
-  showModal,
-  resetAllRoutesOverrides,
-} from "@openmrs/esm-framework/src/internal";
-import type { Module } from "./types";
-import styles from "./list.scss";
+} from '@carbon/react';
+import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import fuzzy from 'fuzzy';
+import { useDebounce, type ImportMap, showModal, resetAllRoutesOverrides } from '@openmrs/esm-framework/src/internal';
+import type { Module } from './types';
+import styles from './list.scss';
 
 interface ImportMapListState {
   notOverriddenMap: ImportMap;
@@ -47,35 +35,35 @@ type ImportMapDispatchAction =
   | ResetAllOverridesAction;
 
 interface SetDefaultMapAction {
-  type: "set_default_map";
+  type: 'set_default_map';
   notOverriddenMap: ImportMap;
 }
 
 interface SetCurrentMapAction {
-  type: "set_current_map";
+  type: 'set_current_map';
   currentPageMap: ImportMap;
 }
 
 interface SetNextDispatchAction {
-  type: "set_next_map";
+  type: 'set_next_map';
   nextPageMap: ImportMap;
 }
 
 interface ShowNewModuleDialogAction {
-  type: "show_new_module_dialog";
+  type: 'show_new_module_dialog';
 }
 
 interface ShowEditModuleDialogAction {
-  type: "show_edit_module_dialog";
+  type: 'show_edit_module_dialog';
   module: Module;
 }
 
 interface HideEditModuleDialogAction {
-  type: "hide_edit_module_dialog";
+  type: 'hide_edit_module_dialog';
 }
 
 interface ResetAllOverridesAction {
-  type: "reset_all_overrides";
+  type: 'reset_all_overrides';
 }
 
 const initialImportMapState: ImportMapListState = {
@@ -88,35 +76,33 @@ const initialImportMapState: ImportMapListState = {
 
 function updateToNext(dispatch: Dispatch<ImportMapDispatchAction>) {
   return () =>
-    window.importMapOverrides
-      .getNextPageMap()
-      .then((nextPageMap) => dispatch({ type: "set_next_map", nextPageMap }));
+    window.importMapOverrides.getNextPageMap().then((nextPageMap) => dispatch({ type: 'set_next_map', nextPageMap }));
 }
 
 function reducer(state: ImportMapListState, action: ImportMapDispatchAction) {
   switch (action.type) {
-    case "set_default_map":
+    case 'set_default_map':
       return { ...state, notOverriddenMap: action.notOverriddenMap };
-    case "set_current_map":
+    case 'set_current_map':
       return { ...state, currentPageMap: action.currentPageMap };
-    case "set_next_map":
+    case 'set_next_map':
       return { ...state, nextPageMap: action.nextPageMap };
-    case "show_new_module_dialog":
+    case 'show_new_module_dialog':
       return {
         ...state,
         dialogModule: { isNew: true },
       };
-    case "show_edit_module_dialog":
+    case 'show_edit_module_dialog':
       return {
         ...state,
         dialogModule: { module: action.module, isNew: false },
       };
-    case "hide_edit_module_dialog":
+    case 'hide_edit_module_dialog':
       return {
         ...state,
         dialogModule: null,
       };
-    case "reset_all_overrides":
+    case 'reset_all_overrides':
       window.importMapOverrides.resetOverrides();
       resetAllRoutesOverrides();
       return state;
@@ -128,43 +114,38 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
   const [state, dispatch] = useReducer(reducer, initialImportMapState);
 
   const inputRef = useRef<HTMLInputElement>();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const searchVal = useDebounce(searchQuery);
 
   useEffect(() => {
     // load initial values from importMapOverrides
     window.importMapOverrides
       .getDefaultMap()
-      .then((notOverriddenMap) =>
-        dispatch({ type: "set_default_map", notOverriddenMap })
-      );
+      .then((notOverriddenMap) => dispatch({ type: 'set_default_map', notOverriddenMap }));
     window.importMapOverrides
       .getCurrentPageMap()
-      .then((currentPageMap) =>
-        dispatch({ type: "set_current_map", currentPageMap })
-      );
+      .then((currentPageMap) => dispatch({ type: 'set_current_map', currentPageMap }));
 
     // focus on the search box
     inputRef.current?.focus();
 
     // add our event listener
     const dispatcher = updateToNext(dispatch);
-    window.addEventListener("import-map-overrides:change", dispatcher);
+    window.addEventListener('import-map-overrides:change', dispatcher);
     // clean-up event listener
-    return () =>
-      window.removeEventListener("import-map-overrides:change", dispatcher);
+    return () => window.removeEventListener('import-map-overrides:change', dispatcher);
   }, []);
 
   useEffect(() => {
     if (state.dialogModule) {
       showModal(
-        "importmap-override-modal",
+        'importmap-override-modal',
         {
           ...state.dialogModule,
         },
         () => {
-          dispatch({ type: "hide_edit_module_dialog" });
-        }
+          dispatch({ type: 'hide_edit_module_dialog' });
+        },
       );
     }
   }, [state.dialogModule]);
@@ -180,9 +161,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
   const notOverriddenKeys = Object.keys(state.notOverriddenMap.imports);
   const disabledModules = window.importMapOverrides.getDisabledOverrides();
 
-  const searchableKeys = [
-    ...new Set([...notOverriddenKeys, ...Object.keys(overrideMap)]),
-  ];
+  const searchableKeys = [...new Set([...notOverriddenKeys, ...Object.keys(overrideMap)])];
   searchableKeys.sort();
 
   fuzzy.filter(searchVal, searchableKeys).map((searchResult) => {
@@ -230,21 +209,20 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
           ref={inputRef}
           id="module-search"
           className={styles.imoSearchBox}
-          aria-label={t("searchModules", "Search modules")}
-          placeholder={t("searchModules", "Search modules")}
-          onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
-            setSearchQuery(evt.target.value)
-          }
+          aria-label={t('searchModules', 'Search modules')}
+          placeholder={t('searchModules', 'Search modules')}
+          onChange={(evt: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(evt.target.value)}
           labelText=""
+          size="lg"
         />
         <div>
-          <Button onClick={() => dispatch({ type: "show_new_module_dialog" })}>
-            {t("addNewModule", "Add new module")}
+          <Button kind="primary" onClick={() => dispatch({ type: 'show_new_module_dialog' })}>
+            {t('addNewModule', 'Add new module')}
           </Button>
         </div>
         <div>
-          <Button onClick={() => dispatch({ type: "reset_all_overrides" })}>
-            {t("resetOverrides", "Reset all overrides")}
+          <Button kind="secondary" onClick={() => dispatch({ type: 'reset_all_overrides' })}>
+            {t('resetOverrides', 'Reset all overrides')}
           </Button>
         </div>
       </div>
@@ -252,10 +230,10 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
         <Table size="lg" stickyHeader={true} className={styles.imoTable}>
           <TableHead>
             <TableRow>
-              <TableHeader>{t("moduleStatus", "Module Status")}</TableHeader>
-              <TableHeader>{t("moduleName", "Module Name")}</TableHeader>
-              <TableHeader>{t("domain", "Domain")}</TableHeader>
-              <TableHeader>{t("filename", "Filename")}</TableHeader>
+              <TableHeader>{t('moduleStatus', 'Module Status')}</TableHeader>
+              <TableHeader>{t('moduleName', 'Module Name')}</TableHeader>
+              <TableHeader>{t('domain', 'Domain')}</TableHeader>
+              <TableHeader>{t('filename', 'Filename')}</TableHeader>
             </TableRow>
           </TableHead>
           <TableBody className={styles.imoTableBody}>
@@ -263,16 +241,11 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
               <TableRow
                 role="button"
                 tabIndex={0}
-                onClick={() =>
-                  dispatch({ type: "show_edit_module_dialog", module: mod })
-                }
+                onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
               >
                 <TableCell>
                   <div
-                    className={classNames(
-                      styles.imoStatus,
-                      styles.imoNextOverride
-                    )}
+                    className={classNames(styles.imoStatus, styles.imoNextOverride)}
                     role="button"
                     tabIndex={0}
                     onClick={(evt) => {
@@ -280,7 +253,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
                       window.location.reload();
                     }}
                   />
-                  <div>{t("inlineOverride", "Inline Override")}</div>
+                  <div className={styles.imoNextOverrideText}>{t('inlineOverride', 'Inline Override')}</div>
                   <div />
                 </TableCell>
                 <TableCell>{mod.moduleName}</TableCell>
@@ -292,16 +265,11 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
               <TableRow
                 role="button"
                 tabIndex={0}
-                onClick={() =>
-                  dispatch({ type: "show_edit_module_dialog", module: mod })
-                }
+                onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
               >
                 <TableCell>
                   <div
-                    className={classNames(
-                      styles.imoStatus,
-                      styles.imoNextDefault
-                    )}
+                    className={classNames(styles.imoStatus, styles.imoNextDefault)}
                     role="button"
                     tabIndex={0}
                     onClick={(evt) => {
@@ -309,7 +277,7 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
                       window.location.reload();
                     }}
                   />
-                  <div>{t("default", "Default")}</div>
+                  <div className={styles.imoNextDefaultText}>{t('default', 'Default')}</div>
                   <div />
                 </TableCell>
                 <TableCell>{mod.moduleName}</TableCell>
@@ -321,18 +289,11 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
               <TableRow
                 role="button"
                 tabIndex={0}
-                onClick={() =>
-                  dispatch({ type: "show_edit_module_dialog", module: mod })
-                }
+                onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
               >
                 <TableCell>
-                  <div
-                    className={classNames(
-                      styles.imoStatus,
-                      styles.imoDisabledOverride
-                    )}
-                  />
-                  <div>{t("overrideDisabled", "Override Disabled")}</div>
+                  <div className={classNames(styles.imoStatus, styles.imoDisabledOverride)} />
+                  <div className={styles.imoDisabledOverrideText}>{t('overrideDisabled', 'Override Disabled')}</div>
                 </TableCell>
                 <TableCell>{mod.moduleName}</TableCell>
                 <TableCell>{toDomain(mod)}</TableCell>
@@ -343,18 +304,11 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
               <TableRow
                 role="button"
                 tabIndex={0}
-                onClick={() =>
-                  dispatch({ type: "show_edit_module_dialog", module: mod })
-                }
+                onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
               >
                 <TableCell>
-                  <div
-                    className={classNames(
-                      styles.imoStatus,
-                      styles.imoCurrentOverride
-                    )}
-                  />
-                  <div>{t("inlineOverride", "Inline Override")}</div>
+                  <div className={classNames(styles.imoStatus, styles.imoCurrentOverride)} />
+                  <div className={styles.imoCurrentOverrideText}>{t('inlineOverride', 'Inline Override')}</div>
                 </TableCell>
                 <TableCell>{mod.moduleName}</TableCell>
                 <TableCell>{toDomain(mod)}</TableCell>
@@ -365,18 +319,11 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
               <TableRow
                 role="button"
                 tabIndex={0}
-                onClick={() =>
-                  dispatch({ type: "show_edit_module_dialog", module: mod })
-                }
+                onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
               >
                 <TableCell>
-                  <div
-                    className={classNames(
-                      styles.imoStatus,
-                      styles.imoExternalOverride
-                    )}
-                  />
-                  <div>{t("externalOverride", "External Override")}</div>
+                  <div className={classNames(styles.imoStatus, styles.imoExternalOverride)} />
+                  <div className={styles.externalOverrideText}>{t('externalOverride', 'External Override')}</div>
                 </TableCell>
                 <TableCell>{mod.moduleName}</TableCell>
                 <TableCell>{toDomain(mod)}</TableCell>
@@ -387,18 +334,11 @@ const ImportMapList = forwardRef<HTMLDivElement>((props, ref) => {
               <TableRow
                 role="button"
                 tabIndex={0}
-                onClick={() =>
-                  dispatch({ type: "show_edit_module_dialog", module: mod })
-                }
+                onClick={() => dispatch({ type: 'show_edit_module_dialog', module: mod })}
               >
                 <TableCell>
-                  <div
-                    className={classNames(
-                      styles.imoStatus,
-                      styles.imoDefaultModule
-                    )}
-                  />
-                  <div>{t("default", "Default")}</div>
+                  <div className={classNames(styles.imoStatus, styles.imoDefaultModule)} />
+                  <div>{t('default', 'Default')}</div>
                 </TableCell>
                 <TableCell>{mod.moduleName}</TableCell>
                 <TableCell>{toDomain(mod)}</TableCell>
@@ -416,9 +356,7 @@ function sorter(obj1: { order: number }, obj2: { order: number }) {
   return obj1.order - obj2.order;
 }
 
-const currentBase =
-  (document.querySelector("base") && document.querySelector("base").href) ||
-  location.origin + "/";
+const currentBase = (document.querySelector('base') && document.querySelector('base').href) || location.origin + '/';
 
 function toDomain(mod: Module) {
   const urlStr = toUrlStr(mod);
@@ -429,7 +367,7 @@ function toDomain(mod: Module) {
 function toFileName(mod: Module) {
   const urlStr = toUrlStr(mod);
   const url = toURL(urlStr);
-  return url ? url.pathname.slice(url.pathname.lastIndexOf("/") + 1) : urlStr;
+  return url ? url.pathname.slice(url.pathname.lastIndexOf('/') + 1) : urlStr;
 }
 
 function toUrlStr(mod: Module) {

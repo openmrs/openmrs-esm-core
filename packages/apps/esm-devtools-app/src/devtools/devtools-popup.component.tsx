@@ -1,8 +1,8 @@
-import React from "react";
-import { Button } from "@carbon/react";
-import { Close } from "@carbon/react/icons";
-import ImportMap from "./import-map.component";
-import styles from "./devtools-popup.styles.scss";
+import React from 'react';
+import { Button } from '@carbon/react';
+import { Close } from '@carbon/react/icons';
+import ImportMap from './import-map.component';
+import styles from './devtools-popup.styles.scss';
 
 export default function DevToolsPopup(props: DevToolsPopupProps) {
   return (

@@ -24,7 +24,7 @@ The base path or URL for the OpenMRS API / endpoints.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L86)
+[packages/framework/esm-globals/src/types.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L83)
 
 ___
 
@@ -36,7 +36,7 @@ URLs of configurations to load in the system.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L99)
+[packages/framework/esm-globals/src/types.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L96)
 
 ___
 
@@ -50,7 +50,7 @@ The environment to use.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L95)
+[packages/framework/esm-globals/src/types.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L92)
 
 ___
 
@@ -64,7 +64,7 @@ Defines if offline should be supported by installing a service worker.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L104)
+[packages/framework/esm-globals/src/types.ts:101](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L101)
 
 ___
 
@@ -76,4 +76,4 @@ The base path for the SPA root path.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L90)
+[packages/framework/esm-globals/src/types.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L87)

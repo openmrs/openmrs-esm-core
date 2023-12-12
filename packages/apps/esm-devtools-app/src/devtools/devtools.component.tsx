@@ -23,14 +23,9 @@ function DevTools() {
           [styles.overridden]: isOverridden,
         })}
       >
-        {"{\u00B7\u00B7\u00B7}"}
+        {'{\u00B7\u00B7\u00B7}'}
       </div>
-      {devToolsOpen && (
-        <DevToolsPopup
-          close={toggleDevTools}
-          toggleOverridden={toggleOverridden}
-        />
-      )}
+      {devToolsOpen && <DevToolsPopup close={toggleDevTools} toggleOverridden={toggleOverridden} />}
     </>
   );
 

@@ -1,7 +1,7 @@
 /** @module @category Routes Utilities */
-import type { OpenmrsAppRoutes, OpenmrsRoutes } from "@openmrs/esm-globals";
-import { canAccessStorage } from "@openmrs/esm-utils";
-import { localStorageRoutesPrefix } from "./constants";
+import type { OpenmrsAppRoutes, OpenmrsRoutes } from '@openmrs/esm-globals';
+import { canAccessStorage } from '@openmrs/esm-utils';
+import { localStorageRoutesPrefix } from './constants';
 
 const isEnabled = canAccessStorage();
 
@@ -15,16 +15,13 @@ const isEnabled = canAccessStorage();
  *  version of an {@link OpenmrsAppRoutes} object or a string or URL that resolves to a
  *  JSON document that represents an {@link OpenmrsAppRoutes} object
  */
-export function addRoutesOverride(
-  moduleName: string,
-  routes: OpenmrsAppRoutes | string | URL
-) {
+export function addRoutesOverride(moduleName: string, routes: OpenmrsAppRoutes | string | URL) {
   if (!isEnabled) {
     return;
   }
 
-  if (typeof routes === "string") {
-    if (routes.startsWith("http")) {
+  if (typeof routes === 'string') {
+    if (routes.startsWith('http')) {
       return addRouteOverrideInternal(moduleName, routes);
     } else {
       try {
@@ -32,10 +29,7 @@ export function addRoutesOverride(
         if (isOpenmrsAppRoutes(maybeRoutes)) {
           return addRouteOverrideInternal(moduleName, maybeRoutes);
         } else {
-          console.error(
-            `The supplied routes for ${moduleName} is not a valid OpenmrsAppRoutes object`,
-            routes
-          );
+          console.error(`The supplied routes for ${moduleName} is not a valid OpenmrsAppRoutes object`, routes);
         }
       } catch {}
     }
@@ -47,7 +41,7 @@ export function addRoutesOverride(
 
   console.error(
     `Override for ${moduleName} is not in a valid format. Expected either a Javascript Object, a JSON string of a Javascript object, or a URL`,
-    routes
+    routes,
   );
 }
 
@@ -87,10 +81,7 @@ export function resetAllRoutesOverrides() {
   }
 }
 
-function addRouteOverrideInternal(
-  moduleName: string,
-  routes: OpenmrsAppRoutes | string
-) {
+function addRouteOverrideInternal(moduleName: string, routes: OpenmrsAppRoutes | string) {
   const key = localStorageRoutesPrefix + moduleName;
   localStorage.setItem(key, JSON.stringify(routes));
 }
@@ -103,26 +94,21 @@ function addRouteOverrideInternal(
  * @param routes the object to check to see if it is an OpenmrsAppRoutes object
  * @returns true if the routes value is an OpenmrsAppRoutes
  */
-export function isOpenmrsAppRoutes(
-  routes: OpenmrsAppRoutes | unknown
-): routes is OpenmrsAppRoutes {
-  if (routes && typeof routes === "object") {
+export function isOpenmrsAppRoutes(routes: OpenmrsAppRoutes | unknown): routes is OpenmrsAppRoutes {
+  if (routes && typeof routes === 'object') {
     const hasOwnProperty = Object.prototype.hasOwnProperty;
     // we cast maybeRoutes as OpenmrsAppRoutes mainly so we can refer to the properties it should
     // have without repeated casts
     const maybeRoutes = routes as OpenmrsAppRoutes;
 
-    if (hasOwnProperty.call(routes, "pages")) {
+    if (hasOwnProperty.call(routes, 'pages')) {
       if (!Boolean(maybeRoutes.pages) || !Array.isArray(maybeRoutes.pages)) {
         return false;
       }
     }
 
-    if (hasOwnProperty.call(routes, "extensions")) {
-      if (
-        !Boolean(maybeRoutes.extensions) ||
-        !Array.isArray(maybeRoutes.extensions)
-      ) {
+    if (hasOwnProperty.call(routes, 'extensions')) {
+      if (!Boolean(maybeRoutes.extensions) || !Array.isArray(maybeRoutes.extensions)) {
         return false;
       }
     }
@@ -143,15 +129,11 @@ export function isOpenmrsAppRoutes(
  * @param routes the object to check to see if it is an OpenmrsRoutes object
  * @returns true if the routes value is an OpenmrsRoutes
  */
-export function isOpenmrsRoutes(
-  routes: OpenmrsRoutes | unknown
-): routes is OpenmrsRoutes {
-  if (routes && typeof routes === "object") {
+export function isOpenmrsRoutes(routes: OpenmrsRoutes | unknown): routes is OpenmrsRoutes {
+  if (routes && typeof routes === 'object') {
     const maybeRoutes = routes as OpenmrsRoutes;
 
-    return Object.entries(maybeRoutes).every(
-      ([key, value]) => typeof key === "string" && isOpenmrsAppRoutes(value)
-    );
+    return Object.entries(maybeRoutes).every(([key, value]) => typeof key === 'string' && isOpenmrsAppRoutes(value));
   }
 
   return false;

@@ -1,8 +1,8 @@
 /** @module @category Extension */
-import { mountRootParcel, type Parcel, type ParcelConfig } from "single-spa";
-import { getExtensionNameFromId, getExtensionRegistration } from "./extensions";
-import { checkStatus } from "./helpers";
-import { updateInternalExtensionStore } from "./store";
+import { mountRootParcel, type Parcel, type ParcelConfig } from 'single-spa';
+import { getExtensionNameFromId, getExtensionRegistration } from './extensions';
+import { checkStatus } from './helpers';
+import { updateInternalExtensionStore } from './store';
 
 export interface CancelLoading {
   (): void;
