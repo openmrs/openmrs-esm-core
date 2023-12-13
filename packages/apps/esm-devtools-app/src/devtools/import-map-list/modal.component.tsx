@@ -58,6 +58,7 @@ const ImportMapModal: React.FC<ImportMapModalProps> = ({ module, isNew, close })
   return (
     <>
       <ModalHeader
+        closeModal={close}
         title={
           isNew
             ? t('addModule', 'Add Module')
