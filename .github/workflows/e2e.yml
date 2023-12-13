@@ -47,6 +47,7 @@ jobs:
         run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
 
       - name: Run E2E tests
+        timeout-minutes: 15
         run: yarn playwright test
 
       - name: Stop dev server
