@@ -1,4 +1,6 @@
 .omrs-toasts-container {
+  display: flex;
+  flex-direction: column;
   z-index: 100000;
   position: fixed;
   width: 20rem;

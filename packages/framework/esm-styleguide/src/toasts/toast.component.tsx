@@ -35,10 +35,8 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
     title,
     actionButtonLabel,
     onActionButtonClick = () => {},
-    millis = defaultOptions.millis,
+    millis = actionButtonLabel ? null : defaultOptions.millis,
   } = toast;
-
-  const [waitingForTime, setWaitingForTime] = useState(true);
 
   const handleActionClick = useCallback(() => {
     onActionButtonClick();
@@ -46,27 +44,21 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
   }, [closeToast, onActionButtonClick]);
 
   useEffect(() => {
-    if (waitingForTime) {
+    if (millis) {
       const timeoutId = setTimeout(closeToast, millis);
       return () => clearTimeout(timeoutId);
     }
-  }, [waitingForTime, closeToast, millis]);
+  }, [closeToast, millis]);
 
   return (
-    <div
-      onMouseEnter={() => setWaitingForTime(false)}
-      onMouseLeave={() => setWaitingForTime(true)}
-    >
-      <ActionableNotification
-        actionButtonLabel={actionButtonLabel}
-        kind={kind || "info"}
-        lowContrast={critical}
-        subtitle={description}
-        title={title || ""}
-        onActionButtonClick={handleActionClick}
-        onClose={closeToast}
-        timeout={actionButtonLabel ? null : millis}
-      />
-    </div>
+    <ActionableNotification
+      actionButtonLabel={actionButtonLabel}
+      kind={kind || "info"}
+      lowContrast={critical}
+      subtitle={description}
+      title={title || ""}
+      onActionButtonClick={handleActionClick}
+      onClose={closeToast}
+    />
   );
 };
