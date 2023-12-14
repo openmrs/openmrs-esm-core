@@ -12,5 +12,5 @@ export {
   subscribeActionableNotificationShown,
   subscribeToastShown,
   subscribeSnackbarShown,
-} from './events';
-export * from './types';
+} from "./events";
+export * from "./types";

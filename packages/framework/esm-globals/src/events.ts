@@ -60,12 +60,20 @@ export interface ShowToastEvent {
   kind?: 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
   title?: string;
   millis?: number;
+  actionButtonLabel?: string | any;
+  onActionButtonClick?: () => void;
 }
 
 /** @category UI */
 export interface ShowSnackbarEvent {
   subtitle?: any;
-  kind?: 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
+  kind?:
+    | "error"
+    | "info"
+    | "info-square"
+    | "success"
+    | "warning"
+    | "warning-alt";
   title: string;
   actionButtonLabel?: string | any;
   onActionButtonClick?: () => void;
@@ -74,10 +82,10 @@ export interface ShowSnackbarEvent {
   timeoutInMs?: number;
 }
 
-const notificationShownName = 'openmrs:notification-shown';
-const actionableNotificationShownName = 'openmrs:actionable-notification-shown';
-const toastShownName = 'openmrs:toast-shown';
-const snackbarShownName = 'openmrs:snack-bar-shown';
+const notificationShownName = "openmrs:notification-shown";
+const actionableNotificationShownName = "openmrs:actionable-notification-shown";
+const toastShownName = "openmrs:toast-shown";
+const snackbarShownName = "openmrs:snack-bar-shown";
 
 export function dispatchNotificationShown(data: ShowNotificationEvent) {
   window.dispatchEvent(new CustomEvent(notificationShownName, { detail: data }));

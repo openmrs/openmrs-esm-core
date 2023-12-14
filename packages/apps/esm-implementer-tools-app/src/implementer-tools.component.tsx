@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { showToast, UserHasAccess, useStore } from '@openmrs/esm-framework';
-import { implementerToolsStore, showModuleDiagnostics, togglePopup } from './store';
+import React, { useState, useEffect } from "react";
+import { showToast, UserHasAccess, useStore } from "@openmrs/esm-framework";
+import {
+  implementerToolsStore,
+  showModuleDiagnostics,
+  togglePopup,
+} from "./store";
 
 import { useBackendDependencies } from './backend-dependencies/useBackendDependencies';
 import { hasInvalidDependencies } from './backend-dependencies/openmrs-backend-dependencies';

@@ -1,8 +1,10 @@
 .omrs-toasts-container {
   z-index: 100000;
   position: fixed;
+  width: 20rem;
   top: 4rem;
   right: 1rem;
+  gap: 0.5rem;
 }
 
 .omrs-toast-mounting,

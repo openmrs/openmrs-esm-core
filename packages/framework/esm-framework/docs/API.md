@@ -174,13 +174,11 @@
 - [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
 - [showActionableNotification](API.md#showactionablenotification)
-- [showActionableToast](API.md#showactionabletoast)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
 - [showSnackbar](API.md#showsnackbar)
 - [showToast](API.md#showtoast)
 - [subscribeActionableNotificationShown](API.md#subscribeactionablenotificationshown)
-- [subscribeActionableToastShown](API.md#subscribeactionabletoastshown)
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
 - [subscribeSnackbarShown](API.md#subscribesnackbarshown)
 - [subscribeToastShown](API.md#subscribetoastshown)
@@ -645,16 +643,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/actionable-notification.component.tsx#L24)
-
-___
-
-### ActionableToastType
-
-Ƭ **ActionableToastType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/actionable-toast.component.tsx#L24)
 
 ___
 
@@ -4317,28 +4305,6 @@ Displays an actionable notification in the UI.
 #### Defined in
 
 [packages/framework/esm-styleguide/src/notifications/index.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/notifications/index.tsx#L85)
-
-___
-
-### showActionableToast
-
-▸ **showActionableToast**(`actionableToast`): `void`
-
-Displays a snack bar notification in the UI.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `actionableToast` | [`ActionableToastDescriptor`](interfaces/ActionableToastDescriptor.md) | The description of the snack bar to display. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/actionable-toasts/index.tsx:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/actionable-toasts/index.tsx#L35)
 
 ___
 

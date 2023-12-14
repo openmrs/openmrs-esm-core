@@ -17,7 +17,12 @@ const ActiveToasts: React.FC<ActiveToastsProps> = ({ subject }) => {
     const subscription = subject.subscribe((toast) =>
       setToasts((toasts) => [
         ...toasts.filter(
-          (t) => t.description !== toast.description || t.kind !== toast.kind || t.title !== toast.title,
+          (t) =>
+            t.description !== toast.description ||
+            t.kind !== toast.kind ||
+            t.title !== toast.title ||
+            t.actionButtonLabel !== toast.actionButtonLabel ||
+            t.onActionButtonClick !== toast.onActionButtonClick
         ),
         toast,
       ]),
