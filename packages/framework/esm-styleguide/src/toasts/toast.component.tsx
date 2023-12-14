@@ -1,6 +1,6 @@
 /** @module @category UI */
-import React, { useEffect, useState, useCallback } from "react";
-import { ActionableNotification } from "@carbon/react";
+import React, { useEffect, useCallback } from 'react';
+import { ActionableNotification } from '@carbon/react';
 
 const defaultOptions = {
   millis: 5000,
@@ -53,10 +53,10 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
   return (
     <ActionableNotification
       actionButtonLabel={actionButtonLabel}
-      kind={kind || "info"}
+      kind={kind || 'info'}
       lowContrast={critical}
       subtitle={description}
-      title={title || ""}
+      title={title || ''}
       onActionButtonClick={handleActionClick}
       onClose={closeToast}
     />

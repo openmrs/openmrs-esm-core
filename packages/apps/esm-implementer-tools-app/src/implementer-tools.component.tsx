@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { showToast, UserHasAccess, useStore } from "@openmrs/esm-framework";
-import {
-  implementerToolsStore,
-  showModuleDiagnostics,
-  togglePopup,
-} from "./store";
+import React, { useState, useEffect } from 'react';
+import { showToast, UserHasAccess, useStore } from '@openmrs/esm-framework';
+import { implementerToolsStore, showModuleDiagnostics, togglePopup } from './store';
 
 import { useBackendDependencies } from './backend-dependencies/useBackendDependencies';
 import { hasInvalidDependencies } from './backend-dependencies/openmrs-backend-dependencies';
@@ -30,10 +26,10 @@ function PopupHandler() {
     if (shouldShowNotification) {
       showToast({
         critical: false,
-        kind: "error",
+        kind: 'error',
         description: t(
-          "checkImplementerToolsMessage",
-          "Check the Backend Modules tab in the Implementer Tools for more details"
+          'checkImplementerToolsMessage',
+          'Check the Backend Modules tab in the Implementer Tools for more details',
         ),
         title: t('modulesWithMissingDependenciesWarning', 'Some modules have unresolved backend dependencies'),
         actionButtonLabel: t('viewModules', 'View modules'),
