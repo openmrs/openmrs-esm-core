@@ -495,6 +495,26 @@ export const validatingLocationSuccessResponse = {
   },
 };
 
+export const validatingLocationEmptyResponse = {
+  ok: true,
+  data: {
+    resourceType: 'Bundle',
+    id: 'e3c2aa40-21b0-4671-a492-bb7e7f16cc46',
+    meta: {
+      lastUpdated: '2023-11-08T08:45:48.967+00:00',
+    },
+    type: 'searchset',
+    total: 0,
+    link: [
+      {
+        relation: 'self',
+        url: 'https://dev3.openmrs.org/openmrs/ws/fhir2/R4/Location?_id=1ce1b7d4-c865-4178-82b0-5932e51503d6',
+      },
+    ],
+    entry: [],
+  },
+};
+
 export const validatingLocationFailureResponse = {
   ok: false,
   data: {

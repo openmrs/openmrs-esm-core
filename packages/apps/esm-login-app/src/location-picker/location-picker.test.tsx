@@ -9,6 +9,7 @@ import {
 } from '@openmrs/esm-framework';
 import {
   mockLoginLocations,
+  validatingLocationEmptyResponse,
   validatingLocationFailureResponse,
   validatingLocationSuccessResponse,
 } from '../../__mocks__/locations.mock';
@@ -16,6 +17,7 @@ import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import LocationPicker from './location-picker.component';
 import { act } from 'react-dom/test-utils';
+import userEvent from '@testing-library/user-event';
 
 const validLocationUuid = '1ce1b7d4-c865-4178-82b0-5932e51503d6';
 const invalidLocationUuid = '2gf1b7d4-c865-4178-82b0-5932e51503d6';
@@ -40,6 +42,13 @@ mockedOpenmrsFetch.mockImplementation((url) => {
     return validatingLocationFailureResponse;
   }
 
+  if (url === `/ws/fhir2/R4/Location?_id=${validLocationUuid}&name%3Acontains=site`) {
+    return validatingLocationEmptyResponse;
+  }
+
+  if (url === '/ws/fhir2/R4/Location?_summary=data&_count=50&_tag=Login+Location&name%3Acontains=site') {
+    return validatingLocationEmptyResponse;
+  }
   return mockLoginLocations;
 });
 
@@ -60,10 +69,7 @@ describe('LocationPicker', () => {
   describe('Testing basic workflows', () => {
     it('renders a list of login locations', async () => {
       await act(() => {
-        renderWithRouter(LocationPicker, {
-          currentLocationUuid: 'some-location-uuid',
-          hideWelcomeMessage: false,
-        });
+        renderWithRouter(LocationPicker, {});
       });
 
       expect(screen.getByText(/welcome testy mctesterface/i)).toBeInTheDocument();
@@ -347,4 +353,19 @@ describe('LocationPicker', () => {
     expect(radios[0].getAttribute('id')).toBe('Community Outreach');
     expect(radios[0]).toHaveAttribute('checked');
   });
+
+  // it("should not show default location if the searched term doesn't matches the default location", async () => {
+  //   const user = userEvent.setup();
+  //   await act(() => {
+  //     renderWithRouter(LocationPicker, {});
+  //   });
+
+  //   const searchBox = screen.getByRole('searchbox', {
+  //     name: /search for a location/i,
+  //   });
+  //   await user.type(searchBox, 'site');
+  //   expect(searchBox.getAttribute('value')).toBe('site');
+
+  //   expect(screen.queryByRole('radio', { name: new RegExp(/community outreach/, 'i') })).not.toBeInTheDocument();
+  // });
 });

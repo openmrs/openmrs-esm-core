@@ -158,7 +158,7 @@ export function useDefaultLocation(isUpdateFlow: boolean, searchTerm: string) {
 
   const userDefaultLocationUuid = useMemo(() => userProperties?.defaultLocation, [userProperties?.defaultLocation]);
 
-  const { isLocationValid, location: defaultFhirLocation } = useValidateLocationUuid(
+  const { isLocationValid, location: defaultLocationFhir } = useValidateLocationUuid(
     userDefaultLocationUuid,
     searchTerm,
   );
@@ -218,7 +218,7 @@ export function useDefaultLocation(isUpdateFlow: boolean, searchTerm: string) {
   );
 
   return {
-    defaultFhirLocation,
+    defaultLocationFhir,
     userDefaultLocationUuid: isLocationValid ? userDefaultLocationUuid : null,
     updateDefaultLocation,
     savePreference,
