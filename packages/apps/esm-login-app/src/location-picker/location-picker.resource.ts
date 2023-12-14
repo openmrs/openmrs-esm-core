@@ -158,10 +158,11 @@ export function useDefaultLocation(isUpdateFlow: boolean, searchTerm: string) {
 
   const userDefaultLocationUuid = useMemo(() => userProperties?.defaultLocation, [userProperties?.defaultLocation]);
 
-  const { isLocationValid, location: defaultLocationFhir } = useValidateLocationUuid(
-    userDefaultLocationUuid,
-    searchTerm,
-  );
+  const {
+    isLoading: isLoadingValidation,
+    isLocationValid,
+    location: defaultLocationFhir,
+  } = useValidateLocationUuid(userDefaultLocationUuid, searchTerm);
 
   useEffect(() => {
     if (userDefaultLocationUuid) {
@@ -218,6 +219,7 @@ export function useDefaultLocation(isUpdateFlow: boolean, searchTerm: string) {
   );
 
   return {
+    isLoadingValidation,
     defaultLocationFhir,
     userDefaultLocationUuid: isLocationValid ? userDefaultLocationUuid : null,
     updateDefaultLocation,

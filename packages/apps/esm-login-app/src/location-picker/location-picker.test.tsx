@@ -351,21 +351,22 @@ describe('LocationPicker', () => {
 
     const radios = screen.getAllByRole('radio');
     expect(radios[0].getAttribute('id')).toBe('Community Outreach');
-    expect(radios[0]).toHaveAttribute('checked');
+    // @ts-ignore
+    expect(radios[0].checked).toBe(true);
   });
 
-  // it("should not show default location if the searched term doesn't matches the default location", async () => {
-  //   const user = userEvent.setup();
-  //   await act(() => {
-  //     renderWithRouter(LocationPicker, {});
-  //   });
+  it("should not show default location if the searched term doesn't matches the default location", async () => {
+    const user = userEvent.setup();
+    await act(() => {
+      renderWithRouter(LocationPicker, {});
+    });
 
-  //   const searchBox = screen.getByRole('searchbox', {
-  //     name: /search for a location/i,
-  //   });
-  //   await user.type(searchBox, 'site');
-  //   expect(searchBox.getAttribute('value')).toBe('site');
+    const searchBox = screen.getByRole('searchbox', {
+      name: /search for a location/i,
+    });
+    await user.type(searchBox, 'site');
+    expect(searchBox.getAttribute('value')).toBe('site');
 
-  //   expect(screen.queryByRole('radio', { name: new RegExp(/community outreach/, 'i') })).not.toBeInTheDocument();
-  // });
+    expect(screen.queryByRole('radio', { name: new RegExp(/community outreach/, 'i') })).not.toBeInTheDocument();
+  });
 });

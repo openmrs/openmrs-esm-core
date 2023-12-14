@@ -35,8 +35,14 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   const [searchParams] = useSearchParams();
 
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
-  const { userDefaultLocationUuid, updateDefaultLocation, savePreference, setSavePreference, defaultLocationFhir } =
-    useDefaultLocation(isUpdateFlow, debouncedSearchQuery);
+  const {
+    isLoadingValidation,
+    userDefaultLocationUuid,
+    updateDefaultLocation,
+    savePreference,
+    setSavePreference,
+    defaultLocationFhir,
+  } = useDefaultLocation(isUpdateFlow, debouncedSearchQuery);
 
   const { user, sessionLocation } = useSession();
   const { currentUser } = useMemo(
@@ -55,6 +61,8 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
     loadingNewData,
     setPage,
   } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, debouncedSearchQuery);
+
+  const isLoadingLocations = isLoading || isLoadingValidation;
 
   const locations = useMemo(() => {
     if (!defaultLocationFhir?.length || !fetchedLocations) {
@@ -105,7 +113,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
-    if (!isLoading && !searchTerm) {
+    if (!isLoadingLocations && !debouncedSearchQuery) {
       if (!config.chooseLocation.enabled || locations?.length === 1) {
         changeLocation(locations[0]?.resource.id, false);
       }
@@ -113,13 +121,14 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
         changeLocation();
       }
     }
-  }, [changeLocation, config.chooseLocation.enabled, isLoading, locations, searchTerm]);
+  }, [changeLocation, config.chooseLocation.enabled, isLoadingLocations, locations, debouncedSearchQuery]);
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
     if (isUpdateFlow) {
       return;
     }
+
     if (userDefaultLocationUuid && !isSubmitting) {
       setActiveLocation(userDefaultLocationUuid);
       changeLocation(userDefaultLocationUuid, true);
@@ -178,7 +187,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
             value={searchTerm}
           />
           <div className={styles.searchResults}>
-            {isLoading ? (
+            {isLoadingLocations ? (
               <div className={styles.loadingContainer}>
                 <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
                 <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
