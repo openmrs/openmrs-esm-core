@@ -10,32 +10,36 @@ import {
   RadioButtonGroup,
   RadioButtonSkeleton,
 } from '@carbon/react';
-import { navigate, setSessionLocation, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+import {
+  navigate,
+  setSessionLocation,
+  useConfig,
+  useConnectivity,
+  useDebounce,
+  useSession,
+} from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
-import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
-import { useDefaultLocation } from './location-picker.resource';
+import { useDefaultLocation, useInfiniteScrolling, useLoginLocations } from './location-picker.resource';
 import { ConfigSchema } from '../config-schema';
 
-interface LocationPickerProps {
-  hideWelcomeMessage?: boolean;
-  currentLocationUuid?: string;
-}
+interface LocationPickerProps {}
 
-const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, currentLocationUuid }) => {
+const LocationPicker: React.FC<LocationPickerProps> = () => {
   const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
+  const [searchTerm, setSearchTerm] = useState(null);
+  const debouncedSearchQuery = useDebounce(searchTerm);
   const [searchParams] = useSearchParams();
+
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
   const { userDefaultLocationUuid, updateDefaultLocation, savePreference, setSavePreference, defaultLocationFhir } =
-    useDefaultLocation(isUpdateFlow);
-
-  const [searchTerm, setSearchTerm] = useState(null);
+    useDefaultLocation(isUpdateFlow, debouncedSearchQuery);
 
   const { user, sessionLocation } = useSession();
-  const { currentUser, userProperties } = useMemo(
+  const { currentUser } = useMemo(
     () => ({
       currentUser: user?.display,
       userUuid: user?.uuid,
@@ -50,12 +54,13 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     hasMore,
     loadingNewData,
     setPage,
-  } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
+  } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, debouncedSearchQuery);
 
   const locations = useMemo(() => {
     if (!defaultLocationFhir?.length || !fetchedLocations) {
       return fetchedLocations;
     }
+
     return [
       ...(defaultLocationFhir ?? []),
       ...fetchedLocations?.filter(({ resource }) => resource.id !== defaultLocationFhir?.[0].resource.id),
@@ -63,9 +68,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
   }, [defaultLocationFhir, fetchedLocations]);
 
   const [activeLocation, setActiveLocation] = useState(() => {
-    if (currentLocationUuid && hideWelcomeMessage) {
-      return currentLocationUuid;
-    }
     return sessionLocation?.uuid ?? userDefaultLocationUuid;
   });
 
@@ -124,9 +126,8 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     }
   }, [changeLocation, isSubmitting, userDefaultLocationUuid, isUpdateFlow]);
 
-  const search = (location: string) => {
-    setActiveLocation('');
-    setSearchTerm(location);
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   const handleSubmit = useCallback(
@@ -140,27 +141,15 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     [activeLocation, changeLocation, savePreference],
   );
 
-  // Infinite scroll
-  const observer = useRef(null);
-  const loadingIconRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (loadingNewData) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting && hasMore) {
-            setPage((page) => page + 1);
-          }
-        },
-        {
-          threshold: 1,
-        },
-      );
-      if (node) observer.current.observe(node);
-    },
-    [loadingNewData, hasMore, setPage],
-  );
+  const handleFetchNextSet = useCallback(() => {
+    setPage((page) => page + 1);
+  }, [setPage]);
 
+  const { observer, loadingIconRef } = useInfiniteScrolling({
+    inLoadingState: loadingNewData,
+    onIntersection: handleFetchNextSet,
+    shouldLoadMore: hasMore,
+  });
   const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
 
   return (
@@ -183,9 +172,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
             labelText={t('searchForLocation', 'Search for a location')}
             id="search-1"
             placeholder={t('searchForLocation', 'Search for a location')}
-            onChange={(event) => search(event.target.value)}
+            onChange={handleSearch}
             name="searchForLocation"
             size="lg"
+            value={searchTerm}
           />
           <div className={styles.searchResults}>
             {isLoading ? (
