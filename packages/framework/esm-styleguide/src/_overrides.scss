@@ -37,14 +37,6 @@
   display: none;
 }
 
-/* Icon button */
-.cds--btn--icon-only {
-  // Apply a size layout token that sets the default size of the icon-only button to `sm`
-  @include layout.use('size', $default: 'sm');
-  // Remove extraneous top padding from the icon-only button
-  padding-block-start: 0;
-}
-
 /* Side nav */
 .cds--side-nav {
   overflow: auto;
