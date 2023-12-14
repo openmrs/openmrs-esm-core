@@ -22,7 +22,7 @@ const ActiveToasts: React.FC<ActiveToastsProps> = ({ subject }) => {
             t.kind !== toast.kind ||
             t.title !== toast.title ||
             t.actionButtonLabel !== toast.actionButtonLabel ||
-            t.onActionButtonClick !== toast.onActionButtonClick
+            t.onActionButtonClick !== toast.onActionButtonClick,
         ),
         toast,
       ]),
