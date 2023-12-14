@@ -6,12 +6,27 @@
 
 ### Properties
 
+- [actionButtonLabel](ShowToastEvent.md#actionbuttonlabel)
 - [description](ShowToastEvent.md#description)
 - [kind](ShowToastEvent.md#kind)
 - [millis](ShowToastEvent.md#millis)
 - [title](ShowToastEvent.md#title)
 
+### Methods
+
+- [onActionButtonClick](ShowToastEvent.md#onactionbuttonclick)
+
 ## Properties
+
+### actionButtonLabel
+
+• `Optional` **actionButtonLabel**: `any`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:96](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L96)
+
+___
 
 ### description
 
@@ -49,4 +64,18 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L61)
+[packages/framework/esm-globals/src/events.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L94)
+
+## Methods
+
+### onActionButtonClick
+
+▸ `Optional` **onActionButtonClick**(): `void`
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-globals/src/events.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L97)
