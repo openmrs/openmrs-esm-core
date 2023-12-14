@@ -1038,7 +1038,13 @@ ___
 
 ### getLocations
 
-▸ **getLocations**(): `Observable`<[`Location`](interfaces/Location.md)[]\>
+▸ **getLocations**(`tagUuidOrName?`): `Observable`<[`Location`](interfaces/Location.md)[]\>
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `tagUuidOrName` | ``null`` \| `string` | `null` |
 
 #### Returns
 
@@ -1484,7 +1490,13 @@ ___
 
 ### useLocations
 
-▸ **useLocations**(): [`Location`](interfaces/Location.md)[]
+▸ **useLocations**(`tagUuidOrName?`): [`Location`](interfaces/Location.md)[]
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `tagUuidOrName` | ``null`` \| `string` | `null` |
 
 #### Returns
 

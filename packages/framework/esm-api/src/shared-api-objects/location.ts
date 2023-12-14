@@ -11,8 +11,9 @@ export function toLocationObject(openmrsRestForm: any): Location {
   };
 }
 
-export function getLocations(): Observable<Array<Location>> {
-  return openmrsObservableFetch<any>(`/ws/rest/v1/location`)
+export function getLocations(tagUuidOrName: string | null = null): Observable<Array<Location>> {
+  const url = `/ws/rest/v1/location` + (tagUuidOrName ? '?tag=' + tagUuidOrName : '');
+  return openmrsObservableFetch<any>(url)
     .pipe(
       map((results) => {
         const locations: Array<Location> = results.data.results.map(toLocationObject);
