@@ -7,8 +7,9 @@ import {
   ExtensionDefinition,
   OpenmrsAppRoutes,
   RouteDefinition,
+  ExtensionRegistration,
 } from '@openmrs/esm-framework';
-import { ActivityFn, LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
+import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
 import { emptyLifecycle, routeRegex } from './helpers';
 
 const pages: Array<RegisteredPageDefinition> = [];
@@ -134,11 +135,34 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
 
     routes.pages?.forEach((p) => {
-      pages.push({ ...p, order: p.order ?? Number.MAX_SAFE_INTEGER, appName });
+      if (
+        p &&
+        typeof p === 'object' &&
+        Object.hasOwn(p, 'component') &&
+        (Object.hasOwn(p, 'route') || Object.hasOwn(p, 'routeRegex') || Object.hasOwn(p, 'routes'))
+      ) {
+        pages.push({
+          ...p,
+          order: p.order ?? Number.MAX_SAFE_INTEGER,
+          appName,
+        });
+      } else {
+        console.warn(
+          `A page for ${appName} could not be registered as it does not appear to have the required properties`,
+          p,
+        );
+      }
     });
 
     availableExtensions.forEach((ext) => {
-      tryRegisterExtension(appName, ext);
+      if (ext && typeof ext === 'object' && Object.hasOwn(ext, 'name') && Object.hasOwn(ext, 'component')) {
+        tryRegisterExtension(appName, ext);
+      } else {
+        console.warn(
+          `An extension for ${appName} could not be registered as it does not appear to have the required properties`,
+          ext,
+        );
+      }
     });
   }
 }
@@ -240,7 +264,7 @@ extension definition.`,
 
   if (extension.slots && extension.slot) {
     console.warn(
-      `The extension ${name} from ${appName} declares both a 'slots' property and 
+      `The extension ${name} from ${appName} declares both a 'slots' property and
 a 'slot' property. Only the 'slots' property will be honored.`,
     );
   }
@@ -255,7 +279,7 @@ To fix this, ensure that you define a 'component' field inside the extension def
     return;
   }
 
-  let loader;
+  let loader: ExtensionRegistration['load'] | undefined = undefined;
   if (extension.component) {
     loader = getLoader(appName, extension.component);
   } else if (extension.load) {
@@ -269,17 +293,19 @@ supported, so the extension will not be loaded.`,
     loader = extension.load;
   }
 
-  registerExtension({
-    name,
-    load: loader,
-    meta: extension.meta || {},
-    order: extension.order,
-    moduleName: appName,
-    privileges: extension.privileges,
-    online: extension.online ?? true,
-    offline: extension.offline ?? false,
-    featureFlag: extension.featureFlag,
-  });
+  if (loader) {
+    registerExtension({
+      name,
+      load: loader,
+      meta: extension.meta || {},
+      order: extension.order,
+      moduleName: appName,
+      privileges: extension.privileges,
+      online: extension.online ?? true,
+      offline: extension.offline ?? false,
+      featureFlag: extension.featureFlag,
+    });
+  }
 
   for (const slot of slots) {
     attach(slot, name);

@@ -191,6 +191,7 @@
 ### Utility Functions
 
 - [age](API.md#age)
+- [canAccessStorage](API.md#canaccessstorage)
 - [daysIntoYear](API.md#daysintoyear)
 - [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
@@ -424,7 +425,7 @@ A definition of an extension as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L163)
+[packages/framework/esm-globals/src/types.ts:171](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L171)
 
 ___
 
@@ -457,7 +458,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:251](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L251)
+[packages/framework/esm-globals/src/types.ts:259](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L259)
 
 ___
 
@@ -469,7 +470,7 @@ A definition of a page extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L107)
+[packages/framework/esm-globals/src/types.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L115)
 
 ___
 
@@ -498,7 +499,7 @@ A definition of a page after the app has been registered.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:158](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L158)
+[packages/framework/esm-globals/src/types.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L166)
 
 ___
 
@@ -508,7 +509,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L62)
+[packages/framework/esm-globals/src/types.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L70)
 
 ___
 
@@ -1037,7 +1038,13 @@ ___
 
 ### getLocations
 
-▸ **getLocations**(): `Observable`<[`Location`](interfaces/Location.md)[]\>
+▸ **getLocations**(`tagUuidOrName?`): `Observable`<[`Location`](interfaces/Location.md)[]\>
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `tagUuidOrName` | ``null`` \| `string` | `null` |
 
 #### Returns
 
@@ -1483,7 +1490,13 @@ ___
 
 ### useLocations
 
-▸ **useLocations**(): [`Location`](interfaces/Location.md)[]
+▸ **useLocations**(`tagUuidOrName?`): [`Location`](interfaces/Location.md)[]
+
+#### Parameters
+
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `tagUuidOrName` | ``null`` \| `string` | `null` |
 
 #### Returns
 
@@ -4640,6 +4653,32 @@ A human-readable string version of the age.
 #### Defined in
 
 [packages/framework/esm-utils/src/age-helpers.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L36)
+
+___
+
+### canAccessStorage
+
+▸ **canAccessStorage**(`storage?`): `boolean`
+
+Simple utility function to determine if an object implementing the WebStorage API
+is actually available. Useful for testing the availability of `localStorage` or
+`sessionStorage`.
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `storage` | `Storage` | `window.localStorage` | The WebStorage API object to check. Defaults to `localStorage`. |
+
+#### Returns
+
+`boolean`
+
+True if the WebStorage API object is able to be accessed, false otherwise
+
+#### Defined in
+
+[packages/framework/esm-utils/src/storage.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/storage.ts#L11)
 
 ___
 
