@@ -7,12 +7,12 @@ export interface RootProps {}
 
 const Root: React.FC<RootProps> = () => {
   return (
-    <BrowserRouter basename={window.spaBase}>
+    <BrowserRouter basename={window.getOpenmrsSpaBase()}>
       <Routes>
-        <Route path="/login/*" element={null} />
-        <Route path="/logout/*" element={null} />
+        <Route path="login/*" element={null} />
+        <Route path="logout/*" element={null} />
         <Route
-          path="/*"
+          path="*"
           element={
             <div className={styles.primaryNavContainer}>
               <Navbar />

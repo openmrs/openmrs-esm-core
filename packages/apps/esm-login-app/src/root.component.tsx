@@ -8,12 +8,12 @@ export interface RootProps {}
 
 const Root: React.FC<RootProps> = () => {
   return (
-    <BrowserRouter basename={window.spaBase}>
+    <BrowserRouter basename={window.getOpenmrsSpaBase()}>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/login/confirm" element={<Login />} />
-        <Route path="/login/location" element={<LocationPicker />} />
-        <Route path="/logout" element={<RedirectLogout />} />
+        <Route path="login" element={<Login />} />
+        <Route path="login/confirm" element={<Login />} />
+        <Route path="login/location" element={<LocationPicker />} />
+        <Route path="logout" element={<RedirectLogout />} />
       </Routes>
     </BrowserRouter>
   );
