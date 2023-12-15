@@ -1,7 +1,7 @@
 /** @module @category Offline */
-import { getLoggedInUser } from "@openmrs/esm-api";
-import Dexie from "dexie";
-import { OfflineDb } from "./offline-db";
+import { getLoggedInUser } from '@openmrs/esm-api';
+import Dexie from 'dexie';
+import { OfflineDb } from './offline-db';
 
 /**
  * A handler for synchronizing dynamically declared offline data.
@@ -96,8 +96,7 @@ export interface DynamicOfflineDataSyncState {
   }>;
 }
 
-const dynamicOfflineDataHandlers: Record<string, DynamicOfflineDataHandler> =
-  {};
+const dynamicOfflineDataHandlers: Record<string, DynamicOfflineDataHandler> = {};
 
 /**
  * Returns all handlers which have been setup using the {@link setupDynamicOfflineDataHandler} function.
@@ -111,12 +110,10 @@ export function getDynamicOfflineDataHandlers() {
  * See {@link DynamicOfflineDataHandler} for details.
  * @param handler The handler to be setup.
  */
-export function setupDynamicOfflineDataHandler(
-  handler: DynamicOfflineDataHandler
-) {
+export function setupDynamicOfflineDataHandler(handler: DynamicOfflineDataHandler) {
   if (dynamicOfflineDataHandlers[handler.id]) {
     console.warn(
-      `[setupDynamicOfflineDataHandler] Another second handler with the ID "${handler.id}" was registered. This handler will override the previous one. This could be unintended as the previous handler might run different flows than the newly registered one. If this is the case, ensure that you are setting up the handlers with different IDs.`
+      `[setupDynamicOfflineDataHandler] Another second handler with the ID "${handler.id}" was registered. This handler will override the previous one. This could be unintended as the previous handler might run different flows than the newly registered one. If this is the case, ensure that you are setting up the handlers with different IDs.`,
     );
   }
 
@@ -128,9 +125,7 @@ export function setupDynamicOfflineDataHandler(
  * Optionally returns only entries of a given type.
  * @param type The type of the entries to be returned. If `undefined`, returns all types.
  */
-export async function getDynamicOfflineDataEntries<
-  T extends DynamicOfflineData
->(type?: string): Promise<Array<T>> {
+export async function getDynamicOfflineDataEntries<T extends DynamicOfflineData>(type?: string): Promise<Array<T>> {
   const userId = await getCurrentUserId();
   return await getDynamicOfflineDataEntriesFor<T>(userId, type);
 }
@@ -141,9 +136,10 @@ export async function getDynamicOfflineDataEntries<
  * @param userId The ID of the user whose entries are to be retrieved.
  * @param type The type of the entries to be returned. If `undefined`, returns all types.
  */
-export async function getDynamicOfflineDataEntriesFor<
-  T extends DynamicOfflineData
->(userId: string, type?: string): Promise<Array<T>> {
+export async function getDynamicOfflineDataEntriesFor<T extends DynamicOfflineData>(
+  userId: string,
+  type?: string,
+): Promise<Array<T>> {
   const filter = type ? { type, users: userId } : { users: userId };
   const db = new OfflineDb();
   return (await db.dynamicOfflineData
@@ -158,10 +154,7 @@ export async function getDynamicOfflineDataEntriesFor<
  * @param type The type of the offline data. See {@link DynamicOfflineData} for details.
  * @param identifier The identifier of the offline data. See {@link DynamicOfflineData} for details.
  */
-export async function putDynamicOfflineData(
-  type: string,
-  identifier: string
-): Promise<void> {
+export async function putDynamicOfflineData(type: string, identifier: string): Promise<void> {
   const userId = await getCurrentUserId();
   return await putDynamicOfflineDataFor(userId, type, identifier);
 }
@@ -173,11 +166,7 @@ export async function putDynamicOfflineData(
  * @param type The type of the offline data. See {@link DynamicOfflineData} for details.
  * @param identifier The identifier of the offline data. See {@link DynamicOfflineData} for details.
  */
-export async function putDynamicOfflineDataFor(
-  userId: string,
-  type: string,
-  identifier: string
-): Promise<void> {
+export async function putDynamicOfflineDataFor(userId: string, type: string, identifier: string): Promise<void> {
   const db = new OfflineDb();
   const existingEntry = await db.dynamicOfflineData
     .get({
@@ -209,10 +198,7 @@ export async function putDynamicOfflineDataFor(
  * @param type The type of the offline data. See {@link DynamicOfflineData} for details.
  * @param identifier The identifier of the offline data. See {@link DynamicOfflineData} for details.
  */
-export async function removeDynamicOfflineData(
-  type: string,
-  identifier: string
-): Promise<void> {
+export async function removeDynamicOfflineData(type: string, identifier: string): Promise<void> {
   const userId = await getCurrentUserId();
   return await removeDynamicOfflineDataFor(userId, type, identifier);
 }
@@ -224,11 +210,7 @@ export async function removeDynamicOfflineData(
  * @param type The type of the offline data. See {@link DynamicOfflineData} for details.
  * @param identifier The identifier of the offline data. See {@link DynamicOfflineData} for details.
  */
-export async function removeDynamicOfflineDataFor(
-  userId: string,
-  type: string,
-  identifier: string
-): Promise<void> {
+export async function removeDynamicOfflineDataFor(userId: string, type: string, identifier: string): Promise<void> {
   const db = new OfflineDb();
   const existingEntry = await db.dynamicOfflineData
     .get({
@@ -246,9 +228,7 @@ export async function removeDynamicOfflineDataFor(
         })
         .catch(Dexie.errnames.DatabaseClosed);
     } else {
-      await db.dynamicOfflineData
-        .delete(existingEntry.id!)
-        .catch(Dexie.errnames.DatabaseClosed);
+      await db.dynamicOfflineData.delete(existingEntry.id!).catch(Dexie.errnames.DatabaseClosed);
     }
   }
 }
@@ -258,15 +238,10 @@ export async function removeDynamicOfflineDataFor(
  * @param type The type of the offline data. See {@link DynamicOfflineData} for details.
  * @param abortSignal An {@link AbortSignal} which can be used to cancel the operation.
  */
-export async function syncAllDynamicOfflineData(
-  type: string,
-  abortSignal?: AbortSignal
-): Promise<void> {
+export async function syncAllDynamicOfflineData(type: string, abortSignal?: AbortSignal): Promise<void> {
   const dataEntriesToSync = await getDynamicOfflineDataEntries(type);
   await Promise.all(
-    dataEntriesToSync.map(async (entry) =>
-      syncDynamicOfflineData(entry.type, entry.identifier, abortSignal)
-    )
+    dataEntriesToSync.map(async (entry) => syncDynamicOfflineData(entry.type, entry.identifier, abortSignal)),
   );
 }
 
@@ -279,7 +254,7 @@ export async function syncAllDynamicOfflineData(
 export async function syncDynamicOfflineData(
   type: string,
   identifier: string,
-  abortSignal?: AbortSignal
+  abortSignal?: AbortSignal,
 ): Promise<void> {
   // If this function is called without the offline data being registered, we're implicitly doing
   // that instead of throwing. This mitigates race conditions with user input and generally
@@ -292,9 +267,7 @@ export async function syncDynamicOfflineData(
   const entry = await db.dynamicOfflineData
     .get({ type, identifier })
     .catch(Dexie.errnames.DatabaseClosed, () => undefined);
-  const handlers = getDynamicOfflineDataHandlers().filter(
-    (handler) => handler.type === type
-  );
+  const handlers = getDynamicOfflineDataHandlers().filter((handler) => handler.type === type);
 
   if (!entry) {
     return;
@@ -306,17 +279,15 @@ export async function syncDynamicOfflineData(
         handler.sync(identifier, abortSignal);
         return { id: handler.id, error: undefined };
       } catch (e: any) {
-        const errorMessage: string = e["message"]?.toString() ?? e.toString();
+        const errorMessage: string = e['message']?.toString() ?? e.toString();
         return { id: handler.id, error: errorMessage };
       }
-    })
+    }),
   );
 
   const succeededHandlers = results.filter((x) => !x.error).map((x) => x.id);
   const erroredHandlers = results.filter((x) => x.error).map((x) => x.id);
-  const errors = results
-    .filter((x) => x.error)
-    .map((x) => ({ handlerId: x.id, message: x.error! }));
+  const errors = results.filter((x) => x.error).map((x) => ({ handlerId: x.id, message: x.error! }));
   const newSyncState: DynamicOfflineDataSyncState = {
     syncedOn: new Date(),
     syncedBy: userId,
@@ -338,9 +309,7 @@ async function getCurrentUserId() {
   const id = (await getLoggedInUser()).uuid;
 
   if (!id) {
-    throw new Error(
-      "Using the dynamic offline data API requires a logged in user."
-    );
+    throw new Error('Using the dynamic offline data API requires a logged in user.');
   }
 
   return id;

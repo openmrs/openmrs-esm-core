@@ -1,12 +1,8 @@
-export {
-  type OfflineMode,
-  type OfflineModeResult,
-  getCurrentOfflineMode,
-} from "./mode";
-export * from "./offline-patient-data";
-export * from "./service-worker-messaging";
-export * from "./service-worker-http-headers";
-export * from "./uuid";
+export { type OfflineMode, type OfflineModeResult, getCurrentOfflineMode } from './mode';
+export * from './offline-patient-data';
+export * from './service-worker-messaging';
+export * from './service-worker-http-headers';
+export * from './uuid';
 export {
   type QueueItemDescriptor,
   type SyncItem,
@@ -20,6 +16,6 @@ export {
   beginEditSynchronizationItem,
   deleteSynchronizationItem,
   setupOfflineSync,
-} from "./sync";
-export * from "./dynamic-offline-data";
-export { getOfflineDb } from "./offline-db";
+} from './sync';
+export * from './dynamic-offline-data';
+export { getOfflineDb } from './offline-db';

@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import type { ImportMap } from "@openmrs/esm-globals";
-import { retry } from "@openmrs/esm-utils";
-import { absoluteWbManifestUrls, omrsCacheName } from "./constants";
-import { fetchUrlsToCacheFromImportMap } from "./import-map-utils";
-import { ServiceWorkerDb } from "./storage";
+import type { ImportMap } from '@openmrs/esm-globals';
+import { retry } from '@openmrs/esm-utils';
+import { absoluteWbManifestUrls, omrsCacheName } from './constants';
+import { fetchUrlsToCacheFromImportMap } from './import-map-utils';
+import { ServiceWorkerDb } from './storage';
 
 /**
  * Attempts to resolve cacheable files from the specified import map (files are retrieved via convention)
@@ -43,17 +43,13 @@ export async function addToOmrsCache(urls: Array<string>) {
     urls.map(async (url) => {
       try {
         await retry(() => cache.add(url), {
-          onError: (e, attempt) =>
-            console.debug(
-              `[SW] Failure attempt ${attempt} at caching "${url}". Error: `,
-              e
-            ),
+          onError: (e, attempt) => console.debug(`[SW] Failure attempt ${attempt} at caching "${url}". Error: `, e),
         });
         return { url, success: true };
       } catch (e) {
         return { url, success: false };
       }
-    })
+    }),
   );
 
   const cached = results.filter((r) => r.success);
@@ -62,14 +58,14 @@ export async function addToOmrsCache(urls: Array<string>) {
   if (cached.length > 0) {
     console.debug(
       `[SW] Successfully added ${cached.length} URLs to the OMRS cache. URLs: `,
-      cached.map((r) => r.url)
+      cached.map((r) => r.url),
     );
   }
 
   if (failedToCache.length > 0) {
     console.error(
       `[SW] Failed to cache ${failedToCache.length} URLs. URLs: `,
-      failedToCache.map((r) => r.url)
+      failedToCache.map((r) => r.url),
     );
   }
 }
@@ -77,27 +73,23 @@ export async function addToOmrsCache(urls: Array<string>) {
 async function invalidateObsoleteCacheEntries(newImportMapUrls: Array<string>) {
   const cache = await caches.open(omrsCacheName);
   const cachedUrls = (await cache.keys()).map((x) => x.url);
-  const dynamicRoutes =
-    await new ServiceWorkerDb().dynamicRouteRegistrations.toArray();
+  const dynamicRoutes = await new ServiceWorkerDb().dynamicRouteRegistrations.toArray();
 
   const urlsToInvalidate = cachedUrls.filter(
     (cachedUrl) =>
       !absoluteWbManifestUrls.includes(cachedUrl) &&
       !newImportMapUrls.includes(cachedUrl) &&
-      !dynamicRoutes.some((route) => new RegExp(route.pattern).test(cachedUrl))
+      !dynamicRoutes.some((route) => new RegExp(route.pattern).test(cachedUrl)),
   );
 
-  console.info(
-    "[SW] Removing the following expired URLs from the cache: ",
-    urlsToInvalidate
-  );
+  console.info('[SW] Removing the following expired URLs from the cache: ', urlsToInvalidate);
 
   // eslint-disable-next-line no-console
   console.debug(
-    "[SW] The following URLs were known and not invalidated: ",
+    '[SW] The following URLs were known and not invalidated: ',
     absoluteWbManifestUrls,
     newImportMapUrls,
-    dynamicRoutes
+    dynamicRoutes,
   );
 
   await Promise.all(urlsToInvalidate.map((url) => cache.delete(url)));

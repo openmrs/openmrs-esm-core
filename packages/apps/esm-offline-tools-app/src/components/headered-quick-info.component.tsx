@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { SkeletonText } from "@carbon/react";
-import styles from "./headered-quick-info.styles.scss";
+import React, { ReactNode } from 'react';
+import { SkeletonText } from '@carbon/react';
+import styles from './headered-quick-info.styles.scss';
 
 export interface HeaderedQuickInfoProps {
   header: string;
@@ -8,19 +8,11 @@ export interface HeaderedQuickInfoProps {
   isLoading?: boolean;
 }
 
-const HeaderedQuickInfo: React.FC<HeaderedQuickInfoProps> = ({
-  header,
-  content,
-  isLoading = false,
-}) => {
+const HeaderedQuickInfo: React.FC<HeaderedQuickInfoProps> = ({ header, content, isLoading = false }) => {
   return (
     <div>
       <h4 className={styles.label01}>{header}</h4>
-      {isLoading ? (
-        <SkeletonText heading />
-      ) : (
-        <span className={styles.productiveHeading04}>{content}</span>
-      )}
+      {isLoading ? <SkeletonText heading /> : <span className={styles.productiveHeading04}>{content}</span>}
     </div>
   );
 };

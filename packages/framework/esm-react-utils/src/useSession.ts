@@ -1,6 +1,6 @@
 /** @module @category API */
-import { getSessionStore, Session } from "@openmrs/esm-api";
-import { useState, useEffect, useRef } from "react";
+import { getSessionStore, Session } from '@openmrs/esm-api';
+import { useState, useEffect, useRef } from 'react';
 
 let promise: undefined | Promise<Session>;
 
@@ -85,14 +85,12 @@ export function useSession(): Session {
   // get here.
   useEffect(() => {
     if (!unsubscribe.current) {
-      unsubscribe.current = getSessionStore().subscribe(
-        ({ loaded, session: newSession }) => {
-          if (loaded) {
-            session = newSession;
-            setStateSession(newSession);
-          }
+      unsubscribe.current = getSessionStore().subscribe(({ loaded, session: newSession }) => {
+        if (loaded) {
+          session = newSession;
+          setStateSession(newSession);
         }
-      );
+      });
     }
     return () => {
       unsubscribe.current && unsubscribe.current();
@@ -103,12 +101,10 @@ export function useSession(): Session {
   const result = stateSession || session;
   if (!result) {
     if (promise) {
-      console.warn(
-        "useSession is in an unexpected state. Attempting to recover."
-      );
+      console.warn('useSession is in an unexpected state. Attempting to recover.');
       throw promise;
     } else {
-      throw Error("useSession is in an invalid state.");
+      throw Error('useSession is in an invalid state.');
     }
   }
   return result;

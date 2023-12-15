@@ -1,15 +1,23 @@
-import React from "react";
-import ImportMap from "./import-map.component";
-import styles from "./devtools-popup.styles.css";
+import React from 'react';
+import { Button } from '@carbon/react';
+import { Close } from '@carbon/react/icons';
+import ImportMap from './import-map.component';
+import styles from './devtools-popup.styles.scss';
 
 export default function DevToolsPopup(props: DevToolsPopupProps) {
   return (
     <div className={styles.popup}>
       <ImportMap toggleOverridden={props.toggleOverridden} />
       <div className={styles.farRight}>
-        <button onClick={props.close} className={styles.closeButton}>
-          {"\u24e7"}
-        </button>
+        <Button
+          className={styles.closeButton}
+          kind="secondary"
+          renderIcon={(props) => <Close size={16} {...props} />}
+          iconDescription="Close"
+          onClick={props.close}
+          hasIconOnly
+          size="sm"
+        />
       </div>
     </div>
   );

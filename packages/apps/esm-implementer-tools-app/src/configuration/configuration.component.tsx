@@ -1,21 +1,9 @@
-import React, { useMemo, useState } from "react";
-import {
-  Button,
-  Column,
-  FlexGrid,
-  Row,
-  TextInput,
-  Toggle,
-} from "@carbon/react";
-import { useTranslation } from "react-i18next";
-import {
-  ChevronDown,
-  ChevronUp,
-  Download,
-  TrashCan,
-} from "@carbon/react/icons";
-import cloneDeep from "lodash-es/cloneDeep";
-import isEmpty from "lodash-es/isEmpty";
+import React, { useMemo, useState } from 'react';
+import { Button, Column, FlexGrid, Row, TextInput, Toggle } from '@carbon/react';
+import { useTranslation } from 'react-i18next';
+import { ChevronDown, ChevronUp, Download, TrashCan } from '@carbon/react/icons';
+import cloneDeep from 'lodash-es/cloneDeep';
+import isEmpty from 'lodash-es/isEmpty';
 import {
   Config,
   getExtensionInternalStore,
@@ -23,22 +11,20 @@ import {
   temporaryConfigStore,
   useStore,
   useStoreWithActions,
-} from "@openmrs/esm-framework/src/internal";
-import { ConfigTree } from "./interactive-editor/config-tree.component";
-import { Description } from "./interactive-editor/description.component";
-import { implementerToolsStore, ImplementerToolsStore } from "../store";
-import styles from "./configuration.styles.scss";
+} from '@openmrs/esm-framework/src/internal';
+import { ConfigTree } from './interactive-editor/config-tree.component';
+import { Description } from './interactive-editor/description.component';
+import { implementerToolsStore, ImplementerToolsStore } from '../store';
+import styles from './configuration.styles.scss';
 
-const JsonEditor = React.lazy(
-  () => import("./json-editor/json-editor.component")
-);
+const JsonEditor = React.lazy(() => import('./json-editor/json-editor.component'));
 
 function isLeaf(configNode: Config) {
   return (
-    configNode.hasOwnProperty("_default") ||
-    configNode["_type"] ||
-    configNode.hasOwnProperty("_value") ||
-    configNode.hasOwnProperty("_source")
+    configNode.hasOwnProperty('_default') ||
+    configNode['_type'] ||
+    configNode.hasOwnProperty('_value') ||
+    configNode.hasOwnProperty('_source')
   );
 }
 
@@ -59,10 +45,7 @@ interface OpenOrCloseButtonProps {
   toggleIsToolbarOpen(): void;
 }
 
-const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({
-  isConfigToolbarOpen,
-  toggleIsToolbarOpen,
-}) => (
+const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({ isConfigToolbarOpen, toggleIsToolbarOpen }) => (
   <Button
     hasIconOnly
     renderIcon={isConfigToolbarOpen ? ChevronUp : ChevronDown}
@@ -70,7 +53,7 @@ const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({
     kind="ghost"
     size="sm"
     tooltipPosition="left"
-    iconDescription={`${isConfigToolbarOpen ? "Hide" : "Show"} toolbar`}
+    iconDescription={`${isConfigToolbarOpen ? 'Hide' : 'Show'} toolbar`}
   />
 );
 
@@ -89,14 +72,11 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
   const { config } = useStore(implementerToolsConfigStore);
   const extensionStore = useStore(getExtensionInternalStore());
   const tempConfigStore = useStore(temporaryConfigStore);
-  const [filterText, setFilterText] = useState("");
+  const [filterText, setFilterText] = useState('');
   const tempConfig = tempConfigStore.config;
-  const tempConfigObjUrl = new Blob(
-    [JSON.stringify(tempConfig, undefined, 2)],
-    {
-      type: "application/json",
-    }
-  );
+  const tempConfigObjUrl = new Blob([JSON.stringify(tempConfig, undefined, 2)], {
+    type: 'application/json',
+  });
 
   const combinedConfig = useMemo(() => {
     const result = cloneDeep(config);
@@ -130,25 +110,18 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
       }
       return result;
     }
-    return filterText
-      ? getRelatedBranches(combinedConfig, filterText)
-      : combinedConfig;
+    return filterText ? getRelatedBranches(combinedConfig, filterText) : combinedConfig;
   }, [filterText, combinedConfig]);
 
-  const mainContentHeight = isConfigToolbarOpen
-    ? "calc(50vh - 7rem)"
-    : "calc(50vh - 2rem)";
+  const mainContentHeight = isConfigToolbarOpen ? 'calc(50vh - 7rem)' : 'calc(50vh - 2rem)';
   return (
     <>
       <div className={styles.tools}>
         <div className={styles.toggleToolbarButton}>
-          <OpenOrCloseButton
-            isConfigToolbarOpen={isConfigToolbarOpen}
-            toggleIsToolbarOpen={toggleIsToolbarOpen}
-          />
+          <OpenOrCloseButton isConfigToolbarOpen={isConfigToolbarOpen} toggleIsToolbarOpen={toggleIsToolbarOpen} />
         </div>
         {isConfigToolbarOpen ? (
-          <FlexGrid style={{ padding: "0.5em 1.5em" }}>
+          <FlexGrid style={{ padding: '0.5em 1.5em' }}>
             <Row className={styles.row}>
               <Column>
                 <TextInput
@@ -161,14 +134,14 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 <Toggle
                   className={styles.toggle}
                   id="jsonModeSwitch"
-                  labelText={t("jsonEditor", "JSON Editor")}
+                  labelText={t('jsonEditor', 'JSON Editor')}
                   onToggle={toggleIsJsonModeEnabled}
                   toggled={isJsonModeEnabled}
                 />
                 <Toggle
                   className={styles.toggle}
                   id="uiEditorSwitch"
-                  labelText={t("uiEditor", "UI Editor")}
+                  labelText={t('uiEditor', 'UI Editor')}
                   toggled={isUIEditorEnabled}
                   onToggle={toggleIsUIEditorEnabled}
                 />
@@ -182,7 +155,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                     temporaryConfigStore.setState({ config: {} });
                   }}
                 >
-                  {t("clearConfig", "Clear Local Config")}
+                  {t('clearConfig', 'Clear Local Config')}
                 </Button>
                 <Button
                   kind="secondary"
@@ -194,7 +167,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                     download="temporary_config.json"
                     href={window.URL.createObjectURL(tempConfigObjUrl)}
                   >
-                    {t("downloadConfig", "Download Config")}
+                    {t('downloadConfig', 'Download Config')}
                   </a>
                 </Button>
               </Column>

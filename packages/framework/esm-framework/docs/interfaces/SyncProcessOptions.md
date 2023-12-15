@@ -28,7 +28,7 @@ Additional data which can be used for synchronizing data in a {@link ProcessSync
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L56)
+[packages/framework/esm-offline/src/sync.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L53)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L60)
+[packages/framework/esm-offline/src/sync.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L57)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L58)
+[packages/framework/esm-offline/src/sync.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L55)
 
 ___
 
@@ -58,7 +58,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L59)
+[packages/framework/esm-offline/src/sync.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L56)
 
 ___
 
@@ -68,4 +68,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/sync.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L57)
+[packages/framework/esm-offline/src/sync.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/sync.ts#L54)

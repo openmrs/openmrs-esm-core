@@ -1,15 +1,10 @@
 /** @module @category API */
-import {
-  defaultVisitCustomRepresentation,
-  getVisitStore,
-  openmrsFetch,
-  Visit,
-} from "@openmrs/esm-api";
-import useSWR from "swr";
-import dayjs from "dayjs";
-import isToday from "dayjs/plugin/isToday";
-import { useMemo } from "react";
-import { useStore } from "./useStore";
+import { defaultVisitCustomRepresentation, getVisitStore, openmrsFetch, Visit } from '@openmrs/esm-api';
+import useSWR from 'swr';
+import dayjs from 'dayjs';
+import isToday from 'dayjs/plugin/isToday';
+import { useMemo } from 'react';
+import { useStore } from './useStore';
 
 dayjs.extend(isToday);
 
@@ -43,14 +38,9 @@ export interface VisitReturnType {
  * @param patientUuid Unique patient identifier `string`
  */
 export function useVisit(patientUuid: string): VisitReturnType {
-  const { patientUuid: visitStorePatientUuid, manuallySetVisitUuid } = useStore(
-    getVisitStore()
-  );
+  const { patientUuid: visitStorePatientUuid, manuallySetVisitUuid } = useStore(getVisitStore());
   // Ignore the visit store data if it is not for this patient
-  const retrospectiveVisitUuid =
-    patientUuid && visitStorePatientUuid == patientUuid
-      ? manuallySetVisitUuid
-      : null;
+  const retrospectiveVisitUuid = patientUuid && visitStorePatientUuid == patientUuid ? manuallySetVisitUuid : null;
   const activeVisitUrlSuffix = `?patient=${patientUuid}&v=${defaultVisitCustomRepresentation}&includeInactive=false`;
   const retrospectiveVisitUrlSuffix = `/${retrospectiveVisitUuid}`;
 
@@ -61,10 +51,7 @@ export function useVisit(patientUuid: string): VisitReturnType {
     isValidating: activeIsValidating,
   } = useSWR<{
     data: Visit | { results: Array<Visit> };
-  }>(
-    patientUuid ? `/ws/rest/v1/visit${activeVisitUrlSuffix}` : null,
-    openmrsFetch
-  );
+  }>(patientUuid ? `/ws/rest/v1/visit${activeVisitUrlSuffix}` : null, openmrsFetch);
 
   const {
     data: retroData,
@@ -73,23 +60,16 @@ export function useVisit(patientUuid: string): VisitReturnType {
     isValidating: retroIsValidating,
   } = useSWR<{
     data: Visit | { results: Array<Visit> };
-  }>(
-    patientUuid && retrospectiveVisitUuid
-      ? `/ws/rest/v1/visit${retrospectiveVisitUrlSuffix}`
-      : null,
-    openmrsFetch
-  );
+  }>(patientUuid && retrospectiveVisitUuid ? `/ws/rest/v1/visit${retrospectiveVisitUrlSuffix}` : null, openmrsFetch);
 
   const activeVisit = useMemo(
-    () =>
-      activeData?.data.results.find((visit) => visit.stopDatetime === null) ??
-      null,
-    [activeData]
+    () => activeData?.data.results.find((visit) => visit.stopDatetime === null) ?? null,
+    [activeData],
   );
 
   const currentVisit = useMemo(
     () => (retrospectiveVisitUuid ? retroData?.data : activeVisit ?? null),
-    [retroData, activeVisit, retrospectiveVisitUuid]
+    [retroData, activeVisit, retrospectiveVisitUuid],
   );
 
   return {
@@ -102,9 +82,6 @@ export function useVisit(patientUuid: string): VisitReturnType {
     activeVisit,
     currentVisit,
     currentVisitIsRetrospective: Boolean(retrospectiveVisitUuid),
-    isLoading: Boolean(
-      (!activeData || (retrospectiveVisitUuid && !retroData)) &&
-        (!activeError || !retroError)
-    ),
+    isLoading: Boolean((!activeData || (retrospectiveVisitUuid && !retroData)) && (!activeError || !retroError)),
   };
 }

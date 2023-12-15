@@ -1,10 +1,7 @@
 /** @module @category UI */
-import { useRef, useEffect } from "react";
+import { useRef, useEffect } from 'react';
 
-export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
-  handler: (event: Event) => void,
-  active = true
-) {
+export function useOnClickOutside<T extends HTMLElement = HTMLElement>(handler: (event: Event) => void, active = true) {
   const ref = useRef<T>(null);
 
   useEffect(() => {

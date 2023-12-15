@@ -1,9 +1,9 @@
-import { basename, dirname, resolve } from "path";
-import { existsSync, readFileSync, statSync } from "fs";
-import { inc } from "semver";
+import { basename, dirname, resolve } from 'node:path';
+import { existsSync, readFileSync, statSync } from 'node:fs';
+import { inc } from 'semver';
 
 export function getSharedDependencies() {
-  return require("@openmrs/esm-app-shell/dependencies.json");
+  return require('@openmrs/esm-app-shell/dependencies.json');
 }
 
 export function getMainBundle(project: any) {
@@ -11,7 +11,7 @@ export function getMainBundle(project: any) {
 
   if (!Boolean(file)) {
     throw Error(
-      "Could not find project to run. If you ran this outside of a directory containing an app, make sure you specify --sources."
+      'Could not find project to run. If you ran this outside of a directory containing an app, make sure you specify --sources.',
     );
   }
 
@@ -22,11 +22,8 @@ export function getMainBundle(project: any) {
   };
 }
 
-export function getAppRoutes(
-  sourceDirectory: string,
-  project: any
-): Record<string, unknown> {
-  const routesPath = resolve(sourceDirectory, "src", "routes.json");
+export function getAppRoutes(sourceDirectory: string, project: any): Record<string, unknown> {
+  const routesPath = resolve(sourceDirectory, 'src', 'routes.json');
 
   if (!existsSync(routesPath)) {
     return {};
@@ -38,15 +35,13 @@ export function getAppRoutes(
     return {};
   }
 
-  const json = JSON.parse(readFileSync(routesPath, { encoding: "utf-8" }));
+  const json = JSON.parse(readFileSync(routesPath, { encoding: 'utf-8' }));
 
-  if (!(typeof json === "object")) {
+  if (!(typeof json === 'object')) {
     return {};
   }
 
-  json["version"] = project.version
-    ? inc(project.version, "prerelease", "local")
-    : undefined;
+  json['version'] = project.version ? inc(project.version, 'prerelease', 'local') : undefined;
 
   return json;
 }

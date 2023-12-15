@@ -1,20 +1,15 @@
-import React from "react";
-import {
-  ConfigurableLink,
-  Type,
-  useConfig,
-  validators,
-} from "@openmrs/esm-framework";
+import React from 'react';
+import { ConfigurableLink, Type, useConfig, validators } from '@openmrs/esm-framework';
 
 export const genericLinkConfigSchema = {
   title: {
-    _default: "New Link",
+    _default: 'New Link',
     _type: Type.String,
   },
   target: {
-    _default: "#",
+    _default: '#',
     _type: Type.String,
-    _description: "The URL to link to.",
+    _description: 'The URL to link to.',
     _validators: [validators.isUrl],
   },
 };

@@ -1,11 +1,6 @@
-import React from "react";
-import {
-  StructuredListBody,
-  StructuredListCell,
-  StructuredListRow,
-  StructuredListWrapper,
-} from "@carbon/react";
-import styles from "./layout.styles.css";
+import React from 'react';
+import { StructuredListBody, StructuredListCell, StructuredListRow, StructuredListWrapper } from '@carbon/react';
+import styles from './layout.styles.css';
 
 export interface SubtreeProps {
   leaf: boolean;
@@ -15,34 +10,16 @@ export interface SubtreeProps {
   onMouseLeave?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
-export function Subtree({
-  leaf,
-  label,
-  children,
-  onMouseEnter,
-  onMouseLeave,
-}: SubtreeProps) {
+export function Subtree({ leaf, label, children, onMouseEnter, onMouseLeave }: SubtreeProps) {
   return leaf ? (
-    <StructuredListRow
-      className={styles.structuredListRow}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      <StructuredListCell className={styles.labelCell}>
-        {label}
-      </StructuredListCell>
+    <StructuredListRow className={styles.structuredListRow} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <StructuredListCell className={styles.labelCell}>{label}</StructuredListCell>
       <StructuredListCell>{children}</StructuredListCell>
     </StructuredListRow>
   ) : (
     <>
-      <StructuredListRow
-        className={styles.structuredListRow}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      >
-        <StructuredListCell className={styles.labelCell}>
-          {label}
-        </StructuredListCell>
+      <StructuredListRow className={styles.structuredListRow} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <StructuredListCell className={styles.labelCell}>{label}</StructuredListCell>
         <StructuredListCell />
       </StructuredListRow>
       <StructuredListRow className={styles.structuredListRow}>

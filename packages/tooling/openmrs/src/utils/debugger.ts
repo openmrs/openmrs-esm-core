@@ -1,29 +1,27 @@
-import { dirname } from "path";
-import { logInfo } from "./logger";
-import type { Configuration } from "webpack";
+import { dirname } from 'node:path';
+import { logInfo } from './logger';
+import type { Configuration } from 'webpack';
 
 function getWebpackEnv() {
   return {
     ...process.env,
-    analyze: process.env.BUNDLE_ANALYZE === "true",
-    production: process.env.NODE_ENV === "production",
-    development: process.env.NODE_ENV === "development",
+    analyze: process.env.BUNDLE_ANALYZE === 'true',
+    production: process.env.NODE_ENV === 'production',
+    development: process.env.NODE_ENV === 'development',
   };
 }
 
 function loadConfig(configPath: string) {
-  const content:
-    | Configuration
-    | ((env: unknown) => Configuration) = require(configPath);
-  if (typeof content === "function") {
+  const content: Configuration | ((env: unknown) => Configuration) = require(configPath);
+  if (typeof content === 'function') {
     return content(getWebpackEnv());
   }
   return content;
 }
 
 function debug(configPath: string, port: number) {
-  const Webpack: typeof import("webpack") = require("webpack");
-  const WebpackDevServer: typeof import("webpack-dev-server") = require("webpack-dev-server");
+  const Webpack: typeof import('webpack') = require('webpack');
+  const WebpackDevServer: typeof import('webpack-dev-server') = require('webpack-dev-server');
   const config = loadConfig(configPath);
 
   const compiler = Webpack(config);
@@ -40,6 +38,4 @@ function debug(configPath: string, port: number) {
   });
 }
 
-process.on("message", ({ source, port }: { source: string; port: number }) =>
-  debug(source, port)
-);
+process.on('message', ({ source, port }: { source: string; port: number }) => debug(source, port));

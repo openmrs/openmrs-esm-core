@@ -1,24 +1,18 @@
 /** @module @category Breadcrumb */
-import { getBreadcrumbs } from "./db";
-import { BreadcrumbRegistration } from "./types";
+import { getBreadcrumbs } from './db';
+import { BreadcrumbRegistration } from './types';
 
-function getExact(
-  breadcrumbs: Array<BreadcrumbRegistration>,
-  path: string
-): BreadcrumbRegistration {
+function getExact(breadcrumbs: Array<BreadcrumbRegistration>, path: string): BreadcrumbRegistration {
   const [bc] = breadcrumbs.filter((m) => m.matcher.test(path));
   return bc;
 }
 
-function getClosest(
-  breadcrumbs: Array<BreadcrumbRegistration>,
-  path: string
-): BreadcrumbRegistration | undefined {
-  const segments = path.split("/");
+function getClosest(breadcrumbs: Array<BreadcrumbRegistration>, path: string): BreadcrumbRegistration | undefined {
+  const segments = path.split('/');
 
   while (segments.length > 1) {
     segments.pop();
-    const newPath = segments.join("/");
+    const newPath = segments.join('/');
     const next = getNext(breadcrumbs, newPath);
 
     if (next) {
@@ -29,10 +23,7 @@ function getClosest(
   return undefined;
 }
 
-function getNext(
-  breadcrumbs: Array<BreadcrumbRegistration>,
-  path: string | undefined
-) {
+function getNext(breadcrumbs: Array<BreadcrumbRegistration>, path: string | undefined) {
   if (path) {
     return getExact(breadcrumbs, path) || getClosest(breadcrumbs, path);
   }
@@ -40,10 +31,7 @@ function getNext(
   return undefined;
 }
 
-export function filterBreadcrumbs(
-  list: Array<BreadcrumbRegistration>,
-  path: string
-) {
+export function filterBreadcrumbs(list: Array<BreadcrumbRegistration>, path: string) {
   if (list.length > 0) {
     const current = getNext(list, path);
 

@@ -1,14 +1,12 @@
-import React from "react";
-import { implementerToolsStore } from "../store";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { implementerToolsStore } from '../store';
+import { useTranslation } from 'react-i18next';
 
 interface ConfigEditButtonProps {
   configPath: string[];
 }
 
-export default function ConfigEditButton({
-  configPath,
-}: ConfigEditButtonProps) {
+export default function ConfigEditButton({ configPath }: ConfigEditButtonProps) {
   const { t } = useTranslation();
   return (
     <button
@@ -16,7 +14,7 @@ export default function ConfigEditButton({
         implementerToolsStore.setState({ configPathBeingEdited: configPath });
       }}
     >
-      {t("edit", "Edit")}
+      {t('edit', 'Edit')}
     </button>
   );
 }

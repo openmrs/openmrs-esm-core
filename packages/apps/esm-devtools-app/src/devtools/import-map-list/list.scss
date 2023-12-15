@@ -1,0 +1,82 @@
+@use '@carbon/styles/scss/colors';
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+
+.imoListContainer {
+  margin: 0 spacing.$spacing-04 0 spacing.$spacing-04;
+  height: 50vh;
+}
+
+.imoTableHeaderActions {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+
+  > * + * {
+    margin: 0 spacing.$spacing-03;
+  }
+}
+
+.imoSearchBox {
+  width: auto;
+  min-width: 12rem;
+  margin-right: spacing.$spacing-03;
+}
+
+.imoTable {
+  // 50vh is the container size - size of the header
+  max-height: calc(50vh - spacing.$spacing-09 - 12px);
+}
+
+.imoStatus {
+  height: spacing.$spacing-04;
+  width: spacing.$spacing-04;
+  border-radius: spacing.$spacing-03;
+  border: 1px solid colors.$gray-100;
+  margin-top: spacing.$spacing-02;
+  margin-right: spacing.$spacing-03;
+}
+
+.imoNextOverride {
+  background-color: colors.$red-90;
+}
+
+.imoNextOverrideText {
+  color: colors.$red-90;
+}
+
+.imoNextDefault {
+  background-color: colors.$yellow-70;
+}
+
+.imoNextDefaultText {
+  color: colors.$yellow-70;
+}
+
+.imoDisabledOverride {
+  background-color: colors.$cyan-30;
+}
+
+.imoDisabledOverrideText {
+  color: colors.$cyan-30;
+}
+
+.imoCurrentOverride {
+  background-color: colors.$red-40;
+}
+
+.imoCurrentOverrideText {
+  color: colors.$red-40;
+}
+
+.imoExternalOverride {
+  background-color: colors.$orange-50;
+}
+
+.imoExternalOverrideText {
+  color: colors.$orange-50;
+}
+
+.imoDefaultModule {
+  background-color: colors.$yellow-50;
+}

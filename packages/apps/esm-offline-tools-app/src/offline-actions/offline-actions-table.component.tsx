@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Button,
   DataTable,
@@ -18,7 +18,7 @@ import {
   TableRow,
   TableSelectAll,
   TableSelectRow,
-} from "@carbon/react";
+} from '@carbon/react';
 import {
   beginEditSynchronizationItem,
   canBeginEditSynchronizationItemsOfType,
@@ -28,15 +28,15 @@ import {
   SyncItem,
   useLayoutType,
   usePagination,
-} from "@openmrs/esm-framework";
-import styles from "./offline-actions-table.styles.scss";
+} from '@openmrs/esm-framework';
+import styles from './offline-actions-table.styles.scss';
 
 export interface SyncItemWithPatient {
   item: SyncItem;
   patient?: fhir.Patient;
 }
 
-type OfflineActionsTableHeaders = "createdOn" | "patient" | "action" | "error";
+type OfflineActionsTableHeaders = 'createdOn' | 'patient' | 'action' | 'error';
 
 export interface OfflineActionsTableProps {
   data?: Array<SyncItemWithPatient>;
@@ -60,32 +60,30 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
   const { results, currentPage, goTo } = usePagination(data);
   const layout = useLayoutType();
 
-  const toolbarItemSize = isDesktop(layout) ? "sm" : undefined;
+  const toolbarItemSize = isDesktop(layout) ? 'sm' : undefined;
 
   const defaultHeaders: Array<{
     key: OfflineActionsTableHeaders;
     header: string;
   }> = [
     {
-      key: "createdOn",
-      header: t("offlineActionsTableCreatedOn", "Date & Time"),
+      key: 'createdOn',
+      header: t('offlineActionsTableCreatedOn', 'Date & Time'),
     },
     {
-      key: "patient",
-      header: t("offlineActionsTablePatient", "Patient"),
+      key: 'patient',
+      header: t('offlineActionsTablePatient', 'Patient'),
     },
     {
-      key: "action",
-      header: t("offlineActionsTableAction", "Action"),
+      key: 'action',
+      header: t('offlineActionsTableAction', 'Action'),
     },
     {
-      key: "error",
-      header: t("offlineActionsTableError", "Error"),
+      key: 'error',
+      header: t('offlineActionsTableError', 'Error'),
     },
   ];
-  const headers = defaultHeaders.filter(
-    (header) => !hiddenHeaders?.includes(header.key)
-  );
+  const headers = defaultHeaders.filter((header) => !hiddenHeaders?.includes(header.key));
 
   const rows = results.map((syncItem) => {
     const patientName = getPatientName(syncItem);
@@ -94,19 +92,14 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
       id: syncItem.item.id.toString(),
       createdOn: syncItem.item.createdOn?.toLocaleDateString(),
       patient: {
-        value: (
-          <PatientLink
-            patientUuid={syncItem.item.descriptor?.patientUuid}
-            patientName={patientName}
-          />
-        ),
+        value: <PatientLink patientUuid={syncItem.item.descriptor?.patientUuid} patientName={patientName} />,
         filterableValue: patientName,
       },
       action: {
         value: <ActionNameLink syncItem={syncItem.item} />,
-        filterableValue: syncItem.item.descriptor.displayName ?? "-",
+        filterableValue: syncItem.item.descriptor.displayName ?? '-',
       },
-      error: syncItem.item.lastError?.message ?? "-",
+      error: syncItem.item.lastError?.message ?? '-',
     };
   });
 
@@ -127,23 +120,14 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
         onInputChange,
         selectedRows,
       }) => (
-        <TableContainer
-          className={styles.tableContainer}
-          {...getTableContainerProps()}
-        >
+        <TableContainer className={styles.tableContainer} {...getTableContainerProps()}>
           <div className={styles.tableHeaderContainer}>
             {selectedRows.length === 0 && (
               <Layer>
                 <Search
                   className={styles.tableSearch}
-                  labelText={t(
-                    "offlinePatientsTableSearchLabel",
-                    "Search this list"
-                  )}
-                  placeholder={t(
-                    "offlinePatientsTableSearchPlaceholder",
-                    "Search this list"
-                  )}
+                  labelText={t('offlinePatientsTableSearchLabel', 'Search this list')}
+                  placeholder={t('offlinePatientsTableSearchPlaceholder', 'Search this list')}
                   size={toolbarItemSize}
                   onChange={onInputChange}
                 />
@@ -157,21 +141,14 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
                 disabled={disableEditing || disableDelete}
                 onClick={() => onDelete(selectedRows.map((row) => +row.id))}
               >
-                {t(
-                  "offlineActionsTableDeleteActions",
-                  "Delete {{count}} actions",
-                  { count: selectedRows.length }
-                )}
+                {t('offlineActionsTableDeleteActions', 'Delete {{count}} actions', { count: selectedRows.length })}
               </Button>
             )}
           </div>
           <Table {...getTableProps()} isSortable useZebraStyles>
             <TableHead>
               <TableRow>
-                <TableSelectAll
-                  {...getSelectionProps()}
-                  disabled={disableEditing}
-                />
+                <TableSelectAll {...getSelectionProps()} disabled={disableEditing} />
                 {headers.map((header) => (
                   <TableHeader {...getHeaderProps({ header })} isSortable>
                     {header.header}
@@ -182,14 +159,9 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
             <TableBody>
               {rows.map((row) => (
                 <TableRow {...getRowProps({ row })}>
-                  <TableSelectRow
-                    {...getSelectionProps({ row })}
-                    disabled={disableEditing}
-                  />
+                  <TableSelectRow {...getSelectionProps({ row })} disabled={disableEditing} />
                   {row.cells.map((cell) => (
-                    <TableCell key={cell.id}>
-                      {cell.value?.value ?? cell.value}
-                    </TableCell>
+                    <TableCell key={cell.id}>{cell.value?.value ?? cell.value}</TableCell>
                   ))}
                 </TableRow>
               ))}
@@ -229,26 +201,18 @@ function getPatientName({ item, patient }: SyncItemWithPatient) {
   }
 
   const patientName = patient?.name?.[0];
-  return patientName
-    ? `${patientName.given.join(" ")} ${patientName.family}`
-    : item.descriptor.patientUuid;
+  return patientName ? `${patientName.given.join(' ')} ${patientName.family}` : item.descriptor.patientUuid;
 }
 
 function ActionNameLink({ syncItem }: { syncItem: SyncItem }) {
-  const displayName = syncItem.descriptor.displayName ?? "-";
+  const displayName = syncItem.descriptor.displayName ?? '-';
 
   if (!canBeginEditSynchronizationItemsOfType(syncItem.type)) {
     return <>{displayName}</>;
   }
 
   return (
-    <Link
-      onClick={() =>
-        beginEditSynchronizationItem(syncItem.id).catch((e) =>
-          createErrorHandler()(e)
-        )
-      }
-    >
+    <Link onClick={() => beginEditSynchronizationItem(syncItem.id).catch((e) => createErrorHandler()(e))}>
       {displayName}
     </Link>
   );
@@ -282,10 +246,9 @@ function filterTableRows({
     headers.some(({ key }) => {
       const cellId = getCellId(rowId, key);
       const value = cellsById[cellId].value;
-      const filterableValue =
-        value?.filterableValue?.toString() ?? value?.toString() ?? "";
+      const filterableValue = value?.filterableValue?.toString() ?? value?.toString() ?? '';
       return filterableValue.toLowerCase().includes(inputValue.toLowerCase());
-    })
+    }),
   );
 }
 

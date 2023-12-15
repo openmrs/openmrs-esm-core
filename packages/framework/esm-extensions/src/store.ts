@@ -1,13 +1,13 @@
 /** @module @category Extension */
-import isEqual from "lodash-es/isEqual";
+import isEqual from 'lodash-es/isEqual';
 import {
   configExtensionStore,
   ConfigExtensionStoreElement,
   ConfigObject,
   ExtensionSlotConfigObject,
-} from "@openmrs/esm-config";
-import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
-import type { LifeCycles } from "single-spa";
+} from '@openmrs/esm-config';
+import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
+import type { LifeCycles } from 'single-spa';
 
 export interface ExtensionMeta {
   [_: string]: any;
@@ -94,13 +94,10 @@ export interface ConnectedExtension {
   config: ConfigObject | null;
 }
 
-const extensionInternalStore = createGlobalStore<ExtensionInternalStore>(
-  "extensionsInternal",
-  {
-    slots: {},
-    extensions: {},
-  }
-);
+const extensionInternalStore = createGlobalStore<ExtensionInternalStore>('extensionsInternal', {
+  slots: {},
+  extensions: {},
+});
 
 /**
  * This gets the extension system's internal store. It is subject
@@ -109,15 +106,13 @@ const extensionInternalStore = createGlobalStore<ExtensionInternalStore>(
  * @internal
  */
 export const getExtensionInternalStore = () =>
-  getGlobalStore<ExtensionInternalStore>("extensionsInternal", {
+  getGlobalStore<ExtensionInternalStore>('extensionsInternal', {
     slots: {},
     extensions: {},
   });
 
 /** @internal */
-export function updateInternalExtensionStore(
-  updater: (state: ExtensionInternalStore) => ExtensionInternalStore
-) {
+export function updateInternalExtensionStore(updater: (state: ExtensionInternalStore) => ExtensionInternalStore) {
   const state = extensionInternalStore.getState();
   const newState = updater(state);
 
@@ -131,7 +126,7 @@ export function updateInternalExtensionStore(
  * state of the extension system.
  */
 export const getExtensionStore = () =>
-  getGlobalStore<ExtensionStore>("extensions", {
+  getGlobalStore<ExtensionStore>('extensions', {
     slots: {},
   });
 
@@ -157,12 +152,7 @@ function updateConfigExtensionStore(extensionState: ExtensionInternalStore) {
       });
     }
   }
-  if (
-    !isEqual(
-      configExtensionStore.getState().mountedExtensions,
-      configExtensionRecords
-    )
-  ) {
+  if (!isEqual(configExtensionStore.getState().mountedExtensions, configExtensionRecords)) {
     configExtensionStore.setState({
       mountedExtensions: configExtensionRecords,
     });

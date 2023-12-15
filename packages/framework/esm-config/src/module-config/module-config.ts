@@ -1,21 +1,7 @@
 /** @module @category Config */
-import { clone, reduce, mergeDeepRight, equals, omit } from "ramda";
-import {
-  Config,
-  ConfigObject,
-  ConfigSchema,
-  ExtensionSlotConfig,
-  ExtensionSlotConfigObject,
-  Type,
-} from "../types";
-import {
-  isArray,
-  isBoolean,
-  isUuid,
-  isNumber,
-  isObject,
-  isString,
-} from "../validators/type-validators";
+import { clone, reduce, mergeDeepRight, equals, omit } from 'ramda';
+import { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject, Type } from '../types';
+import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
 import {
   ConfigExtensionStore,
   ConfigInternalStore,
@@ -27,9 +13,9 @@ import {
   implementerToolsConfigStore,
   temporaryConfigStore,
   getExtensionSlotsConfigStore,
-} from "./state";
-import type {} from "@openmrs/esm-globals";
-import { TemporaryConfigStore } from "..";
+} from './state';
+import type {} from '@openmrs/esm-globals';
+import { TemporaryConfigStore } from '..';
 
 /**
  * Store setup
@@ -51,70 +37,44 @@ import { TemporaryConfigStore } from "..";
  * store values at the end. `computeExtensionConfigs` calls `getGlobalStore`,
  * which creates stores.
  */
-computeModuleConfig(
-  configInternalStore.getState(),
-  temporaryConfigStore.getState()
-);
-configInternalStore.subscribe((configState) =>
-  computeModuleConfig(configState, temporaryConfigStore.getState())
-);
+computeModuleConfig(configInternalStore.getState(), temporaryConfigStore.getState());
+configInternalStore.subscribe((configState) => computeModuleConfig(configState, temporaryConfigStore.getState()));
 temporaryConfigStore.subscribe((tempConfigState) =>
-  computeModuleConfig(configInternalStore.getState(), tempConfigState)
+  computeModuleConfig(configInternalStore.getState(), tempConfigState),
 );
 
-computeImplementerToolsConfig(
-  configInternalStore.getState(),
-  temporaryConfigStore.getState()
-);
+computeImplementerToolsConfig(configInternalStore.getState(), temporaryConfigStore.getState());
 configInternalStore.subscribe((configState) =>
-  computeImplementerToolsConfig(configState, temporaryConfigStore.getState())
+  computeImplementerToolsConfig(configState, temporaryConfigStore.getState()),
 );
 temporaryConfigStore.subscribe((tempConfigState) =>
-  computeImplementerToolsConfig(configInternalStore.getState(), tempConfigState)
+  computeImplementerToolsConfig(configInternalStore.getState(), tempConfigState),
 );
 
-computeExtensionSlotConfigs(
-  configInternalStore.getState(),
-  temporaryConfigStore.getState()
-);
+computeExtensionSlotConfigs(configInternalStore.getState(), temporaryConfigStore.getState());
 configInternalStore.subscribe((configState) =>
-  computeExtensionSlotConfigs(configState, temporaryConfigStore.getState())
+  computeExtensionSlotConfigs(configState, temporaryConfigStore.getState()),
 );
 temporaryConfigStore.subscribe((tempConfigState) =>
-  computeExtensionSlotConfigs(configInternalStore.getState(), tempConfigState)
+  computeExtensionSlotConfigs(configInternalStore.getState(), tempConfigState),
 );
 
 computeExtensionConfigs(
   configInternalStore.getState(),
   configExtensionStore.getState(),
-  temporaryConfigStore.getState()
+  temporaryConfigStore.getState(),
 );
 configInternalStore.subscribe((configState) => {
-  computeExtensionConfigs(
-    configState,
-    configExtensionStore.getState(),
-    temporaryConfigStore.getState()
-  );
+  computeExtensionConfigs(configState, configExtensionStore.getState(), temporaryConfigStore.getState());
 });
 configExtensionStore.subscribe((extensionState) => {
-  computeExtensionConfigs(
-    configInternalStore.getState(),
-    extensionState,
-    temporaryConfigStore.getState()
-  );
+  computeExtensionConfigs(configInternalStore.getState(), extensionState, temporaryConfigStore.getState());
 });
 temporaryConfigStore.subscribe((tempConfigState) => {
-  computeExtensionConfigs(
-    configInternalStore.getState(),
-    configExtensionStore.getState(),
-    tempConfigState
-  );
+  computeExtensionConfigs(configInternalStore.getState(), configExtensionStore.getState(), tempConfigState);
 });
 
-function computeModuleConfig(
-  state: ConfigInternalStore,
-  tempState: TemporaryConfigStore
-) {
+function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryConfigStore) {
   for (let moduleName of Object.keys(state.schemas)) {
     const config = getConfigForModule(moduleName, state, tempState);
     const moduleStore = getConfigStore(moduleName);
@@ -122,16 +82,10 @@ function computeModuleConfig(
   }
 }
 
-function computeExtensionSlotConfigs(
-  state: ConfigInternalStore,
-  tempState: TemporaryConfigStore
-) {
+function computeExtensionSlotConfigs(state: ConfigInternalStore, tempState: TemporaryConfigStore) {
   const slotConfigs = getExtensionSlotConfigs(state, tempState);
   const newSlotStoreEntries = Object.fromEntries(
-    Object.entries(slotConfigs).map(([slotName, config]) => [
-      slotName,
-      { loaded: true, config },
-    ])
+    Object.entries(slotConfigs).map(([slotName, config]) => [slotName, { loaded: true, config }]),
   );
   const slotStore = getExtensionSlotsConfigStore();
   const oldState = slotStore.getState();
@@ -141,10 +95,7 @@ function computeExtensionSlotConfigs(
   }
 }
 
-function computeImplementerToolsConfig(
-  state: ConfigInternalStore,
-  tempConfigState: TemporaryConfigStore
-) {
+function computeImplementerToolsConfig(state: ConfigInternalStore, tempConfigState: TemporaryConfigStore) {
   const config = getImplementerToolsConfig(state, tempConfigState);
   implementerToolsConfigStore.setState({ config });
 }
@@ -152,7 +103,7 @@ function computeImplementerToolsConfig(
 function computeExtensionConfigs(
   configState: ConfigInternalStore,
   extensionState: ConfigExtensionStore,
-  tempConfigState: TemporaryConfigStore
+  tempConfigState: TemporaryConfigStore,
 ) {
   const configs = {};
   for (let extension of extensionState.mountedExtensions) {
@@ -162,7 +113,7 @@ function computeExtensionConfigs(
       extension.slotName,
       extension.extensionId,
       configState,
-      tempConfigState
+      tempConfigState,
     );
     configs[extension.slotName] = {
       ...configs[extension.slotName],
@@ -182,7 +133,7 @@ function computeExtensionConfigs(
  * configuration system how the module can be configured. It specifies
  * what makes configuration valid or invalid.
  *
- * See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+ * See [Configuration System](https://o3-docs.openmrs.org/docs/configuration-system)
  * for more information about defining a config schema.
  *
  * @param moduleName Name of the module the schema is being defined for. Generally
@@ -191,10 +142,7 @@ function computeExtensionConfigs(
  */
 export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
-  const enhancedSchema = mergeDeepRight(
-    schema,
-    implicitConfigSchema
-  ) as ConfigSchema;
+  const enhancedSchema = mergeDeepRight(schema, implicitConfigSchema) as ConfigSchema;
 
   const state = configInternalStore.getState();
   configInternalStore.setState({
@@ -211,7 +159,7 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
  * The schema tells the configuration system how the module can be configured.
  * It specifies what makes configuration valid or invalid.
  *
- * See [Configuration System](http://o3-dev.docs.openmrs.org/#/main/config)
+ * See [Configuration System](https://o3-docs.openmrs.org/docs/configuration-system)
  * for more information about defining a config schema.
  *
  * @param extensionName Name of the extension the schema is being defined for.
@@ -219,20 +167,14 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
  *   by `setupOpenMRS`.
  * @param schema The config schema for the extension
  */
-export function defineExtensionConfigSchema(
-  extensionName: string,
-  schema: ConfigSchema
-) {
+export function defineExtensionConfigSchema(extensionName: string, schema: ConfigSchema) {
   validateConfigSchema(extensionName, schema);
-  const enhancedSchema = mergeDeepRight(
-    schema,
-    implicitConfigSchema
-  ) as ConfigSchema;
+  const enhancedSchema = mergeDeepRight(schema, implicitConfigSchema) as ConfigSchema;
 
   const state = configInternalStore.getState();
   if (state.schemas[extensionName]) {
     console.warn(
-      `Config schema for extension ${extensionName} already exists. If there are multiple extensions with this same name, one will probably crash.`
+      `Config schema for extension ${extensionName} already exists. If there are multiple extensions with this same name, one will probably crash.`,
     );
   }
 
@@ -241,7 +183,7 @@ export function defineExtensionConfigSchema(
   });
 }
 
-export function provide(config: Config, sourceName = "provided") {
+export function provide(config: Config, sourceName = 'provided') {
   const state = configInternalStore.getState();
   configInternalStore.setState({
     providedConfigs: [...state.providedConfigs, { source: sourceName, config }],
@@ -262,10 +204,7 @@ export function getConfig(moduleName: string): Promise<Config> {
     const store = getConfigStore(moduleName);
     function update(state: ConfigStore) {
       if (state.loaded && state.config) {
-        const config = omit(
-          ["Display conditions", "Translation overrides"],
-          state.config
-        );
+        const config = omit(['Display conditions', 'Translation overrides'], state.config);
         resolve(config);
         unsubscribe && unsubscribe();
       }
@@ -300,11 +239,7 @@ export function getConfigInternal(moduleName: string): Promise<Config> {
  *     the provided config came from
  * @internal
  */
-export function processConfig(
-  schema: ConfigSchema,
-  providedConfig: ConfigObject,
-  keyPathContext: string
-) {
+export function processConfig(schema: ConfigSchema, providedConfig: ConfigObject, keyPathContext: string) {
   validateStructure(schema, providedConfig, keyPathContext);
   const config = setDefaults(schema, providedConfig);
   runAllValidatorsInConfigTree(schema, config, keyPathContext);
@@ -335,23 +270,18 @@ function computeExtensionConfig(
   slotName: string,
   extensionId: string,
   configState: ConfigInternalStore,
-  tempConfigState: TemporaryConfigStore
+  tempConfigState: TemporaryConfigStore,
 ) {
   const extensionName = getExtensionNameFromId(extensionId);
   const extensionConfigSchema = configState.schemas[extensionName];
-  const nameOfSchemaSource = extensionConfigSchema
-    ? extensionName
-    : extensionModuleName;
+  const nameOfSchemaSource = extensionConfigSchema ? extensionName : extensionModuleName;
   const providedConfigs = getProvidedConfigs(configState, tempConfigState);
   const slotModuleConfig = mergeConfigsFor(slotModuleName, providedConfigs);
-  const configOverride =
-    slotModuleConfig?.extensionSlots?.[slotName]?.configure?.[extensionId] ??
-    {};
+  const configOverride = slotModuleConfig?.extensionSlots?.[slotName]?.configure?.[extensionId] ?? {};
   const extensionConfig = mergeConfigsFor(nameOfSchemaSource, providedConfigs);
   const combinedConfig = mergeConfigs([extensionConfig, configOverride]);
   // TODO: validate that a schema exists for the module
-  const schema =
-    extensionConfigSchema ?? configState.schemas[extensionModuleName];
+  const schema = extensionConfigSchema ?? configState.schemas[extensionModuleName];
   validateStructure(schema, combinedConfig, nameOfSchemaSource);
   const config = setDefaults(schema, combinedConfig);
   runAllValidatorsInConfigTree(schema, config, nameOfSchemaSource);
@@ -361,12 +291,12 @@ function computeExtensionConfig(
 
 function getImplementerToolsConfig(
   configState: ConfigInternalStore,
-  tempConfigState: TemporaryConfigStore
+  tempConfigState: TemporaryConfigStore,
 ): Record<string, Config> {
   let result = getSchemaWithValuesAndSources(clone(configState.schemas));
   const configsAndSources = [
     ...configState.providedConfigs.map((c) => [c.config, c.source]),
-    [tempConfigState.config, "temporary config"],
+    [tempConfigState.config, 'temporary config'],
   ] as Array<[Config, string]>;
   for (let [config, source] of configsAndSources) {
     result = mergeConfigs([result, createValuesAndSourcesTree(config, source)]);
@@ -375,8 +305,8 @@ function getImplementerToolsConfig(
 }
 
 function getSchemaWithValuesAndSources(schema) {
-  if (schema.hasOwnProperty("_default")) {
-    return { ...schema, _value: schema._default, _source: "default" };
+  if (schema.hasOwnProperty('_default')) {
+    return { ...schema, _value: schema._default, _source: 'default' };
   } else if (isOrdinaryObject(schema)) {
     return Object.keys(schema).reduce((obj, key) => {
       obj[key] = getSchemaWithValuesAndSources(schema[key]);
@@ -401,20 +331,18 @@ function createValuesAndSourcesTree(config: ConfigObject, source: string) {
 
 function getExtensionSlotConfigs(
   configState: ConfigInternalStore,
-  tempConfigState: TemporaryConfigStore
+  tempConfigState: TemporaryConfigStore,
 ): Record<string, ExtensionSlotConfigObject> {
-  const allConfigs = mergeConfigs(
-    getProvidedConfigs(configState, tempConfigState)
+  const allConfigs = mergeConfigs(getProvidedConfigs(configState, tempConfigState));
+  const slotConfigPerModule: Record<string, Record<string, ExtensionSlotConfig>> = Object.keys(allConfigs).reduce(
+    (obj, key) => {
+      if (allConfigs[key]?.extensionSlots) {
+        obj[key] = allConfigs[key]?.extensionSlots;
+      }
+      return obj;
+    },
+    {},
   );
-  const slotConfigPerModule: Record<
-    string,
-    Record<string, ExtensionSlotConfig>
-  > = Object.keys(allConfigs).reduce((obj, key) => {
-    if (allConfigs[key]?.extensionSlots) {
-      obj[key] = allConfigs[key]?.extensionSlots;
-    }
-    return obj;
-  }, {});
   validateAllExtensionSlotConfigs(slotConfigPerModule);
   const slotConfigs = Object.keys(slotConfigPerModule).reduce((obj, key) => {
     obj = { ...obj, ...slotConfigPerModule[key] };
@@ -423,132 +351,87 @@ function getExtensionSlotConfigs(
   return slotConfigs;
 }
 
-function validateAllExtensionSlotConfigs(
-  slotConfigPerModule: Record<string, Record<string, ExtensionSlotConfig>>
-) {
-  for (let [moduleName, configBySlotName] of Object.entries(
-    slotConfigPerModule
-  )) {
+function validateAllExtensionSlotConfigs(slotConfigPerModule: Record<string, Record<string, ExtensionSlotConfig>>) {
+  for (let [moduleName, configBySlotName] of Object.entries(slotConfigPerModule)) {
     for (let [slotName, config] of Object.entries(configBySlotName)) {
       validateExtensionSlotConfig(config, moduleName, slotName);
     }
   }
 }
 
-function validateExtensionSlotConfig(
-  config: ExtensionSlotConfig,
-  moduleName: string,
-  slotName: string
-): void {
+function validateExtensionSlotConfig(config: ExtensionSlotConfig, moduleName: string, slotName: string): void {
   const errorPrefix = `Extension slot config '${moduleName}.extensionSlots.${slotName}`;
-  const invalidKeys = Object.keys(config).filter(
-    (k) => !["add", "remove", "order", "configure"].includes(k)
-  );
+  const invalidKeys = Object.keys(config).filter((k) => !['add', 'remove', 'order', 'configure'].includes(k));
   if (invalidKeys.length) {
-    console.error(
-      errorPrefix + `' contains invalid keys '${invalidKeys.join("', '")}'`
-    );
+    console.error(errorPrefix + `' contains invalid keys '${invalidKeys.join("', '")}'`);
   }
   if (config.add) {
-    if (
-      !Array.isArray(config.add) ||
-      !config.add.every((n) => typeof n === "string")
-    ) {
-      console.error(
-        errorPrefix +
-          `.add' is invalid. Must be an array of strings (extension IDs)`
-      );
+    if (!Array.isArray(config.add) || !config.add.every((n) => typeof n === 'string')) {
+      console.error(errorPrefix + `.add' is invalid. Must be an array of strings (extension IDs)`);
     }
   }
   if (config.remove) {
-    if (
-      !Array.isArray(config.remove) ||
-      !config.remove.every((n) => typeof n === "string")
-    ) {
-      console.error(
-        errorPrefix +
-          `.remove' is invalid. Must be an array of strings (extension IDs)`
-      );
+    if (!Array.isArray(config.remove) || !config.remove.every((n) => typeof n === 'string')) {
+      console.error(errorPrefix + `.remove' is invalid. Must be an array of strings (extension IDs)`);
     }
   }
   if (config.order) {
-    if (
-      !Array.isArray(config.order) ||
-      !config.order.every((n) => typeof n === "string")
-    ) {
-      console.error(
-        errorPrefix +
-          `.order' is invalid. Must be an array of strings (extension IDs)`
-      );
+    if (!Array.isArray(config.order) || !config.order.every((n) => typeof n === 'string')) {
+      console.error(errorPrefix + `.order' is invalid. Must be an array of strings (extension IDs)`);
     }
   }
   if (config.configure) {
     if (!isOrdinaryObject(config.configure)) {
-      console.error(
-        errorPrefix +
-          `.configure' is invalid. Must be an object with extension IDs for keys`
-      );
+      console.error(errorPrefix + `.configure' is invalid. Must be an object with extension IDs for keys`);
     }
   }
 }
 
-function getProvidedConfigs(
-  configState: ConfigInternalStore,
-  tempConfigState: TemporaryConfigStore
-): Array<Config> {
-  return [
-    ...configState.providedConfigs.map((c) => c.config),
-    tempConfigState.config,
-  ];
+function getProvidedConfigs(configState: ConfigInternalStore, tempConfigState: TemporaryConfigStore): Array<Config> {
+  return [...configState.providedConfigs.map((c) => c.config), tempConfigState.config];
 }
 
-function validateConfigSchema(
-  moduleName: string,
-  schema: ConfigSchema,
-  keyPath = ""
-) {
+function validateConfigSchema(moduleName: string, schema: ConfigSchema, keyPath = '') {
   const updateMessage = `Please verify that you are running the latest version and, if so, alert the maintainer.`;
 
-  for (const key of Object.keys(schema).filter((k) => !k.startsWith("_"))) {
-    const thisKeyPath = keyPath + (keyPath && ".") + key;
+  for (const key of Object.keys(schema).filter((k) => !k.startsWith('_'))) {
+    const thisKeyPath = keyPath + (keyPath && '.') + key;
     const schemaPart = schema[key] as ConfigSchema;
 
-    if (thisKeyPath === "Display conditions") {
+    if (thisKeyPath === 'Display conditions') {
       console.error(
-        `${moduleName} declares a configuration option called "Display conditions"; the "Display conditions" option is a reserved name. ${updateMessage}`
+        `${moduleName} declares a configuration option called "Display conditions"; the "Display conditions" option is a reserved name. ${updateMessage}`,
       );
     }
 
-    if (thisKeyPath === "Translation overrides") {
+    if (thisKeyPath === 'Translation overrides') {
       console.error(
-        `${moduleName} declares a configuration option called "Translation overrides"; the "Translation overrides" option is a reserved name. ${updateMessage}`
+        `${moduleName} declares a configuration option called "Translation overrides"; the "Translation overrides" option is a reserved name. ${updateMessage}`,
       );
     }
 
     if (!isOrdinaryObject(schemaPart)) {
-      console.error(
-        `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}`
-      );
+      console.error(`${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}`);
       continue;
     }
 
-    if (!schemaPart.hasOwnProperty("_default")) {
+    if (!schemaPart.hasOwnProperty('_default')) {
       // recurse for nested config keys
       validateConfigSchema(moduleName, schemaPart, thisKeyPath);
     }
 
     const elements = schemaPart._elements;
     if (hasObjectSchema(elements)) {
-      validateConfigSchema(moduleName, elements, thisKeyPath + "._elements");
+      validateConfigSchema(moduleName, elements, thisKeyPath + '._elements');
     }
 
     if (schemaPart._validators) {
       for (let validator of schemaPart._validators) {
-        if (typeof validator !== "function") {
+        if (typeof validator !== 'function') {
           console.error(
             `${moduleName} has invalid validator for key '${thisKeyPath}' ${updateMessage}.` +
               `\n\nIf you're the maintainer: validators must be functions that return either ` +
-              `undefined or an error string. Received ${validator}.`
+              `undefined or an error string. Received ${validator}.`,
           );
         }
       }
@@ -558,35 +441,27 @@ function validateConfigSchema(
     if (valueType && !Object.values(Type).includes(valueType)) {
       console.error(
         `${moduleName} has invalid type for key '${thisKeyPath}' ${updateMessage}.` +
-          `\n\nIf you're the maintainer: the allowed types are ${Object.values(
-            Type
-          ).join(", ")}. ` +
-          `Received '${valueType}'`
+          `\n\nIf you're the maintainer: the allowed types are ${Object.values(Type).join(', ')}. ` +
+          `Received '${valueType}'`,
       );
     }
 
     if (
-      Object.keys(schemaPart).every((k) =>
-        ["_description", "_validators", "_elements", "_type"].includes(k)
-      ) &&
-      !keyPath.includes("._elements")
+      Object.keys(schemaPart).every((k) => ['_description', '_validators', '_elements', '_type'].includes(k)) &&
+      !keyPath.includes('._elements')
     ) {
       console.error(
         `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
           `\n\nIf you're the maintainer: all config elements must have a default. ` +
-          `Received ${JSON.stringify(schemaPart)}`
+          `Received ${JSON.stringify(schemaPart)}`,
       );
     }
 
-    if (
-      elements &&
-      valueType &&
-      ![Type.Array, Type.Object].includes(valueType)
-    ) {
+    if (elements && valueType && ![Type.Array, Type.Object].includes(valueType)) {
       console.error(
         `${moduleName} has bad config schema definition for key '${thisKeyPath}'. ${updateMessage}.` +
           `\n\nIf you're the maintainer: the 'elements' key only works with '_type' equal to 'Array' or 'Object'. ` +
-          `Received ${JSON.stringify(valueType)}`
+          `Received ${JSON.stringify(valueType)}`,
       );
     }
   }
@@ -595,17 +470,14 @@ function validateConfigSchema(
 function getConfigForModule(
   moduleName: string,
   configState: ConfigInternalStore,
-  tempConfigState: TemporaryConfigStore
+  tempConfigState: TemporaryConfigStore,
 ): ConfigObject {
   if (!configState.schemas.hasOwnProperty(moduleName)) {
-    throw Error("No config schema has been defined for " + moduleName);
+    throw Error('No config schema has been defined for ' + moduleName);
   }
 
   const schema = configState.schemas[moduleName];
-  const inputConfig = mergeConfigsFor(
-    moduleName,
-    getProvidedConfigs(configState, tempConfigState)
-  );
+  const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs(configState, tempConfigState));
   validateStructure(schema, inputConfig, moduleName);
   const config = setDefaults(schema, inputConfig);
   runAllValidatorsInConfigTree(schema, config, moduleName);
@@ -613,13 +485,8 @@ function getConfigForModule(
   return config;
 }
 
-function mergeConfigsFor(
-  moduleName: string,
-  allConfigs: Array<Config>
-): ConfigObject {
-  const allConfigsForModule = allConfigs
-    .map(({ [moduleName]: c }) => c)
-    .filter((c) => !!c);
+function mergeConfigsFor(moduleName: string, allConfigs: Array<Config>): ConfigObject {
+  const allConfigsForModule = allConfigs.map(({ [moduleName]: c }) => c).filter((c) => !!c);
 
   return mergeConfigs(allConfigsForModule);
 }
@@ -635,22 +502,16 @@ function mergeConfigs(configs: Array<Config>) {
  * correct. Does not run validators yet, since those will be run on
  * the config with the defaults filled in.
  */
-function validateStructure(
-  schema: ConfigSchema,
-  config: ConfigObject,
-  keyPath = ""
-) {
+function validateStructure(schema: ConfigSchema, config: ConfigObject, keyPath = '') {
   // validate each constituent element
   for (const key of Object.keys(config)) {
     const value = config[key];
-    const thisKeyPath = keyPath + "." + key;
+    const thisKeyPath = keyPath + '.' + key;
     const schemaPart = schema[key] as ConfigSchema;
 
     if (!schema.hasOwnProperty(key)) {
-      if (!(key === "extensionSlots" && keyPath !== "")) {
-        console.error(
-          `Unknown config key '${thisKeyPath}' provided. Ignoring.`
-        );
+      if (!(key === 'extensionSlots' && keyPath !== '')) {
+        console.error(`Unknown config key '${thisKeyPath}' provided. Ignoring.`);
       }
 
       continue;
@@ -660,11 +521,7 @@ function validateStructure(
   }
 }
 
-function validateBranchStructure(
-  schemaPart: ConfigSchema,
-  value: any,
-  keyPath: string
-) {
+function validateBranchStructure(schemaPart: ConfigSchema, value: any, keyPath: string) {
   checkType(keyPath, schemaPart._type, value);
 
   if (isOrdinaryObject(value)) {
@@ -672,7 +529,7 @@ function validateBranchStructure(
     // or there's no `_default` value (which would indicate a freeform object)
     if (schemaPart._type === Type.Object) {
       validateDictionaryStructure(schemaPart, value, keyPath);
-    } else if (!schemaPart.hasOwnProperty("_default")) {
+    } else if (!schemaPart.hasOwnProperty('_default')) {
       // recurse to validate nested object structure
       validateStructure(schemaPart, value, keyPath);
     }
@@ -683,11 +540,7 @@ function validateBranchStructure(
   }
 }
 
-function validateDictionaryStructure(
-  dictionarySchema: ConfigSchema,
-  config: ConfigObject,
-  keyPath: string
-) {
+function validateDictionaryStructure(dictionarySchema: ConfigSchema, config: ConfigObject, keyPath: string) {
   if (dictionarySchema._elements) {
     for (const key of Object.keys(config)) {
       const value = config[key];
@@ -696,19 +549,11 @@ function validateDictionaryStructure(
   }
 }
 
-function validateArrayStructure(
-  arraySchema: ConfigSchema,
-  value: ConfigObject,
-  keyPath: string
-) {
+function validateArrayStructure(arraySchema: ConfigSchema, value: ConfigObject, keyPath: string) {
   // if there is an array element object schema, verify that elements match it
   if (hasObjectSchema(arraySchema._elements)) {
     for (let i = 0; i < value.length; i++) {
-      validateBranchStructure(
-        arraySchema._elements,
-        value[i],
-        `${keyPath}[${i}]`
-      );
+      validateBranchStructure(arraySchema._elements, value[i], `${keyPath}[${i}]`);
     }
   }
 
@@ -722,11 +567,7 @@ function validateArrayStructure(
  * on the config object after it has been filled in with all the defaults, since
  * higher-level validators may refer to default values.
  */
-function runAllValidatorsInConfigTree(
-  schema: ConfigSchema,
-  config: ConfigObject,
-  keyPath = ""
-) {
+function runAllValidatorsInConfigTree(schema: ConfigSchema, config: ConfigObject, keyPath = '') {
   // If `!schema`, there should have been a structural validation error printed already.
   if (schema) {
     if (config !== schema._default) {
@@ -736,7 +577,7 @@ function runAllValidatorsInConfigTree(
     if (isOrdinaryObject(config)) {
       for (const key of Object.keys(config)) {
         const value = config[key];
-        const thisKeyPath = keyPath + "." + key;
+        const thisKeyPath = keyPath + '.' + key;
         const schemaPart = schema[key] as ConfigSchema;
         if (schema._type === Type.Object && schema._elements) {
           runAllValidatorsInConfigTree(schema._elements, value, thisKeyPath);
@@ -746,11 +587,7 @@ function runAllValidatorsInConfigTree(
       }
     } else if (Array.isArray(config) && schema._elements) {
       for (let i = 0; i < config.length; i++) {
-        runAllValidatorsInConfigTree(
-          schema._elements,
-          config[i],
-          `${keyPath}[${i}]`
-        );
+        runAllValidatorsInConfigTree(schema._elements, config[i], `${keyPath}[${i}]`);
       }
     }
   }
@@ -773,32 +610,22 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
   }
 }
 
-function runValidators(
-  keyPath: string,
-  validators: Array<Function> | undefined,
-  value: any
-) {
+function runValidators(keyPath: string, validators: Array<Function> | undefined, value: any) {
   if (validators) {
     try {
       for (let validator of validators) {
         const validatorResult = validator(value);
 
-        if (typeof validatorResult === "string") {
-          if (typeof value === "object") {
-            console.error(
-              `Invalid configuration for ${keyPath}: ${validatorResult}`
-            );
+        if (typeof validatorResult === 'string') {
+          if (typeof value === 'object') {
+            console.error(`Invalid configuration for ${keyPath}: ${validatorResult}`);
           } else {
-            console.error(
-              `Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`
-            );
+            console.error(`Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`);
           }
         }
       }
     } catch (e) {
-      console.error(
-        `Skipping invalid validator at "${keyPath}". Encountered error\n\t${e}`
-      );
+      console.error(`Skipping invalid validator at "${keyPath}". Encountered error\n\t${e}`);
     }
   }
 }
@@ -820,11 +647,11 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
     // crashing completely, though it will produce unexpected behavior.
     // If this happens, there should be legible errors in the console from
     // the schema validator.
-    if (schemaPart && schemaPart.hasOwnProperty("_default")) {
+    if (schemaPart && schemaPart.hasOwnProperty('_default')) {
       // We assume that schemaPart defines a config value, since it has
       // a property `_default`.
       if (!config.hasOwnProperty(key)) {
-        (config[key] as any) = schemaPart["_default"];
+        (config[key] as any) = schemaPart['_default'];
       }
 
       // We also check if it is an object or array with object elements, in which case we recurse
@@ -832,16 +659,11 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
 
       if (configPart && hasObjectSchema(elements)) {
         if (schemaPart._type === Type.Array && Array.isArray(configPart)) {
-          const configWithDefaults = configPart.map((conf: Config) =>
-            setDefaults(elements, conf)
-          );
+          const configWithDefaults = configPart.map((conf: Config) => setDefaults(elements, conf));
           config[key] = configWithDefaults;
         } else if (schemaPart._type === Type.Object) {
           for (let objectKey of Object.keys(configPart)) {
-            configPart[objectKey] = setDefaults(
-              elements,
-              configPart[objectKey]
-            );
+            configPart[objectKey] = setDefaults(elements, configPart[objectKey]);
           }
         }
       }
@@ -860,19 +682,14 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
   return config;
 };
 
-function hasObjectSchema(
-  elementsSchema: Object | undefined
-): elementsSchema is ConfigSchema {
+function hasObjectSchema(elementsSchema: Object | undefined): elementsSchema is ConfigSchema {
   return (
-    !!elementsSchema &&
-    Object.keys(elementsSchema).filter(
-      (e) => !["_default", "_validators"].includes(e)
-    ).length > 0
+    !!elementsSchema && Object.keys(elementsSchema).filter((e) => !['_default', '_validators'].includes(e)).length > 0
   );
 }
 
 function isOrdinaryObject(value) {
-  return typeof value === "object" && !Array.isArray(value) && value !== null;
+  return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
 
 /**
@@ -880,7 +697,7 @@ function isOrdinaryObject(value) {
  * cannot depend on esm-extensions.
  */
 function getExtensionNameFromId(extensionId: string) {
-  const [extensionName] = extensionId.split("#");
+  const [extensionName] = extensionId.split('#');
   return extensionName;
 }
 
@@ -888,16 +705,16 @@ function getExtensionNameFromId(extensionId: string) {
  * The implicitConfigSchema is implicitly included in every configuration schema
  */
 const implicitConfigSchema: ConfigSchema = {
-  "Display conditions": {
+  'Display conditions': {
     privileges: {
-      _description: "The privilege(s) the user must have to use this extension",
+      _description: 'The privilege(s) the user must have to use this extension',
       _type: Type.Array,
       _default: [],
     },
   },
-  "Translation overrides": {
+  'Translation overrides': {
     _description:
-      "Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value",
+      'Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value',
     _type: Type.Object,
     _default: {},
   },

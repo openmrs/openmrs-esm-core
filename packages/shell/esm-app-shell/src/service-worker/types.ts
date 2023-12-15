@@ -1,4 +1,4 @@
-import type { PrecacheEntry } from "workbox-precaching/_types";
+import type { PrecacheEntry } from 'workbox-precaching/_types';
 
 // Globals injected by Workbox at build time.
 declare global {

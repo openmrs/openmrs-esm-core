@@ -4,15 +4,12 @@ import {
   showModal,
   SyncItem,
   useStore,
-} from "@openmrs/esm-framework/src/internal";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import OfflineActionsTable from "./offline-actions-table.component";
-import {
-  usePendingSyncItems,
-  useSyncItemPatients,
-} from "../hooks/offline-actions";
-import NoActionsEmptyState from "./no-actions-empty-state.component";
+} from '@openmrs/esm-framework/src/internal';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import OfflineActionsTable from './offline-actions-table.component';
+import { usePendingSyncItems, useSyncItemPatients } from '../hooks/offline-actions';
+import NoActionsEmptyState from './no-actions-empty-state.component';
 
 export interface OfflineActionsProps {
   /**
@@ -29,33 +26,22 @@ const OfflineActions: React.FC<OfflineActionsProps> = ({ patientUuid }) => {
   const syncItemsToRender = patientUuid
     ? syncItems?.filter((x) => x.descriptor.patientUuid === patientUuid)
     : syncItems;
-  const syncItemsTableData = getSyncItemsWithPatient(
-    syncItemsToRender,
-    syncItemPatients
-  );
+  const syncItemsTableData = getSyncItemsWithPatient(syncItemsToRender, syncItemPatients);
   const isLoading = !syncItems || !syncItemPatients;
   const isSynchronizing = !!syncStore.synchronization;
 
   const deleteSynchronizationItems = async (ids: Array<number>) => {
-    const closeModal = showModal("offline-tools-confirmation-modal", {
-      title: t(
-        "offlineActionsDeleteConfirmationModalTitle",
-        "Delete offline actions"
-      ),
+    const closeModal = showModal('offline-tools-confirmation-modal', {
+      title: t('offlineActionsDeleteConfirmationModalTitle', 'Delete offline actions'),
       children: t(
-        "offlineActionsDeleteConfirmationModalContent",
-        "Are you sure that you want to delete all selected offline actions? This cannot be undone!"
+        'offlineActionsDeleteConfirmationModalContent',
+        'Are you sure that you want to delete all selected offline actions? This cannot be undone!',
       ),
-      confirmText: t(
-        "offlineActionsDeleteConfirmationModalConfirm",
-        "Delete forever"
-      ),
-      cancelText: t("offlineActionsDeleteConfirmationModalCancel", "Cancel"),
+      confirmText: t('offlineActionsDeleteConfirmationModalConfirm', 'Delete forever'),
+      cancelText: t('offlineActionsDeleteConfirmationModalCancel', 'Cancel'),
       closeModal: () => closeModal(),
       onConfirm: async () => {
-        await Promise.allSettled(
-          ids.map((id) => deleteSynchronizationItem(id))
-        );
+        await Promise.allSettled(ids.map((id) => deleteSynchronizationItem(id)));
         mutate();
       },
     });
@@ -67,7 +53,7 @@ const OfflineActions: React.FC<OfflineActionsProps> = ({ patientUuid }) => {
         <OfflineActionsTable
           isLoading={isLoading}
           data={syncItemsTableData}
-          hiddenHeaders={patientUuid ? ["patient"] : []}
+          hiddenHeaders={patientUuid ? ['patient'] : []}
           disableEditing={isSynchronizing}
           disableDelete={false}
           onDelete={deleteSynchronizationItems}
@@ -79,15 +65,10 @@ const OfflineActions: React.FC<OfflineActionsProps> = ({ patientUuid }) => {
   );
 };
 
-function getSyncItemsWithPatient(
-  syncItems: Array<SyncItem> = [],
-  patients: Array<fhir.Patient> = []
-) {
+function getSyncItemsWithPatient(syncItems: Array<SyncItem> = [], patients: Array<fhir.Patient> = []) {
   return syncItems.map((item) => ({
     item,
-    patient: patients.find(
-      (patient) => patient.id === item.descriptor?.patientUuid
-    ),
+    patient: patients.find((patient) => patient.id === item.descriptor?.patientUuid),
   }));
 }
 

@@ -1,23 +1,22 @@
 /** @module @category Error Handling */
-import { dispatchNotificationShown } from "@openmrs/esm-globals";
+import { dispatchNotificationShown } from '@openmrs/esm-globals';
 
 window.onerror = function (error) {
-  console.error("Unexpected error: ", error);
+  console.error('Unexpected error: ', error);
   dispatchNotificationShown({
-    description: error ?? "Oops! An unexpected error occurred.",
-    kind: "error",
-    title: "Error",
+    description: error ?? 'Oops! An unexpected error occurred.',
+    kind: 'error',
+    title: 'Error',
   });
   return false;
 };
 
 window.onunhandledrejection = function (event) {
-  console.error("Unhandled rejection: ", event.reason);
+  console.error('Unhandled rejection: ', event.reason);
   dispatchNotificationShown({
-    description:
-      event.reason ?? "Oops! An unhandled promise rejection occurred.",
-    kind: "error",
-    title: "Error",
+    description: event.reason ?? 'Oops! An unhandled promise rejection occurred.',
+    kind: 'error',
+    title: 'Error',
   });
 };
 
@@ -44,13 +43,11 @@ function ensureErrorObject(thing: any) {
     return thing;
   } else if (thing === null) {
     return Error(`'null' was thrown as an error`);
-  } else if (typeof thing === "object") {
+  } else if (typeof thing === 'object') {
     try {
       message = `Object thrown as error: ${JSON.stringify(thing)}`;
     } catch (e) {
-      message = `Object thrown as error with the following properties: ${Object.keys(
-        thing
-      )}`;
+      message = `Object thrown as error with the following properties: ${Object.keys(thing)}`;
     }
     return Error(message);
   } else if (thing === undefined) {

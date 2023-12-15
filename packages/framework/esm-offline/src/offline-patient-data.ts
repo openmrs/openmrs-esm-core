@@ -1,9 +1,6 @@
 /** @module @category Offline */
-import { createGlobalStore } from "@openmrs/esm-state";
-import {
-  setupDynamicOfflineDataHandler,
-  syncDynamicOfflineData,
-} from "./dynamic-offline-data";
+import { createGlobalStore } from '@openmrs/esm-state';
+import { setupDynamicOfflineDataHandler, syncDynamicOfflineData } from './dynamic-offline-data';
 
 /** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export interface OfflinePatientDataSyncStore {
@@ -33,13 +30,10 @@ export interface OfflinePatientArgs {
   signal: AbortSignal;
 }
 
-const store = createGlobalStore<OfflinePatientDataSyncStore>(
-  "offline-patients",
-  {
-    offlinePatientDataSyncState: {},
-    handlers: {},
-  }
-);
+const store = createGlobalStore<OfflinePatientDataSyncStore>('offline-patients', {
+  offlinePatientDataSyncState: {},
+  handlers: {},
+});
 
 /** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export function getOfflinePatientDataStore() {
@@ -48,14 +42,11 @@ export function getOfflinePatientDataStore() {
 }
 
 /** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
-export function registerOfflinePatientHandler(
-  identifier: string,
-  handler: OfflinePatientDataSyncHandler
-) {
+export function registerOfflinePatientHandler(identifier: string, handler: OfflinePatientDataSyncHandler) {
   printDeprecationWarning();
 
   setupDynamicOfflineDataHandler({
-    type: "patient",
+    type: 'patient',
     displayName: handler.displayName,
     id: identifier,
     isSynced: () => Promise.resolve(true),
@@ -70,12 +61,12 @@ export function registerOfflinePatientHandler(
 /** @deprecated Will be removed once all modules have been migrated to the new dynamic offline data API. */
 export async function syncOfflinePatientData(patientUuid: string) {
   printDeprecationWarning();
-  await syncDynamicOfflineData("patient", patientUuid);
+  await syncDynamicOfflineData('patient', patientUuid);
 }
 
 function printDeprecationWarning() {
   console.warn(
-    "The offline patient API has been deprecated and will be removed in a future release. " +
-      "To prevent future crashes, the functions remain available for the moment, but any invocations should be migrated ASAP."
+    'The offline patient API has been deprecated and will be removed in a future release. ' +
+      'To prevent future crashes, the functions remain available for the moment, but any invocations should be migrated ASAP.',
   );
 }

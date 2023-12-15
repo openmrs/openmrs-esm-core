@@ -1,8 +1,11 @@
-@import "../root.scss";
+@import '../root.scss';
 
 .logout {
   padding-right: 0rem;
-  @include brand-02(background-color);
   @extend .productiveHeading01;
   width: 16rem;
+
+  &:hover {
+    @include brand-01(background-color);
+  }
 }

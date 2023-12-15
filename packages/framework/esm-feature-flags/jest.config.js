@@ -1,9 +1,9 @@
 module.exports = {
   transform: {
-    "^.+\\.tsx?$": ["@swc/jest"],
+    '^.+\\.tsx?$': ['@swc/jest'],
   },
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    url: "http://localhost/",
+    url: 'http://localhost/',
   },
 };

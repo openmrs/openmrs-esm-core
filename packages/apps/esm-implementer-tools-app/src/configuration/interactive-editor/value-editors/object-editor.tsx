@@ -1,16 +1,10 @@
-import React from "react";
-import {
-  StructuredListBody,
-  StructuredListCell,
-  StructuredListRow,
-  StructuredListWrapper,
-  Tile,
-} from "@carbon/react";
-import { ValueEditorField } from "./value-editor-field";
-import { ConfigValueDescriptor } from "../editable-value.component";
-import { Type } from "@openmrs/esm-framework";
-import cloneDeep from "lodash-es/cloneDeep";
-import styles from "./object-editor.styles.css";
+import React from 'react';
+import { StructuredListBody, StructuredListCell, StructuredListRow, StructuredListWrapper, Tile } from '@carbon/react';
+import { ValueEditorField } from './value-editor-field';
+import { ConfigValueDescriptor } from '../editable-value.component';
+import { Type } from '@openmrs/esm-framework';
+import cloneDeep from 'lodash-es/cloneDeep';
+import styles from './object-editor.styles.css';
 
 interface ObjectEditorProps {
   element: ConfigValueDescriptor;
@@ -18,17 +12,13 @@ interface ObjectEditorProps {
   setValue: (value: Object) => void;
 }
 
-export function ObjectEditor({
-  element,
-  valueObject,
-  setValue,
-}: ObjectEditorProps) {
+export function ObjectEditor({ element, valueObject, setValue }: ObjectEditorProps) {
   return (
     <Tile className={styles.objectEditor}>
       <StructuredListWrapper>
         <StructuredListBody>
           {Object.entries(element).map(([key, schema]) =>
-            !key.startsWith("_") ? (
+            !key.startsWith('_') ? (
               <StructuredListRow key={key}>
                 <StructuredListCell>
                   <ValueEditorField
@@ -60,7 +50,7 @@ export function ObjectEditor({
                   />
                 </StructuredListCell>
               </StructuredListRow>
-            ) : null
+            ) : null,
           )}
         </StructuredListBody>
       </StructuredListWrapper>

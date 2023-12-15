@@ -1,8 +1,8 @@
 /** @module @category Utility */
-import { useCallback, useMemo } from "react";
-import useSWR, { SWRConfiguration } from "swr";
-import { type FetchConfig, openmrsFetch } from "@openmrs/esm-api";
-import useAbortController from "./useAbortController";
+import { useCallback, useMemo } from 'react';
+import useSWR, { SWRConfiguration } from 'swr';
+import { type FetchConfig, openmrsFetch } from '@openmrs/esm-api';
+import useAbortController from './useAbortController';
 
 export type ArgumentsTuple = [any, ...unknown[]];
 export type Key = string | ArgumentsTuple | undefined | null;
@@ -15,15 +15,15 @@ export type UseOpenmrsSWROptions = {
 
 function getUrl(key: Key, url?: string | ((key: Key) => string)): string {
   if (url) {
-    return typeof url === "function" ? url(key) : url;
+    return typeof url === 'function' ? url(key) : url;
   }
 
-  if (typeof key === "string") {
+  if (typeof key === 'string') {
     return key;
   }
 
   throw new Error(
-    `When using useOpenmrsSWR with a key that is not a string, you must provide a url() function that converts the key to a valid url. The key for this hook is ${key}.`
+    `When using useOpenmrsSWR with a key that is not a string, you must provide a url() function that converts the key to a valid url. The key for this hook is ${key}.`,
   );
 }
 
@@ -71,7 +71,7 @@ export function useOpenmrsSWR(key: Key, options: UseOpenmrsSWROptions = {}) {
   const ac = useAbortController();
   const abortSignal = useMemo<AbortSignal>(
     () => fetchInit?.signal ?? abortController?.signal ?? ac.signal,
-    [abortController?.signal, fetchInit?.signal, ac.signal]
+    [abortController?.signal, fetchInit?.signal, ac.signal],
   );
 
   const fetcher = useCallback(
@@ -79,7 +79,7 @@ export function useOpenmrsSWR(key: Key, options: UseOpenmrsSWROptions = {}) {
       const url_ = getUrl(key, url);
       return openmrsFetch(url_, { ...fetchInit, signal: abortSignal });
     },
-    [abortSignal, fetchInit, url]
+    [abortSignal, fetchInit, url],
   );
 
   return useSWR(key, fetcher, swrConfig);

@@ -1,18 +1,18 @@
 module.exports = {
   transform: {
-    "^.+\\.tsx?$": ["@swc/jest"],
+    '^.+\\.tsx?$': ['@swc/jest'],
   },
   globals: {
     System: {},
   },
   moduleNameMapper: {
-    "lodash-es": "lodash",
-    "\\.(s?css)$": "identity-obj-proxy",
-    "@openmrs/esm-framework": "@openmrs/esm-framework/mock.tsx",
-    dexie: require.resolve("dexie"),
+    'lodash-es': 'lodash',
+    '\\.(s?css)$': 'identity-obj-proxy',
+    '@openmrs/esm-framework': '@openmrs/esm-framework/mock.tsx',
+    dexie: require.resolve('dexie'),
   },
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    url: "http://localhost/",
+    url: 'http://localhost/',
   },
 };

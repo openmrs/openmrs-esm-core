@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import type { FrontendModule } from "./types";
+import { useMemo } from 'react';
+import type { FrontendModule } from './types';
 
 export function useFrontendModules(): Array<FrontendModule> {
   return useMemo(() => {

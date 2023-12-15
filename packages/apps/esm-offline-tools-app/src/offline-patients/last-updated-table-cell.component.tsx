@@ -1,17 +1,9 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Link } from "@carbon/react";
-import {
-  PendingFilled,
-  WarningAltFilled,
-  CheckmarkOutline,
-} from "@carbon/react/icons";
-import {
-  DynamicOfflineDataSyncState,
-  getDynamicOfflineDataHandlers,
-  navigate,
-} from "@openmrs/esm-framework";
-import styles from "./last-updated-table-cell.scss";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from '@carbon/react';
+import { PendingFilled, WarningAltFilled, CheckmarkOutline } from '@carbon/react/icons';
+import { DynamicOfflineDataSyncState, getDynamicOfflineDataHandlers, navigate } from '@openmrs/esm-framework';
+import styles from './last-updated-table-cell.scss';
 
 export interface LastUpdatedTableCellProps {
   patientUuid: string;
@@ -19,11 +11,7 @@ export interface LastUpdatedTableCellProps {
   lastSyncState?: DynamicOfflineDataSyncState;
 }
 
-const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
-  patientUuid,
-  isSyncing,
-  lastSyncState,
-}) => {
+const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({ patientUuid, isSyncing, lastSyncState }) => {
   const { t } = useTranslation();
 
   const InnerContent = () => {
@@ -31,7 +19,7 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
       return (
         <>
           <PendingFilled className={styles.pendingIcon} />
-          {t("offlinePatientsTableLastUpdatedDownloading", "Downloading...")}
+          {t('offlinePatientsTableLastUpdatedDownloading', 'Downloading...')}
         </>
       );
     }
@@ -40,10 +28,7 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
       return (
         <>
           <WarningAltFilled className={styles.errorIcon} />
-          {t(
-            "offlinePatientsTableLastUpdatedNotYetSynchronized",
-            "Not synchronized"
-          )}
+          {t('offlinePatientsTableLastUpdatedNotYetSynchronized', 'Not synchronized')}
         </>
       );
     }
@@ -52,7 +37,7 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
       return (
         <>
           <WarningAltFilled className={styles.errorIcon} />
-          {t("offlinePatientsTableLastUpdatedOutdatedData", "Outdated data")}
+          {t('offlinePatientsTableLastUpdatedOutdatedData', 'Outdated data')}
         </>
       );
     }
@@ -68,10 +53,10 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
               })
             }
           >
-            {lastSyncState.erroredHandlers.length}{" "}
+            {lastSyncState.erroredHandlers.length}{' '}
             {lastSyncState.erroredHandlers.length === 1
-              ? t("offlinePatientsTableLastUpdatedError", "error")
-              : t("offlinePatientsTableLastUpdatedErrors", "errors")}
+              ? t('offlinePatientsTableLastUpdatedError', 'error')
+              : t('offlinePatientsTableLastUpdatedErrors', 'errors')}
           </Link>
         </>
       );
@@ -94,12 +79,9 @@ const LastUpdatedTableCell: React.FC<LastUpdatedTableCellProps> = ({
 
 function hasNewUnknownHandlers(lastSyncState: DynamicOfflineDataSyncState) {
   const currentHandlers = getDynamicOfflineDataHandlers()
-    .filter((handler) => handler.type === "patient")
+    .filter((handler) => handler.type === 'patient')
     .map((handler) => handler.id);
-  const lastSyncHandlers = [
-    ...lastSyncState.succeededHandlers,
-    ...lastSyncState.erroredHandlers,
-  ];
+  const lastSyncHandlers = [...lastSyncState.succeededHandlers, ...lastSyncState.erroredHandlers];
 
   return currentHandlers.some((id) => !lastSyncHandlers.includes(id));
 }

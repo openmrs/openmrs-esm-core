@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
-import classNames from "classnames";
-import last from "lodash-es/last";
-import { BrowserRouter, useLocation } from "react-router-dom";
-import { ConfigurableLink } from "@openmrs/esm-framework";
+import React, { useEffect, useMemo, useState } from 'react';
+import classNames from 'classnames';
+import last from 'lodash-es/last';
+import { BrowserRouter, useLocation } from 'react-router-dom';
+import { ConfigurableLink } from '@openmrs/esm-framework';
 
 interface DashboardLinkConfig {
   basePath?: string;
@@ -10,20 +10,13 @@ interface DashboardLinkConfig {
   title: string | (() => string | Promise<string>);
 }
 
-const DashboardLink: React.FC<DashboardLinkConfig> = ({
-  basePath,
-  path,
-  title,
-}) => {
+const DashboardLink: React.FC<DashboardLinkConfig> = ({ basePath, path, title }) => {
   const location = useLocation();
-  const navLink = useMemo(
-    () => decodeURIComponent(last(location.pathname.split("/"))),
-    [location.pathname]
-  );
+  const navLink = useMemo(() => decodeURIComponent(last(location.pathname.split('/'))), [location.pathname]);
   const [resolvedTitle, setResolvedTitle] = useState<string | undefined>();
 
   useEffect(() => {
-    if (typeof title === "function") {
+    if (typeof title === 'function') {
       Promise.resolve(title())
         .then((resolvedValue) => {
           setResolvedTitle(resolvedValue);
@@ -36,15 +29,14 @@ const DashboardLink: React.FC<DashboardLinkConfig> = ({
     }
   }, [title]);
 
-  const activeClassName =
-    path === navLink ? "active-left-nav-link" : "non-active";
+  const activeClassName = path === navLink ? 'active-left-nav-link' : 'non-active';
 
   return (
     title &&
     resolvedTitle && (
       <div key={path} className={activeClassName}>
         <ConfigurableLink
-          className={classNames("cds--side-nav__link", activeClassName)}
+          className={classNames('cds--side-nav__link', activeClassName)}
           to={`${basePath}/${encodeURIComponent(path)}`}
         >
           {resolvedTitle}

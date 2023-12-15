@@ -1,5 +1,5 @@
 /** @module @category Utility */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 /**
  * @beta

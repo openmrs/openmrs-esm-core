@@ -2,9 +2,9 @@ import {
   getCurrentUser,
   getSynchronizationItemsFor,
   openmrsObservableFetch,
-} from "@openmrs/esm-framework/src/internal";
-import { mergeMap } from "rxjs/operators";
-import { userPropertyChange } from "./constants";
+} from '@openmrs/esm-framework/src/internal';
+import { mergeMap } from 'rxjs/operators';
+import { userPropertyChange } from './constants';
 
 export function getCurrentSession() {
   return openmrsObservableFetch(`/ws/rest/v1/session`);
@@ -20,14 +20,11 @@ export function getSynchronizedCurrentUser() {
       const { user } = result;
 
       if (user) {
-        const allChanges = await getSynchronizationItemsFor<any>(
-          user.uuid,
-          userPropertyChange
-        );
+        const allChanges = await getSynchronizationItemsFor<any>(user.uuid, userPropertyChange);
         Object.assign(user.userProperties, ...allChanges);
       }
 
       return result;
-    })
+    }),
   );
 }

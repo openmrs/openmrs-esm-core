@@ -1,6 +1,6 @@
-import Dexie, { Table } from "dexie";
-import type { DynamicOfflineData } from "./dynamic-offline-data";
-import type { SyncItem } from "./sync";
+import Dexie, { Table } from 'dexie';
+import type { DynamicOfflineData } from './dynamic-offline-data';
+import type { SyncItem } from './sync';
 
 /**
  * Accesses the central IndexedDB used by the `esm-offline` module to persist offline related state.
@@ -14,15 +14,15 @@ export class OfflineDb extends Dexie {
   dynamicOfflineData: Table<DynamicOfflineData, number>;
 
   constructor() {
-    super("EsmOffline");
+    super('EsmOffline');
 
     this.version(4).stores({
-      syncQueue: "++id,userId,type,[userId+type]",
-      dynamicOfflineData: "++id,type,identifier,*users,&[type+identifier]",
+      syncQueue: '++id,userId,type,[userId+type]',
+      dynamicOfflineData: '++id,type,identifier,*users,&[type+identifier]',
     });
 
-    this.syncQueue = this.table("syncQueue");
-    this.dynamicOfflineData = this.table("dynamicOfflineData");
+    this.syncQueue = this.table('syncQueue');
+    this.dynamicOfflineData = this.table('dynamicOfflineData');
   }
 }
 

@@ -1,4 +1,4 @@
-import { test as base } from "@playwright/test";
+import { test as base } from '@playwright/test';
 
 // This file sets up our custom test harness using the custom fixtures.
 // See https://playwright.dev/docs/test-fixtures#creating-a-fixture for details.

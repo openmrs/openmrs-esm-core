@@ -1,13 +1,10 @@
-:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/). You may find the [Map of the Project](https://openmrs.github.io/openmrs-esm-core/#/main/map) especially helpful.
-
+:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://o3-docs.openmrs.org/). You may find the [Introduction](https://o3-docs.openmrs.org/docs/introduction) especially helpful.
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
 for `@openmrs/esm-framework`, which is contained in this repository.
 
-
 ![OpenMRS CI](https://github.com/openmrs/openmrs-esm-core/workflows/OpenMRS%20CI/badge.svg)
 ![Check documentation](https://github.com/openmrs/openmrs-esm-core/actions/workflows/docs.yml/badge.svg)
-
 
 Below is the documentation for this repository.
 
@@ -152,21 +149,18 @@ yarn turbo test --force
 
 ### Linking the framework
 
-If you want to try out changes to a framework library, you will
-probably want to `yarn link` or `npm link` it into a frontend module.
-Note that even though frontend modules import from `@openmrs/esm-framework`,
-the package you need to link is the sub-library; for example, if you are trying
-to test changes in `packages/framework/esm-api`, you will need to link it:
+If you want to try out changes to a framework library, you will probably want to `yarn link` or `npm link` it into a frontend module.
+Note that even though frontend modules import from `@openmrs/esm-framework`, the package you need to link is the sub-library; for example, if you are trying to test changes in `packages/framework/esm-api`, you will need to link it:
 
-```
+```sh
 yarn link path/to/openmrs-esm-core/packages/framework/esm-framework
 yarn link path/to/openmrs-esm-core/packages/framework/esm-api
 ```
 
 This satisfies the build tooling, but we must do one more step to get the frontend
-to load these dependencies at runtime
-(see docs on [Runtime Dependencies](https://o3-dev.docs.openmrs.org/#/main/deps)).
-Here, there are two options.
+to load these dependencies at runtime.
+
+Here, there are two options:
 
 #### Method 1: Using the frontend dev server
 
@@ -178,47 +172,39 @@ dev server, you will need to link the tooling as well.
 In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
 Then run your patient chart dev server as usual, with `yarn start`.
 
-If you're not able to get this working, try the 
-
 #### Method 2: Using import map overrides
 
-Read the [dev documentation](https://o3-dev.docs.openmrs.org/#/getting_started/setup?id=import-map-overrides)
-about import map overrides if you have not already.
-
-In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient chart
-repository, `cd` into whatever packages you are working on and run `yarn serve`
-from there. Then use the import map override tool in the browser to tell the frontend
-to load your local patient chart packages.
+In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient chart repository, `cd` into whatever packages you are working on and run `yarn serve` from there. Then use the import map override tool in the browser to tell the frontend to load your local patient chart packages.
 
 #### Once it's working
 
-Please note that this will result in entries being added to the package.json file
-in the `resolutions` field. These changes must be undone before creating your PR,
-which you can do by running `yarn unlink --all` in the patient chart repo.
+Please note that this will result in entries being added to the package.json file in the `resolutions` field. These changes must be undone before creating your PR, which you can do by running `yarn unlink --all` in the patient chart repo.
 
-Check your work by adding a `console.log` at the top level of a file you're
-working on in `esm-api`.
+Check your work by adding a `console.log` at the top level of a file you're working on in `esm-api`.
 
 ### Version and release
+
+We use Yarn [workspaces](https://yarnpkg.com/features/workspaces) to handle versioning in this monorepo.
 
 To increment the version, run the following command:
 
 ```sh
-yarn release
+yarn release [version]
 ```
 
-You will need to pick the next version number. We use minor changes (e.g. `3.2.0` → `3.3.0`)
-to indicate big new features and breaking changes, and patch changes (e.g. `3.2.0` → `3.2.1`)
-otherwise.
+Where version corresponds to:
 
-Note that this command will not create a new tag, nor publish the packages.
-After running it, make a PR or merge to `main` with the resulting changeset.
+- `patch` for bug fixes e.g. `3.2.0` → `3.2.1`
+- `minor` for new features that are backwards-compatible e.g `3.2.0` → `3.3.0`
+- `major` for breaking changes e.g. `3.2.0` → `4.0.0`
 
-Once the version bump is merged, go to GitHub and
-[draft a new release](https://github.com/openmrs/openmrs-esm-core/releases/new). 
-The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title
-should just be the version number (e.g., `3.2.1`). The creation of the GitHub release
-will cause GitHub Actions to publish the packages, completing the release process.
+Note that this command will not create a new tag, nor publish the packages. After running it, make a PR or merge to `main` with the resulting changeset. Note that the release commit message must resemble `(chore) Release vx.x.x` where `x.x.x` is the new version number prefixed with `v`.
+
+This is because we don't want to trigger a pre-release build when effecting a version bump.
+
+Once the version bump commit is merged, go to GitHub and [draft a new release](https://github.com/openmrs/openmrs-esm-core/releases/new).
+
+The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title should just be the version number (e.g., `3.2.1`). The creation of the GitHub release will cause GitHub Actions to publish the packages, completing the release process.
 
 > Don't run `npm publish`, `yarn publish`, or `lerna publish`. Use the above process.
 

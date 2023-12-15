@@ -7,5 +7,11 @@
       "online": true,
       "offline": true
     }
+  ],
+  "extensions": [
+    {
+      "name": "importmap-override-modal",
+      "component": "importmapOverrideModal"
+    }
   ]
 }
