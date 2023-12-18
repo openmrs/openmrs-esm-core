@@ -1,12 +1,12 @@
-import React, { PropsWithChildren } from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { useOnClickOutside } from "./useOnClickOutside";
+import React, { PropsWithChildren } from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import { useOnClickOutside } from './useOnClickOutside';
 
-describe("useOnClickOutside", () => {
+describe('useOnClickOutside', () => {
   const handler: (e: Event) => void = jest.fn();
   afterEach(() => (handler as jest.Mock).mockClear());
 
-  it("should call the handler when clicking outside", () => {
+  it('should call the handler when clicking outside', () => {
     // setup
     const Component: React.FC<PropsWithChildren> = ({ children }) => {
       const ref = useOnClickOutside<HTMLDivElement>(handler);
@@ -21,7 +21,7 @@ describe("useOnClickOutside", () => {
     expect(handler).toHaveBeenCalledTimes(1);
   });
 
-  it("should not call the handler when clicking on the element", () => {
+  it('should not call the handler when clicking on the element', () => {
     // setup
     const Component: React.FC<PropsWithChildren> = ({ children }) => {
       const ref = useOnClickOutside<HTMLDivElement>(handler);
@@ -31,7 +31,7 @@ describe("useOnClickOutside", () => {
     render(
       <Component>
         <div ref={mutableRef}></div>
-      </Component>
+      </Component>,
     );
 
     // act
@@ -43,19 +43,19 @@ describe("useOnClickOutside", () => {
     expect(handler).not.toHaveBeenCalled();
   });
 
-  it("should unregister the event listener when unmounted", () => {
+  it('should unregister the event listener when unmounted', () => {
     // setup
     const Component: React.FC<PropsWithChildren> = ({ children }) => {
       const ref = useOnClickOutside<HTMLDivElement>(handler);
       return <div ref={ref}>{children}</div>;
     };
     const ref = render(<Component />);
-    const spy = jest.spyOn(window, "removeEventListener");
+    const spy = jest.spyOn(window, 'removeEventListener');
 
     // act
     ref.unmount();
 
     // verify
-    expect(spy).toHaveBeenCalledWith("click", expect.any(Function));
+    expect(spy).toHaveBeenCalledWith('click', expect.any(Function));
   });
 });

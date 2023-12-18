@@ -1,10 +1,10 @@
 /** @module @category UI */
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { Subject } from "rxjs";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { Subject } from 'rxjs';
 
-import { SnackbarDescriptor, SnackbarMeta } from "./snackbar.component";
-import ActiveSnackbars from "./active-snackbar.component";
+import { SnackbarDescriptor, SnackbarMeta } from './snackbar.component';
+import ActiveSnackbars from './active-snackbar.component';
 
 const snackbarsSubject = new Subject<SnackbarMeta>();
 let snackbarId = 0;
@@ -22,7 +22,7 @@ export function renderSnackbars(target: HTMLElement | null) {
 }
 
 function isNotEmpty(title: string) {
-  return typeof title === "string" ? title.trim().length > 0 : false;
+  return typeof title === 'string' ? title.trim().length > 0 : false;
 }
 
 /**
@@ -38,8 +38,6 @@ export function showSnackbar(snackbar: SnackbarDescriptor) {
       });
     }, 0);
   } else {
-    console.error(
-      `showSnackbar must be called with an object having a 'title' property that is a non-empty string`
-    );
+    console.error(`showSnackbar must be called with an object having a 'title' property that is a non-empty string`);
   }
 }

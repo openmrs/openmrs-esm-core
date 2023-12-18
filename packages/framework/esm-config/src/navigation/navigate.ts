@@ -1,10 +1,10 @@
 /** @module @category Navigation */
-import { navigateToUrl } from "single-spa";
-import { interpolateUrl } from "./interpolate-string";
-import type {} from "@openmrs/esm-globals";
+import { navigateToUrl } from 'single-spa';
+import { interpolateUrl } from './interpolate-string';
+import type {} from '@openmrs/esm-globals';
 
 function trimTrailingSlash(str: string) {
-  return str.replace(/\/$/, "");
+  return str.replace(/\/$/, '');
 }
 
 export type TemplateParams = { [key: string]: string };

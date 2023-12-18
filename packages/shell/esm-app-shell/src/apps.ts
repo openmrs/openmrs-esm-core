@@ -7,14 +7,10 @@ import {
   ExtensionDefinition,
   OpenmrsAppRoutes,
   RouteDefinition,
-} from "@openmrs/esm-framework";
-import {
-  ActivityFn,
-  LifeCycles,
-  pathToActiveWhen,
-  registerApplication,
-} from "single-spa";
-import { emptyLifecycle, routeRegex } from "./helpers";
+  ExtensionRegistration,
+} from '@openmrs/esm-framework';
+import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
+import { emptyLifecycle, routeRegex } from './helpers';
 
 const pages: Array<RegisteredPageDefinition> = [];
 
@@ -28,13 +24,11 @@ const pages: Array<RegisteredPageDefinition> = [];
  * strings, regexps, and booleans
  * @returns An activityFn suitable to use for a single-spa application
  */
-function getActivityFn(
-  route: RouteDefinition | Array<RouteDefinition>
-): ActivityFn {
+function getActivityFn(route: RouteDefinition | Array<RouteDefinition>): ActivityFn {
   if (Array.isArray(route)) {
     const activators = route.map(getActivityFn);
     return (location) => activators.some((activator) => activator(location));
-  } else if (typeof route === "string") {
+  } else if (typeof route === 'string') {
     return pathToActiveWhen(window.getOpenmrsSpaBase() + route);
   } else if (route instanceof RegExp) {
     return (location) => routeRegex(route, location);
@@ -55,20 +49,12 @@ function getActivityFn(
  * @param pageDefinition The RegisteredPageDefinition object for this page
  * @returns An activityFn suitable to use for a single-spa application
  */
-function wrapPageActivityFn(
-  activityFn: ActivityFn,
-  { online, offline }: RegisteredPageDefinition
-) {
+function wrapPageActivityFn(activityFn: ActivityFn, { online, offline }: RegisteredPageDefinition) {
   return (location: Location) => {
     // basically, if the page should only work online and we're offline or if the
     // page should only work offline and we're online, defaulting to always rendering
     // the page
-    if (
-      !(
-        (navigator.onLine && (online ?? true)) ||
-        (!navigator.onLine && (offline ?? false))
-      )
-    ) {
+    if (!((navigator.onLine && (online ?? true)) || (!navigator.onLine && (offline ?? false)))) {
       return false;
     }
 
@@ -76,7 +62,7 @@ function wrapPageActivityFn(
   };
 }
 
-const STARTUP_FUNCTION = "startupApp";
+const STARTUP_FUNCTION = 'startupApp';
 /**
  * @internal
  *
@@ -98,28 +84,18 @@ const initializedApps = new Map<string, Promise<unknown>>();
  * React-based pages or extensions should generally use the framework's
  * `getAsyncLifecycle()` or `getSyncLifecycle()` functions.
  */
-function getLoader(
-  appName: string,
-  component: string
-): () => Promise<LifeCycles> {
+function getLoader(appName: string, component: string): () => Promise<LifeCycles> {
   return async () => {
     const module = await importDynamic<
-      Record<
-        Exclude<string, "startupApp">,
-        () => LifeCycles | Promise<LifeCycles>
-      > & { startupApp?: () => unknown }
+      Record<Exclude<string, 'startupApp'>, () => LifeCycles | Promise<LifeCycles>> & { startupApp?: () => unknown }
     >(appName);
 
-    if (
-      module &&
-      Object.hasOwn(module, component) &&
-      typeof module[component] === "function"
-    ) {
+    if (module && Object.hasOwn(module, component) && typeof module[component] === 'function') {
       if (!(appName in initializedApps)) {
         await (initializedApps[appName] = new Promise((resolve, reject) => {
           if (Object.hasOwn(module, STARTUP_FUNCTION)) {
             const startup = module[STARTUP_FUNCTION];
-            if (typeof startup === "function") {
+            if (typeof startup === 'function') {
               return Promise.resolve(startup()).then(resolve).catch(reject);
             }
           }
@@ -133,13 +109,9 @@ function getLoader(
       return Promise.resolve(module[component]());
     } else {
       if (module && Object.hasOwn(module, component)) {
-        console.warn(
-          `The export ${component} of the app ${appName} is not a function`
-        );
+        console.warn(`The export ${component} of the app ${appName} is not a function`);
       } else {
-        console.warn(
-          `The app ${appName} does not define a component called ${component}, this cannot be loaded`
-        );
+        console.warn(`The app ${appName} does not define a component called ${component}, this cannot be loaded`);
       }
     }
 
@@ -157,18 +129,40 @@ function getLoader(
  * definition.
  */
 export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
-  if (appName && routes && typeof routes === "object") {
+  if (appName && routes && typeof routes === 'object') {
     defineConfigSchema(appName, {});
 
-    const availableExtensions: Array<ExtensionDefinition> =
-      routes.extensions ?? [];
+    const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
 
     routes.pages?.forEach((p) => {
-      pages.push({ ...p, order: p.order ?? Number.MAX_SAFE_INTEGER, appName });
+      if (
+        p &&
+        typeof p === 'object' &&
+        Object.hasOwn(p, 'component') &&
+        (Object.hasOwn(p, 'route') || Object.hasOwn(p, 'routeRegex') || Object.hasOwn(p, 'routes'))
+      ) {
+        pages.push({
+          ...p,
+          order: p.order ?? Number.MAX_SAFE_INTEGER,
+          appName,
+        });
+      } else {
+        console.warn(
+          `A page for ${appName} could not be registered as it does not appear to have the required properties`,
+          p,
+        );
+      }
     });
 
     availableExtensions.forEach((ext) => {
-      tryRegisterExtension(appName, ext);
+      if (ext && typeof ext === 'object' && Object.hasOwn(ext, 'name') && Object.hasOwn(ext, 'component')) {
+        tryRegisterExtension(appName, ext);
+      } else {
+        console.warn(
+          `An extension for ${appName} could not be registered as it does not appear to have the required properties`,
+          ext,
+        );
+      }
     });
   }
 }
@@ -187,7 +181,7 @@ export function finishRegisteringAllApps() {
     if (sort != 0) {
       return sort;
     }
-    return a.appName.localeCompare(b.appName, "en");
+    return a.appName.localeCompare(b.appName, 'en');
   });
 
   // Create a div for each page. This ensures their DOM order.
@@ -203,7 +197,7 @@ export function finishRegisteringAllApps() {
     const index = appIndices.get(page.appName);
 
     const name = `${page.appName}-page-${index}`;
-    const div = document.createElement("div");
+    const div = document.createElement('div');
     div.id = `single-spa-application:${name}`;
     document.body.appendChild(div);
     tryRegisterPage(name, page);
@@ -218,22 +212,19 @@ export function finishRegisteringAllApps() {
  * @param appName The name of the app containing this page
  * @param page A Javascript object that describes the page defintion, derived from `routes.json`
  */
-export function tryRegisterPage(
-  appName: string,
-  page: RegisteredPageDefinition
-) {
+export function tryRegisterPage(appName: string, page: RegisteredPageDefinition) {
   const route =
-    typeof page.route !== "undefined"
+    typeof page.route !== 'undefined'
       ? page.route
-      : typeof page.routeRegex !== "undefined"
-      ? new RegExp(page.routeRegex)
-      : false;
+      : typeof page.routeRegex !== 'undefined'
+        ? new RegExp(page.routeRegex)
+        : false;
 
   if (route === false) {
     console.warn(
       `A registered page definition is missing a route and thus cannot be registered.
 To fix this, ensure that you define the "route" (or alternatively the "routeRegex") field inside the extension definition.`,
-      appName
+      appName,
     );
     return;
   }
@@ -242,7 +233,7 @@ To fix this, ensure that you define the "route" (or alternatively the "routeRege
     console.warn(
       `A registered page definition is missing a component and thus cannot be registered.
 To fix this, ensure that you define the "component" field inside the page definition.`,
-      appName
+      appName,
     );
     return;
   }
@@ -259,67 +250,62 @@ To fix this, ensure that you define the "component" field inside the page defini
  * @param appName The name of the app containing this page
  * @param extension A Javascript object that describes the extension defintion, derived from `routes.json`
  */
-export function tryRegisterExtension(
-  appName: string,
-  extension: ExtensionDefinition
-) {
+export function tryRegisterExtension(appName: string, extension: ExtensionDefinition) {
   const name = extension.name;
   if (!name) {
     console.error(
       `An extension definition in ${appName} is missing an name and thus cannot be
 registered. To fix this, ensure that you define the "name" field inside the
 extension definition.`,
-      extension
+      extension,
     );
     return;
   }
 
   if (extension.slots && extension.slot) {
     console.warn(
-      `The extension ${name} from ${appName} declares both a 'slots' property and 
-a 'slot' property. Only the 'slots' property will be honored.`
+      `The extension ${name} from ${appName} declares both a 'slots' property and
+a 'slot' property. Only the 'slots' property will be honored.`,
     );
   }
-  const slots = extension.slots
-    ? extension.slots
-    : extension.slot
-    ? [extension.slot]
-    : [];
+  const slots = extension.slots ? extension.slots : extension.slot ? [extension.slot] : [];
 
   if (!extension.component && !extension.load) {
     console.error(
       `The extension ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
 To fix this, ensure that you define a 'component' field inside the extension definition.`,
-      extension
+      extension,
     );
     return;
   }
 
-  let loader;
+  let loader: ExtensionRegistration['load'] | undefined = undefined;
   if (extension.component) {
     loader = getLoader(appName, extension.component);
   } else if (extension.load) {
-    if (typeof extension.load !== "function") {
+    if (typeof extension.load !== 'function') {
       console.error(
         `The extension ${name} from ${appName} declares a 'load' property that is not a function. This is not
-supported, so the extension will not be loaded.`
+supported, so the extension will not be loaded.`,
       );
       return;
     }
     loader = extension.load;
   }
 
-  registerExtension({
-    name,
-    load: loader,
-    meta: extension.meta || {},
-    order: extension.order,
-    moduleName: appName,
-    privileges: extension.privileges,
-    online: extension.online ?? true,
-    offline: extension.offline ?? false,
-    featureFlag: extension.featureFlag,
-  });
+  if (loader) {
+    registerExtension({
+      name,
+      load: loader,
+      meta: extension.meta || {},
+      order: extension.order,
+      moduleName: appName,
+      privileges: extension.privileges,
+      online: extension.online ?? true,
+      offline: extension.offline ?? false,
+      featureFlag: extension.featureFlag,
+    });
+  }
 
   for (const slot of slots) {
     attach(slot, name);

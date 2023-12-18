@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Breadcrumb, BreadcrumbItem, InlineLoading } from "@carbon/react";
-import {
-  getBreadcrumbsFor,
-  ConfigurableLink,
-  BreadcrumbRegistration,
-} from "@openmrs/esm-framework";
+import React, { useEffect, useState } from 'react';
+import { Breadcrumb, BreadcrumbItem, InlineLoading } from '@carbon/react';
+import { getBreadcrumbsFor, ConfigurableLink, BreadcrumbRegistration } from '@openmrs/esm-framework';
 
 function getPath(path: string, params: Array<string>) {
   const parts = [...params];
@@ -18,11 +14,11 @@ function getParams(path: string, matcher: RegExp) {
     const [, ...params] = match;
     return params;
   } else {
-    const segments = path.split("/");
+    const segments = path.split('/');
     segments.pop();
 
     if (segments.length > 1) {
-      const newPath = segments.join("/");
+      const newPath = segments.join('/');
       return getParams(newPath, matcher);
     }
   }
@@ -35,17 +31,12 @@ interface CustomBreadcrumbItemProps {
   params: any;
 }
 
-export const CustomBreadcrumbItem: React.FC<CustomBreadcrumbItemProps> = ({
-  breadcrumbRegistration,
-  params,
-}) => {
-  const [title, setTitle] = useState("");
+export const CustomBreadcrumbItem: React.FC<CustomBreadcrumbItemProps> = ({ breadcrumbRegistration, params }) => {
+  const [title, setTitle] = useState('');
 
   useEffect(() => {
-    if (typeof breadcrumbRegistration.settings.title === "function") {
-      Promise.resolve(breadcrumbRegistration.settings.title(params)).then(
-        (res) => setTitle(res)
-      );
+    if (typeof breadcrumbRegistration.settings.title === 'function') {
+      Promise.resolve(breadcrumbRegistration.settings.title(params)).then((res) => setTitle(res));
     } else {
       setTitle(breadcrumbRegistration.settings.title);
     }
@@ -53,9 +44,7 @@ export const CustomBreadcrumbItem: React.FC<CustomBreadcrumbItemProps> = ({
 
   return (
     <BreadcrumbItem key={breadcrumbRegistration.settings.path}>
-      <ConfigurableLink
-        to={getPath(breadcrumbRegistration.settings.path, params)}
-      >
+      <ConfigurableLink to={getPath(breadcrumbRegistration.settings.path, params)}>
         {title ? title : <InlineLoading />}
       </ConfigurableLink>
     </BreadcrumbItem>
@@ -70,8 +59,8 @@ export const Breadcrumbs: React.FC = () => {
 
   useEffect(() => {
     const handler = () => setPath(location.pathname);
-    window.addEventListener("popstate", handler);
-    return () => window.removeEventListener("popstate", handler);
+    window.addEventListener('popstate', handler);
+    return () => window.removeEventListener('popstate', handler);
   }, []);
 
   if (breadcrumbs.length > 4) {
@@ -79,7 +68,7 @@ export const Breadcrumbs: React.FC = () => {
       ...breadcrumbs[1],
       settings: {
         ...breadcrumbs[1].settings,
-        title: "...",
+        title: '...',
       },
     });
   }
@@ -87,11 +76,7 @@ export const Breadcrumbs: React.FC = () => {
   return (
     <Breadcrumb className="breadcrumbs-container">
       {breadcrumbs.map((bc, index) => (
-        <CustomBreadcrumbItem
-          key={`breadcrumb-item-${index}`}
-          breadcrumbRegistration={bc}
-          params={params}
-        />
+        <CustomBreadcrumbItem key={`breadcrumb-item-${index}`} breadcrumbRegistration={bc} params={params} />
       ))}
     </Breadcrumb>
   );

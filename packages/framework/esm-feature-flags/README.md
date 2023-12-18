@@ -6,7 +6,7 @@
 
 This is the feature flags library for [OpenMRS Frontend 3.0](https://wiki.openmrs.org/display/projects/OpenMRS+3.0%3A+A+Frontend+Framework+that+enables+collaboration+and+better+User+Experience).
 
-Please see the [Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/main/config)
+Please see the [Developer Documentation](https://o3-docs.openmrs.org/docs/configuration-system)
 for information about how to use it.
 
 ## Contributing & Development

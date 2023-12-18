@@ -1,5 +1,5 @@
-@use "@carbon/styles/scss/type";
-@import "../vars";
+@use '@carbon/styles/scss/type';
+@import '../vars';
 
 .leftNav {
   border-right: 1px solid $ui-03;
@@ -8,7 +8,7 @@
   // Left nav menu item
   :global(.cds--side-nav__link) {
     color: $text-02;
-    @include type.type-style("heading-compact-01");
+    @include type.type-style('heading-compact-01');
 
     &:focus,
     &:hover {

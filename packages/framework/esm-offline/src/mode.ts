@@ -4,8 +4,8 @@ async function isSafariPrivateBrowsing() {
   const storage = window.sessionStorage;
 
   try {
-    storage.setItem("someKeyHere", "test");
-    storage.removeItem("someKeyHere");
+    storage.setItem('someKeyHere', 'test');
+    storage.removeItem('someKeyHere');
   } catch (e) {
     if (e.code === DOMException.QUOTA_EXCEEDED_ERR && storage.length === 0) {
       return true;
@@ -21,18 +21,14 @@ async function isEdgePrivateBrowsing() {
 
 async function isFirefoxPrivateBrowsing() {
   return new Promise<boolean>((resolve) => {
-    const db = indexedDB.open("test");
+    const db = indexedDB.open('test');
     db.onerror = () => resolve(true);
     db.onsuccess = () => resolve(false);
   });
 }
 
 async function isPrivateBrowsing() {
-  return (
-    (await isFirefoxPrivateBrowsing()) ||
-    (await isEdgePrivateBrowsing()) ||
-    (await isSafariPrivateBrowsing())
-  );
+  return (await isFirefoxPrivateBrowsing()) || (await isEdgePrivateBrowsing()) || (await isSafariPrivateBrowsing());
 }
 
 export type OfflineMode = "on" | "off" | "unavailable";
@@ -59,12 +55,8 @@ export function getCurrentOfflineMode(): OfflineModeResult {
 }
 
 export function setCurrentOfflineMode(mode: OfflineMode) {
-  if (offlineMode !== "unavailable" && mode !== "unavailable") {
-    localStorage.setItem(
-      offlineModeStorageKey,
-      mode === "on" ? "active" : "disabled"
-    );
-    lastRun = new Date().toLocaleString();
+  if (offlineMode !== 'unavailable' && mode !== 'unavailable') {
+    localStorage.setItem(offlineModeStorageKey, mode === 'on' ? 'active' : 'disabled');
     offlineMode = mode;
   }
 }
@@ -81,14 +73,14 @@ export async function activateOfflineCapability() {
   const isPrivate = await isPrivateBrowsing();
 
   if (!isPrivate) {
-    if (localStorage.getItem(offlineModeStorageKey) === "active") {
-      offlineMode = "on";
+    if (localStorage.getItem(offlineModeStorageKey) === 'active') {
+      offlineMode = 'on';
     } else {
-      offlineMode = "off";
+      offlineMode = 'off';
     }
   }
 
-  if (navigator.onLine && offlineMode === "on") {
+  if (navigator.onLine && offlineMode === 'on') {
     //TODO trigger here --> update cycle
   }
 }

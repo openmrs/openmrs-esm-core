@@ -1,14 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  temporaryConfigStore,
-  useStore,
-} from "@openmrs/esm-framework/src/internal";
-import { Button } from "@carbon/react";
-import AceEditor from "react-ace";
-import style from "./json-editor.scss";
+import React, { useCallback, useEffect, useState } from 'react';
+import { temporaryConfigStore, useStore } from '@openmrs/esm-framework/src/internal';
+import { Button } from '@carbon/react';
+import AceEditor from 'react-ace';
+import style from './json-editor.scss';
 
-import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/theme-github";
+import 'ace-builds/src-noconflict/mode-java';
+import 'ace-builds/src-noconflict/theme-github';
 
 export interface JsonEditorProps {
   /** A CSS value */
@@ -17,8 +14,8 @@ export interface JsonEditorProps {
 
 export default function JsonEditor({ height }: JsonEditorProps) {
   const temporaryConfig = useStore(temporaryConfigStore);
-  const [editorValue, setEditorValue] = useState("");
-  const [error, setError] = useState("");
+  const [editorValue, setEditorValue] = useState('');
+  const [error, setError] = useState('');
   const [key, setKey] = useState(`ace-editor`);
 
   const updateTemporaryConfig = useCallback(() => {
@@ -29,7 +26,7 @@ export default function JsonEditor({ height }: JsonEditorProps) {
       setError(e.message);
       return;
     }
-    setError("");
+    setError('');
     temporaryConfigStore.setState({ config });
   }, [editorValue, temporaryConfigStore]);
 
@@ -58,10 +55,7 @@ export default function JsonEditor({ height }: JsonEditorProps) {
         <Button size="md" type="submit" onClick={updateTemporaryConfig}>
           Update
         </Button>
-        <div
-          className={style.alert}
-          style={{ backgroundColor: error ? "#d03030" : "inherit" }}
-        >
+        <div className={style.alert} style={{ backgroundColor: error ? '#d03030' : 'inherit' }}>
           {error}
         </div>
       </div>

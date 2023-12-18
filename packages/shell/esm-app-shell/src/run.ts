@@ -1,8 +1,8 @@
-import { start, triggerAppChange } from "single-spa";
+import { start, triggerAppChange } from 'single-spa';
 import {
   setupApiModule,
   renderLoadingSpinner,
-  Config,
+  type Config,
   provide,
   showNotification,
   showActionableNotification,
@@ -28,22 +28,23 @@ import {
   subscribePrecacheStaticDependencies,
   openmrsFetch,
   interpolateUrl,
-  OpenmrsRoutes,
+  type OpenmrsRoutes,
   getCurrentImportMap,
   importDynamic,
-} from "@openmrs/esm-framework/src/internal";
-import {
-  finishRegisteringAllApps,
-  registerApp,
-  tryRegisterExtension,
-} from "./apps";
-import { setupI18n } from "./locale";
-import { appName, getCoreExtensions } from "./ui";
+  canAccessStorage,
+  localStorageRoutesPrefix,
+  OpenmrsAppRoutes,
+  isOpenmrsAppRoutes,
+  isOpenmrsRoutes,
+} from '@openmrs/esm-framework/src/internal';
+import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
+import { setupI18n } from './locale';
+import { appName, getCoreExtensions } from './ui';
 
 // @internal
 // used to track when the window.installedModules global is finalised
 // so we can pre-load all modules
-const REGISTRATION_PROMISES = Symbol("openmrs_registration_promises");
+const REGISTRATION_PROMISES = Symbol('openmrs_registration_promises');
 
 /**
  * Sets up the frontend modules (apps). Uses the defined export
@@ -52,9 +53,7 @@ const REGISTRATION_PROMISES = Symbol("openmrs_registration_promises");
  * as the registry of all apps in the application.
  */
 async function setupApps() {
-  const scriptTags = document.querySelectorAll<HTMLScriptElement>(
-    "script[type='openmrs-routes']"
-  );
+  const scriptTags = document.querySelectorAll<HTMLScriptElement>("script[type='openmrs-routes']");
 
   const promises: Array<Promise<OpenmrsRoutes>> = [];
   for (let i = 0; i < scriptTags.length; i++) {
@@ -68,33 +67,89 @@ async function setupApps() {
             routes = (await openmrsFetch<OpenmrsRoutes>(scriptTag.src)).data;
           }
         } catch (e) {
-          console.error(
-            `Caught error while loading routes from ${
-              scriptTag.src ?? "JSON script tag content"
-            }`,
-            e
-          );
+          console.error(`Caught error while loading routes from ${scriptTag.src ?? 'JSON script tag content'}`, e);
 
           return {};
         }
 
         return Promise.resolve(routes ?? {});
-      })(scriptTags.item(i))
+      })(scriptTags.item(i)),
     );
   }
 
-  const routes = (await Promise.all(promises)).reduce(
-    (accumulatedRoutes, routes) => ({ ...accumulatedRoutes, ...routes }),
-    {}
-  );
+  if (canAccessStorage()) {
+    // load routes overrides from localStorage if any
+    const localStorage = window.localStorage;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(localStorageRoutesPrefix)) {
+        const localOverride = localStorage.getItem(key);
+        if (localOverride) {
+          try {
+            const maybeOpenmrsRoutes = JSON.parse(localOverride);
+            if (isOpenmrsAppRoutes(maybeOpenmrsRoutes)) {
+              promises.push(
+                Promise.resolve<OpenmrsRoutes>({
+                  [key.slice(localStorageRoutesPrefix.length)]: maybeOpenmrsRoutes,
+                }),
+              );
+            } else if (typeof maybeOpenmrsRoutes === 'string' && maybeOpenmrsRoutes.startsWith('http')) {
+              promises.push(
+                openmrsFetch<OpenmrsAppRoutes>(maybeOpenmrsRoutes)
+                  .then((response) => {
+                    if (isOpenmrsAppRoutes(response.data)) {
+                      return Promise.resolve({
+                        [key.slice(localStorageRoutesPrefix.length)]: response.data,
+                      });
+                    }
+
+                    return Promise.reject(
+                      `${maybeOpenmrsRoutes} did not resolve to a valid OpenmrsAppRoutes JSON object`,
+                    );
+                  })
+                  .catch((reason) => {
+                    console.warn(
+                      `Failed to fetch route overrides for ${key.slice(localStorageRoutesPrefix.length)}`,
+                      reason,
+                    );
+
+                    // still fail the promise
+                    throw reason;
+                  }),
+              );
+            } else {
+              console.warn(
+                `Route override for ${key.slice(
+                  localStorageRoutesPrefix.length,
+                )} could not be handled as it was neither a JSON object nor a URL string`,
+                localOverride,
+              );
+            }
+          } catch (e) {
+            console.error(`Error parsing local route override for ${key}`, e);
+          }
+        }
+      }
+    }
+  }
+
+  const routes: OpenmrsRoutes = (await Promise.allSettled(promises))
+    .filter((p) => p.status === 'fulfilled')
+    .map((p) => (p as PromiseFulfilledResult<OpenmrsRoutes>).value)
+    .filter(isOpenmrsRoutes)
+    .reduce(
+      (accumulatedRoutes, routes) => ({
+        ...accumulatedRoutes,
+        ...routes,
+      }),
+      {},
+    );
 
   const modules: typeof window.installedModules = [];
-  const registrationPromises = Object.entries(routes).map(
-    async ([module, routes]) => {
-      modules.push([module, routes]);
-      registerApp(module, routes);
-    }
-  );
+  const registrationPromises = Object.entries(routes).map(async ([module, routes]) => {
+    modules.push([module, routes]);
+    registerApp(module, routes);
+  });
 
   window[REGISTRATION_PROMISES] = Promise.all(registrationPromises);
   window.installedModules = modules;
@@ -120,9 +175,9 @@ function connectivityChanged() {
   dispatchConnectivityChanged(online);
   showToast({
     critical: true,
-    description: `Connection: ${online ? "online" : "offline"}`,
-    title: "App",
-    kind: online ? "success" : "warning",
+    description: `Connection: ${online ? 'online' : 'offline'}`,
+    title: 'App',
+    kind: online ? 'success' : 'warning',
   });
 }
 
@@ -130,18 +185,15 @@ function connectivityChanged() {
  * Runs the shell by importing the translations and starting single SPA.
  */
 function runShell() {
-  window.addEventListener("offline", connectivityChanged);
-  window.addEventListener("online", connectivityChanged);
+  window.addEventListener('offline', connectivityChanged);
+  window.addEventListener('online', connectivityChanged);
   return setupI18n()
     .catch((err) => console.error(`Failed to initialize translations`, err))
     .then(() => start());
 }
 
 async function preloadScripts() {
-  const [, importMap] = await Promise.all([
-    window[REGISTRATION_PROMISES],
-    getCurrentImportMap(),
-  ]);
+  const [, importMap] = await Promise.all([window[REGISTRATION_PROMISES], getCurrentImportMap()]);
 
   window.installedModules.map(async ([module]) => {
     // we simply swallow the error here since this is only a preload
@@ -155,28 +207,25 @@ function handleInitFailure(e: Error) {
 }
 
 function renderFatalErrorPage(e?: Error) {
-  const template = document.querySelector<HTMLTemplateElement>("#app-error");
+  const template = document.querySelector<HTMLTemplateElement>('#app-error');
 
   if (template) {
     const fragment = template.content.cloneNode(true) as DocumentFragment;
     const messageContainer = fragment.querySelector('[data-var="message"]');
 
     if (messageContainer) {
-      messageContainer.textContent =
-        e?.message || "No additional information available.";
+      messageContainer.textContent = e?.message || 'No additional information available.';
     }
 
     if (
-      localStorage.getItem("openmrs:devtools") &&
-      Object.keys(localStorage).some((k) =>
-        k.startsWith("import-map-override:")
-      )
+      localStorage.getItem('openmrs:devtools') &&
+      Object.keys(localStorage).some((k) => k.startsWith('import-map-override:'))
     ) {
-      const appErrorActionButtons = fragment?.querySelector("#buttons");
+      const appErrorActionButtons = fragment?.querySelector('#buttons');
       if (appErrorActionButtons) {
-        const clearDevOverridesButton = document.createElement("button");
-        clearDevOverridesButton.className = "cds--btn";
-        clearDevOverridesButton.innerHTML = "Clear dev overrides";
+        const clearDevOverridesButton = document.createElement('button');
+        clearDevOverridesButton.className = 'cds--btn';
+        clearDevOverridesButton.innerHTML = 'Clear dev overrides';
         clearDevOverridesButton.onclick = clearDevOverrides;
         appErrorActionButtons.appendChild(clearDevOverridesButton);
       }
@@ -189,10 +238,8 @@ function renderFatalErrorPage(e?: Error) {
 function clearDevOverrides() {
   for (const key of Object.keys(localStorage)) {
     if (
-      key.startsWith("import-map-override:") &&
-      !["import-map-override:react", "import-map-override:react-dom"].includes(
-        key
-      )
+      key.startsWith('import-map-override:') &&
+      !['import-map-override:react', 'import-map-override:react-dom'].includes(key)
     ) {
       localStorage.removeItem(key);
     }
@@ -217,34 +264,30 @@ function createConfigLoader(configUrls: Array<string>) {
             value: {},
           };
         });
-    })
+    }),
   );
   return () => loadingConfigs.then(loadConfigs);
 }
 
 function showNotifications() {
-  renderInlineNotifications(
-    document.querySelector(".omrs-inline-notifications-container")
-  );
+  renderInlineNotifications(document.querySelector('.omrs-inline-notifications-container'));
   return;
 }
 
 function showActionableNotifications() {
-  renderActionableNotifications(
-    document.querySelector(".omrs-actionable-notifications-container")
-  );
+  renderActionableNotifications(document.querySelector('.omrs-actionable-notifications-container'));
 }
 
 function showToasts() {
-  renderToasts(document.querySelector(".omrs-toasts-container"));
+  renderToasts(document.querySelector('.omrs-toasts-container'));
 }
 
 function showSnackbars() {
-  renderSnackbars(document.querySelector(".omrs-snackbars-container"));
+  renderSnackbars(document.querySelector('.omrs-snackbars-container'));
 }
 
 function showModals() {
-  renderModals(document.querySelector(".omrs-modals-container"));
+  renderModals(document.querySelector('.omrs-modals-container'));
 }
 
 function showLoadingSpinner() {
@@ -263,16 +306,14 @@ function registerCoreExtensions() {
 
 async function setupOffline() {
   try {
-    await registerOmrsServiceWorker(
-      `${window.getOpenmrsSpaBase()}service-worker.js`
-    );
+    await registerOmrsServiceWorker(`${window.getOpenmrsSpaBase()}service-worker.js`);
     await activateOfflineCapability();
     setupOfflineStaticDependencyPrecaching();
   } catch (error) {
-    console.error("Error while setting up offline mode.", error);
+    console.error('Error while setting up offline mode.', error);
     showNotification({
-      kind: "error",
-      title: "Offline Setup Error",
+      kind: 'error',
+      title: 'Offline Setup Error',
       description: error.message,
     });
   }
@@ -283,9 +324,7 @@ function setupOfflineStaticDependencyPrecaching() {
   let lastPrecache: Date | null = null;
 
   subscribeOnlineAndLoginChange((online, hasLoggedInUser) => {
-    const hasExceededPrecacheDelay =
-      !lastPrecache ||
-      new Date().getTime() - lastPrecache.getTime() > precacheDelay;
+    const hasExceededPrecacheDelay = !lastPrecache || new Date().getTime() - lastPrecache.getTime() > precacheDelay;
 
     if (hasLoggedInUser && online && hasExceededPrecacheDelay) {
       lastPrecache = new Date();
@@ -294,9 +333,7 @@ function setupOfflineStaticDependencyPrecaching() {
   });
 }
 
-function subscribeOnlineAndLoginChange(
-  cb: (online: boolean, hasLoggedInUser: boolean) => void
-) {
+function subscribeOnlineAndLoginChange(cb: (online: boolean, hasLoggedInUser: boolean) => void) {
   let isOnline = false;
   let hasLoggedInUser = false;
 
@@ -316,40 +353,37 @@ async function precacheGlobalStaticDependencies() {
 
   // By default, cache the session endpoint.
   // This ensures that a lot of user/session related functions also work offline.
-  const sessionPathUrl = new URL(
-    `${window.openmrsBase}/ws/rest/v1/session`,
-    window.location.origin
-  ).href;
+  const sessionPathUrl = new URL(`${window.openmrsBase}/ws/rest/v1/session`, window.location.origin).href;
 
   await messageOmrsServiceWorker({
-    type: "registerDynamicRoute",
+    type: 'registerDynamicRoute',
     url: sessionPathUrl,
-    strategy: "network-first",
+    strategy: 'network-first',
   });
 
-  await openmrsFetch("/ws/rest/v1/session").catch((e) =>
+  await openmrsFetch('/ws/rest/v1/session').catch((e) =>
     console.warn(
-      "Failed to precache the user session data from the app shell. MFs depending on this data may run into problems while offline.",
-      e
-    )
+      'Failed to precache the user session data from the app shell. MFs depending on this data may run into problems while offline.',
+      e,
+    ),
   );
 }
 
 async function precacheImportMap() {
   const importMap = await window.importMapOverrides.getCurrentPageMap();
   await messageOmrsServiceWorker({
-    type: "onImportMapChanged",
+    type: 'onImportMapChanged',
     importMap,
   });
 }
 
 function setupOfflineCssClasses() {
   subscribeConnectivity(({ online }) => {
-    const body = document.querySelector("body")!;
+    const body = document.querySelector('body')!;
     if (online) {
-      body.classList.remove("omrs-offline");
+      body.classList.remove('omrs-offline');
     } else {
-      body.classList.add("omrs-offline");
+      body.classList.add('omrs-offline');
     }
   });
 }

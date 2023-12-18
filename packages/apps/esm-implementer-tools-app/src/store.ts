@@ -1,4 +1,4 @@
-import { createGlobalStore } from "@openmrs/esm-framework";
+import { createGlobalStore } from '@openmrs/esm-framework';
 
 export interface ImplementerToolsStore {
   activeItemDescription?: ActiveItemDescription;
@@ -18,19 +18,16 @@ export interface ActiveItemDescription {
   source?: string;
 }
 
-export const implementerToolsStore = createGlobalStore<ImplementerToolsStore>(
-  "implementer-tools",
-  {
-    activeItemDescription: undefined,
-    configPathBeingEdited: null,
-    isOpen: getIsImplementerToolsOpen(),
-    hasAlert: false,
-    openTabIndex: 0,
-    isConfigToolbarOpen: getIsConfigToolbarOpen(),
-    isUIEditorEnabled: getIsUIEditorEnabled(),
-    isJsonModeEnabled: getIsJsonModeEnabled(),
-  }
-);
+export const implementerToolsStore = createGlobalStore<ImplementerToolsStore>('implementer-tools', {
+  activeItemDescription: undefined,
+  configPathBeingEdited: null,
+  isOpen: getIsImplementerToolsOpen(),
+  hasAlert: false,
+  openTabIndex: 0,
+  isConfigToolbarOpen: getIsConfigToolbarOpen(),
+  isUIEditorEnabled: getIsUIEditorEnabled(),
+  isJsonModeEnabled: getIsJsonModeEnabled(),
+});
 
 export const setHasAlert = (value: boolean) =>
   implementerToolsStore.setState((state) => ({
@@ -79,55 +76,33 @@ implementerToolsStore.subscribe((state) => {
 });
 
 function getIsImplementerToolsOpen(): boolean {
-  return (
-    JSON.parse(
-      localStorage.getItem("openmrs:openmrsImplementerToolsAreOpen") || "false"
-    ) ?? false
-  );
+  return JSON.parse(localStorage.getItem('openmrs:openmrsImplementerToolsAreOpen') || 'false') ?? false;
 }
 
 function setIsImplementerToolsOpen(value: boolean): void {
-  localStorage.setItem(
-    "openmrs:openmrsImplementerToolsAreOpen",
-    JSON.stringify(value)
-  );
+  localStorage.setItem('openmrs:openmrsImplementerToolsAreOpen', JSON.stringify(value));
 }
 
 function getIsConfigToolbarOpen(): boolean {
-  return (
-    JSON.parse(
-      localStorage.getItem("openmrs:openmrsImplementerToolsConfigOpen") ||
-        "true"
-    ) ?? true
-  );
+  return JSON.parse(localStorage.getItem('openmrs:openmrsImplementerToolsConfigOpen') || 'true') ?? true;
 }
 
 function setIsConfigToolbarOpen(value: boolean): void {
-  localStorage.setItem(
-    "openmrs:openmrsImplementerToolsConfigOpen",
-    JSON.stringify(value)
-  );
+  localStorage.setItem('openmrs:openmrsImplementerToolsConfigOpen', JSON.stringify(value));
 }
 
 function getIsUIEditorEnabled(): boolean {
-  return (
-    JSON.parse(localStorage.getItem("openmrs:isUIEditorEnabled") || "false") ??
-    false
-  );
+  return JSON.parse(localStorage.getItem('openmrs:isUIEditorEnabled') || 'false') ?? false;
 }
 
 function setIsUIEditorEnabled(enabled: boolean) {
-  localStorage.setItem("openmrs:isUIEditorEnabled", JSON.stringify(enabled));
+  localStorage.setItem('openmrs:isUIEditorEnabled', JSON.stringify(enabled));
 }
 
 function getIsJsonModeEnabled(): boolean {
-  return (
-    JSON.parse(
-      localStorage.getItem("openmrs:getIsJsonModeEnabled") || "false"
-    ) ?? false
-  );
+  return JSON.parse(localStorage.getItem('openmrs:getIsJsonModeEnabled') || 'false') ?? false;
 }
 
 function setIsJsonModeEnabled(enabled: boolean) {
-  localStorage.setItem("openmrs:getIsJsonModeEnabled", JSON.stringify(enabled));
+  localStorage.setItem('openmrs:getIsJsonModeEnabled', JSON.stringify(enabled));
 }

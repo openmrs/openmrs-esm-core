@@ -158,8 +158,7 @@ yarn link path/to/openmrs-esm-core/packages/framework/esm-api
 ```
 
 This satisfies the build tooling, but we must do one more step to get the frontend
-to load these dependencies at runtime
-(see docs on [Runtime Dependencies](https://o3-dev.docs.openmrs.org/#/main/deps)).
+to load these dependencies at runtime.
 
 Here, there are two options:
 
@@ -173,12 +172,7 @@ dev server, you will need to link the tooling as well.
 In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
 Then run your patient chart dev server as usual, with `yarn start`.
 
-If you're not able to get this working, try the 
-
 #### Method 2: Using import map overrides
-
-Read the [dev documentation](https://o3-dev.docs.openmrs.org/#/getting_started/setup?id=import-map-overrides)
-about import map overrides if you have not already.
 
 In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient chart repository, `cd` into whatever packages you are working on and run `yarn serve` from there. Then use the import map override tool in the browser to tell the frontend to load your local patient chart packages.
 

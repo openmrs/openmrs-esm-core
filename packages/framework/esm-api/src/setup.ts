@@ -1,21 +1,20 @@
-import { defineConfigSchema, Type, validators } from "@openmrs/esm-config";
-import { refetchCurrentUser } from "./shared-api-objects/current-user";
+import { defineConfigSchema, Type, validators } from '@openmrs/esm-config';
+import { refetchCurrentUser } from './shared-api-objects/current-user';
 
 /**
  * @internal
  */
 export function setupApiModule() {
-  defineConfigSchema("@openmrs/esm-api", {
+  defineConfigSchema('@openmrs/esm-api', {
     redirectAuthFailure: {
       enabled: {
         _type: Type.Boolean,
         _default: true,
-        _description:
-          "Whether to redirect logged-out users to `redirectAuthFailure.url`",
+        _description: 'Whether to redirect logged-out users to `redirectAuthFailure.url`',
       },
       url: {
         _type: Type.String,
-        _default: "${openmrsSpaBase}/login",
+        _default: '${openmrsSpaBase}/login',
         _validators: [validators.isUrl],
       },
       errors: {
@@ -25,7 +24,7 @@ export function setupApiModule() {
           _type: Type.Number,
           _validators: [validators.inRange(100, 600)],
         },
-        _description: "The HTTP error codes for which users will be redirected",
+        _description: 'The HTTP error codes for which users will be redirected',
       },
       resolvePromise: {
         _type: Type.Boolean,

@@ -1,16 +1,16 @@
-jest.mock("./index");
-const { reportError } = jest.requireActual("./index");
+jest.mock('./index');
+const { reportError } = jest.requireActual('./index');
 
 jest.useFakeTimers();
-describe("error handler", () => {
-  it("transfrom the input in valid error object if it is not already an error obejct", () => {
+describe('error handler', () => {
+  it('transfrom the input in valid error object if it is not already an error obejct', () => {
     expect(() => {
-      reportError("error");
+      reportError('error');
       jest.runAllTimers();
-    }).toThrow("error");
+    }).toThrow('error');
 
     expect(() => {
-      reportError({ error: "error" });
+      reportError({ error: 'error' });
       jest.runAllTimers();
     }).toThrow('Object thrown as error: {"error":"error"}');
 

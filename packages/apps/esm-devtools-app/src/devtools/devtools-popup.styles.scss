@@ -1,0 +1,52 @@
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.popup {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  z-index: 8000;
+  background-color: $ui-03;
+  border-top: 2px solid $ui-05;
+  color: $color-gray-100;
+  box-sizing: border-box;
+}
+
+.tabs {
+  width: 100%;
+}
+
+.tabList {
+  position: fixed;
+  height: 4rem;
+  width: 100%;
+  z-index: 1000;
+  background-color: black;
+}
+
+.tabPanels {
+  padding: 1.5rem;
+}
+
+.farRight {
+  position: absolute;
+  right: 24px;
+  top: 16px;
+  display: flex;
+  z-index: 1000;
+}
+
+.closeButton {
+  align-items: center;
+}
+
+.closeButton:focus {
+  /*
+    there's some 3rd party css that turns these off using !important, so the only way to override them is to also use important.
+    this is why you don't use !important -- it makes it hard for other people to override it when they need to :(
+  */
+  outline: solid !important;
+  outline-width: thin !important;
+  outline-color: #e5e5e6 !important;
+}

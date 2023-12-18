@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import styles from "./shared-page-layout.styles.scss";
+import React, { ReactNode } from 'react';
+import styles from './shared-page-layout.styles.scss';
 
 export interface SharedPageLayoutProps {
   header: string;
@@ -7,11 +7,7 @@ export interface SharedPageLayoutProps {
   children?: React.ReactNode;
 }
 
-const SharedPageLayout: React.FC<SharedPageLayoutProps> = ({
-  header: title,
-  primaryActions,
-  children,
-}) => {
+const SharedPageLayout: React.FC<SharedPageLayoutProps> = ({ header: title, primaryActions, children }) => {
   return (
     <>
       <header className={styles.pageHeaderContainer}>

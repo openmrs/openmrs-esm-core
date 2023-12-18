@@ -1,4 +1,4 @@
-import "@testing-library/jest-dom";
+import '@testing-library/jest-dom';
 
 declare global {
   interface Window {
@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-window.openmrsBase = "/openmrs";
-window.spaBase = "/spa";
-window.getOpenmrsSpaBase = () => "/openmrs/spa/";
+window.openmrsBase = '/openmrs';
+window.spaBase = '/spa';
+window.getOpenmrsSpaBase = () => '/openmrs/spa/';
 window.HTMLElement.prototype.scrollIntoView = jest.fn();

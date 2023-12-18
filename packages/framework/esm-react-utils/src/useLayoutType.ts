@@ -1,21 +1,21 @@
 /** @module @category UI */
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-export type LayoutType = "phone" | "tablet" | "small-desktop" | "large-desktop";
+export type LayoutType = 'phone' | 'tablet' | 'small-desktop' | 'large-desktop';
 
 function getLayout() {
-  let layout: LayoutType = "tablet";
+  let layout: LayoutType = 'tablet';
 
   document.body.classList.forEach((cls) => {
     switch (cls) {
-      case "omrs-breakpoint-lt-tablet":
-        layout = "phone";
+      case 'omrs-breakpoint-lt-tablet':
+        layout = 'phone';
         break;
-      case "omrs-breakpoint-gt-small-desktop":
-        layout = "large-desktop";
+      case 'omrs-breakpoint-gt-small-desktop':
+        layout = 'large-desktop';
         break;
-      case "omrs-breakpoint-gt-tablet":
-        layout = "small-desktop";
+      case 'omrs-breakpoint-gt-tablet':
+        layout = 'small-desktop';
         break;
     }
   });
@@ -30,12 +30,11 @@ export function useLayoutType() {
     const handler = () => {
       setType(getLayout());
     };
-    window.addEventListener("resize", handler);
-    return () => window.removeEventListener("resize", handler);
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
   }, []);
 
   return type;
 }
 
-export const isDesktop = (layout: LayoutType) =>
-  layout === "small-desktop" || layout === "large-desktop";
+export const isDesktop = (layout: LayoutType) => layout === 'small-desktop' || layout === 'large-desktop';

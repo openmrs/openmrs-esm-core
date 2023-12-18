@@ -1,8 +1,8 @@
 /** @module @category Offline */
-import Dexie from "dexie";
-import { getLoggedInUser } from "@openmrs/esm-api";
-import { createGlobalStore } from "@openmrs/esm-state";
-import { OfflineDb } from "./offline-db";
+import Dexie from 'dexie';
+import { getLoggedInUser } from '@openmrs/esm-api';
+import { createGlobalStore } from '@openmrs/esm-state';
+import { OfflineDb } from './offline-db';
 
 /**
  * Defines an item queued up in the offline synchronization queue.
@@ -44,10 +44,7 @@ export interface QueueItemDescriptor {
  * The function receives additional `options` which provide additional data that can be used
  * for synchronizing.
  */
-export type ProcessSyncItem<T> = (
-  item: T,
-  options: SyncProcessOptions<T>
-) => Promise<any>;
+export type ProcessSyncItem<T> = (item: T, options: SyncProcessOptions<T>) => Promise<any>;
 
 /**
  * Additional data which can be used for synchronizing data in a {@link ProcessSyncItem} function.
@@ -106,10 +103,7 @@ interface SyncResultBag {
 const db = new OfflineDb();
 const handlers: Record<string, SyncHandler> = {};
 
-const syncStore = createGlobalStore<OfflineSynchronizationStore>(
-  "offline-synchronization",
-  {}
-);
+const syncStore = createGlobalStore<OfflineSynchronizationStore>('offline-synchronization', {});
 
 export function getOfflineSynchronizationStore() {
   return syncStore;
@@ -159,12 +153,7 @@ export async function runSynchronization() {
           results[name] = {};
           await Promise.all(deps);
 
-          promises[name] = processHandler(
-            handler,
-            results,
-            abortController,
-            notifySyncProgress
-          );
+          promises[name] = processHandler(handler, results, abortController, notifySyncProgress);
           handlerQueue.splice(i, 1);
         }
       }
@@ -180,7 +169,7 @@ async function processHandler(
   { type, dependsOn, process }: SyncHandler,
   results: SyncResultBag,
   abortController: AbortController,
-  notifySyncProgress: () => void
+  notifySyncProgress: () => void,
 ) {
   const items: Array<[number, unknown, QueueItemDescriptor]> = [];
   const contents: Array<unknown> = [];
@@ -200,9 +189,7 @@ async function processHandler(
         index: i,
         items: contents,
         userId,
-        dependencies: dependencies.map(({ id, type }) =>
-          dependsOn.includes(type) ? results[type][id] : undefined
-        ),
+        dependencies: dependencies.map(({ id, type }) => (dependsOn.includes(type) ? results[type][id] : undefined)),
       });
 
       if (id !== undefined) {
@@ -225,7 +212,7 @@ async function processHandler(
 
 async function getUserId() {
   const user = await getLoggedInUser();
-  return user?.uuid || "*";
+  return user?.uuid || '*';
 }
 
 /**
@@ -239,7 +226,7 @@ export async function queueSynchronizationItemFor<T>(
   userId: string,
   type: string,
   content: T,
-  descriptor?: QueueItemDescriptor
+  descriptor?: QueueItemDescriptor,
 ) {
   const targetId = descriptor && descriptor.id;
 
@@ -271,11 +258,7 @@ export async function queueSynchronizationItemFor<T>(
  * @param content The actual data to be synchronized.
  * @param descriptor An optional descriptor providing additional metadata about the sync item.
  */
-export async function queueSynchronizationItem<T>(
-  type: string,
-  content: T,
-  descriptor?: QueueItemDescriptor
-) {
+export async function queueSynchronizationItem<T>(type: string, content: T, descriptor?: QueueItemDescriptor) {
   const userId = await getUserId();
   return await queueSynchronizationItemFor(userId, type, content, descriptor);
 }
@@ -285,10 +268,7 @@ export async function queueSynchronizationItem<T>(
  * @param userId The ID of the user whose synchronization items should be returned.
  * @param type The identifying type of the synchronization items to be returned..
  */
-export async function getSynchronizationItemsFor<T>(
-  userId: string,
-  type?: string
-) {
+export async function getSynchronizationItemsFor<T>(userId: string, type?: string) {
   const fullItems = await getFullSynchronizationItemsFor<T>(userId, type);
   return fullItems.map((item) => item.content);
 }
@@ -298,10 +278,7 @@ export async function getSynchronizationItemsFor<T>(
  * @param userId The ID of the user whose synchronization items should be returned.
  * @param type The identifying type of the synchronization items to be returned..
  */
-export async function getFullSynchronizationItemsFor<T>(
-  userId: string,
-  type?: string
-): Promise<Array<SyncItem<T>>> {
+export async function getFullSynchronizationItemsFor<T>(userId: string, type?: string): Promise<Array<SyncItem<T>>> {
   const filter = type ? { type, userId } : { userId };
   return await db.syncQueue
     .where(filter)
@@ -331,12 +308,8 @@ export async function getFullSynchronizationItems<T>(type?: string) {
  * Returns a queued sync item with the given ID or `undefined` if no such item exists.
  * @param id The ID of the requested sync item.
  */
-export async function getSynchronizationItem<T = any>(
-  id: number
-): Promise<SyncItem<T> | undefined> {
-  return await db.syncQueue
-    .get(id)
-    .catch(Dexie.errnames.DatabaseClosed, () => undefined);
+export async function getSynchronizationItem<T = any>(id: number): Promise<SyncItem<T> | undefined> {
+  return await db.syncQueue.get(id).catch(Dexie.errnames.DatabaseClosed, () => undefined);
 }
 
 /**
@@ -363,7 +336,7 @@ export async function beginEditSynchronizationItem(id: number) {
   const editCallback = handlers[item.type]?.options.onBeginEditSyncItem;
   if (!editCallback) {
     throw new Error(
-      `A sync item with the ID ${id} exists, but the associated handler (if one exists) doesn't support editing the item. You can avoid this error by either verifying that sync items of this type can be edited via the "canEditSynchronizationItemsOfType(type: string)" function or alternatively ensure that the synchronizaton handler for sync items of type "${item.type}" supports editing items.`
+      `A sync item with the ID ${id} exists, but the associated handler (if one exists) doesn't support editing the item. You can avoid this error by either verifying that sync items of this type can be edited via the "canEditSynchronizationItemsOfType(type: string)" function or alternatively ensure that the synchronizaton handler for sync items of type "${item.type}" supports editing items.`,
     );
   }
 
@@ -393,7 +366,7 @@ export function setupOfflineSync<T>(
   type: string,
   dependsOn: Array<string>,
   process: ProcessSyncItem<T>,
-  options: SetupOfflineSyncOptions<T> = {}
+  options: SetupOfflineSyncOptions<T> = {},
 ) {
   handlers[type] = {
     type,

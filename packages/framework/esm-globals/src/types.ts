@@ -1,13 +1,10 @@
-import type { Application } from "single-spa";
-import type { i18n } from "i18next";
+import type { LifeCycles } from 'single-spa';
+import type { i18n } from 'i18next';
 
 declare global {
   const __webpack_share_scopes__: Record<
     string,
-    Record<
-      string,
-      { loaded?: 1; get: () => Promise<unknown>; from: string; eager: boolean }
-    >
+    Record<string, { loaded?: 1; get: () => Promise<unknown>; from: string; eager: boolean }>
   >;
 
   var __webpack_init_sharing__: (scope: string) => Promise<void>;
@@ -47,9 +44,17 @@ declare global {
      * Gets a set of options from the import-map-overrides package.
      */
     importMapOverrides: {
-      getCurrentPageMap: () => Promise<ImportMap>;
+      addOverride(moduleName: string, url: string): void;
+      enableOverride(moduleName: string): void;
+      getCurrentPageMap(): Promise<ImportMap>;
+      getDefaultMap(): Promise<ImportMap>;
+      getNextPageMap(): Promise<ImportMap>;
       addOverride(moduleName: string, url: string): void;
       getOverrideMap(includeDisabled?: boolean): ImportMap;
+      getDisabledOverrides(): Array<string>;
+      isDisabled(moduleName: string): boolean;
+      removeOverride(moduleName: string): void;
+      resetOverrides(): void;
     };
     /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
@@ -62,7 +67,7 @@ declare global {
   }
 }
 
-export type SpaEnvironment = "production" | "development" | "test";
+export type SpaEnvironment = 'production' | 'development' | 'test';
 
 export interface ImportMap {
   imports: Record<string, string>;
@@ -158,8 +163,7 @@ export type PageDefinition = {
 /**
  * A definition of a page after the app has been registered.
  */
-export type RegisteredPageDefinition = Omit<PageDefinition, "order"> &
-  AppComponent & { order: number };
+export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
 
 /**
  * A definition of an extension as extracted from an app's routes.json
@@ -222,7 +226,7 @@ export type ExtensionDefinition = {
       /**
        * @internal
        */
-      load: Application;
+      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
     }
 );
 

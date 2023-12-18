@@ -21,6 +21,6 @@ export {
   beginEditSynchronizationItem,
   deleteSynchronizationItem,
   setupOfflineSync,
-} from "./sync";
-export * from "./dynamic-offline-data";
-export { getOfflineDb } from "./offline-db";
+} from './sync';
+export * from './dynamic-offline-data';
+export { getOfflineDb } from './offline-db';

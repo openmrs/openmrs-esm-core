@@ -1,16 +1,16 @@
-import { renderHook, cleanup } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
-import useAbortController from "./useAbortController";
+import { renderHook, cleanup } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import useAbortController from './useAbortController';
 
-describe("useAbortController", () => {
+describe('useAbortController', () => {
   afterEach(cleanup);
 
-  it("returns an AbortController", () => {
+  it('returns an AbortController', () => {
     const { result } = renderHook(() => useAbortController());
     expect(result.current).not.toBeNull();
   });
 
-  it("returns a consistent AbortController across re-renders", () => {
+  it('returns a consistent AbortController across re-renders', () => {
     const { result, rerender } = renderHook(() => useAbortController());
     const firstAc = result.current;
 
@@ -19,7 +19,7 @@ describe("useAbortController", () => {
     expect(result.current).toBe(firstAc);
   });
 
-  it("returns a new AbortController after the previous controller has been aborted", () => {
+  it('returns a new AbortController after the previous controller has been aborted', () => {
     const { result, rerender } = renderHook(() => useAbortController());
     const firstAc = result.current;
 
@@ -30,7 +30,7 @@ describe("useAbortController", () => {
     expect(result.current).not.toBe(firstAc);
   });
 
-  it("aborts the AbortController when the component is unmounted", () => {
+  it('aborts the AbortController when the component is unmounted', () => {
     const { result, unmount } = renderHook(() => useAbortController());
 
     expect(result.current.signal.aborted).toBe(false);

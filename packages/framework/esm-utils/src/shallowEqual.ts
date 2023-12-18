@@ -15,20 +15,12 @@ export function shallowEqual(objA: unknown, objB: unknown) {
     return true;
   }
 
-  if (
-    typeof objA !== "object" ||
-    objA === null ||
-    typeof objB !== "object" ||
-    objB === null
-  ) {
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
     return false;
   }
 
   const objAKeys = Object.getOwnPropertyNames(objA);
   const objBKeys = Object.getOwnPropertyNames(objB);
 
-  return (
-    objAKeys.length === objBKeys.length &&
-    objAKeys.every((key) => objA[key] === objB[key])
-  );
+  return objAKeys.length === objBKeys.length && objAKeys.every((key) => objA[key] === objB[key]);
 }
