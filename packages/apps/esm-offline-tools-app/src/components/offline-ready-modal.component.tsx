@@ -1,36 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  Button,
-  InlineLoading,
-} from "@carbon/react";
-import { useTranslation } from "react-i18next";
-import { getCurrentOfflineMode, showToast } from "@openmrs/esm-framework";
+import React, { useCallback, useEffect, useState } from 'react';
+import { ModalBody, ModalFooter, ModalHeader, Button, InlineLoading } from '@carbon/react';
+import { useTranslation } from 'react-i18next';
+import { getCurrentOfflineMode, showToast } from '@openmrs/esm-framework';
 
 export interface OfflineActionsProgressModalProps {
   items?: Array<any>;
   closeModal: (active: boolean) => void;
 }
 
-const OfflineReadyModal: React.FC<OfflineActionsProgressModalProps> = ({
-  closeModal,
-  items,
-}) => {
+const OfflineReadyModal: React.FC<OfflineActionsProgressModalProps> = ({ closeModal, items }) => {
   const { t } = useTranslation();
   const [isRunning, setIsRunning] = useState(true);
-  const [abortController, setAbortController] = useState(
-    () => new AbortController()
-  );
+  const [abortController, setAbortController] = useState(() => new AbortController());
 
   async function dispatchOfflineEvent() {
     //TODO CHANGE MODE
     let mode = getCurrentOfflineMode().active;
     window.dispatchEvent(
-      new CustomEvent(`openmrs:offline-${mode ? "enabled" : "disabled"}`, {
+      new CustomEvent(`openmrs:offline-${mode ? 'enabled' : 'disabled'}`, {
         detail: getCurrentOfflineMode(),
-      })
+      }),
     );
 
     setIsRunning(false);
@@ -46,20 +35,17 @@ const OfflineReadyModal: React.FC<OfflineActionsProgressModalProps> = ({
 
       showToast({
         critical: true,
-        kind: "warning",
-        description: t(
-          "unavailableOfflineFeatures",
-          "Some features may not be available offline."
-        ),
-        title: t("offlinePreparationCanceled", "Offline preparation canceled"),
+        kind: 'warning',
+        description: t('unavailableOfflineFeatures', 'Some features may not be available offline.'),
+        title: t('offlinePreparationCanceled', 'Offline preparation canceled'),
       });
       closeModal(false);
     } else {
       showToast({
         critical: true,
-        kind: "success",
-        description: t("offlineModeIsReady", "Offline mode is ready"),
-        title: t("offline", "Offline"),
+        kind: 'success',
+        description: t('offlineModeIsReady', 'Offline mode is ready'),
+        title: t('offline', 'Offline'),
       });
       closeModal(true);
     }
@@ -67,24 +53,21 @@ const OfflineReadyModal: React.FC<OfflineActionsProgressModalProps> = ({
 
   return (
     <>
-      <ModalHeader
-        title={t("preparingOfflineMode", "Preparing for offline mode")}
-        closeModal={handleClose}
-      />
+      <ModalHeader title={t('preparingOfflineMode', 'Preparing for offline mode')} closeModal={handleClose} />
       <ModalBody>
         {isRunning && (
           <InlineLoading
             // className={styles.loader}
-            description={t("loading", "Loading") + "..."}
+            description={t('loading', 'Loading') + '...'}
           />
         )}
       </ModalBody>
       <ModalFooter>
         <Button kind="danger" onClick={handleClose} disabled={!isRunning}>
-          {t("cancel", "Cancel")}
+          {t('cancel', 'Cancel')}
         </Button>
         <Button kind="primary" onClick={handleClose} disabled={isRunning}>
-          {t("confirm", "Confirm")}
+          {t('confirm', 'Confirm')}
         </Button>
       </ModalFooter>
     </>

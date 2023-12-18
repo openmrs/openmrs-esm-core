@@ -12,6 +12,7 @@
   "homeOverviewCardPatientsNewlyRegistered": "רשומים חדשים",
   "homeOverviewCardView": "צפה",
   "lastRun": "Last Run",
+  "loading": "Loading",
   "never": "Never",
   "offline": "Offline",
   "offlineActions": "פעולות לא מקוונות",
@@ -64,7 +65,6 @@
   "offlineReady": "מצב לא מקוון מוכן",
   "offlineToolsAppMenuLink": "כלי לא מקוונים",
   "preparingOfflineMode": "Preparing for offline mode",
-  "progressBarLabel": "{progress}% Complete",
   "refresh": "Refresh",
   "unavailableOfflineFeatures": "Some features may not be available offline."
 }

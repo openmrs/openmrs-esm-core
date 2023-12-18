@@ -12,6 +12,7 @@
   "homeOverviewCardPatientsNewlyRegistered": "Recién registrados",
   "homeOverviewCardView": "Ver",
   "lastRun": "Última carrera",
+  "loading": "Loading",
   "never": "Nunca",
   "offline": "Offline",
   "offlineActions": "Acciones offline",
@@ -63,7 +64,6 @@
   "offlineReady": "Listo offline",
   "offlineToolsAppMenuLink": "Herramientas offline",
   "preparingOfflineMode": "Preparando modo sin conexión",
-  "progressBarLabel": "{{progress}}% Completo",
   "refresh": "Actualizar",
   "unavailableOfflineFeatures": "Some features may not be available offline."
 }

@@ -1,14 +1,14 @@
-import React, { useState, useCallback } from "react";
-import { useTranslation } from "react-i18next";
-import { Toggle, Button, DefinitionTooltip } from "@carbon/react";
-import { Network_3 } from "@carbon/react/icons";
+import React, { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Toggle, Button, DefinitionTooltip } from '@carbon/react';
+import { Network_3 } from '@carbon/react/icons';
 import {
   getCurrentOfflineMode,
   setCurrentOfflineMode,
   showModal,
   useConnectivity,
-} from "@openmrs/esm-framework/src/internal";
-import styles from "./offline-actions-mode-button.scss";
+} from '@openmrs/esm-framework/src/internal';
+import styles from './offline-actions-mode-button.scss';
 
 function doNotCloseMenu(ev: React.SyntheticEvent) {
   ev.stopPropagation();
@@ -17,16 +17,14 @@ function doNotCloseMenu(ev: React.SyntheticEvent) {
 const OfflineActionsModeButton: React.FC = () => {
   const { t } = useTranslation();
   const isOnline = useConnectivity();
-  const [lastRun, setLastRun] = useState<string>(
-    () => getCurrentOfflineMode().lastRun
-  );
+  const [lastRun, setLastRun] = useState<string>(() => getCurrentOfflineMode().lastRun);
   const [active, setActive] = useState(() => getCurrentOfflineMode().active);
 
   const toggle = useCallback(() => {
-    const dispose = showModal("offline-tools-offline-ready-modal", {
+    const dispose = showModal('offline-tools-offline-ready-modal', {
       closeModal: (result) => {
         setActive(result);
-        setCurrentOfflineMode(result ? "on" : "off");
+        setCurrentOfflineMode(result ? 'on' : 'off');
         dispose();
       },
     });
@@ -42,30 +40,21 @@ const OfflineActionsModeButton: React.FC = () => {
         <div>
           <Network_3 size={20} />
           <span onClick={doNotCloseMenu} role="none">
-            {t("offlineReady", "Offline Ready")}
+            {t('offlineReady', 'Offline Ready')}
           </span>
         </div>
         <DefinitionTooltip
           openOnHover
           align="top"
-          definition={`${t("lastRun", "Last Run")}: ${
-            active ? lastRun : t("never", "Never")
-          }`}
+          definition={`${t('lastRun', 'Last Run')}: ${active ? lastRun : t('never', 'Never')}`}
         >
           {active && (
             <Button kind="ghost" onClick={handleRefresh}>
-              {t("refresh", "Refresh")}
+              {t('refresh', 'Refresh')}
             </Button>
           )}
         </DefinitionTooltip>
-        {!active && (
-          <Toggle
-            className={styles.toggle}
-            id="offlineModeSwitch"
-            toggled={active}
-            onToggle={toggle}
-          />
-        )}
+        {!active && <Toggle className={styles.toggle} id="offlineModeSwitch" toggled={active} onToggle={toggle} />}
       </div>
     )
   );

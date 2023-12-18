@@ -8,7 +8,7 @@ import offlineToolsComponent from './root.component';
 import offlineToolsLinkComponent from './offline-tools-app-menu-link.component';
 import offlineToolsNavItemsComponent from './nav/offline-tools-nav-menu.component';
 import offlineToolsConfirmationModalComponent from './components/confirmation-modal.component';
-import offlineToolsOfflineReadyModalComponent from "./components/offline-ready-modal.component";
+import offlineToolsOfflineReadyModalComponent from './components/offline-ready-modal.component';
 import offlineToolsPatientsCardComponent from './offline-patients/patients-overview-card.component';
 import offlineToolsActionsCardComponent from './offline-actions/offline-actions-overview-card.component';
 import offlineToolsActionsComponent from './offline-actions/offline-actions.component';
@@ -37,15 +37,9 @@ export const offlineToolsNavItems = getSyncLifecycle(offlineToolsNavItemsCompone
 
 export const offlineToolsConfirmationModal = getSyncLifecycle(offlineToolsConfirmationModalComponent, options);
 
-export const offlineToolsOfflineReadyModal = getSyncLifecycle(
-  offlineToolsOfflineReadyModalComponent,
-  options
-);
+export const offlineToolsOfflineReadyModal = getSyncLifecycle(offlineToolsOfflineReadyModalComponent, options);
 
-export const offlineToolsPatientsCard = getSyncLifecycle(
-  offlineToolsPatientsCardComponent,
-  options
-);
+export const offlineToolsPatientsCard = getSyncLifecycle(offlineToolsPatientsCardComponent, options);
 
 export const offlineToolsActionsCard = getSyncLifecycle(offlineToolsActionsCardComponent, options);
 

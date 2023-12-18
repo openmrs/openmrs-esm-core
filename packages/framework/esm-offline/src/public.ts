@@ -1,13 +1,8 @@
-export {
-  type OfflineMode,
-  type OfflineModeResult,
-  getCurrentOfflineMode,
-  registerOfflineHandler,
-} from "./mode";
-export * from "./offline-patient-data";
-export * from "./service-worker-messaging";
-export * from "./service-worker-http-headers";
-export * from "./uuid";
+export { type OfflineMode, type OfflineModeResult, getCurrentOfflineMode, registerOfflineHandler } from './mode';
+export * from './offline-patient-data';
+export * from './service-worker-messaging';
+export * from './service-worker-http-headers';
+export * from './uuid';
 export {
   type QueueItemDescriptor,
   type SyncItem,

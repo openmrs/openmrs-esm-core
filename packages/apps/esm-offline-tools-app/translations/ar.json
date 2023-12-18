@@ -12,6 +12,7 @@
   "homeOverviewCardPatientsNewlyRegistered": "مُسجل حديثًا",
   "homeOverviewCardView": "عرض",
   "lastRun": "Last Run",
+  "loading": "Loading",
   "never": "Never",
   "offline": "Offline",
   "offlineActions": "الأنشطة بدون اتصال",
@@ -66,7 +67,6 @@
   "offlineReady": "جاهز للعمل بدون اتصال",
   "offlineToolsAppMenuLink": "أدوات العمل بدون اتصال",
   "preparingOfflineMode": "Preparing for offline mode",
-  "progressBarLabel": "{progress}% Complete",
   "refresh": "Refresh",
   "unavailableOfflineFeatures": "Some features may not be available offline."
 }
