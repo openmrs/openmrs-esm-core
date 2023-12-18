@@ -11,7 +11,7 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 15
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -47,7 +47,6 @@ jobs:
         run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
 
       - name: Run E2E tests
-        timeout-minutes: 15
         run: yarn playwright test
 
       - name: Stop dev server
