@@ -1,5 +1,5 @@
 import React from 'react';
-import '@testing-library/jest-dom';
+
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { implementerToolsConfigStore, temporaryConfigStore, Type } from '@openmrs/esm-framework/src/internal';
@@ -22,8 +22,6 @@ jest.mock('./interactive-editor/value-editors/concept-search.resource', () => ({
     isLoadingConcept: false,
   })),
 }));
-
-window.URL.createObjectURL = jest.fn();
 
 const mockImplToolsConfig = {
   '@openmrs/mario': {
@@ -104,11 +102,12 @@ describe('Configuration', () => {
 
   it('renders the configuration component inside the implementer tools panel', () => {
     renderConfiguration();
+
+    screen.findByRole('textbox', { name: /search configuration/i });
     screen.getByRole('switch', { name: /json editor/i });
     screen.getByRole('switch', { name: /ui editor/i });
     screen.getByRole('button', { name: /clear local config/i });
     screen.getByRole('button', { name: /download config/i });
-    screen.getByRole('textbox', { name: /search configuration/i });
   });
 
   it('displays correct boolean value and editor', async () => {
@@ -121,6 +120,8 @@ describe('Configuration', () => {
     });
 
     renderConfiguration();
+
+    screen.findByText('hasHat');
 
     const rowElement = screen.getByText('hasHat').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
@@ -164,6 +165,8 @@ describe('Configuration', () => {
 
     renderConfiguration();
 
+    screen.findByText('hatUuid');
+
     const rowElement = (await screen.findByText('hatUuid')).closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
@@ -205,7 +208,9 @@ describe('Configuration', () => {
 
     renderConfiguration();
 
-    const rowElement = (await screen.findByText('numberFingers')).closest('.cds--structured-list-row');
+    screen.findByText('numberFingers');
+
+    const rowElement = screen.getByText('numberFingers').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
     if (rowElement) {
@@ -242,7 +247,9 @@ describe('Configuration', () => {
 
     renderConfiguration();
 
-    const rowElement = (await screen.findByText('nemesisName')).closest('.cds--structured-list-row');
+    screen.findByText('nemesisName');
+
+    const rowElement = screen.getByText('nemesisName').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
     if (rowElement) {
@@ -274,7 +281,9 @@ describe('Configuration', () => {
 
     renderConfiguration();
 
-    const rowElement = (await screen.findByText('mustacheUuid')).closest('.cds--structured-list-row');
+    screen.findByText('mustacheUuid');
+
+    const rowElement = screen.getByText('mustacheUuid').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
     if (rowElement) {
@@ -306,9 +315,14 @@ describe('Configuration', () => {
         '@openmrs/luigi': mockImplToolsConfig['@openmrs/luigi'],
       },
     });
+
     renderConfiguration();
-    const rowElement = (await screen.findByText('favoriteNumbers')).closest('.cds--structured-list-row');
+
+    screen.findByText('favoriteNumbers');
+
+    const rowElement = screen.getByText('favoriteNumbers').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
+
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
 

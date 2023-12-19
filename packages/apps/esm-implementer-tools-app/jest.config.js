@@ -5,6 +5,7 @@ module.exports = {
   globals: {
     System: {},
   },
+  setupFilesAfterEnv: ['<rootDir>/setup-tests.ts'],
   moduleNameMapper: {
     'lodash-es': 'lodash',
     '\\.(s?css)$': 'identity-obj-proxy',

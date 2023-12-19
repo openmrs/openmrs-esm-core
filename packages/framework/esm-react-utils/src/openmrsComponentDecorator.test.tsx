@@ -13,15 +13,22 @@ describe('openmrs-component-decorator', () => {
   it('renders a component', () => {
     const DecoratedComp = openmrsComponentDecorator(opts)(CompThatWorks);
     render(<DecoratedComp />);
-    waitFor(() => {
-      expect(screen.getByText('The button')).toBeTruthy();
-    });
+
+    screen.findByText('The button');
   });
 
   it('catches any errors in the component tree and renders a ui explaining something bad happened', () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
     const DecoratedComp = openmrsComponentDecorator(opts)(CompThatThrows);
     render(<DecoratedComp />);
     // TO-DO assert the UX for broken react app is showing
+    expect(consoleError).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        message: expect.stringContaining('ahahaa'),
+      }),
+    );
+    consoleError.mockRestore();
   });
 
   it('provides ComponentContext', () => {
