@@ -37,13 +37,16 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   test('Config should add, order, and remove extensions within slots', async () => {
+    const promise = Promise.resolve();
     registerSimpleExtension('Fred', 'esm-flintstone');
     registerSimpleExtension('Wilma', 'esm-flintstone');
     registerSimpleExtension('Barney', 'esm-rubble');
     registerSimpleExtension('Betty', 'esm-rubble');
+
     attach('A slot', 'Fred');
     attach('A slot', 'Wilma');
     defineConfigSchema('esm-flintstone', {});
+
     provide({
       'esm-flintstone': {
         extensionSlots: {
@@ -56,18 +59,17 @@ describe('Interaction between configuration and extension systems', () => {
       },
     });
 
-    act(() => {
-      const App = openmrsComponentDecorator({
-        moduleName: 'esm-flintstone',
-        featureName: 'The Flintstones',
-        disableTranslations: true,
-      })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-flintstone',
+      featureName: 'The Flintstones',
+      disableTranslations: true,
+    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
-      render(<App />);
-    });
+    await act(async () => await promise);
 
-    await waitFor(() => expect(screen.getByText('Betty')).toBeInTheDocument());
+    render(<App />);
 
+    screen.findByText('Betty');
     const slot = screen.getByTestId('slot');
     const extensions = slot.childNodes;
 
@@ -80,6 +82,7 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   test("Extensions should recieve config from module and from 'configure' key", async () => {
+    const promise = Promise.resolve();
     registerSimpleExtension('Pebbles', 'esm-flintstone', true);
     defineConfigSchema('esm-flintstone', {
       town: { _type: Type.String, _default: 'Bedrock' },
@@ -101,23 +104,22 @@ describe('Interaction between configuration and extension systems', () => {
       },
     });
 
-    act(() => {
-      const App = openmrsComponentDecorator({
-        moduleName: 'esm-flintstone',
-        featureName: 'The Flintstones',
-        disableTranslations: true,
-      })(() => (
-        <>
-          <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
-          <ExtensionSlot data-testid="future-slot" name="Future slot" />
-        </>
-      ));
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-flintstone',
+      featureName: 'The Flintstones',
+      disableTranslations: true,
+    })(() => (
+      <>
+        <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
+        <ExtensionSlot data-testid="future-slot" name="Future slot" />
+      </>
+    ));
 
-      render(<App />);
-    });
+    await act(async () => await promise);
 
-    await screen.findAllByText(/.*Pebbles.*/);
+    render(<App />);
 
+    screen.findAllByText(/.*Pebbles.*/);
     const flintstonePebbles = screen.getByTestId('flintstone-slot');
     const futurePebbles = screen.getByTestId('future-slot');
 
@@ -128,6 +130,8 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   test('Should be possible to attach the same extension twice with different configurations', async () => {
+    const promise = Promise.resolve();
+
     registerSimpleExtension('pet', 'esm-characters', true);
     defineConfigSchema('esm-characters', {
       name: { _type: Type.String, _default: '(no-name)' },
@@ -151,22 +155,21 @@ describe('Interaction between configuration and extension systems', () => {
       },
     });
 
-    act(() => {
-      const App = openmrsComponentDecorator({
-        moduleName: 'esm-flintstone',
-        featureName: 'The Flintstones',
-        disableTranslations: true,
-      })(() => (
-        <>
-          <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
-        </>
-      ));
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-flintstone',
+      featureName: 'The Flintstones',
+      disableTranslations: true,
+    })(() => (
+      <>
+        <ExtensionSlot data-testid="flintstone-slot" name="Flintstone slot" />
+      </>
+    ));
 
-      render(<App />);
-    });
+    await act(async () => await promise);
 
-    await screen.findAllByText(/.*Dino.*/);
+    render(<App />);
 
+    screen.findAllByText(/.*Dino.*/);
     const slot = screen.getByTestId('flintstone-slot');
 
     await waitFor(() => {
@@ -176,19 +179,20 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   test('Slot config should update with temporary config', async () => {
+    const promise = Promise.resolve();
     registerSimpleExtension('Pearl', 'esm-slaghoople');
     attach('A slot', 'Pearl');
     defineConfigSchema('esm-slaghoople', {});
 
-    act(() => {
-      const App = openmrsComponentDecorator({
-        moduleName: 'esm-slaghoople',
-        featureName: 'The Slaghooples',
-        disableTranslations: true,
-      })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-slaghoople',
+      featureName: 'The Slaghooples',
+      disableTranslations: true,
+    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
-      render(<App />);
-    });
+    await act(async () => await promise);
+
+    render(<App />);
 
     await waitFor(() => expect(screen.getByText('Pearl')).toBeInTheDocument());
 
@@ -210,22 +214,21 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   test('Extension config should update with temporary config', async () => {
+    const promise = Promise.resolve();
     registerSimpleExtension('Mr. Slate', 'esm-flintstone', true);
     attach('A slot', 'Mr. Slate');
     defineConfigSchema('esm-flintstone', { tie: { _default: 'green' } });
 
-    act(() => {
-      const App = openmrsComponentDecorator({
-        moduleName: 'esm-quarry',
-        featureName: 'The Flintstones',
-        disableTranslations: true,
-      })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-quarry',
+      featureName: 'The Flintstones',
+      disableTranslations: true,
+    })(() => <ExtensionSlot data-testid="slot" name="A slot" />);
 
-      render(<App />);
-    });
+    await act(async () => await promise);
 
+    render(<App />);
     await waitFor(() => expect(screen.getByText(/Mr. Slate/)).toBeInTheDocument());
-
     expect(screen.getByTestId('slot')).toHaveTextContent(/green/);
 
     act(() => {
@@ -244,13 +247,12 @@ describe('Interaction between configuration and extension systems', () => {
       });
     });
 
-    await waitFor(() => {
-      expect(screen.getByTestId('slot')).toHaveTextContent(/black/);
-      expect(screen.queryByText('green')).not.toBeInTheDocument();
-    });
+    expect(screen.getByTestId('slot')).toHaveTextContent(/black/);
+    expect(screen.queryByText('green')).not.toBeInTheDocument();
   });
 
   test('Extension config should be available in extension store', async () => {
+    const promise = Promise.resolve();
     registerSimpleExtension('Bamm-Bamm', 'esm-flintstone', false);
     attach('A slot', 'Bamm-Bamm');
     defineConfigSchema('esm-flintstone', { clothes: { _default: 'leopard' } });
@@ -266,18 +268,17 @@ describe('Interaction between configuration and extension systems', () => {
       );
     }
 
-    act(() => {
-      const App = openmrsComponentDecorator({
-        moduleName: 'esm-flintstone',
-        featureName: 'The Flintstones',
-        disableTranslations: true,
-      })(RootComponent);
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-flintstone',
+      featureName: 'The Flintstones',
+      disableTranslations: true,
+    })(RootComponent);
 
-      render(<App />);
-    });
+    await act(async () => await promise);
 
-    await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
+    render(<App />);
 
+    screen.findByTestId(/slot/);
     expect(screen.getByText(/clothes/)).toHaveTextContent(/leopard/);
 
     act(() => {
@@ -300,6 +301,7 @@ describe('Interaction between configuration and extension systems', () => {
   });
 
   test('should not show extension when user lacks configured privilege', async () => {
+    const promise = Promise.resolve();
     mockSessionStore.setState({
       loaded: true,
       session: {
@@ -346,22 +348,23 @@ describe('Interaction between configuration and extension systems', () => {
       );
     }
 
-    act(() => {
-      const App = openmrsComponentDecorator({
-        moduleName: 'esm-bedrock',
-        featureName: 'Bedrock',
-        disableTranslations: true,
-      })(RootComponent);
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-bedrock',
+      featureName: 'Bedrock',
+      disableTranslations: true,
+    })(RootComponent);
 
-      render(<App />);
-    });
+    await act(async () => await promise);
 
-    await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
+    render(<App />);
+
+    screen.findByTestId(/slot/);
     expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Wilma');
     expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
   });
 
   test('should show extension when user has configured privilege', async () => {
+    const promise = Promise.resolve();
     mockSessionStore.setState({
       loaded: true,
       session: {
@@ -402,21 +405,22 @@ describe('Interaction between configuration and extension systems', () => {
       );
     }
 
-    act(() => {
-      const App = openmrsComponentDecorator({
-        moduleName: 'esm-bedrock',
-        featureName: 'Bedrock',
-        disableTranslations: true,
-      })(RootComponent);
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-bedrock',
+      featureName: 'Bedrock',
+      disableTranslations: true,
+    })(RootComponent);
 
-      render(<App />);
-    });
+    await act(async () => await promise);
+
+    render(<App />);
 
     await waitFor(() => expect(screen.getByTestId(/slot/)).toBeInTheDocument());
     expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Schmoo');
   });
 
   test('should only show extensions users have default privilege for', async () => {
+    const promise = Promise.resolve();
     mockSessionStore.setState({
       loaded: true,
       session: {
@@ -455,25 +459,23 @@ describe('Interaction between configuration and extension systems', () => {
       );
     }
 
-    act(() => {
-      const App = openmrsComponentDecorator({
-        moduleName: 'esm-bedrock',
-        featureName: 'Bedrock',
-        disableTranslations: true,
-      })(RootComponent);
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-bedrock',
+      featureName: 'Bedrock',
+      disableTranslations: true,
+    })(RootComponent);
 
-      render(<App />);
-    });
+    await act(async () => await promise);
 
-    await waitFor(() => {
-      expect(screen.getByTestId(/slot/)).toBeInTheDocument();
-      expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Wilma');
-      expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
-    });
+    render(<App />);
+
+    screen.findByTestId(/slot/);
+    expect(screen.getByTestId('slot').firstChild).toHaveAttribute('data-extension-id', 'Wilma');
+    expect(screen.queryAllByText(/\bSchmoo\b/)).toHaveLength(0);
   });
 });
 
-function registerSimpleExtension(
+async function registerSimpleExtension(
   name: string,
   moduleName: string,
   takesConfig: boolean = false,
