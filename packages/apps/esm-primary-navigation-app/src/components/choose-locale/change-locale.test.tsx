@@ -1,5 +1,6 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { ChangeLocale } from './change-locale.component';
 import type { PostUserProperties } from './change-locale.resource';
 
@@ -15,6 +16,7 @@ describe(`<ChangeLocale />`, () => {
   let postUserPropertiesMock: PostUserProperties = jest.fn(() => Promise.resolve());
 
   it('should change user locale', async () => {
+    const userSetup = userEvent.setup();
     postUserPropertiesMock = jest.fn(() => Promise.resolve());
 
     render(
@@ -26,11 +28,7 @@ describe(`<ChangeLocale />`, () => {
       />,
     );
     expect(screen.getByLabelText(/Select locale/)).toHaveValue('fr');
-    fireEvent.change(screen.getByLabelText(/Select locale/i), {
-      target: { value: 'en' },
-    });
-    await waitFor(() => {
-      expect(postUserPropertiesMock).toHaveBeenCalledWith(user.uuid, { defaultLocale: 'en' }, expect.anything());
-    });
+    await userSetup.selectOptions(screen.getByLabelText(/Select locale/i), 'en');
+    expect(postUserPropertiesMock).toHaveBeenCalledWith(user.uuid, { defaultLocale: 'en' }, expect.anything());
   });
 });

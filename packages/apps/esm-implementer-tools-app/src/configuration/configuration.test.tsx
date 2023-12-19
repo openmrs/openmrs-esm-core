@@ -122,7 +122,6 @@ describe('Configuration', () => {
     renderConfiguration();
 
     screen.findByText('hasHat');
-
     const rowElement = screen.getByText('hasHat').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
@@ -166,7 +165,6 @@ describe('Configuration', () => {
     renderConfiguration();
 
     screen.findByText('hatUuid');
-
     const rowElement = (await screen.findByText('hatUuid')).closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
@@ -209,7 +207,6 @@ describe('Configuration', () => {
     renderConfiguration();
 
     screen.findByText('numberFingers');
-
     const rowElement = screen.getByText('numberFingers').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
@@ -248,7 +245,6 @@ describe('Configuration', () => {
     renderConfiguration();
 
     screen.findByText('nemesisName');
-
     const rowElement = screen.getByText('nemesisName').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
@@ -282,7 +278,6 @@ describe('Configuration', () => {
     renderConfiguration();
 
     screen.findByText('mustacheUuid');
-
     const rowElement = screen.getByText('mustacheUuid').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
@@ -319,7 +314,6 @@ describe('Configuration', () => {
     renderConfiguration();
 
     screen.findByText('favoriteNumbers');
-
     const rowElement = screen.getByText('favoriteNumbers').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
