@@ -59,14 +59,11 @@ export function setCurrentOfflineMode(mode: OfflineMode) {
     localStorage.setItem(offlineModeStorageKey, mode === 'on' ? 'active' : 'disabled');
     offlineMode = mode;
   }
+  lastRun = new Date().toLocaleString();
 }
 
 export function registerOfflineHandler(setupOffline: OfflineHandler) {
   window.addEventListener('openmrs:offline-enabled', setupOffline);
-  const offlineMode = getCurrentOfflineMode();
-  if (offlineMode.active) {
-    setupOffline();
-  }
 }
 
 export async function activateOfflineCapability() {

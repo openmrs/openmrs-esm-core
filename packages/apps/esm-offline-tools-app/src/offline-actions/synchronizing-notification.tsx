@@ -51,7 +51,7 @@ function SynchronizingNotification({ mySynchronizationIndex }) {
     <div className={styles.notificationLoadingContainer}>
       {isCanceled
         ? t('offlineActionsSynchronizationNotificationCanceling', 'Canceling...')
-        : t('offlineActionsSynchronizationNotificationStatus', '{current} / {total} actions', {
+        : t('offlineActionsSynchronizationNotificationStatus', '{{current}} / {{total}} actions', {
             current: synchronization.totalCount - synchronization.pendingCount,
             total: synchronization.totalCount,
           })}

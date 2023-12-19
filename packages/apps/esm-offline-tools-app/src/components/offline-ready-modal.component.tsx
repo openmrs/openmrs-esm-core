@@ -14,10 +14,8 @@ const OfflineReadyModal: React.FC<OfflineActionsProgressModalProps> = ({ closeMo
   const [abortController, setAbortController] = useState(() => new AbortController());
 
   async function dispatchOfflineEvent() {
-    //TODO CHANGE MODE
-    let mode = getCurrentOfflineMode().active;
     window.dispatchEvent(
-      new CustomEvent(`openmrs:offline-${mode ? 'enabled' : 'disabled'}`, {
+      new CustomEvent(`openmrs:offline-enabled`, {
         detail: getCurrentOfflineMode(),
       }),
     );
