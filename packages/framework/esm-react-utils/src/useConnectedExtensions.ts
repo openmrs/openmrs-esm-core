@@ -1,6 +1,7 @@
 /** @module @category Extension */
 import { useMemo } from 'react';
-import { ConnectedExtension, getConnectedExtensions } from '@openmrs/esm-extensions';
+import type { ConnectedExtension } from '@openmrs/esm-extensions';
+import { getConnectedExtensions } from '@openmrs/esm-extensions';
 import { useConnectivity } from './useConnectivity';
 import { useAssignedExtensions } from './useAssignedExtensions';
 import { useStore } from './useStore';

@@ -2,7 +2,7 @@
 import { Observable } from 'rxjs';
 import isPlainObject from 'lodash-es/isPlainObject';
 import { getConfig, navigate } from '@openmrs/esm-config';
-import { FetchResponse } from './types';
+import type { FetchResponse } from './types';
 
 export const restBaseUrl = '/ws/rest/v1/';
 

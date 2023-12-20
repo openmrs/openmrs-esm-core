@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
 
-window.openmrsBase = '/openmrs';
-window.spaBase = '/spa';
-window.getOpenmrsSpaBase = () => '/openmrs/spa/';
+global.window.openmrsBase = '/openmrs';
+global.window.spaBase = '/spa';
+global.window.getOpenmrsSpaBase = () => '/openmrs/spa/';

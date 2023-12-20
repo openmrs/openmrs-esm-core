@@ -1,28 +1,54 @@
 {
-  "extends": ["ts-react-important-stuff"],
+  "env": {
+    "node": true
+  },
+  "extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "ignorePatterns": ["**/*.test.tsx"],
   "rules": {
+    // Disabling these rules for now just to keep the diff small. I'll enable them in a future PR that fixes lint issues.
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/triple-slash-reference": "off",
+    // Use `import type` instead of `import` for type imports https://typescript-eslint.io/blog/consistent-type-imports-and-exports-why-and-how
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "fixStyle": "inline-type-imports"
+      }
+    ],
+    "prefer-const": "off",
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-unsafe-optional-chaining": "off",
+    "no-explicit-any": "off",
+    "no-extra-boolean-cast": "off",
+    "no-prototype-builtins": "off",
+    "no-useless-escape": "off",
     "no-restricted-imports": [
       "error",
       {
         "paths": [
+          // These two rules ensure that we're importing lodash and lodash-es correctly. Not doing so can bloat our bundle size significantly.
           {
             "name": "lodash",
-            "message": "Import specific methods from `lodash-es`. e.g. `import map from 'lodash-es/map'`"
+            "message": "Import specific methods from `lodash`. e.g. `import map from 'lodash/map'`"
           },
           {
             "name": "lodash-es",
-            "message": "Import specific methods from `lodash-es`. e.g. `import map from 'lodash-es/map'`"
-          }
-        ],
-        "patterns": [
+            "importNames": ["default"],
+            "message": "Import specific methods from `lodash-es`. e.g. `import { map } from 'lodash-es'`"
+          },
+          // These two rules ensure that we're importing Carbon components and icons from the correct packages (after v10). May be removed in the future.
           {
-            "group": ["carbon-components-react"],
+            "name": "carbon-components-react",
             "message": "Import from `@carbon/react` directly. e.g. `import { Toggle } from '@carbon/react'`"
           },
           {
-            "group": ["@carbon/icons-react"],
+            "name": "@carbon/icons-react",
             "message": "Import from `@carbon/react/icons`. e.g. `import { ChevronUp } from '@carbon/react/icons'`"
           }
         ]

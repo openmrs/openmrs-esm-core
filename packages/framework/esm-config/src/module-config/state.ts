@@ -1,7 +1,7 @@
 /** @module @category Config */
 import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
 import { omit } from 'ramda';
-import { Config, ConfigObject, ConfigSchema, ExtensionSlotConfigObject, ProvidedConfig } from '../types';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfigObject, ProvidedConfig } from '../types';
 
 /**
  * Internal store

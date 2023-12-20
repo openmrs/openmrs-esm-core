@@ -66,7 +66,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
 
     modalStack.forEach((instance, index) => {
       switch (instance.state) {
-        case 'NEW':
+        case 'NEW': {
           const { outer, contentContainer } = createModalFrame();
           instance.container = outer;
           renderExtension(contentContainer, '', '', instance.extensionId, undefined, instance.props).then((parcel) => {
@@ -76,6 +76,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
             outer.style.visibility = 'unset';
           });
           break;
+        }
 
         case 'MOUNTED':
           if (instance.container) {

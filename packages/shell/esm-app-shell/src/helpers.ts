@@ -1,4 +1,4 @@
-import { LifeCycles } from 'single-spa';
+import type { LifeCycles } from 'single-spa';
 
 export const emptyLifecycle: LifeCycles<never> = {
   bootstrap() {

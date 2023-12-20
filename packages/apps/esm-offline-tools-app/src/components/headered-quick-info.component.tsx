@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React from 'react';
 import { SkeletonText } from '@carbon/react';
 import styles from './headered-quick-info.styles.scss';
 

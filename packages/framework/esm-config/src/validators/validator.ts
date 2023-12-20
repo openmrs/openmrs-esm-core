@@ -1,5 +1,5 @@
 /** @module @category Config Validation */
-import { Validator, ValidatorFunction } from '../types';
+import type { Validator, ValidatorFunction } from '../types';
 
 /**
  * Constructs a custom validator.

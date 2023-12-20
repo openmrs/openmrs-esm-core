@@ -2,16 +2,9 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useSwrInfinite from 'swr/infinite';
 import useSwrImmutable from 'swr/immutable';
-import {
-  FetchResponse,
-  fhirBaseUrl,
-  openmrsFetch,
-  refetchCurrentUser,
-  Session,
-  showNotification,
-  useDebounce,
-} from '@openmrs/esm-framework';
-import { LocationEntry, LocationResponse } from './types';
+import type { FetchResponse, Session } from '@openmrs/esm-framework';
+import { fhirBaseUrl, openmrsFetch, refetchCurrentUser, showNotification, useDebounce } from '@openmrs/esm-framework';
+import type { LocationEntry, LocationResponse } from './types';
 
 export async function performLogin(username: string, password: string): Promise<{ data: Session }> {
   const abortController = new AbortController();

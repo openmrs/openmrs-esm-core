@@ -15,7 +15,7 @@ import type { LoginReferrer } from '../login/login.component';
 import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
 import { useDefaultLocation } from './location-picker.resource';
-import { ConfigSchema } from '../config-schema';
+import type { ConfigSchema } from '../config-schema';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;

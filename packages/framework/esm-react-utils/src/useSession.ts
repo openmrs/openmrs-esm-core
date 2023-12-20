@@ -1,5 +1,6 @@
 /** @module @category API */
-import { getSessionStore, Session } from '@openmrs/esm-api';
+import type { Session } from '@openmrs/esm-api';
+import { getSessionStore } from '@openmrs/esm-api';
 import { useState, useEffect, useRef } from 'react';
 
 let promise: undefined | Promise<Session>;

@@ -31,7 +31,9 @@ export function addRoutesOverride(moduleName: string, routes: OpenmrsAppRoutes |
         } else {
           console.error(`The supplied routes for ${moduleName} is not a valid OpenmrsAppRoutes object`, routes);
         }
-      } catch {}
+      } catch (e) {
+        console.error(`Could not add routes override for ${moduleName}: `, e);
+      }
     }
   } else if (routes instanceof URL) {
     return addRouteOverrideInternal(moduleName, routes.toString());
