@@ -1,4 +1,5 @@
-import { omrsOfflineCachingStrategyHttpHeaderName, OmrsOfflineHttpHeaders } from '@openmrs/esm-framework';
+import type { OmrsOfflineHttpHeaders } from '@openmrs/esm-framework';
+import { omrsOfflineCachingStrategyHttpHeaderName } from '@openmrs/esm-framework';
 
 export const routes = {
   home: `home`,

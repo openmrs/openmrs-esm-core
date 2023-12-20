@@ -2,7 +2,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Subject } from 'rxjs';
-import { ToastDescriptor, ToastNotificationMeta } from './toast.component';
+import type { ToastDescriptor, ToastNotificationMeta } from './toast.component';
 import ActiveToasts from './active-toasts.component';
 import isEmpty from 'lodash-es/isEmpty';
 

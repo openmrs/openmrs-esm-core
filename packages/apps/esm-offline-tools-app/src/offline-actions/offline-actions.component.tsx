@@ -1,8 +1,8 @@
+import type { SyncItem } from '@openmrs/esm-framework/src/internal';
 import {
   deleteSynchronizationItem,
   getOfflineSynchronizationStore,
   showModal,
-  SyncItem,
   useStore,
 } from '@openmrs/esm-framework/src/internal';
 import React from 'react';

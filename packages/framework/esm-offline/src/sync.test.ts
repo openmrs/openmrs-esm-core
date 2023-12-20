@@ -1,11 +1,11 @@
 import 'fake-indexeddb/auto';
 import { getLoggedInUser } from '@openmrs/esm-api';
+import type { QueueItemDescriptor } from './sync';
 import {
   getFullSynchronizationItems,
   getFullSynchronizationItemsFor,
   getSynchronizationItems,
   getSynchronizationItemsFor,
-  QueueItemDescriptor,
   queueSynchronizationItem,
   queueSynchronizationItemFor,
   deleteSynchronizationItem,

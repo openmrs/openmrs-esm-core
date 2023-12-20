@@ -9,7 +9,8 @@ import {
   StructuredListWrapper,
   Tile,
 } from '@carbon/react';
-import { Concept, useConceptLookup } from './concept-search.resource';
+import type { Concept } from './concept-search.resource';
+import { useConceptLookup } from './concept-search.resource';
 import styles from './uuid-search.scss';
 
 interface ConceptSearchBoxProps {

@@ -2,7 +2,8 @@ import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
-import { ImportmapDeclaration, logInfo, logWarn, removeTrailingSlash } from '../utils';
+import type { ImportmapDeclaration } from '../utils';
+import { logInfo, logWarn, removeTrailingSlash } from '../utils';
 
 /* eslint-disable no-console */
 

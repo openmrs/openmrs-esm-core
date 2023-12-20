@@ -1,6 +1,7 @@
 /** @module @category Extension */
 import { useEffect, useState } from 'react';
-import { AssignedExtension, ExtensionStore, getExtensionStore } from '@openmrs/esm-extensions';
+import type { AssignedExtension, ExtensionStore } from '@openmrs/esm-extensions';
+import { getExtensionStore } from '@openmrs/esm-extensions';
 import isEqual from 'lodash-es/isEqual';
 
 /**

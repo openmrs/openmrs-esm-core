@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Subject } from 'rxjs';
-import { Toast, ToastNotificationMeta } from './toast.component';
+import type { Subject } from 'rxjs';
+import type { ToastNotificationMeta } from './toast.component';
+import { Toast } from './toast.component';
 
 interface ActiveToastsProps {
   subject: Subject<ToastNotificationMeta>;

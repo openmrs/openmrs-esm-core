@@ -1,4 +1,4 @@
-import { RouteHandlerCallbackOptions } from 'workbox-core';
+import type { RouteHandlerCallbackOptions } from 'workbox-core';
 import { registerRoute } from 'workbox-routing';
 import { getOrCreateDefaultRouter } from 'workbox-routing/utils/getOrCreateDefaultRouter';
 import { validMethods } from 'workbox-routing/utils/constants';

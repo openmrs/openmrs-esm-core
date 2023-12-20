@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Subject } from 'rxjs';
-import { InlineNotificationMeta, Notification } from './notification.component';
+import type { Subject } from 'rxjs';
+import type { InlineNotificationMeta } from './notification.component';
+import { Notification } from './notification.component';
 
 interface ActiveNotificationProps {
   subject: Subject<InlineNotificationMeta>;

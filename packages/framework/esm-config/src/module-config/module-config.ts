@@ -1,12 +1,11 @@
 /** @module @category Config */
 import { clone, reduce, mergeDeepRight, equals, omit } from 'ramda';
-import { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject, Type } from '../types';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject } from '../types';
+import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
+import type { ConfigExtensionStore, ConfigInternalStore, ConfigStore } from './state';
 import {
-  ConfigExtensionStore,
-  ConfigInternalStore,
   configInternalStore,
-  ConfigStore,
   configExtensionStore,
   getConfigStore,
   getExtensionsConfigStore,
@@ -15,7 +14,7 @@ import {
   getExtensionSlotsConfigStore,
 } from './state';
 import type {} from '@openmrs/esm-globals';
-import { TemporaryConfigStore } from '..';
+import type { TemporaryConfigStore } from '..';
 
 /**
  * Store setup

@@ -1,4 +1,4 @@
-import npmRegistryFetch from 'npm-registry-fetch';
+import type npmRegistryFetch from 'npm-registry-fetch';
 import npmConfig from '@pnpm/npm-conf';
 
 /**

@@ -1,6 +1,6 @@
 import { copyFile, mkdir, readFile, unlink, writeFile } from 'fs/promises';
 import { resolve, dirname, basename } from 'path';
-import { prompt, Question } from 'inquirer';
+import { prompt, type Question } from 'inquirer';
 import rimraf from 'rimraf';
 import axios from 'axios';
 import npmRegistryFetch from 'npm-registry-fetch';
@@ -54,7 +54,8 @@ async function readConfig(
         baseDir: dirname(config),
         ...JSON.parse(await readFile(config, 'utf8')),
       };
-    case 'survey':
+
+    case 'survey': {
       logInfo(`Loading available frontend modules ...`);
 
       const packages = await npmRegistryFetch
@@ -103,6 +104,7 @@ async function readConfig(
             return prev;
           }, {}),
       };
+    }
   }
 
   return {

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { CalendarDate, parseDate } from '@internationalized/date';
+import type { CalendarDate } from '@internationalized/date';
+import { parseDate } from '@internationalized/date';
 import { DatePicker } from '@react-spectrum/datepicker';
 import { Provider } from '@react-spectrum/provider';
 import { theme as defaultTheme } from '@react-spectrum/theme-default';

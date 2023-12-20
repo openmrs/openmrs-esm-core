@@ -1,7 +1,8 @@
 import React from 'react';
 import EditableValue from './editable-value.component';
 import isEqual from 'lodash-es/isEqual';
-import { ExtensionSlotConfigureValueObject, useAssignedExtensions } from '@openmrs/esm-framework';
+import type { ExtensionSlotConfigureValueObject } from '@openmrs/esm-framework';
+import { useAssignedExtensions } from '@openmrs/esm-framework';
 import { ExtensionConfigureTree } from './extension-configure-tree';
 import { Subtree } from './layout/subtree.component';
 import { implementerToolsStore } from '../../store';
