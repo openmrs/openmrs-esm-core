@@ -212,3 +212,8 @@ The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title sh
 
 For documentation about our design patterns, please visit our design system documentation website.
 
+## Bumping Playwright Version
+
+Be sure to update the Playwright version in the [Bamboo Playwright Docker image](e2e/support/bamboo/playwright.Dockerfile) whenever making version changes. 
+Also, ensure you specify the exact versions of Playwright in the package.json file to maintain consistency between the Playwright version used in the Docker image for Bamboo test execution and the version used in the codebase.
+
