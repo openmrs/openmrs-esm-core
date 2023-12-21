@@ -215,4 +215,4 @@ For documentation about our design patterns, please visit our design system docu
 ## Bumping Playwright Version
 
 Be sure to update the Playwright version in the [Bamboo Playwright Docker image](e2e/support/bamboo/playwright.Dockerfile) whenever making version changes. 
-Also, ensure you specify the fixed (pinned) versions of Playwright in the package.json file to maintain consistency between the Playwright version used in the Docker image for Bamboo test execution and the version used in the codebase.
+Also, ensure you specify fixed (pinned) versions of Playwright in the package.json file to maintain consistency between the Playwright version used in the Docker image for Bamboo test execution and the version used in the codebase.
