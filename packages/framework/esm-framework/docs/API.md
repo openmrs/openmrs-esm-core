@@ -1796,13 +1796,19 @@ ___
 
 ### getConfig
 
-▸ **getConfig**(`moduleName`): `Promise`<[`Config`](interfaces/Config.md)\>
+▸ **getConfig**<`T`\>(`moduleName`): `Promise`<`T`\>
 
 A promise-based way to access the config as soon as it is fully loaded.
 If it is already loaded, resolves the config in its present state.
 
 This is a useful function if you need to get the config in the course
 of the execution of a function.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `Record`<`string`, `any`\> |
 
 #### Parameters
 
@@ -1812,7 +1818,7 @@ of the execution of a function.
 
 #### Returns
 
-`Promise`<[`Config`](interfaces/Config.md)\>
+`Promise`<`T`\>
 
 #### Defined in
 
