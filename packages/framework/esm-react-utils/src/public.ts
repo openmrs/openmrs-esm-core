@@ -7,6 +7,7 @@ export * from './getLifecycle';
 export * from './useAbortController';
 export * from './useAssignedExtensions';
 export * from './useAssignedExtensionIds';
+export * from './useAttachments';
 export * from './useBodyScrollLock';
 export * from './useConfig';
 export * from './useConnectedExtensions';

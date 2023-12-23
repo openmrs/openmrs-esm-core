@@ -7,7 +7,11 @@
 ### API Functions
 
 - [clearCurrentUser](API.md#clearcurrentuser)
+- [createAttachment](API.md#createattachment)
+- [deleteAttachmentPermanently](API.md#deleteattachmentpermanently)
 - [fetchCurrentPatient](API.md#fetchcurrentpatient)
+- [getAttachmentByUuid](API.md#getattachmentbyuuid)
+- [getAttachments](API.md#getattachments)
 - [getCurrentUser](API.md#getcurrentuser)
 - [getLocations](API.md#getlocations)
 - [getLoggedInUser](API.md#getloggedinuser)
@@ -159,6 +163,7 @@
 ### Other Functions
 
 - [ExtensionSlot](API.md#extensionslot)
+- [useAttachments](API.md#useattachments)
 
 ### Store Functions
 
@@ -737,6 +742,16 @@ ___
 
 ___
 
+### attachmentUrl
+
+• `Const` **attachmentUrl**: ``"/ws/rest/v1/attachment"``
+
+#### Defined in
+
+[packages/framework/esm-api/src/attachments.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L5)
+
+___
+
 ### defaultVisitCustomRepresentation
 
 • `Const` **defaultVisitCustomRepresentation**: `string`
@@ -935,6 +950,48 @@ ___
 
 ___
 
+### createAttachment
+
+▸ **createAttachment**(`patientUuid`, `fileToUpload`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+| `fileToUpload` | [`UploadedFile`](interfaces/UploadedFile.md) |
+
+#### Returns
+
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/attachments.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L19)
+
+___
+
+### deleteAttachmentPermanently
+
+▸ **deleteAttachmentPermanently**(`attachmentUuid`, `abortController`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `attachmentUuid` | `string` |
+| `abortController` | `AbortController` |
+
+#### Returns
+
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/attachments.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L37)
+
+___
+
 ### fetchCurrentPatient
 
 ▸ **fetchCurrentPatient**(`patientUuid`, `fetchInit?`, `includeOfflinePatients?`): `Promise`<`fhir.Patient` \| ``null``\>
@@ -954,6 +1011,49 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-patient.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L22)
+
+___
+
+### getAttachmentByUuid
+
+▸ **getAttachmentByUuid**(`attachmentUuid`, `abortController`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `attachmentUuid` | `string` |
+| `abortController` | `AbortController` |
+
+#### Returns
+
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/attachments.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L7)
+
+___
+
+### getAttachments
+
+▸ **getAttachments**(`patientUuid`, `includeEncounterless`, `abortController`): `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+| `includeEncounterless` | `boolean` |
+| `abortController` | `AbortController` |
+
+#### Returns
+
+`Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/attachments.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L13)
 
 ___
 
@@ -3954,6 +4054,35 @@ Passing a function as children
 #### Defined in
 
 [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L80)
+
+___
+
+### useAttachments
+
+▸ **useAttachments**(`patientUuid`, `includeEncounterless`): `Object`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+| `includeEncounterless` | `boolean` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`AttachmentResponse`](interfaces/AttachmentResponse.md)[] |
+| `error` | `any` |
+| `isLoading` | `boolean` |
+| `isValidating` | `boolean` |
+| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`AttachmentResponse`](interfaces/AttachmentResponse.md)[]  }\>\> |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useAttachments.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L5)
 
 ___
 

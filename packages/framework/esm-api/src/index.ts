@@ -1,4 +1,5 @@
 export * from './types';
+export * from './attachments';
 export * from './openmrs-fetch';
 export * from './setup';
 
