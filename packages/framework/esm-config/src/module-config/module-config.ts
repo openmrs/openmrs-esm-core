@@ -198,13 +198,13 @@ export function provide(config: Config, sourceName = 'provided') {
  *
  * @param moduleName The name of the module for which to look up the config
  */
-export function getConfig(moduleName: string): Promise<Config> {
-  return new Promise<Config>((resolve) => {
+export function getConfig<T = Record<string, any>>(moduleName: string): Promise<T> {
+  return new Promise<T>((resolve) => {
     const store = getConfigStore(moduleName);
     function update(state: ConfigStore) {
       if (state.loaded && state.config) {
         const config = omit(['Display conditions', 'Translation overrides'], state.config);
-        resolve(config);
+        resolve(config as T);
         unsubscribe && unsubscribe();
       }
     }

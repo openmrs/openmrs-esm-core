@@ -198,9 +198,10 @@ describe('getConfig', () => {
 
   it('uses config values from the provided config file', async () => {
     Config.defineConfigSchema('foo-module', { foo: { _default: 'qux' } });
+    type FooConfig = { foo: string };
     const testConfig = { 'foo-module': { foo: 'bar' } };
     Config.provide(testConfig);
-    const config = await Config.getConfig('foo-module');
+    const config = await Config.getConfig<FooConfig>('foo-module');
     expect(config.foo).toBe('bar');
     expect(console.error).not.toHaveBeenCalled();
   });
