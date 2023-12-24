@@ -198,6 +198,7 @@
 - [age](API.md#age)
 - [canAccessStorage](API.md#canaccessstorage)
 - [daysIntoYear](API.md#daysintoyear)
+- [getDefaultsFromConfigSchema](API.md#getdefaultsfromconfigschema)
 - [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [retry](API.md#retry)
@@ -4838,6 +4839,35 @@ The number of days.
 #### Defined in
 
 [packages/framework/esm-utils/src/age-helpers.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L9)
+
+___
+
+### getDefaultsFromConfigSchema
+
+▸ **getDefaultsFromConfigSchema**(`schema`): `Object`
+
+Given a config schema, this returns an object like is returned by `useConfig`
+with all default values.
+
+This should be used in tests and not in production code.
+
+If all you need is the default values in your tests, these are returned by
+default from the `useConfig`/`getConfig` mock. This function is useful if you
+need to override some of the default values.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `schema` | `any` |
+
+#### Returns
+
+`Object`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/test-helpers.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/test-helpers.ts#L13)
 
 ___
 

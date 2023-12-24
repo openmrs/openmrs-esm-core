@@ -4,7 +4,15 @@ import { createStore, type StoreApi } from 'zustand';
 import { NEVER, of } from 'rxjs';
 import { interpolateUrl } from '@openmrs/esm-config';
 import { type SessionStore } from '@openmrs/esm-api';
-export { parseDate, formatDate, formatDatetime, formatTime, age } from '@openmrs/esm-utils';
+import { getDefaultsFromConfigSchema } from '@openmrs/esm-utils';
+export {
+  getDefaultsFromConfigSchema,
+  parseDate,
+  formatDate,
+  formatDatetime,
+  formatTime,
+  age,
+} from '@openmrs/esm-utils';
 export { interpolateString, interpolateUrl, validators, validator } from '@openmrs/esm-config';
 
 window.i18next = { ...window.i18next, language: 'en' };
@@ -135,28 +143,10 @@ export enum Type {
 }
 
 let configSchema = {};
-function getDefaults(schema) {
-  let tmp = {};
-  for (let k of Object.keys(schema)) {
-    if (schema[k].hasOwnProperty('_default')) {
-      tmp[k] = schema[k]._default;
-    } else if (k.startsWith('_')) {
-      continue;
-    } else if (isOrdinaryObject(schema[k])) {
-      tmp[k] = getDefaults(schema[k]);
-    } else {
-      tmp[k] = schema[k];
-    }
-  }
-  return tmp;
-}
-function isOrdinaryObject(x) {
-  return !!x && x.constructor === Object;
-}
 
-export const getConfig = jest.fn().mockImplementation(() => Promise.resolve(getDefaults(configSchema)));
+export const getConfig = jest.fn().mockImplementation(() => Promise.resolve(getDefaultsFromConfigSchema(configSchema)));
 
-export const useConfig = jest.fn().mockImplementation(() => getDefaults(configSchema));
+export const useConfig = jest.fn().mockImplementation(() => getDefaultsFromConfigSchema(configSchema));
 
 export function defineConfigSchema(moduleName, schema) {
   configSchema = schema;
