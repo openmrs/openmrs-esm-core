@@ -154,9 +154,9 @@ function isOrdinaryObject(x) {
   return !!x && x.constructor === Object;
 }
 
-export const getConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
+export const getConfig = jest.fn().mockImplementation(() => Promise.resolve(getDefaults(configSchema)));
 
-export const useConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
+export const useConfig = jest.fn().mockImplementation(() => getDefaults(configSchema));
 
 export function defineConfigSchema(moduleName, schema) {
   configSchema = schema;
