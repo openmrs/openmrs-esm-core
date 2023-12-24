@@ -1,9 +1,9 @@
 import React from 'react';
 import type {} from '@openmrs/esm-globals';
-import { createStore, StoreApi } from 'zustand';
+import { createStore, type StoreApi } from 'zustand';
 import { NEVER, of } from 'rxjs';
 import { interpolateUrl } from '@openmrs/esm-config';
-import { SessionStore } from '@openmrs/esm-api';
+import { type SessionStore } from '@openmrs/esm-api';
 export { parseDate, formatDate, formatDatetime, formatTime, age } from '@openmrs/esm-utils';
 export { interpolateString, interpolateUrl, validators, validator } from '@openmrs/esm-config';
 
@@ -144,9 +144,9 @@ function isOrdinaryObject(x) {
   return !!x && x.constructor === Object;
 }
 
-export const getConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
+export const getConfig = jest.fn().mockImplementation(() => Promise.resolve(getDefaults(configSchema)));
 
-export const useConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
+export const useConfig = jest.fn().mockImplementation(() => getDefaults(configSchema));
 
 export function defineConfigSchema(moduleName, schema) {
   configSchema = schema;
