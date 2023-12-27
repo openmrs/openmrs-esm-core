@@ -1,8 +1,8 @@
-import { isVersionSatisfied, openmrsFetch } from "@openmrs/esm-framework";
-import difference from "lodash-es/difference";
-import { useMemo, useState } from "react";
+import { isVersionSatisfied, openmrsFetch } from '@openmrs/esm-framework';
+import difference from 'lodash-es/difference';
+import { useMemo, useState } from 'react';
 
-export type ResolvedBackendModuleType = "missing" | "version-mismatch" | "okay";
+export type ResolvedBackendModuleType = 'missing' | 'version-mismatch' | 'okay';
 
 export interface ResolvedBackendModule {
   name: string;
@@ -59,7 +59,7 @@ function checkIfModulesAreInstalled(
     ...missingBackendModule.map((m) => ({
       name: m.uuid,
       requiredVersion: m.version,
-      type: "missing" as ResolvedBackendModuleType,
+      type: 'missing' as ResolvedBackendModuleType,
     })),
     ...installedAndRequiredModules.map((m) => {
       const requiredVersion = m.version;
@@ -81,7 +81,7 @@ function checkIfModulesAreInstalled(
 
 function fetchInstalledBackendModules() {
   return openmrsFetch(`/ws/rest/v1/module?v=custom:(uuid,version)`, {
-    method: "GET",
+    method: 'GET',
   });
 }
 
@@ -135,7 +135,7 @@ function getInstalledVersion(
 ) {
   const moduleName = installedAndRequiredBackendModule.uuid;
   return (
-    installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ?? ""
+    installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ?? ''
   );
 }
 
@@ -144,10 +144,10 @@ function getResolvedModuleType(
   installedVersion: string
 ): ResolvedBackendModuleType {
   if (!isVersionSatisfied(requiredVersion, installedVersion)) {
-    return "version-mismatch";
+    return 'version-mismatch';
   }
 
-  return "okay";
+  return 'okay';
 }
 
 export async function checkModules(): Promise<
@@ -174,7 +174,7 @@ export function hasInvalidDependencies(
   frontendModules: Array<ResolvedDependenciesModule>
 ) {
   return frontendModules.some((m) =>
-    m.dependencies.some((n) => n.type !== "okay")
+    m.dependencies.some((n) => n.type !== 'okay')
   );
 }
 

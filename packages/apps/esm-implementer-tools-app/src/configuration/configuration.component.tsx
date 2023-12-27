@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from 'react';
 import {
   Button,
   Column,
@@ -6,17 +6,17 @@ import {
   Row,
   TextInput,
   Toggle,
-} from "@carbon/react";
-import { useTranslation } from "react-i18next";
+} from '@carbon/react';
+import { useTranslation } from 'react-i18next';
 import {
   Upload,
   ChevronDown,
   ChevronUp,
   Download,
   TrashCan,
-} from "@carbon/react/icons";
-import cloneDeep from "lodash-es/cloneDeep";
-import isEmpty from "lodash-es/isEmpty";
+} from '@carbon/react/icons';
+import cloneDeep from 'lodash-es/cloneDeep';
+import isEmpty from 'lodash-es/isEmpty';
 import {
   Config,
   getExtensionInternalStore,
@@ -27,13 +27,13 @@ import {
   temporaryConfigStore,
   useStore,
   useStoreWithActions,
-} from "@openmrs/esm-framework/src/internal";
-import { ConfigTree } from "./interactive-editor/config-tree.component";
-import { Description } from "./interactive-editor/description.component";
-import { implementerToolsStore, ImplementerToolsStore } from "../store";
-import styles from "./configuration.styles.scss";
-import { saveConfig } from "./configuration.resource";
-import { useBackendDependencyCheck } from "../backend-dependencies/openmrs-backend-dependencies";
+} from '@openmrs/esm-framework/src/internal';
+import { ConfigTree } from './interactive-editor/config-tree.component';
+import { Description } from './interactive-editor/description.component';
+import { implementerToolsStore, ImplementerToolsStore } from '../store';
+import styles from './configuration.styles.scss';
+import { saveConfig } from './configuration.resource';
+import { useBackendDependencyCheck } from '../backend-dependencies/openmrs-backend-dependencies';
 
 const JsonEditor = React.lazy(
   () => import("./json-editor/json-editor.component")
