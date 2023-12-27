@@ -9,27 +9,18 @@
       "dependsOn": ["^build:development"],
       "outputs": ["dist/**"]
     },
-    "test": {
-      "dependsOn": [],
-      "outputs": []
+    "document": {
+      "outputs": ["docs/**"]
     },
-    "watch": {
-      "dependsOn": [],
-      "outputs": []
-    },
+    "test": {},
+    "test:watch": {},
+    "watch": {},
     "lint": {
-      "dependsOn": ["^lint"],
-      "outputs": []
+      "dependsOn": ["^lint"]
     },
     "typescript": {
-      "dependsOn": ["^typescript"],
-      "outputs": []
+      "dependsOn": ["^typescript"]
     },
-    "extract-translations": {
-      "outputs": []
-    },
-    "dev": {
-      "cache": false
-    }
+    "extract-translations": {}
   }
 }

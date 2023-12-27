@@ -1,13 +1,11 @@
-import React from "react";
-import EditableValue from "./editable-value.component";
-import isEqual from "lodash-es/isEqual";
-import {
-  ExtensionSlotConfigureValueObject,
-  useAssignedExtensions,
-} from "@openmrs/esm-framework";
-import { ExtensionConfigureTree } from "./extension-configure-tree";
-import { Subtree } from "./layout/subtree.component";
-import { implementerToolsStore } from "../../store";
+import React from 'react';
+import EditableValue from './editable-value.component';
+import isEqual from 'lodash-es/isEqual';
+import type { ExtensionSlotConfigureValueObject } from '@openmrs/esm-framework';
+import { useAssignedExtensions } from '@openmrs/esm-framework';
+import { ExtensionConfigureTree } from './extension-configure-tree';
+import { Subtree } from './layout/subtree.component';
+import { implementerToolsStore } from '../../store';
 
 interface ExtensionSlotsConfigTreeProps {
   extensionsConfig: { [key: string]: any };
@@ -31,17 +29,14 @@ interface ExtensionConfigureDescriptor {
   _source: string;
 }
 
-export function ExtensionSlotsConfigTree({
-  extensionsConfig,
-  moduleName,
-}: ExtensionSlotsConfigTreeProps) {
+export function ExtensionSlotsConfigTree({ extensionsConfig, moduleName }: ExtensionSlotsConfigTreeProps) {
   return extensionsConfig && Object.keys(extensionsConfig).length ? (
     <Subtree label="extension slots" leaf={false}>
       {Object.keys(extensionsConfig).map((slotName) => (
         <ExtensionSlotConfigTree
           key={slotName}
           config={extensionsConfig?.[slotName]}
-          path={[moduleName, "extensionSlots", slotName]}
+          path={[moduleName, 'extensionSlots', slotName]}
         />
       ))}
     </Subtree>
@@ -69,23 +64,17 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
     }
   }
 
-  function setActiveItemDescriptionOnMouseEnter(
-    moduleName,
-    slotName,
-    key,
-    value
-  ) {
+  function setActiveItemDescriptionOnMouseEnter(moduleName, slotName, key, value) {
     if (!implementerToolsStore.getState().configPathBeingEdited) {
       implementerToolsStore.setState({
         activeItemDescription: {
           path: [moduleName, slotName, key],
           source: value?._source,
           description: {
-            add: "Add an extension to this slot.",
-            remove: "Remove an extension from this slot.",
-            order: "Reorder the extensions in this slot.",
-            configure:
-              "Pass a configuration object directly to one of the extensions in this slot.",
+            add: 'Add an extension to this slot.',
+            remove: 'Remove an extension from this slot.',
+            order: 'Reorder the extensions in this slot.',
+            configure: 'Pass a configuration object directly to one of the extensions in this slot.',
           }[key],
           value: JSON.stringify(value?._value),
         },
@@ -95,10 +84,7 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
 
   function removeActiveItemDescriptionOnMouseLeave(thisPath) {
     const state = implementerToolsStore.getState();
-    if (
-      isEqual(state.activeItemDescription?.path, thisPath) &&
-      !isEqual(state.configPathBeingEdited, thisPath)
-    ) {
+    if (isEqual(state.activeItemDescription?.path, thisPath) && !isEqual(state.configPathBeingEdited, thisPath)) {
       implementerToolsStore.setState({ activeItemDescription: undefined });
     }
   }
@@ -107,43 +93,26 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
     <Subtree
       label={slotName}
       leaf={false}
-      onMouseEnter={() =>
-        setActiveExtensionSlotOnMouseEnter(moduleName, slotName)
-      }
-      onMouseLeave={() =>
-        removeActiveItemDescriptionOnMouseLeave([moduleName, slotName])
-      }
+      onMouseEnter={() => setActiveExtensionSlotOnMouseEnter(moduleName, slotName)}
+      onMouseLeave={() => removeActiveItemDescriptionOnMouseLeave([moduleName, slotName])}
     >
-      {(["add", "remove", "order", "configure"] as const).map((key) => (
+      {(['add', 'remove', 'order', 'configure'] as const).map((key) => (
         <Subtree
           label={key}
-          key={path.join(".") + key}
+          key={path.join('.') + key}
           leaf={true}
-          onMouseEnter={() =>
-            setActiveItemDescriptionOnMouseEnter(
-              moduleName,
-              slotName,
-              key,
-              config?.[key]
-            )
-          }
-          onMouseLeave={() =>
-            removeActiveItemDescriptionOnMouseLeave([moduleName, slotName, key])
-          }
+          onMouseEnter={() => setActiveItemDescriptionOnMouseEnter(moduleName, slotName, key, config?.[key])}
+          onMouseLeave={() => removeActiveItemDescriptionOnMouseLeave([moduleName, slotName, key])}
         >
-          {key === "configure" ? (
-            <ExtensionConfigureTree
-              moduleName={moduleName}
-              slotName={slotName}
-              config={config?.configure?._value}
-            />
+          {key === 'configure' ? (
+            <ExtensionConfigureTree moduleName={moduleName} slotName={slotName} config={config?.configure?._value} />
           ) : (
             <EditableValue
               path={path.concat([key])}
               element={
                 config?.[key] ?? {
                   _value: undefined,
-                  _source: "default",
+                  _source: 'default',
                   _default: [],
                 }
               }

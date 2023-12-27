@@ -53,7 +53,7 @@ Error.constructor
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:321](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L321)
+[packages/framework/esm-api/src/openmrs-fetch.ts:295](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L295)
 
 ## API Properties
 
@@ -63,7 +63,7 @@ Error.constructor
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L334)
+[packages/framework/esm-api/src/openmrs-fetch.ts:303](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L303)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:335](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L335)
+[packages/framework/esm-api/src/openmrs-fetch.ts:304](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L304)
 
 ___
 
@@ -164,7 +164,7 @@ Error.prepareStackTrace
 
 #### Defined in
 
-packages/framework/esm-framework/node_modules/@types/node/ts4.8/globals.d.ts:11
+node_modules/@types/node/ts4.8/globals.d.ts:11
 
 ___
 
@@ -178,7 +178,7 @@ Error.stackTraceLimit
 
 #### Defined in
 
-packages/framework/esm-framework/node_modules/@types/node/ts4.8/globals.d.ts:13
+node_modules/@types/node/ts4.8/globals.d.ts:13
 
 ## Methods
 
@@ -205,4 +205,4 @@ Error.captureStackTrace
 
 #### Defined in
 
-packages/framework/esm-framework/node_modules/@types/node/ts4.8/globals.d.ts:4
+node_modules/@types/node/ts4.8/globals.d.ts:4

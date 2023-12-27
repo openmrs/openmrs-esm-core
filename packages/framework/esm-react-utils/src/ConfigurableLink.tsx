@@ -1,22 +1,10 @@
 /** @module @category Navigation */
-import React, {
-  MouseEvent,
-  AnchorHTMLAttributes,
-  PropsWithChildren,
-} from "react";
-import { navigate, interpolateUrl, TemplateParams } from "@openmrs/esm-config";
+import React, { type MouseEvent, type AnchorHTMLAttributes, type PropsWithChildren } from 'react';
+import type { TemplateParams } from '@openmrs/esm-config';
+import { navigate, interpolateUrl } from '@openmrs/esm-config';
 
-function handleClick(
-  event: MouseEvent,
-  to: string,
-  templateParams?: TemplateParams
-) {
-  if (
-    !event.metaKey &&
-    !event.ctrlKey &&
-    !event.shiftKey &&
-    event.button == 0
-  ) {
+function handleClick(event: MouseEvent, to: string, templateParams?: TemplateParams) {
+  if (!event.metaKey && !event.ctrlKey && !event.shiftKey && event.button == 0) {
     event.preventDefault();
     navigate({ to, templateParams });
   }
@@ -25,8 +13,7 @@ function handleClick(
 /**
  * @noInheritDoc
  */
-export interface ConfigurableLinkProps
-  extends AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface ConfigurableLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   to: string;
   templateParams?: TemplateParams;
 }

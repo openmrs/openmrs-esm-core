@@ -12,15 +12,10 @@ This is useful for developing features and for debugging problems, because you
 can tell the browser to load one module from your localhost while keeping all 
 other modules using the default version in the import map.
 
-Usage is documented both below and in the
-[Import Map Overrides](http://o3-dev.docs.openmrs.org/#/getting_started/setup?id=import-map-overrides)
-section of the developer documentation.
-
 ## Installation / Usage
 
 The devtools are registered as a
 [single-spa application](https://single-spa.js.org/docs/building-applications/)
-
 that creates a gray or red rectangular button near the bottom right of the 
 screen. The rectangular button will only show up if you run the following 
 command in the browser console:

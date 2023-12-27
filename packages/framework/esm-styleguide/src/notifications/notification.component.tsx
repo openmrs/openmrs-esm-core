@@ -1,5 +1,5 @@
-import React from "react";
-import { InlineNotification } from "@carbon/react";
+import React from 'react';
+import { InlineNotification } from '@carbon/react';
 /** @module @category UI */
 
 export interface NotificationProps {
@@ -19,13 +19,7 @@ export interface InlineNotificationMeta extends NotificationDescriptor {
   id: number;
 }
 
-export type InlineNotificationType =
-  | "error"
-  | "info"
-  | "info-square"
-  | "success"
-  | "warning"
-  | "warning-alt";
+export type InlineNotificationType = 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
 
 export const Notification: React.FC<NotificationProps> = ({ notification }) => {
   const { description, action, kind, critical, title } = notification;
@@ -33,10 +27,10 @@ export const Notification: React.FC<NotificationProps> = ({ notification }) => {
   return (
     <InlineNotification
       actions={action}
-      kind={kind || "info"}
+      kind={kind || 'info'}
       lowContrast={critical}
       subtitle={description}
-      title={title || ""}
+      title={title || ''}
     />
   );
 };

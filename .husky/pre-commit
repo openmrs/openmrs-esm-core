@@ -3,6 +3,6 @@
 
 set -e  # die on error
 
-yarn run extract-translations
-yarn pretty-quick --staged
-yarn lerna run document --since main
+yarn turbo extract-translations
+yarn prettier && npx lint-staged
+yarn turbo document --since main

@@ -59,9 +59,38 @@
       "offline": true
     },
     {
+      "name": "offline-tools-page-offline-actions-link",
+      "slot": "offline-tools-page-slot",
+      "component": "offlineToolsActionsLink",
+      "meta": {
+        "name": "actions",
+        "slot": "offline-tools-page-offline-actions-slot"
+      },
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-page-offline-actions",
+      "slot": "offline-tools-page-offline-actions-slot",
+      "component": "offlineToolsPageActions",
+      "online": true,
+      "offline": true
+    },
+    {
       "name": "offline-tools-page-offline-patients",
       "slot": "offline-tools-page-offline-patients-slot",
       "component": "offlineToolsPatients",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "offline-tools-page-actions-link",
+      "slot": "offline-tools-page-actions-slot",
+      "component": "offlineToolsPatientsLink",
+      "meta": {
+        "name": "actions",
+        "slot": "offline-tools-page-actions-slot"
+      },
       "online": true,
       "offline": true
     },
@@ -86,7 +115,7 @@
     {
       "name": "offline-tools-patient-chart-actions-dashboard",
       "slot": "patient-chart-offline-actions-dashboard-slot",
-      "component": "offlineToolsPatientChartActionsDashboard",
+      "component": "offlineToolsPatientChartActions",
       "online": true,
       "offline": true,
       "order": 0
@@ -99,6 +128,7 @@
         "columns": 1,
         "title": "Offline Actions"
       },
+      "order": 12,
       "online": true,
       "offline": true
     },

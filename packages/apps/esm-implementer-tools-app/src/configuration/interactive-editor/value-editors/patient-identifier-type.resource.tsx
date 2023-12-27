@@ -1,6 +1,7 @@
-import useSWR from "swr";
-import { FetchResponse, openmrsFetch } from "@openmrs/esm-framework";
-import { useMemo } from "react";
+import useSWR from 'swr';
+import type { FetchResponse } from '@openmrs/esm-framework';
+import { openmrsFetch } from '@openmrs/esm-framework';
+import { useMemo } from 'react';
 
 export interface PatientIdentifierType {
   uuid: string;
@@ -15,16 +16,16 @@ export function usePatientIdentifierTypes(): {
   data: Array<PatientIdentifierType> | undefined;
   isLoading: boolean;
 } {
-  const { data, error } = useSWR<
-    FetchResponse<PatientIdentifierTypeResponse>,
-    Error
-  >(`/ws/rest/v1/patientidentifiertype`, openmrsFetch);
+  const { data, error } = useSWR<FetchResponse<PatientIdentifierTypeResponse>, Error>(
+    `/ws/rest/v1/patientidentifiertype`,
+    openmrsFetch,
+  );
   const memoisedPatientIdentifierTypeData = useMemo(
     () => ({
       data: data?.data?.results,
       isLoading: !data && !error,
     }),
-    [data, error]
+    [data, error],
   );
 
   return memoisedPatientIdentifierTypeData;

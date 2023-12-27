@@ -26,7 +26,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16.15"
+          registry-url: "https://registry.npmjs.org"
+          node-version: "18"
 
       - name: Cache dependencies
         id: cache
@@ -54,9 +55,9 @@ jobs:
   pre_release:
     runs-on: ubuntu-latest
     needs: build
-
+    
     if: ${{ (github.event.head_commit == null || 
-          !startsWith(github.event.head_commit.message, '(release)')) && 
+          !startsWith(github.event.head_commit.message, '(chore) Release v')) && 
           (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
 
     steps:
@@ -64,8 +65,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16.15"
           registry-url: "https://registry.npmjs.org"
+          node-version: "18"
 
       - name: Cache dependencies
         id: cache
@@ -85,7 +86,8 @@ jobs:
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
 
       - name: Version
-        run: yarn lerna version "$(node -e "console.log(require('semver').inc(require('./lerna.json').version, 'patch'))")-pre.${{ github.run_number }}" --no-git-tag-version --no-push --yes
+        # This command CANNOT be run in parallel
+        run: yarn workspaces foreach --worktree --topological --exclude @openmrs/esm-core version "$(node -e "console.log(require('semver').inc(require('./package.json').version, 'patch'))")-pre.${{ github.run_number }}"
 
       - name: Build
         run: yarn turbo run build --color --concurrency=5
@@ -94,7 +96,7 @@ jobs:
       - run: git add . && git commit -m "Prerelease version" --no-verify
 
       - name: Pre-release
-        run: yarn run ci:publish-next
+        run: yarn config set npmAuthToken "${NODE_AUTH_TOKEN}" && yarn run ci:publish-next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
@@ -116,8 +118,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16.15"
           registry-url: "https://registry.npmjs.org"
+          node-version: "18"
 
       - name: Cache dependencies
         id: cache
@@ -134,7 +136,7 @@ jobs:
         run: yarn turbo run build --color --concurrency=5
 
       - name: Publish
-        run: yarn run ci:publish
+        run: yarn config set npmAuthToken "${NODE_AUTH_TOKEN}" && yarn run ci:publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 

@@ -1,5 +1,5 @@
-@import "~@openmrs/esm-styleguide/src/vars";
-@import "../root.scss";
+@import '~@openmrs/esm-styleguide/src/vars';
+@import '../root.scss';
 
 .changeLocationLinkContainer {
   display: flex;
@@ -19,15 +19,14 @@
 }
 
 .changeLocationLinkContainer div {
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  width: fit-content;
+  justify-content: space-between;
   align-items: center;
 }
 
-.changeLocationLinkContainer button {
-  @include brand-02(background-color);
-  padding: 0rem 0.75rem;
+.changeLocationLinkContainer button,
+.changeLocationLinkContainer button:hover {
   color: $inverse-link;
 }
 

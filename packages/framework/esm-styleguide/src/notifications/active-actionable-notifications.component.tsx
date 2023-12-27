@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Subject } from "rxjs";
-import {
-  ActionableNotificationMeta,
-  ActionableNotificationComponent,
-} from "./actionable-notification.component";
+import React, { useEffect, useState } from 'react';
+import type { Subject } from 'rxjs';
+import type { ActionableNotificationMeta } from './actionable-notification.component';
+import { ActionableNotificationComponent } from './actionable-notification.component';
 
 interface ActionableActiveNotificationProps {
   subject: Subject<ActionableNotificationMeta>;
 }
 
-const ActionableActiveNotifications: React.FC<
-  ActionableActiveNotificationProps
-> = ({ subject }) => {
-  const [notifications, setNotifications] = useState<
-    Array<ActionableNotificationMeta>
-  >([]);
+const ActionableActiveNotifications: React.FC<ActionableActiveNotificationProps> = ({ subject }) => {
+  const [notifications, setNotifications] = useState<Array<ActionableNotificationMeta>>([]);
 
   useEffect(() => {
     const subscription = subject.subscribe((notification) =>
@@ -25,10 +19,10 @@ const ActionableActiveNotifications: React.FC<
             n.actionButtonLabel !== notification.actionButtonLabel ||
             n.onActionButtonClick !== notification.onActionButtonClick ||
             n.kind !== notification.kind ||
-            n.title !== notification.title
+            n.title !== notification.title,
         ),
         notification,
-      ])
+      ]),
     );
 
     return () => subscription.unsubscribe();
@@ -37,10 +31,7 @@ const ActionableActiveNotifications: React.FC<
   return (
     <>
       {notifications.map((notification) => (
-        <ActionableNotificationComponent
-          key={notification.id}
-          notification={notification}
-        />
+        <ActionableNotificationComponent key={notification.id} notification={notification} />
       ))}
     </>
   );

@@ -1,59 +1,34 @@
-import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { ChangeLocale } from "./change-locale.component";
-import type {
-  PostSessionLocale,
-  PostUserProperties,
-} from "./change-locale.resource";
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { ChangeLocale } from './change-locale.component';
+import type { PostUserProperties } from './change-locale.resource';
 
-const allowedLocales = ["en", "fr", "it", "pt"];
+const allowedLocales = ['en', 'fr', 'it', 'pt'];
 const user: any = {
-  uuid: "uuid",
+  uuid: 'uuid',
   userProperties: {
-    defaultLocale: "fr",
+    defaultLocale: 'fr',
   },
 };
 
 describe(`<ChangeLocale />`, () => {
-  let postUserPropertiesMock: PostUserProperties = jest.fn(() =>
-    Promise.resolve()
-  );
-  let postSessionLocaleMock: PostSessionLocale = jest.fn(() =>
-    Promise.resolve()
-  );
+  let postUserPropertiesMock: PostUserProperties = jest.fn(() => Promise.resolve());
 
-  beforeEach(() => {
+  it('should change user locale', async () => {
+    const userSetup = userEvent.setup();
     postUserPropertiesMock = jest.fn(() => Promise.resolve());
-    postSessionLocaleMock = jest.fn(() => Promise.resolve());
 
     render(
       <ChangeLocale
+        locale={'fr'}
         allowedLocales={allowedLocales}
         user={user}
         postUserProperties={postUserPropertiesMock}
-        postSessionLocale={postSessionLocaleMock}
-      />
+      />,
     );
-  });
-
-  it("should have user's defaultLocale as initial value", async () => {
-    expect(screen.getByLabelText(/Select locale/)).toHaveValue("fr");
-  });
-
-  it("should change user locale", async () => {
-    fireEvent.change(screen.getByLabelText(/Select locale/i), {
-      target: { value: "en" },
-    });
-    await waitFor(() => {
-      expect(postUserPropertiesMock).toHaveBeenCalledWith(
-        user.uuid,
-        { defaultLocale: "en" },
-        expect.anything()
-      );
-      expect(postSessionLocaleMock).toHaveBeenCalledWith(
-        "en",
-        expect.anything()
-      );
-    });
+    expect(screen.getByLabelText(/Select locale/)).toHaveValue('fr');
+    await userSetup.selectOptions(screen.getByLabelText(/Select locale/i), 'en');
+    expect(postUserPropertiesMock).toHaveBeenCalledWith(user.uuid, { defaultLocale: 'en' }, expect.anything());
   });
 });

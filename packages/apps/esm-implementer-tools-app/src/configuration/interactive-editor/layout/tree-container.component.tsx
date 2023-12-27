@@ -1,6 +1,7 @@
-import React, { ReactNode } from "react";
-import { StructuredListBody, StructuredListWrapper } from "@carbon/react";
-import styles from "./layout.styles.css";
+import type { ReactNode } from 'react';
+import React from 'react';
+import { StructuredListBody, StructuredListWrapper } from '@carbon/react';
+import styles from './layout.styles.css';
 
 export interface TreeContainerProps {
   children: ReactNode;

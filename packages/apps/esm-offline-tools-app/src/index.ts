@@ -1,102 +1,87 @@
-import {
-  defineConfigSchema,
-  getAsyncLifecycle,
-  getSyncLifecycle,
-  registerBreadcrumbs,
-} from "@openmrs/esm-framework";
-import { routes } from "./constants";
-import { createDashboardLink } from "./createDashboardLink";
-import { dashboardMeta } from "./dashboard.meta";
-import OfflineToolsNavLink from "./nav/offline-tools-nav-link.component";
-import { setupOffline } from "./offline";
-import { setupSynchronizingOfflineActionsNotifications } from "./offline-actions/synchronizing-notification";
+import { defineConfigSchema, getSyncLifecycle, registerBreadcrumbs } from '@openmrs/esm-framework';
+import { routes } from './constants';
+import { createDashboardLink } from './createDashboardLink';
+import { dashboardMeta } from './dashboard.meta';
+import { setupOffline } from './offline';
+import { setupSynchronizingOfflineActionsNotifications } from './offline-actions/synchronizing-notification';
+import offlineToolsComponent from './root.component';
+import offlineToolsLinkComponent from './offline-tools-app-menu-link.component';
+import offlineToolsNavItemsComponent from './nav/offline-tools-nav-menu.component';
+import offlineToolsConfirmationModalComponent from './components/confirmation-modal.component';
+import offlineToolsPatientsCardComponent from './offline-patients/patients-overview-card.component';
+import offlineToolsActionsCardComponent from './offline-actions/offline-actions-overview-card.component';
+import offlineToolsActionsComponent from './offline-actions/offline-actions.component';
+import offlineToolsPatientsComponent from './offline-patients/offline-patients.component';
+import offlineToolsPageActionsComponent from './offline-actions/offline-actions-page.component';
+import offlineToolsPatientChartComponent from './offline-actions/offline-actions-patient-chart-widget.component';
+import offlineToolsOptInButtonComponent from './offline-actions/offline-actions-mode-button.component';
+import OfflineToolsNavLink from './nav/offline-tools-nav-link.component';
 
-export const importTranslation = require.context(
-  "../translations",
-  false,
-  /.json$/,
-  "lazy"
-);
+export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
-const moduleName = "@openmrs/esm-offline-tools-app";
+const moduleName = '@openmrs/esm-offline-tools-app';
 const options = {
-  featureName: "offline-tools",
+  featureName: 'offline-tools',
   moduleName,
 };
 
-export const offlineTools = getAsyncLifecycle(
-  () => import("./root.component"),
-  options
-);
+export const offlineTools = getSyncLifecycle(offlineToolsComponent, options);
 
-export const offlineToolsLink = getAsyncLifecycle(
-  () => import("./offline-tools-app-menu-link.component"),
-  options
-);
+export const offlineToolsLink = getSyncLifecycle(offlineToolsLinkComponent, options);
 
-export const offlineToolsNavItems = getAsyncLifecycle(
-  () => import("./nav/offline-tools-nav-menu.component"),
-  {
-    featureName: "nav-items",
-    moduleName,
-  }
-);
+export const offlineToolsNavItems = getSyncLifecycle(offlineToolsNavItemsComponent, {
+  featureName: 'nav-items',
+  moduleName,
+});
 
-export const offlineToolsConfirmationModal = getAsyncLifecycle(
-  () => import("./components/confirmation-modal.component"),
-  options
-);
+export const offlineToolsConfirmationModal = getSyncLifecycle(offlineToolsConfirmationModalComponent, options);
 
-export const offlineToolsPatientsCard = getAsyncLifecycle(
-  () => import("./offline-patients/patients-overview-card.component"),
-  options
-);
+export const offlineToolsPatientsCard = getSyncLifecycle(offlineToolsPatientsCardComponent, options);
 
-export const offlineToolsActionsCard = getAsyncLifecycle(
-  () => import("./offline-actions/offline-actions-overview-card.component"),
-  options
-);
+export const offlineToolsActionsCard = getSyncLifecycle(offlineToolsActionsCardComponent, options);
 
 export const offlineToolsPatientsLink = getSyncLifecycle(
   () =>
     OfflineToolsNavLink({
-      page: "patients",
-      title: "Patients",
+      page: 'patients',
+      title: 'patients',
     }),
-  options
+  options,
 );
 
-export const offlineToolsPatients = getAsyncLifecycle(
-  () => import("./offline-patients/offline-patients.component"),
-  options
-);
-
-export const offlineToolsPageActions = getAsyncLifecycle(
-  () => import("./offline-actions/offline-actions-page.component"),
-  options
-);
-
-export const offlineToolsPatientChartActions = getAsyncLifecycle(
+export const offlineToolsActionsLink = getSyncLifecycle(
   () =>
-    import("./offline-actions/offline-actions-patient-chart-widget.component"),
-  options
+    OfflineToolsNavLink({
+      page: 'actions',
+      title: 'actions',
+    }),
+  options,
 );
 
-export const offlineToolsPatientChartActionsDashboard = getAsyncLifecycle(
-  () =>
-    import("./offline-actions/offline-actions-patient-chart-widget.component"),
-  options
-);
+export const offlineToolsActions = getSyncLifecycle(offlineToolsActionsComponent, options);
+
+export const offlineToolsPatients = getSyncLifecycle(offlineToolsPatientsComponent, options);
+
+export const offlineToolsPageActions = getSyncLifecycle(offlineToolsPageActionsComponent, options);
+
+export const offlineToolsPatientChartActions = getSyncLifecycle(offlineToolsPatientChartComponent, options);
 
 export const offlineToolsPatientChartActionsDashboardLink = getSyncLifecycle(
-  createDashboardLink(dashboardMeta),
-  options
+  createDashboardLink({
+    ...dashboardMeta,
+    // t('offline_actions_link', 'Offline Actions')
+    title: () =>
+      Promise.resolve(
+        window.i18next?.t('offline_actions_link', {
+          defaultValue: 'Offline Actions',
+          ns: moduleName,
+        }) ?? 'Offline Actions',
+      ),
+  }),
+  options,
 );
 
-export const offlineToolsOptInButton = getAsyncLifecycle(
-  () => import("./offline-actions/offline-actions-mode-button.component"),
-  options
-);
+export const offlineToolsOptInButton = getSyncLifecycle(offlineToolsOptInButtonComponent, options);
 
 export function startupApp() {
   defineConfigSchema(moduleName, {});
@@ -106,22 +91,22 @@ export function startupApp() {
   registerBreadcrumbs([
     {
       path: `${window.spaBase}/${routes.offlineTools}`,
-      title: "Offline Tools",
+      title: 'Offline Tools',
       parent: `${window.spaBase}/${routes.home}`,
     },
     {
       path: `${window.spaBase}/${routes.offlineToolsPatients}`,
-      title: "Patients",
+      title: 'Patients',
       parent: `${window.spaBase}/${routes.offlineTools}`,
     },
     {
       path: `${window.spaBase}/${routes.offlineToolsPatientOfflineData}`,
-      title: "Data",
+      title: 'Data',
       parent: `${window.spaBase}/${routes.offlineToolsPatients}`,
     },
     {
       path: `${window.spaBase}/${routes.offlineToolsActions}`,
-      title: "Actions",
+      title: 'Actions',
       parent: `${window.spaBase}/${routes.offlineTools}`,
     },
   ]);

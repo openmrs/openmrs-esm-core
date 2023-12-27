@@ -1,19 +1,16 @@
-import React from "react";
-import {
-  ExtensionSlot,
-  LoggedInUser,
-  useOnClickOutside,
-} from "@openmrs/esm-framework";
-import { HeaderPanel, HeaderPanelProps } from "@carbon/react";
-import { UserSession } from "../../types";
-import styles from "../../root.scss";
+import React from 'react';
+import type { LoggedInUser, Session } from '@openmrs/esm-framework';
+import { ExtensionSlot, useOnClickOutside } from '@openmrs/esm-framework';
+import type { HeaderPanelProps } from '@carbon/react';
+import { HeaderPanel } from '@carbon/react';
+import styles from '../../root.scss';
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   expanded: boolean;
   user: LoggedInUser | false | null;
   allowedLocales: any;
   onLogout(): void;
-  session: UserSession;
+  session: Session;
   hidePanel: () => void;
 }
 
@@ -43,6 +40,7 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
           onLogout: onLogout,
           referer: window.location.pathname,
           currentLocation: session?.sessionLocation?.display,
+          locale: session?.locale,
         }}
       />
     </HeaderPanel>

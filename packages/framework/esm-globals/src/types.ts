@@ -1,14 +1,13 @@
-import type { Application } from "single-spa";
+import type { LifeCycles } from 'single-spa';
+import type { i18n } from 'i18next';
 
 declare global {
   const __webpack_share_scopes__: Record<
     string,
-    Record<
-      string,
-      { loaded?: 1; get: () => Promise<unknown>; from: string; eager: boolean }
-    >
+    Record<string, { loaded?: 1; get: () => Promise<unknown>; from: string; eager: boolean }>
   >;
 
+  // eslint-disable-next-line no-var
   var __webpack_init_sharing__: (scope: string) => Promise<void>;
 
   interface Window {
@@ -27,37 +26,49 @@ declare global {
      */
     initializeSpa(config: SpaConfig): void;
     /**
-     * Gets the API base path.
+     * Gets the API base path, e.g. /openmrs
      */
     openmrsBase: string;
     /**
-     * Gets the SPA base path.
+     * Gets the SPA base path, e.g. /openmrs/spa
      */
     spaBase: string;
     /**
-     * Gets the determined SPA environment.
+     * Set by the app shell. Indicates whether the app shell is running in production, development, or test mode.
      */
     spaEnv: SpaEnvironment;
     /**
-     * Gets the published SPA version.
+     * The build number of the app shell. Set when the app shell is built by webpack.
      */
     spaVersion?: string;
     /**
      * Gets a set of options from the import-map-overrides package.
      */
     importMapOverrides: {
-      getCurrentPageMap: () => Promise<ImportMap>;
+      addOverride(moduleName: string, url: string): void;
+      enableOverride(moduleName: string): void;
+      getCurrentPageMap(): Promise<ImportMap>;
+      getDefaultMap(): Promise<ImportMap>;
+      getNextPageMap(): Promise<ImportMap>;
       addOverride(moduleName: string, url: string): void;
       getOverrideMap(includeDisabled?: boolean): ImportMap;
+      getDisabledOverrides(): Array<string>;
+      isDisabled(moduleName: string): boolean;
+      removeOverride(moduleName: string): void;
+      resetOverrides(): void;
     };
     /**
      * Gets the installed modules, which are tuples consisting of the module's name and exports.
      */
     installedModules: Array<[string, OpenmrsAppRoutes]>;
+    /**
+     * The i18next instance for the app.
+     */
+    i18next: i18n;
   }
 }
 
-export type SpaEnvironment = "production" | "development" | "test";
+export type SpaEnvironment = 'production' | 'development' | 'test';
 
 export interface ImportMap {
   imports: Record<string, string>;
@@ -153,8 +164,7 @@ export type PageDefinition = {
 /**
  * A definition of a page after the app has been registered.
  */
-export type RegisteredPageDefinition = Omit<PageDefinition, "order"> &
-  AppComponent & { order: number };
+export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
 
 /**
  * A definition of an extension as extracted from an app's routes.json
@@ -185,9 +195,13 @@ export type ExtensionDefinition = {
    */
   order?: number;
   /**
-  
+   * The user must have ANY of these privileges to see this extension.
    */
   privileges?: string | Array<string>;
+  /**
+   * If supplied, the extension will only be rendered when this feature flag is enabled.
+   */
+  featureFlag?: string;
   /**
    * Meta describes any properties that are passed down to the extension when it is loaded
    */
@@ -213,7 +227,7 @@ export type ExtensionDefinition = {
       /**
        * @internal
        */
-      load: Application;
+      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
     }
 );
 

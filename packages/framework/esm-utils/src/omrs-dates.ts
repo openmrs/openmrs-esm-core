@@ -2,10 +2,10 @@
  * @module
  * @category Date and Time
  */
-import { i18n } from "i18next";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import isToday from "dayjs/plugin/isToday";
+import type { i18n } from 'i18next';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import isToday from 'dayjs/plugin/isToday';
 
 dayjs.extend(utc);
 dayjs.extend(isToday);
@@ -18,39 +18,31 @@ declare global {
 
 export type DateInput = string | number | Date;
 
-const isoFormat = "YYYY-MM-DDTHH:mm:ss.SSSZZ";
+const isoFormat = 'YYYY-MM-DDTHH:mm:ss.SSSZZ';
 
 /**
- * This function is STRICT on checking whether a date string is the openmrs format.
+ * This function checks whether a date string is the OpenMRS ISO format.
  * The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
  */
 export function isOmrsDateStrict(omrsPayloadString: string): boolean {
   // omrs format 2018-03-19T00:00:00.000+0300
-  if (
-    omrsPayloadString === null ||
-    omrsPayloadString === undefined ||
-    omrsPayloadString.trim().length !== 28
-  ) {
+  if (omrsPayloadString === null || omrsPayloadString === undefined || omrsPayloadString.trim().length !== 28) {
     return false;
   }
   omrsPayloadString = omrsPayloadString.trim();
 
   // 11th character will always be T
-  if (omrsPayloadString[10] !== "T") {
+  if (omrsPayloadString[10] !== 'T') {
     return false;
   }
 
   // checking time format
-  if (
-    omrsPayloadString[13] !== ":" ||
-    omrsPayloadString[16] !== ":" ||
-    omrsPayloadString[19] !== "."
-  ) {
+  if (omrsPayloadString[13] !== ':' || omrsPayloadString[16] !== ':' || omrsPayloadString[19] !== '.') {
     return false;
   }
 
   // checking UTC offset format
-  if (!(omrsPayloadString[23] === "+" && omrsPayloadString[26] !== ":")) {
+  if (!(omrsPayloadString[23] === '+' || omrsPayloadString[23] === '-')) {
     return false;
   }
 
@@ -66,7 +58,8 @@ export function isOmrsDateToday(date: DateInput) {
 }
 
 /**
- * Converts the object to a date object if it is a valid ISO date time string.
+ * Converts the object to a date object if it is an OpenMRS ISO date time string.
+ * Otherwise returns null.
  */
 export function toDateObjectStrict(omrsDateString: string): Date | null {
   if (!isOmrsDateStrict(omrsDateString)) {
@@ -77,7 +70,7 @@ export function toDateObjectStrict(omrsDateString: string): Date | null {
 }
 
 /**
- * Formats the input as a date time string using the format "YYYY-MM-DDTHH:mm:ss.SSSZZ".
+ * Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
  */
 export function toOmrsIsoString(date: DateInput, toUTC = false): string {
   let d = dayjs(date);
@@ -94,7 +87,7 @@ export function toOmrsIsoString(date: DateInput, toUTC = false): string {
  * Formats the input as a time string using the format "HH:mm".
  */
 export function toOmrsTimeString24(date: DateInput) {
-  return dayjs(date).format("HH:mm");
+  return dayjs(date).format('HH:mm');
 }
 
 /**
@@ -102,7 +95,7 @@ export function toOmrsTimeString24(date: DateInput) {
  * Formats the input as a time string using the format "HH:mm A".
  */
 export function toOmrsTimeString(date: DateInput) {
-  return dayjs.utc(date).format("HH:mm A");
+  return dayjs.utc(date).format('HH:mm A');
 }
 
 /**
@@ -110,7 +103,7 @@ export function toOmrsTimeString(date: DateInput) {
  * Formats the input as a date string using the format "DD - MMM - YYYY".
  */
 export function toOmrsDayDateFormat(date: DateInput) {
-  return toOmrsDateFormat(date, "DD - MMM - YYYY");
+  return toOmrsDateFormat(date, 'DD - MMM - YYYY');
 }
 
 /**
@@ -118,14 +111,14 @@ export function toOmrsDayDateFormat(date: DateInput) {
  * Formats the input as a date string using the format "DD-MMM".
  */
 export function toOmrsYearlessDateFormat(date: DateInput) {
-  return toOmrsDateFormat(date, "DD-MMM");
+  return toOmrsDateFormat(date, 'DD-MMM');
 }
 
 /**
  * @deprecated use `formatDate(date)`
  * Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
  */
-export function toOmrsDateFormat(date: DateInput, format = "YYYY-MMM-DD") {
+export function toOmrsDateFormat(date: DateInput, format = 'YYYY-MMM-DD') {
   return dayjs(date).format(format);
 }
 
@@ -137,9 +130,13 @@ export function parseDate(dateString: string) {
   return dayjs(dateString).toDate();
 }
 
-export type FormatDateMode = "standard" | "wide";
+export type FormatDateMode = 'standard' | 'wide';
 
 export type FormatDateOptions = {
+  /**
+   * The calendar to use when formatting this date.
+   */
+  calendar?: string;
   /**
    * - `standard`: "03 Feb 2022"
    * - `wide`:     "03 — Feb — 2022"
@@ -149,19 +146,98 @@ export type FormatDateOptions = {
    * Whether the time should be included in the output always (`true`),
    * never (`false`), or only when the input date is today (`for today`).
    */
-  time: true | false | "for today";
+  time: true | false | 'for today';
   /** Whether to include the day number */
   day: boolean;
   /** Whether to include the year */
   year: boolean;
+  /**
+   * Disables the special handling of dates that are today. If false
+   * (the default), then dates that are today will be formatted as "Today"
+   * in the locale language. If true, then dates that are today will be
+   * formatted the same as all other dates.
+   */
+  noToday: boolean;
 };
 
 const defaultOptions: FormatDateOptions = {
-  mode: "standard",
-  time: "for today",
+  mode: 'standard',
+  time: 'for today',
   day: true,
   year: true,
+  noToday: false,
 };
+
+/**
+ * Internal cache for per-locale calendars
+ */
+class LocaleCalendars {
+  #registry = new Map<string, string>();
+
+  constructor() {
+    this.#registry.set('am', 'ethiopic');
+  }
+
+  register(locale: string, calendar: string) {
+    this.#registry.set(locale, calendar);
+  }
+
+  getCalendar(locale: Intl.Locale) {
+    if (!Boolean(locale)) {
+      return undefined;
+    }
+
+    if (locale.calendar) {
+      return locale.calendar;
+    }
+
+    if (locale.region) {
+      const key = `${locale.language}-${locale.region}`;
+      if (this.#registry.has(key)) {
+        return this.#registry.get(key);
+      }
+    }
+
+    if (locale.language && this.#registry.has(locale.language)) {
+      return this.#registry.get(locale.language);
+    }
+
+    const defaultCalendar = new Intl.DateTimeFormat(locale.toString()).resolvedOptions().calendar;
+
+    // cache this result
+    this.#registry.set(`${locale.language}${locale.region ? `-${locale.region}` : ''}`, defaultCalendar);
+
+    return defaultCalendar;
+  }
+}
+
+const registeredLocaleCalendars = new LocaleCalendars();
+
+/**
+ * Provides the name of the calendar to associate, as a default, with the given base locale.
+ *
+ * @example
+ * ```
+ * registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the 'en' locale to Buddhist.
+ * ```
+ *
+ * @param baseLocale the locale to register this calendar for
+ * @param calendar the calendar to use for this registration
+ */
+export function registerDefaultCalendar(locale: string, calendar: string) {
+  registeredLocaleCalendars.register(locale, calendar);
+}
+
+/**
+ * Retrieves the default calendar for the specified locale if any.
+ *
+ * @param locale the locale to look-up
+ */
+export function getDefaultCalendar(locale: Intl.Locale | string | undefined) {
+  const locale_ = locale ?? getLocale();
+
+  return registeredLocaleCalendars.getCalendar(locale_ instanceof Intl.Locale ? locale_ : new Intl.Locale(locale_));
+}
 
 /**
  * Formats the input date according to the current locale and the
@@ -172,61 +248,97 @@ const defaultOptions: FormatDateOptions = {
  *  - time: "for today",
  *  - day: true,
  *  - year: true
+ *  - noToday: false
  *
  * If the date is today then "Today" is produced (in the locale language).
+ * This behavior can be disabled with `noToday: true`.
  *
  * When time is included, it is appended with a comma and a space. This
  * agrees with the output of `Date.prototype.toLocaleString` for *most*
  * locales.
- *
- * TODO: Shouldn't throw on null input
  */
+// TODO: Shouldn't throw on null input
 export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
-  const { mode, time, day, year }: FormatDateOptions = {
+  let locale = getLocale();
+  const _locale = new Intl.Locale(locale);
+
+  const { calendar, mode, time, day, year, noToday }: FormatDateOptions = {
     ...defaultOptions,
+    ...{ noToday: _locale.language === 'am' ? true : false },
     ...options,
   };
+
+  const formatCalendar = calendar ?? getDefaultCalendar(_locale);
+
   const formatterOptions: Intl.DateTimeFormatOptions = {
-    year: year ? "numeric" : undefined,
-    month: "short",
-    day: day ? "2-digit" : undefined,
+    calendar: formatCalendar,
+    year: year ? 'numeric' : undefined,
+    month: 'short',
+    day: day ? '2-digit' : undefined,
   };
-  let locale = getLocale();
+
   let localeString: string;
   const isToday = dayjs(date).isToday();
-  if (isToday) {
+  if (isToday && !noToday) {
     // This produces the word "Today" in the language of `locale`
-    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
-    localeString = rtf.format(0, "day");
-    localeString =
-      localeString[0].toLocaleUpperCase(locale) + localeString.slice(1);
+    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+    localeString = rtf.format(0, 'day');
+    localeString = localeString[0].toLocaleUpperCase(locale) + localeString.slice(1);
   } else {
-    if (locale == "en") {
+    if (_locale.language === 'en') {
       // This locale override is here rather than in `getLocale`
       // because Americans should see AM/PM for times.
-      locale = "en-GB";
+      locale = 'en-GB';
     }
-    localeString = date.toLocaleDateString(locale, formatterOptions);
-    if (locale == "en-GB" && mode == "standard" && year && day) {
-      // Custom formatting for English. Use hyphens instead of spaces.
-      localeString = localeString.replace(/ /g, "-");
+
+    const formatter = new Intl.DateTimeFormat(locale, formatterOptions);
+    let parts = formatter.formatToParts(date);
+
+    if ((_locale.language === 'en' || _locale.language === 'am') && mode == 'standard' && year && day) {
+      // Custom formatting for English and Amharic. Use hyphens instead of spaces.
+      parts = parts.map(formatParts('-'));
     }
-    if (mode == "wide") {
-      localeString = localeString.replace(/ /g, " — "); // space-emdash-space
-      if (/ru.*/.test(locale)) {
-        // Remove the extra em-dash that gets added between the year and the suffix 'r.'
-        const len = localeString.length;
-        localeString =
-          localeString.slice(0, len - 5) +
-          localeString.slice(len - 5).replace(" — ", " ");
-      }
+
+    if (mode == 'wide') {
+      parts = parts.map(formatParts(' — ')); // space-emdash-space
     }
+
+    // omit the era when using the Ethiopic calendar
+    if (formatterOptions.calendar === 'ethiopic') {
+      parts = parts.filter((part, idx, values) => {
+        if (
+          part.type === 'era' ||
+          (part.type === 'literal' && idx < values.length - 1 && values[idx + 1].type === 'era')
+        ) {
+          return false;
+        }
+
+        return true;
+      });
+    }
+
+    localeString = parts.map((p) => p.value).join('');
   }
-  if (time === true || (isToday && time === "for today")) {
+  if (time === true || (isToday && time === 'for today')) {
     localeString += `, ${formatTime(date)}`;
   }
   return localeString;
 }
+
+// Internal curried call-back for map()
+const formatParts = (separator: string) => {
+  return (part: Intl.DateTimeFormatPart, idx: number, values: Array<Intl.DateTimeFormatPart>) => {
+    if (part.type !== 'literal' || part.value !== ' ') {
+      return part;
+    }
+
+    if (idx < values.length - 1 && values[idx + 1].type === 'era') {
+      return part;
+    }
+
+    return { type: 'literal', value: separator } as Intl.DateTimeFormatPart;
+  };
+};
 
 /**
  * Formats the input as a time, according to the current locale.
@@ -234,8 +346,8 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
  */
 export function formatTime(date: Date) {
   return date.toLocaleTimeString(getLocale(), {
-    hour: "2-digit",
-    minute: "2-digit",
+    hour: '2-digit',
+    minute: '2-digit',
   });
 }
 
@@ -248,19 +360,21 @@ export function formatTime(date: Date) {
  * and `formatTime` with a comma and space. This agrees with the
  * output of `Date.prototype.toLocaleString` for *most* locales.
  */
-export function formatDatetime(
-  date: Date,
-  options?: Partial<Omit<FormatDateOptions, "time">>
-) {
+export function formatDatetime(date: Date, options?: Partial<Omit<FormatDateOptions, 'time'>>) {
   return formatDate(date, { ...options, time: true });
 }
 
-function getLocale() {
+/**
+ * Returns the current locale of the application.
+ * @returns string
+ */
+export function getLocale() {
   let language = window.i18next.language;
-  language = language.replace("_", "-"); // just in case
+  language = language.replace('_', '-'); // just in case
   // hack for `ht` until https://unicode-org.atlassian.net/browse/CLDR-14956 is fixed
-  if (language === "ht") {
-    language = "fr-HT";
+  if (language === 'ht') {
+    language = 'fr-HT';
   }
+
   return language;
 }

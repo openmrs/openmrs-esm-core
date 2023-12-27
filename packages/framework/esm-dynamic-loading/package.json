@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-dynamic-loading",
-  "version": "5.0.2",
+  "version": "5.3.2",
   "license": "MPL-2.0",
   "description": "Utilities for dynamically loading code in OpenMRS",
   "browser": "dist/openmrs-esm-dynamic-loading.js",
@@ -8,7 +8,8 @@
   "source": true,
   "sideEffects": false,
   "scripts": {
-    "test": "jest --config jest.config.js --passWithNoTests",
+    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
+    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
     "build": "webpack --mode=production",
     "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
@@ -37,10 +38,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
-    "@openmrs/esm-globals": "^5.0.2"
-  },
   "peerDependencies": {
-    "@openmrs/esm-globals": "4.x"
+    "@openmrs/esm-globals": "5.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-globals": "workspace:*"
   }
 }

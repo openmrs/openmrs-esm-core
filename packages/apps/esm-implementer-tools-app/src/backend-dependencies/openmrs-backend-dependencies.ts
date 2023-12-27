@@ -41,18 +41,15 @@ async function initInstalledBackendModules(): Promise<Array<BackendModule>> {
 
 function checkIfModulesAreInstalled(
   module: Module,
-  installedBackendModules: Array<BackendModule>
+  installedBackendModules: Array<BackendModule>,
 ): ResolvedDependenciesModule {
   const dependencies: Array<ResolvedBackendModule> = [];
 
-  const missingBackendModule = getMissingBackendModules(
-    module.backendDependencies,
-    installedBackendModules
-  );
+  const missingBackendModule = getMissingBackendModules(module.backendDependencies, installedBackendModules);
 
   const installedAndRequiredModules = getInstalledAndRequiredBackendModules(
     module.backendDependencies,
-    installedBackendModules
+    installedBackendModules,
   );
 
   dependencies.push(
@@ -70,7 +67,7 @@ function checkIfModulesAreInstalled(
         installedVersion,
         type: getResolvedModuleType(requiredVersion, installedVersion),
       };
-    })
+    }),
   );
 
   return {
@@ -87,21 +84,16 @@ function fetchInstalledBackendModules() {
 
 function getMissingBackendModules(
   requiredBackendModules: Record<string, string> | undefined,
-  installedBackendModules: Array<BackendModule>
+  installedBackendModules: Array<BackendModule>,
 ): Array<BackendModule> {
   if (!requiredBackendModules) {
     return [];
   }
 
   const requiredBackendModulesUuids = Object.keys(requiredBackendModules);
-  const installedBackendModuleUuids = installedBackendModules.map(
-    (res) => res.uuid
-  );
+  const installedBackendModuleUuids = installedBackendModules.map((res) => res.uuid);
 
-  const missingModules = difference(
-    requiredBackendModulesUuids,
-    installedBackendModuleUuids
-  );
+  const missingModules = difference(requiredBackendModulesUuids, installedBackendModuleUuids);
 
   return missingModules.map((key) => ({
     uuid: key,
@@ -111,7 +103,7 @@ function getMissingBackendModules(
 
 function getInstalledAndRequiredBackendModules(
   requiredBackendModules: Record<string, string> | undefined,
-  installedBackendModules: Array<BackendModule>
+  installedBackendModules: Array<BackendModule>,
 ): Array<BackendModule> {
   if (!requiredBackendModules) {
     return [];
@@ -131,18 +123,19 @@ function getInstalledAndRequiredBackendModules(
 
 function getInstalledVersion(
   installedAndRequiredBackendModule: BackendModule,
-  installedBackendModules: Array<BackendModule>
+  installedBackendModules: Array<BackendModule>,
 ) {
   const moduleName = installedAndRequiredBackendModule.uuid;
+<<<<<<< HEAD
   return (
     installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ?? ''
   );
+=======
+  return installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ?? '';
+>>>>>>> origin/main
 }
 
-function getResolvedModuleType(
-  requiredVersion: string,
-  installedVersion: string
-): ResolvedBackendModuleType {
+function getResolvedModuleType(requiredVersion: string, installedVersion: string): ResolvedBackendModuleType {
   if (!isVersionSatisfied(requiredVersion, installedVersion)) {
     return 'version-mismatch';
   }
@@ -150,9 +143,7 @@ function getResolvedModuleType(
   return 'okay';
 }
 
-export async function checkModules(): Promise<
-  Array<ResolvedDependenciesModule>
-> {
+export async function checkModules(): Promise<Array<ResolvedDependenciesModule>> {
   if (!cachedFrontendModules) {
     const modules = (window.installedModules ?? [])
       .filter((module) => Boolean(module[1]?.backendDependencies))
@@ -162,20 +153,23 @@ export async function checkModules(): Promise<
       }));
 
     const installedBackendModules = await initInstalledBackendModules();
-    cachedFrontendModules = modules.map((m) =>
-      checkIfModulesAreInstalled(m, installedBackendModules)
-    );
+    cachedFrontendModules = modules.map((m) => checkIfModulesAreInstalled(m, installedBackendModules));
   }
 
   return cachedFrontendModules;
 }
 
+<<<<<<< HEAD
 export function hasInvalidDependencies(
   frontendModules: Array<ResolvedDependenciesModule>
 ) {
   return frontendModules.some((m) =>
     m.dependencies.some((n) => n.type !== 'okay')
   );
+=======
+export function hasInvalidDependencies(frontendModules: Array<ResolvedDependenciesModule>) {
+  return frontendModules.some((m) => m.dependencies.some((n) => n.type !== 'okay'));
+>>>>>>> origin/main
 }
 
 export function useBackendDependencyCheck(moduleName: string) {

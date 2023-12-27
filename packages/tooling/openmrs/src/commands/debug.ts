@@ -1,9 +1,5 @@
-import {
-  ImportmapDeclaration,
-  loadWebpackConfig,
-  logInfo,
-  logWarn,
-} from "../utils";
+import type { ImportmapDeclaration } from '../utils';
+import { loadWebpackConfig, logInfo, logWarn } from '../utils';
 
 export interface DebugArgs {
   port: number;
@@ -19,8 +15,8 @@ export interface DebugArgs {
 }
 
 export function runDebug(args: DebugArgs) {
-  const webpack = require("webpack");
-  const WebpackDevServer = require("webpack-dev-server");
+  const webpack = require('webpack');
+  const WebpackDevServer = require('webpack-dev-server');
 
   const config = loadWebpackConfig({
     importmap: args.importmap,
@@ -30,14 +26,14 @@ export function runDebug(args: DebugArgs) {
     spaPath: args.spaPath,
     configUrls: args.configUrls,
     addCookie: args.addCookie,
-    env: "development",
+    env: 'development',
   });
 
   logInfo(`Starting the dev server ...`);
 
   const { host, port } = args;
   const options = {
-    ...(config["devServer"] ?? {}),
+    ...(config['devServer'] ?? {}),
     port,
     host,
     publicPath: args.spaPath,

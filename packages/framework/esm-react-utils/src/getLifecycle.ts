@@ -1,16 +1,12 @@
 /** @module @category Framework */
-import React from "react";
-import ReactDOMClient from "react-dom/client";
-import singleSpaReact from "single-spa-react";
-import {
-  openmrsComponentDecorator,
-  ComponentDecoratorOptions,
-} from "./openmrsComponentDecorator";
+import type { ComponentType } from 'react';
+import React from 'react';
+import ReactDOMClient from 'react-dom/client';
+import singleSpaReact from 'single-spa-react';
+import type { ComponentDecoratorOptions } from './openmrsComponentDecorator';
+import { openmrsComponentDecorator } from './openmrsComponentDecorator';
 
-export function getLifecycle<T>(
-  Component: React.ComponentType<T>,
-  options: ComponentDecoratorOptions
-) {
+export function getLifecycle<T>(Component: ComponentType<T>, options: ComponentDecoratorOptions) {
   return singleSpaReact({
     React,
     ReactDOMClient,
@@ -19,17 +15,13 @@ export function getLifecycle<T>(
 }
 
 export function getAsyncLifecycle<T>(
-  lazy: () => Promise<{ default: React.ComponentType<T> }>,
-  options: ComponentDecoratorOptions
+  lazy: () => Promise<{ default: ComponentType<T> }>,
+  options: ComponentDecoratorOptions,
 ) {
-  return () =>
-    lazy().then(({ default: Component }) => getLifecycle(Component, options));
+  return () => lazy().then(({ default: Component }) => getLifecycle(Component, options));
 }
 
-export function getSyncLifecycle<T>(
-  Component: React.ComponentType<T>,
-  options: ComponentDecoratorOptions
-) {
+export function getSyncLifecycle<T>(Component: ComponentType<T>, options: ComponentDecoratorOptions) {
   return () => Promise.resolve(getLifecycle(Component, options));
 }
 

@@ -1,23 +1,16 @@
-import React from "react";
-import "@testing-library/jest-dom";
-import { render, screen, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import {
-  implementerToolsConfigStore,
-  temporaryConfigStore,
-  Type,
-} from "@openmrs/esm-framework/src/internal";
-import { Configuration } from "./configuration.component";
-import {
-  useConceptLookup,
-  useGetConceptByUuid,
-} from "./interactive-editor/value-editors/concept-search.resource";
+import React from 'react';
+
+import { render, screen, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { implementerToolsConfigStore, temporaryConfigStore, Type } from '@openmrs/esm-framework/src/internal';
+import { Configuration } from './configuration.component';
+import { useConceptLookup, useGetConceptByUuid } from './interactive-editor/value-editors/concept-search.resource';
 
 const mockUseConceptLookup = useConceptLookup as jest.Mock;
 const mockUseGetConceptByUuid = useGetConceptByUuid as jest.Mock;
 
-jest.mock("lodash-es/debounce", () => jest.fn((fn) => fn));
-jest.mock("./interactive-editor/value-editors/concept-search.resource", () => ({
+jest.mock('lodash-es/debounce', () => jest.fn((fn) => fn));
+jest.mock('./interactive-editor/value-editors/concept-search.resource', () => ({
   useConceptLookup: jest.fn().mockImplementation(() => ({
     concepts: [],
     error: null,
@@ -30,21 +23,19 @@ jest.mock("./interactive-editor/value-editors/concept-search.resource", () => ({
   })),
 }));
 
-window.URL.createObjectURL = jest.fn();
-
 const mockImplToolsConfig = {
-  "@openmrs/mario": {
+  '@openmrs/mario': {
     hasHat: {
       _type: Type.Boolean,
       _default: true,
       _value: false,
-      _source: "provided",
+      _source: 'provided',
     },
     hatUuid: {
       _type: Type.ConceptUuid,
-      _default: "c64b8446-145e-49a3-98eb-ae37333bedf1",
-      _value: "38c650cf-85d5-41b4-b0b1-46709248acca",
-      _source: "provided",
+      _default: 'c64b8446-145e-49a3-98eb-ae37333bedf1',
+      _value: '38c650cf-85d5-41b4-b0b1-46709248acca',
+      _source: 'provided',
     },
     numberFingers: {
       _type: Type.Number,
@@ -54,27 +45,27 @@ const mockImplToolsConfig = {
     },
     nemesisName: {
       _type: Type.String,
-      _default: "Wario",
-      _value: "Waluigi",
-      _source: "fool",
+      _default: 'Wario',
+      _value: 'Waluigi',
+      _source: 'fool',
     },
     mustacheUuid: {
       _type: Type.UUID,
-      _default: "7e5b9aa1-69fb-45c0-90f5-edc66e23c81d",
-      _value: "181aee4a-5664-42da-8699-c36d28083bd0",
-      _source: "temporary config",
+      _default: '7e5b9aa1-69fb-45c0-90f5-edc66e23c81d',
+      _value: '181aee4a-5664-42da-8699-c36d28083bd0',
+      _source: 'temporary config',
     },
   },
-  "@openmrs/luigi": {
+  '@openmrs/luigi': {
     favoriteNumbers: {
       _type: Type.Array,
       _elements: { _type: Type.Number },
       _default: [0],
       _value: [4, 12],
-      _source: "provided",
+      _source: 'provided',
     },
   },
-  "@openmrs/bowser": {
+  '@openmrs/bowser': {
     minions: {
       _type: Type.Array,
       _elements: {
@@ -83,13 +74,13 @@ const mockImplToolsConfig = {
       },
       _default: [],
       _value: [
-        { name: "goomba", canJump: false },
-        { name: "koopa", canJump: true },
+        { name: 'goomba', canJump: false },
+        { name: 'koopa', canJump: true },
       ],
-      _source: "provided",
+      _source: 'provided',
     },
   },
-  "@openmrs/peach": {
+  '@openmrs/peach': {
     weapons: {
       _type: Type.Object,
       _elements: { _type: Type.Number },
@@ -99,7 +90,7 @@ const mockImplToolsConfig = {
   },
 };
 
-describe("Configuration", () => {
+describe('Configuration', () => {
   afterEach(() => {
     implementerToolsConfigStore.setState({ config: {} });
     temporaryConfigStore.setState({ config: {} });
@@ -109,95 +100,92 @@ describe("Configuration", () => {
     render(<Configuration />);
   }
 
-  it("renders the configuration component inside the implementer tools panel", () => {
+  it('renders the configuration component inside the implementer tools panel', () => {
     renderConfiguration();
-    screen.getByRole("switch", { name: /json editor/i });
-    screen.getByRole("switch", { name: /ui editor/i });
-    screen.getByRole("button", { name: /clear local config/i });
-    screen.getByRole("button", { name: /download config/i });
-    screen.getByRole("textbox", { name: /search configuration/i });
+
+    screen.findByRole('textbox', { name: /search configuration/i });
+    screen.getByRole('switch', { name: /json editor/i });
+    screen.getByRole('switch', { name: /ui editor/i });
+    screen.getByRole('button', { name: /clear local config/i });
+    screen.getByRole('button', { name: /download config/i });
   });
 
-  it("displays correct boolean value and editor", async () => {
+  it('displays correct boolean value and editor', async () => {
     const user = userEvent.setup();
 
     implementerToolsConfigStore.setState({
       config: {
-        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+        '@openmrs/mario': mockImplToolsConfig['@openmrs/mario'],
       },
     });
 
     renderConfiguration();
 
-    const rowElement = screen
-      .getByText("hasHat")
-      .closest(".cds--structured-list-row");
+    screen.findByText('hasHat');
+    const rowElement = screen.getByText('hasHat').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const value = row.getByText("false");
-      const editButton = row.getByText("Edit").parentElement as any;
+      const value = row.getByText('false');
+      const editButton = row.getByText('Edit').parentElement as any;
       await user.click(editButton);
-      const editor = row.getByRole("button", { name: /edit/i });
+      const editor = row.getByRole('button', { name: /edit/i });
 
       await user.click(editor);
-      await user.click(row.getByText("Save"));
+      await user.click(row.getByText('Save'));
 
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
-        config: { "@openmrs/mario": { hasHat: false } },
+        config: { '@openmrs/mario': { hasHat: false } },
       });
     }
   });
 
-  it("displays correct concept UUID value and editor", async () => {
+  it('displays correct concept UUID value and editor', async () => {
     const user = userEvent.setup();
 
     mockUseConceptLookup.mockImplementation(() => ({
-      concepts: [
-        { uuid: "61523693-72e2-456d-8c64-8c5293febeb6", display: "Fedora" },
-      ],
+      concepts: [{ uuid: '61523693-72e2-456d-8c64-8c5293febeb6', display: 'Fedora' }],
       error: null,
       isSearchingConcepts: false,
     }));
 
     mockUseGetConceptByUuid.mockImplementation(() => ({
-      concept: { name: { display: "Fedora" } },
+      concept: { name: { display: 'Fedora' } },
       error: null,
       isLoadingConcept: false,
     }));
 
     implementerToolsConfigStore.setState({
       config: {
-        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+        '@openmrs/mario': mockImplToolsConfig['@openmrs/mario'],
       },
     });
 
     renderConfiguration();
 
-    const rowElement = (await screen.findByText("hatUuid")).closest(
-      ".cds--structured-list-row"
-    );
+    screen.findByText('hatUuid');
+    const rowElement = (await screen.findByText('hatUuid')).closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const editButton = row.getByRole("button", { name: /edit/i });
+      const editButton = row.getByRole('button', { name: /edit/i });
 
       await user.click(editButton);
 
-      const searchbox = await row.findByRole("combobox", {
+      const searchbox = await row.findByRole('combobox', {
         name: /search concepts/i,
       });
 
-      await user.type(searchbox, "fedora");
+      await user.type(searchbox, 'fedora');
 
-      expect(mockUseConceptLookup).toHaveBeenCalledWith("fed");
+      expect(mockUseConceptLookup).toHaveBeenCalledWith('fed');
 
-      const targetConcept = await row.findByText("Fedora");
+      const targetConcept = await row.findByText('Fedora');
 
       await user.click(targetConcept);
-      await user.click(row.getByText("Save"));
+      await user.click(row.getByText('Save'));
 
       // expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
       //   config: {
@@ -207,159 +195,156 @@ describe("Configuration", () => {
     }
   });
 
-  it("displays correct number value and editor", async () => {
+  it('displays correct number value and editor', async () => {
     const user = userEvent.setup();
 
     implementerToolsConfigStore.setState({
       config: {
-        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+        '@openmrs/mario': mockImplToolsConfig['@openmrs/mario'],
       },
     });
 
     renderConfiguration();
 
-    const rowElement = (await screen.findByText("numberFingers")).closest(
-      ".cds--structured-list-row"
-    );
+    screen.findByText('numberFingers');
+    const rowElement = screen.getByText('numberFingers').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const valueButton = row.getByText("8");
+      const valueButton = row.getByText('8');
       expect(valueButton).toBeInTheDocument();
 
-      const editButton = row.getByRole("button", { name: /edit/i });
+      const editButton = row.getByRole('button', { name: /edit/i });
 
       await user.click(editButton);
 
-      const editor = await row.findByRole("spinbutton");
+      const editor = await row.findByRole('spinbutton');
 
-      expect(editor).toHaveAttribute("type", "number");
+      expect(editor).toHaveAttribute('type', 'number');
 
       await user.clear(editor);
-      await user.type(editor, "11");
-      await user.click(row.getByText("Save"));
+      await user.type(editor, '11');
+      await user.click(row.getByText('Save'));
 
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
-        config: { "@openmrs/mario": { numberFingers: 11 } },
+        config: { '@openmrs/mario': { numberFingers: 11 } },
       });
     }
   });
 
-  it("displays correct string value and editor", async () => {
+  it('displays correct string value and editor', async () => {
     const user = userEvent.setup();
 
     implementerToolsConfigStore.setState({
       config: {
-        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+        '@openmrs/mario': mockImplToolsConfig['@openmrs/mario'],
       },
     });
 
     renderConfiguration();
 
-    const rowElement = (await screen.findByText("nemesisName")).closest(
-      ".cds--structured-list-row"
-    );
+    screen.findByText('nemesisName');
+    const rowElement = screen.getByText('nemesisName').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      const editButton = row.getByRole("button", { name: /edit/i });
+      const editButton = row.getByRole('button', { name: /edit/i });
 
       await user.click(editButton);
 
-      const editor = await row.findByRole("textbox");
+      const editor = await row.findByRole('textbox');
 
       await user.clear(editor);
-      await user.type(editor, "Bowser");
-      await user.click(row.getByText("Save"));
+      await user.type(editor, 'Bowser');
+      await user.click(row.getByText('Save'));
 
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
-        config: { "@openmrs/mario": { nemesisName: "Bowser" } },
+        config: { '@openmrs/mario': { nemesisName: 'Bowser' } },
       });
     }
   });
 
-  it("displays correct UUID value and editor", async () => {
+  it('displays correct UUID value and editor', async () => {
     const user = userEvent.setup();
 
     implementerToolsConfigStore.setState({
       config: {
-        "@openmrs/mario": mockImplToolsConfig["@openmrs/mario"],
+        '@openmrs/mario': mockImplToolsConfig['@openmrs/mario'],
       },
     });
 
     renderConfiguration();
 
-    const rowElement = (await screen.findByText("mustacheUuid")).closest(
-      ".cds--structured-list-row"
-    );
+    screen.findByText('mustacheUuid');
+    const rowElement = screen.getByText('mustacheUuid').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
 
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
-      row.getByText("181aee4a-5664-42da-8699-c36d28083bd0");
+      row.getByText('181aee4a-5664-42da-8699-c36d28083bd0');
 
-      const editButton = row.getByRole("button", { name: /edit/i });
+      const editButton = row.getByRole('button', { name: /edit/i });
 
       await user.click(editButton);
 
-      const editor = await row.findByRole("textbox");
+      const editor = await row.findByRole('textbox');
 
       await user.clear(editor);
-      const newUuid = "34f03796-f0e2-4f64-9e9a-28fb49a94baf";
+      const newUuid = '34f03796-f0e2-4f64-9e9a-28fb49a94baf';
       await user.type(editor, newUuid);
-      await user.click(row.getByText("Save"));
+      await user.click(row.getByText('Save'));
 
       expect(temporaryConfigStore.setState).toHaveBeenCalledWith({
-        config: { "@openmrs/mario": { mustacheUuid: newUuid } },
+        config: { '@openmrs/mario': { mustacheUuid: newUuid } },
       });
     }
   });
 
-  it("renders an array editor for simple arrays that behaves correctly", async () => {
+  it('renders an array editor for simple arrays that behaves correctly', async () => {
     const user = userEvent.setup();
 
     implementerToolsConfigStore.setState({
       config: {
-        "@openmrs/luigi": mockImplToolsConfig["@openmrs/luigi"],
+        '@openmrs/luigi': mockImplToolsConfig['@openmrs/luigi'],
       },
     });
+
     renderConfiguration();
-    const rowElement = (await screen.findByText("favoriteNumbers")).closest(
-      ".cds--structured-list-row"
-    );
+
+    screen.findByText('favoriteNumbers');
+    const rowElement = screen.getByText('favoriteNumbers').closest('.cds--structured-list-row');
     expect(rowElement).toBeInTheDocument();
+
     if (rowElement) {
       const row = within(rowElement as HTMLElement);
 
-      const inputs = row.getByText("[ 4, 12 ]");
-      const editButton = row.getByRole("button", { name: /edit/i });
+      const inputs = row.getByText('[ 4, 12 ]');
+      const editButton = row.getByRole('button', { name: /edit/i });
 
       await user.click(editButton);
       // expect(inputs[0]).toHaveValue(4);
       // expect(inputs[1]).toHaveValue(12);
-      const firstValue = row.getByDisplayValue("4");
-      expect(firstValue).toHaveAttribute("type", "number");
+      const firstValue = row.getByDisplayValue('4');
+      expect(firstValue).toHaveAttribute('type', 'number');
 
       await user.clear(firstValue);
-      await user.type(firstValue, "5");
+      await user.type(firstValue, '5');
 
-      const secondRowElement = row
-        .getByDisplayValue("12")
-        .closest(".cds--structured-list-row");
+      const secondRowElement = row.getByDisplayValue('12').closest('.cds--structured-list-row');
 
       expect(secondRowElement).toBeInTheDocument();
       // I can't get the add or remove buttons to work in tests.
       if (secondRowElement) {
         await user.click(
           within(secondRowElement as HTMLElement)
-            .getByText("Remove")
-            .closest("button") as HTMLElement
+            .getByText('Remove')
+            .closest('button') as HTMLElement,
         );
         // await waitForElementToBeRemoved(() => row.getByDisplayValue("12"));
       }
-      await user.click(row.getByText("Add"));
+      await user.click(row.getByText('Add'));
       // let rows = await row.findAllByRole("spinbutton");
       // let newInput = rows[rows.length - 1];
       // user.type(newInput, "11");

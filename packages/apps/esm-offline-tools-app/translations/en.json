@@ -1,5 +1,5 @@
 {
-  "emptyStateText": "There are no {displayText} to display",
+  "emptyStateText": "There are no {{displayText}} to display",
   "home": "Home",
   "homeHeader": "Offline home",
   "homeOverviewCardOfflineActionsFailedToUpload": "Failed to upload",
@@ -20,9 +20,8 @@
   "offlineActionsNoActionsEmptyStateTitle": "No actions pending upload",
   "offlineActionsTableAction": "Action",
   "offlineActionsTableCreatedOn": "Date & Time",
-  "offlineActionsTableDeleteAction": "Delete action",
-  "offlineActionsTableDeleteActions_one": "Delete {count} actions",
-  "offlineActionsTableDeleteActions_other": "Delete {count} actions",
+  "offlineActionsTableDeleteActions_one": "Delete action",
+  "offlineActionsTableDeleteActions_other": "Delete {{count}} actions",
   "offlineActionsTableError": "Error",
   "offlineActionsTablePatient": "Patient",
   "offlineActionsUpdateOfflinePatients": "Update offline patients",

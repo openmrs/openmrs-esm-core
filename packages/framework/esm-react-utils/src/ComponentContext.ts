@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface ExtensionData {
   extensionSlotName: string;
@@ -15,5 +15,5 @@ export interface ComponentConfig {
  * Available to all components. Provided by `openmrsComponentDecorator`.
  */
 export const ComponentContext = React.createContext<ComponentConfig>({
-  moduleName: "",
+  moduleName: '',
 });

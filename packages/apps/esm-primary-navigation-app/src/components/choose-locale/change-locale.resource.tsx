@@ -1,24 +1,21 @@
-import {
-  openmrsFetch,
-  queueSynchronizationItemFor,
-} from "@openmrs/esm-framework/src/internal";
-import { userPropertyChange } from "../../constants";
+import { openmrsFetch, queueSynchronizationItemFor } from '@openmrs/esm-framework/src/internal';
+import { userPropertyChange } from '../../constants';
 
 export type PostUserProperties = (
   userUuid: string,
   userProperties: Record<string, string>,
-  abortController?: AbortController
+  abortController?: AbortController,
 ) => Promise<void>;
 
 export async function postUserPropertiesOnline(
   userUuid: string,
   userProperties: any,
-  abortController: AbortController
+  abortController: AbortController,
 ): Promise<void> {
   await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
-    method: "POST",
+    method: 'POST',
     body: { userProperties },
-    headers: { "Content-Type": "application/json" },
+    headers: { 'Content-Type': 'application/json' },
     signal: abortController.signal,
   });
 
@@ -28,36 +25,9 @@ export async function postUserPropertiesOnline(
 
 export async function postUserPropertiesOffline(
   userUuid: string,
-  userProperties: Record<string, unknown>
+  userProperties: Record<string, unknown>,
 ): Promise<void> {
-  await queueSynchronizationItemFor(
-    userUuid,
-    userPropertyChange,
-    userProperties,
-    {
-      displayName: "User Language Change",
-    }
-  );
-}
-
-export type PostSessionLocale = (
-  locale: string,
-  abortController: AbortController
-) => Promise<void>;
-
-export async function postSessionLocaleOnline(
-  locale: string,
-  abortController: AbortController
-): Promise<void> {
-  await openmrsFetch(`/ws/rest/v1/session`, {
-    method: "POST",
-    body: { locale },
-    headers: { "Content-Type": "application/json" },
-    signal: abortController.signal,
+  await queueSynchronizationItemFor(userUuid, userPropertyChange, userProperties, {
+    displayName: 'User Language Change',
   });
 }
-
-export async function postSessionLocaleOffline(
-  locale: string,
-  abortController: AbortController
-) {}

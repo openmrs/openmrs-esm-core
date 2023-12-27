@@ -1,13 +1,10 @@
-:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://openmrs.github.io/openmrs-esm-core/#/). You may find the [Map of the Project](https://openmrs.github.io/openmrs-esm-core/#/main/map) especially helpful.
-
+:wave:	New to our project? Be sure to review the [OpenMRS 3 Frontend Developer Documentation](https://o3-docs.openmrs.org/). You may find the [Introduction](https://o3-docs.openmrs.org/docs/introduction) especially helpful.
 
 Also see the [API documentation](./packages/framework/esm-framework/docs/API.md)
 for `@openmrs/esm-framework`, which is contained in this repository.
 
-
 ![OpenMRS CI](https://github.com/openmrs/openmrs-esm-core/workflows/OpenMRS%20CI/badge.svg)
 ![Check documentation](https://github.com/openmrs/openmrs-esm-core/actions/workflows/docs.yml/badge.svg)
-
 
 Below is the documentation for this repository.
 
@@ -33,6 +30,7 @@ The following common libraries have been developed. They may also be used indepe
 - [@openmrs/esm-config](packages/framework/esm-config): validation and storage of frontend configuration
 - [@openmrs/esm-error-handling](packages/framework/esm-error-handling): handling of errors
 - [@openmrs/esm-extensions](packages/framework/esm-extensions): implementation of a frontend component extension system
+- [@openmrs/esm-feature-flags](packages/framework/esm-feature-flags): hide features that are in progress
 - [@openmrs/esm-globals](packages/framework/esm-globals): useful global variables and types
 - [@openmrs/esm-offline](packages/framework/esm-offline): provides offline functionality
 - [@openmrs/esm-react-utils](packages/framework/esm-react-utils): utilities for React components
@@ -79,9 +77,7 @@ Verification of the existing packages can also be done in one step using `yarn`:
 yarn verify
 ```
 
-### Running
-
-#### The app shell and the framework
+### Running the app shell and the framework
 
 ```sh
 yarn run:shell
@@ -89,7 +85,7 @@ yarn run:shell
 
 `run:shell` will run the latest version of the shell and the framework only.
 
-#### The frontend modules in `apps`
+### Running the frontend modules in `apps`
 
 ```sh
 yarn run:omrs develop --sources packages/apps/<app folder>
@@ -97,7 +93,7 @@ yarn run:omrs develop --sources packages/apps/<app folder>
 
 This will allow you to develop the app similar to the experience of developing other apps.
 
-#### The tooling
+### Running the tooling
 
 ```sh
 cd packages/tooling/openmrs
@@ -105,65 +101,118 @@ yarn build
 ./dist/cli.js
 ```
 
-#### The tests
+### Running tests
 
-Run `yarn test` in the directory containing the package you want to test.
+To run tests for all packages, run:
 
-Run `yarn lerna run test` to run all the tests in this repository.
+```bash
+yarn turbo test
+```
 
-#### Linking the framework
+To run tests in `watch` mode, run:
 
-If you want to try out changes to a framework library, you will
-probably want to `yarn link` or `npm link` it into a frontend module.
-Note that even though frontend modules import from `@openmrs/esm-framework`,
-the package you need to link is the sub-library; e.g., if you are trying
-to test changes in `packages/framework/esm-api`, you will need to link
-`@openmrs/esm-api`.
+```bash
+yarn turbo test:watch
+```
 
-In order to get your local version of that package to be served in your local
-dev server, you will need to link the app shell as well, and to build it.
+To run tests for a specific package, pass the package name to the `--filter` flag. For example, to run tests for `esm-patient-conditions-app`, run:
 
-##### Example
-To set up to develop `@openmrs/esm-api` in a dev server for
-the patient chart:
+```bash
+yarn turbo test --filter="esm-patient-conditions-app"
+```
 
-1. Navigate to the patient chart repository. Execute
-`yarn link /path/to/esm-core/packages/framework/esm-api` and then run
-`yarn link /path/to/esm-corepackages/shell/esm-app-shell`.
-2. In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
-Then run your patient chart dev server as usual.
+To run a specific test file, run:
 
-Please note that this will result in entries being added to the package.json file
-in the `resolutions` field. These changes must be undone before creating your PR,
-which you can do by running `yarn unlink --all` in the patient chart repo.
+```bash
+yarn turbo test -- login
+```
 
-Check your work by adding a `console.log` at the top level of a file you're
-working on in `esm-api`.
+The above command will only run tests in the file or files that match the provided string.
+
+You can also run the matching tests from above in watch mode by running:
+
+```bash
+yarn turbo test:watch -- login.test
+```
+
+To generate a `coverage` report, run:
+
+```bash
+yarn turbo coverage
+```
+
+By default, `turbo` will cache test runs. This means that re-running tests wihout changing any of the related files will return the cached logs from the last run. To bypass the cache, run tests with the `force` flag, as follows:
+
+```bash
+yarn turbo test --force
+```
+
+### Linking the framework
+
+If you want to try out changes to a framework library, you will probably want to `yarn link` or `npm link` it into a frontend module.
+Note that even though frontend modules import from `@openmrs/esm-framework`, the package you need to link is the sub-library; for example, if you are trying to test changes in `packages/framework/esm-api`, you will need to link it:
+
+```sh
+yarn link path/to/openmrs-esm-core/packages/framework/esm-framework
+yarn link path/to/openmrs-esm-core/packages/framework/esm-api
+```
+
+This satisfies the build tooling, but we must do one more step to get the frontend
+to load these dependencies at runtime.
+
+Here, there are two options:
+
+#### Method 1: Using the frontend dev server
+
+In order to get your local version of the core packages to be served in your local
+dev server, you will need to link the tooling as well.
+
+`yarn link /path/to/esm-core/packages/tooling/openmrs`.
+
+In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
+Then run your patient chart dev server as usual, with `yarn start`.
+
+#### Method 2: Using import map overrides
+
+In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient chart repository, `cd` into whatever packages you are working on and run `yarn serve` from there. Then use the import map override tool in the browser to tell the frontend to load your local patient chart packages.
+
+#### Once it's working
+
+Please note that this will result in entries being added to the package.json file in the `resolutions` field. These changes must be undone before creating your PR, which you can do by running `yarn unlink --all` in the patient chart repo.
+
+Check your work by adding a `console.log` at the top level of a file you're working on in `esm-api`.
 
 ### Version and release
+
+We use Yarn [workspaces](https://yarnpkg.com/features/workspaces) to handle versioning in this monorepo.
 
 To increment the version, run the following command:
 
 ```sh
-yarn release
+yarn release [version]
 ```
 
-You will need to pick the next version number. We use minor changes (e.g. `3.2.0` → `3.3.0`)
-to indicate big new features and breaking changes, and patch changes (e.g. `3.2.0` → `3.2.1`)
-otherwise.
+Where version corresponds to:
 
-Note that this command will not create a new tag, nor publish the packages.
-After running it, make a PR or merge to `main` with the resulting changeset.
+- `patch` for bug fixes e.g. `3.2.0` → `3.2.1`
+- `minor` for new features that are backwards-compatible e.g `3.2.0` → `3.3.0`
+- `major` for breaking changes e.g. `3.2.0` → `4.0.0`
 
-Once the version bump is merged, go to GitHub and
-[draft a new release](https://github.com/openmrs/openmrs-esm-core/releases/new). 
-The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title
-should just be the version number (e.g., `3.2.1`). The creation of the GitHub release
-will cause GitHub Actions to publish the packages, completing the release process.
+Note that this command will not create a new tag, nor publish the packages. After running it, make a PR or merge to `main` with the resulting changeset. Note that the release commit message must resemble `(chore) Release vx.x.x` where `x.x.x` is the new version number prefixed with `v`.
+
+This is because we don't want to trigger a pre-release build when effecting a version bump.
+
+Once the version bump commit is merged, go to GitHub and [draft a new release](https://github.com/openmrs/openmrs-esm-core/releases/new).
+
+The tag should be prefixed with `v` (e.g., `v3.2.1`), while the release title should just be the version number (e.g., `3.2.1`). The creation of the GitHub release will cause GitHub Actions to publish the packages, completing the release process.
 
 > Don't run `npm publish`, `yarn publish`, or `lerna publish`. Use the above process.
 
 ## Design Patterns
 
-For documentation about our design patterns, please visit our [design system](https://zeroheight.com/23a080e38/p/880723--introduction) documentation website.
+For documentation about our design patterns, please visit our design system documentation website.
 
+## Bumping Playwright Version
+
+Be sure to update the Playwright version in the [Bamboo Playwright Docker image](e2e/support/bamboo/playwright.Dockerfile) whenever making version changes. 
+Also, ensure you specify fixed (pinned) versions of Playwright in the package.json file to maintain consistency between the Playwright version used in the Docker image for Bamboo test execution and the version used in the codebase.

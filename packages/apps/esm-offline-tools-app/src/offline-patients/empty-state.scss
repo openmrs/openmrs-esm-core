@@ -1,13 +1,13 @@
-@use "@carbon/styles/scss/spacing";
-@use "@carbon/styles/scss/type";
-@import "../root.scss";
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+@import '../root.scss';
 
 .action {
   margin-bottom: spacing.$spacing-03;
 }
 
 .content {
-  @include type.type-style("heading-compact-01");
+  @include type.type-style('heading-compact-01');
   color: $text-02;
   margin-top: spacing.$spacing-05;
   margin-bottom: spacing.$spacing-03;
@@ -15,14 +15,14 @@
 
 .desktopHeading {
   h4 {
-    @include type.type-style("heading-compact-02");
+    @include type.type-style('heading-compact-02');
     color: $text-02;
   }
 }
 
 .tabletHeading {
   h4 {
-    @include type.type-style("heading-03");
+    @include type.type-style('heading-03');
     color: $text-02;
   }
 }
@@ -34,7 +34,7 @@
   margin-bottom: spacing.$spacing-05;
 
   h4:after {
-    content: "";
+    content: '';
     display: block;
     width: 2rem;
     padding-top: 0.188rem;
@@ -43,7 +43,7 @@
 }
 
 .heading:after {
-  content: "";
+  content: '';
   display: block;
   width: 2rem;
   padding-top: 0.188rem;

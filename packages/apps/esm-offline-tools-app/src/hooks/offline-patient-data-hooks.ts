@@ -1,40 +1,29 @@
-import {
-  fetchCurrentPatient,
-  getSynchronizationItems,
-  getDynamicOfflineDataEntries,
-} from "@openmrs/esm-framework";
-import merge from "lodash-es/merge";
-import { useMemo } from "react";
-import useSWR, { SWRResponse } from "swr";
+import { fetchCurrentPatient, getSynchronizationItems, getDynamicOfflineDataEntries } from '@openmrs/esm-framework';
+import merge from 'lodash-es/merge';
+import { useMemo } from 'react';
+import type { SWRResponse } from 'swr';
+import useSWR from 'swr';
 
 function useDynamicOfflineDataEntries(type: string) {
-  return useSWR(`dynamicOfflineData/entries/${type}`, () =>
-    getDynamicOfflineDataEntries(type)
-  );
+  return useSWR(`dynamicOfflineData/entries/${type}`, () => getDynamicOfflineDataEntries(type));
 }
 
 function useSynchronizationItems<T>(type: string) {
-  return useSWR(`syncQueue/items/${type}`, () =>
-    getSynchronizationItems<T>(type)
-  );
+  return useSWR(`syncQueue/items/${type}`, () => getSynchronizationItems<T>(type));
 }
 
 function useFhirPatients(ids: Array<string>) {
   const stableIds = useMemo(() => [...ids].sort(), [ids]);
-  return useSWR(["fhirPatients", stableIds], () =>
-    Promise.all(
-      stableIds.map((patientId) =>
-        fetchCurrentPatient(patientId, undefined, false)
-      )
-    )
+  return useSWR(['fhirPatients', stableIds], () =>
+    Promise.all(stableIds.map((patientId) => fetchCurrentPatient(patientId, undefined, false))),
   );
 }
 
 export function useOfflineRegisteredPatients() {
-  const offlinePatientsSwr = useDynamicOfflineDataEntries("patient");
+  const offlinePatientsSwr = useDynamicOfflineDataEntries('patient');
   const patientSyncItemsSwr = useSynchronizationItems<{
     fhirPatient?: fhir.Patient;
-  }>("patient-registration");
+  }>('patient-registration');
 
   return useMergedSwr(() => {
     return patientSyncItemsSwr.data
@@ -42,9 +31,7 @@ export function useOfflineRegisteredPatients() {
         const isNewlyRegistered =
           patientRegistrationItem.fhirPatient &&
           !offlinePatientsSwr.data.find(
-            (offlinePatientEntry) =>
-              offlinePatientEntry.identifier ===
-              patientRegistrationItem.fhirPatient.id
+            (offlinePatientEntry) => offlinePatientEntry.identifier === patientRegistrationItem.fhirPatient.id,
           );
         return isNewlyRegistered;
       })
@@ -53,29 +40,19 @@ export function useOfflineRegisteredPatients() {
 }
 
 export function useOfflinePatientsWithEntries() {
-  const offlinePatientsSwr = useDynamicOfflineDataEntries("patient");
+  const offlinePatientsSwr = useDynamicOfflineDataEntries('patient');
   const patientSyncItemsSwr = useSynchronizationItems<{
     fhirPatient?: fhir.Patient;
-  }>("patient-registration");
-  const fhirPatientsSwr = useFhirPatients(
-    offlinePatientsSwr.data?.map((entry) => entry.identifier) ?? []
-  );
+  }>('patient-registration');
+  const fhirPatientsSwr = useFhirPatients(offlinePatientsSwr.data?.map((entry) => entry.identifier) ?? []);
 
   return useMergedSwr(() => {
     return offlinePatientsSwr.data.map((offlinePatientEntry) => {
-      const matchingFhirPatient = fhirPatientsSwr.data.find(
-        (patient) => patient.id === offlinePatientEntry.identifier
-      );
+      const matchingFhirPatient = fhirPatientsSwr.data.find((patient) => patient.id === offlinePatientEntry.identifier);
       const offlineUpdates = patientSyncItemsSwr.data
-        .filter(
-          (syncItem) =>
-            syncItem.fhirPatient.id === offlinePatientEntry.identifier
-        )
+        .filter((syncItem) => syncItem.fhirPatient.id === offlinePatientEntry.identifier)
         .map((item) => item.fhirPatient);
-      const finalPatient = merge(
-        matchingFhirPatient,
-        ...offlineUpdates
-      ) as fhir.Patient;
+      const finalPatient = merge(matchingFhirPatient, ...offlineUpdates) as fhir.Patient;
 
       return {
         patient: finalPatient,
@@ -86,7 +63,7 @@ export function useOfflinePatientsWithEntries() {
 }
 
 export function useOfflinePatientStats() {
-  const offlinePatientsSwr = useDynamicOfflineDataEntries("patient");
+  const offlinePatientsSwr = useDynamicOfflineDataEntries('patient');
   const offlineRegisteredPatientsSwr = useOfflineRegisteredPatients();
 
   return useMergedSwr(
@@ -94,35 +71,28 @@ export function useOfflinePatientStats() {
       downloadedCount: offlinePatientsSwr.data.length,
       registeredCount: offlineRegisteredPatientsSwr.data.length,
     }),
-    [offlinePatientsSwr, offlineRegisteredPatientsSwr]
+    [offlinePatientsSwr, offlineRegisteredPatientsSwr],
   );
 }
 
 export function useLastSyncStateOfPatient(patientUuid: string) {
-  return useSWR(
-    `offlineTools/offlinePatient/${patientUuid}/lastSyncState`,
-    async () => {
-      const offlinePatientEntries = await getDynamicOfflineDataEntries(
-        "patient"
-      );
-      const patientEntry = offlinePatientEntries.find(
-        (entry) => entry.identifier === patientUuid
-      );
-      return patientEntry?.syncState;
-    }
-  );
+  return useSWR(`offlineTools/offlinePatient/${patientUuid}/lastSyncState`, async () => {
+    const offlinePatientEntries = await getDynamicOfflineDataEntries('patient');
+    const patientEntry = offlinePatientEntries.find((entry) => entry.identifier === patientUuid);
+    return patientEntry?.syncState;
+  });
 }
 
-function useMergedSwr<T>(
-  merge: () => T,
-  swrResponses: Array<SWRResponse>
-): SWRResponse<T> {
+function useMergedSwr<T>(merge: () => T, swrResponses: Array<SWRResponse>): SWRResponse<T> {
   return useMemo(() => {
     const areAllLoaded = swrResponses.every((res) => !!res.data);
     const data = areAllLoaded ? merge() : null;
     const error = swrResponses.find((res) => res.error);
-    const mutate = () =>
-      Promise.all(swrResponses.map((res) => res.mutate())).then(merge);
+    const mutate: () => Promise<undefined> = () =>
+      Promise.all(swrResponses.map((res) => res.mutate())).then(() => {
+        merge();
+        return undefined;
+      });
     const isValidating = swrResponses.some((res) => res.isValidating);
     const isLoading = swrResponses.some((res) => res.isLoading);
 
@@ -133,10 +103,5 @@ function useMergedSwr<T>(
       isValidating,
       isLoading,
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    merge,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    ...swrResponses.flatMap((res) => [res.data, res.error, res.isValidating]),
-  ]);
+  }, [merge, swrResponses]);
 }

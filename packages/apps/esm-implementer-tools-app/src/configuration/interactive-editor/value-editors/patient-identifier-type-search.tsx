@@ -1,17 +1,10 @@
-import React, { useState, useMemo } from "react";
-import uniqueId from "lodash-es/uniqueId";
-import {
-  usePatientIdentifierTypes,
-  PatientIdentifierType,
-} from "./patient-identifier-type.resource";
-import styles from "./uuid-search.scss";
-import { useTranslation } from "react-i18next";
-import {
-  Search,
-  StructuredListCell,
-  StructuredListRow,
-  StructuredListWrapper,
-} from "@carbon/react";
+import React, { useState, useMemo } from 'react';
+import uniqueId from 'lodash-es/uniqueId';
+import type { PatientIdentifierType } from './patient-identifier-type.resource';
+import { usePatientIdentifierTypes } from './patient-identifier-type.resource';
+import styles from './uuid-search.scss';
+import { useTranslation } from 'react-i18next';
+import { Search, StructuredListCell, StructuredListRow, StructuredListWrapper } from '@carbon/react';
 
 interface PatientIdentifierTypeSearchBoxProps {
   value: string;
@@ -22,11 +15,9 @@ export function PatientIdentifierTypeSearchBox({
   setPatientIdentifierTypeUuid,
   value,
 }: PatientIdentifierTypeSearchBoxProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const { data: patientIdentifierTypes, isLoading } =
-    usePatientIdentifierTypes();
-  const [activePatientIdentifierTypeUuid, setActivePatientIdentifierTypeUuid] =
-    useState<any>(value);
+  const [searchTerm, setSearchTerm] = useState('');
+  const { data: patientIdentifierTypes, isLoading } = usePatientIdentifierTypes();
+  const [activePatientIdentifierTypeUuid, setActivePatientIdentifierTypeUuid] = useState<any>(value);
   const { t } = useTranslation();
 
   const id = useMemo(() => uniqueId(), []);
@@ -34,27 +25,22 @@ export function PatientIdentifierTypeSearchBox({
   const handleUuidChange = (patientIdentifierType: PatientIdentifierType) => {
     setActivePatientIdentifierTypeUuid(patientIdentifierType.uuid);
     setPatientIdentifierTypeUuid(patientIdentifierType.uuid);
-    setSearchTerm("");
+    setSearchTerm('');
   };
 
   const handleSearchTermChange = (evt) => setSearchTerm(evt.target.value);
 
-  const filteredResults: Array<PatientIdentifierType> | undefined =
-    useMemo(() => {
-      if (!isLoading && searchTerm && searchTerm !== "") {
-        return patientIdentifierTypes?.filter((type) =>
-          type.display.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      } else {
-        return undefined;
-      }
-    }, [isLoading, searchTerm, patientIdentifierTypes]);
+  const filteredResults: Array<PatientIdentifierType> | undefined = useMemo(() => {
+    if (!isLoading && searchTerm && searchTerm !== '') {
+      return patientIdentifierTypes?.filter((type) => type.display.toLowerCase().includes(searchTerm.toLowerCase()));
+    } else {
+      return undefined;
+    }
+  }, [isLoading, searchTerm, patientIdentifierTypes]);
 
   return (
     <div>
-      {activePatientIdentifierTypeUuid && (
-        <p className={styles.activeUuid}>{activePatientIdentifierTypeUuid}</p>
-      )}
+      {activePatientIdentifierTypeUuid && <p className={styles.activeUuid}>{activePatientIdentifierTypeUuid}</p>}
       <div className={styles.autocomplete}>
         <Search
           id={`search-input-${id}`}
@@ -62,12 +48,7 @@ export function PatientIdentifierTypeSearchBox({
           type="text"
           size="sm"
           placeholder={
-            !isLoading
-              ? t(
-                  "searchPersonAttributeHelperText",
-                  "Person attribute type name"
-                )
-              : t("loading", "Loading")
+            !isLoading ? t('searchPersonAttributeHelperText', 'Person attribute type name') : t('loading', 'Loading')
           }
           onChange={handleSearchTermChange}
           value={searchTerm}
@@ -75,11 +56,7 @@ export function PatientIdentifierTypeSearchBox({
         />
         {searchTerm ? (
           filteredResults?.length ? (
-            <StructuredListWrapper
-              selection
-              className={styles.listbox}
-              id={`searchbox-${id}`}
-            >
+            <StructuredListWrapper selection className={styles.listbox} id={`searchbox-${id}`}>
               {filteredResults?.map((patientIdentifierType) => (
                 <StructuredListRow
                   key={patientIdentifierType.uuid}
@@ -96,9 +73,7 @@ export function PatientIdentifierTypeSearchBox({
               ))}
             </StructuredListWrapper>
           ) : (
-            <p className={styles.bodyShort01}>
-              {t("noPersonAttributeFoundText", "No matching results found")}
-            </p>
+            <p className={styles.bodyShort01}>{t('noPersonAttributeFoundText', 'No matching results found')}</p>
           )
         ) : null}
       </div>
