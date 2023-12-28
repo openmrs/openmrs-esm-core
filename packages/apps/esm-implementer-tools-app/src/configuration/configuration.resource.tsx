@@ -1,4 +1,4 @@
-import { Config, openmrsFetch, showNotification } from '@openmrs/esm-framework';
+import { type Config, openmrsFetch } from '@openmrs/esm-framework';
 
 export async function saveConfig(config: Config) {
   return openmrsFetch(`/ws/frontend/config.json`, {
