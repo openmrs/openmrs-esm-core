@@ -1,7 +1,7 @@
-@use "@carbon/styles/scss/spacing";
-@use "@carbon/styles/scss/type";
-@import "~@openmrs/esm-styleguide/src/vars";
-@import "../root.scss";
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+@import '~@openmrs/esm-styleguide/src/vars';
+@import '../root.scss';
 
 .widgetCard {
   background-color: $ui-background;
@@ -21,7 +21,7 @@
     color: $text-02;
 
     &:after {
-      content: "";
+      content: '';
       display: block;
       width: 2rem;
       padding-top: 0.188rem;
@@ -34,7 +34,7 @@
   height: 3rem;
 
   h4 {
-    @include type.type-style("heading-compact-02");
+    @include type.type-style('heading-compact-02');
   }
 }
 
@@ -42,6 +42,6 @@
   height: 4.5rem;
 
   h4 {
-    @include type.type-style("heading-03");
+    @include type.type-style('heading-03');
   }
 }

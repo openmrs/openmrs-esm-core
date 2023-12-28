@@ -1,16 +1,10 @@
 /** @module @category API */
-import { reportError } from "@openmrs/esm-error-handling";
-import { createGlobalStore } from "@openmrs/esm-state";
-import isUndefined from "lodash-es/isUndefined";
-import { Observable } from "rxjs";
-import { openmrsFetch, sessionEndpoint } from "../openmrs-fetch";
-import type {
-  LoggedInUser,
-  SessionLocation,
-  Privilege,
-  Role,
-  Session,
-} from "../types";
+import { reportError } from '@openmrs/esm-error-handling';
+import { createGlobalStore } from '@openmrs/esm-state';
+import isUndefined from 'lodash-es/isUndefined';
+import { Observable } from 'rxjs';
+import { openmrsFetch, sessionEndpoint } from '../openmrs-fetch';
+import type { LoggedInUser, SessionLocation, Privilege, Role, Session } from '../types';
 
 export type SessionStore = LoadedSessionStore | UnloadedSessionStore;
 
@@ -24,7 +18,7 @@ export type UnloadedSessionStore = {
   session: null;
 };
 
-const sessionStore = createGlobalStore<SessionStore>("session", {
+const sessionStore = createGlobalStore<SessionStore>('session', {
   loaded: false,
   session: null,
 });
@@ -70,16 +64,9 @@ let lastFetchTimeMillis = 0;
  */
 function getCurrentUser(): Observable<Session>;
 function getCurrentUser(opts: { includeAuthStatus: true }): Observable<Session>;
-function getCurrentUser(opts: {
-  includeAuthStatus: false;
-}): Observable<LoggedInUser>;
-function getCurrentUser(
-  opts = { includeAuthStatus: true }
-): Observable<Session | LoggedInUser> {
-  if (
-    lastFetchTimeMillis < Date.now() - 1000 * 60 ||
-    !sessionStore.getState().loaded
-  ) {
+function getCurrentUser(opts: { includeAuthStatus: false }): Observable<LoggedInUser>;
+function getCurrentUser(opts = { includeAuthStatus: true }): Observable<Session | LoggedInUser> {
+  if (lastFetchTimeMillis < Date.now() - 1000 * 60 || !sessionStore.getState().loaded) {
     refetchCurrentUser();
   }
 
@@ -95,7 +82,7 @@ function getCurrentUser(
     };
     handler(sessionStore.getState());
     // The observable subscribe function should return an unsubscribe function,
-    // which happens to be exactly what Unistore `subscribe` returns.
+    // which happens to be exactly what `subscribe` returns.
     return sessionStore.subscribe(handler);
   });
 }
@@ -103,37 +90,42 @@ function getCurrentUser(
 export { getCurrentUser };
 
 export function getSessionStore() {
-  if (
-    lastFetchTimeMillis < Date.now() - 1000 * 60 ||
-    !sessionStore.getState().loaded
-  ) {
+  if (lastFetchTimeMillis < Date.now() - 1000 * 60 || !sessionStore.getState().loaded) {
     refetchCurrentUser();
   }
 
   return sessionStore;
 }
 
-function setUserLanguage(data: Session) {
-  const locale = data?.user?.userProperties?.defaultLocale ?? data.locale;
-  const htmlLang = document.documentElement.getAttribute("lang");
+// NB locale is string only if this returns true
+function isValidLocale(locale: unknown): locale is string {
+  if (locale === undefined || typeof locale !== 'string') {
+    return false;
+  }
 
-  if (locale !== htmlLang) {
-    document.documentElement.setAttribute("lang", locale);
+  try {
+    new Intl.Locale(locale);
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+}
+
+export function setUserLanguage(data: Session) {
+  const locale = data?.user?.userProperties?.defaultLocale ?? data.locale;
+  const htmlLang = document.documentElement.getAttribute('lang');
+
+  if (isValidLocale(locale) && locale !== htmlLang) {
+    document.documentElement.setAttribute('lang', locale);
   }
 }
 
-function userHasPrivilege(
-  requiredPrivilege: string | string[] | undefined,
-  user: { privileges: Array<Privilege> }
-) {
-  if (typeof requiredPrivilege === "string") {
-    return !isUndefined(
-      user.privileges.find((p) => requiredPrivilege === p.display)
-    );
+function userHasPrivilege(requiredPrivilege: string | string[] | undefined, user: { privileges: Array<Privilege> }) {
+  if (typeof requiredPrivilege === 'string') {
+    return !isUndefined(user.privileges.find((p) => requiredPrivilege === p.display));
   } else if (Array.isArray(requiredPrivilege)) {
-    return requiredPrivilege.every(
-      (rp) => !isUndefined(user.privileges.find((p) => rp === p.display))
-    );
+    return requiredPrivilege.every((rp) => !isUndefined(user.privileges.find((p) => rp === p.display)));
   } else if (!isUndefined(requiredPrivilege)) {
     console.error(`Could not understand privileges "${requiredPrivilege}"`);
   }
@@ -142,9 +134,7 @@ function userHasPrivilege(
 }
 
 function isSuperUser(user: { roles: Array<Role> }) {
-  return !isUndefined(
-    user.roles.find((role) => role.display === "System Developer")
-  );
+  return !isUndefined(user.roles.find((role) => role.display === 'System Developer'));
 }
 
 /**
@@ -165,7 +155,7 @@ export function refetchCurrentUser() {
     lastFetchTimeMillis = Date.now();
     openmrsFetch(sessionEndpoint)
       .then((res) => {
-        if (typeof res?.data === "object") {
+        if (typeof res?.data === 'object') {
           setUserLanguage(res.data);
           resolve(res.data);
           sessionStore.setState({ loaded: true, session: res.data });
@@ -178,7 +168,7 @@ export function refetchCurrentUser() {
         reportError(`Failed to fetch new session information: ${err}`);
         reject(err);
         return {
-          sessionId: "",
+          sessionId: '',
           authenticated: false,
         };
       });
@@ -188,13 +178,13 @@ export function refetchCurrentUser() {
 export function clearCurrentUser() {
   sessionStore.setState({
     loaded: true,
-    session: { authenticated: false, sessionId: "" },
+    session: { authenticated: false, sessionId: '' },
   });
 }
 
 export function userHasAccess(
   requiredPrivilege: string | string[],
-  user: { privileges: Array<Privilege>; roles: Array<Role> }
+  user: { privileges: Array<Privilege>; roles: Array<Role> },
 ) {
   if (user === undefined) {
     // if the user hasn't been loaded, then return false iff there is a required privilege
@@ -236,18 +226,37 @@ export function getSessionLocation() {
   });
 }
 
-export async function setSessionLocation(
-  locationUuid: string,
-  abortController: AbortController
-): Promise<any> {
+export async function setSessionLocation(locationUuid: string, abortController: AbortController): Promise<any> {
   await openmrsFetch(sessionEndpoint, {
-    method: "POST",
+    method: 'POST',
     body: { sessionLocation: locationUuid },
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     signal: abortController.signal,
   });
 
-  refetchCurrentUser();
+  await refetchCurrentUser();
+}
+
+export async function setUserProperties(
+  userUuid: string,
+  userProperties: {
+    [x: string]: string;
+  },
+  abortController?: AbortController,
+): Promise<any> {
+  if (!abortController) {
+    abortController = new AbortController();
+  }
+  await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
+    method: 'POST',
+    body: { userProperties },
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    signal: abortController.signal,
+  });
+
+  await refetchCurrentUser();
 }

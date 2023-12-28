@@ -1,14 +1,16 @@
 {
   "name": "@openmrs/esm-api",
-  "version": "4.1.0",
+  "version": "5.3.2",
   "license": "MPL-2.0",
   "description": "The javascript module for interacting with the OpenMRS API",
   "browser": "dist/openmrs-esm-api.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "test": "jest --config jest.config.js --passWithNoTests",
+    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
+    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
@@ -40,13 +42,15 @@
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
-    "@openmrs/esm-config": "4.x",
-    "@openmrs/esm-error-handling": "4.x"
+    "@openmrs/esm-config": "5.x",
+    "@openmrs/esm-error-handling": "5.x",
+    "@openmrs/esm-offline": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-config": "^4.1.0",
-    "@openmrs/esm-error-handling": "^4.1.0",
-    "@openmrs/esm-state": "^4.1.0",
-    "rxjs": "^6.5.3"
+    "@openmrs/esm-config": "workspace:*",
+    "@openmrs/esm-error-handling": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
+    "rxjs": "^6.5.3",
+    "webpack": "^5.88.0"
   }
 }

@@ -1,7 +1,7 @@
 /** @module @category Offline */
-import type { ImportMap } from "@openmrs/esm-globals";
-import { OmrsOfflineCachingStrategy } from "./service-worker-http-headers";
-import { getOmrsServiceWorker } from "./service-worker";
+import type { ImportMap } from '@openmrs/esm-globals';
+import type { OmrsOfflineCachingStrategy } from './service-worker-http-headers';
+import { getOmrsServiceWorker } from './service-worker';
 
 /**
  * Sends the specified message to the application's service worker.
@@ -9,7 +9,7 @@ import { getOmrsServiceWorker } from "./service-worker";
  * @returns A promise which completes when the message has been successfully processed by the Service Worker.
  */
 export async function messageOmrsServiceWorker(
-  message: KnownOmrsServiceWorkerMessages
+  message: KnownOmrsServiceWorkerMessages,
 ): Promise<MessageServiceWorkerResult<any>> {
   const sw = await getOmrsServiceWorker();
   return sw
@@ -18,26 +18,21 @@ export async function messageOmrsServiceWorker(
         success: false,
         result: undefined,
         error:
-          "No service worker has been registered. This is typically the case when the application has been built without offline-related features.",
+          'No service worker has been registered. This is typically the case when the application has been built without offline-related features.',
       };
 }
 
-export interface OmrsServiceWorkerMessage<
-  MessageTypeTypeIdentifier extends string
-> {
+export interface OmrsServiceWorkerMessage<MessageTypeTypeIdentifier extends string> {
   type: MessageTypeTypeIdentifier;
 }
 
-export interface OnImportMapChangedMessage
-  extends OmrsServiceWorkerMessage<"onImportMapChanged"> {
+export interface OnImportMapChangedMessage extends OmrsServiceWorkerMessage<'onImportMapChanged'> {
   importMap: ImportMap;
 }
 
-export interface ClearDynamicRoutesMessage
-  extends OmrsServiceWorkerMessage<"clearDynamicRoutes"> {}
+export interface ClearDynamicRoutesMessage extends OmrsServiceWorkerMessage<'clearDynamicRoutes'> {}
 
-export interface RegisterDynamicRouteMessage
-  extends OmrsServiceWorkerMessage<"registerDynamicRoute"> {
+export interface RegisterDynamicRouteMessage extends OmrsServiceWorkerMessage<'registerDynamicRoute'> {
   pattern?: string;
   url?: string;
   strategy?: OmrsOfflineCachingStrategy;

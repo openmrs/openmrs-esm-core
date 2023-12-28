@@ -7,8 +7,8 @@ export {
   getConnectedExtensions,
   getAssignedExtensions,
   registerExtensionSlot,
-} from "./extensions";
-export { type CancelLoading, renderExtension } from "./render";
+} from './extensions';
+export { type CancelLoading, renderExtension } from './render';
 export {
   type ExtensionMeta,
   type ExtensionRegistration,
@@ -17,4 +17,4 @@ export {
   type ConnectedExtension,
   type ExtensionSlotState,
   getExtensionStore,
-} from "./store";
+} from './store';

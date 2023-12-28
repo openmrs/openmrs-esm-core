@@ -26,10 +26,7 @@ export interface BreadcrumbSettings {
   /**
    * The title of the breadcrumb.
    */
-  title:
-    | string
-    | ((params: any) => string)
-    | ((params: any) => Promise<string>);
+  title: string | ((params: any) => string) | ((params: any) => Promise<string>);
 }
 
 export interface BreadcrumbRegistration {

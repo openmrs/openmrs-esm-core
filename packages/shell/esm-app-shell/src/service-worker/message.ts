@@ -2,10 +2,11 @@ import type {
   MessageServiceWorkerResult,
   OnImportMapChangedMessage,
   RegisterDynamicRouteMessage,
-} from "@openmrs/esm-offline";
-import escapeRegExp from "lodash-es/escapeRegExp";
-import { cacheImportMapReferences } from "./caching";
-import { DynamicRouteRegistration, ServiceWorkerDb } from "./storage";
+} from '@openmrs/esm-offline';
+import escapeRegExp from 'lodash-es/escapeRegExp';
+import { cacheImportMapReferences } from './caching';
+import type { DynamicRouteRegistration } from './storage';
+import { ServiceWorkerDb } from './storage';
 
 const messageHandlers = {
   onImportMapChanged,
@@ -21,11 +22,7 @@ async function clearDynamicRoutes() {
   await new ServiceWorkerDb().dynamicRouteRegistrations.clear();
 }
 
-async function registerDynamicRoute({
-  pattern,
-  url,
-  strategy,
-}: RegisterDynamicRouteMessage) {
+async function registerDynamicRoute({ pattern, url, strategy }: RegisterDynamicRouteMessage) {
   let finalPattern = pattern;
   if (!finalPattern && url) {
     finalPattern = `^${escapeRegExp(url)}$`;
@@ -50,12 +47,10 @@ async function registerDynamicRoute({
  * @param event The event data containing the message dispatched to the Service Worker.
  */
 export async function handleMessage(event: ExtendableMessageEvent) {
-  const handler = messageHandlers[event.data?.type?.toString() ?? ""];
+  const handler = messageHandlers[event.data?.type?.toString() ?? ''];
 
   if (!handler) {
-    fail(
-      `Received an unknown message of type "${event.data?.type} which cannot be handled.`
-    );
+    fail(`Received an unknown message of type "${event.data?.type} which cannot be handled.`);
     return;
   }
 
@@ -66,11 +61,11 @@ export async function handleMessage(event: ExtendableMessageEvent) {
       result,
     });
   } catch (e) {
-    fail(e?.message ?? e?.toString() ?? "Unknown error.");
+    fail(e?.message ?? e?.toString() ?? 'Unknown error.');
   }
 
   function fail(error: string) {
-    console.warn("[SW] Handling a message resulted in an error.", error);
+    console.warn('[SW] Handling a message resulted in an error.', error);
     resolve({
       success: false,
       error,

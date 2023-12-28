@@ -1,17 +1,14 @@
 /** @module @category Breadcrumb */
-import { pathToRegexp } from "path-to-regexp";
-import { createGlobalStore } from "@openmrs/esm-state";
-import { BreadcrumbSettings, BreadcrumbRegistration } from "./types";
+import { pathToRegexp } from 'path-to-regexp';
+import { createGlobalStore } from '@openmrs/esm-state';
+import type { BreadcrumbSettings, BreadcrumbRegistration } from './types';
 
-const store = createGlobalStore<Array<BreadcrumbRegistration>>(
-  "breadcrumbs",
-  []
-);
+const store = createGlobalStore<Array<BreadcrumbRegistration>>('breadcrumbs', []);
 
 function getMatcher(settings: BreadcrumbSettings) {
   if (settings.matcher instanceof RegExp) {
     return settings.matcher;
-  } else if (typeof settings.matcher === "string") {
+  } else if (typeof settings.matcher === 'string') {
     return pathToRegexp(settings.matcher);
   } else {
     return pathToRegexp(settings.path);

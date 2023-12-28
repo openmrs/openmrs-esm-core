@@ -1,6 +1,7 @@
 /** @module @category API */
-import { getCurrentUser, LoggedInUser, userHasAccess } from "@openmrs/esm-api";
-import React, { useEffect, useState } from "react";
+import type { LoggedInUser } from '@openmrs/esm-api';
+import { getCurrentUser, userHasAccess } from '@openmrs/esm-api';
+import React, { useEffect, useState } from 'react';
 
 export interface UserHasAccessProps {
   privilege: string | string[];
@@ -8,11 +9,7 @@ export interface UserHasAccessProps {
   children?: React.ReactNode;
 }
 
-export const UserHasAccess: React.FC<UserHasAccessProps> = ({
-  privilege,
-  fallback,
-  children,
-}) => {
+export const UserHasAccess: React.FC<UserHasAccessProps> = ({ privilege, fallback, children }) => {
   const [user, setUser] = useState<LoggedInUser | null>(null);
 
   useEffect(() => {

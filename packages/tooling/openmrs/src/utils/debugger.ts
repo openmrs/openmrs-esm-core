@@ -1,26 +1,26 @@
-import { dirname } from "path";
-import { logInfo, logWarn } from "./logger";
+import { dirname } from 'path';
+import { logInfo, logWarn } from './logger';
 
 function getWebpackEnv() {
   return {
     ...process.env,
-    analyze: process.env.BUNDLE_ANALYZE === "true",
-    production: process.env.NODE_ENV === "production",
-    development: process.env.NODE_ENV === "development",
+    analyze: process.env.BUNDLE_ANALYZE === 'true',
+    production: process.env.NODE_ENV === 'production',
+    development: process.env.NODE_ENV === 'development',
   };
 }
 
 function loadConfig(configPath: string) {
   const content = require(configPath);
-  if (typeof content === "function") {
+  if (typeof content === 'function') {
     return content(getWebpackEnv());
   }
   return content;
 }
 
 function debug(configPath: string, port: number) {
-  const Webpack = require("webpack");
-  const WebpackDevServer = require("webpack-dev-server");
+  const Webpack = require('webpack');
+  const WebpackDevServer = require('webpack-dev-server');
   const config = loadConfig(configPath);
 
   const compiler = Webpack(config);
@@ -37,4 +37,4 @@ function debug(configPath: string, port: number) {
   });
 }
 
-process.on("message", ({ source, port }) => debug(source, port));
+process.on('message', ({ source, port }) => debug(source, port));

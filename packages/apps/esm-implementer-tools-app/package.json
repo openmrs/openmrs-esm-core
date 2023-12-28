@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-implementer-tools-app",
-  "version": "4.1.0",
+  "version": "5.3.2",
   "license": "MPL-2.0",
   "description": "The admin interface for OpenMRS Frontend",
   "browser": "dist/openmrs-esm-implementer-tools-app.js",
@@ -10,13 +10,14 @@
     "start": "openmrs develop",
     "serve": "webpack serve --mode=development",
     "debug": "npm run serve",
-    "test": "jest --config jest.config.js --passWithNoTests",
+    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
+    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
     "build": "webpack --mode=production",
     "build:development": "webpack --mode=development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx",
-    "extract-translations": "i18next 'src/**/*.component.tsx'"
+    "extract-translations": "i18next 'src/**/*.component.tsx' --config='../../../tools/i18next-parser.config.js'"
   },
   "keywords": [
     "openmrs",
@@ -37,7 +38,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@carbon/react": "^1.12.0",
+    "@carbon/react": "~1.37.0",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies": {
@@ -45,17 +46,19 @@
     "react": "18.x",
     "react-dom": "18.x",
     "react-i18next": "11.x",
-    "rxjs": "6.x"
+    "rxjs": "6.x",
+    "swr": "2.x"
   },
   "devDependencies": {
-    "@openmrs/esm-framework": "^4.1.0",
-    "@openmrs/webpack-config": "^4.1.0",
+    "@openmrs/esm-framework": "^5.3.2",
+    "@openmrs/webpack-config": "^5.3.2",
     "ace-builds": "^1.4.14",
     "react": "^18.1.0",
     "react-ace": "^9.5.0",
     "react-dom": "^18.1.0",
-    "react-i18next": "^11.16.9",
+    "react-i18next": "^11.18.6",
     "rxjs": "^6.5.3",
-    "swr": "^2.0.1"
+    "swr": "^2.2.2",
+    "webpack": "^5.88.0"
   }
 }

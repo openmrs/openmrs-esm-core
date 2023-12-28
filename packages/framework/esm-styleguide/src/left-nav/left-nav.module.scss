@@ -1,38 +1,41 @@
-@use "@carbon/styles/scss/type";
-@import "../vars";
-
-:global(.active-left-nav-link) {
-  background-color: $ui-03;
-  outline: none;
-  color: $ui-05;
-  border-left: 0.25rem solid var(--brand-01);
-}
+@use '@carbon/styles/scss/type';
+@import '../vars';
 
 .leftNav {
   border-right: 1px solid $ui-03;
-}
-
-.leftNav > div a {
-  height: 2.5rem;
-  color: $ui-04;
-  border-left: 0.25rem solid transparent;
-  @include type.type-style("heading-compact-01");
-}
-
-:global(.omrs-breakpoint-gt-tablet) .leftNav > div {
   padding-top: 1rem;
+
+  // Left nav menu item
+  :global(.cds--side-nav__link) {
+    color: $text-02;
+    @include type.type-style('heading-compact-01');
+
+    &:focus,
+    &:hover {
+      background-color: $ui-01;
+    }
+
+    // Active menu item
+    &:global(.active-left-nav-link) {
+      color: $ui-05;
+      border-left: 0.25rem solid var(--brand-01);
+      background-color: $ui-03;
+      outline: none;
+      padding: 0 0.75rem;
+    }
+  }
 }
 
-.leftNav > div a:hover {
-  background-color: $ui-03;
-  color: $ui-05;
-  border-left: var(--brand-01);
-  padding: 1.2rem 0 1.2rem 1.2rem;
+/* Desktop */
+:global(.omrs-breakpoint-gt-tablet) {
+  :global(.cds--side-nav__link) {
+    height: 2rem;
+  }
 }
 
-.leftNav > div a:focus {
-  background-color: $ui-03;
-  outline: none;
-  color: $ui-05;
-  border-left: var(--brand-01);
+/* Tablet */
+:global(.omrs-breakpoint-lt-desktop) {
+  :global(.cds--side-nav__link) {
+    height: 3rem;
+  }
 }

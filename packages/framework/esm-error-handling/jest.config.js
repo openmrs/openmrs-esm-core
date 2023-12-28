@@ -1,13 +1,13 @@
 module.exports = {
   transform: {
-    "^.+\\.tsx?$": ["@swc/jest"],
+    '^.+\\.tsx?$': ['@swc/jest'],
   },
   setupFiles: [],
   moduleNameMapper: {
-    "@openmrs/esm-globals": "<rootDir>/__mocks__/openmrs-esm-globals.mock.tsx",
+    '@openmrs/esm-globals': '<rootDir>/__mocks__/openmrs-esm-globals.mock.tsx',
   },
-  testEnvironment: "jsdom",
+  testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    url: "http://localhost/",
+    url: 'http://localhost/',
   },
 };

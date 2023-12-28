@@ -1,11 +1,11 @@
-import createStore, { Store } from "unistore";
+import { createStore, StoreApi } from 'zustand';
 
 interface StoreEntity {
-  value: Store<any>;
+  value: StoreApi<any>;
   active: boolean;
 }
 
-export type MockedStore<T> = Store<T> & { resetMock: () => void };
+export type MockedStore<T> = StoreApi<T> & { resetMock: () => void };
 
 const initialStates: Record<string, any> = {};
 
@@ -13,17 +13,12 @@ const availableStores: Record<string, StoreEntity> = {};
 
 export const mockStores = availableStores;
 
-export function createGlobalStore<TState>(
-  name: string,
-  initialState: TState
-): Store<TState> {
+export function createGlobalStore<T>(name: string, initialState: T): StoreApi<T> {
   const available = availableStores[name];
 
   if (available) {
     if (available.active) {
-      console.error(
-        "Cannot override an existing store. Make sure that stores are only created once."
-      );
+      console.error('Cannot override an existing store. Make sure that stores are only created once.');
     } else {
       available.value.setState(initialState, true);
     }
@@ -31,7 +26,7 @@ export function createGlobalStore<TState>(
     available.active = true;
     return available.value;
   } else {
-    const store = createStore(initialState);
+    const store = createStore<T>()(() => initialState);
     initialStates[name] = initialState;
 
     availableStores[name] = {
@@ -43,14 +38,11 @@ export function createGlobalStore<TState>(
   }
 }
 
-export function getGlobalStore<TState = any>(
-  name: string,
-  fallbackState?: TState
-): Store<TState> {
+export function getGlobalStore<T>(name: string, fallbackState?: T): StoreApi<T> {
   const available = availableStores[name];
 
   if (!available) {
-    const store = createStore(fallbackState);
+    const store = createStore<T>()(() => fallbackState ?? ({} as unknown as T));
     initialStates[name] = fallbackState;
     availableStores[name] = {
       value: store,
@@ -62,13 +54,24 @@ export function getGlobalStore<TState = any>(
   return instrumentedStore(name, available.value);
 }
 
-function instrumentedStore<T>(name: string, store: Store<T>) {
+export function subscribeTo<T, U>(store: StoreApi<T>, select: (state: T) => U, handle: (subState: U) => void) {
+  let previous = select(store.getState());
+
+  return store.subscribe((state) => {
+    const current = select(state);
+
+    if (current !== previous) {
+      previous = current;
+      handle(current);
+    }
+  });
+}
+
+function instrumentedStore<T>(name: string, store: StoreApi<T>) {
   return {
-    action: jest.spyOn(store, "action"),
-    getState: jest.spyOn(store, "getState"),
-    setState: jest.spyOn(store, "setState"),
-    subscribe: jest.spyOn(store, "subscribe"),
-    unsubscribe: jest.spyOn(store, "unsubscribe"),
+    getState: jest.spyOn(store, 'getState'),
+    setState: jest.spyOn(store, 'setState'),
+    subscribe: jest.spyOn(store, 'subscribe'),
     resetMock: () => store.setState(initialStates[name]),
   } as any as MockedStore<T>;
 }

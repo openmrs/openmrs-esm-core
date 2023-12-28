@@ -1,40 +1,45 @@
 /** @module @category Store */
-import createStore, { Store } from "unistore";
+import type { StoreApi } from 'zustand/vanilla';
+import { createStore } from 'zustand/vanilla';
+import type {} from '@openmrs/esm-globals';
 
 interface StoreEntity {
-  value: Store<any>;
+  value: StoreApi<unknown>;
   active: boolean;
 }
 
 const availableStores: Record<string, StoreEntity> = {};
 
+// spaEnv isn't available immediately. Wait a bit before making stores available
+// on window in development mode.
+setTimeout(() => {
+  if (window.spaEnv === 'development') {
+    window['stores'] = availableStores;
+  }
+}, 1000);
+
 /**
- * Creates a Unistore [store](https://github.com/developit/unistore#store).
+ * Creates a Zustand store.
  *
  * @param name A name by which the store can be looked up later.
  *    Must be unique across the entire application.
  * @param initialState An object which will be the initial state of the store.
  * @returns The newly created store.
  */
-export function createGlobalStore<TState>(
-  name: string,
-  initialState: TState
-): Store<TState> {
+export function createGlobalStore<T>(name: string, initialState: T): StoreApi<T> {
   const available = availableStores[name];
 
   if (available) {
     if (available.active) {
-      console.error(
-        "Cannot override an existing store. Make sure that stores are only created once."
-      );
+      console.error('Cannot override an existing store. Make sure that stores are only created once.');
     } else {
       available.value.setState(initialState, true);
     }
 
     available.active = true;
-    return available.value;
+    return available.value as StoreApi<T>;
   } else {
-    const store = createStore(initialState);
+    const store = createStore<T>()(() => initialState);
 
     availableStores[name] = {
       value: store,
@@ -46,21 +51,18 @@ export function createGlobalStore<TState>(
 }
 
 /**
- * Returns the existing [store](https://github.com/developit/unistore#store) named `name`,
+ * Returns the existing store named `name`,
  * or creates a new store named `name` if none exists.
  *
  * @param name The name of the store to look up.
  * @param fallbackState The initial value of the new store if no store named `name` exists.
  * @returns The found or newly created store.
  */
-export function getGlobalStore<TState = any>(
-  name: string,
-  fallbackState?: TState
-): Store<TState> {
+export function getGlobalStore<T>(name: string, fallbackState?: T): StoreApi<T> {
   const available = availableStores[name];
 
   if (!available) {
-    const store = createStore(fallbackState);
+    const store = createStore<T>()(() => fallbackState ?? ({} as unknown as T));
     availableStores[name] = {
       value: store,
       active: false,
@@ -68,30 +70,12 @@ export function getGlobalStore<TState = any>(
     return store;
   }
 
-  return available.value;
+  return available.value as StoreApi<T>;
 }
 
 export interface AppState {}
 
-/**
- * @internal
- */
-export function createAppState(initialState: AppState) {
-  return createGlobalStore("app", initialState);
-}
-
-/**
- * @returns The [store](https://github.com/developit/unistore#store) named `app`.
- */
-export function getAppState() {
-  return getGlobalStore<AppState>("app", {});
-}
-
-export function subscribeTo<T, U>(
-  store: Store<T>,
-  select: (state: T) => U,
-  handle: (subState: U) => void
-) {
+export function subscribeTo<T, U>(store: StoreApi<T>, select: (state: T) => U, handle: (subState: U) => void) {
   let previous = select(store.getState());
 
   return store.subscribe((state) => {

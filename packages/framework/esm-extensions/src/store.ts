@@ -1,12 +1,9 @@
 /** @module @category Extension */
-import isEqual from "lodash-es/isEqual";
-import {
-  configExtensionStore,
-  ConfigExtensionStoreElement,
-  ConfigObject,
-  ExtensionSlotConfigObject,
-} from "@openmrs/esm-config";
-import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
+import isEqual from 'lodash-es/isEqual';
+import type { ConfigExtensionStoreElement, ConfigObject, ExtensionSlotConfigObject } from '@openmrs/esm-config';
+import { configExtensionStore } from '@openmrs/esm-config';
+import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
+import type { LifeCycles } from 'single-spa';
 
 export interface ExtensionMeta {
   [_: string]: any;
@@ -14,13 +11,14 @@ export interface ExtensionMeta {
 
 export interface ExtensionRegistration {
   name: string;
-  load(): Promise<any>;
+  load(): Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
   meta: ExtensionMeta;
   order?: number;
-  online?: boolean | object;
-  offline?: boolean | object;
-  privileges?: string | string[];
+  online?: boolean;
+  offline?: boolean;
+  privileges?: string | Array<string>;
+  featureFlag?: string;
 }
 
 export interface ExtensionInfo extends ExtensionRegistration {
@@ -80,23 +78,22 @@ export interface AssignedExtension {
   config: ConfigObject | null;
   online?: boolean | object;
   offline?: boolean | object;
+  featureFlag?: string;
 }
 
 export interface ConnectedExtension {
   id: string;
   name: string;
+  moduleName: string;
   meta: ExtensionMeta;
   /** The extension's config. Note that this will be `null` until the slot is mounted. */
   config: ConfigObject | null;
 }
 
-const extensionInternalStore = createGlobalStore<ExtensionInternalStore>(
-  "extensionsInternal",
-  {
-    slots: {},
-    extensions: {},
-  }
-);
+const extensionInternalStore = createGlobalStore<ExtensionInternalStore>('extensionsInternal', {
+  slots: {},
+  extensions: {},
+});
 
 /**
  * This gets the extension system's internal store. It is subject
@@ -105,15 +102,13 @@ const extensionInternalStore = createGlobalStore<ExtensionInternalStore>(
  * @internal
  */
 export const getExtensionInternalStore = () =>
-  getGlobalStore<ExtensionInternalStore>("extensionsInternal", {
+  getGlobalStore<ExtensionInternalStore>('extensionsInternal', {
     slots: {},
     extensions: {},
   });
 
 /** @internal */
-export function updateInternalExtensionStore(
-  updater: (state: ExtensionInternalStore) => ExtensionInternalStore
-) {
+export function updateInternalExtensionStore(updater: (state: ExtensionInternalStore) => ExtensionInternalStore) {
   const state = extensionInternalStore.getState();
   const newState = updater(state);
 
@@ -123,12 +118,11 @@ export function updateInternalExtensionStore(
 }
 
 /**
- * This returns a [store](https://github.com/developit/unistore#store)
- * that modules can use to get information about the state of the
- * extension system.
+ * This returns a store that modules can use to get information about the
+ * state of the extension system.
  */
 export const getExtensionStore = () =>
-  getGlobalStore<ExtensionStore>("extensions", {
+  getGlobalStore<ExtensionStore>('extensions', {
     slots: {},
   });
 
@@ -154,12 +148,7 @@ function updateConfigExtensionStore(extensionState: ExtensionInternalStore) {
       });
     }
   }
-  if (
-    !isEqual(
-      configExtensionStore.getState().mountedExtensions,
-      configExtensionRecords
-    )
-  ) {
+  if (!isEqual(configExtensionStore.getState().mountedExtensions, configExtensionRecords)) {
     configExtensionStore.setState({
       mountedExtensions: configExtensionRecords,
     });

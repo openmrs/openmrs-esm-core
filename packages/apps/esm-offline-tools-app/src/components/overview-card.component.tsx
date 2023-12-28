@@ -1,9 +1,10 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { Button, Layer, Tile, TileProps } from "@carbon/react";
-import { ArrowRight } from "@carbon/react/icons";
-import { navigate } from "@openmrs/esm-framework";
-import styles from "./overview-card.styles.scss";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import type { TileProps } from '@carbon/react';
+import { Button, Layer, Tile } from '@carbon/react';
+import { ArrowRight } from '@carbon/react/icons';
+import { navigate } from '@openmrs/esm-framework';
+import styles from './overview-card.styles.scss';
 
 export interface OverviewCardProps extends TileProps {
   header: string;
@@ -11,18 +12,14 @@ export interface OverviewCardProps extends TileProps {
   children?: React.ReactNode;
 }
 
-const OverviewCard: React.FC<OverviewCardProps> = ({
-  header,
-  viewLink,
-  children,
-}) => {
+const OverviewCard: React.FC<OverviewCardProps> = ({ header, viewLink, children }) => {
   const { t } = useTranslation();
 
   return (
     <Layer>
       <Tile className={styles.overviewCard}>
         <div className={styles.headerContainer}>
-          <h3 className={styles.productiveHeading01}>{header}</h3>
+          <h3 className={styles.heading}>{header}</h3>
           <Button
             className={styles.viewButton}
             kind="ghost"
@@ -30,7 +27,7 @@ const OverviewCard: React.FC<OverviewCardProps> = ({
             size="sm"
             onClick={() => navigate({ to: `\${openmrsSpaBase}/${viewLink}` })}
           >
-            {t("homeOverviewCardView", "View")}
+            {t('homeOverviewCardView', 'View')}
           </Button>
         </div>
         <div className={styles.contentContainer}>{children}</div>

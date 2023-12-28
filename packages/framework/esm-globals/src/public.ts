@@ -4,11 +4,13 @@ export {
   type ShowNotificationEvent,
   type ShowActionableNotificationEvent,
   type ShowToastEvent,
+  type ShowSnackbarEvent,
   subscribeConnectivity,
   subscribeConnectivityChanged,
   subscribePrecacheStaticDependencies,
   subscribeNotificationShown,
   subscribeActionableNotificationShown,
   subscribeToastShown,
-} from "./events";
-export * from "./types";
+  subscribeSnackbarShown,
+} from './events';
+export * from './types';

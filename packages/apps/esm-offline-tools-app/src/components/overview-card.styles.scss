@@ -1,9 +1,14 @@
-@use "@carbon/styles/scss/spacing";
-@import "~@openmrs/esm-styleguide/src/vars";
-@import "../root.scss";
+@use '@carbon/styles/scss/spacing';
+@import '~@openmrs/esm-styleguide/src/vars';
+@import '../root.scss';
 
 .overviewCard {
   border: 1px solid $ui-03;
+
+  .heading {
+    @extend .productiveHeading01;
+    color: $text-02;
+  }
 
   .headerContainer {
     display: flex;
@@ -18,6 +23,7 @@
   }
 
   .viewButton {
+    margin-top: -(spacing.$spacing-02);
     margin-right: -(spacing.$spacing-05);
   }
 }

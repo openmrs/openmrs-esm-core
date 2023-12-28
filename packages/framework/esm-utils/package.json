@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-utils",
-  "version": "4.1.0",
+  "version": "5.3.2",
   "license": "MPL-2.0",
   "description": "Helper utilities for OpenMRS",
   "browser": "dist/openmrs-esm-utils.js",
@@ -8,8 +8,10 @@
   "source": true,
   "sideEffects": false,
   "scripts": {
-    "test": "jest --config jest.config.js --passWithNoTests",
+    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
+    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"

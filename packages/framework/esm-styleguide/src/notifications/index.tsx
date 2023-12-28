@@ -1,24 +1,17 @@
 /** @module @category UI */
-import React from "react";
-import { Subject } from "rxjs";
-import {
-  InlineNotificationMeta,
-  NotificationDescriptor,
-} from "./notification.component";
-import {
-  ActionableNotificationMeta,
-  ActionableNotificationDescriptor,
-} from "./actionable-notification.component";
-import ActiveNotifications from "./active-notifications.component";
-import ActionableActiveNotifications from "./active-actionable-notifications.component";
-import isEmpty from "lodash-es/isEmpty";
-import { createRoot } from "react-dom/client";
+import React from 'react';
+import { Subject } from 'rxjs';
+import type { InlineNotificationMeta, NotificationDescriptor } from './notification.component';
+import type { ActionableNotificationMeta, ActionableNotificationDescriptor } from './actionable-notification.component';
+import ActiveNotifications from './active-notifications.component';
+import ActionableActiveNotifications from './active-actionable-notifications.component';
+import isEmpty from 'lodash-es/isEmpty';
+import { createRoot } from 'react-dom/client';
 
 const inlineNotificationsSubject = new Subject<InlineNotificationMeta>();
 let notificationId = 0;
 
-const actionableNotificationsSubject =
-  new Subject<ActionableNotificationMeta>();
+const actionableNotificationsSubject = new Subject<ActionableNotificationMeta>();
 let actionableNotificationId = 0;
 
 /**
@@ -34,11 +27,13 @@ export function renderInlineNotifications(target: HTMLElement | null) {
 }
 
 function isNotEmpty(description: React.ReactNode) {
-  return typeof description === "string"
-    ? description.trim().length > 0
-    : typeof description === "object"
-    ? !isEmpty(description)
-    : false;
+  if (typeof description === 'string') {
+    return description.trim().length > 0;
+  } else if (typeof description === 'object') {
+    return description instanceof Error || !isEmpty(description);
+  }
+
+  return false;
 }
 
 /**
@@ -47,6 +42,10 @@ function isNotEmpty(description: React.ReactNode) {
  */
 export function showNotification(notification: NotificationDescriptor) {
   if (notification && isNotEmpty(notification.description)) {
+    if (notification.description instanceof Error) {
+      notification.description = notification.description.toLocaleString();
+    }
+
     setTimeout(() => {
       // always use in subsequent cycle
       inlineNotificationsSubject.next({
@@ -56,7 +55,7 @@ export function showNotification(notification: NotificationDescriptor) {
     }, 0);
   } else {
     console.error(
-      `showNotification must be called with an object having a 'description' property that is a non-empty string or object`
+      `showNotification must be called with an object having a 'description' property that is a non-empty string or object`,
     );
   }
 }
@@ -66,18 +65,16 @@ export function showNotification(notification: NotificationDescriptor) {
 export function renderActionableNotifications(target: HTMLElement | null) {
   if (target) {
     const root = createRoot(target);
-    root.render(
-      <ActionableActiveNotifications subject={actionableNotificationsSubject} />
-    );
+    root.render(<ActionableActiveNotifications subject={actionableNotificationsSubject} />);
   }
 }
 
 function isNotActionableNotificationEmpty(subtitle: React.ReactNode) {
-  return typeof subtitle === "string"
+  return typeof subtitle === 'string'
     ? subtitle.trim().length > 0
-    : typeof subtitle === "object"
-    ? !isEmpty(subtitle)
-    : false;
+    : typeof subtitle === 'object'
+      ? !isEmpty(subtitle)
+      : false;
 }
 
 /**
@@ -85,13 +82,8 @@ function isNotActionableNotificationEmpty(subtitle: React.ReactNode) {
  * @param notification The description of the notification to display.
  */
 
-export function showActionableNotification(
-  notification: ActionableNotificationDescriptor
-) {
-  if (
-    notification &&
-    isNotActionableNotificationEmpty(notification.actionButtonLabel)
-  ) {
+export function showActionableNotification(notification: ActionableNotificationDescriptor) {
+  if (notification && isNotActionableNotificationEmpty(notification.actionButtonLabel)) {
     setTimeout(() => {
       // always use in subsequent cycle
       actionableNotificationsSubject.next({
@@ -100,8 +92,6 @@ export function showActionableNotification(
       });
     }, 0);
   } else {
-    console.error(
-      `showActionableNotification must be called with an actionButtonLabel that is a non-empty string`
-    );
+    console.error(`showActionableNotification must be called with an actionButtonLabel that is a non-empty string`);
   }
 }

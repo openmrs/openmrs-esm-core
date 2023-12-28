@@ -1,54 +1,67 @@
-import React, { useEffect, useState } from "react";
-import styles from "./change-locale.scss";
-import { Select, SelectItem } from "@carbon/react";
-import { ExtensionSlot, LoggedInUser } from "@openmrs/esm-framework";
-import {
-  PostSessionLocale,
-  PostUserProperties,
-} from "./change-locale.resource";
-import { useTranslation } from "react-i18next";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { Select, SelectItem } from '@carbon/react';
+import type { LoggedInUser } from '@openmrs/esm-framework';
+import { ExtensionSlot, useConnectivity } from '@openmrs/esm-framework';
+import type { PostUserProperties } from './change-locale.resource';
+import { postUserPropertiesOnline, postUserPropertiesOffline } from './change-locale.resource';
+import styles from './change-locale.scss';
 
 export interface ChangeLocaleProps {
   allowedLocales: Array<string>;
   user: LoggedInUser;
+  locale: string;
   postUserProperties: PostUserProperties;
-  postSessionLocale: PostSessionLocale;
 }
 
-const ChangeLocale: React.FC<ChangeLocaleProps> = ({
-  allowedLocales,
-  user,
-  postUserProperties,
-  postSessionLocale,
-}) => {
-  const { t } = useTranslation();
-  const [userProps, setUserProps] = useState(user.userProperties);
-  const options = allowedLocales?.map((locale) => (
-    <SelectItem text={locale} value={locale} key={locale} />
-  ));
+const ChangeLocaleWrapper: React.FC<Pick<ChangeLocaleProps, 'allowedLocales' | 'user' | 'locale'>> = (props) => {
+  const isOnline = useConnectivity();
+  const postUserProperties = useMemo(
+    () => (isOnline ? postUserPropertiesOnline : postUserPropertiesOffline),
+    [isOnline],
+  );
 
-  useEffect(() => {
-    if (user.userProperties.defaultLocale !== userProps.defaultLocale) {
-      const ac = new AbortController();
-      postUserProperties(user.uuid, userProps, ac);
-      postSessionLocale(userProps.defaultLocale, ac);
-      return () => ac.abort();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProps, postUserProperties, postSessionLocale]);
+  return <ChangeLocale {...props} postUserProperties={postUserProperties} />;
+};
+
+// exported for tests
+export const ChangeLocale: React.FC<ChangeLocaleProps> = ({ allowedLocales, locale, user, postUserProperties }) => {
+  const { t } = useTranslation();
+  const [selectedLocale, setSelectedLocale] = useState(locale);
+  const options = allowedLocales?.map((locale) => <SelectItem text={locale} value={locale} key={locale} />);
+
+  const onChange = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const newLocale = event.target.value;
+      if (newLocale !== selectedLocale) {
+        const ac = new AbortController();
+        postUserProperties(
+          user.uuid,
+          {
+            ...(user.userProperties ?? {}),
+            defaultLocale: newLocale,
+          },
+          ac,
+        );
+        setSelectedLocale(newLocale);
+      }
+    },
+    [postUserProperties, user.userProperties, user.uuid, selectedLocale],
+  );
+
+  const onClick = useCallback((event: React.SyntheticEvent) => event.stopPropagation(), []);
 
   return (
-    <div className={`omrs-margin-12 ${styles.switcherContainer}`}>
+    <div className={classNames('omrs-margin-12', styles.switcherContainer)}>
       <Select
         name="selectLocale"
         id="selectLocale"
         invalidText="A valid locale value is required"
-        labelText={t("selectLocale", "Select locale")}
-        onChange={(event) =>
-          setUserProps({ ...userProps, defaultLocale: event.target.value })
-        }
-        onClick={(event) => event.stopPropagation()}
-        value={userProps.defaultLocale}
+        labelText={t('selectLocale', 'Select locale')}
+        onChange={onChange}
+        onClick={onClick}
+        value={selectedLocale}
       >
         {options}
       </Select>
@@ -57,4 +70,4 @@ const ChangeLocale: React.FC<ChangeLocaleProps> = ({
   );
 };
 
-export default ChangeLocale;
+export default ChangeLocaleWrapper;

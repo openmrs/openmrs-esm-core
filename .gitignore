@@ -81,3 +81,9 @@ package-lock.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Playwright and e2e tests
+/test-results/
+/playwright-report/
+/playwright/.cache/
+e2e/storageState.json

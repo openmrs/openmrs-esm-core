@@ -1,4 +1,4 @@
-@import "../root.scss";
+@import '../root.scss';
 
 .container {
   display: flex;
@@ -96,6 +96,10 @@
   :global(.cds--text-input__field-outer-wrapper) {
     width: 18rem;
   }
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 }
 
 .continueButton {
@@ -133,6 +137,6 @@
 }
 
 .errorMessage {
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
   width: 23rem;
 }

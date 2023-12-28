@@ -9,6 +9,7 @@
 - [config](ConnectedExtension.md#config)
 - [id](ConnectedExtension.md#id)
 - [meta](ConnectedExtension.md#meta)
+- [moduleName](ConnectedExtension.md#modulename)
 - [name](ConnectedExtension.md#name)
 
 ## Extension Properties
@@ -31,7 +32,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L86)
+[packages/framework/esm-extensions/src/store.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L85)
 
 ___
 
@@ -45,10 +46,20 @@ ___
 
 ___
 
+### moduleName
+
+• **moduleName**: `string`
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L87)
+
+___
+
 ### name
 
 • **name**: `string`
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L87)
+[packages/framework/esm-extensions/src/store.ts:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L86)

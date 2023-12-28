@@ -1,5 +1,6 @@
-import type { OmrsOfflineCachingStrategy } from "@openmrs/esm-offline";
-import Dexie, { Table } from "dexie";
+import type { OmrsOfflineCachingStrategy } from '@openmrs/esm-offline';
+import type { Table } from 'dexie';
+import Dexie from 'dexie';
 
 /**
  * Contains information about dynamic route registrations.
@@ -28,9 +29,9 @@ export class ServiceWorkerDb extends Dexie {
   dynamicRouteRegistrations: Table<DynamicRouteRegistration, number>;
 
   constructor() {
-    super("ServiceWorker");
-    this.version(1).stores({ dynamicRouteRegistrations: "++,&pattern" });
+    super('ServiceWorker');
+    this.version(1).stores({ dynamicRouteRegistrations: '++,&pattern' });
 
-    this.dynamicRouteRegistrations = this.table("dynamicRouteRegistrations");
+    this.dynamicRouteRegistrations = this.table('dynamicRouteRegistrations');
   }
 }

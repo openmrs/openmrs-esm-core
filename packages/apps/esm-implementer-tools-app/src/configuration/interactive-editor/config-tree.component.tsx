@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "./config-tree.styles.scss";
-import { Accordion, AccordionItem } from "@carbon/react";
-import { ConfigTreeForModule } from "./config-tree-for-module.component";
+import React from 'react';
+import styles from './config-tree.styles.scss';
+import { Accordion, AccordionItem } from '@carbon/react';
+import { ConfigTreeForModule } from './config-tree-for-module.component';
 import { implementerToolsStore } from "../../store";
 import isEqual from "lodash-es/isEqual";
 
@@ -28,11 +28,7 @@ export function ConfigTree({ config }: ConfigTreeProps) {
                 className={styles.fullWidthAccordion}
                 key={`accordion-${moduleName}`}
               >
-                <ConfigTreeForModule
-                  config={moduleConfig}
-                  moduleName={moduleName}
-                  key={`${moduleName}-config`}
-                />
+                <ConfigTreeForModule config={moduleConfig} moduleName={moduleName} key={`${moduleName}-config`} />
               </AccordionItem>
             ) : null;
           })}

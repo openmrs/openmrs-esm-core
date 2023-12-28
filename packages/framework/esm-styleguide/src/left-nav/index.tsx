@@ -1,16 +1,17 @@
 /** @module @category UI */
-import React from "react";
-import { ExtensionSlot, useStore } from "@openmrs/esm-react-utils";
-import { createGlobalStore } from "@openmrs/esm-state";
-import { SideNav, SideNavProps } from "@carbon/react";
-import styles from "./left-nav.module.scss";
+import React from 'react';
+import { ExtensionSlot, useStore } from '@openmrs/esm-react-utils';
+import { createGlobalStore } from '@openmrs/esm-state';
+import type { SideNavProps } from '@carbon/react';
+import { SideNav } from '@carbon/react';
+import styles from './left-nav.module.scss';
 
 interface LeftNavStore {
   slotName: string | null;
   basePath: string;
 }
 
-const leftNavStore = createGlobalStore<LeftNavStore>("left-nav", {
+const leftNavStore = createGlobalStore<LeftNavStore>('left-nav', {
   slotName: null,
   basePath: window.spaBase,
 });
@@ -27,24 +28,14 @@ export function unsetLeftNav(name) {
 
 type LeftNavMenuProps = SideNavProps;
 
-export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>(
-  (props, ref) => {
-    const { slotName, basePath } = useStore(leftNavStore);
-    const currentPath = window.location ?? { pathname: "" };
+export const LeftNavMenu = React.forwardRef<HTMLElement, LeftNavMenuProps>((props, ref) => {
+  const { slotName, basePath } = useStore(leftNavStore);
+  const currentPath = window.location ?? { pathname: '' };
 
-    return (
-      <SideNav
-        ref={ref}
-        expanded
-        aria-label="Left navigation"
-        className={styles.leftNav}
-        {...props}
-      >
-        <ExtensionSlot name="global-nav-menu-slot" />
-        {slotName ? (
-          <ExtensionSlot name={slotName} state={{ basePath, currentPath }} />
-        ) : null}
-      </SideNav>
-    );
-  }
-);
+  return (
+    <SideNav ref={ref} expanded aria-label="Left navigation" className={styles.leftNav} {...props}>
+      <ExtensionSlot name="global-nav-menu-slot" />
+      {slotName ? <ExtensionSlot name={slotName} state={{ basePath, currentPath }} /> : null}
+    </SideNav>
+  );
+});

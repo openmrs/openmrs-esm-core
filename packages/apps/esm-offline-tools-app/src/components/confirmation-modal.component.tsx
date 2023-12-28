@@ -1,5 +1,6 @@
-import React, { ReactNode } from "react";
-import { ModalBody, ModalFooter, ModalHeader } from "@carbon/react";
+import type { ReactNode } from 'react';
+import React from 'react';
+import { ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
 
 export interface ConfirmationModalProps {
   title?: string;
@@ -32,11 +33,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 }) => {
   return (
     <>
-      <ModalHeader
-        title={title}
-        closeModal={closeModal}
-        buttonOnClick={onCancel}
-      />
+      <ModalHeader title={title} closeModal={closeModal} buttonOnClick={onCancel} />
       <ModalBody>{children}</ModalBody>
       <ModalFooter
         danger

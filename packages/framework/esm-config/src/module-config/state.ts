@@ -1,13 +1,7 @@
 /** @module @category Config */
-import { createGlobalStore, getGlobalStore } from "@openmrs/esm-state";
-import { omit } from "ramda";
-import {
-  Config,
-  ConfigObject,
-  ConfigSchema,
-  ExtensionSlotConfigObject,
-  ProvidedConfig,
-} from "../types";
+import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
+import { omit } from 'ramda';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfigObject, ProvidedConfig } from '../types';
 
 /**
  * Internal store
@@ -31,8 +25,8 @@ const configInternalStoreInitialValue = {
  * @internal
  */
 export const configInternalStore = createGlobalStore<ConfigInternalStore>(
-  "config-internal",
-  configInternalStoreInitialValue
+  'config-internal',
+  configInternalStoreInitialValue,
 );
 
 /**
@@ -45,22 +39,21 @@ export interface TemporaryConfigStore {
 }
 
 /** @internal */
-export const temporaryConfigStore = createGlobalStore<TemporaryConfigStore>(
-  "temporary-config",
-  { config: getTemporaryConfig() }
-);
+export const temporaryConfigStore = createGlobalStore<TemporaryConfigStore>('temporary-config', {
+  config: getTemporaryConfig(),
+});
 
 temporaryConfigStore.subscribe((state) => {
   setTemporaryConfig(state.config);
 });
 
 function setTemporaryConfig(value: Config) {
-  localStorage.setItem("openmrs:temporaryConfig", JSON.stringify(value));
+  localStorage.setItem('openmrs:temporaryConfig', JSON.stringify(value));
 }
 
 function getTemporaryConfig(): Config {
   try {
-    return JSON.parse(localStorage.getItem("openmrs:temporaryConfig") || "{}");
+    return JSON.parse(localStorage.getItem('openmrs:temporaryConfig') || '{}');
   } catch (e) {
     return {};
   }
@@ -86,10 +79,9 @@ export interface ConfigExtensionStoreElement {
 }
 
 /** @internal */
-export const configExtensionStore = createGlobalStore<ConfigExtensionStore>(
-  "config-store-of-extension-state",
-  { mountedExtensions: [] }
-);
+export const configExtensionStore = createGlobalStore<ConfigExtensionStore>('config-store-of-extension-state', {
+  mountedExtensions: [],
+});
 
 /**
  * Output configs
@@ -112,10 +104,7 @@ function initializeConfigStore() {
 /** @internal */
 export function getConfigStore(moduleName: string) {
   // We use a store for each module's config, named `config-${moduleName}`
-  return getGlobalStore<ConfigStore>(
-    `config-module-${moduleName}`,
-    initializeConfigStore()
-  );
+  return getGlobalStore<ConfigStore>(`config-module-${moduleName}`, initializeConfigStore());
 }
 
 /**
@@ -140,17 +129,11 @@ export function getExtensionSlotsConfigStore() {
 
 /** @internal */
 export function getExtensionSlotConfig(slotName: string) {
-  return getExtensionSlotConfigFromStore(
-    getExtensionSlotsConfigStore().getState(),
-    slotName
-  );
+  return getExtensionSlotConfigFromStore(getExtensionSlotsConfigStore().getState(), slotName);
 }
 
 /** @internal */
-export function getExtensionSlotConfigFromStore(
-  state: ExtensionSlotsConfigStore,
-  slotName: string
-) {
+export function getExtensionSlotConfigFromStore(state: ExtensionSlotsConfigStore, slotName: string) {
   const slotConfig = state.slots[slotName];
   return slotConfig ?? { loaded: false, config: {} };
 }
@@ -178,25 +161,14 @@ export function getExtensionsConfigStore() {
 export function getExtensionConfig(slotName: string, extensionId: string) {
   const extensionConfig = Object.assign(
     {},
-    getExtensionConfigFromStore(
-      getExtensionsConfigStore().getState(),
-      slotName,
-      extensionId
-    )
+    getExtensionConfigFromStore(getExtensionsConfigStore().getState(), slotName, extensionId),
   );
-  extensionConfig.config = omit(
-    ["Display conditions", "Translation overrides"],
-    extensionConfig.config
-  );
+  extensionConfig.config = omit(['Display conditions', 'Translation overrides'], extensionConfig.config);
   return extensionConfig;
 }
 
 /** @internal */
-export function getExtensionConfigFromStore(
-  state: ExtensionsConfigStore,
-  slotName: string,
-  extensionId: string
-) {
+export function getExtensionConfigFromStore(state: ExtensionsConfigStore, slotName: string, extensionId: string) {
   const extensionConfig = state.configs[slotName]?.[extensionId];
   return extensionConfig ?? { loaded: false, config: null };
 }
@@ -210,7 +182,6 @@ export interface ImplementerToolsConfigStore {
 }
 
 /** @internal */
-export const implementerToolsConfigStore =
-  createGlobalStore<ImplementerToolsConfigStore>("config-implementer-tools", {
-    config: {},
-  });
+export const implementerToolsConfigStore = createGlobalStore<ImplementerToolsConfigStore>('config-implementer-tools', {
+  config: {},
+});

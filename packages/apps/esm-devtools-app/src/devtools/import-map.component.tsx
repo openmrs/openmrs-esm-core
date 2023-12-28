@@ -1,45 +1,32 @@
-import React, { useRef, useEffect } from "react";
-import styles from "./import-map.styles.css";
+import React, { useRef, useEffect } from 'react';
+import ImportMapList from './import-map-list/list.component';
+import styles from './import-map.styles.css';
 
 export default function ImportMap(props: ImportMapProps) {
-  const importMapListRef = useRef<HTMLElement>(null);
+  const importMapListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    window.addEventListener(
-      "import-map-overrides:change",
-      handleImportMapChange
-    );
-    return () =>
-      window.removeEventListener(
-        "import-map-overrides:change",
-        handleImportMapChange
-      );
+    window.addEventListener('import-map-overrides:change', handleImportMapChange);
+    return () => window.removeEventListener('import-map-overrides:change', handleImportMapChange);
 
-    function handleImportMapChange(evt) {
+    function handleImportMapChange() {
       props.toggleOverridden(importMapOverridden());
     }
-  }, [importMapListRef.current]);
+  }, [props]);
 
   return (
     <div className={styles.importMap}>
-      <import-map-overrides-list
-        ref={importMapListRef}
-      ></import-map-overrides-list>
+      <ImportMapList ref={importMapListRef} />
     </div>
   );
 }
 
 export function importMapOverridden(): boolean {
-  return (
-    Object.keys((window as any).importMapOverrides.getOverrideMap().imports)
-      .length > 0
-  );
+  return Object.keys(window.importMapOverrides.getOverrideMap().imports).length > 0;
 }
 
 export function isOverriddenInImportMap(esmName: string): boolean {
-  return (window as any).importMapOverrides
-    .getOverrideMap()
-    .imports.hasOwnProperty(esmName);
+  return window.importMapOverrides.getOverrideMap().imports.hasOwnProperty(esmName);
 }
 
 type ImportMapProps = {

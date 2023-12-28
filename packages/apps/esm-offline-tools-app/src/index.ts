@@ -1,38 +1,89 @@
-import {
-  defineConfigSchema,
-  getAsyncLifecycle,
-  getSyncLifecycle,
-  registerBreadcrumbs,
-} from "@openmrs/esm-framework";
-import { routes } from "./constants";
-import { createDashboardLink } from "./createDashboardLink";
-import { dashboardMeta } from "./dashboard.meta";
-import OfflineToolsNavLink from "./nav/offline-tools-nav-link.component";
-import { setupOffline } from "./offline";
-import { setupSynchronizingOfflineActionsNotifications } from "./offline-actions/synchronizing-notification";
+import { defineConfigSchema, getSyncLifecycle, registerBreadcrumbs } from '@openmrs/esm-framework';
+import { routes } from './constants';
+import { createDashboardLink } from './createDashboardLink';
+import { dashboardMeta } from './dashboard.meta';
+import { setupOffline } from './offline';
+import { setupSynchronizingOfflineActionsNotifications } from './offline-actions/synchronizing-notification';
+import offlineToolsComponent from './root.component';
+import offlineToolsLinkComponent from './offline-tools-app-menu-link.component';
+import offlineToolsNavItemsComponent from './nav/offline-tools-nav-menu.component';
+import offlineToolsConfirmationModalComponent from './components/confirmation-modal.component';
+import offlineToolsPatientsCardComponent from './offline-patients/patients-overview-card.component';
+import offlineToolsActionsCardComponent from './offline-actions/offline-actions-overview-card.component';
+import offlineToolsActionsComponent from './offline-actions/offline-actions.component';
+import offlineToolsPatientsComponent from './offline-patients/offline-patients.component';
+import offlineToolsPageActionsComponent from './offline-actions/offline-actions-page.component';
+import offlineToolsPatientChartComponent from './offline-actions/offline-actions-patient-chart-widget.component';
+import offlineToolsOptInButtonComponent from './offline-actions/offline-actions-mode-button.component';
+import OfflineToolsNavLink from './nav/offline-tools-nav-link.component';
 
-declare var __VERSION__: string;
-// __VERSION__ is replaced by Webpack with the version from package.json
-const version = __VERSION__;
+export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
-const importTranslation = require.context(
-  "../translations",
-  false,
-  /.json$/,
-  "lazy"
-);
-
-const backendDependencies = {
-  "webservices.rest": "^2.24.0",
+const moduleName = '@openmrs/esm-offline-tools-app';
+const options = {
+  featureName: 'offline-tools',
+  moduleName,
 };
 
-function setupOpenMRS() {
-  const moduleName = "@openmrs/esm-offline-tools-app";
-  const options = {
-    featureName: "offline-tools",
-    moduleName,
-  };
+export const offlineTools = getSyncLifecycle(offlineToolsComponent, options);
 
+export const offlineToolsLink = getSyncLifecycle(offlineToolsLinkComponent, options);
+
+export const offlineToolsNavItems = getSyncLifecycle(offlineToolsNavItemsComponent, {
+  featureName: 'nav-items',
+  moduleName,
+});
+
+export const offlineToolsConfirmationModal = getSyncLifecycle(offlineToolsConfirmationModalComponent, options);
+
+export const offlineToolsPatientsCard = getSyncLifecycle(offlineToolsPatientsCardComponent, options);
+
+export const offlineToolsActionsCard = getSyncLifecycle(offlineToolsActionsCardComponent, options);
+
+export const offlineToolsPatientsLink = getSyncLifecycle(
+  () =>
+    OfflineToolsNavLink({
+      page: 'patients',
+      title: 'patients',
+    }),
+  options,
+);
+
+export const offlineToolsActionsLink = getSyncLifecycle(
+  () =>
+    OfflineToolsNavLink({
+      page: 'actions',
+      title: 'actions',
+    }),
+  options,
+);
+
+export const offlineToolsActions = getSyncLifecycle(offlineToolsActionsComponent, options);
+
+export const offlineToolsPatients = getSyncLifecycle(offlineToolsPatientsComponent, options);
+
+export const offlineToolsPageActions = getSyncLifecycle(offlineToolsPageActionsComponent, options);
+
+export const offlineToolsPatientChartActions = getSyncLifecycle(offlineToolsPatientChartComponent, options);
+
+export const offlineToolsPatientChartActionsDashboardLink = getSyncLifecycle(
+  createDashboardLink({
+    ...dashboardMeta,
+    // t('offline_actions_link', 'Offline Actions')
+    title: () =>
+      Promise.resolve(
+        window.i18next?.t('offline_actions_link', {
+          defaultValue: 'Offline Actions',
+          ns: moduleName,
+        }) ?? 'Offline Actions',
+      ),
+  }),
+  options,
+);
+
+export const offlineToolsOptInButton = getSyncLifecycle(offlineToolsOptInButtonComponent, options);
+
+export function startupApp() {
   defineConfigSchema(moduleName, {});
   setupOffline();
   setupSynchronizingOfflineActionsNotifications();
@@ -40,199 +91,23 @@ function setupOpenMRS() {
   registerBreadcrumbs([
     {
       path: `${window.spaBase}/${routes.offlineTools}`,
-      title: "Offline tools",
+      title: 'Offline Tools',
       parent: `${window.spaBase}/${routes.home}`,
     },
     {
       path: `${window.spaBase}/${routes.offlineToolsPatients}`,
-      title: "Offline patients",
+      title: 'Patients',
       parent: `${window.spaBase}/${routes.offlineTools}`,
     },
     {
       path: `${window.spaBase}/${routes.offlineToolsPatientOfflineData}`,
-      title: "Offline data",
+      title: 'Data',
       parent: `${window.spaBase}/${routes.offlineToolsPatients}`,
     },
     {
       path: `${window.spaBase}/${routes.offlineToolsActions}`,
-      title: "Actions",
+      title: 'Actions',
       parent: `${window.spaBase}/${routes.offlineTools}`,
     },
   ]);
-
-  return {
-    pages: [
-      {
-        load: getAsyncLifecycle(() => import("./root.component"), options),
-        route: "offline-tools",
-        online: true,
-        offline: true,
-      },
-    ],
-    extensions: [
-      {
-        name: "offline-tools-link",
-        slot: "app-menu-slot",
-        load: getAsyncLifecycle(
-          () => import("./offline-tools-app-menu-link.component"),
-          options
-        ),
-        online: true,
-        offline: true,
-      },
-      {
-        name: "offline-tools-nav-items",
-        load: getAsyncLifecycle(
-          () => import("./nav/offline-tools-nav-menu.component"),
-          {
-            featureName: "nav-items",
-            moduleName,
-          }
-        ),
-        online: true,
-        offline: true,
-      },
-      {
-        name: "offline-tools-confirmation-modal",
-        load: getAsyncLifecycle(
-          () => import("./components/confirmation-modal.component"),
-          options
-        ),
-        online: true,
-        offline: true,
-      },
-      {
-        name: "offline-tools-dashboard-patients-card",
-        slot: "offline-tools-dashboard-cards",
-        load: getAsyncLifecycle(
-          () => import("./offline-patients/patients-overview-card.component"),
-          options
-        ),
-        online: true,
-        offline: true,
-      },
-      {
-        name: "offline-tools-dashboard-actions-card",
-        slot: "offline-tools-dashboard-cards",
-        load: getAsyncLifecycle(
-          () =>
-            import("./offline-actions/offline-actions-overview-card.component"),
-          options
-        ),
-        online: true,
-        offline: true,
-      },
-      {
-        name: "offline-tools-page-offline-patients-link",
-        slot: "offline-tools-page-slot",
-        load: getSyncLifecycle(
-          () =>
-            OfflineToolsNavLink({
-              page: "patients",
-              title: "Offline patients",
-            }),
-          options
-        ),
-        meta: {
-          name: "patients",
-          slot: "offline-tools-page-offline-patients-slot",
-        },
-        online: true,
-        offline: true,
-      },
-      {
-        name: "offline-tools-page-offline-patients",
-        slot: "offline-tools-page-offline-patients-slot",
-        load: getAsyncLifecycle(
-          () => import("./offline-patients/offline-patients.component"),
-          options
-        ),
-        online: true,
-        offline: true,
-      },
-      {
-        name: "offline-tools-page-actions-link",
-        slot: "offline-tools-page-slot",
-        load: getSyncLifecycle(
-          () =>
-            OfflineToolsNavLink({ page: "actions", title: "Offline actions" }),
-          options
-        ),
-        meta: {
-          name: "actions",
-          slot: "offline-tools-page-actions-slot",
-        },
-        online: true,
-        offline: true,
-      },
-      {
-        name: "offline-tools-page-actions",
-        slot: "offline-tools-page-actions-slot",
-        load: getAsyncLifecycle(
-          () => import("./offline-actions/offline-actions-page.component"),
-          options
-        ),
-        online: {
-          canSynchronizeOfflineActions: true,
-        },
-        offline: {
-          canSynchronizeOfflineActions: false,
-        },
-      },
-      {
-        id: "offline-tools-patient-chart-actions-widget",
-        slot: "patient-chart-summary-dashboard-slot",
-        order: 0,
-        load: getAsyncLifecycle(
-          () =>
-            import(
-              "./offline-actions/offline-actions-patient-chart-widget.component"
-            ),
-          options
-        ),
-        meta: {
-          columnSpan: 4,
-        },
-        online: false,
-        offline: true,
-      },
-      {
-        id: "offline-tools-patient-chart-actions-dashboard",
-        order: 0,
-        slot: dashboardMeta.slot,
-        load: getAsyncLifecycle(
-          () =>
-            import(
-              "./offline-actions/offline-actions-patient-chart-widget.component"
-            ),
-          options
-        ),
-        online: true,
-        offline: true,
-      },
-      {
-        id: "offline-tools-patient-chart-actions-dashboard-link",
-        slot: "patient-chart-dashboard-slot",
-        order: 12,
-        load: getSyncLifecycle(createDashboardLink(dashboardMeta), options),
-        meta: dashboardMeta,
-        online: true,
-        offline: true,
-      },
-      {
-        name: "offline-tools-opt-in-offline-mode-button",
-        slot: "user-panel-slot",
-        order: 1,
-        load: getAsyncLifecycle(
-          () =>
-            import("./offline-actions/offline-actions-mode-button.component"),
-          options
-        ),
-        online: true,
-        offline: false,
-      },
-    ],
-  };
 }
-
-export { setupOpenMRS, importTranslation, backendDependencies, version };

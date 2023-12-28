@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import uniqueId from "lodash-es/uniqueId";
+import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import uniqueId from 'lodash-es/uniqueId';
 import {
   InlineLoading,
   Search,
@@ -8,9 +8,10 @@ import {
   StructuredListRow,
   StructuredListWrapper,
   Tile,
-} from "@carbon/react";
-import { Concept, useConceptLookup } from "./concept-search.resource";
-import styles from "./uuid-search.scss";
+} from '@carbon/react';
+import type { Concept } from './concept-search.resource';
+import { useConceptLookup } from './concept-search.resource';
+import styles from './uuid-search.scss';
 
 interface ConceptSearchBoxProps {
   setConcept: (concept) => void;
@@ -20,7 +21,7 @@ interface ConceptSearchBoxProps {
 export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const { t } = useTranslation();
   const id = useMemo(() => uniqueId(), []);
-  const [conceptToLookup, setConceptToLookup] = useState("");
+  const [conceptToLookup, setConceptToLookup] = useState('');
   const [selectedConcept, setSelectedConcept] = useState<string>(value);
   const { concepts, isSearchingConcepts } = useConceptLookup(conceptToLookup);
 
@@ -31,14 +32,12 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
   const handleConceptUuidChange = (concept) => {
     setSelectedConcept(concept.uuid);
     setConcept(concept);
-    setConceptToLookup("");
+    setConceptToLookup('');
   };
 
   return (
     <div>
-      {selectedConcept && (
-        <p className={styles.activeUuid}>{selectedConcept}</p>
-      )}
+      {selectedConcept && <p className={styles.activeUuid}>{selectedConcept}</p>}
       <div className={styles.autocomplete}>
         <Search
           id={`searchbox-${id}`}
@@ -49,34 +48,21 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           autoCapitalize="off"
           aria-autocomplete="list"
           role="combobox"
-          aria-label={t("searchConceptHelperText", "Search concepts")}
+          aria-label={t('searchConceptHelperText', 'Search concepts')}
           aria-controls={`searchbox-${id}`}
           aria-expanded={concepts.length > 0}
-          placeholder={t("searchConceptHelperText", "Search concepts")}
+          placeholder={t('searchConceptHelperText', 'Search concepts')}
           onChange={handleSearchTermChange}
         />
         {(() => {
           if (!conceptToLookup) return null;
           if (isSearchingConcepts)
-            return (
-              <InlineLoading
-                className={styles.loader}
-                description={t("searching", "Searching") + "..."}
-              />
-            );
+            return <InlineLoading className={styles.loader} description={t('searching', 'Searching') + '...'} />;
           if (concepts && concepts.length && !isSearchingConcepts) {
             return (
-              <StructuredListWrapper
-                selection
-                id={`searchbox-${id}`}
-                className={styles.listbox}
-              >
+              <StructuredListWrapper selection id={`searchbox-${id}`} className={styles.listbox}>
                 {concepts.map((concept: Concept) => (
-                  <StructuredListRow
-                    key={concept.uuid}
-                    role="option"
-                    aria-selected="true"
-                  >
+                  <StructuredListRow key={concept.uuid} role="option" aria-selected="true">
                     <StructuredListCell
                       onClick={() => {
                         handleConceptUuidChange(concept);
@@ -92,9 +78,7 @@ export function ConceptSearchBox({ setConcept, value }: ConceptSearchBoxProps) {
           }
           return (
             <Tile className={styles.emptyResults}>
-              <span>
-                {t("noConceptsFoundText", "No matching concepts found")}
-              </span>
+              <span>{t('noConceptsFoundText', 'No matching concepts found')}</span>
             </Tile>
           );
         })()}

@@ -1,7 +1,7 @@
-@use "@carbon/styles/scss/spacing";
-@use "@carbon/styles/scss/type";
-@import "~@openmrs/esm-styleguide/src/vars";
-@import "../root.scss";
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+@import '~@openmrs/esm-styleguide/src/vars';
+@import '../root.scss';
 
 .tableContainer {
   background-color: transparent;
@@ -13,7 +13,7 @@
   grid-template-columns: 1fr 1fr auto auto;
 
   .tableHeader {
-    @include type.type-style("heading-compact-02");
+    @include type.type-style('heading-compact-02');
     color: $text-02;
     padding: spacing.$spacing-04 0 spacing.$spacing-04 spacing.$spacing-04;
     grid-row: 1;

@@ -1,6 +1,6 @@
 /** @module @category UI */
-import React, { useEffect, useState } from "react";
-import { ToastNotification } from "@carbon/react";
+import React, { useEffect, useState } from 'react';
+import { ToastNotification } from '@carbon/react';
 
 const defaultOptions = {
   millis: 5000,
@@ -23,22 +23,10 @@ export interface ToastNotificationMeta extends ToastDescriptor {
   id: number;
 }
 
-export type ToastType =
-  | "error"
-  | "info"
-  | "info-square"
-  | "success"
-  | "warning"
-  | "warning-alt";
+export type ToastType = 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
 
 export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
-  const {
-    description,
-    kind,
-    critical,
-    title,
-    millis = defaultOptions.millis,
-  } = toast;
+  const { description, kind, critical, title, millis = defaultOptions.millis } = toast;
 
   const [waitingForTime, setWaitingForTime] = useState(true);
 
@@ -50,15 +38,12 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
   }, [waitingForTime]);
 
   return (
-    <div
-      onMouseEnter={() => setWaitingForTime(false)}
-      onMouseLeave={() => setWaitingForTime(true)}
-    >
+    <div onMouseEnter={() => setWaitingForTime(false)} onMouseLeave={() => setWaitingForTime(true)}>
       <ToastNotification
-        kind={kind || "info"}
+        kind={kind || 'info'}
         lowContrast={critical}
         subtitle={description}
-        title={title || ""}
+        title={title || ''}
         timeout={millis}
       />
     </div>

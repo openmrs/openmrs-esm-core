@@ -1,9 +1,5 @@
-@use "@carbon/styles/scss/spacing";
-@import "../root.scss";
-
-.contentContainer {
-  padding: 0 spacing.$spacing-05;
-}
+@use '@carbon/styles/scss/spacing';
+@import '../root.scss';
 
 .buttonInlineIcon {
   margin-right: spacing.$spacing-05;

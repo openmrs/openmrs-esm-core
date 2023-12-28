@@ -2,7 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "module": "esnext",
-    "target": "es2015",
+    "target": "es2022",
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "strictNullChecks": true,

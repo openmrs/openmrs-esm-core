@@ -291,7 +291,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L31)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L18)
 
 ___
 
@@ -301,7 +301,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L30)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L17)
 
 ___
 

@@ -1,9 +1,9 @@
 /** @module @category UI */
-import { renderExtension } from "@openmrs/esm-extensions";
-import { createGlobalStore } from "@openmrs/esm-state";
-import { Parcel } from "single-spa";
+import { renderExtension } from '@openmrs/esm-extensions';
+import { createGlobalStore } from '@openmrs/esm-state';
+import type { Parcel } from 'single-spa';
 
-type ModalInstanceState = "NEW" | "MOUNTED" | "TO_BE_DELETED";
+type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
 
 interface ModalInstance {
   container?: HTMLElement;
@@ -19,13 +19,13 @@ interface ModalState {
   modalStack: Array<ModalInstance>;
 }
 
-const modalStore = createGlobalStore<ModalState>("globalModalState", {
+const modalStore = createGlobalStore<ModalState>('globalModalState', {
   modalContainer: null,
   modalStack: [],
 });
 
 function htmlToElement(html: string) {
-  const template = document.createElement("template");
+  const template = document.createElement('template');
   template.innerHTML = html;
   return template.content.firstChild as ChildNode;
 }
@@ -37,13 +37,13 @@ function createModalFrame() {
     class="cds--modal-close"
     type="button">
     <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1{fill:#000000;}.cls-2{fill:none;}</style></defs><title>close</title><polygon class="cls-1" points="24 9.4 22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4"/><rect class="cls-2" width="32" height="32"/></svg>
-  </button>`.trim()
+  </button>`.trim(),
   ) as HTMLButtonElement;
 
-  closeButton.addEventListener("click", closeHighestInstance);
-  const outer = document.createElement("div");
-  outer.className = "cds--modal-container";
-  const contentContainer = document.createElement("div");
+  closeButton.addEventListener('click', closeHighestInstance);
+  const outer = document.createElement('div');
+  outer.className = 'cds--modal-container';
+  const contentContainer = document.createElement('div');
 
   outer.append(closeButton);
   outer.append(contentContainer);
@@ -59,38 +59,32 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
   if (modalStack.length) {
     // spin up the container if it was hidden previously
     if (!modalContainer.style.visibility) {
-      addEventListener("keydown", handleEscKey);
-      document.body.style.overflow = "hidden";
-      modalContainer.style.visibility = "unset";
+      addEventListener('keydown', handleEscKey);
+      document.body.style.overflow = 'hidden';
+      modalContainer.style.visibility = 'unset';
     }
 
     modalStack.forEach((instance, index) => {
       switch (instance.state) {
-        case "NEW":
+        case 'NEW': {
           const { outer, contentContainer } = createModalFrame();
           instance.container = outer;
-          renderExtension(
-            contentContainer,
-            "",
-            "",
-            instance.extensionId,
-            undefined,
-            instance.props
-          ).then((parcel) => {
+          renderExtension(contentContainer, '', '', instance.extensionId, undefined, instance.props).then((parcel) => {
             instance.parcel = parcel;
-            instance.state = "MOUNTED";
+            instance.state = 'MOUNTED';
             modalContainer.prepend(outer);
-            outer.style.visibility = "unset";
+            outer.style.visibility = 'unset';
           });
           break;
+        }
 
-        case "MOUNTED":
+        case 'MOUNTED':
           if (instance.container) {
-            instance.container.style.visibility = index ? "hidden" : "unset";
+            instance.container.style.visibility = index ? 'hidden' : 'unset';
           }
           break;
 
-        case "TO_BE_DELETED":
+        case 'TO_BE_DELETED':
           instance.onClose();
           instance.parcel?.unmount?.();
           instance.container?.remove();
@@ -104,9 +98,9 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
       }
     });
   } else {
-    modalContainer.style.removeProperty("visibility");
+    modalContainer.style.removeProperty('visibility');
     document.body.style.overflow = original;
-    removeEventListener("keydown", handleEscKey);
+    removeEventListener('keydown', handleEscKey);
   }
 }
 
@@ -133,8 +127,7 @@ function openInstance(instance: ModalInstance) {
 function closeInstance(instance: ModalInstance) {
   const state = modalStore.getState();
   const modalStack = state.modalStack.map(
-    (x): ModalInstance =>
-      x === instance ? { ...x, state: "TO_BE_DELETED" } : x
+    (x): ModalInstance => (x === instance ? { ...x, state: 'TO_BE_DELETED' } : x),
   );
   modalStore.setState({
     ...state,
@@ -152,7 +145,7 @@ function closeHighestInstance() {
 }
 
 function handleEscKey(e: KeyboardEvent) {
-  if (e.key === "Escape") {
+  if (e.key === 'Escape') {
     closeHighestInstance();
   }
 }
@@ -164,11 +157,7 @@ function handleEscKey(e: KeyboardEvent) {
  * @param onClose The optional notification to receive when the modal is closed.
  * @returns The dispose function to force closing the modal dialog.
  */
-export function showModal(
-  extensionId: string,
-  props: Record<string, any> = {},
-  onClose: () => void = () => {}
-) {
+export function showModal(extensionId: string, props: Record<string, any> = {}, onClose: () => void = () => {}) {
   const close = () => {
     const state = modalStore.getState();
     const item = state.modalStack.find((m) => m.onClose === onClose);
@@ -179,7 +168,7 @@ export function showModal(
   };
 
   openInstance({
-    state: "NEW",
+    state: 'NEW',
     onClose,
     extensionId,
     props: {

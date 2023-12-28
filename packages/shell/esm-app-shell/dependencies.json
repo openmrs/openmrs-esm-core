@@ -5,9 +5,9 @@
   "react-dom",
   "react-router-dom",
   "react-i18next",
-  "single-spa",
   "@openmrs/esm-framework",
   "@openmrs/esm-framework/src/internal",
-  "@carbon/react",
-  "rxjs"
+  "rxjs",
+  "single-spa",
+  "swr"
 ]

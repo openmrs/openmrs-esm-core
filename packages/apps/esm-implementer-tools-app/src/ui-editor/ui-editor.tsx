@@ -24,7 +24,7 @@ export default function UiEditor() {
             <Portal
               key={`slot-overlay-${slotInfo.moduleName}-${slotName}`}
               el={document.querySelector(
-                `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotInfo.moduleName}"]`
+                `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotInfo.moduleName}"]`,
               )}
             >
               <SlotOverlay
@@ -36,22 +36,19 @@ export default function UiEditor() {
         : null}
       {extensions
         ? Object.entries(extensions).map(([extensionName, extensionInfo]) =>
-            Object.entries(extensionInfo.instances).map(
-              ([slotModuleName, bySlotName]) =>
-                Object.entries(bySlotName).map(
-                  ([slotName, extensionInstance]) => (
-                    <ExtensionOverlay
-                      key={slotName}
-                      extensionName={extensionName}
-                      slotModuleName={slotModuleName}
-                      slotName={slotName}
-                      domElement={document.querySelector(
-                        `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotModuleName}"] *[data-extension-id="${extensionInstance.id}"]`
-                      )}
-                    />
-                  )
-                )
-            )
+            Object.entries(extensionInfo.instances).map(([slotModuleName, bySlotName]) =>
+              Object.entries(bySlotName).map(([slotName, extensionInstance]) => (
+                <ExtensionOverlay
+                  key={slotName}
+                  extensionName={extensionName}
+                  slotModuleName={slotModuleName}
+                  slotName={slotName}
+                  domElement={document.querySelector(
+                    `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotModuleName}"] *[data-extension-id="${extensionInstance.id}"]`,
+                  )}
+                />
+              )),
+            ),
           )
         : null}
     </>
@@ -83,7 +80,7 @@ export function SlotOverlay({ slotName, moduleName }) {
         }}
         className={styles.slotName}
       >
-        {slotName}
+        Slot: {slotName}
       </div>
     </>
   );
@@ -96,10 +93,7 @@ const actions = {
 };
 
 export function ExitButton() {
-  const { toggleIsUIEditorEnabled } = useStoreWithActions(
-    implementerToolsStore,
-    actions
-  );
+  const { toggleIsUIEditorEnabled } = useStoreWithActions(implementerToolsStore, actions);
   return (
     <Button
       className={styles.exitButton}

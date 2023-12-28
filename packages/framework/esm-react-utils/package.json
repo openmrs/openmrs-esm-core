@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-react-utils",
-  "version": "4.1.0",
+  "version": "5.3.2",
   "license": "MPL-2.0",
   "description": "React utilities for OpenMRS.",
   "browser": "dist/openmrs-esm-react-utils.js",
@@ -9,6 +9,7 @@
   "scripts": {
     "test": "jest --passWithNoTests",
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "lint": "eslint src"
   },
@@ -39,36 +40,36 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "single-spa-react": "^5.0.0",
-    "swr": "^2.0.1"
+    "single-spa-react": "~5.0.0"
   },
   "peerDependencies": {
-    "@openmrs/esm-api": "4.x",
-    "@openmrs/esm-config": "4.x",
-    "@openmrs/esm-error-handling": "4.x",
-    "@openmrs/esm-extensions": "4.x",
-    "@openmrs/esm-globals": "4.x",
+    "@openmrs/esm-api": "5.x",
+    "@openmrs/esm-config": "5.x",
+    "@openmrs/esm-error-handling": "5.x",
+    "@openmrs/esm-extensions": "5.x",
+    "@openmrs/esm-globals": "5.x",
     "dayjs": "1.x",
     "i18next": "19.x",
     "react": "18.x",
     "react-dom": "18.x",
-    "react-i18next": "11.x"
+    "react-i18next": "11.x",
+    "rxjs": "6.x",
+    "swr": "2.x"
   },
   "devDependencies": {
-    "@openmrs/esm-api": "^4.1.0",
-    "@openmrs/esm-config": "^4.1.0",
-    "@openmrs/esm-error-handling": "^4.1.0",
-    "@openmrs/esm-extensions": "^4.1.0",
-    "@openmrs/esm-globals": "^4.1.0",
+    "@openmrs/esm-api": "workspace:*",
+    "@openmrs/esm-config": "workspace:*",
+    "@openmrs/esm-error-handling": "workspace:*",
+    "@openmrs/esm-extensions": "workspace:*",
+    "@openmrs/esm-feature-flags": "workspace:*",
+    "@openmrs/esm-globals": "workspace:*",
     "dayjs": "^1.10.8",
-    "i18next": "^19.6.0",
-    "jest": "28.1.0",
-    "jest-cli": "28.1.0",
-    "jest-environment-jsdom": "28.1.0",
+    "i18next": "^21.10.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-i18next": "^11.16.9",
+    "react-i18next": "^11.18.6",
     "rxjs": "^6.5.3",
-    "unistore": "^3.5.2"
+    "swr": "^2.2.2",
+    "webpack": "^5.88.0"
   }
 }

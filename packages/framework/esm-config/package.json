@@ -1,14 +1,16 @@
 {
   "name": "@openmrs/esm-config",
-  "version": "4.1.0",
+  "version": "5.3.2",
   "license": "MPL-2.0",
   "description": "A configuration library for the OpenMRS Single-Spa framework.",
   "browser": "dist/openmrs-esm-module-config.js",
   "main": "src/index.ts",
   "source": true,
   "scripts": {
-    "test": "jest --config jest.config.js --passWithNoTests",
+    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
+    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
     "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
     "lint": "eslint src --ext ts,tsx"
@@ -39,17 +41,14 @@
     "ramda": "^0.26.1"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "4.x",
-    "@openmrs/esm-state": "4.x",
-    "single-spa": "5.x",
-    "systemjs": "6.x"
+    "@openmrs/esm-globals": "5.x",
+    "@openmrs/esm-state": "5.x",
+    "single-spa": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-globals": "^4.1.0",
-    "@openmrs/esm-state": "^4.1.0",
+    "@openmrs/esm-globals": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
     "@types/ramda": "^0.26.44",
-    "@types/systemjs": "^6.1.0",
-    "babel-plugin-ramda": "^2.0.0",
     "single-spa": "^5.9.2"
   }
 }

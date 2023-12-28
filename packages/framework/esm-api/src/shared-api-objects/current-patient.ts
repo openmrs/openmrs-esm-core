@@ -1,9 +1,10 @@
 /** @module @category API */
-import { fhir } from "../fhir";
-import { FetchResponse } from "../types";
+import { getSynchronizationItems } from '@openmrs/esm-offline';
+import type { FetchConfig } from '../openmrs-fetch';
+import { fhirBaseUrl, openmrsFetch } from '../openmrs-fetch';
+import type { FetchResponse } from '../types';
 
 export type CurrentPatient = fhir.Patient | FetchResponse<fhir.Patient>;
-
 export interface CurrentPatientOptions {
   includeConfig?: boolean;
 }
@@ -18,17 +19,41 @@ export interface OnlyThePatient extends CurrentPatientOptions {
 
 export type PatientUuid = string | null;
 
-export function fetchCurrentPatient(
+export async function fetchCurrentPatient(
   patientUuid: PatientUuid,
-  contentOverrides?: Partial<Parameters<typeof fhir.read>[0]>
-) {
+  fetchInit?: FetchConfig,
+  includeOfflinePatients: boolean = true,
+): Promise<fhir.Patient | null> {
   if (patientUuid) {
-    return fhir.read<fhir.Patient>({
-      type: "Patient",
-      patient: patientUuid,
-      ...contentOverrides,
-    });
+    let err: Error | null = null;
+    const [onlinePatient, offlinePatient] = await Promise.all([
+      openmrsFetch<fhir.Patient>(`${fhirBaseUrl}/Patient/${patientUuid}`, fetchInit).catch<FetchResponse<fhir.Patient>>(
+        (e) => (err = e),
+      ),
+      includeOfflinePatients ? getOfflineRegisteredPatientAsFhirPatient(patientUuid) : Promise.resolve(null),
+    ]);
+
+    if (onlinePatient.ok) {
+      return onlinePatient.data;
+    }
+
+    if (offlinePatient) {
+      return offlinePatient;
+    }
+
+    if (err) {
+      throw err;
+    }
   }
 
-  return Promise.resolve(null);
+  return null;
+}
+
+async function getOfflineRegisteredPatientAsFhirPatient(patientUuid: string): Promise<fhir.Patient | null> {
+  const patientRegistrationSyncItems = await getSynchronizationItems<{
+    fhirPatient: fhir.Patient;
+  }>('patient-registration');
+  const patientSyncItem = patientRegistrationSyncItems.find((item) => item.fhirPatient.id === patientUuid);
+
+  return patientSyncItem?.fhirPatient ?? null;
 }

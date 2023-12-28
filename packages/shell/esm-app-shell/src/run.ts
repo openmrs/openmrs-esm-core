@@ -1,27 +1,24 @@
-import "import-map-overrides";
-import "systemjs/dist/system";
-import "systemjs/dist/extras/amd";
-import "systemjs/dist/extras/named-exports";
-import "systemjs/dist/extras/named-register";
-import "systemjs/dist/extras/use-default";
-import { start, unregisterApplication, getAppNames } from "single-spa";
+import { start, triggerAppChange } from 'single-spa';
+import type { OpenmrsAppRoutes } from '@openmrs/esm-framework/src/internal';
 import {
   setupApiModule,
   renderLoadingSpinner,
-  createAppState,
-  Config,
+  type Config,
   provide,
   showNotification,
   showActionableNotification,
   showToast,
+  showSnackbar,
   renderInlineNotifications,
   renderActionableNotifications,
   renderToasts,
+  renderSnackbars,
   integrateBreakpoints,
   dispatchConnectivityChanged,
   subscribeNotificationShown,
   subscribeActionableNotificationShown,
   subscribeToastShown,
+  subscribeSnackbarShown,
   registerOmrsServiceWorker,
   messageOmrsServiceWorker,
   subscribeConnectivity,
@@ -31,55 +28,130 @@ import {
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
   openmrsFetch,
-} from "@openmrs/esm-framework/src/internal";
-import {
-  finishRegisteringAllApps,
-  registerApp,
-  tryRegisterExtension,
-} from "./apps";
-import { setupI18n } from "./locale";
-import { loadModules } from "./load-modules";
-import { appName, getCoreExtensions } from "./ui";
-import { registerModules, sharedDependencies } from "./dependencies";
+  interpolateUrl,
+  type OpenmrsRoutes,
+  getCurrentImportMap,
+  importDynamic,
+  canAccessStorage,
+  localStorageRoutesPrefix,
+  isOpenmrsAppRoutes,
+  isOpenmrsRoutes,
+} from '@openmrs/esm-framework/src/internal';
+import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
+import { setupI18n } from './locale';
+import { appName, getCoreExtensions } from './ui';
 
-/**
- * Loads the frontend modules (apps and widgets). Should be done *after*
- * the import maps initialized, i.e., after modules loaded.
- *
- * By convention we call frontend modules registering activation functions
- * apps, and all others widgets. This is not enforced technically.
- */
-function loadApps() {
-  return window.importMapOverrides
-    .getCurrentPageMap()
-    .then((importMap) => loadModules(importMap.imports));
-}
-
-/**
- * Registers the extensions already coming from the app shell itself.
- */
-function registerCoreExtensions() {
-  const extensions = getCoreExtensions();
-
-  for (const extension of extensions) {
-    tryRegisterExtension(appName, extension);
-  }
-}
+// @internal
+// used to track when the window.installedModules global is finalised
+// so we can pre-load all modules
+const REGISTRATION_PROMISES = Symbol('openmrs_registration_promises');
 
 /**
  * Sets up the frontend modules (apps). Uses the defined export
- * from the root modules of the apps, which should export a
- * special function called "setupOpenMRS".
- * That function returns an object that is used to feed Single
- * SPA.
+ * from the root modules of the apps. This is done by reading the
+ * list of apps from the routes.registry.json file, which serves
+ * as the registry of all apps in the application.
  */
-async function setupApps(modules: Array<[string, System.Module]>) {
-  modules.forEach(([appName, appExports]) => registerApp(appName, appExports));
-  subscribeConnectivity(async () => {
-    const appNames = getAppNames();
-    await Promise.all(appNames.map(unregisterApplication));
-    finishRegisteringAllApps();
+async function setupApps() {
+  const scriptTags = document.querySelectorAll<HTMLScriptElement>("script[type='openmrs-routes']");
+
+  const promises: Array<Promise<OpenmrsRoutes>> = [];
+  for (let i = 0; i < scriptTags.length; i++) {
+    promises.push(
+      (async (scriptTag) => {
+        let routes: OpenmrsRoutes | undefined = undefined;
+        try {
+          if (scriptTag.textContent) {
+            routes = JSON.parse(scriptTag.textContent) as OpenmrsRoutes;
+          } else if (scriptTag.src) {
+            routes = (await openmrsFetch<OpenmrsRoutes>(scriptTag.src)).data;
+          }
+        } catch (e) {
+          console.error(`Caught error while loading routes from ${scriptTag.src ?? 'JSON script tag content'}`, e);
+
+          return {};
+        }
+
+        return Promise.resolve(routes ?? {});
+      })(scriptTags.item(i)),
+    );
+  }
+
+  if (canAccessStorage()) {
+    // load routes overrides from localStorage if any
+    const localStorage = window.localStorage;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(localStorageRoutesPrefix)) {
+        const localOverride = localStorage.getItem(key);
+        if (localOverride) {
+          try {
+            const maybeOpenmrsRoutes = JSON.parse(localOverride);
+            if (isOpenmrsAppRoutes(maybeOpenmrsRoutes)) {
+              promises.push(
+                Promise.resolve<OpenmrsRoutes>({
+                  [key.slice(localStorageRoutesPrefix.length)]: maybeOpenmrsRoutes,
+                }),
+              );
+            } else if (typeof maybeOpenmrsRoutes === 'string' && maybeOpenmrsRoutes.startsWith('http')) {
+              promises.push(
+                openmrsFetch<OpenmrsAppRoutes>(maybeOpenmrsRoutes)
+                  .then((response) => {
+                    if (isOpenmrsAppRoutes(response.data)) {
+                      return Promise.resolve({
+                        [key.slice(localStorageRoutesPrefix.length)]: response.data,
+                      });
+                    }
+
+                    return Promise.reject(
+                      `${maybeOpenmrsRoutes} did not resolve to a valid OpenmrsAppRoutes JSON object`,
+                    );
+                  })
+                  .catch((reason) => {
+                    console.warn(
+                      `Failed to fetch route overrides for ${key.slice(localStorageRoutesPrefix.length)}`,
+                      reason,
+                    );
+
+                    // still fail the promise
+                    throw reason;
+                  }),
+              );
+            } else {
+              console.warn(
+                `Route override for ${key.slice(
+                  localStorageRoutesPrefix.length,
+                )} could not be handled as it was neither a JSON object nor a URL string`,
+                localOverride,
+              );
+            }
+          } catch (e) {
+            console.error(`Error parsing local route override for ${key}`, e);
+          }
+        }
+      }
+    }
+  }
+
+  const routes: OpenmrsRoutes = (await Promise.allSettled(promises))
+    .filter((p) => p.status === 'fulfilled')
+    .map((p) => (p as PromiseFulfilledResult<OpenmrsRoutes>).value)
+    .filter(isOpenmrsRoutes)
+    .reduce(
+      (accumulatedRoutes, routes) => ({
+        ...accumulatedRoutes,
+        ...routes,
+      }),
+      {},
+    );
+
+  const modules: typeof window.installedModules = [];
+  const registrationPromises = Object.entries(routes).map(async ([module, routes]) => {
+    modules.push([module, routes]);
+    registerApp(module, routes);
   });
+
+  window[REGISTRATION_PROMISES] = Promise.all(registrationPromises);
   window.installedModules = modules;
 }
 
@@ -97,12 +169,15 @@ async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
  */
 function connectivityChanged() {
   const online = navigator.onLine;
+  // NB We do not wait for this to be done; it is simply scheduled
+  triggerAppChange();
+
   dispatchConnectivityChanged(online);
   showToast({
     critical: true,
-    description: `Connection: ${online ? "online" : "offline"}`,
-    title: "App",
-    kind: online ? "success" : "warning",
+    description: `Connection: ${online ? 'online' : 'offline'}`,
+    title: 'App',
+    kind: online ? 'success' : 'warning',
   });
 }
 
@@ -110,11 +185,20 @@ function connectivityChanged() {
  * Runs the shell by importing the translations and starting single SPA.
  */
 function runShell() {
-  window.addEventListener("offline", connectivityChanged);
-  window.addEventListener("online", connectivityChanged);
+  window.addEventListener('offline', connectivityChanged);
+  window.addEventListener('online', connectivityChanged);
   return setupI18n()
     .catch((err) => console.error(`Failed to initialize translations`, err))
     .then(() => start());
+}
+
+async function preloadScripts() {
+  const [, importMap] = await Promise.all([window[REGISTRATION_PROMISES], getCurrentImportMap()]);
+
+  window.installedModules.map(async ([module]) => {
+    // we simply swallow the error here since this is only a preload
+    importDynamic(module, undefined, { importMap }).catch();
+  });
 }
 
 function handleInitFailure(e: Error) {
@@ -123,28 +207,25 @@ function handleInitFailure(e: Error) {
 }
 
 function renderFatalErrorPage(e?: Error) {
-  const template = document.querySelector<HTMLTemplateElement>("#app-error");
+  const template = document.querySelector<HTMLTemplateElement>('#app-error');
 
   if (template) {
     const fragment = template.content.cloneNode(true) as DocumentFragment;
     const messageContainer = fragment.querySelector('[data-var="message"]');
 
     if (messageContainer) {
-      messageContainer.textContent =
-        e?.message || "No additional information available.";
+      messageContainer.textContent = e?.message || 'No additional information available.';
     }
 
     if (
-      localStorage.getItem("openmrs:devtools") &&
-      Object.keys(localStorage).some((k) =>
-        k.startsWith("import-map-override:")
-      )
+      localStorage.getItem('openmrs:devtools') &&
+      Object.keys(localStorage).some((k) => k.startsWith('import-map-override:'))
     ) {
-      const appErrorActionButtons = fragment?.querySelector("#buttons");
+      const appErrorActionButtons = fragment?.querySelector('#buttons');
       if (appErrorActionButtons) {
-        const clearDevOverridesButton = document.createElement("button");
-        clearDevOverridesButton.className = "cds--btn";
-        clearDevOverridesButton.innerHTML = "Clear dev overrides";
+        const clearDevOverridesButton = document.createElement('button');
+        clearDevOverridesButton.className = 'cds--btn';
+        clearDevOverridesButton.innerHTML = 'Clear dev overrides';
         clearDevOverridesButton.onclick = clearDevOverrides;
         appErrorActionButtons.appendChild(clearDevOverridesButton);
       }
@@ -157,10 +238,8 @@ function renderFatalErrorPage(e?: Error) {
 function clearDevOverrides() {
   for (const key of Object.keys(localStorage)) {
     if (
-      key.startsWith("import-map-override:") &&
-      !["import-map-override:react", "import-map-override:react-dom"].includes(
-        key
-      )
+      key.startsWith('import-map-override:') &&
+      !['import-map-override:react', 'import-map-override:react-dom'].includes(key)
     ) {
       localStorage.removeItem(key);
     }
@@ -170,8 +249,9 @@ function clearDevOverrides() {
 
 function createConfigLoader(configUrls: Array<string>) {
   const loadingConfigs = Promise.all(
-    configUrls.map((configUrl) =>
-      fetch(configUrl)
+    configUrls.map((configUrl) => {
+      const interpolatedUrl = interpolateUrl(configUrl);
+      return fetch(interpolatedUrl)
         .then((res) => res.json())
         .then((config) => ({
           name: configUrl,
@@ -183,52 +263,57 @@ function createConfigLoader(configUrls: Array<string>) {
             name: configUrl,
             value: {},
           };
-        })
-    )
+        });
+    }),
   );
   return () => loadingConfigs.then(loadConfigs);
 }
 
 function showNotifications() {
-  renderInlineNotifications(
-    document.querySelector(".omrs-inline-notifications-container")
-  );
+  renderInlineNotifications(document.querySelector('.omrs-inline-notifications-container'));
   return;
 }
 
 function showActionableNotifications() {
-  renderActionableNotifications(
-    document.querySelector(".omrs-actionable-notifications-container")
-  );
-  return;
+  renderActionableNotifications(document.querySelector('.omrs-actionable-notifications-container'));
 }
 
 function showToasts() {
-  renderToasts(document.querySelector(".omrs-toasts-container"));
-  return;
+  renderToasts(document.querySelector('.omrs-toasts-container'));
+}
+
+function showSnackbars() {
+  renderSnackbars(document.querySelector('.omrs-snackbars-container'));
 }
 
 function showModals() {
-  renderModals(document.querySelector(".omrs-modals-container"));
-  return;
+  renderModals(document.querySelector('.omrs-modals-container'));
 }
 
 function showLoadingSpinner() {
   return renderLoadingSpinner(document.body);
 }
 
+/**
+ * Registers the extensions coming from the app shell itself.
+ */
+function registerCoreExtensions() {
+  const extensions = getCoreExtensions();
+  for (const extension of extensions) {
+    tryRegisterExtension(appName, extension);
+  }
+}
+
 async function setupOffline() {
   try {
-    await registerOmrsServiceWorker(
-      `${window.getOpenmrsSpaBase()}service-worker.js`
-    );
+    await registerOmrsServiceWorker(`${window.getOpenmrsSpaBase()}service-worker.js`);
     await activateOfflineCapability();
     setupOfflineStaticDependencyPrecaching();
   } catch (error) {
-    console.error("Error while setting up offline mode.", error);
+    console.error('Error while setting up offline mode.', error);
     showNotification({
-      kind: "error",
-      title: "Offline Setup Error",
+      kind: 'error',
+      title: 'Offline Setup Error',
       description: error.message,
     });
   }
@@ -239,9 +324,7 @@ function setupOfflineStaticDependencyPrecaching() {
   let lastPrecache: Date | null = null;
 
   subscribeOnlineAndLoginChange((online, hasLoggedInUser) => {
-    const hasExceededPrecacheDelay =
-      !lastPrecache ||
-      new Date().getTime() - lastPrecache.getTime() > precacheDelay;
+    const hasExceededPrecacheDelay = !lastPrecache || new Date().getTime() - lastPrecache.getTime() > precacheDelay;
 
     if (hasLoggedInUser && online && hasExceededPrecacheDelay) {
       lastPrecache = new Date();
@@ -250,9 +333,7 @@ function setupOfflineStaticDependencyPrecaching() {
   });
 }
 
-function subscribeOnlineAndLoginChange(
-  cb: (online: boolean, hasLoggedInUser: boolean) => void
-) {
+function subscribeOnlineAndLoginChange(cb: (online: boolean, hasLoggedInUser: boolean) => void) {
   let isOnline = false;
   let hasLoggedInUser = false;
 
@@ -272,40 +353,37 @@ async function precacheGlobalStaticDependencies() {
 
   // By default, cache the session endpoint.
   // This ensures that a lot of user/session related functions also work offline.
-  const sessionPathUrl = new URL(
-    `${window.openmrsBase}/ws/rest/v1/session`,
-    window.location.origin
-  ).href;
+  const sessionPathUrl = new URL(`${window.openmrsBase}/ws/rest/v1/session`, window.location.origin).href;
 
   await messageOmrsServiceWorker({
-    type: "registerDynamicRoute",
+    type: 'registerDynamicRoute',
     url: sessionPathUrl,
-    strategy: "network-first",
+    strategy: 'network-first',
   });
 
-  await openmrsFetch("/ws/rest/v1/session").catch((e) =>
+  await openmrsFetch('/ws/rest/v1/session').catch((e) =>
     console.warn(
-      "Failed to precache the user session data from the app shell. MFs depending on this data may run into problems while offline.",
-      e
-    )
+      'Failed to precache the user session data from the app shell. MFs depending on this data may run into problems while offline.',
+      e,
+    ),
   );
 }
 
 async function precacheImportMap() {
   const importMap = await window.importMapOverrides.getCurrentPageMap();
   await messageOmrsServiceWorker({
-    type: "onImportMapChanged",
+    type: 'onImportMapChanged',
     importMap,
   });
 }
 
 function setupOfflineCssClasses() {
   subscribeConnectivity(({ online }) => {
-    const body = document.querySelector("body")!;
+    const body = document.querySelector('body')!;
     if (online) {
-      body.classList.remove("omrs-offline");
+      body.classList.remove('omrs-offline');
     } else {
-      body.classList.add("omrs-offline");
+      body.classList.add('omrs-offline');
     }
   });
 }
@@ -319,23 +397,22 @@ export function run(configUrls: Array<string>, offline: boolean) {
   showModals();
   showNotifications();
   showActionableNotifications();
-  createAppState({});
+  showSnackbars();
   subscribeNotificationShown(showNotification);
   subscribeActionableNotificationShown(showActionableNotification);
   subscribeToastShown(showToast);
+  subscribeSnackbarShown(showSnackbar);
   subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
-  // FIXME this is part of a hack to load esm-form-app which depends on the legacy loading for now
-  // Once esm-form-app can be upgraded to Angular 12 and Module Federation, we should be able to ditch this
-  registerModules(sharedDependencies);
   setupApiModule();
   registerCoreExtensions();
 
-  return loadApps()
-    .then(setupApps)
+  return setupApps()
+    .then(finishRegisteringAllApps)
     .then(setupOfflineCssClasses)
     .then(provideConfigs)
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(() => (offline ? setupOffline() : undefined));
+    .then(offline ? setupOffline : undefined)
+    .then(preloadScripts);
 }

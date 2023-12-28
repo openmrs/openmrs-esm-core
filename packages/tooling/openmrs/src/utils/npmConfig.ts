@@ -1,5 +1,5 @@
-import npmRegistryFetch from "npm-registry-fetch";
-import npmConfig from "@pnpm/npm-conf";
+import type npmRegistryFetch from 'npm-registry-fetch';
+import npmConfig from '@pnpm/npm-conf';
 
 /**
  * Utility function to load the appropriate configuration for npmRegistryFetch
@@ -12,9 +12,7 @@ import npmConfig from "@pnpm/npm-conf";
  *
  * @param registry The NPM registry to use, if any
  */
-export function getNpmRegistryConfiguration(
-  registry?: string | null | undefined
-): npmRegistryFetch.Options {
+export function getNpmRegistryConfiguration(registry?: string | null | undefined): npmRegistryFetch.Options {
   const conf = npmConfig();
 
   if (!conf) {
@@ -22,9 +20,7 @@ export function getNpmRegistryConfiguration(
   }
 
   if (conf.warnings.length >= 1) {
-    throw new Error(
-      `Warnings while loading .npmrc:\n  ${conf.warnings.join("\n  ")}`
-    );
+    throw new Error(`Warnings while loading .npmrc:\n  ${conf.warnings.join('\n  ')}`);
   }
 
   if (!conf.config) {
@@ -35,18 +31,15 @@ export function getNpmRegistryConfiguration(
   // so to convert this to a "normal" object, we combine all the settings
   // found; note this relies on the internal structure of the config
   // object and may not be stable
-  const configuration: npmRegistryFetch.Options = Object.assign(
-    {},
-    ...(conf.config.list.slice().reverse() ?? [])
-  );
+  const configuration: npmRegistryFetch.Options = Object.assign({}, ...(conf.config.list.slice().reverse() ?? []));
 
   if (configuration.__source__) {
     delete configuration.__source__;
   }
 
-  if ("strict-ssl" in configuration) {
-    configuration.strictSSL = configuration["strict-ssl"];
-    delete configuration["strict-ssl"];
+  if ('strict-ssl' in configuration) {
+    configuration.strictSSL = configuration['strict-ssl'];
+    delete configuration['strict-ssl'];
   }
 
   if (registry) {

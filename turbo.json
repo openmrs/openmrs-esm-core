@@ -5,27 +5,22 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
-    "test": {
-      "dependsOn": [],
-      "outputs": []
+    "build:development": {
+      "dependsOn": ["^build:development"],
+      "outputs": ["dist/**"]
     },
-    "watch": {
-      "dependsOn": [],
-      "outputs": []
+    "document": {
+      "outputs": ["docs/**"]
     },
+    "test": {},
+    "test:watch": {},
+    "watch": {},
     "lint": {
-      "dependsOn": ["^lint"],
-      "outputs": []
+      "dependsOn": ["^lint"]
     },
     "typescript": {
-      "dependsOn": ["^typescript"],
-      "outputs": []
+      "dependsOn": ["^typescript"]
     },
-    "extract-translations": {
-      "outputs": []
-    },
-    "dev": {
-      "cache": false
-    }
+    "extract-translations": {}
   }
 }
