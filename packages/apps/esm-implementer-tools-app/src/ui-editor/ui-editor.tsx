@@ -1,16 +1,16 @@
-import React from "react";
-import styles from "./styles.css";
+import React from 'react';
+import styles from './styles.css';
 import {
   getExtensionInternalStore,
   useAssignedExtensions,
   useStore,
   useStoreWithActions,
-} from "@openmrs/esm-framework/src/internal";
-import { Button } from "@carbon/react";
-import { Close } from "@carbon/react/icons";
-import { Portal } from "./portal";
-import { ExtensionOverlay } from "./extension-overlay.component";
-import { ImplementerToolsStore, implementerToolsStore } from "../store";
+} from '@openmrs/esm-framework/src/internal';
+import { Button } from '@carbon/react';
+import { Close } from '@carbon/react/icons';
+import { Portal } from './portal';
+import { ExtensionOverlay } from './extension-overlay.component';
+import { type ImplementerToolsStore, implementerToolsStore } from '../store';
 
 export default function UiEditor() {
   const { slots, extensions } = useStore(getExtensionInternalStore());
@@ -27,10 +27,7 @@ export default function UiEditor() {
                 `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotInfo.moduleName}"]`,
               )}
             >
-              <SlotOverlay
-                slotName={slotName}
-                moduleName={slotInfo.moduleName}
-              />
+              <SlotOverlay slotName={slotName} moduleName={slotInfo.moduleName} />
             </Portal>
           ))
         : null}
@@ -56,32 +53,26 @@ export default function UiEditor() {
 }
 
 export function SlotOverlay({ slotName, moduleName }) {
-  const assignedExtensions = useAssignedExtensions(slotName);
-
-  const setActiveExtensionSlot = (mdName, slotName) => {
+  const setActiveExtensionSlot = (moduleName: string, slotName: string) => {
     if (!implementerToolsStore.getState().configPathBeingEdited) {
       implementerToolsStore.setState({
-        activeItemDescription: {
-          path: [mdName, slotName],
-          value: assignedExtensions.map((e) => e.id),
-        },
+        uiSelectedPath: [moduleName, 'extensionSlots', slotName],
+        isOpen: true,
       });
     }
   };
   return (
     <>
       <div className={styles.slotOverlay}></div>
-      <div
-        role="button"
-        tabIndex={0}
+      <button
         onClick={(event) => {
           event.preventDefault();
-          setActiveExtensionSlot(slotName, moduleName);
+          setActiveExtensionSlot(moduleName, slotName);
         }}
         className={styles.slotName}
       >
         Slot: {slotName}
-      </div>
+      </button>
     </>
   );
 }
