@@ -1,13 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import { Button, Column, FlexGrid, Row, TextInput, Toggle } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, ChevronUp, Download, TrashCan } from '@carbon/react/icons';
+import { ChevronDown, ChevronUp, Download, TrashCan, Upload } from '@carbon/react/icons';
 import cloneDeep from 'lodash-es/cloneDeep';
 import isEmpty from 'lodash-es/isEmpty';
 import type { Config } from '@openmrs/esm-framework/src/internal';
 import {
   getExtensionInternalStore,
   implementerToolsConfigStore,
+  navigate,
+  showNotification,
+  showToast,
   temporaryConfigStore,
   useStore,
   useStoreWithActions,
@@ -17,6 +20,8 @@ import { Description } from './interactive-editor/description.component';
 import type { ImplementerToolsStore } from '../store';
 import { implementerToolsStore } from '../store';
 import styles from './configuration.styles.scss';
+import { saveConfig } from './configuration.resource';
+import { useBackendDependencyCheck } from '../backend-dependencies/openmrs-backend-dependencies';
 
 const JsonEditor = React.lazy(() => import('./json-editor/json-editor.component'));
 
@@ -62,6 +67,7 @@ export interface ConfigurationProps {}
 
 export const Configuration: React.FC<ConfigurationProps> = () => {
   const { t } = useTranslation();
+  const isSpaModulePresent = useBackendDependencyCheck('spa');
   const {
     isUIEditorEnabled,
     toggleIsUIEditorEnabled,
@@ -158,6 +164,43 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 >
                   {t('clearConfig', 'Clear Local Config')}
                 </Button>
+                {isSpaModulePresent ? (
+                  <Button
+                    kind="primary"
+                    iconDescription="Publish config to server"
+                    renderIcon={(props) => <Upload size={16} {...props} />}
+                    onClick={() => {
+                      saveConfig(tempConfig).then(
+                        (response) => {
+                          if (response.ok && !response.redirected) {
+                            temporaryConfigStore.setState({ config: {} });
+                            showToast({
+                              critical: true,
+                              title: t('savedConfiguration', 'Configuration published'),
+                              kind: 'success',
+                              description: t(
+                                'successfullySavedConfiguration',
+                                'Configuration has been pusblished to the server. It is now live for all users. Your local configuration overrides have been cleared.',
+                              ),
+                            });
+                          } else if (response.ok && response.redirected) {
+                            navigate({ to: response.url });
+                          }
+                        },
+                        (error) => {
+                          showNotification({
+                            title: t('errorSavingConfiguration', 'Error saving configuration'),
+                            kind: 'error',
+                            critical: true,
+                            description: error?.message,
+                          });
+                        },
+                      );
+                    }}
+                  >
+                    {t('publishConfig', 'Publish Config')}
+                  </Button>
+                ) : null}
                 <Button
                   kind="secondary"
                   iconDescription="Download config"
