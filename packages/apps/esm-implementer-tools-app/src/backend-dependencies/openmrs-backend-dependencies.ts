@@ -126,13 +126,7 @@ function getInstalledVersion(
   installedBackendModules: Array<BackendModule>,
 ) {
   const moduleName = installedAndRequiredBackendModule.uuid;
-<<<<<<< HEAD
-  return (
-    installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ?? ''
-  );
-=======
   return installedBackendModules.find((mod) => mod.uuid == moduleName)?.version ?? '';
->>>>>>> origin/main
 }
 
 function getResolvedModuleType(requiredVersion: string, installedVersion: string): ResolvedBackendModuleType {
@@ -159,23 +153,12 @@ export async function checkModules(): Promise<Array<ResolvedDependenciesModule>>
   return cachedFrontendModules;
 }
 
-<<<<<<< HEAD
-export function hasInvalidDependencies(
-  frontendModules: Array<ResolvedDependenciesModule>
-) {
-  return frontendModules.some((m) =>
-    m.dependencies.some((n) => n.type !== 'okay')
-  );
-=======
 export function hasInvalidDependencies(frontendModules: Array<ResolvedDependenciesModule>) {
   return frontendModules.some((m) => m.dependencies.some((n) => n.type !== 'okay'));
->>>>>>> origin/main
 }
 
 export function useBackendDependencyCheck(moduleName: string) {
-  const [backendDependencies, setBackendDependencies] = useState<
-    BackendModule[]
-  >([]);
+  const [backendDependencies, setBackendDependencies] = useState<Array<BackendModule>>([]);
 
   useMemo(async () => {
     const dependencies = await initInstalledBackendModules();
