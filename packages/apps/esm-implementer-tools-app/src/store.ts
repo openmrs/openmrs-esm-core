@@ -1,7 +1,7 @@
 import { createGlobalStore } from '@openmrs/esm-framework';
 
 export interface ImplementerToolsStore {
-  activeItemDescription?: ActiveItemDescription;
+  activeItemDescription: null | ActiveItemDescription;
   configPathBeingEdited: null | Array<string>;
   isOpen: boolean;
   hasAlert: boolean;
@@ -9,6 +9,7 @@ export interface ImplementerToolsStore {
   isConfigToolbarOpen: boolean;
   isUIEditorEnabled: boolean;
   isJsonModeEnabled: boolean;
+  uiSelectedPath: null | Array<string>;
 }
 
 export interface ActiveItemDescription {
@@ -19,7 +20,7 @@ export interface ActiveItemDescription {
 }
 
 export const implementerToolsStore = createGlobalStore<ImplementerToolsStore>('implementer-tools', {
-  activeItemDescription: undefined,
+  activeItemDescription: null,
   configPathBeingEdited: null,
   isOpen: getIsImplementerToolsOpen(),
   hasAlert: false,
@@ -27,6 +28,7 @@ export const implementerToolsStore = createGlobalStore<ImplementerToolsStore>('i
   isConfigToolbarOpen: getIsConfigToolbarOpen(),
   isUIEditorEnabled: getIsUIEditorEnabled(),
   isJsonModeEnabled: getIsJsonModeEnabled(),
+  uiSelectedPath: null,
 });
 
 export const setHasAlert = (value: boolean) =>
