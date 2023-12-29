@@ -30,7 +30,8 @@
       "slot": "user-panel-actions-slot",
       "component": "logoutButton",
       "online": true,
-      "offline": true
+      "offline": true,
+      "order": 999
     },
     {
       "name": "location-changer",

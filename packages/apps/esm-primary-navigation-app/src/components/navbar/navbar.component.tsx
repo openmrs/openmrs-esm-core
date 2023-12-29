@@ -26,7 +26,6 @@ const Navbar: React.FC = () => {
   const config = useConfig();
   const [user, setUser] = useState<LoggedInUser | null | false>(session?.user ?? null);
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
-  const allowedLocales = session?.allowedLocales ?? null;
   const layout = useLayoutType();
   const navMenuItems = useConnectedExtensions('patient-chart-dashboard-slot').map((e) => e.id);
   const openmrsSpaBase = window['getOpenmrsSpaBase']();
@@ -122,16 +121,7 @@ const Navbar: React.FC = () => {
         {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel} expanded={isActivePanel('sideMenu')} />}
         {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel} />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
-        {showUserMenu && (
-          <UserMenuPanel
-            user={user}
-            session={session}
-            expanded={isActivePanel('userMenu')}
-            allowedLocales={allowedLocales}
-            onLogout={logout}
-            hidePanel={hidePanel}
-          />
-        )}
+        {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} onLogout={logout} hidePanel={hidePanel} />}
       </Header>
     </>
   );

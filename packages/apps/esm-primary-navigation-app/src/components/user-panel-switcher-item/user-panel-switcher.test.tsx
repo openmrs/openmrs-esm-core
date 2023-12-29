@@ -5,7 +5,7 @@ import { mockLoggedInUser } from '../../../__mocks__/mock-user';
 
 describe('<UserPanelSwitcher/>', () => {
   beforeEach(() => {
-    render(<UserPanelSwitcher user={mockLoggedInUser as any} />);
+    render(<UserPanelSwitcher />);
   });
 
   it('should display user name', async () => {

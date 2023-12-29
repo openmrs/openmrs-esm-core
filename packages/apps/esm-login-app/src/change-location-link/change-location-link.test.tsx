@@ -13,12 +13,7 @@ describe('<ChangeLocationLink/>', () => {
   };
 
   beforeEach(() => {
-    render(
-      <ChangeLocationLink
-        referer={mockChangeLocationProps.referer}
-        currentLocation={mockChangeLocationProps.currentLocation}
-      />,
-    );
+    render(<ChangeLocationLink />);
   });
 
   it('should display the `Change location` link', async () => {

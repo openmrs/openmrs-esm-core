@@ -7,21 +7,11 @@ import styles from '../../root.scss';
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   expanded: boolean;
-  user: LoggedInUser | false | null;
-  allowedLocales: any;
   onLogout(): void;
-  session: Session;
   hidePanel: () => void;
 }
 
-const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
-  expanded,
-  user,
-  allowedLocales,
-  onLogout,
-  session,
-  hidePanel,
-}) => {
+const UserMenuPanel: React.FC<UserMenuPanelProps> = ({ expanded, onLogout, hidePanel }) => {
   const userMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel, expanded);
 
   return (
@@ -35,14 +25,10 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
       <ExtensionSlot
         name="user-panel-slot"
         state={{
-          user: user,
-          allowedLocales: allowedLocales,
           onLogout: onLogout,
-          referer: window.location.pathname,
-          currentLocation: session?.sessionLocation?.display,
-          locale: session?.locale,
         }}
       />
+      <ExtensionSlot name="user-panel-actions-slot" />
     </HeaderPanel>
   );
 };
