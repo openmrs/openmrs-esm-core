@@ -1,4 +1,7 @@
 {
-  "notifications": "Notifications",
-  "changeLanguage": "Changer de langue"
+  "apply": "Apply",
+  "cancel": "Cancel",
+  "change": "Change",
+  "changeLanguage": "Change Language",
+  "notifications": "Notifications"
 }
