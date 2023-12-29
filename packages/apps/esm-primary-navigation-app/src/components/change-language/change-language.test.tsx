@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ChangeLanguageModal from './change-language-modal.extension';
+import ChangeLanguageModal from './change-language.modal';
 import { useSession } from '@openmrs/esm-framework';
 
 const mockUser: any = {
