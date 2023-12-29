@@ -3,10 +3,10 @@ import { ModalFooter } from '@carbon/react';
 import { Button } from '@carbon/react';
 import { ModalHeader } from '@carbon/react';
 import { useConnectivity, useSession } from '@openmrs/esm-framework';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { postUserPropertiesOnline, postUserPropertiesOffline } from './change-language.resource';
-import styles from './change-language.scss';
+import styles from './change-language-modal.scss';
 import { RadioButtonGroup } from '@carbon/react';
 import { RadioButton } from '@carbon/react';
 
@@ -22,23 +22,24 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
   const [selectedLocale, setSelectedLocale] = useState(session?.locale);
   const isOnline = useConnectivity();
 
-  const onSubmit = useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const newLocale = event.target.value;
-      const postUserProperties = isOnline ? postUserPropertiesOnline : postUserPropertiesOffline;
-      if (newLocale !== selectedLocale) {
-        const ac = new AbortController();
-        postUserProperties(
-          user.uuid,
-          {
-            ...(user.userProperties ?? {}),
-            defaultLocale: newLocale,
-          },
-          ac,
-        );
-      }
-    },
-    [isOnline, user.userProperties, user.uuid, selectedLocale],
+  const onSubmit = useCallback(() => {
+    const postUserProperties = isOnline ? postUserPropertiesOnline : postUserPropertiesOffline;
+    if (selectedLocale !== session?.locale) {
+      const ac = new AbortController();
+      postUserProperties(
+        user.uuid,
+        {
+          ...(user.userProperties ?? {}),
+          defaultLocale: selectedLocale,
+        },
+        ac,
+      );
+    }
+  }, [isOnline, user.userProperties, user.uuid, selectedLocale]);
+
+  const languageNames = useMemo(
+    () => Object.fromEntries(allowedLocales.map((l) => [l, new Intl.DisplayNames([l], { type: 'language' }).of(l)])),
+    [allowedLocales],
   );
 
   return (
@@ -56,11 +57,11 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
           >
             {allowedLocales.map((l, i) => (
               <RadioButton
-                className={styles.locationRadioButton}
+                className={styles.languageRadioButton}
                 key={`locale-option-${l}`}
                 id={`locale-option-${l}`}
                 name={l}
-                labelText={l}
+                labelText={languageNames[l]}
                 value={l}
               />
             ))}
