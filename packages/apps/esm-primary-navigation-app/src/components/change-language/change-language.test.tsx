@@ -2,26 +2,41 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ChangeLanguageModal from './change-language.modal';
-import type { PostUserProperties } from './change-language.resource';
+import { useSession } from '@openmrs/esm-framework';
 
-const allowedLocales = ['en', 'fr', 'it', 'pt'];
-const user: any = {
+const mockUser: any = {
   uuid: 'uuid',
   userProperties: {
     defaultLocale: 'fr',
   },
 };
 
-describe(`<ChangeLanguage />`, () => {
-  let postUserPropertiesMock: PostUserProperties = jest.fn(() => Promise.resolve());
+const mockUseSession = useSession as jest.Mock;
+mockUseSession.mockReturnValue({
+  authenticated: true,
+  user: mockUser,
+  allowedLocales: ['en', 'fr', 'it', 'pt'],
+  locale: 'fr',
+});
 
+const mockPostUserPropertiesOnline = jest.fn((...args) => Promise.resolve());
+jest.mock('./change-language.resource', () => ({
+  postUserPropertiesOnline: (...args) => mockPostUserPropertiesOnline(...args),
+  postUserPropertiesOffline: jest.fn(),
+}));
+
+describe(`Change Language Modal`, () => {
   it('should change user locale', async () => {
-    const userSetup = userEvent.setup();
-    postUserPropertiesMock = jest.fn(() => Promise.resolve());
+    const user = userEvent.setup();
 
     render(<ChangeLanguageModal close={jest.fn()} />);
-    expect(screen.getByLabelText(/Select locale/)).toHaveValue('fr');
-    await userSetup.selectOptions(screen.getByLabelText(/Select locale/i), 'en');
-    expect(postUserPropertiesMock).toHaveBeenCalledWith(user.uuid, { defaultLocale: 'en' }, expect.anything());
+    expect(screen.getByRole('radio', { name: /français/ })).toBeChecked();
+    await user.click(screen.getByRole('radio', { name: /english/i }));
+    await user.click(screen.getByRole('button', { name: /apply/i }));
+    expect(mockPostUserPropertiesOnline).toHaveBeenCalledWith(
+      mockUser.uuid,
+      { defaultLocale: 'en' },
+      expect.anything(),
+    );
   });
 });
