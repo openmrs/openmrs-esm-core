@@ -50,6 +50,6 @@ export const linkComponent = getSyncLifecycle(genericLinkComponent, {
 });
 
 export const changeLanguageModal = getAsyncLifecycle(
-  () => import('./components/change-language/change-language.modal'),
+  () => import('./components/change-language/change-language-modal.extension'),
   options,
 );
