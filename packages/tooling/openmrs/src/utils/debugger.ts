@@ -20,7 +20,8 @@ function loadConfig(configPath: string) {
 }
 
 function debug(configPath: string, port: number) {
-  const Webpack: typeof import('webpack') = require('webpack');
+  const Webpack = require('webpack');
+  // eslint-disable-next-line @typescript-eslint/consistent-type-imports
   const WebpackDevServer: typeof import('webpack-dev-server') = require('webpack-dev-server');
   const config = loadConfig(configPath);
 
