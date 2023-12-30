@@ -1,46 +1,13 @@
 @import '~@openmrs/esm-styleguide/src/vars';
 @import '../../root.scss';
 
-.changeLanguageLinkContainer {
+.panelItemContainer a {
   display: flex;
-  flex-direction: row;
-  width: 16rem;
-  justify-content: flex-start;
-  color: $field-01;
   align-items: center;
-  @extend .bodyLong01;
-  height: 3rem;
-  cursor: pointer;
-}
-
-.changeLanguageLinkContainer svg {
-  margin: 0rem 0.75rem;
-  fill: $field-01;
-}
-
-.changeLanguageLinkContainer div {
-  width: 100%;
-  display: flex;
   justify-content: space-between;
+}
+
+.panelItemContainer div {
+  display: flex;
   align-items: center;
-}
-
-.changeLanguageLinkContainer button,
-.changeLanguageLinkContainer button:hover {
-  color: $inverse-link;
-}
-
-.changeLanguageLinkContainer button :hover {
-  @include brand-03(background-color);
-  color: $inverse-link;
-}
-
-.changeLanguageLink {
-  color: $field-01;
-  width: fit-content;
-}
-
-.changeLanguageLink :hover {
-  color: $field-01;
-  @include brand-01(background-color);
 }

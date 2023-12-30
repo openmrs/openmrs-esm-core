@@ -4,6 +4,7 @@ import { navigate, useSession } from '@openmrs/esm-framework';
 import { Button } from '@carbon/react';
 import { Location } from '@carbon/react/icons';
 import styles from './change-location-link.scss';
+import { SwitcherItem } from '@carbon/react';
 
 const ChangeLocationLink: React.FC = () => {
   const { t } = useTranslation();
@@ -20,15 +21,15 @@ const ChangeLocationLink: React.FC = () => {
   };
 
   return (
-    <div className={styles.changeLocationLinkContainer}>
-      <Location size={20} />
+    <SwitcherItem className={styles.panelItemContainer}>
       <div>
-        {currentLocation}
-        <Button kind="ghost" onClick={changeLocation}>
-          {t('change', 'Change')}
-        </Button>
+        <Location size={20} />
+        <p>{currentLocation}</p>
       </div>
-    </div>
+      <Button kind="ghost" onClick={changeLocation}>
+        {t('change', 'Change')}
+      </Button>
+    </SwitcherItem>
   );
 };
 

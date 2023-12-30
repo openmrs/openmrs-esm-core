@@ -1,11 +1,11 @@
 @import '../root.scss';
 
-.logout {
-  padding-right: 0rem;
-  @extend .productiveHeading01;
-  width: 16rem;
+/* Repeat selector for specificity */
+button.logout.logout {
+  color: $field-01;
+  font-size: 1rem;
 
   &:hover {
-    @include brand-01(background-color);
+    background-color: inherit;
   }
 }

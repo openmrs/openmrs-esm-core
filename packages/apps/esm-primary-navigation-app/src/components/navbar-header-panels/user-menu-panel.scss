@@ -1,0 +1,83 @@
+@import '~@openmrs/esm-styleguide/src/vars';
+@import '../../root.scss';
+
+.userPanelSwitcher {
+  padding-top: 1rem;
+  align-items: start;
+}
+
+.userPanelSwitcher :global(.cds--switcher__item) {
+  height: 3rem;
+}
+
+.userPanelSwitcher :global(.cds--switcher__item:first-child) {
+  margin-top: 0;
+}
+
+.userPanelSwitcher :global(.cds--switcher__item-link) {
+  display: flex;
+  align-items: center;
+  color: $field-01;
+  padding: 0;
+  height: 3rem;
+  @extend .bodyLong01;
+}
+
+.userPanelSwitcher :global(.cds--switcher__item-link):hover:not(.cds--switcher__item-link--selected) {
+  color: $field-01;
+  @include brand-02(background-color);
+}
+
+.userPanelSwitcher :global(.cds--switcher__item) svg {
+  margin: 0rem 0.75rem;
+  fill: $field-01;
+  flex-shrink: 0;
+}
+
+.userPanelSwitcher :global(.cds--switcher__item) button {
+  color: $inverse-link;
+}
+
+.userPanelSwitcher :global(.cds--switcher__item) button:hover {
+  @include brand-03(background-color);
+  color: $inverse-link;
+}
+
+// .userMenuPanelItem {
+//   display: flex;
+//   flex-direction: row;
+//   width: 16rem;
+//   justify-content: flex-start;
+//   color: $field-01;
+//   align-items: center;
+//   @extend .bodyLong01;
+//   height: 3rem;
+//   cursor: pointer;
+// }
+
+// .userMenuPanelItem div div {
+//   width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
+
+// .userMenuPanelItem button,
+// .userMenuPanelItem button:hover {
+//   color: $inverse-link;
+// }
+
+// .userMenuPanelItem button :hover {
+//   @include brand-03(background-color);
+//   color: $inverse-link;
+// }
+
+// .userMenuPanelItem a {
+//   color: $field-01;
+//   width: fit-content;
+// }
+
+// .userMenuPanelItem a :hover {
+//   color: $field-01;
+//   @include brand-01(background-color);
+// }

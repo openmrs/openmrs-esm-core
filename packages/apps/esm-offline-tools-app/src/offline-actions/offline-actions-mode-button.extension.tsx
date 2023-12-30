@@ -4,6 +4,7 @@ import { Toggle } from '@carbon/react';
 import { Network_3 } from '@carbon/react/icons';
 import { getCurrentOfflineMode, setCurrentOfflineMode } from '@openmrs/esm-framework/src/internal';
 import styles from './offline-actions-mode-button.scss';
+import { SwitcherItem } from '@carbon/react';
 
 function doNotCloseMenu(ev: React.SyntheticEvent) {
   ev.stopPropagation();
@@ -21,15 +22,15 @@ const OfflineActionsModeButton: React.FC = () => {
   }, []);
 
   return (
-    <div className={styles.offlineModeButtonContainer}>
+    <SwitcherItem className={styles.panelItemContainer}>
       <div>
         <Network_3 size={20} />
-        <span onClick={doNotCloseMenu} role="none">
+        <p onClick={doNotCloseMenu} role="none">
           {t('offlineReady', 'Offline Ready')}
-        </span>
+        </p>
       </div>
       <Toggle className={styles.toggle} id="offlineModeSwitch" toggled={active} onToggle={toggle} />
-    </div>
+    </SwitcherItem>
   );
 };
 

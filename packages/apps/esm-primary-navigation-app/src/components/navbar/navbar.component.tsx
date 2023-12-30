@@ -39,8 +39,6 @@ const Navbar: React.FC = () => {
     [],
   );
 
-  const logout = useCallback(() => setUser(false), []);
-
   const hidePanel = useCallback(() => {
     setActiveHeaderPanel(null);
   }, []);
@@ -121,7 +119,7 @@ const Navbar: React.FC = () => {
         {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel} expanded={isActivePanel('sideMenu')} />}
         {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel} />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
-        {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} onLogout={logout} hidePanel={hidePanel} />}
+        {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel} />}
       </Header>
     </>
   );
