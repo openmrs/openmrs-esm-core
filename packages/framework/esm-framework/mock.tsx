@@ -1,10 +1,18 @@
 import React from 'react';
 import type {} from '@openmrs/esm-globals';
-import { createStore, StoreApi } from 'zustand';
+import { createStore, type StoreApi } from 'zustand';
 import { NEVER, of } from 'rxjs';
 import { interpolateUrl } from '@openmrs/esm-config';
-import { SessionStore } from '@openmrs/esm-api';
-export { parseDate, formatDate, formatDatetime, formatTime, age } from '@openmrs/esm-utils';
+import { type SessionStore } from '@openmrs/esm-api';
+import { getDefaultsFromConfigSchema } from '@openmrs/esm-utils';
+export {
+  getDefaultsFromConfigSchema,
+  parseDate,
+  formatDate,
+  formatDatetime,
+  formatTime,
+  age,
+} from '@openmrs/esm-utils';
 export { interpolateString, interpolateUrl, validators, validator } from '@openmrs/esm-config';
 
 window.i18next = { ...window.i18next, language: 'en' };
@@ -55,6 +63,16 @@ export const setCurrentVisit = jest.fn();
 export const newWorkspaceItem = jest.fn();
 
 export const fhirBaseUrl = '/ws/fhir2/R4';
+
+export const attachmentUrl = '/ws/rest/v1/attachment';
+
+export const getAttachmentByUuid = jest.fn();
+
+export const getAttachments = jest.fn();
+
+export const createAttachment = jest.fn();
+
+export const deleteAttachmentPermanently = jest.fn();
 
 /* esm-state */
 interface StoreEntity {
@@ -125,28 +143,10 @@ export enum Type {
 }
 
 let configSchema = {};
-function getDefaults(schema) {
-  let tmp = {};
-  for (let k of Object.keys(schema)) {
-    if (schema[k].hasOwnProperty('_default')) {
-      tmp[k] = schema[k]._default;
-    } else if (k.startsWith('_')) {
-      continue;
-    } else if (isOrdinaryObject(schema[k])) {
-      tmp[k] = getDefaults(schema[k]);
-    } else {
-      tmp[k] = schema[k];
-    }
-  }
-  return tmp;
-}
-function isOrdinaryObject(x) {
-  return !!x && x.constructor === Object;
-}
 
-export const getConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
+export const getConfig = jest.fn().mockImplementation(() => Promise.resolve(getDefaultsFromConfigSchema(configSchema)));
 
-export const useConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
+export const useConfig = jest.fn().mockImplementation(() => getDefaultsFromConfigSchema(configSchema));
 
 export function defineConfigSchema(moduleName, schema) {
   configSchema = schema;
@@ -204,6 +204,14 @@ export const getExtensionInternalStore = () =>
 export const ComponentContext = React.createContext(null);
 
 export const openmrsComponentDecorator = jest.fn().mockImplementation(() => (component) => component);
+
+export const useAttachments = jest.fn(() => ({
+  isLoading: true,
+  data: [],
+  error: null,
+  mutate: jest.fn(),
+  isValidating: true,
+}));
 
 export const useCurrentPatient = jest.fn(() => []);
 

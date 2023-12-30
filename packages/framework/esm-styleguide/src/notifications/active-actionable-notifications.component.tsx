@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Subject } from 'rxjs';
-import { ActionableNotificationMeta, ActionableNotificationComponent } from './actionable-notification.component';
+import type { Subject } from 'rxjs';
+import type { ActionableNotificationMeta } from './actionable-notification.component';
+import { ActionableNotificationComponent } from './actionable-notification.component';
 
 interface ActionableActiveNotificationProps {
   subject: Subject<ActionableNotificationMeta>;

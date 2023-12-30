@@ -1,5 +1,6 @@
 import type { OmrsOfflineCachingStrategy } from '@openmrs/esm-offline';
-import Dexie, { Table } from 'dexie';
+import type { Table } from 'dexie';
+import Dexie from 'dexie';
 
 /**
  * Contains information about dynamic route registrations.

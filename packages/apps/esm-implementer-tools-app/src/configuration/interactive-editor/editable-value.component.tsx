@@ -5,9 +5,12 @@ import cloneDeep from 'lodash-es/cloneDeep';
 import styles from './editable-value.styles.scss';
 import { Button } from '@carbon/react';
 import { Edit, Reset } from '@carbon/react/icons';
-import { ConfigValue, Validator, Type, Config, temporaryConfigStore } from '@openmrs/esm-framework/src/internal';
-import { ValueEditor, CustomValueType } from './value-editor';
-import { implementerToolsStore, ImplementerToolsStore } from '../../store';
+import type { ConfigValue, Validator, Type, Config } from '@openmrs/esm-framework/src/internal';
+import { temporaryConfigStore } from '@openmrs/esm-framework/src/internal';
+import type { CustomValueType } from './value-editor';
+import { ValueEditor } from './value-editor';
+import type { ImplementerToolsStore } from '../../store';
+import { implementerToolsStore } from '../../store';
 import { DisplayValue } from './display-value';
 import { useTranslation } from 'react-i18next';
 

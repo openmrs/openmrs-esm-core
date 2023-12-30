@@ -15,7 +15,11 @@ async function readImportmap(path: string, backend?: string, spaPath?: string) {
     if (backend && spaPath) {
       try {
         return await fetchRemoteImportmap(`${backend}${spaPath}importmap.json`);
-      } catch {}
+      } catch (e) {
+        logWarn(
+          `Could not read importmap from ${backend}${spaPath}importmap.json. Falling back to import map from https://dev3.openmrs.org/openmrs/spa/importmap.json: ${e}`,
+        );
+      }
     }
 
     return fetchRemoteImportmap('https://dev3.openmrs.org/openmrs/spa/importmap.json');
@@ -31,7 +35,11 @@ async function readRoutes(path: string, backend?: string, spaPath?: string) {
     if (backend && spaPath) {
       try {
         return await fetchRemoteRoutes(`${backend}${spaPath}routes.registry.json`);
-      } catch {}
+      } catch (e) {
+        logWarn(
+          `Could not read routes registry from ${backend}${spaPath}routes.registry.json. Falling back to routes registry from https://dev3.openmrs.org/openmrs/spa/routes.registry.json: ${e}`,
+        );
+      }
     }
 
     return fetchRemoteRoutes('https://dev3.openmrs.org/openmrs/spa/routes.registry.json');

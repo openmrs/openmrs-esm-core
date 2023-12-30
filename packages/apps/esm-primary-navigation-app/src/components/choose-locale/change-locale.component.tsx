@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Select, SelectItem } from '@carbon/react';
-import { ExtensionSlot, LoggedInUser, useConnectivity } from '@openmrs/esm-framework';
-import { PostUserProperties, postUserPropertiesOnline, postUserPropertiesOffline } from './change-locale.resource';
+import type { LoggedInUser } from '@openmrs/esm-framework';
+import { ExtensionSlot, useConnectivity } from '@openmrs/esm-framework';
+import type { PostUserProperties } from './change-locale.resource';
+import { postUserPropertiesOnline, postUserPropertiesOffline } from './change-locale.resource';
 import styles from './change-locale.scss';
 
 export interface ChangeLocaleProps {

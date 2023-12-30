@@ -3,8 +3,8 @@ import { Navigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { HeaderContainer, Header, HeaderMenuButton, HeaderGlobalBar, HeaderGlobalAction } from '@carbon/react';
 import { Close, Switcher, UserAvatarFilledAlt } from '@carbon/react/icons';
+import type { LoggedInUser } from '@openmrs/esm-framework';
 import {
-  LoggedInUser,
   useLayoutType,
   ExtensionSlot,
   ConfigurableLink,

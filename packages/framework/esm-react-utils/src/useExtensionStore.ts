@@ -1,5 +1,6 @@
 /** @module @category Extension */
-import { ExtensionStore, getExtensionStore } from '@openmrs/esm-extensions';
+import type { ExtensionStore } from '@openmrs/esm-extensions';
+import { getExtensionStore } from '@openmrs/esm-extensions';
 import { createUseStore } from './useStore';
 
 export const useExtensionStore = createUseStore<ExtensionStore>(getExtensionStore());

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switcher } from '@carbon/react';
 import { UserAvatarFilledAlt } from '@carbon/react/icons';
-import { LoggedInUser } from '@openmrs/esm-framework';
+import type { LoggedInUser } from '@openmrs/esm-framework';
 import styles from './user-panel-switcher.scss';
 
 export interface UserPanelSwitcherItemProps {

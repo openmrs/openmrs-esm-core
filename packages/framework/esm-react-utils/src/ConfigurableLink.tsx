@@ -1,6 +1,7 @@
 /** @module @category Navigation */
 import React, { type MouseEvent, type AnchorHTMLAttributes, type PropsWithChildren } from 'react';
-import { navigate, interpolateUrl, TemplateParams } from '@openmrs/esm-config';
+import type { TemplateParams } from '@openmrs/esm-config';
+import { navigate, interpolateUrl } from '@openmrs/esm-config';
 
 function handleClick(event: MouseEvent, to: string, templateParams?: TemplateParams) {
   if (!event.metaKey && !event.ctrlKey && !event.shiftKey && event.button == 0) {

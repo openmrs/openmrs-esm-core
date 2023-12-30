@@ -1,11 +1,7 @@
 /** @module @category Extension */
 import isEqual from 'lodash-es/isEqual';
-import {
-  configExtensionStore,
-  ConfigExtensionStoreElement,
-  ConfigObject,
-  ExtensionSlotConfigObject,
-} from '@openmrs/esm-config';
+import type { ConfigExtensionStoreElement, ConfigObject, ExtensionSlotConfigObject } from '@openmrs/esm-config';
+import { configExtensionStore } from '@openmrs/esm-config';
 import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
 import type { LifeCycles } from 'single-spa';
 

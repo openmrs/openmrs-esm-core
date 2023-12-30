@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Layer, Tile, TileProps } from '@carbon/react';
+import type { TileProps } from '@carbon/react';
+import { Button, Layer, Tile } from '@carbon/react';
 import { ArrowRight } from '@carbon/react/icons';
 import { navigate } from '@openmrs/esm-framework';
 import styles from './overview-card.styles.scss';

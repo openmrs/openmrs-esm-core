@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, InlineLoading, InlineNotification, PasswordInput, TextInput, Tile } from '@carbon/react';
 import { ArrowLeft, ArrowRight } from '@carbon/react/icons';
 import { useTranslation } from 'react-i18next';
+import type { Session } from '@openmrs/esm-framework';
 import {
   useConfig,
   interpolateUrl,
@@ -13,7 +14,6 @@ import {
   getSessionStore,
   useConnectivity,
   navigate as openmrsNavigate,
-  Session,
 } from '@openmrs/esm-framework';
 import { performLogin } from '../login.resource';
 import styles from './login.scss';
