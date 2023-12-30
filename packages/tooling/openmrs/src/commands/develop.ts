@@ -1,9 +1,9 @@
 import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
-import { resolve } from 'path';
-import { readFileSync } from 'fs';
-import type { ImportmapDeclaration } from '../utils';
-import { logInfo, logWarn, removeTrailingSlash } from '../utils';
+import { resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import { type ImportmapDeclaration, type RoutesDeclaration, logInfo, logWarn, removeTrailingSlash } from '../utils';
 
 /* eslint-disable no-console */
 
@@ -13,7 +13,8 @@ export interface DevelopArgs {
   backend: string;
   open: boolean;
   importmap: ImportmapDeclaration;
-  routes: Record<string, unknown>;
+  routes: RoutesDeclaration;
+  watchedRoutesPaths: Record<string, string>;
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
@@ -21,8 +22,9 @@ export interface DevelopArgs {
   supportOffline: boolean;
 }
 
-export function runDevelop(args: DevelopArgs) {
-  const { backend, host, port, open, importmap, configUrls, addCookie, supportOffline } = args;
+export async function runDevelop(args: DevelopArgs) {
+  const { backend, host, port, open, importmap, routes, watchedRoutesPaths, configUrls, addCookie, supportOffline } =
+    args;
   const apiUrl = removeTrailingSlash(args.apiUrl);
   const spaPath = removeTrailingSlash(args.spaPath);
   const app = express();
@@ -76,8 +78,32 @@ export function runDevelop(args: DevelopArgs) {
     });
   }
 
-  if (args.routes && Object.keys(args.routes).length > 0) {
-    const stringifiedRoutes = JSON.stringify(args.routes);
+  if (routes.type === 'inline') {
+    let stringifiedRoutes = routes.value;
+    if (watchedRoutesPaths && !!Object.keys(watchedRoutesPaths).length) {
+      // watchedRoutesPath is keyed from package to path, but here we need to go from
+      // path to package.
+      const watchedRoutesByPath = Object.fromEntries(Object.entries(watchedRoutesPaths).map(([k, v]) => [v, k]));
+
+      logInfo(`Watching routes.json for ${Object.keys(watchedRoutesPaths).join(', ')}`);
+      // setup watchers for all the discovered routes.json files which update the in-memory map
+      (await import('node-watch')).default(Object.keys(watchedRoutesByPath), { delay: 0 }, async (event, name) => {
+        if (event === 'update') {
+          const updatedApp = watchedRoutesByPath[name];
+          if (updatedApp) {
+            const jsonRoutes = JSON.parse(stringifiedRoutes);
+            const version = jsonRoutes[updatedApp]?.version;
+            jsonRoutes[updatedApp] = {
+              ...JSON.parse(await readFile(name, 'utf8')),
+              version,
+            };
+            stringifiedRoutes = JSON.stringify(jsonRoutes);
+            logInfo(`Updated routes for ${updatedApp}`);
+          }
+        }
+      });
+    }
+
     app.get(`${spaPath}/routes.registry.json`, (_, res) => {
       res.contentType('application/json').send(stringifiedRoutes);
     });

@@ -12487,6 +12487,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-watch@npm:^0.7.4":
+  version: 0.7.4
+  resolution: "node-watch@npm:0.7.4"
+  checksum: ea752dd5cd0aa1344ced1002409c8a81829cc5406fd949f34e8886786f2015651d2da9c3d3d4f164d23b9e84c7062ff97051746fe77db18955ffb23dc3dc0b76
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^6.0.0":
   version: 6.0.0
   resolution: "nopt@npm:6.0.0"
@@ -12896,6 +12903,7 @@ __metadata:
     html-webpack-plugin: "npm:^5.5.0"
     inquirer: "npm:^7.3.3"
     mini-css-extract-plugin: "npm:^2.4.5"
+    node-watch: "npm:^0.7.4"
     npm-registry-fetch: "npm:^14.0.3"
     pacote: "npm:^15.0.0"
     postcss: "npm:^8.4.6"
