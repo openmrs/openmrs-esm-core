@@ -18,7 +18,7 @@ export function ChangeLanguageLink() {
   const languageNames = new Intl.DisplayNames([session?.locale], { type: 'language' });
 
   return (
-    <SwitcherItem className={styles.panelItemContainer}>
+    <SwitcherItem className={styles.panelItemContainer} aria-label="Change language">
       <div>
         <Language size={20} />
         <p>{languageNames.of(session?.locale)}</p>

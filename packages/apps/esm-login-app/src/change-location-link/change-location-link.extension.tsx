@@ -21,7 +21,7 @@ const ChangeLocationLink: React.FC = () => {
   };
 
   return (
-    <SwitcherItem className={styles.panelItemContainer}>
+    <SwitcherItem aria-label="Change Location" className={styles.panelItemContainer}>
       <div>
         <Location size={20} />
         <p>{currentLocation}</p>

@@ -9,7 +9,7 @@ const UserPanelSwitcher: React.FC = () => {
   const session = useSession();
   const user = session?.user;
   return (
-    <SwitcherItem>
+    <SwitcherItem aria-label="User">
       <UserAvatarFilledAlt size={20} />
       <p>{user.person.display}</p>
     </SwitcherItem>

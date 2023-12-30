@@ -22,7 +22,7 @@ const OfflineActionsModeButton: React.FC = () => {
   }, []);
 
   return (
-    <SwitcherItem className={styles.panelItemContainer}>
+    <SwitcherItem className={styles.panelItemContainer} aria-label="Offline mode">
       <div>
         <Network_3 size={20} />
         <p onClick={doNotCloseMenu} role="none">

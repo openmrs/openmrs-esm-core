@@ -14,8 +14,8 @@ const Logout: React.FC<LogoutProps> = () => {
   }, []);
 
   return (
-    <SwitcherItem>
-      <Button className={styles.logout} onClick={logout} aria-labelledby="Logout" kind="ghost">
+    <SwitcherItem aria-label={t('Logout', 'Logout')}>
+      <Button className={styles.logout} onClick={logout} kind="ghost">
         {t('Logout', 'Logout')}
       </Button>
     </SwitcherItem>
