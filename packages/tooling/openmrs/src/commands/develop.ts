@@ -3,7 +3,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
-import { type ImportmapDeclaration, type RoutesDeclaration, logInfo, logWarn, removeTrailingSlash } from '../utils';
+import { ImportmapDeclaration, RoutesDeclaration, logInfo, logWarn, removeTrailingSlash } from '../utils';
 
 /* eslint-disable no-console */
 
