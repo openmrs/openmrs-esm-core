@@ -50,4 +50,19 @@ describe(`ConfigurableLink`, () => {
     await user.type(link, '{enter}');
     expect(navigate).toHaveBeenCalledWith({ to: path });
   });
+
+  it('executes onBeforeNavigate callback if provided', async () => {
+    const onBeforeNavigate = jest.fn();
+    render(
+      <ConfigurableLink to={path} onBeforeNavigate={onBeforeNavigate}>
+        SPA Home
+      </ConfigurableLink>,
+    );
+
+    const user = userEvent.setup();
+    const link = screen.getByRole('link', { name: /spa home/i });
+    await user.click(link);
+    expect(onBeforeNavigate).toHaveBeenCalled();
+    expect(navigate).toHaveBeenCalledWith({ to: path });
+  });
 });

@@ -2,7 +2,6 @@ import React from 'react';
 import type {} from '@openmrs/esm-globals';
 import { createStore, type StoreApi } from 'zustand';
 import { NEVER, of } from 'rxjs';
-import { interpolateUrl } from '@openmrs/esm-config';
 import { type SessionStore } from '@openmrs/esm-api';
 import { getDefaultsFromConfigSchema } from '@openmrs/esm-utils';
 export {
@@ -14,6 +13,7 @@ export {
   age,
 } from '@openmrs/esm-utils';
 export { interpolateString, interpolateUrl, validators, validator } from '@openmrs/esm-config';
+export { ConfigurableLink } from '@openmrs/esm-react-utils';
 
 window.i18next = { ...window.i18next, language: 'en' };
 
@@ -157,12 +157,6 @@ export function defineExtensionConfigSchema(extensionName, schema) {
 }
 
 export const navigate = jest.fn();
-
-export const ConfigurableLink = jest
-  .fn()
-  .mockImplementation((config: { to: string; children: React.ReactNode }) => (
-    <a href={interpolateUrl(config.to)}>{config.children}</a>
-  ));
 
 /* esm-dynamic-loading */
 export const importDynamic = jest.fn();
