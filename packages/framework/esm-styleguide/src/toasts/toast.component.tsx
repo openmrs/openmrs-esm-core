@@ -1,5 +1,5 @@
 /** @module @category UI */
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { ActionableNotification } from '@carbon/react';
 
 const defaultOptions = {
@@ -35,30 +35,32 @@ export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
     title,
     actionButtonLabel,
     onActionButtonClick = () => {},
-    millis = actionButtonLabel ? null : defaultOptions.millis,
+    millis = defaultOptions.millis,
   } = toast;
-
+  const [waitingForTime, setWaitingForTime] = useState(true);
   const handleActionClick = useCallback(() => {
     onActionButtonClick();
     closeToast();
   }, [closeToast, onActionButtonClick]);
 
   useEffect(() => {
-    if (millis) {
+    if (!actionButtonLabel && waitingForTime) {
       const timeoutId = setTimeout(closeToast, millis);
       return () => clearTimeout(timeoutId);
     }
-  }, [closeToast, millis]);
+  }, [closeToast, waitingForTime, millis, actionButtonLabel]);
 
   return (
-    <ActionableNotification
-      actionButtonLabel={actionButtonLabel}
-      kind={kind || 'info'}
-      lowContrast={critical}
-      subtitle={description}
-      title={title || ''}
-      onActionButtonClick={handleActionClick}
-      onClose={closeToast}
-    />
+    <div onMouseEnter={() => setWaitingForTime(false)} onMouseLeave={() => setWaitingForTime(true)}>
+      <ActionableNotification
+        actionButtonLabel={actionButtonLabel}
+        kind={kind || 'info'}
+        lowContrast={critical}
+        subtitle={description}
+        title={title || ''}
+        onActionButtonClick={handleActionClick}
+        onClose={closeToast}
+      />
+    </div>
   );
 };
