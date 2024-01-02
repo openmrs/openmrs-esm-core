@@ -1,4 +1,7 @@
 {
-  "notifications": "Notificaciones",
-  "selectLocale": "Seleccionar la localización"
+  "apply": "Aplicar",
+  "cancel": "Cancelar",
+  "change": "Cambiar",
+  "changeLanguage": "Cambiar idioma",
+  "notifications": "Notificaciones"
 }

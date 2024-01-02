@@ -1,24 +1,23 @@
 import React from 'react';
-import ChangeLocationLink from './change-location-link.component';
+import ChangeLocationLink from './change-location-link.extension';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { navigate } from '@openmrs/esm-framework';
+import { navigate, useSession } from '@openmrs/esm-framework';
 
 const navigateMock = navigate as jest.Mock;
+const useSessionMock = useSession as jest.Mock;
+
+delete window.location;
+window.location = new URL('https://dev3.openmrs.org/openmrs/spa/home') as any as Location;
 
 describe('<ChangeLocationLink/>', () => {
-  const mockChangeLocationProps = {
-    referer: '/openmrs/spa/home',
-    currentLocation: 'Unknown Location',
-  };
-
   beforeEach(() => {
-    render(
-      <ChangeLocationLink
-        referer={mockChangeLocationProps.referer}
-        currentLocation={mockChangeLocationProps.currentLocation}
-      />,
-    );
+    useSessionMock.mockReturnValue({
+      sessionLocation: {
+        display: 'Waffle House',
+      },
+    });
+    render(<ChangeLocationLink />);
   });
 
   it('should display the `Change location` link', async () => {

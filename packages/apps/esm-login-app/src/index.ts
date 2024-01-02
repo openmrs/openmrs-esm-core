@@ -2,8 +2,8 @@ import { defineConfigSchema, getSyncLifecycle } from '@openmrs/esm-framework';
 import { configSchema } from './config-schema';
 import rootComponent from './root.component';
 import locationPickerComponent from './location-picker/location-picker.component';
-import changeLocationLinkComponent from './change-location-link/change-location-link.component';
-import logoutButtonComponent from './logout/logout.component';
+import changeLocationLinkComponent from './change-location-link/change-location-link.extension';
+import logoutButtonComponent from './logout/logout.extension';
 
 const moduleName = '@openmrs/esm-login-app';
 

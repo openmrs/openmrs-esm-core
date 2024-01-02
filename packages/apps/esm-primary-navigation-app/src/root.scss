@@ -13,6 +13,10 @@
   @include type.type-style('body-01');
 }
 
+.bodyShort01 {
+  @include type.type-style('body-compact-01');
+}
+
 .headerPanel {
   height: max-content;
 }

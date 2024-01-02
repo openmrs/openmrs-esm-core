@@ -1,27 +1,19 @@
 import React from 'react';
-import type { LoggedInUser, Session } from '@openmrs/esm-framework';
-import { ExtensionSlot, useOnClickOutside } from '@openmrs/esm-framework';
 import type { HeaderPanelProps } from '@carbon/react';
-import { HeaderPanel } from '@carbon/react';
-import styles from '../../root.scss';
+import { HeaderPanel, Switcher, SwitcherDivider } from '@carbon/react';
+import { ExtensionSlot, useOnClickOutside } from '@openmrs/esm-framework';
+import styles from './user-menu-panel.scss';
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   expanded: boolean;
-  user: LoggedInUser | false | null;
-  allowedLocales: any;
-  onLogout(): void;
-  session: Session;
   hidePanel: () => void;
 }
 
-const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
-  expanded,
-  user,
-  allowedLocales,
-  onLogout,
-  session,
-  hidePanel,
-}) => {
+/**
+ * Extensions attaching to `user-panel-slot` or `user-panel-bottom-slot` should in
+ * general be wrapped in the `SwitcherItem` Carbon component.
+ */
+const UserMenuPanel: React.FC<UserMenuPanelProps> = ({ expanded, hidePanel }) => {
   const userMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel, expanded);
 
   return (
@@ -32,17 +24,11 @@ const UserMenuPanel: React.FC<UserMenuPanelProps> = ({
       aria-label="Location"
       aria-labelledby="Location Icon"
     >
-      <ExtensionSlot
-        name="user-panel-slot"
-        state={{
-          user: user,
-          allowedLocales: allowedLocales,
-          onLogout: onLogout,
-          referer: window.location.pathname,
-          currentLocation: session?.sessionLocation?.display,
-          locale: session?.locale,
-        }}
-      />
+      <Switcher className={styles.userPanelSwitcher} aria-label="Switcher Container">
+        <ExtensionSlot name="user-panel-slot" />
+        <SwitcherDivider className={styles.divider} />
+        <ExtensionSlot name="user-panel-bottom-slot" />
+      </Switcher>
     </HeaderPanel>
   );
 };
