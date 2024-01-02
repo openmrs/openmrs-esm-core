@@ -283,6 +283,12 @@ export function useOpenmrsSWR(key: string | Array<any>) {
 
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
+export const usePatientName = jest.fn().mockImplementation(() => ({
+  isLoadingName: false,
+  patientName: 'Patient Name',
+  nameTemplate: null,
+}));
+
 /* esm-styleguide */
 
 export const showNotification = jest.fn();
