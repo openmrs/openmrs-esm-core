@@ -16,6 +16,7 @@ import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
 import { useDefaultLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
+import { PatientName } from '@openmrs/esm-framework';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
@@ -169,7 +170,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
         <div className={styles.locationCard}>
           <div className={styles.paddedContainer}>
             <p className={styles.welcomeTitle}>
-              {t('welcome', 'Welcome')} {currentUser}
+              {t('welcome', 'Welcome')} <PatientName patientUuid={user?.person?.uuid} />
             </p>
             <p className={styles.welcomeMessage}>
               {t(

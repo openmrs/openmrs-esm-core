@@ -22,7 +22,7 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({ expanded, hidePanel }) =>
 
   useEffect(() => {
     window.addEventListener('popstate', hidePanel);
-    return window.addEventListener('popstate', hidePanel);
+    return window.removeEventListener('popstate', hidePanel);
   }, [hidePanel]);
 
   return expanded && <LeftNavMenu ref={menuRef} isChildOfHeader />;
