@@ -106,6 +106,15 @@
 }
 
 /* Tabs */
+
+.cds--tabs .cds--tabs__nav-item--selected {
+  border-bottom: 2px solid var(--brand-03);
+}
+.cds--tabs .cds--tabs__nav-link:active,
+.cds--tabs .cds--tabs__nav-link:focus {
+  outline: 2px solid var(--brand-03);
+}
+
 .cds--tabs--scrollable .cds--tabs--scrollable__nav-item--selected .cds--tabs--scrollable__nav-link,
 .cds--tabs--scrollable .cds--tabs--scrollable__nav-item--selected .cds--tabs--scrollable__nav-link:active,
 .cds--tabs--scrollable .cds--tabs--scrollable__nav-item--selected .cds--tabs--scrollable__nav-link:focus {

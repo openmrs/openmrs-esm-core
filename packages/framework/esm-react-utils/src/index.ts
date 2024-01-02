@@ -30,3 +30,5 @@ export * from './useStore';
 export * from './useVisit';
 export * from './useVisitTypes';
 export * from './usePagination';
+export * from './PatientName';
+export * from './usePatientName';
