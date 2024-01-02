@@ -18,14 +18,14 @@ describe(`ConfigurableLink`, () => {
   const path = '${openmrsSpaBase}/home';
   beforeEach(() => {
     mockNavigate.mockClear();
+  });
+
+  it(`interpolates the link`, async () => {
     render(
       <ConfigurableLink to={path} className="fancy-link">
         SPA Home
       </ConfigurableLink>,
     );
-  });
-
-  it(`interpolates the link`, async () => {
     const link = screen.getByRole('link', { name: /spa home/i });
     expect(link).toBeTruthy();
     expect(link.closest('a')).toHaveClass('fancy-link');
@@ -33,6 +33,11 @@ describe(`ConfigurableLink`, () => {
   });
 
   it(`calls navigate on normal click but not special clicks`, async () => {
+    render(
+      <ConfigurableLink to={path} className="fancy-link">
+        SPA Home
+      </ConfigurableLink>,
+    );
     const user = userEvent.setup();
 
     const link = screen.getByRole('link', { name: /spa home/i });
@@ -43,6 +48,11 @@ describe(`ConfigurableLink`, () => {
   });
 
   it(`calls navigate on enter`, async () => {
+    render(
+      <ConfigurableLink to={path} className="fancy-link">
+        SPA Home
+      </ConfigurableLink>,
+    );
     const user = userEvent.setup();
 
     expect(navigate).not.toHaveBeenCalled();
