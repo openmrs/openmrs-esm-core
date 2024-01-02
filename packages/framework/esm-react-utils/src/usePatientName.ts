@@ -55,6 +55,12 @@ function useNameTemplate() {
   };
 }
 
+/**
+ * This react hook returns the name of the patient/ person according
+ * to the name template defined in the global properties
+ * @param patientUuid string
+ */
+
 export default function usePatientName(patientUuid: string) {
   const { isLoadingPersonName, preferredName } = useRestPatient(patientUuid);
   const { isLoadingNameTemplate, nameTemplate } = useNameTemplate();

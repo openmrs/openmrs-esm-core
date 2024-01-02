@@ -455,6 +455,16 @@ ___
 
 ___
 
+### NameToken
+
+Ƭ **NameToken**: ``"givenName"`` \| ``"middleName"`` \| ``"familyName"`` \| ``"familyName2"`` \| `string`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/usePatientName.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatientName.ts#L15)
+
+___
+
 ### OpenmrsRoutes
 
 Ƭ **OpenmrsRoutes**: `Record`<`string`, [`OpenmrsAppRoutes`](interfaces/OpenmrsAppRoutes.md)\>
