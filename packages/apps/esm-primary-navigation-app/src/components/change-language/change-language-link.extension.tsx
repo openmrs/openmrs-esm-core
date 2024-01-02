@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
-import { Language } from '@carbon/react/icons';
 import { useTranslation } from 'react-i18next';
+import { Button, SwitcherItem } from '@carbon/react';
+import { Language } from '@carbon/react/icons';
 import { showModal, useSession } from '@openmrs/esm-framework';
-import { Button } from '@carbon/react';
 import styles from './change-language-link.scss';
-import { SwitcherItem } from '@carbon/react';
 
 /** The user menu item that shows the current language and has a button to change the language */
 export function ChangeLanguageLink() {

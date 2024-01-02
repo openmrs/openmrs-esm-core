@@ -1,14 +1,9 @@
-import { ModalBody } from '@carbon/react';
-import { ModalFooter } from '@carbon/react';
-import { Button } from '@carbon/react';
-import { ModalHeader } from '@carbon/react';
-import { useConnectivity, useSession } from '@openmrs/esm-framework';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { postUserPropertiesOnline, postUserPropertiesOffline } from './change-language.resource';
+import { Button, ModalBody, ModalFooter, ModalHeader, RadioButton, RadioButtonGroup } from '@carbon/react';
+import { useConnectivity, useSession } from '@openmrs/esm-framework';
+import { postUserPropertiesOffline, postUserPropertiesOnline } from './change-language.resource';
 import styles from './change-language-modal.scss';
-import { RadioButtonGroup } from '@carbon/react';
-import { RadioButton } from '@carbon/react';
 
 interface ChangeLanguageModalProps {
   close(): void;

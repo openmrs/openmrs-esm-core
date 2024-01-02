@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@carbon/react';
+import { Button, SwitcherItem } from '@carbon/react';
 import { navigate } from '@openmrs/esm-framework';
 import styles from './logout.scss';
-import { SwitcherItem } from '@carbon/react';
 
 export interface LogoutProps {}
 
