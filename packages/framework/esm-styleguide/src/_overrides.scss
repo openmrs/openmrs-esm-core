@@ -56,6 +56,26 @@
 /* Content Switcher */
 .cds--content-switcher {
   @include layout.use('size', $default: 'sm');
+
+  & > :first-child {
+    border-bottom-left-radius: 0.25rem;
+    border-right: unset !important;
+    border-top-left-radius: 0.25rem;
+
+    [aria-selected='false'] {
+      border-left: 0.0625rem solid colors.$blue-30 !important;
+    }
+  }
+
+  & > :last-child {
+    border-bottom-right-radius: 0.25rem;
+    border-left: unset !important;
+    border-top-right-radius: 0.25rem;
+
+    [aria-selected='false'] {
+      border-right: 0.0625rem solid colors.$blue-30 !important;
+    }
+  }
 }
 
 .cds--content-switcher-btn {
@@ -68,16 +88,12 @@
     background-color: transparent !important;
   }
 
-  &:first-child {
-    border-bottom-left-radius: 0.25rem;
-    border-left: 0.0625rem solid colors.$blue-30 !important;
-    border-top-left-radius: 0.25rem;
-  }
+  &.cds--btn--primary {
+    background-color: unset;
 
-  &:last-child {
-    border-bottom-right-radius: 0.25rem;
-    border-right: 0.0625rem solid colors.$blue-30 !important;
-    border-top-right-radius: 0.25rem;
+    &:hover {
+      background-color: colors.$gray-10-hover;
+    }
   }
 
   &::before {
@@ -88,8 +104,12 @@
 
   &.cds--content-switcher--selected {
     border: 1px solid colors.$blue-60 !important;
-    background-color: colors.$blue-10;
-    color: colors.$blue-60;
+    background-color: colors.$blue-10 !important;
+    color: colors.$blue-60 !important;
+
+    svg {
+      fill: colors.$blue-60 !important;
+    }
 
     &::after {
       background-color: colors.$blue-10;
@@ -103,6 +123,22 @@
       border: 0 !important;
     }
   }
+}
+
+.cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:first-child .cds--content-switcher-btn {
+  border-left: unset;
+}
+
+.cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:last-child .cds--content-switcher-btn {
+  border-right: unset;
+}
+
+.cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:first-child {
+  border-left: 0.0625rem solid colors.$blue-30;
+}
+
+.cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:last-child {
+  border-right: 0.0625rem solid colors.$blue-30;
 }
 
 /* Tabs */
