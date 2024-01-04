@@ -169,7 +169,9 @@ export function attach(slotName: string, extensionId: string) {
   });
 }
 
-/** Avoid using this. Extension attachments should be considered declarative. */
+/**
+ * @deprecated Avoid using this. Extension attachments should be considered declarative.
+ */
 export function detach(extensionSlotName: string, extensionId: string) {
   updateInternalExtensionStore((state) => {
     const existingSlot = state.slots[extensionSlotName];
@@ -191,7 +193,9 @@ export function detach(extensionSlotName: string, extensionId: string) {
   });
 }
 
-/** Avoid using this. Extension attachments should be considered declarative. */
+/**
+ * @deprecated Avoid using this. Extension attachments should be considered declarative.
+ */
 export function detachAll(extensionSlotName: string) {
   updateInternalExtensionStore((state) => {
     const existingSlot = state.slots[extensionSlotName];
