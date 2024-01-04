@@ -306,6 +306,10 @@ html[dir='rtl'] {
     }
   }
 
+  .cds--header__name {
+    padding-inline: 1rem 2rem;
+  }
+
   .cds--header-panel--expanded {
     right: calc(100vw - var(--omrs-sidenav-width));
   }
@@ -483,14 +487,33 @@ html[dir='rtl'] {
         }
       }
     }
-    .tab-content {
-      margin-left: unset;
-      margin-right: 10rem;
 
+    .tab-content {
       .pane {
-        padding-left: unset;
-        padding-right: 1rem;
+        padding-inline: 0;
+
+        & > h4 {
+          padding-left: unset;
+          padding-inline-start: 1rem;
+        }
       }
+    }
+
+    .cds--accordion__title {
+      text-align: start;
+    }
+
+    .cds--accordion__content {
+      padding-inline: 1rem;
+
+      .cds--text-input,
+      .cds--text-area {
+        box-sizing: border-box;
+      }
+    }
+
+    .question-area {
+      min-width: unset;
     }
   }
 }
