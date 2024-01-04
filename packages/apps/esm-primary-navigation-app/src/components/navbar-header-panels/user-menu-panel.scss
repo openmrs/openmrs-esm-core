@@ -1,6 +1,10 @@
 @import '~@openmrs/esm-styleguide/src/vars';
 @import '../../root.scss';
 
+.headerPanel {
+  transition: none;
+}
+
 .userPanelSwitcher {
   padding-top: 1rem;
   align-items: start;
