@@ -1,6 +1,6 @@
 /** @module @category UI */
-import React, { useEffect, useState } from 'react';
-import { ToastNotification } from '@carbon/react';
+import React, { useEffect, useCallback, useState } from 'react';
+import { ActionableNotification } from '@carbon/react';
 
 const defaultOptions = {
   millis: 5000,
@@ -13,6 +13,8 @@ export interface ToastProps {
 
 export interface ToastDescriptor {
   description: React.ReactNode;
+  onActionButtonClick?: () => void;
+  actionButtonLabel?: string;
   kind?: ToastType;
   critical?: boolean;
   title?: string;
@@ -26,25 +28,38 @@ export interface ToastNotificationMeta extends ToastDescriptor {
 export type ToastType = 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
 
 export const Toast: React.FC<ToastProps> = ({ toast, closeToast }) => {
-  const { description, kind, critical, title, millis = defaultOptions.millis } = toast;
-
+  const {
+    description,
+    kind,
+    critical,
+    title,
+    actionButtonLabel,
+    onActionButtonClick = () => {},
+    millis = defaultOptions.millis,
+  } = toast;
   const [waitingForTime, setWaitingForTime] = useState(true);
+  const handleActionClick = useCallback(() => {
+    onActionButtonClick();
+    closeToast();
+  }, [closeToast, onActionButtonClick]);
 
   useEffect(() => {
-    if (waitingForTime) {
+    if (!actionButtonLabel && waitingForTime) {
       const timeoutId = setTimeout(closeToast, millis);
       return () => clearTimeout(timeoutId);
     }
-  }, [waitingForTime]);
+  }, [closeToast, waitingForTime, millis, actionButtonLabel]);
 
   return (
     <div onMouseEnter={() => setWaitingForTime(false)} onMouseLeave={() => setWaitingForTime(true)}>
-      <ToastNotification
+      <ActionableNotification
+        actionButtonLabel={actionButtonLabel}
         kind={kind || 'info'}
         lowContrast={critical}
         subtitle={description}
         title={title || ''}
-        timeout={millis}
+        onActionButtonClick={handleActionClick}
+        onClose={closeToast}
       />
     </div>
   );

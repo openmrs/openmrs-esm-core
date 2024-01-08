@@ -621,3 +621,10 @@ html[dir='rtl'] {
     }
   }
 }
+
+// This is to override the green border and background color which we apply to tertiary buttons. Since this in the Notification carbon uses blue.
+.cds--actionable-notification__action-button.cds--btn--tertiary {
+  background-color: transparent;
+  border: 1px solid #0f62fe;
+  color: #0f62fe;
+}
