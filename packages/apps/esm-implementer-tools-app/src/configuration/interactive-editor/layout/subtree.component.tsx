@@ -10,26 +10,36 @@ export interface SubtreeProps {
   onMouseLeave?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
-export function Subtree({ leaf, label, children, onMouseEnter, onMouseLeave }: SubtreeProps) {
-  return leaf ? (
-    <StructuredListRow className={styles.structuredListRow} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-      <StructuredListCell className={styles.labelCell}>{label}</StructuredListCell>
-      <StructuredListCell>{children}</StructuredListCell>
-    </StructuredListRow>
-  ) : (
-    <>
+export const Subtree = React.forwardRef<HTMLSpanElement, SubtreeProps>(
+  ({ leaf, label, children, onMouseEnter, onMouseLeave }: SubtreeProps, ref) => {
+    return leaf ? (
       <StructuredListRow className={styles.structuredListRow} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        <StructuredListCell className={styles.labelCell}>{label}</StructuredListCell>
-        <StructuredListCell />
-      </StructuredListRow>
-      <StructuredListRow className={styles.structuredListRow}>
-        <StructuredListCell />
-        <StructuredListCell className={styles.subtreeCell}>
-          <StructuredListWrapper className={styles.structuredList}>
-            <StructuredListBody>{children}</StructuredListBody>
-          </StructuredListWrapper>
+        <StructuredListCell className={styles.labelCell}>
+          <span className={styles.label} ref={ref}>
+            {label}
+          </span>
         </StructuredListCell>
+        <StructuredListCell>{children}</StructuredListCell>
       </StructuredListRow>
-    </>
-  );
-}
+    ) : (
+      <>
+        <StructuredListRow className={styles.structuredListRow} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+          <StructuredListCell className={styles.labelCell}>
+            <span className={styles.label} ref={ref}>
+              {label}
+            </span>
+          </StructuredListCell>
+          <StructuredListCell />
+        </StructuredListRow>
+        <StructuredListRow className={styles.structuredListRow}>
+          <StructuredListCell />
+          <StructuredListCell className={styles.subtreeCell}>
+            <StructuredListWrapper className={styles.structuredList}>
+              <StructuredListBody>{children}</StructuredListBody>
+            </StructuredListWrapper>
+          </StructuredListCell>
+        </StructuredListRow>
+      </>
+    );
+  },
+);

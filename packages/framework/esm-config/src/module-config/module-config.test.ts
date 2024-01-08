@@ -1,15 +1,14 @@
 import unset from 'lodash/unset';
 import * as Config from './module-config';
-import { MockedStore, mockStores } from '../../__mocks__/openmrs-esm-state.mock';
+import type { MockedStore } from '../../__mocks__/openmrs-esm-state.mock';
+import { mockStores } from '../../__mocks__/openmrs-esm-state.mock';
 import { validator } from '../validators/validator';
 import { validators, isUrl } from '../validators/validators';
+import type { ConfigExtensionStore, ConfigInternalStore, ImplementerToolsConfigStore } from './state';
 import {
-  ConfigExtensionStore,
   configExtensionStore,
-  ConfigInternalStore,
   configInternalStore,
   getExtensionConfig,
-  ImplementerToolsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
 } from './state';
@@ -199,9 +198,10 @@ describe('getConfig', () => {
 
   it('uses config values from the provided config file', async () => {
     Config.defineConfigSchema('foo-module', { foo: { _default: 'qux' } });
+    type FooConfig = { foo: string };
     const testConfig = { 'foo-module': { foo: 'bar' } };
     Config.provide(testConfig);
-    const config = await Config.getConfig('foo-module');
+    const config = await Config.getConfig<FooConfig>('foo-module');
     expect(config.foo).toBe('bar');
     expect(console.error).not.toHaveBeenCalled();
   });

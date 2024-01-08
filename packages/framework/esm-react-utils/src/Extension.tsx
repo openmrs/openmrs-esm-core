@@ -37,7 +37,6 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, wrap, ...
       );
     }
     // we only warn when component mounts
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ref = useCallback(
@@ -98,7 +97,6 @@ export const Extension: React.FC<ExtensionProps> = ({ state, children, wrap, ...
 
     // we intentionally do not re-run this hook if state gets updated
     // state updates are handled in the next useEffect hook
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extension?.extensionSlotName, extension?.extensionId, extension?.extensionSlotModuleName, domElement]);
 
   useEffect(() => {

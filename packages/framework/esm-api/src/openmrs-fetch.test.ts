@@ -25,24 +25,24 @@ describe('openmrsFetch', () => {
 
   it(`throws an error if you don't pass in a url string`, () => {
     // @ts-ignore
-    expect(() => openmrsFetch()).toThrowError(/first argument/);
+    expect(() => openmrsFetch()).toThrow(/first argument/);
     // @ts-ignore
-    expect(() => openmrsFetch({})).toThrowError(/first argument/);
+    expect(() => openmrsFetch({})).toThrow(/first argument/);
   });
 
   it(`throws an error if you pass in an invalid fetchInit object`, () => {
     // @ts-ignore
-    expect(() => openmrsFetch('/session', 'invalid second arg')).toThrowError(/second argument/);
+    expect(() => openmrsFetch('/session', 'invalid second arg')).toThrow(/second argument/);
 
     // @ts-ignore
-    expect(() => openmrsFetch('/session', 123)).toThrowError(/second argument/);
+    expect(() => openmrsFetch('/session', 123)).toThrow(/second argument/);
   });
 
   it(`throws an Error if there is no openmrsBase`, () => {
     // @ts-ignore
     delete window.openmrsBase;
 
-    expect(() => openmrsFetch('/session')).toThrowError(/openmrsBase/);
+    expect(() => openmrsFetch('/session')).toThrow(/openmrsBase/);
   });
 
   it(`calls window.fetch with the correct arguments for a basic GET request`, () => {

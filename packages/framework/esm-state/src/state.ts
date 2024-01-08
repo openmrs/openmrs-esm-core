@@ -1,5 +1,6 @@
 /** @module @category Store */
-import { createStore, StoreApi } from 'zustand/vanilla';
+import type { StoreApi } from 'zustand/vanilla';
+import { createStore } from 'zustand/vanilla';
 import type {} from '@openmrs/esm-globals';
 
 interface StoreEntity {

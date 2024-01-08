@@ -1,14 +1,11 @@
-import {
-  attach,
-  registerExtension,
-  defineConfigSchema,
-  importDynamic,
+import type {
   RegisteredPageDefinition,
   ExtensionDefinition,
   OpenmrsAppRoutes,
   RouteDefinition,
   ExtensionRegistration,
 } from '@openmrs/esm-framework';
+import { attach, registerExtension, defineConfigSchema, importDynamic } from '@openmrs/esm-framework';
 import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
 import { emptyLifecycle, routeRegex } from './helpers';
 

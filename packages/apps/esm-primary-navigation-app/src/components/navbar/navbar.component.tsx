@@ -1,10 +1,9 @@
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { HeaderContainer, Header, HeaderMenuButton, HeaderGlobalBar, HeaderGlobalAction } from '@carbon/react';
 import { Close, Switcher, UserAvatarFilledAlt } from '@carbon/react/icons';
 import {
-  LoggedInUser,
   useLayoutType,
   ExtensionSlot,
   ConfigurableLink,
@@ -21,15 +20,11 @@ import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import styles from './navbar.scss';
 
-const Navbar: React.FC = () => {
-  const session = useSession();
+const HeaderItems: React.FC = () => {
   const config = useConfig();
-  const [user, setUser] = useState<LoggedInUser | null | false>(session?.user ?? null);
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
-  const allowedLocales = session?.allowedLocales ?? null;
   const layout = useLayoutType();
   const navMenuItems = useConnectedExtensions('patient-chart-dashboard-slot').map((e) => e.id);
-  const openmrsSpaBase = window['getOpenmrsSpaBase']();
   const appMenuItems = useConnectedExtensions('app-menu-slot');
   const userMenuItems = useConnectedExtensions('user-panel-slot');
   const isActivePanel = useCallback((panelName: string) => activeHeaderPanel === panelName, [activeHeaderPanel]);
@@ -40,8 +35,6 @@ const Navbar: React.FC = () => {
     [],
   );
 
-  const logout = useCallback(() => setUser(false), []);
-
   const hidePanel = useCallback(() => {
     setActiveHeaderPanel(null);
   }, []);
@@ -49,7 +42,7 @@ const Navbar: React.FC = () => {
   const showHamburger = useMemo(() => !isDesktop(layout) && navMenuItems.length > 0, [navMenuItems.length, layout]);
   const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
   const showUserMenu = useMemo(() => userMenuItems.length > 0, [userMenuItems.length]);
-  const HeaderItems = () => (
+  return (
     <>
       <OfflineBanner />
       <Header aria-label="OpenMRS">
@@ -122,23 +115,19 @@ const Navbar: React.FC = () => {
         {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel} expanded={isActivePanel('sideMenu')} />}
         {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel} />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
-        {showUserMenu && (
-          <UserMenuPanel
-            user={user}
-            session={session}
-            expanded={isActivePanel('userMenu')}
-            allowedLocales={allowedLocales}
-            onLogout={logout}
-            hidePanel={hidePanel}
-          />
-        )}
+        {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel} />}
       </Header>
     </>
   );
+};
 
-  if (user && session) {
+const Navbar: React.FC = () => {
+  const session = useSession();
+  const openmrsSpaBase = window['getOpenmrsSpaBase']();
+
+  if (session?.user?.person) {
     return session.sessionLocation ? (
-      <HeaderContainer render={memo(HeaderItems)}></HeaderContainer>
+      <HeaderContainer render={HeaderItems}></HeaderContainer>
     ) : (
       <Navigate
         to={`/login/location`}

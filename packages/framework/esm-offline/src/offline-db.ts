@@ -1,4 +1,5 @@
-import Dexie, { Table } from 'dexie';
+import type { Table } from 'dexie';
+import Dexie from 'dexie';
 import type { DynamicOfflineData } from './dynamic-offline-data';
 import type { SyncItem } from './sync';
 

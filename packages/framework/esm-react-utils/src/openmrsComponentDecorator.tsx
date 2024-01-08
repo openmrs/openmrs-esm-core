@@ -1,7 +1,8 @@
 import React, { type ComponentType, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import type {} from '@openmrs/esm-globals';
-import { ComponentConfig, ComponentContext, ExtensionData } from './ComponentContext';
+import type { ComponentConfig, ExtensionData } from './ComponentContext';
+import { ComponentContext } from './ComponentContext';
 
 const defaultOpts = {
   strictMode: true,

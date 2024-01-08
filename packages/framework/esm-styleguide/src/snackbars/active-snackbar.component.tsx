@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Subject } from 'rxjs';
-import { Snackbar, SnackbarMeta } from './snackbar.component';
+import type { Subject } from 'rxjs';
+import type { SnackbarMeta } from './snackbar.component';
+import { Snackbar } from './snackbar.component';
 
 interface ActiveSnackbarProps {
   subject: Subject<SnackbarMeta>;

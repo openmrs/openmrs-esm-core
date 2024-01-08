@@ -1,7 +1,8 @@
 import { fetchCurrentPatient, getSynchronizationItems, getDynamicOfflineDataEntries } from '@openmrs/esm-framework';
 import merge from 'lodash-es/merge';
 import { useMemo } from 'react';
-import useSWR, { SWRResponse } from 'swr';
+import type { SWRResponse } from 'swr';
+import useSWR from 'swr';
 
 function useDynamicOfflineDataEntries(type: string) {
   return useSWR(`dynamicOfflineData/entries/${type}`, () => getDynamicOfflineDataEntries(type));

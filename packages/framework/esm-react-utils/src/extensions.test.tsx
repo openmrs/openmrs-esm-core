@@ -28,6 +28,10 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('Extension receives state changes passed through (not using <Extension>)', async () => {
     function EnglishExtension({ suffix }) {
       return <div>English{suffix}</div>;
@@ -87,16 +91,22 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
   });
 
   test('ExtensionSlot throws error if both state and children provided', () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
     const App = () => (
       <ExtensionSlot name="Box" state={{ color: 'red' }}>
         <Extension />
       </ExtensionSlot>
     );
-    expect(() => render(<App />)).toThrowError(
+    expect(() => render(<App />)).toThrow();
+    expect(consoleError).toHaveBeenNthCalledWith(
+      1,
       expect.objectContaining({
-        message: expect.stringMatching(/children.*state/),
+        message: expect.stringMatching(
+          /Both children and state have been provided. If children are provided, the state must be passed as a prop to the `Extension` component/i,
+        ),
       }),
     );
+    consoleError.mockRestore();
   });
 
   test('Extension Slot receives meta', async () => {
@@ -111,10 +121,10 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     })(() => {
       const metas = useExtensionSlotMeta('Box');
       const wrapItem = useCallback(
-        (slot: React.ReactNode, extension: ExtensionData) => {
+        (slot: React.ReactNode, extension?: ExtensionData) => {
           return (
             <div>
-              <h1>{metas[getExtensionNameFromId(extension.extensionId)].code}</h1>
+              <h1>{metas[getExtensionNameFromId(extension?.extensionId ?? '')].code}</h1>
               {slot}
             </div>
           );
@@ -124,7 +134,7 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
       return (
         <div>
           <ExtensionSlot name="Box">
-            <Extension wrap={wrapItem} />
+            <Extension>{wrapItem}</Extension>
           </ExtensionSlot>
         </div>
       );

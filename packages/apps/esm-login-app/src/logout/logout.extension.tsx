@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Switcher, SwitcherDivider } from '@carbon/react';
+import { Button, SwitcherItem } from '@carbon/react';
 import { navigate } from '@openmrs/esm-framework';
 import styles from './logout.scss';
 
@@ -13,14 +13,11 @@ const Logout: React.FC<LogoutProps> = () => {
   }, []);
 
   return (
-    <>
-      <SwitcherDivider className={styles.divider} />
-      <Switcher aria-label="Switcher Container">
-        <Button className={styles.logout} onClick={logout} aria-labelledby="Logout" role="button">
-          {t('Logout', 'Logout')}
-        </Button>
-      </Switcher>
-    </>
+    <SwitcherItem aria-label={t('Logout', 'Logout')}>
+      <Button className={styles.logout} onClick={logout} kind="ghost">
+        {t('Logout', 'Logout')}
+      </Button>
+    </SwitcherItem>
   );
 };
 

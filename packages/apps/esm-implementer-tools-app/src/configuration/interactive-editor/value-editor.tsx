@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@carbon/react';
 import { Close, Save } from '@carbon/react/icons';
-import { Type } from '@openmrs/esm-framework';
-import { ConfigValueDescriptor } from './editable-value.component';
+import type { Type } from '@openmrs/esm-framework';
+import type { ConfigValueDescriptor } from './editable-value.component';
 import { ValueEditorField } from './value-editors/value-editor-field';
 import styles from './value-editor.scss';
 

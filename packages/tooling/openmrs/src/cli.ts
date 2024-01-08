@@ -43,7 +43,7 @@ yargs.command(
       .describe('add-cookie', 'Additional cookies to provide when proxying.')
       .boolean('support-offline')
       .describe('support-offline', 'Determines if a service worker should be installed for offline support.')
-      .default('support-offline', true)
+      .default('support-offline', false)
       .string('spa-path')
       .default('spa-path', '/openmrs/spa/')
       .describe('spa-path', 'The path of the application on the target server.')
@@ -178,7 +178,7 @@ yargs.command(
         type: 'boolean',
       })
       .option('support-offline', {
-        default: true,
+        default: false,
         describe: 'Determines if a service worker should be installed for offline support.',
         type: 'boolean',
       })

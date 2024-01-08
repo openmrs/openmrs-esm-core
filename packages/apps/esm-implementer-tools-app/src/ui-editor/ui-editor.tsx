@@ -1,11 +1,16 @@
 import React from 'react';
 import styles from './styles.css';
-import { getExtensionInternalStore, useStore, useStoreWithActions } from '@openmrs/esm-framework/src/internal';
+import {
+  getExtensionInternalStore,
+  useAssignedExtensions,
+  useStore,
+  useStoreWithActions,
+} from '@openmrs/esm-framework/src/internal';
 import { Button } from '@carbon/react';
 import { Close } from '@carbon/react/icons';
 import { Portal } from './portal';
 import { ExtensionOverlay } from './extension-overlay.component';
-import { ImplementerToolsStore, implementerToolsStore } from '../store';
+import { type ImplementerToolsStore, implementerToolsStore } from '../store';
 
 export default function UiEditor() {
   const { slots, extensions } = useStore(getExtensionInternalStore());
@@ -22,7 +27,7 @@ export default function UiEditor() {
                 `*[data-extension-slot-name="${slotName}"][data-extension-slot-module-name="${slotInfo.moduleName}"]`,
               )}
             >
-              <SlotOverlay slotName={slotName} />
+              <SlotOverlay slotName={slotName} moduleName={slotInfo.moduleName} />
             </Portal>
           ))
         : null}
@@ -47,11 +52,27 @@ export default function UiEditor() {
   );
 }
 
-export function SlotOverlay({ slotName }) {
+export function SlotOverlay({ slotName, moduleName }) {
+  const setActiveExtensionSlot = (moduleName: string, slotName: string) => {
+    if (!implementerToolsStore.getState().configPathBeingEdited) {
+      implementerToolsStore.setState({
+        uiSelectedPath: [moduleName, 'extensionSlots', slotName],
+        isOpen: true,
+      });
+    }
+  };
   return (
     <>
       <div className={styles.slotOverlay}></div>
-      <div className={styles.slotName}>{'Slot: ' + slotName}</div>
+      <button
+        onClick={(event) => {
+          event.preventDefault();
+          setActiveExtensionSlot(moduleName, slotName);
+        }}
+        className={styles.slotName}
+      >
+        Slot: {slotName}
+      </button>
     </>
   );
 }

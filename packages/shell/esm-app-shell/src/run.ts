@@ -1,4 +1,5 @@
 import { start, triggerAppChange } from 'single-spa';
+import type { OpenmrsAppRoutes } from '@openmrs/esm-framework/src/internal';
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -33,7 +34,6 @@ import {
   importDynamic,
   canAccessStorage,
   localStorageRoutesPrefix,
-  OpenmrsAppRoutes,
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
 } from '@openmrs/esm-framework/src/internal';

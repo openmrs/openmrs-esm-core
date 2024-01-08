@@ -29,12 +29,18 @@
       "order": 0
     },
     {
-      "name": "change-locale",
+      "name": "change-language",
       "slot": "user-panel-slot",
-      "component": "localeChanger",
+      "component": "changeLanguageLink",
       "online": true,
       "offline": true,
       "order": 1
+    },
+    {
+      "name": "change-language-modal",
+      "component": "changeLanguageModal",
+      "online": true,
+      "offline": true
     },
     {
       "name": "offline-banner",

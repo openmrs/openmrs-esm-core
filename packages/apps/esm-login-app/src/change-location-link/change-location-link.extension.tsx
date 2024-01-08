@@ -1,17 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { navigate } from '@openmrs/esm-framework';
+import { navigate, useSession } from '@openmrs/esm-framework';
 import { Button } from '@carbon/react';
 import { Location } from '@carbon/react/icons';
 import styles from './change-location-link.scss';
+import { SwitcherItem } from '@carbon/react';
 
-interface ChangeLocationLinkProps {
-  referer?: string;
-  currentLocation: string;
-}
-
-const ChangeLocationLink: React.FC<ChangeLocationLinkProps> = ({ referer, currentLocation }) => {
+const ChangeLocationLink: React.FC = () => {
   const { t } = useTranslation();
+  const session = useSession();
+  const currentLocation = session?.sessionLocation?.display;
+  const referer = window.location.pathname;
 
   const changeLocation = () => {
     // update=true is passed as a query param for updating the location preference,
@@ -22,15 +21,15 @@ const ChangeLocationLink: React.FC<ChangeLocationLinkProps> = ({ referer, curren
   };
 
   return (
-    <div className={styles.changeLocationLinkContainer}>
-      <Location size={20} />
+    <SwitcherItem aria-label="Change Location" className={styles.panelItemContainer}>
       <div>
-        {currentLocation}
-        <Button kind="ghost" onClick={changeLocation}>
-          {t('change', 'Change')}
-        </Button>
+        <Location size={20} />
+        <p>{currentLocation}</p>
       </div>
-    </div>
+      <Button kind="ghost" onClick={changeLocation}>
+        {t('change', 'Change')}
+      </Button>
+    </SwitcherItem>
   );
 };
 
