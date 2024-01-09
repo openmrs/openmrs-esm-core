@@ -1,9 +1,10 @@
 /** @module @category API */
 import { Observable } from 'rxjs';
 import isPlainObject from 'lodash-es/isPlainObject';
-import { getConfig, navigate } from '@openmrs/esm-config';
+import { getConfig } from '@openmrs/esm-config';
+import { navigate } from '@openmrs/esm-navigation';
 import type { FetchResponse } from './types';
-import { clearHistory } from '@openmrs/esm-navigation';
+import { clearHistory } from '@openmrs/esm-navigation/src/index';
 
 export const restBaseUrl = '/ws/rest/v1/';
 

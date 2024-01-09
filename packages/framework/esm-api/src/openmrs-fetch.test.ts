@@ -1,7 +1,8 @@
 import { openmrsFetch, openmrsObservableFetch } from './openmrs-fetch';
 import { isObservable } from 'rxjs';
 
-import { getConfig as mockGetConfig, navigate as mockNavigate } from '@openmrs/esm-config';
+import { getConfig as mockGetConfig } from '@openmrs/esm-config';
+import { navigate as mockNavigate } from '@openmrs/esm-navigation';
 
 describe('openmrsFetch', () => {
   beforeEach(() => {

@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { navigate, interpolateUrl } from '@openmrs/esm-config';
+import { navigate, interpolateUrl } from '@openmrs/esm-navigation';
 import { ConfigurableLink } from './ConfigurableLink';
 
 jest.mock('single-spa');
