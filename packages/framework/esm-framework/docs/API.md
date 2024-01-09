@@ -123,6 +123,9 @@
 ### Navigation Functions
 
 - [ConfigurableLink](API.md#configurablelink)
+- [clearHistory](API.md#clearhistory)
+- [getHistory](API.md#gethistory)
+- [goBackInHistory](API.md#gobackinhistory)
 - [interpolateString](API.md#interpolatestring)
 - [interpolateUrl](API.md#interpolateurl)
 - [navigate](API.md#navigate)
@@ -339,7 +342,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/navigation/navigate.ts#L10)
+[packages/framework/esm-navigation/src/navigation/navigate.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L10)
 
 ___
 
@@ -769,7 +772,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L9)
+[packages/framework/esm-api/src/openmrs-fetch.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L10)
 
 ___
 
@@ -791,7 +794,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L7)
+[packages/framework/esm-api/src/openmrs-fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L8)
 
 ___
 
@@ -801,7 +804,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L11)
+[packages/framework/esm-api/src/openmrs-fetch.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L12)
 
 ___
 
@@ -1274,7 +1277,7 @@ makeUrl('/foo/bar');
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L23)
+[packages/framework/esm-api/src/openmrs-fetch.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L24)
 
 ___
 
@@ -1341,7 +1344,7 @@ free up memory and network resources and to prevent race conditions.
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:83](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L83)
+[packages/framework/esm-api/src/openmrs-fetch.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L84)
 
 ___
 
@@ -1392,7 +1395,7 @@ To cancel the network request, simply call `subscription.unsubscribe();`
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L262)
+[packages/framework/esm-api/src/openmrs-fetch.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L264)
 
 ___
 
@@ -1740,42 +1743,42 @@ ___
 
 ### filterBreadcrumbs
 
-▸ **filterBreadcrumbs**(`list`, `path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
+▸ **filterBreadcrumbs**(`list`, `path`): `BreadcrumbRegistration`[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `list` | [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[] |
+| `list` | `BreadcrumbRegistration`[] |
 | `path` | `string` |
 
 #### Returns
 
-[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
+`BreadcrumbRegistration`[]
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/filter.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/filter.ts#L34)
+[packages/framework/esm-navigation/src/breadcrumbs/filter.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/filter.ts#L34)
 
 ___
 
 ### getBreadcrumbs
 
-▸ **getBreadcrumbs**(): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
+▸ **getBreadcrumbs**(): `BreadcrumbRegistration`[]
 
 #### Returns
 
-[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
+`BreadcrumbRegistration`[]
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/db.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/db.ts#L32)
+[packages/framework/esm-navigation/src/breadcrumbs/db.ts:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L32)
 
 ___
 
 ### getBreadcrumbsFor
 
-▸ **getBreadcrumbsFor**(`path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
+▸ **getBreadcrumbsFor**(`path`): `BreadcrumbRegistration`[]
 
 #### Parameters
 
@@ -1785,11 +1788,11 @@ ___
 
 #### Returns
 
-[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
+`BreadcrumbRegistration`[]
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/filter.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/filter.ts#L54)
+[packages/framework/esm-navigation/src/breadcrumbs/filter.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/filter.ts#L54)
 
 ___
 
@@ -1801,7 +1804,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumb` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md) |
+| `breadcrumb` | `BreadcrumbSettings` |
 
 #### Returns
 
@@ -1809,7 +1812,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/db.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/db.ts#L18)
+[packages/framework/esm-navigation/src/breadcrumbs/db.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L18)
 
 ___
 
@@ -1821,7 +1824,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumbs` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md)[] |
+| `breadcrumbs` | `BreadcrumbSettings`[] |
 
 #### Returns
 
@@ -1829,7 +1832,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/db.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/db.ts#L22)
+[packages/framework/esm-navigation/src/breadcrumbs/db.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/breadcrumbs/db.ts#L22)
 
 ___
 
@@ -2623,7 +2626,7 @@ ___
 
 ▸ **detach**(`extensionSlotName`, `extensionId`): `void`
 
-Avoid using this. Extension attachments should be considered declarative.
+**`deprecated`** Avoid using this. Extension attachments should be considered declarative.
 
 #### Parameters
 
@@ -2638,7 +2641,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:173](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L173)
+[packages/framework/esm-extensions/src/extensions.ts:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L175)
 
 ___
 
@@ -2646,7 +2649,7 @@ ___
 
 ▸ **detachAll**(`extensionSlotName`): `void`
 
-Avoid using this. Extension attachments should be considered declarative.
+**`deprecated`** Avoid using this. Extension attachments should be considered declarative.
 
 #### Parameters
 
@@ -2660,7 +2663,7 @@ Avoid using this. Extension attachments should be considered declarative.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:195](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L195)
+[packages/framework/esm-extensions/src/extensions.ts:199](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L199)
 
 ___
 
@@ -2684,7 +2687,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:329](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L329)
+[packages/framework/esm-extensions/src/extensions.ts:333](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L333)
 
 ___
 
@@ -2711,7 +2714,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:255](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L255)
+[packages/framework/esm-extensions/src/extensions.ts:259](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L259)
 
 ___
 
@@ -2837,7 +2840,7 @@ Does not consider if offline or online.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAssignedExtensions.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L12)
+[packages/framework/esm-react-utils/src/useAssignedExtensions.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L10)
 
 ___
 
@@ -3178,6 +3181,62 @@ A React link component which calls [navigate](API.md#navigate) when clicked
 
 ___
 
+### clearHistory
+
+▸ **clearHistory**(): `void`
+
+Clears the history from sessionStorage. This should be done when the user
+logs out.
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-navigation/src/history/history.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L63)
+
+___
+
+### getHistory
+
+▸ **getHistory**(): `string`[]
+
+Returns a list of URLs representing the history of the current window session.
+
+#### Returns
+
+`string`[]
+
+#### Defined in
+
+[packages/framework/esm-navigation/src/history/history.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L37)
+
+___
+
+### goBackInHistory
+
+▸ **goBackInHistory**(`toIndex:`): `void`
+
+Rolls back the history to the specified point and navigates to that URL.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `toIndex:` | `Object` | The index in the history stack (which can be obtained with [getHistory](API.md#gethistory)) to navigate and roll back to. History after that index will be deleted. |
+| `toIndex:.toUrl` | `string` |  |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-navigation/src/history/history.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L47)
+
+___
+
 ### interpolateString
 
 ▸ **interpolateString**(`template`, `params`): `string`
@@ -3206,7 +3265,7 @@ interpolateString("test ok", { one: "1", two: "2" }) // will return "test ok"
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/navigation/interpolate-string.ts#L60)
+[packages/framework/esm-navigation/src/navigation/interpolate-string.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L60)
 
 ___
 
@@ -3252,7 +3311,7 @@ navigate({
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/interpolate-string.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/navigation/interpolate-string.ts#L36)
+[packages/framework/esm-navigation/src/navigation/interpolate-string.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/interpolate-string.ts#L36)
 
 ___
 
@@ -3270,7 +3329,8 @@ const submitHandler = () => {
   navigate({ to: config.links.submitSuccess });
 };
 ```
-#### Example return values:
+
+#### Example behavior::
 ```js
 @example
 navigate({ to: "/some/path" }); // => window.location.assign("/some/path")
@@ -3279,6 +3339,8 @@ navigate({ to: "${openmrsBase}/some/path" }); // => window.location.assign("/ope
 navigate({ to: "/openmrs/spa/foo/page" }); // => navigateToUrl("/openmrs/spa/foo/page")
 navigate({ to: "${openmrsSpaBase}/bar/page" }); // => navigateToUrl("/openmrs/spa/bar/page")
 navigate({ to: "/${openmrsSpaBase}/baz/page" }) // => navigateToUrl("/openmrs/spa/baz/page")
+navigate({ to: "https://o3.openmrs.org/${openmrsSpaBase}/qux/page" }); // => navigateToUrl("/openmrs/spa/qux/page")
+  if `window.location.origin` == "https://o3.openmrs.org", else will use window.location.assign
 ```
 
 #### Parameters
@@ -3293,7 +3355,7 @@ navigate({ to: "/${openmrsSpaBase}/baz/page" }) // => navigateToUrl("/openmrs/sp
 
 #### Defined in
 
-[packages/framework/esm-config/src/navigation/navigate.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/navigation/navigate.ts#L46)
+[packages/framework/esm-navigation/src/navigation/navigate.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/navigation/navigate.ts#L49)
 
 ___
 

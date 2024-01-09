@@ -25,7 +25,7 @@ export interface NavigateOptions {
  *   navigate({ to: config.links.submitSuccess });
  * };
  * ```
- * 
+ *
  * #### Example behavior::
  * ```js
  * @example
