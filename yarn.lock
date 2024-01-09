@@ -3003,6 +3003,7 @@ __metadata:
     "@openmrs/esm-extensions": "workspace:*"
     "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
+    "@openmrs/esm-navigation": "workspace:*"
     dayjs: "npm:^1.10.8"
     i18next: "npm:^21.10.0"
     lodash-es: "npm:^4.17.21"
@@ -3019,6 +3020,7 @@ __metadata:
     "@openmrs/esm-error-handling": 5.x
     "@openmrs/esm-extensions": 5.x
     "@openmrs/esm-globals": 5.x
+    "@openmrs/esm-navigation": 5.x
     dayjs: 1.x
     i18next: 19.x
     react: 18.x

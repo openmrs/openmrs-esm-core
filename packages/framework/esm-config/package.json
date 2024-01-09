@@ -42,13 +42,11 @@
   },
   "peerDependencies": {
     "@openmrs/esm-globals": "5.x",
-    "@openmrs/esm-navigation": "5.x",
     "@openmrs/esm-state": "5.x",
     "single-spa": "5.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
-    "@openmrs/esm-navigation": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
     "@types/ramda": "^0.26.44",
     "single-spa": "^5.9.2"
