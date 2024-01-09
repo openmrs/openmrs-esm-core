@@ -772,7 +772,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L10)
+[packages/framework/esm-api/src/openmrs-fetch.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L11)
 
 ___
 
@@ -794,7 +794,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L8)
+[packages/framework/esm-api/src/openmrs-fetch.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L9)
 
 ___
 
@@ -804,7 +804,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L12)
+[packages/framework/esm-api/src/openmrs-fetch.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L13)
 
 ___
 
@@ -1277,7 +1277,7 @@ makeUrl('/foo/bar');
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L24)
+[packages/framework/esm-api/src/openmrs-fetch.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L25)
 
 ___
 
@@ -1344,7 +1344,7 @@ free up memory and network resources and to prevent race conditions.
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L84)
+[packages/framework/esm-api/src/openmrs-fetch.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L85)
 
 ___
 
@@ -1395,7 +1395,7 @@ To cancel the network request, simply call `subscription.unsubscribe();`
 
 #### Defined in
 
-[packages/framework/esm-api/src/openmrs-fetch.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L264)
+[packages/framework/esm-api/src/openmrs-fetch.ts:265](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/openmrs-fetch.ts#L265)
 
 ___
 
@@ -1743,18 +1743,18 @@ ___
 
 ### filterBreadcrumbs
 
-▸ **filterBreadcrumbs**(`list`, `path`): `BreadcrumbRegistration`[]
+▸ **filterBreadcrumbs**(`list`, `path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `list` | `BreadcrumbRegistration`[] |
+| `list` | [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[] |
 | `path` | `string` |
 
 #### Returns
 
-`BreadcrumbRegistration`[]
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Defined in
 
@@ -1764,11 +1764,11 @@ ___
 
 ### getBreadcrumbs
 
-▸ **getBreadcrumbs**(): `BreadcrumbRegistration`[]
+▸ **getBreadcrumbs**(): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Returns
 
-`BreadcrumbRegistration`[]
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Defined in
 
@@ -1778,7 +1778,7 @@ ___
 
 ### getBreadcrumbsFor
 
-▸ **getBreadcrumbsFor**(`path`): `BreadcrumbRegistration`[]
+▸ **getBreadcrumbsFor**(`path`): [`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Parameters
 
@@ -1788,7 +1788,7 @@ ___
 
 #### Returns
 
-`BreadcrumbRegistration`[]
+[`BreadcrumbRegistration`](interfaces/BreadcrumbRegistration.md)[]
 
 #### Defined in
 
@@ -1804,7 +1804,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumb` | `BreadcrumbSettings` |
+| `breadcrumb` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md) |
 
 #### Returns
 
@@ -1824,7 +1824,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `breadcrumbs` | `BreadcrumbSettings`[] |
+| `breadcrumbs` | [`BreadcrumbSettings`](interfaces/BreadcrumbSettings.md)[] |
 
 #### Returns
 
