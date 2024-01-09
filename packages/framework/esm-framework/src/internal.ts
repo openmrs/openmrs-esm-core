@@ -2,6 +2,7 @@ export * from '@openmrs/esm-api';
 import * as config from '@openmrs/esm-config';
 const { navigate, interpolateString, interpolateUrl, ...exportedConfig } = config;
 export default exportedConfig;
+export type { Config, ConfigSchema, ConfigObject, DisplayConditionsConfigObject, ExtensionSlotConfig, ExtensionSlotConfigObject, ExtensionSlotConfigureValueObject, ExtensionSlotsConfigStore, ExtensionsConfigStore, ProvidedConfig, ValidatorFunction, ConfigValue, Validator, TemporaryConfigStore } from '@openmrs/esm-config';
 export * from '@openmrs/esm-dynamic-loading';
 export * from '@openmrs/esm-error-handling';
 export * from '@openmrs/esm-extensions';
