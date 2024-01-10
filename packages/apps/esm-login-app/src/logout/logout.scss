@@ -1,8 +1,11 @@
-@import "../root.scss";
+@import '../root.scss';
 
-.logout {
-  padding-right: 0rem;
-  @include brand-02(background-color);
-  @extend .productiveHeading01;
+button.logout {
+  color: $field-01 !important;
+  font-size: 1rem;
   width: 16rem;
+
+  &:hover {
+    background-color: inherit;
+  }
 }

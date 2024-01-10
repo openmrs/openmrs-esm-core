@@ -1,20 +1,16 @@
-import React from "react";
-import { Switcher } from "@carbon/react";
-import { UserAvatarFilledAlt } from "@carbon/react/icons";
-import { LoggedInUser } from "@openmrs/esm-framework";
-import styles from "./user-panel-switcher.scss";
+import React from 'react';
+import { UserAvatarFilledAlt } from '@carbon/react/icons';
+import { SwitcherItem } from '@carbon/react';
+import { useSession } from '@openmrs/esm-framework';
 
-export interface UserPanelSwitcherItemProps {
-  user: LoggedInUser;
-}
-
-const UserPanelSwitcher: React.FC<UserPanelSwitcherItemProps> = ({ user }) => (
-  <div className={styles.switcherContainer}>
-    <Switcher aria-label="Switcher Container">
+const UserPanelSwitcher: React.FC = () => {
+  const session = useSession();
+  return (
+    <SwitcherItem aria-label="User">
       <UserAvatarFilledAlt size={20} />
-      <p>{user.person.display}</p>
-    </Switcher>
-  </div>
-);
+      <p>{session?.user?.person?.display}</p>
+    </SwitcherItem>
+  );
+};
 
 export default UserPanelSwitcher;

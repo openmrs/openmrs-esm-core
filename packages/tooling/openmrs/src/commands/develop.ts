@@ -1,13 +1,9 @@
-import express from "express";
-import { createProxyMiddleware } from "http-proxy-middleware";
-import { resolve } from "path";
-import { readFileSync } from "fs";
-import {
-  ImportmapDeclaration,
-  logInfo,
-  logWarn,
-  removeTrailingSlash,
-} from "../utils";
+import express from 'express';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import { resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { readFile } from 'node:fs/promises';
+import { type ImportmapDeclaration, type RoutesDeclaration, logInfo, logWarn, removeTrailingSlash } from '../utils';
 
 /* eslint-disable no-console */
 
@@ -17,7 +13,8 @@ export interface DevelopArgs {
   backend: string;
   open: boolean;
   importmap: ImportmapDeclaration;
-  routes: Record<string, unknown>;
+  routes: RoutesDeclaration;
+  watchedRoutesPaths: Record<string, string>;
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
@@ -25,29 +22,17 @@ export interface DevelopArgs {
   supportOffline: boolean;
 }
 
-export function runDevelop(args: DevelopArgs) {
-  const {
-    backend,
-    host,
-    port,
-    open,
-    importmap,
-    configUrls,
-    addCookie,
-    supportOffline,
-  } = args;
+export async function runDevelop(args: DevelopArgs) {
+  const { backend, host, port, open, importmap, routes, watchedRoutesPaths, configUrls, addCookie, supportOffline } =
+    args;
   const apiUrl = removeTrailingSlash(args.apiUrl);
   const spaPath = removeTrailingSlash(args.spaPath);
   const app = express();
-  const source = resolve(
-    require.resolve("@openmrs/esm-app-shell/package.json"),
-    "..",
-    "dist"
-  );
-  const index = resolve(source, "index.html");
-  const indexContent = readFileSync(index, "utf8")
+  const source = resolve(require.resolve('@openmrs/esm-app-shell/package.json'), '..', 'dist');
+  const index = resolve(source, 'index.html');
+  const indexContent = readFileSync(index, 'utf8')
     .replace(
-      RegExp("<script>[\\s\\S]+</script>"),
+      RegExp('<script>[\\s\\S]+</script>'),
       `
     <script>
         initializeSpa({
@@ -58,21 +43,18 @@ export function runDevelop(args: DevelopArgs) {
           configUrls: ${JSON.stringify(configUrls)},
         });
     </script>
-  `
+  `,
     )
     .replace(/href="\/openmrs\/spa/g, `href="${spaPath}`)
     .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`)
     .replace(
-      /https:\/\/dev3.openmrs.org\/openmrs\/spa\/importmap\.json/g,
-      `http://${host}:${port}${spaPath}/importmap.json`
+      /https:\/\/dev3\.openmrs\.org\/openmrs\/spa\/importmap\.json/g,
+      `http://${host}:${port}${spaPath}/importmap.json`,
     );
 
-  const sw = resolve(source, "service-worker.js");
+  const sw = resolve(source, 'service-worker.js');
   // remove any full references to dev3.openmrs.org
-  const swContent = readFileSync(sw, "utf-8").replace(
-    /https:\/\/dev3.openmrs.org\/openmrs\/spa\//g,
-    ``
-  );
+  const swContent = readFileSync(sw, 'utf-8').replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g, ``);
 
   const pageUrl = `http://${host}:${port}${spaPath}`;
 
@@ -87,35 +69,55 @@ export function runDevelop(args: DevelopArgs) {
   // Return our custom `index.html` for all requests beginning with spaPath
   // and not ending in `.js`, `.woff`, `.woff2`, `.json`, or any three-character
   // extension.
-  const indexHtmlPathMatcher = new RegExp(
-    `^${spaPath}/(?!.*\\.js$)(?!.*\\.woff2?$)(?!.*\\.json$)(?!.*\\....$).*$`
-  );
+  const indexHtmlPathMatcher = new RegExp(`^${spaPath}/(?!.*\\.js$)(?!.*\\.woff2?$)(?!.*\\.json$)(?!.*\\....$).*$`);
 
   // Route for custom `importmap.json` goes above static assets
-  if (importmap.type === "inline") {
+  if (importmap.type === 'inline') {
     app.get(`${spaPath}/importmap.json`, (_, res) => {
-      res.contentType("application/json").send(importmap.value);
+      res.contentType('application/json').send(importmap.value);
     });
   }
 
-  if (args.routes && Object.keys(args.routes).length > 0) {
-    const stringifiedRoutes = JSON.stringify(args.routes);
+  if (routes.type === 'inline') {
+    let stringifiedRoutes = routes.value;
+    if (watchedRoutesPaths && !!Object.keys(watchedRoutesPaths).length) {
+      // watchedRoutesPath is keyed from package to path, but here we need to go from
+      // path to package.
+      const watchedRoutesByPath = Object.fromEntries(Object.entries(watchedRoutesPaths).map(([k, v]) => [v, k]));
+
+      logInfo(`Watching routes.json for ${Object.keys(watchedRoutesPaths).join(', ')}`);
+      // setup watchers for all the discovered routes.json files which update the in-memory map
+      (await import('node-watch')).default(Object.keys(watchedRoutesByPath), { delay: 0 }, async (event, name) => {
+        if (event === 'update') {
+          const updatedApp = watchedRoutesByPath[name];
+          if (updatedApp) {
+            const jsonRoutes = JSON.parse(stringifiedRoutes);
+            const version = jsonRoutes[updatedApp]?.version;
+            jsonRoutes[updatedApp] = {
+              ...JSON.parse(await readFile(name, 'utf8')),
+              version,
+            };
+            stringifiedRoutes = JSON.stringify(jsonRoutes);
+            logInfo(`Updated routes for ${updatedApp}`);
+          }
+        }
+      });
+    }
+
     app.get(`${spaPath}/routes.registry.json`, (_, res) => {
-      res.contentType("application/json").send(stringifiedRoutes);
+      res.contentType('application/json').send(stringifiedRoutes);
     });
   }
 
   // Route for custom `service-worker.js` before most things
   if (supportOffline) {
     app.get(`${spaPath}/service-worker.js`, (_, res) => {
-      res.contentType("js").send(swContent);
+      res.contentType('js').send(swContent);
     });
   }
 
   // Route for custom `index.html` goes above static assets
-  app.get(indexHtmlPathMatcher, (_, res) =>
-    res.contentType("text/html").send(indexContent)
-  );
+  app.get(indexHtmlPathMatcher, (_, res) => res.contentType('text/html').send(indexContent));
 
   // Return static assets for any request for which we have one, except importmap.json and index.html
   app.use(spaPath, express.static(source, { index: false }));
@@ -127,23 +129,20 @@ export function runDevelop(args: DevelopArgs) {
     apiUrl,
     createProxyMiddleware(
       (path) => {
-        return (
-          new RegExp(`${apiUrl}/.*`).test(path) &&
-          !indexHtmlPathMatcher.test(path)
-        );
+        return new RegExp(`${apiUrl}/.*`).test(path) && !indexHtmlPathMatcher.test(path);
       },
       {
         target: backend,
         changeOrigin: true,
         onProxyReq(proxyReq) {
           if (addCookie) {
-            const origCookie = proxyReq.getHeader("cookie");
+            const origCookie = proxyReq.getHeader('cookie');
             const newCookie = `${origCookie};${addCookie}`;
-            proxyReq.setHeader("cookie", newCookie);
+            proxyReq.setHeader('cookie', newCookie);
           }
         },
-      }
-    )
+      },
+    ),
   );
 
   app.listen(port, host, () => {
@@ -151,16 +150,16 @@ export function runDevelop(args: DevelopArgs) {
     logInfo(`SPA available at ${pageUrl}`);
 
     if (open) {
-      const open = require("open");
+      const open = require('open');
 
       setTimeout(
         () =>
           open(pageUrl, { wait: false }).catch(() => {
             logWarn(
-              `Unable to open "${pageUrl}" in browser. If you are running in a headless environment, please do not use the --open flag.`
+              `Unable to open "${pageUrl}" in browser. If you are running in a headless environment, please do not use the --open flag.`,
             );
           }),
-        2000
+        2000,
       );
     }
   });

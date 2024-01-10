@@ -283,6 +283,10 @@
 - [unselectable](ConfigurableLinkProps.md#unselectable)
 - [vocab](ConfigurableLinkProps.md#vocab)
 
+### Navigation Methods
+
+- [onBeforeNavigate](ConfigurableLinkProps.md#onbeforenavigate)
+
 ## Navigation Properties
 
 ### templateParams
@@ -291,7 +295,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L31)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L19)
 
 ___
 
@@ -301,7 +305,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L30)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L18)
 
 ___
 
@@ -4156,3 +4160,17 @@ AnchorHTMLAttributes.vocab
 #### Defined in
 
 node_modules/@types/react/index.d.ts:1882
+
+## Navigation Methods
+
+### onBeforeNavigate
+
+▸ `Optional` **onBeforeNavigate**(): `void`
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L20)

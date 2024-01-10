@@ -1,5 +1,5 @@
-import useSWR from "swr";
-import { openmrsFetch } from "@openmrs/esm-framework";
+import useSWR from 'swr';
+import { openmrsFetch } from '@openmrs/esm-framework';
 
 export type Concept = {
   answers: Array<ConceptAnswer>;
@@ -22,7 +22,7 @@ export function useConceptLookup(query: string) {
 
   const { data, error } = useSWR<{ data: { results: Array<Concept> } }, Error>(
     query ? conceptLookupUrl : null,
-    openmrsFetch
+    openmrsFetch,
   );
 
   return {
@@ -35,10 +35,7 @@ export function useConceptLookup(query: string) {
 export function useGetConceptByUuid(conceptUuid: string) {
   const fetchConceptUrl = `/ws/rest/v1/concept/${conceptUuid}`;
 
-  const { data, error } = useSWR<{ data: Concept }, Error>(
-    conceptUuid ? fetchConceptUrl : null,
-    openmrsFetch
-  );
+  const { data, error } = useSWR<{ data: Concept }, Error>(conceptUuid ? fetchConceptUrl : null, openmrsFetch);
 
   return {
     concept: data?.data ?? null,

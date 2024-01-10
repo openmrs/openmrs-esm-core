@@ -1,0 +1,30 @@
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animated {
+  animation-duration: 250ms;
+  animation-timing-function: ease-in-out;
+}
+
+.slideIn {
+  animation-name: slideInFromLeft;
+}
+
+.slideOut {
+  animation-name: slideOutToLeft;
+}

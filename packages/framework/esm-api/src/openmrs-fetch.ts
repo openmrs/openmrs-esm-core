@@ -1,12 +1,12 @@
 /** @module @category API */
-import { Observable } from "rxjs";
-import isPlainObject from "lodash-es/isPlainObject";
-import { getConfig, navigate } from "@openmrs/esm-config";
-import { FetchResponse } from "./types";
+import { Observable } from 'rxjs';
+import isPlainObject from 'lodash-es/isPlainObject';
+import { getConfig, navigate } from '@openmrs/esm-config';
+import type { FetchResponse } from './types';
 
-export const restBaseUrl = "/ws/rest/v1/";
+export const restBaseUrl = '/ws/rest/v1/';
 
-export const fhirBaseUrl = "/ws/fhir2/R4";
+export const fhirBaseUrl = '/ws/fhir2/R4';
 
 export const sessionEndpoint = `${restBaseUrl}session`;
 
@@ -21,11 +21,11 @@ export const sessionEndpoint = `${restBaseUrl}session`;
  * ```
  */
 export function makeUrl(path: string) {
-  if (path && path.startsWith("http")) {
+  if (path && path.startsWith('http')) {
     return path;
-  } else if (path[0] !== "/") {
+  } else if (path[0] !== '/') {
     // ensure path starts with /
-    path = "/" + path;
+    path = '/' + path;
   }
 
   return window.openmrsBase + path;
@@ -80,26 +80,19 @@ export function makeUrl(path: string) {
  *
  * @category API
  */
-export function openmrsFetch<T = any>(
-  path: string,
-  fetchInit: FetchConfig = {}
-): Promise<FetchResponse<T>> {
-  if (typeof path !== "string") {
-    throw Error(
-      "The first argument to @openmrs/api's openmrsFetch function must be a url string"
-    );
+export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {}): Promise<FetchResponse<T>> {
+  if (typeof path !== 'string') {
+    throw Error("The first argument to @openmrs/api's openmrsFetch function must be a url string");
   }
 
-  if (typeof fetchInit !== "object") {
-    throw Error(
-      "The second argument to @openmrs/api's openmrsFetch function must be a plain object."
-    );
+  if (typeof fetchInit !== 'object') {
+    throw Error("The second argument to @openmrs/api's openmrsFetch function must be a plain object.");
   }
 
   // @ts-ignore
   if (!window.openmrsBase) {
     throw Error(
-      "@openmrs/api is running in a browser that doesn't have window.openmrsBase, which is provided by openmrs-module-spa's HTML file."
+      "@openmrs/api is running in a browser that doesn't have window.openmrsBase, which is provided by openmrs-module-spa's HTML file.",
     );
   }
 
@@ -124,8 +117,8 @@ export function openmrsFetch<T = any>(
    * If a different Accept header is preferred, pass it into the fetchInit.
    * If no Accept header is desired, pass it in explicitly as null.
    */
-  if (typeof fetchInit.headers.Accept === "undefined") {
-    fetchInit.headers.Accept = "application/json";
+  if (typeof fetchInit.headers.Accept === 'undefined') {
+    fetchInit.headers.Accept = 'application/json';
   }
 
   if (fetchInit.headers.Accept === null) {
@@ -136,17 +129,14 @@ export function openmrsFetch<T = any>(
    * header. Returning that header is useful when using the API, but
    * not from a UI.
    */
-  if (
-    path.startsWith(restBaseUrl) &&
-    typeof fetchInit.headers["Disable-WWW-Authenticate"] === "undefined"
-  ) {
-    fetchInit.headers["Disable-WWW-Authenticate"] = "true";
+  if (path.startsWith(restBaseUrl) && typeof fetchInit.headers['Disable-WWW-Authenticate'] === 'undefined') {
+    fetchInit.headers['Disable-WWW-Authenticate'] = 'true';
   }
 
   if (path.startsWith(fhirBaseUrl)) {
     const urlUrl = new URL(url, window.location.toString());
-    if (!urlUrl.searchParams.has("_summary")) {
-      urlUrl.searchParams.set("_summary", "data");
+    if (!urlUrl.searchParams.has('_summary')) {
+      urlUrl.searchParams.set('_summary', 'data');
       url = urlUrl.toString();
     }
   }
@@ -194,12 +184,11 @@ export function openmrsFetch<T = any>(
       /*
        *Redirect to given url when redirect on auth failure is enabled
        */
-      const { redirectAuthFailure } = await getConfig("@openmrs/esm-api");
+      const { redirectAuthFailure } = await getConfig('@openmrs/esm-api');
 
       if (
         (url === makeUrl(sessionEndpoint) && response.status === 403) ||
-        (redirectAuthFailure.enabled &&
-          redirectAuthFailure.errors.includes(response.status))
+        (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status))
       ) {
         navigate({ to: redirectAuthFailure.url });
 
@@ -227,24 +216,14 @@ export function openmrsFetch<T = any>(
               /* Make the fetch promise go into "rejected" status, with the best
                * possible stacktrace and error message.
                */
-              throw new OpenmrsFetchError(
-                url,
-                response,
-                responseBody,
-                requestStacktrace
-              );
+              throw new OpenmrsFetchError(url, response, responseBody, requestStacktrace);
             },
             (err) => {
               /* We weren't able to download a response body for this error.
                * Time to just give the best possible stacktrace and error message.
                */
-              throw new OpenmrsFetchError(
-                url,
-                response,
-                null,
-                requestStacktrace
-              );
-            }
+              throw new OpenmrsFetchError(url, response, null, requestStacktrace);
+            },
           );
       }
     }
@@ -280,14 +259,9 @@ export function openmrsFetch<T = any>(
  *
  * @category API
  */
-export function openmrsObservableFetch<T>(
-  url: string,
-  fetchInit: FetchConfig = {}
-) {
-  if (typeof fetchInit !== "object") {
-    throw Error(
-      "The second argument to openmrsObservableFetch must be either omitted or an object"
-    );
+export function openmrsObservableFetch<T>(url: string, fetchInit: FetchConfig = {}) {
+  if (typeof fetchInit !== 'object') {
+    throw Error('The second argument to openmrsObservableFetch must be either omitted or an object');
   }
 
   const abortController = new AbortController();
@@ -306,7 +280,7 @@ export function openmrsObservableFetch<T>(
       (err) => {
         hasResponse = true;
         observer.error(err);
-      }
+      },
     );
 
     return () => {
@@ -318,12 +292,7 @@ export function openmrsObservableFetch<T>(
 }
 
 export class OpenmrsFetchError extends Error {
-  constructor(
-    url: string,
-    response: Response,
-    responseBody: ResponseBody | null,
-    requestStacktrace: Error
-  ) {
+  constructor(url: string, response: Response, responseBody: ResponseBody | null, requestStacktrace: Error) {
     super();
     this.message = `Server responded with ${response.status} (${response.statusText}) for url ${url}. Check err.responseBody or network tab in dev tools for more info`;
     requestStacktrace.message = this.message;
@@ -335,7 +304,7 @@ export class OpenmrsFetchError extends Error {
   responseBody: string | FetchResponseJson | null;
 }
 
-export interface FetchConfig extends Omit<RequestInit, "body" | "headers"> {
+export interface FetchConfig extends Omit<RequestInit, 'body' | 'headers'> {
   headers?: FetchHeaders;
   body?: FetchBody | string;
 }

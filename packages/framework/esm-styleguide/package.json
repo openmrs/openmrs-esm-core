@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-styleguide",
-  "version": "5.2.0",
+  "version": "5.3.2",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "browser": "dist/openmrs-esm-styleguide.js",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@carbon/charts": "^1.12.0",
-    "@carbon/react": "^1.37.0",
+    "@carbon/react": "~1.37.0",
     "@internationalized/date": "^3.5.0",
     "@react-spectrum/datepicker": "^3.8.0",
     "@react-spectrum/provider": "^3.9.0",
@@ -51,8 +51,10 @@
   },
   "peerDependencies": {
     "@openmrs/esm-extensions": "5.x",
+    "@openmrs/esm-framework": "5.x",
     "@openmrs/esm-react-utils": "5.x",
     "@openmrs/esm-state": "5.x",
+    "dayjs": "1.x",
     "react": "18.x",
     "react-dom": "18.x",
     "rxjs": "6.x"
@@ -69,6 +71,7 @@
     "postcss": "^8.4.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "rxjs": "^6.5.3"
+    "rxjs": "^6.5.3",
+    "webpack": "^5.88.0"
   }
 }

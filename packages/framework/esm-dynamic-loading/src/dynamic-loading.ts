@@ -1,7 +1,7 @@
 /** @module @category Dynamic Loading */
-"use strict";
+'use strict';
 // hack to make the types defined in esm-globals available here
-import type { ImportMap } from "@openmrs/esm-globals";
+import type { ImportMap } from '@openmrs/esm-globals';
 
 /**
  * @internal
@@ -12,7 +12,7 @@ import type { ImportMap } from "@openmrs/esm-globals";
  * @returns An opaque, equivalent JS identifier for the module
  */
 export function slugify(name: string) {
-  return name.replace(/[\/\-@]/g, "_");
+  return name.replace(/[\/\-@]/g, '_');
 }
 
 /**
@@ -28,8 +28,8 @@ export function slugify(name: string) {
  */
 export async function importDynamic<T = any>(
   jsPackage: string,
-  share: string = "./start",
-  options?: { importMap?: ImportMap }
+  share: string = './start',
+  options?: { importMap?: ImportMap },
 ): Promise<T> {
   await preloadImport(jsPackage, options?.importMap);
 
@@ -47,7 +47,7 @@ export async function importDynamic<T = any>(
   const factory = await container.get(share);
   const module = factory();
 
-  if (!(typeof module === "object") || module === null) {
+  if (!(typeof module === 'object') || module === null) {
     const error = `Container for ${jsPackage} did not return an ESM module as expected`;
     console.error(error);
     throw new Error(error);
@@ -68,9 +68,8 @@ export async function importDynamic<T = any>(
  *  `getCurrentPageMap()` for every script when bulk loading.
  */
 export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
-  if (typeof jsPackage !== "string" || jsPackage.trim().length === 0) {
-    const error =
-      "Attempted to call importDynamic() without supplying a package to load";
+  if (typeof jsPackage !== 'string' || jsPackage.trim().length === 0) {
+    const error = 'Attempted to call importDynamic() without supplying a package to load';
     console.error(error);
     throw new Error(error);
   }
@@ -86,7 +85,7 @@ export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
     }
 
     let url = activeImportMap.imports[jsPackage];
-    if (url.startsWith("./")) {
+    if (url.startsWith('./')) {
       url = window.spaBase + url.substring(1);
     }
 
@@ -114,28 +113,24 @@ interface FederatedModule {
 
 function isFederatedModule(a: unknown): a is FederatedModule {
   return (
-    typeof a === "object" &&
+    typeof a === 'object' &&
     a !== null &&
-    "init" in a &&
-    typeof a["init"] === "function" &&
-    "get" in a &&
-    typeof a["get"] === "function"
+    'init' in a &&
+    typeof a['init'] === 'function' &&
+    'get' in a &&
+    typeof a['get'] === 'function'
   );
 }
 
 // internals to track script loading
 // basically, if we're already loading a script, we should wait until the script is loaded
 // we use a global to track this
-const OPENMRS_SCRIPT_LOADING = Symbol("__openmrs_script_loading");
+const OPENMRS_SCRIPT_LOADING = Symbol('__openmrs_script_loading');
 
 /**
  * Appends a `<script>` to the DOM with the given URL.
  */
-function loadScript(
-  url: string,
-  resolve: (value: unknown) => void,
-  reject: (reason?: any) => void
-) {
+function loadScript(url: string, resolve: (value: unknown) => void, reject: (reason?: any) => void) {
   const scriptElement = document.head.querySelector(`script[src="${url}"]`);
   let scriptLoading: Set<String> = window[OPENMRS_SCRIPT_LOADING];
   if (!scriptLoading) {
@@ -144,42 +139,42 @@ function loadScript(
 
   if (!scriptElement) {
     scriptLoading.add(url);
-    const element = document.createElement("script");
+    const element = document.createElement('script');
     element.src = url;
-    element.type = "text/javascript";
+    element.type = 'text/javascript';
     element.async = true;
     const loadFn = () => {
       scriptLoading.delete(url);
-      element.removeEventListener("load", loadFn);
+      element.removeEventListener('load', loadFn);
       resolve(null);
     };
-    element.addEventListener("load", loadFn);
+    element.addEventListener('load', loadFn);
 
     const errFn = (ev: ErrorEvent) => {
       scriptLoading.delete(url);
       console.error(`Failed to load script from ${url}`, ev);
-      element.removeEventListener("error", errFn);
+      element.removeEventListener('error', errFn);
       reject(ev.message);
     };
-    element.addEventListener("error", errFn);
+    element.addEventListener('error', errFn);
 
     document.head.appendChild(element);
   } else {
     if (scriptLoading.has(url)) {
       const loadFn = () => {
-        scriptElement?.removeEventListener("load", loadFn);
+        scriptElement?.removeEventListener('load', loadFn);
         resolve(null);
       };
-      scriptElement.addEventListener("load", loadFn);
+      scriptElement.addEventListener('load', loadFn);
 
       const errFn = (ev: ErrorEvent) => {
         console.error(`Failed to load script from ${url}`, ev);
-        scriptElement?.removeEventListener("error", errFn);
+        scriptElement?.removeEventListener('error', errFn);
         reject(ev.message);
       };
-      scriptElement.addEventListener("error", errFn);
+      scriptElement.addEventListener('error', errFn);
     } else {
-      console.warn("Script already loaded. Not loading it again.", url);
+      console.warn('Script already loaded. Not loading it again.', url);
       resolve(null);
     }
   }

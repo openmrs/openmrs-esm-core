@@ -1,21 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
-import isEqual from "lodash-es/isEqual";
-import unset from "lodash-es/unset";
-import cloneDeep from "lodash-es/cloneDeep";
-import styles from "./editable-value.styles.scss";
-import { Button } from "@carbon/react";
-import { Edit, Reset } from "@carbon/react/icons";
-import {
-  ConfigValue,
-  Validator,
-  Type,
-  Config,
-  temporaryConfigStore,
-} from "@openmrs/esm-framework/src/internal";
-import { ValueEditor, CustomValueType } from "./value-editor";
-import { implementerToolsStore, ImplementerToolsStore } from "../../store";
-import { DisplayValue } from "./display-value";
-import { useTranslation } from "react-i18next";
+import React, { useState, useEffect, useRef } from 'react';
+import isEqual from 'lodash-es/isEqual';
+import unset from 'lodash-es/unset';
+import cloneDeep from 'lodash-es/cloneDeep';
+import styles from './editable-value.styles.scss';
+import { Button } from '@carbon/react';
+import { Edit, Reset } from '@carbon/react/icons';
+import type { ConfigValue, Validator, Type, Config } from '@openmrs/esm-framework/src/internal';
+import { temporaryConfigStore } from '@openmrs/esm-framework/src/internal';
+import type { CustomValueType } from './value-editor';
+import { ValueEditor } from './value-editor';
+import type { ImplementerToolsStore } from '../../store';
+import { implementerToolsStore } from '../../store';
+import { DisplayValue } from './display-value';
+import { useTranslation } from 'react-i18next';
 
 export interface EditableValueProps {
   path: Array<string>;
@@ -33,11 +30,7 @@ export interface ConfigValueDescriptor {
   _type?: Type;
 }
 
-export default function EditableValue({
-  path,
-  element,
-  customType,
-}: EditableValueProps) {
+export default function EditableValue({ path, element, customType }: EditableValueProps) {
   const [valueString, setValueString] = useState<string>();
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -58,10 +51,7 @@ export default function EditableValue({
 
   useEffect(() => {
     const update = (state: ImplementerToolsStore) => {
-      if (
-        state.configPathBeingEdited &&
-        isEqual(state.configPathBeingEdited, path)
-      ) {
+      if (state.configPathBeingEdited && isEqual(state.configPathBeingEdited, path)) {
         focusOnConfigPathBeingEdited();
       }
     };
@@ -100,11 +90,7 @@ export default function EditableValue({
               handleSave={(val) => {
                 try {
                   const result = JSON.parse(val);
-                  const tempConfigUpdate = set(
-                    cloneDeep(temporaryConfigStore.getState()),
-                    ["config", ...path],
-                    result
-                  );
+                  const tempConfigUpdate = set(cloneDeep(temporaryConfigStore.getState()), ['config', ...path], result);
                   temporaryConfigStore.setState(tempConfigUpdate);
                   setValueString(val);
                   closeEditor();
@@ -121,29 +107,21 @@ export default function EditableValue({
             <Button
               kind="ghost"
               size="sm"
-              iconDescription={t("editValueButtonText", "Edit")}
+              iconDescription={t('editValueButtonText', 'Edit')}
               onClick={() => setEditing(true)}
               ref={activeConfigRef}
               renderIcon={(props) => <Edit size={16} {...props} />}
               hasIconOnly
             />
-            {element._source == "temporary config" ? (
+            {element._source == 'temporary config' ? (
               <Button
                 renderIcon={(props) => <Reset size={16} {...props} />}
                 size="sm"
                 kind="ghost"
-                iconDescription={t(
-                  "resetToDefaultValueButtonText",
-                  "Reset to default"
-                )}
+                iconDescription={t('resetToDefaultValueButtonText', 'Reset to default')}
                 hasIconOnly
                 onClick={() => {
-                  temporaryConfigStore.setState(
-                    unset(temporaryConfigStore.getState(), [
-                      "config",
-                      ...path,
-                    ]) as any
-                  );
+                  temporaryConfigStore.setState(unset(temporaryConfigStore.getState(), ['config', ...path]) as any);
                 }}
               />
             ) : null}

@@ -1,22 +1,22 @@
 module.exports = {
   transform: {
-    "\\.[jt]sx?$": "@swc/jest",
+    '\\.[jt]sx?$': '@swc/jest',
   },
-  transformIgnorePatterns: ["/node_modules/(?!@openmrs)"],
+  transformIgnorePatterns: ['/node_modules/(?!@openmrs)'],
   moduleNameMapper: {
-    "\\.(s?css)$": "identity-obj-proxy",
-    "^@carbon/icons-react/es/(.*)$": "@carbon/icons-react/lib/$1",
-    "^@carbon/charts": "identity-obj-proxy",
-    "@openmrs/esm-framework": "@openmrs/esm-framework/mock",
-    "^lodash-es/(.*)$": "lodash/$1",
-    dexie: require.resolve("dexie"),
+    '\\.(s?css)$': 'identity-obj-proxy',
+    '^@carbon/icons-react/es/(.*)$': '@carbon/icons-react/lib/$1',
+    '^@carbon/charts': 'identity-obj-proxy',
+    '@openmrs/esm-framework': '@openmrs/esm-framework/mock',
+    '^lodash-es/(.*)$': 'lodash/$1',
+    dexie: require.resolve('dexie'),
   },
   collectCoverageFrom: [
-    "**/src/**/*.component.tsx",
-    "!**/node_modules/**",
-    "!**/vendor/**",
-    "!**/src/**/*.test.*",
-    "!**/src/declarations.d.tsx",
+    '**/src/**/*.component.tsx',
+    '!**/node_modules/**',
+    '!**/vendor/**',
+    '!**/src/**/*.test.*',
+    '!**/src/declarations.d.ts',
   ],
   coverageThreshold: {
     global: {
@@ -26,9 +26,9 @@ module.exports = {
       lines: 80,
     },
   },
-  setupFilesAfterEnv: ["<rootDir>/setupTests.ts"],
-  testEnvironment: "jsdom",
+  setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
+  testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    url: "http://localhost/",
+    url: 'http://localhost/',
   },
 };

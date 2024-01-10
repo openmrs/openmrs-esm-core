@@ -6,9 +6,7 @@
  */
 exports.removeTrailingSlash = (path) => {
   const i = path.length - 1;
-  return path[i] === "/"
-    ? exports.removeTrailingSlash(path.substr(0, i))
-    : path;
+  return path[i] === '/' ? exports.removeTrailingSlash(path.substr(0, i)) : path;
 };
 
 /**
@@ -18,13 +16,11 @@ exports.removeTrailingSlash = (path) => {
  * @returns {string} The number as a string, padded to two places
  */
 const padToTwoDigits = (num) => {
-  return num.toString().padStart(2, "0");
+  return num.toString().padStart(2, '0');
 };
 
 exports.getTimestamp = () => {
   const today = new Date();
   const dd = padToTwoDigits;
-  return `${today.getFullYear()}${dd(today.getMonth() + 1)}${dd(
-    today.getDate()
-  )}`;
+  return `${today.getFullYear()}${dd(today.getMonth() + 1)}${dd(today.getDate())}`;
 };

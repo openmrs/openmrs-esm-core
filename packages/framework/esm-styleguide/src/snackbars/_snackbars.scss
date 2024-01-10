@@ -1,0 +1,31 @@
+@use '@carbon/styles/scss/spacing';
+
+.omrs-snackbars-container {
+  z-index: 1000;
+  position: fixed;
+  width: 20rem;
+  bottom: 1rem;
+  left: 1rem;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Tablet */
+.omrs-breakpoint-lt-desktop {
+  .omrs-snackbars-container {
+    bottom: 5.5rem;
+  }
+}
+
+.omrs-snackbar-mounting,
+.omrs-snackbar-mounting > * {
+  padding: 0;
+}
+
+.omrs-snackbar-closing,
+.omrs-snackbar-mounting {
+  opacity: 0;
+}

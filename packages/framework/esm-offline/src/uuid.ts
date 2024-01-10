@@ -1,7 +1,7 @@
 /** @module @category Offline */
-import { v4 } from "uuid";
+import { v4 } from 'uuid';
 
-export const offlineUuidPrefix = "OFFLINE+";
+export const offlineUuidPrefix = 'OFFLINE+';
 
 /** Generates a UUID-like string which is used for uniquely identifying objects while offline. */
 export function generateOfflineUuid() {

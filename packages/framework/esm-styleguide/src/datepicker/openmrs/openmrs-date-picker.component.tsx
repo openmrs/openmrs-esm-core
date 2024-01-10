@@ -1,13 +1,13 @@
-import React from "react";
-import { supportedLocales as reactSpectrumSupportedLocales } from "../react-spectrum/locales";
-import { getLocale } from "@openmrs/esm-framework";
-import ReactSpectrumDatePickerWrapper from "../react-spectrum/adobe-react-spectrum-date-wrapper.component";
-import { DatePicker, DatePickerInput } from "@carbon/react";
+import React from 'react';
+import { supportedLocales as reactSpectrumSupportedLocales } from '../react-spectrum/locales';
+import { getLocale } from '@openmrs/esm-framework';
+import ReactSpectrumDatePickerWrapper from '../react-spectrum/adobe-react-spectrum-date-wrapper.component';
+import { DatePicker, DatePickerInput } from '@carbon/react';
 
 // TODO: should be locale sensitive
 // see: https://issues.openmrs.org/browse/O3-998
-const DEFAULT_DATE_FORMAT = "d/m/Y";
-const DEFAULT_PLACEHOLDER = "dd/mm/yyyy";
+const DEFAULT_DATE_FORMAT = 'd/m/Y';
+const DEFAULT_PLACEHOLDER = 'dd/mm/yyyy';
 
 interface OpenmrsDatePickerProps {
   id: string;
@@ -25,7 +25,7 @@ interface OpenmrsDatePickerProps {
   disabled?: boolean;
   carbonOptions?: {
     /* We currently don't support the 'range' option */
-    datePickerType?: "simple" | "single";
+    datePickerType?: 'simple' | 'single';
     onClose?: Function;
     onOpen?: Function;
     light?: boolean;
@@ -74,7 +74,7 @@ export const OpenmrsDatePicker: React.FC<OpenmrsDatePickerProps> = ({
     <DatePicker
       dateFormat={dateFormat}
       value={value}
-      datePickerType={carbonOptions?.datePickerType || "single"}
+      datePickerType={carbonOptions?.datePickerType || 'single'}
       onChange={(val) => onChange(val[0])}
       onClose={carbonOptions?.onClose}
       onOpen={carbonOptions?.onOpen}

@@ -1,7 +1,7 @@
 /** @module @category Feature Flags */
-import { useEffect } from "react";
-import { useStore } from "./useStore";
-import { featureFlagsStore } from "@openmrs/esm-feature-flags";
+import { useEffect } from 'react';
+import { useStore } from './useStore';
+import { featureFlagsStore } from '@openmrs/esm-feature-flags';
 
 /** Use this function to tell whether a feature flag is toggled on or off.
  *
@@ -22,7 +22,7 @@ export function useFeatureFlag(flagName: string) {
   useEffect(() => {
     if (!flags[flagName]) {
       console.error(
-        `useFeatureFlag: Attempted to get value of non-existent flag "${flagName}". Did you forget to call registerFeatureFlag?`
+        `useFeatureFlag: Attempted to get value of non-existent flag "${flagName}". Did you forget to call registerFeatureFlag?`,
       );
     }
   }, [flags[flagName]]);

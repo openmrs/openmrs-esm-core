@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ActionableNotification } from "@carbon/react";
+import React, { useState } from 'react';
+import { ActionableNotification } from '@carbon/react';
 /** @module @category UI */
 
 export interface ActionableNotificationProps {
@@ -17,22 +17,13 @@ export interface ActionableNotificationDescriptor {
   progressActionLabel?: string;
 }
 
-export interface ActionableNotificationMeta
-  extends ActionableNotificationDescriptor {
+export interface ActionableNotificationMeta extends ActionableNotificationDescriptor {
   id: number;
 }
 
-export type ActionableNotificationType =
-  | "error"
-  | "info"
-  | "info-square"
-  | "success"
-  | "warning"
-  | "warning-alt";
+export type ActionableNotificationType = 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
 
-export const ActionableNotificationComponent: React.FC<
-  ActionableNotificationProps
-> = ({ notification }) => {
+export const ActionableNotificationComponent: React.FC<ActionableNotificationProps> = ({ notification }) => {
   const {
     actionButtonLabel,
     onActionButtonClick = () => {},
@@ -53,7 +44,7 @@ export const ActionableNotificationComponent: React.FC<
 
   return (
     <ActionableNotification
-      kind={kind || "info"}
+      kind={kind || 'info'}
       actionButtonLabel={actionText}
       ariaLabel="Closes actionable notification"
       onActionButtonClick={handleActionClick}

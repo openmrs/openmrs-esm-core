@@ -1,8 +1,8 @@
 /** @module @category API */
-import { Observable } from "rxjs";
-import { map, take } from "rxjs/operators";
-import { openmrsObservableFetch } from "../openmrs-fetch";
-import { Location } from "../types";
+import type { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { openmrsObservableFetch } from '../openmrs-fetch';
+import type { Location } from '../types';
 
 export function toLocationObject(openmrsRestForm: any): Location {
   return {
@@ -11,14 +11,14 @@ export function toLocationObject(openmrsRestForm: any): Location {
   };
 }
 
-export function getLocations(): Observable<Array<Location>> {
-  return openmrsObservableFetch<any>(`/ws/rest/v1/location`)
+export function getLocations(tagUuidOrName: string | null = null): Observable<Array<Location>> {
+  const url = `/ws/rest/v1/location` + (tagUuidOrName ? '?tag=' + tagUuidOrName : '');
+  return openmrsObservableFetch<any>(url)
     .pipe(
       map((results) => {
-        const locations: Array<Location> =
-          results.data.results.map(toLocationObject);
+        const locations: Array<Location> = results.data.results.map(toLocationObject);
         return locations;
-      })
+      }),
     )
     .pipe(take(1));
 }

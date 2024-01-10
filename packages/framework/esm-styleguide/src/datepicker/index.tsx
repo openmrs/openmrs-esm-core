@@ -1,1 +1,1 @@
-export * from "./openmrs/openmrs-date-picker.component";
+export * from './openmrs/openmrs-date-picker.component';

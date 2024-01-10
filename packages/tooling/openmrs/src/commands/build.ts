@@ -1,20 +1,7 @@
-import {
-  copyFileSync,
-  existsSync,
-  readdirSync,
-  readFileSync,
-  statSync,
-} from "fs";
-import {
-  checkImportmapJson,
-  checkRoutesJson,
-  getImportMap,
-  getRoutes,
-  loadWebpackConfig,
-  logInfo,
-} from "../utils";
-import { basename, join, parse, resolve } from "path";
-import type { webpack } from "webpack";
+import { copyFileSync, existsSync, readdirSync, readFileSync, statSync } from 'fs';
+import { checkImportmapJson, checkRoutesJson, getImportMap, getRoutes, loadWebpackConfig, logInfo } from '../utils';
+import { basename, join, parse, resolve } from 'path';
+import type { webpack } from 'webpack';
 
 type WebpackExport = typeof webpack;
 
@@ -50,16 +37,13 @@ export type BuildConfig = Partial<{
 
 function loadBuildConfig(buildConfigPath?: string): BuildConfig {
   if (buildConfigPath) {
-    return JSON.parse(readFileSync(buildConfigPath, "utf8"));
+    return JSON.parse(readFileSync(buildConfigPath, 'utf8'));
   } else {
     return {} as BuildConfig;
   }
 }
 
-function addConfigFilesFromPaths(
-  configPaths: Array<string>,
-  targetDir: string
-) {
+function addConfigFilesFromPaths(configPaths: Array<string>, targetDir: string) {
   for (let configPath of configPaths) {
     const realPath = resolve(configPath);
     copyFileSync(realPath, join(targetDir, basename(configPath)));
@@ -67,19 +51,17 @@ function addConfigFilesFromPaths(
 }
 
 export async function runBuild(args: BuildArgs) {
-  const webpack: WebpackExport = require("webpack");
+  const webpack: WebpackExport = require('webpack');
   const buildConfig = loadBuildConfig(args.buildConfig);
   const configUrls = buildConfig.configUrls || args.configUrls;
   for (let configPath of buildConfig.configPaths || args.configPaths) {
     configUrls.push(basename(configPath));
   }
 
-  const importMap = await getImportMap(
-    args.importmap || buildConfig.importmap || "importmap.json"
-  );
+  const importMap = await getImportMap(args.importmap || buildConfig.importmap || 'importmap.json');
   // if we're supplying a URL importmap and the dist folder exists and the raw importmap file doesn't exist
   // we use the nearest thing. Basically, this is added to support the --hash-importmap assemble option.
-  if (importMap.type === "url") {
+  if (importMap.type === 'url') {
     if (
       !/^https?:\/\//.test(importMap.value) &&
       existsSync(args.target) &&
@@ -91,9 +73,7 @@ export async function runBuild(args: BuildArgs) {
           entry.startsWith(fileName) &&
           entry.endsWith(extension) &&
           statSync(resolve(args.target, entry)).isFile() &&
-          checkImportmapJson(
-            readFileSync(resolve(args.target, entry)).toString()
-          )
+          checkImportmapJson(readFileSync(resolve(args.target, entry)).toString()),
       );
 
       if (paths) {
@@ -102,11 +82,9 @@ export async function runBuild(args: BuildArgs) {
     }
   }
 
-  const routes = await getRoutes(
-    args.routes || buildConfig.routes || "routes.registry.json"
-  );
+  const routes = await getRoutes(args.routes || buildConfig.routes || 'routes.registry.json');
   // As above, check for a hashed routes.registry.json if --hash-importmap assmeble option was used
-  if (routes.type === "url") {
+  if (routes.type === 'url') {
     if (
       !/^https?:\/\//.test(routes.value) &&
       existsSync(args.target) &&
@@ -118,14 +96,11 @@ export async function runBuild(args: BuildArgs) {
           entry.startsWith(fileName) &&
           entry.endsWith(extension) &&
           statSync(resolve(args.target, entry)).isFile() &&
-          checkRoutesJson(readFileSync(resolve(args.target, entry)).toString())
+          checkRoutesJson(readFileSync(resolve(args.target, entry)).toString()),
       );
 
       if (paths) {
-        routes.value = routes.value.replace(
-          /routes\.registry\.json/i,
-          paths[0]
-        );
+        routes.value = routes.value.replace(/routes\.registry\.json/i, paths[0]);
       }
     }
   }
@@ -133,7 +108,7 @@ export async function runBuild(args: BuildArgs) {
   const config = loadWebpackConfig({
     importmap: importMap,
     routes,
-    env: "production",
+    env: 'production',
     apiUrl: buildConfig.apiUrl || args.apiUrl,
     configUrls: configUrls,
     defaultLocale: args.defaultLocale || buildConfig.defaultLocale,
@@ -156,19 +131,16 @@ export async function runBuild(args: BuildArgs) {
   return await new Promise<void>((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err || stats?.hasErrors()) {
-        reject(err ?? stats?.compilation.errors);
+        reject(err ?? new Error(stats?.compilation.errors.toString()));
       } else {
         stats &&
           console.log(
             stats.toString({
               colors: true,
-            })
+            }),
           );
 
-        addConfigFilesFromPaths(
-          buildConfig.configPaths || args.configPaths,
-          args.target
-        );
+        addConfigFilesFromPaths(buildConfig.configPaths || args.configPaths, args.target);
 
         logInfo(`Build finished.`);
         resolve();

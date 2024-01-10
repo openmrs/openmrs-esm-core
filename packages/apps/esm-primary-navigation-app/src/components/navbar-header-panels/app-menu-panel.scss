@@ -1,5 +1,5 @@
-@use "@carbon/styles/scss/spacing";
-@import "../../root.scss";
+@use '@carbon/styles/scss/spacing';
+@import '../../root.scss';
 
 .menuLink a {
   display: flex;
@@ -23,4 +23,8 @@
 
 .launchIcon {
   margin-left: spacing.$spacing-03;
+}
+
+.headerPanel {
+  width: fit-content;
 }

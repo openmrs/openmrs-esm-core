@@ -1,11 +1,8 @@
-import React, { type ComponentType, Suspense } from "react";
-import { I18nextProvider } from "react-i18next";
-import type {} from "@openmrs/esm-globals";
-import {
-  ComponentConfig,
-  ComponentContext,
-  ExtensionData,
-} from "./ComponentContext";
+import React, { type ComponentType, Suspense } from 'react';
+import { I18nextProvider } from 'react-i18next';
+import type {} from '@openmrs/esm-globals';
+import type { ComponentConfig, ExtensionData } from './ComponentContext';
+import { ComponentContext } from './ComponentContext';
 
 const defaultOpts = {
   strictMode: true,
@@ -32,22 +29,17 @@ export interface OpenmrsReactComponentState {
 
 export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
   if (
-    typeof userOpts !== "object" ||
-    typeof userOpts.featureName !== "string" ||
-    typeof userOpts.moduleName !== "string"
+    typeof userOpts !== 'object' ||
+    typeof userOpts.featureName !== 'string' ||
+    typeof userOpts.moduleName !== 'string'
   ) {
-    throw new Error("Invalid options");
+    throw new Error('Invalid options');
   }
 
   const opts = Object.assign({}, defaultOpts, userOpts);
 
-  return function decorateComponent(
-    Comp: ComponentType<any>
-  ): ComponentType<any> {
-    return class OpenmrsReactComponent extends React.Component<
-      OpenmrsReactComponentProps,
-      OpenmrsReactComponentState
-    > {
+  return function decorateComponent(Comp: ComponentType<any>): ComponentType<any> {
+    return class OpenmrsReactComponent extends React.Component<OpenmrsReactComponentProps, OpenmrsReactComponentState> {
       static displayName = `OpenmrsReactComponent(${opts.featureName})`;
 
       constructor(props: OpenmrsReactComponentProps) {
@@ -84,9 +76,7 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
       render() {
         if (this.state.caughtError) {
           // TO-DO have a UX designed for when a catastrophic error occurs
-          return (
-            <div>An error has occurred. Please try reloading the page.</div>
-          );
+          return <div>An error has occurred. Please try reloading the page.</div>;
         } else {
           const content = (
             <Suspense fallback={null}>
@@ -94,10 +84,7 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
                 {opts.disableTranslations ? (
                   <Comp {...this.props} />
                 ) : (
-                  <I18nextProvider
-                    i18n={window.i18next}
-                    defaultNS={opts.moduleName}
-                  >
+                  <I18nextProvider i18n={window.i18next} defaultNS={opts.moduleName}>
                     <Comp {...this.props} />
                   </I18nextProvider>
                 )}

@@ -1,1 +1,1 @@
-export * from "./omrs-content-switcher.component";
+export * from './omrs-content-switcher.component';

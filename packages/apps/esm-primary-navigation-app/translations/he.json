@@ -1,4 +1,7 @@
 {
-  "notifications": "התראות",
-  "selectLocale": "בחירת שפה"
+  "apply": "אישור",
+  "cancel": "Cancel",
+  "change": "שינוי",
+  "changeLanguage": "Change Language",
+  "notifications": "התראות"
 }

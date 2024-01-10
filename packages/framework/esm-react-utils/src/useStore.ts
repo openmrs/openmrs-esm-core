@@ -1,7 +1,7 @@
 /** @module @category Store */
-import { subscribeTo } from "@openmrs/esm-state";
-import { useEffect, useMemo, useState } from "react";
-import type { StoreApi } from "zustand";
+import { subscribeTo } from '@openmrs/esm-state';
+import { useEffect, useMemo, useState } from 'react';
+import type { StoreApi } from 'zustand';
 
 export type ActionFunction<T> = (state: T, ...args: any[]) => Partial<T>;
 export type Actions<T> =
@@ -10,21 +10,16 @@ export type Actions<T> =
 export type BoundActions = { [key: string]: (...args: any[]) => void };
 
 function bindActions<T>(store: StoreApi<T>, actions: Actions<T>): BoundActions {
-  if (typeof actions == "function") {
+  if (typeof actions == 'function') {
     actions = actions(store);
   }
 
   const bound = {};
 
   for (let i in actions) {
-    bound[i] = function () {
-      const args = arguments;
+    bound[i] = function (...args) {
       store.setState((state) => {
-        let _args = [state];
-        for (let i = 0; i < args.length; i++) {
-          _args.push(args[i]);
-        }
-
+        let _args = [state, ...args];
         return actions[i](..._args);
       });
     };
@@ -37,28 +32,13 @@ const defaultSelectFunction = (x) => x;
 
 function useStore<T, U>(store: StoreApi<T>): T;
 function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U): U;
-function useStore<T, U>(
-  store: StoreApi<T>,
-  select: undefined,
-  actions: Actions<T>
-): T & BoundActions;
-function useStore<T, U>(
-  store: StoreApi<T>,
-  select: (state: T) => U,
-  actions: Actions<T>
-): U & BoundActions;
-function useStore<T, U>(
-  store: StoreApi<T>,
-  select: (state: T) => U = defaultSelectFunction,
-  actions?: Actions<T>
-) {
+function useStore<T, U>(store: StoreApi<T>, select: undefined, actions: Actions<T>): T & BoundActions;
+function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U, actions: Actions<T>): U & BoundActions;
+function useStore<T, U>(store: StoreApi<T>, select: (state: T) => U = defaultSelectFunction, actions?: Actions<T>) {
   const [state, setState] = useState<U>(() => select(store.getState()));
   useEffect(() => subscribeTo(store, select, setState), [store, select]);
 
-  let boundActions: BoundActions = useMemo(
-    () => (actions ? bindActions(store, actions) : {}),
-    [store, actions]
-  );
+  let boundActions: BoundActions = useMemo(() => (actions ? bindActions(store, actions) : {}), [store, actions]);
 
   return { ...state, ...boundActions };
 }
@@ -69,10 +49,7 @@ function useStore<T, U>(
  * @param actions
  * @returns
  */
-function useStoreWithActions<T>(
-  store: StoreApi<T>,
-  actions: Actions<T>
-): T & BoundActions {
+function useStoreWithActions<T>(store: StoreApi<T>, actions: Actions<T>): T & BoundActions {
   return useStore(store, defaultSelectFunction, actions);
 }
 
@@ -87,10 +64,7 @@ function createUseStore<T>(store: StoreApi<T>) {
   function useStore(actions?: Actions<T>) {
     const [state, set] = useState(store.getState());
     useEffect(() => store.subscribe((state) => set(state)), []);
-    let boundActions: BoundActions = useMemo(
-      () => (actions ? bindActions(store, actions) : {}),
-      [actions]
-    );
+    let boundActions: BoundActions = useMemo(() => (actions ? bindActions(store, actions) : {}), [actions]);
 
     return { ...state, ...boundActions };
   }

@@ -1,5 +1,5 @@
-import React, { Fragment, useMemo } from "react";
-import { useTranslation } from "react-i18next";
+import React, { Fragment, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DataTable,
   Table,
@@ -9,35 +9,33 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-} from "@carbon/react";
-import { ResolvedDependenciesModule } from "./openmrs-backend-dependencies";
-import styles from "./backend-dependencies.styles.scss";
+} from '@carbon/react';
+import type { ResolvedDependenciesModule } from './openmrs-backend-dependencies';
+import styles from './backend-dependencies.styles.scss';
 
 export interface BackendDependencies {
   backendDependencies: Array<ResolvedDependenciesModule>;
 }
 
-export const BackendDependencies: React.FC<BackendDependencies> = ({
-  backendDependencies,
-}) => {
+export const BackendDependencies: React.FC<BackendDependencies> = ({ backendDependencies }) => {
   const { t } = useTranslation();
 
   const headers = useMemo(
     () => [
       {
-        key: "name",
-        header: t("moduleName", "Module Name"),
+        key: 'name',
+        header: t('moduleName', 'Module Name'),
       },
       {
-        key: "installedVersion",
-        header: t("installedVersion", "Installed Version"),
+        key: 'installedVersion',
+        header: t('installedVersion', 'Installed Version'),
       },
       {
-        key: "requiredVersion",
-        header: t("requiredVersion", "Required Version"),
+        key: 'requiredVersion',
+        header: t('requiredVersion', 'Required Version'),
       },
     ],
-    [t]
+    [t],
   );
 
   return (
@@ -49,9 +47,7 @@ export const BackendDependencies: React.FC<BackendDependencies> = ({
               <TableHead>
                 <TableRow>
                   {headers.map((header) => (
-                    <TableHeader {...getHeaderProps({ header })}>
-                      {header.header}
-                    </TableHeader>
+                    <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
                   ))}
                 </TableRow>
               </TableHead>
@@ -69,18 +65,12 @@ export const BackendDependencies: React.FC<BackendDependencies> = ({
                       <TableRow key={dep.name}>
                         <TableCell>{dep.name}</TableCell>
                         <TableCell>
-                          {dep.type === "missing" ? (
-                            <span style={{ color: "red" }}>
-                              {t("missing", "Missing")}
-                            </span>
-                          ) : dep.type === "version-mismatch" ? (
-                            <span style={{ color: "red" }}>
-                              {dep.installedVersion}
-                            </span>
+                          {dep.type === 'missing' ? (
+                            <span style={{ color: 'red' }}>{t('missing', 'Missing')}</span>
+                          ) : dep.type === 'version-mismatch' ? (
+                            <span style={{ color: 'red' }}>{dep.installedVersion}</span>
                           ) : (
-                            <span style={{ color: "green" }}>
-                              {dep.installedVersion}
-                            </span>
+                            <span style={{ color: 'green' }}>{dep.installedVersion}</span>
                           )}
                         </TableCell>
                         <TableCell>{dep.requiredVersion}</TableCell>

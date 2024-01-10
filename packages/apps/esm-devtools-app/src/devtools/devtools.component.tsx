@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import DevToolsPopup from "./devtools-popup.component";
-import styles from "./devtools.styles.css";
-import { importMapOverridden } from "./import-map.component";
+import React, { useState } from 'react';
+import classNames from 'classnames';
+import { importMapOverridden } from './import-map.component';
+import DevToolsPopup from './devtools-popup.component';
+import styles from './devtools.styles.css';
 
 export default function Root(props) {
-  return window.spaEnv === "development" ||
-    Boolean(localStorage.getItem("openmrs:devtools")) ? (
+  return window.spaEnv === 'development' || Boolean(localStorage.getItem('openmrs:devtools')) ? (
     <DevTools {...props} />
   ) : null;
 }
@@ -19,16 +19,13 @@ function DevTools() {
         role="button"
         tabIndex={0}
         onClick={toggleDevTools}
-        className={`${styles.devtoolsTriggerButton} ${
-          styles.overridden ? isOverridden : ""
-        }`}
-      />
-      {devToolsOpen && (
-        <DevToolsPopup
-          close={toggleDevTools}
-          toggleOverridden={toggleOverridden}
-        />
-      )}
+        className={classNames(styles.devtoolsTriggerButton, {
+          [styles.overridden]: isOverridden,
+        })}
+      >
+        {'{\u00B7\u00B7\u00B7}'}
+      </div>
+      {devToolsOpen && <DevToolsPopup close={toggleDevTools} toggleOverridden={toggleOverridden} />}
     </>
   );
 

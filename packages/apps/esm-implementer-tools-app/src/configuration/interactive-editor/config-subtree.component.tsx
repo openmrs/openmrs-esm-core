@@ -1,8 +1,8 @@
-import React from "react";
-import EditableValue from "./editable-value.component";
-import { implementerToolsStore } from "../../store";
-import isEqual from "lodash-es/isEqual";
-import { Subtree } from "./layout/subtree.component";
+import React from 'react';
+import EditableValue from './editable-value.component';
+import { implementerToolsStore } from '../../store';
+import isEqual from 'lodash-es/isEqual';
+import { Subtree } from './layout/subtree.component';
 
 export interface ConfigSubtreeProps {
   config: Record<string, any>;
@@ -25,10 +25,7 @@ export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
 
   function removeActiveItemDescriptionOnMouseLeave(thisPath) {
     const state = implementerToolsStore.getState();
-    if (
-      isEqual(state.activeItemDescription?.path, thisPath) &&
-      !isEqual(state.configPathBeingEdited, thisPath)
-    ) {
+    if (isEqual(state.activeItemDescription?.path, thisPath) && !isEqual(state.configPathBeingEdited, thisPath)) {
       implementerToolsStore.setState({ activeItemDescription: undefined });
     }
   }
@@ -37,19 +34,14 @@ export function ConfigSubtree({ config, path = [] }: ConfigSubtreeProps) {
     <>
       {Object.entries(config).map(([key, value], i) => {
         const thisPath = path.concat([key]);
-        const isLeaf =
-          value.hasOwnProperty("_value") || value.hasOwnProperty("_type");
+        const isLeaf = value.hasOwnProperty('_value') || value.hasOwnProperty('_type');
         return (
           <Subtree
             label={key}
             leaf={isLeaf}
-            onMouseEnter={() =>
-              setActiveItemDescriptionOnMouseEnter(thisPath, key, value)
-            }
-            onMouseLeave={() =>
-              removeActiveItemDescriptionOnMouseLeave(thisPath)
-            }
-            key={`subtree-${thisPath.join(".")}`}
+            onMouseEnter={() => setActiveItemDescriptionOnMouseEnter(thisPath, key, value)}
+            onMouseLeave={() => removeActiveItemDescriptionOnMouseLeave(thisPath)}
+            key={`subtree-${thisPath.join('.')}`}
           >
             {isLeaf ? (
               <EditableValue path={thisPath} element={value} />
