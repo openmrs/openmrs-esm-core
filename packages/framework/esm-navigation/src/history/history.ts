@@ -13,23 +13,25 @@ function addToHistory(newLocation: string) {
   sessionStorage.setItem(historyKey, JSON.stringify(history));
 }
 
-// Initialize history  from sessionStorage. If history  is empty, add document.referrer
-// if available.
-function initializeHistory() {
+/**
+ * Initialize history from sessionStorage. If history  is empty, add
+ * document.referrer if available.
+ *
+ * @internal
+ */
+export function setupHistory() {
   let history = JSON.parse(sessionStorage.getItem(historyKey) ?? '[]');
   if (history.length === 0 && document.referrer) {
     addToHistory(document.referrer);
   }
+
+  window.addEventListener('single-spa:routing-event', (evt) => {
+    const history = getHistory();
+    if (history[history.length - 1] !== window.location.href) {
+      addToHistory(window.location.href);
+    }
+  });
 }
-
-initializeHistory();
-
-window.addEventListener('single-spa:routing-event', (evt) => {
-  const history = getHistory();
-  if (history[history.length - 1] !== window.location.href) {
-    addToHistory(window.location.href);
-  }
-});
 
 /**
  * Returns a list of URLs representing the history of the current window session.
