@@ -123,7 +123,6 @@
 ### Navigation Functions
 
 - [ConfigurableLink](API.md#configurablelink)
-- [clearHistory](API.md#clearhistory)
 - [getHistory](API.md#gethistory)
 - [goBackInHistory](API.md#gobackinhistory)
 - [interpolateString](API.md#interpolatestring)
@@ -3181,23 +3180,6 @@ A React link component which calls [navigate](API.md#navigate) when clicked
 
 ___
 
-### clearHistory
-
-▸ **clearHistory**(): `void`
-
-Clears the history from sessionStorage. This should be done when the user
-logs out.
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-navigation/src/history/history.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L63)
-
-___
-
 ### getHistory
 
 ▸ **getHistory**(): `string`[]
@@ -3210,13 +3192,13 @@ Returns a list of URLs representing the history of the current window session.
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/history/history.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L37)
+[packages/framework/esm-navigation/src/history/history.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L39)
 
 ___
 
 ### goBackInHistory
 
-▸ **goBackInHistory**(`toIndex:`): `void`
+▸ **goBackInHistory**(`toUrl:`): `void`
 
 Rolls back the history to the specified point and navigates to that URL.
 
@@ -3224,8 +3206,8 @@ Rolls back the history to the specified point and navigates to that URL.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `toIndex:` | `Object` | The index in the history stack (which can be obtained with [getHistory](API.md#gethistory)) to navigate and roll back to. History after that index will be deleted. |
-| `toIndex:.toUrl` | `string` |  |
+| `toUrl:` | `Object` | The URL in the history to navigate to. History after that index will be deleted. If the URL is not found in the history, an error will be thrown. |
+| `toUrl:.toUrl` | `string` |  |
 
 #### Returns
 
@@ -3233,7 +3215,7 @@ Rolls back the history to the specified point and navigates to that URL.
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/history/history.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L47)
+[packages/framework/esm-navigation/src/history/history.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L50)
 
 ___
 

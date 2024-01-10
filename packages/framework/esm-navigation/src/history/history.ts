@@ -43,8 +43,9 @@ export function getHistory(): Array<string> {
 /**
  * Rolls back the history to the specified point and navigates to that URL.
  *
- * @param toIndex: The index in the history stack (which can be obtained with [[getHistory]])
- * to navigate and roll back to. History after that index will be deleted.
+ * @param toUrl: The URL in the history to navigate to. History after that index
+ * will be deleted. If the URL is not found in the history, an error will be
+ * thrown.
  */
 export function goBackInHistory({ toUrl }: { toUrl: string }) {
   const history = getHistory();
