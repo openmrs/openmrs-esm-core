@@ -2658,17 +2658,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-breadcrumbs@workspace:packages/framework/esm-breadcrumbs":
-  version: 0.0.0-use.local
-  resolution: "@openmrs/esm-breadcrumbs@workspace:packages/framework/esm-breadcrumbs"
-  dependencies:
-    "@openmrs/esm-state": "workspace:*"
-    path-to-regexp: "npm:6.1.0"
-  peerDependencies:
-    "@openmrs/esm-state": 5.x
-  languageName: unknown
-  linkType: soft
-
 "@openmrs/esm-config@workspace:*, @openmrs/esm-config@workspace:packages/framework/esm-config":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-config@workspace:packages/framework/esm-config"
