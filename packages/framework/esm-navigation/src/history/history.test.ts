@@ -1,4 +1,5 @@
 import { navigate } from '../navigation/navigate';
+import { clearHistory, getHistory, goBackInHistory, setupHistory } from './history';
 
 jest.mock('../navigation/navigate');
 const mockNavigate = navigate as jest.Mock;
@@ -34,6 +35,10 @@ describe('history', () => {
     mockNavigate.mockClear();
   });
 
+  afterEach(() => {
+    clearHistory();
+  });
+
   afterAll(() => {
     window.location = originalWindowLocation;
     (document as any).referrer = originalDocumentReferrer;
@@ -41,12 +46,12 @@ describe('history', () => {
   });
 
   it('should be initialized with document.referrer if available', () => {
-    const { getHistory } = require('./history');
+    setupHistory();
     expect(getHistory()).toEqual([mockReferrer]);
   });
 
   it('should update history on routing events and go back correctly', () => {
-    const { getHistory, goBackInHistory } = require('./history');
+    setupHistory();
     window.location.href = 'https://o3.openmrs.org/openmrs/spa/labs';
     window.dispatchEvent(new CustomEvent('single-spa:routing-event'));
     expect(getHistory()).toEqual([mockReferrer, 'https://o3.openmrs.org/openmrs/spa/labs']);
