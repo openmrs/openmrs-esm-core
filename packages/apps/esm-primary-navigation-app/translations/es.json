@@ -3,5 +3,6 @@
   "cancel": "Cancelar",
   "change": "Cambiar",
   "changeLanguage": "Cambiar idioma",
-  "notifications": "Notificaciones"
+  "notifications": "Notificaciones",
+  "userMenuTooltip": "User"
 }
