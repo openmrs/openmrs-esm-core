@@ -1,12 +1,17 @@
 /** @module @category Navigation */
-import React, { type MouseEvent, type AnchorHTMLAttributes, type PropsWithChildren } from 'react';
+import React, { type MouseEvent, type AnchorHTMLAttributes, type PropsWithChildren, useEffect } from 'react';
 import type { TemplateParams } from '@openmrs/esm-navigation';
 import { navigate, interpolateUrl } from '@openmrs/esm-navigation';
 
-function handleClick(event: MouseEvent, to: string, templateParams?: TemplateParams, onBeforeNavigate?: () => void) {
+function handleClick(
+  event: MouseEvent,
+  to: string,
+  templateParams?: TemplateParams,
+  onBeforeNavigate?: (event: MouseEvent) => void,
+) {
   if (!event.metaKey && !event.ctrlKey && !event.shiftKey && event.button == 0) {
     event.preventDefault();
-    onBeforeNavigate?.();
+    onBeforeNavigate?.(event);
     navigate({ to, templateParams });
   }
 }
@@ -17,7 +22,7 @@ function handleClick(event: MouseEvent, to: string, templateParams?: TemplatePar
 export interface ConfigurableLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   to: string;
   templateParams?: TemplateParams;
-  onBeforeNavigate?: () => void;
+  onBeforeNavigate?: (event: MouseEvent) => void;
 }
 
 /**
@@ -36,6 +41,18 @@ export function ConfigurableLink({
   children,
   ...otherProps
 }: PropsWithChildren<ConfigurableLinkProps>) {
+  useEffect(() => {
+    if (otherProps.href) {
+      console.warn(
+        `ConfigurableLink does not support the href prop. Use the 'to' prop instead. The provided href value is '${otherProps.href}'`,
+      );
+    }
+    if (otherProps.onClick) {
+      console.warn(
+        `ConfigurableLink does not support the onClick prop. Use the 'onBeforeNavigate' prop instead. The 'to' prop of the offending link is ${to}`,
+      );
+    }
+  }, []);
   return (
     <a
       onClick={(event) => handleClick(event, to, templateParams, onBeforeNavigate)}
