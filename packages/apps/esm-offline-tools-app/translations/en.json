@@ -53,5 +53,10 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Unknown error.",
   "offlinePatientSyncDetailsHeader": "Offline patient details",
   "offlineReady": "Offline Ready",
-  "offlineToolsAppMenuLink": "Offline tools"
+  "offlineToolsAppMenuLink": "Offline tools",
+  "offlineActionsSynchronizationNotificationTitle": "Upload",
+  "offlineActionsSynchronizationNotificationSynchronized": "The offline action synchronization has finished.",
+  "offlineActionsSynchronizationNotificationCanceling": "Canceling...",
+  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} actions",
+  "offlineActionsSynchronizationNotificationCancelUpload": "Cancel upload"
 }
