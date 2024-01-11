@@ -82,7 +82,7 @@ const HeaderItems: React.FC = () => {
                 [styles.activePanel]: !isActivePanel('userMenu'),
               })}
               enterDelayMs={500}
-              name="Users"
+              name="User"
               isActive={isActivePanel('userMenu')}
               onClick={(event) => {
                 togglePanel('userMenu');
