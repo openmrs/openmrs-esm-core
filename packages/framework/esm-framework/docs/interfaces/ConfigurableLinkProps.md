@@ -295,7 +295,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L19)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L24)
 
 ___
 
@@ -305,7 +305,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L18)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L23)
 
 ___
 
@@ -4165,7 +4165,13 @@ node_modules/@types/react/index.d.ts:1882
 
 ### onBeforeNavigate
 
-▸ `Optional` **onBeforeNavigate**(): `void`
+▸ `Optional` **onBeforeNavigate**(`event`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `event` | `MouseEvent`<`Element`, `MouseEvent`\> |
 
 #### Returns
 
@@ -4173,4 +4179,4 @@ node_modules/@types/react/index.d.ts:1882
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L20)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L25)
