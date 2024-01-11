@@ -44,7 +44,7 @@ export const offlineToolsPatientsLink = getSyncLifecycle(
   () =>
     OfflineToolsNavLink({
       page: 'patients',
-      title: 'patients',
+      title: 'offlinePatients',
     }),
   options,
 );
@@ -53,7 +53,7 @@ export const offlineToolsActionsLink = getSyncLifecycle(
   () =>
     OfflineToolsNavLink({
       page: 'actions',
-      title: 'actions',
+      title: 'offlineActions',
     }),
   options,
 );
