@@ -43,10 +43,14 @@ export function ConfigurableLink({
 }: PropsWithChildren<ConfigurableLinkProps>) {
   useEffect(() => {
     if (otherProps.href) {
-      console.warn('ConfigurableLink does not support the href prop. Use the `to` prop instead.');
+      console.warn(
+        `ConfigurableLink does not support the href prop. Use the 'to' prop instead. The provided href value is '${otherProps.href}'`,
+      );
     }
     if (otherProps.onClick) {
-      console.warn('ConfigurableLink does not support the onClick prop. Use the `onBeforeNavigate` prop instead.');
+      console.warn(
+        `ConfigurableLink does not support the onClick prop. Use the 'onBeforeNavigate' prop instead. The 'to' prop of the offending link is ${to}`,
+      );
     }
   }, []);
   return (

@@ -3176,7 +3176,7 @@ A React link component which calls [navigate](API.md#navigate) when clicked
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L37)
+[packages/framework/esm-react-utils/src/ConfigurableLink.tsx:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ConfigurableLink.tsx#L53)
 
 ___
 
