@@ -11,7 +11,7 @@ describe('navigate', () => {
   beforeAll(() => {
     delete (window as any).location;
     //@ts-ignore
-    window.location = { assign: jest.fn() };
+    window.location = { assign: jest.fn(), origin: 'https://o3.openmrs.org' };
     mockLocationAssign = window.location.assign as jest.Mock;
   });
 
@@ -57,6 +57,12 @@ describe('navigate', () => {
   it('tolerates an extra inital slash', () => {
     navigate({ to: '/${openmrsSpaBase}/baz/page' });
     expect(navigateToUrl).toHaveBeenCalledWith('/openmrs/spa/baz/page');
+    expect(window.location.assign).not.toHaveBeenCalled();
+  });
+
+  it('uses single-spa navigateToUrl if the URL has the current origin', () => {
+    navigate({ to: `${window.location.origin}/openmrs/spa/qux/page` });
+    expect(navigateToUrl).toHaveBeenCalledWith('/openmrs/spa/qux/page');
     expect(window.location.assign).not.toHaveBeenCalled();
   });
 });

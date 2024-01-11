@@ -15,17 +15,6 @@ import {
 } from '@openmrs/esm-framework';
 import { mutate } from 'swr';
 
-jest.mock('@openmrs/esm-framework', () => ({
-  navigate: jest.fn(),
-  setUserLanguage: jest.fn(),
-  useConfig: jest.fn(),
-  useConnectivity: jest.fn(),
-  useSession: jest.fn(),
-  clearCurrentUser: jest.fn(),
-  openmrsFetch: jest.fn(),
-  refetchCurrentUser: jest.fn(),
-}));
-
 jest.mock('swr', () => ({
   mutate: jest.fn(),
 }));

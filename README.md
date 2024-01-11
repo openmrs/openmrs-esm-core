@@ -26,12 +26,12 @@ This contains tooling and the app shell.
 The following common libraries have been developed. They may also be used independently of the app shell.
 
 - [@openmrs/esm-api](packages/framework/esm-api): helps make calls to the backend
-- [@openmrs/esm-breadcrumbs](packages/framework/esm-breadcrumbs): management of UI breadcrumbs
 - [@openmrs/esm-config](packages/framework/esm-config): validation and storage of frontend configuration
 - [@openmrs/esm-error-handling](packages/framework/esm-error-handling): handling of errors
 - [@openmrs/esm-extensions](packages/framework/esm-extensions): implementation of a frontend component extension system
 - [@openmrs/esm-feature-flags](packages/framework/esm-feature-flags): hide features that are in progress
 - [@openmrs/esm-globals](packages/framework/esm-globals): useful global variables and types
+- [@openmrs/esm-navigation](packages/framework/esm-navigation): navigation utilities, breadcrumbs, and history
 - [@openmrs/esm-offline](packages/framework/esm-offline): provides offline functionality
 - [@openmrs/esm-react-utils](packages/framework/esm-react-utils): utilities for React components
 - [@openmrs/esm-state](packages/framework/esm-state): brings in state management

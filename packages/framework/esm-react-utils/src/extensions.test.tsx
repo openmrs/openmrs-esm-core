@@ -18,7 +18,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 
-// For some reason in the text context `isEqual` always returns true
+// For some reason in the test context `isEqual` always returns true
 // when using the import substitution in jest.config.js. Here's a custom
 // mock.
 jest.mock('lodash-es/isEqual', () => (a, b) => JSON.stringify(a) == JSON.stringify(b));

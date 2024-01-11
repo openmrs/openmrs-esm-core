@@ -2609,6 +2609,7 @@ __metadata:
   dependencies:
     "@openmrs/esm-config": "workspace:*"
     "@openmrs/esm-error-handling": "workspace:*"
+    "@openmrs/esm-navigation": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     "@types/fhir": "npm:0.0.31"
     lodash-es: "npm:^4.17.21"
@@ -2617,6 +2618,7 @@ __metadata:
   peerDependencies:
     "@openmrs/esm-config": 5.x
     "@openmrs/esm-error-handling": 5.x
+    "@openmrs/esm-navigation": 5.x
     "@openmrs/esm-offline": 5.x
   languageName: unknown
   linkType: soft
@@ -2653,17 +2655,6 @@ __metadata:
     workbox-strategies: "npm:^6.1.5"
     workbox-webpack-plugin: "npm:^6.1.5"
     workbox-window: "npm:^6.1.5"
-  languageName: unknown
-  linkType: soft
-
-"@openmrs/esm-breadcrumbs@workspace:*, @openmrs/esm-breadcrumbs@workspace:packages/framework/esm-breadcrumbs":
-  version: 0.0.0-use.local
-  resolution: "@openmrs/esm-breadcrumbs@workspace:packages/framework/esm-breadcrumbs"
-  dependencies:
-    "@openmrs/esm-state": "workspace:*"
-    path-to-regexp: "npm:6.1.0"
-  peerDependencies:
-    "@openmrs/esm-state": 5.x
   languageName: unknown
   linkType: soft
 
@@ -2811,13 +2802,13 @@ __metadata:
   resolution: "@openmrs/esm-framework@workspace:packages/framework/esm-framework"
   dependencies:
     "@openmrs/esm-api": "workspace:*"
-    "@openmrs/esm-breadcrumbs": "workspace:*"
     "@openmrs/esm-config": "workspace:*"
     "@openmrs/esm-dynamic-loading": "workspace:*"
     "@openmrs/esm-error-handling": "workspace:*"
     "@openmrs/esm-extensions": "workspace:*"
     "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
+    "@openmrs/esm-navigation": "workspace:*"
     "@openmrs/esm-offline": "workspace:*"
     "@openmrs/esm-react-utils": "workspace:*"
     "@openmrs/esm-routes": "workspace:*"
@@ -2901,6 +2892,17 @@ __metadata:
     react-router-dom: 6.x
     rxjs: 6.x
     swr: 2.x
+  languageName: unknown
+  linkType: soft
+
+"@openmrs/esm-navigation@workspace:*, @openmrs/esm-navigation@workspace:packages/framework/esm-navigation":
+  version: 0.0.0-use.local
+  resolution: "@openmrs/esm-navigation@workspace:packages/framework/esm-navigation"
+  dependencies:
+    "@openmrs/esm-state": "workspace:*"
+    path-to-regexp: "npm:6.1.0"
+  peerDependencies:
+    "@openmrs/esm-state": 5.x
   languageName: unknown
   linkType: soft
 
@@ -2990,6 +2992,7 @@ __metadata:
     "@openmrs/esm-extensions": "workspace:*"
     "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
+    "@openmrs/esm-navigation": "workspace:*"
     dayjs: "npm:^1.10.8"
     i18next: "npm:^21.10.0"
     lodash-es: "npm:^4.17.21"
@@ -3006,6 +3009,7 @@ __metadata:
     "@openmrs/esm-error-handling": 5.x
     "@openmrs/esm-extensions": 5.x
     "@openmrs/esm-globals": 5.x
+    "@openmrs/esm-navigation": 5.x
     dayjs: 1.x
     i18next: 19.x
     react: 18.x

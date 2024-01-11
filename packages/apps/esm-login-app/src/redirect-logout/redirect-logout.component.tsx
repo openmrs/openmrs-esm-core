@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useEffect } from 'react';
 import { navigate, setUserLanguage, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+import { clearHistory } from '@openmrs/esm-framework/src/internal';
 import { performLogout } from './logout.resource';
 
 export interface RedirectLogoutProps {}
@@ -11,6 +12,7 @@ const RedirectLogout: React.FC<RedirectLogoutProps> = () => {
   const isLoginEnabled = useConnectivity();
 
   useEffect(() => {
+    clearHistory();
     if (!session.authenticated || !isLoginEnabled) {
       navigate({ to: '${openmrsSpaBase}/login' });
     } else {

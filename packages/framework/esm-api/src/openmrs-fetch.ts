@@ -1,8 +1,10 @@
 /** @module @category API */
 import { Observable } from 'rxjs';
 import isPlainObject from 'lodash-es/isPlainObject';
-import { getConfig, navigate } from '@openmrs/esm-config';
+import { getConfig } from '@openmrs/esm-config';
+import { navigate } from '@openmrs/esm-navigation';
 import type { FetchResponse } from './types';
+import { clearHistory } from '@openmrs/esm-navigation/src/index';
 
 export const restBaseUrl = '/ws/rest/v1/';
 
@@ -190,6 +192,7 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
         (url === makeUrl(sessionEndpoint) && response.status === 403) ||
         (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status))
       ) {
+        clearHistory();
         navigate({ to: redirectAuthFailure.url });
 
         /* We sometimes don't really want this promise to resolve since there's no response data,

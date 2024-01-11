@@ -2,17 +2,12 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { navigate, interpolateUrl } from '@openmrs/esm-config';
+import { navigate } from '@openmrs/esm-navigation';
 import { ConfigurableLink } from './ConfigurableLink';
 
 jest.mock('single-spa');
 
-jest.mock('@openmrs/esm-config');
 const mockNavigate = navigate as jest.Mock;
-
-const realInterpolate = jest.requireActual('@openmrs/esm-config').interpolateUrl;
-
-(interpolateUrl as jest.Mock).mockImplementation((...args) => realInterpolate(...args));
 
 describe(`ConfigurableLink`, () => {
   const path = '${openmrsSpaBase}/home';
