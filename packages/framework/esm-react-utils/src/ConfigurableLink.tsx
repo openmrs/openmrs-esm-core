@@ -9,10 +9,26 @@ function handleClick(
   templateParams?: TemplateParams,
   onBeforeNavigate?: (event: MouseEvent) => void,
 ) {
-  if (!event.metaKey && !event.ctrlKey && !event.shiftKey && event.button == 0) {
+  // Left click without modifiers (normal navigation)
+  if (event.button === 0 && !event.ctrlKey && !event.shiftKey && !event.altKey && !event.metaKey) {
     event.preventDefault();
     onBeforeNavigate?.(event);
     navigate({ to, templateParams });
+  }
+
+  // Left click with Ctrl key (or Cmd key on Mac) - Open in new tab
+  if (event.button === 0 && (event.ctrlKey || event.metaKey)) {
+    onBeforeNavigate?.(event);
+  }
+
+  // Left click with Shift key - Open in new window
+  if (event.button === 0 && event.shiftKey) {
+    onBeforeNavigate?.(event);
+  }
+
+  // Middle click - Open in new background tab
+  if (event.button === 1) {
+    onBeforeNavigate?.(event);
   }
 }
 
