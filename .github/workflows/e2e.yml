@@ -9,9 +9,43 @@ on:
       - main
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      changes: ${{ steps.filter.outputs.changes }}
+
+    steps: 
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: Check if any source code has changed
+        id: changes
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            src:
+              - 'packages/**/src/**/*!(.test).ts'
+              - 'packages/**/src/**/*!(.test).tsx'
+              - 'packages/**/src/**/*!(.test).js'
+              - 'packages/**/src/**/*!(.test).jsx'
+              - 'packages/**/src/**/*.scss'
+              - 'packages/**/src/routes.json'
+              - 'playwright.config.ts'
+              - 'e2e/**/*.ts'
+              - 'e2e/**/*.js'
+              - 'e2e/support/github/**/*.*'
+              - 'example.env'
+              - '.github/workflows/e2e.yml'
+
   main:
+    needs: changes
+    if: ${{ needs.changes.outputs.changes == 'true' }}
+
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
