@@ -59,7 +59,7 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
               ? t('locationPreferenceAdded', 'Selected location will be used for your next logins')
               : t('locationPreferenceUpdated', 'Login location preference updated'),
             description: !isUpdateFlow
-              ? t('selectedLocationPreferenceSetMessage', 'You can change your preference from the user dashboard')
+              ? t('selectedLocationPreferenceSetMessage', 'You can change your preference from the user menu')
               : t('locationPreferenceAdded', 'Selected location will be used for your next logins'),
             kind: 'success',
           });

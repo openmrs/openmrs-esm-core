@@ -19,8 +19,10 @@ import OfflineBanner from '../offline-banner/offline-banner.component';
 import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import styles from './navbar.scss';
+import { useTranslation } from 'react-i18next';
 
 const HeaderItems: React.FC = () => {
+  const { t } = useTranslation();
   const config = useConfig();
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
   const layout = useLayoutType();
@@ -75,14 +77,14 @@ const HeaderItems: React.FC = () => {
           />
           {showUserMenu && (
             <HeaderGlobalAction
-              aria-label="Users"
+              aria-label={t('userMenuTooltip', 'User')}
               aria-labelledby="Users Avatar Icon"
               className={classNames({
                 [styles.headerGlobalBarButton]: isActivePanel('userMenu'),
                 [styles.activePanel]: !isActivePanel('userMenu'),
               })}
               enterDelayMs={500}
-              name="Users"
+              name="User"
               isActive={isActivePanel('userMenu')}
               onClick={(event) => {
                 togglePanel('userMenu');

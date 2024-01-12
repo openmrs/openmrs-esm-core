@@ -27,7 +27,7 @@ export interface OpenmrsReactComponentState {
   config: ComponentConfig;
 }
 
-export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
+export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions) {
   if (
     typeof userOpts !== 'object' ||
     typeof userOpts.featureName !== 'string' ||
@@ -38,11 +38,14 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
 
   const opts = Object.assign({}, defaultOpts, userOpts);
 
-  return function decorateComponent(Comp: ComponentType<any>): ComponentType<any> {
-    return class OpenmrsReactComponent extends React.Component<OpenmrsReactComponentProps, OpenmrsReactComponentState> {
+  return function decorateComponent(Comp: ComponentType<T>): ComponentType<T> {
+    return class OpenmrsReactComponent extends React.Component<
+      OpenmrsReactComponentProps & T,
+      OpenmrsReactComponentState
+    > {
       static displayName = `OpenmrsReactComponent(${opts.featureName})`;
 
-      constructor(props: OpenmrsReactComponentProps) {
+      constructor(props: OpenmrsReactComponentProps & T) {
         super(props);
         this.state = {
           caughtError: null,

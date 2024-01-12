@@ -37,6 +37,6 @@
     "single-spa": "5.x"
   },
   "devDependencies": {
-    "single-spa": "^5.9.2"
+    "single-spa": "^6.0.0"
   }
 }
