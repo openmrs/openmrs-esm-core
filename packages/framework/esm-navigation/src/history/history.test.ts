@@ -72,5 +72,7 @@ describe('history', () => {
     });
     goBackInHistory({ toUrl: 'https://o3.openmrs.org/openmrs/spa/labs' });
     expect(getHistory()).toEqual([mockReferrer, 'https://o3.openmrs.org/openmrs/spa/labs']);
+    goBackInHistory({ toUrl: mockReferrer });
+    expect(getHistory()).toEqual([mockReferrer]);
   });
 });
