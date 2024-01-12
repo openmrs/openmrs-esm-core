@@ -14,4 +14,12 @@ describe('@openmrs/esm-framework/mock', () => {
   xit('should have the same exports as @openmrs/esm-framework', () => {
     expect(new Set(Object.keys(real))).toEqual(new Set(Object.keys(mock)));
   });
+
+  it('should have a working goBackInHistory function', () => {
+    mock.navigate({ to: '/test' });
+    const history = mock.getHistory();
+    mock.goBackInHistory({ toUrl: history[0] });
+    expect(mock.getHistory()).toEqual([history[0]]);
+    expect(mock.navigate).toHaveBeenCalled();
+  });
 });

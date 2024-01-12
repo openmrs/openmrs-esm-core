@@ -166,7 +166,7 @@ export const getFeatureFlag = jest.fn().mockReturnValue(true);
 export const subscribeToFeatureFlag = jest.fn((name: string, callback) => callback(true));
 
 /* esm-navigation */
-export { goBackInHistory, interpolateUrl, interpolateString } from '@openmrs/esm-navigation';
+export { interpolateUrl, interpolateString } from '@openmrs/esm-navigation';
 export let history = ['https://o3.openmrs.org/home'];
 export const navigate = jest.fn(({ to, templateParams }: { to: string; templateParams?: TemplateParams }) => {
   let target = interpolateUrl(to, templateParams);
@@ -186,6 +186,16 @@ export const navigate = jest.fn(({ to, templateParams }: { to: string; templateP
 export const getHistory = jest.fn(() => history);
 export const clearHistory = jest.fn(() => {
   history = [];
+});
+export const goBackInHistory = jest.fn(({ toUrl }) => {
+  const toIndex = history.lastIndexOf(toUrl);
+  if (toIndex != -1) {
+    const newHistory = history.slice(0, toIndex + 1);
+    navigate({ to: history[toIndex] });
+    history = newHistory;
+  } else {
+    throw new Error(`URL ${toUrl} not found in history; cannot go back to it.`);
+  }
 });
 
 /* esm-offline */
