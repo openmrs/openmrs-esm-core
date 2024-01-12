@@ -116,7 +116,7 @@ describe('LocationPicker', () => {
         expect(showToast).toHaveBeenCalledWith({
           kind: 'success',
           title: 'Selected location will be used for your next logins',
-          description: 'You can change your preference from the user dashboard',
+          description: 'You can change your preference from the user menu',
         }),
       );
     });
