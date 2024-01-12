@@ -14,7 +14,7 @@ jobs:
     permissions:
       pull-requests: read
     outputs:
-      changes: ${{ steps.filter.outputs.changes.test-sources }}
+      test-changes: ${{ steps.changes.outputs.test-sources }}
 
     steps: 
       - name: Checkout repo
@@ -41,7 +41,7 @@ jobs:
 
   main:
     needs: changes
-    if: ${{ needs.changes.outputs.changes == ['test-sources'] }}
+    if: ${{ needs.changes.outputs.test-changes == 'true' }}
 
     runs-on: ubuntu-latest
     timeout-minutes: 15
