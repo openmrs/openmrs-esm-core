@@ -41,7 +41,7 @@ jobs:
 
   main:
     needs: changes
-    if: ${{ needs.changes.outputs.changes == 'true' }}
+    if: ${{ needs.changes.outputs.changes == ['test-sources'] }}
 
     runs-on: ubuntu-latest
     timeout-minutes: 15
