@@ -17,9 +17,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Push source file using transifex client
         uses: transifex/cli-action@v2
-        args: pull
         with:
           token: ${{ secrets.TRANSIFEX_TOKEN }}
+          args: pull
       - name: Create PR if necessary
         uses: peter-evans/create-pull-request@v5
         with:
