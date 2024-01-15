@@ -4,7 +4,7 @@ import { createStore, type StoreApi } from 'zustand';
 import { NEVER, of } from 'rxjs';
 import { type SessionStore } from '@openmrs/esm-api';
 import { getDefaultsFromConfigSchema } from '@openmrs/esm-utils';
-import { interpolateUrl, type TemplateParams } from '@openmrs/esm-navigation';
+import * as utils from '@openmrs/esm-utils';
 
 window.i18next = { ...window.i18next, language: 'en' };
 
@@ -167,36 +167,10 @@ export const subscribeToFeatureFlag = jest.fn((name: string, callback) => callba
 
 /* esm-navigation */
 export { interpolateUrl, interpolateString } from '@openmrs/esm-navigation';
-export let history = ['https://o3.openmrs.org/home'];
-export const navigate = jest.fn(({ to, templateParams }: { to: string; templateParams?: TemplateParams }) => {
-  let target = interpolateUrl(to, templateParams);
-  if (target.startsWith('/')) {
-    target = window.location.origin + target;
-  }
-  try {
-    // Don't mess with the real window.location
-    if (!(window.location instanceof Location)) {
-      (window.location as any).href = target;
-    }
-  } catch (e) {
-    // window.location is probably not mocked. Don't worry about it.
-  }
-  history.push(target);
-});
-export const getHistory = jest.fn(() => history);
-export const clearHistory = jest.fn(() => {
-  history = [];
-});
-export const goBackInHistory = jest.fn(({ toUrl }) => {
-  const toIndex = history.lastIndexOf(toUrl);
-  if (toIndex != -1) {
-    const newHistory = history.slice(0, toIndex + 1);
-    navigate({ to: history[toIndex] });
-    history = newHistory;
-  } else {
-    throw new Error(`URL ${toUrl} not found in history; cannot go back to it.`);
-  }
-});
+export const navigate = jest.fn();
+export const getHistory = jest.fn(() => ['https://o3.openmrs.org/home']);
+export const clearHistory = jest.fn();
+export const goBackInHistory = jest.fn();
 
 /* esm-offline */
 export const useConnectivity = jest.fn().mockReturnValue(true);
@@ -231,6 +205,8 @@ export const useSession = jest.fn(() => ({
 }));
 
 export const useLayoutType = jest.fn(() => 'desktop');
+
+export const useAssignedExtensions = jest.fn(() => []);
 
 export const useExtensionSlotMeta = jest.fn(() => ({}));
 
@@ -286,6 +262,8 @@ export function useOpenmrsSWR(key: string | Array<any>) {
 
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
+export const useOnClickOutside = jest.fn();
+
 /* esm-styleguide */
 export const showNotification = jest.fn();
 export const showActionableNotification = jest.fn();
@@ -293,22 +271,19 @@ export const showToast = jest.fn();
 export const showSnackbar = jest.fn();
 export const showModal = jest.fn();
 
-export const LeftNavMenu = jest.fn();
+export const LeftNavMenu = jest.fn(() => <div>Left Nav Menu</div>);
 export const setLeftNav = jest.fn();
 export const unsetLeftNav = jest.fn();
 
-export const OpenmrsDatePicker = jest.fn();
+export const OpenmrsDatePicker = jest.fn(() => <div>OpenMRS DatePicker</div>);
 
 /* esm-utils */
-export {
-  getDefaultsFromConfigSchema,
-  parseDate,
-  formatDate,
-  formatDatetime,
-  formatTime,
-  age,
-} from '@openmrs/esm-utils';
+export { getDefaultsFromConfigSchema, parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
+
+export const age = jest.fn((arg) => utils.age(arg));
 
 export function isVersionSatisfied() {
   return true;
 }
+
+export const translateFrom = jest.fn((m, key, fallback) => fallback ?? key);
