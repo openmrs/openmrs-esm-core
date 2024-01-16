@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { temporaryConfigStore, useStore } from '@openmrs/esm-framework/src/internal';
+import { clearConfigErrors, temporaryConfigStore, useStore } from '@openmrs/esm-framework/src/internal';
 import { Button } from '@carbon/react';
 import AceEditor from 'react-ace';
 import style from './json-editor.scss';
@@ -28,6 +28,7 @@ export default function JsonEditor({ height }: JsonEditorProps) {
     }
     setError('');
     temporaryConfigStore.setState({ config });
+    clearConfigErrors();
   }, [editorValue, temporaryConfigStore]);
 
   useEffect(() => {
