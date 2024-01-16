@@ -56,7 +56,7 @@ describe(`ConfigurableLink`, () => {
     expect(navigate).toHaveBeenCalledWith({ to: path });
   });
 
-  it('executes onBeforeNavigate callback if provided', async () => {
+  it('executes onBeforeNavigate callback on any click that would open the page (including ctrl-click etc)', async () => {
     const onBeforeNavigate = jest.fn();
     render(
       <ConfigurableLink to={path} onBeforeNavigate={onBeforeNavigate}>
@@ -69,5 +69,19 @@ describe(`ConfigurableLink`, () => {
     await user.click(link);
     expect(onBeforeNavigate).toHaveBeenCalled();
     expect(navigate).toHaveBeenCalledWith({ to: path });
+    onBeforeNavigate.mockClear();
+    await user.pointer({ target: link, keys: '[MouseRight]' });
+    expect(onBeforeNavigate).not.toHaveBeenCalled();
+    // Note: This ought to work, but doesn't because of
+    //   https://github.com/testing-library/user-event/issues/1083
+    //   `event.button` is getting set to 0 when it should be 1.
+    // await user.pointer({ target: link, keys: '[MouseMiddle]' });
+    // expect(onBeforeNavigate).toHaveBeenCalled();
+    // onBeforeNavigate.mockClear();
+    await user.pointer({ target: link, keys: '[ControlLeft][MouseLeft][/ControlLeft]' });
+    expect(onBeforeNavigate).toHaveBeenCalled();
+    onBeforeNavigate.mockClear();
+    await user.pointer({ target: link, keys: '[ShiftLeft][MouseLeft][/ShiftLeft]' });
+    expect(onBeforeNavigate).toHaveBeenCalled();
   });
 });
