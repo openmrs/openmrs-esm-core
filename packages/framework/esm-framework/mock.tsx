@@ -3,7 +3,6 @@ import type {} from '@openmrs/esm-globals';
 import { createStore, type StoreApi } from 'zustand';
 import { NEVER, of } from 'rxjs';
 import { type SessionStore } from '@openmrs/esm-api';
-import { getDefaultsFromConfigSchema } from '@openmrs/esm-utils';
 import * as utils from '@openmrs/esm-utils';
 
 window.i18next = { ...window.i18next, language: 'en' };
@@ -118,9 +117,11 @@ export enum Type {
 
 let configSchema = {};
 
-export const getConfig = jest.fn().mockImplementation(() => Promise.resolve(getDefaultsFromConfigSchema(configSchema)));
+export const getConfig = jest
+  .fn()
+  .mockImplementation(() => Promise.resolve(utils.getDefaultsFromConfigSchema(configSchema)));
 
-export const useConfig = jest.fn().mockImplementation(() => getDefaultsFromConfigSchema(configSchema));
+export const useConfig = jest.fn().mockImplementation(() => utils.getDefaultsFromConfigSchema(configSchema));
 
 export function defineConfigSchema(moduleName, schema) {
   configSchema = schema;
@@ -176,7 +177,7 @@ export const goBackInHistory = jest.fn();
 export const useConnectivity = jest.fn().mockReturnValue(true);
 
 /* esm-react-utils */
-export { ConfigurableLink } from '@openmrs/esm-react-utils';
+export { ConfigurableLink, isDesktop, useStore, useStoreWithActions, createUseStore } from '@openmrs/esm-react-utils';
 
 export const ComponentContext = React.createContext(null);
 
@@ -221,8 +222,6 @@ export const useExtensionInternalStore = createGlobalStore('extensionInternal', 
 export const useExtensionStore = getExtensionStore();
 
 export const useFeatureFlag = jest.fn().mockReturnValue(true);
-
-export { isDesktop, useStore, useStoreWithActions, createUseStore } from '@openmrs/esm-react-utils';
 
 export const usePagination = jest.fn().mockImplementation(() => ({
   currentPage: 1,
