@@ -8,7 +8,7 @@ const { peerDependencies } = require('./package.json');
 module.exports = (env) => ({
   entry: [resolve(__dirname, 'src/index.ts')],
   output: {
-    filename: 'openmrs-esm-breadcrumbs.js',
+    filename: 'openmrs-esm-navigation.js',
     path: resolve(__dirname, 'dist'),
     library: { type: 'system' },
   },

@@ -9,6 +9,7 @@ import {
   useConnectivity,
 } from '@openmrs/esm-framework/src/internal';
 import styles from './offline-actions-mode-button.scss';
+import { SwitcherItem } from '@carbon/react';
 
 function doNotCloseMenu(ev: React.SyntheticEvent) {
   ev.stopPropagation();

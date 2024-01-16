@@ -1,5 +1,6 @@
 /** @module @category API */
-import { getLocations, Location } from '@openmrs/esm-api';
+import type { Location } from '@openmrs/esm-api';
+import { getLocations } from '@openmrs/esm-api';
 import { useState, useEffect } from 'react';
 
 export function useLocations(tagUuidOrName: string | null = null) {

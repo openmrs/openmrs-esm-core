@@ -9,18 +9,52 @@ on:
       - main
 
 jobs:
-  main:
+  changes:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    permissions:
+      pull-requests: read
+    outputs:
+      test-changes: ${{ steps.changes.outputs.test-sources }}
+
+    steps: 
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: Check if any source code has changed
+        id: changes
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            test-sources:
+              - 'packages/**/src/**/*!(.test).ts'
+              - 'packages/**/src/**/*!(.test).tsx'
+              - 'packages/**/src/**/*!(.test).js'
+              - 'packages/**/src/**/*!(.test).jsx'
+              - 'packages/**/src/**/*.scss'
+              - 'packages/**/src/routes.json'
+              - 'playwright.config.ts'
+              - 'e2e/**/*.ts'
+              - 'e2e/**/*.js'
+              - 'e2e/support/github/**/*.*'
+              - 'example.env'
+              - '.github/workflows/e2e.yml'
+
+  main:
+    needs: changes
+    if: ${{ needs.changes.outputs.test-changes == 'true' }}
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Copy test environment variables
         run: cp example.env .env
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
@@ -54,7 +88,7 @@ jobs:
         run: docker stop $(docker ps -a -q)
 
       - name: Upload report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report

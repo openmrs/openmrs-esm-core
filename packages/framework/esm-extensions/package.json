@@ -49,7 +49,7 @@
     "@openmrs/esm-config": "workspace:*",
     "@openmrs/esm-feature-flags": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
-    "single-spa": "^5.9.2"
+    "single-spa": "^6.0.0"
   },
   "dependencies": {
     "lodash-es": "^4.17.21"

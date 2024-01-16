@@ -15,6 +15,17 @@ jest.mock('@openmrs/esm-api', () => ({
   getLoggedInUser: jest.fn(async () => ({ uuid: mockUserId })),
 }));
 
+let consoleWarn;
+
+beforeAll(() => {
+  // Hide dexie warnings about missing indexes.
+  consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+});
+
+afterAll(() => {
+  consoleWarn.mockRestore();
+});
+
 afterEach(async () => {
   // We want each test case to start fresh with a clean sync queue.
   await new OfflineDb().dynamicOfflineData.clear();

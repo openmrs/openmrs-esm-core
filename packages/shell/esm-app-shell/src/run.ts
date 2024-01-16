@@ -1,4 +1,5 @@
 import { start, triggerAppChange } from 'single-spa';
+import type { OpenmrsAppRoutes } from '@openmrs/esm-framework/src/internal';
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -33,9 +34,9 @@ import {
   importDynamic,
   canAccessStorage,
   localStorageRoutesPrefix,
-  OpenmrsAppRoutes,
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
+  setupHistory,
 } from '@openmrs/esm-framework/src/internal';
 import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
 import { setupI18n } from './locale';
@@ -404,6 +405,7 @@ export function run(configUrls: Array<string>, offline: boolean) {
   subscribeSnackbarShown(showSnackbar);
   subscribePrecacheStaticDependencies(precacheGlobalStaticDependencies);
   setupApiModule();
+  setupHistory();
   registerCoreExtensions();
 
   return setupApps()

@@ -1,8 +1,8 @@
+import type { SyncItem } from '@openmrs/esm-framework/src/internal';
 import {
   fetchCurrentPatient,
   getFullSynchronizationItems,
   getSynchronizationItems,
-  SyncItem,
 } from '@openmrs/esm-framework/src/internal';
 import uniq from 'lodash-es/uniq';
 import useSWR from 'swr';

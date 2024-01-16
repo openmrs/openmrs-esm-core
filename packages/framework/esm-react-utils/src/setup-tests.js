@@ -1,5 +1,11 @@
-import '@testing-library/jest-dom/extend-expect';
+import { jest } from '@jest/globals'
+import '@testing-library/jest-dom';
 
-window.openmrsBase = '/openmrs';
-window.spaBase = '/spa';
-window.getOpenmrsSpaBase = () => '/openmrs/spa/';
+global.window.openmrsBase = '/openmrs';
+global.window.spaBase = '/spa';
+global.window.getOpenmrsSpaBase = () => '/openmrs/spa/';
+
+jest.mock('@openmrs/esm-navigation', () => ({
+  ...jest.requireActual('@openmrs/esm-navigation'),
+  navigate: jest.fn(),
+}));

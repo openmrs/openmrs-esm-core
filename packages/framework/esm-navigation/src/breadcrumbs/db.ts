@@ -1,7 +1,7 @@
 /** @module @category Breadcrumb */
 import { pathToRegexp } from 'path-to-regexp';
 import { createGlobalStore } from '@openmrs/esm-state';
-import { BreadcrumbSettings, BreadcrumbRegistration } from './types';
+import type { BreadcrumbSettings, BreadcrumbRegistration } from '../types';
 
 const store = createGlobalStore<Array<BreadcrumbRegistration>>('breadcrumbs', []);
 

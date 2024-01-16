@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Subject } from 'rxjs';
-import { Toast, ToastNotificationMeta } from './toast.component';
+import type { Subject } from 'rxjs';
+import type { ToastNotificationMeta } from './toast.component';
+import { Toast } from './toast.component';
 
 interface ActiveToastsProps {
   subject: Subject<ToastNotificationMeta>;
@@ -17,7 +18,12 @@ const ActiveToasts: React.FC<ActiveToastsProps> = ({ subject }) => {
     const subscription = subject.subscribe((toast) =>
       setToasts((toasts) => [
         ...toasts.filter(
-          (t) => t.description !== toast.description || t.kind !== toast.kind || t.title !== toast.title,
+          (t) =>
+            t.description !== toast.description ||
+            t.kind !== toast.kind ||
+            t.title !== toast.title ||
+            t.actionButtonLabel !== toast.actionButtonLabel ||
+            t.onActionButtonClick !== toast.onActionButtonClick,
         ),
         toast,
       ]),

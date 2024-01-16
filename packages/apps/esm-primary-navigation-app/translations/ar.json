@@ -1,4 +1,8 @@
 {
+  "apply": "Apply",
+  "cancel": "Cancel",
+  "change": "تغيير",
+  "changeLanguage": "Change Language",
   "notifications": "الإشعارات",
-  "selectLocale": "اختر اللغة"
+  "userMenuTooltip": "User"
 }

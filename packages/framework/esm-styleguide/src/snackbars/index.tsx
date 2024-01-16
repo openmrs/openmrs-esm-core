@@ -3,7 +3,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Subject } from 'rxjs';
 
-import { SnackbarDescriptor, SnackbarMeta } from './snackbar.component';
+import type { SnackbarDescriptor, SnackbarMeta } from './snackbar.component';
 import ActiveSnackbars from './active-snackbar.component';
 
 const snackbarsSubject = new Subject<SnackbarMeta>();

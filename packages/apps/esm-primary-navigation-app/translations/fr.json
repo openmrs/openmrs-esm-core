@@ -1,4 +1,8 @@
 {
+  "apply": "Appliquer",
+  "cancel": "Annuler",
+  "change": "Changer",
+  "changeLanguage": "Changer de langue",
   "notifications": "Notifications",
-  "selectLocale": "Sélectionner les paramètres régionaux"
+  "userMenuTooltip": "User"
 }

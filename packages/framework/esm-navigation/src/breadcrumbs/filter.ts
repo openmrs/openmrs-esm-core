@@ -1,6 +1,6 @@
 /** @module @category Breadcrumb */
 import { getBreadcrumbs } from './db';
-import { BreadcrumbRegistration } from './types';
+import type { BreadcrumbRegistration } from '../types';
 
 function getExact(breadcrumbs: Array<BreadcrumbRegistration>, path: string): BreadcrumbRegistration {
   const [bc] = breadcrumbs.filter((m) => m.matcher.test(path));

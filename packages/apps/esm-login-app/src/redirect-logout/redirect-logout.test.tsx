@@ -15,17 +15,6 @@ import {
 } from '@openmrs/esm-framework';
 import { mutate } from 'swr';
 
-jest.mock('@openmrs/esm-framework', () => ({
-  navigate: jest.fn(),
-  setUserLanguage: jest.fn(),
-  useConfig: jest.fn(),
-  useConnectivity: jest.fn(),
-  useSession: jest.fn(),
-  clearCurrentUser: jest.fn(),
-  openmrsFetch: jest.fn(),
-  refetchCurrentUser: jest.fn(),
-}));
-
 jest.mock('swr', () => ({
   mutate: jest.fn(),
 }));
@@ -54,18 +43,18 @@ describe('Testing Logout', () => {
   });
   it('should render Logout and redirect to login page', async () => {
     render(<RedirectLogout />);
-    expect(openmrsFetch).toBeCalledWith('/ws/rest/v1/session', {
+    expect(openmrsFetch).toHaveBeenCalledWith('/ws/rest/v1/session', {
       method: 'DELETE',
     });
     await waitFor(() => expect(mutate).toBeCalled());
     expect(clearCurrentUser).toBeCalled();
     expect(refetchCurrentUser).toBeCalled();
-    expect(setUserLanguage).toBeCalledWith({
+    expect(setUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
       authenticated: false,
       sessionId: '',
     });
-    expect(navigate).toBeCalledWith({ to: '${openmrsSpaBase}/login' });
+    expect(navigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
   });
 
   it('should render Logout and redirect to provider.logoutUrl if provider.type === oauth2', async () => {
@@ -76,18 +65,18 @@ describe('Testing Logout', () => {
       },
     });
     render(<RedirectLogout />);
-    expect(openmrsFetch).toBeCalledWith('/ws/rest/v1/session', {
+    expect(openmrsFetch).toHaveBeenCalledWith('/ws/rest/v1/session', {
       method: 'DELETE',
     });
     await waitFor(() => expect(mutate).toBeCalled());
     expect(clearCurrentUser).toBeCalled();
     expect(refetchCurrentUser).toBeCalled();
-    expect(setUserLanguage).toBeCalledWith({
+    expect(setUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
       authenticated: false,
       sessionId: '',
     });
-    expect(navigate).toBeCalledWith({ to: '/oauth/logout' });
+    expect(navigate).toHaveBeenCalledWith({ to: '/oauth/logout' });
   });
 
   it('should redirect to login if the session is already unauthenticated', async () => {
@@ -95,12 +84,12 @@ describe('Testing Logout', () => {
       authenticated: false,
     } as Session);
     render(<RedirectLogout />);
-    expect(navigate).toBeCalledWith({ to: '${openmrsSpaBase}/login' });
+    expect(navigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
   });
 
   it('should redirect to login if the application is Offline', async () => {
     (useConnectivity as jest.Mock).mockReturnValue(false);
     render(<RedirectLogout />);
-    expect(navigate).toBeCalledWith({ to: '${openmrsSpaBase}/login' });
+    expect(navigate).toHaveBeenCalledWith({ to: '${openmrsSpaBase}/login' });
   });
 });

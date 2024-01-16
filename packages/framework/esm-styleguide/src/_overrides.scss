@@ -56,6 +56,26 @@
 /* Content Switcher */
 .cds--content-switcher {
   @include layout.use('size', $default: 'sm');
+
+  & > :first-child {
+    border-bottom-left-radius: 0.25rem;
+    border-right: unset !important;
+    border-top-left-radius: 0.25rem;
+
+    [aria-selected='false'] {
+      border-left: 0.0625rem solid colors.$blue-30 !important;
+    }
+  }
+
+  & > :last-child {
+    border-bottom-right-radius: 0.25rem;
+    border-left: unset !important;
+    border-top-right-radius: 0.25rem;
+
+    [aria-selected='false'] {
+      border-right: 0.0625rem solid colors.$blue-30 !important;
+    }
+  }
 }
 
 .cds--content-switcher-btn {
@@ -68,16 +88,12 @@
     background-color: transparent !important;
   }
 
-  &:first-child {
-    border-bottom-left-radius: 0.25rem;
-    border-left: 0.0625rem solid colors.$blue-30 !important;
-    border-top-left-radius: 0.25rem;
-  }
+  &.cds--btn--primary {
+    background-color: unset;
 
-  &:last-child {
-    border-bottom-right-radius: 0.25rem;
-    border-right: 0.0625rem solid colors.$blue-30 !important;
-    border-top-right-radius: 0.25rem;
+    &:hover {
+      background-color: colors.$gray-10-hover;
+    }
   }
 
   &::before {
@@ -88,8 +104,12 @@
 
   &.cds--content-switcher--selected {
     border: 1px solid colors.$blue-60 !important;
-    background-color: colors.$blue-10;
-    color: colors.$blue-60;
+    background-color: colors.$blue-10 !important;
+    color: colors.$blue-60 !important;
+
+    svg {
+      fill: colors.$blue-60 !important;
+    }
 
     &::after {
       background-color: colors.$blue-10;
@@ -103,6 +123,22 @@
       border: 0 !important;
     }
   }
+}
+
+.cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:first-child .cds--content-switcher-btn {
+  border-left: unset;
+}
+
+.cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:last-child .cds--content-switcher-btn {
+  border-right: unset;
+}
+
+.cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:first-child {
+  border-left: 0.0625rem solid colors.$blue-30;
+}
+
+.cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:last-child {
+  border-right: 0.0625rem solid colors.$blue-30;
 }
 
 /* Tabs */
@@ -306,6 +342,10 @@ html[dir='rtl'] {
     }
   }
 
+  .cds--header__name {
+    padding-inline: 1rem 2rem;
+  }
+
   .cds--header-panel--expanded {
     right: calc(100vw - var(--omrs-sidenav-width));
   }
@@ -320,7 +360,6 @@ html[dir='rtl'] {
   }
 
   .cds--btn--secondary {
-    padding: calc(0.375rem - 3px) 12px calc(0.375rem - 3px) 60px;
     svg {
       left: spacing.$spacing-05;
       right: unset;
@@ -371,20 +410,112 @@ html[dir='rtl'] {
   }
 
   .cds--content-switcher {
-    & > :last-child {
-      border-bottom-left-radius: 0.25rem;
-      border-top-left-radius: 0.25rem;
-      border-bottom-right-radius: unset;
-      border-top-right-radius: unset;
-      border-left: 0.0625rem solid #a6c8ff;
-    }
+    @include layout.use('size', $default: 'sm');
+
     & > :first-child {
-      border-right: 0.0625rem solid #a6c8ff;
-      border-bottom-right-radius: 0.25rem;
-      border-top-right-radius: 0.25rem;
-      border-bottom-left-radius: unset;
-      border-top-left-radius: unset;
+      border-bottom-right-radius: 0.25rem !important;
+      border-left: unset !important;
+      border-right: unset !important;
+      border-top-right-radius: 0.25rem !important;
+
+      [aria-selected='false'] {
+        border-right: 0.0625rem solid colors.$blue-30;
+        border-left: unset !important;
+      }
     }
+
+    & > :last-child {
+      border-bottom-left-radius: 0.25rem !important;
+      border-left: unset;
+      border-right: unset;
+      border-top-left-radius: 0.25rem !important;
+
+      [aria-selected='false'] {
+        border-left: 0.0625rem solid colors.$blue-30;
+        border-right: unset !important;
+      }
+    }
+
+    .cds--btn--icon-only {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .cds--content-switcher-btn {
+    &::after {
+      background-color: transparent !important;
+    }
+
+    &.cds--btn--primary {
+      background-color: unset;
+
+      &:hover {
+        background-color: colors.$gray-10-hover;
+      }
+    }
+
+    &::before {
+      background-color: colors.$blue-30;
+      height: 100%;
+      z-index: 0;
+    }
+
+    &.cds--content-switcher--selected {
+      border: 1px solid colors.$blue-60 !important;
+      background-color: colors.$blue-10 !important;
+      color: colors.$blue-60 !important;
+
+      svg {
+        fill: colors.$blue-60 !important;
+      }
+
+      &::after {
+        background-color: colors.$blue-10;
+      }
+
+      &::before {
+        background-color: transparent;
+      }
+
+      &:disabled {
+        border: 0 !important;
+      }
+    }
+  }
+
+  .cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:first-child .cds--content-switcher-btn {
+    border-bottom-right-radius: 0.25rem !important;
+    border-top-right-radius: 0.25rem !important;
+    border-top-left-radius: unset !important;
+    border-bottom-left-radius: unset !important;
+  }
+
+  .cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:last-child .cds--content-switcher-btn {
+    border-bottom-left-radius: 0.25rem !important;
+    border-top-left-radius: 0.25rem !important;
+    border-top-right-radius: unset !important;
+    border-bottom-right-radius: unset !important;
+  }
+
+  .cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:first-child .cds--content-switcher-btn {
+    border-left: unset;
+  }
+
+  .cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:last-child .cds--content-switcher-btn {
+    border-right: unset;
+  }
+
+  .cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:first-child {
+    border-right: 0.0625rem solid colors.$blue-30;
+    border-bottom-left-radius: unset !important;
+    border-top-left-radius: unset !important;
+  }
+
+  .cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:last-child {
+    border-left: 0.0625rem solid colors.$blue-30;
+    border-bottom-right-radius: unset !important;
+    border-top-right-radius: unset !important;
   }
 
   .cds--date-picker-input__wrapper {
@@ -483,14 +614,40 @@ html[dir='rtl'] {
         }
       }
     }
-    .tab-content {
-      margin-left: unset;
-      margin-right: 10rem;
 
+    .tab-content {
       .pane {
-        padding-left: unset;
-        padding-right: 1rem;
+        padding-inline: 0;
+
+        & > h4 {
+          padding-left: unset;
+          padding-inline-start: 1rem;
+        }
       }
     }
+
+    .cds--accordion__title {
+      text-align: start;
+    }
+
+    .cds--accordion__content {
+      padding-inline: 1rem;
+
+      .cds--text-input,
+      .cds--text-area {
+        box-sizing: border-box;
+      }
+    }
+
+    .question-area {
+      min-width: unset;
+    }
   }
+}
+
+// This is to override the green border and background color which we apply to tertiary buttons. Since this in the Notification carbon uses blue.
+.cds--actionable-notification__action-button.cds--btn--tertiary {
+  background-color: transparent;
+  border: 1px solid #0f62fe;
+  color: #0f62fe;
 }

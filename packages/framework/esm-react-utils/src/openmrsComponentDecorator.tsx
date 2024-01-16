@@ -1,7 +1,8 @@
 import React, { type ComponentType, Suspense } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import type {} from '@openmrs/esm-globals';
-import { ComponentConfig, ComponentContext, ExtensionData } from './ComponentContext';
+import type { ComponentConfig, ExtensionData } from './ComponentContext';
+import { ComponentContext } from './ComponentContext';
 
 const defaultOpts = {
   strictMode: true,
@@ -26,7 +27,7 @@ export interface OpenmrsReactComponentState {
   config: ComponentConfig;
 }
 
-export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
+export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions) {
   if (
     typeof userOpts !== 'object' ||
     typeof userOpts.featureName !== 'string' ||
@@ -37,11 +38,14 @@ export function openmrsComponentDecorator(userOpts: ComponentDecoratorOptions) {
 
   const opts = Object.assign({}, defaultOpts, userOpts);
 
-  return function decorateComponent(Comp: ComponentType<any>): ComponentType<any> {
-    return class OpenmrsReactComponent extends React.Component<OpenmrsReactComponentProps, OpenmrsReactComponentState> {
+  return function decorateComponent(Comp: ComponentType<T>): ComponentType<T> {
+    return class OpenmrsReactComponent extends React.Component<
+      OpenmrsReactComponentProps & T,
+      OpenmrsReactComponentState
+    > {
       static displayName = `OpenmrsReactComponent(${opts.featureName})`;
 
-      constructor(props: OpenmrsReactComponentProps) {
+      constructor(props: OpenmrsReactComponentProps & T) {
         super(props);
         this.state = {
           caughtError: null,

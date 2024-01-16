@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FilterableMultiSelect } from '@carbon/react';
-import { ExtensionInternalStore, getExtensionInternalStore } from '@openmrs/esm-framework/src/internal';
+import type { ExtensionInternalStore } from '@openmrs/esm-framework/src/internal';
+import { getExtensionInternalStore } from '@openmrs/esm-framework/src/internal';
 
 const extensionInternalStore = getExtensionInternalStore();
 

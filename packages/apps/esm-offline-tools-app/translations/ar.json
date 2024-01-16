@@ -68,5 +68,10 @@
   "offlineToolsAppMenuLink": "أدوات العمل بدون اتصال",
   "preparingOfflineMode": "Preparing for offline mode",
   "refresh": "Refresh",
-  "unavailableOfflineFeatures": "Some features may not be available offline."
+  "unavailableOfflineFeatures": "Some features may not be available offline.",
+  "offlineActionsSynchronizationNotificationTitle": "تحميل",
+  "offlineActionsSynchronizationNotificationSynchronized": "انتهت مزامنة الإجراءات غير المتصلة.",
+  "offlineActionsSynchronizationNotificationCanceling": "إلغاء...",
+  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} إجراء",
+  "offlineActionsSynchronizationNotificationCancelUpload": "إلغاء التحميل"
 }

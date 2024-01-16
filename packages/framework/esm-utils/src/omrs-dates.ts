@@ -2,7 +2,7 @@
  * @module
  * @category Date and Time
  */
-import { i18n } from 'i18next';
+import type { i18n } from 'i18next';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';

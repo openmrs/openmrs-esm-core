@@ -1,6 +1,7 @@
 /** @module @category Utility */
 import { useCallback, useMemo } from 'react';
-import useSWR, { SWRConfiguration } from 'swr';
+import type { SWRConfiguration } from 'swr';
+import useSWR from 'swr';
 import { type FetchConfig, openmrsFetch } from '@openmrs/esm-api';
 import useAbortController from './useAbortController';
 

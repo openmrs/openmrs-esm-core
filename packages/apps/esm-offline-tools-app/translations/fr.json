@@ -65,5 +65,10 @@
   "offlineToolsAppMenuLink": "Outils hors ligne",
   "preparingOfflineMode": "Préparation du mode hors ligne",
   "refresh": "rafraîchir",
-  "unavailableOfflineFeatures": "Some features may not be available offline."
+  "unavailableOfflineFeatures": "Some features may not be available offline.",
+  "offlineActionsSynchronizationNotificationTitle": "Téléversement",
+  "offlineActionsSynchronizationNotificationSynchronized": "La synchronisation des actions hors ligne est terminée.",
+  "offlineActionsSynchronizationNotificationCanceling": "Annulation...",
+  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} actions",
+  "offlineActionsSynchronizationNotificationCancelUpload": "Annuler le téléversement"
 }

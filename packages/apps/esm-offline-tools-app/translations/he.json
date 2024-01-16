@@ -66,5 +66,10 @@
   "offlineToolsAppMenuLink": "כלי לא מקוונים",
   "preparingOfflineMode": "Preparing for offline mode",
   "refresh": "Refresh",
-  "unavailableOfflineFeatures": "Some features may not be available offline."
+  "unavailableOfflineFeatures": "Some features may not be available offline.",
+  "offlineActionsSynchronizationNotificationTitle": "העלאה",
+  "offlineActionsSynchronizationNotificationSynchronized": "הסנכרון של הפעולות במצב לא מקוון הושלם.",
+  "offlineActionsSynchronizationNotificationCanceling": "מבטל...",
+  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} פעולות",
+  "offlineActionsSynchronizationNotificationCancelUpload": "בטל העלאה"
 }

@@ -1,10 +1,11 @@
 module.exports = {
-  transform: {
-    '^.+\\.tsx?$': ['@swc/jest'],
-  },
   moduleNameMapper: {},
+  setupFiles: ['<rootDir>/src/setup-tests.js'],
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     url: 'http://localhost/',
+  },
+  transform: {
+    '^.+\\.tsx?$': ['@swc/jest'],
   },
 };

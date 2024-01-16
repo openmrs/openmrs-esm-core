@@ -1,12 +1,11 @@
 /** @module @category Config */
 import { clone, reduce, mergeDeepRight, equals, omit } from 'ramda';
-import { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject, Type } from '../types';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject } from '../types';
+import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
+import type { ConfigExtensionStore, ConfigInternalStore, ConfigStore } from './state';
 import {
-  ConfigExtensionStore,
-  ConfigInternalStore,
   configInternalStore,
-  ConfigStore,
   configExtensionStore,
   getConfigStore,
   getExtensionsConfigStore,
@@ -15,7 +14,7 @@ import {
   getExtensionSlotsConfigStore,
 } from './state';
 import type {} from '@openmrs/esm-globals';
-import { TemporaryConfigStore } from '..';
+import type { TemporaryConfigStore } from '..';
 
 /**
  * Store setup
@@ -199,13 +198,13 @@ export function provide(config: Config, sourceName = 'provided') {
  *
  * @param moduleName The name of the module for which to look up the config
  */
-export function getConfig(moduleName: string): Promise<Config> {
-  return new Promise<Config>((resolve) => {
+export function getConfig<T = Record<string, any>>(moduleName: string): Promise<T> {
+  return new Promise<T>((resolve) => {
     const store = getConfigStore(moduleName);
     function update(state: ConfigStore) {
       if (state.loaded && state.config) {
         const config = omit(['Display conditions', 'Translation overrides'], state.config);
-        resolve(config);
+        resolve(config as T);
         unsubscribe && unsubscribe();
       }
     }

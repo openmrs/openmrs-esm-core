@@ -65,5 +65,10 @@
   "offlineToolsAppMenuLink": "Herramientas offline",
   "preparingOfflineMode": "Preparando modo sin conexión",
   "refresh": "Actualizar",
-  "unavailableOfflineFeatures": "Some features may not be available offline."
+  "unavailableOfflineFeatures": "Some features may not be available offline.",
+  "offlineActionsSynchronizationNotificationTitle": "Subir",
+  "offlineActionsSynchronizationNotificationSynchronized": "La sincronización de acciones sin conexión ha finalizado.",
+  "offlineActionsSynchronizationNotificationCanceling": "Cancelando...",
+  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} acciones",
+  "offlineActionsSynchronizationNotificationCancelUpload": "Cancelar subida"
 }

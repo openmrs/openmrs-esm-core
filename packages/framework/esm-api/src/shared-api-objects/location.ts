@@ -1,8 +1,8 @@
 /** @module @category API */
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { openmrsObservableFetch } from '../openmrs-fetch';
-import { Location } from '../types';
+import type { Location } from '../types';
 
 export function toLocationObject(openmrsRestForm: any): Location {
   return {

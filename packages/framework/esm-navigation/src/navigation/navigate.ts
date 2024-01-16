@@ -25,7 +25,8 @@ export interface NavigateOptions {
  *   navigate({ to: config.links.submitSuccess });
  * };
  * ```
- * #### Example return values:
+ *
+ * #### Example behavior::
  * ```js
  * @example
  * navigate({ to: "/some/path" }); // => window.location.assign("/some/path")
@@ -34,6 +35,8 @@ export interface NavigateOptions {
  * navigate({ to: "/openmrs/spa/foo/page" }); // => navigateToUrl("/openmrs/spa/foo/page")
  * navigate({ to: "${openmrsSpaBase}/bar/page" }); // => navigateToUrl("/openmrs/spa/bar/page")
  * navigate({ to: "/${openmrsSpaBase}/baz/page" }) // => navigateToUrl("/openmrs/spa/baz/page")
+ * navigate({ to: "https://o3.openmrs.org/${openmrsSpaBase}/qux/page" }); // => navigateToUrl("/openmrs/spa/qux/page")
+ *   if `window.location.origin` == "https://o3.openmrs.org", else will use window.location.assign
  * ```
  *
  * @param to The target path or URL. Supports templating with 'openmrsBase', 'openmrsSpaBase',
@@ -45,7 +48,7 @@ export interface NavigateOptions {
  */
 export function navigate({ to, templateParams }: NavigateOptions): void {
   const openmrsSpaBase = trimTrailingSlash(window.getOpenmrsSpaBase());
-  const target = interpolateUrl(to, templateParams);
+  const target = interpolateUrl(to, templateParams).replace(window.location.origin, '');
   const isSpaPath = target.startsWith(openmrsSpaBase);
 
   if (isSpaPath) {

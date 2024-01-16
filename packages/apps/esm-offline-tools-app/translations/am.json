@@ -64,5 +64,10 @@
   "offlineToolsAppMenuLink": "Offline tools",
   "preparingOfflineMode": "Preparing for offline mode",
   "refresh": "Refresh",
-  "unavailableOfflineFeatures": "Some features may not be available offline."
+  "unavailableOfflineFeatures": "Some features may not be available offline.",
+  "offlineActionsSynchronizationNotificationTitle": "Upload",
+  "offlineActionsSynchronizationNotificationSynchronized": "The offline action synchronization has finished.",
+  "offlineActionsSynchronizationNotificationCanceling": "Canceling...",
+  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} actions",
+  "offlineActionsSynchronizationNotificationCancelUpload": "Cancel upload"
 }

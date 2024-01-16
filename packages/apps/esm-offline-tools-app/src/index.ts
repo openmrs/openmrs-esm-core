@@ -15,7 +15,7 @@ import offlineToolsActionsComponent from './offline-actions/offline-actions.comp
 import offlineToolsPatientsComponent from './offline-patients/offline-patients.component';
 import offlineToolsPageActionsComponent from './offline-actions/offline-actions-page.component';
 import offlineToolsPatientChartComponent from './offline-actions/offline-actions-patient-chart-widget.component';
-import offlineToolsOptInButtonComponent from './offline-actions/offline-actions-mode-button.component';
+import offlineToolsOptInButtonComponent from './offline-actions/offline-actions-mode-button.extension';
 import OfflineToolsNavLink from './nav/offline-tools-nav-link.component';
 
 export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
@@ -47,7 +47,7 @@ export const offlineToolsPatientsLink = getSyncLifecycle(
   () =>
     OfflineToolsNavLink({
       page: 'patients',
-      title: 'patients',
+      title: 'offlinePatients',
     }),
   options,
 );
@@ -56,7 +56,7 @@ export const offlineToolsActionsLink = getSyncLifecycle(
   () =>
     OfflineToolsNavLink({
       page: 'actions',
-      title: 'actions',
+      title: 'offlineActions',
     }),
   options,
 );

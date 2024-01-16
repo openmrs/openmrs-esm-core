@@ -1,7 +1,8 @@
 /** @module @category API */
 import { getSynchronizationItems } from '@openmrs/esm-offline';
-import { FetchConfig, fhirBaseUrl, openmrsFetch } from '../openmrs-fetch';
-import { FetchResponse } from '../types';
+import type { FetchConfig } from '../openmrs-fetch';
+import { fhirBaseUrl, openmrsFetch } from '../openmrs-fetch';
+import type { FetchResponse } from '../types';
 
 export type CurrentPatient = fhir.Patient | FetchResponse<fhir.Patient>;
 export interface CurrentPatientOptions {

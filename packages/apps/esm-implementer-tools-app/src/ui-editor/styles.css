@@ -13,11 +13,12 @@
   background-color: rgb(255, 255, 255, 0.85);
   border: 1px solid rgba(43, 43, 185, 0.4);
   color: #393939;
+  cursor: pointer;
   position: absolute;
   bottom: 0;
   right: 0;
   padding: 0.5em 0.5em 0.5em 0.5em;
-  pointer-events: none;
+  z-index: 99999;
 }
 
 .extensionOverlay {

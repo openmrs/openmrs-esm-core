@@ -1,7 +1,6 @@
 /** @module @category Extension */
-import { useEffect, useState } from 'react';
-import { AssignedExtension, ExtensionStore, getExtensionStore } from '@openmrs/esm-extensions';
-import isEqual from 'lodash-es/isEqual';
+import { useMemo } from 'react';
+import { useExtensionStore } from './useExtensionStore';
 
 /**
  * Gets the assigned extensions for a given extension slot name.
@@ -9,18 +8,11 @@ import isEqual from 'lodash-es/isEqual';
  * @param slotName The name of the slot to get the assigned extensions for.
  */
 export function useAssignedExtensions(slotName: string) {
-  const [extensions, setExtensions] = useState<Array<AssignedExtension>>([]);
+  const { slots } = useExtensionStore();
 
-  useEffect(() => {
-    function update(state: ExtensionStore) {
-      const newExtensions = state.slots[slotName]?.assignedExtensions ?? [];
-      if (!isEqual(newExtensions, extensions)) {
-        setExtensions(newExtensions);
-      }
-    }
-    update(getExtensionStore().getState());
-    return getExtensionStore().subscribe(update);
-  }, [slotName, extensions]);
+  const extensions = useMemo(() => {
+    return slots[slotName]?.assignedExtensions ?? [];
+  }, [slots, slotName]);
 
   return extensions;
 }
