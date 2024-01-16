@@ -131,6 +131,8 @@ export function defineExtensionConfigSchema(extensionName, schema) {
   configSchema = schema;
 }
 
+export const clearConfigErrors = jest.fn();
+
 /* esm-dynamic-loading */
 export const importDynamic = jest.fn();
 
