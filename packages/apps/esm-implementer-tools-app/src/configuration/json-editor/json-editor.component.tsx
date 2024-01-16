@@ -27,8 +27,8 @@ export default function JsonEditor({ height }: JsonEditorProps) {
       return;
     }
     setError('');
-    temporaryConfigStore.setState({ config });
     clearConfigErrors();
+    temporaryConfigStore.setState({ config });
   }, [editorValue, temporaryConfigStore]);
 
   useEffect(() => {

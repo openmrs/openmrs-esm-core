@@ -154,8 +154,8 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   iconDescription="Clear local config"
                   renderIcon={(props) => <TrashCan size={16} {...props} />}
                   onClick={() => {
-                    temporaryConfigStore.setState({ config: {} });
                     clearConfigErrors();
+                    temporaryConfigStore.setState({ config: {} });
                   }}
                 >
                   {t('clearConfig', 'Clear Local Config')}

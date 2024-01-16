@@ -91,8 +91,8 @@ export default function EditableValue({ path, element, customType }: EditableVal
                 try {
                   const result = JSON.parse(val);
                   const tempConfigUpdate = set(cloneDeep(temporaryConfigStore.getState()), ['config', ...path], result);
-                  temporaryConfigStore.setState(tempConfigUpdate);
                   clearConfigErrors(path.join('.'));
+                  temporaryConfigStore.setState(tempConfigUpdate);
                   setValueString(val);
                   closeEditor();
                 } catch (e) {
@@ -122,8 +122,8 @@ export default function EditableValue({ path, element, customType }: EditableVal
                 iconDescription={t('resetToDefaultValueButtonText', 'Reset to default')}
                 hasIconOnly
                 onClick={() => {
-                  temporaryConfigStore.setState(unset(temporaryConfigStore.getState(), ['config', ...path]) as any);
                   clearConfigErrors(path.join('.'));
+                  temporaryConfigStore.setState(unset(temporaryConfigStore.getState(), ['config', ...path]) as any);
                 }}
               />
             ) : null}
