@@ -699,7 +699,6 @@ function isOrdinaryObject(value) {
 
 /** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
 const displayedValidationMessages = new Set<string>();
-(window as any).displayedValidationMessages = displayedValidationMessages;
 
 function logError(keyPath: string, message: string) {
   const key = `${keyPath}:::${message}`;
@@ -712,6 +711,8 @@ function logError(keyPath: string, message: string) {
 /**
  * Normally, configuration errors are only displayed once. This function clears the list of
  * displayed errors, so that they will be displayed again.
+ *
+ * @internal
  */
 export function clearConfigErrors(keyPath?: string) {
   if (keyPath) {
