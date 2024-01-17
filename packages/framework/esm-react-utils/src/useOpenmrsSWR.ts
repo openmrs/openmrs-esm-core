@@ -67,7 +67,7 @@ function getUrl(key: Key, url?: string | ((key: Key) => string)): string {
  * @param options An object of optional parameters to provide, including a {@link FetchConfig} object
  *   to pass to {@link openmrsFetch} or options to pass to SWR
  */
-export function useOpenmrsSWR<T>(key: Key, options: UseOpenmrsSWROptions = {}) {
+export function useOpenmrsSWR<DataType = any, ErrorType = any>(key: Key, options: UseOpenmrsSWROptions = {}) {
   const { abortController, fetchInit, url, swrConfig } = options;
   const ac = useAbortController();
   const abortSignal = useMemo<AbortSignal>(
@@ -83,5 +83,5 @@ export function useOpenmrsSWR<T>(key: Key, options: UseOpenmrsSWROptions = {}) {
     [abortSignal, fetchInit, url],
   );
 
-  return useSWR<FetchResponse<T>>(key, fetcher, swrConfig);
+  return useSWR<FetchResponse<DataType>, ErrorType>(key, fetcher, swrConfig);
 }
