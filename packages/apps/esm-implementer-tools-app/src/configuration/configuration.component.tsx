@@ -6,6 +6,7 @@ import cloneDeep from 'lodash-es/cloneDeep';
 import isEmpty from 'lodash-es/isEmpty';
 import type { Config } from '@openmrs/esm-framework/src/internal';
 import {
+  clearConfigErrors,
   getExtensionInternalStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
@@ -153,6 +154,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   iconDescription="Clear local config"
                   renderIcon={(props) => <TrashCan size={16} {...props} />}
                   onClick={() => {
+                    clearConfigErrors();
                     temporaryConfigStore.setState({ config: {} });
                   }}
                 >

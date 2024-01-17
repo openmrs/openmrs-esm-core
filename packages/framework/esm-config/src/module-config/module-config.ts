@@ -172,7 +172,7 @@ export function defineExtensionConfigSchema(extensionName: string, schema: Confi
 
   const state = configInternalStore.getState();
   if (state.schemas[extensionName]) {
-    console.warn(
+    console.error(
       `Config schema for extension ${extensionName} already exists. If there are multiple extensions with this same name, one will probably crash.`,
     );
   }
@@ -359,29 +359,30 @@ function validateAllExtensionSlotConfigs(slotConfigPerModule: Record<string, Rec
 }
 
 function validateExtensionSlotConfig(config: ExtensionSlotConfig, moduleName: string, slotName: string): void {
-  const errorPrefix = `Extension slot config '${moduleName}.extensionSlots.${slotName}`;
+  const keyPath = `${moduleName}.extensionSlots.${slotName}`;
+  const errorPrefix = `Extension slot config '${keyPath}'`;
   const invalidKeys = Object.keys(config).filter((k) => !['add', 'remove', 'order', 'configure'].includes(k));
   if (invalidKeys.length) {
-    console.error(errorPrefix + `' contains invalid keys '${invalidKeys.join("', '")}'`);
+    logError(keyPath, errorPrefix + `' contains invalid keys '${invalidKeys.join("', '")}'`);
   }
   if (config.add) {
     if (!Array.isArray(config.add) || !config.add.every((n) => typeof n === 'string')) {
-      console.error(errorPrefix + `.add' is invalid. Must be an array of strings (extension IDs)`);
+      logError(keyPath, errorPrefix + `.add' is invalid. Must be an array of strings (extension IDs)`);
     }
   }
   if (config.remove) {
     if (!Array.isArray(config.remove) || !config.remove.every((n) => typeof n === 'string')) {
-      console.error(errorPrefix + `.remove' is invalid. Must be an array of strings (extension IDs)`);
+      logError(keyPath, errorPrefix + `.remove' is invalid. Must be an array of strings (extension IDs)`);
     }
   }
   if (config.order) {
     if (!Array.isArray(config.order) || !config.order.every((n) => typeof n === 'string')) {
-      console.error(errorPrefix + `.order' is invalid. Must be an array of strings (extension IDs)`);
+      logError(keyPath, errorPrefix + `.order' is invalid. Must be an array of strings (extension IDs)`);
     }
   }
   if (config.configure) {
     if (!isOrdinaryObject(config.configure)) {
-      console.error(errorPrefix + `.configure' is invalid. Must be an object with extension IDs for keys`);
+      logError(keyPath, errorPrefix + `.configure' is invalid. Must be an object with extension IDs for keys`);
     }
   }
 }
@@ -390,6 +391,11 @@ function getProvidedConfigs(configState: ConfigInternalStore, tempConfigState: T
   return [...configState.providedConfigs.map((c) => c.config), tempConfigState.config];
 }
 
+/**
+ * Validates the config schema for a module. Since problems identified here are programming errors
+ * that hopefully will be caught during development, this function logs errors to the console directly;
+ * it's fine if we spam the user with these errors.
+ */
 function validateConfigSchema(moduleName: string, schema: ConfigSchema, keyPath = '') {
   const updateMessage = `Please verify that you are running the latest version and, if so, alert the maintainer.`;
 
@@ -510,7 +516,7 @@ function validateStructure(schema: ConfigSchema, config: ConfigObject, keyPath =
 
     if (!schema.hasOwnProperty(key)) {
       if (!(key === 'extensionSlots' && keyPath !== '')) {
-        console.error(`Unknown config key '${thisKeyPath}' provided. Ignoring.`);
+        logError(thisKeyPath, `Unknown config key '${thisKeyPath}' provided. Ignoring.`);
       }
 
       continue;
@@ -616,11 +622,11 @@ function runValidators(keyPath: string, validators: Array<Function> | undefined,
         const validatorResult = validator(value);
 
         if (typeof validatorResult === 'string') {
-          if (typeof value === 'object') {
-            console.error(`Invalid configuration for ${keyPath}: ${validatorResult}`);
-          } else {
-            console.error(`Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`);
-          }
+          const message =
+            typeof value === 'object'
+              ? `Invalid configuration for ${keyPath}: ${validatorResult}`
+              : `Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`;
+          logError(keyPath, message);
         }
       }
     } catch (e) {
@@ -689,6 +695,35 @@ function hasObjectSchema(elementsSchema: Object | undefined): elementsSchema is 
 
 function isOrdinaryObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
+}
+
+/** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
+const displayedValidationMessages = new Set<string>();
+
+function logError(keyPath: string, message: string) {
+  const key = `${keyPath}:::${message}`;
+  if (!displayedValidationMessages.has(key)) {
+    console.error(message);
+    displayedValidationMessages.add(key);
+  }
+}
+
+/**
+ * Normally, configuration errors are only displayed once. This function clears the list of
+ * displayed errors, so that they will be displayed again.
+ *
+ * @internal
+ */
+export function clearConfigErrors(keyPath?: string) {
+  if (keyPath) {
+    displayedValidationMessages.forEach((key) => {
+      if (key.startsWith(keyPath)) {
+        displayedValidationMessages.delete(key);
+      }
+    });
+  } else {
+    displayedValidationMessages.clear();
+  }
 }
 
 /**
