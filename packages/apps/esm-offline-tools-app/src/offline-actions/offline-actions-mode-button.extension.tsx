@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Toggle, Button, DefinitionTooltip } from '@carbon/react';
+import { Button } from '@carbon/react';
 import { Network_3 } from '@carbon/react/icons';
 import {
   getCurrentOfflineMode,
@@ -18,7 +18,6 @@ function doNotCloseMenu(ev: React.SyntheticEvent) {
 const OfflineActionsModeButton: React.FC = () => {
   const { t } = useTranslation();
   const isOnline = useConnectivity();
-  const [lastRun, setLastRun] = useState<string>(() => getCurrentOfflineMode().lastRun);
   const [active, setActive] = useState(() => getCurrentOfflineMode().active);
 
   const toggle = useCallback(() => {
@@ -37,26 +36,21 @@ const OfflineActionsModeButton: React.FC = () => {
 
   return (
     isOnline && (
-      <div className={styles.offlineModeButtonContainer}>
+      <SwitcherItem aria-label="Offline Ready" className={styles.panelItemContainer}>
         <div>
           <Network_3 size={20} />
-          <span onClick={doNotCloseMenu} role="none">
-            {t('offlineReady', 'Offline Ready')}
-          </span>
+          <p>{t('offlineReady', 'Offline Ready')}</p>
         </div>
-        <DefinitionTooltip
-          openOnHover
-          align="top"
-          definition={`${t('lastRun', 'Last Run')}: ${active ? lastRun : t('never', 'Never')}`}
-        >
-          {active && (
-            <Button kind="ghost" onClick={handleRefresh}>
-              {t('refresh', 'Refresh')}
-            </Button>
-          )}
-        </DefinitionTooltip>
-        {!active && <Toggle className={styles.toggle} id="offlineModeSwitch" toggled={active} onToggle={toggle} />}
-      </div>
+        {active ? (
+          <Button kind="ghost" onClick={handleRefresh}>
+            {t('refresh', 'Refresh')}
+          </Button>
+        ) : (
+          <Button kind="ghost" id="offlineModeSwitch" onClick={toggle}>
+            {t('turnOn', 'Turn On')}
+          </Button>
+        )}
+      </SwitcherItem>
     )
   );
 };

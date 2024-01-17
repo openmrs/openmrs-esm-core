@@ -3,48 +3,8 @@
 
 .panelItemContainer a {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-
-  :global(.cds--toggle-input__label .cds--toggle__switch) {
-    margin-top: 0 !important;
-  }
-
-  :global(.cds--toggle) {
-    /* setting the width prevents the toggle from changing size when the text changes */
-    width: 76px;
-    margin: 0 1rem;
-  }
-
-  :global(.cds--toggle__text) {
-    color: $ui-02;
-  }
-
-  :global(.cds--definition-term) {
-    color: $ui-02;
-  }
-
-  svg {
-    margin: 0rem 0.75rem;
-    fill: $field-01;
-  }
-
-  & > div {
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
-    align-items: center;
-  }
-
-  button,
-  button:hover {
-    color: $inverse-link;
-  }
-
-  button :hover {
-    @include brand-03(background-color);
-    color: $inverse-link;
-  }
+  justify-content: space-between;
 }
 
 .panelItemContainer div {

@@ -1,4 +1,9 @@
-import { defineConfigSchema, getSyncLifecycle, registerBreadcrumbs, registerOfflineHandler } from '@openmrs/esm-framework';
+import {
+  defineConfigSchema,
+  getSyncLifecycle,
+  registerBreadcrumbs,
+  registerOfflineHandler,
+} from '@openmrs/esm-framework';
 import { routes } from './constants';
 import { createDashboardLink } from './createDashboardLink';
 import { dashboardMeta } from './dashboard.meta';
