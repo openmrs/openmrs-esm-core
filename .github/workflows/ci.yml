@@ -152,6 +152,7 @@ jobs:
     steps:
       - name: Trigger RefApp Build
         uses: fjogeleit/http-request-action@master
+        continue-on-error: true
         with:
           url: https://ci.openmrs.org/rest/api/latest/queue/REFAPP-D3X
           method: "POST"
