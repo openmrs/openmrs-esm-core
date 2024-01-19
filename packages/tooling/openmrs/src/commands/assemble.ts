@@ -1,12 +1,13 @@
-import { copyFile, mkdir, readFile, unlink, writeFile } from 'fs/promises';
+import { mkdir, readFile, writeFile } from 'fs/promises';
+import { existsSync } from 'fs';
 import { resolve, dirname, basename } from 'path';
+import { Readable } from 'stream';
 import { prompt, type Question } from 'inquirer';
 import rimraf from 'rimraf';
 import axios from 'axios';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
 import { contentHash, logInfo, logWarn, untar } from '../utils';
-import { createReadStream, existsSync, readFileSync } from 'fs';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 
 /* eslint-disable no-console */
@@ -14,7 +15,7 @@ import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 export interface AssembleArgs {
   target: string;
   mode: string;
-  config: string;
+  config: Array<string>;
   registry?: string;
   hashImportmap: boolean;
   fresh: boolean;
@@ -32,29 +33,72 @@ interface NpmSearchResult {
 }
 
 interface AssembleConfig {
-  baseDir: string;
   publicUrl: string;
   frontendModules: Record<string, string>;
+  frontendModuleExcludes?: Array<string>;
 }
 
 async function readConfig(
   mode: string,
-  config: string,
+  configs: Array<string>,
   fetchOptions: npmRegistryFetch.Options,
 ): Promise<AssembleConfig> {
   switch (mode) {
-    case 'config':
-      if (!existsSync(config)) {
-        throw new Error(`Could not find the config file "${config}".`);
+    // curly-braces are here to add a lexical scope which allows us to safely
+    // declare variables
+    case 'config': {
+      if (configs.length === 0) {
+        configs = [resolve(process.cwd(), 'spa-build-config.json')];
       }
 
-      logInfo(`Reading configuration ...`);
-
-      return {
-        baseDir: dirname(config),
-        ...JSON.parse(await readFile(config, 'utf8')),
+      const results: {
+        configs: Array<AssembleConfig>;
+        errors: Array<Error>;
+      } = {
+        configs: [],
+        errors: [],
       };
 
+      for (const config of configs) {
+        if (!existsSync(config)) {
+          results.errors.push(new Error(`Could not find the config file "${config}".`));
+          continue;
+        }
+
+        logInfo(`Reading configuration ${config} ...`);
+
+        results.configs.push({
+          ...JSON.parse(await readFile(config, 'utf8')),
+        });
+      }
+
+      if (results.errors.length > 0) {
+        throw new Error(
+          results.errors.reduce((str, e, idx) => {
+            if (idx > 0) {
+              str += '\n\n';
+            }
+
+            return str + e.message;
+          }, ''),
+        );
+      }
+
+      return results.configs.reduce((config, newConfig) => {
+        if (newConfig.frontendModules) {
+          config.frontendModules = { ...config.frontendModules, ...newConfig.frontendModules };
+        }
+
+        // excludes are processed for each config in turn; this ensure that modules removed in one config can
+        // be added back by providing another config override
+        if (Array.isArray(newConfig.frontendModuleExcludes)) {
+          newConfig.frontendModuleExcludes.forEach((exclude) => {
+            typeof exclude === 'string' && config.frontendModules[exclude] && delete config.frontendModules[exclude];
+          });
+        }
+        return config;
+      });
+    }
     case 'survey': {
       logInfo(`Loading available frontend modules ...`);
 
@@ -95,7 +139,6 @@ async function readConfig(
       const answers = await prompt(questions);
 
       return {
-        baseDir: process.cwd(),
         publicUrl: '.',
         frontendModules: Object.keys(answers)
           .filter((m) => answers[m])
@@ -108,7 +151,6 @@ async function readConfig(
   }
 
   return {
-    baseDir: process.cwd(),
     frontendModules: {},
     publicUrl: '.',
   };
@@ -120,23 +162,17 @@ async function downloadPackage(
   esmVersion: string,
   baseDir: string,
   fetchOptions: npmRegistryFetch.Options,
-) {
+): Promise<Buffer> {
   if (!existsSync(cacheDir)) {
     await mkdir(cacheDir, { recursive: true });
   }
 
   if (esmVersion.startsWith('file:')) {
     const source = resolve(baseDir, esmVersion.substring(5));
-    const file = basename(source);
-    const target = resolve(cacheDir, file);
-    await copyFile(source, target);
-    return file;
+    return readFile(source);
   } else if (/^https?:\/\//.test(esmVersion)) {
     const response = await axios.get<Buffer>(esmVersion);
-    const content = response.data;
-    const file = esmName.replace('@', '').replace(/\//g, '-') + '.tgz';
-    await writeFile(resolve(cacheDir, file), content);
-    return file;
+    return response.data;
   } else {
     const packageName = `${esmName}@${esmVersion}`;
     const tarManifest = await pacote.manifest(packageName, fetchOptions);
@@ -145,23 +181,17 @@ async function downloadPackage(
       throw new Error(`Failed to load manifest for ${packageName} from registry ${fetchOptions.registry}`);
     }
 
-    const tarball = await pacote.tarball(tarManifest._resolved, {
+    return pacote.tarball(tarManifest._resolved, {
       ...fetchOptions,
       integrity: tarManifest._integrity,
     });
-
-    const filename = `${tarManifest.name}-${tarManifest.version}.tgz`.replace(/^@/, '').replace(/\//, '-');
-
-    await writeFile(resolve(cacheDir, filename), tarball);
-
-    return filename;
   }
 }
 
-async function extractFiles(sourceFile: string, targetDir: string) {
+async function extractFiles(buffer: Buffer, targetDir: string) {
   await mkdir(targetDir, { recursive: true });
   const packageRoot = 'package';
-  const rs = createReadStream(sourceFile);
+  const rs = Readable.from(buffer);
   const files = await untar(rs);
   const packageJson = JSON.parse(files[`${packageRoot}/package.json`].toString('utf8'));
   const version = packageJson.version ?? '0.0.0';
@@ -181,7 +211,6 @@ async function extractFiles(sourceFile: string, targetDir: string) {
       }),
   );
 
-  await unlink(sourceFile);
   return [fileName, version];
 }
 
@@ -199,7 +228,7 @@ export async function runAssemble(args: AssembleArgs) {
 
   const routes = {};
 
-  logInfo(`Assembling the importmap ...`);
+  logInfo(`Assembling dependencies and building import map and routes registry...`);
 
   const { frontendModules = {}, publicUrl = '.' } = config;
   const cacheDir = resolve(process.cwd(), '.cache');
@@ -213,15 +242,15 @@ export async function runAssemble(args: AssembleArgs) {
   await Promise.all(
     Object.keys(frontendModules).map(async (esmName) => {
       const esmVersion = frontendModules[esmName];
-      const tgzFileName = await downloadPackage(cacheDir, esmName, esmVersion, config.baseDir, npmConf);
+      const tgzBuffer = await downloadPackage(cacheDir, esmName, esmVersion, process.cwd(), npmConf);
 
-      const dirName = tgzFileName.replace('.tgz', '');
-      const [fileName, version] = await extractFiles(resolve(cacheDir, tgzFileName), resolve(args.target, dirName));
+      const dirName = `${esmName}-${esmVersion}`.replace(/^@/, '').replace(/\//, '-');
+      const [fileName, version] = await extractFiles(tgzBuffer, resolve(args.target, dirName));
 
       const appRoutes = resolve(args.target, dirName, 'routes.json');
       if (existsSync(appRoutes)) {
         try {
-          routes[esmName] = JSON.parse(readFileSync(appRoutes).toString());
+          routes[esmName] = JSON.parse((await readFile(appRoutes)).toString());
           routes[esmName]['version'] = version;
         } catch (e) {
           logWarn(`Error while processing routes for ${esmName} using ${appRoutes}: ${e}`);
@@ -256,6 +285,8 @@ export async function runAssemble(args: AssembleArgs) {
   }
 
   if (args.manifest) {
-    await writeFile(resolve(args.target, 'spa-module-versions.json'), JSON.stringify(versionManifest), 'utf8');
+    await writeFile(resolve(args.target, 'spa-assemble-config.json'), JSON.stringify(versionManifest), 'utf8');
   }
+
+  logInfo(`Finished assembling frontend distribution`);
 }

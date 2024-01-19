@@ -258,10 +258,10 @@ yargs.command(
         coerce: (arg) => trimEnd(arg, '/'),
       })
       .option('config', {
-        default: 'spa-build-config.json',
+        default: ['spa-build-config.json'],
         description: 'Path to a SPA build config JSON.',
-        type: 'string',
-        coerce: (arg) => resolve(process.cwd(), arg),
+        type: 'array',
+        coerce: (arg: Array<string>) => arg.map((p) => resolve(process.cwd(), p)),
       })
       .option('hash-importmap', {
         default: false,
