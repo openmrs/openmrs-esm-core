@@ -13,12 +13,18 @@ export interface ConfigInternalStore {
   providedConfigs: Array<ProvidedConfig>;
   /** An object with module names for keys and schemas for values */
   schemas: Record<string, ConfigSchema>;
-  /** Whether to use dev defaults or not */
+  /**
+   * Before modules are loaded, they get implicit schemas added to `schemas`. Therefore
+   * we need to track separately whether they have actually been loaded (that is,
+   * whether the schema has actually been defined).
+   */
+  moduleLoaded: Record<string, boolean>;
 }
 
 const configInternalStoreInitialValue = {
   providedConfigs: [],
   schemas: {},
+  moduleLoaded: {},
 };
 
 /**
@@ -92,12 +98,14 @@ export const configExtensionStore = createGlobalStore<ConfigExtensionStore>('con
 export interface ConfigStore {
   config: ConfigObject | null;
   loaded: boolean;
+  translationOverridesLoaded: boolean;
 }
 
 function initializeConfigStore() {
   return {
     config: null,
     loaded: false,
+    translationOverridesLoaded: false,
   };
 }
 

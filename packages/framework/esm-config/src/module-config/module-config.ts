@@ -3,6 +3,7 @@ import { clone, reduce, mergeDeepRight, equals, omit } from 'ramda';
 import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject } from '../types';
 import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
+import { validator } from '../validators/validator';
 import type { ConfigExtensionStore, ConfigInternalStore, ConfigStore } from './state';
 import {
   configInternalStore,
@@ -14,7 +15,7 @@ import {
   getExtensionSlotsConfigStore,
 } from './state';
 import type {} from '@openmrs/esm-globals';
-import type { TemporaryConfigStore } from '..';
+import { type TemporaryConfigStore } from '..';
 
 /**
  * Store setup
@@ -75,9 +76,28 @@ temporaryConfigStore.subscribe((tempConfigState) => {
 
 function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryConfigStore) {
   for (let moduleName of Object.keys(state.schemas)) {
-    const config = getConfigForModule(moduleName, state, tempState);
+    // At this point the schema could be either just the implicit schema or the actually
+    // defined schema. We run with just the implicit schema because we want to populate
+    // the config store with the translation overrides as soon as possible. In fact, the
+    // translation system will throw for Suspense until the translation overrides are
+    // available, which as of this writing blocks the schema definition from occurring
+    // for modules loaded based on their extensions.
     const moduleStore = getConfigStore(moduleName);
-    moduleStore.setState({ loaded: true, config });
+    if (state.moduleLoaded[moduleName]) {
+      const config = getConfigForModule(moduleName, state, tempState);
+      moduleStore.setState({
+        translationOverridesLoaded: true,
+        loaded: true,
+        config,
+      });
+    } else {
+      const config = getConfigForModuleImplicitSchema(moduleName, state, tempState);
+      moduleStore.setState({
+        translationOverridesLoaded: true,
+        loaded: false,
+        config,
+      });
+    }
   }
 }
 
@@ -105,6 +125,8 @@ function computeExtensionConfigs(
   tempConfigState: TemporaryConfigStore,
 ) {
   const configs = {};
+  // We assume that the module schema has already been defined, since the extension
+  // it contains is mounted.
   for (let extension of extensionState.mountedExtensions) {
     const config = computeExtensionConfig(
       extension.slotModuleName,
@@ -146,6 +168,24 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   const state = configInternalStore.getState();
   configInternalStore.setState({
     schemas: { ...state.schemas, [moduleName]: enhancedSchema },
+    moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
+  });
+}
+
+/**
+ * This alerts the configuration system that a module exists. This allows config to be
+ * processed, while still allowing the extension system to know whether the module has
+ * actually had its front bundle executed yet.
+ *
+ * This should only be used in esm-app-shell.
+ *
+ * @internal
+ * @param moduleName
+ */
+export function registerModuleWithConfigSystem(moduleName: string) {
+  const state = configInternalStore.getState();
+  configInternalStore.setState({
+    schemas: { ...state.schemas, [moduleName]: implicitConfigSchema },
   });
 }
 
@@ -214,13 +254,13 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
 }
 
 /** @internal */
-export function getConfigInternal(moduleName: string): Promise<Config> {
-  return new Promise<Config>((resolve) => {
+export function getTranslationOverrides(moduleName: string): Promise<Object> {
+  return new Promise<Object>((resolve) => {
     const store = getConfigStore(moduleName);
     function update(state: ConfigStore) {
-      if (state.loaded && state.config) {
-        const config = state.config;
-        resolve(config);
+      if (state.translationOverridesLoaded && state.config) {
+        const translationOverrides = state.config['Translation overrides'] ?? {};
+        resolve(translationOverrides);
         unsubscribe && unsubscribe();
       }
     }
@@ -279,7 +319,6 @@ function computeExtensionConfig(
   const configOverride = slotModuleConfig?.extensionSlots?.[slotName]?.configure?.[extensionId] ?? {};
   const extensionConfig = mergeConfigsFor(nameOfSchemaSource, providedConfigs);
   const combinedConfig = mergeConfigs([extensionConfig, configOverride]);
-  // TODO: validate that a schema exists for the module
   const schema = extensionConfigSchema ?? configState.schemas[extensionModuleName];
   validateStructure(schema, combinedConfig, nameOfSchemaSource);
   const config = setDefaults(schema, combinedConfig);
@@ -477,15 +516,23 @@ function getConfigForModule(
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore,
 ): ConfigObject {
-  if (!configState.schemas.hasOwnProperty(moduleName)) {
-    throw Error('No config schema has been defined for ' + moduleName);
-  }
-
   const schema = configState.schemas[moduleName];
   const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs(configState, tempConfigState));
   validateStructure(schema, inputConfig, moduleName);
   const config = setDefaults(schema, inputConfig);
   runAllValidatorsInConfigTree(schema, config, moduleName);
+  delete config.extensionSlots;
+  return config;
+}
+
+function getConfigForModuleImplicitSchema(
+  moduleName: string,
+  configState: ConfigInternalStore,
+  tempConfigState: TemporaryConfigStore,
+): ConfigObject {
+  const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs(configState, tempConfigState));
+  const config = setDefaults(implicitConfigSchema, inputConfig);
+  runAllValidatorsInConfigTree(implicitConfigSchema, config, moduleName);
   delete config.extensionSlots;
   return config;
 }
@@ -751,5 +798,16 @@ const implicitConfigSchema: ConfigSchema = {
       'Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value',
     _type: Type.Object,
     _default: {},
+    _validators: [
+      validator(
+        (o) => Object.keys(o).every((k) => /^[a-z]{2,3}(-[A-Z]{2,3})?$/.test(k)),
+        (o) => {
+          const badKeys = Object.keys(o).filter((k) => !/^[a-z]{2,3}(-[A-Z]{2,3})?$/.test(k));
+          return `The 'Translation overrides' object should have language codes for keys. Language codes must be in the form of a two-to-three letter language code optionally followed by a hyphen and a two-to-three letter country code. The following keys do not conform: ${badKeys.join(
+            ', ',
+          )}.`;
+        },
+      ),
+    ],
   },
 };
