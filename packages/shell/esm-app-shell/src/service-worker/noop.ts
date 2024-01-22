@@ -1,5 +1,5 @@
-self.__WB_MANIFEST = [];
 self.__WB_DISABLE_DEV_LOGS = true;
+const wbManifest = self.__WB_MANIFEST;
 
 self.addEventListener("message", () => {});
 
