@@ -166,7 +166,7 @@ const Login: React.FC<LoginProps> = () => {
             kind="error"
             /**
              * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
-             * t('invalidCredentials')
+             * t('invalidCredentials', 'Invalid username or password')
              */
             subtitle={t(errorMessage)}
             title={t('error', 'Error')}

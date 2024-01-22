@@ -54,10 +54,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Erreur inconnue.",
   "offlinePatientSyncDetailsHeader": "Détails des patients hors ligne",
   "offlineReady": "Prêt pour être hors ligne",
-  "offlineToolsAppMenuLink": "Outils hors ligne",
-  "offlineActionsSynchronizationNotificationTitle": "Téléversement",
-  "offlineActionsSynchronizationNotificationSynchronized": "La synchronisation des actions hors ligne est terminée.",
-  "offlineActionsSynchronizationNotificationCanceling": "Annulation...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} actions",
-  "offlineActionsSynchronizationNotificationCancelUpload": "Annuler le téléversement"
+  "offlineToolsAppMenuLink": "Outils hors ligne"
 }

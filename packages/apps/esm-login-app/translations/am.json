@@ -5,7 +5,7 @@
   "continue": "Continue",
   "error": "Error",
   "errorLoadingLoginLocations": "Error loading login locations",
-  "invalidCredentials": "",
+  "invalidCredentials": "Invalid username or password",
   "loading": "Loading",
   "locationPreferenceAdded": "Selected location will be used for your next logins",
   "locationPreferenceRemoved": "Login location preference removed",

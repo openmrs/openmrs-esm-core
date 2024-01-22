@@ -71,6 +71,12 @@ module.exports = {
   failOnWarnings: false,
   // Exit with an exit code of 1 on warnings
 
+  resetDefaultValueLocale: 'en',
+  // The locale to compare with default values to determine whether a default value has been changed.
+  // If this is set and a default value differs from a translation in the specified locale, all entries
+  // for that key across locales are reset to the default value, and existing translations are moved to
+  // the `_old` file.
+
   customValueTemplate: null,
   // If you wish to customize the value output the value as an object, you can set your own format.
   // ${defaultValue} is the default value you set in your translation function.

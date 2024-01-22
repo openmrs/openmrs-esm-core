@@ -57,10 +57,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "خطأ غير معروف.",
   "offlinePatientSyncDetailsHeader": "تفاصيل المريض بدون اتصال",
   "offlineReady": "جاهز للعمل بدون اتصال",
-  "offlineToolsAppMenuLink": "أدوات العمل بدون اتصال",
-  "offlineActionsSynchronizationNotificationTitle": "تحميل",
-  "offlineActionsSynchronizationNotificationSynchronized": "انتهت مزامنة الإجراءات غير المتصلة.",
-  "offlineActionsSynchronizationNotificationCanceling": "إلغاء...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} إجراء",
-  "offlineActionsSynchronizationNotificationCancelUpload": "إلغاء التحميل"
+  "offlineToolsAppMenuLink": "أدوات العمل بدون اتصال"
 }

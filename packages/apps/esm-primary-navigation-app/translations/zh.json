@@ -1,4 +1,8 @@
 {
+  "apply": "Apply",
+  "cancel": "Cancel",
+  "change": "Change",
+  "changeLanguage": "Change Language",
   "notifications": "通知",
-  "selectLocale": "选择区域"
+  "userMenuTooltip": "User"
 }
