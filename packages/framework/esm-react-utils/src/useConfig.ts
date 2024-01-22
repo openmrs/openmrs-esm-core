@@ -137,9 +137,9 @@ interface UseConfigOptions {
  * @param options Additional options that can be passed to useConfig()
  */
 export function useConfig<T = Record<string, any>>(options?: UseConfigOptions) {
-  // This hook uses the config of the MF defining the component.
-  // If the component is used in an extension slot then the slot
-  // may override (part of) its configuration.
+  // This hook gets the appropriate configuration depending on whether the caller is a module
+  // or an extension, which is determined from the ComponentContext. It will throw for suspense
+  // if the configuration is not yet loaded.
   const { moduleName: contextModuleName, extension } = useContext(ComponentContext);
   const moduleName = options?.externalModuleName ?? contextModuleName;
 

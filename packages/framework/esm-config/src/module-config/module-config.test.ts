@@ -15,6 +15,9 @@ import {
 import { Type } from '../types';
 import { getExtensionSlotsConfigStore } from '..';
 
+// Names from Wikipedia's "Metasyntactic variable" page:
+// foo, bar, baz, qux, quux, corge, grault, garply, waldo, fred, plugh, xyzzy, thud
+
 const mockConfigInternalStore = configInternalStore as MockedStore<ConfigInternalStore>;
 const mockTemporaryConfigStore = temporaryConfigStore as MockedStore<object>;
 const mockImplementerToolsConfigStore = implementerToolsConfigStore as MockedStore<ImplementerToolsConfigStore>;
@@ -734,6 +737,26 @@ describe('processConfig', () => {
 describe('implementer tools config', () => {
   afterEach(resetAll);
 
+  const implicitConfigImplementerToolsResult = {
+    'Display conditions': {
+      privileges: {
+        _default: [],
+        _description: expect.any(String),
+        _source: 'default',
+        _type: Type.Array,
+        _value: [],
+      },
+    },
+    'Translation overrides': {
+      _default: {},
+      _description: expect.any(String),
+      _source: 'default',
+      _type: Type.Object,
+      _validators: [expect.any(Function)],
+      _value: {},
+    },
+  };
+
   it('returns all config schemas, with values and sources interpolated', async () => {
     Config.defineConfigSchema('foo-module', {
       foo: { _default: 'qux', _description: 'All the foo', _validators: [] },
@@ -751,43 +774,11 @@ describe('implementer tools config', () => {
           _description: 'All the foo',
           _validators: [],
         },
-        'Display conditions': {
-          privileges: {
-            _default: [],
-            _description: 'The privilege(s) the user must have to use this extension',
-            _source: 'default',
-            _type: Type.Array,
-            _value: [],
-          },
-        },
-        'Translation overrides': {
-          _default: {},
-          _description:
-            'Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value',
-          _source: 'default',
-          _type: Type.Object,
-          _value: {},
-        },
+        ...implicitConfigImplementerToolsResult,
       },
       'bar-module': {
         bar: { _value: 'baz', _source: 'my config source', _default: 'quinn' },
-        'Display conditions': {
-          privileges: {
-            _default: [],
-            _description: 'The privilege(s) the user must have to use this extension',
-            _source: 'default',
-            _type: Type.Array,
-            _value: [],
-          },
-        },
-        'Translation overrides': {
-          _default: {},
-          _description:
-            'Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value',
-          _source: 'default',
-          _type: Type.Object,
-          _value: {},
-        },
+        ...implicitConfigImplementerToolsResult,
       },
     });
   });
@@ -932,23 +923,8 @@ describe('extension slot config', () => {
             remove: { _value: ['bar'], _source: 'provided' },
           },
         },
-        'Display conditions': {
-          privileges: {
-            _default: [],
-            _description: 'The privilege(s) the user must have to use this extension',
-            _source: 'default',
-            _type: Type.Array,
-            _value: [],
-          },
-        },
-        'Translation overrides': {
-          _default: {},
-          _description:
-            'Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value',
-          _source: 'default',
-          _type: Type.Object,
-          _value: {},
-        },
+        'Display conditions': expect.any(Object),
+        'Translation overrides': expect.any(Object),
       },
     });
   });
@@ -1070,6 +1046,7 @@ describe('extension config', () => {
   });
 
   it('does not accept module config parameters for extension if extension config schema is defined', () => {
+    updateConfigExtensionStore();
     Config.defineExtensionConfigSchema('fooExt', {
       qux: { _default: 'quxxy' },
     });
@@ -1094,6 +1071,35 @@ describe('extension config', () => {
     };
     Config.provide(badConfigNoExtensionConfigsForModule);
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/unknown config key 'ext-mod.qux' provided.*/i));
+  });
+});
+
+describe('translation overrides', () => {
+  it('allows obtaining translation overrides before schema is registered', async () => {
+    console.error = jest.fn();
+    Config.provide({
+      'corge-module': {
+        'Translation overrides': {
+          en: {
+            'foo.bar': 'baz',
+          },
+        },
+        corges: true,
+      },
+    });
+    Config.registerModuleWithConfigSystem('corge-module');
+    const translationOverrides = await Config.getTranslationOverrides('corge-module');
+    expect(translationOverrides).toStrictEqual({
+      en: {
+        'foo.bar': 'baz',
+      },
+    });
+    Config.defineConfigSchema('corge-module', {
+      corges: { _default: false, _type: Type.Boolean },
+    });
+    const config = Config.getConfig('corge-module');
+    expect(config).resolves.toStrictEqual({ corges: true });
+    expect(console.error).not.toHaveBeenCalled();
   });
 });
 
