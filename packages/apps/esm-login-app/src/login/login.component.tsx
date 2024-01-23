@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, InlineLoading, InlineNotification, PasswordInput, TextInput, Tile } from '@carbon/react';
 import { ArrowLeft, ArrowRight } from '@carbon/react/icons';
@@ -159,21 +158,22 @@ const Login: React.FC<LoginProps> = () => {
 
   if (config.provider.type === 'basic') {
     return (
-      <div className={classNames('canvas', styles['container'])}>
-        {errorMessage && (
-          <InlineNotification
-            className={styles.errorMessage}
-            kind="error"
-            /**
-             * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
-             * t('invalidCredentials')
-             */
-            subtitle={t(errorMessage)}
-            title={t('error', 'Error')}
-            onClick={() => setErrorMessage('')}
-          />
-        )}
+      <div className={styles.container}>
         <Tile className={styles['login-card']}>
+          {errorMessage && (
+            <div className={styles.errorMessage}>
+              <InlineNotification
+                kind="error"
+                /**
+                 * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
+                 * t('invalidCredentials')
+                 */
+                subtitle={t(errorMessage)}
+                title={t('error', 'Error')}
+                onClick={() => setErrorMessage('')}
+              />
+            </div>
+          )}
           {showPasswordOnSeparateScreen && showPassword ? (
             <div className={styles['back-button-div']}>
               <Button

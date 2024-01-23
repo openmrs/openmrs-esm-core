@@ -138,9 +138,9 @@
 }
 
 .errorMessage {
-  position: absolute;
-  top: 0;
-  margin-top: 0.25rem;
-  margin-bottom: 3rem;
   width: 23rem;
+  margin-bottom: 1rem;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
 }
