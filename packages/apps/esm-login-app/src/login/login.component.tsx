@@ -161,9 +161,8 @@ const Login: React.FC<LoginProps> = () => {
       <div className={styles.container}>
         <Tile className={styles['login-card']}>
           {errorMessage && (
-            <div className={styles.errorMessageContainer}>
+            <div className={styles.errorMessage}>
               <InlineNotification
-                className={styles.errorMessage}
                 kind="error"
                 /**
                  * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
