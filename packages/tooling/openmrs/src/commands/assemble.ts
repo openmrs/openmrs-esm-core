@@ -189,7 +189,6 @@ async function downloadPackage(
 }
 
 async function extractFiles(buffer: Buffer, targetDir: string) {
-  await mkdir(targetDir, { recursive: true });
   const packageRoot = 'package';
   const rs = Readable.from(buffer);
   const files = await untar(rs);
@@ -198,6 +197,8 @@ async function extractFiles(buffer: Buffer, targetDir: string) {
   const entryModule = packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
   const sourceDir = dirname(entryModule);
+  let outputDir = `${targetDir}-${version}`;
+  await mkdir(outputDir, { recursive: true });
 
   await Promise.all(
     Object.keys(files)
@@ -205,7 +206,7 @@ async function extractFiles(buffer: Buffer, targetDir: string) {
       .map(async (m) => {
         const content = files[m];
         const fileName = m.replace(`${packageRoot}/${sourceDir}/`, '');
-        const targetFile = resolve(targetDir, fileName);
+        const targetFile = resolve(outputDir, fileName);
         await mkdir(dirname(targetFile), { recursive: true });
         await writeFile(targetFile, content);
       }),
@@ -245,7 +246,7 @@ export async function runAssemble(args: AssembleArgs) {
       const esmVersion = frontendModules[esmName];
       const tgzBuffer = await downloadPackage(cacheDir, esmName, esmVersion, process.cwd(), npmConf);
 
-      const dirName = `${esmName}-${esmVersion}`.replace(/^@/, '').replace(/\//, '-');
+      const dirName = `${esmName}`.replace(/^@/, '').replace(/\//, '-');
       const [fileName, version] = await extractFiles(tgzBuffer, resolve(args.target, dirName));
 
       const appRoutes = resolve(args.target, dirName, 'routes.json');
