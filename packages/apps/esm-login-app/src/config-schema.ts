@@ -1,6 +1,21 @@
 import { validators, Type } from '@openmrs/esm-framework';
 
 export const configSchema = {
+  appVersion: {
+    _type: Type.String,
+    _default: '3.x',
+    _description: "Specifies the version of the configuration.",
+  },
+  showVersionNumber: {
+    _type: Type.Boolean,
+    _default: true,
+    _description: "displays version number if condition is met",
+  },
+  partnerLogos: {
+    _type: Type.Array,
+    _default: [],
+    _description: 'A path or URL to an image. If null, will use the OHRI SVG sprite.',
+  },
   provider: {
     type: {
       _type: Type.String,

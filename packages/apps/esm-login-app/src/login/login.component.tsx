@@ -156,6 +156,13 @@ const Login: React.FC<LoginProps> = () => {
     </svg>
   );
 
+  const partnerLogoImgs = config?.partnerLogos?.map((eachImage: string) => {
+    <div className="logo" id="partner_logo_i">
+      <img src={interpolateUrl(eachImage)} alt={eachImage} width="40px" />
+    </div>;
+  });
+
+
   if (config.provider.type === 'basic') {
     return (
       <div className={styles.container}>
@@ -181,7 +188,7 @@ const Login: React.FC<LoginProps> = () => {
                 iconDescription="Back to username"
                 kind="ghost"
                 onClick={() => navigate('/login')}
-                renderIcon={(props) => <ArrowLeft size={24} style={{ marginRight: '0.5rem' }} {...props} />}
+                renderIcon={(props: any) => <ArrowLeft size={24} style={{ marginRight: '0.5rem' }} {...props} />}
               >
                 <span>{t('back', 'Back')}</span>
               </Button>
@@ -216,7 +223,7 @@ const Login: React.FC<LoginProps> = () => {
                 {showPasswordOnSeparateScreen && (
                   <Button
                     className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                    renderIcon={(props: any) => <ArrowRight size={24} {...props} />}
                     type="submit"
                     iconDescription="Continue to login"
                     onClick={continueLogin}
@@ -255,7 +262,7 @@ const Login: React.FC<LoginProps> = () => {
                 <Button
                   type="submit"
                   className={styles.continueButton}
-                  renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                  renderIcon={(props: any) => <ArrowRight size={24} {...props} />}
                   iconDescription="Log in"
                   disabled={!isLoginEnabled || isLoggingIn}
                 >
@@ -269,12 +276,27 @@ const Login: React.FC<LoginProps> = () => {
             )}
           </form>
         </Tile>
+        {config.showVersionNumber && <p className={styles['powered-by-txt']}>Version {config.appVersion}</p>}
+
         <div className={styles['footer']}>
           <p className={styles['powered-by-txt']}>{t('poweredBy', 'Powered by')}</p>
-          <div>
-            <svg role="img" className={styles['powered-by-logo']}>
+          <div className={styles['logos-container']}>
+            <svg role="img"
+              className={styles['powered-by-logo']}
+              style={{ width: '10rem', height: '4rem', marginRight: '2rem' }}>
               <use xlinkHref="#omrs-logo-partial-mono"></use>
             </svg>
+            <div id="partner_logos_container">
+              {config?.partnerLogos?.map((plogo: string, index: React.Key) => (
+                <img
+                  key={index}
+                  src={interpolateUrl(plogo)}
+                  alt={plogo}
+                  style={{ width: '6rem', height: '4rem', marginLeft: '2rem' }}
+                />
+              ))}
+            </div>
+
           </div>
         </div>
       </div>

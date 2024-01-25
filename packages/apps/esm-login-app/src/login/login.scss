@@ -28,6 +28,8 @@
   text-align: center;
   color: $color-gray-70;
   color: $text-02;
+  padding-left: 2rem;
+  padding-bottom: 1rem
 }
 
 .need-help {
@@ -143,4 +145,10 @@
   position: absolute;
   bottom: 100%;
   left: 0;
+}
+
+.logos-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly
 }
