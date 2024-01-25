@@ -11,6 +11,12 @@
       "offline": true
     },
     {
+      "component": "changePassword",
+      "route": "change-password",
+      "online": true,
+      "offline": true
+    },
+    {
       "component": "root",
       "route": "logout",
       "online": true,
@@ -36,6 +42,14 @@
       "name": "location-changer",
       "slot": "user-panel-slot",
       "component": "changeLocationLink",
+      "online": true,
+      "offline": true,
+      "order": 1
+    },
+    {
+      "name": "change-password",
+      "slot": "user-panel-slot",
+      "component": "changePasswordButton",
       "online": true,
       "offline": true,
       "order": 1
