@@ -1,7 +1,7 @@
 import { defineConfigSchema, getSyncLifecycle } from '@openmrs/esm-framework';
 import { configSchema } from './config-schema';
 import rootComponent from './root.component';
-import locationPickerComponent from './location-picker/location-picker.component';
+import locationPickerComponent from './location-picker-view/location-picker-view.component';
 import changeLocationLinkComponent from './change-location-link/change-location-link.extension';
 import logoutButtonComponent from './logout/logout.extension';
 

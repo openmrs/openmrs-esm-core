@@ -20,10 +20,7 @@
   "offlineActionsNoActionsEmptyStateTitle": "אין פעולות ממתינות להעלאה",
   "offlineActionsTableAction": "פעולה",
   "offlineActionsTableCreatedOn": "תאריך ושעה",
-  "offlineActionsTableDeleteActions_one": "מחק פעולה",
-  "offlineActionsTableDeleteActions_two": "מחק {{count}} פעולות",
-  "offlineActionsTableDeleteActions_many": "מחק {{count}} פעולות",
-  "offlineActionsTableDeleteActions_other": "מחק {{count}} פעולות",
+  "offlineActionsTableDeleteActions": "Delete {{count}} actions",
   "offlineActionsTableError": "שגיאה",
   "offlineActionsTablePatient": "מטופל",
   "offlineActionsUpdateOfflinePatients": "עדכן מטופלים לא מקוונים",
@@ -55,10 +52,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "שגיאה לא ידועה.",
   "offlinePatientSyncDetailsHeader": "פרטי מטופל לא מקוון",
   "offlineReady": "מצב לא מקוון מוכן",
-  "offlineToolsAppMenuLink": "כלי לא מקוונים",
-  "offlineActionsSynchronizationNotificationTitle": "העלאה",
-  "offlineActionsSynchronizationNotificationSynchronized": "הסנכרון של הפעולות במצב לא מקוון הושלם.",
-  "offlineActionsSynchronizationNotificationCanceling": "מבטל...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} פעולות",
-  "offlineActionsSynchronizationNotificationCancelUpload": "בטל העלאה"
+  "offlineToolsAppMenuLink": "כלי לא מקוונים"
 }

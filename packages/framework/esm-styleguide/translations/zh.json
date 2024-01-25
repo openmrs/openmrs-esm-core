@@ -1,0 +1,8 @@
+{
+  "error": "错误",
+  "errorCopy": "抱歉，显示此信息时出现问题。您可以尝试重新加载此页面，或联系网站管理员并提供上面的错误代码。",
+  "errorLoadingLoginLocations": "加载登录位置时出错",
+  "loading": "加载中",
+  "noResultsToDisplay": "没有要显示的结果",
+  "searchForLocation": "搜索位置"
+}

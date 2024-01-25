@@ -1,0 +1,8 @@
+{
+  "error": "Error",
+  "errorCopy": "Lo siento, hubo un problema al mostrar esta información. Puedes intentar recargar esta página o ponerte en contacto con el administrador del sitio y proporcionar el código de error anterior.",
+  "errorLoadingLoginLocations": "Error al cargar las ubicaciones de inicio de sesión",
+  "loading": "Cargando",
+  "noResultsToDisplay": "No hay resultados para mostrar",
+  "searchForLocation": "Buscar una ubicación"
+}

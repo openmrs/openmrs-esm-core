@@ -1,0 +1,63 @@
+@use '@carbon/styles/scss/spacing';
+@import '~@openmrs/esm-styleguide/src/vars';
+@import '../root.scss';
+
+.locationPickerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.paddedContainer {
+  padding: spacing.$spacing-06 spacing.$spacing-06 spacing.$spacing-05;
+}
+
+.locationCard {
+  display: flex;
+  flex-direction: column;
+  width: 23rem;
+  background-color: $ui-02;
+  margin: 0;
+  border: 1px solid $ui-03;
+}
+
+.welcomeTitle {
+  @extend .productiveHeading03;
+  text-transform: capitalize;
+}
+
+.welcomeMessage {
+  @extend .bodyLong01;
+  margin-top: spacing.$spacing-03;
+  color: $color-gray-70;
+}
+
+.confirmButton {
+  padding: spacing.$spacing-06;
+
+  .savePreferenceCheckbox {
+    padding-bottom: spacing.$spacing-05 !important;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+.loadingContainer {
+  margin-top: spacing.$spacing-06;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: spacing.$spacing-06 auto 0rem;
+}
+
+.loader {
+  min-height: fit-content;
+}

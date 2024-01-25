@@ -20,9 +20,7 @@
   "offlineActionsNoActionsEmptyStateTitle": "Aucune actions en attente de téléchargement",
   "offlineActionsTableAction": "Action",
   "offlineActionsTableCreatedOn": "Date & Heure",
-  "offlineActionsTableDeleteActions_one": "Supprimer l'action",
-  "offlineActionsTableDeleteActions_many": "Supprimer les {{count}} actions",
-  "offlineActionsTableDeleteActions_other": "Supprimer les {{count}} actions",
+  "offlineActionsTableDeleteActions": "Delete {{count}} actions",
   "offlineActionsTableError": "Erreur",
   "offlineActionsTablePatient": "Patient",
   "offlineActionsUpdateOfflinePatients": "Mettre à jour les patients hors ligne",
@@ -54,10 +52,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Erreur inconnue.",
   "offlinePatientSyncDetailsHeader": "Détails des patients hors ligne",
   "offlineReady": "Prêt pour être hors ligne",
-  "offlineToolsAppMenuLink": "Outils hors ligne",
-  "offlineActionsSynchronizationNotificationTitle": "Téléversement",
-  "offlineActionsSynchronizationNotificationSynchronized": "La synchronisation des actions hors ligne est terminée.",
-  "offlineActionsSynchronizationNotificationCanceling": "Annulation...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} actions",
-  "offlineActionsSynchronizationNotificationCancelUpload": "Annuler le téléversement"
+  "offlineToolsAppMenuLink": "Outils hors ligne"
 }

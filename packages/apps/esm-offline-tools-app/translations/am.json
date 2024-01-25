@@ -20,8 +20,7 @@
   "offlineActionsNoActionsEmptyStateTitle": "No actions pending upload",
   "offlineActionsTableAction": "Action",
   "offlineActionsTableCreatedOn": "Date & Time",
-  "offlineActionsTableDeleteActions_one": "Delete action",
-  "offlineActionsTableDeleteActions_other": "Delete {{count}} actions",
+  "offlineActionsTableDeleteActions": "Delete {{count}} actions",
   "offlineActionsTableError": "Error",
   "offlineActionsTablePatient": "Patient",
   "offlineActionsUpdateOfflinePatients": "Update offline patients",
@@ -53,10 +52,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Unknown error.",
   "offlinePatientSyncDetailsHeader": "Offline patient details",
   "offlineReady": "Offline Ready",
-  "offlineToolsAppMenuLink": "Offline tools",
-  "offlineActionsSynchronizationNotificationTitle": "Upload",
-  "offlineActionsSynchronizationNotificationSynchronized": "The offline action synchronization has finished.",
-  "offlineActionsSynchronizationNotificationCanceling": "Canceling...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} actions",
-  "offlineActionsSynchronizationNotificationCancelUpload": "Cancel upload"
+  "offlineToolsAppMenuLink": "Offline tools"
 }

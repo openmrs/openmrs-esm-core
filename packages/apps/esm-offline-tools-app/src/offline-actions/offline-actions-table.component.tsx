@@ -141,7 +141,9 @@ const OfflineActionsTable: React.FC<OfflineActionsTableProps> = ({
                 disabled={disableEditing || disableDelete}
                 onClick={() => onDelete(selectedRows.map((row) => +row.id))}
               >
-                {t('offlineActionsTableDeleteActions', 'Delete {{count}} actions', { count: selectedRows.length })}
+                {t('offlineActionsTableDeleteActions', 'Delete {{count}} actions', {
+                  locationCount: selectedRows.length,
+                })}
               </Button>
             )}
           </div>

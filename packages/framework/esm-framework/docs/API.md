@@ -900,6 +900,16 @@ and *must* only be used once within that `<ExtensionSlot>`.
 
 ___
 
+### LocationPicker
+
+• `Const` **LocationPicker**: `React.FC`<`LocationPickerProps`\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx#L15)
+
+___
+
 ### OpenmrsDatePicker
 
 • `Const` **OpenmrsDatePicker**: `React.FC`<`OpenmrsDatePickerProps`\>

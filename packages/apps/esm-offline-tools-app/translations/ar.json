@@ -20,12 +20,7 @@
   "offlineActionsNoActionsEmptyStateTitle": "لا توجد أنشطة في انتظار التحميل",
   "offlineActionsTableAction": "الإجراء",
   "offlineActionsTableCreatedOn": "التاريخ والوقت",
-  "offlineActionsTableDeleteActions_zero": "حذف {{count}} إجراءات",
-  "offlineActionsTableDeleteActions_one": "حذف الإجراء",
-  "offlineActionsTableDeleteActions_two": "حذف {{count}} إجراءات",
-  "offlineActionsTableDeleteActions_few": "حذف {{count}} إجراءات",
-  "offlineActionsTableDeleteActions_many": "حذف {{count}} إجراءات",
-  "offlineActionsTableDeleteActions_other": "حذف {{count}} إجراءات",
+  "offlineActionsTableDeleteActions": "Delete {{count}} actions",
   "offlineActionsTableError": "خطأ",
   "offlineActionsTablePatient": "المريض",
   "offlineActionsUpdateOfflinePatients": "تحديث المرضى بدون اتصال",
@@ -57,10 +52,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "خطأ غير معروف.",
   "offlinePatientSyncDetailsHeader": "تفاصيل المريض بدون اتصال",
   "offlineReady": "جاهز للعمل بدون اتصال",
-  "offlineToolsAppMenuLink": "أدوات العمل بدون اتصال",
-  "offlineActionsSynchronizationNotificationTitle": "تحميل",
-  "offlineActionsSynchronizationNotificationSynchronized": "انتهت مزامنة الإجراءات غير المتصلة.",
-  "offlineActionsSynchronizationNotificationCanceling": "إلغاء...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} إجراء",
-  "offlineActionsSynchronizationNotificationCancelUpload": "إلغاء التحميل"
+  "offlineToolsAppMenuLink": "أدوات العمل بدون اتصال"
 }
