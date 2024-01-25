@@ -5,7 +5,7 @@ import locationPickerComponent from './location-picker/location-picker.component
 import changeLocationLinkComponent from './change-location-link/change-location-link.extension';
 import changePasswordButtonComponent from './change-password-button/change-password-button.component';
 import logoutButtonComponent from './logout/logout.extension';
-import changePasswordComponent from './change-password/change-password'
+import changePasswordComponent from './change-password/change-password.component'
 
 const moduleName = '@openmrs/esm-login-app';
 

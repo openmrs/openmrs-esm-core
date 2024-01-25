@@ -4,7 +4,7 @@ import { useConfig } from '@openmrs/esm-framework';
 import { performPasswordChange } from './change-password.resource';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
-import ChangePassword from './change-password';
+import ChangePassword from './change-password.component';
 
 const mockedChangePassword = performPasswordChange as jest.Mock;
 const mockedUseConfig = useConfig as jest.Mock;
