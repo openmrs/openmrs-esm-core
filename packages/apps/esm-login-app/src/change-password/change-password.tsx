@@ -56,8 +56,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
   };
 
   const handleValidation = (passwordInputValue, passwordInputFieldName) => {
-    // const passwordInputValue = event.target.value.trim();
-    // const passwordInputFieldName = event.target.name;
     if (passwordInputFieldName === 'newPassword') {
       const uppercaseRegExp = /(?=.*?[A-Z])/;
       const lowercaseRegExp = /(?=.*?[a-z])/;
@@ -134,7 +132,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
             });
           });
         } else {
-          throw new Error('invalidCredentials');
+          throw new Error('invalidPasswordCredentials');
         }
       } catch (error) {
         setIsSavingPassword(false);
@@ -157,14 +155,14 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
               kind="error"
               /**
                * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
-               * t('invalidCredentials')
+               * t('invalidPasswordCredentials')
                */
               subtitle={t(errorMessage)}
               title={t('error', 'Error')}
               onClick={() => setErrorMessage('')}
             />
           )}
-          <Tile className={styles['login-card']}>
+          <Tile className={styles['change-password-card']}>
             <form onSubmit={handleSubmit} ref={formRef}>
               <div className={styles['input-group']}>
                 <PasswordInput
@@ -175,7 +173,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
                   name="oldPassword"
                   value={passwordInput.oldPassword}
                   onChange={handlePasswordChange}
-                  // onKeyUp={handleValidation}
                   ref={oldPasswordInputRef}
                   required
                   showPasswordLabel="Show old password"
@@ -188,7 +185,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
                   name="newPassword"
                   value={passwordInput.newPassword}
                   onChange={handlePasswordChange}
-                  // onKeyUp={handleValidation}
                   ref={newPasswordInputRef}
                   required
                   showPasswordLabel="Show new password"
@@ -201,7 +197,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
                   name="confirmPassword"
                   value={passwordInput.confirmPassword}
                   onChange={handlePasswordChange}
-                  // onKeyUp={handleValidation}
                   ref={confirmPasswordInputRef}
                   required
                   showPasswordLabel="Show confirm password"
