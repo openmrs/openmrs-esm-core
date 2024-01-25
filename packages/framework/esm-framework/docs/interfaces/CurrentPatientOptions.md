@@ -24,4 +24,4 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L9)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:9](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L9)

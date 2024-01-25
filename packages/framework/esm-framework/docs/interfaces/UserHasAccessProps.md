@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L9)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:9](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L9)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L8)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:8](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L8)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/UserHasAccess.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L7)
+[packages/framework/esm-react-utils/src/UserHasAccess.tsx:7](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/UserHasAccess.tsx#L7)

@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L8)
+[packages/framework/esm-api/src/types/fetch.ts:8](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/fetch.ts#L8)
 
 ___
 

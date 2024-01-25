@@ -162,7 +162,6 @@ const Login: React.FC<LoginProps> = () => {
     </div>;
   });
 
-
   if (config.provider.type === 'basic') {
     return (
       <div className={styles.container}>
@@ -281,9 +280,11 @@ const Login: React.FC<LoginProps> = () => {
         <div className={styles['footer']}>
           <p className={styles['powered-by-txt']}>{t('poweredBy', 'Powered by')}</p>
           <div className={styles['logos-container']}>
-            <svg role="img"
+            <svg
+              role="img"
               className={styles['powered-by-logo']}
-              style={{ width: '10rem', height: '4rem', marginRight: '2rem' }}>
+              style={{ width: '10rem', height: '4rem', marginRight: '2rem' }}
+            >
               <use xlinkHref="#omrs-logo-partial-mono"></use>
             </svg>
             <div id="partner_logos_container">
@@ -296,7 +297,6 @@ const Login: React.FC<LoginProps> = () => {
                 />
               ))}
             </div>
-
           </div>
         </div>
       </div>

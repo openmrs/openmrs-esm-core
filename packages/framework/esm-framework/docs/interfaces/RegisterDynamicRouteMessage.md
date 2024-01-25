@@ -25,7 +25,7 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L36)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:36](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L36)
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L38)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:38](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L38)
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:26](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L26)
 
 ___
 
@@ -59,4 +59,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/service-worker-messaging.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L37)
+[packages/framework/esm-offline/src/service-worker-messaging.ts:37](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/service-worker-messaging.ts#L37)

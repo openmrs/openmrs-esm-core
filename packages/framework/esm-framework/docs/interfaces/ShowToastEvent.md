@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L63)
+[packages/framework/esm-globals/src/events.ts:63](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L63)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L59)
+[packages/framework/esm-globals/src/events.ts:59](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L59)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L60)
+[packages/framework/esm-globals/src/events.ts:60](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L60)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L62)
+[packages/framework/esm-globals/src/events.ts:62](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L62)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L61)
+[packages/framework/esm-globals/src/events.ts:61](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L61)
 
 ## Methods
 
@@ -78,4 +78,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L64)
+[packages/framework/esm-globals/src/events.ts:64](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L64)

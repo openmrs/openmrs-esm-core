@@ -4,12 +4,12 @@ export const configSchema = {
   appVersion: {
     _type: Type.String,
     _default: '3.x',
-    _description: "Specifies the version of the configuration.",
+    _description: 'Specifies the version of the configuration.',
   },
   showVersionNumber: {
     _type: Type.Boolean,
     _default: true,
-    _description: "displays version number if condition is met",
+    _description: 'displays version number if condition is met',
   },
   partnerLogos: {
     _type: Type.Array,

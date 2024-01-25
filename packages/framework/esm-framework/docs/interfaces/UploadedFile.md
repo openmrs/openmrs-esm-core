@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L3)
+[packages/framework/esm-api/src/types/attachments-types.ts:3](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L3)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:2](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L2)
+[packages/framework/esm-api/src/types/attachments-types.ts:2](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L2)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L6)
+[packages/framework/esm-api/src/types/attachments-types.ts:6](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L6)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L4)
+[packages/framework/esm-api/src/types/attachments-types.ts:4](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L4)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L5)
+[packages/framework/esm-api/src/types/attachments-types.ts:5](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L5)
 
 ___
 
@@ -71,4 +71,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L7)
+[packages/framework/esm-api/src/types/attachments-types.ts:7](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L7)

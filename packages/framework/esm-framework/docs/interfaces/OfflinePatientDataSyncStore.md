@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L8)
+[packages/framework/esm-offline/src/offline-patient-data.ts:8](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L8)
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-offline/src/offline-patient-data.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L7)
+[packages/framework/esm-offline/src/offline-patient-data.ts:7](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/offline-patient-data.ts#L7)

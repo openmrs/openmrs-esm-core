@@ -24,7 +24,7 @@ The internal ID of the data entry, as assigned by the IndexedDB where it is stor
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L48)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:48](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L48)
 
 ___
 
@@ -37,7 +37,7 @@ This is typically the ID of the resource as assigned by a remote API.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L58)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:58](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L58)
 
 ___
 
@@ -50,7 +50,7 @@ Otherwise this is `undefined`.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L67)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:67](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L67)
 
 ___
 
@@ -63,7 +63,7 @@ Examples could be `"patient"` or `"form"`.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L53)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:53](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L53)
 
 ___
 
@@ -75,4 +75,4 @@ The UUIDs of the users who need this data entry available offline.
 
 #### Defined in
 
-[packages/framework/esm-offline/src/dynamic-offline-data.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L62)
+[packages/framework/esm-offline/src/dynamic-offline-data.ts:62](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-offline/src/dynamic-offline-data.ts#L62)

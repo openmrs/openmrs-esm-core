@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L30)
+[packages/framework/esm-config/src/types.ts:30](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L30)
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L31)
+[packages/framework/esm-config/src/types.ts:31](https://github.com/kirwea/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L31)
