@@ -188,12 +188,12 @@ async function downloadPackage(
   }
 }
 
-async function extractFiles(buffer: Buffer, targetDir: string) {
+async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string, string]> {
   const packageRoot = 'package';
   const rs = Readable.from(buffer);
   const files = await untar(rs);
   const packageJson = JSON.parse(files[`${packageRoot}/package.json`].toString('utf8'));
-  const version = packageJson.version ?? '0.0.0';
+  const version = (packageJson.version as string) ?? '0.0.0';
   const entryModule = packageJson.browser ?? packageJson.module ?? packageJson.main;
   const fileName = basename(entryModule);
   const sourceDir = dirname(entryModule);
@@ -246,8 +246,9 @@ export async function runAssemble(args: AssembleArgs) {
       const esmVersion = frontendModules[esmName];
       const tgzBuffer = await downloadPackage(cacheDir, esmName, esmVersion, process.cwd(), npmConf);
 
-      const dirName = `${esmName}`.replace(/^@/, '').replace(/\//, '-');
-      const [fileName, version] = await extractFiles(tgzBuffer, resolve(args.target, dirName));
+      const baseDirName = `${esmName}`.replace(/^@/, '').replace(/\//, '-');
+      const [fileName, version] = await extractFiles(tgzBuffer, resolve(args.target, baseDirName));
+      const dirName = `${baseDirName}-${version}`;
 
       const appRoutes = resolve(args.target, dirName, 'routes.json');
       if (existsSync(appRoutes)) {
