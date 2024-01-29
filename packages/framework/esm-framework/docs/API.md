@@ -1861,7 +1861,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L142)
+[packages/framework/esm-config/src/module-config/module-config.ts:164](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L164)
 
 ___
 
@@ -1893,7 +1893,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:169](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L169)
+[packages/framework/esm-config/src/module-config/module-config.ts:209](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L209)
 
 ___
 
@@ -1925,7 +1925,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L201)
+[packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
 
 ___
 
@@ -1946,7 +1946,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:185](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L185)
+[packages/framework/esm-config/src/module-config/module-config.ts:225](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L225)
 
 ___
 
@@ -5138,7 +5138,7 @@ ___
 
 ### useOpenmrsSWR
 
-▸ **useOpenmrsSWR**(`key`, `options?`): `SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>, `any`, `undefined` \| `Partial`<`PublicConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>\>\>
+▸ **useOpenmrsSWR**<`DataType`, `ErrorType`\>(`key`, `options?`): `SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `Partial`<`PublicConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>\>
 
 **`beta`**
 
@@ -5175,6 +5175,13 @@ function MyComponent() {
 }
 ```
 
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `DataType` | `any` |
+| `ErrorType` | `any` |
+
 #### Parameters
 
 | Name | Type | Description |
@@ -5184,7 +5191,7 @@ function MyComponent() {
 
 #### Returns
 
-`SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`any`\>, `any`, `undefined` \| `Partial`<`PublicConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>\>\>
+`SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `Partial`<`PublicConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>\>
 
 #### Defined in
 
