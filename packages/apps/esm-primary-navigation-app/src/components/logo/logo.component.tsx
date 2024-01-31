@@ -2,13 +2,10 @@ import React from 'react';
 import { interpolateUrl, useConfig } from '@openmrs/esm-framework';
 import styles from './logo.scss';
 
-interface LogoProps {
-  width?: number; // Optional width property for the logo
-}
 
-const Logo: React.FC<LogoProps> = ({ width = 110 }) => {
+const Logo: React.FC = () => {
   const { logo } = useConfig();
-
+  const logoWidth = logo?.width || 110;
   //Maximum width for the logo
   const maxWidth = 300;
 
@@ -19,13 +16,13 @@ const Logo: React.FC<LogoProps> = ({ width = 110 }) => {
           className={styles.logo}
           src={interpolateUrl(logo.src)}
           alt={logo.alt}
-          width={Math.min(logo.width || width, maxWidth)} // Adjusted width logic
+          width={Math.min( logoWidth, maxWidth)} // Adjusted width logic
           height={40}
         />
       ) : logo?.name ? (
         logo.name
       ) : (
-        <svg role="img" width={width} height={40}>
+        <svg role="img" width={logoWidth} height={40}>
           <use xlinkHref="#omrs-logo-white"></use>
         </svg>
       )}
