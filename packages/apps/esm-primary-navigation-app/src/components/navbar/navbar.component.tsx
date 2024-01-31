@@ -87,13 +87,26 @@ const HeaderItems: React.FC = () => {
               name="User"
               isActive={isActivePanel('userMenu')}
               onClick={(event) => {
+                setTimeout(() => {
                 togglePanel('userMenu');
-                event.stopPropagation();
-              }}
+              }, 100);
+            }}
             >
-              {isActivePanel('userMenu') ? <Close size={20} /> : <UserAvatarFilledAlt size={20} />}
-            </HeaderGlobalAction>
-          )}
+              {isActivePanel('userMenu') ? (
+               <button
+               className={styles.closeButton}
+               onClick={(event) => {
+                 togglePanel('userMenu');
+                 event.stopPropagation();
+               }}
+             >
+               <Close size={20} />
+             </button>
+           ) : (
+             <UserAvatarFilledAlt size={20} />
+           )}
+         </HeaderGlobalAction>
+       )}
           {showAppMenu && (
             <HeaderGlobalAction
               aria-label="App Menu"
@@ -106,11 +119,24 @@ const HeaderItems: React.FC = () => {
               isActive={isActivePanel('appMenu')}
               tooltipAlignment="end"
               onClick={(event) => {
-                togglePanel('appMenu');
-                event.stopPropagation();
+                setTimeout(() => {
+                  togglePanel('appMenu');
+                }, 100);
               }}
-            >
-              {isActivePanel('appMenu') ? <Close size={20} /> : <Switcher size={20} />}
+              >
+              {isActivePanel('appMenu') ? (
+                <button
+                  className={styles.closeButton}
+                  onClick={(event) => {
+                    togglePanel('appMenu');
+                    event.stopPropagation();
+                  }}
+                >
+                  <Close size={20} />
+                </button>
+              ) : (
+                <Switcher size={20} />
+              )}
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>
