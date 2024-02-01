@@ -68,11 +68,7 @@ describe('LocationPickerView', () => {
     });
   });
 
-  afterEach(() => {
-    mockedOpenmrsFetch.mockReset();
-  });
-
-  it('renders a the component properly', async () => {
+  it('renders the component properly', async () => {
     await act(async () => {
       renderWithRouter(LocationPickerView, {
         currentLocationUuid: 'some-location-uuid',
@@ -89,7 +85,6 @@ describe('LocationPickerView', () => {
   });
 
   describe('Testing setting user preference workflow', () => {
-    jest.restoreAllMocks();
     it('should save user preference if the user checks the checkbox and submit', async () => {
       const user = userEvent.setup();
 
