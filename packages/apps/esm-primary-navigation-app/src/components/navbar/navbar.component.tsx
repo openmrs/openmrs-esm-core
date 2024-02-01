@@ -53,9 +53,8 @@ const HeaderItems: React.FC = () => {
             aria-label="Open menu"
             isCollapsible
             className={styles.headerMenuButton}
-            onClick={(event) => {
-              togglePanel('sideMenu');
-              event.stopPropagation();
+            onClick={() => {
+              setTimeout(() => togglePanel('sideMenu'), 0);
             }}
             isActive={isActivePanel('sideMenu')}
           />
@@ -86,9 +85,8 @@ const HeaderItems: React.FC = () => {
               enterDelayMs={500}
               name="User"
               isActive={isActivePanel('userMenu')}
-              onClick={(event) => {
-                togglePanel('userMenu');
-                event.stopPropagation();
+              onClick={() => {
+                setTimeout(() => togglePanel('userMenu'), 0);
               }}
             >
               {isActivePanel('userMenu') ? <Close size={20} /> : <UserAvatarFilledAlt size={20} />}
@@ -105,9 +103,8 @@ const HeaderItems: React.FC = () => {
               enterDelayMs={500}
               isActive={isActivePanel('appMenu')}
               tooltipAlignment="end"
-              onClick={(event) => {
-                togglePanel('appMenu');
-                event.stopPropagation();
+              onClick={() => {
+                setTimeout(() => togglePanel('appMenu'), 0);
               }}
             >
               {isActivePanel('appMenu') ? <Close size={20} /> : <Switcher size={20} />}
