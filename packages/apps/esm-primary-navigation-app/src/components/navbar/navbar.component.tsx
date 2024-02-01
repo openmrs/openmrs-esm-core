@@ -53,9 +53,8 @@ const HeaderItems: React.FC = () => {
             aria-label="Open menu"
             isCollapsible
             className={styles.headerMenuButton}
-            onClick={(event) => {
-              togglePanel('sideMenu');
-              event.stopPropagation();
+            onClick={() => {
+              setTimeout(() => togglePanel('sideMenu'), 0);
             }}
             isActive={isActivePanel('sideMenu')}
           />
@@ -86,27 +85,13 @@ const HeaderItems: React.FC = () => {
               enterDelayMs={500}
               name="User"
               isActive={isActivePanel('userMenu')}
-              onClick={(event) => {
-                setTimeout(() => {
-                togglePanel('userMenu');
-              }, 100);
-            }}
+              onClick={() => {
+                setTimeout(() => togglePanel('userMenu'), 0);
+              }}
             >
-              {isActivePanel('userMenu') ? (
-               <button
-               className={styles.closeButton}
-               onClick={(event) => {
-                 togglePanel('userMenu');
-                 event.stopPropagation();
-               }}
-             >
-               <Close size={20} />
-             </button>
-           ) : (
-             <UserAvatarFilledAlt size={20} />
-           )}
-         </HeaderGlobalAction>
-       )}
+              {isActivePanel('userMenu') ? <Close size={20} /> : <UserAvatarFilledAlt size={20} />}
+            </HeaderGlobalAction>
+          )}
           {showAppMenu && (
             <HeaderGlobalAction
               aria-label="App Menu"
@@ -118,25 +103,11 @@ const HeaderItems: React.FC = () => {
               enterDelayMs={500}
               isActive={isActivePanel('appMenu')}
               tooltipAlignment="end"
-              onClick={(event) => {
-                setTimeout(() => {
-                  togglePanel('appMenu');
-                }, 100);
+              onClick={() => {
+                setTimeout(() => togglePanel('appMenu'), 0);
               }}
-              >
-              {isActivePanel('appMenu') ? (
-                <button
-                  className={styles.closeButton}
-                  onClick={(event) => {
-                    togglePanel('appMenu');
-                    event.stopPropagation();
-                  }}
-                >
-                  <Close size={20} />
-                </button>
-              ) : (
-                <Switcher size={20} />
-              )}
+            >
+              {isActivePanel('appMenu') ? <Close size={20} /> : <Switcher size={20} />}
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>
