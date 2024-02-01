@@ -1,20 +1,18 @@
-import React, { useState, useEffect, useRef, useCallback, LegacyRef, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useLocation, type Location, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Button, Checkbox, InlineLoading } from '@carbon/react';
 import {
-  Button,
-  Checkbox,
-  InlineLoading,
-  Search,
-  RadioButton,
-  RadioButtonGroup,
-  RadioButtonSkeleton,
-} from '@carbon/react';
-import { navigate, setSessionLocation, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+  navigate,
+  setSessionLocation,
+  useConfig,
+  useConnectivity,
+  useSession,
+  LocationPicker,
+} from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
-import { useLoginLocations } from '../login.resource';
-import styles from './location-picker.scss';
-import { useDefaultLocation } from './location-picker.resource';
+import styles from './location-picker-view.scss';
+import { useDefaultLocation, useLocationCount } from './location-picker-view.resource';
 import type { ConfigSchema } from '../config-schema';
 
 interface LocationPickerProps {
@@ -22,17 +20,20 @@ interface LocationPickerProps {
   currentLocationUuid?: string;
 }
 
-const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, currentLocationUuid }) => {
+const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, currentLocationUuid }) => {
   const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
   const [searchParams] = useSearchParams();
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
-  const { defaultLocation, updateDefaultLocation, savePreference, setSavePreference, defaultLocationFhir } =
+  const { defaultLocation, updateDefaultLocation, savePreference, setSavePreference } =
     useDefaultLocation(isUpdateFlow);
-
-  const [searchTerm, setSearchTerm] = useState(null);
+  const {
+    isLoading: isLoadingLocationCount,
+    locationCount,
+    firstLocation,
+  } = useLocationCount(chooseLocation.useLoginLocationTag);
 
   const { user, sessionLocation } = useSession();
   const { currentUser, userProperties } = useMemo(
@@ -43,24 +44,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     }),
     [user],
   );
-
-  const {
-    locations: fetchedLocations,
-    isLoading,
-    hasMore,
-    loadingNewData,
-    setPage,
-  } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
-
-  const locations = useMemo(() => {
-    if (!defaultLocationFhir?.length || !fetchedLocations) {
-      return fetchedLocations;
-    }
-    return [
-      ...(defaultLocationFhir ?? []),
-      ...fetchedLocations?.filter(({ resource }) => resource.id !== defaultLocationFhir?.[0].resource.id),
-    ];
-  }, [defaultLocationFhir, fetchedLocations]);
 
   const [activeLocation, setActiveLocation] = useState(() => {
     if (currentLocationUuid && hideWelcomeMessage) {
@@ -103,15 +86,14 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
-    if (!isLoading && !searchTerm) {
-      if (!config.chooseLocation.enabled || locations?.length === 1) {
-        changeLocation(locations[0]?.resource.id, false);
-      }
-      if (!locations?.length) {
-        changeLocation();
-      }
+    if (isLoadingLocationCount) return;
+
+    if (locationCount == 0) {
+      changeLocation();
+    } else if (locationCount == 1 || !chooseLocation.enabled) {
+      changeLocation(firstLocation!.resource.id, true);
     }
-  }, [changeLocation, config.chooseLocation.enabled, isLoading, locations, searchTerm]);
+  }, [locationCount, isLoadingLocationCount]);
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
@@ -124,11 +106,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     }
   }, [changeLocation, isSubmitting, defaultLocation, isUpdateFlow]);
 
-  const search = (location: string) => {
-    setActiveLocation('');
-    setSearchTerm(location);
-  };
-
   const handleSubmit = useCallback(
     (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
@@ -139,29 +116,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     },
     [activeLocation, changeLocation, savePreference],
   );
-
-  // Infinite scroll
-  const observer = useRef(null);
-  const loadingIconRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (loadingNewData) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting && hasMore) {
-            setPage((page) => page + 1);
-          }
-        },
-        {
-          threshold: 1,
-        },
-      );
-      if (node) observer.current.observe(node);
-    },
-    [loadingNewData, hasMore, setPage],
-  );
-
-  const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
 
   return (
     <div className={styles.locationPickerContainer}>
@@ -178,62 +132,12 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
               )}
             </p>
           </div>
-          <Search
-            autoFocus
-            labelText={t('searchForLocation', 'Search for a location')}
-            id="search-1"
-            placeholder={t('searchForLocation', 'Search for a location')}
-            onChange={(event) => search(event.target.value)}
-            name="searchForLocation"
-            size="lg"
+          <LocationPicker
+            selectedLocationUuid={activeLocation}
+            defaultLocationUuid={userProperties.defaultLocation}
+            locationTag={chooseLocation.useLoginLocationTag && 'Login Location'}
+            onChange={(locationUuid) => setActiveLocation(locationUuid)}
           />
-          <div className={styles.searchResults}>
-            {isLoading ? (
-              <div className={styles.loadingContainer}>
-                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-              </div>
-            ) : (
-              <>
-                <div className={styles.locationResultsContainer}>
-                  {locations?.length > 0 ? (
-                    <RadioButtonGroup
-                      valueSelected={activeLocation}
-                      orientation="vertical"
-                      name="Login locations"
-                      onChange={(ev) => {
-                        setActiveLocation(ev.toString());
-                      }}
-                    >
-                      {locations.map((entry, i) => (
-                        <RadioButton
-                          className={styles.locationRadioButton}
-                          key={entry.resource.id}
-                          id={entry.resource.name}
-                          name={entry.resource.name}
-                          labelText={entry.resource.name}
-                          value={entry.resource.id}
-                          ref={i === reloadIndex ? loadingIconRef : null}
-                        />
-                      ))}
-                    </RadioButtonGroup>
-                  ) : (
-                    <div className={styles.emptyState}>
-                      <p className={styles.locationNotFound}>{t('noResultsToDisplay', 'No results to display')}</p>
-                    </div>
-                  )}
-                </div>
-                {hasMore && (
-                  <div className={styles.loadingIcon}>
-                    <InlineLoading description={t('loading', 'Loading')} />
-                  </div>
-                )}
-              </>
-            )}
-          </div>
           <div className={styles.confirmButton}>
             <Checkbox
               id="checkbox"
@@ -256,4 +160,4 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
   );
 };
 
-export default LocationPicker;
+export default LocationPickerView;

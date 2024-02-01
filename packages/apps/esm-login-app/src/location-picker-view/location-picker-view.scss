@@ -35,39 +35,6 @@
   color: $color-gray-70;
 }
 
-.searchResults {
-  @extend .bodyShort02;
-  max-height: 100%;
-  overflow-y: auto;
-  padding: 0rem spacing.$spacing-06;
-  background-color: $ui-01;
-  height: 25.5rem;
-}
-
-.resultsCount {
-  @extend .bodyShort01;
-  color: $color-gray-70;
-}
-
-.locationResultsContainer {
-  display: flex;
-  overflow-y: auto;
-  padding: spacing.$spacing-03 spacing.$spacing-01 0rem;
-}
-
-.locationRadioButton {
-  display: flex;
-  height: spacing.$spacing-09;
-  align-items: center;
-  @extend .bodyShort01;
-}
-
-.locationNotFound {
-  @extend .productiveHeading01;
-  color: $text-02;
-  margin-bottom: spacing.$spacing-05;
-}
-
 .confirmButton {
   padding: spacing.$spacing-06;
 
@@ -77,46 +44,6 @@
 
   button {
     width: 100%;
-  }
-}
-
-.radioButtonSkeleton {
-  margin-right: 0 !important;
-  margin-bottom: spacing.$spacing-07;
-}
-
-.radioButtonSkeleton span {
-  width: 100% !important;
-}
-
-.pagination {
-  background-color: $ui-01;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: spacing.$spacing-05;
-  border: spacing.$spacing-01 solid $ui-03;
-}
-
-.pagination > button:first-child,
-pagination > button:first-child:hover {
-  border-right: spacing.$spacing-01 solid $ui-03;
-}
-
-.pagination > button,
-.pagination > button:hover {
-  border-left: spacing.$spacing-01 solid $ui-03;
-}
-
-.loadingIcon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 50%;
-  margin: spacing.$spacing-05 auto;
-
-  :global(.cds--loading__stroke) {
-    @include brand-03(stroke);
   }
 }
 
