@@ -59,6 +59,7 @@ describe('useOnClickOutside', () => {
     ref.unmount();
 
     // verify
-    expect(spy).toHaveBeenCalledWith('click', expect.any(Function));
+    expect(spy).toHaveBeenCalledWith('mousedown', expect.any(Function));
+    expect(spy).toHaveBeenCalledWith('touchstart', expect.any(Function));
   });
 });

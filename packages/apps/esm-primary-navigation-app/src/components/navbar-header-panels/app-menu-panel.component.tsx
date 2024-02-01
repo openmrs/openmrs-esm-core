@@ -8,11 +8,11 @@ import styles from './app-menu-panel.scss';
 
 interface AppMenuProps {
   expanded: boolean;
-  hidePanel: () => void;
+  hidePanel: Parameters<typeof useOnClickOutside>[0];
 }
 
 const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
-  const appMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel, expanded);
+  const appMenuRef = useOnClickOutside(hidePanel, expanded);
   const config = useConfig();
   const { t } = useTranslation();
 
@@ -22,7 +22,6 @@ const AppMenuPanel: React.FC<AppMenuProps> = ({ expanded, hidePanel }) => {
       className={classNames({ [styles.headerPanel]: expanded })}
       aria-label="App Menu Panel"
       expanded={expanded}
-      onClick={() => hidePanel()}
     >
       <ExtensionSlot className={styles.menuLink} name="app-menu-slot" />
       {config?.externalRefLinks?.length > 0 && (
