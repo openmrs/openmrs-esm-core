@@ -34,11 +34,3 @@
 .spacedLogo {
   margin-left: 1rem;
 }
-
-.closeButton {
-  @include brand-01(background-color);
-  height: spacing.$spacing-09;
-  width: spacing.$spacing-09;
-  padding: spacing.$spacing-04;
-  margin-right: spacing.$spacing-02;
-}
