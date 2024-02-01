@@ -1,8 +1,0 @@
-{
-  "error": "Erreur",
-  "errorCopy": "Désolé, un problème est survenu lors de l'affichage de ces informations. Vous pouvez essayer de recharger cette page ou contacter l'administrateur du site en citant le code d'erreur ci-dessus.",
-  "errorLoadingLoginLocations": "Erreur lors du chargement des emplacements de connexion",
-  "loading": "Chargement",
-  "noResultsToDisplay": "Aucun résultat à afficher",
-  "searchForLocation": "Rechercher un emplacement"
-}
