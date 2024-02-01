@@ -466,7 +466,7 @@ export const locationResponseForNonExistingSearch = {
   },
 };
 
-export const locationResponseWithOneEntry = {
+export const outpatientClinicResponse = {
   data: {
     resourceType: 'Bundle',
     id: '301b3ad6-868a-48a6-bc3f-aaa8aa3f89a6',

@@ -12,7 +12,7 @@ import {
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import styles from './location-picker-view.scss';
-import { useDefaultLocation, useLocationCount } from './location-picker.resource';
+import { useDefaultLocation, useLocationCount } from './location-picker-view.resource';
 import type { ConfigSchema } from '../config-schema';
 
 interface LocationPickerProps {

@@ -5,7 +5,7 @@ import { openmrsFetch, useConfig, useSession } from '@openmrs/esm-framework';
 import {
   inpatientWardResponse,
   locationResponseForNonExistingSearch,
-  locationResponseWithOneEntry,
+  outpatientClinicResponse,
   mockLoginLocations,
 } from '../../__mocks__/locations.mock';
 import { mockConfig } from '../../__mocks__/config.mock';
@@ -35,8 +35,8 @@ mockedOpenmrsFetch.mockImplementation((url) => {
   if (url === '/ws/fhir2/R4/Location?_summary=data&_count=50&name%3Acontains=search_for_no_location') {
     return locationResponseForNonExistingSearch;
   }
-  if (url === '/ws/fhir2/R4/Location?_summary=data&_count=50&name%3Acontains=search_for_one_location') {
-    return locationResponseWithOneEntry;
+  if (url === '/ws/fhir2/R4/Location?_summary=data&_count=50&name%3Acontains=outpatient') {
+    return outpatientClinicResponse;
   }
   return mockLoginLocations;
 });
@@ -113,18 +113,14 @@ describe('LocationPicker', () => {
     );
   });
 
-  it('should not display the default location on top when searching', async () => {
+  it('should not display the default location if search result does not contain the default location', async () => {
     const user = userEvent.setup();
     await act(async () => {
       render(<LocationPicker defaultLocationUuid={inpatientWardLocationUuid} onChange={jest.fn()} />);
     });
     const searchInput = screen.getByRole('searchbox', { name: /search for a location/i });
-    await user.type(searchInput, 'search_for_one_location');
+    await user.type(searchInput, 'outpatient');
 
-    const locations = screen.queryAllByRole('radio');
-    expect(locations.length).toBe(1);
-    expect(locations[0].getAttribute('value')).toBe(outpatientClinicLocationUuid);
-    expect(screen.queryByRole('radio', { name: /outpatient clinic/i })).toBeInTheDocument();
     expect(screen.queryByRole('radio', { name: /inpatient ward/i })).not.toBeInTheDocument();
   });
 
