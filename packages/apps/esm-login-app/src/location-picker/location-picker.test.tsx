@@ -17,7 +17,7 @@ import {
 } from '../../__mocks__/locations.mock';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
-import LocationPickerView from './location-picker-view.component';
+import LocationPickerView from './location-picker.component';
 
 const fistLocation = {
   uuid: 'uuid_1',

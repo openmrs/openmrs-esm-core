@@ -8,11 +8,11 @@ import {
   useConfig,
   useConnectivity,
   useSession,
-  LocationPicker,
+  LocationPicker as LocationPickerComponent,
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
-import styles from './location-picker-view.scss';
-import { useDefaultLocation, useLocationCount } from './location-picker-view.resource';
+import styles from './location-picker.scss';
+import { useDefaultLocation, useLocationCount } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
 
 interface LocationPickerProps {
@@ -132,7 +132,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
               )}
             </p>
           </div>
-          <LocationPicker
+          <LocationPickerComponent
             selectedLocationUuid={activeLocation}
             defaultLocationUuid={userProperties.defaultLocation}
             locationTag={chooseLocation.useLoginLocationTag && 'Login Location'}
