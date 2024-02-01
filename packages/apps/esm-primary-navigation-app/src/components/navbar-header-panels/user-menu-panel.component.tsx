@@ -5,7 +5,7 @@ import styles from './user-menu-panel.scss';
 
 interface UserMenuPanelProps extends HeaderPanelProps {
   expanded: boolean;
-  hidePanel: () => void;
+  hidePanel: Parameters<typeof useOnClickOutside>[0];
 }
 
 /**
@@ -13,7 +13,7 @@ interface UserMenuPanelProps extends HeaderPanelProps {
  * general be wrapped in the `SwitcherItem` Carbon component.
  */
 const UserMenuPanel: React.FC<UserMenuPanelProps> = ({ expanded, hidePanel }) => {
-  const userMenuRef = useOnClickOutside<HTMLDivElement>(hidePanel, expanded);
+  const userMenuRef = useOnClickOutside(hidePanel, expanded);
 
   return (
     <HeaderPanel

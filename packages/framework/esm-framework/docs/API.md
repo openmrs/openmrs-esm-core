@@ -4758,7 +4758,7 @@ ___
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `handler` | (`event`: `Event`) => `void` | `undefined` |
+| `handler` | (`event`: `MouseEvent`) => `void` | `undefined` |
 | `active` | `boolean` | `true` |
 
 #### Returns

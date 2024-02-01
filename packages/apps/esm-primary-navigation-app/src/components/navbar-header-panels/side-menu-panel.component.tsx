@@ -1,28 +1,17 @@
 import React, { useEffect, useRef } from 'react';
-import { LeftNavMenu } from '@openmrs/esm-framework';
+import { LeftNavMenu, useOnClickOutside } from '@openmrs/esm-framework';
 
 interface SideMenuPanelProps {
   expanded: boolean;
-  hidePanel: () => void;
+  hidePanel: Parameters<typeof useOnClickOutside>[0];
 }
 
 const SideMenuPanel: React.FC<SideMenuPanelProps> = ({ expanded, hidePanel }) => {
-  const menuRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef?.current && !menuRef.current.contains(event.target)) {
-        hidePanel();
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, [menuRef, hidePanel]);
+  const menuRef = useOnClickOutside(hidePanel, expanded);
 
   useEffect(() => {
     window.addEventListener('popstate', hidePanel);
-    return window.addEventListener('popstate', hidePanel);
+    return window.removeEventListener('popstate', hidePanel);
   }, [hidePanel]);
 
   return expanded && <LeftNavMenu ref={menuRef} isChildOfHeader />;
