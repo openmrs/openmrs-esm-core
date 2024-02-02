@@ -15,6 +15,7 @@ export interface Attachment {
   dateTime: string;
   bytesMimeType: string;
   bytesContentFamily: string;
+  description?: string;
 }
 
 export interface AttachmentResponse {
@@ -23,4 +24,5 @@ export interface AttachmentResponse {
   comment: string;
   dateTime: string;
   uuid: string;
+  filename?: string;
 }

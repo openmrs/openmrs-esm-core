@@ -10,6 +10,7 @@
 - [bytesMimeType](Attachment.md#bytesmimetype)
 - [comment](Attachment.md#comment)
 - [dateTime](Attachment.md#datetime)
+- [description](Attachment.md#description)
 - [filename](Attachment.md#filename)
 - [id](Attachment.md#id)
 - [src](Attachment.md#src)
@@ -53,6 +54,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/attachments-types.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L15)
+
+___
+
+### description
+
+• `Optional` **description**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/attachments-types.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L18)
 
 ___
 
