@@ -8,7 +8,6 @@
 
 - [bytesContentFamily](Attachment.md#bytescontentfamily)
 - [bytesMimeType](Attachment.md#bytesmimetype)
-- [comment](Attachment.md#comment)
 - [dateTime](Attachment.md#datetime)
 - [description](Attachment.md#description)
 - [filename](Attachment.md#filename)
@@ -23,7 +22,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L17)
+[packages/framework/esm-api/src/types/attachments-types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L16)
 
 ___
 
@@ -33,17 +32,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L16)
-
-___
-
-### comment
-
-• **comment**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/attachments-types.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L14)
+[packages/framework/esm-api/src/types/attachments-types.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L15)
 
 ___
 
@@ -53,7 +42,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L15)
+[packages/framework/esm-api/src/types/attachments-types.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L14)
 
 ___
 
@@ -63,7 +52,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L18)
+[packages/framework/esm-api/src/types/attachments-types.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L17)
 
 ___
 

@@ -11,7 +11,6 @@ export interface Attachment {
   id: string;
   src: string;
   filename: string;
-  comment: string;
   dateTime: string;
   bytesMimeType: string;
   bytesContentFamily: string;
