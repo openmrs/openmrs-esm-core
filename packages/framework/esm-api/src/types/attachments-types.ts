@@ -10,12 +10,13 @@ export interface UploadedFile {
 export interface Attachment {
   id: string;
   src: string;
-  title: string;
-  description: string;
+  filename: string;
+  comment: string;
   dateTime: string;
   bytesMimeType: string;
   bytesContentFamily: string;
 }
+
 export interface AttachmentResponse {
   bytesContentFamily: string;
   bytesMimeType: string;
