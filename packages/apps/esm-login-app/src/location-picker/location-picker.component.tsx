@@ -10,13 +10,12 @@ import {
   RadioButtonGroup,
   RadioButtonSkeleton,
 } from '@carbon/react';
-import { navigate, setSessionLocation, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+import { navigate, setSessionLocation, showNotification, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
 import { useDefaultLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
-import { Toast } from '@openmrs/esm-styleguide/src/toasts/toast.component';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
@@ -53,9 +52,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
   } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
 
   const locations = useMemo(() => {
-    // for testing the case that we have found no locations
-    // return []
-
     if (!defaultLocationFhir?.length || !fetchedLocations) {
       return fetchedLocations;
     }
@@ -117,6 +113,11 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
         changeLocation(locations[0]?.resource.id, false);
       }
       if (!locations?.length) {
+        showNotification({
+          title: t('Error', 'Error'),
+          kind: 'error',
+          description: "No locations were found for this system. Please contact your administrator",
+        });
         changeLocation();
       }
     }
@@ -233,12 +234,11 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
                     ) : (
                       <div className={styles.emptyState}>
                           <p className={styles.locationNotFound}>{t('noResultsToDisplay', 'No results to display')}</p>
-                          <Toast toast={{id: 123, description: "No locations were found for this instance. Please contact your system administrator.", kind: 'error'}} closeToast={() => {}}/>
                     </div>
               )}
 
             </div>
-            {hasMore && (
+            {!locations?.length || hasMore && (
               <div className={styles.loadingIcon}>
                 <InlineLoading description={t('loading', 'Loading')} />
               </div>
