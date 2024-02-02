@@ -991,7 +991,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/attachments.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L39)
+[packages/framework/esm-api/src/attachments.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/attachments.ts#L38)
 
 ___
 

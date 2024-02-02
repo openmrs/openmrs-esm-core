@@ -19,7 +19,6 @@ export function getAttachments(patientUuid: string, includeEncounterless: boolea
 export async function createAttachment(patientUuid: string, fileToUpload: UploadedFile) {
   const formData = new FormData();
 
-  formData.append('fileName', fileToUpload.fileName);
   formData.append('fileCaption', fileToUpload.fileDescription);
   formData.append('patient', patientUuid);
 
