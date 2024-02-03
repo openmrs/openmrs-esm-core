@@ -10,7 +10,15 @@ import {
   RadioButtonGroup,
   RadioButtonSkeleton,
 } from '@carbon/react';
-import { navigate, setSessionLocation, showNotification, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+import {
+  navigate,
+  setSessionLocation,
+  showNotification,
+  showToast,
+  useConfig,
+  useConnectivity,
+  useSession,
+} from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
@@ -83,21 +91,17 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
       const referrer = state?.referrer;
       const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
 
-      const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve({"redirectToHome": false});
+      const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.reject();
 
       updateDefaultLocation(locationUuid, saveUserPreference);
-      sessionDefined.then((obj) => {
-        if ((referrer && !['/', '/login', '/login/location'].includes(referrer))) {
-          if (!obj || obj?.redirectToHome) {
-            navigate({ to: '${openmrsSpaBase}' + referrer });
-            return;
-          }
+      sessionDefined.then(() => {
+        if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
+          navigate({ to: '${openmrsSpaBase}' + referrer });
+          return;
         }
-        if ((returnToUrl && returnToUrl !== '/')) {
-          if (!obj || obj?.redirectToHome) {
-            navigate({ to: returnToUrl });
-          }
-        } else if (!obj || obj?.redirectToHome) {
+        if (returnToUrl && returnToUrl !== '/') {
+          navigate({ to: returnToUrl });
+        } else {
           navigate({ to: config.links.loginSuccess });
         }
         return;
@@ -113,10 +117,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
         changeLocation(locations[0]?.resource.id, false);
       }
       if (!locations?.length) {
-        showNotification({
+        showToast({
           title: t('Error', 'Error'),
           kind: 'error',
-          description: "No locations were found for this system. Please contact your administrator",
+          description: 'No locations were found for this system. Please contact your administrator',
         });
         changeLocation();
       }
@@ -174,99 +178,99 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
   const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
 
   return (
-  <div className={styles.locationPickerContainer}>
-  <form onSubmit={handleSubmit}>
-    <div className={styles.locationCard}>
-      <div className={styles.paddedContainer}>
-        <p className={styles.welcomeTitle}>
-          {t('welcome', 'Welcome')} {currentUser}
-        </p>
-        <p className={styles.welcomeMessage}>
-          {t(
-            'selectYourLocation',
-            'Select your location from the list below. Use the search bar to find your location.',
-          )}
-        </p>
-      </div>
-      <Search
-        autoFocus
-        labelText={t('searchForLocation', 'Search for a location')}
-        id="search-1"
-        placeholder={t('searchForLocation', 'Search for a location')}
-        onChange={(event) => search(event.target.value)}
-        name="searchForLocation"
-        size="lg"
-      />
-      <div className={styles.searchResults}>
-        {isLoading ? (
-          <div className={styles.loadingContainer}>
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-            <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
-          </div>
-        ) : (
-          <>
-              <div className={styles.locationResultsContainer}>
-              {locations?.length > 0 ? (
-                <RadioButtonGroup
-                  valueSelected={activeLocation}
-                  orientation="vertical"
-                  name="Login locations"
-                  onChange={(ev) => {
-                    setActiveLocation(ev.toString());
-                  }}
-                >
-                  {locations.map((entry, i) => (
-                    <RadioButton
-                      className={styles.locationRadioButton}
-                      key={entry.resource.id}
-                      id={entry.resource.name}
-                      name={entry.resource.name}
-                      labelText={entry.resource.name}
-                      value={entry.resource.id}
-                      ref={i === reloadIndex ? loadingIconRef : null}
-                    />
-                  ))}
-
-                </RadioButtonGroup>
-                    ) : (
-                      <div className={styles.emptyState}>
-                          <p className={styles.locationNotFound}>{t('noResultsToDisplay', 'No results to display')}</p>
-                    </div>
+    <div className={styles.locationPickerContainer}>
+      <form onSubmit={handleSubmit}>
+        <div className={styles.locationCard}>
+          <div className={styles.paddedContainer}>
+            <p className={styles.welcomeTitle}>
+              {t('welcome', 'Welcome')} {currentUser}
+            </p>
+            <p className={styles.welcomeMessage}>
+              {t(
+                'selectYourLocation',
+                'Select your location from the list below. Use the search bar to find your location.',
               )}
-
-            </div>
-            {!locations?.length || hasMore && (
-              <div className={styles.loadingIcon}>
-                <InlineLoading description={t('loading', 'Loading')} />
-              </div>
-            )}
-          </>
-        )}
-      </div>
-      <div className={styles.confirmButton}>
-        <Checkbox
-          id="checkbox"
-          className={styles.savePreferenceCheckbox}
-          labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
-          checked={savePreference}
-          onChange={(_, { checked }) => setSavePreference(checked)}
-        />
-        <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
-          {isSubmitting ? (
-            <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
-          ) : (
-            <span>{t('confirm', 'Confirm')}</span>
+            </p>
+          </div>
+          {locations?.length > 0 && (
+            <Search
+              autoFocus
+              labelText={t('searchForLocation', 'Search for a location')}
+              id="search-1"
+              placeholder={t('searchForLocation', 'Search for a location')}
+              onChange={(event) => search(event.target.value)}
+              name="searchForLocation"
+              size="lg"
+            />
           )}
-        </Button>
-      </div>
+          <div className={styles.searchResults}>
+            {isLoading ? (
+              <div className={styles.loadingContainer}>
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+                <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
+              </div>
+            ) : (
+              <>
+                <div className={styles.locationResultsContainer}>
+                  {locations?.length > 0 ? (
+                    <RadioButtonGroup
+                      valueSelected={activeLocation}
+                      orientation="vertical"
+                      name="Login locations"
+                      onChange={(ev) => {
+                        setActiveLocation(ev.toString());
+                      }}
+                    >
+                      {locations.map((entry, i) => (
+                        <RadioButton
+                          className={styles.locationRadioButton}
+                          key={entry.resource.id}
+                          id={entry.resource.name}
+                          name={entry.resource.name}
+                          labelText={entry.resource.name}
+                          value={entry.resource.id}
+                          ref={i === reloadIndex ? loadingIconRef : null}
+                        />
+                      ))}
+                    </RadioButtonGroup>
+                  ) : (
+                    <div className={styles.emptyState}>
+                      <p className={styles.locationNotFound}>{t('noResultsToDisplay', 'No results to display')}</p>
+                    </div>
+                  )}
+                </div>
+                {!locations?.length ||
+                  (hasMore && (
+                    <div className={styles.loadingIcon}>
+                      <InlineLoading description={t('loading', 'Loading')} />
+                    </div>
+                  ))}
+              </>
+            )}
+          </div>
+          <div className={styles.confirmButton}>
+            <Checkbox
+              id="checkbox"
+              className={styles.savePreferenceCheckbox}
+              labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
+              checked={savePreference}
+              onChange={(_, { checked }) => setSavePreference(checked)}
+            />
+            <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
+              {isSubmitting ? (
+                <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
+              ) : (
+                <span>{t('confirm', 'Confirm')}</span>
+              )}
+            </Button>
+          </div>
+        </div>
+      </form>
     </div>
-  </form>
-    </div>
-
-
-)};
+  );
+};
 
 export default LocationPicker;
