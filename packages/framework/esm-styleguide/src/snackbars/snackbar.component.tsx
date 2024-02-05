@@ -1,5 +1,5 @@
 /** @module @category UI */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ActionableNotification } from '@carbon/react';
 import classnames from 'classnames';
 import styles from './snackbar.module.scss';
@@ -18,6 +18,7 @@ export interface SnackbarDescriptor {
   progressActionLabel?: string;
   subtitle?: string;
   timeoutInMs?: number;
+  userDismissible?: boolean;
   title: string;
 }
 
@@ -36,11 +37,12 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) =
     progressActionLabel,
     subtitle,
     timeoutInMs,
+    userDismissible,
     title,
     ...props
   } = snackbar;
 
-  const [actionText, setActionText] = useState(actionButtonLabel);
+  const [actionText, setActionText] = useState(actionButtonLabel || '');
   const [applyAnimation, setApplyAnimation] = useState(true);
 
   const [isClosing, setIsClosing] = useState(false);
@@ -57,11 +59,14 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) =
   };
 
   useEffect(() => {
-    if (timeoutInMs) {
-      const timeoutId = setTimeout(onCloseSnackbar, timeoutInMs);
+    // Snackbar can auto clear after 5s if it's a success or if it's warning and not user dismissible
+    const canAutoClear = kind === 'success' || (!userDismissible && (kind === 'warning' || kind === 'warning-alt'));
+
+    if (timeoutInMs || canAutoClear) {
+      const timeoutId = setTimeout(onCloseSnackbar, timeoutInMs || 5000);
       return () => clearTimeout(timeoutId);
     }
-  }, [timeoutInMs, onCloseSnackbar]);
+  }, [timeoutInMs, userDismissible, kind, onCloseSnackbar]);
 
   useEffect(() => {
     setApplyAnimation(false);
@@ -73,7 +78,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) =
 
   return (
     <ActionableNotification
-      actionButtonLabel={actionText || ''}
+      actionButtonLabel={actionText}
       ariaLabel="Close snackbar"
       className={classnames(styles.slideIn, {
         [styles.animated]: applyAnimation,
