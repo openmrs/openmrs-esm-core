@@ -23,11 +23,6 @@ export const configSchema = {
       _default: '${openmrsSpaBase}/home',
       _description: 'The link to redirect to when the logo is clicked',
     },
-    width: {
-      _type: Type.Number, 
-      _default: 110, 
-      _description: 'The width of the logo in pixels'
-    }
   },
   externalRefLinks: {
     _type: Type.Array,
