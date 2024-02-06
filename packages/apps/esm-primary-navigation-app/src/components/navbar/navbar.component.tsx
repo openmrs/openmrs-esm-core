@@ -31,15 +31,16 @@ const HeaderItems: React.FC = () => {
   const userMenuItems = useConnectedExtensions('user-panel-slot');
   const isActivePanel = useCallback((panelName: string) => activeHeaderPanel === panelName, [activeHeaderPanel]);
 
-  const togglePanel = useCallback(
-    (panelName: string) =>
-      setActiveHeaderPanel((activeHeaderPanel) => (activeHeaderPanel === panelName ? null : panelName)),
+  const togglePanel = useCallback((panelName: string) => {
+    setActiveHeaderPanel((activeHeaderPanel) => (activeHeaderPanel === panelName ? null : panelName));
+  }, []);
+
+  const hidePanel = useCallback(
+    (panelName: string) => () => {
+      setActiveHeaderPanel((activeHeaderPanel) => (activeHeaderPanel === panelName ? null : activeHeaderPanel));
+    },
     [],
   );
-
-  const hidePanel = useCallback(() => {
-    setActiveHeaderPanel(null);
-  }, []);
 
   const showHamburger = useMemo(() => !isDesktop(layout) && navMenuItems.length > 0, [navMenuItems.length, layout]);
   const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
@@ -55,7 +56,6 @@ const HeaderItems: React.FC = () => {
             className={styles.headerMenuButton}
             onClick={(event) => {
               togglePanel('sideMenu');
-              event.stopPropagation();
             }}
             isActive={isActivePanel('sideMenu')}
           />
@@ -86,9 +86,8 @@ const HeaderItems: React.FC = () => {
               enterDelayMs={500}
               name="User"
               isActive={isActivePanel('userMenu')}
-              onClick={(event) => {
+              onClick={() => {
                 togglePanel('userMenu');
-                event.stopPropagation();
               }}
             >
               {isActivePanel('userMenu') ? <Close size={20} /> : <UserAvatarFilledAlt size={20} />}
@@ -105,19 +104,18 @@ const HeaderItems: React.FC = () => {
               enterDelayMs={500}
               isActive={isActivePanel('appMenu')}
               tooltipAlignment="end"
-              onClick={(event) => {
+              onClick={() => {
                 togglePanel('appMenu');
-                event.stopPropagation();
               }}
             >
               {isActivePanel('appMenu') ? <Close size={20} /> : <Switcher size={20} />}
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>
-        {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel} expanded={isActivePanel('sideMenu')} />}
-        {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel} />}
+        {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />}
+        {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel('appMenu')} />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
-        {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel} />}
+        {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel('userMenu')} />}
       </Header>
     </>
   );

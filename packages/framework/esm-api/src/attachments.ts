@@ -19,7 +19,7 @@ export function getAttachments(patientUuid: string, includeEncounterless: boolea
 export async function createAttachment(patientUuid: string, fileToUpload: UploadedFile) {
   const formData = new FormData();
 
-  formData.append('fileCaption', fileToUpload.fileName);
+  formData.append('fileCaption', fileToUpload.fileDescription);
   formData.append('patient', patientUuid);
 
   if (fileToUpload.file) {
@@ -28,6 +28,7 @@ export async function createAttachment(patientUuid: string, fileToUpload: Upload
     formData.append('file', new File([''], fileToUpload.fileName), fileToUpload.fileName);
     formData.append('base64Content', fileToUpload.base64Content);
   }
+
   return openmrsFetch(`${attachmentUrl}`, {
     method: 'POST',
     body: formData,

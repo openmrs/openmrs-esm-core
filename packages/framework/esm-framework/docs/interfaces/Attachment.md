@@ -10,9 +10,9 @@
 - [bytesMimeType](Attachment.md#bytesmimetype)
 - [dateTime](Attachment.md#datetime)
 - [description](Attachment.md#description)
+- [filename](Attachment.md#filename)
 - [id](Attachment.md#id)
 - [src](Attachment.md#src)
-- [title](Attachment.md#title)
 
 ## Properties
 
@@ -22,7 +22,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L17)
+[packages/framework/esm-api/src/types/attachments-types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L16)
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L16)
+[packages/framework/esm-api/src/types/attachments-types.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L15)
 
 ___
 
@@ -42,17 +42,27 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L15)
+[packages/framework/esm-api/src/types/attachments-types.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L14)
 
 ___
 
 ### description
 
-• **description**: `string`
+• `Optional` **description**: `string`
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L14)
+[packages/framework/esm-api/src/types/attachments-types.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L17)
+
+___
+
+### filename
+
+• **filename**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/attachments-types.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L13)
 
 ___
 
@@ -73,13 +83,3 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/attachments-types.ts:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L12)
-
-___
-
-### title
-
-• **title**: `string`
-
-#### Defined in
-
-[packages/framework/esm-api/src/types/attachments-types.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L13)

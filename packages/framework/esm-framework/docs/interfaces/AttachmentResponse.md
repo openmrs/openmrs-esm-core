@@ -10,6 +10,7 @@
 - [bytesMimeType](AttachmentResponse.md#bytesmimetype)
 - [comment](AttachmentResponse.md#comment)
 - [dateTime](AttachmentResponse.md#datetime)
+- [filename](AttachmentResponse.md#filename)
 - [uuid](AttachmentResponse.md#uuid)
 
 ## Properties
@@ -20,7 +21,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L20)
+[packages/framework/esm-api/src/types/attachments-types.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L21)
 
 ___
 
@@ -30,7 +31,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L21)
+[packages/framework/esm-api/src/types/attachments-types.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L22)
 
 ___
 
@@ -40,7 +41,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L22)
+[packages/framework/esm-api/src/types/attachments-types.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L23)
 
 ___
 
@@ -50,7 +51,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L23)
+[packages/framework/esm-api/src/types/attachments-types.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L24)
+
+___
+
+### filename
+
+• `Optional` **filename**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/attachments-types.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L26)
 
 ___
 
@@ -60,4 +71,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/attachments-types.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L24)
+[packages/framework/esm-api/src/types/attachments-types.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/attachments-types.ts#L25)
