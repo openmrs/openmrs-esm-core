@@ -9,7 +9,7 @@ export type PostUserProperties = (
 
 export async function postUserPropertiesOnline(
   userUuid: string,
-  userProperties: Record<string, unknown>,
+  userProperties: Record<string, string>,
   abortController: AbortController,
 ): Promise<void> {
   await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
@@ -25,7 +25,7 @@ export async function postUserPropertiesOnline(
 
 export async function postUserPropertiesOffline(
   userUuid: string,
-  userProperties: Record<string, unknown>,
+  userProperties: Record<string, string>,
 ): Promise<void> {
   await queueSynchronizationItemFor(userUuid, userPropertyChange, userProperties, {
     displayName: 'User Language Change',
