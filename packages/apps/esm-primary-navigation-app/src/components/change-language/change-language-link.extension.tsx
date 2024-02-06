@@ -10,19 +10,17 @@ export function ChangeLanguageLink() {
   const { t } = useTranslation();
   const session = useSession();
 
-  const launchChangeModal = useCallback(() => {
-    showModal('change-language-modal');
-  }, []);
+  const launchChangeLanguageModal = useCallback(() => showModal('change-language-modal'), []);
 
   const languageNames = new Intl.DisplayNames([session?.locale], { type: 'language' });
 
   return (
-    <SwitcherItem className={styles.panelItemContainer} aria-label="Change language">
+    <SwitcherItem className={styles.panelItemContainer} aria-label={t('changeLanguage', 'Change language')}>
       <div>
         <Language size={20} />
         <p>{languageNames.of(session?.locale)}</p>
       </div>
-      <Button kind="ghost" onClick={launchChangeModal}>
+      <Button kind="ghost" onClick={launchChangeLanguageModal}>
         {t('change', 'Change')}
       </Button>
     </SwitcherItem>
