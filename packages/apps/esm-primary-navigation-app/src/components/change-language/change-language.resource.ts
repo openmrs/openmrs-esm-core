@@ -9,7 +9,7 @@ export type PostUserProperties = (
 
 export async function postUserPropertiesOnline(
   userUuid: string,
-  userProperties: any,
+  userProperties: Record<string, unknown>,
   abortController: AbortController,
 ): Promise<void> {
   await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {

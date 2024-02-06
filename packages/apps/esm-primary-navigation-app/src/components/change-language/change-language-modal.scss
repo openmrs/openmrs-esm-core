@@ -4,7 +4,6 @@
 .languageOptionsContainer {
   display: flex;
   flex-direction: column;
-  margin-left: 2em;
   max-height: 28rem;
 }
 
@@ -13,4 +12,14 @@
   height: spacing.$spacing-09;
   align-items: center;
   @extend .bodyShort01;
+}
+
+.submitButton {
+  :global(.cds--inline-loading) {
+    min-height: 1rem !important;
+  }
+
+  :global(.cds--inline-loading__text) {
+    font-size: unset !important;
+  }
 }
