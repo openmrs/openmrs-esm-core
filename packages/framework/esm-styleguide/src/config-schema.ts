@@ -1,4 +1,4 @@
-import { Type } from '@openmrs/esm-framework';
+import { ConfigSchema, Type, validators } from '@openmrs/esm-framework';
 
 export const esmStyleGuideSchema = {
   'Brand color #1': {
@@ -15,8 +15,13 @@ export const esmStyleGuideSchema = {
   },
   preferredCalendar: {
     _type: Type.Object,
+    _description: "Keys should be locale codes, and values should be the preferred calendar for that locale. For example, {'am': 'ethiopic'}.",
     _default: {
       am: 'ethiopic',
     },
+    _elements: {
+      _validators: [validators.oneOf(
+        ['buddhist', 'chinese', 'coptic', 'dangi', 'ethioaa', 'ethiopic', 'gregory', 'hebrew', 'indian', 'islamic', 'islamic-umalqura', 'islamic-tbla', 'islamic-civil', 'islamic-rgsa', 'iso8601', 'japanese', 'persian', 'roc', 'islamicc'])]
+    }
   },
 };

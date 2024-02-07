@@ -13,6 +13,8 @@ export * from './modals';
 export * from './left-nav';
 export * from './error-state';
 export * from './datepicker';
+export * from './responsive-wrapper';
+export * from './patient-banner';
 
 defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
 setupBranding();
