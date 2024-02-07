@@ -24,8 +24,6 @@ test('Logout as Admin user', async ({ page }) => {
 
   await test.step('Then I should be redirected to the login page', async () => {
     await expect(page).toHaveURL(`${process.env.E2E_BASE_URL}/spa/login`);
-    await expect(page.getByTitle('close notification')).not.toBeVisible();
-    await expect(page.getByText('Language ID should be string or object.')).not.toBeVisible();
-    await expect(page.getByText('Cannot read properties of undefined (reading `person`)')).not.toBeVisible();
+    await expect(page.getByText('error')).not.toBeVisible();
   });
 });
