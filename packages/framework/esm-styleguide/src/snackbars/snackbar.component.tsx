@@ -18,7 +18,7 @@ export interface SnackbarDescriptor {
   progressActionLabel?: string;
   subtitle?: string;
   timeoutInMs?: number;
-  userDismissible?: boolean;
+  autoClose?: boolean;
   title: string;
 }
 
@@ -28,7 +28,7 @@ export interface SnackbarMeta extends SnackbarDescriptor {
 
 export type SnackbarType = 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
 
-export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) => {
+export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: removeSnackBarFromDom }) => {
   const {
     actionButtonLabel,
     isLowContrast,
@@ -36,8 +36,8 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) =
     onActionButtonClick = () => {},
     progressActionLabel,
     subtitle,
-    timeoutInMs,
-    userDismissible,
+    timeoutInMs = 5000,
+    autoClose = kind !== 'error',
     title,
     ...props
   } = snackbar;
@@ -46,6 +46,12 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) =
   const [applyAnimation, setApplyAnimation] = useState(true);
 
   const [isClosing, setIsClosing] = useState(false);
+
+  const closeSnackbar = () => {
+    // This is to add a slide out animation before closing the snackbar
+    // This animations lasts for 250ms, thus the timeout
+    setTimeout(removeSnackBarFromDom, 250);
+  };
 
   const onCloseSnackbar = useCallback(() => {
     setIsClosing(true);
@@ -59,14 +65,11 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) =
   };
 
   useEffect(() => {
-    // Snackbar can auto clear after 5s if it's a success or if it's warning and not user dismissible
-    const canAutoClear = kind === 'success' || (!userDismissible && (kind === 'warning' || kind === 'warning-alt'));
-
-    if (timeoutInMs || canAutoClear) {
-      const timeoutId = setTimeout(onCloseSnackbar, timeoutInMs || 5000);
+    if (autoClose) {
+      const timeoutId = setTimeout(onCloseSnackbar, timeoutInMs);
       return () => clearTimeout(timeoutId);
     }
-  }, [timeoutInMs, userDismissible, kind, onCloseSnackbar]);
+  }, [timeoutInMs, autoClose, onCloseSnackbar]);
 
   useEffect(() => {
     setApplyAnimation(false);
