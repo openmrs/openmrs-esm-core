@@ -4,14 +4,8 @@ import styles from './logo.scss';
 
 const Logo: React.FC = () => {
   const { logo } = useConfig();
-  const maxWidth = 300; // Maximum width of the logo
 
-   // Preload image to get dimensions
-      const img = new Image();
-      img.src = interpolateUrl(logo.src);
-
-    const logoWidth = img.width || 110; //default width 
-
+    const logoWidth = 110; //default width for the omrs logo
 
   return (
     <>
@@ -19,8 +13,6 @@ const Logo: React.FC = () => {
         <img
           className={styles.logo}
           src={interpolateUrl(logo.src)}
-          alt={logo.alt}
-          width={logoWidth}
           height={40}
         />
       ) : logo?.name ? (
