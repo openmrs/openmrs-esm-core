@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ChangeLanguageModal from './change-language.modal';
+import { render, screen } from '@testing-library/react';
 import { useSession } from '@openmrs/esm-framework';
+import ChangeLanguageModal from './change-language.modal';
 
-const mockUser: any = {
+const mockUser = {
   uuid: 'uuid',
   userProperties: {
     defaultLocale: 'fr',
@@ -32,7 +32,7 @@ describe(`Change Language Modal`, () => {
     render(<ChangeLanguageModal close={jest.fn()} />);
     expect(screen.getByRole('radio', { name: /français/ })).toBeChecked();
     await user.click(screen.getByRole('radio', { name: /english/i }));
-    await user.click(screen.getByRole('button', { name: /apply/i }));
+    await user.click(screen.getByRole('button', { name: /change/i }));
     expect(mockPostUserPropertiesOnline).toHaveBeenCalledWith(
       mockUser.uuid,
       { defaultLocale: 'en' },
