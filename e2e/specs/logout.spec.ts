@@ -1,8 +1,15 @@
 import { test } from '../core';
 import { expect } from '@playwright/test';
+import { HomePage } from '../pages';
 
-test('Logout as Admin user', async ({ page, api }) => {
-  await test.step('When I click the `User` button', async () => {
+test('Logout as Admin user', async ({ page }) => {
+  const homePage = new HomePage(page);
+
+  await test.step('When I visit the home page', async () => {
+    await homePage.goto();
+  });
+
+  await test.step('And I click the `User` button', async () => {
     await page.getByRole('button', { name: /user/i }).click();
   });
 
