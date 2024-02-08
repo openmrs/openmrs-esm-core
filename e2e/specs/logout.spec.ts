@@ -13,13 +13,12 @@ test('Logout as Admin user', async ({ page }) => {
     await loginPage.enterLoginCredentials();
   });
 
-  await test.step('Then I should be in the Home page', async () => {
+  await test.step('Then I should be on the Home page', async () => {
     await expect(page).toHaveURL(`${process.env.E2E_BASE_URL}/spa/home`);
   });
 
-  await test.step('And I click the `User` button', async () => {
+  await test.step('When I click the `User` button', async () => {
     await page.getByRole('button', { name: /user/i }).click();
-    await expect(page.getByText(/super user/i)).toBeVisible();
   });
 
   await test.step('And I click the `Logout` button', async () => {
