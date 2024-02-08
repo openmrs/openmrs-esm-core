@@ -25,16 +25,23 @@
   .patientName {
     color: $ui-01;
   }
-  
-  .demographics, .row, .identifierTag, .identifier, .contactDetails .heading {
+
+  .demographics,
+  .row,
+  .identifierTag,
+  .identifier,
+  .contactDetails .heading {
     color: $ui-02;
   }
-  
-  .toggleContactDetailsButton, .toggleContactDetailsButton > svg, .actionsButtonText {
+
+  .toggleContactDetailsButton,
+  .toggleContactDetailsButton > svg,
+  .actionsButtonText {
     color: colors.$blue-40;
   }
 
-  &:focus, &:hover {
+  &:focus,
+  &:hover {
     background-color: colors.$gray-90;
   }
 }
@@ -44,7 +51,7 @@
 }
 
 .patientName {
-  @include type.type-style("heading-03");
+  @include type.type-style('heading-03');
   margin-right: 0.25rem;
 }
 
@@ -67,7 +74,7 @@
 }
 
 .demographics {
-  @include type.type-style("body-compact-02");
+  @include type.type-style('body-compact-02');
   color: $text-02;
   margin-top: 0.375rem;
 }
@@ -90,7 +97,7 @@
 }
 
 .identifiers {
-  @include type.type-style("body-compact-02");
+  @include type.type-style('body-compact-02');
   color: $ui-04;
   display: flex;
   flex-wrap: wrap;
@@ -100,7 +107,6 @@
   display: flex;
   align-items: center;
   margin-right: 0.75rem;
-
 }
 
 .tag {
@@ -116,7 +122,7 @@
 }
 
 .actionsButtonText {
-  @include type.type-style("body-compact-01");
+  @include type.type-style('body-compact-01');
   color: $interactive-01;
 }
 
