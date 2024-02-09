@@ -11,7 +11,7 @@ export type ResponsiveWrapperProps = {
  * On desktop, it renders the children as is, while on a tablet, it wraps them in a Carbon Layer https://react.carbondesignsystem.com/?path=/docs/components-layer--overview component.
  * This provides a light background for form inputs on tablets, in accordance with the design requirements.
  */
-export default function ResponsiveWrapper({ children }: ResponsiveWrapperProps) {
+export function ResponsiveWrapper({ children }: ResponsiveWrapperProps) {
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
 
