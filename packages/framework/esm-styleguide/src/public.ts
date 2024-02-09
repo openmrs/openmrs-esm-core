@@ -12,3 +12,4 @@ export { type SnackbarDescriptor, type SnackbarType, type SnackbarMeta } from '.
 export * from './left-nav';
 export * from './error-state';
 export * from './datepicker';
+export * from './responsive-wrapper';
