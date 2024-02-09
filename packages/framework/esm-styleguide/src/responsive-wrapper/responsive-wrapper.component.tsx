@@ -2,7 +2,7 @@ import React from 'react';
 import { Layer } from '@carbon/react';
 import { useLayoutType } from '@openmrs/esm-framework';
 
-type ResponsiveWrapperProps = {
+export type ResponsiveWrapperProps = {
   children: React.ReactNode;
 };
 
