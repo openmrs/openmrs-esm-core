@@ -47,11 +47,11 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
 
   const [isClosing, setIsClosing] = useState(false);
 
-  const closeSnackbar = () => {
+  const closeSnackbar = useCallback(() => {
     // This is to add a slide out animation before closing the snackbar
-    // This animations lasts for 250ms, thus the timeout
+    // The animation lasts for 250ms, thus the timeout
     setTimeout(removeSnackBarFromDom, 250);
-  };
+  }, [removeSnackBarFromDom]);
 
   const onCloseSnackbar = useCallback(() => {
     setIsClosing(true);
