@@ -13,7 +13,6 @@ import {
 import {
   navigate,
   setSessionLocation,
-  showNotification,
   showToast,
   useConfig,
   useConnectivity,
@@ -84,8 +83,8 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
 
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
-      if (locationUuid) {
-        setIsSubmitting(true);
+      if (!locationUuid) {
+        return;
       }
 
       const referrer = state?.referrer;
@@ -118,7 +117,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
       }
       if (!locations?.length) {
         showToast({
-          title: t('Error', 'Error'),
+          title: t('error', 'Error'),
           kind: 'error',
           description: 'No locations were found for this system. Please contact your administrator',
         });
@@ -242,12 +241,11 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
                     </div>
                   )}
                 </div>
-                {!locations?.length ||
-                  (hasMore && (
-                    <div className={styles.loadingIcon}>
-                      <InlineLoading description={t('loading', 'Loading')} />
-                    </div>
-                  ))}
+                {hasMore && (
+                  <div className={styles.loadingIcon}>
+                    <InlineLoading description={t('loading', 'Loading')} />
+                  </div>
+                )}
               </>
             )}
           </div>
