@@ -30,19 +30,19 @@ export type SnackbarType = 'error' | 'info' | 'info-square' | 'success' | 'warni
 
 export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: removeSnackBarFromDom }) => {
   const {
-    actionButtonLabel,
-    isLowContrast,
-    kind,
+    actionButtonLabel = '',
+    isLowContrast = true,
+    kind = 'info',
     onActionButtonClick = () => {},
     progressActionLabel,
-    subtitle,
+    subtitle = '',
     timeoutInMs = 5000,
     autoClose = kind !== 'error',
     title,
     ...props
   } = snackbar;
 
-  const [actionText, setActionText] = useState(actionButtonLabel || '');
+  const [actionText, setActionText] = useState(actionButtonLabel);
   const [applyAnimation, setApplyAnimation] = useState(true);
 
   const [isClosing, setIsClosing] = useState(false);
@@ -88,12 +88,12 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
         [styles.slideOut]: isClosing,
       })}
       inline
-      kind={kind || 'info'}
+      kind={kind}
       lowContrast={isLowContrast}
       onActionButtonClick={handleActionClick}
       onClose={closeSnackbar}
       statusIconDescription="Snackbar notification"
-      subtitle={subtitle || ''}
+      subtitle={subtitle}
       title={title}
       {...props}
     />
