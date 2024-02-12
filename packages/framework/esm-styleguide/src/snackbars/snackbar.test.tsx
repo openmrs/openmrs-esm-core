@@ -36,7 +36,7 @@ describe('Snackbar component', () => {
     const { getByLabelText } = render(<Snackbar {...snackbarProps} />);
     fireEvent.click(getByLabelText('Close snackbar'));
 
-    waitFor(() => expect(closeSnackbarMock).toHaveBeenCalled(), { timeout: 250});
+    waitFor(() => expect(closeSnackbarMock).toHaveBeenCalled(), { timeout: 250 });
   });
 
   it('calls onActionButtonClick when the action button is clicked', async () => {
