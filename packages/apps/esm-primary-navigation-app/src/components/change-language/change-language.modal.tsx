@@ -36,7 +36,7 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
       postUserProperties(
         user.uuid,
         {
-          ...(user.userProperties ?? {}),
+          ...user.userProperties,
           defaultLocale: selectedLocale.replace(/-/gi, '_'),
         },
         ac,
