@@ -31,9 +31,9 @@ export type SnackbarType = 'error' | 'info' | 'info-square' | 'success' | 'warni
 export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: removeSnackBarFromDom }) => {
   const {
     actionButtonLabel = '',
-    isLowContrast = true,
-    kind = 'info',
+    kind = 'success',
     onActionButtonClick = () => {},
+    isLowContrast = kind !== 'error',
     progressActionLabel,
     subtitle = '',
     timeoutInMs = 5000,
