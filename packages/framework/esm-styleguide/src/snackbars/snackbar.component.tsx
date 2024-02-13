@@ -44,7 +44,6 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
 
   const [actionText, setActionText] = useState(actionButtonLabel);
   const [applyAnimation, setApplyAnimation] = useState(true);
-
   const [isClosing, setIsClosing] = useState(false);
 
   const closeSnackbar = useCallback(() => {
@@ -82,7 +81,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
   return (
     <ActionableNotification
       actionButtonLabel={actionText}
-      ariaLabel="Close snackbar"
+      aria-label="Close snackbar"
       className={classnames(styles.slideIn, {
         [styles.animated]: applyAnimation,
         [styles.slideOut]: isClosing,
