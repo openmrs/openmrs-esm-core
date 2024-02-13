@@ -6,7 +6,7 @@ import {
   useSession,
   setSessionLocation,
   setUserProperties,
-  showToast,
+  showSnackbar,
 } from '@openmrs/esm-framework';
 import {
   mockLoginLocations,
@@ -48,7 +48,7 @@ jest.mock('@openmrs/esm-framework', () => ({
   setSessionLocation: jest.fn().mockResolvedValue({}),
   setUserProperties: jest.fn().mockResolvedValue({}),
   navigate: jest.fn(),
-  showToast: jest.fn(),
+  showSnackbar: jest.fn(),
 }));
 
 describe('LocationPicker', () => {
@@ -113,10 +113,11 @@ describe('LocationPicker', () => {
       });
 
       await waitFor(() =>
-        expect(showToast).toHaveBeenCalledWith({
+        expect(showSnackbar).toHaveBeenCalledWith({
+          isLowContrast: true,
           kind: 'success',
-          title: 'Selected location will be used for your next logins',
-          description: 'You can change your preference from the user menu',
+          subtitle: 'Your preferred location has been saved for future logins',
+          title: 'Location saved',
         }),
       );
     });
@@ -141,7 +142,7 @@ describe('LocationPicker', () => {
 
       expect(setSessionLocation).toHaveBeenCalledWith('1ce1b7d4-c865-4178-82b0-5932e51503d6', expect.anything());
       expect(setUserProperties).not.toHaveBeenCalled();
-      expect(showToast).not.toHaveBeenCalled();
+      expect(showSnackbar).not.toHaveBeenCalled();
     });
 
     it('should redirect to home if user preference in the userProperties is present and the location preference is valid', async () => {
@@ -271,10 +272,11 @@ describe('LocationPicker', () => {
       expect(setUserProperties).toHaveBeenCalledWith('90bd24b3-e700-46b0-a5ef-c85afdfededd', {});
 
       await waitFor(() =>
-        expect(showToast).toHaveBeenCalledWith({
-          title: 'Login location preference removed',
+        expect(showSnackbar).toHaveBeenCalledWith({
+          isLowContrast: true,
           kind: 'success',
-          description: 'The login location preference has been removed.',
+          title: 'Location preference removed',
+          subtitle: 'You will need to select a location on each login',
         }),
       );
     });
@@ -315,10 +317,11 @@ describe('LocationPicker', () => {
       });
 
       await waitFor(() =>
-        expect(showToast).toHaveBeenCalledWith({
-          description: 'Selected location will be used for your next logins',
+        expect(showSnackbar).toHaveBeenCalledWith({
+          isLowContrast: true,
           kind: 'success',
-          title: 'Login location preference updated',
+          title: 'Location updated',
+          subtitle: 'Your preferred login location has been updated',
         }),
       );
     });

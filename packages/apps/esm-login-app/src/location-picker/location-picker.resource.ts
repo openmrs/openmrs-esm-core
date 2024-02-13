@@ -1,11 +1,10 @@
-import { setUserProperties, showToast, useSession } from '@openmrs/esm-framework';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { setUserProperties, showSnackbar, useSession } from '@openmrs/esm-framework';
 import { useValidateLocationUuid } from '../login.resource';
 
 export function useDefaultLocation(isUpdateFlow: boolean) {
   const { t } = useTranslation();
-  const [savePreference, setSavePreference] = useState(false);
   const { user } = useSession();
   const { userUuid, userProperties } = useMemo(
     () => ({
@@ -14,10 +13,9 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
     }),
     [user],
   );
+  const [savePreference, setSavePreference] = useState(false);
 
-  const defaultLocation = useMemo(() => {
-    return userProperties?.defaultLocation;
-  }, [userProperties?.defaultLocation]);
+  const defaultLocation = useMemo(() => userProperties?.defaultLocation, [userProperties?.defaultLocation]);
 
   const { isLocationValid, defaultLocation: defaultLocationFhir } = useValidateLocationUuid(defaultLocation);
 
@@ -54,20 +52,20 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
 
       updateUserPropsWithDefaultLocation(locationUuid, saveDefaultLocation).then(() => {
         if (saveDefaultLocation) {
-          showToast({
-            title: !isUpdateFlow
-              ? t('locationPreferenceAdded', 'Selected location will be used for your next logins')
-              : t('locationPreferenceUpdated', 'Login location preference updated'),
-            description: !isUpdateFlow
-              ? t('selectedLocationPreferenceSetMessage', 'You can change your preference from the user menu')
-              : t('locationPreferenceAdded', 'Selected location will be used for your next logins'),
+          showSnackbar({
+            title: !isUpdateFlow ? t('locationSaved', 'Location saved') : t('locationUpdated', 'Location updated'),
+            subtitle: !isUpdateFlow
+              ? t('locationSaveMessage', 'Your preferred location has been saved for future logins')
+              : t('locationUpdateMessage', 'Your preferred login location has been updated'),
             kind: 'success',
+            isLowContrast: true,
           });
         } else if (defaultLocation) {
-          showToast({
-            title: t('locationPreferenceRemoved', 'Login location preference removed'),
-            description: t('removedLoginLocationPreference', 'The login location preference has been removed.'),
+          showSnackbar({
+            title: t('locationPreferenceRemoved', 'Location preference removed'),
+            subtitle: t('locationPreferenceRemovedMessage', 'You will need to select a location on each login'),
             kind: 'success',
+            isLowContrast: true,
           });
         }
       });
