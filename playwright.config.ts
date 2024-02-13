@@ -13,9 +13,11 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   retries: 0,
   reporter: process.env.CI ? [['junit', { outputFile: 'results.xml' }], ['html']] : [['html']],
+  globalSetup: require.resolve('./e2e/core/global-setup'),
   use: {
     baseURL: `${process.env.E2E_BASE_URL}/spa/`,
     trace: 'retain-on-failure',
+    storageState: 'e2e/storageState.json',
     video: 'retain-on-failure',
   },
   projects: [
