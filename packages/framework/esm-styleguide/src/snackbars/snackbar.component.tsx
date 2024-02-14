@@ -18,6 +18,7 @@ export interface SnackbarDescriptor {
   progressActionLabel?: string;
   subtitle?: string;
   timeoutInMs?: number;
+  autoClose?: boolean;
   title: string;
 }
 
@@ -27,23 +28,29 @@ export interface SnackbarMeta extends SnackbarDescriptor {
 
 export type SnackbarType = 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
 
-export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) => {
+export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: removeSnackBarFromDom }) => {
   const {
-    actionButtonLabel,
-    isLowContrast,
-    kind,
+    actionButtonLabel = '',
+    kind = 'success',
     onActionButtonClick = () => {},
+    isLowContrast = kind !== 'error',
     progressActionLabel,
-    subtitle,
-    timeoutInMs,
+    subtitle = '',
+    timeoutInMs = 5000,
+    autoClose = kind !== 'error',
     title,
     ...props
   } = snackbar;
 
   const [actionText, setActionText] = useState(actionButtonLabel);
   const [applyAnimation, setApplyAnimation] = useState(true);
-
   const [isClosing, setIsClosing] = useState(false);
+
+  const closeSnackbar = useCallback(() => {
+    // This is to add a slide out animation before closing the snackbar
+    // The animation lasts for 250ms, thus the timeout
+    setTimeout(removeSnackBarFromDom, 250);
+  }, [removeSnackBarFromDom]);
 
   const onCloseSnackbar = useCallback(() => {
     setIsClosing(true);
@@ -57,11 +64,11 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) =
   };
 
   useEffect(() => {
-    if (timeoutInMs) {
+    if (autoClose) {
       const timeoutId = setTimeout(onCloseSnackbar, timeoutInMs);
       return () => clearTimeout(timeoutId);
     }
-  }, [timeoutInMs, onCloseSnackbar]);
+  }, [timeoutInMs, autoClose, onCloseSnackbar]);
 
   useEffect(() => {
     setApplyAnimation(false);
@@ -73,19 +80,19 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar }) =
 
   return (
     <ActionableNotification
-      actionButtonLabel={actionText || ''}
-      ariaLabel="Close snackbar"
+      actionButtonLabel={actionText}
+      aria-label="Close snackbar"
       className={classnames(styles.slideIn, {
         [styles.animated]: applyAnimation,
         [styles.slideOut]: isClosing,
       })}
       inline
-      kind={kind || 'info'}
+      kind={kind}
       lowContrast={isLowContrast}
       onActionButtonClick={handleActionClick}
       onClose={closeSnackbar}
       statusIconDescription="Snackbar notification"
-      subtitle={subtitle || ''}
+      subtitle={subtitle}
       title={title}
       {...props}
     />
