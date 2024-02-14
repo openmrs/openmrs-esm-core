@@ -14,7 +14,7 @@ type Commands = typeof commands;
 type CommandNames = keyof Commands;
 
 function runCommand<T extends CommandNames>(type: T, args: Parameters<Commands[T]>[0]) {
-  const ps = fork(runner, [], { cwd: root });
+  const ps = fork(runner, [], { cwd: process.cwd() });
 
   ps.send({
     type,
