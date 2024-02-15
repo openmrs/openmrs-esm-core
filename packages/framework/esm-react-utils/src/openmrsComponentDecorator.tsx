@@ -19,8 +19,6 @@ const defaultSwrConfig = {
   fetcher: openmrsFetch,
   // only revalidate once every 30 seconds
   focusThrottleInterval: 30000,
-  // https://swr.vercel.app/docs/revalidation#revalidate-on-focus
-  revalidateOnFocus: false,
 };
 
 export interface ComponentDecoratorOptions {
