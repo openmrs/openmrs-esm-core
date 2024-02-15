@@ -2,6 +2,8 @@ import { test } from '../core';
 import { expect } from '@playwright/test';
 import { LoginPage } from '../pages';
 
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test('Login as Admin user', async ({ page }) => {
   const loginPage = new LoginPage(page);
 

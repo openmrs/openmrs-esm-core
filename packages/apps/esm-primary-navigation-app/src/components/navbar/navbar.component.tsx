@@ -48,7 +48,7 @@ const HeaderItems: React.FC = () => {
   return (
     <>
       <OfflineBanner />
-      <Header aria-label="OpenMRS">
+      <Header aria-label="OpenMRS" className={styles.topNavHeader}>
         {showHamburger && (
           <HeaderMenuButton
             aria-label="Open menu"
