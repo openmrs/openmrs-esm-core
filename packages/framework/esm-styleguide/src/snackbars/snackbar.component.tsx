@@ -37,7 +37,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({ snackbar, closeSnackbar: rem
     progressActionLabel,
     subtitle = '',
     timeoutInMs = 5000,
-    autoClose = kind !== 'error',
+    autoClose = kind !== 'error' && !actionButtonLabel,
     title,
     ...props
   } = snackbar;
