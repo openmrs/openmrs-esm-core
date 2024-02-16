@@ -910,6 +910,20 @@ ___
 
 ___
 
+### ResponsiveWrapper
+
+• `Const` **ResponsiveWrapper**: `React.FC`<[`ResponsiveWrapperProps`](interfaces/ResponsiveWrapperProps.md)\>
+
+ResponsiveWrapper enables a responsive behavior for the component its wraps, providing a different rendering based on the current layout type.
+On desktop, it renders the children as is, while on a tablet, it wraps them in a Carbon Layer https://react.carbondesignsystem.com/?path=/docs/components-layer--overview component.
+This provides a light background for form inputs on tablets, in accordance with the design requirements.
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L14)
+
+___
+
 ### backendDependencies
 
 • `Const` **backendDependencies**: `Object`
@@ -3192,7 +3206,7 @@ Returns a list of URLs representing the history of the current window session.
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/history/history.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L39)
+[packages/framework/esm-navigation/src/history/history.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L47)
 
 ___
 
@@ -3215,7 +3229,7 @@ Rolls back the history to the specified point and navigates to that URL.
 
 #### Defined in
 
-[packages/framework/esm-navigation/src/history/history.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L50)
+[packages/framework/esm-navigation/src/history/history.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/history/history.ts#L58)
 
 ___
 
