@@ -2,12 +2,13 @@ import {
   getCurrentUser,
   getSynchronizationItemsFor,
   openmrsObservableFetch,
+  restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
 import { mergeMap } from 'rxjs/operators';
 import { userPropertyChange } from './constants';
 
 export function getCurrentSession() {
-  return openmrsObservableFetch(`/ws/rest/v1/session`);
+  return openmrsObservableFetch(`${restBaseUrl}session`);
 }
 
 /**

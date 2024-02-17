@@ -1,8 +1,9 @@
 /** @module @category API */
 import type { UploadedFile } from './types';
-import { openmrsFetch } from './openmrs-fetch';
+import { openmrsFetch, restBaseUrl } from './openmrs-fetch';
 
-export const attachmentUrl = '/ws/rest/v1/attachment';
+export const attachmentUrl = `${restBaseUrl}/attachment`;
+
 
 export function getAttachmentByUuid(attachmentUuid: string, abortController: AbortController) {
   return openmrsFetch(`${attachmentUrl}/${attachmentUuid}`, {

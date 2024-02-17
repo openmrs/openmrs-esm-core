@@ -3,7 +3,7 @@ import { reportError } from '@openmrs/esm-error-handling';
 import { createGlobalStore } from '@openmrs/esm-state';
 import isUndefined from 'lodash-es/isUndefined';
 import { Observable } from 'rxjs';
-import { openmrsFetch, sessionEndpoint } from '../openmrs-fetch';
+import { openmrsFetch, restBaseUrl, sessionEndpoint } from '../openmrs-fetch';
 import type { LoggedInUser, SessionLocation, Privilege, Role, Session, FetchResponse } from '../types';
 
 export type SessionStore = LoadedSessionStore | UnloadedSessionStore;
@@ -239,8 +239,7 @@ export async function setUserProperties(
   if (!abortController) {
     abortController = new AbortController();
   }
-
-  await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
+  await openmrsFetch(`${restBaseUrl}/user/${userUuid}`, {
     method: 'POST',
     body: { userProperties },
     headers: {

@@ -1,5 +1,5 @@
 import { start, triggerAppChange } from 'single-spa';
-import type { OpenmrsAppRoutes } from '@openmrs/esm-framework/src/internal';
+import { type OpenmrsAppRoutes, restBaseUrl } from '@openmrs/esm-framework/src/internal';
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -354,7 +354,7 @@ async function precacheGlobalStaticDependencies() {
 
   // By default, cache the session endpoint.
   // This ensures that a lot of user/session related functions also work offline.
-  const sessionPathUrl = new URL(`${window.openmrsBase}/ws/rest/v1/session`, window.location.origin).href;
+  const sessionPathUrl = new URL(`${window.openmrsBase}${restBaseUrl}/session`, window.location.origin).href;
 
   await messageOmrsServiceWorker({
     type: 'registerDynamicRoute',
@@ -362,7 +362,7 @@ async function precacheGlobalStaticDependencies() {
     strategy: 'network-first',
   });
 
-  await openmrsFetch('/ws/rest/v1/session').catch((e) =>
+  await openmrsFetch(`${restBaseUrl}/session`).catch((e) =>
     console.warn(
       'Failed to precache the user session data from the app shell. MFs depending on this data may run into problems while offline.',
       e,
