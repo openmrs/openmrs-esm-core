@@ -13,7 +13,6 @@ const Logo: React.FC = () => {
         <img
           className={styles.logo}
           src={interpolateUrl(logo.src)}
-          height={40}
           alt={logo.alt}
         />
       ) : logo?.name ? (
