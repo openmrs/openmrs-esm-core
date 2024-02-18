@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layer, Tile } from '@carbon/react';
-import { useTranslation } from 'react-i18next';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 import { useLayoutType } from '@openmrs/esm-react-utils';
 import styles from './error-state.module.scss';
 
@@ -10,7 +10,6 @@ export interface ErrorStateProps {
 }
 
 export const ErrorState: React.FC<ErrorStateProps> = ({ error, headerTitle }) => {
-  const { t } = useTranslation();
   const isTablet = useLayoutType() === 'tablet';
 
   return (
@@ -20,15 +19,10 @@ export const ErrorState: React.FC<ErrorStateProps> = ({ error, headerTitle }) =>
           <h4>{headerTitle}</h4>
         </div>
         <p className={styles.errorMessage}>
-          {t('error', 'Error')} {`${error?.response?.status}: `}
+          {getCoreTranslation('error')} {`${error?.response?.status}: `}
           {error?.response?.statusText}
         </p>
-        <p className={styles.errorCopy}>
-          {t(
-            'errorCopy',
-            'Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.',
-          )}
-        </p>
+        <p className={styles.errorCopy}>{getCoreTranslation('errorCopy')}</p>
       </Tile>
     </Layer>
   );

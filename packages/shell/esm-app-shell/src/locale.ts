@@ -2,7 +2,7 @@ import * as i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import merge from 'lodash-es/merge';
-import { getTranslationOverrides, importDynamic } from '@openmrs/esm-framework/src/internal';
+import { getTranslationOverrides, importCoreTranslation, importDynamic } from '@openmrs/esm-framework/src/internal';
 
 export function setupI18n() {
   window.i18next = i18next.default || i18next;
@@ -31,6 +31,20 @@ export function setupI18n() {
           callback(Error("can't handle translation namespace"), null);
         } else if (namespace === undefined || language === undefined) {
           callback(Error(), null);
+        } else if (namespace === 'core') {
+          Promise.all([importCoreTranslation(`./${language}.json`), getTranslationOverrides(namespace)])
+            .then(([json, overrides]) => {
+              let translations = json ?? {};
+
+              if (language in overrides) {
+                translations = merge(translations, overrides[language]);
+              }
+
+              callback(null, translations);
+            })
+            .catch((err: Error) => {
+              callback(err, null);
+            });
         } else if (namespace === '@openmrs/esm-app-shell') {
           // currently, we don't have translations in the app shell
           getTranslationOverrides(namespace)

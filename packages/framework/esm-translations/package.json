@@ -1,20 +1,19 @@
 {
-  "name": "@openmrs/esm-utils",
-  "version": "5.5.0",
+  "name": "@openmrs/esm-translations",
+  "version": "5.4.0",
   "license": "MPL-2.0",
-  "description": "Helper utilities for OpenMRS",
-  "browser": "dist/openmrs-esm-utils.js",
+  "description": "O3 Framework module for translation support",
+  "browser": "dist/openmrs-esm-translations.js",
   "main": "src/index.ts",
   "source": true,
-  "sideEffects": false,
   "scripts": {
-    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
-    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
+    "test": "jest --passWithNoTests",
     "build": "webpack --mode=production",
     "build:development": "webpack --mode development",
     "analyze": "webpack --mode=production --env analyze=true",
     "typescript": "tsc",
-    "lint": "eslint src --ext ts,tsx"
+    "lint": "eslint src --ext ts,tsx",
+    "extract-translations": "i18next src/translations.ts --config='i18next-parser.config.mjs'"
   },
   "keywords": [
     "openmrs",
@@ -39,16 +38,12 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/semver": "^7.3.4",
-    "dayjs": "^1.10.4",
-    "rxjs": "^6.5.3"
-  },
-  "peerDependencies": {
-    "dayjs": "1.x",
-    "i18next": "21.x",
-    "rxjs": "6.x"
+    "i18next-parser": "^8.12.0"
   },
   "dependencies": {
-    "semver": "7.3.2"
+    "i18next": "21.10.0"
+  },
+  "peerDependencies": {
+    "i18next": "21.x"
   }
 }

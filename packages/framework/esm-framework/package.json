@@ -50,12 +50,13 @@
     "@openmrs/esm-routes": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
     "@openmrs/esm-styleguide": "workspace:*",
+    "@openmrs/esm-translations": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
     "dayjs": "^1.10.7"
   },
   "peerDependencies": {
     "dayjs": "1.x",
-    "i18next": "19.x",
+    "i18next": "21.x",
     "react": "18.x",
     "react-dom": "18.x",
     "react-i18next": "11.x",

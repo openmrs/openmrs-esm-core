@@ -10,6 +10,7 @@ import {
   refetchCurrentUser,
   useConnectivity,
   navigate as openmrsNavigate,
+  getCoreTranslation,
 } from '@openmrs/esm-framework';
 import { type ConfigSchema } from '../config-schema';
 import styles from './login.scss';
@@ -156,7 +157,7 @@ const Login: React.FC = () => {
               <InlineNotification
                 kind="error"
                 subtitle={t(errorMessage)}
-                title={t('error', 'Error')}
+                title={getCoreTranslation('error')}
                 onClick={() => setErrorMessage('')}
               />
             </div>

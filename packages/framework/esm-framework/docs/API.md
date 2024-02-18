@@ -177,6 +177,11 @@
 - [useStore](API.md#usestore)
 - [useStoreWithActions](API.md#usestorewithactions)
 
+### Translation Functions
+
+- [getCoreTranslation](API.md#getcoretranslation)
+- [translateFrom](API.md#translatefrom)
+
 ### UI Functions
 
 - [CustomOverflowMenu](API.md#customoverflowmenu)
@@ -212,7 +217,6 @@
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [retry](API.md#retry)
 - [shallowEqual](API.md#shallowequal)
-- [translateFrom](API.md#translatefrom)
 - [useAbortController](API.md#useabortcontroller)
 - [useDebounce](API.md#usedebounce)
 - [useOpenmrsSWR](API.md#useopenmrsswr)
@@ -646,6 +650,18 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useStore.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L10)
+
+___
+
+## Translation Type Aliases
+
+### CoreTranslationKey
+
+Ƭ **CoreTranslationKey**: keyof typeof `coreTranslations`
+
+#### Defined in
+
+[packages/framework/esm-translations/src/index.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L9)
 
 ___
 
@@ -4473,6 +4489,52 @@ ___
 
 ___
 
+## Translation Functions
+
+### getCoreTranslation
+
+▸ **getCoreTranslation**(`key`, `defaultText?`): `string`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"errorCopy"`` \| ``"loading"`` |
+| `defaultText?` | `string` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-translations/src/index.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L21)
+
+___
+
+### translateFrom
+
+▸ **translateFrom**(`moduleName`, `key`, `fallback?`, `options?`): `string`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `moduleName` | `string` |
+| `key` | `string` |
+| `fallback?` | `string` |
+| `options?` | `object` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-translations/src/index.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L11)
+
+___
+
 ## UI Functions
 
 ### CustomOverflowMenu
@@ -5197,29 +5259,6 @@ true if the objects are shallowly equal to each other
 #### Defined in
 
 [packages/framework/esm-utils/src/shallowEqual.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/shallowEqual.ts#L13)
-
-___
-
-### translateFrom
-
-▸ **translateFrom**(`moduleName`, `key`, `fallback?`, `options?`): `string`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `moduleName` | `string` |
-| `key` | `string` |
-| `fallback?` | `string` |
-| `options?` | `object` |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/translate.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/translate.ts#L4)
 
 ___
 
