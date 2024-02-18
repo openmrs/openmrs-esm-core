@@ -1,8 +1,9 @@
 import React from 'react';
-import type {} from '@openmrs/esm-globals';
-import { createStore, type StoreApi } from 'zustand';
 import { NEVER, of } from 'rxjs';
+import { createStore, type StoreApi } from 'zustand';
 import { type SessionStore } from '@openmrs/esm-api';
+import type {} from '@openmrs/esm-globals';
+import { coreTranslations } from '@openmrs/esm-translations/src/translations';
 import * as utils from '@openmrs/esm-utils';
 
 window.i18next = { ...window.i18next, language: 'en' };
@@ -296,6 +297,10 @@ export const usePatientPhoto = jest.fn(() => ({
   error: null,
 }));
 
+/* esm-translations */
+export const translateFrom = jest.fn((m, key, fallback) => fallback ?? key);
+export const getCoreTranslation = jest.fn((key) => coreTranslations[key]);
+
 /* esm-utils */
 export { getDefaultsFromConfigSchema, parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
 
@@ -304,5 +309,3 @@ export const age = jest.fn((arg) => utils.age(arg));
 export function isVersionSatisfied() {
   return true;
 }
-
-export const translateFrom = jest.fn((m, key, fallback) => fallback ?? key);
