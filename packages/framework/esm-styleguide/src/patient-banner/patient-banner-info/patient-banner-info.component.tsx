@@ -7,45 +7,31 @@ import styles from './patient-banner-info.module.scss';
 
 export interface PatientBannerPatientInfoProps {
   patientUuid: string;
-  name: string;
-  gender: string;
-  identifiers: Array<{ value: string; type: string; typeUuid: string }>;
-  birthDate: string;
-  deathDate: string | null;
+  patient: fhir.Patient;
 }
 
-export function PatientBannerPatientInfo({
-  patientUuid,
-  name,
-  gender,
-  identifiers,
-  birthDate,
-  deathDate,
-}: PatientBannerPatientInfoProps) {
+export function PatientBannerPatientInfo({ patientUuid, patient }: PatientBannerPatientInfoProps) {
   const { excludePatientIdentifierCodeTypes } = useConfig();
 
+  const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0].family}`;
+  const gender = patient?.gender && getGender(patient.gender);
+
   const filteredIdentifiers =
-    identifiers.filter((identifier) => !excludePatientIdentifierCodeTypes?.uuids.includes(identifier.typeUuid)) ?? [];
+    patient?.identifier?.filter(
+      (identifier) => !excludePatientIdentifierCodeTypes?.uuids.includes(identifier.type?.coding?.[0]?.code),
+    ) ?? [];
 
   return (
     <div className={styles.patientInfo}>
       <div className={classNames(styles.row, styles.patientNameRow)}>
         <div className={styles.flexRow}>
           <span className={styles.patientName}>{name}</span>
-          {/* TODO: The fhir Patient passed in the state to the patient-banner-tags-slot is
-          totally unused other than the death date, which is used as a boolean to
-          tell if a patient is dead. We should eventually try to get rid of it and
-          just provide `isDeceased` as state. */}
-          <ExtensionSlot
-            name="patient-banner-tags-slot"
-            state={{ patientUuid, patient: { deceasedDateTime: deathDate } }}
-            className={styles.flexRow}
-          />
+          <ExtensionSlot name="patient-banner-tags-slot" state={{ patientUuid, patient }} className={styles.flexRow} />
         </div>
       </div>
       <div className={styles.demographics}>
-        <span>{getGender(gender)}</span> &middot; <span>{age(birthDate)}</span> &middot;{' '}
-        <span>{formatDate(parseDate(birthDate), { mode: 'wide', time: false })}</span>
+        <span>{gender}</span> &middot; <span>{patient?.birthDate && age(patient.birthDate)}</span> &middot;{' '}
+        <span>{patient?.birthDate && formatDate(parseDate(patient.birthDate), { mode: 'wide', time: false })}</span>
       </div>
       <div className={styles.row}>
         <div className={styles.identifiers}>

@@ -165,6 +165,7 @@
 ### Other Functions
 
 - [ExtensionSlot](API.md#extensionslot)
+- [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
 - [useAttachments](API.md#useattachments)
 
 ### Store Functions
@@ -4127,6 +4128,26 @@ Passing a function as children
 #### Defined in
 
 [packages/framework/esm-react-utils/src/ExtensionSlot.tsx:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L80)
+
+___
+
+### PatientBannerPatientInfo
+
+▸ **PatientBannerPatientInfo**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientBannerPatientInfoProps`](interfaces/PatientBannerPatientInfoProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/patient-banner-info/patient-banner-info.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-banner-info/patient-banner-info.component.tsx#L13)
 
 ___
 

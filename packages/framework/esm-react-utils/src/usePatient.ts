@@ -5,7 +5,7 @@ import { fetchCurrentPatient } from '@openmrs/esm-api';
 
 export type NullablePatient = fhir.Patient | null;
 
-interface CurrentPatientState {
+export interface CurrentPatientState {
   patientUuid: string | null;
   patient: NullablePatient;
   isPendingUuid: boolean;
