@@ -19,7 +19,7 @@
     "setup": "yarn install && turbo run build",
     "start": "openmrs develop",
     "verify": "turbo run lint && turbo run test && turbo run typescript",
-    "prettier": "prettier --config prettier.config.js --write \"packages/**/*.{ts,tsx,css,scss}\" \"e2e/**/*.ts\"",
+    "prettier": "prettier --config prettier.config.js --write \"packages/**/*.{ts,tsx,css,scss}\" \"e2e/**/*.ts\" | grep -v unchanged",
     "postinstall": "husky install",
     "test": "cross-env TZ=UTC jest --config jest.config.json --verbose false --passWithNoTests",
     "test-watch": "cross-env TZ=UTC jest --watch --config jest.config.json",
