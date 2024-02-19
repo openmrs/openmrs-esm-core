@@ -104,7 +104,9 @@ const Login: React.FC = () => {
       try {
         setIsLoggingIn(true);
 
-        const sessionStore = await handleUpdateSessionStore(username, password);
+        let passwd = password || passwordInputRef.current.value;
+
+        const sessionStore = await handleUpdateSessionStore(username, passwd);
         const session = sessionStore.session;
         const authenticated = sessionStore?.session?.authenticated;
         if (authenticated) {
