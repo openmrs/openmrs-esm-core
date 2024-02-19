@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { type To, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, InlineLoading, InlineNotification, PasswordInput, TextInput, Tile } from '@carbon/react';
 import { ArrowLeft, ArrowRight } from '@carbon/react/icons';
@@ -8,7 +8,6 @@ import {
   interpolateUrl,
   useSession,
   refetchCurrentUser,
-  clearCurrentUser,
   useConnectivity,
   navigate as openmrsNavigate,
 } from '@openmrs/esm-framework';
@@ -26,6 +25,10 @@ const hidden: React.CSSProperties = {
   padding: 0,
 };
 
+async function handleUpdateSessionStore(username?: string, password?: string) {
+  return refetchCurrentUser(username, password);
+}
+
 const Login: React.FC = () => {
   const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
@@ -34,7 +37,15 @@ const Login: React.FC = () => {
   const location = useLocation() as unknown as Omit<Location, 'state'> & {
     state: LoginReferrer;
   };
-  const navigate = useNavigate();
+
+  const rawNavigate = useNavigate();
+  const navigate = useCallback(
+    (to: To) => {
+      rawNavigate(to, { state: location.state });
+    },
+    [rawNavigate, location.state],
+  );
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -46,67 +57,36 @@ const Login: React.FC = () => {
   const showUsername = location.pathname === '/login';
   const showPassword = !showPasswordOnSeparateScreen || location.pathname === '/login/confirm';
 
-  const handleUpdateSessionStore = useCallback(
-    async (username?: string, password?: string) => {
-      return refetchCurrentUser(username, password).then((sessionStore) => {
-        const session = sessionStore.session;
-        const authenticated = session.authenticated;
-        if (authenticated) {
-          if (session.sessionLocation) {
-            openmrsNavigate({
-              to: location?.state?.referrer ? `\${openmrsSpaBase}${location.state.referrer}` : loginLinks?.loginSuccess,
-            });
-          } else {
-            navigate('/login/location', { state: location.state });
-          }
-        }
-      });
-    },
-    [loginLinks?.loginSuccess, location.state, navigate],
-  );
-
   useEffect(() => {
-    if (user) {
-      clearCurrentUser();
-      handleUpdateSessionStore();
-    } else if (!username && location.pathname === '/login/confirm') {
-      navigate('/login', { state: location.state });
+    if (!user) {
+      if (loginProvider.type === 'oauth2') {
+        openmrsNavigate({ to: loginProvider.loginUrl });
+      } else if (!username && location.pathname === '/login/confirm') {
+        navigate('/login');
+      }
     }
-  }, [username, navigate, location, user, handleUpdateSessionStore]);
+  }, [username, navigate, location, user, loginProvider]);
 
   useEffect(() => {
     const fieldToFocus =
       showPasswordOnSeparateScreen && showPassword ? passwordInputRef.current : usernameInputRef.current;
 
-    if (fieldToFocus) {
-      fieldToFocus.focus();
-    }
+    fieldToFocus?.focus();
   }, [showPassword, showPasswordOnSeparateScreen]);
 
-  useEffect(() => {
-    if (!user && loginProvider.type === 'oauth2') {
-      openmrsNavigate({ to: loginProvider.loginUrl });
-    }
-  }, [loginProvider, user]);
-
   const continueLogin = useCallback(() => {
-    const field = usernameInputRef.current;
+    const usernameField = usernameInputRef.current;
 
-    if (field.value.length > 0) {
-      navigate('/login/confirm', { state: location.state });
+    if (usernameField.value && usernameField.value.trim()) {
+      navigate('/login/confirm');
     } else {
-      field.focus();
+      usernameField.focus();
     }
   }, [location.state, navigate]);
 
   const changeUsername = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setUsername(evt.target.value), []);
 
   const changePassword = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => setPassword(evt.target.value), []);
-
-  const resetUserNameAndPassword = useCallback(() => {
-    setUsername('');
-    setPassword('');
-  }, []);
 
   const handleSubmit = useCallback(
     async (evt: React.FormEvent<HTMLFormElement>) => {
@@ -116,22 +96,59 @@ const Login: React.FC = () => {
       if (!showPassword) {
         continueLogin();
         return false;
+      } else if (!password || !password.trim()) {
+        passwordInputRef.current.focus();
+        return false;
       }
 
       try {
         setIsLoggingIn(true);
 
-        await handleUpdateSessionStore(username, password);
-      } catch (error) {
+        const sessionStore = await handleUpdateSessionStore(username, password);
+        const session = sessionStore.session;
+        const authenticated = sessionStore?.session?.authenticated;
+        if (authenticated) {
+          if (session.sessionLocation) {
+            let to = loginLinks?.loginSuccess || '/home';
+            if (location?.state?.referrer) {
+              if (location.state.referrer.startsWith('/')) {
+                to = `\${openmrsSpaBase}${location.state.referrer}`;
+              } else {
+                to = location.state.referrer;
+              }
+            }
+
+            openmrsNavigate({ to });
+          } else {
+            navigate('/login/location');
+          }
+        } else {
+          setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
+
+          setUsername('');
+          setPassword('');
+          navigate('/login');
+        }
+
+        return true;
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setErrorMessage(error.message);
+        } else {
+          setErrorMessage(t('invalidCredentials', 'Invalid username or password'));
+        }
+
+        setUsername('');
+        setPassword('');
+        navigate('/login');
+      } finally {
         setIsLoggingIn(false);
-        setErrorMessage(error.message);
-        resetUserNameAndPassword();
       }
 
       return false;
     },
 
-    [showPassword, continueLogin, username, password, handleUpdateSessionStore, resetUserNameAndPassword],
+    [showPassword, username, password, handleUpdateSessionStore, navigate, handleUpdateSessionStore],
   );
 
   if (!loginProvider || loginProvider.type === 'basic') {
@@ -142,10 +159,6 @@ const Login: React.FC = () => {
             <div className={styles.errorMessage}>
               <InlineNotification
                 kind="error"
-                /**
-                 * This comment tells i18n to still keep the following translation keys (used as value for: errorMessage):
-                 * t('invalidCredentials')
-                 */
                 subtitle={t(errorMessage)}
                 title={t('error', 'Error')}
                 onClick={() => setErrorMessage('')}
