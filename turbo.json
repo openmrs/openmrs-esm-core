@@ -10,7 +10,7 @@
       "outputs": ["dist/**"]
     },
     "document": {
-      "outputs": ["docs/**"]
+      "outputs": ["packages/framework/esm-framework/docs/**"]
     },
     "test": {},
     "test:watch": {},
