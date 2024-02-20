@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "run:omrs": "openmrs",
-    "run:shell": "turbo run watch --filter=@openmrs/esm-app-shell --parallel --no-cache",
+    "run:shell": "yarn workspace @openmrs/esm-app-shell watch",
     "ci:publish-next": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --access public --tag next",
     "ci:publish": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --access public --tag latest",
     "release": "yarn workspaces foreach --all --topological version",
