@@ -3,14 +3,14 @@ import { Observable } from 'rxjs';
 import isPlainObject from 'lodash-es/isPlainObject';
 import { getConfig } from '@openmrs/esm-config';
 import { navigate } from '@openmrs/esm-navigation';
-import type { FetchResponse } from './types';
 import { clearHistory } from '@openmrs/esm-navigation/src/index';
+import type { FetchResponse } from './types';
 
-export const restBaseUrl = '/ws/rest/v1/';
+export const restBaseUrl = '/ws/rest/v1';
 
 export const fhirBaseUrl = '/ws/fhir2/R4';
 
-export const sessionEndpoint = `${restBaseUrl}session`;
+export const sessionEndpoint = `${restBaseUrl}/session`;
 
 /**
  * Append `path` to the OpenMRS SPA base.

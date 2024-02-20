@@ -789,7 +789,7 @@ ___
 
 ### restBaseUrl
 
-• `Const` **restBaseUrl**: ``"/ws/rest/v1/"``
+• `Const` **restBaseUrl**: ``"/ws/rest/v1"``
 
 #### Defined in
 
