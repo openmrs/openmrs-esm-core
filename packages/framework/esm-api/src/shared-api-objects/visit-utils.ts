@@ -55,7 +55,7 @@ export function getVisitsForPatient(
 ): Observable<FetchResponse<{ results: Array<Visit> }>> {
   const custom = v ?? defaultVisitCustomRepresentation;
 
-  return openmrsObservableFetch(`${restBaseUrl}visit?patient=${patientUuid}&v=${custom}`, {
+  return openmrsObservableFetch(`${restBaseUrl}/visit?patient=${patientUuid}&v=${custom}`, {
     signal: abortController.signal,
     method: 'GET',
     headers: {
@@ -71,7 +71,7 @@ export function getVisitsForPatient(
 }
 
 export function saveVisit(payload: NewVisitPayload, abortController: AbortController): Observable<FetchResponse<any>> {
-  return openmrsObservableFetch(`${restBaseUrl}visit`, {
+  return openmrsObservableFetch(`${restBaseUrl}/visit`, {
     signal: abortController.signal,
     method: 'POST',
     headers: {
@@ -86,7 +86,7 @@ export function updateVisit(
   payload: UpdateVisitPayload,
   abortController: AbortController,
 ): Observable<any> {
-  return openmrsObservableFetch(`${restBaseUrl}visit/${uuid}`, {
+  return openmrsObservableFetch(`${restBaseUrl}/visit/${uuid}`, {
     signal: abortController.signal,
     method: 'POST',
     headers: {

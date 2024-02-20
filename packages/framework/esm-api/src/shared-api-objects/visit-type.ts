@@ -13,7 +13,7 @@ export function toVisitTypeObject(openmrsRestForm: any): VisitType {
 }
 
 export function getVisitTypes(): Observable<Array<VisitType>> {
-  return openmrsObservableFetch<any>(`${restBaseUrl}visittype`)
+  return openmrsObservableFetch<any>(`${restBaseUrl}/visittype`)
     .pipe(
       map((results) => {
         const visitTypes: Array<VisitType> = results.data.results.map(toVisitTypeObject);

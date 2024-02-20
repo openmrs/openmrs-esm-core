@@ -12,7 +12,7 @@ export function toLocationObject(openmrsRestForm: any): Location {
 }
 
 export function getLocations(tagUuidOrName: string | null = null): Observable<Array<Location>> {
-  const url = `${restBaseUrl}location` + (tagUuidOrName ? '?tag=' + tagUuidOrName : '');
+  const url = `${restBaseUrl}/location` + (tagUuidOrName ? '?tag=' + tagUuidOrName : '');
   return openmrsObservableFetch<any>(url)
     .pipe(
       map((results) => {

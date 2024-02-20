@@ -8,7 +8,7 @@ import { mergeMap } from 'rxjs/operators';
 import { userPropertyChange } from './constants';
 
 export function getCurrentSession() {
-  return openmrsObservableFetch(`${restBaseUrl}session`);
+  return openmrsObservableFetch(`${restBaseUrl}/session`);
 }
 
 /**

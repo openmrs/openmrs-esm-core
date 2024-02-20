@@ -18,7 +18,7 @@ type Mappings = {
 };
 
 export function useConceptLookup(query: string) {
-  const conceptLookupUrl = `${restBaseUrl}concept/?q=${query}`;
+  const conceptLookupUrl = `${restBaseUrl}/concept/?q=${query}`;
 
   const { data, error } = useSWR<{ data: { results: Array<Concept> } }, Error>(
     query ? conceptLookupUrl : null,
@@ -33,7 +33,7 @@ export function useConceptLookup(query: string) {
 }
 
 export function useGetConceptByUuid(conceptUuid: string) {
-  const fetchConceptUrl = `${restBaseUrl}concept/${conceptUuid}`;
+  const fetchConceptUrl = `${restBaseUrl}/concept/${conceptUuid}`;
 
   const { data, error } = useSWR<{ data: Concept }, Error>(conceptUuid ? fetchConceptUrl : null, openmrsFetch);
 

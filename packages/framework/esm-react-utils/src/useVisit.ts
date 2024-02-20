@@ -52,7 +52,7 @@ export function useVisit(patientUuid: string): VisitReturnType {
     isValidating: activeIsValidating,
   } = useSWR<{
     data: Visit | { results: Array<Visit> };
-  }>(patientUuid ? `${restBaseUrl}visit${activeVisitUrlSuffix}` : null, openmrsFetch);
+  }>(patientUuid ? `${restBaseUrl}/visit${activeVisitUrlSuffix}` : null, openmrsFetch);
 
   const {
     data: retroData,
@@ -61,7 +61,7 @@ export function useVisit(patientUuid: string): VisitReturnType {
     isValidating: retroIsValidating,
   } = useSWR<{
     data: Visit | { results: Array<Visit> };
-  }>(patientUuid && retrospectiveVisitUuid ? `${restBaseUrl}visit${retrospectiveVisitUrlSuffix}` : null, openmrsFetch);
+  }>(patientUuid && retrospectiveVisitUuid ? `${restBaseUrl}/visit${retrospectiveVisitUrlSuffix}` : null, openmrsFetch);
 
   const activeVisit = useMemo(
     () => activeData?.data.results.find((visit) => visit.stopDatetime === null) ?? null,

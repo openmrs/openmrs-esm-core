@@ -76,7 +76,7 @@ function checkIfModulesAreInstalled(
 }
 
 function fetchInstalledBackendModules() {
-  return openmrsFetch(`${restBaseUrl}module?v=custom:(uuid,version)`, {
+  return openmrsFetch(`${restBaseUrl}/module?v=custom:(uuid,version)`, {
     method: 'GET',
   });
 }

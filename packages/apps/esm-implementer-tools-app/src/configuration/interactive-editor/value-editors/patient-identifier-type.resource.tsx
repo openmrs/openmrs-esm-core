@@ -17,7 +17,7 @@ export function usePatientIdentifierTypes(): {
   isLoading: boolean;
 } {
   const { data, error } = useSWR<FetchResponse<PatientIdentifierTypeResponse>, Error>(
-    `${restBaseUrl}patientidentifiertype`,
+    `${restBaseUrl}/patientidentifiertype`,
     openmrsFetch,
   );
   const memoisedPatientIdentifierTypeData = useMemo(
