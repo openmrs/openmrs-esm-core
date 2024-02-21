@@ -963,7 +963,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L178)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:168](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L168)
 
 ___
 
@@ -1183,7 +1183,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L202)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L192)
 
 ___
 
@@ -1197,7 +1197,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L220)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:210](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L210)
 
 ___
 
@@ -1414,15 +1414,22 @@ ___
 
 ### refetchCurrentUser
 
-▸ **refetchCurrentUser**(): `Promise`<`unknown`\>
+▸ **refetchCurrentUser**(`username?`, `password?`): `Promise`<[`SessionStore`](API.md#sessionstore)\>
 
 The `refetchCurrentUser` function causes a network request to redownload
 the user. All subscribers to the current user will be notified of the
 new users once the new version of the user object is downloaded.
 
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `username?` | `string` |
+| `password?` | `string` |
+
 #### Returns
 
-`Promise`<`unknown`\>
+`Promise`<[`SessionStore`](API.md#sessionstore)\>
 
 The same observable as returned by [getCurrentUser](API.md#getcurrentuser).
 
@@ -1434,7 +1441,7 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:153](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L153)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:154](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L154)
 
 ___
 
@@ -1497,7 +1504,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:229](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L229)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:219](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L219)
 
 ___
 
@@ -1523,7 +1530,7 @@ ___
 
 ### setUserProperties
 
-▸ **setUserProperties**(`userUuid`, `userProperties`, `abortController?`): `Promise`<`any`\>
+▸ **setUserProperties**(`userUuid`, `userProperties`, `abortController?`): `Promise`<[`SessionStore`](API.md#sessionstore)\>
 
 #### Parameters
 
@@ -1535,11 +1542,11 @@ ___
 
 #### Returns
 
-`Promise`<`any`\>
+`Promise`<[`SessionStore`](API.md#sessionstore)\>
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:242](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L242)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L232)
 
 ___
 
@@ -1748,7 +1755,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:185](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L185)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L175)
 
 ___
 
