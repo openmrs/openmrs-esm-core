@@ -4,8 +4,6 @@ import styles from './logo.scss';
 
 const Logo: React.FC = () => {
   const { logo } = useConfig();
-
-
   return (
     <>
       {logo?.src ? (
