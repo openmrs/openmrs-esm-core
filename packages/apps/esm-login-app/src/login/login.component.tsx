@@ -25,10 +25,6 @@ const hidden: React.CSSProperties = {
   padding: 0,
 };
 
-async function handleUpdateSessionStore(username?: string, password?: string) {
-  return refetchCurrentUser(username, password);
-}
-
 const Login: React.FC = () => {
   const { showPasswordOnSeparateScreen, provider: loginProvider, links: loginLinks } = useConfig<ConfigSchema>();
   const isLoginEnabled = useConnectivity();
@@ -104,9 +100,7 @@ const Login: React.FC = () => {
       try {
         setIsLoggingIn(true);
 
-        let passwd = password || passwordInputRef.current.value;
-
-        const sessionStore = await handleUpdateSessionStore(username, passwd);
+        const sessionStore = await refetchCurrentUser(username, password);
         const session = sessionStore.session;
         const authenticated = sessionStore?.session?.authenticated;
         if (authenticated) {
@@ -150,7 +144,7 @@ const Login: React.FC = () => {
       return false;
     },
 
-    [showPassword, username, password, handleUpdateSessionStore, navigate, handleUpdateSessionStore],
+    [showPassword, username, password, navigate],
   );
 
   if (!loginProvider || loginProvider.type === 'basic') {
