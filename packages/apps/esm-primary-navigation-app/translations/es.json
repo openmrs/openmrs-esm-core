@@ -1,8 +1,8 @@
 {
-  "apply": "Aplicar",
   "cancel": "Cancelar",
   "change": "Cambiar",
   "changeLanguage": "Cambiar idioma",
+  "changingLanguage": "Changing language",
   "notifications": "Notificaciones",
   "userMenuTooltip": "User"
 }

@@ -21,7 +21,6 @@
   "offlineActionsTableAction": "Acción",
   "offlineActionsTableCreatedOn": "Fecha y Hora",
   "offlineActionsTableDeleteActions_one": "Eliminar acción",
-  "offlineActionsTableDeleteActions_many": "Eliminar {{count}} acciones",
   "offlineActionsTableDeleteActions_other": "Eliminar {{count}} acciones",
   "offlineActionsTableError": "Error",
   "offlineActionsTablePatient": "Paciente",
