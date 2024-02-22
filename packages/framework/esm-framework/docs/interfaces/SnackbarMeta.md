@@ -13,6 +13,7 @@
 ### UI Properties
 
 - [actionButtonLabel](SnackbarMeta.md#actionbuttonlabel)
+- [autoClose](SnackbarMeta.md#autoclose)
 - [id](SnackbarMeta.md#id)
 - [isLowContrast](SnackbarMeta.md#islowcontrast)
 - [kind](SnackbarMeta.md#kind)
@@ -41,13 +42,27 @@
 
 ___
 
+### autoClose
+
+• `Optional` **autoClose**: `boolean`
+
+#### Inherited from
+
+[SnackbarDescriptor](SnackbarDescriptor.md).[autoClose](SnackbarDescriptor.md#autoclose)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
+
+___
+
 ### id
 
 • **id**: `number`
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L25)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L26)
 
 ___
 
@@ -131,7 +146,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L22)
 
 ## UI Methods
 

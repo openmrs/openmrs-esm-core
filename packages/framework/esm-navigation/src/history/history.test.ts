@@ -1,3 +1,4 @@
+import merge from 'lodash/merge';
 import { navigate } from '../navigation/navigate';
 import { clearHistory, getHistory, goBackInHistory, setupHistory } from './history';
 
@@ -53,12 +54,12 @@ describe('history', () => {
   it('should update history on routing events and go back correctly', () => {
     setupHistory();
     window.location.href = 'https://o3.openmrs.org/openmrs/spa/labs';
-    window.dispatchEvent(new CustomEvent('single-spa:routing-event'));
+    dispatchRoutingEvent();
     expect(getHistory()).toEqual([mockReferrer, 'https://o3.openmrs.org/openmrs/spa/labs']);
     window.location.href = 'https://o3.openmrs.org/pharmacy';
-    window.dispatchEvent(new CustomEvent('single-spa:routing-event'));
+    dispatchRoutingEvent();
     window.location.href = 'https://o3.openmrs.org/x-ray';
-    window.dispatchEvent(new CustomEvent('single-spa:routing-event'));
+    dispatchRoutingEvent();
     expect(getHistory()).toEqual([
       mockReferrer,
       'https://o3.openmrs.org/openmrs/spa/labs',
@@ -68,11 +69,36 @@ describe('history', () => {
 
     mockNavigate.mockImplementation((params: { to: string }) => {
       window.location.href = params.to;
-      window.dispatchEvent(new CustomEvent('single-spa:routing-event'));
+      dispatchRoutingEvent();
     });
     goBackInHistory({ toUrl: 'https://o3.openmrs.org/openmrs/spa/labs' });
     expect(getHistory()).toEqual([mockReferrer, 'https://o3.openmrs.org/openmrs/spa/labs']);
     goBackInHistory({ toUrl: mockReferrer });
     expect(getHistory()).toEqual([mockReferrer]);
   });
+
+  it('should handle in-SPA redirects / replaceState correctly', () => {
+    setupHistory();
+    window.location.href = 'https://o3.openmrs.org/openmrs/spa/tests';
+    dispatchRoutingEvent();
+    window.location.href = 'https://o3.openmrs.org/openmrs/spa/tests/home';
+    dispatchRoutingEvent({ originalEvent: { singleSpaTrigger: 'replaceState' } });
+    expect(getHistory()).toEqual([mockReferrer, 'https://o3.openmrs.org/openmrs/spa/tests/home']);
+  });
+
+  it('should handle back button navigation', () => {
+    setupHistory();
+    window.location.href = 'https://o3.openmrs.org/openmrs/spa/home';
+    dispatchRoutingEvent();
+    window.location.href = 'https://o3.openmrs.org/openmrs/spa/dentist';
+    dispatchRoutingEvent();
+    window.location.href = 'https://o3.openmrs.org/openmrs/spa/home';
+    dispatchRoutingEvent({ originalEvent: { singleSpa: null } });
+    expect(getHistory()).toEqual([mockReferrer, 'https://o3.openmrs.org/openmrs/spa/home']);
+  });
 });
+
+function dispatchRoutingEvent(additionalEventDetail: CustomEvent['detail'] = {}) {
+  const event = merge({ detail: { originalEvent: { singleSpa: true } } }, { detail: additionalEventDetail });
+  window.dispatchEvent(new CustomEvent('single-spa:routing-event', event));
+}

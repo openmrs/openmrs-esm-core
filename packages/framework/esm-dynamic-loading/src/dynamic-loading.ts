@@ -154,7 +154,7 @@ function loadScript(url: string, resolve: (value: unknown) => void, reject: (rea
       scriptLoading.delete(url);
       console.error(`Failed to load script from ${url}`, ev);
       element.removeEventListener('error', errFn);
-      reject(ev.message);
+      reject(ev.message ?? `Failed to load script from ${url}`);
     };
     element.addEventListener('error', errFn);
 

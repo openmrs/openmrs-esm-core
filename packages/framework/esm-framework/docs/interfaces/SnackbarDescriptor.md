@@ -13,6 +13,7 @@
 ### UI Properties
 
 - [actionButtonLabel](SnackbarDescriptor.md#actionbuttonlabel)
+- [autoClose](SnackbarDescriptor.md#autoclose)
 - [isLowContrast](SnackbarDescriptor.md#islowcontrast)
 - [kind](SnackbarDescriptor.md#kind)
 - [progressActionLabel](SnackbarDescriptor.md#progressactionlabel)
@@ -33,6 +34,16 @@
 #### Defined in
 
 [packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L14)
+
+___
+
+### autoClose
+
+• `Optional` **autoClose**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
 
 ___
 
@@ -92,7 +103,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L21)
+[packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/snackbars/snackbar.component.tsx#L22)
 
 ## UI Methods
 

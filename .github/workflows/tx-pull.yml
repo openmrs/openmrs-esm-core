@@ -12,14 +12,15 @@ jobs:
     
     runs-on: ubuntu-latest
     permissions:
-      actions: write
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       - name: Push source file using transifex client
         uses: transifex/cli-action@v2
         with:
           token: ${{ secrets.TRANSIFEX_TOKEN }}
-          args: pull
+          args: pull --force --all
       - name: Create PR if necessary
         uses: peter-evans/create-pull-request@v5
         with:

@@ -4,7 +4,7 @@ import { createGlobalStore } from '@openmrs/esm-state';
 import isUndefined from 'lodash-es/isUndefined';
 import { Observable } from 'rxjs';
 import { openmrsFetch, sessionEndpoint } from '../openmrs-fetch';
-import type { LoggedInUser, SessionLocation, Privilege, Role, Session } from '../types';
+import type { LoggedInUser, SessionLocation, Privilege, Role, Session, FetchResponse } from '../types';
 
 export type SessionStore = LoadedSessionStore | UnloadedSessionStore;
 
@@ -71,7 +71,7 @@ function getCurrentUser(opts = { includeAuthStatus: true }): Observable<Session 
   }
 
   return new Observable((subscriber) => {
-    const handler = (state) => {
+    const handler = (state: SessionStore) => {
       if (state.loaded) {
         if (opts.includeAuthStatus) {
           subscriber.next(state.session);
@@ -120,6 +120,7 @@ export function setUserLanguage(data: Session) {
     document.documentElement.setAttribute('lang', locale);
   }
 }
+sessionStore.subscribe((state) => state.session && setUserLanguage(state.session));
 
 function userHasPrivilege(requiredPrivilege: string | string[] | undefined, user: { privileges: Array<Privilege> }) {
   if (typeof requiredPrivilege === 'string') {
@@ -150,29 +151,18 @@ function isSuperUser(user: { roles: Array<Role> }) {
  * refetchCurrentUser()
  * ```
  */
-export function refetchCurrentUser() {
-  return new Promise((resolve, reject) => {
-    lastFetchTimeMillis = Date.now();
-    openmrsFetch(sessionEndpoint)
-      .then((res) => {
-        if (typeof res?.data === 'object') {
-          setUserLanguage(res.data);
-          resolve(res.data);
-          sessionStore.setState({ loaded: true, session: res.data });
-        } else {
-          reject();
-          return Promise.reject();
-        }
-      })
-      .catch((err) => {
-        reportError(`Failed to fetch new session information: ${err}`);
-        reject(err);
-        return {
-          sessionId: '',
-          authenticated: false,
-        };
-      });
-  });
+export function refetchCurrentUser(username?: string, password?: string) {
+  lastFetchTimeMillis = Date.now();
+  let headers = {};
+  if (username && password) {
+    headers['Authorization'] = `Basic ${window.btoa(`${username}:${password}`)}`;
+  }
+
+  return handleSessionResponse(
+    openmrsFetch(sessionEndpoint, {
+      headers,
+    }),
+  );
 }
 
 export function clearCurrentUser() {
@@ -202,7 +192,7 @@ export function userHasAccess(
 export function getLoggedInUser() {
   let user;
   let unsubscribe;
-  return new Promise<LoggedInUser>((res, rej) => {
+  return new Promise<LoggedInUser>((res) => {
     const handler = (state: SessionStore) => {
       if (state.loaded && state.session.user) {
         user = state.session.user;
@@ -227,16 +217,16 @@ export function getSessionLocation() {
 }
 
 export async function setSessionLocation(locationUuid: string, abortController: AbortController): Promise<any> {
-  await openmrsFetch(sessionEndpoint, {
-    method: 'POST',
-    body: { sessionLocation: locationUuid },
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    signal: abortController.signal,
-  });
-
-  await refetchCurrentUser();
+  return handleSessionResponse(
+    openmrsFetch(sessionEndpoint, {
+      method: 'POST',
+      body: { sessionLocation: locationUuid },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      signal: abortController.signal,
+    }),
+  );
 }
 
 export async function setUserProperties(
@@ -245,10 +235,11 @@ export async function setUserProperties(
     [x: string]: string;
   },
   abortController?: AbortController,
-): Promise<any> {
+): Promise<SessionStore> {
   if (!abortController) {
     abortController = new AbortController();
   }
+
   await openmrsFetch(`/ws/rest/v1/user/${userUuid}`, {
     method: 'POST',
     body: { userProperties },
@@ -258,5 +249,29 @@ export async function setUserProperties(
     signal: abortController.signal,
   });
 
-  await refetchCurrentUser();
+  return refetchCurrentUser();
+}
+
+function handleSessionResponse(result: Promise<FetchResponse<Session>>) {
+  return new Promise<SessionStore>((resolve, reject) => {
+    result
+      .then((res) => {
+        let nextState: SessionStore;
+        if (typeof res?.data === 'object') {
+          nextState = { loaded: true, session: res.data };
+          sessionStore.setState(nextState);
+          resolve(nextState);
+        } else {
+          nextState = { loaded: false, session: null };
+          sessionStore.setState(nextState);
+          reject(nextState);
+        }
+      })
+      .catch((err) => {
+        reportError(`Failed to fetch new session information: ${err}`);
+        const nextState: SessionStore = { loaded: false, session: null };
+        sessionStore.setState(nextState);
+        reject(nextState);
+      });
+  });
 }

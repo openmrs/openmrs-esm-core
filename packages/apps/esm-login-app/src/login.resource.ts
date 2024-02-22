@@ -2,25 +2,8 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useSwrInfinite from 'swr/infinite';
 import useSwrImmutable from 'swr/immutable';
-import type { FetchResponse, Session } from '@openmrs/esm-framework';
-import { fhirBaseUrl, openmrsFetch, refetchCurrentUser, showNotification, useDebounce } from '@openmrs/esm-framework';
+import { type FetchResponse, fhirBaseUrl, openmrsFetch, useDebounce, showNotification } from '@openmrs/esm-framework';
 import type { LocationEntry, LocationResponse } from './types';
-
-export async function performLogin(username: string, password: string): Promise<{ data: Session }> {
-  const abortController = new AbortController();
-  const token = window.btoa(`${username}:${password}`);
-  const url = `/ws/rest/v1/session`;
-
-  return openmrsFetch(url, {
-    headers: {
-      Authorization: `Basic ${token}`,
-    },
-    signal: abortController.signal,
-  }).then((res) => {
-    refetchCurrentUser();
-    return res;
-  });
-}
 
 interface LoginLocationData {
   locations: Array<LocationEntry>;
@@ -38,6 +21,7 @@ export function useLoginLocations(
 ): LoginLocationData {
   const { t } = useTranslation();
   const debouncedSearchQuery = useDebounce(searchQuery);
+
   function constructUrl(page: number, prevPageData: FetchResponse<LocationResponse>) {
     if (prevPageData) {
       const nextLink = prevPageData.data?.link?.find((link) => link.relation === 'next');
@@ -104,6 +88,7 @@ export function useLoginLocations(
       hasMore: data?.length ? data?.[data.length - 1]?.data?.link?.some((link) => link.relation === 'next') : false,
       loadingNewData: isValidating,
       setPage: setSize,
+      error,
     };
   }, [isLoading, data, isValidating, setSize]);
 
@@ -117,17 +102,20 @@ export function useValidateLocationUuid(userPreferredLocationUuid: string) {
       if (err?.response?.status) {
         return err.response.status >= 500;
       }
+
       return false;
     },
   });
+
   const results = useMemo(
     () => ({
-      isLocationValid: data?.ok && data?.data?.total > 0,
+      isLocationValid: data?.ok,
       defaultLocation: data?.data?.entry ?? [],
       error,
       isLoading,
     }),
     [data, isLoading, error],
   );
+
   return results;
 }
