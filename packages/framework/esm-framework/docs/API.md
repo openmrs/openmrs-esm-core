@@ -690,7 +690,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L28)
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L23)
 
 ___
 
@@ -4629,7 +4629,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L104)
+[packages/framework/esm-globals/src/events.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L107)
 
 ___
 
@@ -4655,7 +4655,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L97)
+[packages/framework/esm-globals/src/events.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L100)
 
 ___
 
@@ -4681,7 +4681,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L118)
+[packages/framework/esm-globals/src/events.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L121)
 
 ___
 
@@ -4707,7 +4707,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L111)
+[packages/framework/esm-globals/src/events.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L114)
 
 ___
 
