@@ -1,8 +1,8 @@
 {
-  "apply": "אישור",
   "cancel": "Cancel",
   "change": "שינוי",
   "changeLanguage": "Change language",
+  "changingLanguage": "Changing language",
   "notifications": "התראות",
   "userMenuTooltip": "User"
 }

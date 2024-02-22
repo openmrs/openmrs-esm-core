@@ -20,6 +20,7 @@
   "offlineActionsNoActionsEmptyStateTitle": "No actions pending upload",
   "offlineActionsTableAction": "Action",
   "offlineActionsTableCreatedOn": "Date & Time",
+  "offlineActionsTableDeleteActions_one": "Delete action",
   "offlineActionsTableDeleteActions_other": "Delete {{count}} actions",
   "offlineActionsTableError": "Error",
   "offlineActionsTablePatient": "Patient",

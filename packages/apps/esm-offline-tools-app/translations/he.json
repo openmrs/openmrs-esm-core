@@ -21,8 +21,6 @@
   "offlineActionsTableAction": "פעולה",
   "offlineActionsTableCreatedOn": "תאריך ושעה",
   "offlineActionsTableDeleteActions_one": "מחק פעולה",
-  "offlineActionsTableDeleteActions_two": "מחק {{count}} פעולות",
-  "offlineActionsTableDeleteActions_many": "מחק {{count}} פעולות",
   "offlineActionsTableDeleteActions_other": "מחק {{count}} פעולות",
   "offlineActionsTableError": "שגיאה",
   "offlineActionsTablePatient": "מטופל",
