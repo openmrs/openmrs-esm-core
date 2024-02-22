@@ -196,12 +196,10 @@ function runShell() {
 async function preloadScripts() {
   const [, importMap] = await Promise.all([window[REGISTRATION_PROMISES], getCurrentImportMap()]);
 
-  return Promise.all(
-    window.installedModules.map(async ([module]) => {
-      // we simply swallow the error here since this is only a preload
-      return importDynamic<unknown>(module, undefined, { importMap }).catch();
-    }),
-  );
+  window.installedModules.map(async ([module]) => {
+    // we simply swallow the error here since this is only a preload
+    importDynamic(module, undefined, { importMap }).catch();
+  });
 }
 
 function handleInitFailure(e: Error) {
