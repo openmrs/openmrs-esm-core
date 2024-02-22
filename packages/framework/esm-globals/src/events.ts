@@ -59,7 +59,6 @@ export interface ShowToastEvent {
   description: any;
   kind?: 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
   title?: string;
-  millis?: number;
   actionButtonLabel?: string | any;
   onActionButtonClick?: () => void;
 }
@@ -91,6 +90,10 @@ export function dispatchActionableNotificationShown(data: ShowActionableNotifica
 
 export function dispatchSnackbarShown(data: ShowSnackbarEvent) {
   window.dispatchEvent(new CustomEvent(snackbarShownName, { detail: data }));
+}
+
+export function dispatchToastShown(data: ShowToastEvent) {
+  window.dispatchEvent(new CustomEvent(toastShownName, { detail: data }));
 }
 
 /** @category UI */

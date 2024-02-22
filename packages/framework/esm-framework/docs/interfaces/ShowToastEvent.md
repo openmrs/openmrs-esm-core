@@ -9,7 +9,6 @@
 - [actionButtonLabel](ShowToastEvent.md#actionbuttonlabel)
 - [description](ShowToastEvent.md#description)
 - [kind](ShowToastEvent.md#kind)
-- [millis](ShowToastEvent.md#millis)
 - [title](ShowToastEvent.md#title)
 
 ### Methods
@@ -24,7 +23,7 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L63)
+[packages/framework/esm-globals/src/events.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L62)
 
 ___
 
@@ -48,16 +47,6 @@ ___
 
 ___
 
-### millis
-
-• `Optional` **millis**: `number`
-
-#### Defined in
-
-[packages/framework/esm-globals/src/events.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L62)
-
-___
-
 ### title
 
 • `Optional` **title**: `string`
@@ -78,4 +67,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L64)
+[packages/framework/esm-globals/src/events.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L63)
