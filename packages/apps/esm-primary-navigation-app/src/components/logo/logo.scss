@@ -1,7 +1,11 @@
 .logo {
   display: flex;
-  align-items: center;
+  align-items: right;
   width: auto;
   max-width: 300px;
   height: 40px;
+  overflow: hidden;
+  position: relative;
+  object-fit: cover;
+  object-position: left;
 }
