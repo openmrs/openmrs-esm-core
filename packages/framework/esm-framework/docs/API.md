@@ -2543,10 +2543,11 @@ const { someComponent } = importDynamic("@openmrs/esm-template-app")
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `jsPackage` | `string` | `undefined` | The package to load the export from |
-| `share` | `string` | `'./start'` | Indicates the name of the shared module; this is an advanced feature if the package you are loading   doesn't use the default OpenMRS shared module name "./start" |
-| `options?` | `Object` | `undefined` | - |
+| `jsPackage` | `string` | `undefined` | The package to load the export from. |
+| `share` | `string` | `'./start'` | Indicates the name of the shared module; this is an advanced feature if the package you are loading   doesn't use the default OpenMRS shared module name "./start". |
+| `options?` | `Object` | `undefined` | Additional options to control loading this script. |
 | `options.importMap?` | [`ImportMap`](interfaces/ImportMap.md) | `undefined` |  |
+| `options.maxLoadingTime?` | `number` | `undefined` |  |
 
 #### Returns
 
@@ -2554,7 +2555,7 @@ const { someComponent } = importDynamic("@openmrs/esm-template-app")
 
 #### Defined in
 
-[packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L29)
+[packages/framework/esm-dynamic-loading/src/dynamic-loading.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-dynamic-loading/src/dynamic-loading.ts#L36)
 
 ___
 
