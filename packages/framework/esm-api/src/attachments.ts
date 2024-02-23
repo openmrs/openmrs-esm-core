@@ -4,7 +4,6 @@ import { openmrsFetch, restBaseUrl } from './openmrs-fetch';
 
 export const attachmentUrl = `${restBaseUrl}/attachment`;
 
-
 export function getAttachmentByUuid(attachmentUuid: string, abortController: AbortController) {
   return openmrsFetch(`${attachmentUrl}/${attachmentUuid}`, {
     signal: abortController.signal,
