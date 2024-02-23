@@ -51,7 +51,7 @@ describe('Root', () => {
   it('should display navbar with title', async () => {
     render(<Root />);
 
-    expect(screen.getByRole('button', { name: /user/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /My Account/i })).toBeInTheDocument();
     expect(screen.getByRole('banner', { name: /openmrs/i })).toBeInTheDocument();
     expect(screen.getByText(/mock emr/i)).toBeInTheDocument();
   });
@@ -61,7 +61,7 @@ describe('Root', () => {
 
     render(<Root />);
 
-    const userButton = screen.getByRole('button', { name: /user/i });
+    const userButton = screen.getByRole('button', { name: /My Account/i });
     await user.click(userButton);
     expect(screen.getByLabelText(/location/i)).toBeInTheDocument();
   });
