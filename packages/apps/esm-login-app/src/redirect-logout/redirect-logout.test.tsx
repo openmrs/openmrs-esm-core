@@ -1,13 +1,13 @@
 import React from 'react';
-import { cleanup, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import RedirectLogout from './redirect-logout.component';
-import { performLogout } from './logout.resource';
 import {
   Session,
   clearCurrentUser,
   navigate,
   openmrsFetch,
   refetchCurrentUser,
+  restBaseUrl,
   setUserLanguage,
   useConfig,
   useConnectivity,
@@ -19,6 +19,15 @@ jest.mock('swr', () => ({
   mutate: jest.fn(),
 }));
 
+jest.mock('@openmrs/esm-framework', () => {
+  const originalModule = jest.requireActual('@openmrs/esm-framework');
+
+  return {
+    ...originalModule,
+    restBaseUrl: '/ws/rest/v1',
+  };
+});
+
 Object.defineProperty(document, 'documentElement', {
   value: {
     getAttribute: jest.fn().mockReturnValue('km'),
@@ -27,7 +36,6 @@ Object.defineProperty(document, 'documentElement', {
 
 describe('Testing Logout', () => {
   beforeEach(() => {
-    cleanup();
     jest.clearAllMocks();
     (useConnectivity as jest.Mock).mockReturnValue(true);
     (openmrsFetch as jest.Mock).mockResolvedValue({});
@@ -43,12 +51,12 @@ describe('Testing Logout', () => {
   });
   it('should render Logout and redirect to login page', async () => {
     render(<RedirectLogout />);
-    expect(openmrsFetch).toHaveBeenCalledWith('/ws/rest/v1/session', {
+    expect(openmrsFetch).toHaveBeenCalledWith(`${restBaseUrl}/session`, {
       method: 'DELETE',
     });
-    await waitFor(() => expect(mutate).toBeCalled());
-    expect(clearCurrentUser).toBeCalled();
-    expect(refetchCurrentUser).toBeCalled();
+    await waitFor(() => expect(mutate).toHaveBeenCalled());
+    expect(clearCurrentUser).toHaveBeenCalled();
+    expect(refetchCurrentUser).toHaveBeenCalled();
     expect(setUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
       authenticated: false,
@@ -65,12 +73,12 @@ describe('Testing Logout', () => {
       },
     });
     render(<RedirectLogout />);
-    expect(openmrsFetch).toHaveBeenCalledWith('/ws/rest/v1/session', {
+    expect(openmrsFetch).toHaveBeenCalledWith(`${restBaseUrl}/session`, {
       method: 'DELETE',
     });
-    await waitFor(() => expect(mutate).toBeCalled());
-    expect(clearCurrentUser).toBeCalled();
-    expect(refetchCurrentUser).toBeCalled();
+    await waitFor(() => expect(mutate).toHaveBeenCalled());
+    expect(clearCurrentUser).toHaveBeenCalled();
+    expect(refetchCurrentUser).toHaveBeenCalled();
     expect(setUserLanguage).toHaveBeenCalledWith({
       locale: 'km',
       authenticated: false,

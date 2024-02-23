@@ -55,7 +55,7 @@ export function makeUrl(path: string) {
  * ```js
  * import { openmrsFetch } from '@openmrs/esm-api'
  * const abortController = new AbortController();
- * openmrsFetch('/ws/rest/v1/session', {signal: abortController.signal})
+ * openmrsFetch(`${restBaseUrl}/session', {signal: abortController.signal})
  *   .then(response => {
  *     console.log(response.data.authenticated)
  *   })
@@ -63,7 +63,7 @@ export function makeUrl(path: string) {
  *     console.error(err.status);
  *   })
  * abortController.abort();
- * openmrsFetch('/ws/rest/v1/session', {
+ * openmrsFetch(`${restBaseUrl}/session', {
  *   method: 'POST',
  *   body: {
  *     username: 'hi',
@@ -248,7 +248,7 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
  *
  * ```js
  * import { openmrsObservableFetch } from '@openmrs/esm-api'
- * const subscription = openmrsObservableFetch('/ws/rest/v1/session').subscribe(
+ * const subscription = openmrsObservableFetch(`${restBaseUrl}/session').subscribe(
  *   response => console.log(response.data),
  *   err => {throw err},
  *   () => console.log('finished')

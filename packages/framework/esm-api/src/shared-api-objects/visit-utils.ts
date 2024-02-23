@@ -2,7 +2,7 @@
 import type { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { take, map } from 'rxjs/operators';
-import { openmrsObservableFetch } from '../openmrs-fetch';
+import { openmrsObservableFetch, restBaseUrl } from '../openmrs-fetch';
 import type { FetchResponse, NewVisitPayload, UpdateVisitPayload, Visit } from '../types';
 import { getGlobalStore } from '@openmrs/esm-state';
 
@@ -55,7 +55,7 @@ export function getVisitsForPatient(
 ): Observable<FetchResponse<{ results: Array<Visit> }>> {
   const custom = v ?? defaultVisitCustomRepresentation;
 
-  return openmrsObservableFetch(`/ws/rest/v1/visit?patient=${patientUuid}&v=${custom}`, {
+  return openmrsObservableFetch(`${restBaseUrl}/visit?patient=${patientUuid}&v=${custom}`, {
     signal: abortController.signal,
     method: 'GET',
     headers: {
@@ -71,7 +71,7 @@ export function getVisitsForPatient(
 }
 
 export function saveVisit(payload: NewVisitPayload, abortController: AbortController): Observable<FetchResponse<any>> {
-  return openmrsObservableFetch(`/ws/rest/v1/visit`, {
+  return openmrsObservableFetch(`${restBaseUrl}/visit`, {
     signal: abortController.signal,
     method: 'POST',
     headers: {
@@ -86,7 +86,7 @@ export function updateVisit(
   payload: UpdateVisitPayload,
   abortController: AbortController,
 ): Observable<any> {
-  return openmrsObservableFetch(`/ws/rest/v1/visit/${uuid}`, {
+  return openmrsObservableFetch(`${restBaseUrl}/visit/${uuid}`, {
     signal: abortController.signal,
     method: 'POST',
     headers: {

@@ -747,7 +747,7 @@ ___
 
 ### attachmentUrl
 
-• `Const` **attachmentUrl**: ``"/ws/rest/v1/attachment"``
+• `Const` **attachmentUrl**: `string`
 
 #### Defined in
 
@@ -1330,7 +1330,7 @@ A [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Gl
 ```js
 import { openmrsFetch } from '@openmrs/esm-api'
 const abortController = new AbortController();
-openmrsFetch('/ws/rest/v1/session', {signal: abortController.signal})
+openmrsFetch(`${restBaseUrl}/session', {signal: abortController.signal})
   .then(response => {
     console.log(response.data.authenticated)
   })
@@ -1338,7 +1338,7 @@ openmrsFetch('/ws/rest/v1/session', {signal: abortController.signal})
     console.error(err.status);
   })
 abortController.abort();
-openmrsFetch('/ws/rest/v1/session', {
+openmrsFetch(`${restBaseUrl}/session', {
   method: 'POST',
   body: {
     username: 'hi',
@@ -1394,7 +1394,7 @@ The response object is exactly the same as for [openmrsFetch](API.md#openmrsfetc
 
 ```js
 import { openmrsObservableFetch } from '@openmrs/esm-api'
-const subscription = openmrsObservableFetch('/ws/rest/v1/session').subscribe(
+const subscription = openmrsObservableFetch(`${restBaseUrl}/session').subscribe(
   response => console.log(response.data),
   err => {throw err},
   () => console.log('finished')
