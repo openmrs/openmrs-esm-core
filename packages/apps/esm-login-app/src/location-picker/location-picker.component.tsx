@@ -10,19 +10,13 @@ import {
   RadioButtonGroup,
   RadioButtonSkeleton,
 } from '@carbon/react';
-import {
-  navigate,
-  setSessionLocation,
-  showToast,
-  useConfig,
-  useConnectivity,
-  useSession,
-} from '@openmrs/esm-framework';
+import { navigate, setSessionLocation, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
 import { useDefaultLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
+import { Snackbar } from '@openmrs/esm-styleguide/src/snackbars/snackbar.component';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
@@ -56,6 +50,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     hasMore,
     loadingNewData,
     setPage,
+    mutate,
   } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
 
   const locations = useMemo(() => {
@@ -114,14 +109,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     if (!isLoading && !searchTerm) {
       if (!config.chooseLocation.enabled || locations?.length === 1) {
         changeLocation(locations[0]?.resource.id, false);
-      }
-      if (!locations?.length) {
-        showToast({
-          title: t('error', 'Error'),
-          kind: 'error',
-          description: 'No locations were found for this system. Please contact your administrator',
-        });
-        changeLocation();
       }
     }
   }, [changeLocation, config.chooseLocation.enabled, isLoading, locations, searchTerm]);
@@ -191,7 +178,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
               )}
             </p>
           </div>
-          {locations?.length > 0 && (
+          {locations?.length > 0 ? (
             <Search
               autoFocus
               labelText={t('searchForLocation', 'Search for a location')}
@@ -200,6 +187,21 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
               onChange={(event) => search(event.target.value)}
               name="searchForLocation"
               size="lg"
+            />
+          ) : (
+            <Snackbar
+              snackbar={{
+                id: 1,
+                actionButtonLabel: t('reload', 'Reload'),
+                onActionButtonClick: () => mutate(),
+                kind: 'error',
+                title: t('locationsFailedToLoad', 'Locations failed to load'),
+                subtitle: t(
+                  'locationIssueContactAdministrator',
+                  'If the issue persists please contact your administrator',
+                ),
+              }}
+              closeSnackbar={() => {}}
             />
           )}
           <div className={styles.searchResults}>

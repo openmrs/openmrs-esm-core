@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { KeyedMutator } from 'swr';
 import useSwrInfinite from 'swr/infinite';
 import useSwrImmutable from 'swr/immutable';
 import { type FetchResponse, fhirBaseUrl, openmrsFetch, useDebounce, showNotification } from '@openmrs/esm-framework';
@@ -12,6 +13,7 @@ interface LoginLocationData {
   hasMore: boolean;
   loadingNewData: boolean;
   setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[]>;
+  mutate: KeyedMutator<FetchResponse<LocationResponse>[]>;
 }
 
 export function useLoginLocations(
@@ -66,10 +68,10 @@ export function useLoginLocations(
     return url + urlSearchParameters.toString();
   }
 
-  const { data, isLoading, isValidating, setSize, error } = useSwrInfinite<FetchResponse<LocationResponse>, Error>(
-    constructUrl,
-    openmrsFetch,
-  );
+  const { data, isLoading, isValidating, setSize, error, mutate } = useSwrInfinite<
+    FetchResponse<LocationResponse>,
+    Error
+  >(constructUrl, openmrsFetch);
 
   if (error) {
     showNotification({
@@ -89,6 +91,7 @@ export function useLoginLocations(
       loadingNewData: isValidating,
       setPage: setSize,
       error,
+      mutate,
     };
   }, [isLoading, data, isValidating, setSize]);
 
