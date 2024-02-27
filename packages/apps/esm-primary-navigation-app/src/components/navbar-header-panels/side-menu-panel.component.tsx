@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { LeftNavMenu, useOnClickOutside } from '@openmrs/esm-framework';
 
 interface SideMenuPanelProps {
@@ -10,8 +10,8 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({ expanded, hidePanel }) =>
   const menuRef = useOnClickOutside(hidePanel, expanded);
 
   useEffect(() => {
-    window.addEventListener('popstate', hidePanel);
-    return window.removeEventListener('popstate', hidePanel);
+    window.addEventListener('single-spa:before-mount-routing-event', hidePanel);
+    return window.addEventListener('single-spa:before-mount-routing-event', hidePanel);
   }, [hidePanel]);
 
   return expanded && <LeftNavMenu ref={menuRef} isChildOfHeader />;
