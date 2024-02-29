@@ -10,8 +10,8 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({ expanded, hidePanel }) =>
   const menuRef = useOnClickOutside(hidePanel, expanded);
 
   useEffect(() => {
-    window.addEventListener('single-spa:before-mount-routing-event', hidePanel);
-    return () => window.addEventListener('single-spa:before-mount-routing-event', hidePanel);
+    window.addEventListener('popstate', hidePanel);
+    return () => window.removeEventListener('popstate', hidePanel);
   }, [hidePanel]);
 
   return expanded && <LeftNavMenu ref={menuRef} isChildOfHeader />;
