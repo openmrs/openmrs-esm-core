@@ -11,7 +11,7 @@ const SideMenuPanel: React.FC<SideMenuPanelProps> = ({ expanded, hidePanel }) =>
 
   useEffect(() => {
     window.addEventListener('single-spa:before-mount-routing-event', hidePanel);
-    return window.addEventListener('single-spa:before-mount-routing-event', hidePanel);
+    return () => window.addEventListener('single-spa:before-mount-routing-event', hidePanel);
   }, [hidePanel]);
 
   return expanded && <LeftNavMenu ref={menuRef} isChildOfHeader />;
