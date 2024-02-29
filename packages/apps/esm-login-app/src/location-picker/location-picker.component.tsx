@@ -181,10 +181,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
           <div className={styles['back-button-div']}>
             <Button
               className={styles['back-button']}
-              iconDescription="Back to username"
+              iconDescription={t('backToPreviousPage', 'Back to previous page')}
               kind="ghost"
               onClick={handleNavigation}
-              renderIcon={(props) => <ArrowLeft size={24} style={{ marginRight: '0.5rem' }} {...props} />}
+              renderIcon={(props) => <ArrowLeft size={24} {...props} />}
             >
               <span>{t('back', 'Back')}</span>
             </Button>

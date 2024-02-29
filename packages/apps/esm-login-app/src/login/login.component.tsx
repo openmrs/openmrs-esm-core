@@ -166,10 +166,10 @@ const Login: React.FC = () => {
             <div className={styles['back-button-div']}>
               <Button
                 className={styles['back-button']}
-                iconDescription="Back to username"
+                iconDescription={t('backToUserNameIconLabel', 'Back to username')}
                 kind="ghost"
                 onClick={() => navigate('/login')}
-                renderIcon={(props) => <ArrowLeft size={24} style={{ marginRight: '0.5rem' }} {...props} />}
+                renderIcon={(props) => <ArrowLeft size={24} {...props} />}
               >
                 <span>{t('back', 'Back')}</span>
               </Button>

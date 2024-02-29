@@ -29,3 +29,17 @@
 .caption01 {
   @include type.type-style('legal-01');
 }
+
+.back-button {
+  height: 3rem;
+  padding-left: 0rem;
+
+  svg {
+    margin-right: 0.5rem;
+    order: 1;
+  }
+
+  span {
+    order: 2;
+  }
+}
