@@ -23,6 +23,7 @@ import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
 import { useDefaultLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
+import { ArrowLeft } from '@carbon/react/icons';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
@@ -82,30 +83,33 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     state: LoginReferrer;
   };
 
+  const handleNavigation = useCallback(() => {
+    const referrer = state?.referrer;
+    const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
+
+    if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
+      navigate({ to: '${openmrsSpaBase}' + referrer });
+      return;
+    }
+    if (returnToUrl && returnToUrl !== '/') {
+      navigate({ to: returnToUrl });
+    } else {
+      navigate({ to: config.links.loginSuccess });
+    }
+  }, [state?.referrer, location, config.links.loginSuccess]);
+
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
       setIsSubmitting(true);
-
-      const referrer = state?.referrer;
-      const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
-
       const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
 
       updateDefaultLocation(locationUuid, saveUserPreference);
       sessionDefined.then(() => {
-        if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
-          navigate({ to: '${openmrsSpaBase}' + referrer });
-          return;
-        }
-        if (returnToUrl && returnToUrl !== '/') {
-          navigate({ to: returnToUrl });
-        } else {
-          navigate({ to: config.links.loginSuccess });
-        }
+        handleNavigation();
         return;
       });
     },
-    [state?.referrer, config.links.loginSuccess, updateDefaultLocation],
+    [updateDefaultLocation, handleNavigation],
   );
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
@@ -173,6 +177,19 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
   return (
     <div className={styles.locationPickerContainer}>
       <form onSubmit={handleSubmit}>
+        {isUpdateFlow ? (
+          <div className={styles['back-button-div']}>
+            <Button
+              className={styles['back-button']}
+              iconDescription="Back to username"
+              kind="ghost"
+              onClick={handleNavigation}
+              renderIcon={(props) => <ArrowLeft size={24} style={{ marginRight: '0.5rem' }} {...props} />}
+            >
+              <span>{t('back', 'Back')}</span>
+            </Button>
+          </div>
+        ) : null}
         <div className={styles.locationCard}>
           <div className={styles.paddedContainer}>
             <p className={styles.welcomeTitle}>
