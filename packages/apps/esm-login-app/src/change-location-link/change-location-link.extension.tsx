@@ -1,12 +1,10 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { navigate, useSession } from '@openmrs/esm-framework';
 import { Button } from '@carbon/react';
 import { Location } from '@carbon/react/icons';
 import styles from './change-location-link.scss';
 import { SwitcherItem } from '@carbon/react';
-import { useLocation } from 'react-router-dom';
-import type { LoginReferrer } from '../login/login.component';
 
 const ChangeLocationLink: React.FC = () => {
   const { t } = useTranslation();
