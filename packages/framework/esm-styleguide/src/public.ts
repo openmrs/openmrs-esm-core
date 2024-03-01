@@ -6,7 +6,7 @@ export {
 } from './notifications/actionable-notification.component';
 export { showToast } from './toasts';
 export { showModal } from './modals';
-export { showOverlay } from './overlays';
+export { showOverlay, registerOverlay } from './overlays';
 export { type ToastDescriptor, type ToastType, type ToastNotificationMeta } from './toasts/toast.component';
 export { showSnackbar } from './snackbars';
 export { type SnackbarDescriptor, type SnackbarType, type SnackbarMeta } from './snackbars/snackbar.component';

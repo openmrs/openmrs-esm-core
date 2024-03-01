@@ -15,8 +15,6 @@ export * from './left-nav';
 export * from './error-state';
 export * from './datepicker';
 
-export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
-
 defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
 setupBranding();
 setupLogo();
