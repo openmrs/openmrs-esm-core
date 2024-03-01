@@ -1,5 +1,4 @@
 import { start, triggerAppChange } from 'single-spa';
-import { type OpenmrsAppRoutes, restBaseUrl } from '@openmrs/esm-framework/src/internal';
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -37,6 +36,9 @@ import {
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
   setupHistory,
+  type OpenmrsAppRoutes,
+  renderOverlays,
+  restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
 import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
 import { setupI18n } from './locale';
@@ -289,6 +291,10 @@ function showModals() {
   setupModals(document.querySelector('.omrs-modals-container'));
 }
 
+function showOverlays() {
+  renderOverlays(document.querySelector('.omrs-overlays-container'));
+}
+
 function showLoadingSpinner() {
   return renderLoadingSpinner(document.body);
 }
@@ -399,6 +405,7 @@ export function run(configUrls: Array<string>, offline: boolean) {
   integrateBreakpoints();
   showToasts();
   showModals();
+  showOverlays();
   showNotifications();
   showActionableNotifications();
   showSnackbars();

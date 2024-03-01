@@ -10,6 +10,7 @@ export * from './notifications';
 export * from './toasts';
 export * from './snackbars';
 export * from './modals';
+export * from './overlays';
 export * from './left-nav';
 export * from './error-state';
 export * from './datepicker';
@@ -17,6 +18,8 @@ export * from './responsive-wrapper';
 export * from './patient-banner';
 export * from './patient-photo';
 export * from './custom-overflow-menu';
+
+export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
 defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
 setupBranding();
