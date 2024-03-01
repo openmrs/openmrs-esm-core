@@ -1,0 +1,74 @@
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+@import '../vars';
+
+.omrs--overlay--desktop--overlay {
+  position: fixed;
+  top: spacing.$spacing-09;
+  right: 0;
+  height: calc(100vh - 3rem);
+  min-width: 27rem;
+  background-color: $ui-02;
+  border-left: 1px solid $text-03;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  z-index: 999;
+}
+
+.omrs--overlay--tablet--overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background-color: $ui-02;
+  overflow: hidden;
+  padding-top: spacing.$spacing-09;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.omrs--overlay--tablet--header {
+  button {
+    background-color: $brand-01 !important;
+  }
+  .headerContent {
+    color: $ui-02;
+  }
+}
+
+.omrs--overlay--desktop--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $ui-03;
+  border-bottom: 1px solid $text-03;
+}
+
+.omrs--overlay--header--content {
+  @include type.type-style('heading-compact-02');
+  padding: 0 spacing.$spacing-05;
+  color: $ui-05;
+}
+
+.omrs--overlay--close--btn {
+  background-color: $ui-02;
+}
+
+.omrs--overlay--content {
+  padding: spacing.$spacing-05;
+  overflow-y: auto;
+}
+
+.omrs--overlay--hidden {
+  display: none;
+}
+
+.omrs--overlay--loading--content {
+  display: flex;
+  background-color: $openmrs-background-grey;
+  justify-content: center;
+  min-height: spacing.$spacing-09;
+}
