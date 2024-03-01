@@ -10,6 +10,10 @@ import {
   getOverlayRegistration,
 } from './overlay.resource';
 
+/**
+ * Registers a new overlay to display.
+ * @param overlayDefinition
+ */
 export function registerOverlay(overlayDefinition: OverlayRegistration) {
   overlayRegistrations[overlayDefinition.name] = overlayDefinition;
 }
@@ -22,18 +26,16 @@ export function renderOverlays(overlayContainer: HTMLElement | null) {
 }
 
 /**
- * Shows the provided extension component in an overlay window.
- * @param extensionId The id of the extension to show.
- * @param props The optional props to provide to the extension.
- * @param onClose The optional notification to receive when the modal is closed.
- * @returns The dispose function to force closing the modal dialog.
+ * Shows the provided component in an overlay window.
+ * @param name name of the overlay registered with
+ * @param props props that will be passed into the overlay content component
  */
 export function showOverlay(
   name: string,
   props: {
     overlayTitle?: string;
     [x: string]: any;
-  },
+  } = {},
 ) {
   const store = overlayStore;
   const existingOverlay = store.getState().overlayStack.find((x) => x.name === name);
@@ -46,15 +48,14 @@ export function showOverlay(
   }
 
   const overlayRegistration = getOverlayRegistration(name);
-
-  openInstance({
-    ...overlayRegistration,
-    overlayTitle: props?.overlayTitle ?? overlayRegistration.title,
-    props: {
-      ...props,
-      closeOverlay: (onClose: () => void = () => {}) => closeInstance(name, onClose),
-    },
-  });
-
-  return close;
+  if (overlayRegistration) {
+    openInstance({
+      ...overlayRegistration,
+      overlayTitle: props?.overlayTitle ?? overlayRegistration.title,
+      props: {
+        ...props,
+        closeOverlay: (onClose: () => void = () => {}) => closeInstance(name, onClose),
+      },
+    });
+  }
 }

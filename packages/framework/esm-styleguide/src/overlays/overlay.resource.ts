@@ -31,7 +31,11 @@ export const overlayStore = createGlobalStore<OverlayState>('globalOverlayState'
 });
 
 export function getOverlayRegistration(name: string) {
-  return overlayRegistrations[name];
+  if (overlayRegistrations[name]) {
+    return overlayRegistrations[name];
+  }
+
+  throw new Error(`No overlay registered with name: ${name}`);
 }
 
 export function useOverlayStore() {

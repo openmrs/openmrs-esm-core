@@ -19,8 +19,6 @@ export * from './patient-banner';
 export * from './patient-photo';
 export * from './custom-overflow-menu';
 
-export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
-
 defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
 setupBranding();
 setupLogo();
