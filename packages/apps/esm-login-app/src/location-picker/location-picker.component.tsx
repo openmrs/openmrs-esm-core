@@ -89,9 +89,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
 
     if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
       navigate({ to: '${openmrsSpaBase}' + referrer });
-      return;
-    }
-    if (returnToUrl && returnToUrl !== '/') {
+    } else if (returnToUrl && returnToUrl !== '/') {
       navigate({ to: returnToUrl });
     } else {
       navigate({ to: config.links.loginSuccess });
@@ -104,10 +102,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
       const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
 
       updateDefaultLocation(locationUuid, saveUserPreference);
-      sessionDefined.then(() => {
-        handleNavigation();
-        return;
-      });
+      sessionDefined.then(handleNavigation);
     },
     [updateDefaultLocation, handleNavigation],
   );
