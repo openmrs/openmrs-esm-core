@@ -2,7 +2,7 @@
 @use '@carbon/styles/scss/type';
 @import '../vars';
 
-.omrs--overlay--desktop--overlay {
+.omrs--workspace--desktop--workspace {
   position: fixed;
   top: spacing.$spacing-09;
   right: 0;
@@ -16,7 +16,7 @@
   z-index: 999;
 }
 
-.omrs--overlay--tablet--overlay {
+.omrs--workspace--tablet--workspace {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -30,7 +30,7 @@
   grid-template-rows: 1fr auto;
 }
 
-.omrs--overlay--tablet--header {
+.omrs--workspace--tablet--header {
   button {
     background-color: $brand-01 !important;
   }
@@ -39,7 +39,7 @@
   }
 }
 
-.omrs--overlay--desktop--header {
+.omrs--workspace--desktop--header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -47,26 +47,26 @@
   border-bottom: 1px solid $text-03;
 }
 
-.omrs--overlay--header--content {
+.omrs--workspace--header--content {
   @include type.type-style('heading-compact-02');
   padding: 0 spacing.$spacing-05;
   color: $ui-05;
 }
 
-.omrs--overlay--close--btn {
+.omrs--workspace--close--btn {
   background-color: $ui-02;
 }
 
-.omrs--overlay--content {
+.omrs--workspace--content {
   padding: spacing.$spacing-05;
   overflow-y: auto;
 }
 
-.omrs--overlay--hidden {
+.omrs--workspace--hidden {
   display: none;
 }
 
-.omrs--overlay--loading--content {
+.omrs--workspace--loading--content {
   display: flex;
   background-color: $openmrs-background-grey;
   justify-content: center;

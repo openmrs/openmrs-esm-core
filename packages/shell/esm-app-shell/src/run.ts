@@ -37,7 +37,7 @@ import {
   isOpenmrsRoutes,
   setupHistory,
   type OpenmrsAppRoutes,
-  renderOverlays,
+  renderWorkspaces,
   restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
 import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
@@ -292,7 +292,7 @@ function showModals() {
 }
 
 function showOverlays() {
-  renderOverlays(document.querySelector('.omrs-overlays-container'));
+  renderWorkspaces(document.querySelector('.omrs-overlays-container'));
 }
 
 function showLoadingSpinner() {
