@@ -10,7 +10,7 @@ test('Logout as Admin user', async ({ page }) => {
   });
 
   await test.step('And I click the `User` button', async () => {
-    await page.getByRole('button', { name: /user/i }).click();
+    await page.getByRole('button', { name: /My Account/i }).click();
   });
 
   await test.step('And I click the `Logout` button', async () => {

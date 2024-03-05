@@ -35,7 +35,7 @@ test('Login as Admin user', async ({ page }) => {
   });
 
   await test.step('And I should be able to see various elements on the page', async () => {
-    await page.getByRole('button', { name: /user/i }).click();
+    await page.getByRole('button', { name: /My Account/i }).click();
     await expect(page.getByText(/super user/i)).toBeVisible();
     await expect(page.getByText(/outpatient clinic/i)).toBeVisible();
     await expect(page.getByRole('button', { name: /logout/i })).toBeVisible();

@@ -77,7 +77,7 @@ const HeaderItems: React.FC = () => {
           />
           {showUserMenu && (
             <HeaderGlobalAction
-              aria-label={t('userMenuTooltip', 'User')}
+              aria-label={t('userMenuTooltip', 'My Account')}
               aria-labelledby="Users Avatar Icon"
               className={classNames({
                 [styles.headerGlobalBarButton]: isActivePanel('userMenu'),
