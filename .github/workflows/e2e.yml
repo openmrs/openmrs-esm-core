@@ -16,13 +16,13 @@ jobs:
     outputs:
       test-changes: ${{ steps.changes.outputs.test-sources }}
 
-    steps: 
+    steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      
+
       - name: Check if any source code has changed
         id: changes
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@v3
         with:
           filters: |
             test-sources:
@@ -60,7 +60,7 @@ jobs:
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
