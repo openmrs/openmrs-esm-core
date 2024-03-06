@@ -1,23 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Header, InlineLoading } from '@carbon/react';
+import { Button, Header, InlineLoading, ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
 import { ArrowLeft, Close } from '@carbon/react/icons';
 import { useLayoutType, isDesktop } from '@openmrs/esm-framework';
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
-import { type WorkspaceInstance, useWorkspaceStore } from './workspaces.resource';
+import { type WorkspaceInstance, useWorkspaceStore, cancelPrompt } from './workspaces.resource';
+
 import classNames from 'classnames';
 
 const WorkspaceContainer: React.FC = () => {
-  const { workspaceStack } = useWorkspaceStore();
-  if (!workspaceStack.length) {
+  const { openWorkspaces } = useWorkspaceStore();
+  if (!openWorkspaces.length) {
     return null;
   }
   return (
     <>
-      {workspaceStack.map((instance, index) => (
+      {openWorkspaces.map((instance, index) => (
         <Workspace workspaceInstance={instance} visible={index === 0} key={instance.name} />
       ))}
+      <WorkspaceNotification />
     </>
   );
 };
@@ -45,9 +47,16 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance, visible }) => 
     };
   }, [workspaceInstance.load]);
 
-  if (!workspaceInstance) {
+  if (!workspaceInstance || !visible) {
     return null;
   }
+
+  const props = {
+    ...workspaceInstance.additionalProps,
+    closeWorkspace: workspaceInstance.closeWorkspace,
+    closeWorkspaceWithSavedChanges: workspaceInstance.closeWorkspaceWithSavedChanges,
+    promptBeforeClosing: workspaceInstance.promptBeforeClosing,
+  };
 
   return (
     <div
@@ -63,7 +72,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance, visible }) => 
           <Button
             className="omrs--workspace--close--btn"
             iconDescription={t('closeWorkspace', 'Close workspace')}
-            onClick={workspaceInstance?.props?.closeWorkspace}
+            onClick={workspaceInstance?.closeWorkspace}
             kind="ghost"
             hasIconOnly
             renderIcon={(props) => <Close size={16} {...props} />}
@@ -73,7 +82,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance, visible }) => 
         <Header className="omrs--workspace--tablet--header" aria-label="Workspace header">
           <Button
             kind="ghost"
-            onClick={workspaceInstance?.props?.closeWorkspace}
+            onClick={workspaceInstance?.closeWorkspace}
             hasIconOnly
             iconDescription={t('closeWorkspace', 'Close workspace')}
             renderIcon={(props) => <ArrowLeft size={16} onClick={close} {...props} />}
@@ -83,12 +92,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance, visible }) => 
       )}
       <div className="omrs--workspace--content" ref={ref}>
         {lifecycle ? (
-          <Parcel
-            key={workspaceInstance.name}
-            config={lifecycle}
-            mountParcel={mountRootParcel}
-            {...workspaceInstance.props}
-          />
+          <Parcel key={workspaceInstance.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
         ) : (
           <InlineLoading className="omrs--workspace--loading--content" description={`${t('loading', 'Loading...')}`} />
         )}
@@ -98,3 +102,27 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance, visible }) => 
 };
 
 export default WorkspaceContainer;
+
+const WorkspaceNotification: React.FC = () => {
+  const { t } = useTranslation();
+  const { prompt } = useWorkspaceStore();
+
+  if (!prompt) {
+    return null;
+  }
+
+  return (
+    <ComposedModal open={true} onClose={cancelPrompt}>
+      <ModalHeader title={prompt.title}></ModalHeader>
+      <ModalBody>{prompt.body}</ModalBody>
+      <ModalFooter>
+        <Button kind="secondary" onClick={cancelPrompt}>
+          {prompt.cancelText ?? t('cancel', 'Cancel')}
+        </Button>
+        <Button kind="danger" onClick={prompt.onConfirm}>
+          {prompt.confirmText ?? t('confirm', 'Confirm')}
+        </Button>
+      </ModalFooter>
+    </ComposedModal>
+  );
+};
