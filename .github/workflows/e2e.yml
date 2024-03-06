@@ -32,6 +32,7 @@ jobs:
               - 'packages/**/src/**/*!(.test).jsx'
               - 'packages/**/src/**/*.scss'
               - 'packages/**/src/routes.json'
+              - 'package.json'
               - 'playwright.config.ts'
               - 'e2e/**/*.ts'
               - 'e2e/**/*.js'
