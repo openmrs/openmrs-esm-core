@@ -8,6 +8,7 @@ module.exports = {
     '^@carbon/icons-react/es/(.*)$': '@carbon/icons-react/lib/$1',
     '^@carbon/charts': 'identity-obj-proxy',
     '@openmrs/esm-framework': '@openmrs/esm-framework/mock',
+    '@openmrs/esm-translations': '@openmrs/esm-translations/mock',
     '^lodash-es/(.*)$': 'lodash/$1',
     dexie: require.resolve('dexie'),
   },
