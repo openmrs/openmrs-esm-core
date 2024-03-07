@@ -4,8 +4,6 @@ import { initReactI18next } from 'react-i18next';
 import merge from 'lodash-es/merge';
 import { getTranslationOverrides, importDynamic } from '@openmrs/esm-framework/src/internal';
 
-console.log('check one two');
-
 export function setupI18n() {
   window.i18next = i18next.default || i18next;
 
