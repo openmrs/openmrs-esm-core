@@ -6,12 +6,12 @@ import { Tag } from '@carbon/react';
 import styles from './patient-banner-info.module.scss';
 
 export interface PatientBannerPatientInfoProps {
-  patientUuid: string;
   patient: fhir.Patient;
 }
 
-export function PatientBannerPatientInfo({ patientUuid, patient }: PatientBannerPatientInfoProps) {
+export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
   const { excludePatientIdentifierCodeTypes } = useConfig();
+  console.log("patient", patient);
 
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0].family}`;
   const gender = patient?.gender && getGender(patient.gender);
@@ -26,7 +26,7 @@ export function PatientBannerPatientInfo({ patientUuid, patient }: PatientBanner
       <div className={classNames(styles.row, styles.patientNameRow)}>
         <div className={styles.flexRow}>
           <span className={styles.patientName}>{name}</span>
-          <ExtensionSlot name="patient-banner-tags-slot" state={{ patientUuid, patient }} className={styles.flexRow} />
+          <ExtensionSlot name="patient-banner-tags-slot" state={{ patientUuid: patient.id, patient }} className={styles.flexRow} />
         </div>
       </div>
       <div className={styles.demographics}>
@@ -38,8 +38,8 @@ export function PatientBannerPatientInfo({ patientUuid, patient }: PatientBanner
           {filteredIdentifiers?.length
             ? filteredIdentifiers.map(({ value, type }) => (
                 <span key={value} className={styles.identifierTag}>
-                  <Tag className={styles.tag} type="gray" title={type}>
-                    {type}
+                  <Tag className={styles.tag} type="gray" title={type?.text}>
+                    {type?.text}
                   </Tag>
                   {value}
                 </span>
