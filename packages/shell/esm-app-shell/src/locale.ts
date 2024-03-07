@@ -45,20 +45,6 @@ export function setupI18n() {
             .catch((err: Error) => {
               callback(err, null);
             });
-        } else if (namespace === '@openmrs/esm-app-shell') {
-          // currently, we don't have translations in the app shell
-          getTranslationOverrides(namespace)
-            .then((overrides) => {
-              let translations = {};
-              if (language in overrides) {
-                translations = overrides[language];
-              }
-
-              callback(null, translations);
-            })
-            .catch((err: Error) => {
-              callback(err, null);
-            });
         } else {
           importDynamic(namespace)
             .then((module) =>
