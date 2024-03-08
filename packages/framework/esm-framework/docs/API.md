@@ -181,7 +181,9 @@
 
 - [CustomOverflowMenu](API.md#customoverflowmenu)
 - [PatientBannerActionsMenu](API.md#patientbanneractionsmenu)
+- [PatientBannerContactDetails](API.md#patientbannercontactdetails)
 - [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
+- [PatientBannerToggleContactDetailsButton](API.md#patientbannertogglecontactdetailsbutton)
 - [PatientPhoto](API.md#patientphoto)
 - [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
@@ -4513,6 +4515,26 @@ ___
 
 ___
 
+### PatientBannerContactDetails
+
+▸ **PatientBannerContactDetails**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | `ContactDetailsProps` |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:180](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L180)
+
+___
+
 ### PatientBannerPatientInfo
 
 ▸ **PatientBannerPatientInfo**(`__namedParameters`): `Element`
@@ -4530,6 +4552,26 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx#L13)
+
+___
+
+### PatientBannerToggleContactDetailsButton
+
+▸ **PatientBannerToggleContactDetailsButton**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientBannerToggleContactDetailsButtonProps`](interfaces/PatientBannerToggleContactDetailsButtonProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx#L16)
 
 ___
 
