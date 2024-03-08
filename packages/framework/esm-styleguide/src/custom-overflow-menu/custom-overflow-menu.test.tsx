@@ -1,11 +1,11 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import CustomOverflowMenuComponent from './overflow-menu.component';
+import { CustomOverflowMenu } from './custom-overflow-menu.component';}
 
 describe('CustomOverflowMenuComponent', () => {
   it('should render', () => {
-    render(<CustomOverflowMenuComponent menuTitle="Test Menu" dropDownMenu={true} children={<li>Option 1</li>} />);
+    render(<CustomOverflowMenu menuTitle="Test Menu" children={<li>Option 1</li>} />);
     expect(screen.getByRole('button', { name: 'Test Menu' })).toBeInTheDocument();
   });
 
@@ -13,10 +13,10 @@ describe('CustomOverflowMenuComponent', () => {
     const user = userEvent.setup();
 
     render(
-      <CustomOverflowMenuComponent menuTitle="Menu" dropDownMenu={false}>
+      <CustomOverflowMenu menuTitle="Menu">
         <li>Option 1</li>
         <li>Option 2</li>
-      </CustomOverflowMenuComponent>,
+      </CustomOverflowMenu>,
     );
 
     const triggerButton = screen.getByRole('button', { name: /menu/i });

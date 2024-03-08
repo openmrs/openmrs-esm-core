@@ -2,7 +2,7 @@ import { ExtensionSlot, useConnectedExtensions } from '@openmrs/esm-react-utils'
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { OverflowMenuVertical } from '@carbon/react/icons';
 import styles from './patient-banner-actions-menu.module.scss';
-import CustomOverflowMenuComponent from './custom-overflow-menu.component';
+import { CustomOverflowMenu } from '../../custom-overflow-menu/custom-overflow-menu.component';
 import { translateFrom } from '@openmrs/esm-utils';
 
 export interface PatientBannerActionsMenuProps {
@@ -22,22 +22,17 @@ export function PatientBannerActionsMenu({
   isDeceased,
   additionalActionsSlotState,
 }: PatientBannerActionsMenuProps) {
-  const overflowMenuRef = useRef(null);
   const patientActions = useConnectedExtensions(actionsSlotName);
   const patientActionsSlotState = useMemo(
     () => ({ patientUuid, ...additionalActionsSlotState }),
     [patientUuid, additionalActionsSlotState],
   );
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const toggleMenu = useCallback(() => {
-    setMenuIsOpen((value) => !value);
-  }, []);
 
   return (
     <>
       {patientActions.length > 0 ? (
-        <div className={styles.overflowMenuContainer} ref={overflowMenuRef}>
-          <CustomOverflowMenuComponent
+        <div className={styles.overflowMenuContainer}>
+          <CustomOverflowMenu
             deceased={isDeceased}
             menuTitle={
               <>
@@ -47,16 +42,13 @@ export function PatientBannerActionsMenu({
                 <OverflowMenuVertical size={16} style={{ marginLeft: '0.5rem', fill: '#78A9FF' }} />
               </>
             }
-            menuIsOpen={menuIsOpen}
-            setMenuIsOpen={setMenuIsOpen}
           >
             <ExtensionSlot
-              onClick={toggleMenu}
               name="patient-actions-slot"
               key="patient-actions-slot"
               state={patientActionsSlotState}
             />
-          </CustomOverflowMenuComponent>
+          </CustomOverflowMenu>
         </div>
       ) : null}
     </>

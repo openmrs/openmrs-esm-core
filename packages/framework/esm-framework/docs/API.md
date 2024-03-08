@@ -165,6 +165,7 @@
 ### Other Functions
 
 - [ExtensionSlot](API.md#extensionslot)
+- [PatientBannerActionsMenu](API.md#patientbanneractionsmenu)
 - [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
 - [PatientPhoto](API.md#patientphoto)
 - [useAttachments](API.md#useattachments)
@@ -4133,6 +4134,26 @@ Passing a function as children
 
 ___
 
+### PatientBannerActionsMenu
+
+▸ **PatientBannerActionsMenu**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientBannerActionsMenuProps`](interfaces/PatientBannerActionsMenuProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L19)
+
+___
+
 ### PatientBannerPatientInfo
 
 ▸ **PatientBannerPatientInfo**(`__namedParameters`): `Element`
@@ -4222,7 +4243,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L28)
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L29)
 
 ___
 

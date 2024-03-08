@@ -1,26 +1,23 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import { useLayoutType, useOnClickOutside } from '@openmrs/esm-framework';
 import styles from './custom-overflow-menu.module.scss';
 
-interface CustomOverflowMenuComponentProps {
+interface CustomOverflowMenuProps {
   menuTitle: React.ReactNode;
-  menuIsOpen: boolean;
-  setMenuIsOpen: (value: boolean | ((currentValue: boolean) => boolean)) => void;
   children: React.ReactNode;
   deceased?: boolean;
 }
 
-const CustomOverflowMenuComponent: React.FC<CustomOverflowMenuComponentProps> = ({
-  menuIsOpen,
-  setMenuIsOpen,
+export function CustomOverflowMenu({
   menuTitle,
   children,
   deceased,
-}) => {
+}: CustomOverflowMenuProps) {
+  const [menuIsOpen, setMenuIsOpen] = React.useState(false);
   const ref = useOnClickOutside<HTMLDivElement>(() => setMenuIsOpen(false), menuIsOpen);
   const isTablet = useLayoutType() === 'tablet';
-  const toggleShowMenu = useCallback(() => setMenuIsOpen(state => !state), []);
+  const toggleShowMenu = useCallback(() => setMenuIsOpen((state) => !state), []);
 
   return (
     <div data-overflow-menu className={classNames('cds--overflow-menu', styles.container)} ref={ref}>
@@ -61,5 +58,3 @@ const CustomOverflowMenuComponent: React.FC<CustomOverflowMenuComponentProps> = 
     </div>
   );
 };
-
-export default CustomOverflowMenuComponent;
