@@ -73,16 +73,16 @@ const mockCohorts = [
   },
 ];
 
-jest.mock('../hooks/usePatientAttributes', () => ({
+jest.mock('./usePatientAttributes', () => ({
   usePatientAttributes: jest.fn(),
   usePatientContactAttributes: jest.fn(),
 }));
 
-jest.mock('../hooks/usePatientListsForPatient', () => ({
+jest.mock('./usePatientListsForPatient', () => ({
   usePatientListsForPatient: jest.fn(),
 }));
 
-jest.mock('./relationships.resource', () => ({
+jest.mock('./useRelationships', () => ({
   useRelationships: jest.fn(),
 }));
 

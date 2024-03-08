@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import { CustomOverflowMenu } from './custom-overflow-menu.component';}
+import { CustomOverflowMenu } from './custom-overflow-menu.component';
 
 describe('CustomOverflowMenuComponent', () => {
   it('should render', () => {
