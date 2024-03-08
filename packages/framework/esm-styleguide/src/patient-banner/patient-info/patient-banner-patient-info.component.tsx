@@ -1,3 +1,4 @@
+/** @module @category UI */
 import { age, formatDate, parseDate, translateFrom } from '@openmrs/esm-framework';
 import { ExtensionSlot, useConfig } from '@openmrs/esm-react-utils';
 import React from 'react';

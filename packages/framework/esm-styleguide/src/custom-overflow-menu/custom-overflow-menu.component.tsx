@@ -1,3 +1,4 @@
+/** @module @category UI */
 import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import { useLayoutType, useOnClickOutside } from '@openmrs/esm-framework';
@@ -9,11 +10,7 @@ interface CustomOverflowMenuProps {
   deceased?: boolean;
 }
 
-export function CustomOverflowMenu({
-  menuTitle,
-  children,
-  deceased,
-}: CustomOverflowMenuProps) {
+export function CustomOverflowMenu({ menuTitle, children, deceased }: CustomOverflowMenuProps) {
   const [menuIsOpen, setMenuIsOpen] = React.useState(false);
   const ref = useOnClickOutside<HTMLDivElement>(() => setMenuIsOpen(false), menuIsOpen);
   const isTablet = useLayoutType() === 'tablet';
@@ -57,4 +54,4 @@ export function CustomOverflowMenu({
       </div>
     </div>
   );
-};
+}

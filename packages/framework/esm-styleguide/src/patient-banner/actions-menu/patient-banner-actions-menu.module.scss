@@ -3,7 +3,7 @@
 @import '~@openmrs/esm-styleguide/src/vars';
 
 .actionsButtonText {
-  @include type.type-style("body-compact-01");
+  @include type.type-style('body-compact-01');
   color: $interactive-01;
 }
 
@@ -20,4 +20,3 @@ html[dir='rtl'] {
     }
   }
 }
-

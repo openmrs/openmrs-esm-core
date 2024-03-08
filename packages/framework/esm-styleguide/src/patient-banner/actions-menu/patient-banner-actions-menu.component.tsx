@@ -1,3 +1,4 @@
+/** @module @category UI */
 import { ExtensionSlot, useConnectedExtensions } from '@openmrs/esm-react-utils';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { OverflowMenuVertical } from '@carbon/react/icons';
@@ -43,11 +44,7 @@ export function PatientBannerActionsMenu({
               </>
             }
           >
-            <ExtensionSlot
-              name="patient-actions-slot"
-              key="patient-actions-slot"
-              state={patientActionsSlotState}
-            />
+            <ExtensionSlot name="patient-actions-slot" key="patient-actions-slot" state={patientActionsSlotState} />
           </CustomOverflowMenu>
         </div>
       ) : null}

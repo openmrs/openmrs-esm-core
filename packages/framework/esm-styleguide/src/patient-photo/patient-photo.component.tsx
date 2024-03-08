@@ -1,3 +1,4 @@
+/** @module @category UI */
 import React from 'react';
 import Avatar from 'react-avatar';
 import GeoPattern from 'geopattern';
