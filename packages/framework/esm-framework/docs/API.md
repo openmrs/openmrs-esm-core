@@ -166,7 +166,9 @@
 
 - [ExtensionSlot](API.md#extensionslot)
 - [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
+- [PatientPhoto](API.md#patientphoto)
 - [useAttachments](API.md#useattachments)
+- [usePatientPhoto](API.md#usepatientphoto)
 
 ### Store Functions
 
@@ -4147,7 +4149,31 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/patient-banner-info/patient-banner-info.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-banner-info/patient-banner-info.component.tsx#L13)
+[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx#L12)
+
+___
+
+### PatientPhoto
+
+▸ **PatientPhoto**(`__namedParameters`): `Element`
+
+A component which displays the patient photo. If there is no photo, it will display
+a generated avatar. The default size is 80px. Set the size prop to 'small' to display
+a 48px avatar.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientPhotoProps`](interfaces/PatientPhotoProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L17)
 
 ___
 
@@ -4177,6 +4203,26 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useAttachments.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L5)
+
+___
+
+### usePatientPhoto
+
+▸ **usePatientPhoto**(`patientUuid`): [`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+
+#### Returns
+
+[`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L28)
 
 ___
 

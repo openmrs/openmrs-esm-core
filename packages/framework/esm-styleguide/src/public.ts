@@ -14,3 +14,4 @@ export * from './error-state';
 export * from './datepicker';
 export * from './responsive-wrapper';
 export * from './patient-banner';
+export * from './patient-photo';

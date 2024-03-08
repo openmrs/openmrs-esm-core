@@ -1,1 +1,1 @@
-export * from './patient-banner-info/patient-banner-info.component';
+export * from './patient-info/patient-banner-patient-info.component';

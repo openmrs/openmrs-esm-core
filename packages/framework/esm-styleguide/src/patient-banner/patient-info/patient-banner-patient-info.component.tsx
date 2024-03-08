@@ -3,7 +3,7 @@ import { ExtensionSlot, useConfig } from '@openmrs/esm-react-utils';
 import React from 'react';
 import classNames from 'classnames';
 import { Tag } from '@carbon/react';
-import styles from './patient-banner-info.module.scss';
+import styles from './patient-banner-patient-info.module.scss';
 
 export interface PatientBannerPatientInfoProps {
   patient: fhir.Patient;
@@ -11,7 +11,6 @@ export interface PatientBannerPatientInfoProps {
 
 export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
   const { excludePatientIdentifierCodeTypes } = useConfig();
-  console.log("patient", patient);
 
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0].family}`;
   const gender = patient?.gender && getGender(patient.gender);
@@ -26,7 +25,11 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
       <div className={classNames(styles.row, styles.patientNameRow)}>
         <div className={styles.flexRow}>
           <span className={styles.patientName}>{name}</span>
-          <ExtensionSlot name="patient-banner-tags-slot" state={{ patientUuid: patient.id, patient }} className={styles.flexRow} />
+          <ExtensionSlot
+            name="patient-banner-tags-slot"
+            state={{ patientUuid: patient.id, patient }}
+            className={styles.flexRow}
+          />
         </div>
       </div>
       <div className={styles.demographics}>
