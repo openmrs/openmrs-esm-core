@@ -12,13 +12,6 @@
   background-color: $ui-01;
 }
 
-.buttonCol {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
 .deceasedPatientContainer {
   background-color: colors.$gray-80;
 
@@ -128,17 +121,6 @@
 
 // Overriding styles for RTL support
 html[dir='rtl'] {
-  .overflowMenuContainer {
-    & > div {
-      margin-left: unset;
-      margin-right: -1.5rem;
-      & > div {
-        left: unset;
-        right: -6.025rem;
-      }
-    }
-  }
-
   .demographics {
     display: flex;
     gap: 0.25rem;

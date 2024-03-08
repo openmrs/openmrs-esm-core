@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
 import { useConfig } from '@openmrs/esm-react-utils';
+import { type StyleguideConfigObject } from '../config-schema';
 
 export interface UsePatientPhotoResult {
   data: { dateTime: string; imageSrc: string } | null;
@@ -26,10 +27,10 @@ interface PhotoObs {
 }
 
 export function usePatientPhoto(patientUuid: string): UsePatientPhotoResult {
-  const {
-    concepts: { patientPhotoUuid },
-  } = useConfig();
-  const url = `${restBaseUrl}/obs?patient=${patientUuid}&concept=${patientPhotoUuid}&v=full`;
+  const { patientPhotoConceptUuid } = useConfig<StyleguideConfigObject>();
+  const url = patientPhotoConceptUuid
+    ? `${restBaseUrl}/obs?patient=${patientUuid}&concept=${patientPhotoConceptUuid}&v=full`
+    : null;
 
   const { data, error, isLoading } = useSWR<{ data: ObsFetchResponse }, Error>(patientUuid ? url : null, openmrsFetch);
 

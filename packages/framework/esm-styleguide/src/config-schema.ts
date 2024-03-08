@@ -1,4 +1,14 @@
-import { ConfigSchema, Type, validators } from '@openmrs/esm-framework';
+import { Type, validators } from '@openmrs/esm-framework';
+
+export interface StyleguideConfigObject {
+  'Brand color #1': string;
+  'Brand color #2': string;
+  'Brand color #3': string;
+  patientPhotoConceptUuid: string;
+  preferredCalendar: {
+    [key: string]: string;
+  };
+}
 
 export const esmStyleGuideSchema = {
   'Brand color #1': {
@@ -12,6 +22,12 @@ export const esmStyleGuideSchema = {
   'Brand color #3': {
     _default: '#007d79',
     _type: Type.String,
+  },
+  patientPhotoConceptUuid: {
+    _type: Type.ConceptUuid,
+    _default: '736e8771-e501-4615-bfa7-570c03f4bef5',
+    _description:
+      "Used to look up the patient photo, which is stored as an attachment obs. Set to `null` in order to disable the feature and use only generated avatars. To remove the avatars entirely, use extension configuration's `remove` feature.",
   },
   preferredCalendar: {
     _type: Type.Object,
