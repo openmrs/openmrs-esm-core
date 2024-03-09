@@ -661,7 +661,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L9)
+[packages/framework/esm-translations/src/index.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L26)
 
 ___
 
@@ -1937,7 +1937,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:209](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L209)
+[packages/framework/esm-config/src/module-config/module-config.ts:225](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L225)
 
 ___
 
@@ -1969,7 +1969,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
+[packages/framework/esm-config/src/module-config/module-config.ts:257](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L257)
 
 ___
 
@@ -1990,7 +1990,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:225](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L225)
+[packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
 
 ___
 
@@ -4508,7 +4508,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L21)
+[packages/framework/esm-translations/src/index.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L28)
 
 ___
 
@@ -4531,7 +4531,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L11)
+[packages/framework/esm-translations/src/index.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L18)
 
 ___
 
