@@ -173,17 +173,15 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     <div className={styles.locationPickerContainer}>
       <form onSubmit={handleSubmit}>
         {isUpdateFlow ? (
-          <div className={styles['back-button-div']}>
-            <Button
-              className={styles['back-button']}
-              iconDescription={t('backToPreviousPage', 'Back to previous page')}
-              kind="ghost"
-              onClick={handleNavigation}
-              renderIcon={(props) => <ArrowLeft size={24} {...props} />}
-            >
-              <span>{t('back', 'Back')}</span>
-            </Button>
-          </div>
+          <Button
+            className={styles['back-button']}
+            iconDescription={t('backToPreviousPage', 'Back to previous page')}
+            kind="ghost"
+            onClick={handleNavigation}
+            renderIcon={(props) => <ArrowLeft size={24} {...props} />}
+          >
+            <span>{t('back', 'Back')}</span>
+          </Button>
         ) : null}
         <div className={styles.locationCard}>
           <div className={styles.paddedContainer}>
