@@ -2,7 +2,15 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import useSwrInfinite from 'swr/infinite';
 import useSwrImmutable from 'swr/immutable';
-import { type FetchResponse, fhirBaseUrl, openmrsFetch, useDebounce, showNotification } from '@openmrs/esm-framework';
+import {
+  type FetchResponse,
+  fhirBaseUrl,
+  openmrsFetch,
+  useDebounce,
+  showNotification,
+  useSession,
+  useOpenmrsSWR,
+} from '@openmrs/esm-framework';
 import type { LocationEntry, LocationResponse } from './types';
 
 interface LoginLocationData {
@@ -14,13 +22,12 @@ interface LoginLocationData {
   setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[]>;
 }
 
-export function useLoginLocations(
+function useInfiniteLoginLocations(
   useLoginLocationTag: boolean,
   count: number = 0,
   searchQuery: string = '',
 ): LoginLocationData {
   const { t } = useTranslation();
-  const debouncedSearchQuery = useDebounce(searchQuery);
 
   function constructUrl(page: number, prevPageData: FetchResponse<LocationResponse>) {
     if (prevPageData) {
@@ -59,8 +66,8 @@ export function useLoginLocations(
       urlSearchParameters.append('_tag', 'Login Location');
     }
 
-    if (typeof debouncedSearchQuery === 'string' && debouncedSearchQuery != '') {
-      urlSearchParameters.append('name:contains', debouncedSearchQuery);
+    if (typeof searchQuery === 'string' && searchQuery != '') {
+      urlSearchParameters.append('name:contains', searchQuery);
     }
 
     return url + urlSearchParameters.toString();
@@ -93,6 +100,67 @@ export function useLoginLocations(
   }, [isLoading, data, isValidating, setSize]);
 
   return memoizedLocations;
+}
+
+export function usePreviousLoggedInLocations(useLoginLocationTag: boolean, searchQuery: string = '') {
+  const { user } = useSession();
+  const searchParams = new URLSearchParams();
+  searchParams.append('_summary', 'data');
+  const previousLoggedInLocationUuids = user?.userProperties?.previousLoggedInLocations ?? '';
+  searchParams.append('_id', previousLoggedInLocationUuids);
+  if (useLoginLocationTag) {
+    searchParams.append('_tag', 'Login Location');
+  }
+  if (typeof searchQuery === 'string' && searchQuery != '') {
+    searchParams.append('name:contains', searchQuery);
+  }
+
+  const url = previousLoggedInLocationUuids ? `${fhirBaseUrl}/Location?${searchParams.toString()}` : null;
+
+  const { data, error, isLoading, mutate } = useOpenmrsSWR<LocationResponse>(url);
+
+  const memoisedResults = useMemo(
+    () => ({
+      previousLoggedInLocations: data?.data?.entry ?? [],
+      error,
+      isLoadingPreviousLoggedInLocations: isLoading,
+      mutatePreviousLoggedInLocations: mutate,
+    }),
+    [data, isLoading, error, mutate],
+  );
+
+  return memoisedResults;
+}
+
+export function useLoginLocations(
+  useLoginLocationTag: boolean,
+  count: number = 0,
+  searchQuery: string = '',
+): LoginLocationData {
+  const debouncedSearchQuery = useDebounce(searchQuery);
+
+  const loginLocationsData = useInfiniteLoginLocations(useLoginLocationTag, count, debouncedSearchQuery);
+
+  const previousLoggedInLocationsData = usePreviousLoggedInLocations(useLoginLocationTag, debouncedSearchQuery);
+
+  const memoisedResults = useMemo(() => {
+    const { locations, isLoading: isLoadingLocations, ...restData } = loginLocationsData;
+    const { previousLoggedInLocations, isLoadingPreviousLoggedInLocations } = previousLoggedInLocationsData;
+    const previousLoggedInLocationUuids = previousLoggedInLocations?.map((entry) => entry.resource.id);
+
+    // Excluding the previously logged in locations from fetched locations list since they are separately fetched and shown at the top of the list
+    const filteredLocations = previousLoggedInLocationUuids.length
+      ? locations?.filter((entry) => !previousLoggedInLocationUuids.includes(entry.resource.id))
+      : locations;
+    return {
+      ...restData,
+      isLoading: isLoadingLocations || isLoadingPreviousLoggedInLocations,
+      // The previously logged in locations will be shown at the top of the list.
+      locations: [...(previousLoggedInLocations ?? []), ...(filteredLocations ?? [])],
+    };
+  }, [loginLocationsData, previousLoggedInLocationsData]);
+
+  return memoisedResults;
 }
 
 export function useValidateLocationUuid(userPreferredLocationUuid: string) {
