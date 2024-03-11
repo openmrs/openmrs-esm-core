@@ -14,7 +14,7 @@ import { navigate, setSessionLocation, useConfig, useConnectivity, useSession } 
 import type { LoginReferrer } from '../login/login.component';
 import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
-import { useDefaultLocation } from './location-picker.resource';
+import { updateLocationInUserProps, useDefaultLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
 
 interface LocationPickerProps {
@@ -35,7 +35,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
   const [searchTerm, setSearchTerm] = useState(null);
 
   const { user, sessionLocation } = useSession();
-  const { currentUser, userProperties } = useMemo(
+  const { currentUser } = useMemo(
     () => ({
       currentUser: user?.display,
       userUuid: user?.uuid,
@@ -85,6 +85,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
       const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
 
       updateDefaultLocation(locationUuid, saveUserPreference);
+      updateLocationInUserProps(user, locationUuid);
       sessionDefined.then(() => {
         if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
           navigate({ to: '${openmrsSpaBase}' + referrer });

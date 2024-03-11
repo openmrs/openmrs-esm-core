@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { setUserProperties, showSnackbar, useSession } from '@openmrs/esm-framework';
+import { type LoggedInUser, setUserProperties, showSnackbar, useSession } from '@openmrs/esm-framework';
 import { useValidateLocationUuid } from '../login.resource';
 
 export function useDefaultLocation(isUpdateFlow: boolean) {
@@ -80,4 +80,14 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
     savePreference,
     setSavePreference,
   };
+}
+
+export async function updateLocationInUserProps(user: LoggedInUser, locationUuid: string) {
+  const prevLoggedInLocations = user?.userProperties?.previousLoggedInLocations?.split(',') ?? [];
+  const updatedLoggedInLocations = [locationUuid, ...prevLoggedInLocations?.filter((uuid) => uuid !== locationUuid)];
+  const updatedUserProperties = {
+    ...(user?.userProperties ?? {}),
+    previousLoggedInLocations: updatedLoggedInLocations.join(','),
+  };
+  await setUserProperties(user?.uuid, updatedUserProperties);
 }
