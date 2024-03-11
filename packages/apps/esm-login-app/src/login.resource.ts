@@ -1,4 +1,4 @@
-import { openmrsFetch, refetchCurrentUser, Session } from '@openmrs/esm-framework';
+import { openmrsFetch, refetchCurrentUser, type Session } from '@openmrs/esm-framework';
 
 export async function performLogin(username: string, password: string): Promise<{ data: Session }> {
   const abortController = new AbortController();

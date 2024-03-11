@@ -37,7 +37,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
   const {
     isLoadingValidation,
-    userDefaultLocationUuid,
+    defaultLocation,
     updateDefaultLocation,
     savePreference,
     setSavePreference,
@@ -76,7 +76,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   }, [defaultLocationFhir, fetchedLocations]);
 
   const [activeLocation, setActiveLocation] = useState(() => {
-    return sessionLocation?.uuid ?? userDefaultLocationUuid;
+    return sessionLocation?.uuid ?? defaultLocation;
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -129,11 +129,11 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
       return;
     }
 
-    if (userDefaultLocationUuid && !isSubmitting) {
-      setActiveLocation(userDefaultLocationUuid);
-      changeLocation(userDefaultLocationUuid, true);
+    if (defaultLocation && !isSubmitting) {
+      setActiveLocation(defaultLocation);
+      changeLocation(defaultLocation, true);
     }
-  }, [changeLocation, isSubmitting, userDefaultLocationUuid, isUpdateFlow]);
+  }, [changeLocation, isSubmitting, defaultLocation, isUpdateFlow]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
