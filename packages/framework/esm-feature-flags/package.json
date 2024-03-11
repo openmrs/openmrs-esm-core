@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-feature-flags",
-  "version": "5.3.2",
+  "version": "5.4.0",
   "license": "MPL-2.0",
   "description": "A feature flag system for the OpenMRS Single-Spa framework.",
   "browser": "dist/openmrs-esm-feature-flags.js",
@@ -48,6 +48,6 @@
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
-    "single-spa": "^5.9.2"
+    "single-spa": "^6.0.0"
   }
 }

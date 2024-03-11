@@ -12,14 +12,32 @@
 
 ### UI Properties
 
+- [actionButtonLabel](ToastNotificationMeta.md#actionbuttonlabel)
 - [critical](ToastNotificationMeta.md#critical)
 - [description](ToastNotificationMeta.md#description)
 - [id](ToastNotificationMeta.md#id)
 - [kind](ToastNotificationMeta.md#kind)
-- [millis](ToastNotificationMeta.md#millis)
 - [title](ToastNotificationMeta.md#title)
 
+### UI Methods
+
+- [onActionButtonClick](ToastNotificationMeta.md#onactionbuttonclick)
+
 ## UI Properties
+
+### actionButtonLabel
+
+• `Optional` **actionButtonLabel**: `string`
+
+#### Inherited from
+
+[ToastDescriptor](ToastDescriptor.md).[actionButtonLabel](ToastDescriptor.md#actionbuttonlabel)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L13)
+
+___
 
 ### critical
 
@@ -31,7 +49,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L17)
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L15)
 
 ___
 
@@ -45,7 +63,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L15)
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L11)
 
 ___
 
@@ -55,7 +73,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L23)
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L20)
 
 ___
 
@@ -69,21 +87,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L16)
-
-___
-
-### millis
-
-• `Optional` **millis**: `number`
-
-#### Inherited from
-
-[ToastDescriptor](ToastDescriptor.md).[millis](ToastDescriptor.md#millis)
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L19)
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L14)
 
 ___
 
@@ -97,4 +101,22 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L18)
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L16)
+
+## UI Methods
+
+### onActionButtonClick
+
+▸ `Optional` **onActionButtonClick**(): `void`
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[ToastDescriptor](ToastDescriptor.md).[onActionButtonClick](ToastDescriptor.md#onactionbuttonclick)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/toasts/toast.component.tsx:12](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/toasts/toast.component.tsx#L12)

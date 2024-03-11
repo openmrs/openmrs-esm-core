@@ -2,6 +2,10 @@
   width: 12em;
 }
 
+.label {
+  scroll-margin-top: 6em;
+}
+
 .structuredList {
   margin-bottom: 1em;
 }

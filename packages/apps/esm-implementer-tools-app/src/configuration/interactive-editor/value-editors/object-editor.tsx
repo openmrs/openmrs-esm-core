@@ -1,7 +1,7 @@
 import React from 'react';
 import { StructuredListBody, StructuredListCell, StructuredListRow, StructuredListWrapper, Tile } from '@carbon/react';
 import { ValueEditorField } from './value-editor-field';
-import { ConfigValueDescriptor } from '../editable-value.component';
+import type { ConfigValueDescriptor } from '../editable-value.component';
 import { Type } from '@openmrs/esm-framework';
 import cloneDeep from 'lodash-es/cloneDeep';
 import styles from './object-editor.styles.css';

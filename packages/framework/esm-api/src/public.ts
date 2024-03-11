@@ -1,5 +1,6 @@
 export * from './types';
 export * from './openmrs-fetch';
+export * from './attachments';
 
 export * from './shared-api-objects/current-user';
 export * from './shared-api-objects/current-patient';

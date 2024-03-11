@@ -19,13 +19,13 @@ import {
   TableSelectAll,
   TableSelectRow,
 } from '@carbon/react';
+import type { SyncItem } from '@openmrs/esm-framework';
 import {
   beginEditSynchronizationItem,
   canBeginEditSynchronizationItemsOfType,
   createErrorHandler,
   isDesktop,
   navigate,
-  SyncItem,
   useLayoutType,
   usePagination,
 } from '@openmrs/esm-framework';

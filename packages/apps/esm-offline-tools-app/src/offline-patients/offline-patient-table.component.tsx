@@ -18,6 +18,7 @@ import {
   TableSelectRow,
 } from '@carbon/react';
 import { Renew } from '@carbon/react/icons';
+import type { DynamicOfflineDataSyncState } from '@openmrs/esm-framework';
 import {
   age,
   isDesktop,
@@ -27,7 +28,6 @@ import {
   removeDynamicOfflineData,
   syncDynamicOfflineData,
   getDynamicOfflineDataEntries,
-  DynamicOfflineDataSyncState,
   useLayoutType,
 } from '@openmrs/esm-framework';
 import { useTranslation } from 'react-i18next';

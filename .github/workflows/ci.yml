@@ -22,16 +22,16 @@ jobs:
       actions: read
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
           node-version: "18"
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
@@ -41,7 +41,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Setup local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v2
+        uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
@@ -55,22 +55,22 @@ jobs:
   pre_release:
     runs-on: ubuntu-latest
     needs: build
-    
-    if: ${{ (github.event.head_commit == null || 
-          !startsWith(github.event.head_commit.message, '(chore) Release v')) && 
+
+    if: ${{ (github.event.head_commit == null ||
+          !startsWith(github.event.head_commit.message, '(chore) Release v')) &&
           (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
           node-version: "18"
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
@@ -80,7 +80,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Setup local cache server for Turborepo
-        uses: felixmosh/turborepo-gh-artifacts@v2
+        uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ secrets.TURBO_SERVER_TOKEN }}
@@ -91,7 +91,7 @@ jobs:
 
       - name: Build
         run: yarn turbo run build --color --concurrency=5
-      
+
       - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
       - run: git add . && git commit -m "Prerelease version" --no-verify
 
@@ -101,7 +101,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: packages
           path: |
@@ -114,16 +114,16 @@ jobs:
     if: ${{ github.event_name == 'release' }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
           node-version: "18"
 
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
@@ -145,14 +145,15 @@ jobs:
 
     needs: pre_release
 
-    if: ${{ (github.event.head_commit == null || 
-          !startsWith(github.event.head_commit.message, '(release)')) && 
+    if: ${{ (github.event.head_commit == null ||
+          !startsWith(github.event.head_commit.message, '(release)')) &&
           (github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}
 
     steps:
       - name: Trigger RefApp Build
-        uses: fjogeleit/http-request-action@master
+        uses: fjogeleit/http-request-action@v1
+        continue-on-error: true
         with:
-          url: https://ci.openmrs.org/rest/api/latest/queue/REFAPP-D3X
+          url: https://ci.openmrs.org/rest/api/latest/queue/O3-BF
           method: "POST"
           customHeaders: '{ "Authorization": "Bearer ${{ secrets.BAMBOO_TOKEN }}" }'

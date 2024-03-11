@@ -48,7 +48,9 @@ const openmrsCleanBeforeBuild =
         (typeof process.env.OMRS_CLEAN_BEFORE_BUILD === 'string' &&
           process.env.OMRS_CLEAN_BEFORE_BUILD.toLowerCase() !== 'false')
       );
-    } catch {}
+    } catch {
+      // this is intensionally a no-op
+    }
 
     return undefined;
   })() ?? true;
@@ -364,16 +366,23 @@ module.exports = (env, argv = {}) => {
       new BundleAnalyzerPlugin({
         analyzerMode: env?.analyze ? 'static' : 'disabled',
       }),
-      openmrsOffline &&
-        new InjectManifest({
-          swSrc: resolve(__dirname, './src/service-worker/index.ts'),
-          swDest: 'service-worker.js',
-          maximumFileSizeToCacheInBytes: mode === production ? undefined : Number.MAX_SAFE_INTEGER,
-          additionalManifestEntries: [
-            { url: openmrsImportmapUrl, revision: null },
-            { url: openmrsRoutesUrl, revision: null },
-          ],
-        }),
+      openmrsOffline
+        ? new InjectManifest({
+            swSrc: resolve(__dirname, './src/service-worker/index.ts'),
+            swDest: 'service-worker.js',
+            maximumFileSizeToCacheInBytes: mode === production ? undefined : Number.MAX_SAFE_INTEGER,
+            additionalManifestEntries: [
+              { url: openmrsImportmapUrl, revision: null },
+              { url: openmrsRoutesUrl, revision: null },
+            ],
+          })
+        : new InjectManifest({
+            swSrc: resolve(__dirname, './src/service-worker/noop.ts'),
+            swDest: 'service-worker.js',
+            // this is a no-op service worker, so we don't want to cache anything
+            maximumFileSizeToCacheInBytes: 0,
+            exclude: [/.*/],
+          }),
     ].filter(Boolean),
     ignoreWarnings: [/.*InjectManifest has been called multiple times.*/],
   };

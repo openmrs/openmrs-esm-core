@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { ChevronDown, ChevronUp, Download, TrashCan } from '@carbon/react/icons';
 import cloneDeep from 'lodash-es/cloneDeep';
 import isEmpty from 'lodash-es/isEmpty';
+import type { Config } from '@openmrs/esm-framework/src/internal';
 import {
-  Config,
+  clearConfigErrors,
   getExtensionInternalStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
@@ -14,7 +15,8 @@ import {
 } from '@openmrs/esm-framework/src/internal';
 import { ConfigTree } from './interactive-editor/config-tree.component';
 import { Description } from './interactive-editor/description.component';
-import { implementerToolsStore, ImplementerToolsStore } from '../store';
+import type { ImplementerToolsStore } from '../store';
+import { implementerToolsStore } from '../store';
 import styles from './configuration.styles.scss';
 
 const JsonEditor = React.lazy(() => import('./json-editor/json-editor.component'));
@@ -152,6 +154,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   iconDescription="Clear local config"
                   renderIcon={(props) => <TrashCan size={16} {...props} />}
                   onClick={() => {
+                    clearConfigErrors();
                     temporaryConfigStore.setState({ config: {} });
                   }}
                 >

@@ -15,7 +15,11 @@ async function readImportmap(path: string, backend?: string, spaPath?: string) {
     if (backend && spaPath) {
       try {
         return await fetchRemoteImportmap(`${backend}${spaPath}importmap.json`);
-      } catch {}
+      } catch (e) {
+        logWarn(
+          `Could not read importmap from ${backend}${spaPath}importmap.json. Falling back to import map from https://dev3.openmrs.org/openmrs/spa/importmap.json: ${e}`,
+        );
+      }
     }
 
     return fetchRemoteImportmap('https://dev3.openmrs.org/openmrs/spa/importmap.json');
@@ -26,12 +30,16 @@ async function readImportmap(path: string, backend?: string, spaPath?: string) {
 
 async function readRoutes(path: string, backend?: string, spaPath?: string) {
   if (path.startsWith('http://') || path.startsWith('https://')) {
-    return fetchRemoteImportmap(path);
+    return fetchRemoteRoutes(path);
   } else if (path === 'routes.registry.json') {
     if (backend && spaPath) {
       try {
         return await fetchRemoteRoutes(`${backend}${spaPath}routes.registry.json`);
-      } catch {}
+      } catch (e) {
+        logWarn(
+          `Could not read routes registry from ${backend}${spaPath}routes.registry.json. Falling back to routes registry from https://dev3.openmrs.org/openmrs/spa/routes.registry.json: ${e}`,
+        );
+      }
     }
 
     return fetchRemoteRoutes('https://dev3.openmrs.org/openmrs/spa/routes.registry.json');
@@ -81,6 +89,12 @@ export interface RoutesDeclaration {
 export interface ImportmapAndRoutes {
   importMap: ImportmapDeclaration;
   routes: RoutesDeclaration;
+}
+
+export interface ImportmapAndRoutesWithWatches extends ImportmapAndRoutes {
+  importMap: ImportmapDeclaration;
+  routes: RoutesDeclaration;
+  watchedRoutesPaths: Record<string, string>;
 }
 
 export function checkImportmapJson(value: string) {
@@ -154,11 +168,13 @@ export async function runProject(
 ): Promise<{
   importMap: Record<string, string>;
   routes: Record<string, unknown>;
+  watchedRoutesPaths: Record<string, string>;
 }> {
   const baseDir = process.cwd();
   const sourceDirectories = await matchAny(baseDir, sourceDirectoryPatterns);
   const importMap = {};
   const routes = {};
+  const watchedRoutesPaths = {};
 
   logInfo('Loading dynamic import map and routes ...');
 
@@ -166,6 +182,8 @@ export async function runProject(
     const sourceDirectory = resolve(baseDir, sourceDirectories[i]);
     const projectFile = resolve(sourceDirectory, 'package.json');
     const configPath = resolve(sourceDirectory, 'webpack.config.js');
+    const routesFile = resolve(sourceDirectory, 'src', 'routes.json');
+
     const port = basePort + i + 1;
 
     logInfo(`Looking in directory "${sourceDirectory}" ...`);
@@ -177,6 +195,10 @@ export async function runProject(
 
     const project = require(projectFile);
     const startup = project['openmrs:develop'];
+
+    if (existsSync(routesFile)) {
+      watchedRoutesPaths[project.name] = routesFile;
+    }
 
     if (typeof startup === 'object') {
       // detected specialized startup command
@@ -200,7 +222,7 @@ export async function runProject(
 
   logInfo(`Assembled dynamic import map and routes for packages (${Object.keys(importMap).join(', ')}).`);
 
-  return { importMap, routes };
+  return { importMap, routes, watchedRoutesPaths };
 }
 
 /**
@@ -212,12 +234,22 @@ export async function runProject(
  */
 export async function mergeImportmapAndRoutes(
   importAndRoutes: ImportmapAndRoutes,
-  additionalImportsAndRoutes: { importMap: Record<string, string>; routes: Record<string, unknown> } | false,
+  additionalImportsAndRoutes:
+    | {
+        importMap: Record<string, string>;
+        routes: Record<string, unknown>;
+        watchedRoutesPaths: Record<string, string>;
+      }
+    | false,
   backend?: string,
   spaPath?: string,
-): Promise<ImportmapAndRoutes> {
+): Promise<ImportmapAndRoutesWithWatches> {
   const { importMap: importDecl, routes: routesDecl } = importAndRoutes;
-  const { importMap: additionalImports, routes: additionalRoutes } = additionalImportsAndRoutes || {};
+  const {
+    importMap: additionalImports,
+    routes: additionalRoutes,
+    watchedRoutesPaths = {},
+  } = additionalImportsAndRoutes || {};
 
   if (additionalImports && Object.keys(additionalImports).length > 0) {
     if (importDecl.type === 'url') {
@@ -249,7 +281,7 @@ export async function mergeImportmapAndRoutes(
     });
   }
 
-  return { importMap: importDecl, routes: routesDecl };
+  return { importMap: importDecl, routes: routesDecl, watchedRoutesPaths };
 }
 
 export async function getImportmapAndRoutes(
@@ -342,12 +374,12 @@ export async function getRoutes(routesPath: string): Promise<RoutesDeclaration> 
  *   `backend` changed to import from `http://${host}:${port}`.
  */
 export function proxyImportmapAndRoutes(
-  importmapAndRoutes: ImportmapAndRoutes,
+  importmapAndRoutes: ImportmapAndRoutesWithWatches,
   backend: string,
   host: string,
   port: number,
 ) {
-  const { importMap: importMapDecl, routes: routesDecl } = importmapAndRoutes;
+  const { importMap: importMapDecl, routes: routesDecl, watchedRoutesPaths } = importmapAndRoutes;
   if (importMapDecl.type != 'inline') {
     throw new Error(
       'proxyImportmapAndRoutes called on non-inline import map. This is a programming error. Value: ' +
@@ -370,7 +402,5 @@ export function proxyImportmapAndRoutes(
   });
   importMapDecl.value = JSON.stringify(importmap);
 
-  const routes: Record<string, unknown> = JSON.parse(routesDecl.value);
-
-  return { importmap: importMapDecl, routes };
+  return { importmap: importMapDecl, routes: routesDecl, watchedRoutesPaths };
 }

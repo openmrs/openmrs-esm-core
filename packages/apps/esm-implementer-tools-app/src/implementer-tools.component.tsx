@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { showActionableNotification, UserHasAccess, useStore } from '@openmrs/esm-framework';
+import { showToast, UserHasAccess, useStore } from '@openmrs/esm-framework';
 import { implementerToolsStore, showModuleDiagnostics, togglePopup } from './store';
 
 import { useBackendDependencies } from './backend-dependencies/useBackendDependencies';
@@ -24,10 +24,10 @@ function PopupHandler() {
   useEffect(() => {
     // only show notification max. 1 time
     if (shouldShowNotification) {
-      showActionableNotification({
+      showToast({
         critical: false,
         kind: 'error',
-        subtitle: t(
+        description: t(
           'checkImplementerToolsMessage',
           'Check the Backend Modules tab in the Implementer Tools for more details',
         ),

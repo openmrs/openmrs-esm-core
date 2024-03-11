@@ -1,16 +1,14 @@
-import {
-  attach,
-  registerExtension,
-  defineConfigSchema,
-  importDynamic,
+import type {
   RegisteredPageDefinition,
   ExtensionDefinition,
   OpenmrsAppRoutes,
   RouteDefinition,
   ExtensionRegistration,
 } from '@openmrs/esm-framework';
+import { attach, registerExtension, importDynamic } from '@openmrs/esm-framework';
 import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
 import { emptyLifecycle, routeRegex } from './helpers';
+import { registerModuleWithConfigSystem } from '@openmrs/esm-framework/src/internal';
 
 const pages: Array<RegisteredPageDefinition> = [];
 
@@ -130,7 +128,7 @@ function getLoader(appName: string, component: string): () => Promise<LifeCycles
  */
 export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
   if (appName && routes && typeof routes === 'object') {
-    defineConfigSchema(appName, {});
+    registerModuleWithConfigSystem(appName);
 
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
 

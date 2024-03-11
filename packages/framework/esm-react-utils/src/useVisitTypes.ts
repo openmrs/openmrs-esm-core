@@ -1,5 +1,6 @@
 /** @module @category API */
-import { getVisitTypes, VisitType } from '@openmrs/esm-api';
+import type { VisitType } from '@openmrs/esm-api';
+import { getVisitTypes } from '@openmrs/esm-api';
 import { useEffect, useState } from 'react';
 
 export function useVisitTypes() {

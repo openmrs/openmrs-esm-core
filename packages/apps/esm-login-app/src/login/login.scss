@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .center {
@@ -137,6 +138,9 @@
 }
 
 .errorMessage {
-  margin-bottom: 3rem;
   width: 23rem;
+  margin-bottom: 3rem;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
 }

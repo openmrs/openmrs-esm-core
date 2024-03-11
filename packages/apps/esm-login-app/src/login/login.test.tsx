@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useConfig, useSession } from '@openmrs/esm-framework';
-import { performLogin } from '../login.resource';
+import { refetchCurrentUser, useConfig, useSession } from '@openmrs/esm-framework';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import Login from './login.component';
 
-const mockedLogin = performLogin as jest.Mock;
+const mockedLogin = refetchCurrentUser as jest.Mock;
 const mockedUseConfig = useConfig as jest.Mock;
 const mockedUseSession = useSession as jest.Mock;
 
@@ -31,10 +30,6 @@ jest.mock('@openmrs/esm-framework', () => {
     interpolateUrl: jest.fn().mockImplementation((url: string) => url),
   };
 });
-
-jest.mock('../login.resource', () => ({
-  performLogin: jest.fn(),
-}));
 
 const loginLocations = [
   { uuid: '111', display: 'Earth' },
@@ -121,7 +116,7 @@ describe('Login', () => {
     await screen.findByLabelText(/password/i);
     await user.type(screen.getByLabelText(/password/i), 'no-tax-fraud');
     await user.click(loginButton);
-    await waitFor(() => expect(performLogin).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
+    await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
 
   // TODO: Complete the test
@@ -230,7 +225,7 @@ describe('Login', () => {
     await user.type(passwordInput, 'no-tax-fraud');
     await user.click(loginButton);
 
-    await waitFor(() => expect(performLogin).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
+    await waitFor(() => expect(refetchCurrentUser).toHaveBeenCalledWith('yoshi', 'no-tax-fraud'));
   });
 
   it('should focus the username input', async () => {

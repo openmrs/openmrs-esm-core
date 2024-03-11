@@ -2,7 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@carbon/react';
 import { PendingFilled, WarningAltFilled, CheckmarkOutline } from '@carbon/react/icons';
-import { DynamicOfflineDataSyncState, getDynamicOfflineDataHandlers, navigate } from '@openmrs/esm-framework';
+import type { DynamicOfflineDataSyncState } from '@openmrs/esm-framework';
+import { getDynamicOfflineDataHandlers, navigate } from '@openmrs/esm-framework';
 import styles from './last-updated-table-cell.scss';
 
 export interface LastUpdatedTableCellProps {

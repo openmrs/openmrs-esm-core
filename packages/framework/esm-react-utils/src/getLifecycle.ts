@@ -1,14 +1,17 @@
 /** @module @category Framework */
-import React, { ComponentType } from 'react';
+import type { ComponentType } from 'react';
+import React from 'react';
 import ReactDOMClient from 'react-dom/client';
-import singleSpaReact from 'single-spa-react';
-import { openmrsComponentDecorator, ComponentDecoratorOptions } from './openmrsComponentDecorator';
+import type { AppProps } from 'single-spa';
+import singleSpaReact, { type ReactAppOrParcel } from 'single-spa-react';
+import type { ComponentDecoratorOptions } from './openmrsComponentDecorator';
+import { openmrsComponentDecorator } from './openmrsComponentDecorator';
 
 export function getLifecycle<T>(Component: ComponentType<T>, options: ComponentDecoratorOptions) {
-  return singleSpaReact({
+  return singleSpaReact<T>({
     React,
     ReactDOMClient,
-    rootComponent: openmrsComponentDecorator(options)(Component),
+    rootComponent: openmrsComponentDecorator<T>(options)(Component) as ComponentType<T & AppProps>,
   });
 }
 

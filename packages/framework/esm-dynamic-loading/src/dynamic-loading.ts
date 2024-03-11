@@ -1,7 +1,7 @@
 /** @module @category Dynamic Loading */
 'use strict';
 // hack to make the types defined in esm-globals available here
-import type { ImportMap } from '@openmrs/esm-globals';
+import { dispatchToastShown, type ImportMap } from '@openmrs/esm-globals';
 
 /**
  * @internal
@@ -22,16 +22,41 @@ export function slugify(name: string) {
  * const { someComponent } = importDynamic("@openmrs/esm-template-app")
  * ```
  *
- * @param jsPackage The package to load the export from
+ * @param jsPackage The package to load the export from.
  * @param share Indicates the name of the shared module; this is an advanced feature if the package you are loading
- *   doesn't use the default OpenMRS shared module name "./start"
+ *   doesn't use the default OpenMRS shared module name "./start".
+ * @param options Additional options to control loading this script.
+ * @param options.importMap The import map to use to load the script. This is useful for situations where you're
+ *   loading multiple scripts at a time, since it allows the calling code to supply an importMap, saving multiple
+ *   calls to `getCurrentImportMap()`.
+ * @param options.maxLoadingTime A positive integer representing the maximum number of milliseconds to wait for the
+ *   script to load before the promise returned from this function will be rejected. Defaults to 600,000 milliseconds,
+ *   i.e., 10 minutes.
  */
 export async function importDynamic<T = any>(
   jsPackage: string,
   share: string = './start',
-  options?: { importMap?: ImportMap },
+  options?: {
+    importMap?: ImportMap;
+    maxLoadingTime?: number;
+  },
 ): Promise<T> {
-  await preloadImport(jsPackage, options?.importMap);
+  // default to 10 minutes
+  const maxLoadingTime = !options?.maxLoadingTime || options.maxLoadingTime <= 0 ? 600_000 : options.maxLoadingTime;
+
+  let timeout: ReturnType<typeof setTimeout> | undefined = undefined;
+  await Promise.race([
+    preloadImport(jsPackage, options?.importMap),
+    new Promise((_, reject) => {
+      timeout = setTimeout(() => {
+        reject(
+          new Error(`Could not resolve requested script, ${jsPackage}, within ${humanReadableMs(maxLoadingTime)}.`),
+        );
+      }, maxLoadingTime);
+    }),
+  ]);
+
+  timeout && clearTimeout(timeout);
 
   const jsPackageSlug = slugify(jsPackage);
 
@@ -54,6 +79,27 @@ export async function importDynamic<T = any>(
   }
 
   return module as unknown as T;
+}
+
+/**
+ * Utility function to convert milliseconds into human-readable strings with rather absurd
+ * levels of precision.
+ *
+ * @param ms Number of milliseconds
+ * @returns A human-readable string useful only for error logging, where we can assume English
+ */
+function humanReadableMs(ms: number) {
+  if (ms < 1_000) {
+    return `${ms} milliseconds`;
+  } else if (ms < 60_000) {
+    return `${Math.floor(ms / 1000)} seconds`;
+  } else if (ms < 3_600_000) {
+    return `${Math.floor(ms / 60_000)} minutes`;
+  } else if (ms < 86_400_000) {
+    return `${Math.floor(ms / 3_600_000)} hours`;
+  } else {
+    return `${Math.floor(ms / 86_400_000)} days`;
+  }
 }
 
 /**
@@ -89,10 +135,30 @@ export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
       url = window.spaBase + url.substring(1);
     }
 
-    await new Promise((resolve, reject) => {
-      loadScript(url, resolve, reject);
-    });
+    const isOverridden = !!window.localStorage.getItem(`import-map-override:${jsPackage}`);
+    try {
+      return await new Promise<void>((resolve, reject) => {
+        loadScript(url, resolve, reject);
+      });
+    } catch (err: any) {
+      if (isOverridden) {
+        dispatchToastShown({
+          kind: 'error',
+          title: 'Error loading script',
+          description: `Failed to load overridden script from ${url}. Click below to reset all overrides.`,
+          actionButtonLabel: 'Reload',
+          onActionButtonClick() {
+            window.importMapOverrides.resetOverrides();
+            window.location.reload();
+          },
+        });
+      }
+
+      return Promise.reject(err);
+    }
   }
+
+  return Promise.resolve();
 }
 
 /**
@@ -130,7 +196,11 @@ const OPENMRS_SCRIPT_LOADING = Symbol('__openmrs_script_loading');
 /**
  * Appends a `<script>` to the DOM with the given URL.
  */
-function loadScript(url: string, resolve: (value: unknown) => void, reject: (reason?: any) => void) {
+function loadScript(
+  url: string,
+  resolve: (value: unknown | PromiseLike<unknown>) => void,
+  reject: (reason?: any) => void,
+) {
   const scriptElement = document.head.querySelector(`script[src="${url}"]`);
   let scriptLoading: Set<String> = window[OPENMRS_SCRIPT_LOADING];
   if (!scriptLoading) {
@@ -143,39 +213,66 @@ function loadScript(url: string, resolve: (value: unknown) => void, reject: (rea
     element.src = url;
     element.type = 'text/javascript';
     element.async = true;
-    const loadFn = () => {
+
+    // loadTime() displays an error if a script takes more than 5 seconds to load
+    const loadTimeout = setTimeout(() => {
+      console.error(
+        `The script at ${url} did not load within 5 seconds. This may indicate an issue with the imports in the script's entry-point file or with the script's bundler configuration.`,
+      );
+    }, 5_000); // 5 seconds; this is arbitrary
+
+    let loadFn: () => void, errFn: (ev: ErrorEvent) => void, finishScriptLoading: () => void;
+
+    finishScriptLoading = () => {
+      clearTimeout(loadTimeout);
       scriptLoading.delete(url);
-      element.removeEventListener('load', loadFn);
+      loadFn && element.removeEventListener('load', loadFn);
+      errFn && element.removeEventListener('error', errFn);
+    };
+
+    loadFn = () => {
+      finishScriptLoading();
       resolve(null);
     };
-    element.addEventListener('load', loadFn);
 
-    const errFn = (ev: ErrorEvent) => {
-      scriptLoading.delete(url);
-      console.error(`Failed to load script from ${url}`, ev);
-      element.removeEventListener('error', errFn);
-      reject(ev.message);
+    errFn = (ev: ErrorEvent) => {
+      finishScriptLoading();
+      const msg = `Failed to load script from ${url}`;
+      console.error(msg, ev);
+      reject(ev.message ?? msg);
     };
+
+    element.addEventListener('load', loadFn);
     element.addEventListener('error', errFn);
 
     document.head.appendChild(element);
   } else {
     if (scriptLoading.has(url)) {
-      const loadFn = () => {
-        scriptElement?.removeEventListener('load', loadFn);
+      let loadFn: () => void, errFn: (ev: ErrorEvent) => void, finishScriptLoading: () => void;
+
+      finishScriptLoading = () => {
+        loadFn && scriptElement.removeEventListener('load', loadFn);
+        errFn && scriptElement.removeEventListener('error', errFn);
+      };
+
+      loadFn = () => {
+        finishScriptLoading();
         resolve(null);
       };
-      scriptElement.addEventListener('load', loadFn);
 
-      const errFn = (ev: ErrorEvent) => {
-        console.error(`Failed to load script from ${url}`, ev);
-        scriptElement?.removeEventListener('error', errFn);
+      // this errFn does not log anything
+      errFn = (ev: ErrorEvent) => {
+        finishScriptLoading();
         reject(ev.message);
       };
+
+      scriptElement.addEventListener('load', loadFn);
       scriptElement.addEventListener('error', errFn);
     } else {
-      console.warn('Script already loaded. Not loading it again.', url);
+      console.warn(`Script at ${url} already loaded. Not loading it again.`);
       resolve(null);
     }
   }
 }
+
+function closureScope() {}

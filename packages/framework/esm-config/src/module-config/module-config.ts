@@ -1,12 +1,12 @@
 /** @module @category Config */
 import { clone, reduce, mergeDeepRight, equals, omit } from 'ramda';
-import { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject, Type } from '../types';
+import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, ExtensionSlotConfigObject } from '../types';
+import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
+import { validator } from '../validators/validator';
+import type { ConfigExtensionStore, ConfigInternalStore, ConfigStore } from './state';
 import {
-  ConfigExtensionStore,
-  ConfigInternalStore,
   configInternalStore,
-  ConfigStore,
   configExtensionStore,
   getConfigStore,
   getExtensionsConfigStore,
@@ -15,7 +15,7 @@ import {
   getExtensionSlotsConfigStore,
 } from './state';
 import type {} from '@openmrs/esm-globals';
-import { TemporaryConfigStore } from '..';
+import { type TemporaryConfigStore } from '..';
 
 /**
  * Store setup
@@ -76,9 +76,28 @@ temporaryConfigStore.subscribe((tempConfigState) => {
 
 function computeModuleConfig(state: ConfigInternalStore, tempState: TemporaryConfigStore) {
   for (let moduleName of Object.keys(state.schemas)) {
-    const config = getConfigForModule(moduleName, state, tempState);
+    // At this point the schema could be either just the implicit schema or the actually
+    // defined schema. We run with just the implicit schema because we want to populate
+    // the config store with the translation overrides as soon as possible. In fact, the
+    // translation system will throw for Suspense until the translation overrides are
+    // available, which as of this writing blocks the schema definition from occurring
+    // for modules loaded based on their extensions.
     const moduleStore = getConfigStore(moduleName);
-    moduleStore.setState({ loaded: true, config });
+    if (state.moduleLoaded[moduleName]) {
+      const config = getConfigForModule(moduleName, state, tempState);
+      moduleStore.setState({
+        translationOverridesLoaded: true,
+        loaded: true,
+        config,
+      });
+    } else {
+      const config = getConfigForModuleImplicitSchema(moduleName, state, tempState);
+      moduleStore.setState({
+        translationOverridesLoaded: true,
+        loaded: false,
+        config,
+      });
+    }
   }
 }
 
@@ -106,6 +125,8 @@ function computeExtensionConfigs(
   tempConfigState: TemporaryConfigStore,
 ) {
   const configs = {};
+  // We assume that the module schema has already been defined, since the extension
+  // it contains is mounted.
   for (let extension of extensionState.mountedExtensions) {
     const config = computeExtensionConfig(
       extension.slotModuleName,
@@ -147,6 +168,24 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   const state = configInternalStore.getState();
   configInternalStore.setState({
     schemas: { ...state.schemas, [moduleName]: enhancedSchema },
+    moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
+  });
+}
+
+/**
+ * This alerts the configuration system that a module exists. This allows config to be
+ * processed, while still allowing the extension system to know whether the module has
+ * actually had its front bundle executed yet.
+ *
+ * This should only be used in esm-app-shell.
+ *
+ * @internal
+ * @param moduleName
+ */
+export function registerModuleWithConfigSystem(moduleName: string) {
+  const state = configInternalStore.getState();
+  configInternalStore.setState({
+    schemas: { ...state.schemas, [moduleName]: implicitConfigSchema },
   });
 }
 
@@ -173,7 +212,7 @@ export function defineExtensionConfigSchema(extensionName: string, schema: Confi
 
   const state = configInternalStore.getState();
   if (state.schemas[extensionName]) {
-    console.warn(
+    console.error(
       `Config schema for extension ${extensionName} already exists. If there are multiple extensions with this same name, one will probably crash.`,
     );
   }
@@ -199,13 +238,13 @@ export function provide(config: Config, sourceName = 'provided') {
  *
  * @param moduleName The name of the module for which to look up the config
  */
-export function getConfig(moduleName: string): Promise<Config> {
-  return new Promise<Config>((resolve) => {
+export function getConfig<T = Record<string, any>>(moduleName: string): Promise<T> {
+  return new Promise<T>((resolve) => {
     const store = getConfigStore(moduleName);
     function update(state: ConfigStore) {
       if (state.loaded && state.config) {
         const config = omit(['Display conditions', 'Translation overrides'], state.config);
-        resolve(config);
+        resolve(config as T);
         unsubscribe && unsubscribe();
       }
     }
@@ -215,13 +254,13 @@ export function getConfig(moduleName: string): Promise<Config> {
 }
 
 /** @internal */
-export function getConfigInternal(moduleName: string): Promise<Config> {
-  return new Promise<Config>((resolve) => {
+export function getTranslationOverrides(moduleName: string): Promise<Object> {
+  return new Promise<Object>((resolve) => {
     const store = getConfigStore(moduleName);
     function update(state: ConfigStore) {
-      if (state.loaded && state.config) {
-        const config = state.config;
-        resolve(config);
+      if (state.translationOverridesLoaded && state.config) {
+        const translationOverrides = state.config['Translation overrides'] ?? {};
+        resolve(translationOverrides);
         unsubscribe && unsubscribe();
       }
     }
@@ -280,7 +319,6 @@ function computeExtensionConfig(
   const configOverride = slotModuleConfig?.extensionSlots?.[slotName]?.configure?.[extensionId] ?? {};
   const extensionConfig = mergeConfigsFor(nameOfSchemaSource, providedConfigs);
   const combinedConfig = mergeConfigs([extensionConfig, configOverride]);
-  // TODO: validate that a schema exists for the module
   const schema = extensionConfigSchema ?? configState.schemas[extensionModuleName];
   validateStructure(schema, combinedConfig, nameOfSchemaSource);
   const config = setDefaults(schema, combinedConfig);
@@ -360,29 +398,30 @@ function validateAllExtensionSlotConfigs(slotConfigPerModule: Record<string, Rec
 }
 
 function validateExtensionSlotConfig(config: ExtensionSlotConfig, moduleName: string, slotName: string): void {
-  const errorPrefix = `Extension slot config '${moduleName}.extensionSlots.${slotName}`;
+  const keyPath = `${moduleName}.extensionSlots.${slotName}`;
+  const errorPrefix = `Extension slot config '${keyPath}'`;
   const invalidKeys = Object.keys(config).filter((k) => !['add', 'remove', 'order', 'configure'].includes(k));
   if (invalidKeys.length) {
-    console.error(errorPrefix + `' contains invalid keys '${invalidKeys.join("', '")}'`);
+    logError(keyPath, errorPrefix + `' contains invalid keys '${invalidKeys.join("', '")}'`);
   }
   if (config.add) {
     if (!Array.isArray(config.add) || !config.add.every((n) => typeof n === 'string')) {
-      console.error(errorPrefix + `.add' is invalid. Must be an array of strings (extension IDs)`);
+      logError(keyPath, errorPrefix + `.add' is invalid. Must be an array of strings (extension IDs)`);
     }
   }
   if (config.remove) {
     if (!Array.isArray(config.remove) || !config.remove.every((n) => typeof n === 'string')) {
-      console.error(errorPrefix + `.remove' is invalid. Must be an array of strings (extension IDs)`);
+      logError(keyPath, errorPrefix + `.remove' is invalid. Must be an array of strings (extension IDs)`);
     }
   }
   if (config.order) {
     if (!Array.isArray(config.order) || !config.order.every((n) => typeof n === 'string')) {
-      console.error(errorPrefix + `.order' is invalid. Must be an array of strings (extension IDs)`);
+      logError(keyPath, errorPrefix + `.order' is invalid. Must be an array of strings (extension IDs)`);
     }
   }
   if (config.configure) {
     if (!isOrdinaryObject(config.configure)) {
-      console.error(errorPrefix + `.configure' is invalid. Must be an object with extension IDs for keys`);
+      logError(keyPath, errorPrefix + `.configure' is invalid. Must be an object with extension IDs for keys`);
     }
   }
 }
@@ -391,6 +430,11 @@ function getProvidedConfigs(configState: ConfigInternalStore, tempConfigState: T
   return [...configState.providedConfigs.map((c) => c.config), tempConfigState.config];
 }
 
+/**
+ * Validates the config schema for a module. Since problems identified here are programming errors
+ * that hopefully will be caught during development, this function logs errors to the console directly;
+ * it's fine if we spam the user with these errors.
+ */
 function validateConfigSchema(moduleName: string, schema: ConfigSchema, keyPath = '') {
   const updateMessage = `Please verify that you are running the latest version and, if so, alert the maintainer.`;
 
@@ -472,15 +516,23 @@ function getConfigForModule(
   configState: ConfigInternalStore,
   tempConfigState: TemporaryConfigStore,
 ): ConfigObject {
-  if (!configState.schemas.hasOwnProperty(moduleName)) {
-    throw Error('No config schema has been defined for ' + moduleName);
-  }
-
   const schema = configState.schemas[moduleName];
   const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs(configState, tempConfigState));
   validateStructure(schema, inputConfig, moduleName);
   const config = setDefaults(schema, inputConfig);
   runAllValidatorsInConfigTree(schema, config, moduleName);
+  delete config.extensionSlots;
+  return config;
+}
+
+function getConfigForModuleImplicitSchema(
+  moduleName: string,
+  configState: ConfigInternalStore,
+  tempConfigState: TemporaryConfigStore,
+): ConfigObject {
+  const inputConfig = mergeConfigsFor(moduleName, getProvidedConfigs(configState, tempConfigState));
+  const config = setDefaults(implicitConfigSchema, inputConfig);
+  runAllValidatorsInConfigTree(implicitConfigSchema, config, moduleName);
   delete config.extensionSlots;
   return config;
 }
@@ -511,7 +563,7 @@ function validateStructure(schema: ConfigSchema, config: ConfigObject, keyPath =
 
     if (!schema.hasOwnProperty(key)) {
       if (!(key === 'extensionSlots' && keyPath !== '')) {
-        console.error(`Unknown config key '${thisKeyPath}' provided. Ignoring.`);
+        logError(thisKeyPath, `Unknown config key '${thisKeyPath}' provided. Ignoring.`);
       }
 
       continue;
@@ -617,11 +669,11 @@ function runValidators(keyPath: string, validators: Array<Function> | undefined,
         const validatorResult = validator(value);
 
         if (typeof validatorResult === 'string') {
-          if (typeof value === 'object') {
-            console.error(`Invalid configuration for ${keyPath}: ${validatorResult}`);
-          } else {
-            console.error(`Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`);
-          }
+          const message =
+            typeof value === 'object'
+              ? `Invalid configuration for ${keyPath}: ${validatorResult}`
+              : `Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`;
+          logError(keyPath, message);
         }
       }
     } catch (e) {
@@ -692,6 +744,35 @@ function isOrdinaryObject(value) {
   return typeof value === 'object' && !Array.isArray(value) && value !== null;
 }
 
+/** Keep track of which validation errors we have displayed. Each one should only be displayed once. */
+const displayedValidationMessages = new Set<string>();
+
+function logError(keyPath: string, message: string) {
+  const key = `${keyPath}:::${message}`;
+  if (!displayedValidationMessages.has(key)) {
+    console.error(message);
+    displayedValidationMessages.add(key);
+  }
+}
+
+/**
+ * Normally, configuration errors are only displayed once. This function clears the list of
+ * displayed errors, so that they will be displayed again.
+ *
+ * @internal
+ */
+export function clearConfigErrors(keyPath?: string) {
+  if (keyPath) {
+    displayedValidationMessages.forEach((key) => {
+      if (key.startsWith(keyPath)) {
+        displayedValidationMessages.delete(key);
+      }
+    });
+  } else {
+    displayedValidationMessages.clear();
+  }
+}
+
 /**
  * Copied over from esm-extensions. It rightly belongs to that module, but esm-config
  * cannot depend on esm-extensions.
@@ -717,5 +798,16 @@ const implicitConfigSchema: ConfigSchema = {
       'Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value',
     _type: Type.Object,
     _default: {},
+    _validators: [
+      validator(
+        (o) => Object.keys(o).every((k) => /^[a-z]{2,3}(-[A-Z]{2,3})?$/.test(k)),
+        (o) => {
+          const badKeys = Object.keys(o).filter((k) => !/^[a-z]{2,3}(-[A-Z]{2,3})?$/.test(k));
+          return `The 'Translation overrides' object should have language codes for keys. Language codes must be in the form of a two-to-three letter language code optionally followed by a hyphen and a two-to-three letter country code. The following keys do not conform: ${badKeys.join(
+            ', ',
+          )}.`;
+        },
+      ),
+    ],
   },
 };

@@ -1,0 +1,50 @@
+{
+  "name": "@openmrs/esm-navigation",
+  "version": "5.4.0",
+  "license": "MPL-2.0",
+  "description": "OpenMRS library providing tools for breadcrumbs, navigation, and history.",
+  "browser": "dist/openmrs-esm-navigation.js",
+  "main": "src/index.ts",
+  "source": true,
+  "scripts": {
+    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
+    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
+    "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
+    "analyze": "webpack --mode=production --env analyze=true",
+    "typescript": "tsc",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
+  "directories": {
+    "lib": "dist",
+    "src": "src"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "path-to-regexp": "6.1.0"
+  },
+  "peerDependencies": {
+    "@openmrs/esm-state": "5.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-state": "workspace:*",
+    "lodash": "^4.17.21"
+  }
+}

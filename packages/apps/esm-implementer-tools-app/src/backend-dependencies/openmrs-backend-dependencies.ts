@@ -1,4 +1,4 @@
-import { isVersionSatisfied, openmrsFetch } from '@openmrs/esm-framework';
+import { isVersionSatisfied, openmrsFetch, restBaseUrl } from '@openmrs/esm-framework';
 import difference from 'lodash-es/difference';
 
 export type ResolvedBackendModuleType = 'missing' | 'version-mismatch' | 'okay';
@@ -76,7 +76,7 @@ function checkIfModulesAreInstalled(
 }
 
 function fetchInstalledBackendModules() {
-  return openmrsFetch(`/ws/rest/v1/module?v=custom:(uuid,version)`, {
+  return openmrsFetch(`${restBaseUrl}/module?v=custom:(uuid,version)`, {
     method: 'GET',
   });
 }

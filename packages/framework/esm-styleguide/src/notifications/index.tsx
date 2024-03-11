@@ -1,8 +1,8 @@
 /** @module @category UI */
 import React from 'react';
 import { Subject } from 'rxjs';
-import { InlineNotificationMeta, NotificationDescriptor } from './notification.component';
-import { ActionableNotificationMeta, ActionableNotificationDescriptor } from './actionable-notification.component';
+import type { InlineNotificationMeta, NotificationDescriptor } from './notification.component';
+import type { ActionableNotificationMeta, ActionableNotificationDescriptor } from './actionable-notification.component';
 import ActiveNotifications from './active-notifications.component';
 import ActionableActiveNotifications from './active-actionable-notifications.component';
 import isEmpty from 'lodash-es/isEmpty';

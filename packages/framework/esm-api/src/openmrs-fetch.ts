@@ -1,14 +1,16 @@
 /** @module @category API */
 import { Observable } from 'rxjs';
 import isPlainObject from 'lodash-es/isPlainObject';
-import { getConfig, navigate } from '@openmrs/esm-config';
-import { FetchResponse } from './types';
+import { getConfig } from '@openmrs/esm-config';
+import { navigate } from '@openmrs/esm-navigation';
+import { clearHistory } from '@openmrs/esm-navigation/src/index';
+import type { FetchResponse } from './types';
 
-export const restBaseUrl = '/ws/rest/v1/';
+export const restBaseUrl = '/ws/rest/v1';
 
 export const fhirBaseUrl = '/ws/fhir2/R4';
 
-export const sessionEndpoint = `${restBaseUrl}session`;
+export const sessionEndpoint = `${restBaseUrl}/session`;
 
 /**
  * Append `path` to the OpenMRS SPA base.
@@ -53,7 +55,7 @@ export function makeUrl(path: string) {
  * ```js
  * import { openmrsFetch } from '@openmrs/esm-api'
  * const abortController = new AbortController();
- * openmrsFetch('/ws/rest/v1/session', {signal: abortController.signal})
+ * openmrsFetch(`${restBaseUrl}/session', {signal: abortController.signal})
  *   .then(response => {
  *     console.log(response.data.authenticated)
  *   })
@@ -61,7 +63,7 @@ export function makeUrl(path: string) {
  *     console.error(err.status);
  *   })
  * abortController.abort();
- * openmrsFetch('/ws/rest/v1/session', {
+ * openmrsFetch(`${restBaseUrl}/session', {
  *   method: 'POST',
  *   body: {
  *     username: 'hi',
@@ -190,6 +192,7 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
         (url === makeUrl(sessionEndpoint) && response.status === 403) ||
         (redirectAuthFailure.enabled && redirectAuthFailure.errors.includes(response.status))
       ) {
+        clearHistory();
         navigate({ to: redirectAuthFailure.url });
 
         /* We sometimes don't really want this promise to resolve since there's no response data,
@@ -245,7 +248,7 @@ export function openmrsFetch<T = any>(path: string, fetchInit: FetchConfig = {})
  *
  * ```js
  * import { openmrsObservableFetch } from '@openmrs/esm-api'
- * const subscription = openmrsObservableFetch('/ws/rest/v1/session').subscribe(
+ * const subscription = openmrsObservableFetch(`${restBaseUrl}/session').subscribe(
  *   response => console.log(response.data),
  *   err => {throw err},
  *   () => console.log('finished')

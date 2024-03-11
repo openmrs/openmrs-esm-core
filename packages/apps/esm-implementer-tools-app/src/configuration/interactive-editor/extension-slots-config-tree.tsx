@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import EditableValue from './editable-value.component';
 import isEqual from 'lodash-es/isEqual';
-import { ExtensionSlotConfigureValueObject, useAssignedExtensions } from '@openmrs/esm-framework';
+import type { ExtensionSlotConfigureValueObject } from '@openmrs/esm-framework';
+import { useAssignedExtensions } from '@openmrs/esm-framework';
 import { ExtensionConfigureTree } from './extension-configure-tree';
 import { Subtree } from './layout/subtree.component';
 import { implementerToolsStore } from '../../store';
+import { useStore } from 'zustand';
 
 interface ExtensionSlotsConfigTreeProps {
   extensionsConfig: { [key: string]: any };
@@ -51,6 +53,16 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   const moduleName = path[0];
   const slotName = path[2];
   const assignedExtensions = useAssignedExtensions(slotName);
+  const { uiSelectedPath } = useStore(implementerToolsStore);
+
+  const itemRef = useRef<HTMLLIElement>(null);
+
+  useEffect(() => {
+    const shouldFocus = isEqual(uiSelectedPath, path);
+    if (shouldFocus) {
+      itemRef.current?.scrollIntoView();
+    }
+  }, [uiSelectedPath]);
 
   function setActiveExtensionSlotOnMouseEnter(moduleName, slotName) {
     if (!implementerToolsStore.getState().configPathBeingEdited) {
@@ -91,6 +103,7 @@ function ExtensionSlotConfigTree({ config, path }: ExtensionSlotConfigProps) {
   return (
     <Subtree
       label={slotName}
+      ref={itemRef}
       leaf={false}
       onMouseEnter={() => setActiveExtensionSlotOnMouseEnter(moduleName, slotName)}
       onMouseLeave={() => removeActiveItemDescriptionOnMouseLeave([moduleName, slotName])}

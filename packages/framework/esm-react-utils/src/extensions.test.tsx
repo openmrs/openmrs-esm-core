@@ -18,7 +18,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
 
-// For some reason in the text context `isEqual` always returns true
+// For some reason in the test context `isEqual` always returns true
 // when using the import substitution in jest.config.js. Here's a custom
 // mock.
 jest.mock('lodash-es/isEqual', () => (a, b) => JSON.stringify(a) == JSON.stringify(b));
@@ -26,6 +26,10 @@ jest.mock('lodash-es/isEqual', () => (a, b) => JSON.stringify(a) == JSON.stringi
 describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
   beforeEach(() => {
     updateInternalExtensionStore(() => ({ slots: {}, extensions: {} }));
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   test('Extension receives state changes passed through (not using <Extension>)', async () => {
@@ -87,16 +91,22 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
   });
 
   test('ExtensionSlot throws error if both state and children provided', () => {
+    const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
     const App = () => (
       <ExtensionSlot name="Box" state={{ color: 'red' }}>
         <Extension />
       </ExtensionSlot>
     );
-    expect(() => render(<App />)).toThrowError(
+    expect(() => render(<App />)).toThrow();
+    expect(consoleError).toHaveBeenNthCalledWith(
+      1,
       expect.objectContaining({
-        message: expect.stringMatching(/children.*state/),
+        message: expect.stringMatching(
+          /Both children and state have been provided. If children are provided, the state must be passed as a prop to the `Extension` component/i,
+        ),
       }),
     );
+    consoleError.mockRestore();
   });
 
   test('Extension Slot receives meta', async () => {
@@ -111,10 +121,10 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     })(() => {
       const metas = useExtensionSlotMeta('Box');
       const wrapItem = useCallback(
-        (slot: React.ReactNode, extension: ExtensionData) => {
+        (slot: React.ReactNode, extension?: ExtensionData) => {
           return (
             <div>
-              <h1>{metas[getExtensionNameFromId(extension.extensionId)].code}</h1>
+              <h1>{metas[getExtensionNameFromId(extension?.extensionId ?? '')].code}</h1>
               {slot}
             </div>
           );
@@ -124,7 +134,7 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
       return (
         <div>
           <ExtensionSlot name="Box">
-            <Extension wrap={wrapItem} />
+            <Extension>{wrapItem}</Extension>
           </ExtensionSlot>
         </div>
       );

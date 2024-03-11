@@ -1,5 +1,6 @@
 import useSWR from 'swr';
-import { FetchResponse, openmrsFetch } from '@openmrs/esm-framework';
+import { type FetchResponse, restBaseUrl } from '@openmrs/esm-framework';
+import { openmrsFetch } from '@openmrs/esm-framework';
 import { useMemo } from 'react';
 
 export interface PatientIdentifierType {
@@ -16,7 +17,7 @@ export function usePatientIdentifierTypes(): {
   isLoading: boolean;
 } {
   const { data, error } = useSWR<FetchResponse<PatientIdentifierTypeResponse>, Error>(
-    `/ws/rest/v1/patientidentifiertype`,
+    `${restBaseUrl}/patientidentifiertype`,
     openmrsFetch,
   );
   const memoisedPatientIdentifierTypeData = useMemo(

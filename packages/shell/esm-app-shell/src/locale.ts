@@ -2,7 +2,7 @@ import * as i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 import merge from 'lodash-es/merge';
-import { getConfigInternal, importDynamic } from '@openmrs/esm-framework/src/internal';
+import { getTranslationOverrides, importDynamic } from '@openmrs/esm-framework/src/internal';
 
 export function setupI18n() {
   window.i18next = i18next.default || i18next;
@@ -33,14 +33,11 @@ export function setupI18n() {
           callback(Error(), null);
         } else if (namespace === '@openmrs/esm-app-shell') {
           // currently, we don't have translations in the app shell
-          getConfigInternal(namespace)
-            .then((config) => {
+          getTranslationOverrides(namespace)
+            .then((overrides) => {
               let translations = {};
-              if (config && 'Translation overrides' in config) {
-                const overrides = config['Translation overrides'];
-                if (language in overrides) {
-                  translations = overrides[language];
-                }
+              if (language in overrides) {
+                translations = overrides[language];
               }
 
               callback(null, translations);
@@ -51,16 +48,13 @@ export function setupI18n() {
         } else {
           importDynamic(namespace)
             .then((module) =>
-              Promise.all([getImportPromise(module, namespace, language), getConfigInternal(namespace)]),
+              Promise.all([getImportPromise(module, namespace, language), getTranslationOverrides(namespace)]),
             )
-            .then(([json, config]) => {
+            .then(([json, overrides]) => {
               let translations = json ?? {};
 
-              if (config && 'Translation overrides' in config) {
-                const overrides = config['Translation overrides'];
-                if (language in overrides) {
-                  translations = merge(translations, overrides[language]);
-                }
+              if (language in overrides) {
+                translations = merge(translations, overrides[language]);
               }
 
               callback(null, translations);

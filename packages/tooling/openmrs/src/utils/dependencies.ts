@@ -1,5 +1,5 @@
-import { basename, dirname, resolve } from 'path';
-import { existsSync, readFileSync, statSync } from 'fs';
+import { basename, dirname, resolve } from 'node:path';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { inc } from 'semver';
 
 export function getSharedDependencies() {

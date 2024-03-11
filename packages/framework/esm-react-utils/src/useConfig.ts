@@ -1,16 +1,11 @@
 /** @module @category Config */
 import { useContext, useEffect, useMemo, useState } from 'react';
-import {
-  getConfigStore,
-  getExtensionsConfigStore,
-  ConfigStore,
-  ConfigObject,
-  ExtensionsConfigStore,
-  getExtensionConfigFromStore,
-} from '@openmrs/esm-config';
+import type { ConfigStore, ConfigObject, ExtensionsConfigStore } from '@openmrs/esm-config';
+import { getConfigStore, getExtensionsConfigStore, getExtensionConfigFromStore } from '@openmrs/esm-config';
 import type { StoreApi } from 'zustand';
 import isEqual from 'lodash-es/isEqual';
-import { ComponentContext, ExtensionData } from './ComponentContext';
+import type { ExtensionData } from './ComponentContext';
+import { ComponentContext } from './ComponentContext';
 
 const promises: Record<string, Promise<ConfigObject>> = {};
 const errorMessage = `No ComponentContext has been provided. This should come from "openmrsComponentDecorator".
@@ -142,9 +137,9 @@ interface UseConfigOptions {
  * @param options Additional options that can be passed to useConfig()
  */
 export function useConfig<T = Record<string, any>>(options?: UseConfigOptions) {
-  // This hook uses the config of the MF defining the component.
-  // If the component is used in an extension slot then the slot
-  // may override (part of) its configuration.
+  // This hook gets the appropriate configuration depending on whether the caller is a module
+  // or an extension, which is determined from the ComponentContext. It will throw for suspense
+  // if the configuration is not yet loaded.
   const { moduleName: contextModuleName, extension } = useContext(ComponentContext);
   const moduleName = options?.externalModuleName ?? contextModuleName;
 

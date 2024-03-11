@@ -1,0 +1,25 @@
+@use '@carbon/styles/scss/spacing';
+@import '../../root.scss';
+
+.languageOptionsContainer {
+  display: flex;
+  flex-direction: column;
+  max-height: 28rem;
+}
+
+.languageRadioButton {
+  display: flex;
+  height: spacing.$spacing-09;
+  align-items: center;
+  @extend .bodyShort01;
+}
+
+.submitButton {
+  :global(.cds--inline-loading) {
+    min-height: 1rem !important;
+  }
+
+  :global(.cds--inline-loading__text) {
+    font-size: unset !important;
+  }
+}

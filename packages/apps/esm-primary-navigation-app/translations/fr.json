@@ -1,4 +1,8 @@
 {
+  "cancel": "Annuler",
+  "change": "Changer",
+  "changeLanguage": "Changer de langue",
+  "changingLanguage": "Changing language",
   "notifications": "Notifications",
-  "selectLocale": "Sélectionner les paramètres régionaux"
+  "userMenuTooltip": "User"
 }

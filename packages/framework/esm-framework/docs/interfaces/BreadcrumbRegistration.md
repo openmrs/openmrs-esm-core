@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/types.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/types.ts#L33)
+[packages/framework/esm-navigation/src/types.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L33)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-breadcrumbs/src/types.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-breadcrumbs/src/types.ts#L34)
+[packages/framework/esm-navigation/src/types.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-navigation/src/types.ts#L34)

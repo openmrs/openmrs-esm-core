@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  getOfflineSynchronizationStore,
-  OfflineSynchronizationStore,
-  showNotification,
-  useStore,
-} from '@openmrs/esm-framework/src/internal';
+import type { OfflineSynchronizationStore } from '@openmrs/esm-framework/src/internal';
+import { getOfflineSynchronizationStore, showNotification, useStore } from '@openmrs/esm-framework/src/internal';
 import { getI18n, useTranslation } from 'react-i18next';
 import { Loading, NotificationActionButton } from '@carbon/react';
 import styles from './synchronizing-notification.styles.scss';
@@ -51,7 +47,7 @@ function SynchronizingNotification({ mySynchronizationIndex }) {
     <div className={styles.notificationLoadingContainer}>
       {isCanceled
         ? t('offlineActionsSynchronizationNotificationCanceling', 'Canceling...')
-        : t('offlineActionsSynchronizationNotificationStatus', '{current} / {total} actions', {
+        : t('offlineActionsSynchronizationNotificationStatus', '{{current}} / {{total}} actions', {
             current: synchronization.totalCount - synchronization.pendingCount,
             total: synchronization.totalCount,
           })}

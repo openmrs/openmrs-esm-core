@@ -59,7 +59,8 @@ export interface ShowToastEvent {
   description: any;
   kind?: 'error' | 'info' | 'info-square' | 'success' | 'warning' | 'warning-alt';
   title?: string;
-  millis?: number;
+  actionButtonLabel?: string | any;
+  onActionButtonClick?: () => void;
 }
 
 /** @category UI */
@@ -77,7 +78,7 @@ export interface ShowSnackbarEvent {
 const notificationShownName = 'openmrs:notification-shown';
 const actionableNotificationShownName = 'openmrs:actionable-notification-shown';
 const toastShownName = 'openmrs:toast-shown';
-const SnackbarShownName = 'openmrs:snack-bar-shown';
+const snackbarShownName = 'openmrs:snack-bar-shown';
 
 export function dispatchNotificationShown(data: ShowNotificationEvent) {
   window.dispatchEvent(new CustomEvent(notificationShownName, { detail: data }));
@@ -88,7 +89,11 @@ export function dispatchActionableNotificationShown(data: ShowActionableNotifica
 }
 
 export function dispatchSnackbarShown(data: ShowSnackbarEvent) {
-  window.dispatchEvent(new CustomEvent(SnackbarShownName, { detail: data }));
+  window.dispatchEvent(new CustomEvent(snackbarShownName, { detail: data }));
+}
+
+export function dispatchToastShown(data: ShowToastEvent) {
+  window.dispatchEvent(new CustomEvent(toastShownName, { detail: data }));
 }
 
 /** @category UI */
@@ -115,6 +120,6 @@ export function subscribeToastShown(cb: (data: ShowToastEvent) => void) {
 /** @category UI */
 export function subscribeSnackbarShown(cb: (data: ShowSnackbarEvent) => void) {
   const handler = (ev: CustomEvent) => cb(ev.detail);
-  window.addEventListener(SnackbarShownName, handler);
-  return () => window.removeEventListener(SnackbarShownName, handler);
+  window.addEventListener(snackbarShownName, handler);
+  return () => window.removeEventListener(snackbarShownName, handler);
 }

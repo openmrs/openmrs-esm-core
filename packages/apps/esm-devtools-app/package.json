@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-devtools-app",
-  "version": "5.3.2",
+  "version": "5.4.0",
   "license": "MPL-2.0",
   "description": "Dev tools for frontend devs using OpenMRS",
   "browser": "dist/openmrs-esm-devtools-app.js",
@@ -44,8 +44,8 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
-    "@openmrs/esm-framework": "^5.3.2",
-    "@openmrs/webpack-config": "^5.3.2",
+    "@openmrs/esm-framework": "^5.4.0",
+    "@openmrs/webpack-config": "^5.4.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "^11.18.6",

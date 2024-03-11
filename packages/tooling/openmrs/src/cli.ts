@@ -14,7 +14,7 @@ type Commands = typeof commands;
 type CommandNames = keyof Commands;
 
 function runCommand<T extends CommandNames>(type: T, args: Parameters<Commands[T]>[0]) {
-  const ps = fork(runner, [], { cwd: root });
+  const ps = fork(runner, [], { cwd: type === 'runBuild' ? root : process.cwd() });
 
   ps.send({
     type,
@@ -43,7 +43,7 @@ yargs.command(
       .describe('add-cookie', 'Additional cookies to provide when proxying.')
       .boolean('support-offline')
       .describe('support-offline', 'Determines if a service worker should be installed for offline support.')
-      .default('support-offline', true)
+      .default('support-offline', false)
       .string('spa-path')
       .default('spa-path', '/openmrs/spa/')
       .describe('spa-path', 'The path of the application on the target server.')
@@ -178,7 +178,7 @@ yargs.command(
         type: 'boolean',
       })
       .option('support-offline', {
-        default: true,
+        default: false,
         describe: 'Determines if a service worker should be installed for offline support.',
         type: 'boolean',
       })
@@ -258,10 +258,10 @@ yargs.command(
         coerce: (arg) => trimEnd(arg, '/'),
       })
       .option('config', {
-        default: 'spa-build-config.json',
+        default: ['spa-build-config.json'],
         description: 'Path to a SPA build config JSON.',
-        type: 'string',
-        coerce: (arg) => resolve(process.cwd(), arg),
+        type: 'array',
+        coerce: (arg: Array<string>) => arg.map((p) => resolve(process.cwd(), p)),
       })
       .option('hash-importmap', {
         default: false,

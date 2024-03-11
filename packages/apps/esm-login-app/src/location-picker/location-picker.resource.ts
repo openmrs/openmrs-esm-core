@@ -3,15 +3,16 @@ import { useTranslation } from 'react-i18next';
 import useSwrInfinite from 'swr/infinite';
 import useSwrImmutable from 'swr/immutable';
 import {
-  FetchResponse,
+  type FetchResponse,
   fhirBaseUrl,
   openmrsFetch,
   setUserProperties,
   showNotification,
+  showSnackbar,
   showToast,
   useSession,
 } from '@openmrs/esm-framework';
-import { LocationEntry, LocationResponse } from '../types';
+import type { LocationEntry, LocationResponse } from '../types';
 
 interface LoginLocationData {
   locations: Array<LocationEntry>;
@@ -145,7 +146,6 @@ export function useValidateLocationUuid(locationUuid: string, searchTerm?: strin
 
 export function useDefaultLocation(isUpdateFlow: boolean, searchTerm: string) {
   const { t } = useTranslation();
-  const [savePreference, setSavePreference] = useState(false);
   const { user } = useSession();
 
   const { userUuid, userProperties } = useMemo(
@@ -155,20 +155,21 @@ export function useDefaultLocation(isUpdateFlow: boolean, searchTerm: string) {
     }),
     [user],
   );
+  const [savePreference, setSavePreference] = useState(false);
 
-  const userDefaultLocationUuid = useMemo(() => userProperties?.defaultLocation, [userProperties?.defaultLocation]);
+  const defaultLocation = useMemo(() => userProperties?.defaultLocation, [userProperties?.defaultLocation]);
 
   const {
     isLoading: isLoadingValidation,
     isLocationValid,
     location: defaultLocationFhir,
-  } = useValidateLocationUuid(userDefaultLocationUuid, searchTerm);
+  } = useValidateLocationUuid(defaultLocation, searchTerm);
 
   useEffect(() => {
-    if (userDefaultLocationUuid) {
+    if (defaultLocation) {
       setSavePreference(true);
     }
-  }, [setSavePreference, userDefaultLocationUuid]);
+  }, [setSavePreference, defaultLocation]);
 
   const updateUserPropsWithDefaultLocation = useCallback(
     async (locationUuid: string, saveDefaultLocation: boolean) => {
@@ -191,37 +192,37 @@ export function useDefaultLocation(isUpdateFlow: boolean, searchTerm: string) {
 
   const updateDefaultLocation = useCallback(
     async (locationUuid: string, saveDefaultLocation: boolean) => {
-      if (savePreference && locationUuid === userDefaultLocationUuid) {
+      if (savePreference && locationUuid === defaultLocation) {
         return;
       }
 
       updateUserPropsWithDefaultLocation(locationUuid, saveDefaultLocation).then(() => {
         if (saveDefaultLocation) {
-          showToast({
-            title: !isUpdateFlow
-              ? t('locationPreferenceAdded', 'Selected location will be used for your next logins')
-              : t('locationPreferenceUpdated', 'Login location preference updated'),
-            description: !isUpdateFlow
-              ? t('selectedLocationPreferenceSetMessage', 'You can change your preference from the user dashboard')
-              : t('locationPreferenceAdded', 'Selected location will be used for your next logins'),
+          showSnackbar({
+            title: !isUpdateFlow ? t('locationSaved', 'Location saved') : t('locationUpdated', 'Location updated'),
+            subtitle: !isUpdateFlow
+              ? t('locationSaveMessage', 'Your preferred location has been saved for future logins')
+              : t('locationUpdateMessage', 'Your preferred login location has been updated'),
             kind: 'success',
+            isLowContrast: true,
           });
-        } else if (userDefaultLocationUuid) {
-          showToast({
-            title: t('locationPreferenceRemoved', 'Login location preference removed'),
-            description: t('removedLoginLocationPreference', 'The login location preference has been removed.'),
+        } else if (defaultLocation) {
+          showSnackbar({
+            title: t('locationPreferenceRemoved', 'Location preference removed'),
+            subtitle: t('locationPreferenceRemovedMessage', 'You will need to select a location on each login'),
             kind: 'success',
+            isLowContrast: true,
           });
         }
       });
     },
-    [savePreference, userDefaultLocationUuid, updateUserPropsWithDefaultLocation, t, isUpdateFlow],
+    [savePreference, defaultLocation, updateUserPropsWithDefaultLocation, t, isUpdateFlow],
   );
 
   return {
     isLoadingValidation,
     defaultLocationFhir,
-    userDefaultLocationUuid: isLocationValid ? userDefaultLocationUuid : null,
+    defaultLocation: isLocationValid ? defaultLocation : null,
     updateDefaultLocation,
     savePreference,
     setSavePreference,

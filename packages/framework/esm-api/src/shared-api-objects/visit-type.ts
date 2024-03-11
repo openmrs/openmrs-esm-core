@@ -1,8 +1,8 @@
 /** @module @category API */
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { openmrsObservableFetch } from '../openmrs-fetch';
-import { VisitType } from '../types';
+import { openmrsObservableFetch, restBaseUrl } from '../openmrs-fetch';
+import type { VisitType } from '../types';
 
 export function toVisitTypeObject(openmrsRestForm: any): VisitType {
   return {
@@ -13,7 +13,7 @@ export function toVisitTypeObject(openmrsRestForm: any): VisitType {
 }
 
 export function getVisitTypes(): Observable<Array<VisitType>> {
-  return openmrsObservableFetch<any>(`/ws/rest/v1/visittype`)
+  return openmrsObservableFetch<any>(`${restBaseUrl}/visittype`)
     .pipe(
       map((results) => {
         const visitTypes: Array<VisitType> = results.data.results.map(toVisitTypeObject);

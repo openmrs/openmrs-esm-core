@@ -21,7 +21,7 @@ import {
 import type { LoginReferrer } from '../login/login.component';
 import styles from './location-picker.scss';
 import { useDefaultLocation, useInfiniteScrolling, useLoginLocations } from './location-picker.resource';
-import { ConfigSchema } from '../config-schema';
+import type { ConfigSchema } from '../config-schema';
 
 interface LocationPickerProps {}
 

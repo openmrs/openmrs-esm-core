@@ -1,11 +1,9 @@
 import React from 'react';
 import type {} from '@openmrs/esm-globals';
-import { createStore, StoreApi } from 'zustand';
+import { createStore, type StoreApi } from 'zustand';
 import { NEVER, of } from 'rxjs';
-import { interpolateUrl } from '@openmrs/esm-config';
-import { SessionStore } from '@openmrs/esm-api';
-export { parseDate, formatDate, formatDatetime, formatTime, age } from '@openmrs/esm-utils';
-export { interpolateString, interpolateUrl, validators, validator } from '@openmrs/esm-config';
+import { type SessionStore } from '@openmrs/esm-api';
+import * as utils from '@openmrs/esm-utils';
 
 window.i18next = { ...window.i18next, language: 'en' };
 
@@ -23,38 +21,30 @@ export function setupPaths(config: any) {
   window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
 
-/* esm-utils */
-export function isVersionSatisfied() {
-  return true;
-}
-
-export function useConnectivity() {
-  return true;
-}
-
 /* esm-api */
 export const setSessionLocation = jest.fn(() => Promise.resolve());
-
 export const openmrsFetch = jest.fn((url?: string) => new Promise(() => {}));
-
 export const openmrsObservableFetch = jest.fn(() => of({ data: { entry: [] } }));
-
 export function getCurrentUser() {
   return of({ authenticated: false });
 }
-
 export const mockSessionStore = createGlobalStore<SessionStore>('mock-session-store', {
   loaded: false,
   session: null,
 });
-
 export const getSessionStore = jest.fn(() => mockSessionStore);
-
 export const setCurrentVisit = jest.fn();
-
 export const newWorkspaceItem = jest.fn();
-
+export const restBaseURL = '/ws/rest/v1';
 export const fhirBaseUrl = '/ws/fhir2/R4';
+export const attachmentUrl = '/ws/rest/v1/attachment';
+export const getAttachmentByUuid = jest.fn();
+export const getAttachments = jest.fn();
+export const createAttachment = jest.fn();
+export const deleteAttachmentPermanently = jest.fn();
+export const clearCurrentUser = jest.fn();
+export const refetchCurrentUser = jest.fn();
+export const setUserLanguage = jest.fn();
 
 /* esm-state */
 interface StoreEntity {
@@ -108,6 +98,8 @@ function instrumentedStore<T>(name: string, store: StoreApi<T>) {
 }
 
 /* esm-config */
+export { validators, validator } from '@openmrs/esm-config';
+
 export const configInternalStore = createGlobalStore('config-internal', {});
 
 export const implementerToolsConfigStore = createGlobalStore('implementer-tools-config', {});
@@ -125,28 +117,12 @@ export enum Type {
 }
 
 let configSchema = {};
-function getDefaults(schema) {
-  let tmp = {};
-  for (let k of Object.keys(schema)) {
-    if (schema[k].hasOwnProperty('_default')) {
-      tmp[k] = schema[k]._default;
-    } else if (k.startsWith('_')) {
-      continue;
-    } else if (isOrdinaryObject(schema[k])) {
-      tmp[k] = getDefaults(schema[k]);
-    } else {
-      tmp[k] = schema[k];
-    }
-  }
-  return tmp;
-}
-function isOrdinaryObject(x) {
-  return !!x && x.constructor === Object;
-}
 
-export const getConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
+export const getConfig = jest
+  .fn()
+  .mockImplementation(() => Promise.resolve(utils.getDefaultsFromConfigSchema(configSchema)));
 
-export const useConfig = jest.fn().mockReturnValue(getDefaults(configSchema));
+export const useConfig = jest.fn().mockImplementation(() => utils.getDefaultsFromConfigSchema(configSchema));
 
 export function defineConfigSchema(moduleName, schema) {
   configSchema = schema;
@@ -156,13 +132,7 @@ export function defineExtensionConfigSchema(extensionName, schema) {
   configSchema = schema;
 }
 
-export const navigate = jest.fn();
-
-export const ConfigurableLink = jest
-  .fn()
-  .mockImplementation((config: { to: string; children: React.ReactNode }) => (
-    <a href={interpolateUrl(config.to)}>{config.children}</a>
-  ));
+export const clearConfigErrors = jest.fn();
 
 /* esm-dynamic-loading */
 export const importDynamic = jest.fn();
@@ -173,11 +143,6 @@ export const createErrorHandler = () => jest.fn().mockReturnValue(NEVER);
 export const reportError = jest.fn().mockImplementation((error) => {
   throw error;
 });
-
-/* esm-feature-flags */
-export const registerFeatureFlags = jest.fn();
-export const getFeatureFlag = jest.fn().mockReturnValue(true);
-export const subscribeToFeatureFlag = jest.fn((name: string, callback) => callback(true));
 
 /* esm-extensions */
 
@@ -199,11 +164,35 @@ export const getExtensionInternalStore = () =>
     extensions: {},
   });
 
+/* esm-feature-flags */
+export const registerFeatureFlags = jest.fn();
+export const getFeatureFlag = jest.fn().mockReturnValue(true);
+export const subscribeToFeatureFlag = jest.fn((name: string, callback) => callback(true));
+
+/* esm-navigation */
+export { interpolateUrl, interpolateString } from '@openmrs/esm-navigation';
+export const navigate = jest.fn();
+export const getHistory = jest.fn(() => ['https://o3.openmrs.org/home']);
+export const clearHistory = jest.fn();
+export const goBackInHistory = jest.fn();
+
+/* esm-offline */
+export const useConnectivity = jest.fn().mockReturnValue(true);
+
 /* esm-react-utils */
+export { ConfigurableLink, isDesktop, useStore, useStoreWithActions, createUseStore } from '@openmrs/esm-react-utils';
 
 export const ComponentContext = React.createContext(null);
 
 export const openmrsComponentDecorator = jest.fn().mockImplementation(() => (component) => component);
+
+export const useAttachments = jest.fn(() => ({
+  isLoading: true,
+  data: [],
+  error: null,
+  mutate: jest.fn(),
+  isValidating: true,
+}));
 
 export const useCurrentPatient = jest.fn(() => []);
 
@@ -221,6 +210,8 @@ export const useSession = jest.fn(() => ({
 
 export const useLayoutType = jest.fn(() => 'desktop');
 
+export const useAssignedExtensions = jest.fn(() => []);
+
 export const useExtensionSlotMeta = jest.fn(() => ({}));
 
 export const useConnectedExtensions = jest.fn(() => []);
@@ -234,8 +225,6 @@ export const useExtensionInternalStore = createGlobalStore('extensionInternal', 
 export const useExtensionStore = getExtensionStore();
 
 export const useFeatureFlag = jest.fn().mockReturnValue(true);
-
-export { isDesktop, useStore, useStoreWithActions, createUseStore } from '@openmrs/esm-react-utils';
 
 export const usePagination = jest.fn().mockImplementation(() => ({
   currentPage: 1,
@@ -275,16 +264,28 @@ export function useOpenmrsSWR(key: string | Array<any>) {
 
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
-/* esm-styleguide */
+export const useOnClickOutside = jest.fn();
 
+/* esm-styleguide */
 export const showNotification = jest.fn();
 export const showActionableNotification = jest.fn();
 export const showToast = jest.fn();
 export const showSnackbar = jest.fn();
 export const showModal = jest.fn();
 
-export const LeftNavMenu = jest.fn();
+export const LeftNavMenu = jest.fn(() => <div>Left Nav Menu</div>);
 export const setLeftNav = jest.fn();
 export const unsetLeftNav = jest.fn();
+export const ResponsiveWrapper = jest.fn(({ children }) => <>{children}</>);
+export const OpenmrsDatePicker = jest.fn(() => <div>OpenMRS DatePicker</div>);
 
-export const OpenmrsDatePicker = jest.fn();
+/* esm-utils */
+export { getDefaultsFromConfigSchema, parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
+
+export const age = jest.fn((arg) => utils.age(arg));
+
+export function isVersionSatisfied() {
+  return true;
+}
+
+export const translateFrom = jest.fn((m, key, fallback) => fallback ?? key);
