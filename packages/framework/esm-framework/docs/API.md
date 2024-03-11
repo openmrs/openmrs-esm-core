@@ -166,6 +166,7 @@
 
 - [ExtensionSlot](API.md#extensionslot)
 - [useAttachments](API.md#useattachments)
+- [usePatientPhoto](API.md#usepatientphoto)
 
 ### Store Functions
 
@@ -178,6 +179,12 @@
 
 ### UI Functions
 
+- [CustomOverflowMenu](API.md#customoverflowmenu)
+- [PatientBannerActionsMenu](API.md#patientbanneractionsmenu)
+- [PatientBannerContactDetails](API.md#patientbannercontactdetails)
+- [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
+- [PatientBannerToggleContactDetailsButton](API.md#patientbannertogglecontactdetailsbutton)
+- [PatientPhoto](API.md#patientphoto)
 - [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
 - [showActionableNotification](API.md#showactionablenotification)
@@ -910,20 +917,6 @@ ___
 
 ___
 
-### ResponsiveWrapper
-
-• `Const` **ResponsiveWrapper**: `React.FC`<[`ResponsiveWrapperProps`](interfaces/ResponsiveWrapperProps.md)\>
-
-ResponsiveWrapper enables a responsive behavior for the component its wraps, providing a different rendering based on the current layout type.
-On desktop, it renders the children as is, while on a tablet, it wraps them in a Carbon Layer https://react.carbondesignsystem.com/?path=/docs/components-layer--overview component.
-This provides a light background for form inputs on tablets, in accordance with the design requirements.
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L14)
-
-___
-
 ### backendDependencies
 
 • `Const` **backendDependencies**: `Object`
@@ -950,6 +943,20 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
+
+___
+
+### ResponsiveWrapper
+
+• `Const` **ResponsiveWrapper**: `React.FC`<[`ResponsiveWrapperProps`](interfaces/ResponsiveWrapperProps.md)\>
+
+ResponsiveWrapper enables a responsive behavior for the component its wraps, providing a different rendering based on the current layout type.
+On desktop, it renders the children as is, while on a tablet, it wraps them in a Carbon Layer https://react.carbondesignsystem.com/?path=/docs/components-layer--overview component.
+This provides a light background for form inputs on tablets, in accordance with the design requirements.
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L15)
 
 ## API Functions
 
@@ -4159,6 +4166,26 @@ ___
 
 ___
 
+### usePatientPhoto
+
+▸ **usePatientPhoto**(`patientUuid`): [`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+
+#### Returns
+
+[`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L29)
+
+___
+
 ## Store Functions
 
 ### createGlobalStore
@@ -4447,6 +4474,130 @@ ___
 ___
 
 ## UI Functions
+
+### CustomOverflowMenu
+
+▸ **CustomOverflowMenu**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | `CustomOverflowMenuProps` |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L13)
+
+___
+
+### PatientBannerActionsMenu
+
+▸ **PatientBannerActionsMenu**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientBannerActionsMenuProps`](interfaces/PatientBannerActionsMenuProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L20)
+
+___
+
+### PatientBannerContactDetails
+
+▸ **PatientBannerContactDetails**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | `ContactDetailsProps` |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:180](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L180)
+
+___
+
+### PatientBannerPatientInfo
+
+▸ **PatientBannerPatientInfo**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientBannerPatientInfoProps`](interfaces/PatientBannerPatientInfoProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx#L13)
+
+___
+
+### PatientBannerToggleContactDetailsButton
+
+▸ **PatientBannerToggleContactDetailsButton**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientBannerToggleContactDetailsButtonProps`](interfaces/PatientBannerToggleContactDetailsButtonProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx#L16)
+
+___
+
+### PatientPhoto
+
+▸ **PatientPhoto**(`__namedParameters`): `Element`
+
+A component which displays the patient photo. If there is no photo, it will display
+a generated avatar. The default size is 80px. Set the size prop to 'small' to display
+a 48px avatar.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientPhotoProps`](interfaces/PatientPhotoProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L18)
+
+___
 
 ### isDesktop
 

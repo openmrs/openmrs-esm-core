@@ -279,6 +279,25 @@ export const unsetLeftNav = jest.fn();
 export const ResponsiveWrapper = jest.fn(({ children }) => <>{children}</>);
 export const OpenmrsDatePicker = jest.fn(() => <div>OpenMRS DatePicker</div>);
 
+export const CustomOverflowMenu = jest.fn(({ children }) => (
+  <div>
+    <button>Custom Overflow Menu</button>
+    {children}
+  </div>
+));
+export const PatientBannerActionsMenu = jest.fn(() => <div>Patient Banner Actions Menu</div>);
+export const PatientBannerContactDetails = jest.fn(() => <div>Patient Banner Contact Details</div>);
+export const PatientBannerPatientInfo = jest.fn(() => <div>Patient Banner Patient Info</div>);
+export const PatientBannerToggleContactDetailsButton = jest.fn(() => (
+  <div>Patient Banner Toggle Contact Details Button</div>
+));
+export const PatientPhoto = jest.fn(() => <div>Patient Photo</div>);
+export const usePatientPhoto = jest.fn(() => ({
+  isLoading: true,
+  data: null,
+  error: null,
+}));
+
 /* esm-utils */
 export { getDefaultsFromConfigSchema, parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
 
