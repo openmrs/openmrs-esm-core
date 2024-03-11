@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { type LoggedInUser, setUserProperties, showSnackbar } from '@openmrs/esm-framework';
 import useSwrInfinite from 'swr/infinite';
@@ -164,34 +164,53 @@ export function useLoginLocations(
   return memoisedResults;
 }
 
-export function useValidateLocationUuid(userPreferredLocationUuid: string) {
-  const url = userPreferredLocationUuid ? `${fhirBaseUrl}/Location?_id=${userPreferredLocationUuid}` : null;
+/**
+ * The hook is created to validate a locationUuid and also allow searching with a search term
+ * for the same location so that the searching by name is validated from the backend itself,
+ * which is similar to the hook `useLoginLocations`.
+ * The result from this hook and `useLoginLocations` are merged and hence searching is
+ * required as well in this hook
+ */
+export function useValidateLocationUuid(locationUuid: string, searchTerm?: string) {
+  const [isLocationValid, setIsLocationValid] = useState(false);
+  let urlSearchParameters = new URLSearchParams();
+  urlSearchParameters.append('_id', locationUuid);
+  if (searchTerm) {
+    urlSearchParameters.append('name:contains', searchTerm);
+  }
+  const url = locationUuid ? `/ws/fhir2/R4/Location?${urlSearchParameters.toString()}` : null;
   const { data, error, isLoading } = useSwrImmutable<FetchResponse<LocationResponse>>(url, openmrsFetch, {
     shouldRetryOnError(err) {
       if (err?.response?.status) {
         return err.response.status >= 500;
       }
-
       return false;
     },
   });
 
+  useEffect(() => {
+    // We can only validate a locationUuid if there is no search term filtering the result any more.
+    if (!searchTerm) {
+      setIsLocationValid(data?.ok && data?.data?.total > 0);
+    }
+  }, [data?.data?.total, data?.ok, searchTerm]);
+
   const results = useMemo(
     () => ({
-      isLocationValid: data?.ok,
-      defaultLocation: data?.data?.entry ?? [],
+      isLocationValid,
+      location: data?.data?.entry ?? [],
       error,
       isLoading,
     }),
-    [data, isLoading, error],
+    [isLocationValid, data?.data?.entry, error, isLoading],
   );
-
   return results;
 }
 
-export function useDefaultLocation(isUpdateFlow: boolean) {
+export function useDefaultLocation(isUpdateFlow: boolean, searchTerm: string) {
   const { t } = useTranslation();
   const { user } = useSession();
+
   const { userUuid, userProperties } = useMemo(
     () => ({
       userUuid: user?.uuid,
@@ -203,7 +222,11 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
 
   const defaultLocation = useMemo(() => userProperties?.defaultLocation, [userProperties?.defaultLocation]);
 
-  const { isLocationValid, defaultLocation: defaultLocationFhir } = useValidateLocationUuid(defaultLocation);
+  const {
+    isLoading: isLoadingValidation,
+    isLocationValid,
+    location: defaultLocationFhir,
+  } = useValidateLocationUuid(defaultLocation, searchTerm);
 
   useEffect(() => {
     if (defaultLocation) {
@@ -260,6 +283,7 @@ export function useDefaultLocation(isUpdateFlow: boolean) {
   );
 
   return {
+    isLoadingValidation,
     defaultLocationFhir,
     defaultLocation: isLocationValid ? defaultLocation : null,
     updateDefaultLocation,
@@ -276,4 +300,37 @@ export async function updateLocationInUserProps(user: LoggedInUser, locationUuid
     previousLoggedInLocations: updatedLoggedInLocations.join(','),
   };
   await setUserProperties(user?.uuid, updatedUserProperties);
+}
+export function useInfiniteScrolling({
+  inLoadingState,
+  shouldLoadMore,
+  onIntersection,
+}: {
+  inLoadingState: boolean;
+  shouldLoadMore: boolean;
+  onIntersection: () => void;
+}) {
+  const observer = useRef(null);
+  const loadingIconRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (inLoadingState) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && shouldLoadMore) {
+            onIntersection();
+          }
+        },
+        {
+          threshold: 1,
+        },
+      );
+      if (node) observer.current.observe(node);
+    },
+    [inLoadingState, shouldLoadMore, onIntersection],
+  );
+  return {
+    observer,
+    loadingIconRef,
+  };
 }
