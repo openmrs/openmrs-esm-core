@@ -13,18 +13,18 @@ import {
 import {
   navigate,
   setSessionLocation,
+  setUserProperties,
+  showSnackbar,
   useConfig,
   useConnectivity,
-  useDebounce,
   useSession,
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import styles from './location-picker.scss';
 import {
-  useDefaultLocation,
-  updateLocationInUserProps,
-  useInfiniteScrolling,
+  // useDefaultLocation,
   useLoginLocations,
+  getUserPropertiesWithDefaultAndLogInLocation,
 } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
 
@@ -36,18 +36,14 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
   const [searchTerm, setSearchTerm] = useState(null);
-  const debouncedSearchQuery = useDebounce(searchTerm);
   const [searchParams] = useSearchParams();
-
+  const [activeLocation, setActiveLocation] = useState<string>(null);
+  const [saveDefaultLocation, setSaveDefaultLocation] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
-  const {
-    isLoadingValidation,
-    defaultLocation,
-    updateDefaultLocation,
-    savePreference,
-    setSavePreference,
-    defaultLocationFhir,
-  } = useDefaultLocation(isUpdateFlow, debouncedSearchQuery);
+  const { state } = useLocation() as unknown as Omit<Location, 'state'> & {
+    state: LoginReferrer;
+  };
 
   const { user, sessionLocation } = useSession();
   const { currentUser } = useMemo(
@@ -60,35 +56,57 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   );
 
   const {
-    locations: fetchedLocations,
-    isLoading,
+    locations,
+    isLoadingLocations,
     hasMore,
     loadingNewData,
     setPage,
-  } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, debouncedSearchQuery);
+    isDefaultLocationValid,
+    defaultLocation,
+    lastLoggedInLocation,
+  } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
 
-  const isLoadingLocations = isLoading || isLoadingValidation;
+  const updateUserProperties = useCallback(
+    (locationUuid: string) => {
+      const { previousLoggedInLocations, defaultLocation } = getUserPropertiesWithDefaultAndLogInLocation(
+        locationUuid,
+        user?.userProperties?.previousLoggedInLocations,
+      );
 
-  const locations = useMemo(() => {
-    if (!defaultLocationFhir?.length || !fetchedLocations) {
-      return fetchedLocations;
-    }
+      const prevUserProperties = user?.userProperties;
 
-    return [
-      ...(defaultLocationFhir ?? []),
-      ...fetchedLocations?.filter(({ resource }) => resource.id !== defaultLocationFhir?.[0].resource.id),
-    ];
-  }, [defaultLocationFhir, fetchedLocations]);
+      const updatedUserProperties = {
+        ...(user?.userProperties ?? {}),
+        previousLoggedInLocations,
+        defaultLocation,
+      };
 
-  const [activeLocation, setActiveLocation] = useState(() => {
-    return sessionLocation?.uuid ?? defaultLocation;
-  });
+      if (!saveDefaultLocation) {
+        delete updatedUserProperties.defaultLocation;
+      }
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const { state } = useLocation() as unknown as Omit<Location, 'state'> & {
-    state: LoginReferrer;
-  };
+      setUserProperties(user?.uuid, updatedUserProperties).then(() => {
+        if (saveDefaultLocation) {
+          showSnackbar({
+            title: !isUpdateFlow ? t('locationSaved', 'Location saved') : t('locationUpdated', 'Location updated'),
+            subtitle: !isUpdateFlow
+              ? t('locationSaveMessage', 'Your preferred location has been saved for future logins')
+              : t('locationUpdateMessage', 'Your preferred login location has been updated'),
+            kind: 'success',
+            isLowContrast: true,
+          });
+        } else if (prevUserProperties.defaultLocation && !updatedUserProperties.defaultLocation) {
+          showSnackbar({
+            title: t('locationPreferenceRemoved', 'Location preference removed'),
+            subtitle: t('locationPreferenceRemovedMessage', 'You will need to select a location on each login'),
+            kind: 'success',
+            isLowContrast: true,
+          });
+        }
+      });
+    },
+    [user?.uuid, user?.userProperties, saveDefaultLocation],
+  );
 
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
@@ -98,9 +116,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
       const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
 
       const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
-
-      updateDefaultLocation(locationUuid, saveUserPreference);
-      updateLocationInUserProps(user, locationUuid);
+      updateUserProperties(locationUuid);
       sessionDefined.then(() => {
         if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
           navigate({ to: '${openmrsSpaBase}' + referrer });
@@ -114,12 +130,12 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
         return;
       });
     },
-    [state?.referrer, config.links.loginSuccess, updateDefaultLocation],
+    [state?.referrer, config.links.loginSuccess, updateUserProperties],
   );
 
-  // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
-    if (!isLoadingLocations && !debouncedSearchQuery) {
+    // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
+    if (!isLoadingLocations && !searchTerm) {
       if (!config.chooseLocation.enabled || locations?.length === 1) {
         changeLocation(locations[0]?.resource.id, false);
       }
@@ -127,15 +143,23 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
         changeLocation();
       }
     }
-  }, [changeLocation, config.chooseLocation.enabled, isLoadingLocations, locations, debouncedSearchQuery]);
+  }, [changeLocation, config.chooseLocation.enabled, isLoadingLocations, locations, searchTerm]);
 
-  // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
-    if (isUpdateFlow) {
-      return;
+    if (lastLoggedInLocation && !activeLocation) {
+      setActiveLocation(sessionLocation?.uuid ?? lastLoggedInLocation);
     }
+  }, [lastLoggedInLocation, activeLocation, setActiveLocation]);
 
-    if (defaultLocation && !isSubmitting) {
+  useEffect(() => {
+    if (isDefaultLocationValid) {
+      setSaveDefaultLocation(true);
+    }
+  }, [setSaveDefaultLocation, isDefaultLocationValid]);
+
+  useEffect(() => {
+    // Handle cases where the login location is present in the userProperties.
+    if (!isUpdateFlow && defaultLocation && !isSubmitting) {
       setActiveLocation(defaultLocation);
       changeLocation(defaultLocation, true);
     }
@@ -148,23 +172,36 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   const handleSubmit = useCallback(
     (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
-
       if (!activeLocation) return;
-
-      changeLocation(activeLocation, savePreference);
+      changeLocation(activeLocation, saveDefaultLocation);
     },
-    [activeLocation, changeLocation, savePreference],
+    [activeLocation, changeLocation, saveDefaultLocation],
   );
 
   const handleFetchNextSet = useCallback(() => {
     setPage((page) => page + 1);
   }, [setPage]);
 
-  const { observer, loadingIconRef } = useInfiniteScrolling({
-    inLoadingState: loadingNewData,
-    onIntersection: handleFetchNextSet,
-    shouldLoadMore: hasMore,
-  });
+  const observer = useRef(null);
+  const loadingIconRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (loadingNewData) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && hasMore) {
+            handleFetchNextSet();
+          }
+        },
+        {
+          threshold: 1,
+        },
+      );
+      if (node) observer.current.observe(node);
+    },
+    [loadingNewData, hasMore, handleFetchNextSet],
+  );
+
   const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
 
   return (
@@ -219,7 +256,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
                           key={entry.resource.id}
                           id={entry.resource.name}
                           name={entry.resource.name}
-                          labelText={entry.resource.name}
+                          labelText={`${entry.resource.name} ${entry.resource.id.slice(0, 6)}`}
                           value={entry.resource.id}
                           ref={i === reloadIndex ? loadingIconRef : null}
                         />
@@ -242,10 +279,10 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
           <div className={styles.confirmButton}>
             <Checkbox
               id="checkbox"
-              className={styles.savePreferenceCheckbox}
+              className={styles.saveDefaultLocationCheckbox}
               labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
-              checked={savePreference}
-              onChange={(_, { checked }) => setSavePreference(checked)}
+              checked={saveDefaultLocation}
+              onChange={(_, { checked }) => setSaveDefaultLocation(checked)}
             />
             <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
               {isSubmitting ? (

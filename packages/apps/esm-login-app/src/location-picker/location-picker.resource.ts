@@ -1,8 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { type LoggedInUser, setUserProperties, showSnackbar } from '@openmrs/esm-framework';
+import { type LoggedInUser } from '@openmrs/esm-framework';
 import useSwrInfinite from 'swr/infinite';
-import useSwrImmutable from 'swr/immutable';
 import {
   type FetchResponse,
   fhirBaseUrl,
@@ -16,7 +15,7 @@ import type { LocationEntry, LocationResponse } from './types';
 
 interface LoginLocationData {
   locations: Array<LocationEntry>;
-  isLoading: boolean;
+  isLoadingLocations: boolean;
   totalResults: number;
   hasMore: boolean;
   loadingNewData: boolean;
@@ -91,7 +90,7 @@ function useInfiniteLoginLocations(
   const memoizedLocations = useMemo(() => {
     return {
       locations: data?.length ? data?.flatMap((entries) => entries?.data?.entry ?? []) : null,
-      isLoading,
+      isLoadingLocations: isLoading,
       totalResults: data?.[0]?.data?.total ?? null,
       hasMore: data?.length ? data?.[data.length - 1]?.data?.link?.some((link) => link.relation === 'next') : false,
       loadingNewData: isValidating,
@@ -107,7 +106,10 @@ export function usePreviousLoggedInLocations(useLoginLocationTag: boolean, searc
   const { user } = useSession();
   const searchParams = new URLSearchParams();
   searchParams.append('_summary', 'data');
-  const previousLoggedInLocationUuids = user?.userProperties?.previousLoggedInLocations ?? '';
+  const previousLoggedInLocationUuids = useMemo(
+    () => user?.userProperties?.previousLoggedInLocations ?? '',
+    [user?.userProperties?.previousLoggedInLocations],
+  );
   searchParams.append('_id', previousLoggedInLocationUuids);
   if (useLoginLocationTag) {
     searchParams.append('_tag', 'Login Location');
@@ -120,217 +122,119 @@ export function usePreviousLoggedInLocations(useLoginLocationTag: boolean, searc
 
   const { data, error, isLoading, mutate } = useOpenmrsSWR<LocationResponse>(url);
 
-  const memoisedResults = useMemo(
-    () => ({
-      previousLoggedInLocations: data?.data?.entry ?? [],
+  const memoisedResults = useMemo(() => {
+    const indices = {};
+    previousLoggedInLocationUuids?.split(',').forEach((locationUuid, indx) => {
+      indices[locationUuid] = indx;
+    });
+    return {
+      previousLoggedInLocations: data?.data?.entry?.sort((a, b) => indices[a.resource.id] - indices[b.resource.id]),
       error,
       isLoadingPreviousLoggedInLocations: isLoading,
       mutatePreviousLoggedInLocations: mutate,
-    }),
-    [data, isLoading, error, mutate],
-  );
-
-  return memoisedResults;
-}
-
-export function useLoginLocations(
-  useLoginLocationTag: boolean,
-  count: number = 0,
-  searchQuery: string = '',
-): LoginLocationData {
-  const debouncedSearchQuery = useDebounce(searchQuery);
-
-  const loginLocationsData = useInfiniteLoginLocations(useLoginLocationTag, count, debouncedSearchQuery);
-
-  const previousLoggedInLocationsData = usePreviousLoggedInLocations(useLoginLocationTag, debouncedSearchQuery);
-
-  const memoisedResults = useMemo(() => {
-    const { locations, isLoading: isLoadingLocations, ...restData } = loginLocationsData;
-    const { previousLoggedInLocations, isLoadingPreviousLoggedInLocations } = previousLoggedInLocationsData;
-    const previousLoggedInLocationUuids = previousLoggedInLocations?.map((entry) => entry.resource.id);
-
-    // Excluding the previously logged in locations from fetched locations list since they are separately fetched and shown at the top of the list
-    const filteredLocations = previousLoggedInLocationUuids.length
-      ? locations?.filter((entry) => !previousLoggedInLocationUuids.includes(entry.resource.id))
-      : locations;
-    return {
-      ...restData,
-      isLoading: isLoadingLocations || isLoadingPreviousLoggedInLocations,
-      // The previously logged in locations will be shown at the top of the list.
-      locations: [...(previousLoggedInLocations ?? []), ...(filteredLocations ?? [])],
     };
-  }, [loginLocationsData, previousLoggedInLocationsData]);
+  }, [data, isLoading, error, mutate, previousLoggedInLocationUuids]);
 
   return memoisedResults;
 }
 
-/**
- * The hook is created to validate a locationUuid and also allow searching with a search term
- * for the same location so that the searching by name is validated from the backend itself,
- * which is similar to the hook `useLoginLocations`.
- * The result from this hook and `useLoginLocations` are merged and hence searching is
- * required as well in this hook
- */
-export function useValidateLocationUuid(locationUuid: string, searchTerm?: string) {
-  const [isLocationValid, setIsLocationValid] = useState(false);
+export function useFetchDefaultLocation(useLoginLocationTag: boolean, searchTerm?: string) {
+  const { user } = useSession();
+  const defaultLocationUuid = user?.userProperties?.defaultLocation;
+  const [isDefaultLocationValid, setIsDefaultLocationValid] = useState(false);
   let urlSearchParameters = new URLSearchParams();
-  urlSearchParameters.append('_id', locationUuid);
+  if (useLoginLocationTag) {
+    urlSearchParameters.append('_tag', 'Login Location');
+  }
+  urlSearchParameters.append('_id', defaultLocationUuid);
   if (searchTerm) {
     urlSearchParameters.append('name:contains', searchTerm);
   }
-  const url = locationUuid ? `/ws/fhir2/R4/Location?${urlSearchParameters.toString()}` : null;
-  const { data, error, isLoading } = useSwrImmutable<FetchResponse<LocationResponse>>(url, openmrsFetch, {
-    shouldRetryOnError(err) {
-      if (err?.response?.status) {
-        return err.response.status >= 500;
-      }
-      return false;
-    },
-  });
+  const url = defaultLocationUuid ? `${fhirBaseUrl}/Location?${urlSearchParameters.toString()}` : null;
+  const { data, error, isLoading } = useOpenmrsSWR<LocationResponse>(url);
 
   useEffect(() => {
     // We can only validate a locationUuid if there is no search term filtering the result any more.
     if (!searchTerm) {
-      setIsLocationValid(data?.ok && data?.data?.total > 0);
+      setIsDefaultLocationValid(data?.ok && data?.data?.total > 0);
     }
   }, [data?.data?.total, data?.ok, searchTerm]);
 
   const results = useMemo(
     () => ({
-      isLocationValid,
-      location: data?.data?.entry ?? [],
+      isDefaultLocationValid,
+      defaultLocationArr: isDefaultLocationValid ? data?.data?.entry : [],
       error,
-      isLoading,
+      isLoadingDefaultLocation: isLoading,
     }),
-    [isLocationValid, data?.data?.entry, error, isLoading],
+    [isDefaultLocationValid, data?.data?.entry, error, isLoading],
   );
   return results;
 }
 
-export function useDefaultLocation(isUpdateFlow: boolean, searchTerm: string) {
-  const { t } = useTranslation();
-  const { user } = useSession();
+export function useLoginLocations(useLoginLocationTag: boolean, count: number = 0, searchQuery: string = '') {
+  const debouncedSearchQuery = useDebounce(searchQuery);
 
-  const { userUuid, userProperties } = useMemo(
-    () => ({
-      userUuid: user?.uuid,
-      userProperties: user?.userProperties,
-    }),
-    [user],
-  );
-  const [savePreference, setSavePreference] = useState(false);
+  const defaultLocationData = useFetchDefaultLocation(useLoginLocationTag, debouncedSearchQuery);
+  const previousLoggedInLocationsData = usePreviousLoggedInLocations(useLoginLocationTag, debouncedSearchQuery);
+  const loginLocationsData = useInfiniteLoginLocations(useLoginLocationTag, count, debouncedSearchQuery);
 
-  const defaultLocation = useMemo(() => userProperties?.defaultLocation, [userProperties?.defaultLocation]);
+  const memoisedResults = useMemo(() => {
+    const { defaultLocationArr, isLoadingDefaultLocation, isDefaultLocationValid } = defaultLocationData;
+    const { previousLoggedInLocations, isLoadingPreviousLoggedInLocations } = previousLoggedInLocationsData;
+    const { locations, isLoadingLocations, ...restData } = loginLocationsData;
+    const defaultLocation = isDefaultLocationValid ? defaultLocationArr?.[0]?.resource?.id : null;
 
-  const {
-    isLoading: isLoadingValidation,
-    isLocationValid,
-    location: defaultLocationFhir,
-  } = useValidateLocationUuid(defaultLocation, searchTerm);
+    return {
+      ...restData,
+      isLoadingLocations: isLoadingLocations || isLoadingPreviousLoggedInLocations || isLoadingDefaultLocation,
+      locations: mergeLocations(defaultLocationArr, previousLoggedInLocations, locations),
+      isDefaultLocationValid,
+      defaultLocation,
+      lastLoggedInLocation: defaultLocation ?? previousLoggedInLocations?.[0]?.resource?.id,
+    };
+  }, [loginLocationsData, previousLoggedInLocationsData, defaultLocationData]);
 
-  useEffect(() => {
-    if (defaultLocation) {
-      setSavePreference(true);
+  return memoisedResults;
+}
+
+function mergeLocations(
+  defaultLocationArr: Array<LocationEntry> | undefined,
+  previousLoggedInLocations: Array<LocationEntry> | undefined,
+  fetchedLocations: Array<LocationEntry> | undefined,
+): Array<LocationEntry> {
+  defaultLocationArr = defaultLocationArr ?? [];
+  previousLoggedInLocations = previousLoggedInLocations ?? [];
+  fetchedLocations = fetchedLocations ?? [];
+  const uniqueUuids = new Set<string>();
+  const result = [];
+
+  const addLocation = (entry: LocationEntry) => {
+    const uuid = entry.resource.id;
+    if (!uniqueUuids.has(uuid)) {
+      uniqueUuids.add(uuid);
+      result.push(entry);
     }
-  }, [setSavePreference, defaultLocation]);
-
-  const updateUserPropsWithDefaultLocation = useCallback(
-    async (locationUuid: string, saveDefaultLocation: boolean) => {
-      if (saveDefaultLocation) {
-        // If the user checks the checkbox for saving the preference
-        const updatedUserProperties = {
-          ...userProperties,
-          defaultLocation: locationUuid,
-        };
-        await setUserProperties(userUuid, updatedUserProperties);
-      } else if (!!userProperties?.defaultLocation) {
-        // If the user doesn't want to save the preference,
-        // the old preference should be deleted
-        delete userProperties.defaultLocation;
-        await setUserProperties(userUuid, userProperties);
-      }
-    },
-    [userProperties, userUuid],
-  );
-
-  const updateDefaultLocation = useCallback(
-    async (locationUuid: string, saveDefaultLocation: boolean) => {
-      if (savePreference && locationUuid === defaultLocation) {
-        return;
-      }
-
-      updateUserPropsWithDefaultLocation(locationUuid, saveDefaultLocation).then(() => {
-        if (saveDefaultLocation) {
-          showSnackbar({
-            title: !isUpdateFlow ? t('locationSaved', 'Location saved') : t('locationUpdated', 'Location updated'),
-            subtitle: !isUpdateFlow
-              ? t('locationSaveMessage', 'Your preferred location has been saved for future logins')
-              : t('locationUpdateMessage', 'Your preferred login location has been updated'),
-            kind: 'success',
-            isLowContrast: true,
-          });
-        } else if (defaultLocation) {
-          showSnackbar({
-            title: t('locationPreferenceRemoved', 'Location preference removed'),
-            subtitle: t('locationPreferenceRemovedMessage', 'You will need to select a location on each login'),
-            kind: 'success',
-            isLowContrast: true,
-          });
-        }
-      });
-    },
-    [savePreference, defaultLocation, updateUserPropsWithDefaultLocation, t, isUpdateFlow],
-  );
-
-  return {
-    isLoadingValidation,
-    defaultLocationFhir,
-    defaultLocation: isLocationValid ? defaultLocation : null,
-    updateDefaultLocation,
-    savePreference,
-    setSavePreference,
   };
+
+  defaultLocationArr.forEach(addLocation);
+  previousLoggedInLocations.forEach(addLocation);
+  fetchedLocations.forEach(addLocation);
+
+  return result;
 }
 
-export async function updateLocationInUserProps(user: LoggedInUser, locationUuid: string) {
-  const prevLoggedInLocations = user?.userProperties?.previousLoggedInLocations?.split(',') ?? [];
+export function getUpdatedLoggedInLocations(previousLoggedInLocations: string, locationUuid: string): string {
+  const prevLoggedInLocations = previousLoggedInLocations?.split(',') ?? [];
   const updatedLoggedInLocations = [locationUuid, ...prevLoggedInLocations?.filter((uuid) => uuid !== locationUuid)];
-  const updatedUserProperties = {
-    ...(user?.userProperties ?? {}),
-    previousLoggedInLocations: updatedLoggedInLocations.join(','),
-  };
-  await setUserProperties(user?.uuid, updatedUserProperties);
+  return updatedLoggedInLocations.join(',');
 }
-export function useInfiniteScrolling({
-  inLoadingState,
-  shouldLoadMore,
-  onIntersection,
-}: {
-  inLoadingState: boolean;
-  shouldLoadMore: boolean;
-  onIntersection: () => void;
-}) {
-  const observer = useRef(null);
-  const loadingIconRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (inLoadingState) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting && shouldLoadMore) {
-            onIntersection();
-          }
-        },
-        {
-          threshold: 1,
-        },
-      );
-      if (node) observer.current.observe(node);
-    },
-    [inLoadingState, shouldLoadMore, onIntersection],
-  );
-  return {
-    observer,
-    loadingIconRef,
+
+export function getUserPropertiesWithDefaultAndLogInLocation(locationUuid: string, previousLoggedInLocations: string) {
+  const updatedLoggedInLocations = getUpdatedLoggedInLocations(previousLoggedInLocations, locationUuid);
+  const updatedUserProperties: LoggedInUser['userProperties'] = {
+    previousLoggedInLocations: updatedLoggedInLocations,
+    defaultLocation: locationUuid,
   };
+  return updatedUserProperties;
 }
