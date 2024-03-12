@@ -256,7 +256,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
                           key={entry.resource.id}
                           id={entry.resource.name}
                           name={entry.resource.name}
-                          labelText={`${entry.resource.name} ${entry.resource.id.slice(0, 6)}`}
+                          labelText={entry.resource.name}
                           value={entry.resource.id}
                           ref={i === reloadIndex ? loadingIconRef : null}
                         />
