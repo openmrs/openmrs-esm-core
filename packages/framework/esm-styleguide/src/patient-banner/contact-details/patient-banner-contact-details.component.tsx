@@ -91,7 +91,7 @@ const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
               )}
           </React.Fragment>
         ) : (
-          '--'
+          <li>--</li>
         )}
       </ul>
     </>
