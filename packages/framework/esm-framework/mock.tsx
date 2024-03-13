@@ -226,11 +226,8 @@ export const useExtensionStore = getExtensionStore();
 
 export const useFeatureFlag = jest.fn().mockReturnValue(true);
 
-export const usePagination = jest.fn().mockImplementation(() => ({
-  currentPage: 1,
-  goTo: () => {},
-  results: [],
-}));
+import { usePagination as realUsePagination } from '@openmrs/esm-react-utils';
+export const usePagination = jest.fn(realUsePagination);
 
 export const useVisit = jest.fn().mockReturnValue({
   error: null,
@@ -258,9 +255,9 @@ export const useAbortController = jest.fn().mockReturnValue(() => {
   );
 });
 
-export function useOpenmrsSWR(key: string | Array<any>) {
+export const useOpenmrsSWR = jest.fn((key: string | Array<any>) => {
   return { data: openmrsFetch(key.toString()) };
-}
+});
 
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
@@ -278,10 +275,11 @@ export const setLeftNav = jest.fn();
 export const unsetLeftNav = jest.fn();
 export const ResponsiveWrapper = jest.fn(({ children }) => <>{children}</>);
 export const OpenmrsDatePicker = jest.fn(() => <div>OpenMRS DatePicker</div>);
+export const ErrorState = jest.fn(() => <div>Error State</div>);
 
-export const CustomOverflowMenu = jest.fn(({ children }) => (
+export const CustomOverflowMenu = jest.fn(({ menuTitle, children }) => (
   <div>
-    <button>Custom Overflow Menu</button>
+    <button>{menuTitle}</button>
     {children}
   </div>
 ));
