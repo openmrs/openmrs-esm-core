@@ -661,7 +661,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L26)
+[packages/framework/esm-translations/src/index.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L47)
 
 ___
 
@@ -4495,6 +4495,13 @@ ___
 
 ▸ **getCoreTranslation**(`key`, `defaultText?`): `string`
 
+Use this function to obtain a translation from the core translations. This is a way to avoid having
+to define common translations in your app, and to ensure that translations are consistent across
+different apps. This function is also used to obtain translations in the framework and app shell.
+
+The complete set of core translations is available on the `CoreTranslationKey` type. Providing an
+invalid key to this function will result in a type error.
+
 #### Parameters
 
 | Name | Type |
@@ -4508,7 +4515,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L28)
+[packages/framework/esm-translations/src/index.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L57)
 
 ___
 
@@ -4516,22 +4523,38 @@ ___
 
 ▸ **translateFrom**(`moduleName`, `key`, `fallback?`, `options?`): `string`
 
+This function is for getting a translation from a specific module. Use this only if the
+translation is neither in the app making the call, nor in the core translations.
+This function is useful, for example, in libraries that are used by multiple apps, since libraries can't
+define their own translations.
+
+Translations within the current app should be accessed with the i18next API, using
+`useTranslation` and `t` as usual. Core translations should be accessed with the
+[getCoreTranslation](API.md#getcoretranslation) function.
+
+IMPORTANT: This function creates a hidden dependency on the module. Worse yet, it creates
+a dependency specifically on that module's translation keys, which are often regarded as
+"implementation details" and therefore may be volatile.
+**This function should therefore be avoided when possible.**
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `moduleName` | `string` |
-| `key` | `string` |
-| `fallback?` | `string` |
-| `options?` | `object` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `moduleName` | `string` | The module to get the translation from, e.g. '@openmrs/esm-login-app' |
+| `key` | `string` | The i18next translation key |
+| `fallback?` | `string` | Fallback text for if the lookup fails |
+| `options?` | `object` | Options object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options            for more information. `ns` and `defaultValue` are already set and may not be used. |
 
 #### Returns
 
 `string`
 
+The translated text as a string
+
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L18)
+[packages/framework/esm-translations/src/index.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L39)
 
 ___
 
