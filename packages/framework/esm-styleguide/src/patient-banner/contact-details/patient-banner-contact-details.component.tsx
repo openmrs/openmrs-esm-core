@@ -1,13 +1,9 @@
 /** @module @category UI */
 import React, { useMemo } from 'react';
 import { InlineLoading } from '@carbon/react';
-import {
-  ConfigurableLink,
-  CoreTranslationKey,
-  getCoreTranslation,
-  parseDate,
-  usePatient,
-} from '@openmrs/esm-framework';
+import { type CoreTranslationKey, getCoreTranslation } from '@openmrs/esm-translations';
+import { ConfigurableLink, usePatient } from '@openmrs/esm-react-utils';
+import { parseDate } from '@openmrs/esm-utils';
 import { useRelationships } from './useRelationships';
 import { usePatientContactAttributes } from './usePatientAttributes';
 import { usePatientListsForPatient } from './usePatientListsForPatient';

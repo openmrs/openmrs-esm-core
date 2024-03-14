@@ -54,7 +54,6 @@
   },
   "peerDependencies": {
     "@openmrs/esm-extensions": "5.x",
-    "@openmrs/esm-framework": "5.x",
     "@openmrs/esm-react-utils": "5.x",
     "@openmrs/esm-state": "5.x",
     "@openmrs/esm-translations": "5.x",

@@ -19,7 +19,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({ error, headerTitle }) =>
           <h4>{headerTitle}</h4>
         </div>
         <p className={styles.errorMessage}>
-          {getCoreTranslation('error')} {`${error?.response?.status}: `}
+          {getCoreTranslation('error', 'Error')} {`${error?.response?.status}: `}
           {error?.response?.statusText}
         </p>
         <p className={styles.errorCopy}>{getCoreTranslation('errorCopy')}</p>

@@ -1,7 +1,7 @@
 import { setupLogo } from './logo';
 import { setupIcons } from './icons';
 import { setupBranding } from './brand';
-import { defineConfigSchema } from '@openmrs/esm-framework';
+import { defineConfigSchema } from '@openmrs/esm-config';
 import { esmStyleGuideSchema } from './config-schema';
 
 export * from './breakpoints';

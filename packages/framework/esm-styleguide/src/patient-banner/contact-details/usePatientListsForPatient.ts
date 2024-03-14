@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
-import { type FetchResponse, openmrsFetch } from '@openmrs/esm-framework';
+import { type FetchResponse, openmrsFetch } from '@openmrs/esm-api';
 import { type CohortMemberResponse } from './types';
 
 export function usePatientListsForPatient(patientUuid: string) {
