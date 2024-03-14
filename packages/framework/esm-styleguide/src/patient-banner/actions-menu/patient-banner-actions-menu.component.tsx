@@ -4,7 +4,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { OverflowMenuVertical } from '@carbon/react/icons';
 import styles from './patient-banner-actions-menu.module.scss';
 import { CustomOverflowMenu } from '../../custom-overflow-menu/custom-overflow-menu.component';
-import { translateFrom } from '@openmrs/esm-utils';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 
 export interface PatientBannerActionsMenuProps {
   patientUuid: string;
@@ -37,9 +37,7 @@ export function PatientBannerActionsMenu({
             deceased={isDeceased}
             menuTitle={
               <>
-                <span className={styles.actionsButtonText}>
-                  {translateFrom('@openmrs/esm-patient-banner-app', 'actions', 'Actions')}
-                </span>{' '}
+                <span className={styles.actionsButtonText}>{getCoreTranslation('actions', 'Actions')}</span>{' '}
                 <OverflowMenuVertical size={16} style={{ marginLeft: '0.5rem', fill: '#78A9FF' }} />
               </>
             }

@@ -4493,7 +4493,7 @@ ___
 
 ### getCoreTranslation
 
-▸ **getCoreTranslation**(`key`, `defaultText?`): `string`
+▸ **getCoreTranslation**(`key`, `defaultText?`, `options?`): `string`
 
 Use this function to obtain a translation from the core translations. This is a way to avoid having
 to define common translations in your app, and to ensure that translations are consistent across
@@ -4504,10 +4504,11 @@ invalid key to this function will result in a type error.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"errorCopy"`` \| ``"loading"`` |
-| `defaultText?` | `string` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientLists"`` \| ``"relationships"`` \| ``"seeMoreLists"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"address1"`` \| ``"address2"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
+| `defaultText?` | `string` | - |
+| `options?` | `object` | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
 
 #### Returns
 
@@ -4515,7 +4516,7 @@ invalid key to this function will result in a type error.
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L57)
+[packages/framework/esm-translations/src/index.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L60)
 
 ___
 
@@ -4616,7 +4617,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:180](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L180)
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:181](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L181)
 
 ___
 

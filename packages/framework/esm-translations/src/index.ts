@@ -53,11 +53,14 @@ export type CoreTranslationKey = keyof typeof coreTranslations;
  *
  * The complete set of core translations is available on the `CoreTranslationKey` type. Providing an
  * invalid key to this function will result in a type error.
+ *
+ * @param options Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options
+ *           for more information. `ns` and `defaultValue` are already set and may not be used.
  */
-export function getCoreTranslation(key: CoreTranslationKey, defaultText?: string): string {
+export function getCoreTranslation(key: CoreTranslationKey, defaultText?: string, options?: object): string {
   if (!coreTranslations[key]) {
     console.error(`O3 Core Translations does not provide key '${key}'. The key itself is being rendered as text.`);
     return key;
   }
-  return translateFrom('core', key, defaultText ?? coreTranslations[key]);
+  return translateFrom('core', key, defaultText ?? coreTranslations[key], options);
 }
