@@ -2906,8 +2906,8 @@ __metadata:
   resolution: "@openmrs/esm-devtools-app@workspace:packages/apps/esm-devtools-app"
   dependencies:
     "@carbon/react": "npm:1.37.0"
-    "@openmrs/esm-framework": "npm:^5.5.0"
-    "@openmrs/webpack-config": "npm:^5.5.0"
+    "@openmrs/esm-framework": "workspace:*"
+    "@openmrs/webpack-config": "workspace:*"
     fuzzy: "npm:^0.1.3"
     react: "npm:^18.1.0"
     react-dom: "npm:^18.1.0"
@@ -2976,7 +2976,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/esm-framework@npm:^5.5.0, @openmrs/esm-framework@workspace:*, @openmrs/esm-framework@workspace:packages/framework/esm-framework":
+"@openmrs/esm-framework@workspace:*, @openmrs/esm-framework@workspace:packages/framework/esm-framework":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-framework@workspace:packages/framework/esm-framework"
   dependencies:
@@ -3027,8 +3027,8 @@ __metadata:
   resolution: "@openmrs/esm-implementer-tools-app@workspace:packages/apps/esm-implementer-tools-app"
   dependencies:
     "@carbon/react": "npm:~1.37.0"
-    "@openmrs/esm-framework": "npm:^5.5.0"
-    "@openmrs/webpack-config": "npm:^5.5.0"
+    "@openmrs/esm-framework": "workspace:*"
+    "@openmrs/webpack-config": "workspace:*"
     ace-builds: "npm:^1.4.14"
     lodash-es: "npm:^4.17.21"
     react: "npm:^18.1.0"
@@ -3053,8 +3053,8 @@ __metadata:
   resolution: "@openmrs/esm-login-app@workspace:packages/apps/esm-login-app"
   dependencies:
     "@carbon/react": "npm:~1.37.0"
-    "@openmrs/esm-framework": "npm:^5.5.0"
-    "@openmrs/webpack-config": "npm:^5.5.0"
+    "@openmrs/esm-framework": "workspace:*"
+    "@openmrs/webpack-config": "workspace:*"
     jest: "npm:^29.7.0"
     lodash-es: "npm:^4.17.21"
     react: "npm:^18.1.0"
@@ -3092,8 +3092,8 @@ __metadata:
   resolution: "@openmrs/esm-offline-tools-app@workspace:packages/apps/esm-offline-tools-app"
   dependencies:
     "@carbon/react": "npm:~1.37.0"
-    "@openmrs/esm-framework": "npm:^5.5.0"
-    "@openmrs/webpack-config": "npm:^5.5.0"
+    "@openmrs/esm-framework": "workspace:*"
+    "@openmrs/webpack-config": "workspace:*"
     "@types/lodash-es": "npm:^4.17.5"
     jest: "npm:^29.7.0"
     lodash-es: "npm:^4.17.21"
@@ -3142,8 +3142,8 @@ __metadata:
   resolution: "@openmrs/esm-primary-navigation-app@workspace:packages/apps/esm-primary-navigation-app"
   dependencies:
     "@carbon/react": "npm:~1.37.0"
-    "@openmrs/esm-framework": "npm:^5.5.0"
-    "@openmrs/webpack-config": "npm:^5.5.0"
+    "@openmrs/esm-framework": "workspace:*"
+    "@openmrs/webpack-config": "workspace:*"
     jest: "npm:^29.7.0"
     lodash-es: "npm:^4.17.21"
     react: "npm:^18.1.0"
@@ -3294,7 +3294,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@openmrs/webpack-config@npm:^5.5.0, @openmrs/webpack-config@workspace:*, @openmrs/webpack-config@workspace:packages/tooling/webpack-config":
+"@openmrs/webpack-config@workspace:*, @openmrs/webpack-config@workspace:packages/tooling/webpack-config":
   version: 0.0.0-use.local
   resolution: "@openmrs/webpack-config@workspace:packages/tooling/webpack-config"
   dependencies:

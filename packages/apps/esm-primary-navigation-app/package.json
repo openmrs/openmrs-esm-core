@@ -51,8 +51,8 @@
     "single-spa": "5.x"
   },
   "devDependencies": {
-    "@openmrs/esm-framework": "^5.5.0",
-    "@openmrs/webpack-config": "^5.5.0",
+    "@openmrs/esm-framework": "workspace:*",
+    "@openmrs/webpack-config": "workspace:*",
     "jest": "^29.7.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
