@@ -1,4 +1,4 @@
-import { Type, validators } from '@openmrs/esm-framework';
+import { Type, validators } from '@openmrs/esm-config';
 
 export interface StyleguideConfigObject {
   'Brand color #1': string;

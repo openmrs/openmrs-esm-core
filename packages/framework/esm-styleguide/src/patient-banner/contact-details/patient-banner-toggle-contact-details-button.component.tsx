@@ -2,7 +2,7 @@
 import React, { type MouseEvent } from 'react';
 import { Button } from '@carbon/react';
 import { ChevronDown, ChevronUp } from '@carbon/react/icons';
-import { translateFrom } from '@openmrs/esm-utils';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 
 export interface PatientBannerToggleContactDetailsButtonProps {
   /** Whether the contact details are currently being displayed */
@@ -27,8 +27,8 @@ export function PatientBannerToggleContactDetailsButton({
       onClick={toggleContactDetails}
     >
       {showContactDetails
-        ? translateFrom('@openmrs/esm-patient-banner-app', 'hideDetails', 'Hide details')
-        : translateFrom('@openmrs/esm-patient-banner-app', 'showDetails', 'Show details')}
+        ? getCoreTranslation('hideDetails', 'Hide details')
+        : getCoreTranslation('showDetails', 'Show details')}
     </Button>
   );
 }

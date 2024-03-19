@@ -1,7 +1,7 @@
 /** @module @category UI */
 import React, { useCallback } from 'react';
 import classNames from 'classnames';
-import { useLayoutType, useOnClickOutside } from '@openmrs/esm-framework';
+import { useLayoutType, useOnClickOutside } from '@openmrs/esm-react-utils';
 import styles from './custom-overflow-menu.module.scss';
 
 interface CustomOverflowMenuProps {

@@ -1,4 +1,10 @@
-import { createStore, StoreApi } from 'zustand';
+import { createStore, type StoreApi } from 'zustand';
+export { subscribeTo } from './src/index';
+
+// Needed for all mocks using stores
+const availableStores: Record<string, StoreEntity> = {};
+const initialStates: Record<string, any> = {};
+
 interface StoreEntity {
   value: StoreApi<any>;
   active: boolean;
@@ -7,35 +13,21 @@ interface StoreEntity {
 export type MockedStore<T> = StoreApi<T> & {
   resetMock: () => void;
 };
-const initialStates: Record<string, any> = {};
-
-const availableStores: Record<string, StoreEntity> = {};
 
 export const mockStores = availableStores;
 
 export function createGlobalStore<T>(name: string, initialState: T): StoreApi<T> {
-  const available = availableStores[name];
+  // We ignore whether there's already a store with this name so that tests
+  // don't have to worry about clearing old stores before re-creating them.
+  const store = createStore<T>()(() => initialState);
+  initialStates[name] = initialState;
 
-  if (available) {
-    if (available.active) {
-      console.error('Cannot override an existing store. Make sure that stores are only created once.');
-    } else {
-      available.value.setState(initialState, true);
-    }
+  availableStores[name] = {
+    value: store,
+    active: true,
+  };
 
-    available.active = true;
-    return available.value;
-  } else {
-    const store = createStore<T>()(() => initialState);
-    initialStates[name] = initialState;
-
-    availableStores[name] = {
-      value: store,
-      active: true,
-    };
-
-    return instrumentedStore(name, store);
-  }
+  return instrumentedStore(name, store);
 }
 
 export function getGlobalStore<T>(name: string, fallbackState?: T): StoreApi<T> {

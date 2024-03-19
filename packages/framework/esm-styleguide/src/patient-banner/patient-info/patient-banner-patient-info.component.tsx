@@ -1,5 +1,6 @@
 /** @module @category UI */
-import { age, formatDate, parseDate, translateFrom } from '@openmrs/esm-framework';
+import { getCoreTranslation } from '@openmrs/esm-translations';
+import { age, formatDate, parseDate } from '@openmrs/esm-utils';
 import { ExtensionSlot, useConfig } from '@openmrs/esm-react-utils';
 import React from 'react';
 import classNames from 'classnames';
@@ -56,16 +57,15 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
 }
 
 const getGender = (gender: string): string => {
-  // TODO: We ought to have some kind of "core translations."
   switch (gender) {
     case 'male':
-      return translateFrom('@openmrs/esm-patient-banner-app', 'male', 'Male');
+      return getCoreTranslation('male', 'Male');
     case 'female':
-      return translateFrom('@openmrs/esm-patient-banner-app', 'female', 'Female');
+      return getCoreTranslation('female', 'Female');
     case 'other':
-      return translateFrom('@openmrs/esm-patient-banner-app', 'other', 'Other');
+      return getCoreTranslation('other', 'Other');
     case 'unknown':
-      return translateFrom('@openmrs/esm-patient-banner-app', 'unknown', 'Unknown');
+      return getCoreTranslation('unknown', 'Unknown');
     default:
       return gender;
   }

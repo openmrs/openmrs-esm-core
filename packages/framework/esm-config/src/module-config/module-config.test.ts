@@ -1,7 +1,7 @@
 import unset from 'lodash/unset';
 import * as Config from './module-config';
-import type { MockedStore } from '../../__mocks__/openmrs-esm-state.mock';
-import { mockStores } from '../../__mocks__/openmrs-esm-state.mock';
+import type { MockedStore } from '@openmrs/esm-state/mock';
+import { mockStores } from '@openmrs/esm-state/mock';
 import { validator } from '../validators/validator';
 import { validators, isUrl } from '../validators/validators';
 import type { ConfigExtensionStore, ConfigInternalStore, ImplementerToolsConfigStore } from './state';

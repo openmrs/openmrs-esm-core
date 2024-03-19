@@ -1,4 +1,5 @@
-import { openmrsFetch, restBaseUrl, useConfig } from '@openmrs/esm-framework';
+import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
+import { useConfig } from '@openmrs/esm-react-utils';
 import useSWRImmutable from 'swr/immutable';
 import { type Patient } from './types';
 

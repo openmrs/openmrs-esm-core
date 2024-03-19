@@ -1,8 +1,9 @@
 /** @module @category UI */
 import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { InlineLoading } from '@carbon/react';
-import { ConfigurableLink, parseDate, usePatient, translateFrom } from '@openmrs/esm-framework';
+import { type CoreTranslationKey, getCoreTranslation } from '@openmrs/esm-translations';
+import { ConfigurableLink, usePatient } from '@openmrs/esm-react-utils';
+import { parseDate } from '@openmrs/esm-utils';
 import { useRelationships } from './useRelationships';
 import { usePatientContactAttributes } from './usePatientAttributes';
 import { usePatientListsForPatient } from './usePatientListsForPatient';
@@ -15,16 +16,15 @@ interface ContactDetailsProps {
 }
 
 const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
-  const { t } = useTranslation();
   const { cohorts = [], isLoading } = usePatientListsForPatient(patientUuid);
 
   return (
     <>
       <p className={styles.heading}>
-        {t('patientLists', 'Patient Lists')} ({cohorts?.length ?? 0})
+        {getCoreTranslation('patientLists', 'Patient Lists')} ({cohorts?.length ?? 0})
       </p>
       {isLoading ? (
-        <InlineLoading description={`${t('loading', 'Loading')} ...`} role="progressbar" />
+        <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />
       ) : (
         <ul>
           {(() => {
@@ -46,7 +46,7 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
           <li style={{ marginTop: '1rem' }}>
             <ConfigurableLink to={`${window.spaBase}/home/patient-lists`}>
               {cohorts.length > 3
-                ? t('seeMoreLists', 'See {{count}} more lists', {
+                ? getCoreTranslation('seeMoreLists', 'See {{count}} more lists', {
                     count: cohorts?.length - 3,
                   })
                 : ''}
@@ -61,14 +61,13 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
 const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
   const { isLoading, patient } = usePatient(patientId);
   const address = patient?.address?.find((a) => a.use === 'home');
-  const { t } = useTranslation();
   const getAddressKey = (url) => url.split('#')[1];
 
   return isLoading ? (
-    <InlineLoading description={`${t('loading', 'Loading')} ...`} role="progressbar" />
+    <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />
   ) : (
     <>
-      <p className={styles.heading}>{t('address', 'Address')}</p>
+      <p className={styles.heading}>{getCoreTranslation('address', 'Address')}</p>
       <ul>
         {address ? (
           <React.Fragment>
@@ -79,13 +78,13 @@ const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
                   address?.extension?.[0]?.extension?.map((add, i) => {
                     return (
                       <li key={`address-${key}-${i}`}>
-                        {t(getAddressKey(add.url), getAddressKey(add.url))}: {add.valueString}
+                        {getCoreTranslation(getAddressKey(add.url), getAddressKey(add.url))}: {add.valueString}
                       </li>
                     );
                   })
                 ) : (
                   <li key={`address-${key}`}>
-                    {t(key, key)}: {value}
+                    {getCoreTranslation(key as CoreTranslationKey, key)}: {value}
                   </li>
                 ),
               )}
@@ -99,7 +98,6 @@ const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
 };
 
 const Contact: React.FC<{ patientUuid: string; deceased?: boolean }> = ({ patientUuid }) => {
-  const { t } = useTranslation();
   const { isLoading: isLoadingAttributes, contactAttributes } = usePatientContactAttributes(patientUuid);
 
   const contacts = useMemo(
@@ -108,9 +106,9 @@ const Contact: React.FC<{ patientUuid: string; deceased?: boolean }> = ({ patien
         ? [
             ...contactAttributes?.map((contact) => [
               contact.attributeType.display
-                ? translateFrom(
-                    '@openmrs/esm-patient-banner-app',
-                    contact.attributeType.display,
+                ? getCoreTranslation(
+                    /** TODO: We should probably add translation strings for some of these */
+                    contact.attributeType.display as CoreTranslationKey,
                     contact.attributeType.display,
                   )
                 : '',
@@ -123,9 +121,9 @@ const Contact: React.FC<{ patientUuid: string; deceased?: boolean }> = ({ patien
 
   return (
     <>
-      <p className={styles.heading}>{t('contactDetails', 'Contact Details')}</p>
+      <p className={styles.heading}>{getCoreTranslation('contactDetails', 'Contact Details')}</p>
       {isLoadingAttributes ? (
-        <InlineLoading description={`${t('loading', 'Loading')} ...`} role="progressbar" />
+        <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />
       ) : (
         <ul>
           {contacts.length ? (
@@ -144,14 +142,13 @@ const Contact: React.FC<{ patientUuid: string; deceased?: boolean }> = ({ patien
 };
 
 const Relationships: React.FC<{ patientId: string }> = ({ patientId }) => {
-  const { t } = useTranslation();
   const { data: relationships, isLoading } = useRelationships(patientId);
 
   return (
     <>
-      <p className={styles.heading}>{t('relationships', 'Relationships')}</p>
+      <p className={styles.heading}>{getCoreTranslation('relationships', 'Relationships')}</p>
       {isLoading ? (
-        <InlineLoading description={`${t('loading', 'Loading')} ...`} role="progressbar" />
+        <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />
       ) : (
         <ul>
           {relationships && relationships.length > 0 ? (

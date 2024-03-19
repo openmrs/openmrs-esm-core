@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { Person } from '@openmrs/esm-api';
-import { mockSessionStore } from '../../mock';
+import { mockSessionStore } from '@openmrs/esm-api/mock';
 import { attach, registerExtension, updateInternalExtensionStore } from '../../../esm-extensions';
 import {
   ExtensionSlot,

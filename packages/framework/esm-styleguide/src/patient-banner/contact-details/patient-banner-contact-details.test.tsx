@@ -1,11 +1,11 @@
 /** @module @category UI */
 import React from 'react';
 import { screen } from '@testing-library/react';
+import { usePatient } from '@openmrs/esm-react-utils';
 import { usePatientAttributes, usePatientContactAttributes } from './usePatientAttributes';
 import { usePatientListsForPatient } from './usePatientListsForPatient';
 import { useRelationships } from './useRelationships';
 import { PatientBannerContactDetails } from './patient-banner-contact-details.component';
-import { usePatient } from '@openmrs/esm-framework';
 import { renderWithSwr } from '../../test-utils';
 
 const mockedUsePatient = usePatient as jest.Mock;

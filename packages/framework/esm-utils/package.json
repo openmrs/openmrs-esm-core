@@ -45,7 +45,7 @@
   },
   "peerDependencies": {
     "dayjs": "1.x",
-    "i18next": "19.x",
+    "i18next": "21.x",
     "rxjs": "6.x"
   },
   "dependencies": {

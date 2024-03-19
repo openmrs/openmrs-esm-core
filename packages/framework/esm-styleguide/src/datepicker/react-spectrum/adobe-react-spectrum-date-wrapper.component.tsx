@@ -4,7 +4,8 @@ import { parseDate } from '@internationalized/date';
 import { DatePicker } from '@react-spectrum/datepicker';
 import { Provider } from '@react-spectrum/provider';
 import { theme as defaultTheme } from '@react-spectrum/theme-default';
-import { parseDate as parseDateString, useConfig } from '@openmrs/esm-framework';
+import { useConfig } from '@openmrs/esm-react-utils';
+import { parseDate as parseDateString } from '@openmrs/esm-utils';
 
 interface ReactSpectrumDatePickerWrapperProps {
   id: string;
