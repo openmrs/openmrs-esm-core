@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { type LoggedInUser } from '@openmrs/esm-framework';
+import { showSnackbar, type LoggedInUser } from '@openmrs/esm-framework';
 import useSwrInfinite from 'swr/infinite';
 import {
   type FetchResponse,
   fhirBaseUrl,
   openmrsFetch,
   useDebounce,
-  showNotification,
   useSession,
   useOpenmrsSWR,
 } from '@openmrs/esm-framework';
@@ -22,7 +21,7 @@ interface LoginLocationData {
   setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[]>;
 }
 
-function useInfiniteLoginLocations(
+function useFetchInfiniteLoginLocations(
   useLoginLocationTag: boolean,
   count: number = 0,
   searchQuery: string = '',
@@ -49,17 +48,12 @@ function useInfiniteLoginLocations(
         window.location.origin,
       ).toString();
     }
-
     let url = `${fhirBaseUrl}/Location?`;
     let urlSearchParameters = new URLSearchParams();
     urlSearchParameters.append('_summary', 'data');
 
     if (count) {
       urlSearchParameters.append('_count', '' + count);
-    }
-
-    if (page) {
-      urlSearchParameters.append('_getpagesoffset', '' + page * count);
     }
 
     if (useLoginLocationTag) {
@@ -79,11 +73,10 @@ function useInfiniteLoginLocations(
   );
 
   if (error) {
-    showNotification({
+    showSnackbar({
       title: t('errorLoadingLoginLocations', 'Error loading login locations'),
+      subtitle: error?.message,
       kind: 'error',
-      critical: true,
-      description: error?.message,
     });
   }
 
@@ -177,7 +170,7 @@ export function useLoginLocations(useLoginLocationTag: boolean, count: number = 
 
   const defaultLocationData = useFetchDefaultLocation(useLoginLocationTag, debouncedSearchQuery);
   const previousLoggedInLocationsData = usePreviousLoggedInLocations(useLoginLocationTag, debouncedSearchQuery);
-  const loginLocationsData = useInfiniteLoginLocations(useLoginLocationTag, count, debouncedSearchQuery);
+  const loginLocationsData = useFetchInfiniteLoginLocations(useLoginLocationTag, count, debouncedSearchQuery);
 
   const memoisedResults = useMemo(() => {
     const { defaultLocationArr, isLoadingDefaultLocation, isDefaultLocationValid } = defaultLocationData;

@@ -35,7 +35,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
-  const [searchTerm, setSearchTerm] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchParams] = useSearchParams();
   const [activeLocation, setActiveLocation] = useState<string>(null);
   const [saveDefaultLocation, setSaveDefaultLocation] = useState(false);
@@ -95,7 +95,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
             kind: 'success',
             isLowContrast: true,
           });
-        } else if (prevUserProperties.defaultLocation && !updatedUserProperties.defaultLocation) {
+        } else if (isUpdateFlow && prevUserProperties.defaultLocation && !updatedUserProperties.defaultLocation) {
           showSnackbar({
             title: t('locationPreferenceRemoved', 'Location preference removed'),
             subtitle: t('locationPreferenceRemovedMessage', 'You will need to select a location on each login'),

@@ -450,7 +450,7 @@ export const mockLocationResponseWithOneEntry = {
   },
 };
 
-export const validatingLocationSuccessResponse = {
+export const validLocationResponse = {
   ok: true,
   data: {
     resourceType: 'Bundle',
@@ -495,7 +495,7 @@ export const validatingLocationSuccessResponse = {
   },
 };
 
-export const validatingLocationEmptyResponse = {
+export const emptyLocationResponse = {
   ok: true,
   data: {
     resourceType: 'Bundle',
@@ -516,7 +516,7 @@ export const validatingLocationEmptyResponse = {
 };
 
 export const validatingLocationFailureResponse = {
-  ok: false,
+  ok: true,
   data: {
     resourceType: 'Bundle',
     id: 'deaa418b-c900-4fd3-bb35-16fe5c2be744',
