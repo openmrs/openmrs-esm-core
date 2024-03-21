@@ -19,14 +19,12 @@ import {
   useConfig,
   useConnectivity,
   useSession,
+  useLocations,
+  useDebounce,
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import styles from './location-picker.scss';
-import {
-  // useDefaultLocation,
-  useLoginLocations,
-  getUserPropertiesWithDefaultAndLogInLocation,
-} from './location-picker.resource';
+import { getUserPropertiesWithDefaultAndLogInLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
 
 interface LocationPickerProps {}
@@ -37,6 +35,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
   const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
   const [searchParams] = useSearchParams();
   const [activeLocation, setActiveLocation] = useState<string>(null);
   const [saveDefaultLocation, setSaveDefaultLocation] = useState(false);
@@ -65,10 +64,11 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
     isDefaultLocationValid,
     defaultLocation,
     lastLoggedInLocation,
-  } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
+  } = useLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, debouncedSearchTerm);
 
   const updateUserProperties = useCallback(
     (locationUuid: string) => {
+      if (!locationUuid) return;
       const { previousLoggedInLocations, defaultLocation } = getUserPropertiesWithDefaultAndLogInLocation(
         locationUuid,
         user?.userProperties?.previousLoggedInLocations,
@@ -136,7 +136,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
 
   useEffect(() => {
     // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
-    if (!isLoadingLocations && !searchTerm) {
+    if (!isLoadingLocations && !debouncedSearchTerm) {
       if (!config.chooseLocation.enabled || locations?.length === 1) {
         changeLocation(locations[0]?.resource.id, false);
       }
@@ -144,7 +144,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
         changeLocation();
       }
     }
-  }, [changeLocation, config.chooseLocation.enabled, isLoadingLocations, locations, searchTerm]);
+  }, [changeLocation, config.chooseLocation.enabled, isLoadingLocations, locations, debouncedSearchTerm]);
 
   useEffect(() => {
     if (lastLoggedInLocation && !activeLocation) {

@@ -233,7 +233,7 @@ yargs.command(
       }),
   async (args) =>
     runCommand('runBuild', {
-      configUrls: args['config-url'],
+      configUrls: args['config-url'] as Array<string>,
       configPaths: args['config-path'].map((p) => resolve(process.cwd(), p)),
       ...args,
     }),

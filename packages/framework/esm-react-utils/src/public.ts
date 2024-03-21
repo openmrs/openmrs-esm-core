@@ -17,7 +17,7 @@ export * from './useExtensionSlotMeta';
 export * from './useExtensionStore';
 export * from './useFeatureFlag';
 export * from './useLayoutType';
-export * from './useLocations';
+export { useLocations, type LocationResponse, type LocationEntry } from './useLocations';
 export * from './useOnClickOutside';
 export * from './useOpenmrsSWR';
 export * from './usePatient';

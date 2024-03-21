@@ -2,7 +2,6 @@
   "back": "Back",
   "change": "Change",
   "continue": "Continue",
-  "errorLoadingLoginLocations": "Error loading login locations",
   "invalidCredentials": "Invalid username or password",
   "loading": "Loading",
   "locationPreferenceRemoved": "Login location preference removed",

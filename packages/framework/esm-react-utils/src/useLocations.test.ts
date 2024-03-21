@@ -1,11 +1,12 @@
 import { cleanup, renderHook } from '@testing-library/react';
-import { useFetchDefaultLocation, usePreviousLoggedInLocations } from './location-picker.resource';
-import { useOpenmrsSWR, useSession } from '@openmrs/esm-framework';
+import { useFetchDefaultLocation, usePreviousLoggedInLocations } from './useLocations';
 import {
   emptyLocationResponse,
   validatingLocationFailureResponse,
   validLocationResponse,
-} from '../../__mocks__/locations.mock';
+} from '../__mocks__/locations.mock';
+import { useOpenmrsSWR } from './useOpenmrsSWR';
+import { useSession } from './useSession';
 
 const mockUseOpenmrsSWR = useOpenmrsSWR as jest.Mock;
 const mockUseSession = useSession as jest.Mock;
@@ -13,13 +14,14 @@ const mockUseSession = useSession as jest.Mock;
 const validLocationUuid = '1ce1b7d4-c865-4178-82b0-5932e51503d6';
 const invalidLocationUuid = '2gf1b7d4-c865-4178-82b0-5932e51503d6';
 
-jest.mock('@openmrs/esm-framework', () => ({
-  ...jest.requireActual('@openmrs/esm-framework'),
-  setSessionLocation: jest.fn().mockResolvedValue({}),
-  setUserProperties: jest.fn().mockResolvedValue({}),
-  navigate: jest.fn(),
-  showSnackbar: jest.fn(),
+jest.mock('./useOpenmrsSWR', () => ({
+  ...jest.requireActual('./useOpenmrsSWR'),
   useOpenmrsSWR: jest.fn().mockReturnValue({}),
+}));
+
+jest.mock('./useSession', () => ({
+  ...jest.requireActual('./useSession'),
+  useSession: jest.fn().mockReturnValue({}),
 }));
 
 describe('Testing usePreviousLoggedInLocations', () => {
