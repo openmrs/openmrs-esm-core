@@ -1,9 +1,7 @@
 {
   "back": "Back",
   "change": "Change",
-  "confirm": "Confirm",
   "continue": "Continue",
-  "error": "Error",
   "errorLoadingLoginLocations": "Error loading login locations",
   "invalidCredentials": "Invalid username or password",
   "loading": "Loading",

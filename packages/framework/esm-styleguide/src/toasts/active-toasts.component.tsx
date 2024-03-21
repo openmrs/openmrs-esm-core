@@ -1,3 +1,4 @@
+/** @module @category UI */
 import React, { useCallback, useEffect, useState } from 'react';
 import type { Subject } from 'rxjs';
 import type { ToastNotificationMeta } from './toast.component';

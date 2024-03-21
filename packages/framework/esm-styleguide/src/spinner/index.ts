@@ -1,3 +1,5 @@
+/** @module @category UI */
+
 export function renderLoadingSpinner(target: HTMLElement) {
   const template = document.querySelector<HTMLTemplateElement>('template#loading-spinner');
 

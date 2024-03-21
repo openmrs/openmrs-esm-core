@@ -1,6 +1,6 @@
 {
   "name": "openmrs",
-  "version": "5.4.0",
+  "version": "5.5.0",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "bin": "./dist/cli.js",

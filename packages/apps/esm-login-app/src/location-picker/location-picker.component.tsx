@@ -11,10 +11,11 @@ import {
   RadioButtonSkeleton,
 } from '@carbon/react';
 import {
-  navigate,
-  setSessionLocation,
   setUserProperties,
   showSnackbar,
+  getCoreTranslation,
+  navigate,
+  setSessionLocation,
   useConfig,
   useConnectivity,
   useSession,
@@ -288,7 +289,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
               {isSubmitting ? (
                 <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
               ) : (
-                <span>{t('confirm', 'Confirm')}</span>
+                <span>{getCoreTranslation('confirm')}</span>
               )}
             </Button>
           </div>

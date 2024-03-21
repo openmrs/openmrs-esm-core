@@ -33,3 +33,10 @@ type                   = KEYVALUEJSON
 replace_edited_strings = false
 keep_translations      = false
 
+[o:openmrs:p:openmrs-esm-core:r:esm-translations]
+file_filter            = packages/framework/esm-translations/translations/<lang>.json
+source_file            = packages/framework/esm-translations/translations/en.json
+source_lang            = en
+type                   = KEYVALUEJSON
+replace_edited_strings = false
+keep_translations      = false

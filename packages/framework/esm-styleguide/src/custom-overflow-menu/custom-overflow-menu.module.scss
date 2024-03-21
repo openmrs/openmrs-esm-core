@@ -1,0 +1,37 @@
+@use '@carbon/colors';
+@import '@openmrs/esm-styleguide/src/vars';
+
+.container {
+  width: auto;
+  height: auto;
+}
+
+.menu {
+  display: none;
+  top: 3.125rem;
+  min-width: initial;
+  left: auto;
+  right: 0;
+  background-color: $ui-01;
+  margin-right: 0.2rem;
+  box-shadow: 0 6px 6px rgb(0 0 0 / 30%);
+}
+
+.show {
+  display: block;
+}
+
+.overflowMenuButton {
+  width: auto;
+  height: auto;
+  padding: 0.875rem 1rem;
+  color: colors.$blue-60;
+
+  &:hover {
+    background-color: colors.$gray-10-hover;
+  }
+}
+
+.deceased {
+  color: colors.$blue-40;
+}
