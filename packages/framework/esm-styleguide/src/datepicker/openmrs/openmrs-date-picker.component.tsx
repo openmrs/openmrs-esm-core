@@ -1,6 +1,6 @@
 import React from 'react';
 import { supportedLocales as reactSpectrumSupportedLocales } from '../react-spectrum/locales';
-import { getLocale } from '@openmrs/esm-framework';
+import { getLocale } from '@openmrs/esm-utils';
 import ReactSpectrumDatePickerWrapper from '../react-spectrum/adobe-react-spectrum-date-wrapper.component';
 import { DatePicker, DatePickerInput } from '@carbon/react';
 

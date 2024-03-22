@@ -164,8 +164,13 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   kind="secondary"
                   iconDescription="Download config"
                   renderIcon={(props) => <Download size={16} {...props} />}
+                  onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+                    if ((event.target as HTMLAnchorElement).id != 'downloadConfigBtn')
+                      document.getElementById('downloadConfigBtn')?.click();
+                  }}
                 >
                   <a
+                    id="downloadConfigBtn"
                     className={styles.downloadLink}
                     download="temporary_config.json"
                     href={window.URL.createObjectURL(tempConfigObjUrl)}

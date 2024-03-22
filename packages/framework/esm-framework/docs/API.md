@@ -166,6 +166,7 @@
 
 - [ExtensionSlot](API.md#extensionslot)
 - [useAttachments](API.md#useattachments)
+- [usePatientPhoto](API.md#usepatientphoto)
 
 ### Store Functions
 
@@ -176,8 +177,19 @@
 - [useStore](API.md#usestore)
 - [useStoreWithActions](API.md#usestorewithactions)
 
+### Translation Functions
+
+- [getCoreTranslation](API.md#getcoretranslation)
+- [translateFrom](API.md#translatefrom)
+
 ### UI Functions
 
+- [CustomOverflowMenu](API.md#customoverflowmenu)
+- [PatientBannerActionsMenu](API.md#patientbanneractionsmenu)
+- [PatientBannerContactDetails](API.md#patientbannercontactdetails)
+- [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
+- [PatientBannerToggleContactDetailsButton](API.md#patientbannertogglecontactdetailsbutton)
+- [PatientPhoto](API.md#patientphoto)
 - [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
 - [showActionableNotification](API.md#showactionablenotification)
@@ -205,7 +217,6 @@
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [retry](API.md#retry)
 - [shallowEqual](API.md#shallowequal)
-- [translateFrom](API.md#translatefrom)
 - [useAbortController](API.md#useabortcontroller)
 - [useDebounce](API.md#usedebounce)
 - [useOpenmrsSWR](API.md#useopenmrsswr)
@@ -642,6 +653,18 @@ ___
 
 ___
 
+## Translation Type Aliases
+
+### CoreTranslationKey
+
+Ƭ **CoreTranslationKey**: keyof typeof `coreTranslations`
+
+#### Defined in
+
+[packages/framework/esm-translations/src/index.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L47)
+
+___
+
 ## UI Type Aliases
 
 ### ActionableNotificationType
@@ -910,20 +933,6 @@ ___
 
 ___
 
-### ResponsiveWrapper
-
-• `Const` **ResponsiveWrapper**: `React.FC`<[`ResponsiveWrapperProps`](interfaces/ResponsiveWrapperProps.md)\>
-
-ResponsiveWrapper enables a responsive behavior for the component its wraps, providing a different rendering based on the current layout type.
-On desktop, it renders the children as is, while on a tablet, it wraps them in a Carbon Layer https://react.carbondesignsystem.com/?path=/docs/components-layer--overview component.
-This provides a light background for form inputs on tablets, in accordance with the design requirements.
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L14)
-
-___
-
 ### backendDependencies
 
 • `Const` **backendDependencies**: `Object`
@@ -950,6 +959,20 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
+
+___
+
+### ResponsiveWrapper
+
+• `Const` **ResponsiveWrapper**: `React.FC`<[`ResponsiveWrapperProps`](interfaces/ResponsiveWrapperProps.md)\>
+
+ResponsiveWrapper enables a responsive behavior for the component its wraps, providing a different rendering based on the current layout type.
+On desktop, it renders the children as is, while on a tablet, it wraps them in a Carbon Layer https://react.carbondesignsystem.com/?path=/docs/components-layer--overview component.
+This provides a light background for form inputs on tablets, in accordance with the design requirements.
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L15)
 
 ## API Functions
 
@@ -1914,7 +1937,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:209](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L209)
+[packages/framework/esm-config/src/module-config/module-config.ts:225](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L225)
 
 ___
 
@@ -1946,7 +1969,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
+[packages/framework/esm-config/src/module-config/module-config.ts:257](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L257)
 
 ___
 
@@ -1967,7 +1990,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:225](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L225)
+[packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
 
 ___
 
@@ -4159,6 +4182,26 @@ ___
 
 ___
 
+### usePatientPhoto
+
+▸ **usePatientPhoto**(`patientUuid`): [`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+
+#### Returns
+
+[`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L29)
+
+___
+
 ## Store Functions
 
 ### createGlobalStore
@@ -4446,7 +4489,201 @@ ___
 
 ___
 
+## Translation Functions
+
+### getCoreTranslation
+
+▸ **getCoreTranslation**(`key`, `defaultText?`, `options?`): `string`
+
+Use this function to obtain a translation from the core translations. This is a way to avoid having
+to define common translations in your app, and to ensure that translations are consistent across
+different apps. This function is also used to obtain translations in the framework and app shell.
+
+The complete set of core translations is available on the `CoreTranslationKey` type. Providing an
+invalid key to this function will result in a type error.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientLists"`` \| ``"relationships"`` \| ``"seeMoreLists"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"address1"`` \| ``"address2"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
+| `defaultText?` | `string` | - |
+| `options?` | `object` | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-translations/src/index.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L60)
+
+___
+
+### translateFrom
+
+▸ **translateFrom**(`moduleName`, `key`, `fallback?`, `options?`): `string`
+
+This function is for getting a translation from a specific module. Use this only if the
+translation is neither in the app making the call, nor in the core translations.
+This function is useful, for example, in libraries that are used by multiple apps, since libraries can't
+define their own translations.
+
+Translations within the current app should be accessed with the i18next API, using
+`useTranslation` and `t` as usual. Core translations should be accessed with the
+[getCoreTranslation](API.md#getcoretranslation) function.
+
+IMPORTANT: This function creates a hidden dependency on the module. Worse yet, it creates
+a dependency specifically on that module's translation keys, which are often regarded as
+"implementation details" and therefore may be volatile.
+**This function should therefore be avoided when possible.**
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `moduleName` | `string` | The module to get the translation from, e.g. '@openmrs/esm-login-app' |
+| `key` | `string` | The i18next translation key |
+| `fallback?` | `string` | Fallback text for if the lookup fails |
+| `options?` | `object` | Options object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options            for more information. `ns` and `defaultValue` are already set and may not be used. |
+
+#### Returns
+
+`string`
+
+The translated text as a string
+
+#### Defined in
+
+[packages/framework/esm-translations/src/index.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L39)
+
+___
+
 ## UI Functions
+
+### CustomOverflowMenu
+
+▸ **CustomOverflowMenu**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | `CustomOverflowMenuProps` |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/custom-overflow-menu/custom-overflow-menu.component.tsx#L13)
+
+___
+
+### PatientBannerActionsMenu
+
+▸ **PatientBannerActionsMenu**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientBannerActionsMenuProps`](interfaces/PatientBannerActionsMenuProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/actions-menu/patient-banner-actions-menu.component.tsx#L20)
+
+___
+
+### PatientBannerContactDetails
+
+▸ **PatientBannerContactDetails**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | `ContactDetailsProps` |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L177)
+
+___
+
+### PatientBannerPatientInfo
+
+▸ **PatientBannerPatientInfo**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientBannerPatientInfoProps`](interfaces/PatientBannerPatientInfoProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/patient-info/patient-banner-patient-info.component.tsx#L14)
+
+___
+
+### PatientBannerToggleContactDetailsButton
+
+▸ **PatientBannerToggleContactDetailsButton**(`__namedParameters`): `Element`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientBannerToggleContactDetailsButtonProps`](interfaces/PatientBannerToggleContactDetailsButtonProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-toggle-contact-details-button.component.tsx#L16)
+
+___
+
+### PatientPhoto
+
+▸ **PatientPhoto**(`__namedParameters`): `Element`
+
+A component which displays the patient photo. If there is no photo, it will display
+a generated avatar. The default size is 80px. Set the size prop to 'small' to display
+a 48px avatar.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`PatientPhotoProps`](interfaces/PatientPhotoProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/patient-photo.component.tsx#L18)
+
+___
 
 ### isDesktop
 
@@ -5046,29 +5283,6 @@ true if the objects are shallowly equal to each other
 #### Defined in
 
 [packages/framework/esm-utils/src/shallowEqual.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/shallowEqual.ts#L13)
-
-___
-
-### translateFrom
-
-▸ **translateFrom**(`moduleName`, `key`, `fallback?`, `options?`): `string`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `moduleName` | `string` |
-| `key` | `string` |
-| `fallback?` | `string` |
-| `options?` | `object` |
-
-#### Returns
-
-`string`
-
-#### Defined in
-
-[packages/framework/esm-utils/src/translate.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/translate.ts#L4)
 
 ___
 

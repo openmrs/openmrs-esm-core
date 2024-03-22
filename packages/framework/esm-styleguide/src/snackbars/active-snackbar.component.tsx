@@ -1,3 +1,4 @@
+/** @module @category UI */
 import React, { useEffect, useState, useCallback } from 'react';
 import type { Subject } from 'rxjs';
 import type { SnackbarMeta } from './snackbar.component';

@@ -190,6 +190,22 @@ export function registerModuleWithConfigSystem(moduleName: string) {
 }
 
 /**
+ * This allows the config system to support translation overrides for namespaces that
+ * do not correspond to modules.
+ *
+ * This should only be used in esm-app-shell.
+ *
+ * @internal
+ * @param namespace
+ */
+export function registerTranslationNamespace(namespace: string) {
+  const state = configInternalStore.getState();
+  configInternalStore.setState({
+    schemas: { ...state.schemas, [namespace]: translationOverridesSchema },
+  });
+}
+
+/**
  * This defines a configuration schema for an extension. When a schema is defined
  * for an extension, that extension will receive the configuration corresponding
  * to that schema, rather than the configuration corresponding to the module
@@ -783,16 +799,10 @@ function getExtensionNameFromId(extensionId: string) {
 }
 
 /**
- * The implicitConfigSchema is implicitly included in every configuration schema
+ * The translation overrides schema is used in the implicit schema given to every module;
+ * plus any additional translation namespaces (at time of writing, this is just 'core').
  */
-const implicitConfigSchema: ConfigSchema = {
-  'Display conditions': {
-    privileges: {
-      _description: 'The privilege(s) the user must have to use this extension',
-      _type: Type.Array,
-      _default: [],
-    },
-  },
+const translationOverridesSchema: ConfigSchema = {
   'Translation overrides': {
     _description:
       'Per-language overrides for frontend translations should be keyed by language code and each language dictionary contains the translation key and the display value',
@@ -810,4 +820,18 @@ const implicitConfigSchema: ConfigSchema = {
       ),
     ],
   },
+};
+
+/**
+ * The implicitConfigSchema is implicitly included in every configuration schema
+ */
+const implicitConfigSchema: ConfigSchema = {
+  'Display conditions': {
+    privileges: {
+      _description: 'The privilege(s) the user must have to use this extension',
+      _type: Type.Array,
+      _default: [],
+    },
+  },
+  ...translationOverridesSchema,
 };

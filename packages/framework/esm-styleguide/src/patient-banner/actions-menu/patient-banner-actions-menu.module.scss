@@ -1,0 +1,22 @@
+@use '@carbon/colors';
+@use '@carbon/styles/scss/type';
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.actionsButtonText {
+  @include type.type-style('body-compact-01');
+  color: $interactive-01;
+}
+
+// Overriding styles for RTL support
+html[dir='rtl'] {
+  .overflowMenuContainer {
+    & > div {
+      margin-left: unset;
+      margin-right: -1.5rem;
+      & > div {
+        left: unset;
+        right: -6.025rem;
+      }
+    }
+  }
+}

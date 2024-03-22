@@ -10,7 +10,14 @@ import {
   RadioButtonGroup,
   RadioButtonSkeleton,
 } from '@carbon/react';
-import { navigate, setSessionLocation, useConfig, useConnectivity, useSession } from '@openmrs/esm-framework';
+import {
+  getCoreTranslation,
+  navigate,
+  setSessionLocation,
+  useConfig,
+  useConnectivity,
+  useSession,
+} from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
@@ -263,7 +270,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
               {isSubmitting ? (
                 <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
               ) : (
-                <span>{t('confirm', 'Confirm')}</span>
+                <span>{getCoreTranslation('confirm')}</span>
               )}
             </Button>
           </div>

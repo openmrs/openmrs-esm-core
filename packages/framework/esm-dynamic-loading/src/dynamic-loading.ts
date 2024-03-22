@@ -1,7 +1,7 @@
 /** @module @category Dynamic Loading */
 'use strict';
 // hack to make the types defined in esm-globals available here
-import type { ImportMap } from '@openmrs/esm-globals';
+import { dispatchToastShown, type ImportMap } from '@openmrs/esm-globals';
 
 /**
  * @internal
@@ -135,9 +135,27 @@ export async function preloadImport(jsPackage: string, importMap?: ImportMap) {
       url = window.spaBase + url.substring(1);
     }
 
-    return await new Promise<void>((resolve, reject) => {
-      loadScript(url, resolve, reject);
-    });
+    const isOverridden = !!window.localStorage.getItem(`import-map-override:${jsPackage}`);
+    try {
+      return await new Promise<void>((resolve, reject) => {
+        loadScript(url, resolve, reject);
+      });
+    } catch (err: any) {
+      if (isOverridden) {
+        dispatchToastShown({
+          kind: 'error',
+          title: 'Error loading script',
+          description: `Failed to load overridden script from ${url}. Click below to reset all overrides.`,
+          actionButtonLabel: 'Reload',
+          onActionButtonClick() {
+            window.importMapOverrides.resetOverrides();
+            window.location.reload();
+          },
+        });
+      }
+
+      return Promise.reject(err);
+    }
   }
 
   return Promise.resolve();
@@ -230,23 +248,21 @@ function loadScript(
     document.head.appendChild(element);
   } else {
     if (scriptLoading.has(url)) {
-      let loadFn: () => void, errFn: (ev: ErrorEvent) => void;
-      loadFn = () => {
-        if (scriptElement) {
-          scriptElement.removeEventListener('load', loadFn);
-          scriptElement.removeEventListener('error', errFn);
-        }
+      let loadFn: () => void, errFn: (ev: ErrorEvent) => void, finishScriptLoading: () => void;
 
+      finishScriptLoading = () => {
+        loadFn && scriptElement.removeEventListener('load', loadFn);
+        errFn && scriptElement.removeEventListener('error', errFn);
+      };
+
+      loadFn = () => {
+        finishScriptLoading();
         resolve(null);
       };
 
       // this errFn does not log anything
       errFn = (ev: ErrorEvent) => {
-        if (scriptElement) {
-          scriptElement.removeEventListener('load', loadFn);
-          scriptElement.removeEventListener('error', errFn);
-        }
-
+        finishScriptLoading();
         reject(ev.message);
       };
 
@@ -258,3 +274,5 @@ function loadScript(
     }
   }
 }
+
+function closureScope() {}
