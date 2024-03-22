@@ -33,6 +33,8 @@ export interface ConfigObject {
 
 export interface DisplayConditionsConfigObject {
   privileges?: string[];
+  online?: boolean;
+  offline?: boolean;
 }
 
 export type ConfigValue = string | number | boolean | void | Array<any> | object;
