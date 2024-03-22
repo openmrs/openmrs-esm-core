@@ -53,10 +53,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "未知错误。",
   "offlinePatientSyncDetailsHeader": "离线患者详细信息",
   "offlineReady": "离线就绪",
-  "offlineToolsAppMenuLink": "离线工具",
-  "offlineActionsSynchronizationNotificationTitle": "上传",
-  "offlineActionsSynchronizationNotificationSynchronized": "离线操作同步已完成",
-  "offlineActionsSynchronizationNotificationCanceling": "取消中...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} 操作",
-  "offlineActionsSynchronizationNotificationCancelUpload": "取消上传"
+  "offlineToolsAppMenuLink": "离线工具"
 }
