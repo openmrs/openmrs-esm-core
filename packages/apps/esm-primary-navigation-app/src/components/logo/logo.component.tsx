@@ -4,11 +4,14 @@ import styles from './logo.scss';
 
 const Logo: React.FC = () => {
   const { logo } = useConfig();
-
   return (
     <>
       {logo?.src ? (
-        <img className={styles.logo} src={interpolateUrl(logo.src)} alt={logo.alt} width={110} height={40} />
+        <img
+          className={styles.logo}
+          src={interpolateUrl(logo.src)}
+          alt={logo.alt}
+        />
       ) : logo?.name ? (
         logo.name
       ) : (
