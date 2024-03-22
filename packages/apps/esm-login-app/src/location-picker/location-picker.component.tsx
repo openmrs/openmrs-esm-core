@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, LegacyRef, useMemo } f
 import { useLocation, type Location, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
+  ActionableNotification,
   Button,
   Checkbox,
   InlineLoading,
@@ -23,7 +24,6 @@ import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
 import { useDefaultLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
-import { Snackbar } from '@openmrs/esm-styleguide/src/snackbars/snackbar.component';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
@@ -58,6 +58,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     loadingNewData,
     setPage,
     mutate,
+    error: errorFetchingLoginLocations,
   } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
 
   const locations = useMemo(() => {
@@ -113,12 +114,16 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
-    if (!isLoading && !searchTerm) {
+    if (!isLoading && !errorFetchingLoginLocations && !searchTerm) {
       if (!config.chooseLocation.enabled || locations?.length === 1) {
         changeLocation(locations[0]?.resource.id, false);
       }
+
+      if (!locations.length) {
+        changeLocation();
+      }
     }
-  }, [changeLocation, config.chooseLocation.enabled, isLoading, locations, searchTerm]);
+  }, [changeLocation, config.chooseLocation.enabled, isLoading, locations, searchTerm, errorFetchingLoginLocations]);
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
@@ -170,6 +175,43 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
 
   const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
 
+  if (errorFetchingLoginLocations) {
+    return (
+      <div className={styles.locationPickerContainer}>
+        <div className={styles.locationCard}>
+          <div className={styles.paddedContainer}>
+            <p className={styles.welcomeTitle}>
+              {t('welcome', 'Welcome')} {currentUser}
+            </p>
+            <p className={styles.welcomeMessage}>
+              {t(
+                'selectYourLocation',
+                'Select your location from the list below. Use the search bar to find your location.',
+              )}
+            </p>
+          </div>
+
+          <div className={styles.searchResults}>
+            <div className={styles.errorNotification}>
+              <ActionableNotification
+                actionButtonLabel={t('tryAgain', 'Try again')}
+                hideCloseButton
+                inline
+                kind="error"
+                onActionButtonClick={mutate}
+                title={t('errorLoadingLoginLocations', 'Error loading login locations')}
+                subtitle={getCoreTranslation(
+                  'contactAdministratorIfIssuePersists',
+                  'If the problem persists contact your system administrator.',
+                )}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.locationPickerContainer}>
       <form onSubmit={handleSubmit}>
@@ -185,32 +227,15 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
               )}
             </p>
           </div>
-          {locations?.length > 0 ? (
-            <Search
-              autoFocus
-              labelText={t('searchForLocation', 'Search for a location')}
-              id="search-1"
-              placeholder={t('searchForLocation', 'Search for a location')}
-              onChange={(event) => search(event.target.value)}
-              name="searchForLocation"
-              size="lg"
-            />
-          ) : (
-            <Snackbar
-              snackbar={{
-                id: 1,
-                actionButtonLabel: t('reload', 'Reload'),
-                onActionButtonClick: () => mutate(),
-                kind: 'error',
-                title: t('locationsFailedToLoad', 'Locations failed to load'),
-                subtitle: t(
-                  'locationIssueContactAdministrator',
-                  'If the issue persists please contact your administrator',
-                ),
-              }}
-              closeSnackbar={() => {}}
-            />
-          )}
+          <Search
+            autoFocus
+            labelText={t('searchForLocation', 'Search for a location')}
+            id="search-1"
+            placeholder={t('searchForLocation', 'Search for a location')}
+            onChange={(event) => search(event.target.value)}
+            name="searchForLocation"
+            size="lg"
+          />
           <div className={styles.searchResults}>
             {isLoading ? (
               <div className={styles.loadingContainer}>
