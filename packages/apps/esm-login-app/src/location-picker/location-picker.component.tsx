@@ -86,14 +86,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
 
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
-      if (!locationUuid) {
-        return;
-      }
-
       const referrer = state?.referrer;
       const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
 
-      const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.reject();
+      const sessionDefined = setSessionLocation(locationUuid, new AbortController());
 
       updateDefaultLocation(locationUuid, saveUserPreference);
       sessionDefined.then(() => {
