@@ -46,7 +46,7 @@ export function useLoginLocations(
       ).toString();
     }
 
-    let url = `${fhirBaseUrl}/Loction?`;
+    let url = `${fhirBaseUrl}/Location?`;
     let urlSearchParameters = new URLSearchParams();
     urlSearchParameters.append('_summary', 'data');
 
