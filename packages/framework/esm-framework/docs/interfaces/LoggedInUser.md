@@ -30,7 +30,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L42)
+[packages/framework/esm-api/src/types/user-resource.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L59)
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L41)
+[packages/framework/esm-api/src/types/user-resource.ts:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L58)
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L37)
+[packages/framework/esm-api/src/types/user-resource.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L54)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L38)
+[packages/framework/esm-api/src/types/user-resource.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L55)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L40)
+[packages/framework/esm-api/src/types/user-resource.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L57)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L39)
+[packages/framework/esm-api/src/types/user-resource.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L56)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 ### userProperties
 
-• **userProperties**: ``null`` \| { `[key: string]`: `string` \| `undefined`; `defaultLocation?`: `string` ; `patientsVisited?`: `string` ; `starredPatientLists?`: `string`  }
+• **userProperties**: ``null`` \| { `[key: string]`: `string` \| `undefined`; `defaultLocation?`: `string` ; `patientsVisited?`: `string` ; `previousLoggedInLocations?`: `string` ; `starredPatientLists?`: `string`  }
 
 #### Defined in
 
