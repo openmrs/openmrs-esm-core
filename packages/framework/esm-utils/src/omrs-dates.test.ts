@@ -41,15 +41,16 @@ describe('Openmrs Dates', () => {
     const testDate = new Date();
     testDate.setHours(15);
     testDate.setMinutes(22);
+    testDate.setSeconds(53);
     window.i18next.language = 'en';
-    expect(formatDate(testDate)).toMatch(/Today,\s+03:22\sPM/);
-    expect(formatDate(testDate, { day: false })).toMatch(/Today,\s03:22\sPM/);
-    expect(formatDate(testDate, { year: false })).toMatch(/Today,\s03:22\sPM/);
-    expect(formatDate(testDate, { mode: 'wide' })).toMatch(/Today,\s03:22\sPM/);
+    expect(formatDate(testDate)).toMatch(/Today,\s+03:22:53\sPM/);
+    expect(formatDate(testDate, { day: false })).toMatch(/Today,\s03:22:53\sPM/);
+    expect(formatDate(testDate, { year: false })).toMatch(/Today,\s03:22:53\sPM/);
+    expect(formatDate(testDate, { mode: 'wide' })).toMatch(/Today,\s03:22:53\sPM/);
     window.i18next.language = 'sw';
-    expect(formatDate(testDate)).toEqual('Leo, 15:22');
+    expect(formatDate(testDate)).toEqual('Leo, 15:22:53');
     window.i18next.language = 'ru';
-    expect(formatDate(testDate)).toEqual('Сегодня, 15:22');
+    expect(formatDate(testDate)).toEqual('Сегодня, 15:22:53');
   });
 
   it('formats dates with respect to the locale', () => {
@@ -124,25 +125,26 @@ describe('Openmrs Dates', () => {
     const today = new Date();
     today.setHours(15);
     today.setMinutes(22);
+    today.setSeconds(33);
     window.i18next.language = 'en';
     expect(formatDate(testDate)).toEqual('09-Dec-2021');
-    expect(formatDate(testDate, { time: true })).toMatch(/09-Dec-2021,\s01:15\sPM/);
+    expect(formatDate(testDate, { time: true })).toMatch(/09-Dec-2021,\s01:15:33\sPM/);
     expect(formatDate(testDate, { time: false })).toEqual('09-Dec-2021');
     expect(formatDate(testDate, { time: 'for today' })).toEqual('09-Dec-2021');
-    expect(formatDate(today, { time: true })).toMatch(/Today,\s03:22\sPM/);
+    expect(formatDate(today, { time: true })).toMatch(/Today,\s03:22:33\sPM/);
     expect(formatDate(today, { time: false })).toEqual('Today');
-    expect(formatDate(today, { time: 'for today' })).toMatch(/Today, 03:22\sPM/);
+    expect(formatDate(today, { time: 'for today' })).toMatch(/Today, 03:22:33\sPM/);
   });
 
   it('formats times with respect to the locale', () => {
     timezoneMock.register('Australia/Adelaide');
     const testDate = new Date('2021-12-09T13:15:33');
     window.i18next.language = 'en';
-    expect(formatTime(testDate)).toMatch(/01:15\sPM/i);
+    expect(formatTime(testDate)).toMatch(/01:15:33\sPM/i);
     window.i18next.language = 'es-CO';
-    expect(formatTime(testDate)).toMatch(/1:15\sp.\sm./); // it's not a normal space between the 'p.' and 'm.'
+    expect(formatTime(testDate)).toMatch(/1:15:33\sp.\sm./); // it's not a normal space between the 'p.' and 'm.'
     window.i18next.language = 'es-MX';
-    expect(formatTime(testDate)).toEqual('13:15');
+    expect(formatTime(testDate)).toEqual('13:15:33');
   });
 
   it('formats datetimes with respect to the locale', () => {
@@ -151,18 +153,20 @@ describe('Openmrs Dates', () => {
     const todayDate = new Date();
     todayDate.setHours(15);
     todayDate.setMinutes(20);
+    todayDate.setSeconds(33);
     window.i18next.language = 'en';
-    expect(formatDatetime(testDate)).toMatch(/09-Feb-2022,\s01:15\sPM/i);
-    expect(formatDatetime(todayDate)).toMatch(/Today,\s03:20\sPM/i);
+    expect(formatDatetime(testDate)).toMatch(/09-Feb-2022,\s01:15:33\sPM/i);
+    expect(formatDatetime(todayDate)).toMatch(/Today,\s03:20:33\sPM/i);
     window.i18next.language = 'ht';
-    expect(formatDatetime(testDate)).toEqual('09 févr. 2022, 13:15');
-    expect(formatDatetime(todayDate)).toEqual('Aujourd’hui, 15:20');
+    expect(formatDatetime(testDate)).toEqual('09 févr. 2022, 13:15:33');
+    expect(formatDatetime(todayDate)).toEqual('Aujourd’hui, 15:20:33');
   });
 
   it('does not handle today specially when `noToday` is passed', () => {
     const testDate = new Date();
     testDate.setHours(15);
     testDate.setMinutes(22);
+    testDate.setSeconds(33);
     window.i18next.language = 'en';
     const expected =
       testDate
@@ -171,7 +175,7 @@ describe('Openmrs Dates', () => {
           month: 'short',
           day: '2-digit',
         })
-        .replace(/ /g, '-') + ', 03:22 PM';
+        .replace(/ /g, '-') + ', 03:22:33 PM';
     expect(formatDate(testDate, { noToday: true }).replaceAll(/[\u202F]/g, ' ')).toEqual(expected);
   });
 });
