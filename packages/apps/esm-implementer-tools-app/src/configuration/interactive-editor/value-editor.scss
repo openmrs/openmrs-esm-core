@@ -3,4 +3,19 @@
 
 .valueEditorButtons {
   margin-top: spacing.$spacing-03;
+  :global(.cds--btn--primary) {
+    background-color: #706d6d;
+
+    &:hover {
+      background-color: #8d8a8a;
+    }
+  }
+
+  :global(.cds--btn--secondary) {
+    background-color: #da1e28;
+
+    &:hover {
+      background-color: #b81921;
+    }
+  }
 }

@@ -56,7 +56,7 @@ export default function JsonEditor({ height }: JsonEditorProps) {
         <Button size="md" type="submit" onClick={updateTemporaryConfig}>
           Update
         </Button>
-        <div className={style.alert} style={{ backgroundColor: error ? '#d03030' : 'inherit' }}>
+        <div className={style.alert} style={{ backgroundColor: error ? '#d03030' : '#525252' }}>
           {error}
         </div>
       </div>

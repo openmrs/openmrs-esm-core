@@ -54,6 +54,7 @@ const OpenOrCloseButton: React.FC<OpenOrCloseButtonProps> = ({ isConfigToolbarOp
     onClick={toggleIsToolbarOpen}
     kind="ghost"
     size="sm"
+    className={styles.openCloseBtn}
     tooltipPosition="left"
     iconDescription={`${isConfigToolbarOpen ? 'Hide' : 'Show'} toolbar`}
   />
@@ -123,7 +124,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
           <OpenOrCloseButton isConfigToolbarOpen={isConfigToolbarOpen} toggleIsToolbarOpen={toggleIsToolbarOpen} />
         </div>
         {isConfigToolbarOpen ? (
-          <FlexGrid style={{ padding: '0.5em 1.5em' }}>
+          <FlexGrid style={{ padding: '0.5em 1.5em' }} className={styles.container}>
             <Row className={styles.row}>
               <Column>
                 <TextInput

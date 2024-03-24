@@ -1,0 +1,24 @@
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.arrayEditor {
+  :global(.cds--structured-list) {
+    margin-bottom: 0.25rem;
+  }
+  :global(.cds--structured-list-td) {
+    padding: 0.25rem 3rem 0.25rem 1rem;
+  }
+}
+
+.buttonCell {
+  text-align: right;
+}
+
+.trashButton {
+  background: $danger;
+}
+.addButton {
+  background-color: $color-blue-60-2;
+}
+/* .valueCell {
+  display: inline-flex;
+} */

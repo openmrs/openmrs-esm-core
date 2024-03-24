@@ -1,3 +1,28 @@
-.fullWidthAccordion :global(.cds--accordion__content) {
-  padding-right: 0;
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.fullWidthAccordion {
+  background-color: $ui-06;
+  border-top: none;
+
+  :global(.cds--accordion__content) {
+    padding-right: 0;
+  }
+
+  :global(.cds--accordion__heading) {
+    color: $text-04;
+    &:hover {
+      &::before {
+        background-color: transparent;
+      }
+      background-color: $color-gray-70;
+      color: $text-05;
+      :global(.cds--accordion__arrow) {
+        fill: $text-05;
+      }
+    }
+  }
+
+  :global(.cds--accordion__arrow) {
+    fill: $text-04;
+  }
 }

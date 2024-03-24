@@ -1,4 +1,5 @@
 @use '@carbon/styles/scss/type';
+@import '~@openmrs/esm-styleguide/src/vars';
 
 .container {
   height: 50vh;
@@ -6,6 +7,28 @@
 
   :global(.cds--data-table-container) {
     padding-top: 0;
+  }
+
+  tr {
+    td {
+      background-color: $ui-07;
+      color: $text-04;
+      border-bottom: 1px solid $ui-05;
+      border-top: 1px solid $ui-05;
+    }
+    &:hover {
+      td {
+        background-color: $color-gray-70 !important;
+        color: $text-05 !important;
+        border-bottom: none !important;
+        border-top: none !important;
+      }
+    }
+  }
+
+  .tableHeader {
+    background-color: $ui-06 !important;
+    color: $text-04 !important;
   }
 }
 
