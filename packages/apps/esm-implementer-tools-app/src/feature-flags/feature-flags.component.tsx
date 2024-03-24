@@ -11,7 +11,7 @@ import {
   TableRow,
   Toggle,
 } from '@carbon/react';
-import styles from './frontend-modules.scss';
+import styles from './feature-flags.scss';
 import { registerFeatureFlag, useStore } from '@openmrs/esm-framework';
 import { featureFlagsStore, setFeatureFlag } from '@openmrs/esm-framework/src/internal';
 
@@ -59,7 +59,9 @@ export function FeatureFlags() {
               <TableHead>
                 <TableRow>
                   {headers.map((header) => (
-                    <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
+                    <TableHeader {...getHeaderProps({ header })} className={styles.tableHeader}>
+                      {header.header}
+                    </TableHeader>
                   ))}
                 </TableRow>
               </TableHead>

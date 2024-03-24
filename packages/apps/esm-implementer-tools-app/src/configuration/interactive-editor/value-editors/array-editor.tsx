@@ -13,7 +13,7 @@ import {
 import { Add, TrashCan } from '@carbon/react/icons';
 import { ValueEditorField } from './value-editor-field';
 import type { ConfigValueDescriptor } from '../editable-value.component';
-import styles from './array-editor.styles.css';
+import styles from './array-editor.styles.scss';
 
 interface ArrayEditorProps {
   element: ConfigValueDescriptor;
@@ -50,6 +50,7 @@ export function ArrayEditor({ element, valueArray, setValue }: ArrayEditorProps)
                   renderIcon={(props) => <TrashCan {...props} size={16} />}
                   size="sm"
                   kind="secondary"
+                  className={styles.trashButton}
                   iconDescription="Remove"
                   hasIconOnly
                   onClick={() => {
@@ -68,6 +69,7 @@ export function ArrayEditor({ element, valueArray, setValue }: ArrayEditorProps)
                 size="sm"
                 iconDescription="Add"
                 hasIconOnly
+                className={styles.addButton}
                 onClick={() => {
                   const newValueArray = cloneDeep(valueArray);
                   const newValue = (element._elements?._type ?? Type.Object) == Type.Object ? {} : null;

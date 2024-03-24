@@ -1,13 +1,12 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
 @import '../implementer-tools.styles.scss';
 
 .tools {
   width: 100%;
   background-color: $ui-03;
-  border-bottom: 1px solid $ui-04;
-  border-top: 1px solid $color-gray-30;
+  border-bottom: 1px solid $ui-05;
+  border-top: 1px solid $ui-05;
   z-index: 2;
   position: sticky;
   top: 0;
@@ -31,6 +30,18 @@
     flex-grow: 1;
     width: 100%;
     padding: 0 1rem;
+
+    :global(.cds--label) {
+      color: $text-04;
+    }
+
+    :global(.cds--toggle__text) {
+      color: $text-04;
+    }
+
+    :global(.cds--toggle__label-text) {
+      color: $text-04;
+    }
   }
 }
 
@@ -45,6 +56,23 @@
   width: 100%;
   display: flex;
   overflow-y: auto;
+
+  :global(.ace_scroller) {
+    background-color: $ui-06;
+    color: $text-05;
+  }
+
+  :global(.ace_gutter) {
+    background-color: $ui-06;
+    color: $text-04;
+  }
+
+  :global(.ace_active-line) {
+    background-color: $color-gray-70 !important;
+  }
+  :global(.ace_cursor) {
+    color: $text-05;
+  }
 }
 
 .configTreePane {
@@ -52,12 +80,13 @@
   // overflow-wrap: break-word;
   overflow-x: auto;
   overflow-y: auto;
+  background-color: $ui-06;
 }
 
 .descriptionPane {
   width: 35%;
-  background-color: $ui-03;
-  color: #424242;
+  background-color: $ui-06;
+  color: $text-04;
   padding: spacing.$spacing-05 2em;
   font-size: 12pt;
   overflow-wrap: break-word;
@@ -73,12 +102,17 @@
   display: flex;
   justify-content: flex-end;
   padding: 0.25rem;
+  background-color: $ui-06;
 }
 
 .toggleButtons {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+
+  :global(.cds--toggle__switch--checked) {
+    background-color: #e8e8e8;
+  }
 }
 
 .actionButtons {
@@ -88,5 +122,23 @@
 
   > button {
     margin: 0 1rem;
+  }
+
+  :global(.cds--btn--secondary) {
+    background-color: #706d6d;
+
+    &:hover {
+      background-color: #8d8a8a;
+    }
+  }
+}
+
+.container {
+  background-color: $ui-06;
+}
+
+.openCloseBtn {
+  > svg {
+    fill: $text-04 !important;
   }
 }

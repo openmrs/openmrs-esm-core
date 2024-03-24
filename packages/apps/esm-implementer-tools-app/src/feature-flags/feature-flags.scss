@@ -4,7 +4,7 @@
 .container {
   height: 50vh;
   overflow-y: auto;
-
+  background-color: $ui-06;
   :global(.cds--data-table-container) {
     padding-top: 0;
   }
@@ -24,6 +24,10 @@
         border-top: none !important;
       }
     }
+
+    :global(.cds--toggle__switch--checked) {
+      background-color: #e8e8e8;
+    }
   }
 
   .tableHeader {
@@ -32,6 +36,10 @@
   }
 }
 
-.moduleHeader {
+.header {
   @include type.type-style('heading-compact-02');
+}
+
+.helper {
+  @include type.type-style('helper-text-01');
 }

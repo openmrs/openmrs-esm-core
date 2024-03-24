@@ -47,7 +47,9 @@ export const BackendDependencies: React.FC<BackendDependencies> = ({ backendDepe
               <TableHead>
                 <TableRow>
                   {headers.map((header) => (
-                    <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
+                    <TableHeader {...getHeaderProps({ header })} className={styles.tableHeader}>
+                      {header.header}
+                    </TableHeader>
                   ))}
                 </TableRow>
               </TableHead>
@@ -70,7 +72,7 @@ export const BackendDependencies: React.FC<BackendDependencies> = ({ backendDepe
                           ) : dep.type === 'version-mismatch' ? (
                             <span style={{ color: 'red' }}>{dep.installedVersion}</span>
                           ) : (
-                            <span style={{ color: 'green' }}>{dep.installedVersion}</span>
+                            <span>{dep.installedVersion}</span>
                           )}
                         </TableCell>
                         <TableCell>{dep.requiredVersion}</TableCell>

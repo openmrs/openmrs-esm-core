@@ -43,7 +43,9 @@ export const FrontendModules: React.FC<FrontendModulesProps> = ({ frontendModule
               <TableHead>
                 <TableRow>
                   {headers.map((header) => (
-                    <TableHeader {...getHeaderProps({ header })}>{header.header}</TableHeader>
+                    <TableHeader {...getHeaderProps({ header })} className={styles.tableHeader}>
+                      {header.header}
+                    </TableHeader>
                   ))}
                 </TableRow>
               </TableHead>

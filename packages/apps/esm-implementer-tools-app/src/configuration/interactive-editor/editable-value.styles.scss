@@ -22,6 +22,11 @@
 .elementValue {
   display: flex;
   align-items: center;
+  color: $text-04;
+
+  svg {
+    fill: $text-04 !important;
+  }
 }
 
 .editValueButton {
