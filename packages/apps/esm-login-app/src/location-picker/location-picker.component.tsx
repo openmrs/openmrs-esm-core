@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, LegacyRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useLocation, type Location, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -23,6 +23,7 @@ import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
 import { useDefaultLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
+import { ArrowLeft } from '@carbon/react/icons';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
@@ -82,30 +83,28 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     state: LoginReferrer;
   };
 
+  const handleNavigation = useCallback(() => {
+    const referrer = state?.referrer;
+    const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
+
+    if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
+      navigate({ to: '${openmrsSpaBase}' + referrer });
+    } else if (returnToUrl && returnToUrl !== '/') {
+      navigate({ to: returnToUrl });
+    } else {
+      navigate({ to: config.links.loginSuccess });
+    }
+  }, [state?.referrer, location, config.links.loginSuccess]);
+
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
       setIsSubmitting(true);
-
-      const referrer = state?.referrer;
-      const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
-
       const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
 
       updateDefaultLocation(locationUuid, saveUserPreference);
-      sessionDefined.then(() => {
-        if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
-          navigate({ to: '${openmrsSpaBase}' + referrer });
-          return;
-        }
-        if (returnToUrl && returnToUrl !== '/') {
-          navigate({ to: returnToUrl });
-        } else {
-          navigate({ to: config.links.loginSuccess });
-        }
-        return;
-      });
+      sessionDefined.then(handleNavigation);
     },
-    [state?.referrer, config.links.loginSuccess, updateDefaultLocation],
+    [updateDefaultLocation, handleNavigation],
   );
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
@@ -249,13 +248,26 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
               checked={savePreference}
               onChange={(_, { checked }) => setSavePreference(checked)}
             />
-            <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
-              {isSubmitting ? (
-                <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
+            <div className={styles.actionButtons}>
+              {isUpdateFlow ? (
+                <Button
+                  kind="secondary"
+                  disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+                  onClick={handleNavigation}
+                >
+                  <span>{t('cancel', 'Cancel')}</span>
+                </Button>
               ) : (
-                <span>{getCoreTranslation('confirm')}</span>
+                ''
               )}
-            </Button>
+              <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
+                {isSubmitting ? (
+                  <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
+                ) : (
+                  <span>{t('confirm', 'Confirm')}</span>
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </form>

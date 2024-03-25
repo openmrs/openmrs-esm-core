@@ -75,9 +75,18 @@
     padding-bottom: spacing.$spacing-05 !important;
   }
 
-  button {
+  .actionButtons {
+    display: inline-flex;
     width: 100%;
+
+    button {
+      flex-grow: 1;
+    }
   }
+}
+
+.cancelButton {
+  margin-top: spacing.$spacing-02;
 }
 
 .radioButtonSkeleton {
