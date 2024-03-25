@@ -165,7 +165,7 @@ const Login: React.FC = () => {
           {showPasswordOnSeparateScreen && showPassword ? (
             <div className={styles['back-button-div']}>
               <Button
-                className={styles['back-button']}
+                className={styles.backButton}
                 iconDescription={t('backToUserNameIconLabel', 'Back to username')}
                 kind="ghost"
                 onClick={() => navigate('/login')}

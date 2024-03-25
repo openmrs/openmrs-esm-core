@@ -172,17 +172,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
   return (
     <div className={styles.locationPickerContainer}>
       <form onSubmit={handleSubmit}>
-        {isUpdateFlow ? (
-          <Button
-            className={styles['back-button']}
-            iconDescription={t('backToPreviousPage', 'Back to previous page')}
-            kind="ghost"
-            onClick={handleNavigation}
-            renderIcon={(props) => <ArrowLeft size={24} {...props} />}
-          >
-            <span>{t('back', 'Back')}</span>
-          </Button>
-        ) : null}
         <div className={styles.locationCard}>
           <div className={styles.paddedContainer}>
             <p className={styles.welcomeTitle}>
@@ -266,6 +255,18 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
                 <span>{getCoreTranslation('confirm')}</span>
               )}
             </Button>
+            {isUpdateFlow ? (
+              <Button
+                kind="secondary"
+                disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+                onClick={handleNavigation}
+                className={styles.cancelButton}
+              >
+                <span>{t('cancel', 'Cancel')}</span>
+              </Button>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </form>
