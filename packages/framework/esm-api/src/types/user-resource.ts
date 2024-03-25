@@ -32,6 +32,23 @@ export interface LoggedInUser {
      * The UUID of the location the user has set preference to use for next logins
      */
     defaultLocation?: string;
+    /**
+     * The UUIDs of the last 10 locations that user has previously logged in, separated by commas.
+     *
+     *
+     * You can get the UUIDs as:
+     * ```
+     * user?.userProperties?.previousLoggedInLocations?.split(',') ?? []
+     * ```
+     * To save the location UUIDs:
+     *
+     * ```
+     * {
+     *  previousLoggedInLocations: previousLoggedInLocations.join(',')
+     * }
+     * ```
+     */
+    previousLoggedInLocations?: string;
     [key: string]: string | undefined;
   } | null;
   person: Person;

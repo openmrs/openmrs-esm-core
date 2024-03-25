@@ -11,38 +11,42 @@ import {
   RadioButtonSkeleton,
 } from '@carbon/react';
 import {
+  setUserProperties,
+  showSnackbar,
   getCoreTranslation,
   navigate,
   setSessionLocation,
   useConfig,
   useConnectivity,
   useSession,
+  useLocations,
+  useDebounce,
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
-import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
-import { useDefaultLocation } from './location-picker.resource';
+import { getUserPropertiesWithDefaultAndLogInLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
 
-interface LocationPickerProps {
-  hideWelcomeMessage?: boolean;
-  currentLocationUuid?: string;
-}
+interface LocationPickerProps {}
 
-const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, currentLocationUuid }) => {
+const LocationPicker: React.FC<LocationPickerProps> = () => {
   const { t } = useTranslation();
   const config = useConfig<ConfigSchema>();
   const { chooseLocation } = config;
   const isLoginEnabled = useConnectivity();
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
   const [searchParams] = useSearchParams();
+  const [activeLocation, setActiveLocation] = useState<string>(null);
+  const [saveDefaultLocation, setSaveDefaultLocation] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const isUpdateFlow = useMemo(() => searchParams.get('update') === 'true', [searchParams]);
-  const { defaultLocation, updateDefaultLocation, savePreference, setSavePreference, defaultLocationFhir } =
-    useDefaultLocation(isUpdateFlow);
-
-  const [searchTerm, setSearchTerm] = useState(null);
+  const { state } = useLocation() as unknown as Omit<Location, 'state'> & {
+    state: LoginReferrer;
+  };
 
   const { user, sessionLocation } = useSession();
-  const { currentUser, userProperties } = useMemo(
+  const { currentUser } = useMemo(
     () => ({
       currentUser: user?.display,
       userUuid: user?.uuid,
@@ -52,35 +56,58 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
   );
 
   const {
-    locations: fetchedLocations,
-    isLoading,
+    locations,
+    isLoadingLocations,
     hasMore,
     loadingNewData,
     setPage,
-  } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
+    isDefaultLocationValid,
+    defaultLocation,
+    lastLoggedInLocation,
+  } = useLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, debouncedSearchTerm);
 
-  const locations = useMemo(() => {
-    if (!defaultLocationFhir?.length || !fetchedLocations) {
-      return fetchedLocations;
-    }
-    return [
-      ...(defaultLocationFhir ?? []),
-      ...fetchedLocations?.filter(({ resource }) => resource.id !== defaultLocationFhir?.[0].resource.id),
-    ];
-  }, [defaultLocationFhir, fetchedLocations]);
+  const updateUserProperties = useCallback(
+    (locationUuid: string) => {
+      if (!locationUuid) return;
+      const { previousLoggedInLocations, defaultLocation } = getUserPropertiesWithDefaultAndLogInLocation(
+        locationUuid,
+        user?.userProperties?.previousLoggedInLocations,
+      );
 
-  const [activeLocation, setActiveLocation] = useState(() => {
-    if (currentLocationUuid && hideWelcomeMessage) {
-      return currentLocationUuid;
-    }
-    return sessionLocation?.uuid ?? defaultLocation;
-  });
+      const prevUserProperties = user?.userProperties;
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+      const updatedUserProperties = {
+        ...(user?.userProperties ?? {}),
+        previousLoggedInLocations,
+        defaultLocation,
+      };
 
-  const { state } = useLocation() as unknown as Omit<Location, 'state'> & {
-    state: LoginReferrer;
-  };
+      if (!saveDefaultLocation) {
+        delete updatedUserProperties.defaultLocation;
+      }
+
+      setUserProperties(user?.uuid, updatedUserProperties).then(() => {
+        if (saveDefaultLocation) {
+          showSnackbar({
+            title: !isUpdateFlow ? t('locationSaved', 'Location saved') : t('locationUpdated', 'Location updated'),
+            subtitle: !isUpdateFlow
+              ? t('locationSaveMessage', 'Your preferred location has been saved for future logins')
+              : t('locationUpdateMessage', 'Your preferred login location has been updated'),
+            kind: 'success',
+            isLowContrast: true,
+          });
+        } else if (isUpdateFlow && prevUserProperties.defaultLocation && !updatedUserProperties.defaultLocation) {
+          showSnackbar({
+            title: t('locationPreferenceRemoved', 'Location preference removed'),
+            subtitle: t('locationPreferenceRemovedMessage', 'You will need to select a location on each login'),
+            kind: 'success',
+            isLowContrast: true,
+          });
+        }
+      });
+    },
+    [user?.uuid, user?.userProperties, saveDefaultLocation],
+  );
 
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
@@ -90,8 +117,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
       const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
 
       const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
-
-      updateDefaultLocation(locationUuid, saveUserPreference);
+      updateUserProperties(locationUuid);
       sessionDefined.then(() => {
         if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
           navigate({ to: '${openmrsSpaBase}' + referrer });
@@ -105,12 +131,12 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
         return;
       });
     },
-    [state?.referrer, config.links.loginSuccess, updateDefaultLocation],
+    [state?.referrer, config.links.loginSuccess, updateUserProperties],
   );
 
-  // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
-    if (!isLoading && !searchTerm) {
+    // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
+    if (!isLoadingLocations && !debouncedSearchTerm) {
       if (!config.chooseLocation.enabled || locations?.length === 1) {
         changeLocation(locations[0]?.resource.id, false);
       }
@@ -118,36 +144,45 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
         changeLocation();
       }
     }
-  }, [changeLocation, config.chooseLocation.enabled, isLoading, locations, searchTerm]);
+  }, [changeLocation, config.chooseLocation.enabled, isLoadingLocations, locations, debouncedSearchTerm]);
 
-  // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
-    if (isUpdateFlow) {
-      return;
+    if (lastLoggedInLocation && !activeLocation) {
+      setActiveLocation(sessionLocation?.uuid ?? lastLoggedInLocation);
     }
-    if (defaultLocation && !isSubmitting) {
+  }, [lastLoggedInLocation, activeLocation, setActiveLocation]);
+
+  useEffect(() => {
+    if (isDefaultLocationValid) {
+      setSaveDefaultLocation(true);
+    }
+  }, [setSaveDefaultLocation, isDefaultLocationValid]);
+
+  useEffect(() => {
+    // Handle cases where the login location is present in the userProperties.
+    if (!isUpdateFlow && defaultLocation && !isSubmitting) {
       setActiveLocation(defaultLocation);
       changeLocation(defaultLocation, true);
     }
   }, [changeLocation, isSubmitting, defaultLocation, isUpdateFlow]);
 
-  const search = (location: string) => {
-    setActiveLocation('');
-    setSearchTerm(location);
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   const handleSubmit = useCallback(
     (evt: React.FormEvent<HTMLFormElement>) => {
       evt.preventDefault();
-
       if (!activeLocation) return;
-
-      changeLocation(activeLocation, savePreference);
+      changeLocation(activeLocation, saveDefaultLocation);
     },
-    [activeLocation, changeLocation, savePreference],
+    [activeLocation, changeLocation, saveDefaultLocation],
   );
 
-  // Infinite scroll
+  const handleFetchNextSet = useCallback(() => {
+    setPage((page) => page + 1);
+  }, [setPage]);
+
   const observer = useRef(null);
   const loadingIconRef = useCallback(
     (node: HTMLDivElement) => {
@@ -156,7 +191,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
       observer.current = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting && hasMore) {
-            setPage((page) => page + 1);
+            handleFetchNextSet();
           }
         },
         {
@@ -165,7 +200,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
       );
       if (node) observer.current.observe(node);
     },
-    [loadingNewData, hasMore, setPage],
+    [loadingNewData, hasMore, handleFetchNextSet],
   );
 
   const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
@@ -190,12 +225,13 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
             labelText={t('searchForLocation', 'Search for a location')}
             id="search-1"
             placeholder={t('searchForLocation', 'Search for a location')}
-            onChange={(event) => search(event.target.value)}
+            onChange={handleSearch}
             name="searchForLocation"
             size="lg"
+            value={searchTerm}
           />
           <div className={styles.searchResults}>
-            {isLoading ? (
+            {isLoadingLocations ? (
               <div className={styles.loadingContainer}>
                 <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
                 <RadioButtonSkeleton className={styles.radioButtonSkeleton} role="progressbar" />
@@ -244,10 +280,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
           <div className={styles.confirmButton}>
             <Checkbox
               id="checkbox"
-              className={styles.savePreferenceCheckbox}
+              className={styles.saveDefaultLocationCheckbox}
               labelText={t('rememberLocationForFutureLogins', 'Remember my location for future logins')}
-              checked={savePreference}
-              onChange={(_, { checked }) => setSavePreference(checked)}
+              checked={saveDefaultLocation}
+              onChange={(_, { checked }) => setSaveDefaultLocation(checked)}
             />
             <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
               {isSubmitting ? (

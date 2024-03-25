@@ -1451,7 +1451,7 @@ ___
 
 ### inputMode
 
-• `Optional` **inputMode**: ``"none"`` \| ``"search"`` \| ``"text"`` \| ``"tel"`` \| ``"url"`` \| ``"email"`` \| ``"numeric"`` \| ``"decimal"``
+• `Optional` **inputMode**: ``"url"`` \| ``"none"`` \| ``"search"`` \| ``"text"`` \| ``"tel"`` \| ``"email"`` \| ``"numeric"`` \| ``"decimal"``
 
 Hints at the type of data that might be entered by the user while editing the element or its contents
 
