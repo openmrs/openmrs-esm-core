@@ -248,25 +248,26 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
               checked={savePreference}
               onChange={(_, { checked }) => setSavePreference(checked)}
             />
-            <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
-              {isSubmitting ? (
-                <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
+            <div className={styles.actionButtons}>
+              {isUpdateFlow ? (
+                <Button
+                  kind="secondary"
+                  disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+                  onClick={handleNavigation}
+                >
+                  <span>{t('cancel', 'Cancel')}</span>
+                </Button>
               ) : (
-                <span>{getCoreTranslation('confirm')}</span>
+                ''
               )}
-            </Button>
-            {isUpdateFlow ? (
-              <Button
-                kind="secondary"
-                disabled={!activeLocation || !isLoginEnabled || isSubmitting}
-                onClick={handleNavigation}
-                className={styles.cancelButton}
-              >
-                <span>{t('cancel', 'Cancel')}</span>
+              <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
+                {isSubmitting ? (
+                  <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
+                ) : (
+                  <span>{t('confirm', 'Confirm')}</span>
+                )}
               </Button>
-            ) : (
-              ''
-            )}
+            </div>
           </div>
         </div>
       </form>
