@@ -23,7 +23,7 @@ import {
   messageOmrsServiceWorker,
   subscribeConnectivity,
   getCurrentUser,
-  renderModals,
+  setupModals,
   dispatchPrecacheStaticDependencies,
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
@@ -288,7 +288,7 @@ function showSnackbars() {
 }
 
 function showModals() {
-  renderModals(document.querySelector('.omrs-modals-container'));
+  setupModals(document.querySelector('.omrs-modals-container'));
 }
 
 function showLoadingSpinner() {

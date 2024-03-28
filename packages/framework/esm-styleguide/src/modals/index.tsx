@@ -1,7 +1,9 @@
 /** @module @category UI */
-import { renderExtension } from '@openmrs/esm-extensions';
+import { mountRootParcel, type Parcel } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
-import type { Parcel } from 'single-spa';
+import { getModalRegistration } from './registry';
+import { reportError } from '@openmrs/esm-error-handling';
+export * from './registry';
 
 type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
 
@@ -10,7 +12,7 @@ interface ModalInstance {
   state: ModalInstanceState;
   onClose: () => void;
   parcel?: Parcel | null;
-  extensionId: string;
+  modalName: string;
   props: Record<string, any>;
 }
 
@@ -19,7 +21,7 @@ interface ModalState {
   modalStack: Array<ModalInstance>;
 }
 
-const modalStore = createGlobalStore<ModalState>('globalModalState', {
+const modalStore = createGlobalStore<ModalState>('modalState', {
   modalContainer: null,
   modalStack: [],
 });
@@ -51,13 +53,52 @@ function createModalFrame() {
   return { outer, contentContainer };
 }
 
+let parcelCount = 0;
+
+/**
+ * Mounts the named modal into the specified DOM element
+ */
+async function renderModalIntoDOM(
+  domElement: HTMLElement,
+  modalName: string,
+  additionalProps: Record<string, any> = {},
+): Promise<Parcel | null> {
+  const modalRegistration = getModalRegistration(modalName);
+  let parcel: Parcel | null = null;
+
+  if (domElement) {
+    if (!modalRegistration) {
+      throw Error(`No modal named '${modalName}' has been registered.`);
+    }
+
+    const { load } = modalRegistration;
+
+    const { default: result, ...lifecycle } = await load();
+    const id = parcelCount++;
+    parcel = mountRootParcel(
+      {
+        ...(result ?? lifecycle),
+        name: `${modalName}-${id}`,
+      },
+      {
+        ...additionalProps,
+        domElement,
+      },
+    );
+  } else {
+    reportError(`Failed to launch modal. Please notify your administrator. Modal name: ${modalName}`);
+  }
+
+  return parcel;
+}
+
 const original = window.getComputedStyle(document.body).overflow;
 
 function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
   if (!modalContainer) return;
 
   if (modalStack.length) {
-    // spin up the container if it was hidden previously
+    // ensure the container is visible
     if (!modalContainer.style.visibility) {
       addEventListener('keydown', handleEscKey);
       document.body.style.overflow = 'hidden';
@@ -69,7 +110,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
         case 'NEW': {
           const { outer, contentContainer } = createModalFrame();
           instance.container = outer;
-          renderExtension(contentContainer, '', '', instance.extensionId, undefined, instance.props).then((parcel) => {
+          renderModalIntoDOM(contentContainer, instance.modalName, instance.props).then((parcel) => {
             instance.parcel = parcel;
             instance.state = 'MOUNTED';
             modalContainer.prepend(outer);
@@ -104,16 +145,6 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
   }
 }
 
-export function renderModals(modalContainer: HTMLElement | null) {
-  if (modalContainer) {
-    modalStore.subscribe(handleModalStateUpdate);
-
-    modalStore.setState({
-      ...modalStore.getState(),
-      modalContainer,
-    });
-  }
-}
 function openInstance(instance: ModalInstance) {
   const state = modalStore.getState();
   const modalStack = [instance, ...state.modalStack];
@@ -151,13 +182,30 @@ function handleEscKey(e: KeyboardEvent) {
 }
 
 /**
- * Shows the provided extension component in a modal dialog.
- * @param extensionId The id of the extension to show.
- * @param props The optional props to provide to the extension.
- * @param onClose The optional notification to receive when the modal is closed.
+ * @internal
+ * Sets up the modals system. Should be called in the app shell during initialization.
+ */
+export function setupModals(modalContainer: HTMLElement | null) {
+  modalStore.subscribe(handleModalStateUpdate);
+
+  modalStore.setState({
+    ...modalStore.getState(),
+    modalContainer,
+  });
+}
+
+/**
+ * Shows a modal dialog.
+ *
+ * The modal must have been registered by name. This should be done in the `routes.json` file of the
+ * app that defines the modal.
+ *
+ * @param modalName The name of the modal to show.
+ * @param props The optional props to provide to the modal.
+ * @param onClose The optional callback to call when the modal is closed.
  * @returns The dispose function to force closing the modal dialog.
  */
-export function showModal(extensionId: string, props: Record<string, any> = {}, onClose: () => void = () => {}) {
+export function showModal(modalName: string, props: Record<string, any> = {}, onClose: () => void = () => {}) {
   const close = () => {
     const state = modalStore.getState();
     const item = state.modalStack.find((m) => m.onClose === onClose);
@@ -167,16 +215,20 @@ export function showModal(extensionId: string, props: Record<string, any> = {}, 
     }
   };
 
-  openInstance({
-    state: 'NEW',
-    onClose,
-    extensionId,
-    props: {
-      extensionId,
-      close,
-      ...props,
-    },
-  });
+  const modalRegistration = getModalRegistration(modalName);
+  if (!modalRegistration) {
+    reportError(`Failed to launch modal. Please notify your administrator. Modal name: "${modalName}"`);
+  } else {
+    openInstance({
+      state: 'NEW',
+      onClose,
+      modalName,
+      props: {
+        close,
+        ...props,
+      },
+    });
+  }
 
   return close;
 }

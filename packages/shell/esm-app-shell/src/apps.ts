@@ -4,11 +4,12 @@ import type {
   OpenmrsAppRoutes,
   RouteDefinition,
   ExtensionRegistration,
+  ModalDefintion,
 } from '@openmrs/esm-framework';
 import { attach, registerExtension, importDynamic } from '@openmrs/esm-framework';
 import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
 import { emptyLifecycle, routeRegex } from './helpers';
-import { registerModuleWithConfigSystem } from '@openmrs/esm-framework/src/internal';
+import { registerModal, registerModuleWithConfigSystem } from '@openmrs/esm-framework/src/internal';
 
 const pages: Array<RegisteredPageDefinition> = [];
 
@@ -131,6 +132,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     registerModuleWithConfigSystem(appName);
 
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
+    const availableModals: Array<ModalDefintion> = routes.modals ?? [];
 
     routes.pages?.forEach((p) => {
       if (
@@ -159,6 +161,17 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         console.warn(
           `An extension for ${appName} could not be registered as it does not appear to have the required properties`,
           ext,
+        );
+      }
+    });
+
+    availableModals.forEach((modal) => {
+      if (modal && typeof modal === 'object' && Object.hasOwn(modal, 'name') && Object.hasOwn(modal, 'component')) {
+        tryRegisterModal(appName, modal);
+      } else {
+        console.warn(
+          `A modal for ${appName} could not be registered as it does not appear to have the required properties`,
+          modal,
         );
       }
     });
@@ -203,12 +216,12 @@ export function finishRegisteringAllApps() {
 }
 
 /**
- * This function actually converts each page definition into a single-spa application
+ * This function converts each page definition into a single-spa application
  * if that's possible. After this point, pages are rendered using single-spa's
  * routing logic.
  *
  * @param appName The name of the app containing this page
- * @param page A Javascript object that describes the page defintion, derived from `routes.json`
+ * @param page An object that describes the page, derived from `routes.json`
  */
 export function tryRegisterPage(appName: string, page: RegisteredPageDefinition) {
   const route =
@@ -242,11 +255,11 @@ To fix this, ensure that you define the "component" field inside the page defini
 }
 
 /**
- * This function actually registers an extension definition with the framework and will
+ * This function registers an extension definition with the framework and will
  * attach the extension to any configured slots.
  *
- * @param appName The name of the app containing this page
- * @param extension A Javascript object that describes the extension defintion, derived from `routes.json`
+ * @param appName The name of the app containing this extension
+ * @param extension An object that describes the extension, derived from `routes.json`
  */
 export function tryRegisterExtension(appName: string, extension: ExtensionDefinition) {
   const name = extension.name;
@@ -307,5 +320,55 @@ supported, so the extension will not be loaded.`,
 
   for (const slot of slots) {
     attach(slot, name);
+  }
+}
+
+/**
+ * This function actually registers a modal definition with the framework so that it can be launched.
+ *
+ * @param appName The name of the app defining this modal
+ * @param modal An object that describes the modal, derived from `routes.json`
+ */
+export function tryRegisterModal(appName: string, modal: ModalDefintion) {
+  const name = modal.name;
+  if (!name) {
+    console.error(
+      `A modal definition in ${appName} is missing an name and thus cannot be
+registered. To fix this, ensure that you define the "name" field inside the
+modal definition.`,
+      modal,
+    );
+    return;
+  }
+
+  if (!modal.component && !modal.load) {
+    console.error(
+      `The modal ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
+To fix this, ensure that you define a 'component' field inside the modal definition.`,
+      modal,
+    );
+    return;
+  }
+
+  let loader: ExtensionRegistration['load'] | undefined = undefined;
+  if (modal.component) {
+    loader = getLoader(appName, modal.component);
+  } else if (modal.load) {
+    if (typeof modal.load !== 'function') {
+      console.error(
+        `The modal ${name} from ${appName} declares a 'load' property that is not a function. This is not
+supported, so the modal will not be loaded.`,
+      );
+      return;
+    }
+    loader = modal.load;
+  }
+
+  if (loader) {
+    registerModal({
+      name,
+      load: loader,
+      moduleName: appName,
+    });
   }
 }

@@ -432,7 +432,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L38)
+[packages/framework/esm-config/src/types.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L40)
 
 ___
 
@@ -468,6 +468,18 @@ ___
 
 ___
 
+### ModalDefintion
+
+Ƭ **ModalDefintion**: { `name`: `string`  } & { `component`: `string`  } \| { `component?`: `never`  }
+
+A definition of an modal as extracted from an app's routes.json
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L237)
+
+___
+
 ### OpenmrsRoutes
 
 Ƭ **OpenmrsRoutes**: `Record`<`string`, [`OpenmrsAppRoutes`](interfaces/OpenmrsAppRoutes.md)\>
@@ -477,7 +489,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L260)
+[packages/framework/esm-globals/src/types.ts:295](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L295)
 
 ___
 
@@ -506,7 +518,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L60)
+[packages/framework/esm-config/src/types.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L62)
 
 ___
 
@@ -562,7 +574,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L67)
+[packages/framework/esm-config/src/types.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L69)
 
 ___
 
@@ -586,7 +598,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L65)
+[packages/framework/esm-config/src/types.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L67)
 
 ___
 
@@ -4749,17 +4761,20 @@ ___
 
 ### showModal
 
-▸ **showModal**(`extensionId`, `props?`, `onClose?`): () => `void`
+▸ **showModal**(`modalName`, `props?`, `onClose?`): () => `void`
 
-Shows the provided extension component in a modal dialog.
+Shows a modal dialog.
+
+The modal must have been registered by name. This should be done in the `routes.json` file of the
+app that defines the modal.
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `extensionId` | `string` | The id of the extension to show. |
-| `props` | `Record`<`string`, `any`\> | The optional props to provide to the extension. |
-| `onClose` | () => `void` | The optional notification to receive when the modal is closed. |
+| `modalName` | `string` | The name of the modal to show. |
+| `props` | `Record`<`string`, `any`\> | The optional props to provide to the modal. |
+| `onClose` | () => `void` | The optional callback to call when the modal is closed. |
 
 #### Returns
 
@@ -4775,7 +4790,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:160](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L160)
+[packages/framework/esm-styleguide/src/modals/index.tsx:208](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L208)
 
 ___
 
