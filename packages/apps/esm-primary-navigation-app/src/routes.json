@@ -37,12 +37,6 @@
       "order": 1
     },
     {
-      "name": "change-language-modal",
-      "component": "changeLanguageModal",
-      "online": true,
-      "offline": true
-    },
-    {
       "name": "offline-banner",
       "slot": "user-panel-slot",
       "component": "offlineBanner",
@@ -55,6 +49,12 @@
       "component": "linkComponent",
       "online": true,
       "offline": true
+    }
+  ],
+  "modals": [
+    {
+      "name": "change-language-modal",
+      "component": "changeLanguageModal"
     }
   ]
 }

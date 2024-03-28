@@ -232,6 +232,37 @@ export type ExtensionDefinition = {
 );
 
 /**
+ * A definition of an modal as extracted from an app's routes.json
+ */
+export type ModalDefintion = {
+  /**
+   * The name of this modal. This is used to launch the modal.
+   */
+  name: string;
+} & (
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component: string;
+      /**
+       * @internal
+       */
+      load?: never;
+    }
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component?: never;
+      /**
+       * @internal
+       */
+      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+    }
+);
+
+/**
  * This interface describes the format of the routes provided by an app
  */
 export interface OpenmrsAppRoutes {
@@ -251,6 +282,10 @@ export interface OpenmrsAppRoutes {
    * An array of all extensions supported by this frontend module. Extensions can be mounted in extension slots, either via declarations in this file or configuration.
    */
   extensions?: Array<ExtensionDefinition>;
+  /**
+   * An array of all modals supported by this frontend module. Modals can be launched by name.
+   */
+  modals?: Array<ModalDefintion>;
 }
 
 /**
