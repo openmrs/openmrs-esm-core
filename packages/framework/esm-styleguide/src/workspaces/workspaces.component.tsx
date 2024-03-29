@@ -5,18 +5,19 @@ import { ArrowLeft, Close } from '@carbon/react/icons';
 import { useLayoutType, isDesktop } from '@openmrs/esm-framework';
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
-import { type WorkspaceInstance, useWorkspaceStore, cancelPrompt } from './workspaces.resource';
+import { cancelPrompt } from './workspaces';
 
 import classNames from 'classnames';
+import { useWorkspaces } from './useWorkspaces';
 
 const WorkspaceContainer: React.FC = () => {
-  const { openWorkspaces } = useWorkspaceStore();
-  if (!openWorkspaces.length) {
+  const { workspaces } = useWorkspaces();
+  if (!workspaces.length) {
     return null;
   }
   return (
     <>
-      {openWorkspaces.map((instance, index) => (
+      {workspaces.map((instance, index) => (
         <Workspace workspaceInstance={instance} visible={index === 0} key={instance.name} />
       ))}
       <WorkspaceNotification />
