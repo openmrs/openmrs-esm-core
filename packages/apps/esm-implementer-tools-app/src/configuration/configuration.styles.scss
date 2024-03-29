@@ -1,13 +1,14 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/type';
+@use '@carbon/react/scss/theme';
 @import '~@openmrs/esm-styleguide/src/vars';
 @import '../implementer-tools.styles.scss';
 
 .tools {
   width: 100%;
-  background-color: $ui-03;
-  border-bottom: 1px solid $ui-04;
-  border-top: 1px solid $color-gray-30;
+  background-color: theme.$background;
+  border-bottom: 1px solid theme.$border-subtle-00;
+  border-top: 1px solid theme.$border-subtle-00;
   z-index: 2;
   position: sticky;
   top: 0;
@@ -32,6 +33,10 @@
     width: 100%;
     padding: 0 1rem;
   }
+
+  input {
+    color: theme.$text-inverse;
+  }
 }
 
 .downloadLink {
@@ -45,6 +50,23 @@
   width: 100%;
   display: flex;
   overflow-y: auto;
+
+  :global(.ace_scroller) {
+    background-color: theme.$background;
+    color: theme.$text-secondary;
+  }
+
+  :global(.ace_gutter) {
+    background-color: theme.$background;
+    color: theme.$text-secondary;
+  }
+
+  :global(.ace_active-line) {
+    background-color: theme.$layer-accent !important;
+  }
+  :global(.ace_cursor) {
+    color: theme.$text-secondary;
+  }
 }
 
 .configTreePane {
@@ -52,12 +74,13 @@
   // overflow-wrap: break-word;
   overflow-x: auto;
   overflow-y: auto;
+  background: theme.$background;
 }
 
 .descriptionPane {
   width: 35%;
-  background-color: $ui-03;
-  color: #424242;
+  background-color: theme.$background;
+  color: theme.$text-secondary;
   padding: spacing.$spacing-05 2em;
   font-size: 12pt;
   overflow-wrap: break-word;

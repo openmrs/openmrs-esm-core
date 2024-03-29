@@ -1,6 +1,29 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/type';
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/theme';
+@use '@carbon/react/scss/components/button/tokens' as buttonTokens;
+@use '@carbon/themes/scss/utilities';
+@use '@carbon/react/scss/components/button';
 @import '~@openmrs/esm-styleguide/src/vars';
+
+$buttonTokenOverrides: (
+  button-secondary: #6f6f6f,
+);
+
+$buttonTokens: utilities.merge(buttonTokens.$button-tokens, $buttonTokenOverrides);
+$customDarkTheme: utilities.merge(
+  themes.$g90,
+  (
+    'text-primary': #f5f5f5,
+    'text-secondary': #bcbaba,
+    'layer-selected-inverse': #696969,
+    'text-inverse': #f5f5f5,
+    'field-01': #757575,
+    'background': #393939,
+  )
+);
+@include theme.add-component-tokens($buttonTokens);
 
 .productiveHeading01 {
   @include type.type-style('heading-compact-01');
@@ -37,4 +60,8 @@
   div:hover {
     padding: spacing.$spacing-03 0;
   }
+}
+
+.darkTheme {
+  @include theme.theme($customDarkTheme);
 }

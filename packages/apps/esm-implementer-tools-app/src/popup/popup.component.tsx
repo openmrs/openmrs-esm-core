@@ -53,10 +53,10 @@ export default function Popup({
               setActiveTab(switcherItem.index);
             }}
           >
-            <Switch name="configuration-tab" text={t('configuration', 'Configuration')} />
-            <Switch name="frontend-modules-tab" text={t('frontendModules', 'Frontend Modules')} />
-            <Switch name="backend-modules-tab" text={t('backendModules', 'Backend Modules')} />
-            <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature Flags')} />
+            <Switch name="configuration-tab" text={t('configuration', 'Configuration')} className="darkThemeSwitch"/>
+            <Switch name="frontend-modules-tab" text={t('frontendModules', 'Frontend Modules')} className="darkThemeSwitch"/>
+            <Switch name="backend-modules-tab" text={t('backendModules', 'Backend Modules')} className="darkThemeSwitch"/>
+            <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature Flags')} className="darkThemeSwitch"/>
           </ContentSwitcher>
         </div>
         <div>

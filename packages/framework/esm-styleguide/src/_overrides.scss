@@ -54,7 +54,7 @@
 }
 
 /* Content Switcher */
-.cds--content-switcher {
+.cds--content-switcher:not(.darkThemeSwitch) {
   @include layout.use('size', $default: 'sm');
 
   & > :first-child {
@@ -78,7 +78,7 @@
   }
 }
 
-.cds--content-switcher-btn {
+.cds--content-switcher-btn:not(.darkThemeSwitch) {
   background-color: $ui-02;
   border: none;
   border-top: 1px solid colors.$blue-30;
@@ -125,19 +125,25 @@
   }
 }
 
-.cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:first-child .cds--content-switcher-btn {
+.cds--content-switcher--icon-only
+  .cds--content-switcher-popover__wrapper:first-child
+  .cds--content-switcher-btn:not(.darkThemeSwitch) {
   border-left: unset;
 }
 
-.cds--content-switcher--icon-only .cds--content-switcher-popover__wrapper:last-child .cds--content-switcher-btn {
+.cds--content-switcher--icon-only
+  .cds--content-switcher-popover__wrapper:last-child
+  .cds--content-switcher-btn:not(.darkThemeSwitch) {
   border-right: unset;
 }
 
-.cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:first-child {
+.cds--content-switcher:not(.cds--content-switcher--icon-only)
+  .cds--content-switcher-btn:not(.darkThemeSwitch):first-child {
   border-left: 0.0625rem solid colors.$blue-30;
 }
 
-.cds--content-switcher:not(.cds--content-switcher--icon-only) .cds--content-switcher-btn:last-child {
+.cds--content-switcher:not(.cds--content-switcher--icon-only)
+  .cds--content-switcher-btn:not(.darkThemeSwitch):last-child {
   border-right: 0.0625rem solid colors.$blue-30;
 }
 
