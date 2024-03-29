@@ -5,14 +5,15 @@
 .desktopOverlay {
   position: fixed;
   top: spacing.$spacing-09;
-  width: 37rem;
   right: 0;
-  bottom: 0;
-  border-left: 1px solid $text-03;
-  background-color: $ui-01;
-  overflow-y: auto;
   height: calc(100vh - 3rem);
-  z-index: 3;
+  min-width: 27rem;
+  background-color: $ui-02;
+  border-left: 1px solid $text-03;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  z-index: 999;
 }
 
 .desktopOverlay::after {
@@ -27,18 +28,16 @@
   left: 0;
   right: 0;
   z-index: 9999;
-  background-color: $ui-01;
+  background-color: $ui-02;
   overflow: hidden;
   padding-top: spacing.$spacing-09;
   display: grid;
   grid-template-rows: 1fr auto;
-  overflow-y: auto;
-  height: 100vh;
 }
 
 .tabletOverlayHeader {
   button {
-    @include brand-01(background-color);
+    background-color: $brand-01 !important;
   }
 
   .headerContent {
@@ -48,15 +47,10 @@
 
 .desktopHeader {
   display: flex;
-  height: 2.5rem;
   justify-content: space-between;
   align-items: center;
   background-color: $ui-03;
   border-bottom: 1px solid $text-03;
-  position: sticky;
-  width: 100%;
-  z-index: 1000;
-  top: 0;
 }
 
 .headerContent {
@@ -66,25 +60,19 @@
 }
 
 .closeButton {
-  background-color: $ui-background;
-  color: $ui-05;
-  fill: $ui-05;
+  background-color: $ui-02;
 }
 
-/* Desktop */
-:global(.omrs-breakpoint-gt-tablet) {
-  .overlayContent {
-    padding: 0 0 0 0;
-    overflow-y: auto;
-  }
+.workspaceContent {
+  padding: spacing.$spacing-05;
+  overflow-y: auto;
 }
 
-/* Tablet */
-:global(.omrs-breakpoint-lt-desktop) {
-  .overlayContent {
-    padding: 0 0 0 0;
-    overflow-y: auto;
-  }
+.workspaceLoadingContent {
+  display: flex;
+  background-color: $openmrs-background-grey;
+  justify-content: center;
+  min-height: spacing.$spacing-09;
 }
 
 // Overriding styles for RTL support

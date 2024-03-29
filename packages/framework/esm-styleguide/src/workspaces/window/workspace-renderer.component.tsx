@@ -9,11 +9,11 @@ import styles from './workspace-window.scss';
 
 interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
-  patientUuid: string;
   active: boolean;
+  additionalPropsFromPage?: object;
 }
 
-export function WorkspaceRenderer({ workspace, patientUuid, active }: WorkspaceRendererProps) {
+export function WorkspaceRenderer({ workspace, active, additionalPropsFromPage }: WorkspaceRendererProps) {
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
   const { workspaceWindowState } = useWorkspaces();
@@ -37,10 +37,10 @@ export function WorkspaceRenderer({ workspace, patientUuid, active }: WorkspaceR
         closeWorkspace: workspace.closeWorkspace,
         closeWorkspaceWithSavedChanges: workspace.closeWorkspaceWithSavedChanges,
         promptBeforeClosing: workspace.promptBeforeClosing,
-        patientUuid,
+        ...additionalPropsFromPage,
         ...workspace.additionalProps,
       },
-    [workspace, patientUuid],
+    [workspace, additionalPropsFromPage],
   );
 
   return (

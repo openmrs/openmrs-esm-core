@@ -132,9 +132,9 @@ function promptBeforeLaunchingWorkspace(
   const proceed = () => {
     workspace.closeWorkspace({
       ignoreChanges: true,
-      // Calling the launchPatientWorkspace again, since one of the `if` case
+      // Calling the launchWorkspace again, since one of the `if` case
       // might resolve, but we need to check all the cases before launching the form.
-      onWorkspaceClose: () => launchPatientWorkspace(name, additionalProps),
+      onWorkspaceClose: () => launchWorkspace(name, additionalProps),
     });
   };
 
@@ -164,7 +164,7 @@ function promptBeforeLaunchingWorkspace(
  * @param name The name of the workspace to launch
  * @param additionalProps Props to pass to the workspace component being launched
  */
-export function launchPatientWorkspace(name: string, additionalProps?: object) {
+export function launchWorkspace(name: string, additionalProps?: object) {
   const store = getWorkspaceStore();
   const workspace = getWorkspaceRegistration(name);
   const newWorkspace = {
@@ -236,8 +236,8 @@ export function navigateAndLaunchWorkspace({
   workspaceName: string;
   additionalProps?: object;
 }) {
-  setupWorkspacesFor(contextKey);
-  launchPatientWorkspace(workspaceName, additionalProps);
+  changeWorkspaceContext(contextKey);
+  launchWorkspace(workspaceName, additionalProps);
   navigate({ to: targetUrl });
 }
 
@@ -303,9 +303,12 @@ export function closeWorkspace(
  * should be used when transitioning to a new page. If the current
  * workspace data is for a different page, the workspace state is cleared.
  *
+ * This is called by the workspace components when they mount.
+ * @internal
+ *
  * @param contextKey An arbitrary key to identify the current page
  */
-export function setupWorkspacesFor(contextKey: string) {
+export function changeWorkspaceContext(contextKey: string | null) {
   const store = getWorkspaceStore();
   const state = store.getState();
   if (state.context != contextKey) {
@@ -314,7 +317,7 @@ export function setupWorkspacesFor(contextKey: string) {
 }
 
 const initialState: WorkspaceStoreState = {
-  context: null,
+  context: '',
   openWorkspaces: [],
   prompt: null,
   workspaceWindowState: 'normal',
@@ -357,9 +360,9 @@ export function closeAllWorkspaces(onClosingWorkspaces: () => void = () => {}) {
 
 export interface WorkspacesInfo {
   active: boolean;
+  prompt: Prompt | null;
   workspaceWindowState: WorkspaceWindowState;
   workspaces: Array<OpenWorkspace>;
-  prompt: Prompt | null;
 }
 
 export function useWorkspaces(): WorkspacesInfo {
@@ -368,9 +371,9 @@ export function useWorkspaces(): WorkspacesInfo {
   const memoisedResults = useMemo(
     () => ({
       active: openWorkspaces.length > 0,
+      prompt,
       workspaceWindowState,
       workspaces: openWorkspaces,
-      prompt,
     }),
     [openWorkspaces, workspaceWindowState, prompt],
   );
@@ -481,10 +484,6 @@ export function showWorkspacePrompts(
   }
 }
 
-/**
- * @internal
- * Just for testing.
- */
 export function resetWorkspaceStore() {
   getWorkspaceStore().setState(initialState);
 }
