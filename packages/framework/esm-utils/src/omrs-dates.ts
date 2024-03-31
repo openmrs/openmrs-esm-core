@@ -63,7 +63,6 @@ export function isOmrsDateToday(date: DateInput) {
  */
 export function toDateObjectStrict(omrsDateString: string): Date | null {
   if (!isOmrsDateStrict(omrsDateString)) {
-    // return null;
     throw new Error(`The date "${omrsDateString}" is not valid in the system`);
   }
 
