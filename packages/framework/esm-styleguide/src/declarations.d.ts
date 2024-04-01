@@ -5,4 +5,6 @@ declare module '*.svg' {
 }
 declare module '*.css';
 declare module '*.scss';
-declare type SideNavProps = {};
+declare type SideNavProps = {
+  isChildOfHeader?: boolean;
+};

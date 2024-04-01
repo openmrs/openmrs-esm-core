@@ -48,20 +48,31 @@ export interface WorkspaceRegistration {
   preferredWindowSize?: WorkspaceWindowState;
 }
 
-let registeredWorkspaces: Record<string, WorkspaceRegistration> = {};
+interface WorkspaceRegistrationStore {
+  workspaces: Record<string, WorkspaceRegistration>;
+}
+
+const workspaceRegistrationStore = createGlobalStore<WorkspaceRegistrationStore>('workspaceRegistrations', {
+  workspaces: {},
+});
 
 /**
  * Tells the workspace system about a workspace.
  */
 export function registerWorkspace(workspace: WorkspaceRegistration) {
-  registeredWorkspaces[workspace.name] = {
-    ...workspace,
-    preferredWindowSize: workspace.preferredWindowSize ?? 'normal',
-    type: workspace.type ?? 'form',
-    canHide: workspace.canHide ?? false,
-    canMaximize: workspace.canMaximize ?? false,
-    width: workspace.width ?? 'narrow',
-  };
+  workspaceRegistrationStore.setState((state) => ({
+    workspaces: {
+      ...state.workspaces,
+      [workspace.name]: {
+        ...workspace,
+        preferredWindowSize: workspace.preferredWindowSize ?? 'normal',
+        type: workspace.type ?? 'form',
+        canHide: workspace.canHide ?? false,
+        canMaximize: workspace.canMaximize ?? false,
+        width: workspace.width ?? 'narrow',
+      },
+    },
+  }));
 }
 
 const workspaceExtensionWarningsIssued = new Set();
@@ -72,6 +83,7 @@ const workspaceExtensionWarningsIssued = new Set();
  * @param name of the workspace
  */
 function getWorkspaceRegistration(name: string): WorkspaceRegistration {
+  const registeredWorkspaces = workspaceRegistrationStore.getState().workspaces;
   if (registeredWorkspaces[name]) {
     return registeredWorkspaces[name];
   } else {

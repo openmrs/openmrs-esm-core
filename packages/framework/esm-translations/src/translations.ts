@@ -19,7 +19,6 @@ export const coreTranslations = {
   cancel: 'Cancel',
   change: 'Change',
   close: 'Close',
-  closeWorkspace: 'Close workspace',
   confirm: 'Confirm',
   contactDetails: 'Contact Details',
   error: 'Error',

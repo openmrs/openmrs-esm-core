@@ -15,13 +15,9 @@ export interface WorkspaceOverlayProps {
 
 export function WorkspaceOverlay({ contextKey }: WorkspaceOverlayProps) {
   const { workspaces } = useWorkspaces();
-  if (!workspaces.length) {
-    return null;
-  }
-  const activeWorkspace = workspaces[0];
   return (
     <>
-      <Workspace workspaceInstance={activeWorkspace} />
+      {workspaces.length ? <Workspace workspaceInstance={workspaces[0]} /> : null}
       <WorkspaceNotification contextKey={contextKey} />
     </>
   );
@@ -70,21 +66,23 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
         <div className={styles.desktopHeader}>
           <div className={styles.headerContent}>{workspaceInstance.title}</div>
           <Button
-            className={styles.closePanelButton}
-            iconDescription={getCoreTranslation('closeWorkspace', 'Close workspace')}
+            className={styles.closeButton}
             onClick={workspaceInstance?.closeWorkspace}
             kind="ghost"
             hasIconOnly
+            iconDescription={getCoreTranslation('close', 'Close')}
+            tooltipPosition="bottom"
             renderIcon={(props) => <Close size={16} {...props} />}
           />
         </div>
       ) : (
         <Header className={styles.tabletOverlayHeader} aria-label="Workspace header">
           <Button
-            kind="ghost"
             onClick={workspaceInstance.closeWorkspace}
+            kind="ghost"
             hasIconOnly
-            iconDescription={getCoreTranslation('closeWorkspace', 'Close workspace')}
+            iconDescription={getCoreTranslation('close', 'Close')}
+            tooltipPosition="bottom"
             renderIcon={(props) => <ArrowLeft size={16} onClick={close} {...props} />}
           />
           <div className={styles.headerContent}>{workspaceInstance.title}</div>

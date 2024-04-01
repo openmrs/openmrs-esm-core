@@ -7,19 +7,13 @@
   position: fixed;
   top: spacing.$spacing-09;
   right: 0;
-  height: calc(100vh - 3rem);
-  min-width: 27rem;
+  min-width: 32.25rem;
   background-color: $ui-02;
   border-left: 1px solid $text-03;
   overflow: hidden;
   display: grid;
   grid-template-rows: auto 1fr auto;
   z-index: 999;
-}
-
-.desktopOverlay::after {
-  height: 100%;
-  border-left: 1px solid $text-03;
 }
 
 .tabletOverlay {
@@ -62,18 +56,25 @@
 
 .closeButton {
   background-color: $ui-02;
+  padding-top: 0;
+  height: 2.5rem;
+  min-height: auto;
+  align-items: center;
 }
 
 .workspaceContent {
-  padding: spacing.$spacing-05;
+  top: 6rem;
+  right: auto;
+  left: auto;
   overflow-y: auto;
+  max-height: var(--desktop-workspace-window-height);
 }
 
 .workspaceLoadingContent {
   display: flex;
   background-color: $openmrs-background-grey;
   justify-content: center;
-  min-height: spacing.$spacing-09;
+  height: var(--desktop-workspace-window-height);
 }
 
 // Overriding styles for RTL support
