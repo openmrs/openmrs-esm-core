@@ -1,6 +1,7 @@
 @use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/colors';
 @use '@carbon/styles/scss/type';
-@import './root.scss';
+@import '@openmrs/esm-styleguide/src/vars';
 
 .desktopOverlay {
   position: fixed;

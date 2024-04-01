@@ -291,10 +291,6 @@ function showModals() {
   setupModals(document.querySelector('.omrs-modals-container'));
 }
 
-function showOverlays() {
-  renderWorkspaces(document.querySelector('.omrs-overlays-container'));
-}
-
 function showLoadingSpinner() {
   return renderLoadingSpinner(document.body);
 }
@@ -405,7 +401,6 @@ export function run(configUrls: Array<string>, offline: boolean) {
   integrateBreakpoints();
   showToasts();
   showModals();
-  showOverlays();
   showNotifications();
   showActionableNotifications();
   showSnackbars();

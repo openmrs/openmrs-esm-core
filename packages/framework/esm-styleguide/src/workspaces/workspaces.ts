@@ -146,7 +146,13 @@ function promptBeforeLaunchingWorkspace(
 }
 
 /**
- * Given a workspace specified by its name:
+ * This launches a workspace by its name. The workspace must have been registered.
+ * Workspaces should be registered in the `routes.json` file.
+ *
+ * For the workspace to appear, there must be either a `<WorkspaceOverlay />` or
+ * a `<WorkspaceWindow />` component rendered.
+ *
+ * The behavior of this function is as follows:
  *
  * - If no workspaces are open, or if no other workspaces with the same type are open,
  *   it will be opened and focused.
@@ -158,8 +164,8 @@ function promptBeforeLaunchingWorkspace(
  *   the front and then a confirmation modal will pop up warning about closing the opened
  *   workspace
  *
- * Note that this function just manipulates the workspace store. The UI logic based on
- * the workspace store is contained in esm-patient-chart-app.
+ * Note that this function just manipulates the workspace store. The UI logic is handled
+ * by the components that display workspaces.
  *
  * @param name The name of the workspace to launch
  * @param additionalProps Props to pass to the workspace component being launched

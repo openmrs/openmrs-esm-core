@@ -1,5 +1,5 @@
-@import '../root.scss';
+@use '@carbon/styles/scss/type';
 
 .messageBody {
-  @extend .productiveHeading02;
+  @include type.type-style('heading-compact-02');
 }
