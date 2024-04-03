@@ -2875,7 +2875,6 @@ __metadata:
     cross-env: "npm:7.0.2"
     dotenv: "npm:^16.0.3"
     eslint: "npm:^8.55.0"
-    eslint-config-prettier: "npm:^9.1.0"
     fake-indexeddb: "npm:^4.0.1"
     fork-ts-checker-webpack-plugin: "npm:^7.2.13"
     husky: "npm:^8.0.1"
@@ -8824,17 +8823,6 @@ __metadata:
     escodegen: bin/escodegen.js
     esgenerate: bin/esgenerate.js
   checksum: 10/0f7e404b19b14047dd12b62b2267ba9b68fff02be0d40d71fdcc27dfdd664720e1afae34680892b8a34cdd9280b7b4f81c02f7c7597a8eda0c6d2b4c2b7d07f0
-  languageName: node
-  linkType: hard
-
-"eslint-config-prettier@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "eslint-config-prettier@npm:9.1.0"
-  peerDependencies:
-    eslint: ">=7.0.0"
-  bin:
-    eslint-config-prettier: bin/cli.js
-  checksum: 10/411e3b3b1c7aa04e3e0f20d561271b3b909014956c4dba51c878bf1a23dbb8c800a3be235c46c4732c70827276e540b6eed4636d9b09b444fd0a8e07f0fcd830
   languageName: node
   linkType: hard
 

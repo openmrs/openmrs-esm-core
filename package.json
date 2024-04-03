@@ -19,7 +19,6 @@
     "setup": "yarn install && turbo run build",
     "start": "openmrs develop",
     "verify": "turbo run lint && turbo run test && turbo run typescript",
-    "prettier": "prettier --config prettier.config.js --write \"packages/**/*.{ts,tsx,css,scss}\" \"e2e/**/*.ts\" --list-different",
     "postinstall": "husky install",
     "test": "cross-env TZ=UTC jest --config jest.config.json --verbose false --passWithNoTests",
     "test-watch": "cross-env TZ=UTC jest --watch --config jest.config.json",
@@ -45,7 +44,6 @@
     "cross-env": "7.0.2",
     "dotenv": "^16.0.3",
     "eslint": "^8.55.0",
-    "eslint-config-prettier": "^9.1.0",
     "fake-indexeddb": "^4.0.1",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "husky": "^8.0.1",
@@ -70,7 +68,10 @@
     "webpack": "^5.88.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --cache --fix",
+      "prettier --cache --write --ignore-unknown --list-different"
+    ]
   },
   "resolutions": {
     "minipass": "3.3.5"
