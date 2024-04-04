@@ -186,8 +186,6 @@ function connectivityChanged() {
  * Runs the shell by importing the translations and starting single SPA.
  */
 function runShell() {
-  window.addEventListener('offline', connectivityChanged);
-  window.addEventListener('online', connectivityChanged);
   return setupI18n()
     .catch((err) => console.error(`Failed to initialize translations`, err))
     .then(() => start());
@@ -378,6 +376,11 @@ async function precacheImportMap() {
   });
 }
 
+function registerOfflineHandlers() {
+  window.addEventListener('offline', connectivityChanged);
+  window.addEventListener('online', connectivityChanged);
+}
+
 function setupOfflineCssClasses() {
   subscribeConnectivity(({ online }) => {
     const body = document.querySelector('body')!;
@@ -410,7 +413,8 @@ export function run(configUrls: Array<string>, offline: boolean) {
 
   return setupApps()
     .then(finishRegisteringAllApps)
-    .then(setupOfflineCssClasses)
+    .then(offline ? setupOfflineCssClasses : undefined)
+    .then(offline ? registerOfflineHandlers : undefined)
     .then(provideConfigs)
     .then(runShell)
     .catch(handleInitFailure)

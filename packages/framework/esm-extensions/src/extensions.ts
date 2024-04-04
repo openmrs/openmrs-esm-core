@@ -315,8 +315,8 @@ function getAssignedExtensionsFromSlotData(
         config: extensionConfig,
         featureFlag: extension.featureFlag,
         meta: extension.meta,
-        online: extension.online ?? true,
-        offline: extension.offline ?? false,
+        online: extensionConfig?.['Display conditions']?.online ?? extension.online ?? true,
+        offline: extensionConfig?.['Display conditions']?.offline ?? extension.offline ?? false,
       });
     }
   }
