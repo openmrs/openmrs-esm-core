@@ -53,10 +53,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "שגיאה לא ידועה.",
   "offlinePatientSyncDetailsHeader": "פרטי מטופל לא מקוון",
   "offlineReady": "מצב לא מקוון מוכן",
-  "offlineToolsAppMenuLink": "כלי לא מקוונים",
-  "offlineActionsSynchronizationNotificationTitle": "העלאה",
-  "offlineActionsSynchronizationNotificationSynchronized": "הסנכרון של הפעולות במצב לא מקוון הושלם.",
-  "offlineActionsSynchronizationNotificationCanceling": "מבטל...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} פעולות",
-  "offlineActionsSynchronizationNotificationCancelUpload": "בטל העלאה"
+  "offlineToolsAppMenuLink": "כלי לא מקוונים"
 }

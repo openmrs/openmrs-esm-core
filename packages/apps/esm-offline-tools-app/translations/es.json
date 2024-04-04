@@ -53,10 +53,5 @@
   "offlinePatientSyncDetailsFallbackErrorMessage": "Error desconocido.",
   "offlinePatientSyncDetailsHeader": "Detalles de pacientes offline",
   "offlineReady": "Listo offline",
-  "offlineToolsAppMenuLink": "Herramientas offline",
-  "offlineActionsSynchronizationNotificationTitle": "Subir",
-  "offlineActionsSynchronizationNotificationSynchronized": "La sincronización de acciones sin conexión ha finalizado.",
-  "offlineActionsSynchronizationNotificationCanceling": "Cancelando...",
-  "offlineActionsSynchronizationNotificationStatus": "{{current}} / {{total}} acciones",
-  "offlineActionsSynchronizationNotificationCancelUpload": "Cancelar subida"
+  "offlineToolsAppMenuLink": "Herramientas offline"
 }

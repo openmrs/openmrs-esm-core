@@ -1,9 +1,7 @@
 {
   "back": "חזרה",
   "change": "שינוי",
-  "confirm": "אישור",
   "continue": "המשך",
-  "error": "שגיאה",
   "errorLoadingLoginLocations": "Error loading login locations",
   "invalidCredentials": "שם משתמש או סיסמה לא תקינים",
   "loading": "טוען",
