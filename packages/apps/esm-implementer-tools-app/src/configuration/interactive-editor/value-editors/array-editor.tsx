@@ -13,7 +13,7 @@ import {
 import { Add, TrashCan } from '@carbon/react/icons';
 import { ValueEditorField } from './value-editor-field';
 import type { ConfigValueDescriptor } from '../editable-value.component';
-import styles from './array-editor.styles.css';
+import styles from './array-editor.styles.scss';
 
 interface ArrayEditorProps {
   element: ConfigValueDescriptor;
