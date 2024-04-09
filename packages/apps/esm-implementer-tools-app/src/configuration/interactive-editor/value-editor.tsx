@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@carbon/react';
-import { Close, Save } from '@carbon/react/icons';
-import type { Type } from '@openmrs/esm-framework';
+import { CloseIcon, SaveIcon, type Type } from '@openmrs/esm-framework';
 import type { ConfigValueDescriptor } from './editable-value.component';
 import { ValueEditorField } from './value-editors/value-editor-field';
 import styles from './value-editor.scss';
@@ -46,13 +45,13 @@ export function ValueEditor({ element, customType, path, handleSave, handleClose
       <ValueEditorField element={element} path={path} value={tmpValue} onChange={setTmpValue} valueType={valueType} />
       <div className={styles.valueEditorButtons}>
         <Button
-          renderIcon={(props) => <Save {...props} size={16} />}
+          renderIcon={(props) => <SaveIcon {...props} size={16} />}
           kind="primary"
           onClick={() => handleSave(JSON.stringify(tmpValue))}
         >
           {t('saveValueButtonText', 'Save')}
         </Button>
-        <Button renderIcon={(props) => <Close {...props} size={16} />} kind="secondary" onClick={handleClose}>
+        <Button renderIcon={(props) => <CloseIcon {...props} size={16} />} kind="secondary" onClick={handleClose}>
           {t('cancelButtonText', 'Cancel')}
         </Button>
       </div>

@@ -21,7 +21,7 @@ if (document.readyState === 'complete') {
 
 export function addSvg(htmlId: string, svgString: string) {
   const domParser = new DOMParser();
-  const dom = domParser.parseFromString(svgString, 'text/html');
+  const dom = domParser.parseFromString(svgString, 'image/svg+xml');
   const svgElement = dom.querySelector('svg');
 
   if (svgElement) {

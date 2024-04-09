@@ -1,12 +1,12 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const { resolve } = require('path');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { basename, resolve } = require('path');
 
 const { peerDependencies } = require('./package.json');
 
-module.exports = (env) => ({
+module.exports = (env, argv = {}) => ({
   entry: [resolve(__dirname, 'src/index.ts'), resolve(__dirname, 'src/_all.scss')],
   output: {
     filename: 'openmrs-esm-styleguide.js',
@@ -14,7 +14,7 @@ module.exports = (env) => ({
     path: resolve(__dirname, 'dist'),
     library: { type: 'system' },
   },
-  mode: 'production',
+  mode: argv.mode ?? process.env.NODE_ENV ?? 'production',
   devtool: 'source-map',
   module: {
     rules: [
@@ -40,7 +40,12 @@ module.exports = (env) => ({
         type: 'asset/resource',
       },
       {
-        test: /\.(svg|html)$/,
+        test: /\.svg$/,
+        use: 'svgo-loader',
+        type: 'asset/source',
+      },
+      {
+        test: /\.html$/,
         type: 'asset/source',
       },
     ],

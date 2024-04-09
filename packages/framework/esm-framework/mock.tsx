@@ -11,6 +11,7 @@ export * from '@openmrs/esm-context';
 export * from '@openmrs/esm-extensions/mock';
 export * from '@openmrs/esm-react-utils/mock';
 export * from '@openmrs/esm-state/mock';
+export * from '@openmrs/esm-styleguide/mock';
 export * from '@openmrs/esm-translations/mock';
 
 /* esm-globals */

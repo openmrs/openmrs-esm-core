@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback, LegacyRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useLocation, type Location, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
