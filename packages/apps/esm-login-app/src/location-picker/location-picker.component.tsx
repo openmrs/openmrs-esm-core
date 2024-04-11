@@ -24,7 +24,7 @@ import {
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import styles from './location-picker.scss';
-import { getUserPropertiesWithDefaultAndLogInLocation } from './location-picker.resource';
+import { getUserDefaultAndLoggedInLocations } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
 
 interface LocationPickerProps {}
@@ -46,14 +46,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   };
 
   const { user, sessionLocation } = useSession();
-  const { currentUser } = useMemo(
-    () => ({
-      currentUser: user?.display,
-      userUuid: user?.uuid,
-      userProperties: user?.userProperties,
-    }),
-    [user],
-  );
+  const currentUser = user?.display;
 
   const {
     locations,
@@ -66,18 +59,20 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
     lastLoggedInLocation,
   } = useLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, debouncedSearchTerm);
 
-  const updateUserProperties = useCallback(
+  const prevUserProperties = user?.userProperties;
+
+  const updateLocationsInUserProperties = useCallback(
     (locationUuid: string) => {
-      if (!locationUuid) return;
-      const { previousLoggedInLocations, defaultLocation } = getUserPropertiesWithDefaultAndLogInLocation(
+      if (!locationUuid) {
+        return;
+      }
+      const { previousLoggedInLocations, defaultLocation } = getUserDefaultAndLoggedInLocations(
         locationUuid,
-        user?.userProperties?.previousLoggedInLocations,
+        prevUserProperties?.previousLoggedInLocations,
       );
 
-      const prevUserProperties = user?.userProperties;
-
       const updatedUserProperties = {
-        ...(user?.userProperties ?? {}),
+        ...(prevUserProperties ?? {}),
         previousLoggedInLocations,
         defaultLocation,
       };
@@ -106,7 +101,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
         }
       });
     },
-    [user?.uuid, user?.userProperties, saveDefaultLocation],
+    [user?.uuid, prevUserProperties, saveDefaultLocation],
   );
 
   const changeLocation = useCallback(
@@ -117,7 +112,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
       const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
 
       const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
-      updateUserProperties(locationUuid);
+      updateLocationsInUserProperties(locationUuid);
       sessionDefined.then(() => {
         if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
           navigate({ to: '${openmrsSpaBase}' + referrer });
@@ -131,7 +126,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
         return;
       });
     },
-    [state?.referrer, config.links.loginSuccess, updateUserProperties],
+    [state?.referrer, config.links.loginSuccess, updateLocationsInUserProperties],
   );
 
   useEffect(() => {
@@ -159,7 +154,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
   }, [setSaveDefaultLocation, isDefaultLocationValid]);
 
   useEffect(() => {
-    // Handle cases where the login location is present in the userProperties.
+    // Handle cases where the default login location is present in the userProperties.
     if (!isUpdateFlow && defaultLocation && !isSubmitting) {
       setActiveLocation(defaultLocation);
       changeLocation(defaultLocation, true);
@@ -179,10 +174,6 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
     [activeLocation, changeLocation, saveDefaultLocation],
   );
 
-  const handleFetchNextSet = useCallback(() => {
-    setPage((page) => page + 1);
-  }, [setPage]);
-
   const observer = useRef(null);
   const loadingIconRef = useCallback(
     (node: HTMLDivElement) => {
@@ -191,7 +182,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
       observer.current = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting && hasMore) {
-            handleFetchNextSet();
+            setPage((page) => page + 1);
           }
         },
         {
@@ -200,7 +191,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
       );
       if (node) observer.current.observe(node);
     },
-    [loadingNewData, hasMore, handleFetchNextSet],
+    [loadingNewData, hasMore, setPage],
   );
 
   const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
