@@ -6,6 +6,7 @@ import { useBackendDependencies } from './backend-dependencies/useBackendDepende
 import { hasInvalidDependencies } from './backend-dependencies/openmrs-backend-dependencies';
 import { useTranslation } from 'react-i18next';
 import { useFrontendModules } from './hooks';
+import styles from './implementer-tools.styles.scss';
 
 const Popup = React.lazy(() => import('./popup/popup.component'));
 const UiEditor = React.lazy(() => import('./ui-editor/ui-editor'));
@@ -41,7 +42,7 @@ function PopupHandler() {
   const { isOpen, isUIEditorEnabled, openTabIndex } = useStore(implementerToolsStore);
 
   return (
-    <>
+    <div className={styles.darkTheme}>
       {isOpen ? (
         <Popup
           close={togglePopup}
@@ -51,7 +52,7 @@ function PopupHandler() {
         />
       ) : null}
       {isUIEditorEnabled ? <UiEditor /> : null}
-    </>
+    </div>
   );
 }
 
