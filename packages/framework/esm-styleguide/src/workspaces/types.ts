@@ -1,5 +1,4 @@
-/* The possible states a workspace window can be opened in. */
-export type WorkspaceWindowState = 'maximized' | 'hidden' | 'normal';
+import { type WorkspaceWindowState } from '@openmrs/esm-globals';
 
 export interface CloseWorkspaceOptions {
   /**

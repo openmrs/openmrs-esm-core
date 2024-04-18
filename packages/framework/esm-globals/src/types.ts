@@ -232,13 +232,62 @@ export type ExtensionDefinition = {
 );
 
 /**
- * A definition of an modal as extracted from an app's routes.json
+ * A definition of a modal as extracted from an app's routes.json
  */
 export type ModalDefinition = {
   /**
    * The name of this modal. This is used to launch the modal.
    */
   name: string;
+} & (
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component: string;
+      /**
+       * @internal
+       */
+      load?: never;
+    }
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component?: never;
+      /**
+       * @internal
+       */
+      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+    }
+);
+
+/* The possible states a workspace window can be opened in. */
+export type WorkspaceWindowState = 'maximized' | 'hidden' | 'normal';
+
+/**
+ * A definition of a workspace as extracted from an app's routes.json
+ */
+export type WorkspaceDefinition = {
+  /**
+   * The name of this workspace. This is used to launch the workspace.
+   */
+  name: string;
+  /**
+   * The title of the workspace. This will be looked up as a key in the translations of the module
+   * defining the workspace.
+   */
+  title: string;
+  /**
+   * The type of the workspace. Only one of each "type" of workspace is allowed to be open at a
+   * time. The default is "form". If the right sidebar is in use, then the type determines which
+   * right sidebar icon corresponds to the workspace.
+   */
+  type: string;
+  canHide?: boolean;
+  canMaximize?: boolean;
+  width?: 'narrow' | 'wider';
+  preferredWindowSize?: WorkspaceWindowState;
 } & (
   | {
       /**
@@ -286,6 +335,10 @@ export interface OpenmrsAppRoutes {
    * An array of all modals supported by this frontend module. Modals can be launched by name.
    */
   modals?: Array<ModalDefinition>;
+  /**
+   * An array of all workspaces supported by this frontend module. Workspaces can be launched by name.
+   */
+  workspaces?: Array<WorkspaceDefinition>;
 }
 
 /**

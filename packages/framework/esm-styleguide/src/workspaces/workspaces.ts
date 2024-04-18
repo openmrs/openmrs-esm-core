@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import type { LifeCycles } from 'single-spa';
 import _i18n from 'i18next';
 import {
   type ExtensionRegistration,
@@ -8,9 +9,10 @@ import {
   createGlobalStore,
   useStore,
   getCoreTranslation,
+  type WorkspaceWindowState,
 } from '@openmrs/esm-framework';
 import { getExtensionRegistration } from '@openmrs/esm-framework/src/internal';
-import { type WorkspaceWindowState, type CloseWorkspaceOptions } from './types';
+import { type CloseWorkspaceOptions } from './types';
 
 export interface Prompt {
   title: string;
@@ -29,24 +31,24 @@ export interface WorkspaceStoreState {
   workspaceWindowState: WorkspaceWindowState;
 }
 
+/** See [[WorkspaceDefinition]] for more information about these properties */
+export interface WorkspaceRegistration {
+  name: string;
+  title: string;
+  type: string;
+  canHide?: boolean;
+  canMaximize?: boolean;
+  width?: 'narrow' | 'wider';
+  preferredWindowSize?: WorkspaceWindowState;
+  load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+  moduleName: string;
+}
+
 export interface OpenWorkspace extends WorkspaceRegistration {
   additionalProps: object;
   closeWorkspace(closeWorkspaceOptions?: CloseWorkspaceOptions): boolean;
   closeWorkspaceWithSavedChanges(closeWorkspaceOptions?: CloseWorkspaceOptions): boolean;
   promptBeforeClosing(testFcn: () => boolean): void;
-}
-
-export interface WorkspaceRegistration {
-  name: string;
-  title: string;
-  /** Use `getLifecycle` or `getAsyncLifecycle` to get the value of `load` */
-  load(): Promise<any>;
-  /** Only one of each "type" of workspace is allowed to be open at a time. The default is "form" */
-  type?: string;
-  canHide?: boolean;
-  canMaximize?: boolean;
-  width?: 'narrow' | 'wider';
-  preferredWindowSize?: WorkspaceWindowState;
 }
 
 interface WorkspaceRegistrationStore {
@@ -58,7 +60,9 @@ const workspaceRegistrationStore = createGlobalStore<WorkspaceRegistrationStore>
 });
 
 /**
- * Tells the workspace system about a workspace.
+ * Tells the workspace system about a workspace. This is used by the app shell
+ * to register workspaces defined in the `routes.json` file.
+ * @internal
  */
 export function registerWorkspace(workspace: WorkspaceRegistration) {
   workspaceRegistrationStore.setState((state) => ({
@@ -92,13 +96,14 @@ function getWorkspaceRegistration(name: string): WorkspaceRegistration {
     if (workspaceExtension) {
       if (!workspaceExtensionWarningsIssued.has(name)) {
         console.warn(
-          `The workspace '${name}' is registered as an extension. This is deprecated. Please use the 'registerWorkspace' function instead.`,
+          `The workspace '${name}' is registered as an extension. This is deprecated. Please register it in the "workspaces" section of the routes.json file.`,
         );
         workspaceExtensionWarningsIssued.add(name);
       }
       return {
         name: workspaceExtension.name,
         title: getTitleFromExtension(workspaceExtension),
+        moduleName: workspaceExtension.moduleName,
         preferredWindowSize: workspaceExtension.meta?.screenSize ?? 'normal',
         load: workspaceExtension.load,
         type: workspaceExtension.meta?.type ?? 'form',

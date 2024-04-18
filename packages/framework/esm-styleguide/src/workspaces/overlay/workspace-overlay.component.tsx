@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Header, InlineLoading } from '@carbon/react';
 import { ArrowLeft, Close } from '@carbon/react/icons';
-import { useLayoutType, isDesktop, getCoreTranslation } from '@openmrs/esm-framework';
+import { useLayoutType, isDesktop, getCoreTranslation, translateFrom } from '@openmrs/esm-framework';
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
 import classNames from 'classnames';
@@ -44,11 +44,12 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
     };
   }, [workspaceInstance.load]);
 
-  if (!workspaceInstance) {
-    return null;
-  }
+  const title = useMemo(
+    () => translateFrom(workspaceInstance.moduleName, workspaceInstance.title, workspaceInstance.title),
+    [workspaceInstance.moduleName, workspaceInstance.title],
+  );
 
-  const props = {
+  const workspaceProps = {
     ...workspaceInstance.additionalProps,
     closeWorkspace: workspaceInstance.closeWorkspace,
     closeWorkspaceWithSavedChanges: workspaceInstance.closeWorkspaceWithSavedChanges,
@@ -64,7 +65,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
     >
       {isDesktop(layout) ? (
         <div className={styles.desktopHeader}>
-          <div className={styles.headerContent}>{workspaceInstance.title}</div>
+          <div className={styles.headerContent}>{title}</div>
           <Button
             className={styles.closeButton}
             onClick={workspaceInstance?.closeWorkspace}
@@ -85,12 +86,12 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
             tooltipPosition="bottom"
             renderIcon={(props) => <ArrowLeft size={16} onClick={close} {...props} />}
           />
-          <div className={styles.headerContent}>{workspaceInstance.title}</div>
+          <div className={styles.headerContent}>{title}</div>
         </Header>
       )}
       <div className={styles.workspaceContent} ref={ref}>
         {lifecycle ? (
-          <Parcel key={workspaceInstance.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
+          <Parcel key={workspaceInstance.name} config={lifecycle} mountParcel={mountRootParcel} {...workspaceProps} />
         ) : (
           <InlineLoading
             className={styles.workspaceLoadingContent}
