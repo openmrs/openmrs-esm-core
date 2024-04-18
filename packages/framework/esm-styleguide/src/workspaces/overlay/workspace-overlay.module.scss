@@ -5,7 +5,7 @@
 
 .desktopOverlay {
   position: fixed;
-  top: spacing.$spacing-09;
+  top: var(--omrs-navbar-height);
   right: 0;
   min-width: 32.25rem;
   background-color: $ui-02;
@@ -33,6 +33,10 @@
 .tabletOverlayHeader {
   button {
     background-color: $brand-01 !important;
+
+    & > svg {
+      fill: $ui-02;
+    }
   }
 
   .headerContent {
@@ -46,6 +50,7 @@
   align-items: center;
   background-color: $ui-03;
   border-bottom: 1px solid $text-03;
+  height: var(--workspace-header-height);
 }
 
 .headerContent {
@@ -57,7 +62,7 @@
 .closeButton {
   background-color: $ui-02;
   padding-top: 0;
-  height: 2.5rem;
+  height: var(--workspace-header-height);
   min-height: auto;
   align-items: center;
 }
