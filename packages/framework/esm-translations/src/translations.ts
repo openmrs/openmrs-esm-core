@@ -12,8 +12,22 @@ const addressFields = {
   stateProvince: 'State',
 };
 
+const workspaceTranslations = {
+  closeAllOpenedWorkspaces: 'Discard changes in {{count}} workspaces',
+  closingAllWorkspacesPromptBody:
+    'There are unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}',
+  closingAllWorkspacesPromptTitle: 'You have unsaved changes',
+  discard: 'Discard',
+  openAnyway: 'Open Anyway',
+  unsavedChangesInOpenedWorkspace: `You have unsaved changes in the opened workspace. Do you want to discard these changes?`,
+  unsavedChangesInWorkspace:
+    'There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
+  unsavedChangesTitleText: 'Unsaved Changes',
+};
+
 export const coreTranslations = {
   ...addressFields,
+  ...workspaceTranslations,
   actions: 'Actions',
   address: 'Address',
   cancel: 'Cancel',
