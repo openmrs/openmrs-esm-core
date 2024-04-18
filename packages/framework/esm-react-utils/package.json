@@ -45,6 +45,7 @@
   "peerDependencies": {
     "@openmrs/esm-api": "5.x",
     "@openmrs/esm-config": "5.x",
+    "@openmrs/esm-context": "5.x",
     "@openmrs/esm-error-handling": "5.x",
     "@openmrs/esm-extensions": "5.x",
     "@openmrs/esm-feature-flags": "5.x",
@@ -61,6 +62,7 @@
   "devDependencies": {
     "@openmrs/esm-api": "workspace:*",
     "@openmrs/esm-config": "workspace:*",
+    "@openmrs/esm-context": "workspace:*",
     "@openmrs/esm-error-handling": "workspace:*",
     "@openmrs/esm-extensions": "workspace:*",
     "@openmrs/esm-feature-flags": "workspace:*",

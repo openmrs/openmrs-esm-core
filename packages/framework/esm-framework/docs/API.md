@@ -64,6 +64,14 @@
 - [oneOf](API.md#oneof)
 - [validator](API.md#validator)
 
+### Context Functions
+
+- [getContext](API.md#getcontext)
+- [registerContext](API.md#registercontext)
+- [subscribeToContext](API.md#subscribetocontext)
+- [unregisterContext](API.md#unregistercontext)
+- [updateContext](API.md#updatecontext)
+
 ### Date and Time Functions
 
 - [formatDate](API.md#formatdate)
@@ -302,6 +310,38 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-user.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L16)
+
+___
+
+## Context Type Aliases
+
+### ContextCallback
+
+Ƭ **ContextCallback**<`T`\>: (`state`: `Readonly`<`T`\> \| ``null`` \| `undefined`) => `void`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Type declaration
+
+▸ (`state`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `state` | `Readonly`<`T`\> \| ``null`` \| `undefined` |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L81)
 
 ___
 
@@ -2240,6 +2280,147 @@ A validator ready for use in a config schema
 #### Defined in
 
 [packages/framework/esm-config/src/validators/validator.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validator.ts#L25)
+
+___
+
+## Context Functions
+
+### getContext
+
+▸ **getContext**<`T`\>(`namespace`): `Immutable`<`T`\> \| ``null``
+
+Returns an _immutable_ version of the state of the namespace currently
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `namespace` | `string` |
+
+#### Returns
+
+`Immutable`<`T`\> \| ``null``
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L59)
+
+___
+
+### registerContext
+
+▸ **registerContext**(`namespace`, `initialValue?`): `void`
+
+Used by callers to register a new namespace in the application context. Attempting to register
+an already-registered namespace will display a warning and make no modifications to the state.
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `namespace` | `string` | `undefined` | the namespace to register |
+| `initialValue` | `unknown` | `nothing` | the initial value of the namespace |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L31)
+
+___
+
+### subscribeToContext
+
+▸ **subscribeToContext**<`T`\>(`namespace`, `callback`): () => `void`
+
+Subscribes to updates of a given namespace. Note that the returned object is immutable.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `namespace` | `string` | the namespace to subscribe to |
+| `callback` | [`ContextCallback`](API.md#contextcallback)<`T`\> | a function invoked with the current context whenever |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L89)
+
+___
+
+### unregisterContext
+
+▸ **unregisterContext**(`namespace`): `void`
+
+Used by caller to unregister a namespace in the application context. Unregistering a namespace
+will remove the namespace and all associated data.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `namespace` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L48)
+
+___
+
+### updateContext
+
+▸ **updateContext**<`T`\>(`namespace`, `update`): `void`
+
+Updates a namespace in the global context. If the namespace does not exist, it is registered.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `namespace` | `string` |
+| `update` | (`state`: `T`) => `void` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L71)
 
 ___
 
@@ -4401,7 +4582,7 @@ The found or newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L61)
+[packages/framework/esm-state/src/state.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L91)
 
 ___
 
@@ -4436,7 +4617,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L78)
+[packages/framework/esm-state/src/state.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L106)
 
 ___
 
