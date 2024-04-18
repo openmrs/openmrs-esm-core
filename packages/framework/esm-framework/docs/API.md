@@ -468,9 +468,9 @@ ___
 
 ___
 
-### ModalDefintion
+### ModalDefinition
 
-Ƭ **ModalDefintion**: { `name`: `string`  } & { `component`: `string`  } \| { `component?`: `never`  }
+Ƭ **ModalDefinition**: { `name`: `string`  } & { `component`: `string`  } \| { `component?`: `never`  }
 
 A definition of an modal as extracted from an app's routes.json
 

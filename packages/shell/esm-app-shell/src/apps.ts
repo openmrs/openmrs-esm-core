@@ -4,7 +4,7 @@ import type {
   OpenmrsAppRoutes,
   RouteDefinition,
   ExtensionRegistration,
-  ModalDefintion,
+  ModalDefinition,
 } from '@openmrs/esm-framework';
 import { attach, registerExtension, importDynamic } from '@openmrs/esm-framework';
 import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
@@ -132,7 +132,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     registerModuleWithConfigSystem(appName);
 
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
-    const availableModals: Array<ModalDefintion> = routes.modals ?? [];
+    const availableModals: Array<ModalDefinition> = routes.modals ?? [];
 
     routes.pages?.forEach((p) => {
       if (
@@ -329,7 +329,7 @@ supported, so the extension will not be loaded.`,
  * @param appName The name of the app defining this modal
  * @param modal An object that describes the modal, derived from `routes.json`
  */
-export function tryRegisterModal(appName: string, modal: ModalDefintion) {
+export function tryRegisterModal(appName: string, modal: ModalDefinition) {
   const name = modal.name;
   if (!name) {
     console.error(
