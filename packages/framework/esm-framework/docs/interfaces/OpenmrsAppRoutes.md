@@ -42,7 +42,7 @@ ___
 
 ### modals
 
-• `Optional` **modals**: [`ModalDefintion`](../API.md#modaldefintion)[]
+• `Optional` **modals**: [`ModalDefinition`](../API.md#modaldefinition)[]
 
 An array of all modals supported by this frontend module. Modals can be launched by name.
 

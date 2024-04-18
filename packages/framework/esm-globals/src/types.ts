@@ -234,7 +234,7 @@ export type ExtensionDefinition = {
 /**
  * A definition of an modal as extracted from an app's routes.json
  */
-export type ModalDefintion = {
+export type ModalDefinition = {
   /**
    * The name of this modal. This is used to launch the modal.
    */
@@ -285,7 +285,7 @@ export interface OpenmrsAppRoutes {
   /**
    * An array of all modals supported by this frontend module. Modals can be launched by name.
    */
-  modals?: Array<ModalDefintion>;
+  modals?: Array<ModalDefinition>;
 }
 
 /**
