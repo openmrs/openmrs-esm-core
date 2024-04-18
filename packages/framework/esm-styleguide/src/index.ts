@@ -11,7 +11,6 @@ export * from './toasts';
 export * from './snackbars';
 export * from './modals';
 export * from './workspaces';
-export * from './left-nav';
 export * from './error-state';
 export * from './datepicker';
 export * from './responsive-wrapper';

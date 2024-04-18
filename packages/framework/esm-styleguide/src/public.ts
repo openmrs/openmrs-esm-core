@@ -10,7 +10,6 @@ export * from './workspaces/public';
 export { type ToastDescriptor, type ToastType, type ToastNotificationMeta } from './toasts/toast.component';
 export { showSnackbar } from './snackbars';
 export { type SnackbarDescriptor, type SnackbarType, type SnackbarMeta } from './snackbars/snackbar.component';
-export * from './left-nav';
 export * from './error-state';
 export * from './datepicker';
 export * from './responsive-wrapper';

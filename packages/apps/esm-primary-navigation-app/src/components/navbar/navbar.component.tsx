@@ -4,13 +4,15 @@ import classNames from 'classnames';
 import { HeaderContainer, Header, HeaderMenuButton, HeaderGlobalBar, HeaderGlobalAction } from '@carbon/react';
 import { Close, Switcher, UserAvatarFilledAlt } from '@carbon/react/icons';
 import {
+  leftNavStore,
   useLayoutType,
   ExtensionSlot,
   ConfigurableLink,
   useSession,
   useConnectedExtensions,
   useConfig,
-} from '@openmrs/esm-framework';
+  useStore,
+} from '@openmrs/esm-framework/src/internal';
 import { isDesktop } from '../../utils';
 import AppMenuPanel from '../navbar-header-panels/app-menu-panel.component';
 import Logo from '../logo/logo.component';
@@ -20,14 +22,16 @@ import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import styles from './navbar.scss';
 import { useTranslation } from 'react-i18next';
+import { LeftNavMenu } from '../left-nav';
 
 const HeaderItems: React.FC = () => {
   const { t } = useTranslation();
   const config = useConfig();
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
   const layout = useLayoutType();
-  const navMenuItems = useConnectedExtensions('patient-chart-dashboard-slot').map((e) => e.id);
   const appMenuItems = useConnectedExtensions('app-menu-slot');
+  const { slotName: leftNavSlot } = useStore(leftNavStore);
+  const leftNavItems = useConnectedExtensions(leftNavSlot);
   const userMenuItems = useConnectedExtensions('user-panel-slot');
   const isActivePanel = useCallback((panelName: string) => activeHeaderPanel === panelName, [activeHeaderPanel]);
 
@@ -42,7 +46,8 @@ const HeaderItems: React.FC = () => {
     [],
   );
 
-  const showHamburger = useMemo(() => !isDesktop(layout) && navMenuItems.length > 0, [navMenuItems.length, layout]);
+  const showLeftNav = useMemo(() => isDesktop(layout) && leftNavItems.length > 0, [leftNavItems.length, layout]);
+  const showHamburger = useMemo(() => !isDesktop(layout) && leftNavItems.length > 0, [leftNavItems.length, layout]);
   const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
   const showUserMenu = useMemo(() => userMenuItems.length > 0, [userMenuItems.length]);
   return (
@@ -112,11 +117,12 @@ const HeaderItems: React.FC = () => {
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>
-        {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />}
+        {showHamburger && <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />}
         {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel('appMenu')} />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
         {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel('userMenu')} />}
       </Header>
+      {showLeftNav && <LeftNavMenu isChildOfHeader={false} />}
     </>
   );
 };

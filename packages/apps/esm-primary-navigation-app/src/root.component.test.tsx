@@ -10,6 +10,21 @@ import Root from './root.component';
 const mockUserObservable = of(mockUser);
 const mockSessionObservable = of({ data: mockSession });
 
+// taken from the Jest docs
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
 jest.mock('@openmrs/esm-framework', () => ({
   openmrsFetch: jest.fn().mockResolvedValue({}),
   useConnectedExtensions: jest.fn().mockReturnValue(['mock-extension']),
@@ -21,6 +36,8 @@ jest.mock('@openmrs/esm-framework', () => ({
   useConfig: jest.fn(() => ({
     logo: { src: null, alt: null, name: 'Mock EMR' },
   })),
+  createGlobalStore: jest.fn(),
+  useStore: jest.fn().mockReturnValue({}),
   useOnClickOutside: jest.fn(() => {
     const { useRef } = require('react');
     return useRef();
