@@ -4,9 +4,18 @@ import { ExtensionSlot, useLayoutType, useWorkspaces } from '@openmrs/esm-framew
 import styles from './action-menu.module.scss';
 import { ComponentContext } from '@openmrs/esm-react-utils';
 
-interface ActionMenuInterface {}
-
-export const ActionMenu: React.FC<ActionMenuInterface> = () => {
+/**
+ * This renders the [Siderail and Bottom Nav](https://zeroheight.com/23a080e38/p/948cf1-siderail-and-bottom-nav/b/86907e),
+ * collectively known as the Action Menu. The Siderail is rendered on the right side of the screen
+ * on desktop, and the Bottom Nav is rendered at the bottom of the screen on tablet or mobile.
+ *
+ * The action menu provides an extension slot, to which buttons are attached as extensions. The slot
+ * derives its name from the `featureName` of the top-level component in which this `ActionMenu`
+ * appears (feature names are generally provided in the lifecycle functions in an app's `index.ts` file).
+ * The slot is named `action-menu-${featureName}-items-slot`. For the patient chart, this is
+ * `action-menu-patient-chart-items-slot`.
+ */
+export function ActionMenu() {
   const { active, workspaceWindowState } = useWorkspaces();
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const initialHeight = useRef(window.innerHeight);
@@ -42,6 +51,6 @@ export const ActionMenu: React.FC<ActionMenuInterface> = () => {
       </div>
     </aside>
   );
-};
+}
 
 export default ActionMenu;

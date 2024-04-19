@@ -15,6 +15,35 @@ export interface WorkspaceWindowProps {
   additionalWorkspaceProps?: object;
 }
 
+/**
+ * Use this component to render the [workspace window](https://zeroheight.com/23a080e38/p/483a22-workspace)
+ * in an app such as the patient chart.
+ * When a workspace is opened, the other content on the screen will be pushed to the left.
+ *
+ * The context key is a string that appears in the URL, which defines the pages on which workspaces
+ * are valid. If the URL changes in a way such that it no longer contains the context key, then
+ * all workspaces will be closed. This ensures that, for example, workspaces on the home page do
+ * not stay open when the user transitions to the patient dashboard; and also that workspaces do
+ * not stay open when the user navigates to a different patient. The context key must be a valid
+ * sub-path of the URL, with no initial or trailing slash. So if the URL is
+ * `https://example.com/patient/123/foo`, then `patient` and `patient/123` and `123/foo` are valid
+ * context keys, but `patient/12` and `pati` are not.
+ *
+ * Workspaces may be opened with the [[launchWorkspace]] function from `@openmrs/esm-framework`
+ * (among other options).
+ *
+ * This component also provides everything needed for workspace notifications to be rendered.
+ *
+ * This component does not include the action menu (the right siderail). The [[ActionMenu]] component
+ * is provided separately.
+ *
+ * An extension slot is provided in the workspace header. Its name is derived from the `featureName` of
+ * the top-level component in which it is defined (feature names are generally provided in the lifecycle
+ * functions in an app's `index.ts` file). The slot is named `workspace-header-${featureName}-slot`.
+ * For the patient chart, this is `workspace-header-patient-chart-slot`.
+ *
+ * @param props.contextKey The context key (explained above)
+ */
 export function WorkspaceWindow({ contextKey, additionalWorkspaceProps }: WorkspaceWindowProps) {
   const { active, workspaces, workspaceWindowState } = useWorkspaces();
   const hidden = workspaceWindowState === 'hidden';

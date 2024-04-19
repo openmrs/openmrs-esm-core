@@ -11,7 +11,7 @@ import {
 import { Button, ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import styles from './workspace-notification.module.scss';
-import { navigate } from '@openmrs/esm-framework';
+import { navigate, reportError } from '@openmrs/esm-framework';
 
 export interface WorkspaceNotificationProps {
   contextKey: string;
@@ -20,6 +20,18 @@ export interface WorkspaceNotificationProps {
 export function WorkspaceNotification({ contextKey }: WorkspaceNotificationProps) {
   const { t } = useTranslation();
   const { prompt } = useWorkspaces();
+
+  useEffect(() => {
+    // When the component initially mounts, check that it has been provided a valid context key.
+    // I can't think of a reason the component would mount with a valid context key but not matching the URL.
+    const regex = new RegExp(`\/${contextKey}(\/|$)`);
+    const isValidContextKey = regex.test(window.location.href);
+    if (!isValidContextKey) {
+      reportError(
+        `WorkspaceOverlay or WorkspaceWindow has provided an invalid context key: "${contextKey}". The context key must be part of the URL path, with no initial or trailing slash.`,
+      );
+    }
+  }, []);
 
   useEffect(() => {
     changeWorkspaceContext(contextKey);
