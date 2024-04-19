@@ -51,6 +51,10 @@ jest.mock('@openmrs/esm-framework', () => ({
   }),
 }));
 
+jest.mock('@openmrs/esm-framework/src/internal', () => ({
+  leftNavStore: {},
+}));
+
 jest.mock('./root.resource', () => ({
   getSynchronizedCurrentUser: jest.fn(() => mockUserObservable),
   getCurrentSession: jest.fn(() => mockSessionObservable),

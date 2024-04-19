@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { HeaderContainer, Header, HeaderMenuButton, HeaderGlobalBar, HeaderGlobalAction } from '@carbon/react';
 import { Close, Switcher, UserAvatarFilledAlt } from '@carbon/react/icons';
 import {
-  leftNavStore,
   useLayoutType,
   ExtensionSlot,
   ConfigurableLink,
@@ -12,7 +11,8 @@ import {
   useConnectedExtensions,
   useConfig,
   useStore,
-} from '@openmrs/esm-framework/src/internal';
+} from '@openmrs/esm-framework';
+import { leftNavStore } from '@openmrs/esm-framework/src/internal';
 import { isDesktop } from '../../utils';
 import AppMenuPanel from '../navbar-header-panels/app-menu-panel.component';
 import Logo from '../logo/logo.component';
