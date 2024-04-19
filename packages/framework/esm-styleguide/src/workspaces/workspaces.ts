@@ -11,7 +11,7 @@ import {
   getCoreTranslation,
   type WorkspaceWindowState,
 } from '@openmrs/esm-framework';
-import { getExtensionRegistration } from '@openmrs/esm-framework/src/internal';
+import { getExtensionRegistration } from '@openmrs/esm-extensions';
 import { type CloseWorkspaceOptions } from './types';
 
 export interface Prompt {
@@ -242,7 +242,7 @@ export function launchWorkspace(name: string, additionalProps?: object) {
     openWorkspaces[workspaceIndexInOpenWorkspaces].additionalProps = newWorkspace.additionalProps;
     const restOfTheWorkspaces = openWorkspaces.filter((w) => w.name != name);
     updateStoreWithNewWorkspace(openWorkspaces[workspaceIndexInOpenWorkspaces], restOfTheWorkspaces);
-  } else if (!!openedWorkspaceWithSameType) {
+  } else if (openedWorkspaceWithSameType) {
     const restOfTheWorkspaces = store.getState().openWorkspaces.filter((w) => w.type != newWorkspace.type);
     updateStoreWithNewWorkspace(openedWorkspaceWithSameType, restOfTheWorkspaces);
     promptBeforeLaunchingWorkspace(openedWorkspaceWithSameType, {
@@ -298,7 +298,6 @@ export function cancelPrompt() {
  * Function to close an opened workspace
  * @param name Workspace registration name
  * @param options Options to close workspace
- * @returns
  */
 export function closeWorkspace(
   name: string,
@@ -421,13 +420,12 @@ export function useWorkspaces(): WorkspacesInfo {
 type PromptType = 'closing-workspace' | 'closing-all-workspaces' | 'closing-workspace-launching-new-workspace';
 
 /**
- * Which type of prompt should be shown to the user.
- * @param promptType 'closing-workspace' | 'closing-all-workspaces' | 'closing-workspace-launching-new-workspace'
+ * Sets the current prompt according to the prompt type.
+ * @param promptType Determines the text and behavior of the prompt
  * @param onConfirmation Function to be called after the user confirms to close the workspace
  * @param workspaceTitle Workspace title to be shown in the prompt
  * @returns
  */
-
 export function showWorkspacePrompts(
   promptType: PromptType,
   onConfirmation: () => void = () => {},
@@ -435,9 +433,10 @@ export function showWorkspacePrompts(
 ) {
   const store = getWorkspaceStore();
 
+  let prompt: Prompt;
   switch (promptType) {
     case 'closing-workspace': {
-      const prompt: Prompt = {
+      prompt = {
         title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved Changes'),
         body: getCoreTranslation(
           'unsavedChangesInOpenedWorkspace',
@@ -448,9 +447,7 @@ export function showWorkspacePrompts(
         },
         confirmText: getCoreTranslation('discard', 'Discard'),
       };
-      store.setState({ ...store.getState(), prompt });
-      store.setState((prevState) => ({ ...prevState, prompt }));
-      return;
+      break;
     }
 
     case 'closing-all-workspaces': {
@@ -459,7 +456,7 @@ export function showWorkspacePrompts(
         .openWorkspaces.filter(({ name }) => !canCloseWorkspaceWithoutPrompting(name))
         .map(({ title }, indx) => `${indx + 1}. ${title}`);
 
-      const prompt: Prompt = {
+      prompt = {
         title: getCoreTranslation('closingAllWorkspacesPromptTitle', 'You have unsaved changes'),
         body: getCoreTranslation(
           'closingAllWorkspacesPromptBody',
@@ -475,14 +472,10 @@ export function showWorkspacePrompts(
           count: workspacesNotClosed.length,
         }),
       };
-      store.setState((prevState) => ({
-        ...prevState,
-        prompt,
-      }));
-      return;
+      break;
     }
     case 'closing-workspace-launching-new-workspace': {
-      const prompt: Prompt = {
+      prompt = {
         title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved Changes'),
         body: getCoreTranslation(
           'unsavedChangesInWorkspace',
@@ -490,25 +483,25 @@ export function showWorkspacePrompts(
           { workspaceName: workspaceTitle },
         ),
         onConfirm: () => {
-          store.setState((prevState) => ({
-            ...prevState,
+          store.setState((state) => ({
+            ...state,
             prompt: null,
           }));
           onConfirmation?.();
         },
         confirmText: getCoreTranslation('openAnyway', 'Open anyway'),
       };
-      store.setState((prevState) => ({
-        ...prevState,
-        prompt,
-      }));
-      return;
+      break;
     }
     default: {
+      console.error(
+        `Workspace system trying to open unknown prompt type "${promptType}" in function "showWorkspacePrompts"`,
+      );
       onConfirmation?.();
       return;
     }
   }
+  store.setState((state) => ({ ...state, prompt }));
 }
 
 export function resetWorkspaceStore() {

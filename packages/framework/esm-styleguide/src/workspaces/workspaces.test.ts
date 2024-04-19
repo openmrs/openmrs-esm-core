@@ -1,42 +1,24 @@
-import { registerExtension } from '@openmrs/esm-framework';
 import {
   type Prompt,
   cancelPrompt,
   getWorkspaceStore,
-  launchPatientWorkspace,
+  launchWorkspace,
   registerWorkspace,
   resetWorkspaceStore,
 } from './workspaces';
-
-const mockExtensionRegistry = {};
-
-jest.mock('@openmrs/esm-framework', () => {
-  const originalModule = jest.requireActual('@openmrs/esm-framework');
-
-  return {
-    ...originalModule,
-    registerExtension: (ext) => {
-      mockExtensionRegistry[ext.name] = ext;
-    },
-    getExtensionRegistration: (name) => mockExtensionRegistry[name],
-    translateFrom: (module, key, defaultValue, options = {}) => {
-      Object.keys(options).forEach((key) => {
-        defaultValue = defaultValue.replace(`{{${key}}}`, options[key]);
-      });
-      return defaultValue;
-    },
-  };
-});
+import { clearMockExtensionRegistry } from '@openmrs/esm-framework/mock';
+import { registerExtension } from '@openmrs/esm-framework';
 
 describe('workspace system', () => {
   beforeEach(() => {
     resetWorkspaceStore();
+    clearMockExtensionRegistry();
   });
 
   test('registering, launching, and closing a workspace', () => {
     const store = getWorkspaceStore();
-    registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn() });
-    launchPatientWorkspace('allergies', { foo: true });
+    registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn(), moduleName: '@openmrs/foo' });
+    launchWorkspace('allergies', { foo: true });
     expect(store.getState().openWorkspaces.length).toEqual(1);
     const allergies = store.getState().openWorkspaces[0];
     expect(allergies.name).toBe('allergies');
@@ -48,8 +30,8 @@ describe('workspace system', () => {
   describe('Testing launchPatientWorkspace', () => {
     it('should launch a workspace', () => {
       const store = getWorkspaceStore();
-      registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn() });
-      launchPatientWorkspace('allergies', { foo: true });
+      registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn(), moduleName: '@openmrs/foo' });
+      launchWorkspace('allergies', { foo: true });
       expect(store.getState().openWorkspaces.length).toEqual(1);
       const allergies = store.getState().openWorkspaces[0];
       expect(allergies.name).toBe('allergies');
@@ -58,8 +40,8 @@ describe('workspace system', () => {
 
     test('should update additionalProps when re-opening an already opened form with same name but with different props', () => {
       const store = getWorkspaceStore();
-      registerWorkspace({ name: 'POC HIV Form', title: 'Clinical Form', load: jest.fn() });
-      launchPatientWorkspace('POC HIV Form', { workspaceTitle: 'POC HIV Form' });
+      registerWorkspace({ name: 'POC HIV Form', title: 'Clinical Form', load: jest.fn(), moduleName: '@openmrs/foo' });
+      launchWorkspace('POC HIV Form', { workspaceTitle: 'POC HIV Form' });
 
       expect(store.getState().openWorkspaces.length).toEqual(1);
 
@@ -67,7 +49,7 @@ describe('workspace system', () => {
       expect(POCHIVForm.name).toBe('POC HIV Form');
       expect(POCHIVForm.additionalProps['workspaceTitle']).toBe('POC HIV Form');
 
-      launchPatientWorkspace('POC HIV Form', { workspaceTitle: 'POC HIV Form Updated' });
+      launchWorkspace('POC HIV Form', { workspaceTitle: 'POC HIV Form Updated' });
 
       expect(POCHIVForm.additionalProps['workspaceTitle']).toBe('POC HIV Form Updated');
       expect(store.getState().openWorkspaces.length).toEqual(1);
@@ -79,20 +61,20 @@ describe('workspace system', () => {
 
     it('should show a modal when a workspace is already open (with changes) and it cannot hide', () => {
       const store = getWorkspaceStore();
-      registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn() });
-      launchPatientWorkspace('allergies', { foo: true });
+      registerWorkspace({ name: 'allergies', title: 'Allergies', load: jest.fn(), moduleName: '@openmrs/foo' });
+      launchWorkspace('allergies', { foo: true });
       expect(store.getState().openWorkspaces.length).toEqual(1);
       const allergies = store.getState().openWorkspaces?.[0];
       allergies.promptBeforeClosing(() => true);
-      registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn() });
-      launchPatientWorkspace('conditions', { foo: true });
+      registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn(), moduleName: '@openmrs/foo' });
+      launchWorkspace('conditions', { foo: true });
       const prompt = store.getState().prompt as Prompt;
       expect(prompt).toBeTruthy();
       expect(prompt.title).toMatch('Unsaved Changes');
       expect(prompt.body).toMatch(
         'There are unsaved changes in Allergies. Please save them before opening another workspace.',
       );
-      expect(prompt.confirmText).toMatch('Open anyway');
+      expect(prompt.confirmText).toMatch(/Open anyway/i);
       prompt.onConfirm();
       expect(store.getState().openWorkspaces.length).toEqual(1);
       const openedWorkspace = store.getState().openWorkspaces[0];
@@ -108,11 +90,18 @@ describe('workspace system', () => {
         load: jest.fn(),
         canHide: true,
         type: 'allergies-form',
+        moduleName: '@openmrs/foo',
       });
-      launchPatientWorkspace('allergies', { foo: true });
+      launchWorkspace('allergies', { foo: true });
       expect(store.getState().openWorkspaces.length).toEqual(1);
-      registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn(), type: 'conditions-form' });
-      launchPatientWorkspace('conditions', { foo: true });
+      registerWorkspace({
+        name: 'conditions',
+        title: 'Conditions',
+        load: jest.fn(),
+        type: 'conditions-form',
+        moduleName: '@openmrs/foo',
+      });
+      launchWorkspace('conditions', { foo: true });
       expect(store.getState().openWorkspaces.length).toEqual(2);
       const openedWorkspaces = store.getState().openWorkspaces;
       expect(openedWorkspaces[0].name).toBe('conditions');
@@ -127,6 +116,7 @@ describe('workspace system', () => {
         load: jest.fn(),
         canHide: true,
         type: 'form',
+        moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'conditions',
@@ -134,21 +124,23 @@ describe('workspace system', () => {
         load: jest.fn(),
         canHide: true,
         type: 'conditions-form',
+        moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'vitals',
         title: 'Vitals form',
         load: jest.fn(),
         type: 'form',
+        moduleName: '@openmrs/foo',
       });
-      launchPatientWorkspace('allergies');
-      launchPatientWorkspace('conditions');
+      launchWorkspace('allergies');
+      launchWorkspace('conditions');
       expect(store.getState().openWorkspaces.length).toEqual(2);
       expect(store.getState().openWorkspaces[0].name).toBe('conditions');
       expect(store.getState().openWorkspaces[1].name).toBe('allergies');
       const allergies = store.getState().openWorkspaces[1];
       allergies.promptBeforeClosing(() => true);
-      launchPatientWorkspace('vitals');
+      launchWorkspace('vitals');
       expect(store.getState().openWorkspaces.length).toEqual(2);
       expect(store.getState().openWorkspaces[0].name).toBe('allergies');
       expect(store.getState().openWorkspaces[1].name).toBe('conditions');
@@ -158,7 +150,7 @@ describe('workspace system', () => {
       expect(prompt.body).toMatch(
         'There are unsaved changes in Allergies. Please save them before opening another workspace.',
       );
-      expect(prompt.confirmText).toMatch('Open anyway');
+      expect(prompt.confirmText).toMatch(/Open anyway/i);
       prompt.onConfirm();
       expect(store.getState().openWorkspaces.length).toEqual(2);
       expect(store.getState().openWorkspaces[0].name).toBe('vitals');
@@ -173,6 +165,7 @@ describe('workspace system', () => {
         load: jest.fn(),
         canHide: true,
         type: 'allergies-form',
+        moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'conditions',
@@ -180,19 +173,21 @@ describe('workspace system', () => {
         load: jest.fn(),
         canHide: true,
         type: 'conditions-form',
+        moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'vitals',
         title: 'Vitals form',
         load: jest.fn(),
         type: 'vitals-form',
+        moduleName: '@openmrs/foo',
       });
-      launchPatientWorkspace('allergies');
-      launchPatientWorkspace('conditions');
+      launchWorkspace('allergies');
+      launchWorkspace('conditions');
       expect(store.getState().openWorkspaces.length).toEqual(2);
       expect(store.getState().openWorkspaces[0].name).toBe('conditions');
       expect(store.getState().openWorkspaces[1].name).toBe('allergies');
-      launchPatientWorkspace('vitals');
+      launchWorkspace('vitals');
       expect(store.getState().openWorkspaces.length).toEqual(3);
       expect(store.getState().openWorkspaces[0].name).toBe('vitals');
       expect(store.getState().openWorkspaces[1].name).toBe('conditions');
@@ -209,6 +204,7 @@ describe('workspace system', () => {
         load: jest.fn(),
         canHide: true,
         type: 'form',
+        moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'attachments',
@@ -216,29 +212,32 @@ describe('workspace system', () => {
         load: jest.fn(),
         canHide: true,
         type: 'attachments-form',
+        moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'conditions',
         title: 'Conditions',
         load: jest.fn(),
         type: 'conditions-form',
+        moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'vitals',
         title: 'Vitals form',
         load: jest.fn(),
         type: 'form',
+        moduleName: '@openmrs/foo',
       });
-      launchPatientWorkspace('allergies');
-      launchPatientWorkspace('attachments');
-      launchPatientWorkspace('conditions');
+      launchWorkspace('allergies');
+      launchWorkspace('attachments');
+      launchWorkspace('conditions');
       expect(store.getState().openWorkspaces.length).toEqual(3);
       expect(store.getState().openWorkspaces.map((w) => w.name)).toEqual(['conditions', 'attachments', 'allergies']);
       const conditionsWorkspace = store.getState().openWorkspaces?.[0];
       const allergiesWorkspace = store.getState().openWorkspaces?.[2];
       conditionsWorkspace.promptBeforeClosing(() => true);
       allergiesWorkspace.promptBeforeClosing(() => true);
-      launchPatientWorkspace('vitals');
+      launchWorkspace('vitals');
       expect(store.getState().openWorkspaces.length).toEqual(3);
       expect(store.getState().openWorkspaces[0].name).toBe('conditions');
       const prompt = store.getState().prompt as Prompt;
@@ -271,6 +270,7 @@ describe('workspace system', () => {
         canHide: true,
         type: 'form',
         preferredWindowSize: 'maximized',
+        moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'attachments',
@@ -278,6 +278,7 @@ describe('workspace system', () => {
         load: jest.fn(),
         canHide: true,
         type: 'attachments-form',
+        moduleName: '@openmrs/foo',
       });
       registerWorkspace({
         name: 'conditions',
@@ -285,14 +286,15 @@ describe('workspace system', () => {
         load: jest.fn(),
         type: 'conditions-form',
         preferredWindowSize: 'maximized',
+        moduleName: '@openmrs/foo',
       });
-      launchPatientWorkspace('allergies');
+      launchWorkspace('allergies');
       expect(store.getState().openWorkspaces.length).toBe(1);
       expect(store.getState().workspaceWindowState).toBe('maximized');
-      launchPatientWorkspace('attachments');
+      launchWorkspace('attachments');
       expect(store.getState().openWorkspaces.length).toBe(2);
       expect(store.getState().workspaceWindowState).toBe('normal');
-      launchPatientWorkspace('conditions');
+      launchWorkspace('conditions');
       expect(store.getState().openWorkspaces.length).toBe(3);
       expect(store.getState().workspaceWindowState).toBe('maximized');
       store.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: true });
@@ -308,34 +310,47 @@ describe('workspace system', () => {
     const store = getWorkspaceStore();
     // conditions and form-entry are of the same (default) type, so they will not coexist.
     // order-meds is of a different type, so it will open on top of the others.
-    registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn(), canHide: true });
-    registerWorkspace({ name: 'form-entry', title: 'Some Form', load: jest.fn(), canHide: true });
+    registerWorkspace({
+      name: 'conditions',
+      title: 'Conditions',
+      load: jest.fn(),
+      canHide: true,
+      moduleName: '@openmrs/foo',
+    });
+    registerWorkspace({
+      name: 'form-entry',
+      title: 'Some Form',
+      load: jest.fn(),
+      canHide: true,
+      moduleName: '@openmrs/foo',
+    });
     registerWorkspace({
       name: 'order-meds',
       title: 'Order Medications',
       load: jest.fn(),
       canHide: true,
       type: 'order',
+      moduleName: '@openmrs/foo',
     });
     // Test opening the same workspace twice--should be a no-op
-    launchPatientWorkspace('conditions');
-    launchPatientWorkspace('conditions');
+    launchWorkspace('conditions');
+    launchWorkspace('conditions');
     expect(store.getState().openWorkspaces.length).toEqual(1);
     const conditionsWorkspace = store.getState().openWorkspaces[0];
     conditionsWorkspace.promptBeforeClosing(() => true);
     // Test opening a workspace of the same type--should require confirmation and then replace
-    launchPatientWorkspace('form-entry', { foo: true });
+    launchWorkspace('form-entry', { foo: true });
     expect(store.getState().openWorkspaces.length).toEqual(1);
     expect(store.getState().openWorkspaces[0].name).toBe('conditions');
     let prompt = store.getState().prompt as Prompt;
     expect(prompt.title).toMatch('Unsaved Changes');
     prompt.onConfirm();
-    expect(prompt).toBeNull();
+    expect(store.getState().prompt).toBeNull();
     expect(store.getState().openWorkspaces.length).toEqual(1);
     expect(store.getState().openWorkspaces[0].name).toBe('form-entry');
     expect(store.getState().openWorkspaces[0].additionalProps['foo']).toBe(true);
     // Test opening a workspace of a different type--should open directly
-    launchPatientWorkspace('order-meds');
+    launchWorkspace('order-meds');
     expect(store.getState().openWorkspaces.length).toEqual(2);
     expect(store.getState().openWorkspaces[0].name).toBe('order-meds');
     expect(store.getState().openWorkspaces[1].name).toBe('form-entry');
@@ -343,7 +358,7 @@ describe('workspace system', () => {
     formEntryWorkspace.promptBeforeClosing(() => true);
     // Test going through confirmation flow while order-meds is open
     // Changing the form workspace shouldn't destroy the order-meds workspace
-    launchPatientWorkspace('conditions');
+    launchWorkspace('conditions');
     expect(store.getState().openWorkspaces.length).toEqual(2);
     expect(store.getState().openWorkspaces[0].name).toBe('form-entry');
     expect(store.getState().openWorkspaces[1].name).toBe('order-meds');
@@ -354,7 +369,7 @@ describe('workspace system', () => {
     expect(store.getState().openWorkspaces[0].name).toBe('form-entry');
     expect(store.getState().openWorkspaces[1].name).toBe('order-meds');
     expect(store.getState().prompt).toBeNull();
-    launchPatientWorkspace('conditions');
+    launchWorkspace('conditions');
     prompt = store.getState().prompt as Prompt;
     prompt.onConfirm();
     expect(store.getState().openWorkspaces.length).toEqual(2);
@@ -367,15 +382,15 @@ describe('workspace system', () => {
 
   test('respects promptBeforeClosing function', () => {
     const store = getWorkspaceStore();
-    registerWorkspace({ name: 'hiv', title: 'HIV', load: jest.fn() });
-    registerWorkspace({ name: 'diabetes', title: 'Diabetes', load: jest.fn() });
-    launchPatientWorkspace('hiv');
+    registerWorkspace({ name: 'hiv', title: 'HIV', load: jest.fn(), moduleName: '@openmrs/foo' });
+    registerWorkspace({ name: 'diabetes', title: 'Diabetes', load: jest.fn(), moduleName: '@openmrs/foo' });
+    launchWorkspace('hiv');
     store.getState().openWorkspaces[0].promptBeforeClosing(() => false);
-    launchPatientWorkspace('diabetes');
+    launchWorkspace('diabetes');
     expect(store.getState().prompt).toBeNull();
     expect(store.getState().openWorkspaces[0].name).toBe('diabetes');
     store.getState().openWorkspaces[0].promptBeforeClosing(() => true);
-    launchPatientWorkspace('hiv');
+    launchWorkspace('hiv');
     expect(store.getState().openWorkspaces[0].name).toBe('diabetes');
     const prompt = store.getState().prompt as Prompt;
     expect(prompt.title).toBe('Unsaved Changes');
@@ -392,7 +407,7 @@ describe('workspace system', () => {
       load: jest.fn(),
       meta: { title: 'Lab Results', screenSize: 'maximized' },
     });
-    launchPatientWorkspace('lab-results', { foo: true });
+    launchWorkspace('lab-results', { foo: true });
     expect(store.getState().openWorkspaces.length).toEqual(1);
     const workspace = store.getState().openWorkspaces[0];
     expect(workspace.name).toEqual('lab-results');
@@ -404,13 +419,13 @@ describe('workspace system', () => {
 
   test('launching unregistered workspace throws an error', () => {
     const store = getWorkspaceStore();
-    expect(() => launchPatientWorkspace('test-results')).toThrowError(/test-results.*registered/i);
+    expect(() => launchWorkspace('test-results')).toThrowError(/test-results.*registered/i);
   });
 
   test('respects promptBeforeClosing function before closing workspace, with unsaved changes', () => {
     const store = getWorkspaceStore();
-    registerWorkspace({ name: 'hiv', title: 'HIV', load: jest.fn() });
-    launchPatientWorkspace('hiv');
+    registerWorkspace({ name: 'hiv', title: 'HIV', load: jest.fn(), moduleName: '@openmrs/foo' });
+    launchWorkspace('hiv');
     store.getState().openWorkspaces[0].promptBeforeClosing(() => true);
     store.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: false });
     const prompt = store.getState().prompt as Prompt;

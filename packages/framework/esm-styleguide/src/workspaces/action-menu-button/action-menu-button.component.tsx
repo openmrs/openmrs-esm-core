@@ -1,8 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Button, IconButton } from '@carbon/react';
-import { useLayoutType, useWorkspaces } from '@openmrs/esm-framework';
+import { useLayoutType } from '@openmrs/esm-framework';
 import styles from './action-menu-button.module.scss';
+import { useWorkspaces } from '../workspaces';
 
 interface TagsProps {
   getIcon: (props: object) => JSX.Element;

@@ -2,9 +2,8 @@ import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { isDesktop } from '@openmrs/esm-framework';
-import { launchPatientWorkspace, registerWorkspace } from '@openmrs/esm-patient-common-lib';
-import { mockPatient } from 'tools';
-import WorkspaceWindow from './workspace-window.component';
+import { WorkspaceWindow } from './workspace-window.component';
+import { launchWorkspace, registerWorkspace } from '..';
 
 const mockExtensionRegistry = {};
 const mockedIsDesktop = isDesktop as jest.Mock;
@@ -24,25 +23,12 @@ jest.mock('@openmrs/esm-framework', () => {
   };
 });
 
-const path = `/patient/:patientUuid/chart`;
-// const sampleMatchProp: match<{ patientUuid: string }> = {
-//   isExact: false,
-//   path,
-//   url: path.replace(':patientUuid', '1'),
-//   params: { patientUuid: '1' },
-// };
-// const mockRoute: RouteComponentProps<{ patientUuid: string }> = {
-//   history: '' as any,
-//   location: '' as any,
-//   match: sampleMatchProp,
-// };
-
 xdescribe('WorkspaceWindow', () => {
   test('should reopen hidden workspace window when user relaunches the same workspace window', async () => {
     const user = userEvent.setup();
 
-    registerWorkspace({ name: 'Clinical Form', title: 'Clinical Form', load: jest.fn() });
-    launchPatientWorkspace('Clinical Form', { workspaceTitle: 'POC Triage' });
+    registerWorkspace({ name: 'Clinical Form', title: 'Clinical Form', load: jest.fn(), moduleName: '@openmrs/foo' });
+    launchWorkspace('Clinical Form', { workspaceTitle: 'POC Triage' });
     mockedIsDesktop.mockReturnValue(true);
 
     renderWorkspaceWindow();
@@ -59,7 +45,7 @@ xdescribe('WorkspaceWindow', () => {
 
     expect(workspaceContainer).toHaveClass('hide');
 
-    await launchPatientWorkspace('Clinical Form', { workspaceTitle: 'POC Triage' });
+    await launchWorkspace('Clinical Form', { workspaceTitle: 'POC Triage' });
 
     expect(await screen.findByRole('complementary')).toHaveClass('show');
   });
@@ -83,5 +69,5 @@ xdescribe('WorkspaceWindow', () => {
 });
 
 function renderWorkspaceWindow() {
-  render(<WorkspaceWindow patientUuid={mockPatient.id} />);
+  render(<WorkspaceWindow contextKey="foo" />);
 }

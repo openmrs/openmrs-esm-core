@@ -31,7 +31,7 @@ jest.mock('../workspaces', () => {
   };
 });
 
-describe('SiderailNavButton', () => {
+describe('ActionMenuButton', () => {
   beforeEach(cleanup);
 
   it('should display tablet view', async () => {
@@ -48,7 +48,6 @@ describe('SiderailNavButton', () => {
 
     render(
       <ActionMenuButton
-        name={'visit-note-nav-button'}
         getIcon={(props) => <Pen {...props} />}
         label={'Visit note'}
         iconDescription={'Note'}
@@ -80,7 +79,6 @@ describe('SiderailNavButton', () => {
 
     render(
       <ActionMenuButton
-        name={'visit-note-nav-button'}
         getIcon={(props) => <Pen {...props} />}
         label={'Visit note'}
         iconDescription={'Note'}
@@ -107,7 +105,6 @@ describe('SiderailNavButton', () => {
 
     render(
       <ActionMenuButton
-        name={'visit-note-nav-button'}
         getIcon={(props) => <Pen {...props} />}
         label={'Visit note'}
         iconDescription={'Note'}
@@ -134,7 +131,6 @@ describe('SiderailNavButton', () => {
 
     render(
       <ActionMenuButton
-        name={'visit-note-nav-button'}
         getIcon={(props) => <Pen {...props} />}
         label={'Visit note'}
         iconDescription={'Note'}
@@ -163,7 +159,6 @@ describe('SiderailNavButton', () => {
 
     render(
       <ActionMenuButton
-        name={'visit-note-nav-button'}
         getIcon={(props) => <Pen {...props} />}
         label={'Visit note'}
         iconDescription={'Note'}
@@ -195,7 +190,6 @@ describe('SiderailNavButton', () => {
 
     render(
       <ActionMenuButton
-        name={'visit-note-nav-button'}
         getIcon={(props) => <Pen {...props} />}
         label={'Visit note'}
         iconDescription={'Note'}
@@ -222,7 +216,6 @@ describe('SiderailNavButton', () => {
 
     render(
       <ActionMenuButton
-        name={'visit-note-nav-button'}
         getIcon={(props) => <Pen {...props} />}
         label={'Visit note'}
         iconDescription={'Note'}
@@ -249,7 +242,6 @@ describe('SiderailNavButton', () => {
 
     render(
       <ActionMenuButton
-        name={'visit-note-nav-button'}
         getIcon={(props) => <Pen {...props} />}
         label={'Visit note'}
         iconDescription={'Note'}
