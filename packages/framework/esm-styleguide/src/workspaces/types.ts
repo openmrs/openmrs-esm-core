@@ -37,7 +37,6 @@ export interface DefaultWorkspaceProps {
    * will directly close the workspace without any prompt
    */
   closeWorkspaceWithSavedChanges(closeWorkspaceOptions?: CloseWorkspaceOptions): void;
-  patientUuid: string;
   handlePostResponse?(): void;
 }
 

@@ -1,5 +1,5 @@
-export { launchWorkspace } from './workspaces';
-export { WorkspaceWindow } from './window/workspace-window.component';
-export { WorkspaceOverlay } from './overlay/workspace-overlay.component';
+export * from './action-menu/action-menu.component';
+export * from './overlay/workspace-overlay.component';
+export * from './window/workspace-window.component';
 export { type DefaultWorkspaceProps } from './types';
-export { useWorkspaces } from './workspaces';
+export { closeWorkspace, launchWorkspace, navigateAndLaunchWorkspace, useWorkspaces } from './workspaces';

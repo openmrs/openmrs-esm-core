@@ -10,7 +10,7 @@ import {
 } from '../workspaces';
 import { Button, ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
-import styles from './workspace-notification.scss';
+import styles from './workspace-notification.module.scss';
 import { navigate } from '@openmrs/esm-framework';
 
 export interface WorkspaceNotificationProps {

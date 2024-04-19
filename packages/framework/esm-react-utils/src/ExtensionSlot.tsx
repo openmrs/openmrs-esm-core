@@ -118,6 +118,7 @@ export function ExtensionSlot({
             key={extension.id}
             value={{
               moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
+              featureName: '', // featureName is not used by the receiving Extension
               extension: {
                 extensionId: extension.id,
                 extensionSlotName: name,

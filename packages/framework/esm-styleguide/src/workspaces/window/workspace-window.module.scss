@@ -9,8 +9,9 @@ $container-width: calc(100% - 3rem);
   box-sizing: content-box;
   border-bottom: 1px solid $text-03;
   background-color: $ui-03;
-  top: 3rem;
+  top: var(--omrs-navbar-height);
   z-index: 100;
+  height: var(--workspace-header-height);
 
   a {
     @include type.type-style('heading-compact-02');
@@ -24,14 +25,6 @@ $container-width: calc(100% - 3rem);
     right: auto;
     left: auto;
   }
-}
-
-.hide {
-  display: none;
-}
-
-.show {
-  display: inline-block;
 }
 
 .fixed {

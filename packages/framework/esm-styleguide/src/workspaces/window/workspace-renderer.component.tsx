@@ -5,15 +5,14 @@ import { InlineLoading } from '@carbon/react';
 import { getCoreTranslation, useLayoutType } from '@openmrs/esm-framework';
 import { type OpenWorkspace, useWorkspaces } from '../workspaces';
 import Parcel from 'single-spa-react/parcel';
-import styles from './workspace-window.scss';
+import styles from './workspace-window.module.scss';
 
 interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
-  active: boolean;
   additionalPropsFromPage?: object;
 }
 
-export function WorkspaceRenderer({ workspace, active, additionalPropsFromPage }: WorkspaceRendererProps) {
+export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: WorkspaceRendererProps) {
   const layout = useLayoutType();
   const isTablet = layout === 'tablet';
   const { workspaceWindowState } = useWorkspaces();
@@ -44,12 +43,7 @@ export function WorkspaceRenderer({ workspace, active, additionalPropsFromPage }
   );
 
   return (
-    <div
-      className={classNames(
-        active ? styles.fixed : styles.hide,
-        maximized && !isTablet ? styles.fullWidth : styles.dynamicWidth,
-      )}
-    >
+    <div className={classNames(styles.fixed, maximized && !isTablet ? styles.fullWidth : styles.dynamicWidth)}>
       {lifecycle ? (
         <Parcel key={workspace.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
       ) : (

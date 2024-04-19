@@ -1,0 +1,89 @@
+@use '@carbon/styles/scss/spacing';
+@import '@openmrs/esm-styleguide/src/vars';
+
+$icon-button-size: 2.5rem;
+$actionPanelOffset: 3rem;
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Desktop */
+:global(.omrs-breakpoint-gt-tablet) {
+  .sideRail {
+    position: fixed;
+    align-self: flex-end;
+    background: #ededed;
+    flex-direction: column;
+    display: flex;
+    height: 100%;
+    top: var(--omrs-navbar-height);
+    right: 0;
+    z-index: 1000;
+    width: $actionPanelOffset;
+    align-items: center;
+    border-left: 1px solid $text-03;
+
+    & .container {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+}
+
+/* Tablet */
+:global(.omrs-breakpoint-lt-desktop) {
+  .sideRail {
+    border-top: 1px solid $color-gray-30;
+    position: fixed;
+    background: #ededed;
+    left: 0;
+    bottom: 0;
+    z-index: 8002;
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+  }
+
+  .chartExtensions {
+    background-color: $ui-02;
+    display: flex;
+    width: 100%;
+
+    & > div {
+      flex: 1;
+      cursor: pointer;
+    }
+  }
+}
+
+:global(.omrs-breakpoint-lt-desktop) {
+  .hiddenSideRail {
+    display: none;
+  }
+}
+:global(.omrs-breakpoint-lt-desktop) {
+  .showSideRail {
+    display: flex;
+  }
+}
+
+.divider {
+  background-color: $text-03;
+  margin: 0.75rem 0;
+  height: 1px;
+  width: 2.5rem;
+}
+
+// Overriding styles for RTL support
+html[dir='rtl'] {
+  :global(.omrs-breakpoint-gt-tablet) {
+    .sideRail {
+      right: unset;
+      left: 0;
+    }
+  }
+}

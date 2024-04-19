@@ -63,6 +63,7 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
           caughtErrorInfo: null,
           config: {
             moduleName: opts.moduleName,
+            featureName: opts.featureName,
             extension: props._extensionContext,
           },
         };

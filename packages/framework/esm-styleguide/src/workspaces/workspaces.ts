@@ -36,10 +36,10 @@ export interface WorkspaceRegistration {
   name: string;
   title: string;
   type: string;
-  canHide?: boolean;
-  canMaximize?: boolean;
-  width?: 'narrow' | 'wider';
-  preferredWindowSize?: WorkspaceWindowState;
+  canHide: boolean;
+  canMaximize: boolean;
+  width: 'narrow' | 'wider';
+  preferredWindowSize: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
 }
@@ -59,12 +59,25 @@ const workspaceRegistrationStore = createGlobalStore<WorkspaceRegistrationStore>
   workspaces: {},
 });
 
+/** See [[WorkspaceDefinition]] for more information about these properties */
+export interface RegisterWorkspaceOptions {
+  name: string;
+  title: string;
+  type?: string;
+  canHide?: boolean;
+  canMaximize?: boolean;
+  width?: 'narrow' | 'wider';
+  preferredWindowSize?: WorkspaceWindowState;
+  load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+  moduleName: string;
+}
+
 /**
  * Tells the workspace system about a workspace. This is used by the app shell
  * to register workspaces defined in the `routes.json` file.
  * @internal
  */
-export function registerWorkspace(workspace: WorkspaceRegistration) {
+export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
   workspaceRegistrationStore.setState((state) => ({
     workspaces: {
       ...state.workspaces,

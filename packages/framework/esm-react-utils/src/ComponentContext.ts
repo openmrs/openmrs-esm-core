@@ -8,6 +8,7 @@ export interface ExtensionData {
 
 export interface ComponentConfig {
   moduleName: string;
+  featureName: string;
   extension?: ExtensionData;
 }
 
@@ -16,4 +17,5 @@ export interface ComponentConfig {
  */
 export const ComponentContext = React.createContext<ComponentConfig>({
   moduleName: '',
+  featureName: '',
 });
