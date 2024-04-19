@@ -1,3 +1,4 @@
+/** @module @category Workspace */
 import React from 'react';
 import classNames from 'classnames';
 import { Button, IconButton } from '@carbon/react';

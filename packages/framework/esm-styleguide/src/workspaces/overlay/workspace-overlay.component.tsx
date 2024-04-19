@@ -1,3 +1,4 @@
+/** @module @category Workspace */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Header, InlineLoading } from '@carbon/react';
 import { ArrowLeft, Close } from '@carbon/react/icons';

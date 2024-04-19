@@ -133,12 +133,8 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     registerModuleWithConfigSystem(appName);
 
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
-<<<<<<< HEAD
     const availableModals: Array<ModalDefinition> = routes.modals ?? [];
-=======
-    const availableModals: Array<ModalDefintion> = routes.modals ?? [];
     const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
->>>>>>> 0ca5715c (Make workspaces defined in routes.json)
 
     routes.pages?.forEach((p) => {
       if (

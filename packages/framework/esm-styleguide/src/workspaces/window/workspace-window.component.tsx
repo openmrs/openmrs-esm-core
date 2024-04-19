@@ -1,3 +1,4 @@
+/** @module @category Workspace */
 import React, { useContext, useMemo } from 'react';
 import classNames from 'classnames';
 import { ExtensionSlot, useBodyScrollLock, useLayoutType, isDesktop, translateFrom } from '@openmrs/esm-framework';

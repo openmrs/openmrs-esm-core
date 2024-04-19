@@ -1,3 +1,4 @@
+/** @module @category Workspace */
 import React, { useEffect } from 'react';
 import {
   canCloseWorkspaceWithoutPrompting,
@@ -49,7 +50,7 @@ export function WorkspaceNotification({ contextKey }: WorkspaceNotificationProps
       } = event as { detail: { cancelNavigation: () => void; newUrl: string } };
 
       // Check if the new URL matches the current context.
-      const regex = new RegExp(`\/${contextKey}(?:\/\w+)?$`);
+      const regex = new RegExp(`\/${contextKey}(\/|$)`);
       const isSameContextUrl = regex.test(newUrl);
       const canCloseAllWorkspaces = getWorkspaceStore()
         .getState()

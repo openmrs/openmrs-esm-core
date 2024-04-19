@@ -1,3 +1,4 @@
+/** @module @category Extension */
 import React, { useRef, useMemo } from 'react';
 import type { ConnectedExtension } from '@openmrs/esm-extensions';
 import { ComponentContext } from './ComponentContext';

@@ -1,3 +1,4 @@
+/** @module @category Workspace */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { ExtensionSlot, useLayoutType, useWorkspaces } from '@openmrs/esm-framework';

@@ -1,3 +1,4 @@
+/** @module @category UI */
 import useSWR from 'swr';
 import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
 import { useConfig } from '@openmrs/esm-react-utils';

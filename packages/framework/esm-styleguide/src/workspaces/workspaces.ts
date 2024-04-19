@@ -1,3 +1,4 @@
+/** @module @category Workspace */
 import { useMemo } from 'react';
 import type { LifeCycles } from 'single-spa';
 import _i18n from 'i18next';

@@ -32,6 +32,7 @@
 - [toLocationObject](API.md#tolocationobject)
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
+- [useAttachments](API.md#useattachments)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [useSession](API.md#usesession)
@@ -93,6 +94,7 @@
 
 ### Extension Functions
 
+- [ExtensionSlot](API.md#extensionslot)
 - [attach](API.md#attach)
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
@@ -162,12 +164,6 @@
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
 - [useConnectivity](API.md#useconnectivity)
 
-### Other Functions
-
-- [ExtensionSlot](API.md#extensionslot)
-- [useAttachments](API.md#useattachments)
-- [usePatientPhoto](API.md#usepatientphoto)
-
 ### Store Functions
 
 - [createGlobalStore](API.md#createglobalstore)
@@ -206,6 +202,7 @@
 - [useLayoutType](API.md#uselayouttype)
 - [useOnClickOutside](API.md#useonclickoutside)
 - [usePagination](API.md#usepagination)
+- [usePatientPhoto](API.md#usepatientphoto)
 
 ### Utility Functions
 
@@ -220,6 +217,16 @@
 - [useAbortController](API.md#useabortcontroller)
 - [useDebounce](API.md#usedebounce)
 - [useOpenmrsSWR](API.md#useopenmrsswr)
+
+### Workspace Functions
+
+- [ActionMenu](API.md#actionmenu)
+- [WorkspaceOverlay](API.md#workspaceoverlay)
+- [WorkspaceWindow](API.md#workspacewindow)
+- [closeWorkspace](API.md#closeworkspace)
+- [launchWorkspace](API.md#launchworkspace)
+- [navigateAndLaunchWorkspace](API.md#navigateandlaunchworkspace)
+- [useWorkspaces](API.md#useworkspaces)
 
 ## API Type Aliases
 
@@ -340,6 +347,28 @@ ___
 
 ___
 
+## Extension Type Aliases
+
+### ExtensionProps
+
+Ƭ **ExtensionProps**: { `state?`: `Record`<`string`, `any`\> ; `wrap?`: (`slot`: `ReactNode`, `extension`: [`ExtensionData`](interfaces/ExtensionData.md)) => ``null`` \| `ReactElement`<`any`, `any`\>  } & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`slot`: `React.ReactNode`, `extension?`: [`ExtensionData`](interfaces/ExtensionData.md)) => `React.ReactNode`  }
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/Extension.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L8)
+
+___
+
+### ExtensionSlotProps
+
+Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L24)
+
+___
+
 ## Navigation Type Aliases
 
 ### TemplateParams
@@ -448,31 +477,11 @@ A definition of an extension as extracted from an app's routes.json
 
 ___
 
-### ExtensionProps
-
-Ƭ **ExtensionProps**: { `state?`: `Record`<`string`, `any`\> ; `wrap?`: (`slot`: `ReactNode`, `extension`: [`ExtensionData`](interfaces/ExtensionData.md)) => ``null`` \| `ReactElement`<`any`, `any`\>  } & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`slot`: `React.ReactNode`, `extension?`: [`ExtensionData`](interfaces/ExtensionData.md)) => `React.ReactNode`  }
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/Extension.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L7)
-
-___
-
-### ExtensionSlotProps
-
-Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L23)
-
-___
-
 ### ModalDefinition
 
 Ƭ **ModalDefinition**: { `name`: `string`  } & { `component`: `string`  } \| { `component?`: `never`  }
 
-A definition of an modal as extracted from an app's routes.json
+A definition of a modal as extracted from an app's routes.json
 
 #### Defined in
 
@@ -489,7 +498,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:295](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L295)
+[packages/framework/esm-globals/src/types.ts:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L348)
 
 ___
 
@@ -599,6 +608,28 @@ ___
 #### Defined in
 
 [packages/framework/esm-config/src/types.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L67)
+
+___
+
+### WorkspaceDefinition
+
+Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"``  } & { `component`: `string`  } \| { `component?`: `never`  }
+
+A definition of a workspace as extracted from an app's routes.json
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:271](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L271)
+
+___
+
+### WorkspaceWindowState
+
+Ƭ **WorkspaceWindowState**: ``"maximized"`` \| ``"hidden"`` \| ``"normal"``
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:266](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L266)
 
 ___
 
@@ -863,6 +894,26 @@ ___
 
 ___
 
+## Extension Variables
+
+### Extension
+
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](API.md#extensionprops)\>
+
+Represents the position in the DOM where each extension within
+an extension slot is rendered.
+
+Renders once for each extension attached to that extension slot.
+
+Usage of this component *must* have an ancestor `<ExtensionSlot>`,
+and *must* only be used once within that `<ExtensionSlot>`.
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/Extension.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L25)
+
+___
+
 ## Offline Variables
 
 ### offlineUuidPrefix
@@ -917,24 +968,6 @@ ___
 
 ___
 
-### Extension
-
-• `Const` **Extension**: `React.FC`<[`ExtensionProps`](API.md#extensionprops)\>
-
-Represents the position in the DOM where each extension within
-an extension slot is rendered.
-
-Renders once for each extension attached to that extension slot.
-
-Usage of this component *must* have an ancestor `<ExtensionSlot>`,
-and *must* only be used once within that `<ExtensionSlot>`.
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/Extension.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L24)
-
-___
-
 ### OpenmrsDatePicker
 
 • `Const` **OpenmrsDatePicker**: `React.FC`<`OpenmrsDatePickerProps`\>
@@ -966,7 +999,7 @@ ___
 
 ### LeftNavMenu
 
-• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`RefAttributes`<`HTMLElement`\>\>
+• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
 
 #### Defined in
 
@@ -985,6 +1018,18 @@ This provides a light background for form inputs on tablets, in accordance with 
 #### Defined in
 
 [packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/responsive-wrapper/responsive-wrapper.component.tsx#L15)
+
+___
+
+## Workspace Variables
+
+### ActionMenuButton
+
+• `Const` **ActionMenuButton**: `React.FC`<[`ActionMenuButtonProps`](interfaces/ActionMenuButtonProps.md)\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu-button/action-menu-button.component.tsx#L38)
 
 ## API Functions
 
@@ -1644,6 +1689,35 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/visit-utils.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/visit-utils.ts#L84)
+
+___
+
+### useAttachments
+
+▸ **useAttachments**(`patientUuid`, `includeEncounterless`): `Object`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+| `includeEncounterless` | `boolean` |
+
+#### Returns
+
+`Object`
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`AttachmentResponse`](interfaces/AttachmentResponse.md)[] |
+| `error` | `any` |
+| `isLoading` | `boolean` |
+| `isValidating` | `boolean` |
+| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`AttachmentResponse`](interfaces/AttachmentResponse.md)[]  }\>\> |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useAttachments.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L6)
 
 ___
 
@@ -2643,6 +2717,55 @@ ___
 ___
 
 ## Extension Functions
+
+### ExtensionSlot
+
+▸ **ExtensionSlot**(`__namedParameters`): `Element`
+
+An [extension slot](https://o3-docs.openmrs.org/docs/extension-system).
+A place with a name. Extensions that get connected to that name
+will be rendered into this.
+
+**`example`**
+Passing a react node as children
+
+```tsx
+<ExtensionSlot name="Foo">
+  <div style={{ width: 10rem }}>
+    <Extension />
+  </div>
+</ExtensionSlot>
+```
+
+**`example`**
+Passing a function as children
+
+```tsx
+<ExtensionSlot name="Bar">
+  {(extension) => (
+    <h1>{extension.name}</h1>
+    <div style={{ color: extension.meta.color }}>
+      <Extension />
+    </div>
+  )}
+</ExtensionSlot>
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`ExtensionSlotProps`](API.md#extensionslotprops) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L81)
+
+___
 
 ### attach
 
@@ -4114,106 +4237,6 @@ ___
 
 ___
 
-## Other Functions
-
-### ExtensionSlot
-
-▸ **ExtensionSlot**(`__namedParameters`): `Element`
-
-An [extension slot](https://o3-docs.openmrs.org/docs/extension-system).
-A place with a name. Extensions that get connected to that name
-will be rendered into this.
-
-**`example`**
-Passing a react node as children
-
-```tsx
-<ExtensionSlot name="Foo">
-  <div style={{ width: 10rem }}>
-    <Extension />
-  </div>
-</ExtensionSlot>
-```
-
-**`example`**
-Passing a function as children
-
-```tsx
-<ExtensionSlot name="Bar">
-  {(extension) => (
-    <h1>{extension.name}</h1>
-    <div style={{ color: extension.meta.color }}>
-      <Extension />
-    </div>
-  )}
-</ExtensionSlot>
-```
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`ExtensionSlotProps`](API.md#extensionslotprops) |
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L80)
-
-___
-
-### useAttachments
-
-▸ **useAttachments**(`patientUuid`, `includeEncounterless`): `Object`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `patientUuid` | `string` |
-| `includeEncounterless` | `boolean` |
-
-#### Returns
-
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `data` | [`AttachmentResponse`](interfaces/AttachmentResponse.md)[] |
-| `error` | `any` |
-| `isLoading` | `boolean` |
-| `isValidating` | `boolean` |
-| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<{ `results`: [`AttachmentResponse`](interfaces/AttachmentResponse.md)[]  }\>\> |
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useAttachments.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAttachments.ts#L5)
-
-___
-
-### usePatientPhoto
-
-▸ **usePatientPhoto**(`patientUuid`): [`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `patientUuid` | `string` |
-
-#### Returns
-
-[`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L29)
-
-___
-
 ## Store Functions
 
 ### createGlobalStore
@@ -4518,7 +4541,7 @@ invalid key to this function will result in a type error.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientLists"`` \| ``"relationships"`` \| ``"seeMoreLists"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"address1"`` \| ``"address2"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
+| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientLists"`` \| ``"relationships"`` \| ``"seeMoreLists"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"closeAllOpenedWorkspaces"`` \| ``"closingAllWorkspacesPromptBody"`` \| ``"closingAllWorkspacesPromptTitle"`` \| ``"discard"`` \| ``"openAnyway"`` \| ``"unsavedChangesInOpenedWorkspace"`` \| ``"unsavedChangesInWorkspace"`` \| ``"unsavedChangesTitleText"`` \| ``"address1"`` \| ``"address2"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
 | `defaultText?` | `string` | - |
 | `options?` | `object` | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
 
@@ -5084,6 +5107,26 @@ ___
 
 ___
 
+### usePatientPhoto
+
+▸ **usePatientPhoto**(`patientUuid`): [`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+
+#### Returns
+
+[`UsePatientPhotoResult`](interfaces/UsePatientPhotoResult.md)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L30)
+
+___
+
 ## Utility Functions
 
 ### age
@@ -5447,3 +5490,223 @@ function MyComponent() {
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useOpenmrsSWR.ts:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsSWR.ts#L70)
+
+___
+
+## Workspace Functions
+
+### ActionMenu
+
+▸ **ActionMenu**(): ``null`` \| `Element`
+
+This renders the [Siderail and Bottom Nav](https://zeroheight.com/23a080e38/p/948cf1-siderail-and-bottom-nav/b/86907e),
+collectively known as the Action Menu. The Siderail is rendered on the right side of the screen
+on desktop, and the Bottom Nav is rendered at the bottom of the screen on tablet or mobile.
+
+The action menu provides an extension slot, to which buttons are attached as extensions. The slot
+derives its name from the `featureName` of the top-level component in which this `ActionMenu`
+appears (feature names are generally provided in the lifecycle functions in an app's `index.ts` file).
+The slot is named `action-menu-${featureName}-items-slot`. For the patient chart, this is
+`action-menu-patient-chart-items-slot`.
+
+#### Returns
+
+``null`` \| `Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/action-menu/action-menu.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu/action-menu.component.tsx#L19)
+
+___
+
+### WorkspaceOverlay
+
+▸ **WorkspaceOverlay**(`__namedParameters`): `Element`
+
+Use this component to render the workspace window as an overlay in an app. An overlay is
+a way of rendering workspaces that will cover other content on the screen, rather than
+pushing it to the left (as with [WorkspaceWindow](API.md#workspacewindow)). As described in the
+[ZeroHeight](https://zeroheight.com/23a080e38/p/483a22-workspace/t/34e1a1) documentation,
+this should be used on "app pages" such as the Clinic Dashboard.
+
+The context key is a string that appears in the URL, which defines the pages on which workspaces
+are valid. If the URL changes in a way such that it no longer contains the context key, then
+all workspaces will be closed. This ensures that, for example, workspaces on the home page do
+not stay open when the user transitions to the patient dashboard; and also that workspaces do
+not stay open when the user navigates to a different patient. The context key must be a valid
+sub-path of the URL, with no initial or trailing slash. So if the URL is
+`https://example.com/patient/123/foo`, then `patient` and `patient/123` and `123/foo` are valid
+context keys, but `patient/12` and `pati` are not.
+
+Workspaces may be opened with the [launchWorkspace](API.md#launchworkspace) function from `@openmrs/esm-framework`
+(among other options).
+
+This component also provides everything needed for workspace notifications to be rendered.
+
+This component does not include the action menu (the right siderail). The [ActionMenu](API.md#actionmenu) component
+is provided separately.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`WorkspaceOverlayProps`](interfaces/WorkspaceOverlayProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx#L43)
+
+___
+
+### WorkspaceWindow
+
+▸ **WorkspaceWindow**(`__namedParameters`): `Element`
+
+Use this component to render the [workspace window](https://zeroheight.com/23a080e38/p/483a22-workspace)
+in an app such as the patient chart.
+When a workspace is opened, the other content on the screen will be pushed to the left.
+
+The context key is a string that appears in the URL, which defines the pages on which workspaces
+are valid. If the URL changes in a way such that it no longer contains the context key, then
+all workspaces will be closed. This ensures that, for example, workspaces on the home page do
+not stay open when the user transitions to the patient dashboard; and also that workspaces do
+not stay open when the user navigates to a different patient. The context key must be a valid
+sub-path of the URL, with no initial or trailing slash. So if the URL is
+`https://example.com/patient/123/foo`, then `patient` and `patient/123` and `123/foo` are valid
+context keys, but `patient/12` and `pati` are not.
+
+Workspaces may be opened with the [launchWorkspace](API.md#launchworkspace) function from `@openmrs/esm-framework`
+(among other options).
+
+This component also provides everything needed for workspace notifications to be rendered.
+
+This component does not include the action menu (the right siderail). The [ActionMenu](API.md#actionmenu) component
+is provided separately.
+
+An extension slot is provided in the workspace header. Its name is derived from the `featureName` of
+the top-level component in which it is defined (feature names are generally provided in the lifecycle
+functions in an app's `index.ts` file). The slot is named `workspace-header-${featureName}-slot`.
+For the patient chart, this is `workspace-header-patient-chart-slot`.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`WorkspaceWindowProps`](interfaces/WorkspaceWindowProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L48)
+
+___
+
+### closeWorkspace
+
+▸ **closeWorkspace**(`name`, `options?`): `boolean`
+
+Function to close an opened workspace
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | Workspace registration name |
+| `options` | `CloseWorkspaceOptions` | Options to close workspace |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:303](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L303)
+
+___
+
+### launchWorkspace
+
+▸ **launchWorkspace**(`name`, `additionalProps?`): `void`
+
+This launches a workspace by its name. The workspace must have been registered.
+Workspaces should be registered in the `routes.json` file.
+
+For the workspace to appear, there must be either a `<WorkspaceOverlay />` or
+a `<WorkspaceWindow />` component rendered.
+
+The behavior of this function is as follows:
+
+- If no workspaces are open, or if no other workspaces with the same type are open,
+  it will be opened and focused.
+- If a workspace with the same name is already open, it will be displayed/focused,
+  if it was not already.
+- If a workspace is launched and a workspace which cannot be hidden is already open,
+ a confirmation modal will pop up warning about closing the currently open workspace.
+- If another workspace with the same type is open, the workspace will be brought to
+  the front and then a confirmation modal will pop up warning about closing the opened
+  workspace
+
+Note that this function just manipulates the workspace store. The UI logic is handled
+by the components that display workspaces.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the workspace to launch |
+| `additionalProps?` | `object` | Props to pass to the workspace component being launched |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L205)
+
+___
+
+### navigateAndLaunchWorkspace
+
+▸ **navigateAndLaunchWorkspace**(`__namedParameters`): `void`
+
+Use this function to navigate to a new page and launch a workspace on that page.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | `Object` |
+| `__namedParameters.additionalProps?` | `object` |
+| `__namedParameters.contextKey` | `string` |
+| `__namedParameters.targetUrl` | `string` |
+| `__namedParameters.workspaceName` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:266](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L266)
+
+___
+
+### useWorkspaces
+
+▸ **useWorkspaces**(): `WorkspacesInfo`
+
+#### Returns
+
+`WorkspacesInfo`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:405](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L405)
