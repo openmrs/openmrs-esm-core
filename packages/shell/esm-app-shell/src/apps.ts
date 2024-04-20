@@ -1,3 +1,4 @@
+import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
 import type {
   RegisteredPageDefinition,
   ExtensionDefinition,
@@ -5,11 +6,11 @@ import type {
   RouteDefinition,
   ExtensionRegistration,
   ModalDefinition,
+  WorkspaceDefinition,
 } from '@openmrs/esm-framework';
 import { attach, registerExtension, importDynamic } from '@openmrs/esm-framework';
-import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
+import { registerModal, registerModuleWithConfigSystem, registerWorkspace } from '@openmrs/esm-framework/src/internal';
 import { emptyLifecycle, routeRegex } from './helpers';
-import { registerModal, registerModuleWithConfigSystem } from '@openmrs/esm-framework/src/internal';
 
 const pages: Array<RegisteredPageDefinition> = [];
 
@@ -133,6 +134,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
 
     const availableExtensions: Array<ExtensionDefinition> = routes.extensions ?? [];
     const availableModals: Array<ModalDefinition> = routes.modals ?? [];
+    const availableWorkspaces: Array<WorkspaceDefinition> = routes.workspaces ?? [];
 
     routes.pages?.forEach((p) => {
       if (
@@ -172,6 +174,22 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
         console.warn(
           `A modal for ${appName} could not be registered as it does not appear to have the required properties`,
           modal,
+        );
+      }
+    });
+
+    availableWorkspaces.forEach((workspace) => {
+      if (
+        workspace &&
+        typeof workspace === 'object' &&
+        Object.hasOwn(workspace, 'name') &&
+        Object.hasOwn(workspace, 'component')
+      ) {
+        tryRegisterWorkspace(appName, workspace);
+      } else {
+        console.warn(
+          `A workspace for ${appName} could not be registered as it does not appear to have the required properties`,
+          workspace,
         );
       }
     });
@@ -324,7 +342,7 @@ supported, so the extension will not be loaded.`,
 }
 
 /**
- * This function actually registers a modal definition with the framework so that it can be launched.
+ * This function registers a modal definition with the framework so that it can be launched.
  *
  * @param appName The name of the app defining this modal
  * @param modal An object that describes the modal, derived from `routes.json`
@@ -369,6 +387,71 @@ supported, so the modal will not be loaded.`,
       name,
       load: loader,
       moduleName: appName,
+    });
+  }
+}
+
+/**
+ * This function registers a workspace definition with the framework so that it can be launched.
+ *
+ * @param appName The name of the app defining this workspace
+ * @param workspace An object that describes the workspace, derived from `routes.json`
+ */
+export function tryRegisterWorkspace(appName: string, workspace: WorkspaceDefinition) {
+  const name = workspace.name;
+  if (!name) {
+    console.error(
+      `A workspace definition in ${appName} is missing a name and thus cannot be registered.
+To fix this, ensure that you define the "name" field inside the workspace definition.`,
+      workspace,
+    );
+    return;
+  }
+
+  const title = workspace.title;
+  if (!title) {
+    console.error(
+      `A workspace definition in ${appName} is missing a title and thus cannot be registered.
+To fix this, ensure that you define the "title" field inside the workspace definition.`,
+      workspace,
+    );
+    return;
+  }
+
+  if (!workspace.component && !workspace.load) {
+    console.error(
+      `The workspace ${name} from ${appName} is missing a 'component' entry and thus cannot be registered.
+To fix this, ensure that you define a 'component' field inside the workspace definition.`,
+      workspace,
+    );
+    return;
+  }
+
+  let loader: ExtensionRegistration['load'] | undefined = undefined;
+  if (workspace.component) {
+    loader = getLoader(appName, workspace.component);
+  } else if (workspace.load) {
+    if (typeof workspace.load !== 'function') {
+      console.error(
+        `The workspace ${name} from ${appName} declares a 'load' property that is not a function. This is not
+supported, so the workspace will not be loaded.`,
+      );
+      return;
+    }
+    loader = workspace.load;
+  }
+
+  if (loader) {
+    registerWorkspace({
+      name,
+      title,
+      load: loader,
+      moduleName: appName,
+      type: workspace.type,
+      canHide: workspace.canHide,
+      canMaximize: workspace.canMaximize,
+      width: workspace.width,
+      preferredWindowSize: workspace.preferredWindowSize,
     });
   }
 }

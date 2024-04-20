@@ -2,7 +2,7 @@ import React, { useCallback, useReducer } from 'react';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import {
   attach,
-  ConnectedExtension,
+  type ConnectedExtension,
   getExtensionNameFromId,
   registerExtension,
   updateInternalExtensionStore,
@@ -13,7 +13,7 @@ import {
   ExtensionSlot,
   openmrsComponentDecorator,
   useExtensionSlotMeta,
-  ExtensionData,
+  type ExtensionData,
 } from '.';
 import userEvent from '@testing-library/user-event';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';

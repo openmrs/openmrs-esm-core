@@ -1,3 +1,4 @@
+/** @module @category API */
 import { useMemo } from 'react';
 import useSWR from 'swr';
 import { attachmentUrl, openmrsFetch, type AttachmentResponse, type FetchResponse } from '@openmrs/esm-api';

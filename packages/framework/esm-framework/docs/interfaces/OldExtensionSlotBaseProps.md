@@ -4,17 +4,17 @@
 
 ## Table of contents
 
-### Properties
+### Extension Properties
 
 - [extensionSlotName](OldExtensionSlotBaseProps.md#extensionslotname)
 - [name](OldExtensionSlotBaseProps.md#name)
 - [state](OldExtensionSlotBaseProps.md#state)
 
-### Methods
+### Extension Methods
 
 - [select](OldExtensionSlotBaseProps.md#select)
 
-## Properties
+## Extension Properties
 
 ### extensionSlotName
 
@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L18)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L19)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L16)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L17)
 
 ___
 
@@ -44,9 +44,9 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L21)
 
-## Methods
+## Extension Methods
 
 ### select
 
@@ -64,4 +64,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L19)
+[packages/framework/esm-react-utils/src/ExtensionSlot.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/ExtensionSlot.tsx#L20)

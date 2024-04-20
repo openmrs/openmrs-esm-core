@@ -1,5 +1,4 @@
 import { start, triggerAppChange } from 'single-spa';
-import { type OpenmrsAppRoutes, restBaseUrl } from '@openmrs/esm-framework/src/internal';
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -37,6 +36,9 @@ import {
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
   setupHistory,
+  type OpenmrsAppRoutes,
+  renderWorkspaces,
+  restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
 import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
 import { setupI18n } from './locale';
