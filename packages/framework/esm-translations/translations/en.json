@@ -19,9 +19,12 @@
   "error": "Error",
   "errorCopy": "Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.",
   "female": "Female",
+  "hide": "Hide",
   "hideDetails": "Hide details",
   "loading": "Loading",
   "male": "Male",
+  "maximize": "Maximize",
+  "minimize": "Minimize",
   "openAnyway": "Open Anyway",
   "other": "Other",
   "patientLists": "Patient Lists",
@@ -33,5 +36,6 @@
   "stateProvince": "State",
   "unknown": "Unknown",
   "unsavedChangesInWorkspace": "There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.",
-  "unsavedChangesTitleText": "Unsaved Changes"
+  "unsavedChangesTitleText": "Unsaved Changes",
+  "workspaceHeader": "Workspace Header"
 }

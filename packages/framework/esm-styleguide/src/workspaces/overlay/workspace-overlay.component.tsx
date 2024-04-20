@@ -104,7 +104,10 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
           />
         </div>
       ) : (
-        <Header className={styles.tabletOverlayHeader} aria-label="Workspace header">
+        <Header
+          className={styles.tabletOverlayHeader}
+          aria-label={getCoreTranslation('workspaceHeader', 'Workspace header')}
+        >
           <Button
             onClick={workspaceInstance.closeWorkspace}
             kind="ghost"

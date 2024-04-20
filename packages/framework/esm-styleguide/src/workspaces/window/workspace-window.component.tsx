@@ -1,7 +1,14 @@
 /** @module @category Workspace */
 import React, { useContext, useMemo } from 'react';
 import classNames from 'classnames';
-import { ExtensionSlot, useBodyScrollLock, useLayoutType, isDesktop, translateFrom } from '@openmrs/esm-framework';
+import {
+  ExtensionSlot,
+  useBodyScrollLock,
+  useLayoutType,
+  isDesktop,
+  translateFrom,
+  getCoreTranslation,
+} from '@openmrs/esm-framework';
 import { type OpenWorkspace, useWorkspaces, updateWorkspaceWindowState } from '../workspaces';
 import { Header, HeaderGlobalBar, HeaderName, HeaderMenuButton, HeaderGlobalAction } from '@carbon/react';
 import { ArrowLeft, ArrowRight, Close, DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
@@ -64,7 +71,6 @@ interface WorkspaceProps {
 }
 
 function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
-  const { t } = useTranslation();
   const layout = useLayoutType();
   const { workspaceWindowState } = useWorkspaces();
   const maximized = workspaceWindowState === 'maximized';
@@ -101,7 +107,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
       })}
     >
       <Header
-        aria-label="Workspace Title"
+        aria-label={getCoreTranslation('workspaceHeader', 'Workspace Header')}
         className={classNames(styles.header, maximized ? styles.fullWidth : styles.dynamicWidth)}
       >
         {layout === 'tablet' && !canHide && (
@@ -115,7 +121,9 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               {(canMaximize || maximized) && (
                 <HeaderGlobalAction
                   align="bottom"
-                  label={maximized ? t('minimize', 'Minimize') : t('maximize', 'Maximize')}
+                  label={
+                    maximized ? getCoreTranslation('minimize', 'Minimize') : getCoreTranslation('maximize', 'Maximize')
+                  }
                   onClick={toggleWindowState}
                   size="lg"
                 >
@@ -125,7 +133,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               {canHide ? (
                 <HeaderGlobalAction
                   align="bottom-right"
-                  label={t('hide', 'Hide')}
+                  label={getCoreTranslation('hide', 'Hide')}
                   onClick={() => updateWorkspaceWindowState('hidden')}
                   size="lg"
                 >
@@ -134,7 +142,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               ) : (
                 <HeaderGlobalAction
                   align="bottom-right"
-                  label={t('close', 'Close')}
+                  label={getCoreTranslation('close', 'Close')}
                   onClick={() => closeWorkspace?.()}
                   size="lg"
                 >
@@ -144,7 +152,11 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
             </>
           )}
           {layout === 'tablet' && canHide && (
-            <HeaderGlobalAction align="bottom-right" label={t('close', 'Close')} onClick={() => closeWorkspace?.()}>
+            <HeaderGlobalAction
+              align="bottom-right"
+              label={getCoreTranslation('close', 'Close')}
+              onClick={() => closeWorkspace?.()}
+            >
               <DownToBottom />
             </HeaderGlobalAction>
           )}

@@ -18,11 +18,15 @@ const workspaceTranslations = {
     'There are unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}',
   closingAllWorkspacesPromptTitle: 'You have unsaved changes',
   discard: 'Discard',
+  hide: 'Hide',
+  maximize: 'Maximize',
+  minimize: 'Minimize',
   openAnyway: 'Open Anyway',
   unsavedChangesInOpenedWorkspace: `You have unsaved changes in the opened workspace. Do you want to discard these changes?`,
   unsavedChangesInWorkspace:
     'There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
   unsavedChangesTitleText: 'Unsaved Changes',
+  workspaceHeader: 'Workspace Header',
 };
 
 export const coreTranslations = {
