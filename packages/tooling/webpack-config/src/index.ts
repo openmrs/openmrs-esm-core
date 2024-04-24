@@ -335,6 +335,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       extensions: ['.tsx', '.ts', '.jsx', '.js', '.scss', '.json'],
       alias: {
         '@openmrs/esm-framework': '@openmrs/esm-framework/src/internal',
+        'lodash.findlast': 'lodash-es/findLast',
       },
     },
     ...overrides,

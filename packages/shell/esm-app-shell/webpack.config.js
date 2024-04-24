@@ -270,6 +270,9 @@ module.exports = (env, argv = {}) => {
         zlib: false,
         url: false,
       },
+      alias: {
+        'lodash.findlast': 'lodash-es/findLast',
+      },
     },
     plugins: [
       openmrsCleanBeforeBuild && new CleanWebpackPlugin(),

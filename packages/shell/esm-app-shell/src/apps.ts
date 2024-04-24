@@ -1,15 +1,19 @@
 import { type ActivityFn, type LifeCycles, pathToActiveWhen, registerApplication } from 'single-spa';
-import type {
-  RegisteredPageDefinition,
-  ExtensionDefinition,
-  OpenmrsAppRoutes,
-  RouteDefinition,
-  ExtensionRegistration,
-  ModalDefinition,
-  WorkspaceDefinition,
-} from '@openmrs/esm-framework';
-import { attach, registerExtension, importDynamic } from '@openmrs/esm-framework';
-import { registerModal, registerModuleWithConfigSystem, registerWorkspace } from '@openmrs/esm-framework/src/internal';
+import {
+  type RegisteredPageDefinition,
+  type ExtensionDefinition,
+  type OpenmrsAppRoutes,
+  type RouteDefinition,
+  type ExtensionRegistration,
+  type ModalDefinition,
+  type WorkspaceDefinition,
+  attach,
+  registerExtension,
+  importDynamic,
+  registerModal,
+  registerModuleWithConfigSystem,
+  registerWorkspace,
+} from '@openmrs/esm-framework/src/internal';
 import { emptyLifecycle, routeRegex } from './helpers';
 
 const pages: Array<RegisteredPageDefinition> = [];
