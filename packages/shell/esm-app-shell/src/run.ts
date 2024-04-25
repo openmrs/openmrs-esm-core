@@ -29,15 +29,12 @@ import {
   openmrsFetch,
   interpolateUrl,
   type OpenmrsRoutes,
-  getCurrentImportMap,
-  importDynamic,
   canAccessStorage,
   localStorageRoutesPrefix,
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
   setupHistory,
   type OpenmrsAppRoutes,
-  renderWorkspaces,
   restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
 import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
@@ -191,15 +188,6 @@ function runShell() {
   return setupI18n()
     .catch((err) => console.error(`Failed to initialize translations`, err))
     .then(() => start());
-}
-
-async function preloadScripts() {
-  const [, importMap] = await Promise.all([window[REGISTRATION_PROMISES], getCurrentImportMap()]);
-
-  window.installedModules.map(async ([module]) => {
-    // we simply swallow the error here since this is only a preload
-    importDynamic(module, undefined, { importMap }).catch();
-  });
 }
 
 function handleInitFailure(e: Error) {
@@ -421,6 +409,5 @@ export function run(configUrls: Array<string>, offline: boolean) {
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(offline ? setupOffline : undefined)
-    .then(preloadScripts);
+    .then(offline ? setupOffline : undefined);
 }
