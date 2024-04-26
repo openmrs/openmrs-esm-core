@@ -12,10 +12,6 @@ import { ComponentContext, Extension, type ExtensionProps, useExtensionSlot } fr
  * returns the extensions as an array of React components that can be wired into a component
  * however makes sense.
  *
- * Note that because these do not render as normal extension slots, they will not show
- * up in the UI. This may require more documentation to explain to end-users how to use
- * your slot used in this way.
- *
  * @param name The name of the extension slot
  *
  * @example
