@@ -79,6 +79,10 @@ export const usePatientPhoto = jest.fn(() => ({
   data: null,
   error: null,
 }));
+export const closeWorkspace = jest.fn();
+export const launchWorkspace = jest.fn();
+export const navigateAndLaunchWorkspace = jest.fn();
+export const useWorkspaces  = jest.fn();
 
 /* esm-utils */
 export { getDefaultsFromConfigSchema, parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
