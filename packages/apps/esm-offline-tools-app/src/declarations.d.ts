@@ -1,1 +1,1 @@
-declare type TileProps {}
+declare type TileProps = {};
