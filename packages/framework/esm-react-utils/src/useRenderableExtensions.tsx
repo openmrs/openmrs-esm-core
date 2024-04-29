@@ -28,7 +28,7 @@ import { ComponentContext, Extension, type ExtensionProps, useExtensionSlot } fr
  * )
  * ```
  */
-export default function useRenderableExtensions(name: string): Array<React.FC<Pick<ExtensionProps, 'state'>>> {
+export function useRenderableExtensions(name: string): Array<React.FC<Pick<ExtensionProps, 'state'>>> {
   const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
 
   return name

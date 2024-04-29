@@ -15,10 +15,10 @@ import {
   openmrsComponentDecorator,
   useExtensionSlotMeta,
   type ExtensionData,
+  useRenderableExtensions,
 } from '.';
 import userEvent from '@testing-library/user-event';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
-import useRenderableExtensions from './useRenderableExtensions';
 
 // For some reason in the test context `isEqual` always returns true
 // when using the import substitution in jest.config.js. Here's a custom
