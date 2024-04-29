@@ -29,7 +29,7 @@ closed, given the user forcefully closes the workspace.
 
 | Name | Type |
 | :------ | :------ |
-| `closeWorkspaceOptions?` | `CloseWorkspaceOptions` |
+| `closeWorkspaceOptions?` | [`CloseWorkspaceOptions`](CloseWorkspaceOptions.md) |
 
 #### Returns
 
@@ -52,7 +52,7 @@ will directly close the workspace without any prompt
 
 | Name | Type |
 | :------ | :------ |
-| `closeWorkspaceOptions?` | `CloseWorkspaceOptions` |
+| `closeWorkspaceOptions?` | [`CloseWorkspaceOptions`](CloseWorkspaceOptions.md) |
 
 #### Returns
 

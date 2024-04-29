@@ -5619,7 +5619,7 @@ Function to close an opened workspace
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `name` | `string` | Workspace registration name |
-| `options` | `CloseWorkspaceOptions` | Options to close workspace |
+| `options` | [`CloseWorkspaceOptions`](interfaces/CloseWorkspaceOptions.md) | Options to close workspace |
 
 #### Returns
 
@@ -5701,11 +5701,11 @@ ___
 
 ### useWorkspaces
 
-▸ **useWorkspaces**(): `WorkspacesInfo`
+▸ **useWorkspaces**(): [`WorkspacesInfo`](interfaces/WorkspacesInfo.md)
 
 #### Returns
 
-`WorkspacesInfo`
+[`WorkspacesInfo`](interfaces/WorkspacesInfo.md)
 
 #### Defined in
 
