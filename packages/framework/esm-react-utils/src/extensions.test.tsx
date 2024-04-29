@@ -1,4 +1,5 @@
 import React, { useCallback, useReducer } from 'react';
+import '@testing-library/jest-dom';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import {
   attach,
@@ -17,6 +18,7 @@ import {
 } from '.';
 import userEvent from '@testing-library/user-event';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
+import useRenderableExtensions from './useRenderableExtensions';
 
 // For some reason in the test context `isEqual` always returns true
 // when using the import substitution in jest.config.js. Here's a custom
@@ -276,6 +278,25 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     expect(screen.queryByText('Kurmanji')).not.toBeInTheDocument();
     act(() => setFeatureFlag('kurdish', true));
     await waitFor(() => expect(screen.getByText('Kurmanji')).toBeInTheDocument());
+  });
+
+  test('useRenderableExtensions returns registered extensions', async () => {
+    registerSimpleExtension('Spanish', 'esm-languages-app', undefined, {
+      code: 'es',
+    });
+    attach('Box', 'Spanish');
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-languages-app',
+      featureName: 'Languages',
+      disableTranslations: true,
+    })(() => {
+      const extensions = useRenderableExtensions('Box');
+      const Ext = extensions[0];
+      return <Ext />;
+    });
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText('Spanish')).toBeInTheDocument());
   });
 });
 

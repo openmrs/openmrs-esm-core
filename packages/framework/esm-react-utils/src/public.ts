@@ -21,6 +21,7 @@ export * from './useLocations';
 export * from './useOnClickOutside';
 export * from './useOpenmrsSWR';
 export * from './usePatient';
+export * from './useRenderableExtensions';
 export { useSession } from './useSession';
 export * from './useStore';
 export * from './useVisit';
