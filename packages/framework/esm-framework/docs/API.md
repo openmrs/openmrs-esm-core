@@ -176,6 +176,11 @@
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
 - [useConnectivity](API.md#useconnectivity)
 
+### Other Functions
+
+- [setLeftNav](API.md#setleftnav)
+- [unsetLeftNav](API.md#unsetleftnav)
+
 ### Store Functions
 
 - [createGlobalStore](API.md#createglobalstore)
@@ -199,7 +204,6 @@
 - [PatientBannerToggleContactDetailsButton](API.md#patientbannertogglecontactdetailsbutton)
 - [PatientPhoto](API.md#patientphoto)
 - [isDesktop](API.md#isdesktop)
-- [setLeftNav](API.md#setleftnav)
 - [showActionableNotification](API.md#showactionablenotification)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
@@ -209,7 +213,6 @@
 - [subscribeNotificationShown](API.md#subscribenotificationshown)
 - [subscribeSnackbarShown](API.md#subscribesnackbarshown)
 - [subscribeToastShown](API.md#subscribetoastshown)
-- [unsetLeftNav](API.md#unsetleftnav)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useLayoutType](API.md#uselayouttype)
 - [useOnClickOutside](API.md#useonclickoutside)
@@ -499,6 +502,19 @@ ___
 
 ## Other Type Aliases
 
+### ComponentOrLoadable
+
+Ƭ **ComponentOrLoadable**: { `component`: `string`  } \| { `component?`: `never`  }
+
+Internal shared type for various *Definitions that either take a named component or a function to load the
+component.
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L175)
+
+___
+
 ### ConfigValue
 
 Ƭ **ConfigValue**: `string` \| `number` \| `boolean` \| `void` \| `any`[] \| `object`
@@ -511,25 +527,49 @@ ___
 
 ### ExtensionDefinition
 
-Ƭ **ExtensionDefinition**: { `featureFlag?`: `string` ; `meta?`: { `[k: string]`: `unknown`;  } ; `name`: `string` ; `offline?`: `boolean` ; `online?`: `boolean` ; `order?`: `number` ; `privileges?`: `string` \| `string`[] ; `slot?`: `string` ; `slots?`: `string`[]  } & { `component`: `string`  } \| { `component?`: `never`  }
+Ƭ **ExtensionDefinition**: { `featureFlag?`: `string` ; `meta?`: { `[k: string]`: `unknown`;  } ; `name`: `string` ; `offline?`: `boolean` ; `online?`: `boolean` ; `order?`: `number` ; `privileges?`: `string` \| `string`[] ; `slot?`: `string` ; `slots?`: `string`[]  } & [`ComponentOrLoadable`](API.md#componentorloadable)
 
 A definition of an extension as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L172)
+[packages/framework/esm-globals/src/types.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L200)
+
+___
+
+### Loadable
+
+Ƭ **Loadable**<`LoadResult`\>: () => `Promise`<`LifeCycles`<`LoadResult`\> & { `default`: `LifeCycles`<`LoadResult`\>  }\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `LoadResult` | {} |
+
+#### Type declaration
+
+▸ (): `Promise`<`LifeCycles`<`LoadResult`\> & { `default`: `LifeCycles`<`LoadResult`\>  }\>
+
+##### Returns
+
+`Promise`<`LifeCycles`<`LoadResult`\> & { `default`: `LifeCycles`<`LoadResult`\>  }\>
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:169](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L169)
 
 ___
 
 ### ModalDefinition
 
-Ƭ **ModalDefinition**: { `name`: `string`  } & { `component`: `string`  } \| { `component?`: `never`  }
+Ƭ **ModalDefinition**: { `name`: `string`  } & [`ComponentOrLoadable`](API.md#componentorloadable)
 
 A definition of a modal as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L237)
+[packages/framework/esm-globals/src/types.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L244)
 
 ___
 
@@ -542,7 +582,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L348)
+[packages/framework/esm-globals/src/types.ts:313](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L313)
 
 ___
 
@@ -657,13 +697,13 @@ ___
 
 ### WorkspaceDefinition
 
-Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"``  } & { `component`: `string`  } \| { `component?`: `never`  }
+Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"``  } & [`ComponentOrLoadable`](API.md#componentorloadable)
 
 A definition of a workspace as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:271](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L271)
+[packages/framework/esm-globals/src/types.ts:257](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L257)
 
 ___
 
@@ -673,7 +713,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:266](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L266)
+[packages/framework/esm-globals/src/types.ts:252](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L252)
 
 ___
 
@@ -1040,16 +1080,6 @@ ___
 ___
 
 ## UI Variables
-
-### LeftNavMenu
-
-• `Const` **LeftNavMenu**: `ForwardRefExoticComponent`<`SideNavProps` & `RefAttributes`<`HTMLElement`\>\>
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
-
-___
 
 ### ResponsiveWrapper
 
@@ -4617,6 +4647,40 @@ ___
 
 ___
 
+## Other Functions
+
+### setLeftNav
+
+▸ **setLeftNav**(): `void`
+
+**`deprecated`**
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-pages/src/pages.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-pages/src/pages.ts#L73)
+
+___
+
+### unsetLeftNav
+
+▸ **unsetLeftNav**(): `void`
+
+**`deprecated`**
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-pages/src/pages.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-pages/src/pages.ts#L76)
+
+___
+
 ## Store Functions
 
 ### createGlobalStore
@@ -5120,26 +5184,6 @@ ___
 
 ___
 
-### setLeftNav
-
-▸ **setLeftNav**(`__namedParameters`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | `Object` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L19)
-
-___
-
 ### showActionableNotification
 
 ▸ **showActionableNotification**(`notification`): `void`
@@ -5366,26 +5410,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-globals/src/events.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L114)
-
-___
-
-### unsetLeftNav
-
-▸ **unsetLeftNav**(`name`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name` | `any` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L23)
 
 ___
 
@@ -5986,7 +6010,7 @@ For the patient chart, this is `workspace-header-patient-chart-slot`.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L47)
+[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L55)
 
 ___
 

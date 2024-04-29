@@ -9,6 +9,7 @@ export * from '@openmrs/esm-feature-flags';
 export * from '@openmrs/esm-globals';
 export * from '@openmrs/esm-navigation';
 export * from '@openmrs/esm-offline';
+export * from '@openmrs/esm-pages';
 export * from '@openmrs/esm-react-utils';
 export * from '@openmrs/esm-routes';
 export * from '@openmrs/esm-state';

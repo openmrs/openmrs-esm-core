@@ -10,6 +10,7 @@ export * from '@openmrs/esm-feature-flags/src/public';
 export * from '@openmrs/esm-globals/src/public';
 export * from '@openmrs/esm-navigation/src/public';
 export * from '@openmrs/esm-offline/src/public';
+export * from '@openmrs/esm-pages/src/public';
 export * from '@openmrs/esm-react-utils/src/public';
 export * from '@openmrs/esm-state/src/public';
 export * from '@openmrs/esm-styleguide/src/public';

@@ -1,11 +1,11 @@
 import { getExtensionRegistration } from '@openmrs/esm-extensions';
+import { type Loadable } from '@openmrs/esm-globals';
 import { createGlobalStore } from '@openmrs/esm-state';
-import type { LifeCycles } from 'single-spa';
 
 /** @internal */
 export interface ModalRegistration {
   name: string;
-  load(): Promise<{ default?: LifeCycles } & LifeCycles>;
+  load: Loadable;
   moduleName: string;
 }
 

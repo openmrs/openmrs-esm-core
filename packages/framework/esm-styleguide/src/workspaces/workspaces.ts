@@ -36,7 +36,7 @@ export interface WorkspaceRegistration {
   canMaximize: boolean;
   width: 'narrow' | 'wider';
   preferredWindowSize: WorkspaceWindowState;
-  load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+  load: Loadable;
   moduleName: string;
 }
 
@@ -64,7 +64,7 @@ export interface RegisterWorkspaceOptions {
   canMaximize?: boolean;
   width?: 'narrow' | 'wider';
   preferredWindowSize?: WorkspaceWindowState;
-  load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+  load: Loadable;
   moduleName: string;
 }
 

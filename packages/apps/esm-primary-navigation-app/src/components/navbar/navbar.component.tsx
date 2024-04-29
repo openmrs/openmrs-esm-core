@@ -4,15 +4,14 @@ import classNames from 'classnames';
 import { HeaderContainer, Header, HeaderMenuButton, HeaderGlobalBar, HeaderGlobalAction } from '@carbon/react';
 import { Close, Switcher, UserAvatarFilledAlt } from '@carbon/react/icons';
 import {
-  useLayoutType,
   ExtensionSlot,
   ConfigurableLink,
-  useSession,
+  getActiveAppNames,
   useConnectedExtensions,
   useConfig,
   useStore,
 } from '@openmrs/esm-framework';
-import { leftNavStore } from '@openmrs/esm-framework/src/internal';
+import { useTranslation } from 'react-i18next';
 import { isDesktop } from '../../utils';
 import AppMenuPanel from '../navbar-header-panels/app-menu-panel.component';
 import Logo from '../logo/logo.component';
@@ -21,8 +20,7 @@ import OfflineBanner from '../offline-banner/offline-banner.component';
 import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import styles from './navbar.scss';
-import { useTranslation } from 'react-i18next';
-import { LeftNavMenu } from '../left-nav';
+import { LeftNavMenu } from '../left-nav/left-nav.component';
 
 const HeaderItems: React.FC = () => {
   const { t } = useTranslation();
@@ -30,8 +28,10 @@ const HeaderItems: React.FC = () => {
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
   const layout = useLayoutType();
   const appMenuItems = useConnectedExtensions('app-menu-slot');
-  const { slotName: leftNavSlot } = useStore(leftNavStore);
+  const activePages = getActiveAppNames();
+  const leftNavSlot = activePages && activePages.length > 0 ? `${activePages[0]}-dashboard-slot` : undefined;
   const leftNavItems = useConnectedExtensions(leftNavSlot);
+  const defaultNavItems = useConnectedExtensions('default-dashboard-slot');
   const userMenuItems = useConnectedExtensions('user-panel-slot');
   const isActivePanel = useCallback((panelName: string) => activeHeaderPanel === panelName, [activeHeaderPanel]);
 
@@ -46,15 +46,21 @@ const HeaderItems: React.FC = () => {
     [],
   );
 
-  const showLeftNav = useMemo(() => isDesktop(layout) && leftNavItems.length > 0, [leftNavItems.length, layout]);
-  const showHamburger = useMemo(() => !isDesktop(layout) && leftNavItems.length > 0, [leftNavItems.length, layout]);
+  const showLeftNav = useMemo(
+    () => isDesktop(layout) && (leftNavItems.length > 0 || defaultNavItems.length > 0),
+    [leftNavItems.length, defaultNavItems.length, layout],
+  );
+  const showHamburgerMenu = useMemo(
+    () => !isDesktop(layout) && (leftNavItems.length > 0 || defaultNavItems.length > 0),
+    [leftNavItems.length, defaultNavItems.length, layout],
+  );
   const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
   const showUserMenu = useMemo(() => userMenuItems.length > 0, [userMenuItems.length]);
   return (
     <>
       <OfflineBanner />
       <Header aria-label="OpenMRS" className={styles.topNavHeader}>
-        {showHamburger && (
+        {showHamburgerMenu && (
           <HeaderMenuButton
             aria-label="Open menu"
             isCollapsible
@@ -66,7 +72,7 @@ const HeaderItems: React.FC = () => {
           />
         )}
         <ConfigurableLink to={config.logo.link}>
-          <div className={showHamburger ? '' : styles.spacedLogo}>
+          <div className={showHamburgerMenu ? '' : styles.spacedLogo}>
             <Logo />
           </div>
         </ConfigurableLink>
@@ -117,7 +123,7 @@ const HeaderItems: React.FC = () => {
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>
-        {showHamburger && <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />}
+        {showHamburgerMenu && <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />}
         {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel('appMenu')} />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
         {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel('userMenu')} />}

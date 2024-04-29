@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useOnClickOutside } from '@openmrs/esm-framework';
-import { LeftNavMenu } from '../left-nav';
+import { LeftNavMenu } from '../left-nav/left-nav.component';
 
 interface SideMenuPanelProps {
   expanded: boolean;

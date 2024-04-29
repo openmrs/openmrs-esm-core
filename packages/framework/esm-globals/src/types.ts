@@ -166,6 +166,34 @@ export type PageDefinition = {
  */
 export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
 
+export type Loadable<LoadResult = {}> = () => Promise<LifeCycles<LoadResult> & { default: LifeCycles<LoadResult> }>;
+
+/**
+ * Internal shared type for various *Definitions that either take a named component or a function to load the
+ * component.
+ */
+export type ComponentOrLoadable =
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component: string;
+      /**
+       * @internal
+       */
+      load?: never;
+    }
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component?: never;
+      /**
+       * @internal
+       */
+      load: Loadable;
+    };
+
 /**
  * A definition of an extension as extracted from an app's routes.json
  */
@@ -208,28 +236,7 @@ export type ExtensionDefinition = {
   meta?: {
     [k: string]: unknown;
   };
-} & (
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component: string;
-      /**
-       * @internal
-       */
-      load?: never;
-    }
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component?: never;
-      /**
-       * @internal
-       */
-      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
-    }
-);
+} & ComponentOrLoadable;
 
 /**
  * A definition of a modal as extracted from an app's routes.json
@@ -239,28 +246,7 @@ export type ModalDefinition = {
    * The name of this modal. This is used to launch the modal.
    */
   name: string;
-} & (
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component: string;
-      /**
-       * @internal
-       */
-      load?: never;
-    }
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component?: never;
-      /**
-       * @internal
-       */
-      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
-    }
-);
+} & ComponentOrLoadable;
 
 /* The possible states a workspace window can be opened in. */
 export type WorkspaceWindowState = 'maximized' | 'hidden' | 'normal';
@@ -288,28 +274,7 @@ export type WorkspaceDefinition = {
   canMaximize?: boolean;
   width?: 'narrow' | 'wider';
   preferredWindowSize?: WorkspaceWindowState;
-} & (
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component: string;
-      /**
-       * @internal
-       */
-      load?: never;
-    }
-  | {
-      /**
-       * The name of the component exported by this frontend module.
-       */
-      component?: never;
-      /**
-       * @internal
-       */
-      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
-    }
-);
+} & ComponentOrLoadable;
 
 /**
  * This interface describes the format of the routes provided by an app

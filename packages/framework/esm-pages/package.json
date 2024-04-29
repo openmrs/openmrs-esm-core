@@ -1,0 +1,51 @@
+{
+  "name": "@openmrs/esm-pages",
+  "version": "5.5.0",
+  "license": "MPL-2.0",
+  "description": "Manages pages within the OpenMRS application",
+  "browser": "dist/openmrs-esm-pages.js",
+  "main": "src/index.ts",
+  "source": true,
+  "sideEffects": false,
+  "scripts": {
+    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
+    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
+    "build": "webpack --mode=production",
+    "build:development": "webpack --mode development",
+    "analyze": "webpack --mode=production --env analyze=true",
+    "typescript": "tsc",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
+  "directories": {
+    "lib": "dist",
+    "src": "src"
+  },
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@openmrs/esm-globals": "5.x",
+    "@openmrs/esm-state": "5.x",
+    "single-spa": "6.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-globals": "workspace:*",
+    "@openmrs/esm-state": "workspace:*",
+    "single-spa": "^6.0.1"
+  }
+}

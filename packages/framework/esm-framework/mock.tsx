@@ -48,6 +48,9 @@ export const goBackInHistory = jest.fn();
 /* esm-offline */
 export const useConnectivity = jest.fn().mockReturnValue(true);
 
+/* esm-pages */
+export const getActiveAppNames = jest.fn().mockReturnValue([]);
+
 /* esm-styleguide */
 export const showNotification = jest.fn();
 export const showActionableNotification = jest.fn();
@@ -55,8 +58,6 @@ export const showToast = jest.fn();
 export const showSnackbar = jest.fn();
 export const showModal = jest.fn();
 
-export const setLeftNav = jest.fn();
-export const unsetLeftNav = jest.fn();
 export const ResponsiveWrapper = jest.fn(({ children }) => <>{children}</>);
 export const OpenmrsDatePicker = jest.fn(() => <div>OpenMRS DatePicker</div>);
 export const ErrorState = jest.fn(() => <div>Error State</div>);

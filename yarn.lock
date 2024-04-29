@@ -3145,6 +3145,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-navigation": "workspace:*"
     "@openmrs/esm-offline": "workspace:*"
+    "@openmrs/esm-pages": "workspace:*"
     "@openmrs/esm-react-utils": "workspace:*"
     "@openmrs/esm-routes": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
@@ -3288,6 +3289,20 @@ __metadata:
     "@openmrs/esm-globals": 5.x
     "@openmrs/esm-state": 5.x
     rxjs: 6.x
+  languageName: unknown
+  linkType: soft
+
+"@openmrs/esm-pages@workspace:*, @openmrs/esm-pages@workspace:packages/framework/esm-pages":
+  version: 0.0.0-use.local
+  resolution: "@openmrs/esm-pages@workspace:packages/framework/esm-pages"
+  dependencies:
+    "@openmrs/esm-globals": "workspace:*"
+    "@openmrs/esm-state": "workspace:*"
+    single-spa: "npm:^6.0.1"
+  peerDependencies:
+    "@openmrs/esm-globals": 5.x
+    "@openmrs/esm-state": 5.x
+    single-spa: 6.x
   languageName: unknown
   linkType: soft
 

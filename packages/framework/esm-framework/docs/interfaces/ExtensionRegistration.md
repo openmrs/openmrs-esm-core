@@ -7,6 +7,7 @@
 ### Extension Properties
 
 - [featureFlag](ExtensionRegistration.md#featureflag)
+- [load](ExtensionRegistration.md#load)
 - [meta](ExtensionRegistration.md#meta)
 - [moduleName](ExtensionRegistration.md#modulename)
 - [name](ExtensionRegistration.md#name)
@@ -14,10 +15,6 @@
 - [online](ExtensionRegistration.md#online)
 - [order](ExtensionRegistration.md#order)
 - [privileges](ExtensionRegistration.md#privileges)
-
-### Methods
-
-- [load](ExtensionRegistration.md#load)
 
 ## Extension Properties
 
@@ -28,6 +25,16 @@
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L21)
+
+___
+
+### load
+
+• **load**: [`Loadable`](../API.md#loadable)<{}\>
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L14)
 
 ___
 
@@ -98,17 +105,3 @@ ___
 #### Defined in
 
 [packages/framework/esm-extensions/src/store.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L20)
-
-## Methods
-
-### load
-
-▸ **load**(): `Promise`<{ `default?`: `LifeCycles`<{}\>  } & `LifeCycles`<{}\>\>
-
-#### Returns
-
-`Promise`<{ `default?`: `LifeCycles`<{}\>  } & `LifeCycles`<{}\>\>
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/store.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L14)

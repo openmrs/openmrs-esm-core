@@ -1,9 +1,9 @@
 /** @module @category Extension */
 import isEqual from 'lodash-es/isEqual';
 import type { ConfigExtensionStoreElement, ConfigObject, ExtensionSlotConfigObject } from '@openmrs/esm-config';
+import { type Loadable } from '@openmrs/esm-globals';
 import { configExtensionStore } from '@openmrs/esm-config';
 import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
-import type { LifeCycles } from 'single-spa';
 
 export interface ExtensionMeta {
   [_: string]: any;
@@ -11,7 +11,7 @@ export interface ExtensionMeta {
 
 export interface ExtensionRegistration {
   name: string;
-  load(): Promise<{ default?: LifeCycles } & LifeCycles>;
+  load: Loadable;
   moduleName: string;
   meta: ExtensionMeta;
   order?: number;

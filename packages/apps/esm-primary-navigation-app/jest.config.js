@@ -6,6 +6,7 @@ module.exports = {
   moduleNameMapper: {
     'lodash-es': 'lodash',
     '@openmrs/esm-framework': '@openmrs/esm-framework/mock.tsx',
+    '@openmrs/esm-framework/src/internal': '@openmrs/esm-framework/mock.tsx',
     '\\.(s?css)$': 'identity-obj-proxy',
     'react-i18next': '<rootDir>/__mocks__/react-i18next.mock.js',
   },
