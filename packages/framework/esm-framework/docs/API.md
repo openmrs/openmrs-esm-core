@@ -108,6 +108,7 @@
 - [useConnectedExtensions](API.md#useconnectedextensions)
 - [useExtensionSlotMeta](API.md#useextensionslotmeta)
 - [useExtensionStore](API.md#useextensionstore)
+- [useRenderableExtensions](API.md#userenderableextensions)
 
 ### Feature Flags Functions
 
@@ -3117,6 +3118,49 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L6)
+
+___
+
+### useRenderableExtensions
+
+▸ **useRenderableExtensions**(`name`): `React.FC`<`Pick`<[`ExtensionProps`](API.md#extensionprops), ``"state"``\>\>[]
+
+This is an advanced hook for use-cases where its useful to use the extension system,
+but not the `ExtensionSlot` component's rendering of extensions. Use of this hook
+should be avoided if possible.
+
+Functionally, this hook is very similar to the `ExtensionSlot` component, but whereas
+an `ExtensionSlot` renders a DOM tree of extensions bound to the slot, this hook simply
+returns the extensions as an array of React components that can be wired into a component
+however makes sense.
+
+**`example`**
+```ts
+const extensions = useRenderableExtensions('my-extension-slot');
+return (
+ <>
+   {extensions.map((Ext, index) => (
+     <React.Fragment key={index}>
+       <Ext state={{key: 'value'}} />
+     </React.Fragment>
+   ))}
+ </>
+)
+```
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `string` | The name of the extension slot |
+
+#### Returns
+
+`React.FC`<`Pick`<[`ExtensionProps`](API.md#extensionprops), ``"state"``\>\>[]
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useRenderableExtensions.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useRenderableExtensions.tsx#L31)
 
 ___
 
