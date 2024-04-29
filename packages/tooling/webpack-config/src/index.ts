@@ -288,6 +288,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
             // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
             obj['swr/'] = {
               requiredVersion: peerDependencies['swr'] ?? false,
+              strictVersion: false,
               singleton: true,
               import: 'swr/',
               shareKey: 'swr/',
@@ -297,6 +298,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           } else {
             obj[depName] = {
               requiredVersion: peerDependencies[depName] ?? false,
+              strictVersion: false,
               singleton: true,
               import: depName,
               shareKey: depName,

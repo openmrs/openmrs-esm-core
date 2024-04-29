@@ -337,6 +337,7 @@ module.exports = (env, argv = {}) => {
             // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
             obj['swr/'] = {
               requiredVersion: version,
+              strictVersion: false,
               singleton: true,
               eager: true,
               import: 'swr/',
@@ -347,6 +348,7 @@ module.exports = (env, argv = {}) => {
           } else {
             obj[depName] = {
               requiredVersion: version ?? false,
+              strictVersion: false,
               singleton: true,
               eager: true,
               import: depName,
