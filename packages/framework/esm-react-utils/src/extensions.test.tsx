@@ -281,7 +281,11 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
   });
 
   test('useRenderableExtensions returns registered extensions', async () => {
-    registerSimpleExtension('Spanish', 'esm-languages-app', undefined, {
+    function SpanishExtension({ suffix }) {
+      return <div>Spanish{suffix}</div>;
+    }
+
+    registerSimpleExtension('Spanish', 'esm-languages-app', SpanishExtension, {
       code: 'es',
     });
     attach('Box', 'Spanish');
@@ -292,11 +296,11 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     })(() => {
       const extensions = useRenderableExtensions('Box');
       const Ext = extensions[0];
-      return <Ext />;
+      return <Ext state={{ suffix: ' hola' }} />;
     });
     render(<App />);
 
-    await waitFor(() => expect(screen.getByText('Spanish')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Spanish hola')).toBeInTheDocument());
   });
 });
 

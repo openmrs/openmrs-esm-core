@@ -32,7 +32,7 @@ export function useRenderableExtensions(name: string): Array<React.FC<Pick<Exten
   const { extensions, extensionSlotModuleName } = useExtensionSlot(name);
 
   return name
-    ? extensions.map((extension) => (state: Record<string, unknown>) => (
+    ? extensions.map((extension) => ({ state }: Pick<ExtensionProps, 'state'>) => (
         <ComponentContext.Provider
           value={{
             moduleName: extensionSlotModuleName, // moduleName is not used by the receiving Extension
