@@ -79,6 +79,11 @@ export const usePatientPhoto = jest.fn(() => ({
   data: null,
   error: null,
 }));
+
+export const ActionMenuButton = jest.fn(({ handler }) => <button onClick={handler}>Action Menu Button</button>);
+export const ActionMenu = jest.fn(() => <div>Action Menu</div>);
+export const WorkspaceWindow = jest.fn(() => <div>Workspace Window</div>);
+export const WorkspaceOverlay = jest.fn(() => <div>Workspace Overlay</div>);
 export const closeWorkspace = jest.fn();
 export const launchWorkspace = jest.fn();
 export const navigateAndLaunchWorkspace = jest.fn();
