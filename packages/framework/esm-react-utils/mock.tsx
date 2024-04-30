@@ -37,6 +37,8 @@ export const useSession = jest.fn(() => ({
 
 export const useLayoutType = jest.fn(() => 'desktop');
 
+export const useRenderableExtensions = jest.fn(() => []);
+
 export const useAssignedExtensions = jest.fn(() => []);
 
 export const useExtensionSlotMeta = jest.fn(() => ({}));
