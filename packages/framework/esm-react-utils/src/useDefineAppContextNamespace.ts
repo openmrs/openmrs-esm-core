@@ -1,3 +1,4 @@
+/** @module @category Context */
 import { useEffect, useRef, useState } from 'react';
 import { registerContext, unregisterContext, updateContext } from '@openmrs/esm-context';
 import { shallowEqual } from '@openmrs/esm-utils';
@@ -21,7 +22,7 @@ import { shallowEqual } from '@openmrs/esm-utils';
  *  must be unique among currently registered namespaces in the application context.
  * @param value
  */
-export default function useDefineAppContextNamespace<T extends {}>(namespace: string, value?: T) {
+export function useDefineAppContextNamespace<T extends {}>(namespace: string, value?: T) {
   const previousValue = useRef<T>(value ?? ({} as unknown as T));
 
   // effect hook for registration and unregistration

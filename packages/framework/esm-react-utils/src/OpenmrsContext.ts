@@ -1,4 +1,5 @@
-import useDefineAppContextNamespace from './useDefineAppContextNamespace';
+/** @module @category Context */
+import { useDefineAppContextNamespace } from './useDefineAppContextNamespace';
 
 interface OpenmrsAppContextProps<T = unknown> {
   namespace: string;
@@ -18,8 +19,8 @@ interface OpenmrsAppContextProps<T = unknown> {
  * context component, the `OpenmrsAppContext` is inherently global in scope. That means that _all applications_
  * will see the values that you set for the namespace if they load the value of the namespace.
  */
-export default function OpenmrsAppContext<T = unknown>({ namespace, value }: OpenmrsAppContextProps<T>) {
-  useDefineAppContextNamespace(namespace, value);
+export function OpenmrsAppContext<T extends {}>({ namespace, value }: OpenmrsAppContextProps<T>) {
+  useDefineAppContextNamespace<T>(namespace, value);
 
   return null;
 }
