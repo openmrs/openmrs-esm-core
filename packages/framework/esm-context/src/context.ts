@@ -28,13 +28,12 @@ const nothing = Object();
  * @param namespace the namespace to register
  * @param initialValue the initial value of the namespace
  */
-export function registerContext(namespace: string, initialValue: unknown = nothing) {
+export function registerContext<T = unknown>(namespace: string, initialValue: T = nothing) {
   contextStore.setState((state) => {
     if (namespace in state) {
-      console.warn(
-        `Attempting to re-register namespace ${namespace} in the app context. This may indicate that more than one place trying to manage this namespace.`,
+      throw new Error(
+        `Attempted to re-register namespace ${namespace} in the app context. Each namespace must be unregistered before the name can be registered again.`,
       );
-      return;
     }
 
     state[namespace] = initialValue === nothing ? {} : initialValue;
@@ -53,13 +52,22 @@ export function unregisterContext(namespace: string) {
   });
 }
 
+export function getContext<T = unknown>(namespace: string): Immutable<T> | null;
 /**
- * Returns an _immutable_ version of the state of the namespace currently
+ * Returns an _immutable_ version of the state of the namespace as it is currently
+ *
+ * @typeParam T The type of the value stored in the namespace
+ * @typeParam U The return type of this hook which is mostly relevant when using a selector
+ * @param namespace The namespace to load properties from
+ * @param selector An optional function which extracts the relevant part of the state
  */
-export function getContext<T = unknown>(namespace: string): Immutable<T> | null {
+export function getContext<T = unknown, U = T>(
+  namespace: string,
+  selector: (state: Immutable<T>) => U = (state) => state as unknown as U,
+): Immutable<U> | null {
   const state = contextStore.getState();
   if (namespace in state) {
-    return freeze(state[namespace] as Immutable<T>);
+    return freeze((selector ? selector(state[namespace] as Immutable<T>) : state[namespace]) as Immutable<U>);
   }
 
   return null;
@@ -85,6 +93,7 @@ export type ContextCallback<T = unknown> = (state: Readonly<T> | null | undefine
  *
  * @param namespace the namespace to subscribe to
  * @param callback a function invoked with the current context whenever
+ * @returns A function to unsubscribe from the context
  */
 export function subscribeToContext<T = unknown>(namespace: string, callback: ContextCallback<T>) {
   let previous = getContext(namespace);

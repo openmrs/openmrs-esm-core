@@ -1,4 +1,3 @@
-# openmrs-esm-dynamic-loading
+# openmrs-esm-context
 
-openmrs-esm-dynamic-loading provides functions for dynamically loading JS files using Webpack Module Federation
-dynamic remotes.
+openmrs-esm-context provides the AppContext that is useful for sharing contextual state across the application.

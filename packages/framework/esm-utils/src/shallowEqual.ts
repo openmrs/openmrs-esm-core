@@ -6,21 +6,41 @@
  * In essence, shallowEquals ensures two objects have the same own properties and that the values
  * of these are equal (===) to each other.
  *
- * @param objA The first object to compare
- * @param objB The second object to compare
+ * @param a The first value to compare
+ * @param b The second value to compare
  * @returns true if the objects are shallowly equal to each other
  */
-export function shallowEqual(objA: unknown, objB: unknown) {
-  if (Object.is(objA, objB)) {
+export function shallowEqual(a: unknown, b: unknown) {
+  if (a === b || Object.is(a, b)) {
     return true;
   }
 
-  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+  if (Array.isArray(a)) {
+    if (!Array.isArray(b)) {
+      return false;
+    }
+
+    if (a.length !== b.length) {
+      return false;
+    }
+
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  } else if (Array.isArray(b)) {
     return false;
   }
 
-  const objAKeys = Object.getOwnPropertyNames(objA);
-  const objBKeys = Object.getOwnPropertyNames(objB);
+  if (typeof a !== 'object' || a === null || typeof b !== 'object' || b === null) {
+    return false;
+  }
 
-  return objAKeys.length === objBKeys.length && objAKeys.every((key) => objA[key] === objB[key]);
+  const objAKeys = Object.getOwnPropertyNames(a);
+  const objBKeys = Object.getOwnPropertyNames(b);
+
+  return objAKeys.length === objBKeys.length && objAKeys.every((key) => a[key] === b[key]);
 }
