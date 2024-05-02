@@ -1,8 +1,10 @@
 /** @module @category Context */
 import { useDefineAppContextNamespace } from './useDefineAppContextNamespace';
 
-interface OpenmrsAppContextProps<T = unknown> {
+export interface OpenmrsAppContextProps<T = unknown> {
+  /** the namespace that this component defines */
   namespace: string;
+  /** used to control the value associated with the namespace */
   value?: T;
 }
 

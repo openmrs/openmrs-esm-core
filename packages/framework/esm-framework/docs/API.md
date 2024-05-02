@@ -2314,7 +2314,7 @@ will see the values that you set for the namespace if they load the value of the
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `OpenmrsAppContextProps`<`T`\> |
+| `__namedParameters` | [`OpenmrsAppContextProps`](interfaces/OpenmrsAppContextProps.md)<`T`\> |
 
 #### Returns
 
@@ -2322,7 +2322,7 @@ will see the values that you set for the namespace if they load the value of the
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/OpenmrsContext.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L22)
+[packages/framework/esm-react-utils/src/OpenmrsContext.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L24)
 
 ___
 
