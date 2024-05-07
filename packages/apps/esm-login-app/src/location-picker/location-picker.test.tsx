@@ -1,24 +1,18 @@
 import { act, cleanup, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  useConfig,
-  useSession,
-  setSessionLocation,
-  setUserProperties,
-  showSnackbar,
-  useLocations,
-} from '@openmrs/esm-framework';
+import { useConfig, useSession, setSessionLocation, setUserProperties, showSnackbar } from '@openmrs/esm-framework';
 import { mockLoginLocations } from '../../__mocks__/locations.mock';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
 import LocationPicker from './location-picker.component';
+import { useLoginLocations } from './useLoginLocations.resource';
 
 const validLocationUuid = '1ce1b7d4-c865-4178-82b0-5932e51503d6';
 const invalidLocationUuid = '2gf1b7d4-c865-4178-82b0-5932e51503d6';
 
 const mockedUseConfig = useConfig as jest.Mock;
 const mockUseSession = useSession as jest.Mock;
-const mockUseLocations = useLocations as jest.Mock;
+const mockUseLoginLocations = useLoginLocations as jest.Mock;
 
 mockedUseConfig.mockReturnValue(mockConfig);
 mockUseSession.mockReturnValue({
@@ -36,14 +30,18 @@ jest.mock('@openmrs/esm-framework', () => ({
   navigate: jest.fn(),
   showSnackbar: jest.fn(),
   useOpenmrsSWR: jest.fn().mockReturnValue({}),
-  useLocations: jest.fn(),
+}));
+
+jest.mock('./useLoginLocations.resource', () => ({
+  ...jest.requireActual('./useLoginLocations.resource'),
+  useLoginLocations: jest.fn(),
 }));
 
 describe('LocationPicker', () => {
   beforeEach(() => {
     cleanup();
     jest.clearAllMocks();
-    mockUseLocations.mockReturnValue({
+    mockUseLoginLocations.mockReturnValue({
       locations: mockLoginLocations.data.entry,
       isLoadingLocations: false,
       hasMore: false,
@@ -156,7 +154,7 @@ describe('LocationPicker', () => {
         },
       });
 
-      mockUseLocations.mockReturnValue({
+      mockUseLoginLocations.mockReturnValue({
         locations: mockLoginLocations.data.entry,
         isDefaultLocationValid: true,
         defaultLocation: validLocationUuid,
@@ -194,7 +192,7 @@ describe('LocationPicker', () => {
         },
       });
 
-      mockUseLocations.mockReturnValue({
+      mockUseLoginLocations.mockReturnValue({
         locations: mockLoginLocations.data.entry,
         isDefaultLocationValid: false,
         defaultLocation: null,
@@ -230,7 +228,7 @@ describe('LocationPicker', () => {
         },
       });
 
-      mockUseLocations.mockReturnValue({
+      mockUseLoginLocations.mockReturnValue({
         locations: mockLoginLocations.data.entry,
         isDefaultLocationValid: true,
         defaultLocation: validLocationUuid,
@@ -264,7 +262,7 @@ describe('LocationPicker', () => {
         },
       });
 
-      mockUseLocations.mockReturnValue({
+      mockUseLoginLocations.mockReturnValue({
         locations: mockLoginLocations.data.entry,
         isDefaultLocationValid: true,
         defaultLocation: validLocationUuid,
@@ -320,7 +318,7 @@ describe('LocationPicker', () => {
         },
       });
 
-      mockUseLocations.mockReturnValue({
+      mockUseLoginLocations.mockReturnValue({
         locations: mockLoginLocations.data.entry,
         isDefaultLocationValid: true,
         defaultLocation: validLocationUuid,

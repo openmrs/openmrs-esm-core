@@ -19,13 +19,13 @@ import {
   useConfig,
   useConnectivity,
   useSession,
-  useLocations,
   useDebounce,
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
 import styles from './location-picker.scss';
 import { getUserDefaultAndLoggedInLocations } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
+import { useLoginLocations } from './useLoginLocations.resource';
 
 interface LocationPickerProps {}
 
@@ -57,7 +57,7 @@ const LocationPicker: React.FC<LocationPickerProps> = () => {
     isDefaultLocationValid,
     defaultLocation,
     lastLoggedInLocation,
-  } = useLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, debouncedSearchTerm);
+  } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, debouncedSearchTerm);
 
   const prevUserProperties = user?.userProperties;
 

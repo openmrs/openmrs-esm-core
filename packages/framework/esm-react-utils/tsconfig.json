@@ -10,17 +10,12 @@
     "declaration": true,
     "declarationDir": "dist",
     "emitDeclarationOnly": true,
-    "lib": [
-      "dom",
-      "es5",
-      "scripthost",
-      "es2015",
-      "es2015.promise",
-      "es2016.array.include",
-      "es2018",
-      "ESNext"
-    ]
+    "lib": ["dom", "es5", "scripthost", "es2015", "es2015.promise", "es2016.array.include", "es2018", "ESNext"]
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "../../apps/esm-login-app/src/location-picker/useLoginLocations.resource.ts",
+    "../../apps/esm-login-app/src/location-picker/useLoginLocations.test.ts"
+  ],
   "exclude": ["src/**/*.test.*"]
 }
