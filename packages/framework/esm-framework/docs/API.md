@@ -1724,35 +1724,21 @@ ___
 
 ### useLocations
 
-▸ **useLocations**(`useLoginLocationTag`, `count?`, `searchQuery?`): `Object`
+▸ **useLocations**(`tagUuidOrName?`): [`Location`](interfaces/Location.md)[]
 
 #### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `useLoginLocationTag` | `boolean` | `undefined` |
-| `count` | `number` | `0` |
-| `searchQuery` | `string` | `''` |
+| `tagUuidOrName` | ``null`` \| `string` | `null` |
 
 #### Returns
 
-`Object`
-
-| Name | Type |
-| :------ | :------ |
-| `defaultLocation` | `undefined` \| ``null`` \| `string` |
-| `hasMore` | `boolean` |
-| `isDefaultLocationValid` | `boolean` |
-| `isLoadingLocations` | `boolean` |
-| `lastLoggedInLocation` | `undefined` \| `string` |
-| `loadingNewData` | `boolean` |
-| `locations` | [`LocationEntry`](interfaces/LocationEntry.md)[] |
-| `totalResults` | ``null`` \| `number` |
-| `setPage` | (`size`: `number` \| (`_size`: `number`) => `number`) => `void` |
+[`Location`](interfaces/Location.md)[]
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useLocations.ts:188](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLocations.ts#L188)
+[packages/framework/esm-react-utils/src/useLocations.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLocations.ts#L6)
 
 ___
 

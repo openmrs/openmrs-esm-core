@@ -17,11 +17,7 @@ export * from './useExtensionSlotMeta';
 export * from './useExtensionStore';
 export * from './useFeatureFlag';
 export * from './useLayoutType';
-export {
-  useLocations,
-  type LocationResponse,
-  type LocationEntry,
-} from '../../../apps/esm-login-app/src/location-picker/useLoginLocations.resource';
+export * from './useLocations';
 export * from './useOnClickOutside';
 export * from './useOpenmrsSWR';
 export * from './usePatient';
