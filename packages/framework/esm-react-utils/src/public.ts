@@ -21,6 +21,7 @@ export { useLocations, type LocationResponse, type LocationEntry } from './useLo
 export * from './useOnClickOutside';
 export * from './useOpenmrsSWR';
 export * from './usePatient';
+export * from './useRenderableExtensions';
 export { useSession } from './useSession';
 export * from './useStore';
 export * from './useVisit';

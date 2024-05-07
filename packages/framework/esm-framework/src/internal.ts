@@ -1,3 +1,5 @@
+/// <reference path="./declarations.d.ts" />
+
 export * from '@openmrs/esm-api';
 export * from '@openmrs/esm-config';
 export * from '@openmrs/esm-dynamic-loading';

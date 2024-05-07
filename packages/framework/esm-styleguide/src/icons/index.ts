@@ -1,5 +1,3 @@
-/// <reference path="../declarations.d.ts" />
-
 import visibility from './svgs/visibility_24px_rounded.svg';
 import menu from './svgs/menu_24px_rounded.svg';
 import search from './svgs/search_24px_rounded.svg';

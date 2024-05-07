@@ -1,5 +1,4 @@
 import { start, triggerAppChange } from 'single-spa';
-import { type OpenmrsAppRoutes, restBaseUrl } from '@openmrs/esm-framework/src/internal';
 import {
   setupApiModule,
   renderLoadingSpinner,
@@ -23,20 +22,20 @@ import {
   messageOmrsServiceWorker,
   subscribeConnectivity,
   getCurrentUser,
-  renderModals,
+  setupModals,
   dispatchPrecacheStaticDependencies,
   activateOfflineCapability,
   subscribePrecacheStaticDependencies,
   openmrsFetch,
   interpolateUrl,
   type OpenmrsRoutes,
-  getCurrentImportMap,
-  importDynamic,
   canAccessStorage,
   localStorageRoutesPrefix,
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
   setupHistory,
+  type OpenmrsAppRoutes,
+  restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
 import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
 import { setupI18n } from './locale';
@@ -191,15 +190,6 @@ function runShell() {
     .then(() => start());
 }
 
-async function preloadScripts() {
-  const [, importMap] = await Promise.all([window[REGISTRATION_PROMISES], getCurrentImportMap()]);
-
-  window.installedModules.map(async ([module]) => {
-    // we simply swallow the error here since this is only a preload
-    importDynamic(module, undefined, { importMap }).catch();
-  });
-}
-
 function handleInitFailure(e: Error) {
   console.error(e);
   renderFatalErrorPage(e);
@@ -286,7 +276,7 @@ function showSnackbars() {
 }
 
 function showModals() {
-  renderModals(document.querySelector('.omrs-modals-container'));
+  setupModals(document.querySelector('.omrs-modals-container'));
 }
 
 function showLoadingSpinner() {
@@ -419,6 +409,5 @@ export function run(configUrls: Array<string>, offline: boolean) {
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(offline ? setupOffline : undefined)
-    .then(preloadScripts);
+    .then(offline ? setupOffline : undefined);
 }

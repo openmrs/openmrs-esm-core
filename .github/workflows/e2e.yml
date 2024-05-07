@@ -73,7 +73,7 @@ jobs:
         run: yarn playwright install chromium --with-deps
 
       - name: Build apps
-        run: yarn turbo run build --color --concurrency=5
+        run: yarn turbo build --color --concurrency=5
 
       - name: Run dev server
         run: bash e2e/support/github/run-e2e-docker-env.sh

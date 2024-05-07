@@ -10,6 +10,7 @@ export * from './notifications';
 export * from './toasts';
 export * from './snackbars';
 export * from './modals';
+export * from './workspaces';
 export * from './left-nav';
 export * from './error-state';
 export * from './datepicker';

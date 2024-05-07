@@ -2,7 +2,7 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import RedirectLogout from './redirect-logout.component';
 import {
-  Session,
+  type Session,
   clearCurrentUser,
   navigate,
   openmrsFetch,

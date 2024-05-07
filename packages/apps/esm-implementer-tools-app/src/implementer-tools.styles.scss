@@ -1,5 +1,7 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/type';
+@use '@carbon/react/scss/themes';
+@use '@carbon/react/scss/theme';
 @import '~@openmrs/esm-styleguide/src/vars';
 
 .productiveHeading01 {
@@ -37,4 +39,8 @@
   div:hover {
     padding: spacing.$spacing-03 0;
   }
+}
+
+.darkTheme {
+  @include theme.theme(themes.$g90);
 }

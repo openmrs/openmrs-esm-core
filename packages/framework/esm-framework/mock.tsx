@@ -80,6 +80,15 @@ export const usePatientPhoto = jest.fn(() => ({
   error: null,
 }));
 
+export const ActionMenuButton = jest.fn(({ handler }) => <button onClick={handler}>Action Menu Button</button>);
+export const ActionMenu = jest.fn(() => <div>Action Menu</div>);
+export const WorkspaceWindow = jest.fn(() => <div>Workspace Window</div>);
+export const WorkspaceOverlay = jest.fn(() => <div>Workspace Overlay</div>);
+export const closeWorkspace = jest.fn();
+export const launchWorkspace = jest.fn();
+export const navigateAndLaunchWorkspace = jest.fn();
+export const useWorkspaces = jest.fn();
+
 /* esm-utils */
 export { getDefaultsFromConfigSchema, parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
 

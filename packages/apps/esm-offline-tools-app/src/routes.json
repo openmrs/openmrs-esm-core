@@ -26,12 +26,6 @@
       "offline": true
     },
     {
-      "name": "offline-tools-confirmation-modal",
-      "component": "offlineToolsConfirmationModal",
-      "online": true,
-      "offline": true
-    },
-    {
       "name": "offline-tools-dashboard-patients-card",
       "slot": "offline-tools-dashboard-cards",
       "component": "offlineToolsPatientsCard",
@@ -139,6 +133,12 @@
       "online": true,
       "offline": true,
       "order": 1
+    }
+  ],
+  "modals": [
+    {
+      "name": "offline-tools-confirmation-modal",
+      "component": "offlineToolsConfirmationModal"
     }
   ]
 }

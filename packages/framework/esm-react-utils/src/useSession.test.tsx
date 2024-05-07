@@ -3,7 +3,7 @@ import { act, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useSession, __cleanup } from './useSession';
 import { createGlobalStore } from '@openmrs/esm-state';
-import { SessionStore } from '@openmrs/esm-api';
+import { type SessionStore } from '@openmrs/esm-api';
 
 const mockSessionStore = createGlobalStore<SessionStore>('mockSessionStore', {
   loaded: false,

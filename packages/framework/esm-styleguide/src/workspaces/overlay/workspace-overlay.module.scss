@@ -1,0 +1,91 @@
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/colors';
+@use '@carbon/styles/scss/type';
+@import '@openmrs/esm-styleguide/src/vars';
+
+.desktopOverlay {
+  position: fixed;
+  top: var(--omrs-navbar-height);
+  right: 0;
+  min-width: 32.25rem;
+  background-color: $ui-02;
+  border-left: 1px solid $text-03;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  z-index: 999;
+}
+
+.tabletOverlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background-color: $ui-02;
+  overflow: hidden;
+  padding-top: spacing.$spacing-09;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.tabletOverlayHeader {
+  button {
+    background-color: $brand-01 !important;
+
+    & > svg {
+      fill: $ui-02;
+    }
+  }
+
+  .headerContent {
+    color: $ui-02;
+  }
+}
+
+.desktopHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $ui-03;
+  border-bottom: 1px solid $text-03;
+  height: var(--workspace-header-height);
+}
+
+.headerContent {
+  @include type.type-style('heading-compact-02');
+  padding: 0 spacing.$spacing-05;
+  color: $ui-05;
+}
+
+.closeButton {
+  background-color: $ui-02;
+  padding-top: 0;
+  height: var(--workspace-header-height);
+  min-height: auto;
+  align-items: center;
+}
+
+.workspaceContent {
+  top: 6rem;
+  right: auto;
+  left: auto;
+  overflow-y: auto;
+  max-height: var(--desktop-workspace-window-height);
+}
+
+.workspaceLoadingContent {
+  display: flex;
+  background-color: $openmrs-background-grey;
+  justify-content: center;
+  height: var(--desktop-workspace-window-height);
+}
+
+// Overriding styles for RTL support
+html[dir='rtl'] {
+  .desktopOverlay {
+    right: unset;
+    left: 0;
+  }
+}

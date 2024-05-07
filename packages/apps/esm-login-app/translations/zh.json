@@ -1,9 +1,7 @@
 {
   "back": "返回",
   "change": "更改",
-  "confirm": "确认",
   "continue": "继续",
-  "error": "错误",
   "errorLoadingLoginLocations": "登录地点加载错误",
   "invalidCredentials": "用户名或密码无效",
   "loading": "加载中",

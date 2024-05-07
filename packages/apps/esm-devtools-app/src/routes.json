@@ -8,7 +8,7 @@
       "offline": true
     }
   ],
-  "extensions": [
+  "modals": [
     {
       "name": "importmap-override-modal",
       "component": "importmapOverrideModal"

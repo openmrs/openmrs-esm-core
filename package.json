@@ -14,11 +14,11 @@
     "ci:publish-next": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --access public --tag next",
     "ci:publish": "yarn workspaces foreach --all --topological --exclude @openmrs/esm-core npm publish --access public --tag latest",
     "release": "yarn workspaces foreach --all --topological version",
-    "build": "turbo run build",
-    "build:apps": "turbo run build --filter='@openmrs/*-app'",
-    "setup": "yarn install && turbo run build",
+    "build": "turbo build",
+    "build:apps": "turbo build --filter='@openmrs/*-app'",
+    "setup": "yarn install && turbo build",
     "start": "openmrs develop",
-    "verify": "turbo run lint && turbo run test && turbo run typescript",
+    "verify": "turbo lint test typescript",
     "postinstall": "husky install",
     "test": "cross-env TZ=UTC jest --config jest.config.json --verbose false --passWithNoTests",
     "test-watch": "cross-env TZ=UTC jest --watch --config jest.config.json",
@@ -26,7 +26,7 @@
     "coverage": "yarn test --coverage"
   },
   "devDependencies": {
-    "@playwright/test": "1.42.1",
+    "@playwright/test": "1.43.0",
     "@swc/core": "^1.3.58",
     "@swc/jest": "^0.2.29",
     "@testing-library/dom": "^9.3.3",
@@ -44,6 +44,7 @@
     "cross-env": "7.0.2",
     "dotenv": "^16.0.3",
     "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "fake-indexeddb": "^4.0.1",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "husky": "^8.0.1",
@@ -68,10 +69,8 @@
     "webpack": "^5.88.0"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --cache --fix",
-      "prettier --cache --write --ignore-unknown --list-different"
-    ]
+    "*.{ts,tsx}": "eslint --cache --fix --max-warnings 0",
+    "*.{css,scss,ts,tsx}": "prettier --write --list-different"
   },
   "resolutions": {
     "minipass": "3.3.5"
