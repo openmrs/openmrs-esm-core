@@ -7,6 +7,7 @@ window.i18next = { ...window.i18next, language: 'en' };
 
 export * from '@openmrs/esm-api/mock';
 export * from '@openmrs/esm-config/mock';
+export * from '@openmrs/esm-context';
 export * from '@openmrs/esm-extensions/mock';
 export * from '@openmrs/esm-react-utils/mock';
 export * from '@openmrs/esm-state/mock';
