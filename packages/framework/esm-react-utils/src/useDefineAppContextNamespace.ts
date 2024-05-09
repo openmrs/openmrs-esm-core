@@ -1,5 +1,5 @@
 /** @module @category Context */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { registerContext, unregisterContext, updateContext } from '@openmrs/esm-context';
 import { shallowEqual } from '@openmrs/esm-utils';
 
@@ -13,33 +13,45 @@ import { shallowEqual } from '@openmrs/esm-utils';
  * const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
  * useDefineAppContextNamespace<PatientContext>('patient', patient ?? null);
  * ```
-
+ *
+ * @example
+ * ```ts
+ * const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
+ * const updatePatient = useDefineAppContextNamespace<PatientContext>('patient', patient ?? null);
+ * updatePatient((patient) => {
+ *  patient.name = 'Hector';
+ *  return patient;
+ * })
+ * ```
+ *
  * Note that the AppContext does not allow the storing of undefined values in a namespace. Use `null`
  * instead.
  *
  * @typeParam T The type of the value of the namespace
  * @param namespace The name of the namespace in the application context. Note that the namespace
  *  must be unique among currently registered namespaces in the application context.
- * @param value
+ * @param value The value to associate with this namespace. Updating the value property will update
+ *   the namespace value.
+ * @returns A function which can be used to update the state
  */
 export function useDefineAppContextNamespace<T extends {}>(namespace: string, value?: T) {
-  const previousValue = useRef<T>(value ?? ({} as unknown as T));
+  const previousValue = useRef<T>(value ?? ({} as T));
 
   // effect hook for registration and unregistration
   useEffect(() => {
-    registerContext(namespace, value ?? ({} as unknown as T));
+    registerContext(namespace, value ?? ({} as T));
     return () => {
       unregisterContext(namespace);
     };
   }, [namespace]);
 
   useEffect(() => {
-    let futureValue: T = value ?? ({} as unknown as T);
+    let futureValue: T = value ?? ({} as T);
     if (!shallowEqual(previousValue.current, futureValue)) {
-      updateContext<T>(namespace, () => {
-        return futureValue;
-      });
+      updateContext<T>(namespace, () => futureValue);
       previousValue.current = futureValue;
     }
   }, [value]);
+
+  return (update: (state: T) => T) => updateContext<T>(namespace, update);
 }

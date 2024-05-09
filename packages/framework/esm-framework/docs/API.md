@@ -326,7 +326,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `unknown` |
+| `T` | extends `Object` = {} |
 
 #### Type declaration
 
@@ -344,7 +344,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L89)
+[packages/framework/esm-context/src/context.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L90)
 
 ___
 
@@ -2328,7 +2328,7 @@ ___
 
 ### getContext
 
-▸ **getContext**<`T`\>(`namespace`): `Immutable`<`T`\> \| ``null``
+▸ **getContext**<`T`\>(`namespace`): `Readonly`<`T`\> \| ``null``
 
 Returns an _immutable_ version of the state of the namespace as it is currently
 
@@ -2336,7 +2336,7 @@ Returns an _immutable_ version of the state of the namespace as it is currently
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `T` | `unknown` | The type of the value stored in the namespace |
+| `T` | extends `Object` = {} | The type of the value stored in the namespace |
 
 #### Parameters
 
@@ -2346,7 +2346,7 @@ Returns an _immutable_ version of the state of the namespace as it is currently
 
 #### Returns
 
-`Immutable`<`T`\> \| ``null``
+`Readonly`<`T`\> \| ``null``
 
 #### Defined in
 
@@ -2365,7 +2365,7 @@ an already-registered namespace will display a warning and make no modifications
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `unknown` |
+| `T` | extends `Object` = {} |
 
 #### Parameters
 
@@ -2380,7 +2380,7 @@ an already-registered namespace will display a warning and make no modifications
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L31)
+[packages/framework/esm-context/src/context.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L29)
 
 ___
 
@@ -2394,7 +2394,7 @@ Subscribes to updates of a given namespace. Note that the returned object is imm
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `unknown` |
+| `T` | extends `Object` = {} |
 
 #### Parameters
 
@@ -2417,7 +2417,7 @@ A function to unsubscribe from the context
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L98)
+[packages/framework/esm-context/src/context.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L99)
 
 ___
 
@@ -2440,7 +2440,7 @@ will remove the namespace and all associated data.
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L47)
+[packages/framework/esm-context/src/context.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L46)
 
 ___
 
@@ -2454,7 +2454,7 @@ Updates a namespace in the global context. If the namespace does not exist, it i
 
 | Name | Type |
 | :------ | :------ |
-| `T` | `unknown` |
+| `T` | extends `Object` = {} |
 
 #### Parameters
 
@@ -2475,7 +2475,7 @@ ___
 
 ### useAppContext
 
-▸ **useAppContext**<`T`\>(`namespace`): `T` \| `undefined`
+▸ **useAppContext**<`T`\>(`namespace`): `Readonly`<`T`\> \| `undefined`
 
 This hook is used to access a namespace within the overall AppContext, so that a component can
 use any shared contextual values. A selector may be provided to further restrict the properties
@@ -2497,7 +2497,7 @@ const patientName = useAppContext<PatientContext, string | undefined>('patient',
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `T` | `unknown` | The type of the value stored in the namespace |
+| `T` | extends `Object` = {} | The type of the value stored in the namespace |
 
 #### Parameters
 
@@ -2507,7 +2507,7 @@ const patientName = useAppContext<PatientContext, string | undefined>('patient',
 
 #### Returns
 
-`T` \| `undefined`
+`Readonly`<`T`\> \| `undefined`
 
 #### Defined in
 
@@ -2517,7 +2517,7 @@ ___
 
 ### useDefineAppContextNamespace
 
-▸ **useDefineAppContextNamespace**<`T`\>(`namespace`, `value?`): `void`
+▸ **useDefineAppContextNamespace**<`T`\>(`namespace`, `value?`): (`update`: (`state`: `T`) => `T`) => `void`
 
 This hook is used to register a namespace in the AppContext. The component that registers the
 namespace is responsible for updating the value associated with the namespace. The namespace
@@ -2527,6 +2527,16 @@ will be automatically removed when the component using this hook is unmounted.
 ```ts
 const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
 useDefineAppContextNamespace<PatientContext>('patient', patient ?? null);
+```
+
+**`example`**
+```ts
+const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
+const updatePatient = useDefineAppContextNamespace<PatientContext>('patient', patient ?? null);
+updatePatient((patient) => {
+ patient.name = 'Hector';
+ return patient;
+})
 ```
 
 Note that the AppContext does not allow the storing of undefined values in a namespace. Use `null`
@@ -2543,15 +2553,29 @@ instead.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `namespace` | `string` | The name of the namespace in the application context. Note that the namespace  must be unique among currently registered namespaces in the application context. |
-| `value?` | `T` |  |
+| `value?` | `T` | The value to associate with this namespace. Updating the value property will update   the namespace value. |
 
 #### Returns
+
+`fn`
+
+A function which can be used to update the state
+
+▸ (`update`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `update` | (`state`: `T`) => `T` |
+
+##### Returns
 
 `void`
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useDefineAppContextNamespace.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContextNamespace.ts#L25)
+[packages/framework/esm-react-utils/src/useDefineAppContextNamespace.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContextNamespace.ts#L37)
 
 ___
 

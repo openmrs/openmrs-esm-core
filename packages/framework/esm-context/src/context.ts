@@ -1,8 +1,6 @@
 /** @module @category Context */
 'use strict';
 
-import { type Immutable, isDraft, freeze, original } from 'immer';
-import { immer } from 'zustand/middleware/immer';
 import { createStore } from 'zustand/vanilla';
 import { registerGlobalStore } from '@openmrs/esm-state';
 
@@ -15,7 +13,7 @@ interface OpenmrsAppContext {
  *
  * The application context store, using immer to potentially simplify updates
  */
-export const contextStore = createStore<OpenmrsAppContext>()(immer(() => ({})));
+export const contextStore = createStore<OpenmrsAppContext>()(() => ({}));
 
 registerGlobalStore<OpenmrsAppContext>('openmrs-app-context', contextStore);
 
@@ -28,7 +26,7 @@ const nothing = Object();
  * @param namespace the namespace to register
  * @param initialValue the initial value of the namespace
  */
-export function registerContext<T = unknown>(namespace: string, initialValue: T = nothing) {
+export function registerContext<T extends {} = {}>(namespace: string, initialValue: T = nothing) {
   contextStore.setState((state) => {
     if (namespace in state) {
       throw new Error(
@@ -37,6 +35,7 @@ export function registerContext<T = unknown>(namespace: string, initialValue: T 
     }
 
     state[namespace] = initialValue === nothing ? {} : initialValue;
+    return state;
   });
 }
 
@@ -49,10 +48,11 @@ export function unregisterContext(namespace: string) {
     if (namespace in state) {
       delete state[namespace];
     }
+    return state;
   });
 }
 
-export function getContext<T = unknown>(namespace: string): Immutable<T> | null;
+export function getContext<T extends {} = {}>(namespace: string): Readonly<T> | null;
 /**
  * Returns an _immutable_ version of the state of the namespace as it is currently
  *
@@ -61,13 +61,13 @@ export function getContext<T = unknown>(namespace: string): Immutable<T> | null;
  * @param namespace The namespace to load properties from
  * @param selector An optional function which extracts the relevant part of the state
  */
-export function getContext<T = unknown, U = T>(
+export function getContext<T extends {} = {}, U extends {} = T>(
   namespace: string,
-  selector: (state: Immutable<T>) => U = (state) => state as unknown as U,
-): Immutable<U> | null {
+  selector: (state: Readonly<T>) => U = (state) => state as unknown as U,
+): Readonly<U> | null {
   const state = contextStore.getState();
   if (namespace in state) {
-    return freeze((selector ? selector(state[namespace] as Immutable<T>) : state[namespace]) as Immutable<U>);
+    return Object.freeze(Object.assign({}, (selector ? selector(state[namespace] as T) : state[namespace]) as U));
   }
 
   return null;
@@ -76,17 +76,18 @@ export function getContext<T = unknown, U = T>(
 /**
  * Updates a namespace in the global context. If the namespace does not exist, it is registered.
  */
-export function updateContext<T = unknown>(namespace: string, update: (state: T) => T) {
+export function updateContext<T extends {} = {}>(namespace: string, update: (state: T) => T) {
   contextStore.setState((state) => {
     if (!(namespace in state)) {
       state[namespace] = {};
     }
 
     state[namespace] = update(state[namespace] as T);
+    return state;
   });
 }
 
-export type ContextCallback<T = unknown> = (state: Readonly<T> | null | undefined) => void;
+export type ContextCallback<T extends {} = {}> = (state: Readonly<T> | null | undefined) => void;
 
 /**
  * Subscribes to updates of a given namespace. Note that the returned object is immutable.
@@ -95,21 +96,15 @@ export type ContextCallback<T = unknown> = (state: Readonly<T> | null | undefine
  * @param callback a function invoked with the current context whenever
  * @returns A function to unsubscribe from the context
  */
-export function subscribeToContext<T = unknown>(namespace: string, callback: ContextCallback<T>) {
-  let previous = getContext(namespace);
-  if (isDraft(previous)) {
-    previous = original(previous);
-  }
+export function subscribeToContext<T extends {} = {}>(namespace: string, callback: ContextCallback<T>) {
+  let previous = getContext<T>(namespace);
 
   return contextStore.subscribe((state) => {
-    let current: T | null | undefined = namespace in state ? (state[namespace] as T) : null;
-    if (isDraft(current)) {
-      current = original(current);
-    }
+    let current: Readonly<T> | null | undefined = namespace in state ? (state[namespace] as T) : null;
 
     if (current !== previous) {
       previous = current;
-      callback(freeze(current));
+      callback(Object.freeze(Object.assign({}, current)));
     }
   });
 }
