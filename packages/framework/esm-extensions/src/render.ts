@@ -54,11 +54,11 @@ export async function renderExtension(
         };
       });
 
-      const { default: result, ...lifecycle } = await load();
+      const loadedExtension = await load();
       const id = parcelCount++;
       parcel = mountRootParcel(
         renderFunction({
-          ...(result ?? lifecycle),
+          ...loadedExtension,
           name: `${extensionSlotName}/${extensionName}-${id}`,
         }),
         {

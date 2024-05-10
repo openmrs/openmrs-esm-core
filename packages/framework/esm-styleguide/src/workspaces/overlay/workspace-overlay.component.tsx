@@ -63,9 +63,9 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
 
   useEffect(() => {
     let active = true;
-    workspaceInstance.load().then(({ default: result, ...lifecycle }) => {
+    workspaceInstance.load().then((lifecycle) => {
       if (active) {
-        setLifecycle(result ?? lifecycle);
+        setLifecycle(lifecycle);
       }
     });
     return () => {

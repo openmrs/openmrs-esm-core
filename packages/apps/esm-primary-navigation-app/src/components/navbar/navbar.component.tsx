@@ -6,21 +6,24 @@ import { Close, Switcher, UserAvatarFilledAlt } from '@carbon/react/icons';
 import {
   ExtensionSlot,
   ConfigurableLink,
-  getActiveAppNames,
   useConnectedExtensions,
   useConfig,
-  useStore,
+  useLayoutType,
+  useSession,
 } from '@openmrs/esm-framework';
+import { getActiveAppNames } from '@openmrs/esm-framework/src/internal';
 import { useTranslation } from 'react-i18next';
 import { isDesktop } from '../../utils';
 import AppMenuPanel from '../navbar-header-panels/app-menu-panel.component';
 import Logo from '../logo/logo.component';
+import LeftNavMenu from '../left-nav/left-nav.component';
 import NotificationsMenuPanel from '../navbar-header-panels/notifications-menu-panel.component';
 import OfflineBanner from '../offline-banner/offline-banner.component';
 import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import styles from './navbar.scss';
-import { LeftNavMenu } from '../left-nav/left-nav.component';
+
+const defaultLeftNavSlot = 'default-dashboard-slot';
 
 const HeaderItems: React.FC = () => {
   const { t } = useTranslation();
@@ -29,9 +32,9 @@ const HeaderItems: React.FC = () => {
   const layout = useLayoutType();
   const appMenuItems = useConnectedExtensions('app-menu-slot');
   const activePages = getActiveAppNames();
-  const leftNavSlot = activePages && activePages.length > 0 ? `${activePages[0]}-dashboard-slot` : undefined;
-  const leftNavItems = useConnectedExtensions(leftNavSlot);
-  const defaultNavItems = useConnectedExtensions('default-dashboard-slot');
+  const pageLeftNavSlot = activePages && activePages.length > 0 ? `${activePages[0]}-dashboard-slot` : undefined;
+  const leftNavItems = useConnectedExtensions(pageLeftNavSlot);
+  const defaultLeftNavItems = useConnectedExtensions(defaultLeftNavSlot);
   const userMenuItems = useConnectedExtensions('user-panel-slot');
   const isActivePanel = useCallback((panelName: string) => activeHeaderPanel === panelName, [activeHeaderPanel]);
 
@@ -46,14 +49,17 @@ const HeaderItems: React.FC = () => {
     [],
   );
 
-  const showLeftNav = useMemo(
-    () => isDesktop(layout) && (leftNavItems.length > 0 || defaultNavItems.length > 0),
-    [leftNavItems.length, defaultNavItems.length, layout],
-  );
-  const showHamburgerMenu = useMemo(
-    () => !isDesktop(layout) && (leftNavItems.length > 0 || defaultNavItems.length > 0),
-    [leftNavItems.length, defaultNavItems.length, layout],
-  );
+  const leftNavSlot = useMemo(() => {
+    if (leftNavItems.length > 0) {
+      return pageLeftNavSlot;
+    } else if (defaultLeftNavItems.length > 0) {
+      return defaultLeftNavSlot;
+    }
+
+    return null;
+  }, [pageLeftNavSlot.length, defaultLeftNavSlot.length]);
+  const showLeftNav = useMemo(() => isDesktop(layout) && leftNavSlot !== null, [layout, leftNavSlot]);
+  const showHamburgerMenu = useMemo(() => !isDesktop(layout) && leftNavSlot !== null, [layout, leftNavSlot]);
   const showAppMenu = useMemo(() => appMenuItems.length > 0, [appMenuItems.length]);
   const showUserMenu = useMemo(() => userMenuItems.length > 0, [userMenuItems.length]);
   return (
@@ -65,7 +71,7 @@ const HeaderItems: React.FC = () => {
             aria-label="Open menu"
             isCollapsible
             className={styles.headerMenuButton}
-            onClick={(event) => {
+            onClick={() => {
               togglePanel('sideMenu');
             }}
             isActive={isActivePanel('sideMenu')}
@@ -123,19 +129,25 @@ const HeaderItems: React.FC = () => {
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>
-        {showHamburgerMenu && <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />}
+        {showHamburgerMenu && (
+          <SideMenuPanel
+            hidePanel={hidePanel('sideMenu')}
+            expanded={isActivePanel('sideMenu')}
+            leftNavSlot={leftNavSlot}
+          />
+        )}
         {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel('appMenu')} />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
         {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel('userMenu')} />}
       </Header>
-      {showLeftNav && <LeftNavMenu isChildOfHeader={false} />}
+      {showLeftNav && <LeftNavMenu isChildOfHeader={false} leftNavSlot={leftNavSlot} />}
     </>
   );
 };
 
 const Navbar: React.FC = () => {
   const session = useSession();
-  const openmrsSpaBase = window['getOpenmrsSpaBase']();
+  const openmrsSpaBase = window.getOpenmrsSpaBase();
 
   if (session?.user?.person) {
     return session.sessionLocation ? (

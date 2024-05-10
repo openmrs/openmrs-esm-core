@@ -21,9 +21,9 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
   useEffect(() => {
     let active = true;
-    workspace.load().then(({ default: result, ...lifecycle }) => {
+    workspace.load().then((lifecycle) => {
       if (active) {
-        setLifecycle(result ?? lifecycle);
+        setLifecycle(lifecycle);
       }
     });
     return () => {

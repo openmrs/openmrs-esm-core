@@ -13,10 +13,10 @@ const pageRegistryStore = createGlobalStore<PageRegistry>('pageRegistry', {
   pages: {},
 });
 
-export type PageRegistration = RegisteredPageDefinition & {
+export interface PageRegistration extends RegisteredPageDefinition {
   activityFn: (location: Location) => boolean;
   load: () => Promise<LifeCycles>;
-};
+}
 
 /** @internal */
 export function getPageRegistration(appName: string, order: number): RegisteredPageDefinition | undefined {

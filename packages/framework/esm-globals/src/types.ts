@@ -164,9 +164,14 @@ export type PageDefinition = {
 /**
  * A definition of a page after the app has been registered.
  */
-export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
+export interface RegisteredPageDefinition extends Omit<PageDefinition, 'order'>, AppComponent {
+  /**
+   * Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.
+   */
+  order: number;
+}
 
-export type Loadable<LoadResult = {}> = () => Promise<LifeCycles<LoadResult> & { default: LifeCycles<LoadResult> }>;
+export type Loadable<LoadResult = unknown> = () => Promise<LifeCycles<LoadResult>>;
 
 /**
  * Internal shared type for various *Definitions that either take a named component or a function to load the

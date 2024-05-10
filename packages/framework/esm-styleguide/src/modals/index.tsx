@@ -71,11 +71,11 @@ async function renderModalIntoDOM(
 
     const { load } = modalRegistration;
 
-    const { default: result, ...lifecycle } = await load();
+    const { ...lifecycle } = await load();
     const id = parcelCount++;
     parcel = mountRootParcel(
       {
-        ...(result ?? lifecycle),
+        ...lifecycle,
         name: `${modalName}-${id}`,
       },
       {
