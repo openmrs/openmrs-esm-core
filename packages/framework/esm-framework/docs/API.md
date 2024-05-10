@@ -73,7 +73,7 @@
 - [unregisterContext](API.md#unregistercontext)
 - [updateContext](API.md#updatecontext)
 - [useAppContext](API.md#useappcontext)
-- [useDefineAppContextNamespace](API.md#usedefineappcontextnamespace)
+- [useDefineAppContext](API.md#usedefineappcontext)
 
 ### Date and Time Functions
 
@@ -2515,9 +2515,9 @@ const patientName = useAppContext<PatientContext, string | undefined>('patient',
 
 ___
 
-### useDefineAppContextNamespace
+### useDefineAppContext
 
-▸ **useDefineAppContextNamespace**<`T`\>(`namespace`, `value?`): (`update`: (`state`: `T`) => `T`) => `void`
+▸ **useDefineAppContext**<`T`\>(`namespace`, `value?`): (`update`: (`state`: `T`) => `T`) => `void`
 
 This hook is used to register a namespace in the AppContext. The component that registers the
 namespace is responsible for updating the value associated with the namespace. The namespace
@@ -2526,13 +2526,13 @@ will be automatically removed when the component using this hook is unmounted.
 **`example`**
 ```ts
 const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
-useDefineAppContextNamespace<PatientContext>('patient', patient ?? null);
+useDefineAppContext<PatientContext>('patient', patient ?? null);
 ```
 
 **`example`**
 ```ts
 const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
-const updatePatient = useDefineAppContextNamespace<PatientContext>('patient', patient ?? null);
+const updatePatient = useDefineAppContext<PatientContext>('patient', patient ?? null);
 updatePatient((patient) => {
  patient.name = 'Hector';
  return patient;
@@ -2559,7 +2559,7 @@ instead.
 
 `fn`
 
-A function which can be used to update the state
+A function which can be used to update the state associated with the namespace
 
 ▸ (`update`): `void`
 
@@ -2575,7 +2575,7 @@ A function which can be used to update the state
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useDefineAppContextNamespace.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContextNamespace.ts#L37)
+[packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
 
 ___
 

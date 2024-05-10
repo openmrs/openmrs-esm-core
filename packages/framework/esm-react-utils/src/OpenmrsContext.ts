@@ -1,5 +1,5 @@
 /** @module @category Context */
-import { useDefineAppContextNamespace } from './useDefineAppContextNamespace';
+import { useDefineAppContext } from './useDefineAppContext';
 
 export interface OpenmrsAppContextProps<T = unknown> {
   /** the namespace that this component defines */
@@ -22,7 +22,7 @@ export interface OpenmrsAppContextProps<T = unknown> {
  * will see the values that you set for the namespace if they load the value of the namespace.
  */
 export function OpenmrsAppContext<T extends {}>({ namespace, value }: OpenmrsAppContextProps<T>) {
-  useDefineAppContextNamespace<T>(namespace, value);
+  useDefineAppContext<T>(namespace, value);
 
   return null;
 }

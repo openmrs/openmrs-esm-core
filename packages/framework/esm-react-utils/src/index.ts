@@ -16,7 +16,7 @@ export * from './useConfig';
 export * from './useConnectedExtensions';
 export * from './useConnectivity';
 export * from './useDebounce';
-export * from './useDefineAppContextNamespace';
+export * from './useDefineAppContext';
 export * from './useExtensionInternalStore';
 export * from './useExtensionSlot';
 export * from './useExtensionSlotMeta';
