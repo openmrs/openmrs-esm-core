@@ -43,14 +43,12 @@ function createModalFrame() {
   ) as HTMLButtonElement;
 
   closeButton.addEventListener('click', closeHighestInstance);
-  const outer = document.createElement('div');
-  outer.className = 'cds--modal-container';
-  const contentContainer = document.createElement('div');
+  const modalFrame = document.createElement('div');
+  modalFrame.className = 'cds--modal-container';
 
-  outer.append(closeButton);
-  outer.append(contentContainer);
+  modalFrame.append(closeButton);
 
-  return { outer, contentContainer };
+  return modalFrame;
 }
 
 let parcelCount = 0;
@@ -108,13 +106,13 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
     modalStack.forEach((instance, index) => {
       switch (instance.state) {
         case 'NEW': {
-          const { outer, contentContainer } = createModalFrame();
-          instance.container = outer;
-          renderModalIntoDOM(contentContainer, instance.modalName, instance.props).then((parcel) => {
+          const modalFrame = createModalFrame();
+          instance.container = modalFrame;
+          renderModalIntoDOM(modalFrame, instance.modalName, instance.props).then((parcel) => {
             instance.parcel = parcel;
             instance.state = 'MOUNTED';
-            modalContainer.prepend(outer);
-            outer.style.visibility = 'unset';
+            modalContainer.prepend(modalFrame);
+            modalFrame.style.visibility = 'unset';
           });
           break;
         }
@@ -198,7 +196,9 @@ export function setupModals(modalContainer: HTMLElement | null) {
  * Shows a modal dialog.
  *
  * The modal must have been registered by name. This should be done in the `routes.json` file of the
- * app that defines the modal.
+ * app that defines the modal. Note that both the `<ModelHeader>` and `<ModalBody>` should be at the
+ * top level of the modal component (wrapped in a React.Fragment), or else the content of the modal
+ * body might not vertical-scroll properly.
  *
  * @param modalName The name of the modal to show.
  * @param props The optional props to provide to the modal.
