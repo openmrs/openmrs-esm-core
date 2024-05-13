@@ -196,7 +196,7 @@ export function setupModals(modalContainer: HTMLElement | null) {
  * Shows a modal dialog.
  *
  * The modal must have been registered by name. This should be done in the `routes.json` file of the
- * app that defines the modal. Note that both the `<ModelHeader>` and `<ModalBody>` should be at the
+ * app that defines the modal. Note that both the `<ModalHeader>` and `<ModalBody>` should be at the
  * top level of the modal component (wrapped in a React.Fragment), or else the content of the modal
  * body might not vertical-scroll properly.
  *

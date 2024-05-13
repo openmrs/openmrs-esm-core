@@ -5169,7 +5169,9 @@ ___
 Shows a modal dialog.
 
 The modal must have been registered by name. This should be done in the `routes.json` file of the
-app that defines the modal.
+app that defines the modal. Note that both the `<ModalHeader>` and `<ModalBody>` should be at the
+top level of the modal component (wrapped in a React.Fragment), or else the content of the modal
+body might not vertical-scroll properly.
 
 #### Parameters
 
@@ -5938,7 +5940,7 @@ is provided separately.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx#L43)
+[packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx#L45)
 
 ___
 
@@ -5984,7 +5986,7 @@ For the patient chart, this is `workspace-header-patient-chart-slot`.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L55)
+[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L47)
 
 ___
 
@@ -6007,7 +6009,7 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:303](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L303)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:298](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L298)
 
 ___
 
@@ -6049,7 +6051,7 @@ by the components that display workspaces.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:205](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L205)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L200)
 
 ___
 
@@ -6075,7 +6077,7 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:266](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L266)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L261)
 
 ___
 
@@ -6089,4 +6091,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:405](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L405)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:400](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L400)

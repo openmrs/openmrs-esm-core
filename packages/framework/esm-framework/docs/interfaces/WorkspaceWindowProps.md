@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L23)
+[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L15)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L22)
+[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L14)

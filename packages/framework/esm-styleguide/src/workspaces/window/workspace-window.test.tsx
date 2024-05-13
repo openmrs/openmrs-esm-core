@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { isDesktop } from '@openmrs/esm-framework';
+import { isDesktop } from '@openmrs/esm-react-utils';
 import { WorkspaceWindow } from './workspace-window.component';
 import { launchWorkspace, registerWorkspace } from '..';
 
@@ -12,14 +12,22 @@ jest.mock('./workspace-renderer.component', () => ({
   WorkspaceRenderer: jest.fn().mockImplementation(() => <div>Workspace-Renderer</div>),
 }));
 
-jest.mock('@openmrs/esm-framework', () => {
-  const originalModule = jest.requireActual('@openmrs/esm-framework');
+jest.mock('@openmrs/esm-react-utils', () => {
+  const originalModule = jest.requireActual('@openmrs/esm-react-utils');
 
   return {
     ...originalModule,
     isDesktop: jest.fn(),
-    translateFrom: (module, key, defaultValue, options) => defaultValue,
     useBodyScrollLock: jest.fn(),
+  };
+});
+
+jest.mock('@openmrs/esm-translations', () => {
+  const originalModule = jest.requireActual('@openmrs/esm-translations');
+
+  return {
+    ...originalModule,
+    translateFrom: (module, key, defaultValue, options) => defaultValue,
   };
 });
 

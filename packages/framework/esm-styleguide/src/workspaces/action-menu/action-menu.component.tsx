@@ -1,9 +1,9 @@
 /** @module @category Workspace */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { ExtensionSlot, useLayoutType, useWorkspaces } from '@openmrs/esm-framework';
+import { ComponentContext, ExtensionSlot, useLayoutType } from '@openmrs/esm-react-utils';
+import { useWorkspaces } from '../workspaces';
 import styles from './action-menu.module.scss';
-import { ComponentContext } from '@openmrs/esm-react-utils';
 
 /**
  * This renders the [Siderail and Bottom Nav](https://zeroheight.com/23a080e38/p/948cf1-siderail-and-bottom-nav/b/86907e),

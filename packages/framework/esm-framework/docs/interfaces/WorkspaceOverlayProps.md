@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx#L14)
+[packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx#L16)
