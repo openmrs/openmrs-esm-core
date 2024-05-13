@@ -1,5 +1,10 @@
 /** @module @category Workspace */
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button, ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
+import styles from './workspace-notification.module.scss';
+import { navigate } from '@openmrs/esm-navigation';
+import { reportError } from '@openmrs/esm-error-handling';
 import {
   canCloseWorkspaceWithoutPrompting,
   cancelPrompt,
@@ -9,10 +14,6 @@ import {
   resetWorkspaceStore,
   useWorkspaces,
 } from '../workspaces';
-import { Button, ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
-import { useTranslation } from 'react-i18next';
-import styles from './workspace-notification.module.scss';
-import { navigate, reportError } from '@openmrs/esm-framework';
 
 export interface WorkspaceNotificationProps {
   contextKey: string;

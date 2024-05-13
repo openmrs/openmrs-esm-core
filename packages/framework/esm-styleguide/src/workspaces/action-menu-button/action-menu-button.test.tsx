@@ -1,9 +1,9 @@
 import React from 'react';
 import { screen, render, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useLayoutType } from '@openmrs/esm-framework';
-import { ActionMenuButton } from './action-menu-button.component';
+import { useLayoutType } from '@openmrs/esm-react-utils';
 import { Pen } from '@carbon/react/icons';
+import { ActionMenuButton } from './action-menu-button.component';
 import { useWorkspaces } from '../workspaces';
 
 const mockedUseLayoutType = useLayoutType as jest.Mock;
@@ -13,8 +13,8 @@ jest.mock('@carbon/react/icons', () => ({
   Pen: jest.fn(({ size }) => <div data-testid="pen-icon">size: {size}</div>),
 }));
 
-jest.mock('@openmrs/esm-framework', () => {
-  const originalModule = jest.requireActual('@openmrs/esm-framework');
+jest.mock('@openmrs/esm-react-utils', () => {
+  const originalModule = jest.requireActual('@openmrs/esm-react-utils');
 
   return {
     ...originalModule,

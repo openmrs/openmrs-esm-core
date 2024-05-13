@@ -41,7 +41,6 @@
     "@openmrs/esm-api": "5.x",
     "@openmrs/esm-globals": "5.x",
     "@openmrs/esm-state": "5.x",
-    "@openmrs/esm-styleguide": "5.x",
     "rxjs": "6.x"
   },
   "dependencies": {
@@ -54,7 +53,6 @@
     "@openmrs/esm-api": "workspace:*",
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
-    "@openmrs/esm-styleguide": "workspace:*",
     "@types/uuid": "^9.0.1",
     "rxjs": "^6.5.3"
   }

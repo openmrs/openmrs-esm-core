@@ -1,22 +1,14 @@
 /** @module @category Workspace */
 import React, { useContext, useMemo } from 'react';
 import classNames from 'classnames';
-import {
-  ExtensionSlot,
-  useBodyScrollLock,
-  useLayoutType,
-  isDesktop,
-  translateFrom,
-  getCoreTranslation,
-} from '@openmrs/esm-framework';
-import { type OpenWorkspace, useWorkspaces, updateWorkspaceWindowState } from '../workspaces';
 import { Header, HeaderGlobalBar, HeaderName, HeaderMenuButton, HeaderGlobalAction } from '@carbon/react';
 import { ArrowLeft, ArrowRight, Close, DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
-import { useTranslation } from 'react-i18next';
+import { ComponentContext, ExtensionSlot, useBodyScrollLock, useLayoutType, isDesktop } from '@openmrs/esm-react-utils';
+import { translateFrom, getCoreTranslation } from '@openmrs/esm-translations';
+import { type OpenWorkspace, useWorkspaces, updateWorkspaceWindowState } from '../workspaces';
 import { WorkspaceRenderer } from './workspace-renderer.component';
-import styles from './workspace-window.module.scss';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
-import { ComponentContext } from '@openmrs/esm-react-utils';
+import styles from './workspace-window.module.scss';
 
 export interface WorkspaceWindowProps {
   contextKey: string;

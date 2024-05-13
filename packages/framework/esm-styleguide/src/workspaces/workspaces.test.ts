@@ -6,8 +6,8 @@ import {
   registerWorkspace,
   resetWorkspaceStore,
 } from './workspaces';
+import { registerExtension } from '@openmrs/esm-extensions';
 import { clearMockExtensionRegistry } from '@openmrs/esm-framework/mock';
-import { registerExtension } from '@openmrs/esm-framework';
 
 describe('workspace system', () => {
   beforeEach(() => {

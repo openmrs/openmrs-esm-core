@@ -1,11 +1,13 @@
 /** @module @category Workspace */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import classNames from 'classnames';
+// @ts-ignore
 import { Button, Header, InlineLoading } from '@carbon/react';
 import { ArrowLeft, Close } from '@carbon/react/icons';
-import { useLayoutType, isDesktop, getCoreTranslation, translateFrom } from '@openmrs/esm-framework';
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
-import classNames from 'classnames';
+import { useLayoutType, isDesktop } from '@openmrs/esm-react-utils';
+import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
 import { type OpenWorkspace, useWorkspaces } from '../workspaces';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
 import styles from './workspace-overlay.module.scss';

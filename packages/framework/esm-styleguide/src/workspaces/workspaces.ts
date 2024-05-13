@@ -1,18 +1,13 @@
 /** @module @category Workspace */
 import { useMemo } from 'react';
-import type { LifeCycles } from 'single-spa';
+import { type LifeCycles } from 'single-spa';
 import _i18n from 'i18next';
-import {
-  type ExtensionRegistration,
-  getGlobalStore,
-  navigate,
-  translateFrom,
-  createGlobalStore,
-  useStore,
-  getCoreTranslation,
-  type WorkspaceWindowState,
-} from '@openmrs/esm-framework';
-import { getExtensionRegistration } from '@openmrs/esm-extensions';
+import { type ExtensionRegistration, getExtensionRegistration } from '@openmrs/esm-extensions';
+import { type WorkspaceWindowState } from '@openmrs/esm-globals';
+import { useStore } from '@openmrs/esm-react-utils';
+import { navigate } from '@openmrs/esm-navigation';
+import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
+import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
 import { type CloseWorkspaceOptions } from './types';
 
 export interface Prompt {
