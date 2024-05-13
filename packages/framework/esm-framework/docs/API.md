@@ -6003,7 +6003,7 @@ For the patient chart, this is `workspace-header-patient-chart-slot`.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L55)
+[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L47)
 
 ___
 
@@ -6026,7 +6026,7 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:298](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L298)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:297](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L297)
 
 ___
 
@@ -6068,7 +6068,7 @@ by the components that display workspaces.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L200)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:199](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L199)
 
 ___
 
@@ -6094,7 +6094,7 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L261)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L260)
 
 ___
 
@@ -6108,4 +6108,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:400](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L400)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:399](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L399)

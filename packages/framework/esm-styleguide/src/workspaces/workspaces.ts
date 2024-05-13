@@ -1,9 +1,8 @@
 /** @module @category Workspace */
 import { useMemo } from 'react';
-import { type LifeCycles } from 'single-spa';
 import _i18n from 'i18next';
 import { type ExtensionRegistration, getExtensionRegistration } from '@openmrs/esm-extensions';
-import { type WorkspaceWindowState } from '@openmrs/esm-globals';
+import { type Loadable, type WorkspaceWindowState } from '@openmrs/esm-globals';
 import { useStore } from '@openmrs/esm-react-utils';
 import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
