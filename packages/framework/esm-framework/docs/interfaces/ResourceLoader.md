@@ -20,4 +20,4 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:316](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L316)
+[packages/framework/esm-globals/src/types.ts:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L348)

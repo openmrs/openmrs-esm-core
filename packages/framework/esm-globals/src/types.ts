@@ -110,6 +110,8 @@ type AppComponent = {
   appName: string;
 };
 
+type PageType = 'main' | 'utility';
+
 /**
  * A definition of a page extracted from an app's routes.json
  */
@@ -118,6 +120,11 @@ export type PageDefinition = {
    * The name of the component exported by this frontend module.
    */
   component: string;
+  /**
+   * Used to determine the "type" of page, i.e., whether the page forms the "main screen" when active or whether
+   * the page functions as a utility, like the devtools or implementer tools. Defaults to "main".
+   */
+  type?: PageType;
   /**
    * Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
    */
@@ -163,8 +170,15 @@ export type PageDefinition = {
 
 /**
  * A definition of a page after the app has been registered.
+ *
+ * @internal
  */
-export interface RegisteredPageDefinition extends Omit<PageDefinition, 'order'>, AppComponent {
+export interface RegisteredPageDefinition extends Omit<PageDefinition, 'type' | 'order'>, AppComponent {
+  /**
+   * Used to determine the "type" of page, i.e., whether the page forms the "main screen" when active or whether
+   * the page functions as a utility, like the devtools or implementer tools. Defaults to "main".
+   */
+  type: PageType;
   /**
    * Determines the order in which this page is rendered in the app-shell, which is useful for situations where DOM ordering matters.
    */
@@ -275,9 +289,22 @@ export type WorkspaceDefinition = {
    * right sidebar icon corresponds to the workspace.
    */
   type: string;
+  /**
+   * Controls whether the workspace, once opened, can be hidden into the side rail.
+   */
   canHide?: boolean;
+  /**
+   * Controls whether the workspace can be displayed in full-screen mode on a desktop.
+   */
   canMaximize?: boolean;
+  /**
+   * Controls the "width" of the workspace. The default is "narrow" and this should only be changed
+   * to "wider" if the workspace itself has internal navigation, like the form editor.
+   */
   width?: 'narrow' | 'wider';
+  /**
+   * Controls the default "mode" that the workspace opens in, either "maximized", "hidden", or "normal".
+   */
   preferredWindowSize?: WorkspaceWindowState;
 } & ComponentOrLoadable;
 

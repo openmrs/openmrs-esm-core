@@ -150,6 +150,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
       ) {
         pages.push({
           ...p,
+          type: p.type ?? 'main',
           order: p.order ?? Number.MAX_SAFE_INTEGER,
           appName,
         });

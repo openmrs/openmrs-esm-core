@@ -1,4 +1,5 @@
-import { type RegisteredPageDefinition, type Loadable } from '@openmrs/esm-globals';
+/** @category Page Registration */
+import { type RegisteredPageDefinition } from '@openmrs/esm-globals';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { type LifeCycles, getMountedApps, registerApplication } from 'single-spa';
 import { omit, uniq } from 'lodash-es';
@@ -24,18 +25,23 @@ export function getPageRegistration(appName: string, order: number): RegisteredP
 }
 
 /** @internal */
-export function getActiveAppNames(includeUtilityPages: boolean = false): Array<string> {
-  let mountedPages = getMountedApps();
-  if (!includeUtilityPages) {
-    mountedPages = mountedPages.filter(
-      (page) =>
-        !page.includes('devtools') &&
-        !page.includes('implementer-tools-app') &&
-        !page.includes('primary-navigation-app'),
-    );
+export function getActiveAppNames(includeUtilityPages: boolean = false, mountedApps?: Array<string>): Array<string> {
+  if (typeof mountedApps === 'undefined') {
+    mountedApps = getMountedApps();
   }
 
-  return uniq(mountedPages.filter((page) => page.includes('-page-')).map((page) => page.split('-page-', 1)[0]));
+  if (!includeUtilityPages) {
+    const registeredPages = pageRegistryStore.getState().pages;
+    mountedApps = mountedApps.filter((page) => registeredPages[page]?.type !== 'utility');
+  }
+
+  return uniq(
+    mountedApps.map((page) => {
+      let pageName = page;
+      pageName = pageName.replace(/^@[^\/]*\/(?:esm-)?(.+)-app-page-.*$/, '$1');
+      return pageName;
+    }),
+  );
 }
 
 /** @internal */

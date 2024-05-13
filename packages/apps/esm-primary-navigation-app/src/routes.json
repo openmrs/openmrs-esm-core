@@ -7,6 +7,7 @@
     {
       "component": "root",
       "routeRegex": "^(?!login/?)",
+      "type": "utility",
       "online": true,
       "offline": true,
       "order": 0
@@ -14,6 +15,7 @@
     {
       "component": "redirect",
       "routeRegex": "^$",
+      "type": "utility",
       "online": true,
       "offline": true,
       "order": 0

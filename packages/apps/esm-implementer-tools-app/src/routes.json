@@ -3,10 +3,12 @@
   "pages": [
     {
       "component": "implementerTools",
+      "type": "utility",
       "route": true
     },
     {
       "component": "globalImplementerTools",
+      "type": "utility",
       "route": true
     }
   ],

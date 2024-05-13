@@ -30,7 +30,7 @@ ___
 
 ### load
 
-• **load**: [`Loadable`](../API.md#loadable)<{}\>
+• **load**: [`Loadable`](../API.md#loadable)<`unknown`\>
 
 #### Defined in
 
