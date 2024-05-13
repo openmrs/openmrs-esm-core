@@ -258,7 +258,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
                   <span>{t('cancel', 'Cancel')}</span>
                 </Button>
               ) : (
-                ''
+                null
               )}
               <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
                 {isSubmitting ? (
