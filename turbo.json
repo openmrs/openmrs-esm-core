@@ -10,6 +10,7 @@
       "outputs": ["dist/**"]
     },
     "document": {
+      "inputs": ["packages/framework/**/src/**/*.{ts,tsx}", "!packages/framework/**/src/**/*.test.{ts,tsx}"],
       "outputs": ["packages/framework/esm-framework/docs/**"]
     },
     "test": {},
