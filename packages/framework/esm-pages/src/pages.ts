@@ -36,11 +36,38 @@ export function getActiveAppNames(includeUtilityPages: boolean = false, mountedA
   }
 
   return uniq(
-    mountedApps.map((page) => {
-      let pageName = page;
-      pageName = pageName.replace(/^@[^\/]*\/(?:esm-)?(.+)-app-page-.*$/, '$1');
-      return pageName;
-    }),
+    mountedApps
+      .map((page) => {
+        let pageName = page;
+
+        if (!pageName || !pageName.length) {
+          return '';
+        }
+
+        let idx: number;
+        if (pageName[0] === '@' && (idx = pageName.indexOf('/')) > 0) {
+          if (idx === pageName.length - 1) {
+            return '';
+          }
+
+          pageName = pageName.slice(idx + 1);
+        }
+
+        if (pageName.startsWith('esm-')) {
+          if (pageName.length < 5) {
+            return '';
+          }
+
+          pageName = pageName.slice(5);
+        }
+
+        if ((idx = pageName.indexOf('-app-page-')) > 0) {
+          pageName = pageName.slice(0, idx);
+        }
+
+        return pageName;
+      })
+      .filter((it) => it.length > 0),
   );
 }
 
