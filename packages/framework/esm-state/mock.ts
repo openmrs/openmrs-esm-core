@@ -30,6 +30,15 @@ export function createGlobalStore<T>(name: string, initialState: T): StoreApi<T>
   return instrumentedStore(name, store);
 }
 
+export function registerGlobalStore<T>(name: string, store: StoreApi<T>): StoreApi<T> {
+  availableStores[name] = {
+    value: store,
+    active: true,
+  };
+
+  return instrumentedStore(name, store);
+}
+
 export function getGlobalStore<T>(name: string, fallbackState?: T): StoreApi<T> {
   const available = availableStores[name];
 

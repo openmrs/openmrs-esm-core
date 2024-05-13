@@ -2995,6 +2995,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@openmrs/esm-context@workspace:*, @openmrs/esm-context@workspace:packages/framework/esm-context":
+  version: 0.0.0-use.local
+  resolution: "@openmrs/esm-context@workspace:packages/framework/esm-context"
+  dependencies:
+    "@openmrs/esm-globals": "workspace:*"
+    "@openmrs/esm-state": "workspace:*"
+    immer: "npm:^10.0.4"
+  peerDependencies:
+    "@openmrs/esm-globals": 5.x
+    "@openmrs/esm-state": 5.x
+  languageName: unknown
+  linkType: soft
+
 "@openmrs/esm-core@workspace:.":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-core@workspace:."
@@ -3124,6 +3137,7 @@ __metadata:
   dependencies:
     "@openmrs/esm-api": "workspace:*"
     "@openmrs/esm-config": "workspace:*"
+    "@openmrs/esm-context": "workspace:*"
     "@openmrs/esm-dynamic-loading": "workspace:*"
     "@openmrs/esm-error-handling": "workspace:*"
     "@openmrs/esm-extensions": "workspace:*"
@@ -3311,11 +3325,13 @@ __metadata:
   dependencies:
     "@openmrs/esm-api": "workspace:*"
     "@openmrs/esm-config": "workspace:*"
+    "@openmrs/esm-context": "workspace:*"
     "@openmrs/esm-error-handling": "workspace:*"
     "@openmrs/esm-extensions": "workspace:*"
     "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-navigation": "workspace:*"
+    "@openmrs/esm-utils": "workspace:*"
     dayjs: "npm:^1.10.8"
     i18next: "npm:^21.10.0"
     lodash-es: "npm:^4.17.21"
@@ -3329,11 +3345,13 @@ __metadata:
   peerDependencies:
     "@openmrs/esm-api": 5.x
     "@openmrs/esm-config": 5.x
+    "@openmrs/esm-context": 5.x
     "@openmrs/esm-error-handling": 5.x
     "@openmrs/esm-extensions": 5.x
     "@openmrs/esm-feature-flags": 5.x
     "@openmrs/esm-globals": 5.x
     "@openmrs/esm-navigation": 5.x
+    "@openmrs/esm-utils": 5.x
     dayjs: 1.x
     i18next: 21.x
     react: 18.x
@@ -10686,6 +10704,13 @@ __metadata:
   dependencies:
     "@types/node": "npm:16.9.1"
   checksum: 10/1f7c6c84d0b4d83d50603a38443a51bd45d0aee38ff4284135b30744df9481fa18ae818f906a648d0a6a9a78c884147b7632424199d107998427bb98e96f2584
+  languageName: node
+  linkType: hard
+
+"immer@npm:^10.0.4":
+  version: 10.0.4
+  resolution: "immer@npm:10.0.4"
+  checksum: 10/c1196783cf18e836527f970e45dc88e5472756401831e94d494ca5fd00ab7b39de3156f50505908207e7efe59ac23244d2cde0bd0cff791de7e23709771757e6
   languageName: node
   linkType: hard
 

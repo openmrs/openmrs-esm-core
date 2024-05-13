@@ -274,5 +274,3 @@ function loadScript(
     }
   }
 }
-
-function closureScope() {}

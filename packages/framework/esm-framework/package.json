@@ -39,6 +39,7 @@
   "dependencies": {
     "@openmrs/esm-api": "workspace:*",
     "@openmrs/esm-config": "workspace:*",
+    "@openmrs/esm-context": "workspace:*",
     "@openmrs/esm-dynamic-loading": "workspace:*",
     "@openmrs/esm-error-handling": "workspace:*",
     "@openmrs/esm-extensions": "workspace:*",

@@ -64,6 +64,17 @@
 - [oneOf](API.md#oneof)
 - [validator](API.md#validator)
 
+### Context Functions
+
+- [OpenmrsAppContext](API.md#openmrsappcontext)
+- [getContext](API.md#getcontext)
+- [registerContext](API.md#registercontext)
+- [subscribeToContext](API.md#subscribetocontext)
+- [unregisterContext](API.md#unregistercontext)
+- [updateContext](API.md#updatecontext)
+- [useAppContext](API.md#useappcontext)
+- [useDefineAppContext](API.md#usedefineappcontext)
+
 ### Date and Time Functions
 
 - [formatDate](API.md#formatdate)
@@ -302,6 +313,38 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/shared-api-objects/current-user.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L16)
+
+___
+
+## Context Type Aliases
+
+### ContextCallback
+
+Ƭ **ContextCallback**<`T`\>: (`state`: `Readonly`<`T`\> \| ``null`` \| `undefined`) => `void`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` = {} |
+
+#### Type declaration
+
+▸ (`state`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `state` | `Readonly`<`T`\> \| ``null`` \| `undefined` |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L90)
 
 ___
 
@@ -2240,6 +2283,299 @@ A validator ready for use in a config schema
 #### Defined in
 
 [packages/framework/esm-config/src/validators/validator.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/validators/validator.ts#L25)
+
+___
+
+## Context Functions
+
+### OpenmrsAppContext
+
+▸ **OpenmrsAppContext**<`T`\>(`__namedParameters`): ``null``
+
+OpenmrsAppContext is a simple React component meant to function similarly to React's Context,
+but built on top of the OpenmrsAppContext.
+
+**`example`**
+```ts
+   <OpenmrsAppContext namespace="something" value={{ key: "1234" }} />
+```
+
+**Notes on usage:** Unlike a proper React context where the value is limited to the subtree under the
+context component, the `OpenmrsAppContext` is inherently global in scope. That means that _all applications_
+will see the values that you set for the namespace if they load the value of the namespace.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`OpenmrsAppContextProps`](interfaces/OpenmrsAppContextProps.md)<`T`\> |
+
+#### Returns
+
+``null``
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/OpenmrsContext.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/OpenmrsContext.ts#L24)
+
+___
+
+### getContext
+
+▸ **getContext**<`T`\>(`namespace`): `Readonly`<`T`\> \| ``null``
+
+Returns an _immutable_ version of the state of the namespace as it is currently
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends `Object` = {} | The type of the value stored in the namespace |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `namespace` | `string` | The namespace to load properties from |
+
+#### Returns
+
+`Readonly`<`T`\> \| ``null``
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L55)
+
+___
+
+### registerContext
+
+▸ **registerContext**<`T`\>(`namespace`, `initialValue?`): `void`
+
+Used by callers to register a new namespace in the application context. Attempting to register
+an already-registered namespace will display a warning and make no modifications to the state.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` = {} |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `namespace` | `string` | `undefined` | the namespace to register |
+| `initialValue` | `T` | `nothing` | the initial value of the namespace |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L29)
+
+___
+
+### subscribeToContext
+
+▸ **subscribeToContext**<`T`\>(`namespace`, `callback`): () => `void`
+
+Subscribes to updates of a given namespace. Note that the returned object is immutable.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` = {} |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `namespace` | `string` | the namespace to subscribe to |
+| `callback` | [`ContextCallback`](API.md#contextcallback)<`T`\> | a function invoked with the current context whenever |
+
+#### Returns
+
+`fn`
+
+A function to unsubscribe from the context
+
+▸ (): `void`
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L99)
+
+___
+
+### unregisterContext
+
+▸ **unregisterContext**(`namespace`): `void`
+
+Used by caller to unregister a namespace in the application context. Unregistering a namespace
+will remove the namespace and all associated data.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `namespace` | `string` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L46)
+
+___
+
+### updateContext
+
+▸ **updateContext**<`T`\>(`namespace`, `update`): `void`
+
+Updates a namespace in the global context. If the namespace does not exist, it is registered.
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `Object` = {} |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `namespace` | `string` |
+| `update` | (`state`: `T`) => `T` |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-context/src/context.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L79)
+
+___
+
+### useAppContext
+
+▸ **useAppContext**<`T`\>(`namespace`): `Readonly`<`T`\> \| `undefined`
+
+This hook is used to access a namespace within the overall AppContext, so that a component can
+use any shared contextual values. A selector may be provided to further restrict the properties
+returned from the namespace.
+
+**`example`**
+```ts
+// load a full namespace
+const patientContext = useAppContext<PatientContext>('patient');
+```
+
+**`example`**
+```ts
+// loads part of a namespace
+const patientName = useAppContext<PatientContext, string | undefined>('patient', (state) => state.display);
+```
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends `Object` = {} | The type of the value stored in the namespace |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `namespace` | `string` | The namespace to load properties from |
+
+#### Returns
+
+`Readonly`<`T`\> \| `undefined`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useAppContext.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAppContext.ts#L26)
+
+___
+
+### useDefineAppContext
+
+▸ **useDefineAppContext**<`T`\>(`namespace`, `value?`): (`update`: (`state`: `T`) => `T`) => `void`
+
+This hook is used to register a namespace in the AppContext. The component that registers the
+namespace is responsible for updating the value associated with the namespace. The namespace
+will be automatically removed when the component using this hook is unmounted.
+
+**`example`**
+```ts
+const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
+useDefineAppContext<PatientContext>('patient', patient ?? null);
+```
+
+**`example`**
+```ts
+const { data: patient } = useSWR(`/ws/rest/v1/patient/${patientUuid}`, openmrsFetch);
+const updatePatient = useDefineAppContext<PatientContext>('patient', patient ?? null);
+updatePatient((patient) => {
+ patient.name = 'Hector';
+ return patient;
+})
+```
+
+Note that the AppContext does not allow the storing of undefined values in a namespace. Use `null`
+instead.
+
+#### Type parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `T` | extends `Object` | The type of the value of the namespace |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `namespace` | `string` | The name of the namespace in the application context. Note that the namespace  must be unique among currently registered namespaces in the application context. |
+| `value?` | `T` | The value to associate with this namespace. Updating the value property will update   the namespace value. |
+
+#### Returns
+
+`fn`
+
+A function which can be used to update the state associated with the namespace
+
+▸ (`update`): `void`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `update` | (`state`: `T`) => `T` |
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useDefineAppContext.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useDefineAppContext.ts#L37)
 
 ___
 
@@ -4401,7 +4737,7 @@ The found or newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L61)
+[packages/framework/esm-state/src/state.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L91)
 
 ___
 
@@ -4436,7 +4772,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L78)
+[packages/framework/esm-state/src/state.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L106)
 
 ___
 
@@ -5362,7 +5698,7 @@ ___
 
 ### shallowEqual
 
-▸ **shallowEqual**(`objA`, `objB`): `boolean`
+▸ **shallowEqual**(`a`, `b`): `boolean`
 
 Checks whether two objects are equal, using a shallow comparison, similar to React.
 
@@ -5373,8 +5709,8 @@ of these are equal (===) to each other.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `objA` | `unknown` | The first object to compare |
-| `objB` | `unknown` | The second object to compare |
+| `a` | `unknown` | The first value to compare |
+| `b` | `unknown` | The second value to compare |
 
 #### Returns
 
