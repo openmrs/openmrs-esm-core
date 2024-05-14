@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
-import styles from './workspace-notification.module.scss';
 import { navigate } from '@openmrs/esm-navigation';
 import { reportError } from '@openmrs/esm-error-handling';
 import {
@@ -14,6 +13,9 @@ import {
   resetWorkspaceStore,
   useWorkspaces,
 } from '../workspaces';
+import { escapeRegExp } from 'lodash-es';
+import { type SingleSpaCustomEventDetail } from 'single-spa';
+import styles from './workspace-notification.module.scss';
 
 export interface WorkspaceNotificationProps {
   contextKey: string;
@@ -26,8 +28,8 @@ export function WorkspaceNotification({ contextKey }: WorkspaceNotificationProps
   useEffect(() => {
     // When the component initially mounts, check that it has been provided a valid context key.
     // I can't think of a reason the component would mount with a valid context key but not matching the URL.
-    const regex = new RegExp(`\/${contextKey}(\/|$)`);
-    const isValidContextKey = regex.test(window.location.href);
+    const regex = new RegExp(`\/${escapeRegExp(contextKey)}(\/|$)`);
+    const isValidContextKey = regex.test(window.location.pathname);
     if (!isValidContextKey) {
       reportError(
         `WorkspaceOverlay or WorkspaceWindow has provided an invalid context key: "${contextKey}". The context key must be part of the URL path, with no initial or trailing slash.`,
@@ -45,14 +47,15 @@ export function WorkspaceNotification({ contextKey }: WorkspaceNotificationProps
   // If we navigate away from the current context, we need to prompt if there are
   // unsaved changes.
   useEffect(() => {
-    const handleRouting = (event) => {
+    const handleRouting = (event: Event & { detail: SingleSpaCustomEventDetail }) => {
       const {
         detail: { cancelNavigation, newUrl },
-      } = event as { detail: { cancelNavigation: () => void; newUrl: string } };
+      } = event;
 
       // Check if the new URL matches the current context.
-      const regex = new RegExp(`\/${contextKey}(\/|$)`);
-      const isSameContextUrl = regex.test(newUrl);
+      const regex = new RegExp(`\/${escapeRegExp(contextKey)}(\/|$)`);
+      const url = new URL(newUrl);
+      const isSameContextUrl = regex.test(url.pathname);
       const canCloseAllWorkspaces = getWorkspaceStore()
         .getState()
         .openWorkspaces.every(({ name }) => {
@@ -62,12 +65,9 @@ export function WorkspaceNotification({ contextKey }: WorkspaceNotificationProps
 
       if (!isSameContextUrl) {
         if (!canCloseAllWorkspaces) {
-          cancelNavigation();
+          cancelNavigation?.();
           const navigateToNewUrl = () => {
-            function getUrlWithoutPrefix(url: string) {
-              return url.split(window['getOpenmrsSpaBase']())?.[1];
-            }
-            navigate({ to: `\${openmrsSpaBase}/${getUrlWithoutPrefix(newUrl)}` });
+            navigate({ to: newUrl });
           };
 
           closeAllWorkspaces(navigateToNewUrl);
