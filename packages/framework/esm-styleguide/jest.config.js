@@ -9,8 +9,10 @@ module.exports = {
     '^@carbon/charts': 'identity-obj-proxy',
     '@openmrs/esm-react-utils': '@openmrs/esm-react-utils/mock',
     '@openmrs/esm-translations': '@openmrs/esm-translations/mock',
+    'single-spa': 'single-spa',
     '^lodash-es/(.*)$': 'lodash/$1',
-    dexie: require.resolve('dexie'),
+    'lodash-es': 'lodash',
+    dexie: 'dexie',
   },
   collectCoverageFrom: [
     '**/src/**/*.component.tsx',
