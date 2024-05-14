@@ -9,7 +9,7 @@ import { DatePicker, DatePickerInput } from '@carbon/react';
 const DEFAULT_DATE_FORMAT = 'd/m/Y';
 const DEFAULT_PLACEHOLDER = 'dd/mm/yyyy';
 
-interface OpenmrsDatePickerProps {
+export interface OpenmrsDatePickerProps {
   id: string;
   labelText: string;
   onChange: (value: Date) => void;
