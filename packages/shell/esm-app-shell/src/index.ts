@@ -69,9 +69,11 @@ function initializeSpa(config: SpaConfig) {
   setupPaths(config);
   wireSpaPaths();
   return Promise.resolve(__webpack_init_sharing__('default')).then(async () => {
-    const { configUrls = [], offline = true } = config;
+    const { configUrls = [], offline = false } = config;
+    window.offlineEnabled = offline;
+
     const { run } = await import(/* webpackPreload: true */ './run');
-    return run(configUrls, offline);
+    return run(configUrls);
   });
 }
 

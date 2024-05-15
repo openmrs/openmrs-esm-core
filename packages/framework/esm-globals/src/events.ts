@@ -10,6 +10,10 @@ export function dispatchConnectivityChanged(online: boolean) {
 
 /** @category Offline */
 export function subscribeConnectivityChanged(cb: (ev: ConnectivityChangedEvent) => void) {
+  if (!window.offlineEnabled) {
+    return () => {};
+  }
+
   const handler = (ev: CustomEvent) => cb(ev.detail);
   window.addEventListener(connectivityChangedEventName, handler);
   return () => window.removeEventListener(connectivityChangedEventName, handler);
@@ -17,7 +21,7 @@ export function subscribeConnectivityChanged(cb: (ev: ConnectivityChangedEvent) 
 
 /** @category Offline */
 export function subscribeConnectivity(cb: (ev: ConnectivityChangedEvent) => void) {
-  cb({ online: navigator.onLine });
+  cb({ online: window.offlineEnabled ? navigator.onLine : true });
   return subscribeConnectivityChanged(cb);
 }
 

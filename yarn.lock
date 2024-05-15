@@ -3105,6 +3105,7 @@ __metadata:
     "@openmrs/esm-config": "workspace:*"
     "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
+    "@openmrs/esm-utils": "workspace:*"
     lodash-es: "npm:^4.17.21"
     single-spa: "npm:^6.0.1"
   peerDependencies:
@@ -3112,6 +3113,7 @@ __metadata:
     "@openmrs/esm-config": 5.x
     "@openmrs/esm-feature-flags": 5.x
     "@openmrs/esm-state": 5.x
+    "@openmrs/esm-utils": 5.x
     single-spa: 5.x
   languageName: unknown
   linkType: soft
@@ -3445,11 +3447,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-utils@workspace:packages/framework/esm-utils"
   dependencies:
+    "@openmrs/esm-globals": "workspace:*"
     "@types/semver": "npm:^7.3.4"
     dayjs: "npm:^1.10.4"
     rxjs: "npm:^6.5.3"
     semver: "npm:7.3.2"
   peerDependencies:
+    "@openmrs/esm-globals": 5.x
     dayjs: 1.x
     i18next: 21.x
     rxjs: 6.x

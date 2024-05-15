@@ -1,4 +1,5 @@
 export * from './age-helpers';
+export * from './is-online';
 export * from './omrs-dates';
 export * from './shallowEqual';
 export * from './storage';

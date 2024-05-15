@@ -26,6 +26,11 @@ declare global {
      */
     initializeSpa(config: SpaConfig): void;
     /**
+     * Indicates whether offline mode is enabled in this install or not.
+     * This is used to determine whether offline functionality is present or not.
+     */
+    offlineEnabled: boolean;
+    /**
      * Gets the API base path, e.g. /openmrs
      */
     openmrsBase: string;
@@ -40,7 +45,7 @@ declare global {
     /**
      * The build number of the app shell. Set when the app shell is built by webpack.
      */
-    spaVersion?: string;
+    spaVersion: string;
     /**
      * Gets a set of options from the import-map-overrides package.
      */

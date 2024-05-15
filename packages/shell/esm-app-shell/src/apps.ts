@@ -54,16 +54,20 @@ function getActivityFn(route: RouteDefinition | Array<RouteDefinition>): Activit
  * @returns An activityFn suitable to use for a single-spa application
  */
 function wrapPageActivityFn(activityFn: ActivityFn, { online, offline }: RegisteredPageDefinition) {
-  return (location: Location) => {
-    // basically, if the page should only work online and we're offline or if the
-    // page should only work offline and we're online, defaulting to always rendering
-    // the page
-    if (!((navigator.onLine && (online ?? true)) || (!navigator.onLine && (offline ?? false)))) {
-      return false;
-    }
+  if (window.offlineEnabled) {
+    return (location: Location) => {
+      // basically, if the page should only work online and we're offline or if the
+      // page should only work offline and we're online, defaulting to always rendering
+      // the page
+      if (!((navigator.onLine && (online ?? true)) || (!navigator.onLine && (offline ?? false)))) {
+        return false;
+      }
 
-    return activityFn(location);
-  };
+      return activityFn(location);
+    };
+  } else {
+    return activityFn;
+  }
 }
 
 const STARTUP_FUNCTION = 'startupApp';

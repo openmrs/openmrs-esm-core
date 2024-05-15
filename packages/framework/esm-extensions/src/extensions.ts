@@ -19,6 +19,7 @@ import {
   getExtensionSlotsConfigStore,
 } from '@openmrs/esm-config';
 import { featureFlagsStore } from '@openmrs/esm-feature-flags';
+import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
 import isEqual from 'lodash-es/isEqual';
 import isUndefined from 'lodash-es/isUndefined';
 import type { ExtensionSlotState, AssignedExtension, ConnectedExtension } from '.';
@@ -261,14 +262,15 @@ export function getConnectedExtensions(
   online: boolean | null = null,
   enabledFeatureFlags: Array<string> | null = null,
 ): Array<ConnectedExtension> {
-  const isOnline = online ?? navigator.onLine;
+  const isOnline = isOnlineFn(online ?? undefined);
   const featureFlags =
     enabledFeatureFlags ??
     Object.entries(featureFlagsStore.getState().flags)
       .filter(([, { enabled }]) => enabled)
       .map(([name]) => name);
+
   return assignedExtensions
-    .filter((e) => checkStatusFor(isOnline, e.online, e.offline))
+    .filter((e) => (window.offlineEnabled ? checkStatusFor(isOnline, e.online, e.offline) : true))
     .filter((e) => e.featureFlag === undefined || featureFlags?.includes(e.featureFlag));
 }
 
