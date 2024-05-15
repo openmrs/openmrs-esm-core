@@ -42,6 +42,7 @@
     "@openmrs/esm-config": "5.x",
     "@openmrs/esm-feature-flags": "5.x",
     "@openmrs/esm-state": "5.x",
+    "@openmrs/esm-utils": "5.x",
     "single-spa": "5.x"
   },
   "devDependencies": {
@@ -49,6 +50,7 @@
     "@openmrs/esm-config": "workspace:*",
     "@openmrs/esm-feature-flags": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
+    "@openmrs/esm-utils": "workspace:*",
     "single-spa": "^6.0.1"
   },
   "dependencies": {

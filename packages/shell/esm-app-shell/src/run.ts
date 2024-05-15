@@ -168,6 +168,10 @@ async function loadConfigs(configs: Array<{ name: string; value: Config }>) {
  * Invoked when the connectivity is changed.
  */
 function connectivityChanged() {
+  if (!window.offlineEnabled) {
+    return;
+  }
+
   const online = navigator.onLine;
   // NB We do not wait for this to be done; it is simply scheduled
   triggerAppChange();
@@ -382,7 +386,8 @@ function setupOfflineCssClasses() {
   });
 }
 
-export function run(configUrls: Array<string>, offline: boolean) {
+export function run(configUrls: Array<string>) {
+  const offlineEnabled = window.offlineEnabled;
   const closeLoading = showLoadingSpinner();
   const provideConfigs = createConfigLoader(configUrls);
 
@@ -403,11 +408,11 @@ export function run(configUrls: Array<string>, offline: boolean) {
 
   return setupApps()
     .then(finishRegisteringAllApps)
-    .then(offline ? setupOfflineCssClasses : undefined)
-    .then(offline ? registerOfflineHandlers : undefined)
+    .then(offlineEnabled ? setupOfflineCssClasses : undefined)
+    .then(offlineEnabled ? registerOfflineHandlers : undefined)
     .then(provideConfigs)
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(offline ? setupOffline : undefined);
+    .then(offlineEnabled ? setupOffline : undefined);
 }

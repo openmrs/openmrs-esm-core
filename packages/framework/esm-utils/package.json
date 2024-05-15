@@ -39,11 +39,13 @@
     "access": "public"
   },
   "devDependencies": {
+    "@openmrs/esm-globals": "workspace:*",
     "@types/semver": "^7.3.4",
     "dayjs": "^1.10.4",
     "rxjs": "^6.5.3"
   },
   "peerDependencies": {
+    "@openmrs/esm-globals": "5.x",
     "dayjs": "1.x",
     "i18next": "21.x",
     "rxjs": "6.x"

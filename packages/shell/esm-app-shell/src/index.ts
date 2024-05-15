@@ -32,7 +32,7 @@ function setupPaths(config: SpaConfig) {
   window.openmrsBase = config.apiUrl;
   window.spaBase = config.spaPath;
   window.spaEnv = config.env || 'production';
-  window.spaVersion = process.env.BUILD_VERSION;
+  window.spaVersion = process.env.BUILD_VERSION ?? 'local';
   const spaBaseWithSlash = window.spaBase.endsWith('/') ? window.spaBase : window.spaBase + '/';
   window.getOpenmrsSpaBase = _createSpaBase(spaBaseWithSlash);
 }
@@ -69,9 +69,11 @@ function initializeSpa(config: SpaConfig) {
   setupPaths(config);
   wireSpaPaths();
   return Promise.resolve(__webpack_init_sharing__('default')).then(async () => {
-    const { configUrls = [], offline = true } = config;
+    const { configUrls = [], offline = false } = config;
+    window.offlineEnabled = offline;
+
     const { run } = await import(/* webpackPreload: true */ './run');
-    return run(configUrls, offline);
+    return run(configUrls);
   });
 }
 

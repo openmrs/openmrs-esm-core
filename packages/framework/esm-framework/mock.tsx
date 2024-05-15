@@ -19,7 +19,7 @@ export function setupPaths(config: any) {
   window.openmrsBase = config.apiUrl;
   window.spaBase = config.spaPath;
   window.spaEnv = config.env || 'production';
-  window.spaVersion = process.env.BUILD_VERSION;
+  window.spaVersion = process.env.BUILD_VERSION ?? 'local';
   window.getOpenmrsSpaBase = () => `${window.spaBase}/`;
 }
 

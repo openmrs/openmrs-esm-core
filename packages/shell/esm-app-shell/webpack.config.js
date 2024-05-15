@@ -27,7 +27,7 @@ const openmrsProxyTarget = process.env.OMRS_PROXY_TARGET || 'https://dev3.openmr
 const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || 'OpenMRS';
 const openmrsFavicon = process.env.OMRS_FAVICON || `${openmrsPublicPath}/favicon.ico`;
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || '';
-const openmrsOffline = process.env.OMRS_OFFLINE !== 'disable';
+const openmrsOffline = process.env.OMRS_OFFLINE === 'enable';
 const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || 'en';
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsImportmapUrl = process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
