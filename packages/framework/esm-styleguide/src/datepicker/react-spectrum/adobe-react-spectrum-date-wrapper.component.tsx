@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import type { CalendarDate } from '@internationalized/date';
+import { CalendarDate, EthiopicCalendar, toCalendar } from '@internationalized/date';
 import { parseDate } from '@internationalized/date';
 import { DatePicker } from '@react-spectrum/datepicker';
 import { Provider } from '@react-spectrum/provider';
@@ -29,12 +29,29 @@ function toLocalDateString(dateValue: Date) {
 
   return `${year}-${month}-${date}`;
 }
+function gregToEth(gregdate: string) {
+  const ymd = gregdate.split('-');
 
-function parseToCalendarDate(date: string | Date | undefined) {
+  const year = parseInt(ymd[0], 10);
+  const month = parseInt(ymd[1], 10);
+  const day = parseInt(ymd[2], 10);
+  const gregorianDate = new CalendarDate(year, month, day);
+  const ethiopianDate = toCalendar(gregorianDate, new EthiopicCalendar());
+
+  return ethiopianDate;
+}
+
+function parseToCalendarDate(date: string | Date | undefined, locale?: string, isGregorianDateValue?: boolean) {
   if (!date) {
     return undefined;
   }
-  return parseDate(toLocalDateString(typeof date === 'string' ? parseDateString(date) : date));
+
+  const localDateString = toLocalDateString(typeof date === 'string' ? parseDateString(date) : date);
+  if (locale === 'am-u-ca-ethiopic' && isGregorianDateValue) {
+    return gregToEth(localDateString);
+  }
+
+  return parseDate(localDateString);
 }
 
 function constructValidationState(invalid: boolean | undefined) {
@@ -81,9 +98,9 @@ const ReactSpectrumDatePickerWrapper: React.FC<ReactSpectrumDatePickerWrapperPro
         onChange={(calendarDate) => {
           onChange?.(new Date(calendarDate.year, calendarDate.month - 1, calendarDate.day));
         }}
-        defaultValue={parseToCalendarDate(defaultValue)}
-        minValue={minDate ? (parseToCalendarDate(minDate) as CalendarDate) : undefined}
-        maxValue={maxDate ? (parseToCalendarDate(maxDate) as CalendarDate) : undefined}
+        defaultValue={defaultValue ? (parseToCalendarDate(defaultValue, locale, true) as CalendarDate) : undefined}
+        minValue={minDate ? (parseToCalendarDate(minDate, locale, true) as CalendarDate) : undefined}
+        maxValue={maxDate ? (parseToCalendarDate(maxDate, locale, true) as CalendarDate) : undefined}
         isReadOnly={readonly}
         isDisabled={isDisabled}
         validationState={constructValidationState(invalid)}

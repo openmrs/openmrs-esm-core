@@ -1,5 +1,5 @@
 export const supportedLocales = {
-  am: 'Amharic',
+  am: 'am-AM-u-ca-ethiopic',
   am_ET: 'Amharic (Ethiopia)',
   ti_ET: 'Tigrinya (Ethiopia)',
 };
