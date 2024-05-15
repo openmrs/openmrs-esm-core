@@ -81,6 +81,7 @@ export function setupI18n() {
         lookupQuerystring: 'lang',
       },
       fallbackLng: 'en',
+      nsSeparator: false,
     });
 }
 
