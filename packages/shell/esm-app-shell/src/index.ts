@@ -32,7 +32,7 @@ function setupPaths(config: SpaConfig) {
   window.openmrsBase = config.apiUrl;
   window.spaBase = config.spaPath;
   window.spaEnv = config.env || 'production';
-  window.spaVersion = process.env.BUILD_VERSION;
+  window.spaVersion = process.env.BUILD_VERSION ?? 'local';
   const spaBaseWithSlash = window.spaBase.endsWith('/') ? window.spaBase : window.spaBase + '/';
   window.getOpenmrsSpaBase = _createSpaBase(spaBaseWithSlash);
 }
