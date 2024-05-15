@@ -19,6 +19,7 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
   const { workspaceWindowState } = useWorkspaces();
   const maximized = workspaceWindowState === 'maximized';
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
+
   useEffect(() => {
     let active = true;
     workspace.load().then(({ default: result, ...lifecycle }) => {
@@ -48,7 +49,7 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
       {lifecycle ? (
         <Parcel key={workspace.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
       ) : (
-        <InlineLoading className={styles.loading} description={`${getCoreTranslation('loading', 'Loading')} ...`} />
+        <InlineLoading className={styles.loader} description={`${getCoreTranslation('loading', 'Loading')} ...`} />
       )}
     </div>
   );
