@@ -48,6 +48,7 @@ export const goBackInHistory = jest.fn();
 
 /* esm-offline */
 export const useConnectivity = jest.fn().mockReturnValue(true);
+export const subscribeConnectivity = jest.fn();
 
 /* esm-styleguide */
 export const showNotification = jest.fn();
