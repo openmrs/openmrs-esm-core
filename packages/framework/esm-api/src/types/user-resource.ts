@@ -1,3 +1,4 @@
+import { type OpenmrsResource } from './openmrs-resource';
 import { type Person } from './person-resource';
 
 export interface Session {
@@ -61,4 +62,8 @@ export interface Role {
   uuid: string;
   display: string;
   links: Array<any>;
+}
+
+export interface User extends OpenmrsResource {
+  // TODO: add more attributes
 }
