@@ -176,6 +176,10 @@
 - [syncOfflinePatientData](API.md#syncofflinepatientdata)
 - [useConnectivity](API.md#useconnectivity)
 
+### Other Functions
+
+- [isOnline](API.md#isonline)
+
 ### Store Functions
 
 - [createGlobalStore](API.md#createglobalstore)
@@ -517,7 +521,7 @@ A definition of an extension as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L172)
+[packages/framework/esm-globals/src/types.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L177)
 
 ___
 
@@ -529,7 +533,7 @@ A definition of a modal as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L237)
+[packages/framework/esm-globals/src/types.ts:242](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L242)
 
 ___
 
@@ -542,7 +546,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L348)
+[packages/framework/esm-globals/src/types.ts:353](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L353)
 
 ___
 
@@ -554,7 +558,7 @@ A definition of a page extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L116)
+[packages/framework/esm-globals/src/types.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L121)
 
 ___
 
@@ -583,7 +587,7 @@ A definition of a page after the app has been registered.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:167](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L167)
+[packages/framework/esm-globals/src/types.ts:172](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L172)
 
 ___
 
@@ -593,7 +597,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L71)
+[packages/framework/esm-globals/src/types.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L76)
 
 ___
 
@@ -663,7 +667,7 @@ A definition of a workspace as extracted from an app's routes.json
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:271](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L271)
+[packages/framework/esm-globals/src/types.ts:276](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L276)
 
 ___
 
@@ -673,7 +677,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:266](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L266)
+[packages/framework/esm-globals/src/types.ts:271](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L271)
 
 ___
 
@@ -1014,7 +1018,7 @@ ___
 
 ### OpenmrsDatePicker
 
-• `Const` **OpenmrsDatePicker**: `React.FC`<`OpenmrsDatePickerProps`\>
+• `Const` **OpenmrsDatePicker**: `React.FC`<[`OpenmrsDatePickerProps`](interfaces/OpenmrsDatePickerProps.md)\>
 
 #### Defined in
 
@@ -3134,7 +3138,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L142)
+[packages/framework/esm-extensions/src/extensions.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L143)
 
 ___
 
@@ -3157,7 +3161,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L175)
+[packages/framework/esm-extensions/src/extensions.ts:176](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L176)
 
 ___
 
@@ -3179,7 +3183,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:199](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L199)
+[packages/framework/esm-extensions/src/extensions.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L200)
 
 ___
 
@@ -3203,7 +3207,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:333](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L333)
+[packages/framework/esm-extensions/src/extensions.ts:335](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L335)
 
 ___
 
@@ -3230,7 +3234,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:259](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L259)
+[packages/framework/esm-extensions/src/extensions.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L260)
 
 ___
 
@@ -3262,7 +3266,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L90)
+[packages/framework/esm-extensions/src/extensions.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L91)
 
 ___
 
@@ -4478,7 +4482,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L19)
+[packages/framework/esm-globals/src/events.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L23)
 
 ___
 
@@ -4530,7 +4534,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L33)
+[packages/framework/esm-globals/src/events.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L37)
 
 ___
 
@@ -4613,7 +4617,29 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectivity.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectivity.ts#L5)
+[packages/framework/esm-react-utils/src/useConnectivity.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectivity.ts#L6)
+
+___
+
+## Other Functions
+
+### isOnline
+
+▸ **isOnline**(`online?`): `boolean`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `online?` | `boolean` |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/is-online.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/is-online.ts#L3)
 
 ___
 
@@ -5287,7 +5313,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L107)
+[packages/framework/esm-globals/src/events.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L111)
 
 ___
 
@@ -5313,7 +5339,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:100](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L100)
+[packages/framework/esm-globals/src/events.ts:104](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L104)
 
 ___
 
@@ -5339,7 +5365,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L121)
+[packages/framework/esm-globals/src/events.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L125)
 
 ___
 
@@ -5365,7 +5391,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/events.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L114)
+[packages/framework/esm-globals/src/events.ts:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/events.ts#L118)
 
 ___
 

@@ -1,3 +1,5 @@
+import { type Person } from './person-resource';
+
 export interface Session {
   allowedLocales?: Array<string>;
   authenticated: boolean;
@@ -44,12 +46,6 @@ export interface LoggedInUser {
 }
 
 export interface SessionLocation {
-  uuid: string;
-  display: string;
-  links: Array<any>;
-}
-
-export interface Person {
   uuid: string;
   display: string;
   links: Array<any>;

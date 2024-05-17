@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L48)
+[packages/framework/esm-api/src/types/user-resource.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L50)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L49)
+[packages/framework/esm-api/src/types/user-resource.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L51)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/types/user-resource.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L47)
+[packages/framework/esm-api/src/types/user-resource.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/user-resource.ts#L49)
