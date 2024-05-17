@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { CalendarDate, EthiopicCalendar, toCalendar } from '@internationalized/date';
+import { type CalendarDate } from '@internationalized/date';
 import { parseDate } from '@internationalized/date';
 import { DatePicker } from '@react-spectrum/datepicker';
 import { Provider } from '@react-spectrum/provider';
 import { theme as defaultTheme } from '@react-spectrum/theme-default';
 import { useConfig } from '@openmrs/esm-react-utils';
 import { parseDate as parseDateString } from '@openmrs/esm-utils';
+import { supportedLocales } from './locales';
 
 interface ReactSpectrumDatePickerWrapperProps {
   id: string;
@@ -29,29 +30,19 @@ function toLocalDateString(dateValue: Date) {
 
   return `${year}-${month}-${date}`;
 }
-function gregToEth(gregdate: string) {
-  const ymd = gregdate.split('-');
 
-  const year = parseInt(ymd[0], 10);
-  const month = parseInt(ymd[1], 10);
-  const day = parseInt(ymd[2], 10);
-  const gregorianDate = new CalendarDate(year, month, day);
-  const ethiopianDate = toCalendar(gregorianDate, new EthiopicCalendar());
-
-  return ethiopianDate;
-}
-
-function parseToCalendarDate(date: string | Date | undefined, locale?: string, isGregorianDateValue?: boolean) {
+function parseToCalendarDate(date: string | Date | undefined, locale?: string) {
   if (!date) {
     return undefined;
   }
 
-  const localDateString = toLocalDateString(typeof date === 'string' ? parseDateString(date) : date);
-  if (locale === 'am-u-ca-ethiopic' && isGregorianDateValue) {
-    return gregToEth(localDateString);
+  const parsedCalendarDate = parseDate(toLocalDateString(typeof date === 'string' ? parseDateString(date) : date));
+  if (locale && supportedLocales[locale]) {
+    const localeConvertedDate = supportedLocales[locale].convert(parsedCalendarDate);
+    return localeConvertedDate;
   }
 
-  return parseDate(localDateString);
+  return parsedCalendarDate;
 }
 
 function constructValidationState(invalid: boolean | undefined) {
@@ -98,9 +89,9 @@ const ReactSpectrumDatePickerWrapper: React.FC<ReactSpectrumDatePickerWrapperPro
         onChange={(calendarDate) => {
           onChange?.(new Date(calendarDate.year, calendarDate.month - 1, calendarDate.day));
         }}
-        defaultValue={defaultValue ? (parseToCalendarDate(defaultValue, locale, true) as CalendarDate) : undefined}
-        minValue={minDate ? (parseToCalendarDate(minDate, locale, true) as CalendarDate) : undefined}
-        maxValue={maxDate ? (parseToCalendarDate(maxDate, locale, true) as CalendarDate) : undefined}
+        defaultValue={defaultValue ? (parseToCalendarDate(defaultValue, currentLocale) as CalendarDate) : undefined}
+        minValue={minDate ? (parseToCalendarDate(minDate, currentLocale) as CalendarDate) : undefined}
+        maxValue={maxDate ? (parseToCalendarDate(maxDate, currentLocale) as CalendarDate) : undefined}
         isReadOnly={readonly}
         isDisabled={isDisabled}
         validationState={constructValidationState(invalid)}
