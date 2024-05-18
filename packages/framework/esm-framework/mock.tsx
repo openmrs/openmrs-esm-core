@@ -2,6 +2,7 @@ import React from 'react';
 import { NEVER } from 'rxjs';
 import type {} from '@openmrs/esm-globals';
 import * as utils from '@openmrs/esm-utils';
+import { OpenmrsDatePicker as realOpenmrsDatePicker } from './src';
 
 window.i18next = { ...window.i18next, language: 'en' };
 
@@ -59,6 +60,7 @@ export const LeftNavMenu = jest.fn(() => <div>Left Nav Menu</div>);
 export const setLeftNav = jest.fn();
 export const unsetLeftNav = jest.fn();
 export const ResponsiveWrapper = jest.fn(({ children }) => <>{children}</>);
+export const OpenmrsDatePicker = jest.fn(realOpenmrsDatePicker);
 export const ErrorState = jest.fn(() => <div>Error State</div>);
 
 export const CustomOverflowMenu = jest.fn(({ menuTitle, children }) => (
