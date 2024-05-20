@@ -5191,6 +5191,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/semver@npm:^7":
+  version: 7.5.8
+  resolution: "@types/semver@npm:7.5.8"
+  checksum: 10/3496808818ddb36deabfe4974fd343a78101fa242c4690044ccdc3b95dcf8785b494f5d628f2f47f38a702f8db9c53c67f47d7818f2be1b79f2efb09692e1178
+  languageName: node
+  linkType: hard
+
 "@types/semver@npm:^7.3.4, @types/semver@npm:^7.5.0":
   version: 7.5.6
   resolution: "@types/semver@npm:7.5.6"
@@ -13572,6 +13579,7 @@ __metadata:
     "@types/pacote": "npm:^11.1.5"
     "@types/react": "npm:^18.0.9"
     "@types/rimraf": "npm:^2.0.2"
+    "@types/semver": "npm:^7"
     "@types/tar": "npm:^4.0.3"
     autoprefixer: "npm:^10.4.2"
     axios: "npm:^0.21.1"
@@ -13590,6 +13598,7 @@ __metadata:
     postcss: "npm:^8.4.6"
     postcss-loader: "npm:^6.2.1"
     rimraf: "npm:^3.0.2"
+    semver: "npm:^7.3.4"
     swc-loader: "npm:^0.2.3"
     tar: "npm:^6.0.5"
     typescript: "npm:^4.6.4"
