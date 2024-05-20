@@ -3447,6 +3447,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-utils@workspace:packages/framework/esm-utils"
   dependencies:
+    "@internationalized/date": "npm:^3.5.0"
     "@openmrs/esm-globals": "workspace:*"
     "@types/semver": "npm:^7.3.4"
     dayjs: "npm:^1.10.4"
