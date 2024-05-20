@@ -85,16 +85,16 @@ async function readConfig(
       }
 
       return results.configs.reduce((config, newConfig) => {
-        if (newConfig.frontendModules) {
-          config.frontendModules = { ...config.frontendModules, ...newConfig.frontendModules };
-        }
-
         // excludes are processed for each config in turn; this ensure that modules removed in one config can
         // be added back by providing another config override
         if (Array.isArray(newConfig.frontendModuleExcludes)) {
           newConfig.frontendModuleExcludes.forEach((exclude) => {
             typeof exclude === 'string' && config.frontendModules[exclude] && delete config.frontendModules[exclude];
           });
+        }
+
+        if (newConfig.frontendModules) {
+          config.frontendModules = { ...config.frontendModules, ...newConfig.frontendModules };
         }
         return config;
       });
