@@ -1,29 +1,29 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / PatientIdentifierType
 
-# Interface: OpenmrsResource
+# Interface: PatientIdentifierType
 
 ## Hierarchy
 
-- **`OpenmrsResource`**
+- [`OpenmrsResource`](OpenmrsResource.md)
 
-  ↳ [`PatientIdentifierType`](PatientIdentifierType.md)
-
-## Indexable
-
-▪ [anythingElse: `string`]: `any`
+  ↳ **`PatientIdentifierType`**
 
 ## Table of contents
 
 ### Properties
 
-- [display](OpenmrsResource.md#display)
-- [uuid](OpenmrsResource.md#uuid)
+- [display](PatientIdentifierType.md#display)
+- [uuid](PatientIdentifierType.md#uuid)
 
 ## Properties
 
 ### display
 
 • `Optional` **display**: `string`
+
+#### Inherited from
+
+[OpenmrsResource](OpenmrsResource.md).[display](OpenmrsResource.md#display)
 
 #### Defined in
 
@@ -34,6 +34,10 @@ ___
 ### uuid
 
 • **uuid**: `string`
+
+#### Inherited from
+
+[OpenmrsResource](OpenmrsResource.md).[uuid](OpenmrsResource.md#uuid)
 
 #### Defined in
 
