@@ -64,7 +64,7 @@ export function selectPreferredName(patient: fhir.Patient, ...preferredNames: Na
  */
 function defaultFormat(name: fhir.HumanName): string {
   const forenames: string[] = name.given ?? [];
-  let names: string[] = name.family ? forenames.concat(name.family) : forenames;
+  const names: string[] = name.family ? forenames.concat(name.family) : forenames;
   return names.join(' ');
 }
 
