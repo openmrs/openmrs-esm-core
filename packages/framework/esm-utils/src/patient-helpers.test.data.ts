@@ -66,41 +66,41 @@ export const mockPatientWithMultipleNames = {
   ...mockPatient,
   name: [
     {
-      id: 'efdb246f-4142-4c12-a27a-9be60b9592e9',
+      id: 'id-of-nickname-1',
       use: 'nickname',
       given: ['nick', 'name'],
     },
     {
-      id: 'efdb246f-4142-4c12-a27a-9be60b9592ff',
+      id: 'id-of-nickname-2',
       use: 'nickname',
       given: ['nick', 'name'],
     },
     {
-      id: 'efdb246f-4142-4c12-a27a-9be60b9561ee',
+      id: 'id-of-anonymous-name-1',
       use: 'anonymous',
       given: ['john', 'doe'],
     },
     {
-      id: 'efdb246f-4142-4c12-a27a-9be60b9561dd',
+      id: 'id-of-old-name-1',
       use: 'old',
       given: ['previous'],
       family: 'name',
     },
     {
-      id: 'efdb246f-4142-4c12-a27a-9be60b2261cc',
+      id: 'id-of-maiden-name-1',
       use: 'maiden',
       family: 'maiden name',
     },
     {
       // this is the actual display name
-      id: 'efdb246f-4142-4c12-a27a-9be60b2261bb',
+      id: 'id-of-usual-name-1',
       given: ['John', 'Murray'],
       family: 'Smith',
       text: 'Smith, John Murray',
     },
     {
       // this is usable as a display name, but the usual name will take precedence.
-      id: 'efdb246f-4142-4c12-a27a-9be60b2261aa',
+      id: 'id-of-official-name-1',
       use: 'official',
       given: ['my', 'official'],
       family: 'name',
@@ -113,14 +113,14 @@ export const mockPatientWithOfficialName = {
   name: [
     {
       // this is usable as a display name, but the usual name should be preferred
-      id: 'efdb246f-4142-4c12-a27a-9be60b226123',
+      id: 'id-of-official-name-1',
       use: 'official',
       given: ['my', 'official'],
       family: 'name',
     },
     {
       // this is the preferred display name, even though it comes after the official name
-      id: 'efdb246f-4142-4c12-a27a-9be60b226111',
+      id: 'id-of-usual-name-1',
       use: 'usual', // explicitly marked as usual name
       given: ['my', 'actual'],
       family: 'name',
@@ -132,12 +132,12 @@ export const mockPatientWithNickAndOfficialName = {
   ...mockPatient,
   name: [
     {
-      id: 'efdb246f-4142-4c12-a27a-9be60b226111',
+      id: 'id-of-nickname-1',
       use: 'nickname',
       given: ['nick', 'name'],
     },
     {
-      id: 'efdb246f-4142-4c12-a27a-9be60b226123',
+      id: 'id-of-official-name-1',
       use: 'official',
       given: ['my', 'official'],
       family: 'name',

@@ -43,14 +43,14 @@ const temp: NameUse = 'temp';
 
 describe('Preferred patient name', () => {
   it.each([
-    [mockPatientWithMultipleNames, [], 'efdb246f-4142-4c12-a27a-9be60b2261bb'],
-    [mockPatientWithMultipleNames, [usual], 'efdb246f-4142-4c12-a27a-9be60b2261bb'],
-    [mockPatientWithMultipleNames, [usual, official], 'efdb246f-4142-4c12-a27a-9be60b2261bb'],
-    [mockPatientWithMultipleNames, [official, usual], 'efdb246f-4142-4c12-a27a-9be60b2261aa'],
-    [mockPatientWithMultipleNames, [official, usual], 'efdb246f-4142-4c12-a27a-9be60b2261aa'],
-    [mockPatientWithMultipleNames, [maiden, usual, official], 'efdb246f-4142-4c12-a27a-9be60b2261cc'],
-    [mockPatientWithOfficialName, [usual, official], 'efdb246f-4142-4c12-a27a-9be60b226111'],
-    [mockPatientWithNickAndOfficialName, [nickname, official], 'efdb246f-4142-4c12-a27a-9be60b226111'],
+    [mockPatientWithMultipleNames, [], 'id-of-usual-name-1'],
+    [mockPatientWithMultipleNames, [usual], 'id-of-usual-name-1'],
+    [mockPatientWithMultipleNames, [usual, official], 'id-of-usual-name-1'],
+    [mockPatientWithMultipleNames, [official], 'id-of-official-name-1'],
+    [mockPatientWithMultipleNames, [official, usual], 'id-of-official-name-1'],
+    [mockPatientWithMultipleNames, [maiden, usual, official], 'id-of-maiden-name-1'],
+    [mockPatientWithOfficialName, [usual, official], 'id-of-usual-name-1'],
+    [mockPatientWithNickAndOfficialName, [nickname, official], 'id-of-nickname-1'],
   ])('Is selected according to preferred usage', (patient, preferredUsage, expectedNameId) => {
     const result = selectPreferredName(patient, ...preferredUsage);
     expect(result?.id).toBe(expectedNameId);
