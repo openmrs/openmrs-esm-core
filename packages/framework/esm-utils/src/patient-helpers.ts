@@ -79,7 +79,7 @@ function defaultFormat(name: fhir.HumanName): string {
 function nameUsageMatches(name: fhir.HumanName, usage: NameUse): boolean {
   if (!name.use)
     // a name with no usage is treated as 'usual'
-    return usage == 'usual';
+    return usage === 'usual';
 
-  return name.use == usage;
+  return name.use === usage;
 }
