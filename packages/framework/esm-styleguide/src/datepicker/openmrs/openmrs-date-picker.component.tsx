@@ -3,6 +3,7 @@ import { supportedLocales as reactSpectrumSupportedLocales } from '../react-spec
 import { getLocale } from '@openmrs/esm-utils';
 import ReactSpectrumDatePickerWrapper from '../react-spectrum/adobe-react-spectrum-date-wrapper.component';
 import { DatePicker, DatePickerInput } from '@carbon/react';
+import dayjs from 'dayjs';
 
 // TODO: should be locale sensitive
 // see: https://issues.openmrs.org/browse/O3-998
@@ -11,14 +12,14 @@ const DEFAULT_PLACEHOLDER = 'dd/mm/yyyy';
 
 export interface OpenmrsDatePickerProps {
   id: string;
-  labelText: string;
+  labelText: string | any;
   onChange: (value: Date) => void;
   value?: Date | string;
   /* Not supported by Carbon's picker */
   defaultValue?: Date | string;
   minDate?: Date | string;
   maxDate?: Date | string;
-  readonly?: boolean;
+  readonly?: string | boolean;
   dateFormat?: string;
   invalid?: boolean;
   invalidText?: string;
@@ -64,7 +65,7 @@ export const OpenmrsDatePicker: React.FC<OpenmrsDatePickerProps> = ({
       defaultValue={defaultValue}
       minDate={minDate}
       maxDate={maxDate}
-      readonly={readonly}
+      readonly={typeof readonly === 'boolean' ? readonly : undefined}
       id={id}
       isDisabled={disabled}
       invalid={invalid}
@@ -93,6 +94,14 @@ export const OpenmrsDatePicker: React.FC<OpenmrsDatePickerProps> = ({
         invalidText={invalidText}
         placeholder={carbonOptions?.placeholder || DEFAULT_PLACEHOLDER}
         style={carbonOptions?.pickerInputStyle}
+        // Added for testing purposes.
+        // Notes:
+        // Something strange is happening with the way events are propagated and handled by Carbon.
+        // When we manually trigger an onchange event using the 'fireEvent' lib, the handler below will
+        // be triggered as opposed to the former handler that only gets triggered at runtime.
+        onChange={(e) => onChange(dayjs(e.target.value, DEFAULT_PLACEHOLDER.toUpperCase()).toDate())}
+        disabled={disabled}
+        readOnly={readonly}
       />
     </DatePicker>
   );
