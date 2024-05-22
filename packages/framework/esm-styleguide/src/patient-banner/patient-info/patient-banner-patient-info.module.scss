@@ -69,7 +69,7 @@
 .demographics {
   @include type.type-style('body-compact-02');
   color: $text-02;
-  margin-top: 0.375rem;
+  margin-top: 0.25rem;
 }
 
 .row {
@@ -77,6 +77,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
+  margin-top: 0.25rem;
 }
 
 .patientNameRow {

@@ -59,36 +59,30 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
 };
 
 const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
-  const { isLoading, patient } = usePatient(patientId);
+  const { patient } = usePatient(patientId);
   const address = patient?.address?.find((a) => a.use === 'home');
   const getAddressKey = (url) => url.split('#')[1];
 
-  return isLoading ? (
-    <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />
-  ) : (
+  return (
     <>
       <p className={styles.heading}>{getCoreTranslation('address', 'Address')}</p>
       <ul>
         {address ? (
-          <React.Fragment>
-            {Object.entries(address)
-              .filter(([key]) => !['use', 'id'].includes(key))
-              .map(([key, value]) =>
-                key === 'extension' ? (
-                  address?.extension?.[0]?.extension?.map((add, i) => {
-                    return (
-                      <li key={`address-${key}-${i}`}>
-                        {getCoreTranslation(getAddressKey(add.url), getAddressKey(add.url))}: {add.valueString}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <li key={`address-${key}`}>
-                    {getCoreTranslation(key as CoreTranslationKey, key)}: {value}
+          Object.entries(address)
+            .filter(([key]) => key !== 'id')
+            .map(([key, value]) =>
+              key === 'extension' ? (
+                address.extension?.[0]?.extension?.map((add, i) => (
+                  <li key={`address-${key}-${i}`}>
+                    {getCoreTranslation(getAddressKey(add.url), getAddressKey(add.url))}: {add.valueString}
                   </li>
-                ),
-              )}
-          </React.Fragment>
+                ))
+              ) : (
+                <li key={`address-${key}`}>
+                  {getCoreTranslation(key as CoreTranslationKey, key)}: {value}
+                </li>
+              ),
+            )
         ) : (
           <li>--</li>
         )}
