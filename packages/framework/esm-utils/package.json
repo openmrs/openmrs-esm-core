@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "@internationalized/date": "^3.5.0",
+    "@types/fhir": "0.0.31",
     "semver": "7.3.2"
   }
 }
