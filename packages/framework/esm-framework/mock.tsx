@@ -92,7 +92,16 @@ export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspaces = jest.fn();
 
 /* esm-utils */
-export { getDefaultsFromConfigSchema, parseDate, formatDate, formatDatetime, formatTime } from '@openmrs/esm-utils';
+export {
+  getDefaultsFromConfigSchema,
+  parseDate,
+  formatDate,
+  formatDatetime,
+  formatTime,
+  displayName,
+  formattedName,
+  selectPreferredName,
+} from '@openmrs/esm-utils';
 
 export const age = jest.fn((arg) => utils.age(arg));
 
