@@ -97,7 +97,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
           <div className={styles.headerContent}>{title}</div>
           <Button
             className={styles.closeButton}
-            onClick={() => workspaceInstance?.closeWorkspace}
+            onClick={() => workspaceInstance?.closeWorkspace()}
             kind="ghost"
             hasIconOnly
             iconDescription={getCoreTranslation('close', 'Close')}
@@ -111,7 +111,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
           aria-label={getCoreTranslation('workspaceHeader', 'Workspace header')}
         >
           <Button
-            onClick={() => workspaceInstance.closeWorkspace}
+            onClick={() => workspaceInstance.closeWorkspace()}
             kind="ghost"
             hasIconOnly
             iconDescription={getCoreTranslation('close', 'Close')}
