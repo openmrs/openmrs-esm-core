@@ -1,32 +1,37 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / PersonAttribute
 
-# Interface: OpenmrsResource
+# Interface: PersonAttribute
 
 ## Hierarchy
 
 - [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
 
-  ↳ **`OpenmrsResource`**
-
-  ↳↳ [`Concept`](Concept.md)
-
-  ↳↳ [`User`](User.md)
-
-## Indexable
-
-▪ [anythingElse: `string`]: `any`
+  ↳ **`PersonAttribute`**
 
 ## Table of contents
 
 ### Properties
 
-- [auditInfo](OpenmrsResource.md#auditinfo)
-- [display](OpenmrsResource.md#display)
-- [links](OpenmrsResource.md#links)
-- [resourceVersion](OpenmrsResource.md#resourceversion)
-- [uuid](OpenmrsResource.md#uuid)
+- [attributeType](PersonAttribute.md#attributetype)
+- [auditInfo](PersonAttribute.md#auditinfo)
+- [display](PersonAttribute.md#display)
+- [links](PersonAttribute.md#links)
+- [resourceVersion](PersonAttribute.md#resourceversion)
+- [uuid](PersonAttribute.md#uuid)
+- [value](PersonAttribute.md#value)
+- [voided](PersonAttribute.md#voided)
 
 ## Properties
+
+### attributeType
+
+• `Optional` **attributeType**: [`OpenmrsResource`](OpenmrsResource.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L5)
+
+___
 
 ### auditInfo
 
@@ -95,3 +100,23 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+
+___
+
+### value
+
+• `Optional` **value**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L6)
+
+___
+
+### voided
+
+• `Optional` **voided**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/person-resource.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/person-resource.ts#L7)

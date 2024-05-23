@@ -1,30 +1,27 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / PatientIdentifier
 
-# Interface: OpenmrsResource
+# Interface: PatientIdentifier
 
 ## Hierarchy
 
 - [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
 
-  ↳ **`OpenmrsResource`**
-
-  ↳↳ [`Concept`](Concept.md)
-
-  ↳↳ [`User`](User.md)
-
-## Indexable
-
-▪ [anythingElse: `string`]: `any`
+  ↳ **`PatientIdentifier`**
 
 ## Table of contents
 
 ### Properties
 
-- [auditInfo](OpenmrsResource.md#auditinfo)
-- [display](OpenmrsResource.md#display)
-- [links](OpenmrsResource.md#links)
-- [resourceVersion](OpenmrsResource.md#resourceversion)
-- [uuid](OpenmrsResource.md#uuid)
+- [auditInfo](PatientIdentifier.md#auditinfo)
+- [display](PatientIdentifier.md#display)
+- [identifier](PatientIdentifier.md#identifier)
+- [identifierType](PatientIdentifier.md#identifiertype)
+- [links](PatientIdentifier.md#links)
+- [location](PatientIdentifier.md#location)
+- [preferred](PatientIdentifier.md#preferred)
+- [resourceVersion](PatientIdentifier.md#resourceversion)
+- [uuid](PatientIdentifier.md#uuid)
+- [voided](PatientIdentifier.md#voided)
 
 ## Properties
 
@@ -56,6 +53,26 @@ ___
 
 ___
 
+### identifier
+
+• `Optional` **identifier**: `string`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/patient-resource.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L23)
+
+___
+
+### identifierType
+
+• `Optional` **identifierType**: [`PatientIdentifierType`](PatientIdentifierType.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/patient-resource.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L24)
+
+___
+
 ### links
 
 • `Optional` **links**: [`Link`](Link.md)[]
@@ -67,6 +84,26 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+
+___
+
+### location
+
+• `Optional` **location**: `Location`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/patient-resource.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L25)
+
+___
+
+### preferred
+
+• `Optional` **preferred**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/patient-resource.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L26)
 
 ___
 
@@ -95,3 +132,13 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+
+___
+
+### voided
+
+• `Optional` **voided**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/patient-resource.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L27)

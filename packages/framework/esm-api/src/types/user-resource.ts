@@ -1,3 +1,6 @@
+import { type OpenmrsResource } from './openmrs-resource';
+import { type Person } from './person-resource';
+
 export interface Session {
   allowedLocales?: Array<string>;
   authenticated: boolean;
@@ -49,12 +52,6 @@ export interface SessionLocation {
   links: Array<any>;
 }
 
-export interface Person {
-  uuid: string;
-  display: string;
-  links: Array<any>;
-}
-
 export interface Privilege {
   uuid: string;
   display: string;
@@ -65,4 +62,8 @@ export interface Role {
   uuid: string;
   display: string;
   links: Array<any>;
+}
+
+export interface User extends OpenmrsResource {
+  // TODO: add more attributes
 }

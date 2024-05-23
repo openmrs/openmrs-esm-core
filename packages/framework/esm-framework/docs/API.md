@@ -77,6 +77,7 @@
 
 ### Date and Time Functions
 
+- [convertToLocaleCalendar](API.md#converttolocalecalendar)
 - [formatDate](API.md#formatdate)
 - [formatDatetime](API.md#formatdatetime)
 - [formatTime](API.md#formattime)
@@ -225,10 +226,13 @@
 - [age](API.md#age)
 - [canAccessStorage](API.md#canaccessstorage)
 - [daysIntoYear](API.md#daysintoyear)
+- [displayName](API.md#displayname)
+- [formattedName](API.md#formattedname)
 - [getDefaultsFromConfigSchema](API.md#getdefaultsfromconfigschema)
 - [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [retry](API.md#retry)
+- [selectPreferredName](API.md#selectpreferredname)
 - [shallowEqual](API.md#shallowequal)
 - [useAbortController](API.md#useabortcontroller)
 - [useDebounce](API.md#usedebounce)
@@ -360,7 +364,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L19)
+[packages/framework/esm-utils/src/omrs-dates.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L20)
 
 ___
 
@@ -370,7 +374,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:133](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L133)
+[packages/framework/esm-utils/src/omrs-dates.ts:134](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L134)
 
 ___
 
@@ -391,7 +395,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:135](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L135)
+[packages/framework/esm-utils/src/omrs-dates.ts:136](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L136)
 
 ___
 
@@ -552,6 +556,16 @@ A definition of a modal as extracted from an app's routes.json
 #### Defined in
 
 [packages/framework/esm-globals/src/types.ts:242](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L242)
+
+___
+
+### NameUse
+
+Ƭ **NameUse**: ``"usual"`` \| ``"official"`` \| ``"temp"`` \| ``"nickname"`` \| ``"anonymous"`` \| ``"old"`` \| ``"maiden"``
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:362](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L362)
 
 ___
 
@@ -3088,6 +3102,31 @@ ___
 
 ## Date and Time Functions
 
+### convertToLocaleCalendar
+
+▸ **convertToLocaleCalendar**(`date`, `locale`): `CalendarDate`
+
+Converts a calendar date to the equivalent locale calendar date.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `CalendarDate` |
+| `locale` | `string` \| `Locale` |
+
+#### Returns
+
+`CalendarDate`
+
+CalendarDate
+
+#### Defined in
+
+[packages/framework/esm-utils/src/omrs-dates.ts:387](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L387)
+
+___
+
 ### formatDate
 
 ▸ **formatDate**(`date`, `options?`): `string`
@@ -3122,7 +3161,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L261)
+[packages/framework/esm-utils/src/omrs-dates.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L262)
 
 ___
 
@@ -3151,7 +3190,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:363](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L363)
+[packages/framework/esm-utils/src/omrs-dates.ts:364](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L364)
 
 ___
 
@@ -3174,7 +3213,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:347](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L347)
+[packages/framework/esm-utils/src/omrs-dates.ts:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L348)
 
 ___
 
@@ -3196,7 +3235,7 @@ Retrieves the default calendar for the specified locale if any.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:236](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L236)
+[packages/framework/esm-utils/src/omrs-dates.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L237)
 
 ___
 
@@ -3214,7 +3253,7 @@ string
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:371](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L371)
+[packages/framework/esm-utils/src/omrs-dates.ts:372](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L372)
 
 ___
 
@@ -3237,7 +3276,7 @@ The format should be YYYY-MM-DDTHH:mm:ss.SSSZZ
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L27)
+[packages/framework/esm-utils/src/omrs-dates.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L28)
 
 ___
 
@@ -3257,7 +3296,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L56)
+[packages/framework/esm-utils/src/omrs-dates.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L57)
 
 ___
 
@@ -3280,7 +3319,7 @@ Uses `dayjs(dateString)`.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:129](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L129)
+[packages/framework/esm-utils/src/omrs-dates.ts:130](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L130)
 
 ___
 
@@ -3308,7 +3347,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L227)
+[packages/framework/esm-utils/src/omrs-dates.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L228)
 
 ___
 
@@ -3331,7 +3370,7 @@ Otherwise returns null.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:64](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L64)
+[packages/framework/esm-utils/src/omrs-dates.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L65)
 
 ___
 
@@ -3355,7 +3394,7 @@ Formats the input as a date string. By default the format "YYYY-MMM-DD" is used.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:121](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L121)
+[packages/framework/esm-utils/src/omrs-dates.ts:122](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L122)
 
 ___
 
@@ -3378,7 +3417,7 @@ Formats the input as a date string using the format "DD - MMM - YYYY".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:105](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L105)
+[packages/framework/esm-utils/src/omrs-dates.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L106)
 
 ___
 
@@ -3401,7 +3440,7 @@ Formats the input to OpenMRS ISO format: "YYYY-MM-DDTHH:mm:ss.SSSZZ".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L75)
+[packages/framework/esm-utils/src/omrs-dates.ts:76](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L76)
 
 ___
 
@@ -3424,7 +3463,7 @@ Formats the input as a time string using the format "HH:mm A".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L97)
+[packages/framework/esm-utils/src/omrs-dates.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L98)
 
 ___
 
@@ -3447,7 +3486,7 @@ Formats the input as a time string using the format "HH:mm".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L89)
+[packages/framework/esm-utils/src/omrs-dates.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L90)
 
 ___
 
@@ -3470,7 +3509,7 @@ Formats the input as a date string using the format "DD-MMM".
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:113](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L113)
+[packages/framework/esm-utils/src/omrs-dates.ts:114](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L114)
 
 ___
 
@@ -5561,7 +5600,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L177)
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:171](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L171)
 
 ___
 
@@ -6114,6 +6153,57 @@ The number of days.
 
 ___
 
+### displayName
+
+▸ **displayName**(`patient`): `string`
+
+Gets the formatted display name for a patient.
+
+The display name will be taken from the patient's 'usual' name,
+or may fall back to the patient's 'official' name.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `patient` | `Patient` | The patient details in FHIR format. |
+
+#### Returns
+
+`string`
+
+The patient's display name or an empty string if name is not present.
+
+#### Defined in
+
+[packages/framework/esm-utils/src/patient-helpers.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L14)
+
+___
+
+### formattedName
+
+▸ **formattedName**(`name`): `string`
+
+Get a formatted display string for an FHIR name.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `name` | `undefined` \| `HumanName` | The name to be formatted. |
+
+#### Returns
+
+`string`
+
+The formatted display name or an empty string if name is undefined.
+
+#### Defined in
+
+[packages/framework/esm-utils/src/patient-helpers.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L24)
+
+___
+
 ### getDefaultsFromConfigSchema
 
 ▸ **getDefaultsFromConfigSchema**(`schema`): `Object`
@@ -6224,6 +6314,44 @@ The result of successfully executing `fn`.
 #### Defined in
 
 [packages/framework/esm-utils/src/retry.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/retry.ts#L40)
+
+___
+
+### selectPreferredName
+
+▸ **selectPreferredName**(`patient`, ...`preferredNames`): `fhir.HumanName` \| `undefined`
+
+Select the preferred name from the collection of names associated with a patient.
+
+Names may be specified with a usage such as 'usual', 'official', 'nickname', 'maiden', etc.
+A name with no usage specified is treated as the 'usual' name.
+
+The chosen name will be selected according to the priority order of `preferredNames`,
+
+**`example`**
+// normal use case; prefer usual name, fallback to official name
+displayNameByUsage(patient, 'usual', 'official')
+
+**`example`**
+// prefer usual name over nickname, fallback to official name
+displayNameByUsage(patient, 'usual', 'nickname', 'official')
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `patient` | `Patient` | The patient from whom a name will be selected. |
+| `...preferredNames` | [`NameUse`](API.md#nameuse)[] | Optional ordered sequence of preferred name usages; defaults to 'usual' if not specified. |
+
+#### Returns
+
+`fhir.HumanName` \| `undefined`
+
+the preferred name for the patient, or undefined if no acceptable name could be found.
+
+#### Defined in
+
+[packages/framework/esm-utils/src/patient-helpers.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L47)
 
 ___
 

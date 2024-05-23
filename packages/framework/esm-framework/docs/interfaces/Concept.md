@@ -1,30 +1,22 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / Concept
 
-# Interface: OpenmrsResource
+# Interface: Concept
 
 ## Hierarchy
 
-- [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
+- [`OpenmrsResource`](OpenmrsResource.md)
 
-  ↳ **`OpenmrsResource`**
-
-  ↳↳ [`Concept`](Concept.md)
-
-  ↳↳ [`User`](User.md)
-
-## Indexable
-
-▪ [anythingElse: `string`]: `any`
+  ↳ **`Concept`**
 
 ## Table of contents
 
 ### Properties
 
-- [auditInfo](OpenmrsResource.md#auditinfo)
-- [display](OpenmrsResource.md#display)
-- [links](OpenmrsResource.md#links)
-- [resourceVersion](OpenmrsResource.md#resourceversion)
-- [uuid](OpenmrsResource.md#uuid)
+- [auditInfo](Concept.md#auditinfo)
+- [display](Concept.md#display)
+- [links](Concept.md#links)
+- [resourceVersion](Concept.md#resourceversion)
+- [uuid](Concept.md#uuid)
 
 ## Properties
 
@@ -34,7 +26,7 @@
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[auditInfo](OpenmrsResourceStrict.md#auditinfo)
+[OpenmrsResource](OpenmrsResource.md).[auditInfo](OpenmrsResource.md#auditinfo)
 
 #### Defined in
 
@@ -48,7 +40,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[display](OpenmrsResourceStrict.md#display)
+[OpenmrsResource](OpenmrsResource.md).[display](OpenmrsResource.md#display)
 
 #### Defined in
 
@@ -62,7 +54,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[links](OpenmrsResourceStrict.md#links)
+[OpenmrsResource](OpenmrsResource.md).[links](OpenmrsResource.md#links)
 
 #### Defined in
 
@@ -76,7 +68,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[resourceVersion](OpenmrsResourceStrict.md#resourceversion)
+[OpenmrsResource](OpenmrsResource.md).[resourceVersion](OpenmrsResource.md#resourceversion)
 
 #### Defined in
 
@@ -90,7 +82,7 @@ ___
 
 #### Inherited from
 
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[uuid](OpenmrsResourceStrict.md#uuid)
+[OpenmrsResource](OpenmrsResource.md).[uuid](OpenmrsResource.md#uuid)
 
 #### Defined in
 

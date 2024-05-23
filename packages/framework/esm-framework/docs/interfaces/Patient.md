@@ -1,30 +1,25 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / Patient
 
-# Interface: OpenmrsResource
+# Interface: Patient
 
 ## Hierarchy
 
 - [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
 
-  ↳ **`OpenmrsResource`**
-
-  ↳↳ [`Concept`](Concept.md)
-
-  ↳↳ [`User`](User.md)
-
-## Indexable
-
-▪ [anythingElse: `string`]: `any`
+  ↳ **`Patient`**
 
 ## Table of contents
 
 ### Properties
 
-- [auditInfo](OpenmrsResource.md#auditinfo)
-- [display](OpenmrsResource.md#display)
-- [links](OpenmrsResource.md#links)
-- [resourceVersion](OpenmrsResource.md#resourceversion)
-- [uuid](OpenmrsResource.md#uuid)
+- [auditInfo](Patient.md#auditinfo)
+- [display](Patient.md#display)
+- [identifiers](Patient.md#identifiers)
+- [links](Patient.md#links)
+- [person](Patient.md#person)
+- [resourceVersion](Patient.md#resourceversion)
+- [uuid](Patient.md#uuid)
+- [voided](Patient.md#voided)
 
 ## Properties
 
@@ -56,6 +51,16 @@ ___
 
 ___
 
+### identifiers
+
+• `Optional` **identifiers**: [`PatientIdentifier`](PatientIdentifier.md)[]
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/patient-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L17)
+
+___
+
 ### links
 
 • `Optional` **links**: [`Link`](Link.md)[]
@@ -67,6 +72,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L15)
+
+___
+
+### person
+
+• `Optional` **person**: [`Person`](Person.md)
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/patient-resource.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L18)
 
 ___
 
@@ -95,3 +110,13 @@ ___
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L13)
+
+___
+
+### voided
+
+• `Optional` **voided**: `boolean`
+
+#### Defined in
+
+[packages/framework/esm-api/src/types/patient-resource.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/patient-resource.ts#L19)
