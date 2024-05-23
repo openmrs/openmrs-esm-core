@@ -7,16 +7,12 @@ const Logo: React.FC = () => {
   return (
     <>
       {logo?.src ? (
-        <img
-          className={styles.logo}
-          src={interpolateUrl(logo.src)}
-          alt={logo.alt}
-        />
+        <img className={styles.logo} src={interpolateUrl(logo.src)} alt={logo.alt} />
       ) : logo?.name ? (
         logo.name
       ) : (
         <svg role="img" width={110} height={40}>
-          <use xlinkHref="#omrs-logo-white"></use>
+          <use xlinkHref="#omrs-logo-white" />
         </svg>
       )}
     </>

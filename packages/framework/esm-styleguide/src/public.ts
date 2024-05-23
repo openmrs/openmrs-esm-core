@@ -17,3 +17,5 @@ export * from './responsive-wrapper';
 export * from './patient-banner';
 export * from './patient-photo';
 export * from './custom-overflow-menu';
+export * from './icons/icons';
+export * from './pictograms/pictograms';

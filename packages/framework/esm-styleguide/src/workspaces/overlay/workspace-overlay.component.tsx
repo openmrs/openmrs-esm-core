@@ -3,11 +3,11 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 // @ts-ignore
 import { Button, Header, InlineLoading } from '@carbon/react';
-import { ArrowLeft, Close } from '@carbon/react/icons';
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
 import { useLayoutType, isDesktop } from '@openmrs/esm-react-utils';
 import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
+import { ArrowLeftIcon, CloseIcon } from '../../icons';
 import { type OpenWorkspace, useWorkspaces } from '../workspaces';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
 import styles from './workspace-overlay.module.scss';
@@ -97,12 +97,12 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
           <div className={styles.headerContent}>{title}</div>
           <Button
             className={styles.closeButton}
-            onClick={workspaceInstance?.closeWorkspace}
+            onClick={() => workspaceInstance?.closeWorkspace}
             kind="ghost"
             hasIconOnly
             iconDescription={getCoreTranslation('close', 'Close')}
             tooltipPosition="bottom"
-            renderIcon={(props) => <Close size={16} {...props} />}
+            renderIcon={(props) => <CloseIcon size={16} {...props} />}
           />
         </div>
       ) : (
@@ -111,12 +111,12 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
           aria-label={getCoreTranslation('workspaceHeader', 'Workspace header')}
         >
           <Button
-            onClick={workspaceInstance.closeWorkspace}
+            onClick={() => workspaceInstance.closeWorkspace}
             kind="ghost"
             hasIconOnly
             iconDescription={getCoreTranslation('close', 'Close')}
             tooltipPosition="bottom"
-            renderIcon={(props) => <ArrowLeft size={16} onClick={close} {...props} />}
+            renderIcon={(props) => <ArrowLeftIcon size={16} onClick={close} {...props} />}
           />
           <div className={styles.headerContent}>{title}</div>
         </Header>

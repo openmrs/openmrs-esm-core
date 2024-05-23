@@ -2,13 +2,14 @@
 import React, { useContext, useMemo } from 'react';
 import classNames from 'classnames';
 import { Header, HeaderGlobalBar, HeaderName, HeaderMenuButton, HeaderGlobalAction } from '@carbon/react';
-import { ArrowLeft, ArrowRight, Close, DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
+import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
 import { ComponentContext, ExtensionSlot, useBodyScrollLock, useLayoutType, isDesktop } from '@openmrs/esm-react-utils';
 import { translateFrom, getCoreTranslation } from '@openmrs/esm-translations';
 import { type OpenWorkspace, useWorkspaces, updateWorkspaceWindowState } from '../workspaces';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
 import styles from './workspace-window.module.scss';
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../../icons';
 
 export interface WorkspaceWindowProps {
   contextKey: string;
@@ -103,7 +104,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
         className={classNames(styles.header, maximized ? styles.fullWidth : styles.dynamicWidth)}
       >
         {layout === 'tablet' && !canHide && (
-          <HeaderMenuButton renderMenuIcon={<ArrowLeft />} onClick={closeWorkspace} />
+          <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
         )}
         <HeaderName prefix="">{workspaceTitle}</HeaderName>
         <HeaderGlobalBar className={styles.headerGlobalBar}>
@@ -129,7 +130,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
                   onClick={() => updateWorkspaceWindowState('hidden')}
                   size="lg"
                 >
-                  <ArrowRight />
+                  <ArrowRightIcon />
                 </HeaderGlobalAction>
               ) : (
                 <HeaderGlobalAction
@@ -138,7 +139,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
                   onClick={() => closeWorkspace?.()}
                   size="lg"
                 >
-                  <Close />
+                  <CloseIcon />
                 </HeaderGlobalAction>
               )}
             </>

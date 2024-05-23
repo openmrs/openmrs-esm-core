@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { navigate, useSession } from '@openmrs/esm-framework';
+import { LocationIcon, navigate, useSession } from '@openmrs/esm-framework';
 import { Button } from '@carbon/react';
-import { Location } from '@carbon/react/icons';
 import styles from './change-location-link.scss';
 import { SwitcherItem } from '@carbon/react';
 
@@ -23,7 +22,7 @@ const ChangeLocationLink: React.FC = () => {
   return (
     <SwitcherItem aria-label="Change Location" className={styles.panelItemContainer}>
       <div>
-        <Location size={20} />
+        <LocationIcon size={20} />
         <p>{currentLocation}</p>
       </div>
       <Button kind="ghost" onClick={changeLocation}>

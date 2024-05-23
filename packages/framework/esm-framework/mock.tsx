@@ -12,6 +12,7 @@ export * from '@openmrs/esm-context';
 export * from '@openmrs/esm-extensions/mock';
 export * from '@openmrs/esm-react-utils/mock';
 export * from '@openmrs/esm-state/mock';
+export * from '@openmrs/esm-styleguide/mock';
 export * from '@openmrs/esm-translations/mock';
 
 /* esm-globals */
@@ -48,6 +49,7 @@ export const goBackInHistory = jest.fn();
 
 /* esm-offline */
 export const useConnectivity = jest.fn().mockReturnValue(true);
+export const subscribeConnectivity = jest.fn();
 
 /* esm-styleguide */
 export const showNotification = jest.fn();

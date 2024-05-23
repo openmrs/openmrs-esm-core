@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { Button, ContentSwitcher, Switch } from '@carbon/react';
-import { Close } from '@carbon/react/icons';
 import { useTranslation } from 'react-i18next';
 import { Configuration } from '../configuration/configuration.component';
 import { FrontendModules } from '../frontend-modules/frontend-modules.component';
@@ -9,6 +8,7 @@ import { FeatureFlags } from '../feature-flags/feature-flags.component';
 import type { FrontendModule } from '../types';
 import type { ResolvedDependenciesModule } from '../backend-dependencies/openmrs-backend-dependencies';
 import styles from './popup.styles.scss';
+import { CloseIcon } from '@openmrs/esm-framework';
 
 interface DevToolsPopupProps {
   close(): void;
@@ -62,7 +62,7 @@ export default function Popup({
         <div>
           <Button
             kind="secondary"
-            renderIcon={(props) => <Close size={16} {...props} />}
+            renderIcon={(props) => <CloseIcon size={16} {...props} />}
             iconDescription="Close"
             onClick={close}
             hasIconOnly

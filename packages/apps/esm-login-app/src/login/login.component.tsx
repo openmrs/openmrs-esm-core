@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { type To, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Button, InlineLoading, InlineNotification, PasswordInput, TextInput, Tile } from '@carbon/react';
-import { ArrowLeft, ArrowRight } from '@carbon/react/icons';
 import {
   useConfig,
   interpolateUrl,
@@ -11,6 +10,8 @@ import {
   useConnectivity,
   navigate as openmrsNavigate,
   getCoreTranslation,
+  ArrowLeftIcon,
+  ArrowRightIcon,
 } from '@openmrs/esm-framework';
 import { type ConfigSchema } from '../config-schema';
 import styles from './login.scss';
@@ -169,7 +170,7 @@ const Login: React.FC = () => {
                 iconDescription="Back to username"
                 kind="ghost"
                 onClick={() => navigate('/login')}
-                renderIcon={(props) => <ArrowLeft size={24} style={{ marginRight: '0.5rem' }} {...props} />}
+                renderIcon={(props) => <ArrowLeftIcon size={24} style={{ marginRight: '0.5rem' }} {...props} />}
               >
                 <span>{t('back', 'Back')}</span>
               </Button>
@@ -206,7 +207,7 @@ const Login: React.FC = () => {
                 {showPasswordOnSeparateScreen && (
                   <Button
                     className={styles.continueButton}
-                    renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                    renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                     type="submit"
                     iconDescription="Continue to login"
                     onClick={continueLogin}
@@ -245,7 +246,7 @@ const Login: React.FC = () => {
                 <Button
                   type="submit"
                   className={styles.continueButton}
-                  renderIcon={(props) => <ArrowRight size={24} {...props} />}
+                  renderIcon={(props) => <ArrowRightIcon size={24} {...props} />}
                   iconDescription="Log in"
                   disabled={!isLoginEnabled || isLoggingIn}
                 >

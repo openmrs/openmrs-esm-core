@@ -4,8 +4,10 @@ import { configSchema } from '@openmrs/esm-config/mock';
 import { getExtensionStore, getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
 import { usePagination as realUsePagination } from './src/index';
-export { ConfigurableLink, isDesktop, useStore, useStoreWithActions, createUseStore } from './src/index';
+export { isDesktop, useStore, useStoreWithActions, createUseStore } from './src/index';
 import * as utils from '@openmrs/esm-utils';
+
+export const ConfigurableLink = ({ to, children }) => <a href={to}>{children}</a>;
 
 export const ComponentContext = React.createContext(null);
 

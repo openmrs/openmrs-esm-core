@@ -10,29 +10,20 @@ import Root from './root.component';
 const mockUserObservable = of(mockUser);
 const mockSessionObservable = of({ data: mockSession });
 
-jest.mock('@openmrs/esm-framework', () => ({
-  openmrsFetch: jest.fn().mockResolvedValue({}),
-  useConnectedExtensions: jest.fn().mockReturnValue(['mock-extension']),
-  createErrorHandler: jest.fn(),
-  openmrsObservableFetch: jest.fn(),
-  getCurrentUser: jest.fn(() => mockUserObservable),
-  ExtensionSlot: jest.fn().mockImplementation(({ children }) => <>{children}</>),
-  useLayoutType: jest.fn(() => 'tablet'),
-  useConfig: jest.fn(() => ({
-    logo: { src: null, alt: null, name: 'Mock EMR' },
-  })),
-  useOnClickOutside: jest.fn(() => {
-    const { useRef } = require('react');
-    return useRef();
-  }),
-  useSession: jest.fn().mockReturnValue(mockSession),
-  refetchCurrentUser: jest.fn(),
-  subscribeConnectivity: jest.fn(),
-  navigate: jest.fn(),
-  ConfigurableLink: jest.fn(() => {
-    return <a href="#">Mock EMR</a>;
-  }),
-}));
+jest.mock('@openmrs/esm-framework', () => {
+  const framework = jest.requireActual('@openmrs/esm-framework');
+  return {
+    ...framework,
+    ConfigurableLink: jest.fn(() => {
+      return <a href="#">Mock EMR</a>;
+    }),
+    useConfig: jest.fn(() => ({
+      logo: { src: null, alt: null, name: 'Mock EMR', link: 'Mock EMR' },
+    })),
+    useConnectedExtensions: jest.fn().mockReturnValue(['mock-extension']),
+    useSession: jest.fn().mockReturnValue(mockSession),
+  };
+});
 
 jest.mock('./root.resource', () => ({
   getSynchronizedCurrentUser: jest.fn(() => mockUserObservable),
