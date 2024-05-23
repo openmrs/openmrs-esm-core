@@ -1,6 +1,6 @@
 /** @module @category Utility */
 
-import type { NameUse } from '../../esm-api';
+import { type NameUse } from '@openmrs/esm-globals';
 
 /**
  * Gets the formatted display name for a patient.

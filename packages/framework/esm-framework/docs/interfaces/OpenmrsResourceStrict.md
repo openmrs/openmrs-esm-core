@@ -1,40 +1,46 @@
-[@openmrs/esm-framework](../API.md) / OpenmrsResource
+[@openmrs/esm-framework](../API.md) / OpenmrsResourceStrict
 
-# Interface: OpenmrsResource
+# Interface: OpenmrsResourceStrict
+
+Superclass for all Openmrs Resources, with strict typings.
+If the subclass does not have all attributes (including optional ones)
+accounted for, use OpenmrsResource instead.
 
 ## Hierarchy
 
-- [`OpenmrsResourceStrict`](OpenmrsResourceStrict.md)
+- **`OpenmrsResourceStrict`**
 
-  ↳ **`OpenmrsResource`**
+  ↳ [`OpenmrsResource`](OpenmrsResource.md)
 
-  ↳↳ [`Concept`](Concept.md)
+  ↳ [`PatientIdentifierType`](PatientIdentifierType.md)
 
-  ↳↳ [`User`](User.md)
+  ↳ [`Patient`](Patient.md)
 
-## Indexable
+  ↳ [`PatientIdentifier`](PatientIdentifier.md)
 
-▪ [anythingElse: `string`]: `any`
+  ↳ [`PersonAttribute`](PersonAttribute.md)
+
+  ↳ [`Person`](Person.md)
+
+  ↳ [`PersonName`](PersonName.md)
+
+  ↳ [`PersonAddress`](PersonAddress.md)
 
 ## Table of contents
 
 ### Properties
 
-- [auditInfo](OpenmrsResource.md#auditinfo)
-- [display](OpenmrsResource.md#display)
-- [links](OpenmrsResource.md#links)
-- [resourceVersion](OpenmrsResource.md#resourceversion)
-- [uuid](OpenmrsResource.md#uuid)
+- [auditInfo](OpenmrsResourceStrict.md#auditinfo)
+- [display](OpenmrsResourceStrict.md#display)
+- [links](OpenmrsResourceStrict.md#links)
+- [resourceVersion](OpenmrsResourceStrict.md#resourceversion)
+- [uuid](OpenmrsResourceStrict.md#uuid)
 
 ## Properties
 
 ### auditInfo
 
 • `Optional` **auditInfo**: [`AuditInfo`](AuditInfo.md)
-
-#### Inherited from
-
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[auditInfo](OpenmrsResourceStrict.md#auditinfo)
 
 #### Defined in
 
@@ -46,10 +52,6 @@ ___
 
 • `Optional` **display**: `string`
 
-#### Inherited from
-
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[display](OpenmrsResourceStrict.md#display)
-
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L14)
@@ -59,10 +61,6 @@ ___
 ### links
 
 • `Optional` **links**: [`Link`](Link.md)[]
-
-#### Inherited from
-
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[links](OpenmrsResourceStrict.md#links)
 
 #### Defined in
 
@@ -74,10 +72,6 @@ ___
 
 • `Optional` **resourceVersion**: `string`
 
-#### Inherited from
-
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[resourceVersion](OpenmrsResourceStrict.md#resourceversion)
-
 #### Defined in
 
 [packages/framework/esm-api/src/types/openmrs-resource.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/types/openmrs-resource.ts#L17)
@@ -87,10 +81,6 @@ ___
 ### uuid
 
 • **uuid**: `string`
-
-#### Inherited from
-
-[OpenmrsResourceStrict](OpenmrsResourceStrict.md).[uuid](OpenmrsResourceStrict.md#uuid)
 
 #### Defined in
 

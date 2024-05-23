@@ -9,7 +9,7 @@ import {
   mockPatientWithMultipleNames,
   mockPatientWithNickAndOfficialName,
 } from './patient-helpers.test.data';
-import { type NameUse } from '../../esm-api';
+import { type NameUse } from '@openmrs/esm-globals';
 
 describe('Formatted display name', () => {
   it.each([

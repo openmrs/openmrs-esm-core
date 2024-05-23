@@ -3174,6 +3174,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-globals@workspace:packages/framework/esm-globals"
   dependencies:
+    "@types/fhir": "npm:0.0.31"
     single-spa: "npm:^6.0.1"
   peerDependencies:
     single-spa: 5.x
