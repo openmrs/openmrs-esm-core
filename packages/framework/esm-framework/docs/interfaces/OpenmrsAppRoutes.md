@@ -11,6 +11,7 @@ This interface describes the format of the routes provided by an app
 - [backendDependencies](OpenmrsAppRoutes.md#backenddependencies)
 - [extensions](OpenmrsAppRoutes.md#extensions)
 - [modals](OpenmrsAppRoutes.md#modals)
+- [optionalBackendDependencies](OpenmrsAppRoutes.md#optionalbackenddependencies)
 - [pages](OpenmrsAppRoutes.md#pages)
 - [version](OpenmrsAppRoutes.md#version)
 - [workspaces](OpenmrsAppRoutes.md#workspaces)
@@ -37,7 +38,7 @@ An array of all extensions supported by this frontend module. Extensions can be 
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:338](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L338)
+[packages/framework/esm-globals/src/types.ts:356](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L356)
 
 ___
 
@@ -49,7 +50,25 @@ An array of all modals supported by this frontend module. Modals can be launched
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:342](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L342)
+[packages/framework/esm-globals/src/types.ts:360](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L360)
+
+___
+
+### optionalBackendDependencies
+
+• `Optional` **optionalBackendDependencies**: `Object`
+
+A list of backend modules that may enable optional functionality in this frontend module if available and the corresponding required versions.
+
+#### Index signature
+
+▪ [key: `string`]: `string` \| { `feature?`: `string` ; `version`: `string`  }
+
+The name of the backend dependency and either the required version or an object describing the required version
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L334)
 
 ___
 
@@ -61,7 +80,7 @@ An array of all pages supported by this frontend module. Pages are automatically
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L334)
+[packages/framework/esm-globals/src/types.ts:352](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L352)
 
 ___
 
@@ -85,4 +104,4 @@ An array of all workspaces supported by this frontend module. Workspaces can be 
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:346](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L346)
+[packages/framework/esm-globals/src/types.ts:364](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L364)

@@ -329,6 +329,24 @@ export interface OpenmrsAppRoutes {
    */
   backendDependencies?: Record<string, string>;
   /**
+   * A list of backend modules that may enable optional functionality in this frontend module if available and the corresponding required versions.
+   */
+  optionalBackendDependencies?: {
+    /** The name of the backend dependency and either the required version or an object describing the required version */
+    [key: string]:
+      | string
+      | {
+          /**
+           * The minimum version of this optional dependency that must be present.
+           */
+          version: string;
+          /**
+           * The feature flag to enable if this backend dependency is present
+           */
+          feature?: string;
+        };
+  };
+  /**
    * An array of all pages supported by this frontend module. Pages are automatically mounted based on a route.
    */
   pages?: Array<PageDefinition>;
