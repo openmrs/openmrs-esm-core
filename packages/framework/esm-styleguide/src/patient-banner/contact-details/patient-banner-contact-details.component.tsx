@@ -149,7 +149,11 @@ const Relationships: React.FC<{ patientId: string }> = ({ patientId }) => {
             <>
               {relationships.map((r) => (
                 <li key={r.uuid} className={styles.relationship}>
-                  <div>{r.display}</div>
+                  <div>
+                    <ConfigurableLink to={`${window.spaBase}/patient/${r.relativeUuid}/chart`}>
+                      {r.display}
+                    </ConfigurableLink>
+                  </div>
                   <div>{r.relationshipType}</div>
                   <div>
                     {`${r.relativeAge ? r.relativeAge : '--'} ${
