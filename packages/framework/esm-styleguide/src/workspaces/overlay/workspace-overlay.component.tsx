@@ -73,9 +73,11 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
     };
   }, [workspaceInstance.load]);
 
-  const title = useMemo(
-    () => translateFrom(workspaceInstance.moduleName, workspaceInstance.title, workspaceInstance.title),
-    [workspaceInstance.moduleName, workspaceInstance.title],
+  const workspaceTitle = useMemo(
+    () =>
+      workspaceInstance.additionalProps?.['workspaceTitle'] ??
+      translateFrom(workspaceInstance.moduleName, workspaceInstance.title, workspaceInstance.title),
+    [workspaceInstance],
   );
 
   const workspaceProps = {
@@ -86,7 +88,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
   };
 
   return (
-    <div
+    <aside
       className={classNames({
         [styles.desktopOverlay]: isDesktop(layout),
         [styles.tabletOverlay]: !isDesktop(layout),
@@ -94,7 +96,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
     >
       {isDesktop(layout) ? (
         <div className={styles.desktopHeader}>
-          <div className={styles.headerContent}>{title}</div>
+          <div className={styles.headerContent}>{workspaceTitle}</div>
           <Button
             className={styles.closeButton}
             onClick={() => workspaceInstance?.closeWorkspace()}
@@ -118,7 +120,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
             tooltipPosition="bottom"
             renderIcon={(props) => <ArrowLeftIcon size={16} onClick={close} {...props} />}
           />
-          <div className={styles.headerContent}>{title}</div>
+          <div className={styles.headerContent}>{workspaceTitle}</div>
         </Header>
       )}
       <div className={styles.workspaceContent} ref={ref}>
@@ -131,6 +133,6 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance }) => {
           />
         )}
       </div>
-    </div>
+    </aside>
   );
 };
