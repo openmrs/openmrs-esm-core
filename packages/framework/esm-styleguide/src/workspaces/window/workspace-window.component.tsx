@@ -1,5 +1,5 @@
 /** @module @category Workspace */
-import React, { useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import classNames from 'classnames';
 import { Header, HeaderGlobalBar, HeaderName, HeaderMenuButton, HeaderGlobalAction } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
@@ -75,9 +75,9 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
 
   useBodyScrollLock(!isDesktop(layout));
 
-  const toggleWindowState = () => {
+  const toggleWindowState = useCallback(() => {
     maximized ? updateWorkspaceWindowState('normal') : updateWorkspaceWindowState('maximized');
-  };
+  }, [maximized]);
 
   const workspaceTitle = useMemo(
     () =>
@@ -114,6 +114,9 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               {(canMaximize || maximized) && (
                 <HeaderGlobalAction
                   align="bottom"
+                  aria-label={
+                    maximized ? getCoreTranslation('minimize', 'Minimize') : getCoreTranslation('maximize', 'Maximize')
+                  }
                   label={
                     maximized ? getCoreTranslation('minimize', 'Minimize') : getCoreTranslation('maximize', 'Maximize')
                   }
@@ -126,6 +129,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               {canHide ? (
                 <HeaderGlobalAction
                   align="bottom-right"
+                  aria-label={getCoreTranslation('hide', 'Hide')}
                   label={getCoreTranslation('hide', 'Hide')}
                   onClick={() => updateWorkspaceWindowState('hidden')}
                   size="lg"
@@ -135,6 +139,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
               ) : (
                 <HeaderGlobalAction
                   align="bottom-right"
+                  aria-label={getCoreTranslation('close', 'Close')}
                   label={getCoreTranslation('close', 'Close')}
                   onClick={() => closeWorkspace?.()}
                   size="lg"
@@ -147,6 +152,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
           {layout === 'tablet' && canHide && (
             <HeaderGlobalAction
               align="bottom-right"
+              aria-label={getCoreTranslation('close', 'Close')}
               label={getCoreTranslation('close', 'Close')}
               onClick={() => closeWorkspace?.()}
             >
