@@ -1,0 +1,144 @@
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/colors';
+@use '@carbon/styles/scss/type';
+@import '@openmrs/esm-styleguide/src/vars';
+
+$container-width: calc(100% - 3rem);
+
+.header {
+  box-sizing: content-box;
+  border-bottom: 1px solid $text-03;
+  background-color: $ui-03;
+  top: var(--omrs-navbar-height);
+  z-index: 100;
+  height: var(--workspace-header-height);
+
+  a {
+    @include type.type-style('heading-compact-02');
+
+    &:hover {
+      color: inherit;
+    }
+  }
+
+  &:not(.maximized) {
+    right: auto;
+    left: auto;
+  }
+}
+
+.fixed {
+  background-color: $ui-02;
+  position: fixed !important;
+  top: 6rem;
+  right: auto;
+  left: auto;
+  overflow-y: auto;
+  max-height: var(--desktop-workspace-window-height);
+}
+
+.fullWidth {
+  // Subtract the width of the side rail from the viewport
+  width: $container-width;
+}
+
+.loader {
+  display: flex;
+  background-color: $openmrs-background-grey;
+  justify-content: center;
+  min-height: spacing.$spacing-09;
+}
+
+/* Desktop */
+:global(.omrs-breakpoint-gt-tablet) {
+  .maximized {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+  }
+
+  .container {
+    border-left: 1px solid $text-03;
+    margin-right: 3rem;
+    min-height: 100vh;
+  }
+
+  .widerWorkspace {
+    width: 32.25rem;
+    .dynamicWidth {
+      width: 32.25rem;
+    }
+  }
+
+  .narrowWorkspace {
+    width: 26.25rem;
+
+    .dynamicWidth {
+      width: 26.25rem;
+    }
+  }
+
+  .headerGlobalBar {
+    button {
+      background-color: $ui-02;
+      border-right: 1px solid colors.$gray-20;
+
+      & > svg {
+        fill: colors.$cool-gray-100 !important; // force svg to be visible
+      }
+    }
+  }
+}
+
+/* Tablet */
+:global(.omrs-breakpoint-lt-desktop) {
+  .container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 8001;
+  }
+
+  .header {
+    top: 0;
+    background-color: var(--brand-02);
+
+    a {
+      color: $ui-02;
+    }
+
+    button {
+      color: $ui-02;
+      background-color: var(--brand-02);
+
+      &:hover {
+        background-color: var(--brand-03);
+      }
+    }
+  }
+
+  .fixed {
+    background-color: $ui-01;
+    top: 3rem;
+    min-height: var(--tablet-workspace-window-height);
+  }
+
+  .dynamicWidth {
+    width: 100%;
+  }
+}
+
+// Overriding styles for RTL support
+html[dir='rtl'] {
+  :global(.omrs-breakpoint-gt-tablet) {
+    .container {
+      margin-left: 3rem;
+      margin-right: unset;
+    }
+  }
+}

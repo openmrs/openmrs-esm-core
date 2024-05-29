@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-extensions",
-  "version": "5.5.0",
+  "version": "5.6.0",
   "license": "MPL-2.0",
   "description": "Coordinates extensions and extension points in the OpenMRS Frontend",
   "browser": "dist/openmrs-esm-extensions.js",
@@ -42,6 +42,7 @@
     "@openmrs/esm-config": "5.x",
     "@openmrs/esm-feature-flags": "5.x",
     "@openmrs/esm-state": "5.x",
+    "@openmrs/esm-utils": "5.x",
     "single-spa": "5.x"
   },
   "devDependencies": {
@@ -49,7 +50,8 @@
     "@openmrs/esm-config": "workspace:*",
     "@openmrs/esm-feature-flags": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
-    "single-spa": "^6.0.0"
+    "@openmrs/esm-utils": "workspace:*",
+    "single-spa": "^6.0.1"
   },
   "dependencies": {
     "lodash-es": "^4.17.21"

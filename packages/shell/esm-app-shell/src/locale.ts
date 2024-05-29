@@ -39,7 +39,7 @@ export function setupI18n() {
           callback(Error(), null);
         } else if (namespace === 'core') {
           Promise.all([
-            import(`@openmrs/esm-translations/translations/${language}.json`),
+            import(/* webpackMode: "lazy" */ `@openmrs/esm-translations/translations/${language}.json`),
             getTranslationOverrides(namespace),
           ])
             .then(([json, overrides]) => {
@@ -81,6 +81,7 @@ export function setupI18n() {
         lookupQuerystring: 'lang',
       },
       fallbackLng: 'en',
+      nsSeparator: false,
     });
 }
 

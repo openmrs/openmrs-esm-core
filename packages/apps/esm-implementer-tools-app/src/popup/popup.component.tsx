@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { Button, ContentSwitcher, Switch } from '@carbon/react';
-import { Close } from '@carbon/react/icons';
 import { useTranslation } from 'react-i18next';
 import { Configuration } from '../configuration/configuration.component';
 import { FrontendModules } from '../frontend-modules/frontend-modules.component';
@@ -9,6 +8,7 @@ import { FeatureFlags } from '../feature-flags/feature-flags.component';
 import type { FrontendModule } from '../types';
 import type { ResolvedDependenciesModule } from '../backend-dependencies/openmrs-backend-dependencies';
 import styles from './popup.styles.scss';
+import { CloseIcon } from '@openmrs/esm-framework';
 
 interface DevToolsPopupProps {
   close(): void;
@@ -53,16 +53,16 @@ export default function Popup({
               setActiveTab(switcherItem.index);
             }}
           >
-            <Switch name="configuration-tab" text={t('configuration', 'Configuration')} />
-            <Switch name="frontend-modules-tab" text={t('frontendModules', 'Frontend Modules')} />
-            <Switch name="backend-modules-tab" text={t('backendModules', 'Backend Modules')} />
-            <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature Flags')} />
+            <Switch name="configuration-tab" text={t('configuration', 'Configuration')} className="darkThemeSwitch"/>
+            <Switch name="frontend-modules-tab" text={t('frontendModules', 'Frontend Modules')} className="darkThemeSwitch"/>
+            <Switch name="backend-modules-tab" text={t('backendModules', 'Backend Modules')} className="darkThemeSwitch"/>
+            <Switch name="feature-flags-tab" text={t('featureFlags', 'Feature Flags')} className="darkThemeSwitch"/>
           </ContentSwitcher>
         </div>
         <div>
           <Button
             kind="secondary"
-            renderIcon={(props) => <Close size={16} {...props} />}
+            renderIcon={(props) => <CloseIcon size={16} {...props} />}
             iconDescription="Close"
             onClick={close}
             hasIconOnly

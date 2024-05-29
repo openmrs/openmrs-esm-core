@@ -1,6 +1,6 @@
 /** @module @category UI */
 import { ExtensionSlot, useConnectedExtensions } from '@openmrs/esm-react-utils';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
 import { OverflowMenuVertical } from '@carbon/react/icons';
 import styles from './patient-banner-actions-menu.module.scss';
 import { CustomOverflowMenu } from '../../custom-overflow-menu/custom-overflow-menu.component';

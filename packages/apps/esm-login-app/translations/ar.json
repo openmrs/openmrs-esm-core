@@ -1,9 +1,7 @@
 {
   "back": "رجوع",
   "change": "تغيير",
-  "confirm": "تأكيد",
   "continue": "استمرار",
-  "error": "خطأ",
   "errorLoadingLoginLocations": "Error loading login locations",
   "invalidCredentials": "بيانات الدخول غير صحيحة",
   "loading": "جار التحميل",

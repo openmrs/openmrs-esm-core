@@ -26,6 +26,11 @@ declare global {
      */
     initializeSpa(config: SpaConfig): void;
     /**
+     * Indicates whether offline mode is enabled in this install or not.
+     * This is used to determine whether offline functionality is present or not.
+     */
+    offlineEnabled: boolean;
+    /**
      * Gets the API base path, e.g. /openmrs
      */
     openmrsBase: string;
@@ -40,7 +45,7 @@ declare global {
     /**
      * The build number of the app shell. Set when the app shell is built by webpack.
      */
-    spaVersion?: string;
+    spaVersion: string;
     /**
      * Gets a set of options from the import-map-overrides package.
      */
@@ -232,6 +237,86 @@ export type ExtensionDefinition = {
 );
 
 /**
+ * A definition of a modal as extracted from an app's routes.json
+ */
+export type ModalDefinition = {
+  /**
+   * The name of this modal. This is used to launch the modal.
+   */
+  name: string;
+} & (
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component: string;
+      /**
+       * @internal
+       */
+      load?: never;
+    }
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component?: never;
+      /**
+       * @internal
+       */
+      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+    }
+);
+
+/* The possible states a workspace window can be opened in. */
+export type WorkspaceWindowState = 'maximized' | 'hidden' | 'normal';
+
+/**
+ * A definition of a workspace as extracted from an app's routes.json
+ */
+export type WorkspaceDefinition = {
+  /**
+   * The name of this workspace. This is used to launch the workspace.
+   */
+  name: string;
+  /**
+   * The title of the workspace. This will be looked up as a key in the translations of the module
+   * defining the workspace.
+   */
+  title: string;
+  /**
+   * The type of the workspace. Only one of each "type" of workspace is allowed to be open at a
+   * time. The default is "form". If the right sidebar is in use, then the type determines which
+   * right sidebar icon corresponds to the workspace.
+   */
+  type: string;
+  canHide?: boolean;
+  canMaximize?: boolean;
+  width?: 'narrow' | 'wider';
+  preferredWindowSize?: WorkspaceWindowState;
+} & (
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component: string;
+      /**
+       * @internal
+       */
+      load?: never;
+    }
+  | {
+      /**
+       * The name of the component exported by this frontend module.
+       */
+      component?: never;
+      /**
+       * @internal
+       */
+      load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
+    }
+);
+
+/**
  * This interface describes the format of the routes provided by an app
  */
 export interface OpenmrsAppRoutes {
@@ -251,6 +336,14 @@ export interface OpenmrsAppRoutes {
    * An array of all extensions supported by this frontend module. Extensions can be mounted in extension slots, either via declarations in this file or configuration.
    */
   extensions?: Array<ExtensionDefinition>;
+  /**
+   * An array of all modals supported by this frontend module. Modals can be launched by name.
+   */
+  modals?: Array<ModalDefinition>;
+  /**
+   * An array of all workspaces supported by this frontend module. Workspaces can be launched by name.
+   */
+  workspaces?: Array<WorkspaceDefinition>;
 }
 
 /**
@@ -262,3 +355,8 @@ export type OpenmrsRoutes = Record<string, OpenmrsAppRoutes>;
 export interface ResourceLoader<T = any> {
   (): Promise<T>;
 }
+
+/*
+ * Supported values for FHIR HumanName.use as defined by https://hl7.org/fhir/R4/valueset-name-use.html
+ */
+export type NameUse = 'usual' | 'official' | 'temp' | 'nickname' | 'anonymous' | 'old' | 'maiden';

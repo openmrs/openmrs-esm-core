@@ -3,6 +3,6 @@
 
 set -e  # die on error
 
+npx lint-staged
 yarn turbo extract-translations
-yarn prettier && npx lint-staged
 yarn turbo document --since main

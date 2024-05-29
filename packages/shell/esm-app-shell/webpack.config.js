@@ -27,7 +27,7 @@ const openmrsProxyTarget = process.env.OMRS_PROXY_TARGET || 'https://dev3.openmr
 const openmrsPageTitle = process.env.OMRS_PAGE_TITLE || 'OpenMRS';
 const openmrsFavicon = process.env.OMRS_FAVICON || `${openmrsPublicPath}/favicon.ico`;
 const openmrsEnvironment = process.env.OMRS_ENV || process.env.NODE_ENV || '';
-const openmrsOffline = process.env.OMRS_OFFLINE !== 'disable';
+const openmrsOffline = process.env.OMRS_OFFLINE === 'enable';
 const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || 'en';
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsImportmapUrl = process.env.OMRS_ESM_IMPORTMAP_URL || `${openmrsPublicPath}/importmap.json`;
@@ -270,6 +270,9 @@ module.exports = (env, argv = {}) => {
         zlib: false,
         url: false,
       },
+      alias: {
+        'lodash.findlast': 'lodash-es/findLast',
+      },
     },
     plugins: [
       openmrsCleanBeforeBuild && new CleanWebpackPlugin(),
@@ -334,6 +337,7 @@ module.exports = (env, argv = {}) => {
             // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
             obj['swr/'] = {
               requiredVersion: version,
+              strictVersion: false,
               singleton: true,
               eager: true,
               import: 'swr/',
@@ -344,6 +348,7 @@ module.exports = (env, argv = {}) => {
           } else {
             obj[depName] = {
               requiredVersion: version ?? false,
+              strictVersion: false,
               singleton: true,
               eager: true,
               import: depName,

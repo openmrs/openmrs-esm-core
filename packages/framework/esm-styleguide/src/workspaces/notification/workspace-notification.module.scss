@@ -1,0 +1,5 @@
+@use '@carbon/styles/scss/type';
+
+.messageBody {
+  @include type.type-style('heading-compact-02');
+}

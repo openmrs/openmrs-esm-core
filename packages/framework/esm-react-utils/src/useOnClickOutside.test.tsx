@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { type PropsWithChildren } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useOnClickOutside } from './useOnClickOutside';

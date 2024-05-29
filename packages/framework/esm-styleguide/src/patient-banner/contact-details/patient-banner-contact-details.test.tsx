@@ -137,6 +137,12 @@ describe('ContactDetails', () => {
     expect(screen.getByText(/List three/)).toBeInTheDocument();
   });
 
+  it('patient related name should be a link', async () => {
+    renderWithSwr(<PatientBannerContactDetails patientId={'some-uuid'} deceased={false} />);
+    const relationShip = screen.getByRole('link', { name: /Amanda Robinson/ });
+    expect(relationShip).toHaveAttribute('href', `/spa/patient/${mockRelationships[0].relativeUuid}/chart`);
+  });
+
   it('renders an empty state view when contact details, relations, patient lists and addresses are not available', async () => {
     mockedUsePatient.mockReturnValue({
       isLoading: false,

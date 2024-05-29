@@ -54,6 +54,10 @@ $brand-primary-100: #081a1c;
   --brand-01: #005d5d;
   --brand-02: #004144;
   --brand-03: #007d79;
+  --bottom-nav-height: 4rem;
+  --workspace-header-height: 3rem;
+  --tablet-workspace-window-height: calc(100vh - var(--omrs-navbar-height));
+  --desktop-workspace-window-height: calc(100vh - var(--omrs-navbar-height) - var(--workspace-header-height));
 }
 
 $breakpoint-phone-min: 0px;

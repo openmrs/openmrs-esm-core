@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { HeaderContainer, Header, HeaderMenuButton, HeaderGlobalBar, HeaderGlobalAction } from '@carbon/react';
-import { Close, Switcher, UserAvatarFilledAlt } from '@carbon/react/icons';
 import {
   useLayoutType,
   ExtensionSlot,
@@ -10,6 +10,9 @@ import {
   useSession,
   useConnectedExtensions,
   useConfig,
+  CloseIcon,
+  UserAvatarIcon,
+  SwitcherIcon,
 } from '@openmrs/esm-framework';
 import { isDesktop } from '../../utils';
 import AppMenuPanel from '../navbar-header-panels/app-menu-panel.component';
@@ -19,7 +22,6 @@ import OfflineBanner from '../offline-banner/offline-banner.component';
 import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import styles from './navbar.scss';
-import { useTranslation } from 'react-i18next';
 
 const HeaderItems: React.FC = () => {
   const { t } = useTranslation();
@@ -54,7 +56,7 @@ const HeaderItems: React.FC = () => {
             aria-label="Open menu"
             isCollapsible
             className={styles.headerMenuButton}
-            onClick={(event) => {
+            onClick={() => {
               togglePanel('sideMenu');
             }}
             isActive={isActivePanel('sideMenu')}
@@ -90,7 +92,7 @@ const HeaderItems: React.FC = () => {
                 togglePanel('userMenu');
               }}
             >
-              {isActivePanel('userMenu') ? <Close size={20} /> : <UserAvatarFilledAlt size={20} />}
+              {isActivePanel('userMenu') ? <CloseIcon size={20} /> : <UserAvatarIcon size={20} />}
             </HeaderGlobalAction>
           )}
           {showAppMenu && (
@@ -108,7 +110,7 @@ const HeaderItems: React.FC = () => {
                 togglePanel('appMenu');
               }}
             >
-              {isActivePanel('appMenu') ? <Close size={20} /> : <Switcher size={20} />}
+              {isActivePanel('appMenu') ? <CloseIcon size={20} /> : <SwitcherIcon size={20} />}
             </HeaderGlobalAction>
           )}
         </HeaderGlobalBar>

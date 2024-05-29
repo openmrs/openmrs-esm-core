@@ -1,3 +1,4 @@
+@use '@carbon/react/scss/theme';
 @import '../implementer-tools.styles.scss';
 
 .popup {
@@ -6,10 +7,17 @@
   left: 0;
   width: 100%;
   z-index: 100000;
-  background-color: $ui-03;
+  background-color: theme.$background;
   border-top: 2px solid $ui-05;
   color: $color-gray-100;
   box-sizing: border-box;
+
+  tr {
+    th,
+    td {
+      color: theme.$text-secondary;
+    }
+  }
 }
 
 .content {
@@ -25,6 +33,24 @@
 
   :global(.cds--content-switcher-btn) {
     min-width: fit-content;
+    border: none;
+    &::after {
+      display: none;
+    }
+
+    &::before {
+      display: none;
+    }
+
+    &:last-child {
+      border-right: none !important;
+      border-radius: 0 !important;
+    }
+
+    &:first-child {
+      border-left: none !important;
+      border-radius: 0 !important;
+    }
   }
 }
 
@@ -34,6 +60,5 @@
   justify-content: space-between;
   align-items: center;
   z-index: 2;
-  background: #e0e0e0;
-  padding: 0.25rem;
+  background-color: theme.$background;
 }

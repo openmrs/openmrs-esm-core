@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-styleguide",
-  "version": "5.5.0",
+  "version": "5.6.0",
   "license": "MPL-2.0",
   "description": "The styleguide for OpenMRS SPA",
   "browser": "dist/openmrs-esm-styleguide.js",
@@ -12,7 +12,7 @@
     "start:storybook": "start-storybook --port 7000",
     "build:storybook": "build-storybook",
     "build": "webpack --mode=production",
-    "build:development": "webpack --mode development",
+    "build:development": "webpack --mode=development",
     "analyze": "webpack --mode=production --env analyze=true",
     "lint": "eslint src"
   },
@@ -53,7 +53,9 @@
     "react-avatar": "^5.0.3"
   },
   "peerDependencies": {
+    "@openmrs/esm-error-handling": "5.x",
     "@openmrs/esm-extensions": "5.x",
+    "@openmrs/esm-navigation": "5.x",
     "@openmrs/esm-react-utils": "5.x",
     "@openmrs/esm-state": "5.x",
     "@openmrs/esm-translations": "5.x",
@@ -64,7 +66,9 @@
     "rxjs": "6.x"
   },
   "devDependencies": {
+    "@openmrs/esm-error-handling": "workspace:*",
     "@openmrs/esm-extensions": "workspace:*",
+    "@openmrs/esm-navigation": "workspace:*",
     "@openmrs/esm-react-utils": "workspace:*",
     "@openmrs/esm-state": "workspace:*",
     "@openmrs/esm-translations": "workspace:*",
@@ -77,6 +81,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "rxjs": "^6.5.3",
+    "svgo-loader": "^4.0.0",
     "webpack": "^5.88.0"
   }
 }

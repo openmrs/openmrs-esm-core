@@ -1,8 +1,9 @@
 import React, { useCallback, useReducer } from 'react';
+import '@testing-library/jest-dom';
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import {
   attach,
-  ConnectedExtension,
+  type ConnectedExtension,
   getExtensionNameFromId,
   registerExtension,
   updateInternalExtensionStore,
@@ -13,7 +14,8 @@ import {
   ExtensionSlot,
   openmrsComponentDecorator,
   useExtensionSlotMeta,
-  ExtensionData,
+  type ExtensionData,
+  useRenderableExtensions,
 } from '.';
 import userEvent from '@testing-library/user-event';
 import { registerFeatureFlag, setFeatureFlag } from '@openmrs/esm-feature-flags';
@@ -276,6 +278,29 @@ describe('ExtensionSlot, Extension, and useExtensionSlotMeta', () => {
     expect(screen.queryByText('Kurmanji')).not.toBeInTheDocument();
     act(() => setFeatureFlag('kurdish', true));
     await waitFor(() => expect(screen.getByText('Kurmanji')).toBeInTheDocument());
+  });
+
+  test('useRenderableExtensions returns registered extensions', async () => {
+    function SpanishExtension({ suffix }) {
+      return <div>Spanish{suffix}</div>;
+    }
+
+    registerSimpleExtension('Spanish', 'esm-languages-app', SpanishExtension, {
+      code: 'es',
+    });
+    attach('Box', 'Spanish');
+    const App = openmrsComponentDecorator({
+      moduleName: 'esm-languages-app',
+      featureName: 'Languages',
+      disableTranslations: true,
+    })(() => {
+      const extensions = useRenderableExtensions('Box');
+      const Ext = extensions[0];
+      return <Ext state={{ suffix: ' hola' }} />;
+    });
+    render(<App />);
+
+    await waitFor(() => expect(screen.getByText('Spanish hola')).toBeInTheDocument());
   });
 });
 

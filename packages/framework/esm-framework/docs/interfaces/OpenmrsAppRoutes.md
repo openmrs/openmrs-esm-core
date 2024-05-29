@@ -10,8 +10,10 @@ This interface describes the format of the routes provided by an app
 
 - [backendDependencies](OpenmrsAppRoutes.md#backenddependencies)
 - [extensions](OpenmrsAppRoutes.md#extensions)
+- [modals](OpenmrsAppRoutes.md#modals)
 - [pages](OpenmrsAppRoutes.md#pages)
 - [version](OpenmrsAppRoutes.md#version)
+- [workspaces](OpenmrsAppRoutes.md#workspaces)
 
 ## Properties
 
@@ -23,7 +25,7 @@ A list of backend modules necessary for this frontend module and the correspondi
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:245](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L245)
+[packages/framework/esm-globals/src/types.ts:330](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L330)
 
 ___
 
@@ -35,7 +37,19 @@ An array of all extensions supported by this frontend module. Extensions can be 
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:253](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L253)
+[packages/framework/esm-globals/src/types.ts:338](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L338)
+
+___
+
+### modals
+
+• `Optional` **modals**: [`ModalDefinition`](../API.md#modaldefinition)[]
+
+An array of all modals supported by this frontend module. Modals can be launched by name.
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:342](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L342)
 
 ___
 
@@ -47,7 +61,7 @@ An array of all pages supported by this frontend module. Pages are automatically
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:249](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L249)
+[packages/framework/esm-globals/src/types.ts:334](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L334)
 
 ___
 
@@ -59,4 +73,16 @@ The version of this frontend module.
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L241)
+[packages/framework/esm-globals/src/types.ts:326](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L326)
+
+___
+
+### workspaces
+
+• `Optional` **workspaces**: [`WorkspaceDefinition`](../API.md#workspacedefinition)[]
+
+An array of all workspaces supported by this frontend module. Workspaces can be launched by name.
+
+#### Defined in
+
+[packages/framework/esm-globals/src/types.ts:346](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L346)

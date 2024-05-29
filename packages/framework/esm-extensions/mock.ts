@@ -13,3 +13,19 @@ export const getExtensionInternalStore = () =>
     slots: {},
     extensions: {},
   });
+
+const mockExtensionRegistry = {};
+
+export const getExtensionRegistration = jest.fn((name) => {
+  return mockExtensionRegistry[name];
+});
+
+export const registerExtension = jest.fn((ext) => {
+  mockExtensionRegistry[ext.name] = ext;
+});
+
+export function clearMockExtensionRegistry() {
+  Object.keys(mockExtensionRegistry).forEach((key) => {
+    delete mockExtensionRegistry[key];
+  });
+}

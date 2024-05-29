@@ -5,9 +5,9 @@ import {
   temporaryConfigStore,
   provide,
   configInternalStore,
-  ConfigInternalStore,
+  type ConfigInternalStore,
 } from '@openmrs/esm-config';
-import { MockedStore } from '../__mocks__/openmrs-esm-state.mock';
+import type { MockedStore } from '../__mocks__/openmrs-esm-state.mock';
 import { useConfig } from './useConfig';
 import { ComponentContext } from './ComponentContext';
 

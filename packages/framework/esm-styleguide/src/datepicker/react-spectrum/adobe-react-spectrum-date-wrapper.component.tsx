@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-import type { CalendarDate } from '@internationalized/date';
 import { parseDate } from '@internationalized/date';
 import { DatePicker } from '@react-spectrum/datepicker';
 import { Provider } from '@react-spectrum/provider';
 import { theme as defaultTheme } from '@react-spectrum/theme-default';
 import { useConfig } from '@openmrs/esm-react-utils';
-import { parseDate as parseDateString } from '@openmrs/esm-utils';
+import { convertToLocaleCalendar } from '@openmrs/esm-utils';
+import dayjs from 'dayjs';
 
 interface ReactSpectrumDatePickerWrapperProps {
   id: string;
@@ -22,19 +22,17 @@ interface ReactSpectrumDatePickerWrapperProps {
   onChange?: (value: Date) => void;
 }
 
-function toLocalDateString(dateValue: Date) {
-  const year = dateValue.getFullYear();
-  const month = (dateValue.getMonth() + 1).toString().padStart(2, '0');
-  const date = dateValue.getDate().toString().padStart(2, '0');
-
-  return `${year}-${month}-${date}`;
-}
-
-function parseToCalendarDate(date: string | Date | undefined) {
+function parseToCalendarDate(date: string | Date | undefined, locale?: string | Intl.Locale) {
   if (!date) {
     return undefined;
   }
-  return parseDate(toLocalDateString(typeof date === 'string' ? parseDateString(date) : date));
+
+  const parsedCalendarDate = parseDate(dayjs(date).format('YYYY-MM-DD'));
+  if (locale) {
+    return convertToLocaleCalendar(parsedCalendarDate, locale);
+  }
+
+  return parsedCalendarDate;
 }
 
 function constructValidationState(invalid: boolean | undefined) {
@@ -67,13 +65,13 @@ const ReactSpectrumDatePickerWrapper: React.FC<ReactSpectrumDatePickerWrapperPro
     if (preferredCalendar?.[currentLocale]) {
       return new Intl.Locale(currentLocale, {
         calendar: preferredCalendar[currentLocale],
-      }).toString();
+      });
     }
     return currentLocale;
   }, [currentLocale, preferredCalendar]);
 
   return (
-    <Provider locale={locale} colorScheme="light" theme={defaultTheme}>
+    <Provider locale={locale.toString()} colorScheme="light" theme={defaultTheme}>
       <DatePicker
         id={id}
         label={labelText}
@@ -81,9 +79,9 @@ const ReactSpectrumDatePickerWrapper: React.FC<ReactSpectrumDatePickerWrapperPro
         onChange={(calendarDate) => {
           onChange?.(new Date(calendarDate.year, calendarDate.month - 1, calendarDate.day));
         }}
-        defaultValue={parseToCalendarDate(defaultValue)}
-        minValue={minDate ? (parseToCalendarDate(minDate) as CalendarDate) : undefined}
-        maxValue={maxDate ? (parseToCalendarDate(maxDate) as CalendarDate) : undefined}
+        defaultValue={parseToCalendarDate(defaultValue, locale)}
+        minValue={parseToCalendarDate(minDate, locale)}
+        maxValue={parseToCalendarDate(maxDate, locale)}
         isReadOnly={readonly}
         isDisabled={isDisabled}
         validationState={constructValidationState(invalid)}

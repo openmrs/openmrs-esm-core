@@ -3,7 +3,11 @@ import 'import-map-overrides';
 import '@openmrs/esm-framework';
 import type { SpaConfig } from '@openmrs/esm-framework/src/internal';
 
-export function setupPaths(config: SpaConfig) {
+function _createSpaBase(baseUrl: string) {
+  return () => baseUrl;
+}
+
+function setupPaths(config: SpaConfig) {
   let error = false;
   if (!config.apiUrl) {
     console.error(
@@ -28,9 +32,9 @@ export function setupPaths(config: SpaConfig) {
   window.openmrsBase = config.apiUrl;
   window.spaBase = config.spaPath;
   window.spaEnv = config.env || 'production';
-  window.spaVersion = process.env.BUILD_VERSION;
+  window.spaVersion = process.env.BUILD_VERSION ?? 'local';
   const spaBaseWithSlash = window.spaBase.endsWith('/') ? window.spaBase : window.spaBase + '/';
-  window.getOpenmrsSpaBase = () => spaBaseWithSlash;
+  window.getOpenmrsSpaBase = _createSpaBase(spaBaseWithSlash);
 }
 
 export function setupUtils() {
@@ -65,9 +69,11 @@ function initializeSpa(config: SpaConfig) {
   setupPaths(config);
   wireSpaPaths();
   return Promise.resolve(__webpack_init_sharing__('default')).then(async () => {
-    const { configUrls = [], offline = true } = config;
-    const { run } = await import('./run');
-    return run(configUrls, offline);
+    const { configUrls = [], offline = false } = config;
+    window.offlineEnabled = offline;
+
+    const { run } = await import(/* webpackPreload: true */ './run');
+    return run(configUrls);
   });
 }
 

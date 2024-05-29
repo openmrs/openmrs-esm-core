@@ -36,7 +36,7 @@ The following common libraries have been developed. They may also be used indepe
 - [@openmrs/esm-react-utils](packages/framework/esm-react-utils): utilities for React components
 - [@openmrs/esm-state](packages/framework/esm-state): brings in state management
 - [@openmrs/esm-styleguide](packages/framework/esm-styleguide): styling and UI capabilities
-- [@openmrs/esm-translations](packages/apps/esm-translations): common translations and utilities
+- [@openmrs/esm-translations](packages/framework/esm-translations): common translations and utilities
 - [@openmrs/esm-utils](packages/framework/esm-utils): general utility and helper functions
 
 All libraries are aggregated in the `@openmrs/esm-framework` package:

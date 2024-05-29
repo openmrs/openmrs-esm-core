@@ -1,0 +1,24 @@
+@use '@carbon/styles/scss/components/button';
+
+.arrayEditor {
+  :global(.cds--structured-list) {
+    margin-bottom: 0.25rem;
+  }
+  :global(.cds--structured-list-td) {
+    padding: 0.25rem 3rem 0.25rem 1rem;
+  }
+  :global(.cds--btn--primary) {
+    background-color: button.$button-primary;
+    &:hover {
+      background-color: button.$button-primary-hover;
+    }
+  }
+}
+
+.buttonCell {
+  text-align: right;
+}
+
+/* .valueCell {
+  display: inline-flex;
+} */
