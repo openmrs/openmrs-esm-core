@@ -10,7 +10,6 @@
   min-width: 32.25rem;
   background-color: $ui-02;
   border-left: 1px solid $text-03;
-  overflow: hidden;
   display: grid;
   grid-template-rows: auto 1fr auto;
   z-index: 999;
@@ -24,7 +23,6 @@
   right: 0;
   z-index: 9999;
   background-color: $ui-02;
-  overflow: hidden;
   padding-top: spacing.$spacing-09;
   display: grid;
   grid-template-rows: 1fr auto;
