@@ -23,7 +23,6 @@ import { useLoginLocations } from '../login.resource';
 import styles from './location-picker.scss';
 import { useDefaultLocation } from './location-picker.resource';
 import type { ConfigSchema } from '../config-schema';
-import { ArrowLeft } from '@carbon/react/icons';
 
 interface LocationPickerProps {
   hideWelcomeMessage?: boolean;
@@ -94,7 +93,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     } else {
       navigate({ to: config.links.loginSuccess });
     }
-  }, [state?.referrer, location, config.links.loginSuccess]);
+  }, [state?.referrer, location?.search, config.links.loginSuccess]);
 
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
@@ -255,11 +254,9 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
                   disabled={!activeLocation || !isLoginEnabled || isSubmitting}
                   onClick={handleNavigation}
                 >
-                  <span>{t('cancel', 'Cancel')}</span>
+                  <span>{getCoreTranslation('cancel')}</span>
                 </Button>
-              ) : (
-                null
-              )}
+              ) : null}
               <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
                 {isSubmitting ? (
                   <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
