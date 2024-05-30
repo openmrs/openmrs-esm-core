@@ -115,6 +115,18 @@ export function isOpenmrsAppRoutes(routes: OpenmrsAppRoutes | unknown): routes i
       }
     }
 
+    if (hasOwnProperty.call(routes, 'workspaces')) {
+      if (!Boolean(maybeRoutes.workspaces) || !Array.isArray(maybeRoutes.workspaces)) {
+        return false;
+      }
+    }
+
+    if (hasOwnProperty.call(routes, 'modals')) {
+      if (!Boolean(maybeRoutes.modals) || !Array.isArray(maybeRoutes.modals)) {
+        return false;
+      }
+    }
+
     // Notice that we're essentially testing for things that cannot be treated as an OpenmrsAppRoutes
     // object. This is because a completely empty object is a valid OpenmrsAppRoutes object.
     return true;
