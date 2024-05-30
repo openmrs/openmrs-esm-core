@@ -39,7 +39,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@openmrs/esm-globals": "5.x"
+    "@openmrs/esm-globals": "5.x",
+    "@openmrs/esm-translations": "5.x"
   },
   "devDependencies": {
     "@openmrs/esm-globals": "workspace:*"
