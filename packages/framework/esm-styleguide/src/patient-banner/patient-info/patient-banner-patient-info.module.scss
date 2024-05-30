@@ -12,33 +12,6 @@
   background-color: $ui-01;
 }
 
-.deceasedPatientContainer {
-  background-color: colors.$gray-80;
-
-  .patientName {
-    color: $ui-01;
-  }
-
-  .demographics,
-  .row,
-  .identifierTag,
-  .identifier,
-  .contactDetails .heading {
-    color: $ui-02;
-  }
-
-  .toggleContactDetailsButton,
-  .toggleContactDetailsButton > svg,
-  .actionsButtonText {
-    color: colors.$blue-40;
-  }
-
-  &:focus,
-  &:hover {
-    background-color: colors.$gray-90;
-  }
-}
-
 .patientBanner {
   display: flex;
 }
