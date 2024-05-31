@@ -1,4 +1,4 @@
-import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';
+import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks();
 
 import { addRoutesOverride, isOpenmrsAppRoutes } from './routes';
@@ -100,6 +100,18 @@ describe('Openmrs Routes Utilities', () => {
               component: 'customExtension',
             },
           ],
+          modals: [
+            {
+              name: 'custom modal',
+              component: 'customModal',
+            },
+          ],
+          workspaces: [
+            {
+              name: 'custom workspace',
+              component: 'customWorkspace',
+            },
+          ],
         }),
       ).toBe(true);
     });
@@ -124,6 +136,32 @@ describe('Openmrs Routes Utilities', () => {
             {
               name: 'custom extension',
               component: 'customExtension',
+            },
+          ],
+        }),
+      ).toBe(true);
+    });
+
+    it('should accept an object with only modals', () => {
+      expect(
+        isOpenmrsAppRoutes({
+          modals: [
+            {
+              name: 'custom modal',
+              component: 'customModal',
+            },
+          ],
+        }),
+      ).toBe(true);
+    });
+
+    it('should accept an object with only workspaces', () => {
+      expect(
+        isOpenmrsAppRoutes({
+          workspaces: [
+            {
+              name: 'custom workspace',
+              component: 'customWorkspace',
             },
           ],
         }),

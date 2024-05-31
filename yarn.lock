@@ -3084,6 +3084,7 @@ __metadata:
     "@openmrs/esm-globals": "workspace:*"
   peerDependencies:
     "@openmrs/esm-globals": 5.x
+    "@openmrs/esm-translations": 5.x
   languageName: unknown
   linkType: soft
 
