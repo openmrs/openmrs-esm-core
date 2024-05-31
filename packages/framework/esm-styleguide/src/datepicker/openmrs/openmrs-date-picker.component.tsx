@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type ReactElement, useEffect, useRef } from 'react';
 import { supportedLocales as reactSpectrumSupportedLocales } from '../react-spectrum/locales';
 import { getLocale } from '@openmrs/esm-utils';
 import ReactSpectrumDatePickerWrapper from '../react-spectrum/adobe-react-spectrum-date-wrapper.component';
@@ -12,14 +12,14 @@ const DEFAULT_PLACEHOLDER = 'dd/mm/yyyy';
 
 export interface OpenmrsDatePickerProps {
   id: string;
-  labelText: string | any;
+  labelText: string | ReactElement;
   onChange: (value: Date) => void;
   value?: Date | string;
   /* Not supported by Carbon's picker */
   defaultValue?: Date | string;
   minDate?: Date | string;
   maxDate?: Date | string;
-  readonly?: string | boolean;
+  readonly?: boolean;
   dateFormat?: string;
   invalid?: boolean;
   invalidText?: string;
@@ -55,6 +55,21 @@ export const OpenmrsDatePicker: React.FC<OpenmrsDatePickerProps> = ({
   carbonOptions,
 }) => {
   const locale = getLocale();
+  const inputRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const inputElement = inputRef.current?.querySelector('input');
+    if (inputElement) {
+      const handleChange = (e) => {
+        onChange(dayjs(e.target.value, dateFormat).toDate());
+      };
+      inputElement.addEventListener('change', handleChange);
+
+      return () => {
+        inputElement.removeEventListener('change', handleChange);
+      };
+    }
+  }, [inputRef, dateFormat, onChange]);
 
   return reactSpectrumSupportedLocales[locale] ? (
     <ReactSpectrumDatePickerWrapper
@@ -65,7 +80,7 @@ export const OpenmrsDatePicker: React.FC<OpenmrsDatePickerProps> = ({
       defaultValue={defaultValue}
       minDate={minDate}
       maxDate={maxDate}
-      readonly={typeof readonly === 'boolean' ? readonly : undefined}
+      readonly={readonly}
       id={id}
       isDisabled={disabled}
       invalid={invalid}
@@ -87,6 +102,7 @@ export const OpenmrsDatePicker: React.FC<OpenmrsDatePickerProps> = ({
       warnText={carbonOptions?.warnText}
     >
       <DatePickerInput
+        ref={inputRef}
         id={id}
         dateFormat={dateFormat || DEFAULT_DATE_FORMAT}
         labelText={labelText}
@@ -94,12 +110,6 @@ export const OpenmrsDatePicker: React.FC<OpenmrsDatePickerProps> = ({
         invalidText={invalidText}
         placeholder={carbonOptions?.placeholder || DEFAULT_PLACEHOLDER}
         style={carbonOptions?.pickerInputStyle}
-        // Added for testing purposes.
-        // Notes:
-        // Something strange is happening with the way events are propagated and handled by Carbon.
-        // When we manually trigger an onchange event using the 'fireEvent' lib, the handler below will
-        // be triggered as opposed to the former handler that only gets triggered at runtime.
-        onChange={(e) => onChange(dayjs(e.target.value, DEFAULT_PLACEHOLDER.toUpperCase()).toDate())}
         disabled={disabled}
         readOnly={readonly}
       />
