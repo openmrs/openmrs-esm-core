@@ -593,12 +593,11 @@ function validateBranchStructure(schemaPart: ConfigSchema, value: any, keyPath: 
   checkType(keyPath, schemaPart._type, value);
 
   if (isOrdinaryObject(value)) {
-    // structurally validate only if there's elements specified
-    // or there's no `_default` value (which would indicate a freeform object)
     if (schemaPart._type === Type.Object) {
-      validateDictionaryStructure(schemaPart, value, keyPath);
-    } else if (!schemaPart.hasOwnProperty('_default')) {
-      // recurse to validate nested object structure
+      // validate as freeform object
+      validateFreeformObjectStructure(schemaPart, value, keyPath);
+    } else if (!(schemaPart.hasOwnProperty('_default') || schemaPart.hasOwnProperty('_type'))) {
+      // validate as normal nested config
       validateStructure(schemaPart, value, keyPath);
     }
   } else {
@@ -608,11 +607,11 @@ function validateBranchStructure(schemaPart: ConfigSchema, value: any, keyPath: 
   }
 }
 
-function validateDictionaryStructure(dictionarySchema: ConfigSchema, config: ConfigObject, keyPath: string) {
-  if (dictionarySchema._elements) {
+function validateFreeformObjectStructure(freeformObjectSchema: ConfigSchema, config: ConfigObject, keyPath: string) {
+  if (freeformObjectSchema._elements) {
     for (const key of Object.keys(config)) {
       const value = config[key];
-      validateStructure(dictionarySchema._elements, value, `${keyPath}.${key}`);
+      validateStructure(freeformObjectSchema._elements, value, `${keyPath}.${key}`);
     }
   }
 }
@@ -715,9 +714,9 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
     // crashing completely, though it will produce unexpected behavior.
     // If this happens, there should be legible errors in the console from
     // the schema validator.
-    if (schemaPart && schemaPart.hasOwnProperty('_default')) {
+    if (schemaPart && (schemaPart.hasOwnProperty('_type') || schemaPart.hasOwnProperty('_default'))) {
       // We assume that schemaPart defines a config value, since it has
-      // a property `_default`.
+      // a property `_type` or `_default`.
       if (!config.hasOwnProperty(key)) {
         (config[key] as any) = schemaPart['_default'];
       }
@@ -736,11 +735,12 @@ const setDefaults = (schema: ConfigSchema, inputConfig: Config) => {
         }
       }
     } else if (isOrdinaryObject(schemaPart)) {
-      // Since schemaPart has no property "_default", if it's an ordinary object
+      // Since schemaPart has no property "_type", if it's an ordinary object
       // (unlike, importantly, the validators array), we assume it is a parent config property.
       // We recurse to config[key] and schema[key]. Default config[key] to {}.
-      const selectedConfigPart = config.hasOwnProperty(key) ? configPart : {};
+      const selectedConfigPart = configPart ?? {};
 
+      // There will have been a validation error already if configPart is not a plain object.
       if (isOrdinaryObject(selectedConfigPart)) {
         config[key] = setDefaults(schemaPart, selectedConfigPart);
       }

@@ -515,6 +515,26 @@ describe('getConfig', () => {
     expect(console.error).not.toHaveBeenCalled();
   });
 
+  it('supports type validation of array elements', async () => {
+    Config.defineConfigSchema('foo-module', {
+      foo: {
+        _type: Type.Array,
+        _default: ['bar'],
+        _elements: {
+          _type: Type.String,
+        },
+      },
+    });
+    const testConfig = {
+      'foo-module': {
+        foo: ['bar', 42],
+      },
+    };
+    Config.provide(testConfig);
+    await Config.getConfig('foo-module');
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/Invalid.*42.*foo-module.foo\[1\].*string/i));
+  });
+
   it('supports validation of array elements', async () => {
     Config.defineConfigSchema('foo-module', {
       foo: {
@@ -673,6 +693,104 @@ describe('getConfig', () => {
       { a: { b: 'anotherB', filler: 'defaultFiller' } },
     ]);
     expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('supports array element objects with their own simple arrays', async () => {
+    Config.defineConfigSchema('array-array-simple', {
+      foo: {
+        _default: [],
+        _type: Type.Array,
+        _elements: {
+          shishito: {
+            _type: Type.Array,
+          },
+        },
+      },
+    });
+
+    // Ensure sensible default behavior
+    const configDefault = await Config.getConfig('array-array-simple');
+    expect(configDefault.foo).toStrictEqual([]);
+    expect(console.error).not.toHaveBeenCalled();
+
+    // Ensure that the config is filled in correctly
+    const testConfig = {
+      'array-array-simple': {
+        foo: [{ shishito: [0] }, { shishito: [1, 2] }],
+      },
+    };
+    Config.provide(testConfig);
+    const config = await Config.getConfig('array-array-simple');
+    expect(config.foo).toStrictEqual([{ shishito: [0] }, { shishito: [1, 2] }]);
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('supports array element objects with their own arrays of objects', async () => {
+    Config.defineConfigSchema('array-array-def', {
+      tamago: {
+        _default: [],
+        _type: Type.Array,
+        _elements: {
+          yaki: {
+            _type: Type.Array,
+            _elements: {
+              negi: { _type: Type.String },
+              nasu: { _type: Type.String, _default: 'yum' },
+            },
+          },
+        },
+      },
+    });
+
+    // Ensure sensible default behavior
+    const configDefault = await Config.getConfig('array-array-def');
+    expect(configDefault.tamago).toStrictEqual([]);
+    expect(console.error).not.toHaveBeenCalled();
+
+    // Ensure that the config is filled in correctly
+    const testConfig = {
+      'array-array-def': {
+        tamago: [{ yaki: [{ negi: 'one' }] }, { yaki: [{ negi: 'two', nasu: 'no' }, { negi: 'three' }] }],
+      },
+    };
+    Config.provide(testConfig);
+    const config = await Config.getConfig('array-array-def');
+    expect(config.tamago).toStrictEqual([
+      { yaki: [{ negi: 'one', nasu: 'yum' }] },
+      {
+        yaki: [
+          { negi: 'two', nasu: 'no' },
+          { negi: 'three', nasu: 'yum' },
+        ],
+      },
+    ]);
+    expect(console.error).not.toHaveBeenCalled();
+  });
+
+  it('validates structure of array element objects with their own arrays of objects', async () => {
+    Config.defineConfigSchema('array-array-valid', {
+      tamago: {
+        _default: [],
+        _type: Type.Array,
+        _elements: {
+          yaki: {
+            _type: Type.Array,
+            _elements: {
+              negi: { _type: Type.String },
+              nasu: { _type: Type.String, _default: 'yum' },
+            },
+          },
+        },
+      },
+    });
+    const testConfig = {
+      'array-array-valid': {
+        tamago: [{ yaki: { negi: 'one' } }],
+      },
+    };
+    Config.provide(testConfig);
+    await Config.getConfig('array-array-valid');
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/tamago\[0\].*yaki.*array/i));
   });
 });
 
