@@ -398,9 +398,9 @@ export type SvgIconProps = {
  */
 export const Icon = memo(
   forwardRef<SVGSVGElement, SvgIconProps>(function Icon({ icon, iconProps }, ref) {
-    let { className, fill, size } = Object.assign({}, { fill: 'currentColor', size: 32 }, iconProps);
+    let { className, fill, size } = Object.assign({}, { fill: 'currentColor', size: 20 }, iconProps);
     if (size <= 0 || size > 72) {
-      console.error(`Invalid size '${size}' specified for ${icon}. Defaulting to 32.`);
+      console.error(`Invalid size '${size}' specified for ${icon}. Defaulting to 20.`);
       size = 20;
     }
 
