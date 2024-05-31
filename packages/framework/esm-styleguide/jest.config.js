@@ -7,7 +7,6 @@ module.exports = {
   transformIgnorePatterns: ['/node_modules/(?!@openmrs)'],
   moduleNameMapper: {
     '\\.(s?css)$': 'identity-obj-proxy',
-    '^@carbon/icons-react/es/(.*)$': '@carbon/icons-react/lib/$1',
     '^@carbon/charts': 'identity-obj-proxy',
     '@openmrs/esm-react-utils': '@openmrs/esm-react-utils/mock',
     '@openmrs/esm-translations': '@openmrs/esm-translations/mock',

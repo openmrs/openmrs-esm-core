@@ -29,7 +29,6 @@
   ],
   "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
   "dependencies": {
-    "@carbon/icons-react": "11.26.0",
     "@openmrs/esm-app-shell": "workspace:*",
     "@openmrs/webpack-config": "workspace:*",
     "@pnpm/npm-conf": "^2.1.0",
