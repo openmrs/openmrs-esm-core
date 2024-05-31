@@ -21,7 +21,8 @@
   display: block;
 }
 
-.overflowMenuButton {
+.overflowMenuButton,
+.deceased {
   width: auto;
   height: auto;
   padding: 0.875rem 1rem;
@@ -30,8 +31,4 @@
   &:hover {
     background-color: colors.$gray-10-hover;
   }
-}
-
-.deceased {
-  color: colors.$blue-40;
 }
