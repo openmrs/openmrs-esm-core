@@ -7,6 +7,7 @@ export type IconProps = {
   fill?: string;
   size?: number;
 };
+
 /**
  */
 export const ActivityIcon = memo(
@@ -52,6 +53,54 @@ export const ArrowRightIcon = memo(
 export const ArrowUpIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ArrowUpIcon(props: IconProps, ref) {
     return <Icon ref={ref} icon="omrs-icon-arrow-up" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const CalendarHeatMapIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CalendarHeatMap(props: IconProps, ref) {
+    return <Icon ref={ref} icon="omrs-icon-calendar-heat-map" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const CalendarIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function Calendar(props: IconProps, ref) {
+    return <Icon ref={ref} icon="omrs-icon-calendar" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const CaretDownIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CaretDownIcon(props: IconProps, ref) {
+    return <Icon ref={ref} icon="omrs-icon-caret-down" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const CaretLeftIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CaretLeftIcon(props: IconProps, ref) {
+    return <Icon ref={ref} icon="omrs-icon-caret-left" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const CaretRightIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CaretRightIcon(props: IconProps, ref) {
+    return <Icon ref={ref} icon="omrs-icon-caret-right" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const CaretUpIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CaretUpIcon(props: IconProps, ref) {
+    return <Icon ref={ref} icon="omrs-icon-caret-up" iconProps={props} />;
   }),
 );
 
@@ -113,6 +162,14 @@ export const CloseFilledIcon = memo(
 
 /**
  */
+export const CloseOutlineIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function CloseOutlineIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-close-outline" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const CloseIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function CloseIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-close" iconProps={props} />;
@@ -121,9 +178,17 @@ export const CloseIcon = memo(
 
 /**
  */
-export const CloseOutlineIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function CloseOutlineIcon(props, ref) {
-    return <Icon ref={ref} icon="omrs-icon-close-outline" iconProps={props} />;
+export const DocumentAttachmentIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function DocumentAttachmentIcon(props: IconProps, ref) {
+    return <Icon ref={ref} icon="omrs-icon-document-attachment" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const DocumentIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function DocumentIcon(props: IconProps, ref) {
+    return <Icon ref={ref} icon="omrs-icon-document" iconProps={props} />;
   }),
 );
 
@@ -152,24 +217,12 @@ export const ImageMedicalIcon = memo(
 );
 
 /**
- * Note this is an alias for ImageMedicalIcon
- */
-export const RadiologyIcon = ImageMedicalIcon;
-
-/**
  */
 export const ListCheckedIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ListCheckedIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-list-checked" iconProps={props} />;
   }),
 );
-
-/**
- * Conditions
- *
- * Note this is an alias for ListCheckedIcon
- */
-export const ConditionsIcon = ListCheckedIcon;
 
 /**
  */
@@ -255,13 +308,6 @@ export const ShoppingCartArrowDownIcon = memo(
 );
 
 /**
- * Used as a button to add an item to the Order basket from a search
- *
- * Note this is an alias for ShoppingCartArrowDownIcon
- */
-export const ShoppingCartAddItemIcon = ShoppingCartArrowDownIcon;
-
-/**
  * Lab investigations
  */
 export const TimeIcon = memo(
@@ -311,9 +357,36 @@ export const WarningIcon = memo(
   }),
 );
 
+// Icon aliases that are a little more aligned to specific use-cases
+// should all resolve to a defined React icon
+
 /**
  */
 export const AllergiesIcon = WarningIcon;
+
+/**
+ *
+ */
+export const AttachmentIcon = DocumentAttachmentIcon;
+
+/**
+ * Conditions
+ *
+ * Note this is an alias for ListCheckedIcon
+ */
+export const ConditionsIcon = ListCheckedIcon;
+
+/**
+ *
+ */
+export const RadiologyIcon = ImageMedicalIcon;
+
+/**
+ * Used as a button to add an item to the Order basket from a search
+ *
+ * Note this is an alias for ShoppingCartArrowDownIcon
+ */
+export const ShoppingCartAddItemIcon = ShoppingCartArrowDownIcon;
 
 export type SvgIconProps = {
   icon: string;
@@ -332,7 +405,7 @@ export const Icon = memo(
     }
 
     return (
-      <svg ref={ref} className={classNames(className)} height={size} width={size} fill={fill}>
+      <svg ref={ref} className={classNames(className)} height={size} width={size} fill={fill} viewBox="0 0 16 16">
         <use xlinkHref={`#${icon}`} />
       </svg>
     );

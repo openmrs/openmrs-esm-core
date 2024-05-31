@@ -38,6 +38,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@carbon/icons-react": "^11.37.0",
     "@carbon/react": "~1.37.0",
     "lodash-es": "^4.17.21",
     "swr": "^2.2.2"

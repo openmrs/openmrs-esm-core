@@ -73,6 +73,7 @@
     "*.{css,scss,ts,tsx}": "prettier --write --list-different"
   },
   "resolutions": {
+    "@carbon/icons-react": "11.37.0",
     "minipass": "3.3.5"
   },
   "packageManager": "yarn@4.2.2"
