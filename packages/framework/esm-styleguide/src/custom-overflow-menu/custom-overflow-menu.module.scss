@@ -1,5 +1,5 @@
 @use '@carbon/colors';
-@import '@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .container {
   width: auto;
@@ -12,7 +12,7 @@
   min-width: initial;
   left: auto;
   right: 0;
-  background-color: $ui-01;
+  background-color: vars.$ui-01;
   margin-right: 0.2rem;
   box-shadow: 0 6px 6px rgb(0 0 0 / 30%);
 }

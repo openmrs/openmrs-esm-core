@@ -137,14 +137,12 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
               </Column>
               <Column className={styles.toggleButtons}>
                 <Toggle
-                  className={styles.toggle}
                   id="jsonModeSwitch"
                   labelText={t('jsonEditor', 'JSON Editor')}
                   onToggle={toggleIsJsonModeEnabled}
                   toggled={isJsonModeEnabled}
                 />
                 <Toggle
-                  className={styles.toggle}
                   id="uiEditorSwitch"
                   labelText={t('uiEditor', 'UI Editor')}
                   toggled={isUIEditorEnabled}

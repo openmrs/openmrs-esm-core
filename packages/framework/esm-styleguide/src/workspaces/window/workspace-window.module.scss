@@ -1,14 +1,14 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/colors';
 @use '@carbon/styles/scss/type';
-@import '@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars';
 
 $container-width: calc(100% - 3rem);
 
 .header {
   box-sizing: content-box;
-  border-bottom: 1px solid $text-03;
-  background-color: $ui-03;
+  border-bottom: 1px solid vars.$text-03;
+  background-color: vars.$ui-03;
   top: var(--omrs-navbar-height);
   z-index: 100;
   height: var(--workspace-header-height);
@@ -28,7 +28,7 @@ $container-width: calc(100% - 3rem);
 }
 
 .fixed {
-  background-color: $ui-02;
+  background-color: vars.$ui-02;
   position: fixed !important;
   top: 6rem;
   right: auto;
@@ -44,7 +44,7 @@ $container-width: calc(100% - 3rem);
 
 .loader {
   display: flex;
-  background-color: $openmrs-background-grey;
+  background-color: vars.$openmrs-background-grey;
   justify-content: center;
   min-height: spacing.$spacing-09;
 }
@@ -61,7 +61,7 @@ $container-width: calc(100% - 3rem);
   }
 
   .container {
-    border-left: 1px solid $text-03;
+    border-left: 1px solid vars.$text-03;
     margin-right: 3rem;
     min-height: 100vh;
   }
@@ -83,7 +83,7 @@ $container-width: calc(100% - 3rem);
 
   .headerGlobalBar {
     button {
-      background-color: $ui-02;
+      background-color: vars.$ui-02;
       border-right: 1px solid colors.$gray-20;
 
       & > svg {
@@ -109,11 +109,11 @@ $container-width: calc(100% - 3rem);
     background-color: var(--brand-02);
 
     a {
-      color: $ui-02;
+      color: vars.$ui-02;
     }
 
     button {
-      color: $ui-02;
+      color: vars.$ui-02;
       background-color: var(--brand-02);
 
       &:hover {
@@ -123,7 +123,7 @@ $container-width: calc(100% - 3rem);
   }
 
   .fixed {
-    background-color: $ui-01;
+    background-color: vars.$ui-01;
     top: 3rem;
     min-height: var(--tablet-workspace-window-height);
   }

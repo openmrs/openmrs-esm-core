@@ -1,4 +1,4 @@
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .offlineBanner {
   position: fixed;
@@ -33,6 +33,6 @@
 }
 
 .lastUpdatedNote {
-  color: $color-gray-30;
+  color: vars.$color-gray-30;
   font-size: 0.75rem;
 }

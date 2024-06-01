@@ -1,24 +1,25 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/utilities/layout';
 @use '@carbon/colors';
+@use './vars';
 
 /* UI Shell Header */
 .cds--header {
-  @include brand-01(background-color);
+  @include vars.brand-01(background-color);
   border-bottom: none;
 }
 
 .cds--header__action:hover {
-  @include brand-02(background-color);
+  @include vars.brand-02(background-color);
 }
 
 .cds--header__action--active {
-  @include brand-02(background-color);
-  @include brand-02(border-color);
+  @include vars.brand-02(background-color);
+  @include vars.brand-02(border-color);
 }
 
 .cds--header-panel {
-  @include brand-02(background-color);
+  @include vars.brand-02(background-color);
 }
 
 .cds--header__menu-trigger > svg,
@@ -79,7 +80,7 @@
 }
 
 .cds--content-switcher-btn:not(.darkThemeSwitch) {
-  background-color: $ui-02;
+  background-color: vars.$ui-02;
   border: none;
   border-top: 1px solid colors.$blue-30;
   border-bottom: 1px solid colors.$blue-30;
@@ -182,7 +183,7 @@
 }
 
 .cds--data-table-container {
-  background: $ui-02;
+  background: vars.$ui-02;
   position: relative;
 }
 
@@ -199,7 +200,7 @@
 .cds--data-table-header__title {
   font-size: spacing.$spacing-05;
   font-weight: 600;
-  color: $text-02;
+  color: vars.$text-02;
 }
 
 .cds--data-table thead,
@@ -209,33 +210,33 @@
 .cds--data-table--sort th,
 .cds--data-table--sort th .cds--table-sort__flex {
   min-height: unset;
-  color: $text-02;
+  color: vars.$text-02;
 }
 
 /* Alternate background and border colors for zebra styled table rows */
 
 // Datatables without expansion
 .cds--data-table--zebra tbody tr:not(.cds--parent-row):nth-child(odd) td {
-  background-color: $ui-02;
-  border-bottom: 1px solid $ui-03;
+  background-color: vars.$ui-02;
+  border-bottom: 1px solid vars.$ui-03;
 }
 
 .cds--data-table--zebra tbody tr:not(.cds--parent-row):nth-child(2n) td {
-  background-color: $ui-01;
-  border-bottom: 1px solid $ui-03;
-  border-top: 1px solid $ui-03;
+  background-color: vars.$ui-01;
+  border-bottom: 1px solid vars.$ui-03;
+  border-top: 1px solid vars.$ui-03;
 }
 
 // Datatables with expansion
 .cds--data-table--zebra tbody tr[data-parent-row]:nth-child(4n + 1) td {
-  background-color: $ui-02;
-  border-bottom: 1px solid $ui-03;
-  border-top: 1px solid $ui-03;
+  background-color: vars.$ui-02;
+  border-bottom: 1px solid vars.$ui-03;
+  border-top: 1px solid vars.$ui-03;
 }
 
 .cds--data-table--zebra tbody tr[data-parent-row]:nth-child(4n + 3) td {
-  background-color: $ui-01;
-  border-bottom: 1px solid $ui-03;
+  background-color: vars.$ui-01;
+  border-bottom: 1px solid vars.$ui-03;
 }
 
 /* Misc */
@@ -244,32 +245,32 @@
 .cds--btn--tertiary:hover,
 .cds--btn--tertiary:active,
 .cds--btn--tertiary:focus {
-  @include brand-03(background-color);
+  @include vars.brand-03(background-color);
 }
 
 .cds--btn--primary:hover {
-  @include brand-02(background-color);
+  @include vars.brand-02(background-color);
 }
 
 .cds--btn--tertiary {
-  @include brand-03(color);
+  @include vars.brand-03(color);
 }
 
 .cds--btn--tertiary,
 .cds--btn--primary:focus,
 .cds--btn--tertiary:focus {
-  @include brand-03(border-color);
+  @include vars.brand-03(border-color);
 }
 
 .cds--btn--tertiary:hover,
 .cds--btn--tertiary:active,
 .cds--btn--tertiary:focus {
-  color: $ui-02;
+  color: vars.$ui-02;
 }
 
 .cds--overflow-menu--flip {
   &.cds--overflow-menu-options {
-    background-color: $openmrs-background-grey;
+    background-color: vars.$openmrs-background-grey;
     left: -6.025rem;
     min-width: 12.5rem;
     top: spacing.$spacing-09;
@@ -289,7 +290,7 @@
 
 .cds--pagination-nav__page:not(.cds--pagination-nav__page--direction) {
   &::after {
-    @include brand-03(background-color);
+    @include vars.brand-03(background-color);
   }
 }
 

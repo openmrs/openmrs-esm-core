@@ -20,16 +20,11 @@ module.exports = (env, argv = {}) => ({
     rules: [
       {
         test: /\.css$/i,
-        use: [{ loader: MiniCssExtractPlugin.loader }, 'css-loader', { loader: require.resolve('postcss-loader') }],
+        use: [{ loader: MiniCssExtractPlugin.loader }, 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [
-          { loader: MiniCssExtractPlugin.loader },
-          'css-loader',
-          { loader: require.resolve('postcss-loader') },
-          'sass-loader',
-        ],
+        use: [{ loader: MiniCssExtractPlugin.loader }, 'css-loader', 'postcss-loader', 'sass-loader'],
       },
       {
         test: /\.(js|jsx|ts|tsx)$/,

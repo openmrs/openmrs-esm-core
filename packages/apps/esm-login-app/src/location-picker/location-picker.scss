@@ -1,6 +1,6 @@
 @use '@carbon/styles/scss/spacing';
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../root.scss';
+@use '@openmrs/esm-styleguide/src/vars';
+@use '../root.scss' as root;
 
 .locationPickerContainer {
   display: flex;
@@ -19,9 +19,9 @@
   display: flex;
   flex-direction: column;
   width: 23rem;
-  background-color: $ui-02;
+  background-color: vars.$ui-02;
   margin: 0;
-  border: 1px solid $ui-03;
+  border: 1px solid vars.$ui-03;
 }
 
 .welcomeTitle {
@@ -32,7 +32,7 @@
 .welcomeMessage {
   @extend .bodyLong01;
   margin-top: spacing.$spacing-03;
-  color: $color-gray-70;
+  color: vars.$color-gray-70;
 }
 
 .searchResults {
@@ -40,13 +40,13 @@
   max-height: 100%;
   overflow-y: auto;
   padding: 0rem spacing.$spacing-06;
-  background-color: $ui-01;
+  background-color: vars.$ui-01;
   height: 25.5rem;
 }
 
 .resultsCount {
   @extend .bodyShort01;
-  color: $color-gray-70;
+  color: vars.$color-gray-70;
 }
 
 .locationResultsContainer {
@@ -64,7 +64,7 @@
 
 .locationNotFound {
   @extend .productiveHeading01;
-  color: $text-02;
+  color: vars.$text-02;
   margin-bottom: spacing.$spacing-05;
 }
 
@@ -90,22 +90,22 @@
 }
 
 .pagination {
-  background-color: $ui-01;
+  background-color: vars.$ui-01;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: spacing.$spacing-05;
-  border: spacing.$spacing-01 solid $ui-03;
+  border: spacing.$spacing-01 solid vars.$ui-03;
 }
 
 .pagination > button:first-child,
 pagination > button:first-child:hover {
-  border-right: spacing.$spacing-01 solid $ui-03;
+  border-right: spacing.$spacing-01 solid vars.$ui-03;
 }
 
 .pagination > button,
 .pagination > button:hover {
-  border-left: spacing.$spacing-01 solid $ui-03;
+  border-left: spacing.$spacing-01 solid vars.$ui-03;
 }
 
 .loadingIcon {
@@ -116,7 +116,7 @@ pagination > button:first-child:hover {
   margin: spacing.$spacing-05 auto;
 
   :global(.cds--loading__stroke) {
-    @include brand-03(stroke);
+    @include vars.brand-03(stroke);
   }
 }
 

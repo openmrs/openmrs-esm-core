@@ -1,13 +1,13 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/type';
-@import '../../../implementer-tools.styles.scss';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .activeUuid {
   @include type.type-style('body-compact-01');
-  color: $ui-05;
+  color: vars.$ui-05;
   margin-bottom: spacing.$spacing-03;
   padding-bottom: spacing.$spacing-03;
-  border-bottom: 1px solid $ui-03;
+  border-bottom: 1px solid vars.$ui-03;
 }
 
 .autocomplete,
@@ -30,7 +30,7 @@
 
 .emptyResults {
   @include type.type-style('body-compact-01');
-  background-color: $ui-02;
-  color: $text-02;
+  background-color: vars.$ui-02;
+  color: vars.$text-02;
   min-height: 1rem;
 }

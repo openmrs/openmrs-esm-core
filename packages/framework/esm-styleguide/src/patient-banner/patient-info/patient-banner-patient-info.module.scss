@@ -1,15 +1,15 @@
 @use '@carbon/colors';
 @use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .container {
-  border-top: 0.063rem solid $ui-03;
-  border-bottom: 0.063rem solid $ui-03;
-  background-color: $ui-01;
+  border-top: 0.063rem solid vars.$ui-03;
+  border-bottom: 0.063rem solid vars.$ui-03;
+  background-color: vars.$ui-01;
 }
 
 .activePatientContainer {
-  background-color: $ui-01;
+  background-color: vars.$ui-01;
 }
 
 .patientBanner {
@@ -41,7 +41,7 @@
 
 .demographics {
   @include type.type-style('body-compact-02');
-  color: $text-02;
+  color: vars.$text-02;
   margin-top: 0.25rem;
 }
 
@@ -65,7 +65,7 @@
 
 .identifiers {
   @include type.type-style('body-compact-02');
-  color: $ui-04;
+  color: vars.$ui-04;
   display: flex;
   flex-wrap: wrap;
 }
@@ -90,7 +90,7 @@
 
 .actionsButtonText {
   @include type.type-style('body-compact-01');
-  color: $interactive-01;
+  color: vars.$interactive-01;
 }
 
 // Overriding styles for RTL support

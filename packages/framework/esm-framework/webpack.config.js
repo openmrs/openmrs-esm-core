@@ -27,7 +27,7 @@ module.exports = (env) => ({
       },
       {
         test: /\.css$/,
-        use: [{ loader: require.resolve('style-loader') }, { loader: require.resolve('css-loader') }],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.svg$/,
@@ -36,11 +36,7 @@ module.exports = (env) => ({
       },
       {
         test: /\.scss$/,
-        use: [
-          { loader: require.resolve('style-loader') },
-          { loader: require.resolve('css-loader') },
-          { loader: require.resolve('sass-loader') },
-        ],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },

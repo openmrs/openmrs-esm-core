@@ -1,4 +1,5 @@
-@import '../root.scss';
+@use '@openmrs/esm-styleguide/src/vars';
+@use '../root.scss' as root;
 
 .container {
   display: flex;
@@ -26,8 +27,8 @@
 .powered-by-txt {
   @extend .caption01;
   text-align: center;
-  color: $color-gray-70;
-  color: $text-02;
+  color: vars.$color-gray-70;
+  color: vars.$text-02;
 }
 
 .need-help {
@@ -38,7 +39,7 @@
 .need-help-txt {
   @extend .bodyShort01;
   text-align: left;
-  color: $text-02;
+  color: vars.$text-02;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -57,8 +58,8 @@
 
 .login-card {
   border-radius: 0;
-  border: 1px solid $ui-03;
-  background-color: $ui-02;
+  border: 1px solid vars.$ui-03;
+  background-color: vars.$ui-02;
   width: 23rem;
   padding: 2.5rem;
   position: relative;

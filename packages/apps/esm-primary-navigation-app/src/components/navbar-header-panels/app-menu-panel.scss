@@ -1,5 +1,6 @@
 @use '@carbon/styles/scss/spacing';
-@import '../../root.scss';
+@use '@openmrs/esm-styleguide/src/vars';
+@use '../../root.scss' as root;
 
 .menuLink a {
   display: flex;
@@ -7,18 +8,18 @@
   height: 3rem;
   width: 100%;
   text-decoration: none;
-  color: $ui-02;
+  color: vars.$ui-02;
   background-color: transparent;
   @extend .productiveHeading01;
 }
 
 .menuLink a:hover {
-  @include brand-01(background-color);
+  @include vars.brand-01(background-color);
 }
 
 .externalLinks {
   border-top: 1px solid;
-  @include brand-03(border-top-color);
+  @include vars.brand-03(border-top-color);
 }
 
 .launchIcon {

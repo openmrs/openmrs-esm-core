@@ -206,7 +206,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         merge(
           {
             test: /\.css$/,
-            use: [require.resolve('style-loader'), cssLoader],
+            use: ['style-loader', cssLoader],
           },
           cssRuleConfig,
         ),
@@ -214,10 +214,10 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.s[ac]ss$/i,
             use: [
-              require.resolve('style-loader'),
+              'style-loader',
               cssLoader,
               {
-                loader: require.resolve('sass-loader'),
+                loader: 'sass-loader',
                 options: { sassOptions: { quietDeps: true } },
               },
             ],

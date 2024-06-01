@@ -1,6 +1,5 @@
 @use '@carbon/styles/scss/type';
 @use '@carbon/styles/scss/spacing';
-@import '../../implementer-tools.styles.scss';
 
 .activeConceptUuid {
   @include type.type-style('body-compact-01');

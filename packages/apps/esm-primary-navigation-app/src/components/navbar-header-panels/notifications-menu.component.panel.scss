@@ -1,10 +1,9 @@
 @use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../../root.scss';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .heading {
   @include type.type-style('heading-03');
-  color: $ui-background;
+  color: vars.$ui-background;
   margin: 1rem;
 }
 

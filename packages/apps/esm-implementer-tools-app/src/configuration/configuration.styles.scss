@@ -1,8 +1,7 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/type';
 @use '@carbon/react/scss/theme';
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../implementer-tools.styles.scss';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .tools {
   width: 100%;
@@ -42,7 +41,7 @@
 
 .mainContent {
   max-height: 50vh;
-  background-color: $ui-01;
+  background-color: vars.$ui-01;
   width: 100%;
   display: flex;
   overflow-y: auto;

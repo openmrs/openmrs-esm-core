@@ -212,38 +212,27 @@ module.exports = (env, argv = {}) => {
       rules: [
         {
           test: /openmrs-esm-styleguide\.css$/,
-          use: [
-            isProd
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
-              : { loader: require.resolve('style-loader') },
-            { loader: require.resolve('css-loader') },
-          ],
+          use: [isProd ? { loader: MiniCssExtractPlugin.loader } : 'style-loader', 'css-loader', 'postcss-loader'],
         },
         {
           test: /\.css$/,
           exclude: [/openmrs-esm-styleguide\.css$/],
-          use: [
-            isProd
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
-              : { loader: require.resolve('style-loader') },
-            { loader: require.resolve('css-loader') },
-          ],
+          use: [isProd ? { loader: MiniCssExtractPlugin.loader } : 'style-loader', 'css-loader', 'postcss-loader'],
         },
         {
           test: /\.s[ac]ss$/,
           use: [
-            isProd
-              ? { loader: require.resolve(MiniCssExtractPlugin.loader) }
-              : { loader: require.resolve('style-loader') },
-            { loader: require.resolve('css-loader') },
+            isProd ? { loader: MiniCssExtractPlugin.loader } : 'style-loader',
+            'css-loader',
+            'postcss-loader',
             {
-              loader: require.resolve('sass-loader'),
+              loader: 'sass-loader',
               options: { sassOptions: { quietDeps: true } },
             },
           ],
         },
         {
-          test: /\.(woff|woff2|png)?$/,
+          test: /\.(?:woff|woff2|png)?$/,
           type: 'asset/resource',
         },
         {
@@ -251,7 +240,7 @@ module.exports = (env, argv = {}) => {
           type: 'asset/source',
         },
         {
-          test: /\.(j|t)sx?$/,
+          test: /\.(?:j|t)sx?$/,
           use: [
             {
               loader: 'swc-loader',

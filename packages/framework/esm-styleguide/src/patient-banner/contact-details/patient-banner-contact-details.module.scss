@@ -1,17 +1,17 @@
 @use '@carbon/colors';
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/type';
-@import '~@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .contactDetails,
 .deceased {
-  color: $text-02;
+  color: vars.$text-02;
   width: 100%;
 }
 
 .heading {
   @include type.type-style('heading-compact-01');
-  color: $text-02;
+  color: vars.$text-02;
 }
 
 .row {
@@ -19,7 +19,7 @@
   display: flex;
 
   &:first-child {
-    border-bottom: 1px solid $ui-03;
+    border-bottom: 1px solid vars.$ui-03;
   }
 }
 
@@ -28,7 +28,7 @@
   padding: 1rem 1rem;
 
   &:nth-of-type(2n + 1) {
-    border-right: 1px solid $ui-03;
+    border-right: 1px solid vars.$ui-03;
   }
 }
 

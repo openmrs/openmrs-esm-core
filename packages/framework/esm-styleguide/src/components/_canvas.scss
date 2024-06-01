@@ -1,6 +1,8 @@
+@use '@openmrs/esm-styleguide/src/vars';
+
 html,
 body {
-  background-color: $ui-01;
+  background-color: vars.$ui-01;
   margin: 0;
   padding: 0;
 }

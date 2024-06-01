@@ -1,25 +1,25 @@
 @use '@carbon/styles/scss/type';
-@import '../vars';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .leftNav {
-  border-right: 1px solid $ui-03;
+  border-right: 1px solid vars.$ui-03;
   padding-top: 1rem;
 
   // Left nav menu item
   :global(.cds--side-nav__link) {
-    color: $text-02;
+    color: vars.$text-02;
     @include type.type-style('heading-compact-01');
 
     &:focus,
     &:hover {
-      background-color: $ui-01;
+      background-color: vars.$ui-01;
     }
 
     // Active menu item
     &:global(.active-left-nav-link) {
-      color: $ui-05;
+      color: vars.$ui-05;
       border-left: 0.25rem solid var(--brand-01);
-      background-color: $ui-03;
+      background-color: vars.$ui-03;
       outline: none;
       padding: 0 0.75rem;
     }

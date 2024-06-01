@@ -1,6 +1,5 @@
 @import '@carbon/styles';
 @import '@carbon/charts/styles.css';
-@import './vars';
 
 @import './components/general';
 @import './components/canvas';
@@ -14,5 +13,4 @@
 @import './toasts/toasts';
 @import './snackbars/snackbars';
 @import './modals/modals';
-
 @import './overrides';

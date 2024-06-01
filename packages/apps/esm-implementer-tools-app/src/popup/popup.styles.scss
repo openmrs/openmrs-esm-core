@@ -1,5 +1,5 @@
 @use '@carbon/react/scss/theme';
-@import '../implementer-tools.styles.scss';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .popup {
   position: fixed;
@@ -8,8 +8,8 @@
   width: 100%;
   z-index: 100000;
   background-color: theme.$background;
-  border-top: 2px solid $ui-05;
-  color: $color-gray-100;
+  border-top: 2px solid vars.$ui-05;
+  color: vars.$color-gray-100;
   box-sizing: border-box;
 
   tr {

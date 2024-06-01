@@ -1,27 +1,27 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/type';
-@import '@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars';
 
 .container {
   margin-top: spacing.$spacing-02;
   margin-bottom: spacing.$spacing-02;
   border-radius: 50%;
-  color: $ui-05;
+  color: vars.$ui-05;
   max-width: none;
 
   &:hover {
-    background-color: $color-gray-30;
-    color: $text-02;
+    background-color: vars.$color-gray-30;
+    color: vars.$text-02;
   }
 
   &:focus {
-    border-color: $interactive-01;
+    border-color: vars.$interactive-01;
   }
 
   & > span {
     margin-top: spacing.$spacing-02;
-    @include type.type-style("body-compact-01");
-    color: $text-02;
+    @include type.type-style('body-compact-01');
+    color: vars.$text-02;
   }
 
   & svg {
@@ -39,8 +39,8 @@
     position: absolute;
     font-size: 10px;
     text-align: center;
-    color: $ui-01;
-    background-color: $danger;
+    color: vars.$ui-01;
+    background-color: vars.$danger;
     padding: 0 4px;
     border-radius: 50%;
     top: -14px;
@@ -60,9 +60,9 @@
 :global(.omrs-breakpoint-gt-tablet) {
   .active {
     border: spacing.$spacing-01 solid;
-    @include brand-03(border-color);
+    @include vars.brand-03(border-color);
     border-radius: 50%;
-    background-color: $ui-02;
+    background-color: vars.$ui-02;
 
     &:focus {
       border-color: var(--brand-03) !important;
@@ -78,12 +78,11 @@
 
 /* Tablet */
 :global(.omrs-breakpoint-lt-desktop) {
-
   .container {
     margin-bottom: 0;
     margin-top: 0;
     border-radius: unset;
-    color: $ui-05;
+    color: vars.$ui-05;
     max-width: none;
 
     display: flex;
@@ -93,20 +92,20 @@
   }
 
   .active {
-    background-color: $color-blue-10;
-    color: $interactive-01;
+    background-color: vars.$color-blue-10;
+    color: vars.$interactive-01;
 
     &:hover {
-      color: $interactive-01;
+      color: vars.$interactive-01;
     }
 
     & > span {
-      color: $interactive-01;
-      @include type.type-style("heading-compact-01");
+      color: vars.$interactive-01;
+      @include type.type-style('heading-compact-01');
     }
 
     svg {
-      fill: $interactive-01;
+      fill: vars.$interactive-01;
     }
   }
 }

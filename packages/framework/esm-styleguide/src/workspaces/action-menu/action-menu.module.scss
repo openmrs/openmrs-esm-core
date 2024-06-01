@@ -1,5 +1,5 @@
 @use '@carbon/styles/scss/spacing';
-@import '@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars';
 
 $icon-button-size: 2.5rem;
 $actionPanelOffset: 3rem;
@@ -24,7 +24,7 @@ $actionPanelOffset: 3rem;
     z-index: 1000;
     width: $actionPanelOffset;
     align-items: center;
-    border-left: 1px solid $text-03;
+    border-left: 1px solid vars.$text-03;
 
     & .container {
       display: flex;
@@ -37,7 +37,7 @@ $actionPanelOffset: 3rem;
 /* Tablet */
 :global(.omrs-breakpoint-lt-desktop) {
   .sideRail {
-    border-top: 1px solid $color-gray-30;
+    border-top: 1px solid vars.$color-gray-30;
     position: fixed;
     background: #ededed;
     left: 0;
@@ -49,7 +49,7 @@ $actionPanelOffset: 3rem;
   }
 
   .chartExtensions {
-    background-color: $ui-02;
+    background-color: vars.$ui-02;
     display: flex;
     width: 100%;
 
@@ -72,7 +72,7 @@ $actionPanelOffset: 3rem;
 }
 
 .divider {
-  background-color: $text-03;
+  background-color: vars.$text-03;
   margin: 0.75rem 0;
   height: 1px;
   width: 2.5rem;

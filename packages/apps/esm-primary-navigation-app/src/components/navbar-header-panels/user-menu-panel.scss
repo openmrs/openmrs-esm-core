@@ -1,5 +1,5 @@
-@import '~@openmrs/esm-styleguide/src/vars';
-@import '../../root.scss';
+@use '@openmrs/esm-styleguide/src/vars';
+@use '../../root.scss';
 
 .headerPanel {
   transition: none;
@@ -25,28 +25,28 @@
 .userPanelSwitcher :global(.cds--switcher__item-link) {
   display: flex;
   align-items: center;
-  color: $field-01;
+  color: vars.$field-01;
   padding: 0;
   height: 3rem;
   @extend .bodyLong01;
 }
 
 .userPanelSwitcher :global(.cds--switcher__item-link):hover:not(.cds--switcher__item-link--selected) {
-  color: $field-01;
-  @include brand-02(background-color);
+  color: vars.$field-01;
+  @include vars.brand-02(background-color);
 }
 
 .userPanelSwitcher :global(.cds--switcher__item) svg {
   margin: 0rem 0.75rem;
-  fill: $field-01;
+  fill: vars.$field-01;
   flex-shrink: 0;
 }
 
 .userPanelSwitcher :global(.cds--switcher__item) button {
-  color: $inverse-link;
+  color: vars.$inverse-link;
 }
 
 .userPanelSwitcher :global(.cds--switcher__item) button:hover {
-  @include brand-03(background-color);
-  color: $inverse-link;
+  @include vars.brand-03(background-color);
+  color: vars.$inverse-link;
 }
