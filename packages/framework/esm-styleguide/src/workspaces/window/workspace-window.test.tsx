@@ -59,10 +59,11 @@ describe('WorkspaceWindow', () => {
 
     const hideButton = screen.getByRole('button', { name: 'Hide' });
     await user.click(hideButton);
-    expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
+    expect(screen.queryByRole('complementary')).toHaveClass('hidden');
 
     act(() => launchWorkspace('Clinical Form', { workspaceTitle: 'POC Triage' }));
     expect(await screen.findByRole('complementary')).toBeInTheDocument();
+    expect(screen.queryByRole('complementary')).not.toHaveClass('hidden');
     expect(workspaces.result.current.workspaces.length).toBe(1);
   });
 
