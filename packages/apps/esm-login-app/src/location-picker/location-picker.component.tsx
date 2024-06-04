@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { useLocation, type Location, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
+  ActionableNotification,
   Button,
   Checkbox,
   InlineLoading,
@@ -40,7 +41,6 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     useDefaultLocation(isUpdateFlow);
 
   const [searchTerm, setSearchTerm] = useState(null);
-
   const { user, sessionLocation } = useSession();
   const { currentUser, userProperties } = useMemo(
     () => ({
@@ -57,6 +57,8 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     hasMore,
     loadingNewData,
     setPage,
+    mutate,
+    error: errorFetchingLoginLocations,
   } = useLoginLocations(chooseLocation.useLoginLocationTag, chooseLocation.locationsPerRequest, searchTerm);
 
   const locations = useMemo(() => {
@@ -84,12 +86,10 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
 
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
-      setIsSubmitting(true);
-
       const referrer = state?.referrer;
       const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
 
-      const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
+      const sessionDefined = setSessionLocation(locationUuid, new AbortController());
 
       updateDefaultLocation(locationUuid, saveUserPreference);
       sessionDefined.then(() => {
@@ -110,15 +110,16 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
   useEffect(() => {
-    if (!isLoading && !searchTerm) {
+    if (!isLoading && !errorFetchingLoginLocations && !searchTerm) {
       if (!config.chooseLocation.enabled || locations?.length === 1) {
         changeLocation(locations[0]?.resource.id, false);
       }
-      if (!locations?.length) {
+
+      if (!locations.length) {
         changeLocation();
       }
     }
-  }, [changeLocation, config.chooseLocation.enabled, isLoading, locations, searchTerm]);
+  }, [changeLocation, config.chooseLocation.enabled, isLoading, locations, searchTerm, errorFetchingLoginLocations]);
 
   // Handle cases where the login location is present in the userProperties.
   useEffect(() => {
@@ -169,6 +170,43 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
   );
 
   const reloadIndex = hasMore ? Math.floor(locations.length * 0.5) : -1;
+
+  if (errorFetchingLoginLocations) {
+    return (
+      <div className={styles.locationPickerContainer}>
+        <div className={styles.locationCard}>
+          <div className={styles.paddedContainer}>
+            <p className={styles.welcomeTitle}>
+              {t('welcome', 'Welcome')} {currentUser}
+            </p>
+            <p className={styles.welcomeMessage}>
+              {t(
+                'selectYourLocation',
+                'Select your location from the list below. Use the search bar to find your location.',
+              )}
+            </p>
+          </div>
+
+          <div className={styles.searchResults}>
+            <div className={styles.errorNotification}>
+              <ActionableNotification
+                actionButtonLabel={t('tryAgain', 'Try again')}
+                hideCloseButton
+                inline
+                kind="error"
+                onActionButtonClick={mutate}
+                title={t('errorLoadingLoginLocations', 'Error loading login locations')}
+                subtitle={getCoreTranslation(
+                  'contactAdministratorIfIssuePersists',
+                  'Contact your system administrator if the problem persists.',
+                )}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.locationPickerContainer}>
