@@ -20,7 +20,7 @@ export const coreTranslations = {
   change: 'Change',
   close: 'Close',
   confirm: 'Confirm',
-  contactAdministratorIfIssuePersists: 'If the problem persists contact your system administrator.',
+  contactAdministratorIfIssuePersists: 'Contact your system administrator if the problem persists.',
   contactDetails: 'Contact Details',
   error: 'Error',
   errorCopy:
