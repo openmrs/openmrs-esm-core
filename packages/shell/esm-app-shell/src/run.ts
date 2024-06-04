@@ -39,6 +39,7 @@ import {
 } from '@openmrs/esm-framework/src/internal';
 import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
 import { setupI18n } from './locale';
+import { registerOptionalDependencyHandler } from './optionaldeps';
 import { appName, getCoreExtensions } from './ui';
 
 // @internal
@@ -414,5 +415,6 @@ export function run(configUrls: Array<string>) {
     .then(runShell)
     .catch(handleInitFailure)
     .then(closeLoading)
-    .then(offlineEnabled ? setupOffline : undefined);
+    .then(offlineEnabled ? setupOffline : undefined)
+    .then(registerOptionalDependencyHandler);
 }
