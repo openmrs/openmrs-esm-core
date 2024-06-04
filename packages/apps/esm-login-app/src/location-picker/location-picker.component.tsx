@@ -198,7 +198,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
                 title={t('errorLoadingLoginLocations', 'Error loading login locations')}
                 subtitle={getCoreTranslation(
                   'contactAdministratorIfIssuePersists',
-                  'If the problem persists contact your system administrator.',
+                  'Contact your system administrator if the problem persists.',
                 )}
               />
             </div>
