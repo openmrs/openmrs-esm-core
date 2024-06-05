@@ -73,11 +73,31 @@
 .identifierTag {
   display: flex;
   align-items: center;
+}
+
+.separator {
+  margin-left: 0.75rem;
   margin-right: 0.75rem;
 }
 
 .tag {
-  margin: 0.25rem 0.25rem 0.25rem 0rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.noTag {
+  display: flex;
+
+  .label {
+    font-size: 12px;
+    margin: 0.25rem 0.25rem 0.25rem 0rem;
+    align-self: auto;
+  }
+
+  .identifier {
+    align-self: baseline;
+  }
 }
 
 .tooltipPadding {

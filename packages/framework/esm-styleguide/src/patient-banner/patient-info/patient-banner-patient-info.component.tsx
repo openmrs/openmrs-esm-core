@@ -6,6 +6,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Tag } from '@carbon/react';
 import styles from './patient-banner-patient-info.module.scss';
+import { usePrimaryIdentifierCode } from './primary-identifier.resource';
 
 export interface PatientBannerPatientInfoProps {
   patient: fhir.Patient;
@@ -13,6 +14,8 @@ export interface PatientBannerPatientInfoProps {
 
 export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
   const { excludePatientIdentifierCodeTypes } = useConfig();
+
+  const { primaryIdentifierCode } = usePrimaryIdentifierCode();
 
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0].family}`;
   const gender = patient?.gender && getGender(patient.gender);
@@ -41,12 +44,20 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
       <div className={styles.row}>
         <div className={styles.identifiers}>
           {filteredIdentifiers?.length
-            ? filteredIdentifiers.map(({ value, type }) => (
+            ? filteredIdentifiers.map(({ value, type }, index) => (
                 <span key={value} className={styles.identifierTag}>
-                  <Tag className={styles.tag} type="gray" title={type?.text}>
-                    {type?.text}
-                  </Tag>
-                  {value}
+                  <div>{index > 0 && <span className={styles.separator}>&middot;</span>}</div>
+                  {type?.coding?.[0]?.code == primaryIdentifierCode ? (
+                    <div className={styles.tag}>
+                      <Tag type="gray" title={type?.text}>{`${type?.text}:`}</Tag>
+                      <span>{`${value}`}</span>
+                    </div>
+                  ) : (
+                    <label htmlFor="identifier" className={styles.noTag}>
+                      <span className={styles.label}>{type?.text}: </span>
+                      <span id="identifier" className={styles.identifier}>{`${value}`}</span>
+                    </label>
+                  )}
                 </span>
               ))
             : ''}
