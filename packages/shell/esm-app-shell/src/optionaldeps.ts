@@ -4,6 +4,7 @@ import {
   registerFeatureFlag,
   setFeatureFlag,
   getCurrentUser,
+  restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
 import { satisfies } from 'semver';
 
@@ -50,7 +51,7 @@ function setupOptionalDependencies() {
   }, new Map());
 
   if (optionalDependencyFlags.size > 0) {
-    openmrsFetch<{ results: { uuid: string; version: string }[] }>('/ws/rest/v1/module?v=custom:(uuid,version)')
+    openmrsFetch<{ results: { uuid: string; version: string }[] }>(`${restBaseUrl}/module?v=custom:(uuid,version)`)
       .then((response) => {
         (response.data.results ?? []).forEach((backendModule) => {
           if (optionalDependencyFlags.has(backendModule.uuid)) {
