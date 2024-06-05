@@ -1,12 +1,12 @@
 /** @module @category UI */
-import { getCoreTranslation } from '@openmrs/esm-translations';
-import { age, formatDate, parseDate } from '@openmrs/esm-utils';
-import { ExtensionSlot, useConfig } from '@openmrs/esm-react-utils';
 import React from 'react';
 import classNames from 'classnames';
 import { Tag } from '@carbon/react';
-import styles from './patient-banner-patient-info.module.scss';
+import { age, formatDate, parseDate } from '@openmrs/esm-utils';
+import { getCoreTranslation } from '@openmrs/esm-translations';
+import { ExtensionSlot, useConfig } from '@openmrs/esm-react-utils';
 import { usePrimaryIdentifierCode } from './primary-identifier.resource';
+import styles from './patient-banner-patient-info.module.scss';
 
 export interface PatientBannerPatientInfoProps {
   patient: fhir.Patient;
@@ -14,7 +14,6 @@ export interface PatientBannerPatientInfoProps {
 
 export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoProps) {
   const { excludePatientIdentifierCodeTypes } = useConfig();
-
   const { primaryIdentifierCode } = usePrimaryIdentifierCode();
 
   const name = `${patient?.name?.[0]?.given?.join(' ')} ${patient?.name?.[0].family}`;
@@ -57,7 +56,9 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
                   ) : (
                     <label htmlFor="identifier" className={styles.secondaryIdentifier}>
                       <span className={styles.label}>{type?.text}: </span>
-                      <span id="identifier" className={styles.identifier}>{`${value}`}</span>
+                      <span id="identifier" className={styles.identifier}>
+                        {value}
+                      </span>
                     </label>
                   )}
                 </span>
