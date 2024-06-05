@@ -1,6 +1,7 @@
 /** @category Icons */
-import React, { forwardRef, memo } from 'react';
+import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
 import classNames, { type Argument } from 'classnames';
+import style from './icons.module.scss';
 
 export type IconProps = {
   className?: Argument;
@@ -403,9 +404,18 @@ export const Icon = memo(
       console.error(`Invalid size '${size}' specified for ${icon}. Defaulting to 20.`);
       size = 20;
     }
+    const iconRef = useRef<SVGSVGElement>(null);
+
+    useImperativeHandle(ref, () => iconRef.current!);
+
+    useEffect(() => {
+      if (iconRef.current) {
+        iconRef.current.style.setProperty('--omrs-icon-fill', fill);
+      }
+    }, []);
 
     return (
-      <svg ref={ref} className={classNames(className)} height={size} width={size} fill={fill} viewBox="0 0 16 16">
+      <svg ref={iconRef} className={classNames(className, style.icon)} height={size} width={size} viewBox="0 0 16 16">
         <use xlinkHref={`#${icon}`} />
       </svg>
     );
