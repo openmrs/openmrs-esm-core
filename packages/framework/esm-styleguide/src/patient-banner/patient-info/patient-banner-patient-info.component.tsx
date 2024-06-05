@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import { Tag } from '@carbon/react';
 import { age, formatDate, parseDate } from '@openmrs/esm-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { ExtensionSlot, useConfig } from '@openmrs/esm-react-utils';
-import { usePrimaryIdentifierCode } from './primary-identifier.resource';
+import { ExtensionSlot, useConfig, usePrimaryIdentifierCode } from '@openmrs/esm-react-utils';
 import styles from './patient-banner-patient-info.module.scss';
 
 export interface PatientBannerPatientInfoProps {

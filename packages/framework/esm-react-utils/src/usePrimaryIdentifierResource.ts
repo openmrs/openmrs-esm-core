@@ -1,6 +1,7 @@
+/** @module @category API */
 import { useMemo } from 'react';
 import useSWR from 'swr';
-import { type FetchResponse, restBaseUrl, openmrsFetch } from '@openmrs/esm-framework';
+import { openmrsFetch, restBaseUrl, type FetchResponse } from '@openmrs/esm-api';
 
 export interface PrimaryIdentifier {
   metadataUuid: string;
@@ -17,7 +18,7 @@ export function usePrimaryIdentifierCode(): {
   const url = `${restBaseUrl}/metadatamapping/termmapping?v=custom:(metadataUuid)&code=emr.primaryIdentifierType`;
   const { data, error, isLoading } = useSWR<FetchResponse<PrimaryIdentifierResponse>, Error>(url, openmrsFetch);
 
-  const memoisedPrimaryIdentifierCode = useMemo(
+  const results = useMemo(
     () => ({
       primaryIdentifierCode: data?.data?.results[0]?.metadataUuid,
       isLoading,
@@ -26,5 +27,5 @@ export function usePrimaryIdentifierCode(): {
     [data, error, isLoading],
   );
 
-  return memoisedPrimaryIdentifierCode;
+  return results;
 }
