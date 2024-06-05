@@ -65,7 +65,7 @@
 
 .identifiers {
   @include type.type-style('body-compact-02');
-  color: $ui-04;
+  color: colors.$gray-70;
   display: flex;
   flex-wrap: wrap;
 }
@@ -76,27 +76,28 @@
 }
 
 .separator {
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
+  margin: 0 0.5rem;
 }
 
-.tag {
+.primaryIdentifier {
   display: flex;
   align-items: center;
   gap: 0.25rem;
 }
 
-.noTag {
+.secondaryIdentifier {
   display: flex;
 
   .label {
     font-size: 12px;
     margin: 0.25rem 0.25rem 0.25rem 0rem;
     align-self: auto;
+    @include type.type-style('label-01');
   }
 
   .identifier {
     align-self: baseline;
+    @include type.type-style('body-compact-02');
   }
 }
 
