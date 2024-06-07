@@ -50,7 +50,7 @@ jobs:
         run: yarn run verify
 
       - name: Run build
-        run: yarn turbo build --color --concurrency=5
+        run: yarn turbo run build --color --concurrency=5
 
   pre_release:
     runs-on: ubuntu-latest
@@ -90,7 +90,7 @@ jobs:
         run: yarn workspaces foreach --worktree --topological --exclude @openmrs/esm-core version "$(node -e "console.log(require('semver').inc(require('./package.json').version, 'patch'))")-pre.${{ github.run_number }}"
 
       - name: Build
-        run: yarn turbo build --color --concurrency=5
+        run: yarn turbo run build --color --concurrency=5
 
       - run: git config user.email "info@openmrs.org" && git config user.name "OpenMRS CI"
       - run: git add . && git commit -m "Prerelease version" --no-verify
@@ -133,7 +133,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Build
-        run: yarn turbo build --color --concurrency=5
+        run: yarn turbo run build --color --concurrency=5
 
       - name: Publish
         run: yarn config set npmAuthToken "${NODE_AUTH_TOKEN}" && yarn run ci:publish
