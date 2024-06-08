@@ -1,0 +1,34 @@
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.popup {
+  position: fixed;
+  flex: auto;
+  bottom: 90px;
+  right: 40px;
+  width: 12%;
+  height: 30%;
+  z-index: 8000;
+  background-color: $ui-02;
+  padding: 20px;
+  margin: 20px;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.farRight {
+  left: 80px;
+  right: 0px;
+  top: 16px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.helpButton {
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}

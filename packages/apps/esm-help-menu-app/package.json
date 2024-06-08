@@ -1,0 +1,58 @@
+{
+  "name": "@openmrs/esm-help-menu-app",
+  "version": "5.6.0",
+  "license": "MPL-2.0",
+  "description": " A microfrontend that provides a help menu for the OpenMRS Microfrontend Framework",
+  "browser": "dist/openmrs-esm-help-menu-app.js",
+  "main": "src/index.ts",
+  "source": true,
+  "scripts": {
+    "start": "openmrs develop",
+    "serve": "webpack serve --mode=development",
+    "debug": "npm run serve",
+    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
+    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
+    "build": "webpack --mode=production",
+    "build:development": "webpack --mode=development",
+    "analyze": "webpack --mode=production --env analyze=true",
+    "typescript": "tsc",
+    "lint": "eslint src --ext ts,tsx"
+  },
+  "keywords": [
+    "openmrs",
+    "microfrontends"
+  ],
+  "browserslist": [
+    "extends browserslist-config-openmrs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmrs/openmrs-esm-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openmrs/openmrs-esm-core/issues"
+  },
+  "homepage": "https://github.com/openmrs/openmrs-esm-core#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@openmrs/esm-framework": "*",
+    "react": "18.x",
+    "react-dom": "18.x",
+    "react-i18next": "11.x",
+    "rxjs": "6.x"
+  },
+  "devDependencies": {
+    "@openmrs/esm-framework": "workspace:*",
+    "@openmrs/webpack-config": "workspace:*",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-i18next": "^11.18.6",
+    "webpack": "^5.88.0"
+  },
+  "dependencies": {
+    "@carbon/react": "1.37.0",
+    "fuzzy": "^0.1.3"
+  }
+}

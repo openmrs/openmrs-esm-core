@@ -1,0 +1,19 @@
+.helpMenuButton {
+  z-index: 7900;
+  background-color: #c6c6c6;
+  height: 40px !important;
+  width: 40px !important;
+  bottom: 90px;
+  right: 0px;
+  position: fixed;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 8px;
+  border-radius: 30px;
+}
+
+.overridden {
+  background-color: #da1e28;
+}
