@@ -11,9 +11,14 @@ import { type NameUse } from '@openmrs/esm-globals';
  * @param patient The patient details in FHIR format.
  * @returns The patient's display name or an empty string if name is not present.
  */
-export function displayName(patient: fhir.Patient): string {
+export function getPatientName(patient: fhir.Patient): string {
   const name = selectPreferredName(patient, 'usual', 'official');
-  return formattedName(name);
+  return formatPatientName(name);
+}
+
+/** @deprecated Use `getPatientName` */
+export function displayName(patient: fhir.Patient): string {
+  return getPatientName(patient);
 }
 
 /**
@@ -21,9 +26,14 @@ export function displayName(patient: fhir.Patient): string {
  * @param name The name to be formatted.
  * @returns The formatted display name or an empty string if name is undefined.
  */
-export function formattedName(name: fhir.HumanName | undefined): string {
+export function formatPatientName(name: fhir.HumanName | undefined): string {
   if (name) return name.text ?? defaultFormat(name);
   return '';
+}
+
+/** @deprecated Use `formatPatientName` */
+export function formattedName(name: fhir.HumanName | undefined): string {
+  return formatPatientName(name);
 }
 
 /**
