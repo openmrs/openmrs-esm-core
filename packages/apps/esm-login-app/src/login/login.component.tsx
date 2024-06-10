@@ -282,7 +282,7 @@ const Login: React.FC = () => {
 const Logo: React.FC<{ t: TFunction }> = ({ t }) => {
   const { logo } = useConfig<ConfigSchema>();
   return logo.src ? (
-    <img alt={logo.alt ?? t('openmrsLogo', 'OpenMRS logo')} className={styles.logoImg} src={interpolateUrl(logo.src)} />
+    <img alt={logo.alt ? t(logo.alt) :  t('openmrsLogo', 'OpenMRS logo')} className={styles.logoImg} src={interpolateUrl(logo.src)} />
   ) : (
     <svg role="img" className={styles.logo}>
       <title>{t('openmrsLogo', 'OpenMRS logo')}</title>
