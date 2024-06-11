@@ -3,7 +3,7 @@
 @use '@carbon/styles/scss/type';
 @import '@openmrs/esm-styleguide/src/vars';
 
-$container-width: calc(100% - 3rem);
+$actionPanelOffset: 3rem;
 
 .loader {
   display: flex;
@@ -45,7 +45,7 @@ $container-width: calc(100% - 3rem);
       border-right: 1px solid colors.$gray-20;
 
       & > svg {
-        fill: colors.$cool-gray-100 !important; // force svg to be visible
+        fill: colors.$cool-gray-100 !important;
       }
 
       &:hover {
@@ -54,7 +54,7 @@ $container-width: calc(100% - 3rem);
     }
   }
 
-  .maximized {
+  .maximizedWindow {
     position: fixed;
     top: 0;
     left: 0;
@@ -66,13 +66,23 @@ $container-width: calc(100% - 3rem);
   .workspaceWindow {
     border-left: 1px solid $text-03;
     margin-right: 3rem;
-    min-height: 100vh;
+    height: 100%;
+  }
+
+  .workspaceWindowFixedContainer {
+    position: fixed;
+    top: var(--omrs-navbar-height);
+    right: $actionPanelOffset;
+    bottom: 0;
   }
 
   .widerWorkspace {
     width: 32.25rem;
     .dynamicWidth {
       width: 32.25rem;
+    }
+    .workspaceWindowFixedContainer {
+      width: calc(32.25rem - 1px);
     }
   }
 
@@ -82,21 +92,20 @@ $container-width: calc(100% - 3rem);
     .dynamicWidth {
       width: 26.25rem;
     }
+    .workspaceWindowFixedContainer {
+      width: calc(26.25rem - 1px);
+    }
   }
 
   .workspaceContent {
     background-color: $ui-02;
-    // position: fixed !important;
-    top: 6rem;
-    right: auto;
-    left: auto;
     overflow-y: auto;
     height: var(--desktop-workspace-window-height);
   }
 
   .fullWidth {
     // Subtract the width of the side rail from the viewport
-    width: $container-width;
+    width: calc(100% - $actionPanelOffset);
   }
 
   .overlay {
@@ -170,7 +179,9 @@ $container-width: calc(100% - 3rem);
 
   .workspaceContent {
     background-color: $ui-01;
-    overflow: scroll;
+    overflow-y: auto;
+    margin-top: var(--omrs-navbar-height);
+    height: var(--tablet-workspace-window-height);
   }
 
   .dynamicWidth {

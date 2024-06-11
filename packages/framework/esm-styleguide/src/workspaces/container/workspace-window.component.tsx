@@ -106,84 +106,82 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
         styles.workspaceWindow,
         width === 'narrow' ? styles.narrowWorkspace : styles.widerWorkspace,
         {
-          [styles.maximized]: maximized,
+          [styles.maximizedWindow]: maximized,
           [styles.hidden]: hidden,
         },
       )}
     >
-      <Header
-        aria-label={getCoreTranslation('workspaceHeader', 'Workspace Header')}
-        className={classNames(styles.header, maximized ? styles.fullWidth : styles.dynamicWidth)}
-      >
-        {!isDesktop(layout) && !canHide && (
-          <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
-        )}
-        <HeaderName prefix="">{workspaceTitle}</HeaderName>
-        <HeaderGlobalBar className={styles.headerGlobalBar}>
-          <ExtensionSlot name={`workspace-header-${featureName}-slot`} />
-          {isDesktop(layout) && (
-            <>
-              {(canMaximize || maximized) && (
-                <HeaderGlobalAction
-                  align="bottom"
-                  aria-label={
-                    maximized ? getCoreTranslation('minimize', 'Minimize') : getCoreTranslation('maximize', 'Maximize')
-                  }
-                  label={
-                    maximized ? getCoreTranslation('minimize', 'Minimize') : getCoreTranslation('maximize', 'Maximize')
-                  }
-                  onClick={toggleWindowState}
-                  size="lg"
-                >
-                  {maximized ? <Minimize /> : <Maximize />}
-                </HeaderGlobalAction>
-              )}
-              {canHide ? (
-                <HeaderGlobalAction
-                  align="bottom-right"
-                  aria-label={getCoreTranslation('hide', 'Hide')}
-                  label={getCoreTranslation('hide', 'Hide')}
-                  onClick={() => updateWorkspaceWindowState('hidden')}
-                  size="lg"
-                >
-                  <ArrowRightIcon />
-                </HeaderGlobalAction>
-              ) : (
-                <HeaderGlobalAction
-                  align="bottom-right"
-                  aria-label={getCoreTranslation('close', 'Close')}
-                  label={getCoreTranslation('close', 'Close')}
-                  onClick={() => closeWorkspace?.()}
-                  size="lg"
-                >
-                  <CloseIcon />
-                </HeaderGlobalAction>
-              )}
-            </>
+      <div className={styles.workspaceWindowFixedContainer}>
+        <Header aria-label={getCoreTranslation('workspaceHeader', 'Workspace Header')} className={styles.header}>
+          {!isDesktop(layout) && !canHide && (
+            <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
           )}
-          {layout === 'tablet' && canHide && (
-            <HeaderGlobalAction
-              align="bottom-right"
-              aria-label={getCoreTranslation('close', 'Close')}
-              label={getCoreTranslation('close', 'Close')}
-              onClick={() => closeWorkspace?.()}
-            >
-              <DownToBottom />
-            </HeaderGlobalAction>
-          )}
-        </HeaderGlobalBar>
-      </Header>
-      <div
-        className={classNames(
-          styles.workspaceContent,
-          maximized && isDesktop(layout) ? styles.fullWidth : styles.dynamicWidth,
-        )}
-      >
-        <WorkspaceRenderer
-          key={workspaceInstance.name}
-          workspace={workspaceInstance}
-          additionalPropsFromPage={additionalWorkspaceProps}
-        />
+          <HeaderName prefix="">{workspaceTitle}</HeaderName>
+          <HeaderGlobalBar className={styles.headerButtons}>
+            <ExtensionSlot name={`workspace-header-${featureName}-slot`} />
+            {isDesktop(layout) && (
+              <>
+                {(canMaximize || maximized) && (
+                  <HeaderGlobalAction
+                    align="bottom"
+                    aria-label={
+                      maximized
+                        ? getCoreTranslation('minimize', 'Minimize')
+                        : getCoreTranslation('maximize', 'Maximize')
+                    }
+                    label={
+                      maximized
+                        ? getCoreTranslation('minimize', 'Minimize')
+                        : getCoreTranslation('maximize', 'Maximize')
+                    }
+                    onClick={toggleWindowState}
+                    size="lg"
+                  >
+                    {maximized ? <Minimize /> : <Maximize />}
+                  </HeaderGlobalAction>
+                )}
+                {canHide ? (
+                  <HeaderGlobalAction
+                    align="bottom-right"
+                    aria-label={getCoreTranslation('hide', 'Hide')}
+                    label={getCoreTranslation('hide', 'Hide')}
+                    onClick={() => updateWorkspaceWindowState('hidden')}
+                    size="lg"
+                  >
+                    <ArrowRightIcon />
+                  </HeaderGlobalAction>
+                ) : (
+                  <HeaderGlobalAction
+                    align="bottom-right"
+                    aria-label={getCoreTranslation('close', 'Close')}
+                    label={getCoreTranslation('close', 'Close')}
+                    onClick={() => closeWorkspace?.()}
+                    size="lg"
+                  >
+                    <CloseIcon />
+                  </HeaderGlobalAction>
+                )}
+              </>
+            )}
+            {layout === 'tablet' && canHide && (
+              <HeaderGlobalAction
+                align="bottom-right"
+                aria-label={getCoreTranslation('close', 'Close')}
+                label={getCoreTranslation('close', 'Close')}
+                onClick={() => closeWorkspace?.()}
+              >
+                <DownToBottom />
+              </HeaderGlobalAction>
+            )}
+          </HeaderGlobalBar>
+        </Header>
+        <div className={styles.workspaceContent}>
+          <WorkspaceRenderer
+            key={workspaceInstance.name}
+            workspace={workspaceInstance}
+            additionalPropsFromPage={additionalWorkspaceProps}
+          />
+        </div>
       </div>
     </aside>
   );

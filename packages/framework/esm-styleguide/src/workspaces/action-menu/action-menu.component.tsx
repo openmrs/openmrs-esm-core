@@ -1,8 +1,7 @@
 /** @module @category Workspace */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { ComponentContext, ExtensionSlot, useLayoutType } from '@openmrs/esm-react-utils';
-import { useWorkspaces } from '../workspaces';
+import { ComponentContext, ExtensionSlot } from '@openmrs/esm-react-utils';
 import styles from './action-menu.module.scss';
 
 /**
@@ -17,13 +16,9 @@ import styles from './action-menu.module.scss';
  * `action-menu-patient-chart-items-slot`.
  */
 export function ActionMenu() {
-  const { active, workspaceWindowState } = useWorkspaces();
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const initialHeight = useRef(window.innerHeight);
   const { featureName } = useContext(ComponentContext);
-
-  const isTablet = useLayoutType() === 'tablet';
-  const isPhone = useLayoutType() === 'phone';
 
   useEffect(() => {
     const handleKeyboardVisibilityChange = () => {
@@ -35,10 +30,6 @@ export function ActionMenu() {
     window.addEventListener('resize', handleKeyboardVisibilityChange);
     return () => window.removeEventListener('resize', handleKeyboardVisibilityChange);
   }, [initialHeight]);
-
-  if (active && workspaceWindowState !== 'hidden' && (isTablet || isPhone)) {
-    return null;
-  }
 
   return (
     <aside
