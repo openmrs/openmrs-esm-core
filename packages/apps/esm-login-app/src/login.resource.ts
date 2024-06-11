@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { KeyedMutator } from 'swr';
 import useSwrInfinite from 'swr/infinite';
 import useSwrImmutable from 'swr/immutable';
-import { type FetchResponse, fhirBaseUrl, openmrsFetch, useDebounce, showNotification } from '@openmrs/esm-framework';
+import { type FetchResponse, fhirBaseUrl, openmrsFetch, useDebounce } from '@openmrs/esm-framework';
 import type { LocationEntry, LocationResponse } from './types';
 
 interface LoginLocationData {
@@ -12,6 +13,8 @@ interface LoginLocationData {
   hasMore: boolean;
   loadingNewData: boolean;
   setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[]>;
+  mutate: KeyedMutator<FetchResponse<LocationResponse>[]>;
+  error: Error;
 }
 
 export function useLoginLocations(
@@ -66,19 +69,16 @@ export function useLoginLocations(
     return url + urlSearchParameters.toString();
   }
 
-  const { data, isLoading, isValidating, setSize, error } = useSwrInfinite<FetchResponse<LocationResponse>, Error>(
-    constructUrl,
-    openmrsFetch,
-  );
+  const { data, isLoading, isValidating, setSize, error, mutate } = useSwrInfinite<
+    FetchResponse<LocationResponse>,
+    Error
+  >(constructUrl, openmrsFetch);
 
-  if (error) {
-    showNotification({
-      title: t('errorLoadingLoginLocations', 'Error loading login locations'),
-      kind: 'error',
-      critical: true,
-      description: error?.message,
-    });
-  }
+  useEffect(() => {
+    if (error) {
+      console.error(error);
+    }
+  }, [error]);
 
   const memoizedLocations = useMemo(() => {
     return {
@@ -89,8 +89,9 @@ export function useLoginLocations(
       loadingNewData: isValidating,
       setPage: setSize,
       error,
+      mutate,
     };
-  }, [isLoading, data, isValidating, setSize]);
+  }, [isLoading, data, isValidating, setSize, error, mutate]);
 
   return memoizedLocations;
 }

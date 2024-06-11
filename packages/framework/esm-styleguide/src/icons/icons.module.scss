@@ -1,0 +1,5 @@
+.icon {
+  // fill must be marked !important or else it will be overridden by default Carbon selectors
+  // like '.btn__icon svg' that are interpretted as "more specific" than this class.
+  fill: var(--omrs-icon-fill, 'currentColor') !important;
+}

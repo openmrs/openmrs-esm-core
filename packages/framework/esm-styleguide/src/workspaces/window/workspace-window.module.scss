@@ -42,6 +42,10 @@ $container-width: calc(100% - 3rem);
   width: $container-width;
 }
 
+.hidden {
+  display: none;
+}
+
 .loader {
   display: flex;
   background-color: $openmrs-background-grey;

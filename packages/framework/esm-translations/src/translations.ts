@@ -38,6 +38,7 @@ export const coreTranslations = {
   change: 'Change',
   close: 'Close',
   confirm: 'Confirm',
+  contactAdministratorIfIssuePersists: 'Contact your system administrator if the problem persists.',
   contactDetails: 'Contact Details',
   error: 'Error',
   errorCopy:
@@ -49,6 +50,10 @@ export const coreTranslations = {
   other: 'Other',
   patientLists: 'Patient Lists',
   relationships: 'Relationships',
+  resetOverrides: 'Reset overrides',
+  scriptLoadingFailed: 'Error: Script failed to load',
+  scriptLoadingError:
+    'Failed to load overridden script from {{url}}. Please check that the bundled script is available at the expected URL. Click the button below to reset all import map overrides.',
   seeMoreLists: 'See {{count}} more lists',
   showDetails: 'Show details',
   unknown: 'Unknown',

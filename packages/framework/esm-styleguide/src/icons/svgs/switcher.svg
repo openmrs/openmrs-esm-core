@@ -1,4 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-  <path d="M10 13.33H3a1 1 0 01-1-1V3.67a1 1 0 011-1h10a1 1 0 011 1v5.66"></path>
-  <path d="M8.67 10.67a2.67 2.67 0 100-5.34 2.67 2.67 0 000 5.34zM14 13.33L10.67 10"></path>
+<path d="M9 2H7V4H9V2Z" />
+<path d="M4 2H2V4H4V2Z" />
+<path d="M14 2H12V4H14V2Z" />
+<path d="M9 7H7V9H9V7Z" />
+<path d="M4 7H2V9H4V7Z" />
+<path d="M14 7H12V9H14V7Z" />
+<path d="M9 12H7V14H9V12Z" />
+<path d="M4 12H2V14H4V12Z" />
+<path d="M14 12H12V14H14V12Z" />
 </svg>

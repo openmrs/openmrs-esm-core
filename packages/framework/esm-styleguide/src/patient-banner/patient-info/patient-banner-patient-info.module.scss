@@ -12,33 +12,6 @@
   background-color: $ui-01;
 }
 
-.deceasedPatientContainer {
-  background-color: colors.$gray-80;
-
-  .patientName {
-    color: $ui-01;
-  }
-
-  .demographics,
-  .row,
-  .identifierTag,
-  .identifier,
-  .contactDetails .heading {
-    color: $ui-02;
-  }
-
-  .toggleContactDetailsButton,
-  .toggleContactDetailsButton > svg,
-  .actionsButtonText {
-    color: colors.$blue-40;
-  }
-
-  &:focus,
-  &:hover {
-    background-color: colors.$gray-90;
-  }
-}
-
 .patientBanner {
   display: flex;
 }
@@ -92,7 +65,7 @@
 
 .identifiers {
   @include type.type-style('body-compact-02');
-  color: $ui-04;
+  color: colors.$gray-70;
   display: flex;
   flex-wrap: wrap;
 }
@@ -100,11 +73,31 @@
 .identifierTag {
   display: flex;
   align-items: center;
-  margin-right: 0.75rem;
 }
 
-.tag {
-  margin: 0.25rem 0.25rem 0.25rem 0rem;
+.separator {
+  margin: 0 0.5rem;
+}
+
+.primaryIdentifier {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.secondaryIdentifier {
+  display: flex;
+
+  .label {
+    @include type.type-style('label-01');
+    margin: 0.25rem 0.25rem 0.25rem 0rem;
+    align-self: auto;
+  }
+
+  .identifier {
+    @include type.type-style('body-compact-02');
+    align-self: baseline;
+  }
 }
 
 .tooltipPadding {

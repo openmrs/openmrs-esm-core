@@ -100,8 +100,8 @@ export {
   formatDate,
   formatDatetime,
   formatTime,
-  displayName,
-  formattedName,
+  getPatientName,
+  formatPatientName,
   selectPreferredName,
 } from '@openmrs/esm-utils';
 

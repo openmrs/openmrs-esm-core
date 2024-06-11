@@ -18,6 +18,18 @@ export interface ResolvedDependenciesModule {
 interface Module {
   moduleName: string;
   backendDependencies?: Record<string, string>;
+  optionalBackendDependencies?: {
+    [k: string]:
+      | string
+      | {
+          version: string;
+          feature?: string;
+        };
+  };
+}
+
+interface VersionCheckModule extends Omit<Module, 'optionalBackendDependencies'> {
+  optionalBackendDependencies?: Record<string, string>;
 }
 
 interface BackendModule {
@@ -39,7 +51,7 @@ async function initInstalledBackendModules(): Promise<Array<BackendModule>> {
 }
 
 function checkIfModulesAreInstalled(
-  module: Module,
+  module: VersionCheckModule,
   installedBackendModules: Array<BackendModule>,
 ): ResolvedDependenciesModule {
   const dependencies: Array<ResolvedBackendModule> = [];
@@ -48,6 +60,7 @@ function checkIfModulesAreInstalled(
 
   const installedAndRequiredModules = getInstalledAndRequiredBackendModules(
     module.backendDependencies,
+    module.optionalBackendDependencies,
     installedBackendModules,
   );
 
@@ -102,15 +115,18 @@ function getMissingBackendModules(
 
 function getInstalledAndRequiredBackendModules(
   requiredBackendModules: Record<string, string> | undefined,
+  optionalBackendModules: Record<string, string> | undefined,
   installedBackendModules: Array<BackendModule>,
 ): Array<BackendModule> {
   if (!requiredBackendModules) {
     return [];
   }
 
-  const requiredModules = Object.keys(requiredBackendModules).map((key) => ({
+  const declaredBackendModules = { ...optionalBackendModules, ...requiredBackendModules };
+
+  const requiredModules = Object.keys(declaredBackendModules).map((key) => ({
     uuid: key,
-    version: requiredBackendModules[key],
+    version: declaredBackendModules[key],
   }));
 
   return requiredModules.filter((requiredModule) => {
@@ -139,9 +155,14 @@ function getResolvedModuleType(requiredVersion: string, installedVersion: string
 export async function checkModules(): Promise<Array<ResolvedDependenciesModule>> {
   if (!cachedFrontendModules) {
     const modules = (window.installedModules ?? [])
-      .filter((module) => Boolean(module[1]?.backendDependencies))
+      .filter((module) => Boolean(module[1]?.backendDependencies || module[1]?.optionalBackendDependencies))
       .map((module) => ({
         backendDependencies: module[1].backendDependencies,
+        optionalBackendDependencies: Object.fromEntries(
+          Object.entries(module[1].optionalBackendDependencies ?? {}).map(([key, value]) =>
+            typeof value === 'string' || typeof value === 'undefined' ? [key, value] : [key, value.version],
+          ),
+        ),
         moduleName: module[0],
       }));
 
