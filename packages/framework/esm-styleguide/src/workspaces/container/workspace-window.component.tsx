@@ -8,7 +8,7 @@ import { translateFrom, getCoreTranslation } from '@openmrs/esm-translations';
 import { type OpenWorkspace, useWorkspaces, updateWorkspaceWindowState } from '../workspaces';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
-import styles from './workspace-window.module.scss';
+import styles from './workspace.module.scss';
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../../icons';
 
 export interface WorkspaceWindowProps {
@@ -44,6 +44,10 @@ export interface WorkspaceWindowProps {
  * For the patient chart, this is `workspace-header-patient-chart-slot`.
  *
  * @param props.contextKey The context key (explained above)
+ * @param props.additionalWorkspaceProps Additional props to pass to the workspace. Using this is
+ *          unusual; you will generally want to pass props to the workspace when you open it, using
+ *          `launchWorkspace`. Use this only for props that will apply to every workspace launched
+ *          on the page where this component is mounted.
  */
 export function WorkspaceWindow({ contextKey, additionalWorkspaceProps }: WorkspaceWindowProps) {
   const { workspaces } = useWorkspaces();
@@ -98,16 +102,20 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
 
   return (
     <aside
-      className={classNames(styles.container, width === 'narrow' ? styles.narrowWorkspace : styles.widerWorkspace, {
-        [styles.maximized]: maximized,
-        [styles.hidden]: hidden,
-      })}
+      className={classNames(
+        styles.workspaceWindow,
+        width === 'narrow' ? styles.narrowWorkspace : styles.widerWorkspace,
+        {
+          [styles.maximized]: maximized,
+          [styles.hidden]: hidden,
+        },
+      )}
     >
       <Header
         aria-label={getCoreTranslation('workspaceHeader', 'Workspace Header')}
         className={classNames(styles.header, maximized ? styles.fullWidth : styles.dynamicWidth)}
       >
-        {layout === 'tablet' && !canHide && (
+        {!isDesktop(layout) && !canHide && (
           <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
         )}
         <HeaderName prefix="">{workspaceTitle}</HeaderName>
@@ -165,11 +173,18 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
           )}
         </HeaderGlobalBar>
       </Header>
-      <WorkspaceRenderer
-        key={workspaceInstance.name}
-        workspace={workspaceInstance}
-        additionalPropsFromPage={additionalWorkspaceProps}
-      />
+      <div
+        className={classNames(
+          styles.workspaceContent,
+          maximized && isDesktop(layout) ? styles.fullWidth : styles.dynamicWidth,
+        )}
+      >
+        <WorkspaceRenderer
+          key={workspaceInstance.name}
+          workspace={workspaceInstance}
+          additionalPropsFromPage={additionalWorkspaceProps}
+        />
+      </div>
     </aside>
   );
 }
