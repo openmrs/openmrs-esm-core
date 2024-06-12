@@ -1,0 +1,10 @@
+{
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "errorLoadingLocations": "Error loading locations",
+  "errorLoadingLoginLocations": "Error loading login locations",
+  "loading": "Loading",
+  "noResultsToDisplay": "No results to display",
+  "searchForLocation": "Search for a location",
+  "tryAgain": "Try again"
+}

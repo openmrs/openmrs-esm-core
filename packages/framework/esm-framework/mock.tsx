@@ -93,6 +93,8 @@ export const launchWorkspace = jest.fn();
 export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspaces = jest.fn();
 
+export const LocationPicker = jest.fn(() => <div>Location Picker</div>);
+
 /* esm-utils */
 export {
   getDefaultsFromConfigSchema,

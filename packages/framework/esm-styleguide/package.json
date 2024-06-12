@@ -14,7 +14,8 @@
     "build": "webpack --mode=production",
     "build:development": "webpack --mode=development",
     "analyze": "webpack --mode=production --env analyze=true",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "extract-translations": "i18next 'src/**/*.component.tsx' 'src/**/*.extension.tsx' 'src/**/*.modal.tsx' 'src/**/*.resource.ts' --config='../../../tools/i18next-parser.config.js'"
   },
   "keywords": [
     "openmrs",

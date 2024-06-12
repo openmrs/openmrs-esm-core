@@ -31,11 +31,6 @@ jest.mock('@openmrs/esm-framework', () => {
   };
 });
 
-const loginLocations = [
-  { uuid: '111', display: 'Earth' },
-  { uuid: '222', display: 'Mars' },
-];
-
 mockedUseSession.mockReturnValue({ authenticated: false });
 mockedUseConfig.mockReturnValue(mockConfig);
 
