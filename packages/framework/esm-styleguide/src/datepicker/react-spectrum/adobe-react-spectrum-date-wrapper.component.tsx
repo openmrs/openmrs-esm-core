@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { type ReactElement, useMemo } from 'react';
 import { parseDate } from '@internationalized/date';
 import { DatePicker } from '@react-spectrum/datepicker';
 import { Provider } from '@react-spectrum/provider';
@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 interface ReactSpectrumDatePickerWrapperProps {
   id: string;
   value?: Date | string;
-  labelText?: string;
+  labelText?: string | ReactElement;
   locale: string;
   defaultValue?: Date | string;
   minDate?: Date | string;

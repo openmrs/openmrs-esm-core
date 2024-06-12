@@ -18,24 +18,24 @@
   width: 16rem;
 }
 
-.logo-img {
+.logoImg {
   margin-bottom: 3rem;
   max-width: 100%;
 }
 
-.powered-by-txt {
+.poweredByTxt {
   @extend .caption01;
   text-align: center;
   color: $color-gray-70;
   color: $text-02;
 }
 
-.need-help {
+.needHelp {
   display: flex;
   width: 23rem;
 }
 
-.need-help-txt {
+.needHelpText {
   @extend .bodyShort01;
   text-align: left;
   color: $text-02;
@@ -50,19 +50,19 @@
   margin-left: 0.5rem;
 }
 
-.powered-by-logo {
+.poweredByLogo {
   height: 2.5rem;
   width: 6.5rem;
 }
 
-.login-card {
+.loginCard {
   border-radius: 0;
   border: 1px solid $ui-03;
   background-color: $ui-02;
   width: 23rem;
   padding: 2.5rem;
   position: relative;
-  min-height: 21.5rem;
+  min-height: fit-content;
 }
 
 @media only screen and (min-width: 481px) {
@@ -82,7 +82,7 @@
   }
 }
 
-.input-group {
+.inputGroup {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -108,14 +108,14 @@
   width: 18rem;
 }
 
-.back-button-div {
+.backButtonDiv {
   width: 23rem;
   position: absolute;
   bottom: 100%;
   left: 0;
 }
 
-.back-button {
+.backButton {
   height: 3rem;
   padding-left: 0rem;
 
@@ -127,6 +127,10 @@
   span {
     order: 2;
   }
+}
+
+.backButtonIcon {
+  margin-right: 0.5rem;
 }
 
 .footer {

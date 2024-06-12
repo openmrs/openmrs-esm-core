@@ -343,7 +343,7 @@ export interface OpenmrsAppRoutes {
           /**
            * The feature flag to enable if this backend dependency is present
            */
-          feature?: string;
+          feature?: FeatureFlagDefinition;
         };
   };
   /**
@@ -362,6 +362,12 @@ export interface OpenmrsAppRoutes {
    * An array of all workspaces supported by this frontend module. Workspaces can be launched by name.
    */
   workspaces?: Array<WorkspaceDefinition>;
+}
+
+export interface FeatureFlagDefinition {
+  flagName: string;
+  label: string;
+  description: string;
 }
 
 /**

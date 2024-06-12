@@ -27,10 +27,14 @@ export function PatientPhoto({ patientUuid, patientName, size }: PatientPhotoPro
       src={photo?.imageSrc}
       size={size === 'small' ? '48' : '80'}
       textSizeRatio={size === 'small' ? 1 : 2}
-      style={{
-        backgroundImage: `url(${patternUrl})`,
-        backgroundRepeat: 'round',
-      }}
+      style={
+        !photo
+          ? {
+              backgroundImage: `url(${patternUrl})`,
+              backgroundRepeat: 'round',
+            }
+          : undefined
+      }
     />
   );
 }

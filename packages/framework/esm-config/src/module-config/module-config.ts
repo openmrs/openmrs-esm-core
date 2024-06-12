@@ -165,11 +165,11 @@ export function defineConfigSchema(moduleName: string, schema: ConfigSchema) {
   validateConfigSchema(moduleName, schema);
   const enhancedSchema = mergeDeepRight(schema, implicitConfigSchema) as ConfigSchema;
 
-  const state = configInternalStore.getState();
-  configInternalStore.setState({
+  configInternalStore.setState((state) => ({
+    ...state,
     schemas: { ...state.schemas, [moduleName]: enhancedSchema },
     moduleLoaded: { ...state.moduleLoaded, [moduleName]: true },
-  });
+  }));
 }
 
 /**
@@ -239,10 +239,10 @@ export function defineExtensionConfigSchema(extensionName: string, schema: Confi
 }
 
 export function provide(config: Config, sourceName = 'provided') {
-  const state = configInternalStore.getState();
-  configInternalStore.setState({
+  configInternalStore.setState((state) => ({
+    ...state,
     providedConfigs: [...state.providedConfigs, { source: sourceName, config }],
-  });
+  }));
 }
 
 /**

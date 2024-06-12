@@ -1,4 +1,4 @@
-import { displayName, formattedName, selectPreferredName } from './patient-helpers';
+import { formatPatientName, getPatientName, selectPreferredName } from './patient-helpers';
 import {
   mockPatientWithNoName,
   mockPatientWithOfficialName,
@@ -19,7 +19,7 @@ describe('Formatted display name', () => {
     [givenNameOnly, 'given'],
     [mockPatientWithNoName, ''],
   ])('Is formatted name text if present else default name format', (name, expected) => {
-    const result = formattedName(name);
+    const result = formatPatientName(name);
     expect(result).toBe(expected);
   });
 });
@@ -30,7 +30,7 @@ describe('Patient display name', () => {
     [mockPatientWithOfficialName, 'my actual name'],
     [mockPatientWithNickAndOfficialName, 'my official name'],
   ])('Is selected from usual name or official name', (patient, expected) => {
-    const result = displayName(patient);
+    const result = getPatientName(patient);
     expect(result).toBe(expected);
   });
 });

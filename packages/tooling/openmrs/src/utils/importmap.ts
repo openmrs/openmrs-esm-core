@@ -397,7 +397,7 @@ export function proxyImportmapAndRoutes(
   Object.keys(importmap.imports).forEach((key) => {
     const url = importmap.imports[key];
     if (url.startsWith(backend)) {
-      importmap.imports[key] = url.replace(backend, `http://${host}:${port}`);
+      importmap.imports[key] = url.replace(backend, '');
     }
   });
   importMapDecl.value = JSON.stringify(importmap);

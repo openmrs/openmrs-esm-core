@@ -47,14 +47,11 @@ export async function runDevelop(args: DevelopArgs) {
     )
     .replace(/href="\/openmrs\/spa/g, `href="${spaPath}`)
     .replace(/src="\/openmrs\/spa/g, `src="${spaPath}`)
-    .replace(
-      /https:\/\/dev3\.openmrs\.org\/openmrs\/spa\/importmap\.json/g,
-      `http://${host}:${port}${spaPath}/importmap.json`,
-    );
+    .replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\/importmap\.json/g, `${spaPath}/importmap.json`);
 
   const sw = resolve(source, 'service-worker.js');
   // remove any full references to dev3.openmrs.org
-  const swContent = readFileSync(sw, 'utf-8').replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g, ``);
+  const swContent = readFileSync(sw, 'utf-8').replace(/https:\/\/dev3\.openmrs\.org\/openmrs\/spa\//g, `${spaPath}`);
 
   const pageUrl = `http://${host}:${port}${spaPath}`;
 

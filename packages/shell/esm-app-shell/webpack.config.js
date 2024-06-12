@@ -142,7 +142,7 @@ module.exports = (env, argv = {}) => {
       filename: isProd ? 'openmrs.[contenthash].js' : 'openmrs.js',
       chunkFilename: '[chunkhash].js',
       path: resolve(__dirname, outDir),
-      publicPath: '',
+      publicPath: `${openmrsPublicPath}/`,
       hashFunction: 'xxhash64',
     },
     target: 'web',
