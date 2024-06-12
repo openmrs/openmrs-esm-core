@@ -1,7 +1,7 @@
 /** @module @category Workspace */
 import React, { useContext, useMemo } from 'react';
 import classNames from 'classnames';
-import { Button, Header } from '@carbon/react';
+import { Header } from '@carbon/react';
 import { useLayoutType, isDesktop, ComponentContext, ExtensionSlot, useBodyScrollLock } from '@openmrs/esm-react-utils';
 import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
 import { ArrowLeftIcon, CloseIcon } from '../../icons';
@@ -10,7 +10,6 @@ import { WorkspaceNotification } from '../notification/workspace-notification.co
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import { HeaderName } from '@carbon/react';
 import { HeaderGlobalAction } from '@carbon/react';
-import { HeaderGlobalBar } from '@carbon/react';
 import styles from './workspace.module.scss';
 
 export interface WorkspaceOverlayProps {
@@ -92,7 +91,7 @@ const Workspace: React.FC<WorkspaceProps> = ({ workspaceInstance, additionalWork
   useBodyScrollLock(!isDesktop(layout));
 
   return (
-    <aside className={styles.overlay}>
+    <aside className={classNames(styles.workspaceFixedContainer, styles.widerWorkspace, styles.overlay)}>
       <Header className={styles.header} aria-label={getCoreTranslation('workspaceHeader', 'Workspace header')}>
         <HeaderName className={styles.overlayTitle} prefix="">
           {workspaceTitle}

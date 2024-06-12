@@ -18,6 +18,22 @@ $actionPanelOffset: 3rem;
 
 /* Desktop */
 :global(.omrs-breakpoint-gt-tablet) {
+  .workspaceContainerWithActionMenu {
+    height: 100%;
+
+    .workspaceFixedContainer {
+      right: $actionPanelOffset;
+    }
+  }
+
+  .workspaceContainerWithoutActionMenu {
+    height: 100%;
+
+    .workspaceFixedContainer {
+      right: 0;
+    }
+  }
+
   .header {
     position: relative;
     box-sizing: content-box;
@@ -63,37 +79,30 @@ $actionPanelOffset: 3rem;
     z-index: 1000;
   }
 
-  .workspaceWindow {
-    border-left: 1px solid $text-03;
-    margin-right: 3rem;
+  .workspaceWindowSpacer {
     height: 100%;
   }
 
-  .workspaceWindowFixedContainer {
+  .workspaceFixedContainer {
     position: fixed;
     top: var(--omrs-navbar-height);
-    right: $actionPanelOffset;
     bottom: 0;
+    border-left: 1px solid $text-03;
   }
 
   .widerWorkspace {
     width: 32.25rem;
-    .dynamicWidth {
+
+    .workspaceFixedContainer {
       width: 32.25rem;
-    }
-    .workspaceWindowFixedContainer {
-      width: calc(32.25rem - 1px);
     }
   }
 
   .narrowWorkspace {
     width: 26.25rem;
 
-    .dynamicWidth {
+    .workspaceFixedContainer {
       width: 26.25rem;
-    }
-    .workspaceWindowFixedContainer {
-      width: calc(26.25rem - 1px);
     }
   }
 
@@ -103,18 +112,8 @@ $actionPanelOffset: 3rem;
     height: var(--desktop-workspace-window-height);
   }
 
-  .fullWidth {
-    // Subtract the width of the side rail from the viewport
-    width: calc(100% - $actionPanelOffset);
-  }
-
   .overlay {
-    position: fixed;
-    top: var(--omrs-navbar-height);
-    right: 0;
-    width: 32.25rem;
     background-color: $ui-02;
-    border-left: 1px solid $text-03;
     display: grid;
     grid-template-rows: auto 1fr auto;
     z-index: 999;
@@ -147,7 +146,11 @@ $actionPanelOffset: 3rem;
     }
   }
 
-  .workspaceWindow {
+  .workspaceWindowSpacer {
+    display: none;
+  }
+
+  .workspaceFixedContainer {
     position: fixed;
     top: 0;
     left: 0;
@@ -192,7 +195,7 @@ $actionPanelOffset: 3rem;
 // Overriding styles for RTL support
 html[dir='rtl'] {
   :global(.omrs-breakpoint-gt-tablet) {
-    .workspaceWindow {
+    .workspaceFixedContainer {
       margin-left: 3rem;
       margin-right: unset;
     }

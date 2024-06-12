@@ -4,31 +4,29 @@
 $icon-button-size: 2.5rem;
 $actionPanelOffset: 3rem;
 
-.container {
+.hiddenSideRail {
+  display: none;
+}
+
+.showSideRail {
   display: flex;
-  align-items: center;
-  width: 100%;
 }
 
 /* Desktop */
 :global(.omrs-breakpoint-gt-tablet) {
   .sideRail {
-    position: fixed;
-    align-self: flex-end;
-    background: #ededed;
-    flex-direction: column;
-    display: flex;
-    height: 100%;
-    top: var(--omrs-navbar-height);
-    right: 0;
-    z-index: 1000;
     width: $actionPanelOffset;
-    align-items: center;
-    border-left: 1px solid $text-03;
 
     & .container {
+      position: fixed;
+      top: var(--omrs-navbar-height);
+      right: 0;
+      background: #ededed;
+      height: 100%;
+      z-index: 1000;
+      width: $actionPanelOffset;
+      border-left: 1px solid $text-03;
       display: flex;
-      align-items: center;
       flex-direction: column;
     }
   }
@@ -58,16 +56,11 @@ $actionPanelOffset: 3rem;
       cursor: pointer;
     }
   }
-}
 
-:global(.omrs-breakpoint-lt-desktop) {
-  .hiddenSideRail {
-    display: none;
-  }
-}
-:global(.omrs-breakpoint-lt-desktop) {
-  .showSideRail {
+  .container {
     display: flex;
+    align-items: center;
+    width: 100%;
   }
 }
 

@@ -1,7 +1,7 @@
 /** @module @category Workspace */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { ComponentContext, ExtensionSlot } from '@openmrs/esm-react-utils';
+import { ComponentContext, ExtensionSlot, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import styles from './action-menu.module.scss';
 
 /**
@@ -19,10 +19,11 @@ export function ActionMenu() {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const initialHeight = useRef(window.innerHeight);
   const { featureName } = useContext(ComponentContext);
+  const layout = useLayoutType();
 
   useEffect(() => {
     const handleKeyboardVisibilityChange = () => {
-      setKeyboardVisible(initialHeight.current > window.innerHeight);
+      setKeyboardVisible(!isDesktop(layout) && initialHeight.current > window.innerHeight);
       if (initialHeight.current != window.innerHeight) {
         initialHeight.current = window.innerHeight;
       }

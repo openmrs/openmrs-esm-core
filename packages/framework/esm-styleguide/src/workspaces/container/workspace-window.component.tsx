@@ -103,7 +103,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
   return (
     <aside
       className={classNames(
-        styles.workspaceWindow,
+        styles.workspaceWindowSpacer,
         width === 'narrow' ? styles.narrowWorkspace : styles.widerWorkspace,
         {
           [styles.maximizedWindow]: maximized,
@@ -111,7 +111,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
         },
       )}
     >
-      <div className={styles.workspaceWindowFixedContainer}>
+      <div className={styles.workspaceFixedContainer}>
         <Header aria-label={getCoreTranslation('workspaceHeader', 'Workspace Header')} className={styles.header}>
           {!isDesktop(layout) && !canHide && (
             <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
