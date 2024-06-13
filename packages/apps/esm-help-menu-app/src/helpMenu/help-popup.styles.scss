@@ -32,3 +32,51 @@
   border: none;
   background-color: transparent;
 }
+
+.modalContent {
+  padding: 2px;
+  margin: 3px;
+}
+
+.modalHeader {
+  background-color: #f4f4f4;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modalBody {
+  padding: 20px;
+  font-size: 1rem;
+  line-height: 1.5;
+  max-height: 400px; // Adjust as needed
+  overflow-y: auto;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.modalButton {
+  margin-left: 10px;
+}
+
+.input-field {
+  margin-bottom: 1rem;
+}
+
+.select-field {
+  margin-bottom: 1rem;
+}
+
+.dropdown-field {
+  margin-bottom: 1rem;
+}
+
+.multiselect-field {
+  margin-bottom: 1rem;
+}
