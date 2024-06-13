@@ -3,17 +3,14 @@ import React, {
   type HTMLAttributes,
   type PropsWithChildren,
   useMemo,
-  useRef,
-  useImperativeHandle,
   type RefObject,
   useContext,
   useCallback,
 } from 'react';
 import classNames, { type Argument } from 'classnames';
 import { CalendarDate, CalendarDateTime, ZonedDateTime } from '@internationalized/date';
-import { type AriaButtonOptions, I18nProvider, useButton, useLocale } from 'react-aria';
+import { I18nProvider, useLocale } from 'react-aria';
 import {
-  ButtonContext,
   Calendar,
   CalendarGrid,
   CalendarCell,
@@ -26,8 +23,6 @@ import {
   Group,
   Label,
   Popover,
-  useContextProps,
-  type SlotProps,
   RangeCalendarStateContext,
   NumberField,
   Input,
@@ -35,7 +30,7 @@ import {
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
-import styles from './datepicker.scss';
+import styles from './datepicker.module.scss';
 import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons';
 
 /** A type for any of the acceptable date formats */
@@ -193,29 +188,6 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
 );
 
 /**
- * Component to render a <div /> as a button taking advantage of React Aria's button capabilites.
- *
- * Basically, this allows the easy rendering of buttons without the standard "button" styles
- */
-const FlatButton = forwardRef<Element, PropsWithChildren<AriaButtonOptions<'div'> & SlotProps>>(
-  function FlatButton(props, ref) {
-    // This gets cast a lot in here; it's really a limitation of Typescript and a series of broken types
-    let divRef: RefObject<Element> = useRef<Element>(null);
-    useImperativeHandle(ref, () => divRef.current!);
-
-    [props, divRef] = useContextProps(props, divRef as RefObject<HTMLButtonElement>, ButtonContext);
-    const { buttonProps } = useButton(props, divRef);
-    const className = classNames(buttonProps.className, styles.flatButton);
-
-    return (
-      <div ref={divRef as RefObject<HTMLDivElement>} role="button" {...buttonProps} className={className}>
-        {props.children}
-      </div>
-    );
-  },
-);
-
-/**
  * A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
  */
 export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerProps>(
@@ -282,22 +254,22 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                     );
                   }}
                 </DateInput>
-                <FlatButton>
+                <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
                   <CalendarIcon size={16} />
-                </FlatButton>
+                </Button>
               </Group>
             </div>
             <Popover className={styles.popover} placement="bottom" offset={1}>
               <Dialog className={styles.dialog}>
                 <Calendar className={classNames('cds--date-picker__calendar')}>
                   <header className={styles.header}>
-                    <FlatButton slot="previous">
+                    <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
                       <ChevronLeftIcon size={16} />
-                    </FlatButton>
+                    </Button>
                     <MonthYear className={styles.monthYear} />
-                    <FlatButton slot="next">
+                    <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
                       <ChevronRightIcon size={16} />
-                    </FlatButton>
+                    </Button>
                   </header>
                   <CalendarGrid className={styles.calendarGrid}>
                     {(date) => <CalendarCell className="cds--date-picker__day" date={date} />}
