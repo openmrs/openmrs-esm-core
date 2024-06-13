@@ -172,7 +172,7 @@ const Login: React.FC = () => {
             <div className={styles.backButtonDiv}>
               <Button
                 className={styles.backButton}
-                iconDescription="Back to username"
+                iconDescription={t('backToUserNameIconLabel', 'Back to username')}
                 kind="ghost"
                 onClick={() => navigate('/login')}
                 renderIcon={(props) => <ArrowLeftIcon {...props} size={24} />}

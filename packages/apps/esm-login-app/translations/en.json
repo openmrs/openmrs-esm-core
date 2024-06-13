@@ -1,5 +1,7 @@
 {
   "back": "Back",
+  "backToUserNameIconLabel": "Back to username",
+  "cancel": "Cancel",
   "change": "Change",
   "continue": "Continue",
   "errorLoadingLoginLocations": "Error loading login locations",
