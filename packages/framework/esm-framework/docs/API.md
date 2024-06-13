@@ -228,8 +228,10 @@
 - [canAccessStorage](API.md#canaccessstorage)
 - [daysIntoYear](API.md#daysintoyear)
 - [displayName](API.md#displayname)
+- [formatPatientName](API.md#formatpatientname)
 - [formattedName](API.md#formattedname)
 - [getDefaultsFromConfigSchema](API.md#getdefaultsfromconfigschema)
+- [getPatientName](API.md#getpatientname)
 - [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [retry](API.md#retry)
@@ -2471,7 +2473,7 @@ ___
 
 ### useVisit
 
-▸ **useVisit**(`patientUuid`): [`VisitReturnType`](interfaces/VisitReturnType.md)
+▸ **useVisit**(`patientUuid`, `representation?`): [`VisitReturnType`](interfaces/VisitReturnType.md)
 
 This React hook returns visit information if the patient UUID is not null. There are
 potentially two relevant visits at a time: "active" and "current".
@@ -2491,9 +2493,10 @@ API call is in progress. `mutate` refreshes the data from both API calls.
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `patientUuid` | `string` | Unique patient identifier `string` |
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `patientUuid` | `string` | `undefined` | Unique patient identifier `string` |
+| `representation` | `string` | `defaultVisitCustomRepresentation` | The custom representation of the visit |
 
 #### Returns
 
@@ -2501,7 +2504,7 @@ API call is in progress. `mutate` refreshes the data from both API calls.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useVisit.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L41)
+[packages/framework/esm-react-utils/src/useVisit.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useVisit.ts#L42)
 
 ___
 
@@ -6266,32 +6269,27 @@ ___
 
 ▸ **displayName**(`patient`): `string`
 
-Gets the formatted display name for a patient.
-
-The display name will be taken from the patient's 'usual' name,
-or may fall back to the patient's 'official' name.
+**`deprecated`** Use `getPatientName`
 
 #### Parameters
 
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `patient` | `Patient` | The patient details in FHIR format. |
+| Name | Type |
+| :------ | :------ |
+| `patient` | `Patient` |
 
 #### Returns
 
 `string`
 
-The patient's display name or an empty string if name is not present.
-
 #### Defined in
 
-[packages/framework/esm-utils/src/patient-helpers.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L14)
+[packages/framework/esm-utils/src/patient-helpers.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L20)
 
 ___
 
-### formattedName
+### formatPatientName
 
-▸ **formattedName**(`name`): `string`
+▸ **formatPatientName**(`name`): `string`
 
 Get a formatted display string for an FHIR name.
 
@@ -6309,7 +6307,29 @@ The formatted display name or an empty string if name is undefined.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/patient-helpers.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L24)
+[packages/framework/esm-utils/src/patient-helpers.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L29)
+
+___
+
+### formattedName
+
+▸ **formattedName**(`name`): `string`
+
+**`deprecated`** Use `formatPatientName`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `undefined` \| `HumanName` |
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/framework/esm-utils/src/patient-helpers.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L35)
 
 ___
 
@@ -6345,6 +6365,33 @@ need to override some of the default values.
 #### Defined in
 
 [packages/framework/esm-utils/src/test-helpers.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/test-helpers.ts#L13)
+
+___
+
+### getPatientName
+
+▸ **getPatientName**(`patient`): `string`
+
+Gets the formatted display name for a patient.
+
+The display name will be taken from the patient's 'usual' name,
+or may fall back to the patient's 'official' name.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `patient` | `Patient` | The patient details in FHIR format. |
+
+#### Returns
+
+`string`
+
+The patient's display name or an empty string if name is not present.
+
+#### Defined in
+
+[packages/framework/esm-utils/src/patient-helpers.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L14)
 
 ___
 
@@ -6466,7 +6513,7 @@ the preferred name for the patient, or undefined if no acceptable name could be 
 
 #### Defined in
 
-[packages/framework/esm-utils/src/patient-helpers.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L47)
+[packages/framework/esm-utils/src/patient-helpers.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L57)
 
 ___
 
