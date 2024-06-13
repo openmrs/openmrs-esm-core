@@ -6,169 +6,165 @@
 
 ### Properties
 
-- [carbonOptions](OpenmrsDatePickerProps.md#carbonoptions)
-- [dateFormat](OpenmrsDatePickerProps.md#dateformat)
+- [className](OpenmrsDatePickerProps.md#classname)
 - [defaultValue](OpenmrsDatePickerProps.md#defaultvalue)
-- [disabled](OpenmrsDatePickerProps.md#disabled)
-- [id](OpenmrsDatePickerProps.md#id)
-- [invalid](OpenmrsDatePickerProps.md#invalid)
-- [invalidText](OpenmrsDatePickerProps.md#invalidtext)
-- [labelText](OpenmrsDatePickerProps.md#labeltext)
+- [label](OpenmrsDatePickerProps.md#label)
+- [light](OpenmrsDatePickerProps.md#light)
 - [maxDate](OpenmrsDatePickerProps.md#maxdate)
 - [minDate](OpenmrsDatePickerProps.md#mindate)
-- [readonly](OpenmrsDatePickerProps.md#readonly)
+- [short](OpenmrsDatePickerProps.md#short)
+- [size](OpenmrsDatePickerProps.md#size)
 - [value](OpenmrsDatePickerProps.md#value)
 
 ### Methods
 
+- [isDateUnavailable](OpenmrsDatePickerProps.md#isdateunavailable)
 - [onChange](OpenmrsDatePickerProps.md#onchange)
 
 ## Properties
 
-### carbonOptions
+### className
 
-• `Optional` **carbonOptions**: `Object`
+• `Optional` **className**: `Argument`
 
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `className?` | `string` |
-| `datePickerType?` | ``"simple"`` \| ``"single"`` |
-| `light?` | `boolean` |
-| `onClose?` | `Function` |
-| `onOpen?` | `Function` |
-| `pickerInputStyle?` | `CSSProperties` |
-| `pickerShellStyle?` | `CSSProperties` |
-| `placeholder?` | `string` |
-| `warn?` | `boolean` |
-| `warnText?` | `string` |
+Any CSS classes to add to the outer div of the date picker
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L26)
-
-___
-
-### dateFormat
-
-• `Optional` **dateFormat**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L22)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L57)
 
 ___
 
 ### defaultValue
 
-• `Optional` **defaultValue**: `string` \| `Date`
+• `Optional` **defaultValue**: [`DateInputValue`](../API.md#dateinputvalue)
+
+The default value (uncontrolled)
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L18)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:61](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L61)
 
 ___
 
-### disabled
+### label
 
-• `Optional` **disabled**: `boolean`
+• `Optional` **label**: `string`
+
+The label for this DatePicker element
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L25)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L70)
 
 ___
 
-### id
+### light
 
-• **id**: `string`
+• `Optional` **light**: `boolean`
 
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L13)
-
-___
-
-### invalid
-
-• `Optional` **invalid**: `boolean`
+'true' to use the light version.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L23)
-
-___
-
-### invalidText
-
-• `Optional` **invalidText**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L24)
-
-___
-
-### labelText
-
-• **labelText**: `string`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L14)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:74](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L74)
 
 ___
 
 ### maxDate
 
-• `Optional` **maxDate**: `string` \| `Date`
+• `Optional` **maxDate**: [`DateInputValue`](../API.md#dateinputvalue)
+
+The latest date it is possible to select
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L20)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L78)
 
 ___
 
 ### minDate
 
-• `Optional` **minDate**: `string` \| `Date`
+• `Optional` **minDate**: [`DateInputValue`](../API.md#dateinputvalue)
+
+The earliest date it is possible to select
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L19)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L82)
 
 ___
 
-### readonly
+### short
 
-• `Optional` **readonly**: `boolean`
+• `Optional` **short**: `boolean`
+
+'true' to use the short version.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L21)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L94)
+
+___
+
+### size
+
+• `Optional` **size**: ``"sm"`` \| ``"md"`` \| ``"lg"``
+
+Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option.
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L90)
 
 ___
 
 ### value
 
-• `Optional` **value**: `string` \| `Date`
+• `Optional` **value**: [`DateInputValue`](../API.md#dateinputvalue)
+
+The value (controlled)
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L16)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L98)
 
 ## Methods
 
-### onChange
+### isDateUnavailable
 
-▸ **onChange**(`value`): `void`
+▸ `Optional` **isDateUnavailable**(`date`): `boolean`
+
+A callback that can be used to implement arbitrary logic to mark certain dates as
+unavailable to be selected.
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `value` | `Date` |
+| `date` | `DateValue` |
+
+#### Returns
+
+`boolean`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L66)
+
+___
+
+### onChange
+
+▸ `Optional` **onChange**(`date`): `void`
+
+Handler that is called when the value changes
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `date` | `DateValue` |
 
 #### Returns
 
@@ -176,4 +172,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L15)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L86)
