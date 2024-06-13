@@ -62,7 +62,7 @@ A list of backend modules that may enable optional functionality in this fronten
 
 #### Index signature
 
-▪ [key: `string`]: `string` \| { `feature?`: `string` ; `version`: `string`  }
+▪ [key: `string`]: `string` \| { `feature?`: [`FeatureFlagDefinition`](FeatureFlagDefinition.md) ; `version`: `string`  }
 
 The name of the backend dependency and either the required version or an object describing the required version
 

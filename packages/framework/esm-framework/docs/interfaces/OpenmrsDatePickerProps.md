@@ -46,7 +46,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L26)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L27)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L22)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L23)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L18)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L19)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L25)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L26)
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L13)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L14)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L23)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L24)
 
 ___
 
@@ -106,17 +106,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L24)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L25)
 
 ___
 
 ### labelText
 
-• **labelText**: `string`
+• **labelText**: `string` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L14)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L15)
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L20)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L21)
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L19)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L20)
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L21)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L22)
 
 ___
 
@@ -156,7 +156,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L16)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L17)
 
 ## Methods
 
@@ -176,4 +176,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L15)
+[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L16)
