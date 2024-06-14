@@ -112,7 +112,7 @@ function dateToInternationalizedDate(date: DateInputValue): DateValue | undefine
     return date as unknown as DateValue;
   } else {
     const date_ = dayjs(date).toDate();
-    return new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDay()) as unknown as DateValue;
+    return new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate()) as unknown as DateValue;
   }
 }
 
