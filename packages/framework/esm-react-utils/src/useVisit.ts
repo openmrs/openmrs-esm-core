@@ -37,13 +37,14 @@ export interface VisitReturnType {
  * API call is in progress. `mutate` refreshes the data from both API calls.
  *
  * @param patientUuid Unique patient identifier `string`
+ * @param representation The custom representation of the visit
  */
-export function useVisit(patientUuid: string): VisitReturnType {
+export function useVisit(patientUuid: string, representation = defaultVisitCustomRepresentation): VisitReturnType {
   const { patientUuid: visitStorePatientUuid, manuallySetVisitUuid } = useStore(getVisitStore());
   // Ignore the visit store data if it is not for this patient
   const retrospectiveVisitUuid = patientUuid && visitStorePatientUuid == patientUuid ? manuallySetVisitUuid : null;
-  const activeVisitUrlSuffix = `?patient=${patientUuid}&v=${defaultVisitCustomRepresentation}&includeInactive=false`;
-  const retrospectiveVisitUrlSuffix = `/${retrospectiveVisitUuid}`;
+  const activeVisitUrlSuffix = `?patient=${patientUuid}&v=${representation}&includeInactive=false`;
+  const retrospectiveVisitUrlSuffix = `/${retrospectiveVisitUuid}?v=${representation}`;
 
   const {
     data: activeData,
