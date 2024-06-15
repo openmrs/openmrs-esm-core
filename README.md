@@ -107,25 +107,25 @@ yarn build
 To run tests for all packages, run:
 
 ```bash
-yarn turbo test
+yarn turbo run test
 ```
 
 To run tests in `watch` mode, run:
 
 ```bash
-yarn turbo test:watch
+yarn turbo run test:watch
 ```
 
 To run tests for a specific package, pass the package name to the `--filter` flag. For example, to run tests for `esm-patient-conditions-app`, run:
 
 ```bash
-yarn turbo test --filter="esm-patient-conditions-app"
+yarn turbo run test --filter="esm-patient-conditions-app"
 ```
 
 To run a specific test file, run:
 
 ```bash
-yarn turbo test -- login
+yarn turbo run test -- login
 ```
 
 The above command will only run tests in the file or files that match the provided string.
@@ -133,19 +133,19 @@ The above command will only run tests in the file or files that match the provid
 You can also run the matching tests from above in watch mode by running:
 
 ```bash
-yarn turbo test:watch -- login.test
+yarn turbo run test:watch -- login.test
 ```
 
 To generate a `coverage` report, run:
 
 ```bash
-yarn turbo coverage
+yarn turbo run coverage
 ```
 
 By default, `turbo` will cache test runs. This means that re-running tests wihout changing any of the related files will return the cached logs from the last run. To bypass the cache, run tests with the `force` flag, as follows:
 
 ```bash
-yarn turbo test --force
+yarn turbo run test --force
 ```
 
 ### Linking the framework

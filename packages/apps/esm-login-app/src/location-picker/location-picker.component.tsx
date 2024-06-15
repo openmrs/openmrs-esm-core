@@ -84,28 +84,27 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
     state: LoginReferrer;
   };
 
+  const handleNavigation = useCallback(() => {
+    const referrer = state?.referrer;
+    const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
+
+    if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
+      navigate({ to: '${openmrsSpaBase}' + referrer });
+    } else if (returnToUrl && returnToUrl !== '/') {
+      navigate({ to: returnToUrl });
+    } else {
+      navigate({ to: config.links.loginSuccess });
+    }
+  }, [state?.referrer, location?.search, config.links.loginSuccess]);
+
   const changeLocation = useCallback(
     (locationUuid?: string, saveUserPreference?: boolean) => {
-      const referrer = state?.referrer;
-      const returnToUrl = new URLSearchParams(location?.search).get('returnToUrl');
-
-      const sessionDefined = setSessionLocation(locationUuid, new AbortController());
-
+      setIsSubmitting(true);
+      const sessionDefined = locationUuid ? setSessionLocation(locationUuid, new AbortController()) : Promise.resolve();
       updateDefaultLocation(locationUuid, saveUserPreference);
-      sessionDefined.then(() => {
-        if (referrer && !['/', '/login', '/login/location'].includes(referrer)) {
-          navigate({ to: '${openmrsSpaBase}' + referrer });
-          return;
-        }
-        if (returnToUrl && returnToUrl !== '/') {
-          navigate({ to: returnToUrl });
-        } else {
-          navigate({ to: config.links.loginSuccess });
-        }
-        return;
-      });
+      sessionDefined.then(handleNavigation);
     },
-    [state?.referrer, config.links.loginSuccess, updateDefaultLocation],
+    [updateDefaultLocation, handleNavigation],
   );
 
   // Handle cases where the location picker is disabled, there is only one location, or there are no locations.
@@ -287,13 +286,24 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ hideWelcomeMessage, cur
               checked={savePreference}
               onChange={(_, { checked }) => setSavePreference(checked)}
             />
-            <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
-              {isSubmitting ? (
-                <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
-              ) : (
-                <span>{getCoreTranslation('confirm')}</span>
-              )}
-            </Button>
+            <div className={styles.actionButtons}>
+              {isUpdateFlow ? (
+                <Button
+                  kind="secondary"
+                  disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+                  onClick={handleNavigation}
+                >
+                  <span>{getCoreTranslation('cancel')}</span>
+                </Button>
+              ) : null}
+              <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
+                {isSubmitting ? (
+                  <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
+                ) : (
+                  <span>{getCoreTranslation('confirm')}</span>
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </form>

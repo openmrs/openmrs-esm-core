@@ -1,5 +1,5 @@
 {
-  "emptyStateText": "There are no {{displayText}} to display",
+  "emptyStateText": "Il n'y a pas de {{texte}} à afficher",
   "home": "Accueil",
   "homeHeader": "Accueil hors ligne",
   "homeOverviewCardOfflineActionsFailedToUpload": "Échec du téléchargement",

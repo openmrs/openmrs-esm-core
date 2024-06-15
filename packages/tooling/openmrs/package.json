@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node ./dist/cli.js",
-    "test": "jest --passWithNoTests",
+    "test": "jest --passWithNoTests --color",
     "build": "tsc",
     "lint": "eslint src --ext ts,tsx"
   },

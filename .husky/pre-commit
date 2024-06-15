@@ -4,5 +4,5 @@
 set -e  # die on error
 
 npx lint-staged
-yarn turbo extract-translations
-yarn turbo document --since main
+yarn turbo run extract-translations
+yarn turbo run document -- --since main
