@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 import styles from './help-popup.styles.scss';
 import GenericModal from './subHelpMenu/tutorial';
+import { useTranslation } from 'react-i18next';
 
 export default function HelpMenuPopup(props) {
-  const [releaseNotesModalOpen, setReleaseNotesModalOpen] = useState(false);
+  const { t } = useTranslation();
   const [tutorialsModalOpen, setTutorialsModalOpen] = useState(false);
-
-  const handleReleaseNotesModalOpen = () => {
-    setReleaseNotesModalOpen(true);
-  };
-
-  const handleReleaseNotesModalClose = () => {
-    setReleaseNotesModalOpen(false);
-  };
 
   const handleTutorialsModalOpen = () => {
     setTutorialsModalOpen(true);
@@ -33,22 +26,22 @@ export default function HelpMenuPopup(props) {
           content="Welcome to OpenMRS 3.0.1! Here are some tutorials to help you get started."
         />
         <button className={styles.helpButton} onClick={props.close}>
-          Release Notes
+          {t('releaseNotes', 'Release Notes')}
         </button>
         <button className={styles.helpButton} onClick={handleTutorialsModalOpen}>
-          Tutorials
+          {t('tutorials', 'Tutorials')}
         </button>
         <button className={styles.helpButton} onClick={props.close}>
-          Contact us
+          {t('contactUs', 'Contact us')}
         </button>
         <button className={styles.helpButton} onClick={props.close}>
-          Docs
+          {t('docs', 'Docs')}
         </button>
         <button className={styles.helpButton} onClick={props.close}>
-          Feedback forum
+          {t('feedbackForum', 'Feedback Forum')}
         </button>
         <button className={styles.helpButton} onClick={props.close}>
-          OpenMRS 3.0.1
+          {t('version', 'OpenMRS 3.0.1')}
         </button>
       </div>
     </div>
