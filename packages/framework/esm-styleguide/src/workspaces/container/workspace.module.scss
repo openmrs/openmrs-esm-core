@@ -88,6 +88,8 @@ $actionPanelOffset: 3rem;
     top: var(--omrs-navbar-height);
     bottom: 0;
     border-left: 1px solid $text-03;
+    display: flex;
+    flex-direction: column;
   }
 
   .widerWorkspace {
@@ -132,6 +134,7 @@ $actionPanelOffset: 3rem;
 /* Tablet */
 :global(.omrs-breakpoint-lt-desktop) {
   .header {
+    position: relative;
     background-color: var(--brand-02);
 
     a {
@@ -148,10 +151,6 @@ $actionPanelOffset: 3rem;
     }
   }
 
-  .workspaceWindowSpacer {
-    display: none;
-  }
-
   .workspaceFixedContainer {
     position: fixed;
     top: 0;
@@ -159,11 +158,18 @@ $actionPanelOffset: 3rem;
     right: 0;
     bottom: 0;
     z-index: 8002;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .workspaceContainerWithActionMenu {
+    .workspaceFixedContainer {
+      bottom: var(--bottom-nav-height);
+    }
   }
 
   .overlay {
     background-color: $ui-02;
-    padding-top: spacing.$spacing-09;
     display: flex;
     flex-direction: column;
   }
@@ -195,9 +201,20 @@ $actionPanelOffset: 3rem;
 // Overriding styles for RTL support
 html[dir='rtl'] {
   :global(.omrs-breakpoint-gt-tablet) {
-    .workspaceFixedContainer {
-      margin-left: 3rem;
-      margin-right: unset;
+    .workspaceContainerWithActionMenu {
+      .workspaceFixedContainer {
+        right: unset;
+        left: $actionPanelOffset;
+      }
+    }
+
+    .workspaceContainerWithoutActionMenu {
+      height: 100%;
+
+      .workspaceFixedContainer {
+        right: unset;
+        left: 0;
+      }
     }
   }
 }

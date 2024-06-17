@@ -27,6 +27,7 @@ $actionPanelOffset: 3rem;
       width: $actionPanelOffset;
       border-left: 1px solid $text-03;
       display: flex;
+      align-items: center;
       flex-direction: column;
     }
   }
@@ -36,6 +37,7 @@ $actionPanelOffset: 3rem;
 :global(.omrs-breakpoint-lt-desktop) {
   .sideRail {
     border-top: 1px solid $color-gray-30;
+    background-color: $ui-02;
     height: var(--bottom-nav-height);
     position: fixed;
     left: 0;
@@ -75,8 +77,10 @@ $actionPanelOffset: 3rem;
 html[dir='rtl'] {
   :global(.omrs-breakpoint-gt-tablet) {
     .sideRail {
-      right: unset;
-      left: 0;
+      & .container {
+        right: unset;
+        left: 0;
+      }
     }
   }
 }

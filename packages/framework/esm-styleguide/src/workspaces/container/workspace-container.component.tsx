@@ -25,7 +25,6 @@ export function WorkspaceContainer({
             ? styles.workspaceContainerWithActionMenu
             : styles.workspaceContainerWithoutActionMenu
         }
-        test-id="container"
       >
         {overlay ? (
           <WorkspaceOverlay contextKey={contextKey} additionalWorkspaceProps={additionalWorkspaceProps} />
