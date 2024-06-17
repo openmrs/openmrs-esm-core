@@ -1,3 +1,5 @@
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
 @import '~@openmrs/esm-styleguide/src/vars';
 
 .popup {
@@ -27,15 +29,15 @@
 
 .helpButton {
   margin-bottom: 10px;
-  padding: 5px 10px;
+  padding: spacing.$spacing-02;
   cursor: pointer;
   border: none;
   background-color: transparent;
 }
 
 .modalContent {
-  padding: 2px;
-  margin: 3px;
+  // padding: 2px;
+  // margin: spacing.$spacing-03;
 }
 
 .modalHeader {

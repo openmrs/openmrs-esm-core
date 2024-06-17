@@ -5,5 +5,14 @@
       "component": "helpMenu",
       "route": true
     }
+  ],
+  "extensions": [
+    {
+      "name": "help-menu",
+      "slot": "help-menu-slot",
+      "component": "help",
+      "online": true,
+      "offline": true
+    }
   ]
 }

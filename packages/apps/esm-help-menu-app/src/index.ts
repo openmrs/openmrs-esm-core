@@ -1,5 +1,5 @@
-import { getAsyncLifecycle } from '@openmrs/esm-framework';
-
+import { getAsyncLifecycle, getSyncLifecycle } from '@openmrs/esm-framework';
+import Help from './helpMenu/help.component';
 export const importTranslation = () => Promise.resolve();
 
 const options = {
@@ -8,3 +8,4 @@ const options = {
 };
 
 export const helpMenu = getAsyncLifecycle(() => import('./helpMenu/help.component'), options);
+export const help = getSyncLifecycle(Help, options);

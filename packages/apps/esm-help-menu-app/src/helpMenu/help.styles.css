@@ -17,3 +17,19 @@
 .overridden {
   background-color: #da1e28;
 }
+
+.helpMenuExtension {
+  z-index: 7900;
+  background-color: #c6c6c6;
+  height: 80px !important;
+  width: 90px !important;
+  bottom: 90px;
+  right: 0px;
+  position: fixed;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 9px;
+  border-radius: 40px;
+}
