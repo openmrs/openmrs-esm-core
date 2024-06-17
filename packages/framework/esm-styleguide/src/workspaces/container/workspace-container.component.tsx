@@ -3,26 +3,25 @@ import { WorkspaceOverlay } from './workspace-overlay.component';
 import { WorkspaceWindow } from './workspace-window.component';
 import ActionMenu from './action-menu.component';
 import styles from './workspace.module.scss';
-import classNames from 'classnames';
 
 export interface WorkspaceContainerProps {
   contextKey: string;
   overlay?: boolean;
-  includeSiderailAndBottomNav?: boolean;
+  showSiderailAndBottomNav?: boolean;
   additionalWorkspaceProps?: object;
 }
 
 export function WorkspaceContainer({
   contextKey,
   overlay,
-  includeSiderailAndBottomNav,
+  showSiderailAndBottomNav,
   additionalWorkspaceProps,
 }: WorkspaceContainerProps) {
   return (
     <>
       <div
         className={
-          includeSiderailAndBottomNav
+          showSiderailAndBottomNav
             ? styles.workspaceContainerWithActionMenu
             : styles.workspaceContainerWithoutActionMenu
         }
@@ -34,7 +33,7 @@ export function WorkspaceContainer({
           <WorkspaceWindow contextKey={contextKey} additionalWorkspaceProps={additionalWorkspaceProps} />
         )}
       </div>
-      {includeSiderailAndBottomNav && <ActionMenu />}
+      {showSiderailAndBottomNav && <ActionMenu />}
     </>
   );
 }

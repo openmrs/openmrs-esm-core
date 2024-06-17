@@ -109,14 +109,19 @@ $actionPanelOffset: 3rem;
   .workspaceContent {
     background-color: $ui-02;
     overflow-y: auto;
-    height: var(--desktop-workspace-window-height);
+    flex-grow: 1;
+  }
+
+  // The parcel makes a div, between the workspace container and the workspace itself
+  .workspaceContent > div {
+    height: 100%;
   }
 
   .overlay {
     background-color: $ui-02;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
   }
 
   .overlayHeaderSpacer {
@@ -127,9 +132,6 @@ $actionPanelOffset: 3rem;
 /* Tablet */
 :global(.omrs-breakpoint-lt-desktop) {
   .header {
-    position: fixed;
-    top: 0;
-    z-index: 100;
     background-color: var(--brand-02);
 
     a {
@@ -156,20 +158,14 @@ $actionPanelOffset: 3rem;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 8001;
+    z-index: 8002;
   }
 
   .overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
     background-color: $ui-02;
     padding-top: spacing.$spacing-09;
-    display: grid;
-    grid-template-rows: 1fr auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .overlayCloseButton {
@@ -183,8 +179,12 @@ $actionPanelOffset: 3rem;
   .workspaceContent {
     background-color: $ui-01;
     overflow-y: auto;
-    margin-top: var(--omrs-navbar-height);
-    height: var(--tablet-workspace-window-height);
+    height: 100%;
+  }
+
+  // The parcel makes a div, between the workspace container and the workspace itself
+  .workspaceContent > div {
+    height: 100%;
   }
 
   .dynamicWidth {

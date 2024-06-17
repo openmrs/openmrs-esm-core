@@ -36,11 +36,11 @@ $actionPanelOffset: 3rem;
 :global(.omrs-breakpoint-lt-desktop) {
   .sideRail {
     border-top: 1px solid $color-gray-30;
+    height: var(--bottom-nav-height);
     position: fixed;
-    background: #ededed;
     left: 0;
     bottom: 0;
-    z-index: 8002;
+    z-index: 8003;
     width: 100%;
     display: flex;
     justify-content: stretch;
