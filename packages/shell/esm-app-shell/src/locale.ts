@@ -43,7 +43,7 @@ export function setupI18n() {
             getTranslationOverrides(namespace),
           ])
             .then(([json, overrides]) => {
-              let translations = json ?? {};
+              let translations = json?.default ?? {};
 
               if (language in overrides) {
                 translations = merge(translations, overrides[language]);
