@@ -1,10 +1,10 @@
-import { defineConfigSchema, getSyncLifecycle } from '@openmrs/esm-framework';
+import { defineConfigSchema, getAsyncLifecycle, getSyncLifecycle } from '@openmrs/esm-framework';
 import { configSchema } from './config-schema';
 import rootComponent from './root.component';
 import locationPickerComponent from './location-picker/location-picker.component';
 import changeLocationLinkComponent from './change-location-link/change-location-link.extension';
+import changePasswordLinkComponent from './change-password/change-password.extension';
 import logoutButtonComponent from './logout/logout.extension';
-
 const moduleName = '@openmrs/esm-login-app';
 
 const options = {
@@ -22,3 +22,6 @@ export const root = getSyncLifecycle(rootComponent, options);
 export const locationPicker = getSyncLifecycle(locationPickerComponent, options);
 export const logoutButton = getSyncLifecycle(logoutButtonComponent, options);
 export const changeLocationLink = getSyncLifecycle(changeLocationLinkComponent, options);
+export const passwordChanger = getSyncLifecycle(changePasswordLinkComponent, options);
+
+export const changePasswordModal = getAsyncLifecycle(() => import('./change-password/change-password.modal'), options);
