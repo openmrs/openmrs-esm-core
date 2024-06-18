@@ -76,5 +76,10 @@
     "@carbon/icons-react": "11.37.0",
     "minipass": "3.3.5"
   },
-  "packageManager": "yarn@4.2.2"
+  "packageManager": "yarn@4.2.2",
+  "dependencies": {
+    "@hookform/resolvers": "^3.6.0",
+    "react-hook-form": "^7.52.0",
+    "zod": "^3.23.8"
+  }
 }

@@ -511,6 +511,12 @@ export const UserXrayIcon = memo(
   }),
 );
 
+export const PasswordIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function PasswordIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-password" iconProps={props} />;
+  }),
+);
+
 /**
  */
 export const UserIcon = memo(

@@ -45,6 +45,7 @@ import pedestrianFamily from './svgs/pedestrian-family.svg';
 import pen from './svgs/pen.svg';
 import printer from './svgs/printer.svg';
 import renew from './svgs/renew.svg';
+import password from './svgs/password.svg';
 import reset from './svgs/reset.svg';
 import save from './svgs/save.svg';
 import search from './svgs/search.svg';
@@ -114,6 +115,7 @@ export function setupIcons() {
   addSvg('omrs-icon-pen', pen);
   addSvg('omrs-icon-printer', printer);
   addSvg('omrs-icon-renew', renew);
+  addSvg('omrs-icon-password', password);
   addSvg('omrs-icon-reset', reset);
   addSvg('omrs-icon-search', search);
   addSvg('omrs-icon-save', save);
