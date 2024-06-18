@@ -26,15 +26,15 @@ export default function ChangeLanguageModal({ close }: ChangePasswordModalProps)
         <div className={styles.languageOptionsContainer}>
           <Form>
             <PasswordInput
-              onChange={(event: ChangeEvent) => setOldPassword(event.target.nodeValue)}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => setOldPassword(event.target.value)}
               labelText={t('oldPassword', 'Old Password')}
             />
             <PasswordInput
-              onChange={(event: ChangeEvent) => setNewPassword(event.target.nodeValue)}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => setNewPassword(event.target.value)}
               labelText={t('newPassword', 'New Password')}
             />
             <PasswordInput
-              onChange={(event: ChangeEvent) => setConfirmPassword(event.target.nodeValue)}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => setConfirmPassword(event.target.value)}
               labelText={t('confirmPassword', 'Confirm New Password')}
             />
           </Form>
