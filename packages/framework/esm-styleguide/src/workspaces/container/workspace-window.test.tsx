@@ -13,16 +13,6 @@ jest.mock('./workspace-renderer.component', () => ({
   WorkspaceRenderer: jest.fn().mockImplementation(() => <div>Workspace-Renderer</div>),
 }));
 
-jest.mock('@openmrs/esm-react-utils', () => {
-  const originalModule = jest.requireActual('@openmrs/esm-react-utils');
-
-  return {
-    ...originalModule,
-    isDesktop: jest.fn(),
-    useBodyScrollLock: jest.fn(),
-  };
-});
-
 jest.mock('@openmrs/esm-translations', () => {
   const originalModule = jest.requireActual('@openmrs/esm-translations');
 
@@ -75,15 +65,15 @@ describe('WorkspaceWindow', () => {
     act(() => launchWorkspace('Clinical Form'));
     const header = screen.getByRole('banner');
     expect(within(header).getByText('Clinical Form')).toBeInTheDocument();
-    expect(screen.getByRole('complementary')).not.toHaveClass('maximized');
+    expect(screen.getByRole('complementary')).not.toHaveClass('maximizedWindow');
 
     const maximizeButton = await screen.findByRole('button', { name: 'Maximize' });
     await user.click(maximizeButton);
-    expect(screen.getByRole('complementary')).toHaveClass('maximized');
+    expect(screen.getByRole('complementary')).toHaveClass('maximizedWindow');
 
     const minimizeButton = await screen.findByRole('button', { name: 'Minimize' });
     await user.click(minimizeButton);
-    expect(screen.getByRole('complementary')).not.toHaveClass('maximized');
+    expect(screen.getByRole('complementary')).not.toHaveClass('maximizedWindow');
   });
 });
 
