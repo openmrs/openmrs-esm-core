@@ -1,5 +1,6 @@
 {
   "back": "Atrás",
+  "backToUserNameIconLabel": "Back to username",
   "change": "Cambiar",
   "continue": "Continuar",
   "errorLoadingLoginLocations": "Error loading login locations",
@@ -21,6 +22,7 @@
   "rememberLocationForFutureLogins": "Remember my location for future logins",
   "searchForLocation": "Buscar una ubicación",
   "selectYourLocation": "Selecciona tu ubicación de la lista de abajo. Utiliza la barra de búsqueda para encontrar tu ubicación.",
+  "showPassword": "Show password",
   "submitting": "Enviando",
   "tryAgain": "Try again",
   "username": "Nombre de usuario",
