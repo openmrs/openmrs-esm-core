@@ -4,6 +4,8 @@ import { Button, InlineLoading, ModalBody, ModalFooter, ModalHeader } from '@car
 import styles from './change-password-modal.scss';
 import { Form, PasswordInput } from '@carbon/react';
 import { changeUserPassword } from './change-password.resource';
+import { InlineNotification } from '@carbon/react';
+import { type OpenmrsFetchError } from '@openmrs/esm-framework';
 
 interface ChangePasswordModalProps {
   close(): void;
@@ -17,14 +19,23 @@ export default function ChangeLanguageModal({ close }: ChangePasswordModalProps)
   const [confirmPassword, setConfirmPassword] = useState<string>();
   const [invalid, setInvalid] = useState(false);
   const [invalidText, setInvalidText] = useState<string>();
+  const [showInline, setShowInline] = useState(false);
+  const [backEndErrorMessage, setBackEndErrorMessage] = useState('');
 
   const handleSubmit = useCallback(() => {
     setIsChangingPassword(true);
-    if (!newPassword && newPassword === confirmPassword) {
-      changeUserPassword(oldPassword, newPassword);
+    if (typeof newPassword === 'string' && !!newPassword.length && newPassword === confirmPassword) {
+      changeUserPassword(oldPassword, newPassword)
+        .then()
+        .catch((response: OpenmrsFetchError) => {
+          setShowInline(true);
+          setIsChangingPassword(false);
+          if (typeof response.responseBody === 'object') {
+            setBackEndErrorMessage(response.responseBody?.localizedMessage);
+          }
+        });
     } else {
       setIsChangingPassword(false);
-
       setInvalid(true);
       setInvalidText(t('passwordConfirmPasswordNotTheSame', 'New password and comfirm password are not the same'));
     }
@@ -36,6 +47,13 @@ export default function ChangeLanguageModal({ close }: ChangePasswordModalProps)
       <ModalBody>
         <div className={styles.languageOptionsContainer}>
           <Form>
+            {showInline && (
+              <InlineNotification
+                kind="error"
+                title={t('errorUpdatingPassword', 'Error updating password')}
+                subtitle={backEndErrorMessage}
+              />
+            )}
             <PasswordInput
               onChange={(event: ChangeEvent<HTMLInputElement>) => setOldPassword(event.target.value)}
               labelText={t('oldPassword', 'Old Password')}
