@@ -35,11 +35,6 @@
   background-color: transparent;
 }
 
-.modalContent {
-  // padding: 2px;
-  // margin: spacing.$spacing-03;
-}
-
 .modalHeader {
   background-color: #f4f4f4;
   padding: 16px;
@@ -52,7 +47,7 @@
   padding: 20px;
   font-size: 1rem;
   line-height: 1.5;
-  max-height: 400px; // Adjust as needed
+  max-height: 400px;
   overflow-y: auto;
 }
 
@@ -65,20 +60,4 @@
 
 .modalButton {
   margin-left: 10px;
-}
-
-.input-field {
-  margin-bottom: 1rem;
-}
-
-.select-field {
-  margin-bottom: 1rem;
-}
-
-.dropdown-field {
-  margin-bottom: 1rem;
-}
-
-.multiselect-field {
-  margin-bottom: 1rem;
 }

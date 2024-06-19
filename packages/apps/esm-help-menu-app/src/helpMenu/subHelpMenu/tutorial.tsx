@@ -5,8 +5,14 @@ import { ComposedModal, Button } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@carbon/react';
 import { navigate } from '@openmrs/esm-framework';
+
 export default function GenericModal({ isOpen, onClose, heading, label, content }) {
   const { t } = useTranslation();
+  const home = () => {
+    navigate({ to: '${openmrsSpaBase}/home' });
+    onClose();
+  };
+
   return (
     <>
       {typeof document === 'undefined'
@@ -22,12 +28,12 @@ export default function GenericModal({ isOpen, onClose, heading, label, content 
               secondaryButtonText="Cancel"
             >
               <div className={styles.modalContent}>
-                <div className={styles.modalHeader}>{heading}</div>{' '}
+                <div className={styles.modalHeader}>{heading}</div>
                 <div className={styles.modalBody}>
-                  <p className={styles.inputField}>{content}</p>{' '}
+                  <p className={styles.inputField}>{content}</p>
                 </div>
                 <div className={styles.modalFooter}>
-                  <Button kind="primary" onClick={onClose} className={styles.modalButton}>
+                  <Button kind="primary" onClick={home} className={styles.modalButton}>
                     {t('home', 'Home')}
                   </Button>
                 </div>

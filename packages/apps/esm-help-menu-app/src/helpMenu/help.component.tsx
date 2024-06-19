@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import HelpMenuPopup from './help-popup.component';
 import styles from './help.styles.css';
 import { Help } from '@carbon/react/icons';
-import { useExtensionStore, ExtensionSlot } from '@openmrs/esm-framework';
 
 export default function Root(props) {
   return window.spaEnv === 'development' || Boolean(localStorage.getItem('openmrs:devtools')) ? (
@@ -15,27 +14,47 @@ export default function Root(props) {
 
 function HelpMenu() {
   const [helpMenuOpen, setHelpMenuOpen] = useState(false);
-  const extensionStore = useExtensionStore();
+
+  const toggleHelpMenu = () => {
+    setHelpMenuOpen((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(`.${styles.helpMenuButton}`) && !event.target.closest(`.${styles.popup}`)) {
+        setHelpMenuOpen(false);
+      }
+    };
+
+    if (helpMenuOpen) {
+      document.addEventListener('click', handleClickOutside);
+    } else {
+      document.removeEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [helpMenuOpen]);
 
   return (
     <>
-      <ExtensionSlot className={styles.helpMenuExtension} name="help-menu-slot">
-        <div
-          role="button"
-          onClick={toggleHelpMenu}
-          className={classNames(styles.helpMenuButton, {})}
-          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '2' }}
-        >
-          <div>
-            <Help size={24} />
-          </div>
-        </div>
-        {helpMenuOpen && <HelpMenuPopup close={toggleHelpMenu} />}
-      </ExtensionSlot>
+      <div
+        role="button"
+        onClick={toggleHelpMenu}
+        className={classNames(styles.helpMenuButton)}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '40px',
+          height: '40px',
+          cursor: 'pointer',
+        }}
+      >
+        <Help size={24} />
+      </div>
+      {helpMenuOpen && <HelpMenuPopup close={toggleHelpMenu} />}
     </>
   );
-
-  function toggleHelpMenu() {
-    setHelpMenuOpen(!helpMenuOpen);
-  }
 }
