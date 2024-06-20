@@ -1,5 +1,5 @@
 import React from 'react';
-import Root from './help.component';
+import Root from './root.component';
 import { render } from '@testing-library/react';
 
 describe(`<Root />`, () => {

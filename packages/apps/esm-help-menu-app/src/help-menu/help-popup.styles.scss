@@ -1,0 +1,16 @@
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.popup {
+  position: fixed;
+  flex: auto;
+  bottom: 5rem;
+  right: 2.5rem;
+  width: 11rem;
+  z-index: 8000;
+  background-color: $ui-02;
+  padding: spacing.$spacing-05;
+  margin: spacing.$spacing-05;
+  box-shadow: 0 12px 24px 0 $ui-03;
+}

@@ -8,9 +8,23 @@
   ],
   "extensions": [
     {
-      "name": "help-menu",
+      "name": "release-note",
       "slot": "help-menu-slot",
-      "component": "help",
+      "component": "releaseNotes",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "docs",
+      "slot": "help-menu-slot",
+      "component": "docs",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "contact-us",
+      "slot": "help-menu-slot",
+      "component": "contact",
       "online": true,
       "offline": true
     }
