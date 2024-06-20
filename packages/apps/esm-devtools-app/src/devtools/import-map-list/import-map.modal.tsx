@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { addRoutesOverride, removeRoutesOverride } from '@openmrs/esm-framework/src/internal';
 import { Button, Form, ModalHeader, ModalBody, ModalFooter, TextInput } from '@carbon/react';
 import type { Module } from './types';
-import styles from './modal.scss';
+import styles from './import-map.scss';
 
 type ImportMapModalProps = ({ module: Module; isNew: false } | { module: never; isNew: true }) & { close: () => void };
 
