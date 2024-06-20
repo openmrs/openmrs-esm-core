@@ -9,13 +9,12 @@ const ChangeLocationLink: React.FC = () => {
   const { t } = useTranslation();
   const session = useSession();
   const currentLocation = session?.sessionLocation?.display;
-  const referer = window.location.pathname;
 
   const changeLocation = () => {
     // update=true is passed as a query param for updating the location preference,
     // The location picker won't redirect with default location on finding the update=true param.
     navigate({
-      to: `\${openmrsSpaBase}/login/location?returnToUrl=${referer}&update=true`,
+      to: `\${openmrsSpaBase}/login/location?returnToUrl=${window.location.pathname}&update=true`,
     });
   };
 

@@ -59,9 +59,13 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
 };
 
 const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
-  const { patient } = usePatient(patientId);
+  const { patient, isLoading } = usePatient(patientId);
   const address = patient?.address?.find((a) => a.use === 'home');
   const getAddressKey = (url) => url.split('#')[1];
+
+  if (isLoading) {
+    return <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />;
+  }
 
   return (
     <>

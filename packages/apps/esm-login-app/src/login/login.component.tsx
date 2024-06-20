@@ -172,7 +172,7 @@ const Login: React.FC = () => {
             <div className={styles.backButtonDiv}>
               <Button
                 className={styles.backButton}
-                iconDescription="Back to username"
+                iconDescription={t('backToUserNameIconLabel', 'Back to username')}
                 kind="ghost"
                 onClick={() => navigate('/login')}
                 renderIcon={(props) => <ArrowLeftIcon {...props} size={24} />}
@@ -233,7 +233,8 @@ const Login: React.FC = () => {
                   onChange={changePassword}
                   ref={passwordInputRef}
                   required
-                  showPasswordLabel="Show password"
+                  showPasswordLabel={t('showPassword', 'Show password')}
+                  value={password}
                 />
                 {/* For password managers */}
                 {showPasswordOnSeparateScreen && (
@@ -282,7 +283,11 @@ const Login: React.FC = () => {
 const Logo: React.FC<{ t: TFunction }> = ({ t }) => {
   const { logo } = useConfig<ConfigSchema>();
   return logo.src ? (
-    <img alt={logo.alt ? t(logo.alt) :  t('openmrsLogo', 'OpenMRS logo')} className={styles.logoImg} src={interpolateUrl(logo.src)} />
+    <img
+      alt={logo.alt ? t(logo.alt) : t('openmrsLogo', 'OpenMRS logo')}
+      className={styles.logoImg}
+      src={interpolateUrl(logo.src)}
+    />
   ) : (
     <svg role="img" className={styles.logo}>
       <title>{t('openmrsLogo', 'OpenMRS logo')}</title>

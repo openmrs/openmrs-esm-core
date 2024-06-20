@@ -7,13 +7,16 @@ import type { FetchResponse, NewVisitPayload, UpdateVisitPayload, Visit } from '
 import { getGlobalStore } from '@openmrs/esm-state';
 
 export const defaultVisitCustomRepresentation =
-  'custom:(uuid,encounters:(uuid,encounterDatetime,' +
+  'custom:(uuid,display,voided,indication,startDatetime,stopDatetime,' +
+  'encounters:(uuid,display,encounterDatetime,' +
   'form:(uuid,name),location:ref,' +
-  'encounterType:ref,encounterProviders:(uuid,display,' +
-  'provider:(uuid,display))),patient:(uuid,uuid),' +
+  'encounterType:ref,' +
+  'encounterProviders:(uuid,display,' +
+  'provider:(uuid,display))),' +
+  'patient:(uuid,display),' +
   'visitType:(uuid,name,display),' +
   'attributes:(uuid,display,attributeType:(name,datatypeClassname,uuid),value),' +
-  'location:(uuid,name,display),startDatetime,stopDatetime)';
+  'location:(uuid,name,display))';
 
 export interface VisitStoreState {
   patientUuid: string | null;
