@@ -33,5 +33,6 @@
   "tryAgain": "Try again",
   "username": "Username",
   "validValueRequired": "A valid value is required",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "passwordSuccessfullyChanged": "Password successfully changed"
 }

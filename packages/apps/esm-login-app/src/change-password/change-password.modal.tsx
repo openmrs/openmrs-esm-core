@@ -5,7 +5,7 @@ import styles from './change-password-modal.scss';
 import { Form, PasswordInput } from '@carbon/react';
 import { changeUserPassword } from './change-password.resource';
 import { InlineNotification } from '@carbon/react';
-import { type OpenmrsFetchError } from '@openmrs/esm-framework';
+import { showSnackbar, type OpenmrsFetchError } from '@openmrs/esm-framework';
 
 interface ChangePasswordModalProps {
   close(): void;
@@ -29,6 +29,11 @@ export default function ChangePasswordModal({ close }: ChangePasswordModalProps)
         .then(() => {
           setIsChangingPassword(false);
           close();
+          showSnackbar({
+            title: t('passwordSuccessfullyChanged', 'Password successfully changed'),
+            kind: 'success',
+            isLowContrast: true,
+          });
         })
         .catch((response: OpenmrsFetchError) => {
           setShowInline(true);

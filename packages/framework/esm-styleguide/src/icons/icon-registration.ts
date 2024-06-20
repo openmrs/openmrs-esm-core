@@ -29,6 +29,7 @@ import listChecked from './svgs/list-checked.svg';
 import location from './svgs/location.svg';
 import microscope from './svgs/microscope.svg';
 import money from './svgs/money.svg';
+import password from './svgs/password.svg';
 import reset from './svgs/reset.svg';
 import save from './svgs/save.svg';
 import search from './svgs/search.svg';
@@ -75,6 +76,7 @@ export function setupIcons() {
   addSvg('omrs-icon-location', location);
   addSvg('omrs-icon-microscope', microscope);
   addSvg('omrs-icon-money', money);
+  addSvg('omrs-icon-password', password);
   addSvg('omrs-icon-reset', reset);
   addSvg('omrs-icon-search', search);
   addSvg('omrs-icon-save', save);
