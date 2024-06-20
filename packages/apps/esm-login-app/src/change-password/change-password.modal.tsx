@@ -1,6 +1,6 @@
 import React, { type ChangeEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, InlineLoading, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
+import { Button, InlineLoading, ModalBody, ModalFooter, ModalHeader, Stack } from '@carbon/react';
 import styles from './change-password-modal.scss';
 import { Form, PasswordInput } from '@carbon/react';
 import { changeUserPassword } from './change-password.resource';
@@ -11,7 +11,7 @@ interface ChangePasswordModalProps {
   close(): void;
 }
 
-export default function ChangeLanguageModal({ close }: ChangePasswordModalProps) {
+export default function ChangePasswordModal({ close }: ChangePasswordModalProps) {
   const { t } = useTranslation();
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [oldPassword, setOldPassword] = useState<string>();
@@ -26,7 +26,10 @@ export default function ChangeLanguageModal({ close }: ChangePasswordModalProps)
     setIsChangingPassword(true);
     if (typeof newPassword === 'string' && !!newPassword.length && newPassword === confirmPassword) {
       changeUserPassword(oldPassword, newPassword)
-        .then()
+        .then(() => {
+          setIsChangingPassword(false);
+          close();
+        })
         .catch((response: OpenmrsFetchError) => {
           setShowInline(true);
           setIsChangingPassword(false);
@@ -47,29 +50,31 @@ export default function ChangeLanguageModal({ close }: ChangePasswordModalProps)
       <ModalBody>
         <div className={styles.languageOptionsContainer}>
           <Form>
-            {showInline && (
-              <InlineNotification
-                kind="error"
-                title={t('errorUpdatingPassword', 'Error updating password')}
-                subtitle={backEndErrorMessage}
+            <Stack gap={4}>
+              {showInline && (
+                <InlineNotification
+                  kind="error"
+                  title={t('errorUpdatingPassword', 'Error updating password')}
+                  subtitle={backEndErrorMessage}
+                />
+              )}
+              <PasswordInput
+                onChange={(event: ChangeEvent<HTMLInputElement>) => setOldPassword(event.target.value)}
+                labelText={t('oldPassword', 'Old Password')}
               />
-            )}
-            <PasswordInput
-              onChange={(event: ChangeEvent<HTMLInputElement>) => setOldPassword(event.target.value)}
-              labelText={t('oldPassword', 'Old Password')}
-            />
-            <PasswordInput
-              onChange={(event: ChangeEvent<HTMLInputElement>) => setNewPassword(event.target.value)}
-              labelText={t('newPassword', 'New Password')}
-              invalid={invalid}
-              invalidText={invalidText}
-            />
-            <PasswordInput
-              onChange={(event: ChangeEvent<HTMLInputElement>) => setConfirmPassword(event.target.value)}
-              labelText={t('confirmPassword', 'Confirm New Password')}
-              invalid={invalid}
-              invalidText={invalidText}
-            />
+              <PasswordInput
+                onChange={(event: ChangeEvent<HTMLInputElement>) => setNewPassword(event.target.value)}
+                labelText={t('newPassword', 'New Password')}
+                invalid={invalid}
+                invalidText={invalidText}
+              />
+              <PasswordInput
+                onChange={(event: ChangeEvent<HTMLInputElement>) => setConfirmPassword(event.target.value)}
+                labelText={t('confirmPassword', 'Confirm New Password')}
+                invalid={invalid}
+                invalidText={invalidText}
+              />
+            </Stack>
           </Form>
         </div>
       </ModalBody>
