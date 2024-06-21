@@ -10,27 +10,27 @@
 .calendarGrid {
   width: 17rem;
 
-  & tr,
-  & tr > th,
-  & tr > td {
+  tr,
+  tr > th,
+  tr > td {
     height: 2.428rem;
     width: 2.428rem;
   }
 
-  & > thead > tr > th {
+  > thead > tr > th {
     @include type.type-style('body-compact-01');
     cursor: default;
     text-align: center;
     vertical-align: middle;
   }
 
-  & > tbody > tr > td {
+  > tbody > tr > td {
     @include type.type-style('body-compact-01');
     cursor: pointer;
     text-align: center;
     vertical-align: middle;
 
-    & > div {
+    > div {
       outline: unset;
     }
 
@@ -38,7 +38,7 @@
       background-color: theme.$layer-hover;
     }
 
-    & [aria-disabled='true'] {
+    [aria-disabled] {
       color: theme.$text-disabled;
       cursor: default;
     }
@@ -61,7 +61,7 @@
     background-color: theme.$layer-hover;
   }
 
-  & > svg {
+  > svg {
     display: block;
     margin: auto;
     text-align: center;
@@ -143,15 +143,15 @@
   margin-block-end: spacing.$spacing-01;
   text-align: center;
 
-  & > span {
+  > span {
     margin-left: spacing.$spacing-02;
     margin-right: spacing.$spacing-02;
   }
 
-  & div:has(input[inputmode='numeric']) {
+  div:has(input[inputmode='numeric']) {
     display: inline;
 
-    & > input[inputmode='numeric'] {
+    > input[inputmode='numeric'] {
       @include component-reset.reset;
       @include type.type-style('heading-compact-01');
       background-color: var(--cds-field);
@@ -190,7 +190,7 @@
       }
     }
 
-    & div[role='group'] {
+    div[role='group'] {
       @include component-reset.reset;
       display: inline;
       position: relative;
@@ -200,7 +200,7 @@
       opacity: 1;
     }
 
-    & button {
+    button {
       @include component-reset.reset;
       position: absolute;
       padding: 0 spacing.$spacing-02 0 spacing.$spacing-01;
@@ -270,13 +270,13 @@
   }
 
   .monthYear {
-    & div:has(input[inputmode='numeric']) {
-      & > input[inputmode='numeric'] {
+    div:has(input[inputmode='numeric']) {
+      > input[inputmode='numeric'] {
         padding-right: spacing.$spacing-02;
       }
     }
 
-    & button {
+    button {
       &[slot='increment'] {
         top: 0;
         left: unset;
