@@ -19,6 +19,7 @@ import {
   DateInput,
   DatePicker,
   type DatePickerProps,
+  DatePickerStateContext,
   DateSegment,
   Dialog,
   Group,
@@ -31,7 +32,7 @@ import {
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
 import styles from './datepicker.module.scss';
-import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons';
+import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon, WarningIcon } from '../icons';
 
 /** A type for any of the acceptable date formats */
 export type DateInputValue =
@@ -166,6 +167,15 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
   },
 );
 
+const DatePickerIcon = forwardRef<Element>(function DatePickerIcon(props, ref) {
+  const state = useContext(DatePickerStateContext);
+  return state.isInvalid ? (
+    <WarningIcon className="cds--date-picker__icon cds--date-picker__icon--invalid" size={16} />
+  ) : (
+    <CalendarIcon className="cds--date-picker__icon" size={16} />
+  );
+});
+
 /**
  * A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
  */
@@ -232,7 +242,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                   }}
                 </DateInput>
                 <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
-                  <CalendarIcon size={16} />
+                  <DatePickerIcon />
                 </Button>
               </Group>
             </div>

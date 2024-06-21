@@ -94,6 +94,11 @@
   &.cds--focused {
     @include focus.focus-outline('outline');
   }
+
+  &[data-invalid] {
+    @include focus.focus-outline('invalid');
+    color: theme.$support-error;
+  }
 }
 
 .inputWrapper {
@@ -162,6 +167,10 @@
 
       &:focus {
         @include focus.focus-outline('border');
+      }
+
+      &[data-invalid] {
+        @include focus.focus-outline('invalid');
       }
 
       &[data-disabled],
