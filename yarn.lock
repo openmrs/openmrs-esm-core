@@ -1951,15 +1951,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@internationalized/date@npm:^3.5.0":
-  version: 3.5.0
-  resolution: "@internationalized/date@npm:3.5.0"
-  dependencies:
-    "@swc/helpers": "npm:^0.5.0"
-  checksum: 10/16dfbc20b2f2b2275cb0752ba3d4e3dc967119c1041f40d61e7aced754e3473388f33759d299ad8864bc39a1aba63f119df4d3e2e1e0a3b43e58179e3ab167ea
-  languageName: node
-  linkType: hard
-
 "@internationalized/date@npm:^3.5.4":
   version: 3.5.4
   resolution: "@internationalized/date@npm:3.5.4"
@@ -3396,7 +3387,7 @@ __metadata:
   dependencies:
     "@carbon/charts": "npm:^1.12.0"
     "@carbon/react": "npm:~1.37.0"
-    "@internationalized/date": "npm:^3.5.0"
+    "@internationalized/date": "npm:^3.5.4"
     "@openmrs/esm-error-handling": "workspace:*"
     "@openmrs/esm-extensions": "workspace:*"
     "@openmrs/esm-navigation": "workspace:*"
@@ -3451,7 +3442,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-utils@workspace:packages/framework/esm-utils"
   dependencies:
-    "@internationalized/date": "npm:^3.5.0"
+    "@internationalized/date": "npm:^3.5.4"
     "@openmrs/esm-globals": "workspace:*"
     "@types/semver": "npm:^7.3.4"
     dayjs: "npm:^1.10.4"

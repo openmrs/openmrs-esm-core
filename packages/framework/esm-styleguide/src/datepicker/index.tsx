@@ -9,24 +9,24 @@ import React, {
 } from 'react';
 import classNames, { type Argument } from 'classnames';
 import { CalendarDate, CalendarDateTime, ZonedDateTime } from '@internationalized/date';
-import { I18nProvider, useLocale } from 'react-aria';
+import { I18nProvider, type DateValue, useLocale } from 'react-aria';
 import {
+  Button,
   Calendar,
   CalendarGrid,
   CalendarCell,
   CalendarStateContext,
   DateInput,
   DatePicker,
-  type DateValue,
+  type DatePickerProps,
   DateSegment,
   Dialog,
   Group,
+  Input,
   Label,
+  NumberField,
   Popover,
   RangeCalendarStateContext,
-  NumberField,
-  Input,
-  Button,
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
@@ -45,7 +45,12 @@ export type DateInputValue =
   | null
   | undefined;
 
-export interface OpenmrsDatePickerProps {
+/**
+ * Properties for the OpenmrsDatePicker
+ */
+export interface OpenmrsDatePickerProps
+  // omits here for features we have custom implementations of
+  extends Omit<DatePickerProps<CalendarDate>, 'className' | 'defaultValue' | 'value'> {
   /**
    * Any CSS classes to add to the outer div of the date picker
    */
@@ -54,11 +59,6 @@ export interface OpenmrsDatePickerProps {
    * The default value (uncontrolled)
    */
   defaultValue?: DateInputValue;
-  /**
-   * A callback that can be used to implement arbitrary logic to mark certain dates as
-   * unavailable to be selected.
-   */
-  isDateUnavailable?: (date: DateValue) => boolean;
   /**
    * The label for this DatePicker element
    */
@@ -75,10 +75,6 @@ export interface OpenmrsDatePickerProps {
    * The earliest date it is possible to select
    */
   minDate?: DateInputValue;
-  /**
-   * Handler that is called when the value changes
-   */
-  onChange?: (date: DateValue) => void;
   /**
    * Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option.
    */
@@ -108,11 +104,10 @@ function dateToInternationalizedDate(date: DateInputValue): DateValue | undefine
   }
 
   if (date instanceof CalendarDate || date instanceof CalendarDateTime || date instanceof ZonedDateTime) {
-    // TODO need this casting because DateValue doesn't seem to work as-is'
-    return date as unknown as DateValue;
+    return date;
   } else {
     const date_ = dayjs(date).toDate();
-    return new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate()) as unknown as DateValue;
+    return new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate());
   }
 }
 
@@ -179,15 +174,14 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const {
       className,
       defaultValue: rawDefaultValue,
-      isDateUnavailable,
       label,
       light,
       maxDate: rawMaxDate,
       minDate: rawMinDate,
-      onChange,
       short,
       size,
       value: rawValue,
+      ...datePickerProps
     } = Object.assign({}, defaultProps, props);
 
     const defaultValue = useMemo(() => dateToInternationalizedDate(rawDefaultValue), [rawDefaultValue]);
@@ -215,11 +209,10 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
               ['cds--date-picker--light']: light,
             })}
             defaultValue={defaultValue}
-            isDateUnavailable={isDateUnavailable}
             maxValue={maxDate}
             minValue={minDate}
-            onChange={onChange}
             value={value}
+            {...datePickerProps}
           >
             <div className="cds--date-picker-container">
               {label && <Label className="cds--label">{label}</Label>}
