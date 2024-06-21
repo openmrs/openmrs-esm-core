@@ -6,17 +6,23 @@ import React, {
   type RefObject,
   useContext,
   useCallback,
+  useRef,
+  cloneElement,
+  Children,
 } from 'react';
 import classNames, { type Argument } from 'classnames';
-import { CalendarDate, CalendarDateTime, ZonedDateTime } from '@internationalized/date';
-import { I18nProvider, type DateValue, useLocale } from 'react-aria';
+import { createCalendar, CalendarDate, CalendarDateTime, ZonedDateTime } from '@internationalized/date';
+import { I18nProvider, type DateValue, useLocale, useDateField } from 'react-aria';
+import { useDateFieldState } from 'react-stately';
 import {
   Button,
   Calendar,
   CalendarGrid,
   CalendarCell,
   CalendarStateContext,
+  DateFieldContext,
   DateInput,
+  type DateInputProps,
   DatePicker,
   type DatePickerProps,
   DatePickerStateContext,
@@ -28,6 +34,11 @@ import {
   NumberField,
   Popover,
   RangeCalendarStateContext,
+  useContextProps,
+  DateFieldStateContext,
+  InputContext,
+  Provider,
+  GroupContext,
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
@@ -176,6 +187,43 @@ const DatePickerIcon = forwardRef<Element>(function DatePickerIcon(props, ref) {
   );
 });
 
+// The main reason for this component is to allow us to click inside the date field and trigger the popover
+const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function DatePickerInput(props, ref) {
+  const [dateFieldProps, fieldRef] = useContextProps({ slot: props.slot }, ref, DateFieldContext);
+  const { locale } = useLocale();
+  const state = useDateFieldState({
+    ...dateFieldProps,
+    locale,
+    createCalendar,
+  });
+  const datePickerState = useContext(DatePickerStateContext);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { fieldProps, inputProps } = useDateField({ ...dateFieldProps, inputRef }, state, fieldRef);
+
+  return (
+    <Provider
+      values={[
+        [DateFieldStateContext, state],
+        [InputContext, { ...inputProps, ref: inputRef }],
+        [GroupContext, { ...fieldProps, ref: fieldRef, isInvalid: state.isInvalid }],
+      ]}
+    >
+      <Group
+        {...props}
+        ref={ref}
+        slot={props.slot || undefined}
+        className={props.className ?? 'react-aria-DateInput'}
+        isInvalid={state.isInvalid}
+        onClick={() => datePickerState.setOpen(!datePickerState.isOpen)}
+      >
+        {state.segments.map((segment, i) => cloneElement(props.children(segment), { key: i }))}
+      </Group>
+      <Input />
+    </Provider>
+  );
+});
+
 /**
  * A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
  */
@@ -227,7 +275,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
             <div className="cds--date-picker-container">
               {label && <Label className="cds--label">{label}</Label>}
               <Group className={styles.inputGroup}>
-                <DateInput
+                <DatePickerInput
                   ref={ref}
                   className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
                     [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
@@ -240,7 +288,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                       <React.Fragment />
                     );
                   }}
-                </DateInput>
+                </DatePickerInput>
                 <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
                   <DatePickerIcon />
                 </Button>
