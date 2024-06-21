@@ -119,9 +119,9 @@ yargs.command(
       .array('config-url')
       .default('config-url', [])
       .describe('config-url', 'The URL to a valid frontend configuration. Can be used multiple times.')
-      .array('config-path')
-      .default('config-path', [])
-      .describe('config-path', 'The path to a frontend configuration file. Can be used multiple times.')
+      .array('config-file')
+      .default('config-file', [])
+      .describe('config-file', 'The path to a frontend configuration file. Can be used multiple times.')
       .array('sources')
       .default('sources', ['.'])
       .describe('sources', 'Runs the projects from the provided source directories. Can be used multiple times.')
@@ -143,7 +143,7 @@ yargs.command(
   async (args) =>
     runCommand('runDevelop', {
       configUrls: args['config-url'],
-      configPaths: args['config-path'],
+      configFiles: args['config-file'],
       ...args,
       ...proxyImportmapAndRoutes(
         await mergeImportmapAndRoutes(

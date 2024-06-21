@@ -18,7 +18,7 @@ export interface DevelopArgs {
   spaPath: string;
   apiUrl: string;
   configUrls: Array<string>;
-  configPaths: Array<string>;
+  configFiles: Array<string>;
   addCookie: string;
   supportOffline: boolean;
 }
@@ -33,7 +33,7 @@ export async function runDevelop(args: DevelopArgs) {
     routes,
     watchedRoutesPaths,
     configUrls,
-    configPaths,
+    configFiles,
     addCookie,
     supportOffline,
   } = args;
@@ -42,7 +42,7 @@ export async function runDevelop(args: DevelopArgs) {
   const app = express();
 
   const localConfigUrlPrefix = '__local_config__';
-  const localConfigUrls = configPaths.map((path) => `${spaPath}/${localConfigUrlPrefix}/${basename(path)}`);
+  const localConfigUrls = configFiles.map((path) => `${spaPath}/${localConfigUrlPrefix}/${basename(path)}`);
 
   const source = resolve(require.resolve('@openmrs/esm-app-shell/package.json'), '..', 'dist');
   const index = resolve(source, 'index.html');
@@ -129,15 +129,15 @@ export async function runDevelop(args: DevelopArgs) {
     });
   }
 
-  // Route for custom `index.html` goes above static assets
-  app.get(indexHtmlPathMatcher, (_, res) => res.contentType('text/html').send(indexContent));
-
-  configPaths.forEach((path, i) => {
+  configFiles.forEach((file, i) => {
     const url = localConfigUrls[i];
     app.get(url, (_, res) => {
-      res.contentType('application/json').send(readFileSync(resolve(path)));
+      res.contentType('application/json').send(readFileSync(resolve(process.cwd(), file)));
     });
   });
+
+  // Route for custom `index.html` goes above static assets
+  app.get(indexHtmlPathMatcher, (_, res) => res.contentType('text/html').send(indexContent));
 
   // Return static assets for any request for which we have one, except importmap.json and index.html
   app.use(spaPath, express.static(source, { index: false }));
