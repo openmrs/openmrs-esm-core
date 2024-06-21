@@ -107,7 +107,7 @@
       outline: unset;
     }
 
-    &[aria-valuetext='Empty'] {
+    &[data-placeholder] {
       caret-color: var(--cds-text-primary);
       color: theme.$text-disabled;
     }
@@ -117,11 +117,11 @@
    * These next two style rules try to render the read-only parts of the date in the disabled color
    * unless they ware surrounded by two filled-in entries.
    */
-  [data-readonly]:has(+ [aria-valuetext='Empty']) {
+  [data-readonly]:has(+ [data-placeholder]) {
     color: theme.$text-disabled;
   }
 
-  [aria-valuetext='Empty'] + [data-readonly] {
+  [data-placeholder] + [data-readonly] {
     color: theme.$text-disabled;
   }
 }
@@ -251,5 +251,34 @@
 
   @media screen and (prefers-reduced-motion: reduce) {
     animation: none;
+  }
+}
+
+:global([dir='rtl']) {
+  .inputWrapper {
+    padding-left: unset;
+    padding-right: spacing.$spacing-04;
+  }
+
+  .monthYear {
+    & div:has(input[inputmode='numeric']) {
+      & > input[inputmode='numeric'] {
+        padding-right: spacing.$spacing-02;
+      }
+    }
+
+    & button {
+      &[slot='increment'] {
+        top: 0;
+        left: unset;
+        right: 0;
+      }
+
+      &[slot='decrement'] {
+        top: spacing.$spacing-04;
+        left: unset;
+        right: 0;
+      }
+    }
   }
 }
