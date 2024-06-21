@@ -11,7 +11,7 @@ import {
 } from '@carbon/react';
 import { useConnectivity, useSession } from '@openmrs/esm-framework';
 import { postUserPropertiesOffline, postUserPropertiesOnline } from './change-language.resource';
-import styles from './change-language-modal.scss';
+import styles from './change-language.scss';
 
 interface ChangeLanguageModalProps {
   close(): void;
