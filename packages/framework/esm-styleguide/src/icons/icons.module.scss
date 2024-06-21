@@ -3,3 +3,9 @@
   // like '.btn__icon svg' that are interpretted as "more specific" than this class.
   fill: var(--omrs-icon-fill, 'currentColor') !important;
 }
+
+:global([dir='rtl']) {
+  .icon {
+    transform: scaleX(-1);
+  }
+}
