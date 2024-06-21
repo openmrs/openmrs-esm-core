@@ -27,8 +27,8 @@ export function ActionMenu() {
   return (
     <aside
       className={classNames(styles.sideRail, {
-        [styles.hiddenSideRail]: keyboardVisible,
-        [styles.showSideRail]: !keyboardVisible,
+        [styles.sideRailHidden]: keyboardVisible,
+        [styles.sideRailVisible]: !keyboardVisible,
       })}
     >
       <div className={styles.container}>

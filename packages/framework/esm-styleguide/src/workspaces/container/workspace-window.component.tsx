@@ -1,15 +1,15 @@
 /** @module @category Workspace */
 import React, { useCallback, useContext, useMemo } from 'react';
 import classNames from 'classnames';
-import { Header, HeaderGlobalBar, HeaderName, HeaderMenuButton, HeaderGlobalAction } from '@carbon/react';
+import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
-import { ComponentContext, ExtensionSlot, useBodyScrollLock, useLayoutType, isDesktop } from '@openmrs/esm-react-utils';
-import { translateFrom, getCoreTranslation } from '@openmrs/esm-translations';
-import { type OpenWorkspace, useWorkspaces, updateWorkspaceWindowState } from '../workspaces';
-import { WorkspaceRenderer } from './workspace-renderer.component';
-import { WorkspaceNotification } from '../notification/workspace-notification.component';
-import styles from './workspace.module.scss';
+import { ComponentContext, ExtensionSlot, isDesktop, useBodyScrollLock, useLayoutType } from '@openmrs/esm-react-utils';
+import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../../icons';
+import { WorkspaceNotification } from '../notification/workspace-notification.component';
+import { updateWorkspaceWindowState, useWorkspaces, type OpenWorkspace } from '../workspaces';
+import { WorkspaceRenderer } from './workspace-renderer.component';
+import styles from './workspace.module.scss';
 
 export interface WorkspaceWindowProps {
   contextKey: string;
@@ -42,19 +42,19 @@ interface WorkspaceProps {
 function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
   const layout = useLayoutType();
   const { workspaceWindowState } = useWorkspaces();
-  const maximized = workspaceWindowState === 'maximized';
-  const hidden = workspaceWindowState === 'hidden';
+  const isMaximized = workspaceWindowState === 'maximized';
+  const isHidden = workspaceWindowState === 'hidden';
 
   // We use the feature name of the app containing the workspace in order to set the extension
   // slot name. We can't use contextKey for this because we don't want the slot name to be
   // different for different patients, but we do want it to be different for different apps.
   const { featureName } = useContext(ComponentContext);
 
-  useBodyScrollLock(!hidden && !isDesktop(layout));
+  useBodyScrollLock(!isHidden && !isDesktop(layout));
 
   const toggleWindowState = useCallback(() => {
-    maximized ? updateWorkspaceWindowState('normal') : updateWorkspaceWindowState('maximized');
-  }, [maximized]);
+    isMaximized ? updateWorkspaceWindowState('normal') : updateWorkspaceWindowState('maximized');
+  }, [isMaximized]);
 
   const workspaceTitle = useMemo(
     () =>
@@ -76,8 +76,8 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
         styles.workspaceWindowSpacer,
         width === 'narrow' ? styles.narrowWorkspace : styles.widerWorkspace,
         {
-          [styles.maximizedWindow]: maximized,
-          [styles.hidden]: hidden,
+          [styles.maximizedWindow]: isMaximized,
+          [styles.hidden]: isHidden,
         },
       )}
     >
@@ -91,23 +91,23 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
             <ExtensionSlot name={`workspace-header-${featureName}-slot`} />
             {isDesktop(layout) && (
               <>
-                {(canMaximize || maximized) && (
+                {(canMaximize || isMaximized) && (
                   <HeaderGlobalAction
                     align="bottom"
                     aria-label={
-                      maximized
+                      isMaximized
                         ? getCoreTranslation('minimize', 'Minimize')
                         : getCoreTranslation('maximize', 'Maximize')
                     }
                     label={
-                      maximized
+                      isMaximized
                         ? getCoreTranslation('minimize', 'Minimize')
                         : getCoreTranslation('maximize', 'Maximize')
                     }
                     onClick={toggleWindowState}
                     size="lg"
                   >
-                    {maximized ? <Minimize /> : <Maximize />}
+                    {isMaximized ? <Minimize /> : <Maximize />}
                   </HeaderGlobalAction>
                 )}
                 {canHide ? (

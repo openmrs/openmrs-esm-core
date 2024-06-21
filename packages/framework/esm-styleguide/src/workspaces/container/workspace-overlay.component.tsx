@@ -1,15 +1,13 @@
 /** @module @category Workspace */
 import React, { useContext, useMemo } from 'react';
 import classNames from 'classnames';
-import { Header } from '@carbon/react';
-import { useLayoutType, isDesktop, ComponentContext, ExtensionSlot, useBodyScrollLock } from '@openmrs/esm-react-utils';
+import { Header, HeaderGlobalAction, HeaderName } from '@carbon/react';
+import { ComponentContext, ExtensionSlot, isDesktop, useBodyScrollLock, useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
 import { ArrowLeftIcon, CloseIcon } from '../../icons';
-import { type OpenWorkspace, useWorkspaces } from '../workspaces';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
+import { useWorkspaces, type OpenWorkspace } from '../workspaces';
 import { WorkspaceRenderer } from './workspace-renderer.component';
-import { HeaderName } from '@carbon/react';
-import { HeaderGlobalAction } from '@carbon/react';
 import styles from './workspace.module.scss';
 
 export interface WorkspaceOverlayProps {
