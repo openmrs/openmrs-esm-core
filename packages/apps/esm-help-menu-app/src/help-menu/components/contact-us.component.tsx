@@ -1,20 +1,19 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { navigate } from '@openmrs/esm-framework';
 import styles from './styles.scss';
 
-const Contact = () => {
+const ContactUs = () => {
   const { t } = useTranslation();
 
-  const contactus = () => {
-    navigate({ to: 'https://openmrs.org/contact/' });
+  const handleClick = () => {
+    window.open('https://openmrs.org/contact/', '_blank');
   };
 
   return (
-    <div onClick={contactus} className={styles.helpButton}>
+    <div onClick={handleClick} className={styles.helpButton}>
       {t('contactUs', 'Contact us')}
     </div>
   );
 };
 
-export default Contact;
+export default ContactUs;

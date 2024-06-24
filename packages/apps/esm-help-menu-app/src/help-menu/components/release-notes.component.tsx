@@ -3,18 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { navigate } from '@openmrs/esm-framework';
 import styles from './styles.scss';
 
-const Release = () => {
+const ReleaseNotes = () => {
   const { t } = useTranslation();
 
-  const releaseNotes = () => {
-    navigate({ to: 'https://o3-docs.openmrs.org/docs/changelog' });
+  const handleClick = () => {
+    window.open('https://o3-docs.openmrs.org/docs/changelog', '_blank');
   };
 
   return (
-    <div onClick={releaseNotes} className={styles.helpButton}>
+    <div onClick={handleClick} className={styles.helpButton}>
       {t('releaseNotes', 'Release Notes')}
     </div>
   );
 };
 
-export default Release;
+export default ReleaseNotes;

@@ -2,7 +2,7 @@
   "$schema": "https://json.openmrs.org/routes.schema.json",
   "pages": [
     {
-      "component": "helpMenu",
+      "component": "root",
       "route": true
     }
   ],

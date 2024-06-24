@@ -7,12 +7,12 @@ import { navigate } from '@openmrs/esm-framework';
 const Docs = () => {
   const { t } = useTranslation();
 
-  const docs = () => {
-    navigate({ to: 'https://o3-docs.openmrs.org/' });
+  const handleClick = () => {
+    window.open('https://o3-docs.openmrs.org/', '_blank');
   };
 
   return (
-    <div onClick={docs} className={styles.helpButton}>
+    <div onClick={handleClick} className={styles.helpButton}>
       {t('docs', 'Docs')}
     </div>
   );
