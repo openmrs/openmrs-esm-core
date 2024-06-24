@@ -158,6 +158,8 @@ export type FormatDateOptions = {
   month: boolean;
   /** Whether to include the year */
   year: boolean;
+  /** The unicode numbering system to use */
+  numberingSystem?: string;
   /**
    * Disables the special handling of dates that are today. If false
    * (the default), then dates that are today will be formatted as "Today"
@@ -271,7 +273,7 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
   let locale = options?.locale ?? getLocale();
   const _locale = new Intl.Locale(locale);
 
-  const { calendar, mode, time, day, month, year, noToday }: FormatDateOptions = {
+  const { calendar, mode, time, day, month, year, noToday, numberingSystem }: FormatDateOptions = {
     ...defaultOptions,
     ...{ noToday: _locale.language === 'am' ? true : false },
     ...options,
@@ -284,6 +286,7 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
     year: year ? 'numeric' : undefined,
     month: month ? 'short' : undefined,
     day: day ? '2-digit' : undefined,
+    numberingSystem,
   };
 
   let localeString: string;

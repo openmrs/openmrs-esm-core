@@ -1,14 +1,14 @@
 import React, {
+  cloneElement,
   forwardRef,
   type HTMLAttributes,
   type PropsWithChildren,
-  useMemo,
   type RefObject,
+  type ReactElement,
+  useMemo,
   useContext,
   useCallback,
   useRef,
-  cloneElement,
-  Children,
 } from 'react';
 import classNames, { type Argument } from 'classnames';
 import { createCalendar, CalendarDate, CalendarDateTime, ZonedDateTime } from '@internationalized/date';
@@ -21,7 +21,6 @@ import {
   CalendarCell,
   CalendarStateContext,
   DateFieldContext,
-  DateInput,
   type DateInputProps,
   DatePicker,
   type DatePickerProps,
@@ -73,8 +72,13 @@ export interface OpenmrsDatePickerProps
   defaultValue?: DateInputValue;
   /**
    * The label for this DatePicker element
+   * @deprecated Use labelText instead
    */
-  label?: string;
+  label?: string | ReactElement;
+  /**
+   * The label for this DatePicker element
+   */
+  labelText?: string | ReactElement;
   /**
    * 'true' to use the light version.
    */
@@ -224,6 +228,18 @@ const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function Date
   );
 });
 
+function DatePickerLabel({ labelText }: Pick<OpenmrsDatePickerProps, 'labelText'>) {
+  if (labelText === null || typeof labelText === 'undefined' || typeof labelText === 'boolean') {
+    return null;
+  }
+
+  if (typeof labelText === 'string' || typeof labelText === 'number') {
+    return <Label className="cds--label">{labelText}</Label>;
+  }
+
+  return cloneElement(labelText, { className: classNames(labelText.props?.className, 'cds--label') });
+}
+
 /**
  * A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
  */
@@ -233,6 +249,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       className,
       defaultValue: rawDefaultValue,
       label,
+      labelText,
       light,
       maxDate: rawMaxDate,
       minDate: rawMinDate,
@@ -273,7 +290,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
             {...datePickerProps}
           >
             <div className="cds--date-picker-container">
-              {label && <Label className="cds--label">{label}</Label>}
+              <DatePickerLabel labelText={labelText ?? label} />
               <Group className={styles.inputGroup}>
                 <DatePickerInput
                   ref={ref}
