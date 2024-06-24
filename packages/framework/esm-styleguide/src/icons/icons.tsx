@@ -415,7 +415,13 @@ export const Icon = memo(
     }, []);
 
     return (
-      <svg ref={iconRef} className={classNames('omrs-icon', className)} height={size} width={size} viewBox="0 0 16 16">
+      <svg
+        ref={iconRef}
+        className={classNames('omrs-icon', style.icon, className)}
+        height={size}
+        width={size}
+        viewBox="0 0 16 16"
+      >
         <use xlinkHref={`#${icon}`} />
       </svg>
     );

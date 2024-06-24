@@ -199,9 +199,9 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
 const DatePickerIcon = forwardRef<Element>(function DatePickerIcon(props, ref) {
   const state = useContext(DatePickerStateContext);
   return state.isInvalid ? (
-    <WarningIcon className="cds--date-picker__icon cds--date-picker__icon--invalid" size={16} />
+    <WarningIcon className="cds--date-picker__icon--invalid" size={16} />
   ) : (
-    <CalendarIcon className="cds--date-picker__icon" size={16} />
+    <CalendarIcon size={16} />
   );
 });
 
