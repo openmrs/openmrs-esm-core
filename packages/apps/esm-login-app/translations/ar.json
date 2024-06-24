@@ -1,5 +1,6 @@
 {
   "back": "رجوع",
+  "backToUserNameIconLabel": "Back to username",
   "change": "تغيير",
   "continue": "استمرار",
   "errorLoadingLoginLocations": "Error loading login locations",
@@ -21,6 +22,7 @@
   "rememberLocationForFutureLogins": "Remember my location for future logins",
   "searchForLocation": "ابحث عن موقع",
   "selectYourLocation": "اختر موقعك من القائمة أدناه. استخدم شريط البحث للعثور على موقعك.",
+  "showPassword": "Show password",
   "submitting": "جار الإرسال",
   "tryAgain": "Try again",
   "username": "اسم المستخدم",

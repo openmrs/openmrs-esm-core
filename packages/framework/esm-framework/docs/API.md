@@ -391,7 +391,9 @@ ___
 | :------ | :------ | :------ |
 | `calendar?` | `string` | The calendar to use when formatting this date. |
 | `day` | `boolean` | Whether to include the day number |
+| `locale?` | `string` | The locale to use when formatting this date |
 | `mode` | [`FormatDateMode`](API.md#formatdatemode) | - `standard`: "03 Feb 2022" - `wide`:     "03 — Feb — 2022" |
+| `month` | `boolean` | Whether to include the month number |
 | `noToday` | `boolean` | Disables the special handling of dates that are today. If false (the default), then dates that are today will be formatted as "Today" in the locale language. If true, then dates that are today will be formatted the same as all other dates. |
 | `time` | `boolean` \| ``"for today"`` | Whether the time should be included in the output always (`true`), never (`false`), or only when the input date is today (`for today`). |
 | `year` | `boolean` | Whether to include the year |
@@ -517,6 +519,18 @@ ___
 #### Defined in
 
 [packages/framework/esm-config/src/types.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L40)
+
+___
+
+### DateInputValue
+
+Ƭ **DateInputValue**: `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime` \| `Date` \| `Dayjs` \| `string` \| `number` \| ``null`` \| `undefined`
+
+A type for any of the acceptable date formats
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L37)
 
 ___
 
@@ -1452,11 +1466,13 @@ ___
 
 ### OpenmrsDatePicker
 
-• `Const` **OpenmrsDatePicker**: `React.FC`<[`OpenmrsDatePickerProps`](interfaces/OpenmrsDatePickerProps.md)\>
+• `Const` **OpenmrsDatePicker**: `ForwardRefExoticComponent`<[`OpenmrsDatePickerProps`](interfaces/OpenmrsDatePickerProps.md) & `RefAttributes`<`HTMLDivElement`\>\>
+
+A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/openmrs/openmrs-date-picker.component.tsx#L42)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L177)
 
 ___
 
@@ -3235,7 +3251,7 @@ CalendarDate
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:387](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L387)
+[packages/framework/esm-utils/src/omrs-dates.ts:395](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L395)
 
 ___
 
@@ -3250,6 +3266,7 @@ Default options:
  - mode: "standard",
  - time: "for today",
  - day: true,
+ - month: true,
  - year: true
  - noToday: false
 
@@ -3273,7 +3290,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L262)
+[packages/framework/esm-utils/src/omrs-dates.ts:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L270)
 
 ___
 
@@ -3302,7 +3319,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:364](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L364)
+[packages/framework/esm-utils/src/omrs-dates.ts:372](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L372)
 
 ___
 
@@ -3325,7 +3342,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L348)
+[packages/framework/esm-utils/src/omrs-dates.ts:356](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L356)
 
 ___
 
@@ -3347,7 +3364,7 @@ Retrieves the default calendar for the specified locale if any.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L237)
+[packages/framework/esm-utils/src/omrs-dates.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L244)
 
 ___
 
@@ -3365,7 +3382,7 @@ string
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:372](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L372)
+[packages/framework/esm-utils/src/omrs-dates.ts:380](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L380)
 
 ___
 
@@ -3450,7 +3467,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `locale` | `string` | - |
+| `locale` | `string` | the locale to register this calendar for |
 | `calendar` | `string` | the calendar to use for this registration |
 
 #### Returns
@@ -3459,7 +3476,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:228](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L228)
+[packages/framework/esm-utils/src/omrs-dates.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L235)
 
 ___
 
@@ -5601,7 +5618,7 @@ invalid key to this function will result in a type error.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactAdministratorIfIssuePersists"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientLists"`` \| ``"relationships"`` \| ``"resetOverrides"`` \| ``"scriptLoadingFailed"`` \| ``"scriptLoadingError"`` \| ``"seeMoreLists"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"closeAllOpenedWorkspaces"`` \| ``"closingAllWorkspacesPromptBody"`` \| ``"closingAllWorkspacesPromptTitle"`` \| ``"discard"`` \| ``"hide"`` \| ``"maximize"`` \| ``"minimize"`` \| ``"openAnyway"`` \| ``"unsavedChangesInOpenedWorkspace"`` \| ``"unsavedChangesInWorkspace"`` \| ``"unsavedChangesTitleText"`` \| ``"workspaceHeader"`` \| ``"address1"`` \| ``"address2"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
+| `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactAdministratorIfIssuePersists"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientLists"`` \| ``"relationships"`` \| ``"resetOverrides"`` \| ``"scriptLoadingFailed"`` \| ``"scriptLoadingError"`` \| ``"seeMoreLists"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"closeAllOpenedWorkspaces"`` \| ``"closingAllWorkspacesPromptBody"`` \| ``"closingAllWorkspacesPromptTitle"`` \| ``"discard"`` \| ``"hide"`` \| ``"maximize"`` \| ``"minimize"`` \| ``"openAnyway"`` \| ``"unsavedChangesInOpenedWorkspace"`` \| ``"unsavedChangesInWorkspace"`` \| ``"unsavedChangesTitleText"`` \| ``"workspaceHeader"`` \| ``"address1"`` \| ``"address2"`` \| ``"address3"`` \| ``"address4"`` \| ``"address5"`` \| ``"address6"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
 | `defaultText?` | `string` | - |
 | `options?` | `object` | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
 
@@ -5712,7 +5729,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L175)
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:179](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L179)
 
 ___
 

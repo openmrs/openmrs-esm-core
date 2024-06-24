@@ -1,5 +1,6 @@
 {
   "back": "返回",
+  "backToUserNameIconLabel": "Back to username",
   "change": "更改",
   "continue": "继续",
   "errorLoadingLoginLocations": "登录地点加载错误",
@@ -21,6 +22,7 @@
   "rememberLocationForFutureLogins": "记住我的地点以便将来登录",
   "searchForLocation": "搜索一个地点",
   "selectYourLocation": "请从下面的列表中选择您的地点。可使用搜索栏进行搜索。",
+  "showPassword": "Show password",
   "submitting": "提交中",
   "tryAgain": "Try again",
   "username": "用户名",
