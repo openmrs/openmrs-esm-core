@@ -3,3 +3,4 @@ export * from './build';
 export * from './debug';
 export * from './develop';
 export * from './start';
+export * from './merge-configs';
