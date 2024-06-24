@@ -150,16 +150,59 @@ yarn turbo run test --force
 
 ### Linking the framework
 
-If you want to try out changes to a framework library, you will probably want to `yarn link` or `npm link` it into a frontend module.
-Note that even though frontend modules import from `@openmrs/esm-framework`, the package you need to link is the sub-library; for example, if you are trying to test changes in `packages/framework/esm-api`, you will need to link it:
+You probably want to try out your changes to a framework library in a frontend module. Unfortunately, getting
+a working development environment for this is very finicky. No one technique works for all frontend modules
+all the time.
 
-```sh
-yarn link path/to/openmrs-esm-core/packages/framework/esm-framework
-yarn link path/to/openmrs-esm-core/packages/framework/esm-api
+Note that even though frontend modules import from `@openmrs/esm-framework`, the package you need to link is the sub-library; for example, if you are trying to test changes in `packages/framework/esm-api`, you will need to link that sub-library.
+
+If you're unsure whether your version of a core package is running, add a `console.log` at the top level of a file you're working on.
+
+Here are the tools at your disposal for trying to get this to work:
+
+#### Yarn Link
+
+This should be the first thing you try. To link the styleguide, for example, you would use
+
+```
+yarn link ../path/to/openmrs-esm-core/packages/framework/esm-styleguide
 ```
 
-This satisfies the build tooling, but we must do one more step to get the frontend
-to load these dependencies at runtime.
+This will add a line to the "resolutions" section of the `package.json` file which uses the `portal:` protocol.
+The other protocol is `link:`. If you need to make changes to the `esm-framework` package, you will need to link
+it in as well. However, this does not work as a portal created with the `yarn link` command. Rather you will
+want to manually add the line to the `resolutions` field in the `package.json` file:
+
+```json
+"resolutions": {
+  "@openmrs/esm-framework": "link:../path/to/openmrs-esm-core/packages/framework/esm-framework"
+}
+```
+
+#### Yalc
+
+Sometimes, the build tooling will simply not work with `yarn link`. In this case, you will need to use `yalc`.
+Install `yalc` on your computer with
+
+```
+npm install -g yalc
+```
+
+Then, link the repository you are working on. For `esm-api`, for example, run
+
+```sh
+# In this repository
+cd packages/framework/esm-api
+yalc publish
+cd ../../../openmrs-esm-patient-chart  # for example
+yalc link @openmrs/esm-api
+```
+
+In order for patient-chart to receive further updates you make to esm-api, you will need to run `yalc push` in the esm-api directory and `yalc update` in the patient-chart directory.
+
+### Running with a local version of the core packages
+
+This satisfies the build tooling, but we must do one more step to get the frontend to load these dependencies at runtime.
 
 Here, there are two options:
 
@@ -170,6 +213,7 @@ dev server, you will need to link the tooling as well.
 
 `yarn link /path/to/esm-core/packages/tooling/openmrs`.
 
+You can try using `yalc` for this as well, if `yarn link` doesn't work. Or manually creating a `link:` resolution in `package.json`.
 In packages/shell/esm-app-shell, run `yarn build:development --watch` to ensure that the built app shell is updated with your changes and available to the patient chart.
 Then run your patient chart dev server as usual, with `yarn start`.
 
@@ -179,9 +223,9 @@ In `esm-core`, start the app shell with `yarn run:shell`. Then, in the patient c
 
 #### Once it's working
 
-Please note that this will result in entries being added to the package.json file in the `resolutions` field. These changes must be undone before creating your PR, which you can do by running `yarn unlink --all` in the patient chart repo.
+Please note that any of these techniques will modify the `package.json` file. These changes must be undone before creating 
+your PR. If you used `yarn link`, you can undo these changes by running `yarn unlink --all` in the patient chart repo.
 
-Check your work by adding a `console.log` at the top level of a file you're working on in `esm-api`.
 
 ### Version and release
 

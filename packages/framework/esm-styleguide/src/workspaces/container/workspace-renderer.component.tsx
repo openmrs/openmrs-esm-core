@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import classNames from 'classnames';
 import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
 import { InlineLoading } from '@carbon/react';
-import { useLayoutType } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { type OpenWorkspace, useWorkspaces } from '../workspaces';
-import styles from './workspace-window.module.scss';
+import { type OpenWorkspace } from '../workspaces';
+import styles from './workspace.module.scss';
 
 interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
@@ -14,10 +12,6 @@ interface WorkspaceRendererProps {
 }
 
 export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: WorkspaceRendererProps) {
-  const layout = useLayoutType();
-  const isTablet = layout === 'tablet';
-  const { workspaceWindowState } = useWorkspaces();
-  const maximized = workspaceWindowState === 'maximized';
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
 
   useEffect(() => {
@@ -44,13 +38,9 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
     [workspace, additionalPropsFromPage],
   );
 
-  return (
-    <div className={classNames(styles.fixed, maximized && !isTablet ? styles.fullWidth : styles.dynamicWidth)}>
-      {lifecycle ? (
-        <Parcel key={workspace.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
-      ) : (
-        <InlineLoading className={styles.loader} description={`${getCoreTranslation('loading', 'Loading')} ...`} />
-      )}
-    </div>
+  return lifecycle ? (
+    <Parcel key={workspace.name} config={lifecycle} mountParcel={mountRootParcel} {...props} />
+  ) : (
+    <InlineLoading className={styles.loader} description={`${getCoreTranslation('loading', 'Loading')} ...`} />
   );
 }

@@ -3,8 +3,8 @@ import { openmrsFetch } from '@openmrs/esm-api/mock';
 import { configSchema } from '@openmrs/esm-config/mock';
 import { getExtensionStore, getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
-import { usePagination as realUsePagination } from './src/index';
-export { ConfigurableLink, isDesktop, useStore, useStoreWithActions, createUseStore } from './src/index';
+import { isDesktop as realIsDesktop, usePagination as realUsePagination } from './src/index';
+export { ConfigurableLink, useStore, useStoreWithActions, createUseStore } from './src/index';
 import * as utils from '@openmrs/esm-utils';
 
 export const ComponentContext = React.createContext(null);
@@ -94,3 +94,7 @@ export const useOpenmrsSWR = jest.fn((key: string | Array<any>) => {
 export const useDebounce = jest.fn().mockImplementation((value) => value);
 
 export const useOnClickOutside = jest.fn();
+
+export const useBodyScrollLock = jest.fn();
+
+export const isDesktop = jest.fn().mockImplementation(realIsDesktop);
