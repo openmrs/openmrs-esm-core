@@ -127,6 +127,19 @@ function dateToInternationalizedDate(date: DateInputValue): DateValue | undefine
   }
 }
 
+function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
+  return parseInt(
+    formatDate(date, {
+      calendar: intlLocale.calendar,
+      locale: intlLocale.baseName,
+      day: false,
+      month: false,
+      noToday: true,
+      numberingSystem: 'latn',
+    }),
+  );
+}
+
 const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanElement>>>(
   function MonthYear(props, ref) {
     const { className } = props;
@@ -147,9 +160,10 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
       noToday: true,
     });
 
-    const year = state.visibleRange.start.toDate(tz).getFullYear();
-    const maxYear = state.maxValue ? state.maxValue.toDate(tz).getFullYear() : undefined;
-    const minYear = state.minValue ? state.minValue.toDate(tz).getFullYear() : undefined;
+    const year = getYearAsNumber(state.visibleRange.start.toDate(tz), intlLocale);
+
+    const maxYear = state.maxValue ? getYearAsNumber(state.maxValue.toDate(tz), intlLocale) : undefined;
+    const minYear = state.minValue ? getYearAsNumber(state.minValue.toDate(tz), intlLocale) : undefined;
 
     const changeHandler = useCallback((value: number) => {
       state.setFocusedDate(state.focusedDate.cycle('year', value - state.focusedDate.year));

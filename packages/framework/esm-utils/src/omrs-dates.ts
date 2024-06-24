@@ -397,7 +397,7 @@ export function getLocale() {
  */
 export function convertToLocaleCalendar(date: CalendarDate, locale: string | Intl.Locale) {
   let locale_ = typeof locale === 'string' ? new Intl.Locale(locale) : locale;
-  const localCalendarName = getDefaultCalendar(locale);
+  const localCalendarName = getDefaultCalendar(locale_);
 
   return localCalendarName ? toCalendar(date, createCalendar(localCalendarName)) : date;
 }
