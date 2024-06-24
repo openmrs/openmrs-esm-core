@@ -1,10 +1,8 @@
 import React, { type ChangeEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, InlineLoading, ModalBody, ModalFooter, ModalHeader, Stack } from '@carbon/react';
+import { Button, Form, PasswordInput,  InlineLoading, InlineNotification, ModalBody, ModalFooter, ModalHeader, Stack } from '@carbon/react';
 import styles from './change-password-modal.scss';
-import { Form, PasswordInput } from '@carbon/react';
 import { changeUserPassword } from './change-password.resource';
-import { InlineNotification } from '@carbon/react';
 import { showSnackbar, type OpenmrsFetchError } from '@openmrs/esm-framework';
 
 interface ChangePasswordModalProps {
@@ -65,17 +63,17 @@ export default function ChangePasswordModal({ close }: ChangePasswordModalProps)
               )}
               <PasswordInput
                 onChange={(event: ChangeEvent<HTMLInputElement>) => setOldPassword(event.target.value)}
-                labelText={t('oldPassword', 'Old Password')}
+                labelText={t('oldPassword', 'Old password')}
               />
               <PasswordInput
                 onChange={(event: ChangeEvent<HTMLInputElement>) => setNewPassword(event.target.value)}
-                labelText={t('newPassword', 'New Password')}
+                labelText={t('newPassword', 'New password')}
                 invalid={invalid}
                 invalidText={invalidText}
               />
               <PasswordInput
                 onChange={(event: ChangeEvent<HTMLInputElement>) => setConfirmPassword(event.target.value)}
-                labelText={t('confirmPassword', 'Confirm New Password')}
+                labelText={t('confirmPassword', 'Confirm new password')}
                 invalid={invalid}
                 invalidText={invalidText}
               />
