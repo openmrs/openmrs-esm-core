@@ -89,19 +89,12 @@ async function packageConfigs(configDirs: string[], outputFilePath: string): Pro
 const app = express();
 app.use(express.json());
 
-function cleanPath(inputPath: string): string {
-  return path.normalize(inputPath).replace(/^(\.\.(\/|\\|$))+/, '');
-}
-
 app.post('/merge-configs', async (req, res) => {
-  let { directories, output } = req.body;
+  const { directories, output } = req.body;
 
-  if (!Array.isArray(directories) || typeof output !== 'string') {
+  if (!directories || !output) {
     return res.status(400).send('Invalid directories or output path');
   }
-
-  directories = directories.map(cleanPath);
-  output = cleanPath(output);
 
   try {
     await packageConfigs(directories, output);
