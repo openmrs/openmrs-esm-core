@@ -89,26 +89,32 @@ async function packageConfigs(configDirs: string[], outputFilePath: string): Pro
 const app = express();
 app.use(express.json());
 
-app.post('/merge-configs', async (req, res) => {
-  const { directories, output } = req.body;
+function cleanPath(inputPath: string): string {
+  return path.normalize(inputPath).replace(/^(\.\.(\/|\\|$))+/, '');
+}
 
-  if (!directories || !output) {
-    return res.status(400).send('directories and output are required');
+app.post('/merge-configs', async (req, res) => {
+  let { directories, output } = req.body;
+
+  if (!Array.isArray(directories) || typeof output !== 'string') {
+    return res.status(400).send('Invalid directories or output path');
   }
+
+  directories = directories.map(cleanPath);
+  output = cleanPath(output);
 
   try {
     await packageConfigs(directories, output);
     res.status(200).send(`Merged configuration written to ${output}`);
   } catch (error) {
     logWarn(`Failed to package configs: ${error.message}`);
-    res.status(500).send(`Failed to package configs: ${error.message}`);
   }
 });
 
 export function runMergeConfigServer(args: MergeConfigArgs) {
   const { directories, output, port } = args;
 
-  app.post('/merge-configs', async (req, res) => {
+  app.post('/merge-configs', async (_, res) => {
     try {
       await packageConfigs(directories, output);
       res.status(200).send(`Merged configuration written to ${output}`);
