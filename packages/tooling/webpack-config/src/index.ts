@@ -336,7 +336,6 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       alias: {
         '@openmrs/esm-framework': '@openmrs/esm-framework/src/internal',
         'lodash.findlast': 'lodash-es/findLast',
-        'react-dom$': 'react-dom/profiling',
       },
     },
     ...overrides,
