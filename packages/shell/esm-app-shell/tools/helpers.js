@@ -6,7 +6,7 @@
  */
 exports.removeTrailingSlash = (path) => {
   const i = path.length - 1;
-  return path[i] === '/' ? exports.removeTrailingSlash(path.substr(0, i)) : path;
+  return path[i] === '/' ? exports.removeTrailingSlash(path.slice(0, i)) : path;
 };
 
 /**

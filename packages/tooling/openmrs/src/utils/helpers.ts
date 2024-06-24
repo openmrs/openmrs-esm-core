@@ -1,20 +1,19 @@
-import { util } from 'webpack';
+import { createHash } from 'crypto';
 
-export function trimEnd(text: string, chr: string) {
+export function trimEnd(text: string, chr: string): string {
   while (text.endsWith(chr)) {
-    text = text.substr(0, text.length - chr.length);
+    text = text.slice(0, text.length - chr.length);
   }
-
   return text;
 }
 
-export function removeTrailingSlash(path: string) {
+export function removeTrailingSlash(path: string): string {
   const i = path.length - 1;
-  return path[i] === '/' ? removeTrailingSlash(path.substr(0, i)) : path;
+  return path[i] === '/' ? removeTrailingSlash(path.slice(0, i)) : path;
 }
 
-export function contentHash(obj: object) {
-  const hash = util.createHash('xxhash64');
-  hash.update(JSON.stringify(obj), 'UTF-8');
-  return hash.digest().toString('hex');
+export function contentHash(obj: object): string {
+  const hash = createHash('xxhash64');
+  hash.update(JSON.stringify(obj), 'utf-8');
+  return hash.digest('hex');
 }

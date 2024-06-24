@@ -36,23 +36,23 @@
  * Telling Webpack to use `/a/b/c`? If the Webpack config is symlinked
  * from `/d/e/`, then it *might* in *some cases* try to import `/d/e/c`.
  */
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import { resolve, dirname, basename } from 'path';
+import { existsSync, statSync } from 'fs';
+import { basename, dirname, resolve } from 'path';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+// eslint-disable-next-line no-restricted-imports
+import { isArray, merge, mergeWith } from 'lodash';
+import { inc } from 'semver';
 import {
-  DefinePlugin,
   container,
+  DefinePlugin,
   type ModuleOptions,
-  type WebpackOptionsNormalized as WebpackConfiguration,
   type RuleSetRule,
+  type WebpackOptionsNormalized as WebpackConfiguration,
 } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
-// eslint-disable-next-line no-restricted-imports
-import { merge, mergeWith, isArray } from 'lodash';
-import { existsSync, statSync } from 'fs';
-import { inc } from 'semver';
 
 type OpenmrsWebpackConfig = Omit<Partial<WebpackConfiguration>, 'module'> & {
   module: ModuleOptions;
@@ -70,15 +70,13 @@ function getFrameworkVersion() {
   }
 }
 
-function makeIdent(name: string) {
-  if (name.indexOf('/') !== -1) {
-    name = name.substr(name.indexOf('/'));
+function makeIdent(name: string): string {
+  if (name.includes('/')) {
+    name = name.slice(name.indexOf('/'));
   }
-
   if (name.endsWith('-app')) {
-    name = name.substr(0, name.length - 4);
+    name = name.slice(0, -4);
   }
-
   return name;
 }
 
@@ -338,6 +336,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       alias: {
         '@openmrs/esm-framework': '@openmrs/esm-framework/src/internal',
         'lodash.findlast': 'lodash-es/findLast',
+        'react-dom$': 'react-dom/profiling',
       },
     },
     ...overrides,
