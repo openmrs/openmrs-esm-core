@@ -10,10 +10,10 @@ const ChangePasswordLink: React.FC = () => {
   const launchChangePasswordModal = useCallback(() => showModal('change-password-modal'), []);
 
   return (
-    <SwitcherItem aria-label="Change Password" className={styles.panelItemContainer}>
+    <SwitcherItem aria-label={t('changePassword', 'ChangePassword')}  className={styles.panelItemContainer}>
       <div>
         <PasswordIcon size={20} />
-        <p>Password</p>
+        <p>{t('password', 'Password')}</p>
       </div>
       <Button kind="ghost" onClick={launchChangePasswordModal}>
         {t('change', 'Change')}
