@@ -8,7 +8,7 @@ import { InlineNotification } from '@carbon/react';
 import { showSnackbar, type OpenmrsFetchError } from '@openmrs/esm-framework';
 
 interface ChangePasswordModalProps {
-  close(): void;
+  close(): () => void;
 }
 
 export default function ChangePasswordModal({ close }: ChangePasswordModalProps) {
@@ -55,7 +55,7 @@ export default function ChangePasswordModal({ close }: ChangePasswordModalProps)
       <ModalBody>
         <div className={styles.languageOptionsContainer}>
           <Form>
-            <Stack gap={4}>
+            <Stack gap={5}>
               {showInline && (
                 <InlineNotification
                   kind="error"
