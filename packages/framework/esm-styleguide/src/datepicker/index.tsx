@@ -1,37 +1,48 @@
 import React, {
+  cloneElement,
   forwardRef,
   type HTMLAttributes,
   type PropsWithChildren,
-  useMemo,
   type RefObject,
+  type ReactElement,
+  useMemo,
   useContext,
   useCallback,
+  useRef,
 } from 'react';
 import classNames, { type Argument } from 'classnames';
-import { CalendarDate, CalendarDateTime, ZonedDateTime } from '@internationalized/date';
-import { I18nProvider, useLocale } from 'react-aria';
+import { createCalendar, CalendarDate, CalendarDateTime, ZonedDateTime } from '@internationalized/date';
+import { I18nProvider, type DateValue, useLocale, useDateField } from 'react-aria';
+import { useDateFieldState } from 'react-stately';
 import {
+  Button,
   Calendar,
   CalendarGrid,
   CalendarCell,
   CalendarStateContext,
-  DateInput,
+  DateFieldContext,
+  type DateInputProps,
   DatePicker,
-  type DateValue,
+  type DatePickerProps,
+  DatePickerStateContext,
   DateSegment,
   Dialog,
   Group,
+  Input,
   Label,
+  NumberField,
   Popover,
   RangeCalendarStateContext,
-  NumberField,
-  Input,
-  Button,
+  useContextProps,
+  DateFieldStateContext,
+  InputContext,
+  Provider,
+  GroupContext,
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
 import styles from './datepicker.module.scss';
-import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon } from '../icons';
+import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon, WarningIcon } from '../icons';
 
 /** A type for any of the acceptable date formats */
 export type DateInputValue =
@@ -45,7 +56,12 @@ export type DateInputValue =
   | null
   | undefined;
 
-export interface OpenmrsDatePickerProps {
+/**
+ * Properties for the OpenmrsDatePicker
+ */
+export interface OpenmrsDatePickerProps
+  // omits here for features we have custom implementations of
+  extends Omit<DatePickerProps<CalendarDate>, 'className' | 'defaultValue' | 'value'> {
   /**
    * Any CSS classes to add to the outer div of the date picker
    */
@@ -55,14 +71,14 @@ export interface OpenmrsDatePickerProps {
    */
   defaultValue?: DateInputValue;
   /**
-   * A callback that can be used to implement arbitrary logic to mark certain dates as
-   * unavailable to be selected.
+   * The label for this DatePicker element
+   * @deprecated Use labelText instead
    */
-  isDateUnavailable?: (date: DateValue) => boolean;
+  label?: string | ReactElement;
   /**
    * The label for this DatePicker element
    */
-  label?: string;
+  labelText?: string | ReactElement;
   /**
    * 'true' to use the light version.
    */
@@ -75,10 +91,6 @@ export interface OpenmrsDatePickerProps {
    * The earliest date it is possible to select
    */
   minDate?: DateInputValue;
-  /**
-   * Handler that is called when the value changes
-   */
-  onChange?: (date: DateValue) => void;
   /**
    * Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option.
    */
@@ -108,12 +120,24 @@ function dateToInternationalizedDate(date: DateInputValue): DateValue | undefine
   }
 
   if (date instanceof CalendarDate || date instanceof CalendarDateTime || date instanceof ZonedDateTime) {
-    // TODO need this casting because DateValue doesn't seem to work as-is'
-    return date as unknown as DateValue;
+    return date;
   } else {
     const date_ = dayjs(date).toDate();
-    return new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate()) as unknown as DateValue;
+    return new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate());
   }
+}
+
+function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
+  return parseInt(
+    formatDate(date, {
+      calendar: intlLocale.calendar,
+      locale: intlLocale.baseName,
+      day: false,
+      month: false,
+      noToday: true,
+      numberingSystem: 'latn',
+    }),
+  );
 }
 
 const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanElement>>>(
@@ -136,9 +160,10 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
       noToday: true,
     });
 
-    const year = state.visibleRange.start.toDate(tz).getFullYear();
-    const maxYear = state.maxValue ? state.maxValue.toDate(tz).getFullYear() : undefined;
-    const minYear = state.minValue ? state.minValue.toDate(tz).getFullYear() : undefined;
+    const year = getYearAsNumber(state.visibleRange.start.toDate(tz), intlLocale);
+
+    const maxYear = state.maxValue ? getYearAsNumber(state.maxValue.toDate(tz), intlLocale) : undefined;
+    const minYear = state.minValue ? getYearAsNumber(state.minValue.toDate(tz), intlLocale) : undefined;
 
     const changeHandler = useCallback((value: number) => {
       state.setFocusedDate(state.focusedDate.cycle('year', value - state.focusedDate.year));
@@ -171,6 +196,64 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
   },
 );
 
+const DatePickerIcon = forwardRef<Element>(function DatePickerIcon(props, ref) {
+  const state = useContext(DatePickerStateContext);
+  return state.isInvalid ? (
+    <WarningIcon className="cds--date-picker__icon--invalid" size={16} />
+  ) : (
+    <CalendarIcon size={16} />
+  );
+});
+
+// The main reason for this component is to allow us to click inside the date field and trigger the popover
+const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function DatePickerInput(props, ref) {
+  const [dateFieldProps, fieldRef] = useContextProps({ slot: props.slot }, ref, DateFieldContext);
+  const { locale } = useLocale();
+  const state = useDateFieldState({
+    ...dateFieldProps,
+    locale,
+    createCalendar,
+  });
+  const datePickerState = useContext(DatePickerStateContext);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const { fieldProps, inputProps } = useDateField({ ...dateFieldProps, inputRef }, state, fieldRef);
+
+  return (
+    <Provider
+      values={[
+        [DateFieldStateContext, state],
+        [InputContext, { ...inputProps, ref: inputRef }],
+        [GroupContext, { ...fieldProps, ref: fieldRef, isInvalid: state.isInvalid }],
+      ]}
+    >
+      <Group
+        {...props}
+        ref={ref}
+        slot={props.slot || undefined}
+        className={props.className ?? 'react-aria-DateInput'}
+        isInvalid={state.isInvalid}
+        onClick={() => datePickerState.setOpen(!datePickerState.isOpen)}
+      >
+        {state.segments.map((segment, i) => cloneElement(props.children(segment), { key: i }))}
+      </Group>
+      <Input />
+    </Provider>
+  );
+});
+
+function DatePickerLabel({ labelText }: Pick<OpenmrsDatePickerProps, 'labelText'>) {
+  if (labelText === null || typeof labelText === 'undefined' || typeof labelText === 'boolean') {
+    return null;
+  }
+
+  if (typeof labelText === 'string' || typeof labelText === 'number') {
+    return <Label className="cds--label">{labelText}</Label>;
+  }
+
+  return cloneElement(labelText, { className: classNames(labelText.props?.className, 'cds--label') });
+}
+
 /**
  * A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
  */
@@ -179,15 +262,15 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const {
       className,
       defaultValue: rawDefaultValue,
-      isDateUnavailable,
       label,
+      labelText,
       light,
       maxDate: rawMaxDate,
       minDate: rawMinDate,
-      onChange,
       short,
       size,
       value: rawValue,
+      ...datePickerProps
     } = Object.assign({}, defaultProps, props);
 
     const defaultValue = useMemo(() => dateToInternationalizedDate(rawDefaultValue), [rawDefaultValue]);
@@ -215,16 +298,15 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
               ['cds--date-picker--light']: light,
             })}
             defaultValue={defaultValue}
-            isDateUnavailable={isDateUnavailable}
             maxValue={maxDate}
             minValue={minDate}
-            onChange={onChange}
             value={value}
+            {...datePickerProps}
           >
             <div className="cds--date-picker-container">
-              {label && <Label className="cds--label">{label}</Label>}
+              <DatePickerLabel labelText={labelText ?? label} />
               <Group className={styles.inputGroup}>
-                <DateInput
+                <DatePickerInput
                   ref={ref}
                   className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
                     [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
@@ -237,9 +319,9 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                       <React.Fragment />
                     );
                   }}
-                </DateInput>
+                </DatePickerInput>
                 <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
-                  <CalendarIcon size={16} />
+                  <DatePickerIcon />
                 </Button>
               </Group>
             </div>

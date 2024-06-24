@@ -395,6 +395,7 @@ ___
 | `mode` | [`FormatDateMode`](API.md#formatdatemode) | - `standard`: "03 Feb 2022" - `wide`:     "03 — Feb — 2022" |
 | `month` | `boolean` | Whether to include the month number |
 | `noToday` | `boolean` | Disables the special handling of dates that are today. If false (the default), then dates that are today will be formatted as "Today" in the locale language. If true, then dates that are today will be formatted the same as all other dates. |
+| `numberingSystem?` | `string` | The unicode numbering system to use |
 | `time` | `boolean` \| ``"for today"`` | Whether the time should be included in the output always (`true`), never (`false`), or only when the input date is today (`for today`). |
 | `year` | `boolean` | Whether to include the year |
 
@@ -530,7 +531,7 @@ A type for any of the acceptable date formats
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L37)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L48)
 
 ___
 
@@ -1472,7 +1473,7 @@ A date picker component to select a single date. Based on React Aria, but styled
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L177)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L260)
 
 ___
 
@@ -3251,7 +3252,7 @@ CalendarDate
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:395](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L395)
+[packages/framework/esm-utils/src/omrs-dates.ts:398](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L398)
 
 ___
 
@@ -3290,7 +3291,7 @@ locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L270)
+[packages/framework/esm-utils/src/omrs-dates.ts:272](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L272)
 
 ___
 
@@ -3319,7 +3320,7 @@ output of `Date.prototype.toLocaleString` for *most* locales.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:372](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L372)
+[packages/framework/esm-utils/src/omrs-dates.ts:375](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L375)
 
 ___
 
@@ -3342,7 +3343,7 @@ Formats the input as a time, according to the current locale.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:356](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L356)
+[packages/framework/esm-utils/src/omrs-dates.ts:359](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L359)
 
 ___
 
@@ -3364,7 +3365,7 @@ Retrieves the default calendar for the specified locale if any.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:244](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L244)
+[packages/framework/esm-utils/src/omrs-dates.ts:246](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L246)
 
 ___
 
@@ -3382,7 +3383,7 @@ string
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:380](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L380)
+[packages/framework/esm-utils/src/omrs-dates.ts:383](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L383)
 
 ___
 
@@ -3476,7 +3477,7 @@ registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the '
 
 #### Defined in
 
-[packages/framework/esm-utils/src/omrs-dates.ts:235](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L235)
+[packages/framework/esm-utils/src/omrs-dates.ts:237](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/omrs-dates.ts#L237)
 
 ___
 
