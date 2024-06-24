@@ -96,13 +96,48 @@ app.post('/merge-configs', async (req, res) => {
     return res.status(400).send('Invalid directories or output path');
   }
 
+  // Validate the output path
+  if (!isValidPath(output)) {
+    return res.status(400).send('Invalid output path');
+  }
+
+  // Sanitize and validate directories
+  const sanitizedDirectories = directories.filter((dir) => isValidPath(dir));
+  if (sanitizedDirectories.length !== directories.length) {
+    return res.status(400).send('One or more directory paths are invalid');
+  }
+
   try {
-    await packageConfigs(directories, output);
+    await packageConfigs(sanitizedDirectories, path.resolve(output));
     res.status(200).send(`Merged configuration written to ${output}`);
   } catch (error) {
     logWarn(`Failed to package configs: ${error.message}`);
   }
 });
+
+function isValidPath(p: string): boolean {
+  // Check if the path is empty
+  if (p === '') {
+    return false;
+  }
+
+  // Check for absolute path (starting with / or \ on Windows)
+  const isAbsolutePath = p.startsWith('/') || /^[a-zA-Z]:[\\/]/.test(p);
+
+  // Validate characters: allow only alphanumeric characters, underscores, dashes, periods, and slashes
+  const validCharactersRegex = /^[a-zA-Z0-9_\-./\\]+$/;
+  if (!validCharactersRegex.test(p)) {
+    return false;
+  }
+
+  // Check for consecutive slashes or backslashes
+  if (/\/{2,}|\\{2,}/.test(p)) {
+    return false;
+  }
+
+  // If it's an absolute path or passes all checks for relative paths, return true
+  return isAbsolutePath || !isAbsolutePath;
+}
 
 export function runMergeConfigServer(args: MergeConfigArgs) {
   const { directories, output, port } = args;
