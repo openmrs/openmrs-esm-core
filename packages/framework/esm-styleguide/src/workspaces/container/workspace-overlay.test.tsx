@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render, within, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
+import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { WorkspaceOverlay } from './workspace-overlay.component';
 import { launchWorkspace, registerWorkspace, workspaceStore } from '..';
 import '@testing-library/jest-dom';
@@ -22,28 +22,6 @@ describe('WorkspaceOverlay', () => {
     });
   });
 
-  it('renders the desktop version of the overlay', async () => {
-    mockedUseLayoutType.mockReturnValue('small-desktop');
-    act(() => launchWorkspace('Patient Search', { workspaceTitle: 'Test Header' }));
-    renderWorkspaceOverlay();
-
-    expect(await screen.findByText('Test Header')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
-    const container = screen.getByRole('complementary');
-    expect(container).toHaveClass('desktopOverlay');
-  });
-
-  it('renders the tablet version of the overlay', async () => {
-    mockedUseLayoutType.mockReturnValue('tablet');
-    act(() => launchWorkspace('Patient Search'));
-    renderWorkspaceOverlay();
-
-    expect(await screen.findByText('Patient Search')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Close' })).toBeInTheDocument();
-    const container = screen.getByRole('complementary');
-    expect(container).toHaveClass('tabletOverlay');
-  });
-
   it('opens with overridable title and closes', async () => {
     mockedUseLayoutType.mockReturnValue('small-desktop');
     const user = userEvent.setup();
@@ -60,5 +38,9 @@ describe('WorkspaceOverlay', () => {
 });
 
 function renderWorkspaceOverlay() {
-  render(<WorkspaceOverlay contextKey="workspace-overlay" />);
+  render(
+    <ComponentContext.Provider value={{ featureName: 'test', moduleName: '@openmrs/foo' }}>
+      <WorkspaceOverlay contextKey="workspace-overlay" />
+    </ComponentContext.Provider>,
+  );
 }

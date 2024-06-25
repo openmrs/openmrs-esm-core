@@ -11,7 +11,7 @@ import { satisfies } from 'semver';
 export function registerOptionalDependencyHandler() {
   const subscription = getCurrentUser().subscribe((session) => {
     if (session.authenticated) {
-      subscription.unsubscribe();
+      subscription?.unsubscribe();
       setupOptionalDependencies();
     }
   });

@@ -684,3 +684,7 @@ html[dir='rtl'] {
   border: 1px solid #0f62fe;
   color: #0f62fe;
 }
+
+svg.omrs-icon {
+  fill: var(--omrs-icon-fill, 'currentColor');
+}
