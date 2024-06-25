@@ -9,7 +9,6 @@ interface Config {
 interface MergeConfigArgs {
   directories: string[];
   output: string;
-  port: number;
 }
 
 interface ConfigModule {
@@ -93,7 +92,7 @@ async function packageConfigs(configDirs: string[], outputFilePath: string): Pro
 }
 
 export async function runMergeConfigServer(args: MergeConfigArgs) {
-  const { directories, output, port } = args;
+  const { directories, output } = args;
 
   try {
     await packageConfigs(directories, output);
