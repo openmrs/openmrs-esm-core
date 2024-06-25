@@ -9,7 +9,6 @@ interface Config {
 interface MergeConfigArgs {
   directories: string[];
   output: string;
-  port: number;
 }
 
 interface ConfigModule {
