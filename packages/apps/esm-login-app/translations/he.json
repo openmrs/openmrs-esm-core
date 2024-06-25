@@ -1,5 +1,6 @@
 {
   "back": "חזרה",
+  "backToUserNameIconLabel": "Back to username",
   "change": "שינוי",
   "continue": "המשך",
   "errorLoadingLoginLocations": "Error loading login locations",
@@ -21,6 +22,7 @@
   "rememberLocationForFutureLogins": "Remember my location for future logins",
   "searchForLocation": "חיפוש מיקום",
   "selectYourLocation": "בחר את המיקום שלך מהרשימה למטה. השתמש בשורת החיפוש לחיפוש המיקום שלך.",
+  "showPassword": "Show password",
   "submitting": "Submitting",
   "tryAgain": "Try again",
   "username": "שם משתמש",

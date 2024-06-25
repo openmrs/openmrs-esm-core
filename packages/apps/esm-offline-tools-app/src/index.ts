@@ -7,7 +7,7 @@ import { setupSynchronizingOfflineActionsNotifications } from './offline-actions
 import offlineToolsComponent from './root.component';
 import offlineToolsLinkComponent from './offline-tools-app-menu-link.component';
 import offlineToolsNavItemsComponent from './nav/offline-tools-nav-menu.component';
-import offlineToolsConfirmationModalComponent from './components/confirmation-modal.component';
+import offlineToolsConfirmationModalComponent from './components/confirmation.modal';
 import offlineToolsPatientsCardComponent from './offline-patients/patients-overview-card.component';
 import offlineToolsActionsCardComponent from './offline-actions/offline-actions-overview-card.component';
 import offlineToolsActionsComponent from './offline-actions/offline-actions.component';

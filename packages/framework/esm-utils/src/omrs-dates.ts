@@ -139,6 +139,10 @@ export type FormatDateOptions = {
    */
   calendar?: string;
   /**
+   * The locale to use when formatting this date
+   */
+  locale?: string;
+  /**
    * - `standard`: "03 Feb 2022"
    * - `wide`:     "03 — Feb — 2022"
    */
@@ -150,8 +154,12 @@ export type FormatDateOptions = {
   time: true | false | 'for today';
   /** Whether to include the day number */
   day: boolean;
+  /** Whether to include the month number */
+  month: boolean;
   /** Whether to include the year */
   year: boolean;
+  /** The unicode numbering system to use */
+  numberingSystem?: string;
   /**
    * Disables the special handling of dates that are today. If false
    * (the default), then dates that are today will be formatted as "Today"
@@ -165,6 +173,7 @@ const defaultOptions: FormatDateOptions = {
   mode: 'standard',
   time: 'for today',
   day: true,
+  month: true,
   year: true,
   noToday: false,
 };
@@ -222,7 +231,7 @@ const registeredLocaleCalendars = new LocaleCalendars();
  * registerDefaultCalendar('en', 'buddhist') // sets the default calendar for the 'en' locale to Buddhist.
  * ```
  *
- * @param baseLocale the locale to register this calendar for
+ * @param locale the locale to register this calendar for
  * @param calendar the calendar to use for this registration
  */
 export function registerDefaultCalendar(locale: string, calendar: string) {
@@ -248,6 +257,7 @@ export function getDefaultCalendar(locale: Intl.Locale | string | undefined) {
  *  - mode: "standard",
  *  - time: "for today",
  *  - day: true,
+ *  - month: true,
  *  - year: true
  *  - noToday: false
  *
@@ -260,10 +270,10 @@ export function getDefaultCalendar(locale: Intl.Locale | string | undefined) {
  */
 // TODO: Shouldn't throw on null input
 export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
-  let locale = getLocale();
+  let locale = options?.locale ?? getLocale();
   const _locale = new Intl.Locale(locale);
 
-  const { calendar, mode, time, day, year, noToday }: FormatDateOptions = {
+  const { calendar, mode, time, day, month, year, noToday, numberingSystem }: FormatDateOptions = {
     ...defaultOptions,
     ...{ noToday: _locale.language === 'am' ? true : false },
     ...options,
@@ -274,8 +284,9 @@ export function formatDate(date: Date, options?: Partial<FormatDateOptions>) {
   const formatterOptions: Intl.DateTimeFormatOptions = {
     calendar: formatCalendar,
     year: year ? 'numeric' : undefined,
-    month: 'short',
+    month: month ? 'short' : undefined,
     day: day ? '2-digit' : undefined,
+    numberingSystem,
   };
 
   let localeString: string;
@@ -386,7 +397,7 @@ export function getLocale() {
  */
 export function convertToLocaleCalendar(date: CalendarDate, locale: string | Intl.Locale) {
   let locale_ = typeof locale === 'string' ? new Intl.Locale(locale) : locale;
-  const localCalendarName = getDefaultCalendar(locale);
+  const localCalendarName = getDefaultCalendar(locale_);
 
   return localCalendarName ? toCalendar(date, createCalendar(localCalendarName)) : date;
 }

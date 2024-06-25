@@ -4,29 +4,28 @@
 $icon-button-size: 2.5rem;
 $actionPanelOffset: 3rem;
 
-.container {
+.sideRailHidden {
+  display: none;
+}
+
+.sideRailVisible {
   display: flex;
-  align-items: center;
-  width: 100%;
 }
 
 /* Desktop */
 :global(.omrs-breakpoint-gt-tablet) {
   .sideRail {
-    position: fixed;
-    align-self: flex-end;
-    background: #ededed;
-    flex-direction: column;
-    display: flex;
-    height: 100%;
-    top: var(--omrs-navbar-height);
-    right: 0;
-    z-index: 1000;
     width: $actionPanelOffset;
-    align-items: center;
-    border-left: 1px solid $text-03;
 
     & .container {
+      position: fixed;
+      top: var(--omrs-navbar-height);
+      right: 0;
+      background: #ededed;
+      height: 100%;
+      z-index: 1000;
+      width: $actionPanelOffset;
+      border-left: 1px solid $text-03;
       display: flex;
       align-items: center;
       flex-direction: column;
@@ -38,11 +37,12 @@ $actionPanelOffset: 3rem;
 :global(.omrs-breakpoint-lt-desktop) {
   .sideRail {
     border-top: 1px solid $color-gray-30;
+    background-color: $ui-02;
+    height: var(--bottom-nav-height);
     position: fixed;
-    background: #ededed;
     left: 0;
     bottom: 0;
-    z-index: 8002;
+    z-index: 8003;
     width: 100%;
     display: flex;
     justify-content: stretch;
@@ -58,16 +58,11 @@ $actionPanelOffset: 3rem;
       cursor: pointer;
     }
   }
-}
 
-:global(.omrs-breakpoint-lt-desktop) {
-  .hiddenSideRail {
-    display: none;
-  }
-}
-:global(.omrs-breakpoint-lt-desktop) {
-  .showSideRail {
+  .container {
     display: flex;
+    align-items: center;
+    width: 100%;
   }
 }
 
@@ -82,8 +77,10 @@ $actionPanelOffset: 3rem;
 html[dir='rtl'] {
   :global(.omrs-breakpoint-gt-tablet) {
     .sideRail {
-      right: unset;
-      left: 0;
+      & .container {
+        right: unset;
+        left: 0;
+      }
     }
   }
 }
