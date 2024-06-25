@@ -18,6 +18,14 @@ interface ConfigModule {
 }
 
 async function readConfigFile(filePath: string): Promise<Config | null> {
+  const safeDir = path.join(__dirname, 'config'); // Example safe directory
+
+  // Check if filePath starts with safeDir
+  if (!filePath.startsWith(safeDir)) {
+    logWarn(`Attempted to read file from an unsafe location: ${filePath}`);
+    return null;
+  }
+
   try {
     const data = await fs.readFile(filePath, 'utf8');
     const configFunction = new Function('exports', 'require', 'module', '__filename', '__dirname', data);
@@ -130,8 +138,12 @@ function isValidPath(p: string): boolean {
     return false;
   }
 
-  // Check for consecutive slashes or backslashes
   if (/\/{2,}|\\{2,}/.test(p)) {
+    return false;
+  }
+
+  if (p.includes('..') || p.includes('~') || p.includes(':')) {
+    // Disallow parent directory traversal (~), other special characters (:)
     return false;
   }
 
