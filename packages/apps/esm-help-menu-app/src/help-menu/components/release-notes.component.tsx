@@ -12,7 +12,7 @@ const ReleaseNotes = () => {
 
   return (
     <div onClick={handleClick} className={styles.helpButton}>
-      {t('releaseNotes', 'Release Notes')}
+      {t('releaseNotes', 'Release notes')}
       <ArrowUpRight />
     </div>
   );

@@ -12,7 +12,7 @@ const ContactUs = () => {
 
   return (
     <div onClick={handleClick} className={styles.helpButton}>
-      {t('communityforum', 'Community Forum')}
+      {t('communityforum', 'Community forum')}
       <ArrowUpRight />
     </div>
   );
