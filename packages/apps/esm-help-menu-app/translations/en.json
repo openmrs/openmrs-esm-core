@@ -1,9 +1,5 @@
 {
   "releaseNotes": "Release Notes",
-  "tutorials": "Tutorials",
-  "contactUs": "Contact us",
-  "docs": "Docs",
-  "feedbackForum": "Feedback forum",
-  "version": "OpenMRS 3.0.1",
-  "home": "Home"
+  "communityforum": "Community Forum",
+  "docs": "Docs"
 }

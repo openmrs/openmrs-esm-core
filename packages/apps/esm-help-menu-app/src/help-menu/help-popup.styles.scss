@@ -6,11 +6,16 @@
   position: fixed;
   flex: auto;
   bottom: 5rem;
-  right: 2.5rem;
+  right: 3rem;
   width: 11rem;
   z-index: 8000;
   background-color: $ui-02;
-  padding: spacing.$spacing-05;
-  margin: spacing.$spacing-05;
+  gap: spacing.$spacing-05;
+  padding: spacing.$spacing-02;
+  margin: spacing.$spacing-02;
   box-shadow: 0 12px 24px 0 $ui-03;
+}
+
+.popup {
+  @include type.type-style('body-01');
 }

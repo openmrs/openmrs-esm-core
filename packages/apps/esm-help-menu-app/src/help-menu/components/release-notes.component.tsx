@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { navigate } from '@openmrs/esm-framework';
 import styles from './styles.scss';
+import { ArrowUpRight } from '@carbon/react/icons';
 
 const ReleaseNotes = () => {
   const { t } = useTranslation();
@@ -13,6 +13,7 @@ const ReleaseNotes = () => {
   return (
     <div onClick={handleClick} className={styles.helpButton}>
       {t('releaseNotes', 'Release Notes')}
+      <ArrowUpRight />
     </div>
   );
 };
