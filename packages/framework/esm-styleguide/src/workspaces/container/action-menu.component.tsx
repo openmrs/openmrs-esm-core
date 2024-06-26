@@ -4,9 +4,6 @@ import classNames from 'classnames';
 import { ComponentContext, ExtensionSlot, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import styles from './action-menu.module.scss';
 
-/**
- * @deprecated Use `WorkspaceContainer` instead
- */
 export function ActionMenu() {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const initialHeight = useRef(window.innerHeight);

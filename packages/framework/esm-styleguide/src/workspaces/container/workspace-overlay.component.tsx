@@ -12,13 +12,15 @@ import styles from './workspace.module.scss';
 
 export interface WorkspaceOverlayProps {
   contextKey: string;
+  sidebarWithinWorkspace?: boolean;
   additionalWorkspaceProps?: object;
 }
 
-/**
- * @deprecated Use `WorkspaceContainer` instead
- */
-export function WorkspaceOverlay({ contextKey, additionalWorkspaceProps }: WorkspaceOverlayProps) {
+export function WorkspaceOverlay({
+  contextKey,
+  sidebarWithinWorkspace,
+  additionalWorkspaceProps,
+}: WorkspaceOverlayProps) {
   const { workspaces } = useWorkspaces();
 
   return (

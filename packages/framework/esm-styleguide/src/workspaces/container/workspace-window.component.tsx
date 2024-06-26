@@ -13,13 +13,15 @@ import styles from './workspace.module.scss';
 
 export interface WorkspaceWindowProps {
   contextKey: string;
+  sidebarWithinWorkspace?: boolean;
   additionalWorkspaceProps?: object;
 }
 
-/**
- * @deprecated Use `WorkspaceContainer` instead
- */
-export function WorkspaceWindow({ contextKey, additionalWorkspaceProps }: WorkspaceWindowProps) {
+export function WorkspaceWindow({
+  contextKey,
+  sidebarWithinWorkspace,
+  additionalWorkspaceProps,
+}: WorkspaceWindowProps) {
   const { workspaces } = useWorkspaces();
   // If there are no open workspaces, have an empty container ready so that it can animate onto the screen
   const workspacesOrEmptyContainer: Array<OpenWorkspace | null> = workspaces.length ? workspaces : [null];
