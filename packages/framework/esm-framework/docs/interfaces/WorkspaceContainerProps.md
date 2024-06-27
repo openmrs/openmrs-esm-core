@@ -19,9 +19,8 @@
 
 #### Defined in
 
-=======
 [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L11)
->>>>>>> upstream/main
+
 
 ___
 
@@ -31,9 +30,8 @@ ___
 
 #### Defined in
 
-=======
 [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L8)
->>>>>>> upstream/main
+
 
 ___
 
