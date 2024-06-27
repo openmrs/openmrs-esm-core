@@ -11,25 +11,10 @@ export interface MergeConfigArgs {
   output: string;
 }
 
-interface ConfigModule {
-  configSchema: Config;
-}
-
 async function readConfigFile(filePath: string): Promise<Config | null> {
-  const safeDir = path.join(__dirname, 'config'); // Example safe directory
-
-  // Check if filePath starts with safeDir
-  if (!filePath.startsWith(safeDir)) {
-    logWarn(`Attempted to read file from an unsafe location: ${filePath}`);
-    return null;
-  }
-
   try {
     const data = await fs.readFile(filePath, 'utf8');
-    const configFunction = new Function('exports', 'require', 'module', '__filename', '__dirname', data);
-    const module: ConfigModule = { configSchema: {} };
-    configFunction(module, require, module, filePath, path.dirname(filePath));
-    return module.configSchema;
+    return JSON.parse(data);
   } catch (error) {
     logWarn(`Error reading or parsing file ${filePath}: ${error.message}`);
     return null;
@@ -58,10 +43,7 @@ function mergeConfigs(configs: (Config | null)[]): Config {
 
 async function writeConfigFile(filePath: string, config: Config): Promise<void> {
   try {
-    const content = `import { validators, Type } from '@openmrs/esm-framework';
-
-export const configSchema = ${JSON.stringify(config, null, 2)};
-`;
+    const content = JSON.stringify(config, null, 2);
     await fs.writeFile(filePath, content, 'utf8');
     logInfo(`Merged configuration written to ${filePath}`);
   } catch (error) {
@@ -76,7 +58,7 @@ async function packageConfigs(configDirs: string[], outputFilePath: string): Pro
     try {
       const files = await fs.readdir(dir);
       for (const file of files) {
-        if (path.extname(file) === '.ts' || path.extname(file) === '.js') {
+        if (path.extname(file) === '.json') {
           const filePath = path.join(dir, file);
           const config = await readConfigFile(filePath);
           configs.push(config);
