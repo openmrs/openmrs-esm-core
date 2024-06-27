@@ -49,11 +49,12 @@ describe('WorkspaceWindow', () => {
 
     const hideButton = screen.getByRole('button', { name: 'Hide' });
     await user.click(hideButton);
-    expect(screen.queryByRole('complementary')).toHaveClass('hidden');
+    expect(screen.queryByRole('complementary')).toHaveClass('hiddenRelative');
 
     act(() => launchWorkspace('Clinical Form', { workspaceTitle: 'POC Triage' }));
     expect(await screen.findByRole('complementary')).toBeInTheDocument();
-    expect(screen.queryByRole('complementary')).not.toHaveClass('hidden');
+    expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenRelative');
+    expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenFixed');
     expect(workspaces.result.current.workspaces.length).toBe(1);
   });
 
@@ -65,15 +66,15 @@ describe('WorkspaceWindow', () => {
     act(() => launchWorkspace('Clinical Form'));
     const header = screen.getByRole('banner');
     expect(within(header).getByText('Clinical Form')).toBeInTheDocument();
-    expect(screen.getByRole('complementary')).not.toHaveClass('maximizedWindow');
+    expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
 
     const maximizeButton = await screen.findByRole('button', { name: 'Maximize' });
     await user.click(maximizeButton);
-    expect(screen.getByRole('complementary')).toHaveClass('maximizedWindow');
+    expect(screen.getByRole('complementary').firstChild).toHaveClass('maximizedWindow');
 
     const minimizeButton = await screen.findByRole('button', { name: 'Minimize' });
     await user.click(minimizeButton);
-    expect(screen.getByRole('complementary')).not.toHaveClass('maximizedWindow');
+    expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
   });
 });
 

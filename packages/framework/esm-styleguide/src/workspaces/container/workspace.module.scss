@@ -12,7 +12,7 @@ $actionPanelOffset: 3rem;
   min-height: spacing.$spacing-09;
 }
 
-.hidden {
+.hiddenExtraWorkspace {
   display: none;
 }
 
@@ -49,7 +49,7 @@ $actionPanelOffset: 3rem;
       }
     }
 
-    &:not(.maximized) {
+    &:not(.maximizedWindow) {
       right: auto;
       left: auto;
     }
@@ -71,16 +71,12 @@ $actionPanelOffset: 3rem;
   }
 
   .maximizedWindow {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
+    width: calc(100% - $actionPanelOffset) !important;
   }
 
   .workspaceWindowSpacer {
     height: 100%;
+    transition: margin-right 0.5s ease-in-out;
   }
 
   .workspaceFixedContainer {
@@ -90,6 +86,13 @@ $actionPanelOffset: 3rem;
     border-left: 1px solid $text-03;
     display: flex;
     flex-direction: column;
+    z-index: 50;
+    -webkit-transition: width 0.5s ease-in-out;
+    -moz-transition: width 0.5s ease-in-out;
+    -o-transition: width 0.5s ease-in-out;
+    transition:
+      width 0.5s ease-in-out,
+      right 0.5s ease-in-out;
   }
 
   .widerWorkspace {
@@ -98,6 +101,14 @@ $actionPanelOffset: 3rem;
     .workspaceFixedContainer {
       width: 32.25rem;
     }
+
+    &.hiddenRelative {
+      margin-right: -32.25rem !important;
+    }
+
+    .hiddenFixed {
+      right: -32.25rem !important;
+    }
   }
 
   .narrowWorkspace {
@@ -105,6 +116,14 @@ $actionPanelOffset: 3rem;
 
     .workspaceFixedContainer {
       width: 26.25rem;
+    }
+
+    &.hiddenRelative {
+      margin-right: -26.25rem !important;
+    }
+
+    .hiddenFixed {
+      right: -26.25rem !important;
     }
   }
 
