@@ -16,26 +16,6 @@ $actionPanelOffset: 3rem;
   display: none;
 }
 
-.widerWorkspace.hiddenRelative {
-  margin-right: -32.25rem !important;
-}
-
-.widerWorkspace {
-  .hiddenFixed {
-    right: -32.25rem !important;
-  }
-}
-
-.narrowWorkspace.hiddenRelative {
-  margin-right: -26.25rem !important;
-}
-
-.narrowWorkspace {
-  .hiddenFixed {
-    right: -26.25rem !important;
-  }
-}
-
 /* Desktop */
 :global(.omrs-breakpoint-gt-tablet) {
   .workspaceContainerWithActionMenu {
