@@ -17,6 +17,7 @@
     "build": "turbo run build",
     "build:apps": "turbo run build --filter='@openmrs/*-app'",
     "setup": "yarn install && turbo run build",
+    "merge-configs": "openmrs merge-configs",
     "start": "openmrs develop",
     "verify": "turbo run lint test typescript",
     "postinstall": "husky install",
