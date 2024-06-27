@@ -100,4 +100,4 @@ export async function runMergeConfig(args: MergeConfigArgs) {
   } catch (error) {
     logWarn(`Failed to package configs: ${error.message}`);
   }
-};
+}

@@ -2,7 +2,7 @@
 
 import yargs from 'yargs';
 import { fork } from 'child_process';
-import { MergeConfigArgs} from './commands/merge-configs';
+import type { MergeConfigArgs} from './commands/merge-configs';
 import { resolve } from 'path';
 import { getImportmapAndRoutes, mergeImportmapAndRoutes, proxyImportmapAndRoutes, runProject, trimEnd } from './utils';
 
