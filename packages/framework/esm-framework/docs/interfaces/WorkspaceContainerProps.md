@@ -21,7 +21,6 @@
 
 [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L11)
 
-
 ___
 
 ### contextKey
@@ -32,7 +31,6 @@ ___
 
 [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L8)
 
-
 ___
 
 ### overlay
@@ -41,9 +39,7 @@ ___
 
 #### Defined in
 
-=======
 [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L9)
->>>>>>> upstream/main
 
 ___
 
@@ -53,6 +49,5 @@ ___
 
 #### Defined in
 
-=======
 [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L10)
->>>>>>> upstream/main
+
