@@ -244,9 +244,6 @@
 
 ### Workspace Functions
 
-- [ActionMenu](API.md#actionmenu)
-- [WorkspaceOverlay](API.md#workspaceoverlay)
-- [WorkspaceWindow](API.md#workspacewindow)
 - [closeWorkspace](API.md#closeworkspace)
 - [launchWorkspace](API.md#launchworkspace)
 - [navigateAndLaunchWorkspace](API.md#navigateandlaunchworkspace)
@@ -5350,7 +5347,7 @@ This component also provides everything needed for workspace notifications to be
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L59)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L67)
 
 ___
 
@@ -6772,66 +6769,6 @@ function MyComponent() {
 ___
 
 ## Workspace Functions
-
-### ActionMenu
-
-▸ **ActionMenu**(): `Element`
-
-**`deprecated`** Use `WorkspaceContainer` instead
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/container/action-menu.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/action-menu.component.tsx#L10)
-
-___
-
-### WorkspaceOverlay
-
-▸ **WorkspaceOverlay**(`__namedParameters`): `Element`
-
-**`deprecated`** Use `WorkspaceContainer` instead
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`WorkspaceOverlayProps`](interfaces/WorkspaceOverlayProps.md) |
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-overlay.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-overlay.component.tsx#L21)
-
-___
-
-### WorkspaceWindow
-
-▸ **WorkspaceWindow**(`__namedParameters`): `Element`
-
-**`deprecated`** Use `WorkspaceContainer` instead
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`WorkspaceWindowProps`](interfaces/WorkspaceWindowProps.md) |
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-window.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-window.component.tsx#L22)
-
-___
 
 ### closeWorkspace
 

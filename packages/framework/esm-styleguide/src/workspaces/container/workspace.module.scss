@@ -79,6 +79,12 @@ $actionPanelOffset: 3rem;
     transition: margin-right 0.5s ease-in-out;
   }
 
+  // The overlay doesn't really need this outer layer for anything, so we just keep
+  // it out of the way with "position: fixed"
+  .workspaceOverlayOuterContainer {
+    position: fixed;
+  }
+
   .workspaceFixedContainer {
     position: fixed;
     top: var(--omrs-navbar-height);
