@@ -6,7 +6,7 @@ interface Config {
   [key: string]: any;
 }
 
-interface MergeConfigArgs {
+export interface MergeConfigArgs {
   directories: string[];
   output: string;
 }
@@ -91,7 +91,7 @@ async function packageConfigs(configDirs: string[], outputFilePath: string): Pro
   await writeConfigFile(outputFilePath, mergedConfig);
 }
 
-export async function runMergeConfigServer(args: MergeConfigArgs) {
+export async function runMergeConfig(args: MergeConfigArgs) {
   const { directories, output } = args;
 
   try {
@@ -100,4 +100,4 @@ export async function runMergeConfigServer(args: MergeConfigArgs) {
   } catch (error) {
     logWarn(`Failed to package configs: ${error.message}`);
   }
-}
+};

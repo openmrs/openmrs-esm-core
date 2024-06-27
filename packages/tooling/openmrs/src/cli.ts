@@ -2,6 +2,7 @@
 
 import yargs from 'yargs';
 import { fork } from 'child_process';
+import { MergeConfigArgs} from './commands/merge-configs';
 import { resolve } from 'path';
 import { getImportmapAndRoutes, mergeImportmapAndRoutes, proxyImportmapAndRoutes, runProject, trimEnd } from './utils';
 
@@ -324,6 +325,27 @@ yargs.command(
     }),
 );
 
+yargs.command(
+  'merge-configs',
+  'Merges configuration files from multiple directories into a single output file',
+  (argv) =>
+    argv
+      .option('directories', {
+        alias: 'd',
+        describe: 'Directories to read config files from',
+        type: 'string',
+        demandOption: true,
+      })
+      .option('output', {
+        alias: 'o',
+        describe: 'Output file path',
+        type: 'string',
+        demandOption: true,
+      })
+      .help()
+      .argv,
+      (args) => runCommand('runMergeConfig', args as unknown as MergeConfigArgs)
+    )
 yargs
   .epilog(
     'The SPA build config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` ' +
@@ -341,3 +363,4 @@ yargs
   .help()
   .demandCommand()
   .strict().argv;
+
