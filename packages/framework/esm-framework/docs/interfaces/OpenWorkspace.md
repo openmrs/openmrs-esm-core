@@ -15,9 +15,11 @@
 - [additionalProps](OpenWorkspace.md#additionalprops)
 - [canHide](OpenWorkspace.md#canhide)
 - [canMaximize](OpenWorkspace.md#canmaximize)
+- [hasOwnSidebar](OpenWorkspace.md#hasownsidebar)
 - [moduleName](OpenWorkspace.md#modulename)
 - [name](OpenWorkspace.md#name)
 - [preferredWindowSize](OpenWorkspace.md#preferredwindowsize)
+- [sidebarFamily](OpenWorkspace.md#sidebarfamily)
 - [title](OpenWorkspace.md#title)
 - [type](OpenWorkspace.md#type)
 - [width](OpenWorkspace.md#width)
@@ -40,7 +42,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L44)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L46)
 
 ___
 
@@ -72,6 +74,20 @@ ___
 
 ___
 
+### hasOwnSidebar
+
+• **hasOwnSidebar**: `boolean`
+
+#### Inherited from
+
+[WorkspaceRegistration](WorkspaceRegistration.md).[hasOwnSidebar](WorkspaceRegistration.md#hasownsidebar)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L38)
+
+___
+
 ### moduleName
 
 • **moduleName**: `string`
@@ -82,7 +98,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L40)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L42)
 
 ___
 
@@ -110,7 +126,21 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L38)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L40)
+
+___
+
+### sidebarFamily
+
+• **sidebarFamily**: `string`
+
+#### Inherited from
+
+[WorkspaceRegistration](WorkspaceRegistration.md).[sidebarFamily](WorkspaceRegistration.md#sidebarfamily)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L39)
 
 ___
 
@@ -144,7 +174,7 @@ ___
 
 ### width
 
-• **width**: ``"narrow"`` \| ``"wider"``
+• **width**: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"``
 
 #### Inherited from
 
@@ -172,7 +202,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L45)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L47)
 
 ___
 
@@ -192,7 +222,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L46)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L48)
 
 ___
 
@@ -212,7 +242,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L47)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L49)
 
 ___
 
@@ -232,4 +262,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L39)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L41)

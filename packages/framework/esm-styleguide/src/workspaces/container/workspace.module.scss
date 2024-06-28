@@ -60,7 +60,7 @@ $actionPanelOffset: 3rem;
       background-color: $ui-02;
       border-right: 1px solid colors.$gray-20;
 
-      & > svg {
+      > svg {
         fill: colors.$cool-gray-100 !important;
       }
 
@@ -79,6 +79,11 @@ $actionPanelOffset: 3rem;
     transition: margin-right 0.5s ease-in-out;
   }
 
+  .workspaceOverlayOuterContainer {
+    position: fixed;
+    z-index: 50;
+  }
+
   .workspaceFixedContainer {
     position: fixed;
     top: var(--omrs-navbar-height);
@@ -87,9 +92,26 @@ $actionPanelOffset: 3rem;
     display: flex;
     flex-direction: column;
     z-index: 50;
+    background-color: white;
     transition:
       width 0.5s ease-in-out,
       right 0.5s ease-in-out;
+  }
+
+  .extraWideWorkspace {
+    width: 48.25rem;
+
+    .workspaceFixedContainer {
+      width: 48.25rem;
+    }
+
+    &.hiddenRelative {
+      margin-right: -48.25rem !important;
+    }
+
+    .hiddenFixed {
+      right: -48.25rem !important;
+    }
   }
 
   .widerWorkspace {

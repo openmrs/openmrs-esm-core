@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L11)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L20)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L8)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L17)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L9)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L18)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L10)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L19)

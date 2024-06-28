@@ -17,11 +17,11 @@ $actionPanelOffset: 3rem;
   .sideRail {
     width: $actionPanelOffset;
 
-    & .container {
+    .container {
       position: fixed;
       top: var(--omrs-navbar-height);
       right: 0;
-      background: #ededed;
+      background: $ui-01;
       height: 100%;
       z-index: 1000;
       width: $actionPanelOffset;
@@ -29,6 +29,10 @@ $actionPanelOffset: 3rem;
       display: flex;
       align-items: center;
       flex-direction: column;
+    }
+
+    &.withinWorkspace .container {
+      top: calc(var(--omrs-navbar-height) + var(--workspace-header-height));
     }
   }
 }
@@ -52,7 +56,7 @@ $actionPanelOffset: 3rem;
     display: flex;
     width: 100%;
 
-    & > div {
+    > div {
       flex: 1;
       cursor: pointer;
     }
@@ -76,7 +80,7 @@ $actionPanelOffset: 3rem;
 html[dir='rtl'] {
   :global(.omrs-breakpoint-gt-tablet) {
     .sideRail {
-      & .container {
+      .container {
         right: unset;
         left: 0;
       }
