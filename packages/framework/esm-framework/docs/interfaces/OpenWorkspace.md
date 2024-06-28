@@ -144,7 +144,7 @@ ___
 
 ### width
 
-• **width**: ``"narrow"`` \| ``"wider"``
+• **width**: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"``
 
 #### Inherited from
 

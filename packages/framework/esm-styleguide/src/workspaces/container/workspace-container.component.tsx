@@ -11,6 +11,7 @@ import { type OpenWorkspace, updateWorkspaceWindowState, useWorkspaces } from '.
 import ActionMenu from './action-menu.component';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import styles from './workspace.module.scss';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 export interface WorkspaceContainerProps {
   contextKey: string;
@@ -139,8 +140,17 @@ function Workspace({ isOverlay, workspaceInstance, additionalWorkspaceProps }: W
     canHide = false,
     canMaximize = false,
     width = isOverlay ? 'wider' : 'narrow',
+    hasOwnSidebar = false,
     closeWorkspace,
   } = useMemo(() => workspaceInstance ?? ({} as OpenWorkspace), [workspaceInstance]);
+
+  const workspaceProps = useMemo(
+    () => ({
+      ...additionalWorkspaceProps,
+      ...workspaceInstance?.additionalProps,
+    }),
+    [additionalWorkspaceProps, workspaceInstance],
+  );
 
   return (
     <aside
@@ -166,7 +176,12 @@ function Workspace({ isOverlay, workspaceInstance, additionalWorkspaceProps }: W
               <HeaderName prefix="">{workspaceTitle}</HeaderName>
               <div className={styles.overlayHeaderSpacer} />
               <HeaderGlobalBar className={styles.headerButtons}>
-                <ExtensionSlot name={`workspace-header-${featureName}-slot`} />
+                <ExtensionSlot
+                  name={`workspace-header-family-${workspaceInstance.sidebarFamily}-slot`}
+                  state={workspaceProps}
+                />
+                <ExtensionSlot name={`workspace-header-type-${workspaceInstance.type}-slot`} state={workspaceProps} />
+                <ExtensionSlot name={`workspace-header-${featureName}-slot`} state={workspaceProps} />
                 {isDesktop(layout) && (
                   <>
                     {(canMaximize || isMaximized) && (
@@ -230,6 +245,7 @@ function Workspace({ isOverlay, workspaceInstance, additionalWorkspaceProps }: W
                 additionalPropsFromPage={additionalWorkspaceProps}
               />
             </div>
+            {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />}
           </>
         )}
       </div>

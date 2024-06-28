@@ -291,7 +291,9 @@ export type WorkspaceDefinition = {
   type: string;
   canHide?: boolean;
   canMaximize?: boolean;
-  width?: 'narrow' | 'wider';
+  width?: 'narrow' | 'wider' | 'extra-wide';
+  hasOwnSidebar?: boolean;
+  sidebarFamily?: string;
   preferredWindowSize?: WorkspaceWindowState;
 } & (
   | {

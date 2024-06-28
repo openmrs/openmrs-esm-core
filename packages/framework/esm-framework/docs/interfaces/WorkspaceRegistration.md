@@ -101,7 +101,7 @@ ___
 
 ### width
 
-• **width**: ``"narrow"`` \| ``"wider"``
+• **width**: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"``
 
 #### Defined in
 

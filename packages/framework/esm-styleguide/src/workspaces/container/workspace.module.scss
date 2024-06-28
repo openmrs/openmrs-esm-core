@@ -60,7 +60,7 @@ $actionPanelOffset: 3rem;
       background-color: $ui-02;
       border-right: 1px solid colors.$gray-20;
 
-      & > svg {
+      > svg {
         fill: colors.$cool-gray-100 !important;
       }
 
