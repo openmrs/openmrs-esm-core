@@ -87,9 +87,6 @@ $actionPanelOffset: 3rem;
     display: flex;
     flex-direction: column;
     z-index: 50;
-    -webkit-transition: width 0.5s ease-in-out;
-    -moz-transition: width 0.5s ease-in-out;
-    -o-transition: width 0.5s ease-in-out;
     transition:
       width 0.5s ease-in-out,
       right 0.5s ease-in-out;
@@ -170,6 +167,10 @@ $actionPanelOffset: 3rem;
     }
   }
 
+  .hiddenFixed {
+    top: 100% !important;
+  }
+
   .workspaceFixedContainer {
     position: fixed;
     top: 0;
@@ -179,6 +180,7 @@ $actionPanelOffset: 3rem;
     z-index: 8002;
     display: flex;
     flex-direction: column;
+    transition: top 0.5s ease-in-out;
   }
 
   .workspaceContainerWithActionMenu {
