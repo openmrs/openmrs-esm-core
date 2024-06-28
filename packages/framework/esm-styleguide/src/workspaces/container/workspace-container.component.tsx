@@ -88,7 +88,7 @@ export function WorkspaceContainer({
           {workspacesOrEmptyContainer.map((workspace, i) => (
             <div key={`workspace-container-${i}`} className={classNames({ [styles.hiddenExtraWorkspace]: i !== 0 })}>
               <Workspace
-                overlay={overlay}
+                isOverlay={overlay}
                 workspaceInstance={workspace}
                 additionalWorkspaceProps={additionalWorkspaceProps}
               />
@@ -104,11 +104,11 @@ export function WorkspaceContainer({
 
 interface WorkspaceProps {
   workspaceInstance: OpenWorkspace | null;
-  overlay?: boolean;
+  isOverlay?: boolean;
   additionalWorkspaceProps?: object;
 }
 
-function Workspace({ overlay, workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
+function Workspace({ isOverlay, workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
   const layout = useLayoutType();
   const { workspaceWindowState } = useWorkspaces();
   const isMaximized = workspaceWindowState === 'maximized';
@@ -138,14 +138,14 @@ function Workspace({ overlay, workspaceInstance, additionalWorkspaceProps }: Wor
   const {
     canHide = false,
     canMaximize = false,
-    width = overlay ? 'wider' : 'narrow',
+    width = isOverlay ? 'wider' : 'narrow',
     closeWorkspace,
   } = useMemo(() => workspaceInstance ?? ({} as OpenWorkspace), [workspaceInstance]);
 
   return (
     <aside
       className={classNames(
-        overlay ? styles.workspaceOverlayOuterContainer : styles.workspaceWindowSpacer,
+        isOverlay ? styles.workspaceOverlayOuterContainer : styles.workspaceWindowSpacer,
         width === 'narrow' ? styles.narrowWorkspace : styles.widerWorkspace,
         {
           [styles.hiddenRelative]: isHidden,
