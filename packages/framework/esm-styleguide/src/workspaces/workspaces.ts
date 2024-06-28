@@ -34,7 +34,7 @@ export interface WorkspaceRegistration {
   type: string;
   canHide: boolean;
   canMaximize: boolean;
-  width: 'narrow' | 'wider';
+  width: 'narrow' | 'wider' | 'extra-wide';
   preferredWindowSize: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;

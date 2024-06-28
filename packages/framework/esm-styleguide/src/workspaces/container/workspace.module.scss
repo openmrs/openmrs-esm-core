@@ -98,6 +98,22 @@ $actionPanelOffset: 3rem;
       right 0.5s ease-in-out;
   }
 
+  .extraWideWorkspace {
+    width: 48.25rem;
+
+    .workspaceFixedContainer {
+      width: 48.25rem;
+    }
+
+    &.hiddenRelative {
+      margin-right: -48.25rem !important;
+    }
+
+    .hiddenFixed {
+      right: -48.25rem !important;
+    }
+  }
+
   .widerWorkspace {
     width: 32.25rem;
 
