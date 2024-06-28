@@ -15,7 +15,6 @@ import styles from './workspace.module.scss';
 export interface WorkspaceContainerProps {
   contextKey: string;
   overlay?: boolean;
-  megaWorkspace?: boolean;
   showSiderailAndBottomNav?: boolean;
   additionalWorkspaceProps?: object;
 }
@@ -68,7 +67,6 @@ export interface WorkspaceContainerProps {
 export function WorkspaceContainer({
   contextKey,
   overlay,
-  megaWorkspace,
   showSiderailAndBottomNav,
   additionalWorkspaceProps,
 }: WorkspaceContainerProps) {
@@ -91,7 +89,6 @@ export function WorkspaceContainer({
             <div key={`workspace-container-${i}`} className={classNames({ [styles.hiddenExtraWorkspace]: i !== 0 })}>
               <Workspace
                 isOverlay={overlay}
-                isMegaWorkspace={megaWorkspace}
                 workspaceInstance={workspace}
                 additionalWorkspaceProps={additionalWorkspaceProps}
               />
@@ -108,11 +105,10 @@ export function WorkspaceContainer({
 interface WorkspaceProps {
   workspaceInstance: OpenWorkspace | null;
   isOverlay?: boolean;
-  isMegaWorkspace?: boolean;
   additionalWorkspaceProps?: object;
 }
 
-function Workspace({ isOverlay, isMegaWorkspace, workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
+function Workspace({ isOverlay, workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
   const layout = useLayoutType();
   const { workspaceWindowState } = useWorkspaces();
   const isMaximized = workspaceWindowState === 'maximized';
@@ -139,25 +135,21 @@ function Workspace({ isOverlay, isMegaWorkspace, workspaceInstance, additionalWo
     );
   }, [workspaceInstance]);
 
-  console.log("workspaceInstance", workspaceInstance)
   const {
     canHide = false,
     canMaximize = false,
-    width = isMegaWorkspace ? 'extra-wide' : (isOverlay ? 'wider' : 'narrow'),
+    width = isOverlay ? 'wider' : 'narrow',
     closeWorkspace,
   } = useMemo(() => workspaceInstance ?? ({} as OpenWorkspace), [workspaceInstance]);
 
   return (
     <aside
-      className={classNames(
-        isOverlay ? styles.workspaceOverlayOuterContainer : styles.workspaceWindowSpacer,
-        {
-          [styles.hiddenRelative]: isHidden,
-          [styles.narrowWorkspace]: width === 'narrow',
-          [styles.widerWorkspace]: width === 'wider',
-          [styles.extraWideWorkspace]: width === 'extra-wide',
-        },
-      )}
+      className={classNames(isOverlay ? styles.workspaceOverlayOuterContainer : styles.workspaceWindowSpacer, {
+        [styles.hiddenRelative]: isHidden,
+        [styles.narrowWorkspace]: width === 'narrow',
+        [styles.widerWorkspace]: width === 'wider',
+        [styles.extraWideWorkspace]: width === 'extra-wide',
+      })}
     >
       <div
         className={classNames(styles.workspaceFixedContainer, {
