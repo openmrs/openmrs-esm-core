@@ -8,7 +8,7 @@
   ],
   "extensions": [
     {
-      "name": "release-note",
+      "name": "release-notes",
       "slot": "help-menu-slot",
       "component": "releaseNotes",
       "online": true,

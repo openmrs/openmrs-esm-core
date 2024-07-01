@@ -19,5 +19,5 @@
     ],
     "noEmit": true
   },
-  "include": ["src/**/*", "../esm-help-menu-app/src/help-menu copy"]
+  "include": ["src/**/*"]
 }

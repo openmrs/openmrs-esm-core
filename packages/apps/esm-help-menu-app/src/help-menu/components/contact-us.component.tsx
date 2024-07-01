@@ -2,19 +2,20 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.scss';
 import { ArrowUpRight } from '@carbon/react/icons';
+import { Link } from '@carbon/react';
 
 const ContactUs = () => {
   const { t } = useTranslation();
-
-  const handleClick = () => {
-    window.open('https://talk.openmrs.org/', '_blank');
-  };
-
   return (
-    <div onClick={handleClick} className={styles.helpButton}>
+    <Link
+      className={styles.helpButton}
+      href="https://talk.openmrs.org"
+      rel="noopener noreferrer"
+      renderIcon={ArrowUpRight}
+      target="_blank"
+    >
       {t('communityforum', 'Community forum')}
-      <ArrowUpRight />
-    </div>
+    </Link>
   );
 };
 
