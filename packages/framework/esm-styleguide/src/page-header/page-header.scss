@@ -1,0 +1,37 @@
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.pageHeader {
+  @include type.type-style('body-compact-02');
+  color: $text-02;
+  height: spacing.$spacing-12;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftJustifiedItems {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.rightJustifiedItems {
+  @include type.type-style('body-compact-02');
+  display: flex;
+  flex-direction: column;
+  color: $text-02;
+  padding: 1rem 0;
+  justify-content: space-between;
+}
+
+.pageName {
+  @include type.type-style('heading-04');
+}
+
+.pageLabels {
+  p:first-of-type {
+    margin-bottom: 0.25rem;
+  }
+}
