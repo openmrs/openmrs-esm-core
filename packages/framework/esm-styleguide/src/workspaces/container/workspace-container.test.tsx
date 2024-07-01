@@ -3,7 +3,16 @@ import { screen, render, within, renderHook, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { WorkspaceContainer, launchWorkspace, registerWorkspace, useWorkspaces } from '..';
-jest.mock('./workspace-renderer.component.tsx');
+jest.mock('./workspace-renderer.component.tsx', () => {
+  return {
+    WorkspaceRenderer: ({ workspace }) => (
+      <div>
+        <p>{workspace.name}</p>
+        <input></input>
+      </div>
+    ),
+  };
+});
 
 const mockedIsDesktop = isDesktop as jest.Mock;
 const mockedUseLayoutType = useLayoutType as jest.Mock;
@@ -27,6 +36,15 @@ describe('WorkspaceContainer in window mode', () => {
       title: 'Clinical Form',
       load: jest.fn(),
       moduleName: '@openmrs/foo',
+      canHide: true,
+      canMaximize: true,
+    });
+
+    registerWorkspace({
+      name: 'Order Basket',
+      title: 'Order Basket',
+      load: jest.fn(),
+      moduleName: '@openmrs/bar',
       canHide: true,
       canMaximize: true,
     });
@@ -74,6 +92,26 @@ describe('WorkspaceContainer in window mode', () => {
     await user.click(minimizeButton);
     expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
   });
+
+  test("shouldn't lose data when transitioning between workspaces", async () => {
+    renderWorkspaceWindow();
+    const user = userEvent.setup();
+    act(() => launchWorkspace('Clinical Form'));
+    let container = screen.getByRole('complementary');
+    expect(within(container).getByText('Clinical Form')).toBeInTheDocument();
+    let input = screen.getByRole('textbox');
+    await user.type(input, 'hello');
+
+    await user.click(screen.getByRole('button', { name: 'Minimize' }));
+    act(() => launchWorkspace('Order Basket'));
+    container = screen.getByRole('complementary');
+    expect(within(container).getByText('Order Basket')).toBeInTheDocument();
+
+    act(() => launchWorkspace('Clinical Form'));
+    expect(within(container).getByText('Clinical Form')).toBeInTheDocument();
+    input = screen.getByRole('textbox');
+    expect(input).toHaveValue('hello');
+  });
 });
 
 function renderWorkspaceWindow() {
@@ -118,6 +156,7 @@ function renderWorkspaceOverlay() {
   );
 }
 import '@testing-library/jest-dom';
+import { WorkspaceRenderer } from './workspace-renderer.component';
 
 function expectToBeVisible(element: HTMLElement) {
   expect(element).toBeVisible();
