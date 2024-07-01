@@ -103,6 +103,10 @@ export interface OpenmrsDatePickerProps
    * The value (controlled)
    */
   value?: DateInputValue;
+  /**
+   * Specifies if the input is required. Used to add an asterisk to the label.
+   */
+  isRequired?: boolean;
 }
 
 const defaultProps: OpenmrsDatePickerProps = {
@@ -242,16 +246,22 @@ const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function Date
   );
 });
 
-function DatePickerLabel({ labelText }: Pick<OpenmrsDatePickerProps, 'labelText'>) {
+function DatePickerLabel({ labelText, isRequired = false }: Pick<OpenmrsDatePickerProps, 'labelText' | 'isRequired'>) {
   if (labelText === null || typeof labelText === 'undefined' || typeof labelText === 'boolean') {
     return null;
   }
 
-  if (typeof labelText === 'string' || typeof labelText === 'number') {
-    return <Label className="cds--label">{labelText}</Label>;
-  }
-
-  return cloneElement(labelText, { className: classNames(labelText.props?.className, 'cds--label') });
+  return (
+    <Label className="cds--label">
+      {typeof labelText === 'string' && isRequired ? (
+        <>
+          {labelText} <span className={styles.isRequired}>*</span>
+        </>
+      ) : (
+        labelText
+      )}
+    </Label>
+  );
 }
 
 /**
@@ -270,6 +280,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       short,
       size,
       value: rawValue,
+      isRequired,
       ...datePickerProps
     } = Object.assign({}, defaultProps, props);
 
@@ -289,6 +300,9 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       return `${locale}-u-ca-${calendar}`;
     }, [locale]);
 
+    // eslint-disable-next-line no-console
+    console.log("core's date picker is up and running =======");
+
     return (
       <I18nProvider locale={localeWithCalendar}>
         <div className={classNames('cds--form-item', className)}>
@@ -304,7 +318,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
             {...datePickerProps}
           >
             <div className="cds--date-picker-container">
-              <DatePickerLabel labelText={labelText ?? label} />
+              <DatePickerLabel labelText={labelText ?? label} isRequired={isRequired} />
               <Group className={styles.inputGroup}>
                 <DatePickerInput
                   ref={ref}

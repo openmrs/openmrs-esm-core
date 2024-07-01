@@ -335,15 +335,15 @@ ___
 
 • `Optional` **isRequired**: `boolean`
 
-Whether user input is required on the input before form submission.
+Specifies if the input is required. Used to add an asterisk to the label.
 
-#### Inherited from
+#### Overrides
 
 Omit.isRequired
 
 #### Defined in
 
-node_modules/@react-types/shared/src/inputs.d.ts:23
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L109)
 
 ___
 
