@@ -16,6 +16,12 @@ $actionPanelOffset: 3rem;
   display: none;
 }
 
+.workspaceInnerContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 /* Desktop */
 :global(.omrs-breakpoint-gt-tablet) {
   .workspaceContainerWithActionMenu {
@@ -89,8 +95,6 @@ $actionPanelOffset: 3rem;
     top: var(--omrs-navbar-height);
     bottom: 0;
     border-left: 1px solid $text-03;
-    display: flex;
-    flex-direction: column;
     z-index: 50;
     background-color: white;
     transition:
@@ -200,8 +204,6 @@ $actionPanelOffset: 3rem;
     right: 0;
     bottom: 0;
     z-index: 8002;
-    display: flex;
-    flex-direction: column;
     transition: top 0.5s ease-in-out;
   }
 
