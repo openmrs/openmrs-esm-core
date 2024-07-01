@@ -244,9 +244,6 @@
 
 ### Workspace Functions
 
-- [ActionMenu](API.md#actionmenu)
-- [WorkspaceOverlay](API.md#workspaceoverlay)
-- [WorkspaceWindow](API.md#workspacewindow)
 - [closeWorkspace](API.md#closeworkspace)
 - [launchWorkspace](API.md#launchworkspace)
 - [navigateAndLaunchWorkspace](API.md#navigateandlaunchworkspace)
@@ -584,7 +581,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:386](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L386)
+[packages/framework/esm-globals/src/types.ts:388](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L388)
 
 ___
 
@@ -597,7 +594,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:377](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L377)
+[packages/framework/esm-globals/src/types.ts:379](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L379)
 
 ___
 
@@ -763,7 +760,7 @@ ___
 
 ### WorkspaceDefinition
 
-Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"``  } & { `component`: `string`  } \| { `component?`: `never`  }
+Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `hasOwnSidebar?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `sidebarFamily?`: `string` ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"``  } & { `component`: `string`  } \| { `component?`: `never`  }
 
 A definition of a workspace as extracted from an app's routes.json
 
@@ -5350,7 +5347,7 @@ This component also provides everything needed for workspace notifications to be
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L59)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L68)
 
 ___
 
@@ -6773,66 +6770,6 @@ ___
 
 ## Workspace Functions
 
-### ActionMenu
-
-▸ **ActionMenu**(): `Element`
-
-**`deprecated`** Use `WorkspaceContainer` instead
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/container/action-menu.component.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/action-menu.component.tsx#L10)
-
-___
-
-### WorkspaceOverlay
-
-▸ **WorkspaceOverlay**(`__namedParameters`): `Element`
-
-**`deprecated`** Use `WorkspaceContainer` instead
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`WorkspaceOverlayProps`](interfaces/WorkspaceOverlayProps.md) |
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-overlay.component.tsx:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-overlay.component.tsx#L21)
-
-___
-
-### WorkspaceWindow
-
-▸ **WorkspaceWindow**(`__namedParameters`): `Element`
-
-**`deprecated`** Use `WorkspaceContainer` instead
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`WorkspaceWindowProps`](interfaces/WorkspaceWindowProps.md) |
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-window.component.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-window.component.tsx#L22)
-
-___
-
 ### closeWorkspace
 
 ▸ **closeWorkspace**(`name`, `options?`): `boolean`
@@ -6852,7 +6789,7 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:298](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L298)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:310](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L310)
 
 ___
 
@@ -6881,12 +6818,15 @@ The behavior of this function is as follows:
 Note that this function just manipulates the workspace store. The UI logic is handled
 by the components that display workspaces.
 
+Additional props can be passed to the workspace component being launched. Passing a
+prop named `workspaceTitle` will override the title of the workspace.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `name` | `string` | The name of the workspace to launch |
-| `additionalProps?` | `object` | Props to pass to the workspace component being launched |
+| `additionalProps?` | `object` | Props to pass to the workspace component being launched. Passing          a prop named `workspaceTitle` will override the title of the workspace. |
 
 #### Returns
 
@@ -6894,7 +6834,7 @@ by the components that display workspaces.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L200)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:212](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L212)
 
 ___
 
@@ -6920,7 +6860,7 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L261)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L273)
 
 ___
 
@@ -6934,4 +6874,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:400](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L400)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:412](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L412)

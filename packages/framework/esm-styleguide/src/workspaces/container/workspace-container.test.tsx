@@ -1,18 +1,15 @@
 import React from 'react';
 import { screen, render, within, renderHook, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ComponentContext, isDesktop } from '@openmrs/esm-react-utils';
-import { WorkspaceWindow } from './workspace-window.component';
-import { launchWorkspace, registerWorkspace, useWorkspaces } from '..';
+import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
+import { WorkspaceContainer, launchWorkspace, registerWorkspace, useWorkspaces } from '..';
 
 const mockedIsDesktop = isDesktop as jest.Mock;
+const mockedUseLayoutType = useLayoutType as jest.Mock;
 
-window.history.pushState({}, 'Workspace Window', '/workspace-window');
+window.history.pushState({}, 'Workspace Container', '/workspace-container');
 
-jest.mock('./workspace-renderer.component', () => ({
-  WorkspaceRenderer: jest.fn().mockImplementation(() => <div>Workspace-Renderer</div>),
-}));
-
+jest.mock('single-spa-react/parcel', () => jest.fn().mockImplementation(() => <div>Parcel</div>));
 jest.mock('@openmrs/esm-translations', () => {
   const originalModule = jest.requireActual('@openmrs/esm-translations');
 
@@ -22,7 +19,7 @@ jest.mock('@openmrs/esm-translations', () => {
   };
 });
 
-describe('WorkspaceWindow', () => {
+describe('WorkspaceContainer in window mode', () => {
   beforeAll(() => {
     registerWorkspace({
       name: 'Clinical Form',
@@ -49,11 +46,12 @@ describe('WorkspaceWindow', () => {
 
     const hideButton = screen.getByRole('button', { name: 'Hide' });
     await user.click(hideButton);
-    expect(screen.queryByRole('complementary')).toHaveClass('hidden');
+    expect(screen.queryByRole('complementary')).toHaveClass('hiddenRelative');
 
     act(() => launchWorkspace('Clinical Form', { workspaceTitle: 'POC Triage' }));
     expect(await screen.findByRole('complementary')).toBeInTheDocument();
-    expect(screen.queryByRole('complementary')).not.toHaveClass('hidden');
+    expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenRelative');
+    expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenFixed');
     expect(workspaces.result.current.workspaces.length).toBe(1);
   });
 
@@ -65,22 +63,55 @@ describe('WorkspaceWindow', () => {
     act(() => launchWorkspace('Clinical Form'));
     const header = screen.getByRole('banner');
     expect(within(header).getByText('Clinical Form')).toBeInTheDocument();
-    expect(screen.getByRole('complementary')).not.toHaveClass('maximizedWindow');
+    expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
 
     const maximizeButton = await screen.findByRole('button', { name: 'Maximize' });
     await user.click(maximizeButton);
-    expect(screen.getByRole('complementary')).toHaveClass('maximizedWindow');
+    expect(screen.getByRole('complementary').firstChild).toHaveClass('maximizedWindow');
 
     const minimizeButton = await screen.findByRole('button', { name: 'Minimize' });
     await user.click(minimizeButton);
-    expect(screen.getByRole('complementary')).not.toHaveClass('maximizedWindow');
+    expect(screen.getByRole('complementary').firstChild).not.toHaveClass('maximizedWindow');
   });
 });
 
 function renderWorkspaceWindow() {
   render(
     <ComponentContext.Provider value={{ featureName: 'test', moduleName: '@openmrs/foo' }}>
-      <WorkspaceWindow contextKey="workspace-window" />
+      <WorkspaceContainer contextKey="workspace-container" />
+    </ComponentContext.Provider>,
+  );
+}
+
+describe('WorkspaceContainer in overlay mode', () => {
+  beforeAll(() => {
+    registerWorkspace({
+      name: 'Patient Search',
+      title: 'Patient Search',
+      load: jest.fn().mockResolvedValue({ result: 'hey' }),
+      moduleName: '@openmrs/foo',
+    });
+  });
+
+  it('opens with overridable title and closes', async () => {
+    mockedUseLayoutType.mockReturnValue('small-desktop');
+    const user = userEvent.setup();
+    act(() => launchWorkspace('Patient Search', { workspaceTitle: 'Make an appointment' }));
+    renderWorkspaceOverlay();
+
+    expect(screen.queryByRole('complementary')).toBeInTheDocument();
+    expect(screen.getByText('Make an appointment')).toBeInTheDocument();
+
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    await user.click(closeButton);
+    expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
+  });
+});
+
+function renderWorkspaceOverlay() {
+  render(
+    <ComponentContext.Provider value={{ featureName: 'test', moduleName: '@openmrs/foo' }}>
+      <WorkspaceContainer overlay contextKey="workspace-container" />
     </ComponentContext.Provider>,
   );
 }
