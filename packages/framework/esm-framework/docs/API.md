@@ -1571,7 +1571,7 @@ A date picker component to select a single date. Based on React Aria, but styled
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L260)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L270)
 
 ___
 
