@@ -3,6 +3,7 @@ import { screen, render, within, renderHook, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { WorkspaceContainer, launchWorkspace, registerWorkspace, useWorkspaces } from '..';
+jest.mock('./workspace-renderer.component.tsx');
 
 const mockedIsDesktop = isDesktop as jest.Mock;
 const mockedUseLayoutType = useLayoutType as jest.Mock;
@@ -42,14 +43,14 @@ describe('WorkspaceContainer in window mode', () => {
     expect(workspaces.result.current.workspaces.length).toBe(1);
     const header = screen.getByRole('banner');
     expect(within(header).getByText('POC Triage')).toBeInTheDocument();
-    expect(screen.getByRole('complementary')).toBeInTheDocument();
+    expectToBeVisible(screen.getByRole('complementary'));
 
     const hideButton = screen.getByRole('button', { name: 'Hide' });
     await user.click(hideButton);
     expect(screen.queryByRole('complementary')).toHaveClass('hiddenRelative');
 
     act(() => launchWorkspace('Clinical Form', { workspaceTitle: 'POC Triage' }));
-    expect(await screen.findByRole('complementary')).toBeInTheDocument();
+    expectToBeVisible(await screen.findByRole('complementary'));
     expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenRelative');
     expect(screen.queryByRole('complementary')).not.toHaveClass('hiddenFixed');
     expect(workspaces.result.current.workspaces.length).toBe(1);
@@ -100,11 +101,12 @@ describe('WorkspaceContainer in overlay mode', () => {
     renderWorkspaceOverlay();
 
     expect(screen.queryByRole('complementary')).toBeInTheDocument();
+    expectToBeVisible(screen.getByRole('complementary'));
     expect(screen.getByText('Make an appointment')).toBeInTheDocument();
 
     const closeButton = screen.getByRole('button', { name: 'Close' });
     await user.click(closeButton);
-    expect(screen.queryByRole('complementary')).not.toBeInTheDocument();
+    expect(screen.queryByRole('complementary')).toHaveClass('hiddenRelative');
   });
 });
 
@@ -114,4 +116,12 @@ function renderWorkspaceOverlay() {
       <WorkspaceContainer overlay contextKey="workspace-container" />
     </ComponentContext.Provider>,
   );
+}
+import '@testing-library/jest-dom';
+
+function expectToBeVisible(element: HTMLElement) {
+  expect(element).toBeVisible();
+  expect(element).not.toHaveClass('hiddenRelative');
+  expect(element).not.toHaveClass('hiddenFixed');
+  expect(element).not.toHaveClass('hidden');
 }
