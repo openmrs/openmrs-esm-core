@@ -16,6 +16,12 @@ $actionPanelOffset: 3rem;
   display: none;
 }
 
+.workspaceInnerContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 /* Desktop */
 :global(.omrs-breakpoint-gt-tablet) {
   .workspaceContainerWithActionMenu {
@@ -144,12 +150,6 @@ $actionPanelOffset: 3rem;
     }
   }
 
-  .workspaceInnerContainer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
   .workspaceContent {
     background-color: $ui-02;
     overflow-y: auto;
@@ -225,12 +225,6 @@ $actionPanelOffset: 3rem;
 
   .overlayTitle {
     order: 2;
-  }
-
-  .workspaceInnerContainer {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
   }
 
   .workspaceContent {
