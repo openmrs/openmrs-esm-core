@@ -19,3 +19,13 @@
 .popup {
   @include type.type-style('body-01');
 }
+
+.helpextension {
+  margin: spacing.$spacing-04;
+  padding: spacing.$spacing-01;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: spacing.$spacing-05;
+}

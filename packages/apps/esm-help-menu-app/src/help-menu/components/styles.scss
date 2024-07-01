@@ -3,10 +3,6 @@
 @import '~@openmrs/esm-styleguide/src/vars';
 
 .helpButton {
-  margin: spacing.$spacing-04;
-  padding: spacing.$spacing-01;
-  cursor: pointer;
-  text-align: left;
   display: flex;
   align-items: center;
   justify-content: space-between;
