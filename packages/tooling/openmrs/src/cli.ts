@@ -2,7 +2,6 @@
 
 import yargs from 'yargs';
 import { fork } from 'child_process';
-import type { MergeConfigArgs} from './commands/merge-configs';
 import { resolve } from 'path';
 import { getImportmapAndRoutes, mergeImportmapAndRoutes, proxyImportmapAndRoutes, runProject, trimEnd } from './utils';
 
@@ -15,7 +14,8 @@ type Commands = typeof commands;
 type CommandNames = keyof Commands;
 
 function runCommand<T extends CommandNames>(type: T, args: Parameters<Commands[T]>[0]) {
-  const ps = fork(runner, [], { cwd: type === 'runBuild' ? root : process.cwd() });
+  const ps = fork(runner, [], { cwd: type === 'runBuild' ? root : process.cwd() })
+  console.log(`These are the args received by the runner: ${args}`);
 
   ps.send({
     type,
@@ -330,13 +330,13 @@ yargs.command(
   'Merges configuration files from multiple directories into a single output file',
   (argv) =>
     argv
-      .option('directories', {
+      .option('directoriesPath', {
         alias: 'd',
         describe: 'Directories to read config files from',
         type: 'string',
         demandOption: true,
       })
-      .option('output', {
+      .option('outputPath', {
         alias: 'o',
         describe: 'Output file path',
         type: 'string',
@@ -344,8 +344,11 @@ yargs.command(
       })
       .help()
       .argv,
-      (args) => runCommand('runMergeConfig', args as unknown as MergeConfigArgs)
-    )
+      (args) => runCommand('runMergeConfig', {
+        directoriesPath: args.directoriesPath  as string,
+        outputPath: args.outputPath as string,
+      })
+);
 yargs
   .epilog(
     'The SPA build config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` ' +

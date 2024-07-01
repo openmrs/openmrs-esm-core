@@ -6,9 +6,9 @@ interface Config {
   [key: string]: any;
 }
 
-export interface MergeConfigArgs {
-  directories: string[];
-  output: string;
+export interface MergeArgs {
+  directoriesPath: string;
+  outputPath: string;
 }
 
 async function readConfigFile(filePath: string): Promise<Config | null> {
@@ -51,34 +51,31 @@ async function writeConfigFile(filePath: string, config: Config): Promise<void> 
   }
 }
 
-async function packageConfigs(configDirs: string[], outputFilePath: string): Promise<void> {
+async function packageConfigs(configDirs: string, outputFilePath: string): Promise<void> {
   const configs: (Config | null)[] = [];
-
-  for (const dir of configDirs) {
     try {
-      const files = await fs.readdir(dir);
+      const files = await fs.readdir(configDirs);
       for (const file of files) {
+        const filePath = path.join(configDirs, file);
         if (path.extname(file) === '.json') {
-          const filePath = path.join(dir, file);
           const config = await readConfigFile(filePath);
           configs.push(config);
         }
       }
     } catch (error) {
-      logWarn(`Error reading directory ${dir}: ${error.message}`);
+      console.log(`Error reading directory ${configDirs}: ${error.message}`);
     }
-  }
 
-  const mergedConfig = mergeConfigs(configs.filter(Boolean) as Config[]);
-  await writeConfigFile(outputFilePath, mergedConfig);
+    const mergedConfig = mergeConfigs(configs.filter(Boolean) as Config[]);
+    await writeConfigFile(outputFilePath, mergedConfig);
 }
 
-export async function runMergeConfig(args: MergeConfigArgs) {
-  const { directories, output } = args;
+
+export function runMergeConfig(args: MergeArgs) {
 
   try {
-    await packageConfigs(directories, output);
-    logInfo(`Merged configuration written to ${output}`);
+    packageConfigs(args.directoriesPath, args.outputPath);
+    logInfo(`Merged configuration written to ${args.outputPath}`);
   } catch (error) {
     logWarn(`Failed to package configs: ${error.message}`);
   }
