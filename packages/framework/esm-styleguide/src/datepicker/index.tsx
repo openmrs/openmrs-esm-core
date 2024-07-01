@@ -300,9 +300,6 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       return `${locale}-u-ca-${calendar}`;
     }, [locale]);
 
-    // eslint-disable-next-line no-console
-    console.log("core's date picker is up and running =======");
-
     return (
       <I18nProvider locale={localeWithCalendar}>
         <div className={classNames('cds--form-item', className)}>
