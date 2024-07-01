@@ -180,6 +180,7 @@
 
 ### Other Functions
 
+- [WorkspaceContainer](API.md#workspacecontainer)
 - [isOnline](API.md#isonline)
 
 ### Store Functions
@@ -243,9 +244,6 @@
 
 ### Workspace Functions
 
-- [ActionMenu](API.md#actionmenu)
-- [WorkspaceOverlay](API.md#workspaceoverlay)
-- [WorkspaceWindow](API.md#workspacewindow)
 - [closeWorkspace](API.md#closeworkspace)
 - [launchWorkspace](API.md#launchworkspace)
 - [navigateAndLaunchWorkspace](API.md#navigateandlaunchworkspace)
@@ -583,7 +581,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:386](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L386)
+[packages/framework/esm-globals/src/types.ts:388](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L388)
 
 ___
 
@@ -596,7 +594,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:377](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L377)
+[packages/framework/esm-globals/src/types.ts:379](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L379)
 
 ___
 
@@ -762,7 +760,7 @@ ___
 
 ### WorkspaceDefinition
 
-Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"``  } & { `component`: `string`  } \| { `component?`: `never`  }
+Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `hasOwnSidebar?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `sidebarFamily?`: `string` ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"``  } & { `component`: `string`  } \| { `component?`: `never`  }
 
 A definition of a workspace as extracted from an app's routes.json
 
@@ -5295,6 +5293,64 @@ ___
 
 ## Other Functions
 
+### WorkspaceContainer
+
+▸ **WorkspaceContainer**(`__namedParameters`): `Element`
+
+Use this component to render the [workspace window](https://zeroheight.com/23a080e38/p/483a22-workspace)
+in an app such as the patient chart, or a workspace overlay in an app such as the clinic dashboard.
+This allows workspaces to be opened on the page where this component is mounted. This component
+must not be mounted multiple times on the same page. If there are multiple apps on a page, only
+one of those apps should use this component—it "hosts" the workspaces.
+
+Workspaces may be opened with the [launchWorkspace](API.md#launchworkspace) function from `@openmrs/esm-framework`
+(among other options).
+
+The `overlay` prop determines whether the workspace is rendered as an overlay or a window.
+When a workspace window is opened, the other content on the screen will be pushed to the left.
+When an overlay is opened, it will cover other content on the screen.
+
+The context key is a string that appears in the URL, which defines the pages on which workspaces
+are valid. If the URL changes in a way such that it no longer contains the context key, then
+all workspaces will be closed. This ensures that, for example, workspaces on the home page do
+not stay open when the user transitions to the patient dashboard; and also that workspaces do
+not stay open when the user navigates to a different patient. The context key must be a valid
+sub-path of the URL, with no initial or trailing slash. So if the URL is
+`https://example.com/patient/123/foo`, then `patient` and `patient/123` and `123/foo` are valid
+context keys, but `patient/12` and `pati` are not.
+
+An extension slot is provided in the workspace header. Its name is derived from the `featureName` of
+the top-level component in which it is defined (feature names are generally provided in the lifecycle
+functions in an app's `index.ts` file). The slot is named `workspace-header-${featureName}-slot`.
+For the patient chart, this is `workspace-header-patient-chart-slot`.
+
+This component also provides the [Siderail and Bottom Nav](https://zeroheight.com/23a080e38/p/948cf1-siderail-and-bottom-nav/b/86907e).
+To use this, pass the `showSiderailAndBottomNav` prop. The Siderail is rendered on the right side of the screen
+on desktop, and the Bottom Nav is rendered at the bottom of the screen on tablet or mobile. The sidebar/bottom-nav
+menu provides an extension slot, to which buttons are attached as extensions. The slot
+derives its name from the `featureName` of the top-level component in which this `WorkspaceContainer`
+appears (feature names are generally provided in the lifecycle functions in an app's `index.ts` file).
+The slot is named `action-menu-${featureName}-items-slot`. For the patient chart, this is
+`action-menu-patient-chart-items-slot`.
+
+This component also provides everything needed for workspace notifications to be rendered.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`WorkspaceContainerProps`](interfaces/WorkspaceContainerProps.md) |
+
+#### Returns
+
+`Element`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L68)
+
+___
+
 ### isOnline
 
 ▸ **isOnline**(`online?`): `boolean`
@@ -6714,119 +6770,6 @@ ___
 
 ## Workspace Functions
 
-### ActionMenu
-
-▸ **ActionMenu**(): ``null`` \| `Element`
-
-This renders the [Siderail and Bottom Nav](https://zeroheight.com/23a080e38/p/948cf1-siderail-and-bottom-nav/b/86907e),
-collectively known as the Action Menu. The Siderail is rendered on the right side of the screen
-on desktop, and the Bottom Nav is rendered at the bottom of the screen on tablet or mobile.
-
-The action menu provides an extension slot, to which buttons are attached as extensions. The slot
-derives its name from the `featureName` of the top-level component in which this `ActionMenu`
-appears (feature names are generally provided in the lifecycle functions in an app's `index.ts` file).
-The slot is named `action-menu-${featureName}-items-slot`. For the patient chart, this is
-`action-menu-patient-chart-items-slot`.
-
-#### Returns
-
-``null`` \| `Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/action-menu/action-menu.component.tsx:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/action-menu/action-menu.component.tsx#L19)
-
-___
-
-### WorkspaceOverlay
-
-▸ **WorkspaceOverlay**(`__namedParameters`): `Element`
-
-Use this component to render the workspace window as an overlay in an app. An overlay is
-a way of rendering workspaces that will cover other content on the screen, rather than
-pushing it to the left (as with [WorkspaceWindow](API.md#workspacewindow)). As described in the
-[ZeroHeight](https://zeroheight.com/23a080e38/p/483a22-workspace/t/34e1a1) documentation,
-this should be used on "app pages" such as the Clinic Dashboard.
-
-The context key is a string that appears in the URL, which defines the pages on which workspaces
-are valid. If the URL changes in a way such that it no longer contains the context key, then
-all workspaces will be closed. This ensures that, for example, workspaces on the home page do
-not stay open when the user transitions to the patient dashboard; and also that workspaces do
-not stay open when the user navigates to a different patient. The context key must be a valid
-sub-path of the URL, with no initial or trailing slash. So if the URL is
-`https://example.com/patient/123/foo`, then `patient` and `patient/123` and `123/foo` are valid
-context keys, but `patient/12` and `pati` are not.
-
-Workspaces may be opened with the [launchWorkspace](API.md#launchworkspace) function from `@openmrs/esm-framework`
-(among other options).
-
-This component also provides everything needed for workspace notifications to be rendered.
-
-This component does not include the action menu (the right siderail). The [ActionMenu](API.md#actionmenu) component
-is provided separately.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`WorkspaceOverlayProps`](interfaces/WorkspaceOverlayProps.md) |
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/overlay/workspace-overlay.component.tsx#L45)
-
-___
-
-### WorkspaceWindow
-
-▸ **WorkspaceWindow**(`__namedParameters`): `Element`
-
-Use this component to render the [workspace window](https://zeroheight.com/23a080e38/p/483a22-workspace)
-in an app such as the patient chart.
-When a workspace is opened, the other content on the screen will be pushed to the left.
-
-The context key is a string that appears in the URL, which defines the pages on which workspaces
-are valid. If the URL changes in a way such that it no longer contains the context key, then
-all workspaces will be closed. This ensures that, for example, workspaces on the home page do
-not stay open when the user transitions to the patient dashboard; and also that workspaces do
-not stay open when the user navigates to a different patient. The context key must be a valid
-sub-path of the URL, with no initial or trailing slash. So if the URL is
-`https://example.com/patient/123/foo`, then `patient` and `patient/123` and `123/foo` are valid
-context keys, but `patient/12` and `pati` are not.
-
-Workspaces may be opened with the [launchWorkspace](API.md#launchworkspace) function from `@openmrs/esm-framework`
-(among other options).
-
-This component also provides everything needed for workspace notifications to be rendered.
-
-This component does not include the action menu (the right siderail). The [ActionMenu](API.md#actionmenu) component
-is provided separately.
-
-An extension slot is provided in the workspace header. Its name is derived from the `featureName` of
-the top-level component in which it is defined (feature names are generally provided in the lifecycle
-functions in an app's `index.ts` file). The slot is named `workspace-header-${featureName}-slot`.
-For the patient chart, this is `workspace-header-patient-chart-slot`.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [`WorkspaceWindowProps`](interfaces/WorkspaceWindowProps.md) |
-
-#### Returns
-
-`Element`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/window/workspace-window.component.tsx#L48)
-
-___
-
 ### closeWorkspace
 
 ▸ **closeWorkspace**(`name`, `options?`): `boolean`
@@ -6846,7 +6789,7 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:298](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L298)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:310](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L310)
 
 ___
 
@@ -6875,12 +6818,15 @@ The behavior of this function is as follows:
 Note that this function just manipulates the workspace store. The UI logic is handled
 by the components that display workspaces.
 
+Additional props can be passed to the workspace component being launched. Passing a
+prop named `workspaceTitle` will override the title of the workspace.
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `name` | `string` | The name of the workspace to launch |
-| `additionalProps?` | `object` | Props to pass to the workspace component being launched |
+| `additionalProps?` | `object` | Props to pass to the workspace component being launched. Passing          a prop named `workspaceTitle` will override the title of the workspace. |
 
 #### Returns
 
@@ -6888,7 +6834,7 @@ by the components that display workspaces.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L200)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:212](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L212)
 
 ___
 
@@ -6914,7 +6860,7 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L261)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L273)
 
 ___
 
@@ -6928,4 +6874,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:400](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L400)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:412](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L412)

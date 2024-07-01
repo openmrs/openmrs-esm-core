@@ -1,8 +1,17 @@
-import React from 'react';
-import { WorkspaceOverlay } from './workspace-overlay.component';
-import { WorkspaceWindow } from './workspace-window.component';
+import React, { useCallback, useContext, useMemo } from 'react';
+import classNames from 'classnames';
+import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
+import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
+import { ComponentContext, ExtensionSlot, isDesktop, useBodyScrollLock, useLayoutType } from '@openmrs/esm-react-utils';
+import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
+
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../../icons';
+import { WorkspaceNotification } from '../notification/workspace-notification.component';
+import { type OpenWorkspace, updateWorkspaceWindowState, useWorkspaces } from '../workspaces';
 import ActionMenu from './action-menu.component';
+import { WorkspaceRenderer } from './workspace-renderer.component';
 import styles from './workspace.module.scss';
+import { Action } from 'rxjs/internal/scheduler/Action';
 
 export interface WorkspaceContainerProps {
   contextKey: string;
@@ -62,6 +71,10 @@ export function WorkspaceContainer({
   showSiderailAndBottomNav,
   additionalWorkspaceProps,
 }: WorkspaceContainerProps) {
+  const { workspaces } = useWorkspaces();
+  // If there are no open workspaces, have an empty container ready so that it can animate onto the screen
+  const workspacesOrEmptyContainer: Array<OpenWorkspace | null> = workspaces.length ? workspaces : [null];
+
   return (
     <>
       <div
@@ -71,13 +84,171 @@ export function WorkspaceContainer({
             : styles.workspaceContainerWithoutActionMenu
         }
       >
-        {overlay ? (
-          <WorkspaceOverlay contextKey={contextKey} additionalWorkspaceProps={additionalWorkspaceProps} />
-        ) : (
-          <WorkspaceWindow contextKey={contextKey} additionalWorkspaceProps={additionalWorkspaceProps} />
-        )}
+        <>
+          {/* Hide all workspaces but the first one */}
+          {workspacesOrEmptyContainer.map((workspace, i) => (
+            <div key={`workspace-container-${i}`} className={classNames({ [styles.hiddenExtraWorkspace]: i !== 0 })}>
+              <Workspace
+                isOverlay={overlay}
+                workspaceInstance={workspace}
+                additionalWorkspaceProps={additionalWorkspaceProps}
+              />
+            </div>
+          ))}
+          <WorkspaceNotification contextKey={contextKey} />
+        </>
       </div>
       {showSiderailAndBottomNav && <ActionMenu />}
     </>
+  );
+}
+
+interface WorkspaceProps {
+  workspaceInstance: OpenWorkspace | null;
+  isOverlay?: boolean;
+  additionalWorkspaceProps?: object;
+}
+
+function Workspace({ isOverlay, workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
+  const layout = useLayoutType();
+  const { workspaceWindowState } = useWorkspaces();
+  const isMaximized = workspaceWindowState === 'maximized';
+  const isHidden = workspaceWindowState === 'hidden' || workspaceInstance == null;
+
+  // We use the feature name of the app containing the workspace in order to set the extension
+  // slot name. We can't use contextKey for this because we don't want the slot name to be
+  // different for different patients, but we do want it to be different for different apps.
+  const { featureName } = useContext(ComponentContext);
+
+  useBodyScrollLock(!isHidden && !isDesktop(layout));
+
+  const toggleWindowState = useCallback(() => {
+    isMaximized ? updateWorkspaceWindowState('normal') : updateWorkspaceWindowState('maximized');
+  }, [isMaximized]);
+
+  const workspaceTitle = useMemo(() => {
+    if (workspaceInstance === null) {
+      return '';
+    }
+    return (
+      workspaceInstance.additionalProps?.['workspaceTitle'] ??
+      translateFrom(workspaceInstance.moduleName, workspaceInstance.title, workspaceInstance.title)
+    );
+  }, [workspaceInstance]);
+
+  const {
+    canHide = false,
+    canMaximize = false,
+    width = isOverlay ? 'wider' : 'narrow',
+    hasOwnSidebar = false,
+    closeWorkspace,
+  } = useMemo(() => workspaceInstance ?? ({} as OpenWorkspace), [workspaceInstance]);
+
+  const workspaceProps = useMemo(
+    () => ({
+      ...additionalWorkspaceProps,
+      ...workspaceInstance?.additionalProps,
+    }),
+    [additionalWorkspaceProps, workspaceInstance],
+  );
+
+  return (
+    <aside
+      className={classNames(isOverlay ? styles.workspaceOverlayOuterContainer : styles.workspaceWindowSpacer, {
+        [styles.hiddenRelative]: isHidden,
+        [styles.narrowWorkspace]: width === 'narrow',
+        [styles.widerWorkspace]: width === 'wider',
+        [styles.extraWideWorkspace]: width === 'extra-wide',
+      })}
+    >
+      <div
+        className={classNames(styles.workspaceFixedContainer, {
+          [styles.maximizedWindow]: isMaximized,
+          [styles.hiddenFixed]: isHidden,
+        })}
+      >
+        {workspaceInstance && (
+          <>
+            <Header aria-label={getCoreTranslation('workspaceHeader', 'Workspace Header')} className={styles.header}>
+              {!isDesktop(layout) && !canHide && (
+                <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
+              )}
+              <HeaderName prefix="">{workspaceTitle}</HeaderName>
+              <div className={styles.overlayHeaderSpacer} />
+              <HeaderGlobalBar className={styles.headerButtons}>
+                <ExtensionSlot
+                  name={`workspace-header-family-${workspaceInstance.sidebarFamily}-slot`}
+                  state={workspaceProps}
+                />
+                <ExtensionSlot name={`workspace-header-type-${workspaceInstance.type}-slot`} state={workspaceProps} />
+                <ExtensionSlot name={`workspace-header-${featureName}-slot`} state={workspaceProps} />
+                {isDesktop(layout) && (
+                  <>
+                    {(canMaximize || isMaximized) && (
+                      <HeaderGlobalAction
+                        align="bottom"
+                        aria-label={
+                          isMaximized
+                            ? getCoreTranslation('minimize', 'Minimize')
+                            : getCoreTranslation('maximize', 'Maximize')
+                        }
+                        label={
+                          isMaximized
+                            ? getCoreTranslation('minimize', 'Minimize')
+                            : getCoreTranslation('maximize', 'Maximize')
+                        }
+                        onClick={toggleWindowState}
+                        size="lg"
+                      >
+                        {isMaximized ? <Minimize /> : <Maximize />}
+                      </HeaderGlobalAction>
+                    )}
+                    {canHide ? (
+                      <HeaderGlobalAction
+                        align="bottom-right"
+                        aria-label={getCoreTranslation('hide', 'Hide')}
+                        label={getCoreTranslation('hide', 'Hide')}
+                        onClick={() => updateWorkspaceWindowState('hidden')}
+                        size="lg"
+                      >
+                        <ArrowRightIcon />
+                      </HeaderGlobalAction>
+                    ) : (
+                      <HeaderGlobalAction
+                        align="bottom-right"
+                        aria-label={getCoreTranslation('close', 'Close')}
+                        label={getCoreTranslation('close', 'Close')}
+                        onClick={() => closeWorkspace?.()}
+                        size="lg"
+                      >
+                        <CloseIcon />
+                      </HeaderGlobalAction>
+                    )}
+                  </>
+                )}
+                {layout === 'tablet' && canHide && (
+                  <HeaderGlobalAction
+                    align="bottom-right"
+                    aria-label={getCoreTranslation('close', 'Close')}
+                    label={getCoreTranslation('close', 'Close')}
+                    onClick={() => closeWorkspace?.()}
+                  >
+                    <DownToBottom />
+                  </HeaderGlobalAction>
+                )}
+              </HeaderGlobalBar>
+            </Header>
+            <div className={styles.workspaceContent}>
+              <WorkspaceRenderer
+                key={workspaceInstance.name}
+                workspace={workspaceInstance}
+                additionalPropsFromPage={additionalWorkspaceProps}
+              />
+            </div>
+            {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />}
+          </>
+        )}
+      </div>
+    </aside>
   );
 }

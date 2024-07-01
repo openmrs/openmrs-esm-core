@@ -34,7 +34,9 @@ export interface WorkspaceRegistration {
   type: string;
   canHide: boolean;
   canMaximize: boolean;
-  width: 'narrow' | 'wider';
+  width: 'narrow' | 'wider' | 'extra-wide';
+  hasOwnSidebar: boolean;
+  sidebarFamily: string;
   preferredWindowSize: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
@@ -62,7 +64,9 @@ export interface RegisterWorkspaceOptions {
   type?: string;
   canHide?: boolean;
   canMaximize?: boolean;
-  width?: 'narrow' | 'wider';
+  width?: 'narrow' | 'wider' | 'extra-wide';
+  hasOwnSidebar?: boolean;
+  sidebarFamily?: string;
   preferredWindowSize?: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
@@ -84,6 +88,8 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
         canHide: workspace.canHide ?? false,
         canMaximize: workspace.canMaximize ?? false,
         width: workspace.width ?? 'narrow',
+        hasOwnSidebar: workspace.hasOwnSidebar ?? false,
+        sidebarFamily: workspace.sidebarFamily ?? 'default',
       },
     },
   }));
@@ -119,6 +125,8 @@ function getWorkspaceRegistration(name: string): WorkspaceRegistration {
         canHide: workspaceExtension.meta?.canHide ?? false,
         canMaximize: workspaceExtension.meta?.canMaximize ?? false,
         width: workspaceExtension.meta?.width ?? 'narrow',
+        sidebarFamily: 'default',
+        hasOwnSidebar: false,
       };
     } else {
       throw new Error(`No workspace named '${name}' has been registered.`);
@@ -194,8 +202,12 @@ function promptBeforeLaunchingWorkspace(
  * Note that this function just manipulates the workspace store. The UI logic is handled
  * by the components that display workspaces.
  *
+ * Additional props can be passed to the workspace component being launched. Passing a
+ * prop named `workspaceTitle` will override the title of the workspace.
+ *
  * @param name The name of the workspace to launch
- * @param additionalProps Props to pass to the workspace component being launched
+ * @param additionalProps Props to pass to the workspace component being launched. Passing
+ *          a prop named `workspaceTitle` will override the title of the workspace.
  */
 export function launchWorkspace(name: string, additionalProps?: object) {
   const store = getWorkspaceStore();

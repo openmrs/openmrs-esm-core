@@ -18,7 +18,7 @@
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:370](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L370)
+[packages/framework/esm-globals/src/types.ts:372](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L372)
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:368](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L368)
+[packages/framework/esm-globals/src/types.ts:370](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L370)
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:369](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L369)
+[packages/framework/esm-globals/src/types.ts:371](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L371)
