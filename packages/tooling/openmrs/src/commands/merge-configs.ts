@@ -63,7 +63,7 @@ async function packageConfigs(configDirs: string, outputFilePath: string): Promi
         }
       }
     } catch (error) {
-      console.log(`Error reading directory ${configDirs}: ${error.message}`);
+      logWarn(`Error reading directory ${configDirs}: ${error.message}`);
     }
 
     const mergedConfig = mergeConfigs(configs.filter(Boolean) as Config[]);
@@ -71,7 +71,7 @@ async function packageConfigs(configDirs: string, outputFilePath: string): Promi
 }
 
 
-export function runMergeConfig(args: MergeArgs) {
+export function runMergeConfig(args: MergeArgs): Promise<void> {
 
   try {
     packageConfigs(args.directoriesPath, args.outputPath);
@@ -79,4 +79,5 @@ export function runMergeConfig(args: MergeArgs) {
   } catch (error) {
     logWarn(`Failed to package configs: ${error.message}`);
   }
+  return Promise.resolve();
 }
