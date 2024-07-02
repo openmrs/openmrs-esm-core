@@ -8,6 +8,11 @@ on:
     branches:
       - main
 
+env:
+  TURBO_API: 'http://127.0.0.1:9080'
+  TURBO_TOKEN: ${{ secrets.TURBO_SERVER_TOKEN }}
+  TURBO_TEAM: ${{ github.repository_owner }}
+
 jobs:
   changes:
     runs-on: ubuntu-latest
@@ -72,6 +77,12 @@ jobs:
       - name: Install Playwright Browsers
         run: yarn playwright install chromium --with-deps
 
+      - name: Setup local cache server for Turborepo
+        uses: felixmosh/turborepo-gh-artifacts@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ env.TURBO_TOKEN }}
+
       - name: Build apps
         run: yarn turbo run build --color --concurrency=5
 
@@ -85,7 +96,7 @@ jobs:
         run: yarn playwright test
 
       - name: Stop dev server
-        if: "!cancelled()"
+        if: '!cancelled()'
         run: docker stop $(docker ps -a -q)
 
       - name: Upload report
