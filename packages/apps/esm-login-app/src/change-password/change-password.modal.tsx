@@ -1,98 +1,142 @@
-import React, { type ChangeEvent, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Form, PasswordInput,  InlineLoading, InlineNotification, ModalBody, ModalFooter, ModalHeader, Stack } from '@carbon/react';
-import styles from './change-password-modal.scss';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, FormProvider, useForm, type SubmitHandler } from 'react-hook-form';
+import { Button, Form, PasswordInput, InlineLoading, ModalBody, ModalFooter, ModalHeader, Stack } from '@carbon/react';
+import { showSnackbar } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
-import { showSnackbar, type OpenmrsFetchError } from '@openmrs/esm-framework';
+import styles from './change-password-modal.scss';
 
 interface ChangePasswordModalProps {
   close(): () => void;
 }
 
-export default function ChangePasswordModal({ close }: ChangePasswordModalProps) {
+const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
   const { t } = useTranslation();
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-  const [oldPassword, setOldPassword] = useState<string>();
-  const [newPassword, setNewPassword] = useState<string>();
-  const [confirmPassword, setConfirmPassword] = useState<string>();
-  const [invalid, setInvalid] = useState(false);
-  const [invalidText, setInvalidText] = useState<string>();
-  const [showInline, setShowInline] = useState(false);
-  const [backEndErrorMessage, setBackEndErrorMessage] = useState('');
 
-  const handleSubmit = useCallback(() => {
+  const oldPasswordValidation = z.string({
+    required_error: t('oldPasswordRequired', 'Old password is required'),
+  });
+
+  const newPasswordValidation = z.string({
+    required_error: t('newPasswordRequired', 'New password is required'),
+  });
+
+  const passwordConfirmationValidation = z.string({
+    required_error: t('passwordConfirmationRequired', 'Password confirmation is required'),
+  });
+
+  const changePasswordFormSchema = z
+    .object({
+      oldPassword: oldPasswordValidation,
+      newPassword: newPasswordValidation,
+      passwordConfirmation: passwordConfirmationValidation,
+    })
+    .refine((data) => data.newPassword === data.passwordConfirmation, {
+      message: t('passwordsDoNotMatch', 'Passwords do not match'),
+      path: ['passwordConfirmation'],
+    });
+
+  const methods = useForm<z.infer<typeof changePasswordFormSchema>>({
+    mode: 'all',
+    resolver: zodResolver(changePasswordFormSchema),
+  });
+
+  const onSubmit: SubmitHandler<z.infer<typeof changePasswordFormSchema>> = useCallback((data) => {
     setIsChangingPassword(true);
-    if (typeof newPassword === 'string' && !!newPassword.length && newPassword === confirmPassword) {
-      changeUserPassword(oldPassword, newPassword)
-        .then(() => {
-          setIsChangingPassword(false);
-          close();
-          showSnackbar({
-            title: t('passwordSuccessfullyChanged', 'Password successfully changed'),
-            kind: 'success',
-            isLowContrast: true,
-          });
-        })
-        .catch((response: OpenmrsFetchError) => {
-          setShowInline(true);
-          setIsChangingPassword(false);
-          if (typeof response.responseBody === 'object') {
-            setBackEndErrorMessage(response.responseBody?.localizedMessage);
-          }
+
+    const { oldPassword, newPassword } = data;
+
+    changeUserPassword(oldPassword, newPassword)
+      .then(() => {
+        close();
+
+        showSnackbar({
+          title: t('passwordChangedSuccessfully', 'Password changed successfully'),
+          kind: 'success',
         });
-    } else {
-      setIsChangingPassword(false);
-      setInvalid(true);
-      setInvalidText(t('passwordConfirmPasswordNotTheSame', 'New password and comfirm password are not the same'));
-    }
-  }, [oldPassword, newPassword, confirmPassword]);
+      })
+      .catch((error) => {
+        showSnackbar({
+          kind: 'error',
+          subtitle: error?.message,
+          title: t('errorChangingPassword', 'Error changing password'),
+        });
+      })
+      .finally(() => {
+        setIsChangingPassword(false);
+      });
+  }, []);
+
+  const onError = () => setIsChangingPassword(false);
 
   return (
-    <>
-      <ModalHeader closeModal={close} title={t('changePassword', 'Change password')} />
-      <ModalBody>
-        <div className={styles.languageOptionsContainer}>
-          <Form>
-            <Stack gap={5}>
-              {showInline && (
-                <InlineNotification
-                  kind="error"
-                  title={t('errorUpdatingPassword', 'Error updating password')}
-                  subtitle={backEndErrorMessage}
+    <FormProvider {...methods}>
+      <Form onSubmit={methods.handleSubmit(onSubmit, onError)}>
+        <ModalHeader closeModal={close} title={t('changePassword', 'Change password')} />
+        <ModalBody>
+          <Stack gap={5} className={styles.languageOptionsContainer}>
+            <Controller
+              name="oldPassword"
+              control={methods.control}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <PasswordInput
+                  id="oldPassword"
+                  invalid={!!error}
+                  invalidText={error?.message}
+                  labelText={t('oldPassword', 'Old password')}
+                  onChange={onChange}
+                  value={value}
                 />
               )}
-              <PasswordInput
-                onChange={(event: ChangeEvent<HTMLInputElement>) => setOldPassword(event.target.value)}
-                labelText={t('oldPassword', 'Old password')}
-              />
-              <PasswordInput
-                onChange={(event: ChangeEvent<HTMLInputElement>) => setNewPassword(event.target.value)}
-                labelText={t('newPassword', 'New password')}
-                invalid={invalid}
-                invalidText={invalidText}
-              />
-              <PasswordInput
-                onChange={(event: ChangeEvent<HTMLInputElement>) => setConfirmPassword(event.target.value)}
-                labelText={t('confirmPassword', 'Confirm new password')}
-                invalid={invalid}
-                invalidText={invalidText}
-              />
-            </Stack>
-          </Form>
-        </div>
-      </ModalBody>
-      <ModalFooter>
-        <Button kind="secondary" onClick={close}>
-          {t('cancel', 'Cancel')}
-        </Button>
-        <Button className={styles.submitButton} disabled={isChangingPassword} type="submit" onClick={handleSubmit}>
-          {isChangingPassword ? (
-            <InlineLoading description={t('changingLanguage', 'Changing password') + '...'} />
-          ) : (
-            <span>{t('change', 'Change')}</span>
-          )}
-        </Button>
-      </ModalFooter>
-    </>
+            />
+            <Controller
+              name="newPassword"
+              control={methods.control}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <PasswordInput
+                  id="newPassword"
+                  invalid={!!error}
+                  invalidText={error?.message}
+                  labelText={t('newPassword', 'New password')}
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+            <Controller
+              name="passwordConfirmation"
+              control={methods.control}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <PasswordInput
+                  id="passwordConfirmation"
+                  invalid={!!error}
+                  invalidText={error?.message}
+                  labelText={t('confirmPassword', 'Confirm new password')}
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </Stack>
+        </ModalBody>
+        <ModalFooter>
+          <Button kind="secondary" onClick={close}>
+            {t('cancel', 'Cancel')}
+          </Button>
+          <Button className={styles.submitButton} disabled={isChangingPassword} type="submit">
+            {isChangingPassword ? (
+              <InlineLoading description={t('changingLanguage', 'Changing password') + '...'} />
+            ) : (
+              <span>{t('change', 'Change')}</span>
+            )}
+          </Button>
+        </ModalFooter>
+      </Form>
+    </FormProvider>
   );
-}
+};
+
+export default ChangePasswordModal;

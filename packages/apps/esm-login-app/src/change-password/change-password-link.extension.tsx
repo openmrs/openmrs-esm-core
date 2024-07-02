@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PasswordIcon, showModal } from '@openmrs/esm-framework';
+import { Password } from '@carbon/react/icons';
 import { Button, SwitcherItem } from '@carbon/react';
+import { showModal } from '@openmrs/esm-framework';
 import styles from './change-password.scss';
 
 const ChangePasswordLink: React.FC = () => {
@@ -10,9 +11,9 @@ const ChangePasswordLink: React.FC = () => {
   const launchChangePasswordModal = useCallback(() => showModal('change-password-modal'), []);
 
   return (
-    <SwitcherItem aria-label={t('changePassword', 'ChangePassword')}  className={styles.panelItemContainer}>
+    <SwitcherItem aria-label={t('changePassword', 'ChangePassword')} className={styles.panelItemContainer}>
       <div>
-        <PasswordIcon size={20} />
+        <Password size={20} />
         <p>{t('password', 'Password')}</p>
       </div>
       <Button kind="ghost" onClick={launchChangePasswordModal}>
