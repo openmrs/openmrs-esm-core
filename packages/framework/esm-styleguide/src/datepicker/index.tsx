@@ -11,7 +11,14 @@ import React, {
   useRef,
 } from 'react';
 import classNames, { type Argument } from 'classnames';
-import { createCalendar, CalendarDate, CalendarDateTime, ZonedDateTime } from '@internationalized/date';
+import {
+  createCalendar,
+  CalendarDate,
+  CalendarDateTime,
+  ZonedDateTime,
+  today,
+  getLocalTimeZone,
+} from '@internationalized/date';
 import { I18nProvider, type DateValue, useLocale, useDateField } from 'react-aria';
 import { useDateFieldState } from 'react-stately';
 import {
@@ -294,6 +301,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate), [rawMinDate]);
 
     const locale = getLocale();
+    const today_ = today(getLocalTimeZone());
 
     const localeWithCalendar = useMemo(() => {
       const calendar = getDefaultCalendar(locale);
@@ -356,7 +364,14 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                     </Button>
                   </header>
                   <CalendarGrid className={styles.calendarGrid}>
-                    {(date) => <CalendarCell className="cds--date-picker__day" date={date} />}
+                    {(date) => (
+                      <CalendarCell
+                        className={classNames('cds--date-picker__day', {
+                          [styles.today]: today_.compare(date) === 0,
+                        })}
+                        date={date}
+                      />
+                    )}
                   </CalendarGrid>
                 </Calendar>
               </Dialog>

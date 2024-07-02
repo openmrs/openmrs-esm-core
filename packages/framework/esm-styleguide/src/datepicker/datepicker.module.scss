@@ -314,3 +314,31 @@
   margin: spacing.$spacing-02 0 0;
   overflow: hidden;
 }
+
+.today:not([data-selected]) {
+  position: relative;
+  color: $color-blue-60-2;
+  font-weight: 600;
+  font-size: var(--cds-body-compact-01-font-size, 0.875rem);
+  line-height: var(--cds-body-compact-01-line-height, 1.28572);
+  letter-spacing: var(--cds-body-compact-01-letter-spacing, 0.16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 2.5rem;
+  cursor: pointer;
+  inline-size: 2.5rem;
+
+  &::after {
+    position: absolute;
+    display: block;
+    background-color: var(--cds-link-primary, #0f62fe);
+    block-size: 0.25rem;
+    content: '';
+    inline-size: 0.25rem;
+    inset-block-end: 0.4375rem;
+    inset-inline-start: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+}
