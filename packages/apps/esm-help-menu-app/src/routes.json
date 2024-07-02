@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.openmrs.org/routes.schema.json",
+  "pages": [
+    {
+      "component": "root",
+      "route": true
+    }
+  ],
+  "extensions": [
+    {
+      "name": "release-notes",
+      "slot": "help-menu-slot",
+      "component": "releaseNotes",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "docs",
+      "slot": "help-menu-slot",
+      "component": "docs",
+      "online": true,
+      "offline": true
+    },
+    {
+      "name": "contact-us",
+      "slot": "help-menu-slot",
+      "component": "contact",
+      "online": true,
+      "offline": true
+    }
+  ]
+}
