@@ -49,19 +49,37 @@
     <div class="omrs-snackbars-container"></div>
     <div class="omrs-modals-container"></div>
     <template id="loading-spinner">
-      <div class="omrs-loading-spinner">
-        <div data-inline-loading="" class="cds--inline-loading" role="alert" aria-live="assertive">
-          <div class="cds--inline-loading__animation">
-            <div data-inline-loading-spinner="" class="cds--loading cds--loading--small">
-              <svg class="cds--loading__svg" viewBox="-75 -75 150 150">
-                <circle class="cds--loading__background" cx="0" cy="0" r="26.8125"></circle>
-                <circle class="cds--loading__stroke" cx="0" cy="0" r="26.8125"></circle>
-              </svg>
-            </div>
-          </div>
-          <p data-inline-loading-text-active="" class="cds--inline-loading__text">Loading ...</p>
-        </div>
-      </div>
+      <div
+      style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 600px;"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 487.85 486.93"
+        style="width: 100px; height: auto; animation: spin 3s linear infinite;"
+        
+      >
+        <g id="Layer_2" data-name="Layer 2">
+          <g id="Layer_1-2" data-name="Layer 1">
+            <path
+              style="fill: #ef6827" 
+              d="M132.47,131.38a158.6,158.6,0,0,1,43-30c12-5.67,55.79-24.52,109-10a158.27,158.27,0,0,1,70,41q1-52.5,2-105a238.11,238.11,0,0,0-97-27c-60.35-3.44-106,17.34-126,28C132.8,57.71,132.13,126.38,132.47,131.38Z"
+            />
+            <path
+              style="fill: #149585" 
+              d="M356.47,131.42a159,159,0,0,1,30,43c5.67,12,24.52,55.79,10,109a158.24,158.24,0,0,1-41,70l105,2a238,238,0,0,0,27-97c3.43-60.35-17.35-106-28-126C430.13,131.76,361.47,131.09,356.47,131.42Z"
+            />
+            <path
+              style= "fill: #f0a91f" 
+              d="M356.38,355.55a158.76,158.76,0,0,1-43,30c-12,5.67-55.79,24.52-109,10a158.3,158.3,0,0,1-70-41q-1,52.5-2,105a238,238,0,0,0,97,27c60.35,3.43,106-17.34,126-28C356.05,429.22,356.71,360.55,356.38,355.55Z"
+            />
+            <path
+              style="fill: #5c58a5" 
+              d="M131.38,355.33a158.6,158.6,0,0,1-30-43c-5.67-12-24.52-55.79-10-109a158.27,158.27,0,0,1,41-70l-105-2a238.11,238.11,0,0,0-27,97c-3.44,60.35,17.34,106,28,126C57.71,355,126.38,355.67,131.38,355.33Z"
+            />
+          </g>
+        </g>
+      </svg>
+    </div>
     </template>
     <template id="app-error">
       <div class="omrs-app-error">
