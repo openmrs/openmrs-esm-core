@@ -85,7 +85,7 @@ export interface OpenmrsDatePickerProps
    */
   label?: string | ReactElement;
   /**
-   * The label for this DatePicker element
+   * The label for this DatePicker element. If a string is passed and the input is marked as required, an asterisk is appended to the label.
    */
   labelText?: string | ReactElement;
   /**
