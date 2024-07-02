@@ -35,11 +35,11 @@
       outline: unset;
     }
 
-    &:hover:not(:has([aria-disabled='true'])) {
+    &:hover:not(:has([aria-disabled], [data-selected])) {
       background-color: theme.$layer-hover;
     }
 
-    [data-selected] {
+    &:has([data-selected]) {
       background-color: $color-blue-60-2;
       color: $ui-background;
     }
@@ -72,6 +72,10 @@
     margin: auto;
     text-align: center;
   }
+}
+
+[data-invalid] > .flatButton > svg {
+  --omrs-icon-fill: #{theme.$support-error};
 }
 
 .flatButtonMd {

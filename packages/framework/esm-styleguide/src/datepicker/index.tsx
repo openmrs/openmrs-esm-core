@@ -205,13 +205,10 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
   },
 );
 
-const DatePickerIcon = forwardRef<Element>(function DatePickerIcon(props, ref) {
+const DatePickerIcon = forwardRef<SVGSVGElement>(function DatePickerIcon(props, ref) {
   const state = useContext(DatePickerStateContext);
-  return state.isInvalid ? (
-    <WarningIcon className="cds--date-picker__icon--invalid" size={16} />
-  ) : (
-    <CalendarIcon size={16} />
-  );
+
+  return state.isInvalid ? <WarningIcon ref={ref} size={16} /> : <CalendarIcon ref={ref} size={16} />;
 });
 
 // The main reason for this component is to allow us to click inside the date field and trigger the popover
@@ -278,6 +275,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       className,
       defaultValue: rawDefaultValue,
       invalidText,
+      isInvalid: isInvalidRaw,
       isRequired,
       label,
       labelText,
@@ -294,6 +292,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const value = useMemo(() => dateToInternationalizedDate(rawValue), [rawValue]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate), [rawMaxDate]);
     const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate), [rawMinDate]);
+    const isInvalid = useMemo(() => (invalidText ? true : isInvalidRaw), [invalidText, isInvalidRaw]);
 
     const locale = getLocale();
 
@@ -315,6 +314,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
               ['cds--date-picker--light']: light,
             })}
             defaultValue={defaultValue}
+            isInvalid={isInvalid}
             isRequired={isRequired}
             maxValue={maxDate}
             minValue={minDate}
