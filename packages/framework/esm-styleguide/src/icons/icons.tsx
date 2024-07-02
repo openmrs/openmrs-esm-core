@@ -211,9 +211,57 @@ export const EditIcon = memo(
 
 /**
  */
+export const EventScheduleIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function EventScheduleIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-event-schedule" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const EventsIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function EventsIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-events" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const GroupIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function GroupIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-group" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const GroupAccessIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function GroupAccessIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-group-access" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const HospitalBedIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function HospitalBedIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-hospital-bed" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const ImageMedicalIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function ImageMedicalIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-image-medical" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const InventoryManagementIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function InventoryManagementIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-inventory-management" iconProps={props} />;
   }),
 );
 
@@ -234,11 +282,26 @@ export const LocationIcon = memo(
 );
 
 /**
- * Billing
  */
-export const MoneyIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function MoneyIcon(props, ref) {
-    return <Icon ref={ref} icon="omrs-icon-money" iconProps={props} />;
+export const MaximizeIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function MaximizeIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-maximize" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const MedicationIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function MedicationIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-medication" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const MessageQueueIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function MessageQueueIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-message-queue" iconProps={props} />;
   }),
 );
 
@@ -251,9 +314,74 @@ export const MicroscopeIcon = memo(
 );
 
 /**
+ * Billing
+ */
+export const MoneyIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function MoneyIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-money" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const MovementIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function MovementIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-movement" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const OverflowMenuHorizontalIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function OverflowMenuHorizontalIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-overflow-menu--horizontal" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const OverflowMenuVerticalIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function OverflowMenuVerticalIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-overflow-menu--horizontal" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const PedestrianFamilyIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function PedestrianFamilyIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-pedestrian-family" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const PenIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function PenIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-pen" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const PrinterIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function PrinterIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-pen" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const RenewIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function RenewIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-renew" iconProps={props} />;
+  }),
+);
+
+/**
  */
 export const ResetIcon = memo(
-  forwardRef<SVGSVGElement, IconProps>(function EditIcon(props, ref) {
+  forwardRef<SVGSVGElement, IconProps>(function ResetIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-reset" iconProps={props} />;
   }),
 );
@@ -309,6 +437,23 @@ export const ShoppingCartArrowDownIcon = memo(
 );
 
 /**
+ * Used as a button to add an item to the Order basket from a search
+ */
+export const TableOfContentsIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function TableOfContentsIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-table-of-contents" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const TableIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function TableIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-table" iconProps={props} />;
+  }),
+);
+
+/**
  * Lab investigations
  */
 export const TimeIcon = memo(
@@ -334,6 +479,14 @@ export const TrashCanIcon = memo(
 );
 
 /**
+ */
+export const TreeViewAltIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function TreeViewAltIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-tree-view--alt" iconProps={props} />;
+  }),
+);
+
+/**
  * User of OpenMRS e.g. My Account
  */
 export const UserAvatarIcon = memo(
@@ -344,9 +497,41 @@ export const UserAvatarIcon = memo(
 
 /**
  */
+export const UserFollowIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function UserFollowIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-user-follow" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const UserXrayIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function UserXrayIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-user-xray" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const UserIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function UserIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-user" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const ViewOffIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ViewOffIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-view-off" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const ViewIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ViewIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-view" iconProps={props} />;
   }),
 );
 
