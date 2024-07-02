@@ -2,7 +2,6 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/theme';
 @use '@carbon/styles/scss/type';
-@use '@carbon/styles/scss/colors';
 @use '@carbon/styles/scss/components/button';
 @use '@carbon/styles/scss/utilities/box-shadow';
 @use '@carbon/styles/scss/utilities/component-reset';
@@ -294,6 +293,6 @@
 }
 
 .isRequired {
-  color: #da1e28 !important;
-  margin-left: 0.25rem;
+  color: theme.$text-error !important;
+  margin-left: spacing.$spacing-02;
 }
