@@ -6,7 +6,7 @@
 @use '@carbon/styles/scss/utilities/box-shadow';
 @use '@carbon/styles/scss/utilities/component-reset';
 @use '@carbon/styles/scss/utilities/focus-outline' as focus;
-@import '@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .calendarGrid {
   width: 17rem;
@@ -301,4 +301,12 @@
 .isRequired {
   color: theme.$text-error !important;
   margin-left: spacing.$spacing-02;
+}
+
+.invalidText {
+  color: theme.$text-error !important;
+  font-size: 0.75rem;
+  font-weight: 400 !important;
+  margin: spacing.$spacing-02 0 0;
+  overflow: hidden;
 }
