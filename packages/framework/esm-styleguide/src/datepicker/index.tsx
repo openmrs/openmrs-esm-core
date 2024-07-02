@@ -275,7 +275,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       className,
       defaultValue: rawDefaultValue,
       invalidText,
-      isInvalid: isInvalidRaw,
+      isInvalid,
       isRequired,
       label,
       labelText,
@@ -292,7 +292,6 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const value = useMemo(() => dateToInternationalizedDate(rawValue), [rawValue]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate), [rawMaxDate]);
     const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate), [rawMinDate]);
-    const isInvalid = useMemo(() => (invalidText ? true : isInvalidRaw), [invalidText, isInvalidRaw]);
 
     const locale = getLocale();
 
