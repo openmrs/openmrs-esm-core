@@ -178,18 +178,6 @@ function promptBeforeLaunchingWorkspace(
   }
 }
 
-interface A {
-  foo: string;
-}
-
-interface B extends A {
-  bar: string;
-}
-
-const fib: Omit<B, keyof A> = {
-  bar: 'bar',
-};
-
 /**
  * This launches a workspace by its name. The workspace must have been registered.
  * Workspaces should be registered in the `routes.json` file.
