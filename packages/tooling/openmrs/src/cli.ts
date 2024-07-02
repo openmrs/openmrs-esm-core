@@ -14,7 +14,7 @@ type Commands = typeof commands;
 type CommandNames = keyof Commands;
 
 function runCommand<T extends CommandNames>(type: T, args: Parameters<Commands[T]>[0]) {
-  const ps = fork(runner, [], { cwd: type === 'runBuild' ? root : process.cwd() });
+  const ps = fork(runner, [], { cwd: type === 'runBuild' ? root : process.cwd() })
 
   ps.send({
     type,
@@ -289,10 +289,10 @@ yargs.command(
         type: 'boolean',
       })
       .option('mode', {
-        choices: ['config', 'survey'],
+        choices: ['config', 'configFile', 'survey'],
         default: 'survey',
         description:
-          'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey.',
+          'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `configFile packages up configurations from file specified cia `--config-file`. survey` starts an interactive command-line survey.',
         type: 'string',
       }),
   (args) => runCommand('runAssemble', args),
@@ -323,7 +323,6 @@ yargs.command(
       ...args,
     }),
 );
-
 yargs
   .epilog(
     'The SPA build config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` ' +
@@ -341,3 +340,4 @@ yargs
   .help()
   .demandCommand()
   .strict().argv;
+
