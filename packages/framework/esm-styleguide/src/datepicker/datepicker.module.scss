@@ -40,8 +40,8 @@
     }
 
     [data-selected] {
-      background-color: #0f62fe;
-      color: white;
+      background-color: $color-blue-60-2;
+      color: $ui-background;
     }
 
     [aria-disabled] {
