@@ -38,6 +38,7 @@ import {
   InputContext,
   Provider,
   GroupContext,
+  Text,
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
@@ -71,6 +72,14 @@ export interface OpenmrsDatePickerProps
    */
   defaultValue?: DateInputValue;
   /**
+   * Text to show if the input is invalid e.g. an error message
+   */
+  invalidText?: string;
+  /**
+   * Specifies if the input is required. Used to add an asterisk to the label.
+   */
+  isRequired?: boolean;
+  /**
    * The label for this DatePicker element
    * @deprecated Use labelText instead
    */
@@ -103,10 +112,6 @@ export interface OpenmrsDatePickerProps
    * The value (controlled)
    */
   value?: DateInputValue;
-  /**
-   * Specifies if the input is required. Used to add an asterisk to the label.
-   */
-  isRequired?: boolean;
 }
 
 const defaultProps: OpenmrsDatePickerProps = {
@@ -272,6 +277,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const {
       className,
       defaultValue: rawDefaultValue,
+      invalidText,
       isRequired,
       label,
       labelText,
@@ -336,6 +342,11 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                   <DatePickerIcon />
                 </Button>
               </Group>
+              {invalidText && (
+                <Text slot="errorMessage" className={styles.invalidText}>
+                  {invalidText}
+                </Text>
+              )}
             </div>
             <Popover className={styles.popover} placement="bottom" offset={1}>
               <Dialog className={styles.dialog}>
