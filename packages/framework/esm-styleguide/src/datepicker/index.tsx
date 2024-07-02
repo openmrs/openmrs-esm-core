@@ -38,6 +38,7 @@ import {
   InputContext,
   Provider,
   GroupContext,
+  Text,
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
@@ -70,6 +71,14 @@ export interface OpenmrsDatePickerProps
    * The default value (uncontrolled)
    */
   defaultValue?: DateInputValue;
+  /**
+   * Text to show if the input is invalid e.g. an error message
+   */
+  invalidText?: string;
+  /**
+   * Specifies if the input is required. Used to add an asterisk to the label.
+   */
+  isRequired?: boolean;
   /**
    * The label for this DatePicker element
    * @deprecated Use labelText instead
@@ -242,16 +251,22 @@ const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function Date
   );
 });
 
-function DatePickerLabel({ labelText }: Pick<OpenmrsDatePickerProps, 'labelText'>) {
+function DatePickerLabel({ labelText, isRequired = false }: Pick<OpenmrsDatePickerProps, 'labelText' | 'isRequired'>) {
   if (labelText === null || typeof labelText === 'undefined' || typeof labelText === 'boolean') {
     return null;
   }
 
-  if (typeof labelText === 'string' || typeof labelText === 'number') {
-    return <Label className="cds--label">{labelText}</Label>;
-  }
-
-  return cloneElement(labelText, { className: classNames(labelText.props?.className, 'cds--label') });
+  return (
+    <Label className="cds--label">
+      {typeof labelText === 'string' && isRequired ? (
+        <>
+          {labelText} <span className={styles.isRequired}>*</span>
+        </>
+      ) : (
+        labelText
+      )}
+    </Label>
+  );
 }
 
 /**
@@ -262,6 +277,8 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const {
       className,
       defaultValue: rawDefaultValue,
+      invalidText,
+      isRequired,
       label,
       labelText,
       light,
@@ -298,13 +315,14 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
               ['cds--date-picker--light']: light,
             })}
             defaultValue={defaultValue}
+            isRequired={isRequired}
             maxValue={maxDate}
             minValue={minDate}
             value={value}
             {...datePickerProps}
           >
             <div className="cds--date-picker-container">
-              <DatePickerLabel labelText={labelText ?? label} />
+              <DatePickerLabel labelText={labelText ?? label} isRequired={isRequired} />
               <Group className={styles.inputGroup}>
                 <DatePickerInput
                   ref={ref}
@@ -324,6 +342,11 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                   <DatePickerIcon />
                 </Button>
               </Group>
+              {invalidText && (
+                <Text slot="errorMessage" className={styles.invalidText}>
+                  {invalidText}
+                </Text>
+              )}
             </div>
             <Popover className={styles.popover} placement="bottom" offset={1}>
               <Dialog className={styles.dialog}>
