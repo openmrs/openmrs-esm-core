@@ -128,6 +128,7 @@ async function readConfig(
           ...JSON.parse(await readFile(config, 'utf8')),
         });
       }
+      break;
     }
     case 'survey': {
       logInfo(`Loading available frontend modules ...`);

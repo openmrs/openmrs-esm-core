@@ -15,7 +15,6 @@ type CommandNames = keyof Commands;
 
 function runCommand<T extends CommandNames>(type: T, args: Parameters<Commands[T]>[0]) {
   const ps = fork(runner, [], { cwd: type === 'runBuild' ? root : process.cwd() })
-  console.log(`These are the args received by the runner: ${args}`);
 
   ps.send({
     type,
