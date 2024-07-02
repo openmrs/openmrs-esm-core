@@ -83,16 +83,12 @@ export interface OpenmrsDatePickerProps
    */
   invalidText?: string;
   /**
-   * Specifies if the input is required. Used to add an asterisk to the label.
-   */
-  isRequired?: boolean;
-  /**
    * The label for this DatePicker element
    * @deprecated Use labelText instead
    */
   label?: string | ReactElement;
   /**
-   * The label for this DatePicker element. If a string is passed and the input is marked as required, an asterisk is appended to the label.
+   * The label for this DatePicker element.
    */
   labelText?: string | ReactElement;
   /**
@@ -255,22 +251,12 @@ const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function Date
   );
 });
 
-function DatePickerLabel({ labelText, isRequired = false }: Pick<OpenmrsDatePickerProps, 'labelText' | 'isRequired'>) {
+function DatePickerLabel({ labelText }: Pick<OpenmrsDatePickerProps, 'labelText'>) {
   if (labelText === null || typeof labelText === 'undefined' || typeof labelText === 'boolean') {
     return null;
   }
 
-  return (
-    <Label className="cds--label">
-      {typeof labelText === 'string' && isRequired ? (
-        <>
-          {labelText} <span className={styles.isRequired}>*</span>
-        </>
-      ) : (
-        labelText
-      )}
-    </Label>
-  );
+  return <Label className="cds--label">{labelText}</Label>;
 }
 
 /**
@@ -283,7 +269,6 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       defaultValue: rawDefaultValue,
       invalidText,
       isInvalid,
-      isRequired,
       label,
       labelText,
       light,
@@ -322,14 +307,13 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
             })}
             defaultValue={defaultValue}
             isInvalid={isInvalid}
-            isRequired={isRequired}
             maxValue={maxDate}
             minValue={minDate}
             value={value}
             {...datePickerProps}
           >
             <div className="cds--date-picker-container">
-              <DatePickerLabel labelText={labelText ?? label} isRequired={isRequired} />
+              <DatePickerLabel labelText={labelText ?? label} />
               <Group className={styles.inputGroup}>
                 <DatePickerInput
                   ref={ref}
