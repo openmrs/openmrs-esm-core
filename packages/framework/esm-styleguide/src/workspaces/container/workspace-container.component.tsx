@@ -11,7 +11,6 @@ import { type OpenWorkspace, updateWorkspaceWindowState, useWorkspaces } from '.
 import ActionMenu from './action-menu.component';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import styles from './workspace.module.scss';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 export interface WorkspaceContainerProps {
   contextKey: string;
@@ -71,9 +70,14 @@ export function WorkspaceContainer({
   showSiderailAndBottomNav,
   additionalWorkspaceProps,
 }: WorkspaceContainerProps) {
-  const { workspaces } = useWorkspaces();
-  // If there are no open workspaces, have an empty container ready so that it can animate onto the screen
-  const workspacesOrEmptyContainer: Array<OpenWorkspace | null> = workspaces.length ? workspaces : [null];
+  const layout = useLayoutType();
+  const { workspaces, workspaceWindowState } = useWorkspaces();
+  const activeWorkspace = workspaces[0];
+  const isHidden = workspaceWindowState === 'hidden' || activeWorkspace == null;
+  const isMaximized = workspaceWindowState === 'maximized';
+  const width = activeWorkspace?.width ?? (overlay ? 'wider' : 'narrow');
+
+  useBodyScrollLock(!isHidden && !isDesktop(layout));
 
   return (
     <>
@@ -84,19 +88,31 @@ export function WorkspaceContainer({
             : styles.workspaceContainerWithoutActionMenu
         }
       >
-        <>
-          {/* Hide all workspaces but the first one */}
-          {workspacesOrEmptyContainer.map((workspace, i) => (
-            <div key={`workspace-container-${i}`} className={classNames({ [styles.hiddenExtraWorkspace]: i !== 0 })}>
-              <Workspace
-                isOverlay={overlay}
-                workspaceInstance={workspace}
-                additionalWorkspaceProps={additionalWorkspaceProps}
-              />
-            </div>
-          ))}
-          <WorkspaceNotification contextKey={contextKey} />
-        </>
+        <aside
+          className={classNames(overlay ? styles.workspaceOverlayOuterContainer : styles.workspaceWindowSpacer, {
+            [styles.hiddenRelative]: isHidden,
+            [styles.narrowWorkspace]: width === 'narrow',
+            [styles.widerWorkspace]: width === 'wider',
+            [styles.extraWideWorkspace]: width === 'extra-wide',
+          })}
+        >
+          <div
+            className={classNames(styles.workspaceFixedContainer, {
+              [styles.maximizedWindow]: isMaximized,
+              [styles.hiddenFixed]: isHidden,
+            })}
+          >
+            {workspaces.map((workspace, i) => (
+              <div
+                key={`workspace-container-${workspace ? workspace.name : 'empty'}`}
+                className={classNames({ [styles.hiddenExtraWorkspace]: i !== 0 }, styles.workspaceInnerContainer)}
+              >
+                <Workspace workspaceInstance={workspace} additionalWorkspaceProps={additionalWorkspaceProps} />
+              </div>
+            ))}
+          </div>
+        </aside>
+        <WorkspaceNotification contextKey={contextKey} />
       </div>
       {showSiderailAndBottomNav && <ActionMenu />}
     </>
@@ -105,22 +121,18 @@ export function WorkspaceContainer({
 
 interface WorkspaceProps {
   workspaceInstance: OpenWorkspace | null;
-  isOverlay?: boolean;
   additionalWorkspaceProps?: object;
 }
 
-function Workspace({ isOverlay, workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
+function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
   const layout = useLayoutType();
   const { workspaceWindowState } = useWorkspaces();
   const isMaximized = workspaceWindowState === 'maximized';
-  const isHidden = workspaceWindowState === 'hidden' || workspaceInstance == null;
 
   // We use the feature name of the app containing the workspace in order to set the extension
   // slot name. We can't use contextKey for this because we don't want the slot name to be
   // different for different patients, but we do want it to be different for different apps.
   const { featureName } = useContext(ComponentContext);
-
-  useBodyScrollLock(!isHidden && !isDesktop(layout));
 
   const toggleWindowState = useCallback(() => {
     isMaximized ? updateWorkspaceWindowState('normal') : updateWorkspaceWindowState('maximized');
@@ -139,7 +151,6 @@ function Workspace({ isOverlay, workspaceInstance, additionalWorkspaceProps }: W
   const {
     canHide = false,
     canMaximize = false,
-    width = isOverlay ? 'wider' : 'narrow',
     hasOwnSidebar = false,
     closeWorkspace,
   } = useMemo(() => workspaceInstance ?? ({} as OpenWorkspace), [workspaceInstance]);
@@ -153,102 +164,86 @@ function Workspace({ isOverlay, workspaceInstance, additionalWorkspaceProps }: W
   );
 
   return (
-    <aside
-      className={classNames(isOverlay ? styles.workspaceOverlayOuterContainer : styles.workspaceWindowSpacer, {
-        [styles.hiddenRelative]: isHidden,
-        [styles.narrowWorkspace]: width === 'narrow',
-        [styles.widerWorkspace]: width === 'wider',
-        [styles.extraWideWorkspace]: width === 'extra-wide',
-      })}
-    >
-      <div
-        className={classNames(styles.workspaceFixedContainer, {
-          [styles.maximizedWindow]: isMaximized,
-          [styles.hiddenFixed]: isHidden,
-        })}
-      >
-        {workspaceInstance && (
-          <>
-            <Header aria-label={getCoreTranslation('workspaceHeader', 'Workspace Header')} className={styles.header}>
-              {!isDesktop(layout) && !canHide && (
-                <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
-              )}
-              <HeaderName prefix="">{workspaceTitle}</HeaderName>
-              <div className={styles.overlayHeaderSpacer} />
-              <HeaderGlobalBar className={styles.headerButtons}>
-                <ExtensionSlot
-                  name={`workspace-header-family-${workspaceInstance.sidebarFamily}-slot`}
-                  state={workspaceProps}
-                />
-                <ExtensionSlot name={`workspace-header-type-${workspaceInstance.type}-slot`} state={workspaceProps} />
-                <ExtensionSlot name={`workspace-header-${featureName}-slot`} state={workspaceProps} />
-                {isDesktop(layout) && (
-                  <>
-                    {(canMaximize || isMaximized) && (
-                      <HeaderGlobalAction
-                        align="bottom"
-                        aria-label={
-                          isMaximized
-                            ? getCoreTranslation('minimize', 'Minimize')
-                            : getCoreTranslation('maximize', 'Maximize')
-                        }
-                        label={
-                          isMaximized
-                            ? getCoreTranslation('minimize', 'Minimize')
-                            : getCoreTranslation('maximize', 'Maximize')
-                        }
-                        onClick={toggleWindowState}
-                        size="lg"
-                      >
-                        {isMaximized ? <Minimize /> : <Maximize />}
-                      </HeaderGlobalAction>
-                    )}
-                    {canHide ? (
-                      <HeaderGlobalAction
-                        align="bottom-right"
-                        aria-label={getCoreTranslation('hide', 'Hide')}
-                        label={getCoreTranslation('hide', 'Hide')}
-                        onClick={() => updateWorkspaceWindowState('hidden')}
-                        size="lg"
-                      >
-                        <ArrowRightIcon />
-                      </HeaderGlobalAction>
-                    ) : (
-                      <HeaderGlobalAction
-                        align="bottom-right"
-                        aria-label={getCoreTranslation('close', 'Close')}
-                        label={getCoreTranslation('close', 'Close')}
-                        onClick={() => closeWorkspace?.()}
-                        size="lg"
-                      >
-                        <CloseIcon />
-                      </HeaderGlobalAction>
-                    )}
-                  </>
+    workspaceInstance && (
+      <>
+        <Header aria-label={getCoreTranslation('workspaceHeader', 'Workspace Header')} className={styles.header}>
+          {!isDesktop(layout) && !canHide && (
+            <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
+          )}
+          <HeaderName prefix="">{workspaceTitle}</HeaderName>
+          <div className={styles.overlayHeaderSpacer} />
+          <HeaderGlobalBar className={styles.headerButtons}>
+            <ExtensionSlot
+              name={`workspace-header-family-${workspaceInstance.sidebarFamily}-slot`}
+              state={workspaceProps}
+            />
+            <ExtensionSlot name={`workspace-header-type-${workspaceInstance.type}-slot`} state={workspaceProps} />
+            <ExtensionSlot name={`workspace-header-${featureName}-slot`} state={workspaceProps} />
+            {isDesktop(layout) && (
+              <>
+                {(canMaximize || isMaximized) && (
+                  <HeaderGlobalAction
+                    align="bottom"
+                    aria-label={
+                      isMaximized
+                        ? getCoreTranslation('minimize', 'Minimize')
+                        : getCoreTranslation('maximize', 'Maximize')
+                    }
+                    label={
+                      isMaximized
+                        ? getCoreTranslation('minimize', 'Minimize')
+                        : getCoreTranslation('maximize', 'Maximize')
+                    }
+                    onClick={toggleWindowState}
+                    size="lg"
+                  >
+                    {isMaximized ? <Minimize /> : <Maximize />}
+                  </HeaderGlobalAction>
                 )}
-                {layout === 'tablet' && canHide && (
+                {canHide ? (
+                  <HeaderGlobalAction
+                    align="bottom-right"
+                    aria-label={getCoreTranslation('hide', 'Hide')}
+                    label={getCoreTranslation('hide', 'Hide')}
+                    onClick={() => updateWorkspaceWindowState('hidden')}
+                    size="lg"
+                  >
+                    <ArrowRightIcon />
+                  </HeaderGlobalAction>
+                ) : (
                   <HeaderGlobalAction
                     align="bottom-right"
                     aria-label={getCoreTranslation('close', 'Close')}
                     label={getCoreTranslation('close', 'Close')}
                     onClick={() => closeWorkspace?.()}
+                    size="lg"
                   >
-                    <DownToBottom />
+                    <CloseIcon />
                   </HeaderGlobalAction>
                 )}
-              </HeaderGlobalBar>
-            </Header>
-            <div className={styles.workspaceContent}>
-              <WorkspaceRenderer
-                key={workspaceInstance.name}
-                workspace={workspaceInstance}
-                additionalPropsFromPage={additionalWorkspaceProps}
-              />
-            </div>
-            {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />}
-          </>
-        )}
-      </div>
-    </aside>
+              </>
+            )}
+            {layout === 'tablet' && canHide && (
+              <HeaderGlobalAction
+                align="bottom-right"
+                aria-label={getCoreTranslation('close', 'Close')}
+                label={getCoreTranslation('close', 'Close')}
+                onClick={() => closeWorkspace?.()}
+              >
+                <DownToBottom />
+              </HeaderGlobalAction>
+            )}
+          </HeaderGlobalBar>
+        </Header>
+        <div className={styles.workspaceContent}>
+          <WorkspaceRenderer
+            key={workspaceInstance.name}
+            workspace={workspaceInstance}
+            additionalPropsFromPage={additionalWorkspaceProps}
+          />
+        </div>
+        {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />}
+      </>
+    )
   );
 }
