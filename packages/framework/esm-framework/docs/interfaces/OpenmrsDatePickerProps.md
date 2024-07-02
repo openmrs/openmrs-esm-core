@@ -378,7 +378,7 @@ ___
 
 • `Optional` **labelText**: `string` \| `ReactElement`<`any`, `string` \| `JSXElementConstructor`<`any`\>\>
 
-The label for this DatePicker element
+The label for this DatePicker element. If a string is passed and the input is marked as required, an asterisk is appended to the label.
 
 #### Defined in
 

@@ -342,9 +342,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                   <DatePickerIcon />
                 </Button>
               </Group>
-              {datePickerProps.isInvalid && invalidText && (
-                <FieldError className={styles.invalidText}>{invalidText}</FieldError>
-              )}
+              {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
             </div>
             <Popover className={styles.popover} placement="bottom" offset={1}>
               <Dialog className={styles.dialog}>
