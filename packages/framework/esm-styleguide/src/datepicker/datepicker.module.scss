@@ -6,6 +6,7 @@
 @use '@carbon/styles/scss/utilities/box-shadow';
 @use '@carbon/styles/scss/utilities/component-reset';
 @use '@carbon/styles/scss/utilities/focus-outline' as focus;
+@import '@openmrs/esm-styleguide/src/vars';
 
 .calendarGrid {
   width: 17rem;
@@ -36,6 +37,11 @@
 
     &:hover:not(:has([aria-disabled='true'])) {
       background-color: theme.$layer-hover;
+    }
+
+    [data-selected] {
+      background-color: #0f62fe;
+      color: white;
     }
 
     [aria-disabled] {
