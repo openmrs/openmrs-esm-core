@@ -51,7 +51,40 @@ describe('WorkspaceContainer in window mode', () => {
     });
   });
 
-  test('should override title; should reopen hidden workspace window when user relaunches the same workspace window', async () => {
+  test('should override title via additional props and via setTitle', async () => {
+    mockedIsDesktop.mockReturnValue(true);
+    renderWorkspaceWindow();
+    act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Admission' }));
+    const header = screen.getByRole('banner');
+    expect(within(header).getByText('COVID Admission')).toBeInTheDocument();
+    const workspaces = renderHook(() => useWorkspaces());
+    act(() => workspaces.result.current.workspaces[0].setTitle('COVID Discharge'));
+    expect(within(header).getByText('COVID Discharge')).toBeInTheDocument();
+    act(() =>
+      workspaces.result.current.workspaces[0].setTitle(
+        'Space Ghost',
+        <div data-testid="patient-name">Space Ghost</div>,
+      ),
+    );
+    expect(within(header).getByTestId('patient-name')).toBeInTheDocument();
+  });
+
+  test('re-launching workspace should update title, but only if setTitle was not used', async () => {
+    mockedIsDesktop.mockReturnValue(true);
+    renderWorkspaceWindow();
+    act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Admission' }));
+    const header = screen.getByRole('banner');
+    expect(within(header).getByText('COVID Admission')).toBeInTheDocument();
+    act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Discharge' }));
+    expect(within(header).getByText('COVID Discharge')).toBeInTheDocument();
+    const workspaces = renderHook(() => useWorkspaces());
+    act(() => workspaces.result.current.workspaces[0].setTitle('Fancy Special Title'));
+    expect(within(header).getByText('Fancy Special Title')).toBeInTheDocument();
+    act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Admission Again' }));
+    expect(within(header).getByText('Fancy Special Title')).toBeInTheDocument();
+  });
+
+  test('should reopen hidden workspace window when user relaunches the same workspace window', async () => {
     const user = userEvent.setup();
     const workspaces = renderHook(() => useWorkspaces());
     mockedIsDesktop.mockReturnValue(true);

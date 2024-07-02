@@ -120,7 +120,7 @@ export function WorkspaceContainer({
 }
 
 interface WorkspaceProps {
-  workspaceInstance: OpenWorkspace | null;
+  workspaceInstance: OpenWorkspace;
   additionalWorkspaceProps?: object;
 }
 
@@ -137,16 +137,6 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
   const toggleWindowState = useCallback(() => {
     isMaximized ? updateWorkspaceWindowState('normal') : updateWorkspaceWindowState('maximized');
   }, [isMaximized]);
-
-  const workspaceTitle = useMemo(() => {
-    if (workspaceInstance === null) {
-      return '';
-    }
-    return (
-      workspaceInstance.additionalProps?.['workspaceTitle'] ??
-      translateFrom(workspaceInstance.moduleName, workspaceInstance.title, workspaceInstance.title)
-    );
-  }, [workspaceInstance]);
 
   const {
     canHide = false,
@@ -170,7 +160,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
           {!isDesktop(layout) && !canHide && (
             <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
           )}
-          <HeaderName prefix="">{workspaceTitle}</HeaderName>
+          <HeaderName prefix="">{workspaceInstance.titleNode ?? workspaceInstance.title}</HeaderName>
           <div className={styles.overlayHeaderSpacer} />
           <HeaderGlobalBar className={styles.headerButtons}>
             <ExtensionSlot

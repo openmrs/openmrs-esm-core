@@ -1,5 +1,5 @@
 /** @module @category Workspace */
-import { useMemo } from 'react';
+import { type ReactNode, useMemo } from 'react';
 import { type LifeCycles } from 'single-spa';
 import _i18n from 'i18next';
 import { type ExtensionRegistration, getExtensionRegistration } from '@openmrs/esm-extensions';
@@ -31,6 +31,7 @@ export interface WorkspaceStoreState {
 export interface WorkspaceRegistration {
   name: string;
   title: string;
+  titleNode?: ReactNode;
   type: string;
   canHide: boolean;
   canMaximize: boolean;
@@ -47,6 +48,7 @@ export interface OpenWorkspace extends WorkspaceRegistration {
   closeWorkspace(closeWorkspaceOptions?: CloseWorkspaceOptions): boolean;
   closeWorkspaceWithSavedChanges(closeWorkspaceOptions?: CloseWorkspaceOptions): boolean;
   promptBeforeClosing(testFcn: () => boolean): void;
+  setTitle(title: string, titleNode?: ReactNode): void;
 }
 
 interface WorkspaceRegistrationStore {
@@ -214,10 +216,22 @@ export function launchWorkspace(name: string, additionalProps?: object) {
   const workspace = getWorkspaceRegistration(name);
   const newWorkspace = {
     ...workspace,
+    title: getWorkspaceTitle(workspace, additionalProps),
     closeWorkspace: (options: CloseWorkspaceOptions = {}) => closeWorkspace(name, options),
     closeWorkspaceWithSavedChanges: (options: CloseWorkspaceOptions) =>
       closeWorkspace(name, { ignoreChanges: true, ...options }),
     promptBeforeClosing: (testFcn) => promptBeforeClosing(name, testFcn),
+    setTitle: (title: string, titleNode: ReactNode) => {
+      newWorkspace.title = title;
+      newWorkspace.titleNode = titleNode;
+      store.setState((state) => {
+        const openWorkspaces = state.openWorkspaces.map((w) => (w.name === name ? newWorkspace : w));
+        return {
+          ...state,
+          openWorkspaces,
+        };
+      });
+    },
     additionalProps: additionalProps ?? {},
   };
 
@@ -247,7 +261,12 @@ export function launchWorkspace(name: string, additionalProps?: object) {
       additionalProps,
     });
   } else if (isWorkspaceAlreadyOpen) {
-    openWorkspaces[workspaceIndexInOpenWorkspaces].additionalProps = newWorkspace.additionalProps;
+    const openWorkspace = openWorkspaces[workspaceIndexInOpenWorkspaces];
+    // Only update the title if it hasn't been set by `setTitle`
+    if (openWorkspace.title == getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps)) {
+      openWorkspace.title = getWorkspaceTitle(openWorkspace, newWorkspace.additionalProps);
+    }
+    openWorkspace.additionalProps = newWorkspace.additionalProps;
     const restOfTheWorkspaces = openWorkspaces.filter((w) => w.name != name);
     updateStoreWithNewWorkspace(openWorkspaces[workspaceIndexInOpenWorkspaces], restOfTheWorkspaces);
   } else if (openedWorkspaceWithSameType) {
@@ -510,6 +529,10 @@ export function showWorkspacePrompts(
     }
   }
   store.setState((state) => ({ ...state, prompt }));
+}
+
+function getWorkspaceTitle(workspace: WorkspaceRegistration, additionalProps?: object) {
+  return additionalProps?.['workspaceTitle'] ?? translateFrom(workspace.moduleName, workspace.title, workspace.title);
 }
 
 export function resetWorkspaceStore() {
