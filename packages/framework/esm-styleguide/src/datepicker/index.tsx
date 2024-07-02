@@ -272,6 +272,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const {
       className,
       defaultValue: rawDefaultValue,
+      isRequired,
       label,
       labelText,
       light,
@@ -280,7 +281,6 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       short,
       size,
       value: rawValue,
-      isRequired,
       ...datePickerProps
     } = Object.assign({}, defaultProps, props);
 
@@ -309,6 +309,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
               ['cds--date-picker--light']: light,
             })}
             defaultValue={defaultValue}
+            isRequired={isRequired}
             maxValue={maxDate}
             minValue={minDate}
             value={value}
