@@ -38,7 +38,7 @@ import {
   InputContext,
   Provider,
   GroupContext,
-  Text,
+  FieldError,
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
@@ -343,9 +343,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                 </Button>
               </Group>
               {datePickerProps.isInvalid && invalidText && (
-                <Text slot="errorMessage" className={styles.invalidText}>
-                  {invalidText}
-                </Text>
+                <FieldError className={styles.invalidText}>{invalidText}</FieldError>
               )}
             </div>
             <Popover className={styles.popover} placement="bottom" offset={1}>
