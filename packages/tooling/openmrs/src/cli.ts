@@ -290,10 +290,10 @@ yargs.command(
         type: 'boolean',
       })
       .option('mode', {
-        choices: ['config', 'survey'],
+        choices: ['config', 'configFile', 'survey'],
         default: 'survey',
         description:
-          'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey.',
+          'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `configFile packages up configurations from file specified cia `--config-file`. survey` starts an interactive command-line survey.',
         type: 'string',
       }),
   (args) => runCommand('runAssemble', args),
@@ -323,31 +323,6 @@ yargs.command(
     runCommand('runStart', {
       ...args,
     }),
-);
-
-yargs.command(
-  'merge-configs',
-  'Merges configuration files from multiple directories into a single output file',
-  (argv) =>
-    argv
-      .option('directoriesPath', {
-        alias: 'd',
-        describe: 'Directories to read config files from',
-        type: 'string',
-        demandOption: true,
-      })
-      .option('outputPath', {
-        alias: 'o',
-        describe: 'Output file path',
-        type: 'string',
-        demandOption: true,
-      })
-      .help()
-      .argv,
-      (args) => runCommand('runMergeConfig', {
-        directoriesPath: args.directoriesPath  as string,
-        outputPath: args.outputPath as string,
-      })
 );
 yargs
   .epilog(
