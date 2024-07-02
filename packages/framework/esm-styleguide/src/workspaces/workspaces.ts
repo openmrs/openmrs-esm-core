@@ -8,7 +8,7 @@ import { useStore } from '@openmrs/esm-react-utils';
 import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
 import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
-import { type CloseWorkspaceOptions } from './types';
+import { type DefaultWorkspaceProps, type CloseWorkspaceOptions } from './types';
 
 export interface Prompt {
   title: string;
@@ -43,12 +43,8 @@ export interface WorkspaceRegistration {
   moduleName: string;
 }
 
-export interface OpenWorkspace extends WorkspaceRegistration {
+export interface OpenWorkspace extends WorkspaceRegistration, DefaultWorkspaceProps {
   additionalProps: object;
-  closeWorkspace(closeWorkspaceOptions?: CloseWorkspaceOptions): boolean;
-  closeWorkspaceWithSavedChanges(closeWorkspaceOptions?: CloseWorkspaceOptions): boolean;
-  promptBeforeClosing(testFcn: () => boolean): void;
-  setTitle(title: string, titleNode?: ReactNode): void;
 }
 
 interface WorkspaceRegistrationStore {
@@ -182,6 +178,18 @@ function promptBeforeLaunchingWorkspace(
   }
 }
 
+interface A {
+  foo: string;
+}
+
+interface B extends A {
+  bar: string;
+}
+
+const fib: Omit<B, keyof A> = {
+  bar: 'bar',
+};
+
 /**
  * This launches a workspace by its name. The workspace must have been registered.
  * Workspaces should be registered in the `routes.json` file.
@@ -211,7 +219,9 @@ function promptBeforeLaunchingWorkspace(
  * @param additionalProps Props to pass to the workspace component being launched. Passing
  *          a prop named `workspaceTitle` will override the title of the workspace.
  */
-export function launchWorkspace(name: string, additionalProps?: object) {
+export function launchWorkspace<
+  T extends DefaultWorkspaceProps | object = DefaultWorkspaceProps & { [key: string]: any },
+>(name: string, additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string }) {
   const store = getWorkspaceStore();
   const workspace = getWorkspaceRegistration(name);
   const newWorkspace = {

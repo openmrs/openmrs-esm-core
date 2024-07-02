@@ -6,6 +6,8 @@
 
 - [`WorkspaceRegistration`](WorkspaceRegistration.md)
 
+- [`DefaultWorkspaceProps`](DefaultWorkspaceProps.md)
+
   ↳ **`OpenWorkspace`**
 
 ## Table of contents
@@ -204,7 +206,13 @@ ___
 
 ### closeWorkspace
 
-▸ **closeWorkspace**(`closeWorkspaceOptions?`): `boolean`
+▸ **closeWorkspace**(`closeWorkspaceOptions?`): `void`
+
+Call this function to close the workspace. This function will prompt the user
+if there are any unsaved changes to workspace.
+
+You can pass `onWorkspaceClose` function to be called when the workspace is finally
+closed, given the user forcefully closes the workspace.
 
 #### Parameters
 
@@ -214,17 +222,24 @@ ___
 
 #### Returns
 
-`boolean`
+`void`
+
+#### Inherited from
+
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[closeWorkspace](DefaultWorkspaceProps.md#closeworkspace)
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L48)
+[packages/framework/esm-styleguide/src/workspaces/types.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L30)
 
 ___
 
 ### closeWorkspaceWithSavedChanges
 
-▸ **closeWorkspaceWithSavedChanges**(`closeWorkspaceOptions?`): `boolean`
+▸ **closeWorkspaceWithSavedChanges**(`closeWorkspaceOptions?`): `void`
+
+Call this function to close the workspace after the form is saved. This function
+will directly close the workspace without any prompt
 
 #### Parameters
 
@@ -234,17 +249,24 @@ ___
 
 #### Returns
 
-`boolean`
+`void`
+
+#### Inherited from
+
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[closeWorkspaceWithSavedChanges](DefaultWorkspaceProps.md#closeworkspacewithsavedchanges)
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L49)
+[packages/framework/esm-styleguide/src/workspaces/types.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L40)
 
 ___
 
 ### promptBeforeClosing
 
 ▸ **promptBeforeClosing**(`testFcn`): `void`
+
+Call this with a no-args function that returns true if the user should be prompted before
+this workspace is closed; e.g. if there is unsaved data.
 
 #### Parameters
 
@@ -256,9 +278,13 @@ ___
 
 `void`
 
+#### Inherited from
+
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[promptBeforeClosing](DefaultWorkspaceProps.md#promptbeforeclosing)
+
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:50](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L50)
+[packages/framework/esm-styleguide/src/workspaces/types.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L35)
 
 ___
 
@@ -266,20 +292,31 @@ ___
 
 ▸ **setTitle**(`title`, `titleNode?`): `void`
 
+Use this to set the workspace title if it needs to be set dynamically.
+
+Workspace titles generally are set in the workspace declaration in the routes.json file. They can also
+be set by the workspace launcher by passing `workspaceTitle` in the `additionalProps`
+parameter of the `launchWorkspace` function. This function is useful when the workspace
+title needs to be set dynamically.
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `title` | `string` |
-| `titleNode?` | `ReactNode` |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `title` | `string` | The title to set. If using titleNode, set this to a human-readable string        which will identify the workspace in notifications and other places. |
+| `titleNode?` | `ReactNode` | A React object to put in the workspace header in place of the title. This        is useful for displaying custom elements in the header. Note that custom header        elements can also be attached to the workspace header extension slots. |
 
 #### Returns
 
 `void`
 
+#### Inherited from
+
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[setTitle](DefaultWorkspaceProps.md#settitle)
+
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L51)
+[packages/framework/esm-styleguide/src/workspaces/types.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L55)
 
 ___
 

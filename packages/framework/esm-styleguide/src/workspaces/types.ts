@@ -1,4 +1,5 @@
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';
+import { type ReactNode } from 'react';
 
 export interface CloseWorkspaceOptions {
   /**
@@ -37,7 +38,21 @@ export interface DefaultWorkspaceProps {
    * will directly close the workspace without any prompt
    */
   closeWorkspaceWithSavedChanges(closeWorkspaceOptions?: CloseWorkspaceOptions): void;
-  handlePostResponse?(): void;
+  /**
+   * Use this to set the workspace title if it needs to be set dynamically.
+   *
+   * Workspace titles generally are set in the workspace declaration in the routes.json file. They can also
+   * be set by the workspace launcher by passing `workspaceTitle` in the `additionalProps`
+   * parameter of the `launchWorkspace` function. This function is useful when the workspace
+   * title needs to be set dynamically.
+   *
+   * @param title The title to set. If using titleNode, set this to a human-readable string
+   *        which will identify the workspace in notifications and other places.
+   * @param titleNode A React object to put in the workspace header in place of the title. This
+   *        is useful for displaying custom elements in the header. Note that custom header
+   *        elements can also be attached to the workspace header extension slots.
+   */
+  setTitle(title: string, titleNode?: ReactNode): void;
 }
 
 export interface WorkspaceWindowSize {
