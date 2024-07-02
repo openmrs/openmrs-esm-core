@@ -3174,6 +3174,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@openmrs/esm-help-menu-app@workspace:packages/apps/esm-help-menu-app":
+  version: 0.0.0-use.local
+  resolution: "@openmrs/esm-help-menu-app@workspace:packages/apps/esm-help-menu-app"
+  dependencies:
+    "@carbon/react": "npm:1.37.0"
+    "@openmrs/esm-framework": "workspace:*"
+    "@openmrs/webpack-config": "workspace:*"
+    fuzzy: "npm:^0.1.3"
+    react: "npm:^18.1.0"
+    react-dom: "npm:^18.1.0"
+    react-i18next: "npm:^11.18.6"
+    webpack: "npm:^5.88.0"
+  peerDependencies:
+    "@openmrs/esm-framework": "*"
+    react: 18.x
+    react-dom: 18.x
+    react-i18next: 11.x
+    rxjs: 6.x
+  languageName: unknown
+  linkType: soft
+
 "@openmrs/esm-implementer-tools-app@workspace:packages/apps/esm-implementer-tools-app":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-implementer-tools-app@workspace:packages/apps/esm-implementer-tools-app"
