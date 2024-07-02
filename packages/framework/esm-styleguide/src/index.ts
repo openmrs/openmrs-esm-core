@@ -8,6 +8,7 @@ import { setupPictograms } from './pictograms/pictogram-registration';
 export * from './breakpoints';
 export * from './spinner';
 export * from './notifications';
+export * from './page-header';
 export * from './toasts';
 export * from './snackbars';
 export * from './modals';
