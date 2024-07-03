@@ -291,8 +291,23 @@ export type WorkspaceDefinition = {
   type: string;
   canHide?: boolean;
   canMaximize?: boolean;
+  /**
+   * Controls the width of the workspace. The default is "narrow" and this should only be
+   * changed to "wider" if the workspace itself has internal navigation, like the form editor.
+   * The width "extra-wide" is for workspaces that contain their own sidebar.
+   */
   width?: 'narrow' | 'wider' | 'extra-wide';
+  /**
+   * Controls whether the workspace has its own sidebar. If true, the sidebar will be displayed when the workspace is open.
+   */
   hasOwnSidebar?: boolean;
+  /**
+   * Sidebars have icons that representing workspaces. The sidebar family is the name of the
+   * sidebar that should contain the icon for this workspace. This is generally only needed if
+   * `hasOwnSidebar` is true, in which case this is the name of that sidebar. If multiple
+   * workspaces have `hasOwnSidebar` set to true and the same family name, then the sidebar
+   * within the workspace area will have icons for each of those workspaces.
+   */
   sidebarFamily?: string;
   preferredWindowSize?: WorkspaceWindowState;
 } & (
