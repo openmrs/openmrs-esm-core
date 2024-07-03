@@ -1,8 +1,9 @@
+/// <reference path="../../../setupTests.ts" />
 import React from 'react';
 import { screen, render, within, renderHook, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
-import { WorkspaceContainer, launchWorkspace, registerWorkspace, useWorkspaces } from '..';
+import { type DefaultWorkspaceProps, WorkspaceContainer, launchWorkspace, registerWorkspace, useWorkspaces } from '..';
 
 jest.mock('./workspace-renderer.component.tsx', () => {
   return {
@@ -30,6 +31,10 @@ jest.mock('@openmrs/esm-translations', () => {
   };
 });
 
+interface ClinicalFormWorkspaceProps extends DefaultWorkspaceProps {
+  patientUuid: string;
+}
+
 describe('WorkspaceContainer in window mode', () => {
   beforeAll(() => {
     registerWorkspace({
@@ -51,7 +56,49 @@ describe('WorkspaceContainer in window mode', () => {
     });
   });
 
-  test('should override title; should reopen hidden workspace window when user relaunches the same workspace window', async () => {
+  test('should override title via additional props and via setTitle', async () => {
+    mockedIsDesktop.mockReturnValue(true);
+    renderWorkspaceWindow();
+    // In this line we are also verifying that the type argument to `launchWorkspace`
+    // behaves as expected, constraining the type of the `additionalProps` argument.
+    act(() =>
+      launchWorkspace<ClinicalFormWorkspaceProps>('clinical-form', {
+        workspaceTitle: 'COVID Admission',
+        patientUuid: '123',
+      }),
+    );
+    const header = screen.getByRole('banner');
+    expect(within(header).getByText('COVID Admission')).toBeInTheDocument();
+    const workspaces = renderHook(() => useWorkspaces());
+    act(() => workspaces.result.current.workspaces[0].setTitle('COVID Discharge'));
+    expect(within(header).getByText('COVID Discharge')).toBeInTheDocument();
+    act(() =>
+      workspaces.result.current.workspaces[0].setTitle(
+        'Space Ghost',
+        <div data-testid="patient-name">Space Ghost</div>,
+      ),
+    );
+    expect(within(header).getByTestId('patient-name')).toBeInTheDocument();
+  });
+
+  test('re-launching workspace should update title, but only if setTitle was not used', async () => {
+    mockedIsDesktop.mockReturnValue(true);
+    renderWorkspaceWindow();
+    // In this line we are also testing that `launchWorkspace` allows arbitrary additional props
+    // when no type argument is provided.
+    act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Admission', foo: 'bar' }));
+    const header = screen.getByRole('banner');
+    expect(within(header).getByText('COVID Admission')).toBeInTheDocument();
+    act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Discharge' }));
+    expect(within(header).getByText('COVID Discharge')).toBeInTheDocument();
+    const workspaces = renderHook(() => useWorkspaces());
+    act(() => workspaces.result.current.workspaces[0].setTitle('Fancy Special Title'));
+    expect(within(header).getByText('Fancy Special Title')).toBeInTheDocument();
+    act(() => launchWorkspace('clinical-form', { workspaceTitle: 'COVID Admission Again' }));
+    expect(within(header).getByText('Fancy Special Title')).toBeInTheDocument();
+  });
+
+  test('should reopen hidden workspace window when user relaunches the same workspace window', async () => {
     const user = userEvent.setup();
     const workspaces = renderHook(() => useWorkspaces());
     mockedIsDesktop.mockReturnValue(true);

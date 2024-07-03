@@ -4,14 +4,20 @@
 
 The default parameters received by all workspaces
 
+## Hierarchy
+
+- **`DefaultWorkspaceProps`**
+
+  ↳ [`OpenWorkspace`](OpenWorkspace.md)
+
 ## Table of contents
 
 ### Methods
 
 - [closeWorkspace](DefaultWorkspaceProps.md#closeworkspace)
 - [closeWorkspaceWithSavedChanges](DefaultWorkspaceProps.md#closeworkspacewithsavedchanges)
-- [handlePostResponse](DefaultWorkspaceProps.md#handlepostresponse)
 - [promptBeforeClosing](DefaultWorkspaceProps.md#promptbeforeclosing)
+- [setTitle](DefaultWorkspaceProps.md#settitle)
 
 ## Methods
 
@@ -37,7 +43,7 @@ closed, given the user forcefully closes the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/types.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L29)
+[packages/framework/esm-styleguide/src/workspaces/types.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L30)
 
 ___
 
@@ -53,20 +59,6 @@ will directly close the workspace without any prompt
 | Name | Type |
 | :------ | :------ |
 | `closeWorkspaceOptions?` | [`CloseWorkspaceOptions`](CloseWorkspaceOptions.md) |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/types.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L39)
-
-___
-
-### handlePostResponse
-
-▸ `Optional` **handlePostResponse**(): `void`
 
 #### Returns
 
@@ -97,4 +89,32 @@ this workspace is closed; e.g. if there is unsaved data.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/types.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L34)
+[packages/framework/esm-styleguide/src/workspaces/types.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L35)
+
+___
+
+### setTitle
+
+▸ **setTitle**(`title`, `titleNode?`): `void`
+
+Use this to set the workspace title if it needs to be set dynamically.
+
+Workspace titles generally are set in the workspace declaration in the routes.json file. They can also
+be set by the workspace launcher by passing `workspaceTitle` in the `additionalProps`
+parameter of the `launchWorkspace` function. This function is useful when the workspace
+title needs to be set dynamically.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `title` | `string` | The title to set. If using titleNode, set this to a human-readable string        which will identify the workspace in notifications and other places. |
+| `titleNode?` | `ReactNode` | A React object to put in the workspace header in place of the title. This        is useful for displaying custom elements in the header. Note that custom header        elements can also be attached to the workspace header extension slots. |
+
+#### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/types.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L55)
