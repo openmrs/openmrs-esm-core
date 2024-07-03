@@ -280,7 +280,11 @@ module.exports = (env, argv = {}) => {
         url: false,
       },
       alias: {
+        'lodash.debounce': 'lodash-es/debounce',
         'lodash.findlast': 'lodash-es/findLast',
+        'lodash.isequal': 'lodash-es/isEqual',
+        'lodash.omit': 'lodash-es/omit',
+        'lodash.throttle': 'lodash-es/throttle',
       },
     },
     plugins: [
@@ -341,7 +345,7 @@ module.exports = (env, argv = {}) => {
             }
           }
 
-          const eager = depName === "dayjs";
+          const eager = depName === 'dayjs';
 
           if (depName === 'swr') {
             // SWR is annoying with Module Federation
