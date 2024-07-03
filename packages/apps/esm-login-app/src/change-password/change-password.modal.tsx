@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, FormProvider, useForm, type SubmitHandler } from 'react-hook-form';
+import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
 import { Button, Form, PasswordInput, InlineLoading, ModalBody, ModalFooter, ModalHeader, Stack } from '@carbon/react';
 import { showSnackbar } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
@@ -39,8 +39,11 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
       path: ['passwordConfirmation'],
     });
 
-  const methods = useForm<z.infer<typeof changePasswordFormSchema>>({
-    mode: 'all',
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(changePasswordFormSchema),
   });
 
@@ -73,69 +76,67 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ close }) => {
   const onError = () => setIsChangingPassword(false);
 
   return (
-    <FormProvider {...methods}>
-      <Form onSubmit={methods.handleSubmit(onSubmit, onError)}>
-        <ModalHeader closeModal={close} title={t('changePassword', 'Change password')} />
-        <ModalBody>
-          <Stack gap={5} className={styles.languageOptionsContainer}>
-            <Controller
-              name="oldPassword"
-              control={methods.control}
-              render={({ field: { onChange, value }, fieldState: { error } }) => (
-                <PasswordInput
-                  id="oldPassword"
-                  invalid={!!error}
-                  invalidText={error?.message}
-                  labelText={t('oldPassword', 'Old password')}
-                  onChange={onChange}
-                  value={value}
-                />
-              )}
-            />
-            <Controller
-              name="newPassword"
-              control={methods.control}
-              render={({ field: { onChange, value }, fieldState: { error } }) => (
-                <PasswordInput
-                  id="newPassword"
-                  invalid={!!error}
-                  invalidText={error?.message}
-                  labelText={t('newPassword', 'New password')}
-                  onChange={onChange}
-                  value={value}
-                />
-              )}
-            />
-            <Controller
-              name="passwordConfirmation"
-              control={methods.control}
-              render={({ field: { onChange, value }, fieldState: { error } }) => (
-                <PasswordInput
-                  id="passwordConfirmation"
-                  invalid={!!error}
-                  invalidText={error?.message}
-                  labelText={t('confirmPassword', 'Confirm new password')}
-                  onChange={onChange}
-                  value={value}
-                />
-              )}
-            />
-          </Stack>
-        </ModalBody>
-        <ModalFooter>
-          <Button kind="secondary" onClick={close}>
-            {t('cancel', 'Cancel')}
-          </Button>
-          <Button className={styles.submitButton} disabled={isChangingPassword} type="submit">
-            {isChangingPassword ? (
-              <InlineLoading description={t('changingLanguage', 'Changing password') + '...'} />
-            ) : (
-              <span>{t('change', 'Change')}</span>
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <ModalHeader closeModal={close} title={t('changePassword', 'Change password')} />
+      <ModalBody>
+        <Stack gap={5} className={styles.languageOptionsContainer}>
+          <Controller
+            name="oldPassword"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <PasswordInput
+                id="oldPassword"
+                invalid={!!errors?.oldPassword}
+                invalidText={errors?.oldPassword?.message}
+                labelText={t('oldPassword', 'Old password')}
+                onChange={onChange}
+                value={value}
+              />
             )}
-          </Button>
-        </ModalFooter>
-      </Form>
-    </FormProvider>
+          />
+          <Controller
+            name="newPassword"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <PasswordInput
+                id="newPassword"
+                invalid={!!errors?.newPassword}
+                invalidText={errors?.newPassword?.message}
+                labelText={t('newPassword', 'New password')}
+                onChange={onChange}
+                value={value}
+              />
+            )}
+          />
+          <Controller
+            name="passwordConfirmation"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <PasswordInput
+                id="passwordConfirmation"
+                invalid={!!errors?.passwordConfirmation}
+                invalidText={errors?.passwordConfirmation?.message}
+                labelText={t('confirmPassword', 'Confirm new password')}
+                onChange={onChange}
+                value={value}
+              />
+            )}
+          />
+        </Stack>
+      </ModalBody>
+      <ModalFooter>
+        <Button kind="secondary" onClick={close}>
+          {t('cancel', 'Cancel')}
+        </Button>
+        <Button className={styles.submitButton} disabled={isChangingPassword} type="submit">
+          {isChangingPassword ? (
+            <InlineLoading description={t('changingLanguage', 'Changing password') + '...'} />
+          ) : (
+            <span>{t('change', 'Change')}</span>
+          )}
+        </Button>
+      </ModalFooter>
+    </Form>
   );
 };
 
