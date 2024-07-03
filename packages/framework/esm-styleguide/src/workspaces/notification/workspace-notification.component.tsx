@@ -32,7 +32,7 @@ export function WorkspaceNotification({ contextKey }: WorkspaceNotificationProps
     const isValidContextKey = regex.test(window.location.pathname);
     if (!isValidContextKey) {
       reportError(
-        `WorkspaceOverlay or WorkspaceWindow has provided an invalid context key: "${contextKey}". The context key must be part of the URL path, with no initial or trailing slash.`,
+        `WorkspaceContainer has provided an invalid context key: "${contextKey}". The context key must be part of the URL path, with no initial or trailing slash.`,
       );
     }
   }, []);
