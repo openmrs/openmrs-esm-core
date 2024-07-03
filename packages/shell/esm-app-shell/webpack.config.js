@@ -206,6 +206,9 @@ module.exports = (env, argv = {}) => {
       ],
       static: ['src/assets'],
     },
+    watchOptions: {
+      ignored: ['.git', 'test-results'],
+    },
     mode,
     devtool: isProd ? 'hidden-nosources-source-map' : 'eval-source-map',
     module: {
@@ -259,6 +262,12 @@ module.exports = (env, argv = {}) => {
           ],
         },
       ],
+    },
+    optimization: {
+      splitChunks: {
+        maxAsyncRequests: 3,
+        maxInitialRequests: 1,
+      },
     },
     resolve: {
       mainFields: ['module', 'main'],
@@ -332,6 +341,8 @@ module.exports = (env, argv = {}) => {
             }
           }
 
+          const eager = depName === "dayjs";
+
           if (depName === 'swr') {
             // SWR is annoying with Module Federation
             // See: https://github.com/webpack/webpack/issues/16125 and https://github.com/vercel/swr/issues/2356
@@ -339,7 +350,7 @@ module.exports = (env, argv = {}) => {
               requiredVersion: version,
               strictVersion: false,
               singleton: true,
-              eager: true,
+              eager: false,
               import: 'swr/',
               shareKey: 'swr/',
               shareScope: 'default',
@@ -350,7 +361,7 @@ module.exports = (env, argv = {}) => {
               requiredVersion: version ?? false,
               strictVersion: false,
               singleton: true,
-              eager: true,
+              eager: eager,
               import: depName,
               shareKey: depName,
               shareScope: 'default',

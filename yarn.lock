@@ -3072,6 +3072,7 @@ __metadata:
     react-i18next: "npm:^11.18.6"
     webpack: "npm:^5.88.0"
   peerDependencies:
+    "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
     react: 18.x
     react-dom: 18.x
@@ -3199,6 +3200,7 @@ __metadata:
     react-i18next: "npm:^11.18.6"
     webpack: "npm:^5.88.0"
   peerDependencies:
+    "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
     react: 18.x
     react-dom: 18.x
@@ -3224,6 +3226,7 @@ __metadata:
     swr: "npm:^2.2.2"
     webpack: "npm:^5.88.0"
   peerDependencies:
+    "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
     react: 18.x
     react-dom: 18.x
@@ -3250,6 +3253,7 @@ __metadata:
     swr: "npm:^2.2.2"
     webpack: "npm:^5.88.0"
   peerDependencies:
+    "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
     react: 18.x
     react-dom: 18.x
@@ -3290,6 +3294,7 @@ __metadata:
     rxjs: "npm:^6.5.3"
     swr: "npm:^2.2.2"
   peerDependencies:
+    "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
     react: 18.x
     react-dom: 18.x
@@ -3337,6 +3342,7 @@ __metadata:
     rxjs: "npm:^6.5.3"
     webpack: "npm:^5.88.0"
   peerDependencies:
+    "@carbon/react": 1.x
     "@openmrs/esm-framework": "*"
     react: 18.x
     react-dom: 18.x
