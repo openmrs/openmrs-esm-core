@@ -17,7 +17,7 @@ export interface AssembleArgs {
   target: string;
   mode: string;
   config: Array<string>;
-  myConfigs: Array<string>;
+  configFiles: Array<string>;
   registry?: string;
   hashImportmap: boolean;
   fresh: boolean;
@@ -44,7 +44,7 @@ interface AssembleConfig {
 async function readConfig(
   mode: string,
   configs: Array<string>,
-  myConfigs: Array<string>,
+  configFiles: Array<string>,
   fetchOptions: npmRegistryFetch.Options,
 ): Promise<AssembleConfig> {
   switch (mode) {
@@ -103,20 +103,20 @@ async function readConfig(
         return config;
       });
     }
-    case 'myConfigs':{
-      if (!myConfigs.length) {
+    case 'configFiles':{
+      if (!configFiles.length) {
         throw new Error('Please specify config files using the --config-file option.');
       }
   
       const results: {
-        myConfigs: Array<AssembleConfig>;
+        configFiles: Array<AssembleConfig>;
         errors: Array<Error>;
       } = {
-        myConfigs: [],
+        configFiles: [],
         errors: [],
       };
   
-      for (const config of myConfigs) {
+      for (const config of configFiles) {
         if (!existsSync(config)) {
           results.errors.push(new Error(`Could not find the config file "${config}".`));
           continue;
@@ -124,7 +124,7 @@ async function readConfig(
   
         logInfo(`Reading configuration ${config} ...`);
   
-        results.myConfigs.push({
+        results.configFiles.push({
           ...JSON.parse(await readFile(config, 'utf8')),
         });
       }
@@ -259,7 +259,7 @@ async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string,
 
 export async function runAssemble(args: AssembleArgs) {
   const npmConf = getNpmRegistryConfiguration(args.registry);
-  const config = await readConfig(args.mode, args.config, args.myConfigs, npmConf);
+  const config = await readConfig(args.mode, args.config, args.configFiles, npmConf);
 
   const importmap = {
     imports: {},
@@ -332,8 +332,8 @@ export async function runAssemble(args: AssembleArgs) {
     await writeFile(resolve(args.target, 'spa-assemble-config.json'), JSON.stringify(versionManifest), 'utf8');
   }
 
-  if(args.mode === 'myConfigs'){
-    await writeFile(resolve(args.target, 'My-Merged-configs.json'), JSON.stringify(config), 'utf8');
+  if(args.mode === 'configFiles'){
+    await writeFile(resolve(args.target, 'spa-config.jsons'), JSON.stringify(config), 'utf8');
   }
 
   logInfo(`Finished assembling frontend distribution`);

@@ -289,10 +289,10 @@ yargs.command(
         type: 'boolean',
       })
       .option('mode', {
-        choices: ['config', 'configFile', 'survey'],
+        choices: ['config', 'configFiles', 'survey'],
         default: 'survey',
         description:
-          'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `configFile packages up configurations from file specified cia `--config-file`. survey` starts an interactive command-line survey.',
+          'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `configFiles` packages up configurations from file specified via `--config-file`. `survey` starts an interactive command-line survey.',
         type: 'string',
       }),
   (args) => runCommand('runAssemble', args),
