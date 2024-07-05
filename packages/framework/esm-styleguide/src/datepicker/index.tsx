@@ -11,7 +11,14 @@ import React, {
   useRef,
 } from 'react';
 import classNames, { type Argument } from 'classnames';
-import { createCalendar, CalendarDate, CalendarDateTime, ZonedDateTime } from '@internationalized/date';
+import {
+  createCalendar,
+  CalendarDate,
+  CalendarDateTime,
+  ZonedDateTime,
+  today,
+  getLocalTimeZone,
+} from '@internationalized/date';
 import { I18nProvider, type DateValue, useLocale, useDateField } from 'react-aria';
 import { useDateFieldState } from 'react-stately';
 import {
@@ -38,6 +45,7 @@ import {
   InputContext,
   Provider,
   GroupContext,
+  FieldError,
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
@@ -62,46 +70,32 @@ export type DateInputValue =
 export interface OpenmrsDatePickerProps
   // omits here for features we have custom implementations of
   extends Omit<DatePickerProps<CalendarDate>, 'className' | 'defaultValue' | 'value'> {
-  /**
-   * Any CSS classes to add to the outer div of the date picker
-   */
+  /** Any CSS classes to add to the outer div of the date picker */
   className?: Argument;
-  /**
-   * The default value (uncontrolled)
-   */
+  /** The default value (uncontrolled) */
   defaultValue?: DateInputValue;
+  /** Whether the input value is invalid. */
+  invalid?: boolean;
+  /** Text to show if the input is invalid e.g. an error message */
+  invalidText?: string;
   /**
    * The label for this DatePicker element
    * @deprecated Use labelText instead
    */
   label?: string | ReactElement;
-  /**
-   * The label for this DatePicker element
-   */
+  /** The label for this DatePicker element. */
   labelText?: string | ReactElement;
-  /**
-   * 'true' to use the light version.
-   */
+  /** 'true' to use the light version. */
   light?: boolean;
-  /**
-   * The latest date it is possible to select
-   */
+  /** The latest date it is possible to select */
   maxDate?: DateInputValue;
-  /**
-   * The earliest date it is possible to select
-   */
+  /** The earliest date it is possible to select */
   minDate?: DateInputValue;
-  /**
-   * Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option.
-   */
+  /** Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option */
   size?: 'sm' | 'md' | 'lg';
-  /**
-   * 'true' to use the short version.
-   */
+  /** 'true' to use the short version. */
   short?: boolean;
-  /**
-   * The value (controlled)
-   */
+  /** The value (controlled) */
   value?: DateInputValue;
 }
 
@@ -196,13 +190,10 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
   },
 );
 
-const DatePickerIcon = forwardRef<Element>(function DatePickerIcon(props, ref) {
+const DatePickerIcon = forwardRef<SVGSVGElement>(function DatePickerIcon(props, ref) {
   const state = useContext(DatePickerStateContext);
-  return state.isInvalid ? (
-    <WarningIcon className="cds--date-picker__icon--invalid" size={16} />
-  ) : (
-    <CalendarIcon size={16} />
-  );
+
+  return state.isInvalid ? <WarningIcon ref={ref} size={16} /> : <CalendarIcon ref={ref} size={16} />;
 });
 
 // The main reason for this component is to allow us to click inside the date field and trigger the popover
@@ -247,11 +238,7 @@ function DatePickerLabel({ labelText }: Pick<OpenmrsDatePickerProps, 'labelText'
     return null;
   }
 
-  if (typeof labelText === 'string' || typeof labelText === 'number') {
-    return <Label className="cds--label">{labelText}</Label>;
-  }
-
-  return cloneElement(labelText, { className: classNames(labelText.props?.className, 'cds--label') });
+  return <Label className="cds--label">{labelText}</Label>;
 }
 
 /**
@@ -262,6 +249,9 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const {
       className,
       defaultValue: rawDefaultValue,
+      invalid,
+      invalidText,
+      isInvalid: isInvalidRaw,
       label,
       labelText,
       light,
@@ -277,8 +267,10 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const value = useMemo(() => dateToInternationalizedDate(rawValue), [rawValue]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate), [rawMaxDate]);
     const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate), [rawMinDate]);
+    const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
 
     const locale = getLocale();
+    const today_ = today(getLocalTimeZone());
 
     const localeWithCalendar = useMemo(() => {
       const calendar = getDefaultCalendar(locale);
@@ -298,6 +290,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
               ['cds--date-picker--light']: light,
             })}
             defaultValue={defaultValue}
+            isInvalid={isInvalid}
             maxValue={maxDate}
             minValue={minDate}
             value={value}
@@ -324,6 +317,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                   <DatePickerIcon />
                 </Button>
               </Group>
+              {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
             </div>
             <Popover className={styles.popover} placement="bottom" offset={1}>
               <Dialog className={styles.dialog}>
@@ -338,7 +332,14 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
                     </Button>
                   </header>
                   <CalendarGrid className={styles.calendarGrid}>
-                    {(date) => <CalendarCell className="cds--date-picker__day" date={date} />}
+                    {(date) => (
+                      <CalendarCell
+                        className={classNames('cds--date-picker__day', {
+                          [styles.today]: today_.compare(date) === 0,
+                        })}
+                        date={date}
+                      />
+                    )}
                   </CalendarGrid>
                 </Calendar>
               </Dialog>
