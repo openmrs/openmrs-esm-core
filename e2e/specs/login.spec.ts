@@ -48,6 +48,6 @@ test('Login as Admin user', async ({ page }) => {
   });
 
   await test.step('And I should see the logout button', async () => {
-    await expect(userPanel.getByRole('button', { name: /logout/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /logout/i })).toBeVisible();
   });
 });
