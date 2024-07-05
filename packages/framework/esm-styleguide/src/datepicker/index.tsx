@@ -70,50 +70,32 @@ export type DateInputValue =
 export interface OpenmrsDatePickerProps
   // omits here for features we have custom implementations of
   extends Omit<DatePickerProps<CalendarDate>, 'className' | 'defaultValue' | 'value'> {
-  /**
-   * Any CSS classes to add to the outer div of the date picker
-   */
+  /** Any CSS classes to add to the outer div of the date picker */
   className?: Argument;
-  /**
-   * The default value (uncontrolled)
-   */
+  /** The default value (uncontrolled) */
   defaultValue?: DateInputValue;
-  /**
-   * Text to show if the input is invalid e.g. an error message
-   */
+  /** Whether the input value is invalid. */
+  invalid?: boolean;
+  /** Text to show if the input is invalid e.g. an error message */
   invalidText?: string;
   /**
    * The label for this DatePicker element
    * @deprecated Use labelText instead
    */
   label?: string | ReactElement;
-  /**
-   * The label for this DatePicker element.
-   */
+  /** The label for this DatePicker element. */
   labelText?: string | ReactElement;
-  /**
-   * 'true' to use the light version.
-   */
+  /** 'true' to use the light version. */
   light?: boolean;
-  /**
-   * The latest date it is possible to select
-   */
+  /** The latest date it is possible to select */
   maxDate?: DateInputValue;
-  /**
-   * The earliest date it is possible to select
-   */
+  /** The earliest date it is possible to select */
   minDate?: DateInputValue;
-  /**
-   * Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option.
-   */
+  /** Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option */
   size?: 'sm' | 'md' | 'lg';
-  /**
-   * 'true' to use the short version.
-   */
+  /** 'true' to use the short version. */
   short?: boolean;
-  /**
-   * The value (controlled)
-   */
+  /** The value (controlled) */
   value?: DateInputValue;
 }
 
@@ -267,8 +249,9 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const {
       className,
       defaultValue: rawDefaultValue,
+      invalid,
       invalidText,
-      isInvalid,
+      isInvalid: isInvalidRaw,
       label,
       labelText,
       light,
@@ -284,6 +267,7 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const value = useMemo(() => dateToInternationalizedDate(rawValue), [rawValue]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate), [rawMaxDate]);
     const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate), [rawMinDate]);
+    const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
 
     const locale = getLocale();
     const today_ = today(getLocalTimeZone());
