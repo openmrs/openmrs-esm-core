@@ -6,6 +6,7 @@
 @use '@carbon/styles/scss/utilities/box-shadow';
 @use '@carbon/styles/scss/utilities/component-reset';
 @use '@carbon/styles/scss/utilities/focus-outline' as focus;
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .calendarGrid {
   width: 17rem;
@@ -34,8 +35,13 @@
       outline: unset;
     }
 
-    &:hover:not(:has([aria-disabled='true'])) {
+    &:hover:not(:has([aria-disabled], [data-selected])) {
       background-color: theme.$layer-hover;
+    }
+
+    &:has([data-selected]) {
+      background-color: $color-blue-60-2;
+      color: $ui-background;
     }
 
     [aria-disabled] {
@@ -66,6 +72,10 @@
     margin: auto;
     text-align: center;
   }
+}
+
+[data-invalid] > .flatButton > svg {
+  --omrs-icon-fill: #{theme.$support-error};
 }
 
 .flatButtonMd {
@@ -289,5 +299,41 @@
         right: 0;
       }
     }
+  }
+}
+
+.invalidText {
+  color: theme.$text-error !important;
+  font-size: 0.75rem;
+  font-weight: 400 !important;
+  margin: spacing.$spacing-02 0 0;
+  overflow: hidden;
+}
+
+.today:not([data-selected]) {
+  position: relative;
+  color: $color-blue-60-2;
+  font-weight: 600;
+  font-size: var(--cds-body-compact-01-font-size, 0.875rem);
+  line-height: var(--cds-body-compact-01-line-height, 1.28572);
+  letter-spacing: var(--cds-body-compact-01-letter-spacing, 0.16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: 2.5rem;
+  cursor: pointer;
+  inline-size: 2.5rem;
+
+  &::after {
+    position: absolute;
+    display: block;
+    background-color: var(--cds-link-primary, #0f62fe);
+    block-size: 0.25rem;
+    content: '';
+    inline-size: 0.25rem;
+    inset-block-end: 0.4375rem;
+    inset-inline-start: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
   }
 }

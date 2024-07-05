@@ -601,7 +601,9 @@ export const Icon = memo(
 
     useEffect(() => {
       if (iconRef.current) {
-        iconRef.current.style.setProperty('--omrs-icon-fill', fill);
+        if (fill !== 'currentColor') {
+          iconRef.current.style.setProperty('--omrs-icon-fill', fill);
+        }
       }
     }, []);
 
