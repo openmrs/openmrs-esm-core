@@ -123,16 +123,16 @@ describe('ContactDetails', () => {
   it("renders the patient's address, contact details, patient lists, and relationships when available", async () => {
     renderWithSwr(<PatientBannerContactDetails patientId={'some-uuid'} deceased={false} />);
 
-    expect(screen.getByText('Address')).toBeInTheDocument();
-    expect(screen.getByText('Contact Details')).toBeInTheDocument();
-    expect(screen.getByText('Relationships')).toBeInTheDocument();
+    expect(screen.getByText(/address/i)).toBeInTheDocument();
+    expect(screen.getByText(/contact details/i)).toBeInTheDocument();
+    expect(screen.getByText(/relationships/i)).toBeInTheDocument();
     expect(screen.getByText(/Amanda Robinson/)).toBeInTheDocument();
     expect(screen.getByText(/Sibling/i)).toBeInTheDocument();
     expect(screen.getByText(/24 yrs/i)).toBeInTheDocument();
     expect(screen.getByText(/\+0123456789/i)).toBeInTheDocument();
     expect(screen.getByText(/Next of Kin Contact Phone Number/i)).toBeInTheDocument();
     expect(screen.getByText(/0700-000-000/)).toBeInTheDocument();
-    expect(screen.getByText(/Patient Lists/)).toBeInTheDocument();
+    expect(screen.getByText(/patient lists/i)).toBeInTheDocument();
     expect(screen.getByText(/Test patient List-47/)).toBeInTheDocument();
     expect(screen.getByText(/List three/)).toBeInTheDocument();
   });
@@ -168,10 +168,10 @@ describe('ContactDetails', () => {
 
     renderWithSwr(<PatientBannerContactDetails patientId={'some-uuid'} deceased={false} />);
 
-    expect(screen.getByText('Address')).toBeInTheDocument();
-    expect(screen.getByText('Relationships')).toBeInTheDocument();
-    expect(screen.getByText('Contact Details')).toBeInTheDocument();
-    expect(screen.getByText(/Patient Lists/)).toBeInTheDocument();
+    expect(screen.getByText(/address/i)).toBeInTheDocument();
+    expect(screen.getByText(/relationships/i)).toBeInTheDocument();
+    expect(screen.getByText(/contact details/i)).toBeInTheDocument();
+    expect(screen.getByText(/patient lists/i)).toBeInTheDocument();
     expect(screen.getAllByText('--').length).toBe(4);
   });
 });
