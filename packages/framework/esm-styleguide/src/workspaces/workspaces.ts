@@ -462,7 +462,7 @@ export function showWorkspacePrompts(
   switch (promptType) {
     case 'closing-workspace': {
       prompt = {
-        title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved Changes'),
+        title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
         body: getCoreTranslation(
           'unsavedChangesInOpenedWorkspace',
           `You have unsaved changes in the opened workspace. Do you want to discard these changes?`,
@@ -501,7 +501,7 @@ export function showWorkspacePrompts(
     }
     case 'closing-workspace-launching-new-workspace': {
       prompt = {
-        title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved Changes'),
+        title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
         body: getCoreTranslation(
           'unsavedChangesInWorkspace',
           'There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',

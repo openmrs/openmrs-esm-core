@@ -1,4 +1,4 @@
-/** Please keep these alphebetized */
+/** Please keep these alphabetized */
 
 const addressFields = {
   address1: 'Address line 1',
@@ -25,12 +25,12 @@ const workspaceTranslations = {
   hide: 'Hide',
   maximize: 'Maximize',
   minimize: 'Minimize',
-  openAnyway: 'Open Anyway',
+  openAnyway: 'Open anyway',
   unsavedChangesInOpenedWorkspace: `You have unsaved changes in the opened workspace. Do you want to discard these changes?`,
   unsavedChangesInWorkspace:
     'There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
-  unsavedChangesTitleText: 'Unsaved Changes',
-  workspaceHeader: 'Workspace Header',
+  unsavedChangesTitleText: 'Unsaved changes',
+  workspaceHeader: 'Workspace header',
 };
 
 export const coreTranslations = {
@@ -44,8 +44,7 @@ export const coreTranslations = {
   close: 'Close',
   confirm: 'Confirm',
   contactAdministratorIfIssuePersists: 'Contact your system administrator if the problem persists.',
-  contactDetails: 'Contact Details',
-  dob: 'DOB',
+  contactDetails: 'Contact details',
   error: 'Error',
   errorCopy:
     'Sorry, there was a problem displaying this information. You can try to reload this page, or contact the site administrator and quote the error code above.',
@@ -53,9 +52,8 @@ export const coreTranslations = {
   hideDetails: 'Hide details',
   loading: 'Loading',
   male: 'Male',
-  other: 'Other',
-  patientIdentifierSticker: 'Patient identifier sticker',
-  patientLists: 'Patient Lists',
+  other: 'Other',  patientIdentifierSticker: 'Patient identifier sticker',
+  patientLists: 'Patient lists',
   print: 'Print',
   printError: 'Print error',
   printErrorExplainer: 'An error occurred in {{errorLocation}}',
