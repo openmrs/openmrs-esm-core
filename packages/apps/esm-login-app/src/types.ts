@@ -14,3 +14,21 @@ export interface LocationResponse {
   id: string;
   entry: Array<FHIRLocationResource>;
 }
+
+export interface LocationEntry {
+  resource: Resource;
+}
+
+export interface Resource {
+  id: string;
+  name: string;
+  resourceType: string;
+  status: 'active' | 'inactive';
+  meta?: {
+    tag?: Array<{
+      code: string;
+      display: string;
+      system: string;
+    }>;
+  };
+}

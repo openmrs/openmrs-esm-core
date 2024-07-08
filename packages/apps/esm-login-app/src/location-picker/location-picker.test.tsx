@@ -7,17 +7,15 @@ import {
   setSessionLocation,
   setUserProperties,
   showSnackbar,
-  LocationPicker,
 } from '@openmrs/esm-framework';
 import {
   mockLoginLocations,
-  mockSoleLoginLocation,
   validatingLocationFailureResponse,
   validatingLocationSuccessResponse,
 } from '../../__mocks__/locations.mock';
 import { mockConfig } from '../../__mocks__/config.mock';
 import renderWithRouter from '../test-helpers/render-with-router';
-import LocationPickerView from './location-picker.component';
+import LocationPickerView from './location-picker-view.component';
 
 const fistLocation = {
   uuid: 'uuid_1',
@@ -34,24 +32,16 @@ const userUuid = '90bd24b3-e700-46b0-a5ef-c85afdfededd';
 
 const mockedOpenmrsFetch = openmrsFetch as jest.Mock;
 const mockedUseConfig = useConfig as jest.Mock;
-const mockUseSession = useSession as jest.Mock;
+const mockedUseSession = useSession as jest.Mock;
 
 mockedUseConfig.mockReturnValue(mockConfig);
-mockUseSession.mockReturnValue({
+mockedUseSession.mockReturnValue({
   user: {
     display: 'Testy McTesterface',
-    uuid: userUuid,
+    uuid: '90bd24b3-e700-46b0-a5ef-c85afdfededd',
     userProperties: {},
   },
 });
-
-jest.mock('@openmrs/esm-framework', () => ({
-  ...jest.requireActual('@openmrs/esm-framework'),
-  setSessionLocation: jest.fn().mockResolvedValue({}),
-  setUserProperties: jest.fn().mockResolvedValue({}),
-  navigate: jest.fn(),
-  showSnackbar: jest.fn(),
-}));
 
 describe('LocationPickerView', () => {
   beforeEach(() => {
@@ -135,7 +125,7 @@ describe('LocationPickerView', () => {
 
     it('should redirect to home if user preference in the userProperties is present and the location preference is valid', async () => {
       const validLocationUuid = fistLocation.uuid;
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
@@ -160,7 +150,7 @@ describe('LocationPickerView', () => {
     });
 
     it('should not redirect to home if user preference in the userProperties is present and the location preference is invalid', async () => {
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
@@ -183,7 +173,7 @@ describe('LocationPickerView', () => {
 
   describe('Testing updating user preference workflow', () => {
     it('should not redirect if the login location page has a searchParam `update`', async () => {
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
@@ -206,7 +196,7 @@ describe('LocationPickerView', () => {
     it('should remove the saved preference if the login location page has a searchParam `update=true` and when submitting the user unchecks the checkbox ', async () => {
       const user = userEvent.setup();
 
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
@@ -250,7 +240,7 @@ describe('LocationPickerView', () => {
     it('should update the user preference with new selection', async () => {
       const user = userEvent.setup();
 
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,
@@ -291,7 +281,7 @@ describe('LocationPickerView', () => {
     it('should not update the user preference with same selection', async () => {
       const user = userEvent.setup();
 
-      mockUseSession.mockReturnValue({
+      mockedUseSession.mockReturnValue({
         user: {
           display: 'Testy McTesterface',
           uuid: userUuid,

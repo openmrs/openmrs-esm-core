@@ -8,7 +8,7 @@ import {
   useConfig,
   useConnectivity,
   useSession,
-  LocationPicker as LocationPickerComponent,
+  LocationPicker,
   getCoreTranslation,
 } from '@openmrs/esm-framework';
 import type { LoginReferrer } from '../login/login.component';
@@ -133,7 +133,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
               )}
             </p>
           </div>
-          <LocationPickerComponent
+          <LocationPicker
             selectedLocationUuid={activeLocation}
             defaultLocationUuid={userProperties.defaultLocation}
             locationTag={chooseLocation.useLoginLocationTag && 'Login Location'}

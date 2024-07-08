@@ -91,34 +91,7 @@ export const closeWorkspace = jest.fn();
 export const launchWorkspace = jest.fn();
 export const navigateAndLaunchWorkspace = jest.fn();
 export const useWorkspaces = jest.fn();
-export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
-  const locations = [
-    {
-      uuid: 'uuid_1',
-      name: 'location_1',
-    },
-    {
-      uuid: 'uuid_2',
-      name: 'location_2',
-    },
-  ];
-  return (
-    <div>
-      {locations.map((location) => (
-        <label key={location.uuid}>
-          <input
-            type="radio"
-            name="location"
-            value={location.uuid}
-            checked={location.uuid === selectedLocationUuid}
-            onChange={() => onChange(location.uuid)}
-          />
-          {location.name}
-        </label>
-      ))}
-    </div>
-  );
-});
+
 /* esm-utils */
 export {
   getDefaultsFromConfigSchema,

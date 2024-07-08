@@ -2,7 +2,7 @@ import { defineConfigSchema, getAsyncLifecycle, getSyncLifecycle } from '@openmr
 import { configSchema } from './config-schema';
 import changeLocationLinkComponent from './change-location-link/change-location-link.extension';
 import changePasswordLinkComponent from './change-password/change-password-link.extension';
-import locationPickerComponent from './location-picker/location-picker.component';
+import locationPickerComponent from './location-picker/location-picker-view.component';
 import logoutButtonComponent from './logout/logout.extension';
 import rootComponent from './root.component';
 

@@ -25,3 +25,4 @@ export const deleteAttachmentPermanently = jest.fn();
 export const clearCurrentUser = jest.fn();
 export const refetchCurrentUser = jest.fn();
 export const setUserLanguage = jest.fn();
+export const setUserProperties = jest.fn();
