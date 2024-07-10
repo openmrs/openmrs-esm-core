@@ -12,12 +12,14 @@ import React, {
 } from 'react';
 import classNames, { type Argument } from 'classnames';
 import {
-  createCalendar,
+  type Calendar as CalendarType,
   CalendarDate,
   CalendarDateTime,
   ZonedDateTime,
-  today,
+  createCalendar,
   getLocalTimeZone,
+  toCalendar,
+  today,
 } from '@internationalized/date';
 import { I18nProvider, type DateValue, useLocale, useDateField } from 'react-aria';
 import { useDateFieldState } from 'react-stately';
@@ -108,20 +110,19 @@ const defaultProps: OpenmrsDatePickerProps = {
  * Function to convert relatively arbitrary date values into a React Aria `DateValue`,
  * normally a `CalendarDate`, which represents a date without time or timezone.
  */
-function dateToInternationalizedDate(date: DateInputValue, locale: string | Intl.Locale): DateValue | undefined {
+function dateToInternationalizedDate(date: DateInputValue, calendar: CalendarType | undefined): DateValue | undefined {
   if (!date) {
     return undefined;
   }
 
-  let localeDateValue: CalendarDate | CalendarDateTime | ZonedDateTime;
   if (date instanceof CalendarDate || date instanceof CalendarDateTime || date instanceof ZonedDateTime) {
-    localeDateValue = date;
+    return date;
   } else {
     const date_ = dayjs(date).toDate();
-    localeDateValue = new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate());
+    return calendar
+      ? new CalendarDate(calendar, date_.getFullYear(), date_.getMonth() + 1, date_.getDate())
+      : new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate());
   }
-
-  return convertToLocaleCalendar(localeDateValue, locale);
 }
 
 function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
@@ -267,22 +268,22 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     } = Object.assign({}, defaultProps, props);
 
     const locale = getLocale();
-
-    const defaultValue = useMemo(() => dateToInternationalizedDate(rawDefaultValue, locale), [rawDefaultValue]);
-    const value = useMemo(() => dateToInternationalizedDate(rawValue, locale), [rawValue]);
-    const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, locale), [rawMaxDate]);
-    const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate, locale), [rawMinDate]);
-    const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
-    const today_ = convertToLocaleCalendar(today(getLocalTimeZone()), locale);
-
-    const localeWithCalendar = useMemo(() => {
-      const calendar = getDefaultCalendar(locale);
-
-      if (typeof calendar === 'undefined') {
-        return locale;
-      }
-      return `${locale}-u-ca-${calendar}`;
+    const calendar = useMemo(() => {
+      const cal = getDefaultCalendar(locale);
+      return typeof cal !== 'undefined' ? createCalendar(cal) : undefined;
     }, [locale]);
+
+    const localeWithCalendar = useMemo(
+      () => (typeof calendar === 'undefined' ? locale : `${locale}-u-ca-${calendar.identifier}`),
+      [calendar, locale],
+    );
+
+    const defaultValue = useMemo(() => dateToInternationalizedDate(rawDefaultValue, calendar), [rawDefaultValue]);
+    const value = useMemo(() => dateToInternationalizedDate(rawValue, calendar), [rawValue]);
+    const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar), [rawMaxDate]);
+    const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate, calendar), [rawMinDate]);
+    const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
+    const today_ = calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone());
 
     return (
       <I18nProvider locale={localeWithCalendar}>
