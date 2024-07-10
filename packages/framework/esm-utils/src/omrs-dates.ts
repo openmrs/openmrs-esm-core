@@ -3,7 +3,13 @@
  * @category Date and Time
  */
 import type { i18n } from 'i18next';
-import { createCalendar, toCalendar, type CalendarDate } from '@internationalized/date';
+import {
+  type CalendarDateTime,
+  type ZonedDateTime,
+  createCalendar,
+  toCalendar,
+  type CalendarDate,
+} from '@internationalized/date';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import isToday from 'dayjs/plugin/isToday';
@@ -395,7 +401,10 @@ export function getLocale() {
  * Converts a calendar date to the equivalent locale calendar date.
  * @returns CalendarDate
  */
-export function convertToLocaleCalendar(date: CalendarDate, locale: string | Intl.Locale) {
+export function convertToLocaleCalendar(
+  date: CalendarDate | CalendarDateTime | ZonedDateTime,
+  locale: string | Intl.Locale,
+) {
   let locale_ = typeof locale === 'string' ? new Intl.Locale(locale) : locale;
   const localCalendarName = getDefaultCalendar(locale_);
 
