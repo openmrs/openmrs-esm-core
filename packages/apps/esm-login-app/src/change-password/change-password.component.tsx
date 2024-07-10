@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { type TFunction, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
 import { Button, Form, PasswordInput, InlineLoading, Tile } from '@carbon/react';
-import { interpolateUrl, showSnackbar, useConfig } from '@openmrs/esm-framework';
-import { type ConfigSchema } from '../config-schema';
+import { showSnackbar } from '@openmrs/esm-framework';
 import { changeUserPassword } from './change-password.resource';
+import Logo from '../logo.component';
 import styles from './change-password.scss';
 
 const ChangePassword: React.FC = () => {
@@ -68,12 +68,12 @@ const ChangePassword: React.FC = () => {
       });
   }, []);
 
-  const onError = () => setIsChangingPassword(false);
+  const onError = useCallback(() => setIsChangingPassword(false), []);
 
   return (
     <div className={styles.container}>
       <Tile className={styles.changePasswordCard}>
-        <div className={styles.center}>
+        <div className={styles.alignCenter}>
           <Logo t={t} />
         </div>
         <Form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -129,22 +129,6 @@ const ChangePassword: React.FC = () => {
         </Form>
       </Tile>
     </div>
-  );
-};
-
-const Logo: React.FC<{ t: TFunction }> = ({ t }) => {
-  const { logo } = useConfig<ConfigSchema>();
-  return logo.src ? (
-    <img
-      alt={logo.alt ? t(logo.alt) : t('openmrsLogo', 'OpenMRS logo')}
-      className={styles.logoImg}
-      src={interpolateUrl(logo.src)}
-    />
-  ) : (
-    <svg role="img" className={styles.logo}>
-      <title>{t('openmrsLogo', 'OpenMRS logo')}</title>
-      <use xlinkHref="#omrs-logo-full-color"></use>
-    </svg>
   );
 };
 

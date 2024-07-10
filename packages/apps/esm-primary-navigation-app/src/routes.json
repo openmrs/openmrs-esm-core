@@ -6,7 +6,7 @@
   "pages": [
     {
       "component": "root",
-      "routeRegex": "^(?!login/?)",
+      "routeRegex": "^(?!(?:login|change-password)/?)",
       "online": true,
       "offline": true,
       "order": 0
