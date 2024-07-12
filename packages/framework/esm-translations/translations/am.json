@@ -44,6 +44,6 @@
   "stateProvince": "State",
   "unknown": "Unknown",
   "unsavedChangesInWorkspace": "There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.",
-  "unsavedChangesTitleText": "Unsaved Changes",
-  "workspaceHeader": "Workspace Header"
+  "unsavedChangesTitleText": "Unsaved changes",
+  "workspaceHeader": "Workspace header"
 }

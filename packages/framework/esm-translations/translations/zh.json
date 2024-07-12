@@ -44,6 +44,6 @@
   "stateProvince": "省份",
   "unknown": "未知",
   "unsavedChangesInWorkspace": "{{workspaceName}} 中有未保存的更改。请在打开另一个工作区之前保存它们。",
-  "unsavedChangesTitleText": "未保存的更改",
-  "workspaceHeader": "工作区标题栏"
+  "unsavedChangesTitleText": "Unsaved changes",
+  "workspaceHeader": "Workspace header"
 }
