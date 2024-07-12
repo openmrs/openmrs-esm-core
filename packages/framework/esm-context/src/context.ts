@@ -99,6 +99,9 @@ export type ContextCallback<T extends {} = {}> = (state: Readonly<T> | null | un
 export function subscribeToContext<T extends {} = {}>(namespace: string, callback: ContextCallback<T>) {
   let previous = getContext<T>(namespace);
 
+  // set initial value
+  callback(Object.freeze(Object.assign({}, previous)));
+
   return contextStore.subscribe((state) => {
     let current: Readonly<T> | null | undefined = namespace in state ? (state[namespace] as T) : null;
 
