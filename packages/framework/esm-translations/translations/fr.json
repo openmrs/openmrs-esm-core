@@ -44,6 +44,6 @@
   "stateProvince": "État",
   "unknown": "Inconnu",
   "unsavedChangesInWorkspace": "Des modifications n'ont pas été enregistrées dans {{espaceDeTravail}}. Veuillez les enregistrer avant d'ouvrir un autre espace de travail.",
-  "unsavedChangesTitleText": "Modifications non sauvegardées",
-  "workspaceHeader": "En-tête de l'espace de travail"
+  "unsavedChangesTitleText": "Unsaved changes",
+  "workspaceHeader": "Workspace header"
 }
