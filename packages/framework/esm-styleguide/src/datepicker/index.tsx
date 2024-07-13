@@ -50,7 +50,7 @@ import {
   FieldError,
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
-import { convertToLocaleCalendar, formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
+import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
 import styles from './datepicker.module.scss';
 import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon, WarningIcon } from '../icons';
 
@@ -116,11 +116,11 @@ function dateToInternationalizedDate(date: DateInputValue, calendar: CalendarTyp
   }
 
   if (date instanceof CalendarDate || date instanceof CalendarDateTime || date instanceof ZonedDateTime) {
-    return date;
+    return calendar ? toCalendar(date, calendar) : date;
   } else {
     const date_ = dayjs(date).toDate();
     return calendar
-      ? new CalendarDate(calendar, date_.getFullYear(), date_.getMonth() + 1, date_.getDate())
+      ? toCalendar(new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate()), calendar)
       : new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate());
   }
 }
