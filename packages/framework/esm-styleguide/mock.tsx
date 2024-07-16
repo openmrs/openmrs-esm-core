@@ -48,6 +48,7 @@ export const SwitcherIcon = () => <div>SwitcherIcon</div>;
 export const ShoppingCartIcon = () => <div>ShoppingCartIcon</div>;
 export const ShoppingCartArrowDownIcon = () => <div>ShoppingCartArrowDownIcon</div>;
 export const ShoppingCartAddItemIcon = () => <div>ShoppingCartAddItemIcon</div>;
+export const StickyNoteAddIcon = () => <div>StickyNoteAddIcon</div>;
 export const TableOfContentsIcon = () => <div>TableOfContentsIcon</div>;
 export const TableIcon = () => <div>TableIcon</div>;
 export const TranslateIcon = () => <div>TranslateIcon</div>;
