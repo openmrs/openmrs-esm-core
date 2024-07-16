@@ -66,6 +66,7 @@ import user from './svgs/user.svg';
 import viewOff from './svgs/view-off.svg';
 import view from './svgs/view.svg';
 import warning from './svgs/warning.svg';
+import stickyNoteAdd from './svgs/sticky-note-add.svg';
 import { addSvg } from '../svg-utils';
 
 export function setupIcons() {
@@ -137,4 +138,5 @@ export function setupIcons() {
   addSvg('omrs-icon-view-off', viewOff);
   addSvg('omrs-icon-view', view);
   addSvg('omrs-icon-warning', warning);
+  addSvg('omrs-icon-sticky-note-add', stickyNoteAdd);
 }

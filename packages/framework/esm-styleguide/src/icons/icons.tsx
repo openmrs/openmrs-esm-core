@@ -437,6 +437,15 @@ export const ShoppingCartArrowDownIcon = memo(
 );
 
 /**
+ * Used as action button to open ward in-patient note workspace
+ */
+export const StickyNoteAddIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function ShoppingCartArrowDownIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-sticky-note-add" iconProps={props} />;
+  }),
+);
+
+/**
  * Used as a button to add an item to the Order basket from a search
  */
 export const TableOfContentsIcon = memo(
