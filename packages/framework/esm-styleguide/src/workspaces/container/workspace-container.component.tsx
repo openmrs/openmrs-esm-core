@@ -142,6 +142,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
     canHide = false,
     canMaximize = false,
     hasOwnSidebar = false,
+    onCloseCallback,
     closeWorkspace,
   } = useMemo(() => workspaceInstance ?? ({} as OpenWorkspace), [workspaceInstance]);
 
@@ -205,7 +206,10 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
                     align="bottom-right"
                     aria-label={getCoreTranslation('close', 'Close')}
                     label={getCoreTranslation('close', 'Close')}
-                    onClick={() => closeWorkspace?.()}
+                    onClick={() => {
+                      onCloseCallback?.();
+                      closeWorkspace?.();
+                    }}
                     size="lg"
                   >
                     <CloseIcon />
@@ -218,7 +222,10 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
                 align="bottom-right"
                 aria-label={getCoreTranslation('close', 'Close')}
                 label={getCoreTranslation('close', 'Close')}
-                onClick={() => closeWorkspace?.()}
+                onClick={() => {
+                  onCloseCallback?.();
+                  closeWorkspace?.();
+                }}
               >
                 <DownToBottom />
               </HeaderGlobalAction>

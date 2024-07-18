@@ -33,6 +33,7 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
         closeWorkspaceWithSavedChanges: workspace.closeWorkspaceWithSavedChanges,
         promptBeforeClosing: workspace.promptBeforeClosing,
         setTitle: workspace.setTitle,
+        setOnCloseCallback: workspace.setOnCloseCallback,
         ...additionalPropsFromPage,
         ...workspace.additionalProps,
       },
