@@ -1,12 +1,11 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { type To, useLocation, useNavigate } from 'react-router-dom';
-import { type TFunction, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Button, InlineLoading, InlineNotification, PasswordInput, TextInput, Tile } from '@carbon/react';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   getCoreTranslation,
-  interpolateUrl,
   navigate as openmrsNavigate,
   refetchCurrentUser,
   useConfig,
@@ -14,6 +13,7 @@ import {
   useSession,
 } from '@openmrs/esm-framework';
 import { type ConfigSchema } from '../config-schema';
+import Logo from '../logo.component';
 import styles from './login.scss';
 
 export interface LoginReferrer {
@@ -278,22 +278,6 @@ const Login: React.FC = () => {
   }
 
   return null;
-};
-
-const Logo: React.FC<{ t: TFunction }> = ({ t }) => {
-  const { logo } = useConfig<ConfigSchema>();
-  return logo.src ? (
-    <img
-      alt={logo.alt ? t(logo.alt) : t('openmrsLogo', 'OpenMRS logo')}
-      className={styles.logoImg}
-      src={interpolateUrl(logo.src)}
-    />
-  ) : (
-    <svg role="img" className={styles.logo}>
-      <title>{t('openmrsLogo', 'OpenMRS logo')}</title>
-      <use xlinkHref="#omrs-logo-full-color"></use>
-    </svg>
-  );
 };
 
 export default Login;

@@ -15,6 +15,12 @@
       "route": "logout",
       "online": true,
       "offline": true
+    },
+    {
+      "component": "root",
+      "route": "change-password",
+      "online": true,
+      "offline": true
     }
   ],
   "extensions": [
