@@ -44,6 +44,7 @@
     "swr": "^2.2.2"
   },
   "peerDependencies": {
+    "@carbon/react": "1.x",
     "@openmrs/esm-framework": "*",
     "react": "18.x",
     "react-dom": "18.x",
