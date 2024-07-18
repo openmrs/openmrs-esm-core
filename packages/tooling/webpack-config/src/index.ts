@@ -204,7 +204,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
         merge(
           {
             test: /\.css$/,
-            use: [require.resolve('style-loader'), cssLoader],
+            use: ['style-loader', cssLoader],
           },
           cssRuleConfig,
         ),
@@ -212,10 +212,10 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.s[ac]ss$/i,
             use: [
-              require.resolve('style-loader'),
+              'style-loader',
               cssLoader,
               {
-                loader: require.resolve('sass-loader'),
+                loader: 'sass-loader',
                 options: { sassOptions: { quietDeps: true } },
               },
             ],
@@ -335,7 +335,11 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
       extensions: ['.tsx', '.ts', '.jsx', '.js', '.scss', '.json'],
       alias: {
         '@openmrs/esm-framework': '@openmrs/esm-framework/src/internal',
+        'lodash.debounce': 'lodash-es/debounce',
         'lodash.findlast': 'lodash-es/findLast',
+        'lodash.isequal': 'lodash-es/isEqual',
+        'lodash.omit': 'lodash-es/omit',
+        'lodash.throttle': 'lodash-es/throttle',
       },
     },
     ...overrides,
