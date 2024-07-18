@@ -1,16 +1,20 @@
 /** @module @category UI */
 import React from 'react';
-import styles from './reusable-page-header.scss';
+import styles from './page-header.module.scss';
 import { useTranslation } from 'react-i18next';
-import { ExtensionSlot } from '@openmrs/esm-framework';
+import { useSession } from '@openmrs/esm-framework';
 
-interface pageHeaderProps {
-  pageTitle: string;
+interface PageHeaderProps {
+  dashboardTitle: string;
   illustration: React.ReactElement;
+  utilities?: React.ReactNode;
+  className?: string;
 }
 
-export const PageHeader: React.FC<pageHeaderProps> = ({ pageTitle, illustration }) => {
+export const PageHeader: React.FC<PageHeaderProps> = ({ dashboardTitle, illustration, utilities, className }) => {
   const { t } = useTranslation();
+  const session = useSession();
+  const location = session?.sessionLocation?.display;
 
   const combineWords = (sentence: string): string => {
     const lowerCaseWords = (match: string) => match.toLowerCase();
@@ -19,15 +23,15 @@ export const PageHeader: React.FC<pageHeaderProps> = ({ pageTitle, illustration 
   };
 
   return (
-    <div className={styles.pageHeader}>
+    <div className={className ? className : styles.pageHeader}>
       <div className={styles.leftJustifiedItems}>
         {illustration}
         <div className={styles.pageLabels}>
-          <p>{t(`${combineWords(pageTitle)}`, `${pageTitle}`)}</p>
-          <p className={styles.pageName}>{t(`${combineWords(pageTitle)}`, `${pageTitle}`)}</p>
+          <p>{location}</p>
+          <p className={styles.pageName}>{t(`${combineWords(dashboardTitle)}`, `${dashboardTitle}`)}</p>
         </div>
       </div>
-      <ExtensionSlot name="page-header-utilities-slot" className={styles.rightJustifiedItems} />
+      <div className={styles.rightJustifiedItems}>{utilities}</div>
     </div>
   );
 };
