@@ -2968,7 +2968,6 @@ __metadata:
     single-spa: "npm:^6.0.1"
     swc-loader: "npm:^0.2.3"
     swr: "npm:^2.2.2"
-    systemjs: "npm:^6.8.3"
     webpack: "npm:^5.88.0"
     webpack-pwa-manifest: "npm:^4.3.0"
     workbox-core: "npm:^6.1.5"
@@ -3400,12 +3399,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-routes@workspace:packages/framework/esm-routes"
   dependencies:
+    "@openmrs/esm-config": "workspace:*"
+    "@openmrs/esm-dynamic-loading": "workspace:*"
+    "@openmrs/esm-extensions": "workspace:*"
+    "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
     jest-fetch-mock: "npm:^3.0.3"
+    single-spa: "npm:^6.0.1"
   peerDependencies:
+    "@openmrs/esm-config": 5.x
+    "@openmrs/esm-dynamic-loading": 5.x
+    "@openmrs/esm-extensions": 5.x
+    "@openmrs/esm-feature-flags": 5.x
     "@openmrs/esm-globals": 5.x
     "@openmrs/esm-utils": 5.x
+    single-spa: 6.x
   languageName: unknown
   linkType: soft
 
@@ -17603,13 +17612,6 @@ __metadata:
   peerDependencies:
     webpack: "*"
   checksum: 10/740cf816ed0a66e54f70251cc4564be49481f6108d4c927c9f6b3718bf60a0f9c38896aca0656c1dcaadbd2138352362cf21aef985a0ae4dfbca1acef79dc69e
-  languageName: node
-  linkType: hard
-
-"systemjs@npm:^6.8.3":
-  version: 6.13.0
-  resolution: "systemjs@npm:6.13.0"
-  checksum: 10/d4ecd7ef80751e519c5b7f0797487d54a5b230d5f6be7fcbce3e9508bf96b839418d1cdd09d1f41f7bfcb12fce56fadd798da09d8b1756fa732a37f38884a37b
   languageName: node
   linkType: hard
 

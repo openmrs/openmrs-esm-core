@@ -1,5 +1,7 @@
 export * from './store';
 export * from './extensions';
+export * from './modals';
+export * from './workspaces';
 export * from './helpers';
 export * from './render';
 

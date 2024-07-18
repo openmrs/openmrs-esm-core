@@ -4,15 +4,15 @@
 
 ## Table of contents
 
-### Properties
+### Workspace Properties
 
 - [ignoreChanges](CloseWorkspaceOptions.md#ignorechanges)
 
-### Methods
+### Workspace Methods
 
 - [onWorkspaceClose](CloseWorkspaceOptions.md#onworkspaceclose)
 
-## Properties
+## Workspace Properties
 
 ### ignoreChanges
 
@@ -25,9 +25,9 @@ even if the `testFcn` passed to `promptBeforeClosing` returns `true`.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/types.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L11)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L18)
 
-## Methods
+## Workspace Methods
 
 ### onWorkspaceClose
 
@@ -45,4 +45,4 @@ void
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/types.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/types.ts#L18)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L25)

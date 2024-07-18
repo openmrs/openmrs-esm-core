@@ -18,3 +18,4 @@ export {
   type ExtensionSlotState,
   getExtensionStore,
 } from './store';
+export { type WorkspaceRegistration } from './workspaces';

@@ -7,8 +7,8 @@ import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
 
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../../icons';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
-import { type OpenWorkspace, updateWorkspaceWindowState, useWorkspaces } from '../workspaces';
 import ActionMenu from './action-menu.component';
+import { type OpenWorkspace, updateWorkspaceWindowState, useWorkspaces } from '../workspaces';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import styles from './workspace.module.scss';
 

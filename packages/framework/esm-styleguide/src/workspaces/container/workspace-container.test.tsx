@@ -2,8 +2,9 @@
 import React from 'react';
 import { screen, render, within, renderHook, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { registerWorkspace } from '@openmrs/esm-extensions';
 import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
-import { type DefaultWorkspaceProps, WorkspaceContainer, launchWorkspace, registerWorkspace, useWorkspaces } from '..';
+import { type DefaultWorkspaceProps, WorkspaceContainer, launchWorkspace, useWorkspaces } from '..';
 
 jest.mock('./workspace-renderer.component.tsx', () => {
   return {
@@ -16,7 +17,7 @@ jest.mock('./workspace-renderer.component.tsx', () => {
   };
 });
 
-const mockedIsDesktop = isDesktop as jest.Mock;
+const mockedIsDesktop = isDesktop as unknown as jest.Mock;
 const mockedUseLayoutType = useLayoutType as jest.Mock;
 
 window.history.pushState({}, 'Workspace Container', '/workspace-container');

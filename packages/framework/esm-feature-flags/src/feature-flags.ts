@@ -27,7 +27,7 @@ featureFlagsStore.subscribe((state) => {
 });
 
 function getFeatureFlagsFromLocalStorage() {
-  const flags = {};
+  const flags: FeatureFlagsStore['flags'] = {};
   for (const key of Object.keys(localStorage)) {
     if (key.startsWith('openmrs:feature-flag:')) {
       const flagName = key.replace('openmrs:feature-flag:', '');
