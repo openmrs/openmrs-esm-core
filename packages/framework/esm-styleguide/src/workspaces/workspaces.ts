@@ -1,14 +1,80 @@
 /** @module @category Workspace */
-import { type ReactNode, useMemo } from 'react';
-import { type LifeCycles } from 'single-spa';
+import { useMemo, type ReactNode } from 'react';
 import _i18n from 'i18next';
-import { type ExtensionRegistration, getExtensionRegistration } from '@openmrs/esm-extensions';
+import { getWorkspaceRegistration, type WorkspaceRegistration } from '@openmrs/esm-extensions';
 import { type WorkspaceWindowState } from '@openmrs/esm-globals';
-import { useStore } from '@openmrs/esm-react-utils';
 import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
 import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
-import { type DefaultWorkspaceProps, type CloseWorkspaceOptions } from './types';
+import { useStore } from '@openmrs/esm-react-utils';
+
+export interface CloseWorkspaceOptions {
+  /**
+   * Whether to close the workspace ignoring all the changes present in the workspace.
+   *
+   * If ignoreChanges is true, the user will not be prompted to save changes before closing
+   * even if the `testFcn` passed to `promptBeforeClosing` returns `true`.
+   */
+  ignoreChanges?: boolean;
+  /**
+   * If you want to take an action after the workspace is closed, you can pass your function as
+   * `onWorkspaceClose`. This function will be called only after the workspace is closed, given
+   * that the user might be shown a prompt.
+   * @returns void
+   */
+  onWorkspaceClose?: () => void;
+}
+
+/** The default parameters received by all workspaces */
+export interface DefaultWorkspaceProps {
+  /**
+   * Call this function to close the workspace. This function will prompt the user
+   * if there are any unsaved changes to workspace.
+   *
+   * You can pass `onWorkspaceClose` function to be called when the workspace is finally
+   * closed, given the user forcefully closes the workspace.
+   */
+  closeWorkspace(closeWorkspaceOptions?: CloseWorkspaceOptions): void;
+  /**
+   * Call this with a no-args function that returns true if the user should be prompted before
+   * this workspace is closed; e.g. if there is unsaved data.
+   */
+  promptBeforeClosing(testFcn: () => boolean): void;
+  /**
+   * Call this function to close the workspace after the form is saved. This function
+   * will directly close the workspace without any prompt
+   */
+  closeWorkspaceWithSavedChanges(closeWorkspaceOptions?: CloseWorkspaceOptions): void;
+  /**
+   * Use this to set the workspace title if it needs to be set dynamically.
+   *
+   * Workspace titles generally are set in the workspace declaration in the routes.json file. They can also
+   * be set by the workspace launcher by passing `workspaceTitle` in the `additionalProps`
+   * parameter of the `launchWorkspace` function. This function is useful when the workspace
+   * title needs to be set dynamically.
+   *
+   * @param title The title to set. If using titleNode, set this to a human-readable string
+   *        which will identify the workspace in notifications and other places.
+   * @param titleNode A React object to put in the workspace header in place of the title. This
+   *        is useful for displaying custom elements in the header. Note that custom header
+   *        elements can also be attached to the workspace header extension slots.
+   */
+  setTitle(title: string, titleNode?: ReactNode): void;
+}
+
+export interface WorkspaceWindowSize {
+  size: WorkspaceWindowState;
+}
+
+export interface WorkspaceWindowSizeProviderProps {
+  children?: React.ReactNode;
+}
+
+export interface WorkspaceWindowSizeContext {
+  windowSize: WorkspaceWindowSize;
+  updateWindowSize?(value: WorkspaceWindowState): any;
+  active: boolean;
+}
 
 export interface Prompt {
   title: string;
@@ -27,119 +93,8 @@ export interface WorkspaceStoreState {
   workspaceWindowState: WorkspaceWindowState;
 }
 
-/** See [[WorkspaceDefinition]] for more information about these properties */
-export interface WorkspaceRegistration {
-  name: string;
-  title: string;
-  titleNode?: ReactNode;
-  type: string;
-  canHide: boolean;
-  canMaximize: boolean;
-  width: 'narrow' | 'wider' | 'extra-wide';
-  hasOwnSidebar: boolean;
-  sidebarFamily: string;
-  preferredWindowSize: WorkspaceWindowState;
-  load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
-  moduleName: string;
-}
-
 export interface OpenWorkspace extends WorkspaceRegistration, DefaultWorkspaceProps {
   additionalProps: object;
-}
-
-interface WorkspaceRegistrationStore {
-  workspaces: Record<string, WorkspaceRegistration>;
-}
-
-const workspaceRegistrationStore = createGlobalStore<WorkspaceRegistrationStore>('workspaceRegistrations', {
-  workspaces: {},
-});
-
-/** See [[WorkspaceDefinition]] for more information about these properties */
-export interface RegisterWorkspaceOptions {
-  name: string;
-  title: string;
-  type?: string;
-  canHide?: boolean;
-  canMaximize?: boolean;
-  width?: 'narrow' | 'wider' | 'extra-wide';
-  hasOwnSidebar?: boolean;
-  sidebarFamily?: string;
-  preferredWindowSize?: WorkspaceWindowState;
-  load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
-  moduleName: string;
-}
-
-/**
- * Tells the workspace system about a workspace. This is used by the app shell
- * to register workspaces defined in the `routes.json` file.
- * @internal
- */
-export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
-  workspaceRegistrationStore.setState((state) => ({
-    workspaces: {
-      ...state.workspaces,
-      [workspace.name]: {
-        ...workspace,
-        preferredWindowSize: workspace.preferredWindowSize ?? 'normal',
-        type: workspace.type ?? 'form',
-        canHide: workspace.canHide ?? false,
-        canMaximize: workspace.canMaximize ?? false,
-        width: workspace.width ?? 'narrow',
-        hasOwnSidebar: workspace.hasOwnSidebar ?? false,
-        sidebarFamily: workspace.sidebarFamily ?? 'default',
-      },
-    },
-  }));
-}
-
-const workspaceExtensionWarningsIssued = new Set();
-/**
- * This exists for compatibility with the old way of registering
- * workspaces (as extensions).
- *
- * @param name of the workspace
- */
-function getWorkspaceRegistration(name: string): WorkspaceRegistration {
-  const registeredWorkspaces = workspaceRegistrationStore.getState().workspaces;
-  if (registeredWorkspaces[name]) {
-    return registeredWorkspaces[name];
-  } else {
-    const workspaceExtension = getExtensionRegistration(name);
-    if (workspaceExtension) {
-      if (!workspaceExtensionWarningsIssued.has(name)) {
-        console.warn(
-          `The workspace '${name}' is registered as an extension. This is deprecated. Please register it in the "workspaces" section of the routes.json file.`,
-        );
-        workspaceExtensionWarningsIssued.add(name);
-      }
-      return {
-        name: workspaceExtension.name,
-        title: getTitleFromExtension(workspaceExtension),
-        moduleName: workspaceExtension.moduleName,
-        preferredWindowSize: workspaceExtension.meta?.screenSize ?? 'normal',
-        load: workspaceExtension.load,
-        type: workspaceExtension.meta?.type ?? 'form',
-        canHide: workspaceExtension.meta?.canHide ?? false,
-        canMaximize: workspaceExtension.meta?.canMaximize ?? false,
-        width: workspaceExtension.meta?.width ?? 'narrow',
-        sidebarFamily: 'default',
-        hasOwnSidebar: false,
-      };
-    } else {
-      throw new Error(`No workspace named '${name}' has been registered.`);
-    }
-  }
-}
-
-function getTitleFromExtension(ext: ExtensionRegistration) {
-  const title = ext?.meta?.title;
-  if (typeof title === 'string') {
-    return title;
-  } else if (title && typeof title === 'object') {
-    return translateFrom(ext.moduleName, title.key, title.default);
-  }
-  return ext.name;
 }
 
 /**

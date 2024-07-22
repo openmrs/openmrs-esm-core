@@ -3,6 +3,7 @@ module.exports = {
     '^.+\\.(j|t)sx?$': ['@swc/jest'],
   },
   moduleNameMapper: {
+    dexie: 'dexie',
     'lodash-es': 'lodash',
   },
   testEnvironment: 'jsdom',

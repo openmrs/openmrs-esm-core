@@ -124,6 +124,10 @@ export type PageDefinition = {
    */
   component: string;
   /**
+   * If supplied, the page will only be rendered when this feature flag is enabled.
+   */
+  featureFlag?: string;
+  /**
    * Determines whether the component renders while the browser is connected to the internet. If false, this page will never render while online.
    */
   online?: boolean;
@@ -167,6 +171,7 @@ export type PageDefinition = {
 );
 
 /**
+ * @internal
  * A definition of a page after the app has been registered.
  */
 export type RegisteredPageDefinition = Omit<PageDefinition, 'order'> & AppComponent & { order: number };
@@ -334,57 +339,45 @@ export type WorkspaceDefinition = {
 );
 
 /**
- * This interface describes the format of the routes provided by an app
+ * A definition of a feature flag extracted from the routes.json
  */
+export interface FeatureFlagDefinition {
+  /** A code-friendly name for the flag, which will be used to reference it in code */
+  flagName: string;
+  /** A human-friendly name which will be displayed in the Implementer Tools */
+  label: string;
+  /** An explanation of what the flag does, which will be displayed in the Implementer Tools */
+  description: string;
+}
+
+/** This interface describes the format of the routes provided by an app */
 export interface OpenmrsAppRoutes {
-  /**
-   * The version of this frontend module.
-   */
+  /** The version of this frontend module. */
   version?: string;
-  /**
-   * A list of backend modules necessary for this frontend module and the corresponding required versions.
-   */
+  /** A list of backend modules necessary for this frontend module and the corresponding required versions. */
   backendDependencies?: Record<string, string>;
-  /**
-   * A list of backend modules that may enable optional functionality in this frontend module if available and the corresponding required versions.
-   */
+  /** A list of backend modules that may enable optional functionality in this frontend module if available and the corresponding required versions. */
   optionalBackendDependencies?: {
     /** The name of the backend dependency and either the required version or an object describing the required version */
     [key: string]:
       | string
       | {
-          /**
-           * The minimum version of this optional dependency that must be present.
-           */
+          /** The minimum version of this optional dependency that must be present. */
           version: string;
-          /**
-           * The feature flag to enable if this backend dependency is present
-           */
+          /** The feature flag to enable if this backend dependency is present */
           feature?: FeatureFlagDefinition;
         };
   };
-  /**
-   * An array of all pages supported by this frontend module. Pages are automatically mounted based on a route.
-   */
+  /** An array of all pages supported by this frontend module. Pages are automatically mounted based on a route. */
   pages?: Array<PageDefinition>;
-  /**
-   * An array of all extensions supported by this frontend module. Extensions can be mounted in extension slots, either via declarations in this file or configuration.
-   */
+  /**  An array of all extensions supported by this frontend module. Extensions can be mounted in extension slots, either via declarations in this file or configuration. */
   extensions?: Array<ExtensionDefinition>;
-  /**
-   * An array of all modals supported by this frontend module. Modals can be launched by name.
-   */
+  /** An array of all feature flags for any beta-stage features this module provides. */
+  featureFlags?: Array<FeatureFlagDefinition>;
+  /** An array of all modals supported by this frontend module. Modals can be launched by name. */
   modals?: Array<ModalDefinition>;
-  /**
-   * An array of all workspaces supported by this frontend module. Workspaces can be launched by name.
-   */
+  /** An array of all workspaces supported by this frontend module. Workspaces can be launched by name. */
   workspaces?: Array<WorkspaceDefinition>;
-}
-
-export interface FeatureFlagDefinition {
-  flagName: string;
-  label: string;
-  description: string;
 }
 
 /**

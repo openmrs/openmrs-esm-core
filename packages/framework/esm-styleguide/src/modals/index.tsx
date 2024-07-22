@@ -1,9 +1,8 @@
 /** @module @category UI */
 import { mountRootParcel, type Parcel } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
-import { getModalRegistration } from './registry';
+import { getModalRegistration } from '@openmrs/esm-extensions';
 import { reportError } from '@openmrs/esm-error-handling';
-export * from './registry';
 
 type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
 

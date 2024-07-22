@@ -1,12 +1,5 @@
-import {
-  type Prompt,
-  cancelPrompt,
-  getWorkspaceStore,
-  launchWorkspace,
-  registerWorkspace,
-  resetWorkspaceStore,
-} from './workspaces';
-import { registerExtension } from '@openmrs/esm-extensions';
+import { type Prompt, cancelPrompt, getWorkspaceStore, launchWorkspace, resetWorkspaceStore } from './workspaces';
+import { registerExtension, registerWorkspace } from '@openmrs/esm-extensions';
 import { clearMockExtensionRegistry } from '@openmrs/esm-framework/mock';
 
 describe('workspace system', () => {

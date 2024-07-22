@@ -3,8 +3,8 @@ import { mountRootParcel, type ParcelConfig } from 'single-spa';
 import Parcel from 'single-spa-react/parcel';
 import { InlineLoading } from '@carbon/react';
 import { getCoreTranslation } from '@openmrs/esm-translations';
-import { type OpenWorkspace } from '../workspaces';
 import styles from './workspace.module.scss';
+import { type OpenWorkspace } from '../workspaces';
 
 interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
