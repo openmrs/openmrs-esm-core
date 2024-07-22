@@ -127,6 +127,9 @@
       color: theme.$text-disabled;
     }
   }
+  .date-input:focus {
+    outline: none;
+  }
 
   /*
    * These next two style rules try to render the read-only parts of the date in the disabled color

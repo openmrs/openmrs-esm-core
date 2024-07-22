@@ -106,6 +106,10 @@ const defaultProps: OpenmrsDatePickerProps = {
   size: 'md',
 };
 
+const locale = useLocale();
+const intlLocale = new Intl.Locale(locale.locale);
+const tz = Intl.DateTimeFormat(intlLocale.toString()).resolvedOptions().timeZone;
+
 /**
  * Function to convert relatively arbitrary date values into a React Aria `DateValue`,
  * normally a `CalendarDate`, which represents a date without time or timezone.
@@ -145,10 +149,6 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
     const rangeCalendarState = useContext(RangeCalendarStateContext);
 
     const state = calendarState ?? rangeCalendarState;
-
-    const locale = useLocale();
-    const intlLocale = new Intl.Locale(locale.locale);
-    const tz = Intl.DateTimeFormat(intlLocale.toString()).resolvedOptions().timeZone;
 
     const month = formatDate(state.visibleRange.start.toDate(tz), {
       calendar: intlLocale.calendar,
@@ -214,6 +214,16 @@ const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function Date
   const inputRef = useRef<HTMLInputElement>(null);
   const { fieldProps, inputProps } = useDateField({ ...dateFieldProps, inputRef }, state, fieldRef);
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const typedDate = event.target.value;
+    const parsedDate = dayjs(typedDate, 'MM/DD/YYYY', true);
+    if (parsedDate.isValid()) {
+      const dateValue = new CalendarDate(parsedDate.year(), parsedDate.month() + 1, parsedDate.date());
+      state.setValue(dateValue);
+      datePickerState.setValue(dateValue);
+    }
+  };
+
   return (
     <Provider
       values={[
@@ -232,7 +242,14 @@ const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function Date
       >
         {state.segments.map((segment, i) => cloneElement(props.children(segment), { key: i }))}
       </Group>
-      <Input />
+      <Input
+          type="text"
+          value={state.value ? dayjs(state.value.toDate(tz)).format('MM/DD/YYYY') : ''}
+          onChange={handleInputChange}
+          placeholder="MM/DD/YYYY"
+          className="date-input"
+          {...inputProps}
+        />
     </Provider>
   );
 });
