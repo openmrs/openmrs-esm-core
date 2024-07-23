@@ -173,7 +173,7 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
   }
 
   const cssLoader = {
-    loader: 'css-loader',
+    loader: require.resolve('css-loader'),
     options: {
       modules: {
         localIdentName: `${ident}__[name]__[local]___[hash:base64:5]`,
@@ -197,14 +197,14 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.m?(js|ts|tsx)$/,
             exclude: /node_modules(?![\/\\]@openmrs)/,
-            use: 'swc-loader',
+            use: require.resolve('swc-loader'),
           },
           scriptRuleConfig,
         ),
         merge(
           {
             test: /\.css$/,
-            use: ['style-loader', cssLoader],
+            use: [require.resolve('style-loader'), cssLoader],
           },
           cssRuleConfig,
         ),
@@ -212,10 +212,10 @@ export default (env: Record<string, string>, argv: Record<string, string> = {}) 
           {
             test: /\.s[ac]ss$/i,
             use: [
-              'style-loader',
+              require.resolve('style-loader'),
               cssLoader,
               {
-                loader: 'sass-loader',
+                loader: require.resolve('sass-loader'),
                 options: { sassOptions: { quietDeps: true } },
               },
             ],
