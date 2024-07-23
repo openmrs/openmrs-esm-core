@@ -2,7 +2,7 @@
 @use '@carbon/styles/scss/type';
 @import '~@openmrs/esm-styleguide/src/vars';
 
-.pageHeader {
+.pageHeaderContainer {
   @include type.type-style('body-compact-02');
   color: $text-02;
   height: spacing.$spacing-12;
@@ -11,18 +11,10 @@
   justify-content: space-between;
 }
 
-.leftJustifiedItems {
+.pageHeader {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.rightJustifiedItems {
-  @include type.type-style('body-compact-02');
-  display: flex;
-  flex-direction: column;
-  color: $text-02;
-  padding: 1rem 0;
 }
 
 .pageName {

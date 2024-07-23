@@ -1,37 +1,30 @@
 /** @module @category UI */
 import React from 'react';
 import styles from './page-header.module.scss';
-import { useTranslation } from 'react-i18next';
-import { useSession } from '@openmrs/esm-framework';
+import classNames from 'classnames';
 
 interface PageHeaderProps {
-  dashboardTitle: string;
+  title: string;
   illustration: React.ReactElement;
-  utilities?: React.ReactNode;
+  clinicName: string;
+}
+interface PageHeaderContainerProps {
+  children: React.ReactNode;
   className?: string;
 }
 
-export const PageHeader: React.FC<PageHeaderProps> = ({ dashboardTitle, illustration, utilities, className }) => {
-  const { t } = useTranslation();
-  const session = useSession();
-  const location = session?.sessionLocation?.display;
-
-  const combineWords = (sentence: string): string => {
-    const lowerCaseWords = (match: string) => match.toLowerCase();
-    const capitalizeLetter = (_, group1: string) => group1.toUpperCase();
-    return sentence.replace(/\b\w+/g, lowerCaseWords).replace(/\s(\w)/g, capitalizeLetter);
-  };
-
+export const PageHeader: React.FC<PageHeaderProps> = ({ title, illustration, clinicName }) => {
   return (
-    <div className={className ? className : styles.pageHeader}>
-      <div className={styles.leftJustifiedItems}>
-        {illustration}
-        <div className={styles.pageLabels}>
-          <p>{location}</p>
-          <p className={styles.pageName}>{t(`${combineWords(dashboardTitle)}`, `${dashboardTitle}`)}</p>
-        </div>
+    <div className={styles.pageHeader}>
+      {illustration}
+      <div className={styles.pageLabels}>
+        <p>{clinicName}</p>
+        <p className={styles.pageName}>{title}</p>
       </div>
-      <div className={styles.rightJustifiedItems}>{utilities}</div>
     </div>
   );
+};
+
+export const PageHeaderContainer: React.FC<PageHeaderContainerProps> = ({ className, children }) => {
+  return <div className={classNames(styles.pageHeaderContainer, className)}>{children}</div>;
 };
