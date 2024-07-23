@@ -179,6 +179,8 @@ function renderWorkspaceWindow() {
   );
 }
 
+const onCloseCallbackMock = jest.fn();
+
 describe('WorkspaceContainer in overlay mode', () => {
   beforeAll(() => {
     registerWorkspace({
@@ -186,6 +188,7 @@ describe('WorkspaceContainer in overlay mode', () => {
       title: 'Patient Search',
       load: jest.fn(),
       moduleName: '@openmrs/foo',
+      onCloseCallback: onCloseCallbackMock,
     });
   });
 
@@ -202,6 +205,17 @@ describe('WorkspaceContainer in overlay mode', () => {
     const closeButton = screen.getByRole('button', { name: 'Close' });
     await user.click(closeButton);
     expect(screen.queryByRole('complementary')).toHaveClass('hiddenRelative');
+  });
+
+  it('calls onCloseCallback when workspace closes', async () => {
+    mockedUseLayoutType.mockReturnValue('small-desktop');
+    const user = userEvent.setup();
+    act(() => launchWorkspace('patient-search'));
+    renderWorkspaceOverlay();
+
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    await user.click(closeButton);
+    expect(onCloseCallbackMock).toHaveBeenCalled();
   });
 });
 
