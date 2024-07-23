@@ -19,6 +19,7 @@ export interface WorkspaceRegistration {
   preferredWindowSize: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
+  onCloseCallback?: () => void;
 }
 
 interface WorkspaceRegistrationStore {
@@ -42,6 +43,7 @@ export interface RegisterWorkspaceOptions {
   preferredWindowSize?: WorkspaceWindowState;
   load: () => Promise<{ default?: LifeCycles } & LifeCycles>;
   moduleName: string;
+  onCloseCallback?: () => void;
 }
 
 /**
