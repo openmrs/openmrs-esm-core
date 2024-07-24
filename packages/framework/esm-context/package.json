@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-context",
-  "version": "5.7.1",
+  "version": "5.7.2",
   "license": "MPL-2.0",
   "description": "Utilities for managing the current execution context",
   "browser": "dist/openmrs-esm-context.js",

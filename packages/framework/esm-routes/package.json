@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-routes",
-  "version": "5.7.1",
+  "version": "5.7.2",
   "license": "MPL-2.0",
   "description": "Utilities for working with the routes registry",
   "browser": "dist/openmrs-esm-routes.js",
