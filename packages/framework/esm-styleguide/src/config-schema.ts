@@ -5,6 +5,7 @@ export interface StyleguideConfigObject {
   'Brand color #2': string;
   'Brand color #3': string;
   patientPhotoConceptUuid: string;
+  clinicName: string;
   preferredCalendar: {
     [key: string]: string;
   };
@@ -28,6 +29,11 @@ export const esmStyleGuideSchema = {
     _default: '736e8771-e501-4615-bfa7-570c03f4bef5',
     _description:
       "Used to look up the patient photo, which is stored as an attachment obs. Set to `null` in order to disable the feature and use only generated avatars. To remove the avatars entirely, use extension configuration's `remove` feature.",
+  },
+  clinicName: {
+    _type: Type.String,
+    _description: 'A name of the place (or authority) where all possible locations a user can choose are located.',
+    _default: 'Wellness Point Demo Clinic',
   },
   preferredCalendar: {
     _type: Type.Object,
