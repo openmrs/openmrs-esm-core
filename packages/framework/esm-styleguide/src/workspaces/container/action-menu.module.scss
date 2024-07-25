@@ -1,5 +1,5 @@
 @use '@carbon/styles/scss/spacing';
-@import '@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 $icon-button-size: 2.5rem;
 $actionPanelOffset: 3rem;
