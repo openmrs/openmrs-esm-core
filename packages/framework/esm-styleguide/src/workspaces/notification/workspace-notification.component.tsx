@@ -6,7 +6,6 @@ import { navigate } from '@openmrs/esm-navigation';
 import { reportError } from '@openmrs/esm-error-handling';
 import { escapeRegExp } from 'lodash-es';
 import { type SingleSpaCustomEventDetail } from 'single-spa';
-import styles from './workspace-notification.module.scss';
 import {
   cancelPrompt,
   canCloseWorkspaceWithoutPrompting,
@@ -16,6 +15,7 @@ import {
   resetWorkspaceStore,
   useWorkspaces,
 } from '../workspaces';
+import styles from './workspace-notification.module.scss';
 
 export interface WorkspaceNotificationProps {
   contextKey: string;

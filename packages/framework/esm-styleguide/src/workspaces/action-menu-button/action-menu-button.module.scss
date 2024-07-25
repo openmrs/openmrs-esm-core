@@ -1,6 +1,6 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/type';
-@import '@openmrs/esm-styleguide/src/vars';
+@use '@openmrs/esm-styleguide/src/vars' as *;
 
 .container {
   margin-top: spacing.$spacing-02;
@@ -20,7 +20,7 @@
 
   & > span {
     margin-top: spacing.$spacing-02;
-    @include type.type-style("body-compact-01");
+    @include type.type-style('body-compact-01');
     color: $text-02;
   }
 
@@ -78,7 +78,6 @@
 
 /* Tablet */
 :global(.omrs-breakpoint-lt-desktop) {
-
   .container {
     margin-bottom: 0;
     margin-top: 0;
@@ -102,7 +101,7 @@
 
     & > span {
       color: $interactive-01;
-      @include type.type-style("heading-compact-01");
+      @include type.type-style('heading-compact-01');
     }
 
     svg {
