@@ -8,11 +8,12 @@ import type { StoreApi } from 'zustand/vanilla';
  *
  * In case a workspace doesn't have a sidebarFamilyName, it will be considered as a standalone workspace, and hence this hook will return an empty object and updateFunction as an empty function.
  *
+ * @internal
+ *
  * @param {string} sidebarFamilyName The sidebarFamilyName of the workspace used when registering the workspace in the module's routes.json file.
  */
 export function useWorkspaceFamilyStore(sidebarFamilyName: string) {
   const [storeState, setStoreState] = useState<object>({});
-  const [updateStore, setUpdateStore] = useState<StoreApi<object>['setState']>(() => {});
   const [currentSidebarFamilyName, setCurrentSidebarFamilyName] = useState(sidebarFamilyName);
 
   useEffect(() => {
@@ -27,7 +28,6 @@ export function useWorkspaceFamilyStore(sidebarFamilyName: string) {
     if (store) {
       setStoreState(store.getState());
       unsubscribe = store.subscribe(setStoreState);
-      setUpdateStore(store.setState);
     }
     return () => {
       if (store) {
@@ -36,5 +36,5 @@ export function useWorkspaceFamilyStore(sidebarFamilyName: string) {
     };
   }, [currentSidebarFamilyName]);
 
-  const results = useMemo(() => ({ storeState, updateStore }), [storeState]);
+  return storeState;
 }

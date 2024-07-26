@@ -5,6 +5,7 @@ import { InlineLoading } from '@carbon/react';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import styles from './workspace.module.scss';
 import { type OpenWorkspace } from '../workspaces';
+import { useWorkspaceFamilyStore } from '../workspace-sidebar-store/useWorkspaceFamilyStore';
 
 interface WorkspaceRendererProps {
   workspace: OpenWorkspace;
@@ -13,6 +14,7 @@ interface WorkspaceRendererProps {
 
 export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: WorkspaceRendererProps) {
   const [lifecycle, setLifecycle] = useState<ParcelConfig | undefined>();
+  const workspaceFamilyState = useWorkspaceFamilyStore(workspace.sidebarFamily);
 
   useEffect(() => {
     let active = true;
@@ -35,6 +37,7 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
         setTitle: workspace.setTitle,
         ...additionalPropsFromPage,
         ...workspace.additionalProps,
+        ...workspaceFamilyState,
       },
     [workspace, additionalPropsFromPage],
   );

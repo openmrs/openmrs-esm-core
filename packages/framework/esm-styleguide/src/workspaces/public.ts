@@ -8,4 +8,3 @@ export {
   type WorkspacesInfo,
   type Prompt,
 } from './workspaces';
-export { useWorkspaceFamilyStore } from './workspace-sidebar-store/useWorkspaceFamilyStore';
