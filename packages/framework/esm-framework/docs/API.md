@@ -182,7 +182,6 @@
 
 - [WorkspaceContainer](API.md#workspacecontainer)
 - [isOnline](API.md#isonline)
-- [useWorkspaceFamilyStore](API.md#useworkspacefamilystore)
 
 ### Store Functions
 
@@ -5611,31 +5610,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-utils/src/is-online.ts:3](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/is-online.ts#L3)
-
-___
-
-### useWorkspaceFamilyStore
-
-▸ **useWorkspaceFamilyStore**(`sidebarFamilyName`): `void`
-
-This hook is used to interact with the store of a workspace family.
-A workspace family is defined as a group of workspaces that share the same sidebarFamilyName.
-
-In case a workspace doesn't have a sidebarFamilyName, it will be considered as a standalone workspace, and hence this hook will return an empty object and updateFunction as an empty function.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `sidebarFamilyName` | `string` | The sidebarFamilyName of the workspace used when registering the workspace in the module's routes.json file. |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/workspaces/workspace-sidebar-store/useWorkspaceFamilyStore.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspace-sidebar-store/useWorkspaceFamilyStore.ts#L13)
 
 ___
 
