@@ -4,17 +4,17 @@ import { useTranslation } from 'react-i18next';
 import { Button, ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
 import { navigate } from '@openmrs/esm-navigation';
 import { reportError } from '@openmrs/esm-error-handling';
+import { escapeRegExp } from 'lodash-es';
+import { type SingleSpaCustomEventDetail } from 'single-spa';
 import {
-  canCloseWorkspaceWithoutPrompting,
   cancelPrompt,
+  canCloseWorkspaceWithoutPrompting,
   changeWorkspaceContext,
   closeAllWorkspaces,
   getWorkspaceStore,
   resetWorkspaceStore,
   useWorkspaces,
 } from '../workspaces';
-import { escapeRegExp } from 'lodash-es';
-import { type SingleSpaCustomEventDetail } from 'single-spa';
 import styles from './workspace-notification.module.scss';
 
 export interface WorkspaceNotificationProps {

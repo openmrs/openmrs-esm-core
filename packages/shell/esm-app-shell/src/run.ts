@@ -34,10 +34,12 @@ import {
   isOpenmrsAppRoutes,
   isOpenmrsRoutes,
   setupHistory,
+  registerApp,
+  finishRegisteringAllApps,
+  tryRegisterExtension,
   type OpenmrsAppRoutes,
   restBaseUrl,
 } from '@openmrs/esm-framework/src/internal';
-import { finishRegisteringAllApps, registerApp, tryRegisterExtension } from './apps';
 import { setupI18n } from './locale';
 import { registerOptionalDependencyHandler } from './optionaldeps';
 import { appName, getCoreExtensions } from './ui';

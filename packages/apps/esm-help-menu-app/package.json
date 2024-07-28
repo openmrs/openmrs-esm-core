@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-help-menu-app",
-  "version": "5.7.0",
+  "version": "5.7.2",
   "license": "MPL-2.0",
   "description": " A microfrontend that provides a help menu for O3",
   "browser": "dist/openmrs-esm-help-menu-app.js",

@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-primary-navigation-app",
-  "version": "5.7.0",
+  "version": "5.7.2",
   "license": "MPL-2.0",
   "description": "Main navbar microfrontend for the OpenMRS SPA",
   "browser": "dist/openmrs-esm-primary-navigation-app.js",

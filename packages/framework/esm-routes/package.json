@@ -1,6 +1,6 @@
 {
   "name": "@openmrs/esm-routes",
-  "version": "5.7.0",
+  "version": "5.7.2",
   "license": "MPL-2.0",
   "description": "Utilities for working with the routes registry",
   "browser": "dist/openmrs-esm-routes.js",
@@ -39,12 +39,22 @@
     "access": "public"
   },
   "peerDependencies": {
+    "@openmrs/esm-config": "5.x",
+    "@openmrs/esm-dynamic-loading": "5.x",
+    "@openmrs/esm-extensions": "5.x",
+    "@openmrs/esm-feature-flags": "5.x",
     "@openmrs/esm-globals": "5.x",
-    "@openmrs/esm-utils": "5.x"
+    "@openmrs/esm-utils": "5.x",
+    "single-spa": "6.x"
   },
   "devDependencies": {
+    "@openmrs/esm-config": "workspace:*",
+    "@openmrs/esm-dynamic-loading": "workspace:*",
+    "@openmrs/esm-extensions": "workspace:*",
+    "@openmrs/esm-feature-flags": "workspace:*",
     "@openmrs/esm-globals": "workspace:*",
     "@openmrs/esm-utils": "workspace:*",
-    "jest-fetch-mock": "^3.0.3"
+    "jest-fetch-mock": "^3.0.3",
+    "single-spa": "^6.0.1"
   }
 }

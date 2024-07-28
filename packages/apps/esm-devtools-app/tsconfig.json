@@ -15,7 +15,8 @@
       "es2015.promise",
       "es2016.array.include",
       "es2018",
-      "ESNext"
+      "es2020",
+      "es2022"
     ],
     "noEmit": true
   },

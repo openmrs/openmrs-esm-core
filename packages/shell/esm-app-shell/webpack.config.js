@@ -377,6 +377,7 @@ module.exports = (env, argv = {}) => {
       isProd &&
         new MiniCssExtractPlugin({
           filename: 'openmrs.[contenthash].css',
+          ignoreOrder: true,
         }),
       new DefinePlugin({
         'process.env.BUILD_VERSION': JSON.stringify(`${version}-${timestamp}`),

@@ -2,6 +2,8 @@
 
 # Interface: FeatureFlagDefinition
 
+A definition of a feature flag extracted from the routes.json
+
 ## Table of contents
 
 ### Properties
@@ -16,9 +18,11 @@
 
 • **description**: `string`
 
+An explanation of what the flag does, which will be displayed in the Implementer Tools
+
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:387](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L387)
+[packages/framework/esm-globals/src/types.ts:350](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L350)
 
 ___
 
@@ -26,9 +30,11 @@ ___
 
 • **flagName**: `string`
 
+A code-friendly name for the flag, which will be used to reference it in code
+
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:385](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L385)
+[packages/framework/esm-globals/src/types.ts:346](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L346)
 
 ___
 
@@ -36,6 +42,8 @@ ___
 
 • **label**: `string`
 
+A human-friendly name which will be displayed in the Implementer Tools
+
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:386](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L386)
+[packages/framework/esm-globals/src/types.ts:348](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L348)
