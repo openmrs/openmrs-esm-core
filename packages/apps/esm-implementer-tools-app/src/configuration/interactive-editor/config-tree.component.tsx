@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-import styles from './config-tree.styles.scss';
+import React from 'react';
 import { Accordion, AccordionItem } from '@carbon/react';
 import { ConfigTreeForModule } from './config-tree-for-module.component';
 import { implementerToolsStore } from '../../store';
 import { useStore } from 'zustand';
+import styles from './config-tree.styles.scss';
 
 export interface ConfigTreeProps {
   config: Record<string, any>;

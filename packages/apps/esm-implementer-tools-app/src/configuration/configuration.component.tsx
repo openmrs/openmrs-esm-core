@@ -139,14 +139,14 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                 <Toggle
                   className={styles.toggle}
                   id="jsonModeSwitch"
-                  labelText={t('jsonEditor', 'JSON Editor')}
+                  labelText={t('jsonEditor', 'JSON editor')}
                   onToggle={toggleIsJsonModeEnabled}
                   toggled={isJsonModeEnabled}
                 />
                 <Toggle
                   className={styles.toggle}
                   id="uiEditorSwitch"
-                  labelText={t('uiEditor', 'UI Editor')}
+                  labelText={t('uiEditor', 'UI editor')}
                   toggled={isUIEditorEnabled}
                   onToggle={toggleIsUIEditorEnabled}
                 />
@@ -161,7 +161,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                     temporaryConfigStore.setState({ config: {} });
                   }}
                 >
-                  {t('clearConfig', 'Clear Local Config')}
+                  {t('clearConfig', 'Clear local config')}
                 </Button>
                 <Button
                   kind="secondary"
@@ -178,7 +178,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                     download="temporary_config.json"
                     href={window.URL.createObjectURL(tempConfigObjUrl)}
                   >
-                    {t('downloadConfig', 'Download Config')}
+                    {t('downloadConfig', 'Download config')}
                   </a>
                 </Button>
               </Column>

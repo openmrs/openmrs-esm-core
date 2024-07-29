@@ -28,11 +28,11 @@ export const BackendDependencies: React.FC<BackendDependencies> = ({ backendDepe
       },
       {
         key: 'installedVersion',
-        header: t('installedVersion', 'Installed Version'),
+        header: t('installedVersion', 'Installed version'),
       },
       {
         key: 'requiredVersion',
-        header: t('requiredVersion', 'Required Version'),
+        header: t('requiredVersion', 'Required version'),
       },
     ],
     [t],
@@ -43,7 +43,7 @@ export const BackendDependencies: React.FC<BackendDependencies> = ({ backendDepe
       <DataTable rows={[]} headers={headers}>
         {({ headers, getTableProps, getHeaderProps }) => (
           <TableContainer title="">
-            <Table {...getTableProps()} >
+            <Table {...getTableProps()}>
               <TableHead>
                 <TableRow>
                   {headers.map((header) => (

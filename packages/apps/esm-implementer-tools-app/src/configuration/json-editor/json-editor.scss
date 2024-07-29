@@ -1,3 +1,4 @@
+@use '@carbon/colors';
 @use '@carbon/react/scss/theme';
 @use '@carbon/styles/scss/components/button';
 
@@ -18,4 +19,8 @@
   align-items: center;
   width: 100%;
   padding-left: 2em;
+}
+
+.errorBackground {
+  background-color: colors.$red-60;
 }
