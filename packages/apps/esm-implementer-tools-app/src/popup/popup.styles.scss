@@ -62,3 +62,9 @@
   z-index: 2;
   background-color: theme.$background;
 }
+
+.closeButton {
+  svg {
+    fill: theme.$icon-primary;
+  }
+}

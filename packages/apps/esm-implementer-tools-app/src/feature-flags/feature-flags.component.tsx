@@ -11,9 +11,9 @@ import {
   TableRow,
   Toggle,
 } from '@carbon/react';
-import styles from './frontend-modules.scss';
-import { registerFeatureFlag, useStore } from '@openmrs/esm-framework';
+import { useStore } from '@openmrs/esm-framework';
 import { featureFlagsStore, setFeatureFlag } from '@openmrs/esm-framework/src/internal';
+import styles from './feature-flags.scss';
 
 export function FeatureFlags() {
   const { flags } = useStore(featureFlagsStore);
