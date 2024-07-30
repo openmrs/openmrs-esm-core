@@ -453,6 +453,7 @@ describe('workspace system', () => {
       expect(workspaceFamilyStore).toBeTruthy();
       expect(workspaceFamilyStore?.getState()?.['foo']).toBe(true);
     });
+
     it('should update the store state with new additionalProps if workspaces with same sidebarFamily name calls the function', () => {
       let workspaceFamilyStore = getWorkspaceFamilyStore('ward-patient-sidebar', {
         foo: true,

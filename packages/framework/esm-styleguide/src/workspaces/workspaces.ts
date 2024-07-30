@@ -190,16 +190,7 @@ export function launchWorkspace<
   };
 
   if (newWorkspace.sidebarFamily) {
-    /**
-     * The workspace family store is a store that is specific to the workspace sidebar family.
-     * If the workspace has its own sidebar, the store will be created and passed to the workspace.
-     * This store can be used to store data that is specific to the workspace sidebar family.
-     * The store will be same for all the workspaces with same sidebar family name.
-     *
-     * For workspaces with no sidebarFamilyName or sidebarFamilyName as 'default', the store will be undefined.
-     *
-     * The store will be cleared when all the workspaces with the store's sidebarFamilyName are closed.
-     */
+    // initialize workspace family store
     getWorkspaceFamilyStore(newWorkspace.sidebarFamily, additionalProps);
   }
 
@@ -519,6 +510,16 @@ export function resetWorkspaceStore() {
   getWorkspaceStore().setState(initialState);
 }
 
+/**
+ * The workspace family store is a store that is specific to the workspace sidebar family.
+ * If the workspace has its own sidebar, the store will be created.
+ * This store can be used to store data that is specific to the workspace sidebar family.
+ * The store will be same for all the workspaces with same sidebar family name.
+ *
+ * For workspaces with no sidebarFamilyName or sidebarFamilyName as 'default', the store will be undefined.
+ *
+ * The store will be cleared when all the workspaces with the store's sidebarFamilyName are closed.
+ */
 export function getWorkspaceFamilyStore(
   sidebarFamilyName: string | undefined,
   additionalProps: object = {},
