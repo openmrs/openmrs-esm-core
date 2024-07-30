@@ -7,6 +7,7 @@ import { navigate } from '@openmrs/esm-navigation';
 import { getGlobalStore, createGlobalStore } from '@openmrs/esm-state';
 import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
 import { useStore } from '@openmrs/esm-react-utils';
+import type { StoreApi } from 'zustand/vanilla';
 
 export interface CloseWorkspaceOptions {
   /**
@@ -167,7 +168,7 @@ export function launchWorkspace<
 >(name: string, additionalProps?: Omit<T, keyof DefaultWorkspaceProps> & { workspaceTitle?: string }) {
   const store = getWorkspaceStore();
   const workspace = getWorkspaceRegistration(name);
-  const newWorkspace = {
+  const newWorkspace: OpenWorkspace = {
     ...workspace,
     title: getWorkspaceTitle(workspace, additionalProps),
     closeWorkspace: (options: CloseWorkspaceOptions = {}) => closeWorkspace(name, options),
@@ -187,6 +188,11 @@ export function launchWorkspace<
     },
     additionalProps: additionalProps ?? {},
   };
+
+  if (newWorkspace.sidebarFamily) {
+    // initialize workspace family store
+    getWorkspaceFamilyStore(newWorkspace.sidebarFamily, additionalProps);
+  }
 
   function updateStoreWithNewWorkspace(workspaceToBeAdded: OpenWorkspace, restOfTheWorkspaces?: Array<OpenWorkspace>) {
     store.setState((state) => {
@@ -290,7 +296,19 @@ export function closeWorkspace(
 
   const updateStoreWithClosedWorkspace = () => {
     const state = store.getState();
+    const workspaceToBeClosed = state.openWorkspaces.find((w) => w.name === name);
+    const workspaceSidebarFamilyName = workspaceToBeClosed?.sidebarFamily;
     const newOpenWorkspaces = state.openWorkspaces.filter((w) => w.name != name);
+    const workspaceFamilyStore = getWorkspaceFamilyStore(workspaceSidebarFamilyName);
+    if (
+      workspaceFamilyStore &&
+      !newOpenWorkspaces.some((workspace) => workspace.sidebarFamily === workspaceSidebarFamilyName)
+    ) {
+      // Clearing the workspace family store if there are no more workspaces with the same sidebar family name
+      workspaceFamilyStore.setState({}, true);
+      const unsubscribe = workspaceFamilyStore.subscribe(() => {});
+      unsubscribe?.();
+    }
 
     // ensure closed workspace will not prompt
     promptBeforeClosing(name, () => false);
@@ -490,4 +508,31 @@ function getWorkspaceTitle(workspace: WorkspaceRegistration, additionalProps?: o
 
 export function resetWorkspaceStore() {
   getWorkspaceStore().setState(initialState);
+}
+
+/**
+ * The workspace family store is a store that is specific to the workspace sidebar family.
+ * If the workspace has its own sidebar, the store will be created.
+ * This store can be used to store data that is specific to the workspace sidebar family.
+ * The store will be same for all the workspaces with same sidebar family name.
+ *
+ * For workspaces with no sidebarFamilyName or sidebarFamilyName as 'default', the store will be undefined.
+ *
+ * The store will be cleared when all the workspaces with the store's sidebarFamilyName are closed.
+ */
+export function getWorkspaceFamilyStore(
+  sidebarFamilyName: string | undefined,
+  additionalProps: object = {},
+): StoreApi<object> | undefined {
+  if (!sidebarFamilyName || sidebarFamilyName === 'default') {
+    return undefined;
+  }
+  const store = getGlobalStore<object>(sidebarFamilyName, {});
+  if (additionalProps) {
+    store.setState((prev) => ({
+      ...prev,
+      ...additionalProps,
+    }));
+  }
+  return store;
 }
