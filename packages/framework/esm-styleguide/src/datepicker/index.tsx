@@ -1,10 +1,13 @@
 import React, {
-  cloneElement,
-  forwardRef,
+  type CSSProperties,
+  type ForwardedRef,
   type HTMLAttributes,
   type PropsWithChildren,
   type RefObject,
   type ReactElement,
+  type ReactNode,
+  cloneElement,
+  forwardRef,
   useMemo,
   useContext,
   useCallback,
@@ -21,7 +24,19 @@ import {
   toCalendar,
   today,
 } from '@internationalized/date';
-import { I18nProvider, type DateValue, useLocale, useDateField } from 'react-aria';
+import { type AriaLabelingProps, type DOMProps } from '@react-types/shared';
+import { filterDOMProps } from '@react-aria/utils';
+import {
+  I18nProvider,
+  type DateValue,
+  mergeProps,
+  useLocale,
+  useDateField,
+  useDateSegment,
+  useFocusRing,
+  useHover,
+  useObjectRef,
+} from 'react-aria';
 import { useDateFieldState } from 'react-stately';
 import {
   Button,
@@ -30,24 +45,24 @@ import {
   CalendarCell,
   CalendarStateContext,
   DateFieldContext,
+  DateFieldStateContext,
   type DateInputProps,
   DatePicker,
   type DatePickerProps,
   DatePickerStateContext,
-  DateSegment,
+  type DateSegmentProps,
   Dialog,
+  FieldError,
   Group,
+  GroupContext,
   Input,
+  InputContext,
   Label,
   NumberField,
   Popover,
+  Provider,
   RangeCalendarStateContext,
   useContextProps,
-  DateFieldStateContext,
-  InputContext,
-  Provider,
-  GroupContext,
-  FieldError,
 } from 'react-aria-components';
 import dayjs, { type Dayjs } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
@@ -71,7 +86,7 @@ export type DateInputValue =
  */
 export interface OpenmrsDatePickerProps
   // omits here for features we have custom implementations of
-  extends Omit<DatePickerProps<CalendarDate>, 'className' | 'defaultValue' | 'value'> {
+  extends Omit<DatePickerProps<CalendarDate>, 'className' | 'onChange' | 'defaultValue' | 'value'> {
   /** Any CSS classes to add to the outer div of the date picker */
   className?: Argument;
   /** The default value (uncontrolled) */
@@ -93,6 +108,10 @@ export interface OpenmrsDatePickerProps
   maxDate?: DateInputValue;
   /** The earliest date it is possible to select */
   minDate?: DateInputValue;
+  /** Handler that is called when the value changes. */
+  onChange?: (value: Date | null | undefined) => void;
+  /** Handler that is called when the value changes. Note that this provides types from @internationalized/date. */
+  onChangeRaw?: (value: DateValue | null) => void;
   /** Specifies the size of the input. Currently supports either `sm`, `md`, or `lg` as an option */
   size?: 'sm' | 'md' | 'lg';
   /** 'true' to use the short version. */
@@ -110,9 +129,28 @@ const defaultProps: OpenmrsDatePickerProps = {
  * Function to convert relatively arbitrary date values into a React Aria `DateValue`,
  * normally a `CalendarDate`, which represents a date without time or timezone.
  */
-function dateToInternationalizedDate(date: DateInputValue, calendar: CalendarType | undefined): DateValue | undefined {
-  if (!date) {
-    return undefined;
+function dateToInternationalizedDate(
+  date: DateInputValue,
+  calendar: CalendarType | undefined,
+  allowNull: true,
+): DateValue | null | undefined;
+function dateToInternationalizedDate(
+  date: DateInputValue,
+  calendar: CalendarType | undefined,
+  allowNull: false,
+): DateValue | undefined;
+function dateToInternationalizedDate(date: DateInputValue, calendar: CalendarType | undefined): DateValue | undefined;
+function dateToInternationalizedDate(
+  date: DateInputValue,
+  calendar: CalendarType | undefined,
+  allowNull: boolean = false,
+) {
+  if (typeof date === 'undefined' || date === null) {
+    return allowNull ? date : undefined;
+  }
+
+  if (typeof date === 'string' && !date) {
+    return allowNull ? null : undefined;
   }
 
   if (date instanceof CalendarDate || date instanceof CalendarDateTime || date instanceof ZonedDateTime) {
@@ -123,6 +161,13 @@ function dateToInternationalizedDate(date: DateInputValue, calendar: CalendarTyp
       ? toCalendar(new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate()), calendar)
       : new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate());
   }
+}
+
+function internationalizedDateToDate(date: DateValue): Date | undefined {
+  if (!date) {
+    return undefined;
+  }
+  return date.toDate(getLocalTimeZone());
 }
 
 function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
@@ -228,12 +273,118 @@ const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function Date
         slot={props.slot || undefined}
         className={props.className ?? 'react-aria-DateInput'}
         isInvalid={state.isInvalid}
-        onClick={() => datePickerState.setOpen(!datePickerState.isOpen)}
+        onClick={() => {
+          datePickerState.setOpen(!datePickerState.isOpen);
+        }}
       >
         {state.segments.map((segment, i) => cloneElement(props.children(segment), { key: i }))}
       </Group>
       <Input />
     </Provider>
+  );
+});
+
+interface RenderPropsHookOptions<T> extends DOMProps, AriaLabelingProps {
+  children?: ReactNode | ((values: T & { defaultChildren: ReactNode | undefined }) => ReactNode);
+  values: T;
+  defaultChildren?: ReactNode;
+  defaultClassName?: string;
+  defaultStyle?: CSSProperties;
+  className?: string | ((values: T & { defaultClassName: string | undefined }) => string);
+  style?: CSSProperties | ((values: T & { defaultStyle: CSSProperties }) => CSSProperties);
+}
+
+function useRenderProps<T>(props: RenderPropsHookOptions<T>) {
+  const {
+    className,
+    style,
+    children,
+    defaultClassName = undefined,
+    defaultChildren = undefined,
+    defaultStyle,
+    values,
+  } = props;
+
+  return useMemo(() => {
+    let computedClassName: string | undefined;
+    let computedStyle: React.CSSProperties | undefined;
+    let computedChildren: React.ReactNode | undefined;
+
+    if (typeof className === 'function') {
+      computedClassName = className({ ...values, defaultClassName });
+    } else {
+      computedClassName = className;
+    }
+
+    if (typeof style === 'function') {
+      computedStyle = style({ ...values, defaultStyle: defaultStyle || {} });
+    } else {
+      computedStyle = style;
+    }
+
+    if (typeof children === 'function') {
+      computedChildren = children({ ...values, defaultChildren });
+    } else if (children == null) {
+      computedChildren = defaultChildren;
+    } else {
+      computedChildren = children;
+    }
+
+    return {
+      className: computedClassName ?? defaultClassName,
+      style: computedStyle || defaultStyle ? { ...defaultStyle, ...computedStyle } : undefined,
+      children: computedChildren ?? defaultChildren,
+      'data-rac': '',
+    };
+  }, [className, style, children, defaultClassName, defaultChildren, defaultStyle, values]);
+}
+
+const DateSegment = forwardRef(function DateSegment(
+  { segment, ...otherProps }: DateSegmentProps,
+  ref: ForwardedRef<HTMLDivElement>,
+) {
+  const state = useContext(DateFieldStateContext);
+  const domRef = useObjectRef(ref);
+  const { segmentProps } = useDateSegment(segment, state, domRef);
+  const { focusProps, isFocused, isFocusVisible } = useFocusRing();
+  const { hoverProps, isHovered } = useHover({
+    ...otherProps,
+    isDisabled: state.isDisabled || segment.type === 'literal',
+  });
+  const renderProps = useRenderProps({
+    ...otherProps,
+    values: {
+      ...segment,
+      isReadOnly: !segment.isEditable,
+      isInvalid: state.isInvalid,
+      isDisabled: state.isDisabled,
+      isHovered,
+      isFocused,
+      isFocusVisible,
+    },
+    defaultChildren: segment.text,
+  });
+
+  return (
+    <div
+      {...mergeProps(
+        filterDOMProps(otherProps as unknown as Parameters<typeof filterDOMProps>[0]),
+        segmentProps,
+        focusProps,
+        hoverProps,
+      )}
+      {...renderProps}
+      ref={domRef}
+      data-placeholder={segment.isPlaceholder || undefined}
+      data-invalid={state.isInvalid || undefined}
+      data-readonly={!segment.isEditable || undefined}
+      data-disabled={state.isDisabled || undefined}
+      data-type={segment.type}
+      data-hovered={isHovered || undefined}
+      data-focused={isFocused || undefined}
+      data-focus-visible={isFocusVisible || undefined}
+      onClick={(event) => event.stopPropagation()}
+    />
   );
 });
 
@@ -261,29 +412,49 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
       light,
       maxDate: rawMaxDate,
       minDate: rawMinDate,
+      onChange: rawOnChange,
+      onChangeRaw,
       short,
       size,
       value: rawValue,
       ...datePickerProps
     } = Object.assign({}, defaultProps, props);
 
-    const locale = getLocale();
+    const locale = useMemo(() => {
+      let locale = getLocale();
+      let intlLocale = new Intl.Locale(locale);
+
+      if (intlLocale.language === 'en' && !intlLocale.region) {
+        locale = 'en-GB';
+      }
+
+      return locale;
+    }, []);
+
     const calendar = useMemo(() => {
       const cal = getDefaultCalendar(locale);
       return typeof cal !== 'undefined' ? createCalendar(cal) : undefined;
     }, [locale]);
 
-    const localeWithCalendar = useMemo(
-      () => (typeof calendar === 'undefined' ? locale : `${locale}-u-ca-${calendar.identifier}`),
-      [calendar, locale],
-    );
+    const intlLocale = useMemo(() => new Intl.Locale(locale, { calendar: calendar?.identifier }), [locale, calendar]);
+
+    const localeWithCalendar = useMemo(() => intlLocale.toString(), [intlLocale]);
 
     const defaultValue = useMemo(() => dateToInternationalizedDate(rawDefaultValue, calendar), [rawDefaultValue]);
-    const value = useMemo(() => dateToInternationalizedDate(rawValue, calendar), [rawValue]);
+    const value = useMemo(() => dateToInternationalizedDate(rawValue, calendar, true), [rawValue]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar), [rawMaxDate]);
     const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate, calendar), [rawMinDate]);
     const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
     const today_ = calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone());
+
+    const onChange = useMemo(() => {
+      if (onChangeRaw && rawOnChange) {
+        console.error(
+          'An OpenmrsDatePicker component was created with both onChange and onChangeRaw handlers defined. Only onChangeRaw will be used.',
+        );
+      }
+      return onChangeRaw ? onChangeRaw : (value: DateValue) => rawOnChange?.(internationalizedDateToDate(value));
+    }, [onChangeRaw, rawOnChange]);
 
     return (
       <I18nProvider locale={localeWithCalendar}>
@@ -298,7 +469,9 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
             maxValue={maxDate}
             minValue={minDate}
             value={value}
+            shouldForceLeadingZeros={intlLocale.language === 'en' ? true : undefined}
             {...datePickerProps}
+            onChange={onChange}
           >
             <div className="cds--date-picker-container">
               <DatePickerLabel labelText={labelText ?? label} />
