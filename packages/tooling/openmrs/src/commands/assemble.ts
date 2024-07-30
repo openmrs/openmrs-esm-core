@@ -8,6 +8,7 @@ import axios from 'axios';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
 import semver from 'semver';
+import { merge } from 'lodash-es';
 import { contentHash, logInfo, logWarn, untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 
@@ -18,7 +19,8 @@ export interface AssembleArgs {
   mode: string;
   config: Array<string>;
   registry?: string;
-  hashImportmap: boolean;
+  configFiles: Array<string>;
+  hashFiles: boolean;
   fresh: boolean;
   buildRoutes: boolean;
   manifest: boolean;
@@ -265,7 +267,7 @@ export async function runAssemble(args: AssembleArgs) {
       const appRoutes = resolve(args.target, dirName, 'routes.json');
       if (existsSync(appRoutes)) {
         try {
-          routes[esmName] = JSON.parse((await readFile(appRoutes)).toString());
+          routes[esmName] = JSON.parse(await readFile(appRoutes, 'utf8'));
           routes[esmName]['version'] = version;
         } catch (e) {
           logWarn(`Error while processing routes for ${esmName} using ${appRoutes}: ${e}`);
@@ -286,16 +288,35 @@ export async function runAssemble(args: AssembleArgs) {
   );
 
   await writeFile(
-    resolve(args.target, `importmap${args.hashImportmap ? '.' + contentHash(importmap) : ''}.json`),
+    resolve(args.target, `importmap${args.hashFiles ? '.' + contentHash(importmap) : ''}.json`),
     JSON.stringify(importmap),
     'utf8',
   );
 
   if (args.buildRoutes) {
     await writeFile(
-      resolve(args.target, `routes.registry${args.hashImportmap ? '.' + contentHash(routes) : ''}.json`),
+      resolve(args.target, `routes.registry${args.hashFiles ? '.' + contentHash(routes) : ''}.json`),
       JSON.stringify(routes),
       'utf-8',
+    );
+  }
+
+  if (args.configFiles && args.configFiles.length > 0) {
+    const assembledConfig = args.configFiles.reduce(async (merged, file) => {
+      try {
+        const config = JSON.parse((await readFile(file), 'utf8'));
+        return merge(merged, config);
+      } catch (e) {
+        logWarn(`Error while processing config file ${file}: ${e}`);
+      }
+
+      return merged;
+    }, {});
+
+    await writeFile(
+      resolve(args.target, `openmrs-config${args.hashFiles ? '.' + contentHash(assembledConfig) : ''}.json`),
+      JSON.stringify(assembledConfig),
+      'utf8',
     );
   }
 
