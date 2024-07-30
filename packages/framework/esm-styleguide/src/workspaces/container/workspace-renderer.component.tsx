@@ -36,8 +36,8 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
         promptBeforeClosing: workspace.promptBeforeClosing,
         setTitle: workspace.setTitle,
         ...additionalPropsFromPage,
-        ...workspace.additionalProps,
         ...workspaceFamilyState,
+        ...workspace.additionalProps,
       },
     [workspace, additionalPropsFromPage],
   );
