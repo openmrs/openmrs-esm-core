@@ -96,17 +96,6 @@ export interface WorkspaceStoreState {
 
 export interface OpenWorkspace extends WorkspaceRegistration, DefaultWorkspaceProps {
   additionalProps: object;
-  /**
-   * The workspace family store is a store that is specific to the workspace sidebar family.
-   * If the workspace has its own sidebar, the store will be created and passed to the workspace.
-   * This store can be used to store data that is specific to the workspace sidebar family.
-   * The store will be same for all the workspaces with same sidebar family name.
-   *
-   * For workspaces with no sidebarFamilyName or sidebarFamilyName as 'default', the store will be undefined.
-   *
-   * The store will be cleared when all the workspaces with the store's sidebarFamilyName are closed.
-   */
-  workspaceFamilyStore?: StoreApi<object> | undefined;
 }
 
 /**
@@ -186,7 +175,6 @@ export function launchWorkspace<
     closeWorkspaceWithSavedChanges: (options: CloseWorkspaceOptions) =>
       closeWorkspace(name, { ignoreChanges: true, ...options }),
     promptBeforeClosing: (testFcn) => promptBeforeClosing(name, testFcn),
-    workspaceFamilyStore: getWorkspaceFamilyStore(workspace.sidebarFamily, additionalProps),
     setTitle: (title: string, titleNode: ReactNode) => {
       newWorkspace.title = title;
       newWorkspace.titleNode = titleNode;
@@ -200,6 +188,20 @@ export function launchWorkspace<
     },
     additionalProps: additionalProps ?? {},
   };
+
+  if (newWorkspace.sidebarFamily) {
+    /**
+     * The workspace family store is a store that is specific to the workspace sidebar family.
+     * If the workspace has its own sidebar, the store will be created and passed to the workspace.
+     * This store can be used to store data that is specific to the workspace sidebar family.
+     * The store will be same for all the workspaces with same sidebar family name.
+     *
+     * For workspaces with no sidebarFamilyName or sidebarFamilyName as 'default', the store will be undefined.
+     *
+     * The store will be cleared when all the workspaces with the store's sidebarFamilyName are closed.
+     */
+    getWorkspaceFamilyStore(newWorkspace.sidebarFamily, additionalProps);
+  }
 
   function updateStoreWithNewWorkspace(workspaceToBeAdded: OpenWorkspace, restOfTheWorkspaces?: Array<OpenWorkspace>) {
     store.setState((state) => {
@@ -305,15 +307,15 @@ export function closeWorkspace(
     const state = store.getState();
     const workspaceToBeClosed = state.openWorkspaces.find((w) => w.name === name);
     const workspaceSidebarFamilyName = workspaceToBeClosed?.sidebarFamily;
-    const prevWorkspaceFamilyStore = workspaceToBeClosed?.workspaceFamilyStore;
     const newOpenWorkspaces = state.openWorkspaces.filter((w) => w.name != name);
+    const workspaceFamilyStore = getWorkspaceFamilyStore(workspaceSidebarFamilyName);
     if (
-      prevWorkspaceFamilyStore &&
+      workspaceFamilyStore &&
       !newOpenWorkspaces.some((workspace) => workspace.sidebarFamily === workspaceSidebarFamilyName)
     ) {
       // Clearing the workspace family store if there are no more workspaces with the same sidebar family name
-      prevWorkspaceFamilyStore.setState({}, true);
-      const unsubscribe = prevWorkspaceFamilyStore.subscribe(() => {});
+      workspaceFamilyStore.setState({}, true);
+      const unsubscribe = workspaceFamilyStore.subscribe(() => {});
       unsubscribe?.();
     }
 

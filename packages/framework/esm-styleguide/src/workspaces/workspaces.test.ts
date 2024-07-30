@@ -486,18 +486,20 @@ describe('workspace system', () => {
         sidebarFamily: 'ward-patient-sidebar',
       });
       launchWorkspace('ward-patient-workspace');
+      const workspaceFamilyStore = getWorkspaceFamilyStore('ward-patient-sidebar');
       const workspaceStore = getWorkspaceStore();
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
       expect(workspaceStore.getState().openWorkspaces[0].name).toBe('ward-patient-workspace');
-      expect(workspaceStore.getState().openWorkspaces[0].workspaceFamilyStore).toBeTruthy();
+      expect(workspaceFamilyStore).toBeTruthy();
       workspaceStore.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: true });
       launchWorkspace('allergies');
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
       expect(workspaceStore.getState().openWorkspaces[0].name).toBe('allergies');
-      expect(workspaceStore.getState().openWorkspaces[0].workspaceFamilyStore).toBeFalsy();
+      expect(workspaceFamilyStore?.getState()).toStrictEqual({});
     });
 
     it('should share the same store with different workspaces with same sidebarFamilyName', () => {
+      const sidebarFamily = 'ward-patient-sidebar';
       registerWorkspace({
         name: 'ward-patient-workspace',
         title: 'Ward Patient Workspace',
@@ -505,7 +507,7 @@ describe('workspace system', () => {
         type: 'ward-patient',
         moduleName: '@openmrs/esm-ward-app',
         hasOwnSidebar: true,
-        sidebarFamily: 'ward-patient-sidebar',
+        sidebarFamily,
         canHide: true,
       });
       registerWorkspace({
@@ -515,27 +517,27 @@ describe('workspace system', () => {
         type: 'transfer-patient',
         moduleName: '@openmrs/esm-ward-app',
         hasOwnSidebar: true,
-        sidebarFamily: 'ward-patient-sidebar',
+        sidebarFamily,
       });
       const workspaceStore = getWorkspaceStore();
       launchWorkspace('ward-patient-workspace', {
         foo: true,
       });
+      const sidebarFamilyStore = getWorkspaceFamilyStore(sidebarFamily);
       expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
-      expect(workspaceStore.getState().openWorkspaces[0].workspaceFamilyStore).toBeTruthy();
-      expect(workspaceStore.getState().openWorkspaces[0].workspaceFamilyStore?.getState()?.['foo']).toBe(true);
+      expect(sidebarFamilyStore).toBeTruthy();
+      expect(sidebarFamilyStore?.getState()?.['foo']).toBe(true);
       launchWorkspace('transfer-patient-workspace', { bar: false });
       expect(workspaceStore.getState().openWorkspaces.length).toBe(2);
       const transferPatientWorkspace = workspaceStore.getState().openWorkspaces[0];
       const wardPatientWorkspace = workspaceStore.getState().openWorkspaces[1];
       expect(wardPatientWorkspace.name).toBe('ward-patient-workspace');
-      expect(wardPatientWorkspace.workspaceFamilyStore).toBeTruthy();
-      expect(wardPatientWorkspace.workspaceFamilyStore?.getState()?.['foo']).toBe(true);
-      expect(wardPatientWorkspace.workspaceFamilyStore?.getState()?.['bar']).toBe(false);
+      expect(wardPatientWorkspace).toBeTruthy();
+      expect(sidebarFamilyStore?.getState()?.['foo']).toBe(true);
+      expect(sidebarFamilyStore?.getState()?.['bar']).toBe(false);
       expect(transferPatientWorkspace.name).toBe('transfer-patient-workspace');
-      expect(transferPatientWorkspace.workspaceFamilyStore).toBeTruthy();
-      expect(transferPatientWorkspace.workspaceFamilyStore?.getState()?.['foo']).toBe(true);
-      expect(transferPatientWorkspace.workspaceFamilyStore?.getState()?.['bar']).toBe(false);
+      expect(sidebarFamilyStore?.getState()?.['foo']).toBe(true);
+      expect(sidebarFamilyStore?.getState()?.['bar']).toBe(false);
     });
 
     it('should clear workspace if all the workspaces of the same family is closed', async () => {
@@ -567,7 +569,7 @@ describe('workspace system', () => {
       const transferPatientWorkspace = workspaceStore.getState().openWorkspaces[0];
       transferPatientWorkspace.closeWorkspace({ ignoreChanges: true });
       const wardPatientWorkspace = workspaceStore.getState().openWorkspaces[0];
-      const wardPatientWorkspaceFamilyStore = wardPatientWorkspace.workspaceFamilyStore;
+      const wardPatientWorkspaceFamilyStore = getWorkspaceFamilyStore('ward-patient-sidebar');
       expect(wardPatientWorkspaceFamilyStore).toBeTruthy();
       expect(wardPatientWorkspaceFamilyStore?.getState()?.['foo']).toBe(true);
       expect(wardPatientWorkspaceFamilyStore?.getState()?.['bar']).toBe(false);
