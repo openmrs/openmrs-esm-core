@@ -313,7 +313,11 @@ export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}
     const workspaceSidebarFamilyName = workspaceToBeClosed?.sidebarFamily;
     const newOpenWorkspaces = state.openWorkspaces.filter((w) => w.name != name);
     const workspaceFamilyStore = getWorkspaceFamilyStore(workspaceSidebarFamilyName);
-    if (options.clearWorkspaceFamilyStore && workspaceFamilyStore) {
+    if (
+      options.clearWorkspaceFamilyStore &&
+      workspaceFamilyStore &&
+      !newOpenWorkspaces.some((w) => w.sidebarFamily === workspaceSidebarFamilyName)
+    ) {
       // Clearing the workspace family store if there are no more workspaces with the same sidebar family name and the new workspace is not of the same sidebar family, which is handled in the `launchWorkspace` function.
       workspaceFamilyStore.setState({}, true);
       const unsubscribe = workspaceFamilyStore.subscribe(() => {});

@@ -647,6 +647,40 @@ describe('workspace system', () => {
       expect(wardPatientFamilyStore?.getState()?.['foo']).toBe(true);
     });
 
+    it('should not clear the workspace if a workspace of same sidebar family is opened', () => {
+      registerWorkspace({
+        name: 'ward-patient-workspace',
+        title: 'Ward Patient Workspace',
+        load: jest.fn(),
+        type: 'ward-patient',
+        moduleName: '@openmrs/esm-ward-app',
+        hasOwnSidebar: true,
+        sidebarFamily: 'ward-patient-sidebar',
+        canHide: true,
+      });
+      registerWorkspace({
+        name: 'transfer-patient-workspace',
+        title: 'Transfer Patient Workspace',
+        load: jest.fn(),
+        type: 'transfer-patient',
+        moduleName: '@openmrs/esm-ward-app',
+        hasOwnSidebar: true,
+        sidebarFamily: 'ward-patient-sidebar',
+      });
+      const workspaceStore = getWorkspaceStore();
+      launchWorkspace('ward-patient-workspace', {
+        foo: true,
+      });
+      const wardPatientFamilyStore = getWorkspaceFamilyStore('ward-patient-sidebar');
+      expect(workspaceStore.getState().openWorkspaces.length).toBe(1);
+      expect(wardPatientFamilyStore).toBeTruthy();
+      expect(wardPatientFamilyStore?.getState()?.['foo']).toBe(true);
+      launchWorkspace('transfer-patient-workspace', { bar: false });
+      expect(workspaceStore.getState().openWorkspaces.length).toBe(2);
+      expect(wardPatientFamilyStore?.getState()?.['foo']).toBe(true);
+      expect(wardPatientFamilyStore?.getState()?.['bar']).toBe(false);
+    });
+
     it('should retain default closeWorkspace options in case workspace options are passed', () => {
       registerWorkspace({
         name: 'ward-patient-workspace',
