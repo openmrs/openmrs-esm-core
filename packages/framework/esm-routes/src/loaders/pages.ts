@@ -154,7 +154,7 @@ export function registerApp(appName: string, routes: OpenmrsAppRoutes) {
     });
 
     availableFeatureFlags.forEach((featureFlag) => {
-      if (featureFlag && typeof featureFlag === 'object' && Object.hasOwn(featureFlag, 'featureFlag')) {
+      if (featureFlag && typeof featureFlag === 'object' && Object.hasOwn(featureFlag, 'flagName')) {
         tryRegisterFeatureFlag(appName, featureFlag);
       } else {
         console.warn(
