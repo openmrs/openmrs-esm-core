@@ -19,15 +19,6 @@ jest.mock('swr', () => ({
   mutate: jest.fn(),
 }));
 
-jest.mock('@openmrs/esm-framework', () => {
-  const originalModule = jest.requireActual('@openmrs/esm-framework');
-
-  return {
-    ...originalModule,
-    restBaseUrl: '/ws/rest/v1',
-  };
-});
-
 Object.defineProperty(document, 'documentElement', {
   value: {
     getAttribute: jest.fn().mockReturnValue('km'),
