@@ -326,7 +326,6 @@
   &::after {
     position: absolute;
     display: block;
-    background-color: var(--cds-link-primary, #0f62fe);
     block-size: 0.25rem;
     content: '';
     inline-size: 0.25rem;
@@ -334,5 +333,13 @@
     inset-inline-start: 50%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
+  }
+
+  &[data-disabled]::after {
+    background-color: theme.$text-disabled;
+  }
+
+  &:not([data-disabled])::after {
+    background-color: var(--cds-link-primary, theme.$link-primary);
   }
 }
