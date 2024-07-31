@@ -1,0 +1,84 @@
+@use '@carbon/styles/scss/spacing';
+@use '@carbon/styles/scss/type';
+@import '~@openmrs/esm-styleguide/src/vars';
+
+.bodyCompact01 {
+  @include type.type-style('body-compact-01');
+}
+
+.searchResults {
+  @include type.type-style('body-compact-02');
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 0rem spacing.$spacing-06;
+  background-color: $ui-01;
+  height: 25.5rem;
+}
+
+.resultsCount {
+  @extend .bodyCompact01;
+  color: $color-gray-70;
+}
+
+.locationResultsContainer {
+  display: flex;
+  overflow-y: auto;
+  padding: spacing.$spacing-03 spacing.$spacing-01 0rem;
+}
+
+.locationRadioButton {
+  display: flex;
+  height: spacing.$spacing-09;
+  align-items: center;
+  @extend .bodyCompact01;
+}
+
+.locationNotFound {
+  @include type.type-style('heading-compact-01');
+  color: $text-02;
+  margin-bottom: spacing.$spacing-05;
+}
+
+.confirmButton {
+  padding: spacing.$spacing-06;
+
+  .savePreferenceCheckbox {
+    padding-bottom: spacing.$spacing-05 !important;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+.radioButtonSkeleton {
+  margin-right: 0 !important;
+  margin-bottom: spacing.$spacing-07;
+}
+
+.radioButtonSkeleton span {
+  width: 100% !important;
+}
+
+.loadingIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 50%;
+  margin: spacing.$spacing-05 auto;
+
+  :global(.cds--loading__stroke) {
+    @include brand-03(stroke);
+  }
+}
+
+.loadingContainer {
+  margin-top: spacing.$spacing-06;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: spacing.$spacing-06 auto 0rem;
+}

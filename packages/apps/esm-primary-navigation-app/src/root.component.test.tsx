@@ -6,24 +6,20 @@ import { isDesktop } from './utils';
 import { mockUser } from '../__mocks__/mock-user';
 import { mockSession } from '../__mocks__/mock-session';
 import Root from './root.component';
+import { useConfig, useConnectedExtensions, useSession } from '@openmrs/esm-framework';
 
 const mockUserObservable = of(mockUser);
 const mockSessionObservable = of({ data: mockSession });
 
-jest.mock('@openmrs/esm-framework', () => {
-  const framework = jest.requireActual('@openmrs/esm-framework');
-  return {
-    ...framework,
-    ConfigurableLink: jest.fn(() => {
-      return <a href="#">Mock EMR</a>;
-    }),
-    useConfig: jest.fn(() => ({
-      logo: { src: null, alt: null, name: 'Mock EMR', link: 'Mock EMR' },
-    })),
-    useConnectedExtensions: jest.fn().mockReturnValue(['mock-extension']),
-    useSession: jest.fn().mockReturnValue(mockSession),
-  };
+const mockedUseConfig = useConfig as jest.Mock;
+const mockedUseConnectedExtensions = useConnectedExtensions as jest.Mock;
+const mockedUseSession = useSession as jest.Mock;
+
+mockedUseConfig.mockReturnValue({
+  logo: { src: null, alt: null, name: 'Mock EMR', link: 'Mock EMR' },
 });
+mockedUseConnectedExtensions.mockReturnValue(['mock-extension']);
+mockedUseSession.mockReturnValue(mockSession);
 
 jest.mock('./root.resource', () => ({
   getSynchronizedCurrentUser: jest.fn(() => mockUserObservable),

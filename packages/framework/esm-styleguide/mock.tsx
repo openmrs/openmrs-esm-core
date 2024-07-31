@@ -65,3 +65,32 @@ export const ViewIcon = () => <div>ViewIcon</div>;
 export const WarningIcon = () => <div>WarningIcon</div>;
 export const AllergiesIcon = () => <div>AllergiesIcon</div>;
 export const Icon = () => <div>Icon</div>;
+
+export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
+  const locations = [
+    {
+      uuid: 'uuid_1',
+      name: 'location_1',
+    },
+    {
+      uuid: 'uuid_2',
+      name: 'location_2',
+    },
+  ];
+  return (
+    <div>
+      {locations.map((location) => (
+        <label key={location.uuid}>
+          <input
+            type="radio"
+            name="location"
+            value={location.uuid}
+            checked={location.uuid === selectedLocationUuid}
+            onChange={() => onChange(location.uuid)}
+          />
+          {location.name}
+        </label>
+      ))}
+    </div>
+  );
+});

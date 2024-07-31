@@ -1489,6 +1489,16 @@ ___
 
 ___
 
+### LocationPicker
+
+• `Const` **LocationPicker**: `React.FC`<`LocationPickerProps`\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/location-picker/location-picker.component.tsx#L15)
+
+___
+
 ### MaximizeIcon
 
 • `Const` **MaximizeIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
