@@ -227,13 +227,11 @@
 
 - [age](API.md#age)
 - [canAccessStorage](API.md#canaccessstorage)
-- [daysIntoYear](API.md#daysintoyear)
 - [displayName](API.md#displayname)
 - [formatPatientName](API.md#formatpatientname)
 - [formattedName](API.md#formattedname)
 - [getDefaultsFromConfigSchema](API.md#getdefaultsfromconfigschema)
 - [getPatientName](API.md#getpatientname)
-- [isSameDay](API.md#issameday)
 - [isVersionSatisfied](API.md#isversionsatisfied)
 - [retry](API.md#retry)
 - [selectPreferredName](API.md#selectpreferredname)
@@ -6519,15 +6517,19 @@ ___
 
 ### age
 
-▸ **age**(`dateString`): `string`
+▸ **age**(`birthDate`, `currentDate?`): `string`
 
-Gets a human readable and locale supported age represention of the provided date string.
+Gets a human readable and locale supported representation of a person's age, given their birthDate,
+The representation logic follows the guideline here:
+https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://systems.digital.nhs.uk/data/cui/uig/patben.pdf
+(See Tables 7 and 8)
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `dateString` | `string` | The stringified date. |
+| `birthDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | The birthDate. |
+| `currentDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | Optional. If provided, calculates the age of the person at the provided currentDate (instead of now). |
 
 #### Returns
 
@@ -6537,7 +6539,7 @@ A human-readable string version of the age.
 
 #### Defined in
 
-[packages/framework/esm-utils/src/age-helpers.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L36)
+[packages/framework/esm-utils/src/age-helpers.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L17)
 
 ___
 
@@ -6564,30 +6566,6 @@ True if the WebStorage API object is able to be accessed, false otherwise
 #### Defined in
 
 [packages/framework/esm-utils/src/storage.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/storage.ts#L11)
-
-___
-
-### daysIntoYear
-
-▸ **daysIntoYear**(`date`): `number`
-
-Gets the number of days in the year of the given date.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `date` | `Date` | The date to compute the days within the year. |
-
-#### Returns
-
-`number`
-
-The number of days.
-
-#### Defined in
-
-[packages/framework/esm-utils/src/age-helpers.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L9)
 
 ___
 
@@ -6718,31 +6696,6 @@ The patient's display name or an empty string if name is not present.
 #### Defined in
 
 [packages/framework/esm-utils/src/patient-helpers.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/patient-helpers.ts#L14)
-
-___
-
-### isSameDay
-
-▸ **isSameDay**(`firstDate`, `secondDate`): `boolean`
-
-Checks if two dates are representing the same day.
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `firstDate` | `Date` | The first date. |
-| `secondDate` | `Date` | The second date. |
-
-#### Returns
-
-`boolean`
-
-True if both are located on the same day.
-
-#### Defined in
-
-[packages/framework/esm-utils/src/age-helpers.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-utils/src/age-helpers.ts#L25)
 
 ___
 
