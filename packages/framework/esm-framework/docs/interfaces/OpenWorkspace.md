@@ -202,7 +202,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L98)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L106)
 
 ## Methods
 
@@ -232,7 +232,7 @@ closed, given the user forcefully closes the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L38)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L46)
 
 ___
 
@@ -259,7 +259,7 @@ will directly close the workspace without any prompt
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L48)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:56](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L56)
 
 ___
 
@@ -304,7 +304,7 @@ this workspace is closed; e.g. if there is unsaved data.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:43](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L43)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L51)
 
 ___
 
@@ -336,4 +336,4 @@ title needs to be set dynamically.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L63)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:71](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L71)

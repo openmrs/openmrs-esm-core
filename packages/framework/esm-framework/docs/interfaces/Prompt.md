@@ -23,7 +23,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L82)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L90)
 
 ___
 
@@ -35,7 +35,7 @@ Defaults to "Cancel"
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:87](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L87)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:95](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L95)
 
 ___
 
@@ -47,7 +47,7 @@ Defaults to "Confirm"
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:84](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L84)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L92)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L81)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L89)
 
 ## Methods
 
@@ -71,4 +71,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L85)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L93)

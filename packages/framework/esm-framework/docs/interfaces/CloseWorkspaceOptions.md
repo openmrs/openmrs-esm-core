@@ -6,6 +6,7 @@
 
 ### Workspace Properties
 
+- [clearWorkspaceFamilyStore](CloseWorkspaceOptions.md#clearworkspacefamilystore)
 - [ignoreChanges](CloseWorkspaceOptions.md#ignorechanges)
 
 ### Workspace Methods
@@ -13,6 +14,22 @@
 - [onWorkspaceClose](CloseWorkspaceOptions.md#onworkspaceclose)
 
 ## Workspace Properties
+
+### clearWorkspaceFamilyStore
+
+• `Optional` **clearWorkspaceFamilyStore**: `boolean`
+
+If set to true, the workspace family store will be cleared when the workspace is closed. Defaults to true.
+
+If set to false, the workspace family store will not be cleared when the workspace is closed. This happens when the new workspace is of the same sidebar family as the current workspace.
+
+**`default`** true
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L34)
+
+___
 
 ### ignoreChanges
 
