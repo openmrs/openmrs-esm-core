@@ -1,22 +1,22 @@
 /** @module @category Utility */
 import dayjs from 'dayjs';
 import { getLocale } from './omrs-dates';
+import { DurationFormat } from '@formatjs/intl-durationformat';
+import { type DurationInput } from '@formatjs/intl-durationformat/src/types';
 
 /**
- * Gets a human readable and locale supported representation of a duration between 2 dates,
- * fromDate and toDate. toDate is Optional, defaulting to the current date.
- * Note that `age(birthDate)` gets the age representation of a person with the specified `birthDate`.
+ * Gets a human readable and locale supported representation of a person's age, given their birthDate,
  * The representation logic follows the guideline here:
  * https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://systems.digital.nhs.uk/data/cui/uig/patben.pdf
  * (See Tables 7 and 8)
  *
- * @param fromDate The left bound of the duration.
- * @param toDate Optional. The right bound of the duration. Defaults to the current date
+ * @param birthDate The birthDate.
+ * @param currentDate Optional. If provided, calculates the age of the person at the provided currentDate (instead of now).
  * @returns A human-readable string version of the age.
  */
-export function age(fromDate: dayjs.ConfigType, toDate: dayjs.ConfigType = dayjs()): string {
-  const to = dayjs(toDate);
-  const from = dayjs(fromDate);
+export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType = dayjs()): string {
+  const to = dayjs(currentDate);
+  const from = dayjs(birthDate);
 
   const hourDiff = to.diff(from, 'hours');
   const dayDiff = to.diff(from, 'days');
@@ -24,92 +24,32 @@ export function age(fromDate: dayjs.ConfigType, toDate: dayjs.ConfigType = dayjs
   const monthDiff = to.diff(from, 'months');
   const yearDiff = to.diff(from, 'years');
 
+  const duration: DurationInput = {};
+
   const locale = getLocale();
-  const isLtr = 'ltr' == window.i18next.dir();
 
   if (hourDiff < 2) {
     const minuteDiff = to.diff(from, 'minutes');
-    return new Intl.NumberFormat(locale, {
-      style: 'unit',
-      unit: 'minute',
-      unitDisplay: 'short',
-    }).format(minuteDiff);
+    duration['minutes'] = minuteDiff;
   } else if (dayDiff < 2) {
-    return new Intl.NumberFormat(locale, {
-      style: 'unit',
-      unit: 'hour',
-      unitDisplay: 'short',
-    }).format(hourDiff);
+    duration['hours'] = hourDiff;
   } else if (weekDiff < 4) {
-    return new Intl.NumberFormat(locale, {
-      style: 'unit',
-      unit: 'day',
-      unitDisplay: 'short',
-    }).format(dayDiff);
+    duration['days'] = dayDiff;
   } else if (yearDiff < 1) {
-    const week = new Intl.NumberFormat(locale, {
-      style: 'unit',
-      unit: 'week',
-      unitDisplay: 'short',
-    }).format(weekDiff);
-
     const remainderDayDiff = to.subtract(weekDiff, 'weeks').diff(from, 'days');
-    if (remainderDayDiff > 0) {
-      const day = new Intl.NumberFormat(locale, {
-        style: 'unit',
-        unit: 'day',
-        unitDisplay: 'short',
-      }).format(remainderDayDiff);
-
-      return isLtr ? week + ' ' + day : day + ' ' + week;
-    } else {
-      return week;
-    }
+    duration['weeks'] = weekDiff;
+    duration['days'] = remainderDayDiff;
   } else if (yearDiff < 2) {
-    const month = new Intl.NumberFormat(locale, {
-      style: 'unit',
-      unit: 'month',
-      unitDisplay: 'short',
-    }).format(monthDiff);
-
     const remainderDayDiff = to.subtract(monthDiff, 'months').diff(from, 'days');
-
-    if (remainderDayDiff > 0) {
-      const day = new Intl.NumberFormat(locale, {
-        style: 'unit',
-        unit: 'day',
-        unitDisplay: 'short',
-      }).format(remainderDayDiff);
-
-      return isLtr ? month + ' ' + day : day + ' ' + month;
-    } else {
-      return month;
-    }
+    duration['months'] = monthDiff;
+    duration['days'] = remainderDayDiff;
   } else if (yearDiff < 18) {
-    const year = new Intl.NumberFormat(locale, {
-      style: 'unit',
-      unit: 'year',
-      unitDisplay: 'short',
-    }).format(yearDiff);
-
     const remainderMonthDiff = to.subtract(yearDiff, 'year').diff(from, 'months');
-
-    if (remainderMonthDiff > 0) {
-      const month = new Intl.NumberFormat(locale, {
-        style: 'unit',
-        unit: 'month',
-        unitDisplay: 'short',
-      }).format(remainderMonthDiff);
-
-      return isLtr ? year + ' ' + month : month + ' ' + year;
-    } else {
-      return year;
-    }
+    duration['years'] = yearDiff;
+    duration['months'] = remainderMonthDiff;
   } else {
-    return new Intl.NumberFormat(locale, {
-      style: 'unit',
-      unit: 'year',
-      unitDisplay: 'short',
-    }).format(yearDiff);
+    duration['years'] = yearDiff;
   }
+
+  return new DurationFormat(locale, { style: 'short' }).format(duration);
 }

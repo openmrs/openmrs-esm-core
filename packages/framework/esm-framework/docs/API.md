@@ -6507,11 +6507,9 @@ ___
 
 ### age
 
-▸ **age**(`fromDate`, `toDate?`): `string`
+▸ **age**(`birthDate`, `currentDate?`): `string`
 
-Gets a human readable and locale supported representation of a duration between 2 dates,
-fromDate and toDate. toDate is Optional, defaulting to the current date.
-Note that `age(birthDate)` gets the age representation of a person with the specified `birthDate`.
+Gets a human readable and locale supported representation of a person's age, given their birthDate,
 The representation logic follows the guideline here:
 https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://systems.digital.nhs.uk/data/cui/uig/patben.pdf
 (See Tables 7 and 8)
@@ -6520,8 +6518,8 @@ https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://system
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `fromDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | The left bound of the duration. |
-| `toDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | Optional. The right bound of the duration. Defaults to the current date |
+| `birthDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | The birthDate. |
+| `currentDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | Optional. If provided, calculates the age of the person at the provided currentDate (instead of now). |
 
 #### Returns
 

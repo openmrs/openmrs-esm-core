@@ -78,6 +78,7 @@
   },
   "packageManager": "yarn@4.2.2",
   "dependencies": {
+    "@formatjs/intl-durationformat": "^0.2.4",
     "@hookform/resolvers": "^3.6.0",
     "react-hook-form": "^7.52.0",
     "zod": "^3.23.8"
