@@ -3,7 +3,6 @@ import React, {
   type ForwardedRef,
   type HTMLAttributes,
   type PropsWithChildren,
-  type RefObject,
   type ReactElement,
   type ReactNode,
   cloneElement,
@@ -12,6 +11,7 @@ import React, {
   useContext,
   useCallback,
   useRef,
+  createContext,
 } from 'react';
 import classNames, { type Argument } from 'classnames';
 import {
@@ -64,22 +64,13 @@ import {
   RangeCalendarStateContext,
   useContextProps,
 } from 'react-aria-components';
-import dayjs, { type Dayjs } from 'dayjs';
+import dayjs, { type ConfigType as DayjsConfigType } from 'dayjs';
 import { formatDate, getDefaultCalendar, getLocale } from '@openmrs/esm-utils';
-import styles from './datepicker.module.scss';
 import { CalendarIcon, CaretDownIcon, CaretUpIcon, ChevronLeftIcon, ChevronRightIcon, WarningIcon } from '../icons';
+import styles from './datepicker.module.scss';
 
 /** A type for any of the acceptable date formats */
-export type DateInputValue =
-  | CalendarDate
-  | CalendarDateTime
-  | ZonedDateTime
-  | Date
-  | Dayjs
-  | string
-  | number
-  | null
-  | undefined;
+export type DateInputValue = CalendarDate | CalendarDateTime | ZonedDateTime | DayjsConfigType;
 
 /**
  * Properties for the OpenmrsDatePicker
@@ -157,9 +148,8 @@ function dateToInternationalizedDate(
     return calendar ? toCalendar(date, calendar) : date;
   } else {
     const date_ = dayjs(date).toDate();
-    return calendar
-      ? toCalendar(new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate()), calendar)
-      : new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate());
+    const calendarDate = new CalendarDate(date_.getFullYear(), date_.getMonth() + 1, date_.getDate());
+    return calendar ? toCalendar(calendarDate, calendar) : calendarDate;
   }
 }
 
@@ -183,7 +173,7 @@ function getYearAsNumber(date: Date, intlLocale: Intl.Locale) {
   );
 }
 
-const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanElement>>>(
+const MonthYear = forwardRef<HTMLSpanElement, PropsWithChildren<HTMLAttributes<HTMLSpanElement>>>(
   function MonthYear(props, ref) {
     const { className } = props;
     const calendarState = useContext(CalendarStateContext);
@@ -191,9 +181,8 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
 
     const state = calendarState ?? rangeCalendarState;
 
-    const locale = useLocale();
-    const intlLocale = new Intl.Locale(locale.locale);
-    const tz = Intl.DateTimeFormat(intlLocale.toString()).resolvedOptions().timeZone;
+    const intlLocale = useIntlLocale();
+    const tz = getLocalTimeZone();
 
     const month = formatDate(state.visibleRange.start.toDate(tz), {
       calendar: intlLocale.calendar,
@@ -214,7 +203,7 @@ const MonthYear = forwardRef<Element, PropsWithChildren<HTMLAttributes<HTMLSpanE
 
     return (
       state && (
-        <span ref={ref as RefObject<HTMLSpanElement>} className={className}>
+        <span ref={ref} className={className}>
           <span>{month}</span>
           <NumberField
             formatOptions={{ useGrouping: false }}
@@ -271,11 +260,9 @@ const DatePickerInput = forwardRef<HTMLDivElement, DateInputProps>(function Date
         {...props}
         ref={ref}
         slot={props.slot || undefined}
-        className={props.className ?? 'react-aria-DateInput'}
+        className={props.className}
         isInvalid={state.isInvalid}
-        onClick={() => {
-          datePickerState.setOpen(!datePickerState.isOpen);
-        }}
+        onClick={() => datePickerState.setOpen(!datePickerState.isOpen)}
       >
         {state.segments.map((segment, i) => cloneElement(props.children(segment), { key: i }))}
       </Group>
@@ -387,7 +374,6 @@ const DateSegment = forwardRef(function DateSegment(
     />
   );
 });
-
 function DatePickerLabel({ labelText }: Pick<OpenmrsDatePickerProps, 'labelText'>) {
   if (labelText === null || typeof labelText === 'undefined' || typeof labelText === 'boolean') {
     return null;
@@ -395,6 +381,10 @@ function DatePickerLabel({ labelText }: Pick<OpenmrsDatePickerProps, 'labelText'
 
   return <Label className="cds--label">{labelText}</Label>;
 }
+
+const OpenmrsIntlLocaleContext = createContext<Intl.Locale | null>(null);
+
+const useIntlLocale = () => useContext(OpenmrsIntlLocaleContext)!;
 
 /**
  * A date picker component to select a single date. Based on React Aria, but styled to look like Carbon.
@@ -438,8 +428,6 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
 
     const intlLocale = useMemo(() => new Intl.Locale(locale, { calendar: calendar?.identifier }), [locale, calendar]);
 
-    const localeWithCalendar = useMemo(() => intlLocale.toString(), [intlLocale]);
-
     const defaultValue = useMemo(() => dateToInternationalizedDate(rawDefaultValue, calendar), [rawDefaultValue]);
     const value = useMemo(() => dateToInternationalizedDate(rawValue, calendar, true), [rawValue]);
     const maxDate = useMemo(() => dateToInternationalizedDate(rawMaxDate, calendar), [rawMaxDate]);
@@ -457,71 +445,73 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     }, [onChangeRaw, rawOnChange]);
 
     return (
-      <I18nProvider locale={localeWithCalendar}>
+      <I18nProvider locale={intlLocale.toString()}>
         <div className={classNames('cds--form-item', className)}>
-          <DatePicker
-            className={classNames('cds--date-picker', 'cds--date-picker--single', {
-              ['cds--date-picker--short']: short,
-              ['cds--date-picker--light']: light,
-            })}
-            defaultValue={defaultValue}
-            isInvalid={isInvalid}
-            maxValue={maxDate}
-            minValue={minDate}
-            value={value}
-            shouldForceLeadingZeros={intlLocale.language === 'en' ? true : undefined}
-            {...datePickerProps}
-            onChange={onChange}
-          >
-            <div className="cds--date-picker-container">
-              <DatePickerLabel labelText={labelText ?? label} />
-              <Group className={styles.inputGroup}>
-                <DatePickerInput
-                  ref={ref}
-                  className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
-                    [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
-                  })}
-                >
-                  {(segment) => {
-                    return segment.type !== 'era' ? (
-                      <DateSegment className={styles.inputSegment} segment={segment} />
-                    ) : (
-                      <React.Fragment />
-                    );
-                  }}
-                </DatePickerInput>
-                <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
-                  <DatePickerIcon />
-                </Button>
-              </Group>
-              {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
-            </div>
-            <Popover className={styles.popover} placement="bottom" offset={1}>
-              <Dialog className={styles.dialog}>
-                <Calendar className={classNames('cds--date-picker__calendar')}>
-                  <header className={styles.header}>
-                    <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
-                      <ChevronLeftIcon size={16} />
-                    </Button>
-                    <MonthYear className={styles.monthYear} />
-                    <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
-                      <ChevronRightIcon size={16} />
-                    </Button>
-                  </header>
-                  <CalendarGrid className={styles.calendarGrid}>
-                    {(date) => (
-                      <CalendarCell
-                        className={classNames('cds--date-picker__day', {
-                          [styles.today]: today_.compare(date) === 0,
-                        })}
-                        date={date}
-                      />
-                    )}
-                  </CalendarGrid>
-                </Calendar>
-              </Dialog>
-            </Popover>
-          </DatePicker>
+          <Provider values={[[OpenmrsIntlLocaleContext, intlLocale]]}>
+            <DatePicker
+              className={classNames('cds--date-picker', 'cds--date-picker--single', {
+                ['cds--date-picker--short']: short,
+                ['cds--date-picker--light']: light,
+              })}
+              defaultValue={defaultValue}
+              isInvalid={isInvalid}
+              maxValue={maxDate}
+              minValue={minDate}
+              value={value}
+              shouldForceLeadingZeros={intlLocale.language === 'en' ? true : undefined}
+              {...datePickerProps}
+              onChange={onChange}
+            >
+              <div className="cds--date-picker-container">
+                <DatePickerLabel labelText={labelText ?? label} />
+                <Group className={styles.inputGroup}>
+                  <DatePickerInput
+                    ref={ref}
+                    className={classNames('cds--date-picker-input__wrapper', styles.inputWrapper, {
+                      [styles.inputWrapperMd]: size === 'md' || !size || size.length === 0,
+                    })}
+                  >
+                    {(segment) => {
+                      return segment.type !== 'era' ? (
+                        <DateSegment className={styles.inputSegment} segment={segment} />
+                      ) : (
+                        <React.Fragment />
+                      );
+                    }}
+                  </DatePickerInput>
+                  <Button className={classNames(styles.flatButton, styles.flatButtonMd)}>
+                    <DatePickerIcon />
+                  </Button>
+                </Group>
+                {isInvalid && invalidText && <FieldError className={styles.invalidText}>{invalidText}</FieldError>}
+              </div>
+              <Popover className={styles.popover} placement="bottom" offset={1}>
+                <Dialog className={styles.dialog}>
+                  <Calendar className={classNames('cds--date-picker__calendar')}>
+                    <header className={styles.header}>
+                      <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="previous">
+                        <ChevronLeftIcon size={16} />
+                      </Button>
+                      <MonthYear className={styles.monthYear} />
+                      <Button className={classNames(styles.flatButton, styles.flatButtonMd)} slot="next">
+                        <ChevronRightIcon size={16} />
+                      </Button>
+                    </header>
+                    <CalendarGrid className={styles.calendarGrid}>
+                      {(date) => (
+                        <CalendarCell
+                          className={classNames('cds--date-picker__day', {
+                            [styles.today]: today_.compare(date) === 0,
+                          })}
+                          date={date}
+                        />
+                      )}
+                    </CalendarGrid>
+                  </Calendar>
+                </Dialog>
+              </Popover>
+            </DatePicker>
+          </Provider>
         </div>
       </I18nProvider>
     );
