@@ -617,6 +617,10 @@ function validateFreeformObjectStructure(freeformObjectSchema: ConfigSchema, con
 }
 
 function validateArrayStructure(arraySchema: ConfigSchema, value: ConfigObject, keyPath: string) {
+  const validatedAsArray = checkType(keyPath, Type.Array, value);
+  if (!validatedAsArray) {
+    return;
+  }
   // if there is an array element object schema, verify that elements match it
   if (hasObjectSchema(arraySchema._elements)) {
     for (let i = 0; i < value.length; i++) {
@@ -660,6 +664,10 @@ function runAllValidatorsInConfigTree(schema: ConfigSchema, config: ConfigObject
   }
 }
 
+/**
+ * Run type validation for the value, logging any errors.
+ * @returns true if validation passes, false otherwise
+ */
 function checkType(keyPath: string, _type: Type | undefined, value: any) {
   if (_type) {
     const validator: Record<string, Function> = {
@@ -673,11 +681,17 @@ function checkType(keyPath: string, _type: Type | undefined, value: any) {
       PersonAttributeTypeUuid: isUuid,
       PatientIdentifierTypeUuid: isUuid,
     };
-    runValidators(keyPath, [validator[_type]], value);
+    return runValidators(keyPath, [validator[_type]], value);
   }
+  return true;
 }
 
+/**
+ * Runs validators, logging errors.
+ * @returns true if all pass, false otherwise.
+ */
 function runValidators(keyPath: string, validators: Array<Function> | undefined, value: any) {
+  let returnValue = true;
   if (validators) {
     try {
       for (let validator of validators) {
@@ -689,12 +703,14 @@ function runValidators(keyPath: string, validators: Array<Function> | undefined,
               ? `Invalid configuration for ${keyPath}: ${validatorResult}`
               : `Invalid configuration value ${value} for ${keyPath}: ${validatorResult}`;
           logError(keyPath, message);
+          returnValue = false;
         }
       }
     } catch (e) {
       console.error(`Skipping invalid validator at "${keyPath}". Encountered error\n\t${e}`);
     }
   }
+  return returnValue;
 }
 
 // Recursively fill in the config with values from the schema.

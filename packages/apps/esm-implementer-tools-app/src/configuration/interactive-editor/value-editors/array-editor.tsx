@@ -22,11 +22,12 @@ interface ArrayEditorProps {
 
 export function ArrayEditor({ element, valueArray, setValue }: ArrayEditorProps) {
   const arrayKey = useMemo(() => uniqueId('array-editor-'), []);
+  const currentValueArray = valueArray ?? [];
   return (
     <Tile className={styles.arrayEditor}>
       <StructuredListWrapper>
         <StructuredListBody>
-          {valueArray.map((value, i) => (
+          {currentValueArray.map((value, i) => (
             <StructuredListRow key={`${arrayKey}-${i}`}>
               <StructuredListCell>
                 <ValueEditorField
@@ -38,7 +39,7 @@ export function ArrayEditor({ element, valueArray, setValue }: ArrayEditorProps)
                   valueType={(element._elements?._type as Type) ?? Type.Object}
                   value={value}
                   onChange={(newValue) => {
-                    const newValueArray = cloneDeep(valueArray);
+                    const newValueArray = cloneDeep(currentValueArray);
                     newValueArray[i] = newValue;
                     setValue(newValueArray);
                   }}
@@ -52,7 +53,7 @@ export function ArrayEditor({ element, valueArray, setValue }: ArrayEditorProps)
                   iconDescription="Remove"
                   hasIconOnly
                   onClick={() => {
-                    const newValueArray = cloneDeep(valueArray);
+                    const newValueArray = cloneDeep(currentValueArray);
                     newValueArray.splice(i, 1);
                     setValue(newValueArray);
                   }}
@@ -68,7 +69,7 @@ export function ArrayEditor({ element, valueArray, setValue }: ArrayEditorProps)
                 iconDescription="Add"
                 hasIconOnly
                 onClick={() => {
-                  const newValueArray = cloneDeep(valueArray);
+                  const newValueArray = cloneDeep(currentValueArray);
                   const newValue = (element._elements?._type ?? Type.Object) == Type.Object ? {} : null;
                   newValueArray.push(newValue);
                   setValue(newValueArray);
