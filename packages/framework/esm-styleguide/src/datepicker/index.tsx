@@ -9,6 +9,8 @@ import React, {
   useContext,
   useCallback,
   useRef,
+  useState,
+  useEffect,
 } from 'react';
 import classNames, { type Argument } from 'classnames';
 import {
@@ -284,6 +286,13 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
     const minDate = useMemo(() => dateToInternationalizedDate(rawMinDate, calendar), [rawMinDate]);
     const isInvalid = useMemo(() => invalid ?? isInvalidRaw, [invalid, isInvalidRaw]);
     const today_ = calendar ? toCalendar(today(getLocalTimeZone()), calendar) : today(getLocalTimeZone());
+    const [internalValue, setInternalValue] = useState<
+      CalendarDate | CalendarDateTime | ZonedDateTime | null | undefined
+    >(value);
+
+    useEffect(() => {
+      setInternalValue(rawValue ? dateToInternationalizedDate(rawValue, calendar) : null);
+    }, [rawValue, calendar]);
 
     return (
       <I18nProvider locale={localeWithCalendar}>
@@ -297,7 +306,8 @@ export const OpenmrsDatePicker = forwardRef<HTMLDivElement, OpenmrsDatePickerPro
             isInvalid={isInvalid}
             maxValue={maxDate}
             minValue={minDate}
-            value={value}
+            value={internalValue}
+            onChange={setInternalValue}
             {...datePickerProps}
           >
             <div className="cds--date-picker-container">
