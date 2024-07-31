@@ -57,5 +57,9 @@ function PopupHandler() {
 }
 
 export default function ImplementerTools() {
-  return <PopupHandler />;
+  return (
+    <UserHasAccess privilege="coreapps.systemAdministration">
+      <PopupHandler />
+    </UserHasAccess>
+  );
 }
