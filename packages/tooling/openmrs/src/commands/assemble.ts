@@ -8,7 +8,7 @@ import axios from 'axios';
 import npmRegistryFetch from 'npm-registry-fetch';
 import pacote from 'pacote';
 import semver from 'semver';
-import { merge } from 'lodash-es';
+import merge from 'lodash/merge';
 import { contentHash, logInfo, logWarn, untar } from '../utils';
 import { getNpmRegistryConfiguration } from '../utils/npmConfig';
 

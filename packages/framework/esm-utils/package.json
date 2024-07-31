@@ -51,6 +51,7 @@
     "rxjs": "6.x"
   },
   "dependencies": {
+    "@formatjs/intl-durationformat": "^0.2.4",
     "@internationalized/date": "^3.5.4",
     "semver": "7.3.2"
   }
