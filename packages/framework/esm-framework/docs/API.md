@@ -521,13 +521,13 @@ ___
 
 ### DateInputValue
 
-Ƭ **DateInputValue**: `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime` \| `Date` \| `Dayjs` \| `string` \| `number` \| ``null`` \| `undefined`
+Ƭ **DateInputValue**: `CalendarDate` \| `CalendarDateTime` \| `ZonedDateTime` \| `DayjsConfigType`
 
 A type for any of the acceptable date formats
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:58](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L58)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L73)
 
 ___
 
@@ -1567,7 +1567,7 @@ A date picker component to select a single date. Based on React Aria, but styled
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/datepicker/index.tsx:251](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L251)
+[packages/framework/esm-styleguide/src/datepicker/index.tsx:392](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L392)
 
 ___
 
