@@ -39,7 +39,7 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
         ...workspaceFamilyState,
         ...workspace.additionalProps,
       },
-    [workspace, additionalPropsFromPage],
+    [workspace, additionalPropsFromPage, workspaceFamilyState],
   );
 
   return lifecycle ? (
