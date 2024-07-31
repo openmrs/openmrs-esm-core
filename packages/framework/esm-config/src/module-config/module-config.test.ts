@@ -406,6 +406,23 @@ describe('getConfig', () => {
     expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/0.*foo-module.*baz.*must be an object/i));
   });
 
+  it('does not crash when null is passed as a freeform object config value', async () => {
+    Config.defineConfigSchema('object-null-module', {
+      objnu: {
+        _type: Type.Object,
+        _default: {},
+      },
+    });
+    const testConfig = {
+      'object-null-module': {
+        objnu: null,
+      },
+    };
+    Config.provide(testConfig);
+    await Config.getConfig('object-null-module');
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/.*object-null-module.*obj.*must be an object/i));
+  });
+
   it('supports freeform object elements validations', async () => {
     Config.defineConfigSchema('foo-module', {
       foo: {
@@ -666,6 +683,23 @@ describe('getConfig', () => {
     Config.provide(goodConfig);
     const result = await Config.getConfig('foo-module');
     expect(result.bar[0].a.b).toBe(2);
+  });
+
+  it('does not crash when null is passed as an array config value', async () => {
+    Config.defineConfigSchema('array-null-module', {
+      arnu: {
+        _type: Type.Array,
+        _default: [1, 2, 3],
+      },
+    });
+    const testConfig = {
+      'array-null-module': {
+        arnu: null,
+      },
+    };
+    Config.provide(testConfig);
+    await Config.getConfig('array-null-module');
+    expect(console.error).toHaveBeenCalledWith(expect.stringMatching(/.*array-null-module.*arnu.*must be an array/i));
   });
 
   it('fills array element object elements with defaults', async () => {
