@@ -25,9 +25,7 @@ export interface CloseWorkspaceOptions {
    */
   onWorkspaceClose?: () => void;
   /**
-   * If set to true, the workspace family store will be cleared when the workspace is closed. Defaults to true.
-   *
-   * If set to false, the workspace family store will not be cleared when the workspace is closed. This happens when the new workspace is of the same sidebar family as the current workspace.
+   * Controls whether the workspace family store will be cleared when this workspace is closed. Defaults to true except when opening a new workspace of the same family.
    *
    * @default true
    */

@@ -27,7 +27,7 @@ describe('WorkspaceRenderer', () => {
     });
     render(
       <WorkspaceRenderer
-        // @ts-ignore
+        // @ts-ignore The workspace is of type OpenWorkspace and not all properties are required
         workspace={{
           closeWorkspace: mockedCloseWorkspace,
           name: 'workspace-name',
