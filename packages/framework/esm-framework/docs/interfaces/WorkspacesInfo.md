@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:408](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L408)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:418](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L418)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:409](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L409)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:419](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L419)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:410](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L410)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:420](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L420)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:411](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L411)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:421](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L421)

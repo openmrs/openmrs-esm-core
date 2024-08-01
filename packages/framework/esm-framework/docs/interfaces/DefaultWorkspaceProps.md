@@ -43,7 +43,7 @@ closed, given the user forcefully closes the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L44)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L47)
 
 ___
 
@@ -66,7 +66,7 @@ will directly close the workspace without any prompt
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L54)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L57)
 
 ___
 
@@ -89,7 +89,7 @@ this workspace is closed; e.g. if there is unsaved data.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L49)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L52)
 
 ___
 
@@ -117,4 +117,4 @@ title needs to be set dynamically.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L69)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:72](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L72)

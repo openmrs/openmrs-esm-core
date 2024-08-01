@@ -6977,7 +6977,7 @@ ___
 
 ### closeWorkspace
 
-▸ **closeWorkspace**(`name`, `options?`): `boolean`
+▸ **closeWorkspace**(`name`, `options?`): `void`
 
 Function to close an opened workspace
 
@@ -6990,11 +6990,11 @@ Function to close an opened workspace
 
 #### Returns
 
-`boolean`
+`void`
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:304](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L304)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:306](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L306)
 
 ___
 
@@ -7045,7 +7045,7 @@ prop named `workspaceTitle` will override the title of the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:176](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L176)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:179](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L179)
 
 ___
 
@@ -7071,7 +7071,7 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L261)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:264](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L264)
 
 ___
 
@@ -7085,4 +7085,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:414](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L414)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:424](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L424)
