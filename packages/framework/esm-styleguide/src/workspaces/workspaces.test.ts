@@ -2,7 +2,6 @@ import {
   type Prompt,
   cancelPrompt,
   closeWorkspace,
-  closeWorkspaceInternal,
   getWorkspaceFamilyStore,
   getWorkspaceStore,
   launchWorkspace,
@@ -519,28 +518,6 @@ describe('workspace system', () => {
       closeWorkspace('ward-patient-workspace');
       expect(workspaceFamilyStore?.getState()?.['foo']).toBeUndefined();
       expect(workspaceFamilyStore?.getState()).toStrictEqual({});
-    });
-
-    it('should not clear workspace family store if the workspace is closed and `clearWorkspaceFamilyStore` option is passed false', async () => {
-      registerWorkspace({
-        name: 'ward-patient-workspace',
-        title: 'Ward Patient Workspace',
-        load: jest.fn(),
-        type: 'ward-patient',
-        moduleName: '@openmrs/esm-ward-app',
-        hasOwnSidebar: true,
-        sidebarFamily: 'ward-patient-sidebar',
-      });
-      launchWorkspace('ward-patient-workspace', {
-        foo: true,
-      });
-      const workspaceFamilyStore = getWorkspaceFamilyStore('ward-patient-sidebar');
-      expect(workspaceFamilyStore).toBeTruthy();
-      expect(workspaceFamilyStore?.getState()?.['foo']).toBe(true);
-      closeWorkspaceInternal('ward-patient-workspace', {
-        clearWorkspaceFamilyStore: false,
-      });
-      expect(workspaceFamilyStore?.getState()?.['foo']).toBe(true);
     });
 
     it('should not clear the workspace store if the new workspace opened is of the same type as the already opened workspace', () => {

@@ -303,14 +303,10 @@ const defaultOptions: CloseWorkspaceOptions = {
  * @param options Options to close workspace
  */
 export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}) {
-  closeWorkspaceInternal(name, { ...options, clearWorkspaceFamilyStore: true });
+  return closeWorkspaceInternal(name, { ...options, clearWorkspaceFamilyStore: true });
 }
 
-/**
- * Function to close an opened workspace
- * @internal Exported for testing purposes only
- */
-export function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOptions = {}): boolean {
+function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOptions = {}): boolean {
   options = { ...defaultOptions, ...options };
   const store = getWorkspaceStore();
 
