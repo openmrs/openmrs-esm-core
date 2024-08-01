@@ -24,6 +24,9 @@ export interface CloseWorkspaceOptions {
    * @returns void
    */
   onWorkspaceClose?: () => void;
+}
+
+interface CloseWorkspaceInternalOptions extends CloseWorkspaceOptions {
   /**
    * Controls whether the workspace family store will be cleared when this workspace is closed. Defaults to true except when opening a new workspace of the same family.
    *
@@ -126,7 +129,7 @@ function promptBeforeLaunchingWorkspace(
   const newWorkspaceRegistration = getWorkspaceRegistration(name);
 
   const proceed = () => {
-    workspace.closeWorkspace({
+    closeWorkspaceInternal(workspace.name, {
       ignoreChanges: true,
       // Calling the launchWorkspace again, since one of the `if` case
       // might resolve, but we need to check all the cases before launching the form.
@@ -293,7 +296,6 @@ export function cancelPrompt() {
 const defaultOptions: CloseWorkspaceOptions = {
   ignoreChanges: false,
   onWorkspaceClose: () => {},
-  clearWorkspaceFamilyStore: true,
 };
 
 /**
@@ -301,7 +303,15 @@ const defaultOptions: CloseWorkspaceOptions = {
  * @param name Workspace registration name
  * @param options Options to close workspace
  */
-export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}): boolean {
+export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}) {
+  closeWorkspaceInternal(name, { ...options, clearWorkspaceFamilyStore: true });
+}
+
+/**
+ * Function to close an opened workspace
+ * @internal Exported for testing purposes only
+ */
+export function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOptions = {}): boolean {
   options = { ...defaultOptions, ...options };
   const store = getWorkspaceStore();
 

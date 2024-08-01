@@ -2,6 +2,7 @@ import {
   type Prompt,
   cancelPrompt,
   closeWorkspace,
+  closeWorkspaceInternal,
   getWorkspaceFamilyStore,
   getWorkspaceStore,
   launchWorkspace,
@@ -536,7 +537,7 @@ describe('workspace system', () => {
       const workspaceFamilyStore = getWorkspaceFamilyStore('ward-patient-sidebar');
       expect(workspaceFamilyStore).toBeTruthy();
       expect(workspaceFamilyStore?.getState()?.['foo']).toBe(true);
-      closeWorkspace('ward-patient-workspace', {
+      closeWorkspaceInternal('ward-patient-workspace', {
         clearWorkspaceFamilyStore: false,
       });
       expect(workspaceFamilyStore?.getState()?.['foo']).toBe(true);
