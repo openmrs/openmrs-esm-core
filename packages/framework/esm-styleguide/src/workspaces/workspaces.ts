@@ -26,6 +26,15 @@ export interface CloseWorkspaceOptions {
   onWorkspaceClose?: () => void;
 }
 
+interface CloseWorkspaceInternalOptions extends CloseWorkspaceOptions {
+  /**
+   * Controls whether the workspace family store will be cleared when this workspace is closed. Defaults to true except when opening a new workspace of the same family.
+   *
+   * @default true
+   */
+  clearWorkspaceFamilyStore?: boolean;
+}
+
 /** The default parameters received by all workspaces */
 export interface DefaultWorkspaceProps {
   /**
@@ -117,13 +126,16 @@ function promptBeforeLaunchingWorkspace(
   newWorkspaceDetails: { name: string; additionalProps?: object },
 ) {
   const { name, additionalProps } = newWorkspaceDetails;
+  const newWorkspaceRegistration = getWorkspaceRegistration(name);
 
   const proceed = () => {
-    workspace.closeWorkspace({
+    closeWorkspaceInternal(workspace.name, {
       ignoreChanges: true,
       // Calling the launchWorkspace again, since one of the `if` case
       // might resolve, but we need to check all the cases before launching the form.
       onWorkspaceClose: () => launchWorkspace(name, additionalProps),
+      // If the new workspace is of the same sidebar family, then we don't need to clear the workspace family store.
+      clearWorkspaceFamilyStore: newWorkspaceRegistration.sidebarFamily !== workspace.sidebarFamily,
     });
   };
 
@@ -280,18 +292,22 @@ export function cancelPrompt() {
   store.setState({ ...state, prompt: null });
 }
 
+const defaultOptions: CloseWorkspaceOptions = {
+  ignoreChanges: false,
+  onWorkspaceClose: () => {},
+};
+
 /**
  * Function to close an opened workspace
  * @param name Workspace registration name
  * @param options Options to close workspace
  */
-export function closeWorkspace(
-  name: string,
-  options: CloseWorkspaceOptions = {
-    ignoreChanges: false,
-    onWorkspaceClose: () => {},
-  },
-): boolean {
+export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}) {
+  return closeWorkspaceInternal(name, { ...options, clearWorkspaceFamilyStore: true });
+}
+
+function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOptions = {}): boolean {
+  options = { ...defaultOptions, ...options };
   const store = getWorkspaceStore();
 
   const updateStoreWithClosedWorkspace = () => {
@@ -301,10 +317,11 @@ export function closeWorkspace(
     const newOpenWorkspaces = state.openWorkspaces.filter((w) => w.name != name);
     const workspaceFamilyStore = getWorkspaceFamilyStore(workspaceSidebarFamilyName);
     if (
+      options.clearWorkspaceFamilyStore &&
       workspaceFamilyStore &&
-      !newOpenWorkspaces.some((workspace) => workspace.sidebarFamily === workspaceSidebarFamilyName)
+      !newOpenWorkspaces.some((w) => w.sidebarFamily === workspaceSidebarFamilyName)
     ) {
-      // Clearing the workspace family store if there are no more workspaces with the same sidebar family name
+      // Clearing the workspace family store if there are no more workspaces with the same sidebar family name and the new workspace is not of the same sidebar family, which is handled in the `launchWorkspace` function.
       workspaceFamilyStore.setState({}, true);
       const unsubscribe = workspaceFamilyStore.subscribe(() => {});
       unsubscribe?.();
