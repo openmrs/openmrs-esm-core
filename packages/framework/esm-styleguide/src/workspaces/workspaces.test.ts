@@ -698,28 +698,7 @@ describe('workspace system', () => {
       const workspaceFamilyStore = getWorkspaceFamilyStore('ward-patient-sidebar');
       expect(workspaceFamilyStore).toBeTruthy();
       expect(workspaceFamilyStore?.getState()?.['foo']).toBe(true);
-      /**
-       * This is to test the change in the closeWorkspace function
-       * function closeWorkspace(
-       *  workspaceName: string,
-       *  options?: CloseWorkspaceOptions={
-       *    ignoreChanges: false,
-       *    onWorkspaceClose: () => {},
-       *    clearWorkspaceFamilyStore: true
-       *   }
-       * ): void
-       *
-       * TO
-       *
-       * function closeWorkspace(
-       *  workspaceName: string,
-       *  options?: CloseWorkspaceOptions={}
-       * ) {
-       *  options = {...defaultOptions, ...options}
-       * }
-       *
-       */
-
+      // test that default options are interpolated when providing options to `closeWorkspace`
       closeWorkspace('ward-patient-workspace', { ignoreChanges: true });
       expect(workspaceFamilyStore?.getState()?.['foo']).toBeUndefined();
       expect(workspaceFamilyStore?.getState()).toStrictEqual({});
