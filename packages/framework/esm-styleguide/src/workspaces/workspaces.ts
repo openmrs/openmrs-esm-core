@@ -134,7 +134,6 @@ function promptBeforeLaunchingWorkspace(
       // Calling the launchWorkspace again, since one of the `if` case
       // might resolve, but we need to check all the cases before launching the form.
       onWorkspaceClose: () => launchWorkspace(name, additionalProps),
-      // This condition is added here to check if the new workspace is of the same sidebar family as the current workspace.
       // If the new workspace is of the same sidebar family, then we don't need to clear the workspace family store.
       clearWorkspaceFamilyStore: newWorkspaceRegistration.sidebarFamily !== workspace.sidebarFamily,
     });
