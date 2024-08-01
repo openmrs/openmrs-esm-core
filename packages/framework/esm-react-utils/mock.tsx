@@ -98,3 +98,11 @@ export const useOnClickOutside = jest.fn();
 export const useBodyScrollLock = jest.fn();
 
 export const isDesktop = jest.fn().mockImplementation(realIsDesktop);
+
+export const useLocations = jest.fn().mockReturnValue([]);
+
+export const toOmrsIsoString = jest.fn().mockImplementation((date: Date) => date.toISOString());
+
+export const toDateObjectStrict = jest.fn().mockImplementation((date: string) => new Date(date));
+
+export const getLocale = jest.fn().mockReturnValue('en');

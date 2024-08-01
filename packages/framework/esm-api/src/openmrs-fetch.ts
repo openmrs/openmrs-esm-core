@@ -7,9 +7,7 @@ import { clearHistory } from '@openmrs/esm-navigation/src/index';
 import type { FetchResponse } from './types';
 
 export const restBaseUrl = '/ws/rest/v1';
-
 export const fhirBaseUrl = '/ws/fhir2/R4';
-
 export const sessionEndpoint = `${restBaseUrl}/session`;
 
 /**
