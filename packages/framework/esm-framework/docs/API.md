@@ -181,6 +181,11 @@
 ### Other Functions
 
 - [WorkspaceContainer](API.md#workspacecontainer)
+- [compile](API.md#compile)
+- [evaluate](API.md#evaluate)
+- [evaluateAsBoolean](API.md#evaluateasboolean)
+- [evaluateAsNumber](API.md#evaluateasnumber)
+- [evaluateAsType](API.md#evaluateastype)
 - [isOnline](API.md#isonline)
 
 ### Store Functions
@@ -515,7 +520,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L40)
+[packages/framework/esm-config/src/types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L46)
 
 ___
 
@@ -638,7 +643,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L62)
+[packages/framework/esm-config/src/types.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L68)
 
 ___
 
@@ -716,7 +721,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L69)
+[packages/framework/esm-config/src/types.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L75)
 
 ___
 
@@ -740,7 +745,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L67)
+[packages/framework/esm-config/src/types.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L73)
 
 ___
 
@@ -801,13 +806,14 @@ ___
 
 ### Actions
 
-Ƭ **Actions**<`T`\>: (`store`: `StoreApi`<`T`\>) => `Record`<`string`, [`ActionFunction`](API.md#actionfunction)<`T`\>\> \| `Record`<`string`, [`ActionFunction`](API.md#actionfunction)<`T`\>\>
+Ƭ **Actions**<`T`, `U`\>: (`store`: `StoreApi`<`T`\>) => [`BoundActions`](API.md#boundactions)<`U`\> \| [`BoundActions`](API.md#boundactions)<`U`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | extends [`DefaultBoundActions`](API.md#defaultboundactions) = [`DefaultBoundActions`](API.md#defaultboundactions) |
 
 #### Defined in
 
@@ -817,15 +823,63 @@ ___
 
 ### BoundActions
 
-Ƭ **BoundActions**: `Object`
+Ƭ **BoundActions**<`T`\>: { [k in keyof T]: T[k] }
 
-#### Index signature
+#### Type parameters
 
-▪ [key: `string`]: (...`args`: `any`[]) => `void`
+| Name | Type |
+| :------ | :------ |
+| `T` | extends [`DefaultBoundActions`](API.md#defaultboundactions) = [`DefaultBoundActions`](API.md#defaultboundactions) |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useStore.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L14)
+
+___
+
+### CustomActionsFn
+
+Ƭ **CustomActionsFn**<`T`\>: (...`args`: `any`[]) => `Partial`<`T`\>
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `unknown` |
+
+#### Type declaration
+
+▸ (...`args`): `Partial`<`T`\>
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `...args` | `any`[] |
+
+##### Returns
+
+`Partial`<`T`\>
 
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useStore.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L10)
+
+___
+
+### DefaultBoundActions
+
+Ƭ **DefaultBoundActions**<`T`\>: { [key in keyof T]: CustomActionsFn }
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `object` = `object` |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L11)
 
 ___
 
@@ -4058,7 +4112,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L143)
+[packages/framework/esm-extensions/src/extensions.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L144)
 
 ___
 
@@ -4081,7 +4135,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:176](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L176)
+[packages/framework/esm-extensions/src/extensions.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L177)
 
 ___
 
@@ -4103,7 +4157,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L200)
+[packages/framework/esm-extensions/src/extensions.ts:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L201)
 
 ___
 
@@ -4127,7 +4181,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:335](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L335)
+[packages/framework/esm-extensions/src/extensions.ts:353](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L353)
 
 ___
 
@@ -4154,7 +4208,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L260)
+[packages/framework/esm-extensions/src/extensions.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L261)
 
 ___
 
@@ -4186,7 +4240,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L91)
+[packages/framework/esm-extensions/src/extensions.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L92)
 
 ___
 
@@ -4347,33 +4401,33 @@ ___
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L6)
 
-▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
+| `actions` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md), `object`\> |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L6)
 
-▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
+| `actions?` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md), `object`\> |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 #### Defined in
 
@@ -5601,6 +5655,204 @@ This component also provides everything needed for workspace notifications to be
 
 ___
 
+### compile
+
+▸ **compile**(`expression`): `jsep.Expression`
+
+`compile()` is a companion function for use with {@link evaluate()} and the various `evaluateAs*()` functions.
+It processes an expression string into the resulting AST that is executed by those functions. This is useful if
+you have an expression that will need to be evaluated mulitple times, potentially with different values, as the
+lexing and parsing steps can be skipped by using the AST object returned from this.
+
+The returned AST is intended to be opaque to client applications, but, of course, it is possible to manipulate
+the AST before passing it back to {@link evaluate()}, if desired. This might be useful if, for example, certain
+values are known to be constant.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` | The expression to be parsed |
+
+#### Returns
+
+`jsep.Expression`
+
+An executable AST representation of the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:173](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L173)
+
+___
+
+### evaluate
+
+▸ **evaluate**(`expression`, `variables?`): `DefaultEvaluateReturnType`
+
+`evaluate()` implements a relatively safe version of `eval()` that is limited to evaluating synchronous
+Javascript expressions. This allows us to safely add features that depend on user-supplied code without
+polluting the global namespace or needing to support `eval()` and the like.
+
+By default it supports any expression that evalutes to a string, number, boolean, Date, null, or undefined.
+Other values will result in an error.
+
+**`example`**
+```ts
+// shouldDisplayOptionalData will be false
+const shouldDisplayOptionalData = evaluate('!isEmpty(array)', {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+})
+```
+
+Since this only implements the expression lanaguage part of Javascript, there is no support for assigning
+values, creating functions, or creating objects, so the following will throw an error:
+
+**`example`**
+```ts
+evaluate('var a = 1; a');
+```
+
+In addition to string expressions, `evaluate()` can use an existing jsep.Expression, such as that returned
+from the `compile()` function. The goal here is to support cases where the same expression will be evaluated
+multiple times, possibly with different variables, e.g.,
+
+**`example`**
+```ts
+const expr = compile('isEmpty(array)');
+
+// then we use it like
+evaluate(expr, {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+
+evaluate(expr, {
+ array: ['value'],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+```
+
+This saves the overhead of parsing the expression everytime and simply allows us to evaluate it.
+
+The `variables` parameter should be used to supply any variables or functions that should be in-scope for
+the evaluation. A very limited number of global objects, like NaN and Infinity are always available, but
+any non-global values will need to be passed as a variable. Note that expressions do not have any access to
+the variables in the scope in which they were defined unless they are supplied here.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | `VariablesMap` | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`DefaultEvaluateReturnType`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L94)
+
+___
+
+### evaluateAsBoolean
+
+▸ **evaluateAsBoolean**(`expression`, `variables?`): `Boolean`
+
+`evaluateAsBoolean()` is a variant of {@link evaluate()} which only supports boolean results. Useful
+if valid expression must return boolean values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | `VariablesMap` | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`Boolean`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L107)
+
+___
+
+### evaluateAsNumber
+
+▸ **evaluateAsNumber**(`expression`, `variables?`): `number`
+
+`evaluateAsNumber()` is a variant of {@link evaluate()} which only supports number results. Useful
+if valid expression must return numeric values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | `VariablesMap` | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`number`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L120)
+
+___
+
+### evaluateAsType
+
+▸ **evaluateAsType**<`T`\>(`expression`, `variables?`, `typePredicate`): `T`
+
+`evaluateToType()` is a type-safe version of {@link evaluate()} which returns a result if the result
+passes a custom type predicate. The main use-case for this is to narrow the return types allowed based on
+context, e.g., if the expected result should be a number or boolean, you can supply a custom type-guard
+to ensure that only number or boolean results are returned.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | `VariablesMap` | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+| `typePredicate` | (`result`: `unknown`) => result is T | A [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)  which asserts that the result value matches one of the expected results. |
+
+#### Returns
+
+`T`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L137)
+
+___
+
 ### isOnline
 
 ▸ **isOnline**(`online?`): `boolean`
@@ -5656,16 +5908,17 @@ ___
 
 ### createUseStore
 
-▸ **createUseStore**<`T`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)<`T`\>) => `T` & [`BoundActions`](API.md#boundactions)(`actions?`: [`Actions`](API.md#actions)<`T`\>) => `T` & [`BoundActions`](API.md#boundactions)
+▸ **createUseStore**<`T`, `U`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)<`T`, `U`\>) => `T` & [`BoundActions`](API.md#boundactions)<`U`\>(`actions?`: [`Actions`](API.md#actions)<`T`, `U`\>) => `T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 Whenever possible, use `useStore(yourStore)` instead. This function is for creating a
 custom hook for a specific store.
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | extends `object` = `object` |
 
 #### Parameters
 
@@ -5683,33 +5936,33 @@ custom hook for a specific store.
 
 `T`
 
-▸ (`actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ (`actions`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [`Actions`](API.md#actions)<`T`\> |
+| `actions` | [`Actions`](API.md#actions)<`T`, `U`\> |
 
 ##### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
-▸ (`actions?`): `T` & [`BoundActions`](API.md#boundactions)
+▸ (`actions?`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [`Actions`](API.md#actions)<`T`\> |
+| `actions?` | [`Actions`](API.md#actions)<`T`, `U`\> |
 
 ##### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L60)
+[packages/framework/esm-react-utils/src/useStore.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L65)
 
 ___
 
@@ -5782,14 +6035,15 @@ ___
 
 ### useStore
 
-▸ **useStore**<`T`, `U`\>(`store`): `T`
+▸ **useStore**<`T`, `U`, `V`\>(`store`): `T`
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
-| `U` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | `T` |
+| `V` | extends `object` = `object` |
 
 #### Parameters
 
@@ -5803,16 +6057,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L33)
+[packages/framework/esm-react-utils/src/useStore.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L38)
 
-▸ **useStore**<`T`, `U`\>(`store`, `select`): `U`
+▸ **useStore**<`T`, `U`, `V`\>(`store`, `select`): `U`
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
-| `U` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | `U` |
+| `V` | extends `object` = `object` |
 
 #### Parameters
 
@@ -5827,16 +6082,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L34)
+[packages/framework/esm-react-utils/src/useStore.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L39)
 
-▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useStore**<`T`, `U`, `V`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)<`V`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
-| `U` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | `U` |
+| `V` | extends `object` = `object` |
 
 #### Parameters
 
@@ -5844,24 +6100,25 @@ ___
 | :------ | :------ |
 | `store` | `StoreApi`<`T`\> |
 | `select` | `undefined` |
-| `actions` | [`Actions`](API.md#actions)<`T`\> |
+| `actions` | [`Actions`](API.md#actions)<`T`, `V`\> |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`V`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L35)
+[packages/framework/esm-react-utils/src/useStore.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L40)
 
-▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)
+▸ **useStore**<`T`, `U`, `V`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)<`V`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
-| `U` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | `U` |
+| `V` | extends `object` = `object` |
 
 #### Parameters
 
@@ -5869,42 +6126,43 @@ ___
 | :------ | :------ |
 | `store` | `StoreApi`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
-| `actions` | [`Actions`](API.md#actions)<`T`\> |
+| `actions` | [`Actions`](API.md#actions)<`T`, `V`\> |
 
 #### Returns
 
-`U` & [`BoundActions`](API.md#boundactions)
+`U` & [`BoundActions`](API.md#boundactions)<`V`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L36)
+[packages/framework/esm-react-utils/src/useStore.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L41)
 
 ___
 
 ### useStoreWithActions
 
-▸ **useStoreWithActions**<`T`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
+▸ **useStoreWithActions**<`T`, `U`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 #### Type parameters
 
-| Name |
-| :------ |
-| `T` |
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | extends `object` = `object` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `store` | `StoreApi`<`T`\> | A zustand store |
-| `actions` | [`Actions`](API.md#actions)<`T`\> |  |
+| `actions` | [`Actions`](API.md#actions)<`T`, `U`\> |  |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)
+`T` & [`BoundActions`](API.md#boundactions)<`U`\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L52)
+[packages/framework/esm-react-utils/src/useStore.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L57)
 
 ___
 
