@@ -35,20 +35,15 @@
   color: $color-gray-70;
 }
 
-.confirmButton {
-  padding: spacing.$spacing-06;
+.footerContainer {
+  padding: spacing.$spacing-05 spacing.$spacing-06 spacing.$spacing-06;
 
   .savePreferenceCheckbox {
     padding-bottom: spacing.$spacing-05 !important;
   }
 
-  .actionButtons {
-    display: inline-flex;
+  .confirmButton {
     width: 100%;
-
-    button {
-      flex-grow: 1;
-    }
   }
 }
 
