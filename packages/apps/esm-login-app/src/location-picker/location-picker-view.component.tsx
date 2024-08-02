@@ -139,7 +139,7 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
             locationTag={chooseLocation.useLoginLocationTag && 'Login Location'}
             onChange={(locationUuid) => setActiveLocation(locationUuid)}
           />
-          <div className={styles.confirmButton}>
+          <div className={styles.footerContainer}>
             <Checkbox
               id="checkbox"
               className={styles.savePreferenceCheckbox}
@@ -147,7 +147,12 @@ const LocationPickerView: React.FC<LocationPickerProps> = ({ hideWelcomeMessage,
               checked={savePreference}
               onChange={(_, { checked }) => setSavePreference(checked)}
             />
-            <Button kind="primary" type="submit" disabled={!activeLocation || !isLoginEnabled || isSubmitting}>
+            <Button
+              className={styles.confirmButton}
+              kind="primary"
+              type="submit"
+              disabled={!activeLocation || !isLoginEnabled || isSubmitting}
+            >
               {isSubmitting ? (
                 <InlineLoading className={styles.loader} description={t('submitting', 'Submitting')} />
               ) : (
