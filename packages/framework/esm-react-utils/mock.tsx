@@ -51,7 +51,7 @@ export const UserHasAccess = jest.fn().mockImplementation((props: any) => {
 
 export const useExtensionInternalStore = createGlobalStore('extensionInternal', getExtensionInternalStore());
 
-export const useExtensionStore = getExtensionStore();
+export const useExtensionStore = jest.fn();
 
 export const ExtensionSlot = jest.fn().mockImplementation(({ children }) => <>{children}</>);
 
