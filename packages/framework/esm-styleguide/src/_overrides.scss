@@ -1,5 +1,4 @@
 @use '@carbon/styles/scss/spacing';
-@use '@carbon/styles/scss/utilities/layout';
 @use '@carbon/colors';
 
 /* UI Shell Header */
@@ -55,8 +54,6 @@
 
 /* Content Switcher */
 .cds--content-switcher:not(.darkThemeSwitch) {
-  @include layout.use('size', $default: 'sm');
-
   & > :first-child {
     border-bottom-left-radius: 0.25rem;
     border-right: unset !important;
@@ -84,20 +81,23 @@
   border-top: 1px solid colors.$blue-30;
   border-bottom: 1px solid colors.$blue-30;
 
+  &:hover {
+    background-color: colors.$gray-10-hover !important;
+  }
+
   &::after {
     background-color: transparent !important;
   }
 
   &.cds--btn--primary {
     background-color: unset;
+  }
 
-    &:hover {
-      background-color: colors.$gray-10-hover;
-    }
+  &:focus {
+    box-shadow: none;
   }
 
   &::before {
-    background-color: colors.$blue-30;
     height: 100%;
     z-index: 0;
   }
@@ -442,9 +442,8 @@ html[dir='rtl'] {
     }
   }
 
+  /* RTL Content Switcher */
   .cds--content-switcher {
-    @include layout.use('size', $default: 'sm');
-
     & > :first-child {
       border-bottom-right-radius: 0.25rem !important;
       border-left: unset !important;
@@ -459,8 +458,6 @@ html[dir='rtl'] {
 
     & > :last-child {
       border-bottom-left-radius: 0.25rem !important;
-      border-left: unset;
-      border-right: unset;
       border-top-left-radius: 0.25rem !important;
 
       [aria-selected='false'] {
@@ -489,9 +486,12 @@ html[dir='rtl'] {
     }
 
     &::before {
-      background-color: colors.$blue-30;
       height: 100%;
       z-index: 0;
+    }
+
+    &:focus {
+      box-shadow: none;
     }
 
     &.cds--content-switcher--selected {
