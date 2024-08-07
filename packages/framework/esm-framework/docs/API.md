@@ -873,6 +873,16 @@ ___
 
 ___
 
+### PageHeaderProps
+
+Ƭ **PageHeaderProps**: `XOR`<[`PageHeaderWrapperProps`](interfaces/PageHeaderWrapperProps.md), [`PageHeaderContentProps`](interfaces/PageHeaderContentProps.md)\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L29)
+
+___
+
 ### SnackbarType
 
 Ƭ **SnackbarType**: ``"error"`` \| ``"info"`` \| ``"info-square"`` \| ``"success"`` \| ``"warning"`` \| ``"warning-alt"``
@@ -1118,6 +1128,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:566](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L566)
+
+___
+
+### AppointmentsPictogram
+
+• `Const` **AppointmentsPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L48)
 
 ___
 
@@ -1425,6 +1445,16 @@ ___
 
 ___
 
+### HomePictogram
+
+• `Const` **HomePictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L36)
+
+___
+
 ### HospitalBedIcon
 
 • `Const` **HospitalBedIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
@@ -1464,6 +1494,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L262)
+
+___
+
+### LaboratoryPictogram
+
+• `Const` **LaboratoryPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L60)
 
 ___
 
@@ -1601,6 +1641,16 @@ ___
 
 ___
 
+### PatientListsPictogram
+
+• `Const` **PatientListsPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L42)
+
+___
+
 ### PedestrianFamilyIcon
 
 • `Const` **PedestrianFamilyIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
@@ -1690,6 +1740,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:407](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L407)
+
+___
+
+### ServiceQueuesPictogram
+
+• `Const` **ServiceQueuesPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L54)
 
 ___
 
@@ -1925,6 +1985,62 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
+
+___
+
+### PageHeader
+
+• `Const` **PageHeader**: `React.FC`<[`PageHeaderProps`](API.md#pageheaderprops)\>
+
+The page header is typically located at the top of a dashboard. It includes a pictogram on the left,
+the name of the dashboard or page, and the `implementationName` from the configuration, which is typically
+the name of the clinic or the authority that is using the implementation. It can also include interactive
+content on the right-hand side. It can be used in two ways:
+
+1. Alone, in order to render just the page header, with no content on the right side:
+
+**`example`**
+```tsx
+  <PageHeader title="My Dashboard" illustration={<Illustration />} />
+```
+
+2. Wrapped around the [PageHeaderContent](API.md#pageheadercontent) component, in order to render the page header on the left
+and some other content on the right side:
+
+**`example`**
+```tsx
+  <PageHeader>
+    <PageHeaderContent title="My Dashboard" illustration={<Illustration />} />
+    <Button>Click me</Button>
+  </PageHeader>
+```
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L57)
+
+___
+
+### PageHeaderContent
+
+• `Const` **PageHeaderContent**: `React.FC`<[`PageHeaderContentProps`](interfaces/PageHeaderContentProps.md)\>
+
+The PageHeaderContent component should be used inside the [PageHeader](API.md#pageheader) component. It is used if the page
+header should include some content on the right side, in addition to the pictogram and the name of the page.
+If only the page header is needed, without any additional content, the [PageHeader](API.md#pageheader) component can be used
+on its own, and the PageHeaderContent component is not needed.
+
+**`example`**
+```tsx
+  <PageHeader>
+    <PageHeaderContent title="My Dashboard" illustration={<Illustration />} />
+    <Button>Click me</Button>
+  </PageHeader>
+```
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L85)
 
 ___
 
