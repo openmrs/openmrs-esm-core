@@ -9,6 +9,7 @@
 - [Brand color #1](StyleguideConfigObject.md#brand color #1)
 - [Brand color #2](StyleguideConfigObject.md#brand color #2)
 - [Brand color #3](StyleguideConfigObject.md#brand color #3)
+- [implementationName](StyleguideConfigObject.md#implementationname)
 - [patientPhotoConceptUuid](StyleguideConfigObject.md#patientphotoconceptuuid)
 - [preferredCalendar](StyleguideConfigObject.md#preferredcalendar)
 
@@ -44,13 +45,23 @@ ___
 
 ___
 
+### implementationName
+
+• **implementationName**: `string`
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/config-schema.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L7)
+
+___
+
 ### patientPhotoConceptUuid
 
 • **patientPhotoConceptUuid**: `string`
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L7)
+[packages/framework/esm-styleguide/src/config-schema.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L8)
 
 ___
 
@@ -64,4 +75,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/config-schema.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L8)
+[packages/framework/esm-styleguide/src/config-schema.ts:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/config-schema.ts#L9)
