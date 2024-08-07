@@ -225,14 +225,22 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
             )}
           </HeaderGlobalBar>
         </Header>
-        <div className={styles.workspaceContent}>
+        <div
+          className={classNames(styles.workspaceContent, {
+            [styles.marginWorkspaceContent]: hasOwnSidebar,
+          })}
+        >
           <WorkspaceRenderer
             key={workspaceInstance.name}
             workspace={workspaceInstance}
             additionalPropsFromPage={additionalWorkspaceProps}
           />
         </div>
-        {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />}
+        {hasOwnSidebar && (
+          <div className={styles.workspaceActionMenu}>
+            <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />
+          </div>
+        )}
       </>
     )
   );

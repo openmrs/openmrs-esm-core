@@ -4,6 +4,12 @@
 @import '@openmrs/esm-styleguide/src/vars';
 
 $actionPanelOffset: 3rem;
+$narrowWorkspaceWidth: 26.25rem;
+$widerWorkspaceWidth: 32.25rem;
+$extraWideWorkspaceWidth: 48.25rem;
+$narrowWorkspaceWithSiderailWidth: 29.25rem;
+$widerWorkspaceWithSiderailWidth: 35.25rem;
+$extraWideWorkspaceWithSiderailWidth: 51.25rem;
 
 .loader {
   display: flex;
@@ -103,50 +109,98 @@ $actionPanelOffset: 3rem;
   }
 
   .extraWideWorkspace {
-    width: 48.25rem;
+    width: $extraWideWorkspaceWidth;
 
     .workspaceFixedContainer {
-      width: 48.25rem;
+      width: $extraWideWorkspaceWidth;
     }
 
     &.hiddenRelative {
-      margin-right: -48.25rem !important;
+      margin-right: -$extraWideWorkspaceWidth !important;
     }
 
     .hiddenFixed {
-      right: -48.25rem !important;
+      right: -$extraWideWorkspaceWidth !important;
+    }
+  }
+
+  .extraWideWorkspace:has(.workspaceActionMenu) {
+    width: $extraWideWorkspaceWidth;
+
+    .workspaceFixedContainer {
+      width: $extraWideWorkspaceWidth;
+    }
+
+    &.hiddenRelative {
+      margin-right: -$extraWideWorkspaceWidth !important;
+    }
+
+    .hiddenFixed {
+      right: -$extraWideWorkspaceWidth !important;
     }
   }
 
   .widerWorkspace {
-    width: 32.25rem;
+    width: $widerWorkspaceWidth;
 
     .workspaceFixedContainer {
-      width: 32.25rem;
+      width: $widerWorkspaceWidth;
     }
 
     &.hiddenRelative {
-      margin-right: -32.25rem !important;
+      margin-right: -$widerWorkspaceWidth !important;
     }
 
     .hiddenFixed {
-      right: -32.25rem !important;
+      right: -$widerWorkspaceWidth !important;
+    }
+  }
+
+  .widerWorkspace:has(.workspaceActionMenu) {
+    width: $widerWorkspaceWithSiderailWidth;
+
+    .workspaceFixedContainer {
+      width: $widerWorkspaceWithSiderailWidth;
+    }
+
+    &.hiddenRelative {
+      margin-right: -$widerWorkspaceWithSiderailWidth !important;
+    }
+
+    .hiddenFixed {
+      right: -$widerWorkspaceWithSiderailWidth !important;
     }
   }
 
   .narrowWorkspace {
-    width: 26.25rem;
+    width: $narrowWorkspaceWidth;
 
     .workspaceFixedContainer {
-      width: 26.25rem;
+      width: $narrowWorkspaceWidth;
     }
 
     &.hiddenRelative {
-      margin-right: -26.25rem !important;
+      margin-right: -$narrowWorkspaceWidth !important;
     }
 
     .hiddenFixed {
-      right: -26.25rem !important;
+      right: -$narrowWorkspaceWidth !important;
+    }
+  }
+
+  .narrowWorkspace:has(.workspaceActionMenu) {
+    width: $narrowWorkspaceWithSiderailWidth;
+
+    .workspaceFixedContainer {
+      width: $narrowWorkspaceWithSiderailWidth;
+    }
+
+    &.hiddenRelative {
+      margin-right: -$narrowWorkspaceWithSiderailWidth !important;
+    }
+
+    .hiddenFixed {
+      right: -$narrowWorkspaceWithSiderailWidth !important;
     }
   }
 
@@ -154,6 +208,10 @@ $actionPanelOffset: 3rem;
     background-color: $ui-02;
     overflow-y: auto;
     flex-grow: 1;
+  }
+
+  .marginWorkspaceContent {
+    margin-right: 3rem;
   }
 
   // The parcel makes a div, between the workspace container and the workspace itself
