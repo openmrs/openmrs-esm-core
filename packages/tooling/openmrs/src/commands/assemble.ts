@@ -18,6 +18,7 @@ export interface AssembleArgs {
   target: string;
   mode: string;
   config: Array<string>;
+  configFiles: Array<string>;   
   registry?: string;
   configFiles: Array<string>;
   hashFiles: boolean;
@@ -45,6 +46,7 @@ interface AssembleConfig {
 async function readConfig(
   mode: string,
   configs: Array<string>,
+  configFiles: Array<string>,
   fetchOptions: npmRegistryFetch.Options,
 ): Promise<AssembleConfig> {
   switch (mode) {
@@ -102,6 +104,59 @@ async function readConfig(
         }
         return config;
       });
+    }
+    case 'configFiles':{
+      if (!configFiles.length) {
+        throw new Error('Please specify config files using the --config-file option.');
+      }
+
+      const results: {
+        configs: Array<AssembleConfig>;
+        errors: Array<Error>;
+      } = {
+        configs: [],
+        errors: [],
+      };
+
+      for (const config of configFiles) {
+        if (!existsSync(config)) {
+          results.errors.push(new Error(`Could not find the config file "${config}".`));
+          continue;
+        }
+
+        logInfo(`Reading configuration ${config} ...`);
+
+        results.configs.push({
+          ...JSON.parse(await readFile(config, 'utf8')),
+        });
+      }
+
+      if (results.errors.length > 0) {
+        throw new Error(
+          results.errors.reduce((str, e, idx) => {
+            if (idx > 0) {
+              str += '\n\n';
+            }
+
+            return str + e.message;
+          }, ''),
+        );
+      }
+
+      const combinedConfig = results.configs.reduce((combinedConfig, newConfig) => {
+        if (newConfig.frontendModules) {
+          combinedConfig.frontendModules = { ...combinedConfig.frontendModules, ...newConfig.frontendModules };
+        }
+        if (newConfig.publicUrl) {
+          combinedConfig.publicUrl = newConfig.publicUrl;
+        }
+        if (newConfig.frontendModuleExcludes) {
+          combinedConfig.frontendModuleExcludes = [...(combinedConfig.frontendModuleExcludes || []), ...newConfig.frontendModuleExcludes];
+        }
+        return combinedConfig;
+      }, {} as AssembleConfig);
+
+      return combinedConfig;
     }
     case 'survey': {
       logInfo(`Loading available frontend modules ...`);
@@ -232,7 +287,7 @@ async function extractFiles(buffer: Buffer, targetDir: string): Promise<[string,
 
 export async function runAssemble(args: AssembleArgs) {
   const npmConf = getNpmRegistryConfiguration(args.registry);
-  const config = await readConfig(args.mode, args.config, npmConf);
+  const config = await readConfig(args.mode, args.config, args.configFiles, npmConf);
 
   const importmap = {
     imports: {},
@@ -322,6 +377,10 @@ export async function runAssemble(args: AssembleArgs) {
 
   if (args.manifest) {
     await writeFile(resolve(args.target, 'spa-assemble-config.json'), JSON.stringify(versionManifest), 'utf8');
+  }
+
+  if(args.mode === 'configFiles'){
+    await writeFile(resolve(args.target, 'spa-config.json'), JSON.stringify(config), 'utf8');
   }
 
   logInfo(`Finished assembling frontend distribution`);

@@ -48,5 +48,4 @@ ___
 • `Optional` **showSiderailAndBottomNav**: `boolean`
 
 #### Defined in
-
 [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L18)

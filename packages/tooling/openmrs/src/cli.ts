@@ -298,10 +298,10 @@ yargs.command(
         type: 'boolean',
       })
       .option('mode', {
-        choices: ['config', 'survey'],
+        choices: ['config', 'configFiles', 'survey'],
         default: 'survey',
         description:
-          'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `survey` starts an interactive command-line survey.',
+          'The source of the frontend modules to assemble. `config` uses a configuration file specified via `--config`. `configFiles` packages up configurations from file specified via `--config-file`. `survey` starts an interactive command-line survey.',
         type: 'string',
       }),
   (args) => runCommand('runAssemble', { ...args, configFiles: args['config-file'] }),
@@ -332,7 +332,6 @@ yargs.command(
       ...args,
     }),
 );
-
 yargs
   .epilog(
     'The SPA assemble config JSON is a JSON file, typically `frontend.json`, which defines parameters for the `build` and `assemble` ' +
@@ -350,3 +349,4 @@ yargs
   .help()
   .demandCommand()
   .strict().argv;
+
