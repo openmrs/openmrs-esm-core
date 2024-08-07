@@ -27,7 +27,7 @@ export const esmStyleGuideSchema = {
   implementationName: {
     _type: Type.String,
     _description: 'A name of the place (or authority) where all possible locations a user can choose are located.',
-    _default: 'Wellness Point Demo Clinic',
+    _default: 'Clinic',
   },
   patientPhotoConceptUuid: {
     _type: Type.ConceptUuid,
