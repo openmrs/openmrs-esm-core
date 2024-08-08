@@ -236,11 +236,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
             additionalPropsFromPage={additionalWorkspaceProps}
           />
         </div>
-        {hasOwnSidebar && (
-          <div className={styles.workspaceActionMenu}>
-            <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />
-          </div>
-        )}
+        {hasOwnSidebar && <ActionMenu isWithinWorkspace name={workspaceInstance.sidebarFamily} />}
       </>
     )
   );
