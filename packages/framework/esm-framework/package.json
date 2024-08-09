@@ -42,6 +42,7 @@
     "@openmrs/esm-context": "workspace:*",
     "@openmrs/esm-dynamic-loading": "workspace:*",
     "@openmrs/esm-error-handling": "workspace:*",
+    "@openmrs/esm-expression-evaluator": "workspace:*",
     "@openmrs/esm-extensions": "workspace:*",
     "@openmrs/esm-feature-flags": "workspace:*",
     "@openmrs/esm-globals": "workspace:*",

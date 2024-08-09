@@ -27,13 +27,19 @@ export interface Config {
 
 export interface ConfigObject {
   [key: string]: any;
+  /** Options that control when this extension is displayed  */
   'Display conditions'?: DisplayConditionsConfigObject;
   'Translation overrides'?: Record<string, Record<string, string>>;
 }
 
 export interface DisplayConditionsConfigObject {
+  /** The privileges a user should have to see this extension */
   privileges?: string[];
+  /** An expression to evaluate whether or not the user should see this extension */
+  expression?: string;
+  /** Whether to display this extension when connected to the server */
   online?: boolean;
+  /** Whether to display this extension when not connected to the server */
   offline?: boolean;
 }
 
