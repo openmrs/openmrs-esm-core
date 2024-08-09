@@ -249,6 +249,10 @@ $extraWideWorkspaceWidth: 48.25rem;
   .dynamicWidth {
     width: 100%;
   }
+
+  .marginWorkspaceContent {
+    margin-bottom: var(--bottom-nav-height);
+  }
 }
 
 // Overriding styles for RTL support
