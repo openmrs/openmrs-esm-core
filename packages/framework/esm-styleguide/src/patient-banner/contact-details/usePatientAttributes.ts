@@ -1,6 +1,6 @@
+import useSWRImmutable from 'swr/immutable';
 import { openmrsFetch, restBaseUrl } from '@openmrs/esm-api';
 import { useConfig } from '@openmrs/esm-react-utils';
-import useSWRImmutable from 'swr/immutable';
 import { type Patient } from './types';
 
 const customRepresentation =
@@ -31,10 +31,10 @@ export const usePatientAttributes = (patientUuid: string) => {
  * @returns Object containing `contactAttribute` {@link Attribute} loading status
  */
 export const usePatientContactAttributes = (patientUuid: string) => {
-  const { contactAttributeType } = useConfig();
+  const { contactAttributeTypes } = useConfig();
   const { attributes, isLoading } = usePatientAttributes(patientUuid);
   const contactAttributes = attributes.filter(
-    ({ attributeType }) => contactAttributeType?.some((uuid) => attributeType.uuid === uuid),
+    ({ attributeType }) => contactAttributeTypes?.some((uuid) => attributeType.uuid === uuid),
   );
   return {
     contactAttributes: contactAttributes ?? [],

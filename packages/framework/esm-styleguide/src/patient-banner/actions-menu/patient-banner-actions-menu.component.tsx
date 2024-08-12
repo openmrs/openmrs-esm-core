@@ -1,10 +1,10 @@
 /** @module @category UI */
-import { ExtensionSlot, useConnectedExtensions } from '@openmrs/esm-react-utils';
 import React, { useMemo } from 'react';
 import { OverflowMenuVertical } from '@carbon/react/icons';
-import styles from './patient-banner-actions-menu.module.scss';
-import { CustomOverflowMenu } from '../../custom-overflow-menu/custom-overflow-menu.component';
+import { ExtensionSlot, useConnectedExtensions } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
+import { CustomOverflowMenu } from '../../custom-overflow-menu/custom-overflow-menu.component';
+import styles from './patient-banner-actions-menu.module.scss';
 
 export interface PatientBannerActionsMenuProps {
   patientUuid: string;

@@ -21,10 +21,10 @@ export function PatientBannerToggleContactDetailsButton({
   return (
     <Button
       className={className}
-      kind="ghost"
-      renderIcon={showContactDetails ? ChevronUpIcon : ChevronDownIcon}
       iconDescription="Toggle contact details"
+      kind="ghost"
       onClick={toggleContactDetails}
+      renderIcon={showContactDetails ? ChevronUpIcon : ChevronDownIcon}
     >
       {showContactDetails
         ? getCoreTranslation('hideDetails', 'Hide details')
