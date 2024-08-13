@@ -27,7 +27,7 @@ export const Pictogram = memo(
 
     return (
       <svg ref={ref} className={classNames(className)} height={size} width={size}>
-        <use xlinkHref={`#${pictogram}`} />
+        <use href={`#${pictogram}`} />
       </svg>
     );
   }),

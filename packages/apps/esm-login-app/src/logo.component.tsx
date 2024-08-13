@@ -15,7 +15,7 @@ const Logo: React.FC<{ t: TFunction }> = ({ t }) => {
   ) : (
     <svg role="img" className={styles.logo}>
       <title>{t('openmrsLogo', 'OpenMRS logo')}</title>
-      <use xlinkHref="#omrs-logo-full-color"></use>
+      <use href="#omrs-logo-full-color"></use>
     </svg>
   );
 };
