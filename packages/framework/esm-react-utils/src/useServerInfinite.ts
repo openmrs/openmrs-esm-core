@@ -4,7 +4,7 @@ import useSWRInfinite from 'swr/infinite';
 import { type OpenMRSPaginatedResponse } from './useServerPagination';
 import { type KeyedMutator } from 'swr';
 
-interface UseServerInfiniteReturnObject<T> {
+export interface UseServerInfiniteReturnObject<T> {
   /**
    * The data fetched from the server so far. Note that this array contains
    * the aggregate of data from all fetched pages. Unless hasMore == false,

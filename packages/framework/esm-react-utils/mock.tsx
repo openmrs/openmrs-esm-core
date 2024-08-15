@@ -7,6 +7,7 @@ import {
   isDesktop as realIsDesktop,
   usePagination as realUsePagination,
   useServerPagination as realUseServerPagination,
+  useServerInfinite as realUseServerInfinite,
 } from './src/index';
 export { ConfigurableLink, useStore, useStoreWithActions, createUseStore } from './src/index';
 import * as utils from '@openmrs/esm-utils';
@@ -66,6 +67,8 @@ export const useFeatureFlag = jest.fn().mockReturnValue(true);
 export const usePagination = jest.fn(realUsePagination);
 
 export const useServerPagination = jest.fn(realUseServerPagination);
+
+export const useServerInfinite = jest.fn(realUseServerInfinite);
 
 export const useVisit = jest.fn().mockReturnValue({
   error: null,
