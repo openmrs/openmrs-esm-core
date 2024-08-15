@@ -1,22 +1,75 @@
 /** @module @category UI */
-import React, { useMemo } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import { InlineLoading } from '@carbon/react';
 import { type CoreTranslationKey, getCoreTranslation } from '@openmrs/esm-translations';
-import { ConfigurableLink, usePatient } from '@openmrs/esm-react-utils';
+import { ConfigurableLink } from '@openmrs/esm-react-utils';
 import { parseDate } from '@openmrs/esm-utils';
-import { useRelationships } from './useRelationships';
-import { usePatientContactAttributes } from './usePatientAttributes';
 import { usePatientListsForPatient } from './usePatientListsForPatient';
+import { useRelationships } from './useRelationships';
 import styles from './patient-banner-contact-details.module.scss';
 
+type FhirPatient = Omit<fhir.Patient, 'id'> & { id: string };
+
 interface ContactDetailsProps {
-  patientId: string;
+  patient: FhirPatient;
   deceased: boolean;
 }
 
-const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
-  const { cohorts = [], isLoading } = usePatientListsForPatient(patientUuid);
+interface CommonProps {
+  patient: FhirPatient;
+}
+
+const Address: React.FC<CommonProps> = ({ patient }) => {
+  const address = patient?.address?.find((a) => a.use === 'home');
+  const getAddressKey = (url: string) => url.split('#')[1];
+
+  return (
+    <>
+      <p className={styles.heading}>{getCoreTranslation('address', 'Address')}</p>
+      <ul>
+        {address ? (
+          Object.entries(address)
+            .filter(([key]) => key !== 'id' && key !== 'use')
+            .map(([key, value]) =>
+              key === 'extension' && Array.isArray(address.extension) ? (
+                address.extension?.[0]?.extension?.map((add, i) => (
+                  <li key={`address-${key}-${i}`}>
+                    {getCoreTranslation(
+                      getAddressKey(add.url) as CoreTranslationKey,
+                      getAddressKey(add.url) as CoreTranslationKey,
+                    )}
+                    : {add.valueString}
+                  </li>
+                ))
+              ) : (
+                <li key={`address-${key}`}>
+                  {getCoreTranslation(key as CoreTranslationKey, key)}: {value}
+                </li>
+              ),
+            )
+        ) : (
+          <li>--</li>
+        )}
+      </ul>
+    </>
+  );
+};
+
+const Contact: React.FC<CommonProps> = ({ patient }) => {
+  const contactDetails = getCoreTranslation('contactDetails', 'Contact Details');
+  const telecom = patient?.telecom;
+
+  return (
+    <>
+      <p className={styles.heading}>{contactDetails}</p>
+      <ul>{telecom?.length ? telecom.map((contact) => <li key={contact.id}>{contact.value}</li>) : <li>--</li>}</ul>
+    </>
+  );
+};
+
+const PatientLists: React.FC<CommonProps> = ({ patient }) => {
+  const { cohorts = [], isLoading } = usePatientListsForPatient(patient.id);
 
   return (
     <>
@@ -43,95 +96,14 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
             }
             return <li>--</li>;
           })()}
-          <li style={{ marginTop: '1rem' }}>
-            <ConfigurableLink to={`${window.spaBase}/home/patient-lists`}>
-              {cohorts.length > 3
-                ? getCoreTranslation('seeMoreLists', 'See {{count}} more lists', {
-                    count: cohorts?.length - 3,
-                  })
-                : ''}
-            </ConfigurableLink>
-          </li>
-        </ul>
-      )}
-    </>
-  );
-};
-
-const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
-  const { patient, isLoading } = usePatient(patientId);
-  const address = patient?.address?.find((a) => a.use === 'home');
-  const getAddressKey = (url) => url.split('#')[1];
-
-  if (isLoading) {
-    return <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />;
-  }
-
-  return (
-    <>
-      <p className={styles.heading}>{getCoreTranslation('address', 'Address')}</p>
-      <ul>
-        {address ? (
-          Object.entries(address)
-            .filter(([key]) => key !== 'id')
-            .map(([key, value]) =>
-              key === 'extension' ? (
-                address.extension?.[0]?.extension?.map((add, i) => (
-                  <li key={`address-${key}-${i}`}>
-                    {getCoreTranslation(getAddressKey(add.url), getAddressKey(add.url))}: {add.valueString}
-                  </li>
-                ))
-              ) : (
-                <li key={`address-${key}`}>
-                  {getCoreTranslation(key as CoreTranslationKey, key)}: {value}
-                </li>
-              ),
-            )
-        ) : (
-          <li>--</li>
-        )}
-      </ul>
-    </>
-  );
-};
-
-const Contact: React.FC<{ patientUuid: string; deceased?: boolean }> = ({ patientUuid }) => {
-  const { isLoading: isLoadingAttributes, contactAttributes } = usePatientContactAttributes(patientUuid);
-
-  const contacts = useMemo(
-    () =>
-      contactAttributes
-        ? [
-            ...contactAttributes?.map((contact) => [
-              contact.attributeType.display
-                ? getCoreTranslation(
-                    /** TODO: We should probably add translation strings for some of these */
-                    contact.attributeType.display as CoreTranslationKey,
-                    contact.attributeType.display,
-                  )
-                : '',
-              contact.value,
-            ]),
-          ]
-        : [],
-    [contactAttributes],
-  );
-
-  return (
-    <>
-      <p className={styles.heading}>{getCoreTranslation('contactDetails', 'Contact Details')}</p>
-      {isLoadingAttributes ? (
-        <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />
-      ) : (
-        <ul>
-          {contacts.length ? (
-            contacts.map(([label, value], index) => (
-              <li key={`${label}-${value}-${index}`}>
-                {label}: {value}
-              </li>
-            ))
-          ) : (
-            <li>--</li>
+          {cohorts.length > 3 && (
+            <li className={styles.link}>
+              <ConfigurableLink to={`${window.spaBase}/home/patient-lists`}>
+                {getCoreTranslation('seeMoreLists', 'See {{count}} more lists', {
+                  count: cohorts?.length - 3,
+                })}
+              </ConfigurableLink>
+            </li>
           )}
         </ul>
       )}
@@ -139,8 +111,8 @@ const Contact: React.FC<{ patientUuid: string; deceased?: boolean }> = ({ patien
   );
 };
 
-const Relationships: React.FC<{ patientId: string }> = ({ patientId }) => {
-  const { data: relationships, isLoading } = useRelationships(patientId);
+const Relationships: React.FC<CommonProps> = ({ patient }) => {
+  const { data: relationships, isLoading } = useRelationships(patient.id);
 
   return (
     <>
@@ -176,23 +148,23 @@ const Relationships: React.FC<{ patientId: string }> = ({ patientId }) => {
   );
 };
 
-export function PatientBannerContactDetails({ patientId, deceased }: ContactDetailsProps) {
+export function PatientBannerContactDetails({ patient, deceased }: ContactDetailsProps) {
   return (
     <div className={classNames(deceased && styles.deceased, styles.contactDetails)}>
       <div className={styles.row}>
         <div className={styles.col}>
-          <Address patientId={patientId} />
+          <Address patient={patient} />
         </div>
         <div className={styles.col}>
-          <Contact patientUuid={patientId} />
+          <Contact patient={patient} />
         </div>
       </div>
       <div className={styles.row}>
         <div className={styles.col}>
-          <Relationships patientId={patientId} />
+          <Relationships patient={patient} />
         </div>
         <div className={styles.col}>
-          <PatientLists patientUuid={patientId} />
+          <PatientLists patient={patient} />
         </div>
       </div>
     </div>
