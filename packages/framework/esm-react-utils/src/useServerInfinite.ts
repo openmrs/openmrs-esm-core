@@ -3,6 +3,7 @@ import { type FetchResponse, openmrsFetch } from '@openmrs/esm-api';
 import useSWRInfinite from 'swr/infinite';
 import { type OpenMRSPaginatedResponse } from './useServerPagination';
 import { type KeyedMutator } from 'swr';
+import { useCallback } from 'react';
 
 export interface UseServerInfiniteReturnObject<T> {
   /**
@@ -51,7 +52,7 @@ export interface UseServerInfiniteReturnObject<T> {
 /**
  * Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
  * The server limits the max number of results being returned, and multiple requests are needed to get the full data set
- * if its size exceed this limit.
+ * if its size exceeds this limit.
  * The max number of results per request is configurable server-side
  * with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
  *
@@ -78,17 +79,17 @@ export function useServerInfinite<T>(
   url: string | URL,
   fetcher: (key: string) => Promise<FetchResponse<OpenMRSPaginatedResponse<T>>> = openmrsFetch,
 ): UseServerInfiniteReturnObject<T> {
-  const getNextUri = (data: FetchResponse<OpenMRSPaginatedResponse<T>>) => {
+  const getNextUri = useCallback((data: FetchResponse<OpenMRSPaginatedResponse<T>>) => {
     return data?.data?.links?.find((link) => link.rel == 'next');
-  };
+  }, []);
 
-  const getKey = (pageIndex: number, previousPageData: FetchResponse<OpenMRSPaginatedResponse<T>>) => {
+  const getKey = useCallback((pageIndex: number, previousPageData: FetchResponse<OpenMRSPaginatedResponse<T>>) => {
     if (pageIndex == 0) {
       return url;
     } else {
       return getNextUri(previousPageData)?.uri ?? null;
     }
-  };
+  }, []);
 
   const { data, size, setSize, ...rest } = useSWRInfinite<FetchResponse<OpenMRSPaginatedResponse<T>>>(getKey, fetcher);
   const nextUri = data?.[data.length - 1].data?.links?.find((link) => link.rel == 'next');

@@ -12,7 +12,7 @@ export interface OpenMRSPaginatedResponse<T> {
 /**
  * Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
  * The server limits the max number of results being returned, and multiple requests are needed to get the full data set
- * if its size exceed this limit.
+ * if its size exceeds this limit.
  * The max number of results per request is configurable server-side
  * with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
  *
@@ -69,17 +69,19 @@ export function useServerPagination<T>(
     (page: number) => {
       if (0 < page && page <= totalPages) {
         setCurrentPage(page);
+      } else {
+        console.warn('Invalid attempt to go to out of bounds page: ' + page);
       }
     },
-    [url, pageSize, currentPage, totalPages],
+    [url, currentPage, totalPages],
   );
   const goToNext = useCallback(() => {
     goTo(currentPage + 1);
-  }, [url, pageSize, currentPage, totalPages]);
+  }, [url, currentPage, totalPages]);
 
   const goToPrevious = useCallback(() => {
     goTo(currentPage - 1);
-  }, [url, pageSize, currentPage, totalPages]);
+  }, [url, currentPage, totalPages]);
 
   return {
     data: data?.data?.results,
