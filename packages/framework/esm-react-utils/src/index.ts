@@ -35,3 +35,4 @@ export * from './useVisit';
 export * from './useVisitTypes';
 export * from './usePagination';
 export * from './usePrimaryIdentifierResource';
+export * from './useServerPagination';

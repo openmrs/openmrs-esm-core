@@ -222,6 +222,7 @@
 - [useOnClickOutside](API.md#useonclickoutside)
 - [usePagination](API.md#usepagination)
 - [usePatientPhoto](API.md#usepatientphoto)
+- [useServerPagination](API.md#useserverpagination)
 
 ### Utility Functions
 
@@ -6574,6 +6575,13 @@ ___
 
 ▸ **usePagination**<`T`\>(`data?`, `resultsPerPage?`): `Object`
 
+Use this hook to paginate data that already exists on the client side.
+Note that if the data is obtained from server-side, the caller must handle server-side pagination manually.
+
+**`see`** `useServerPagination` for hook that automatically manages server-side pagination.
+
+**`see`** `useServerInfinite` for hook to get all data loaded onto the client-side
+
 #### Type parameters
 
 | Name |
@@ -6605,7 +6613,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePagination.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L6)
+[packages/framework/esm-react-utils/src/usePagination.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L15)
 
 ___
 
@@ -6626,6 +6634,70 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L30)
+
+___
+
+### useServerPagination
+
+▸ **useServerPagination**<`T`\>(`url`, `pageSize`, `fetcher?`): `Object`
+
+Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceed this limit.
+The max number of results per request is configurable server-side
+with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
+
+For any UI that displays a paginated view of the full data set, we MUST handle the server-side pagination properly,
+or else the UI does not correctly display the full data set.
+This hook does that by providing callback functions for navigating to different pages of the results, and
+lazy-loads the data on each page as needed.
+
+Note that this hook is not suitable for use for situations that require client-side sorting or filtering
+of the data set. In that case, all data must be loaded onto client-side first.
+
+**`see`** `useServerInfinite` for completely loading data (from all pages) onto client side
+
+**`see`** `usePagination` for pagination of client-side data`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `url` | `string` \| `URL` | `undefined` | The URL of the paginated rest endpoint.            It should be populated with any needed GET params, except `limit`, `startIndex` or `totalCount`,            which will be overridden and manipulated by the `goTo*` callbacks |
+| `pageSize` | `number` | `undefined` | The number of results to return per page / fetch. Note that this value MUST NOT exceed            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000). |
+| `fetcher` | (`key`: `string`) => `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<[`OpenMRSPaginatedResponse`](interfaces/OpenMRSPaginatedResponse.md)<`T`\>\>\> | `openmrsFetch` | The fetcher to use. Defaults to openmrsFetch |
+
+#### Returns
+
+`Object`
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `currentPage` | `number` | - |
+| `currentPageSize` | `MutableRefObject`<`number`\> | - |
+| `data` | `undefined` \| `T`[] |  |
+| `error` | `any` | The error object thrown by the fetcher function. |
+| `goTo` | (`page`: `number`) => `void` | - |
+| `goToNext` | () => `void` | - |
+| `goToPrevious` | () => `void` | - |
+| `isLoading` | `boolean` | - |
+| `isValidating` | `boolean` | - |
+| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<[`OpenMRSPaginatedResponse`](interfaces/OpenMRSPaginatedResponse.md)<`T`\>\>\> | - |
+| `paginated` | `boolean` |  |
+| `showNextButton` | `boolean` |  |
+| `showPreviousButton` | `boolean` |  |
+| `totalCount` | `number` |  |
+| `totalPages` | `number` | - |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useServerPagination.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerPagination.ts#L38)
 
 ___
 
