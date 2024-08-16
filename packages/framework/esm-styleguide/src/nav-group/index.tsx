@@ -18,7 +18,7 @@ export const navGroupConfigSchema = {
   },
   isExpanded: {
     _type: Type.Boolean,
-    _description: 'The name of the slot to create, which links can be added to.',
+    _description: 'The boolean to determine whether the nav group is expanded or not.',
     _default: true,
   },
 };
