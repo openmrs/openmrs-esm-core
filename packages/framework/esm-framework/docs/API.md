@@ -200,14 +200,13 @@
 ### UI Functions
 
 - [CustomOverflowMenu](API.md#customoverflowmenu)
-- [GenericNavGroup](API.md#genericnavgroup)
+- [NavGroup](API.md#navgroup)
 - [PatientBannerActionsMenu](API.md#patientbanneractionsmenu)
 - [PatientBannerContactDetails](API.md#patientbannercontactdetails)
 - [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
 - [PatientBannerToggleContactDetailsButton](API.md#patientbannertogglecontactdetailsbutton)
 - [PatientPhoto](API.md#patientphoto)
 - [isDesktop](API.md#isdesktop)
-- [registerNavGroup](API.md#registernavgroup)
 - [setLeftNav](API.md#setleftnav)
 - [showActionableNotification](API.md#showactionablenotification)
 - [showModal](API.md#showmodal)
@@ -221,7 +220,6 @@
 - [unsetLeftNav](API.md#unsetleftnav)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
 - [useLayoutType](API.md#uselayouttype)
-- [useNavGroups](API.md#usenavgroups)
 - [useOnClickOutside](API.md#useonclickoutside)
 - [usePagination](API.md#usepagination)
 - [usePatientPhoto](API.md#usepatientphoto)
@@ -1987,7 +1985,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:32](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L32)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L30)
 
 ___
 
@@ -2061,14 +2059,18 @@ This provides a light background for form inputs on tablets, in accordance with 
 
 ___
 
-### genericNavGroupConfigSchema
+### navGroupConfigSchema
 
-• `Const` **genericNavGroupConfigSchema**: `Object`
+• `Const` **navGroupConfigSchema**: `Object`
 
 #### Type declaration
 
 | Name | Type |
 | :------ | :------ |
+| `isExpanded` | { `_default`: `boolean` = true; `_description`: `string` = 'The name of the slot to create, which links can be added to.'; `_type`: [`Type`](enums/Type.md) = Type.Boolean } |
+| `isExpanded._default` | `boolean` |
+| `isExpanded._description` | `string` |
+| `isExpanded._type` | [`Type`](enums/Type.md) |
 | `slotName` | { `_default`: `string` = 'my-group-nav-slot'; `_description`: `string` = 'The name of the slot to create, which links can be added to.'; `_type`: [`Type`](enums/Type.md) = Type.String } |
 | `slotName._default` | `string` |
 | `slotName._description` | `string` |
@@ -2080,7 +2082,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/generic-nav-group.component.tsx:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/generic-nav-group.component.tsx#L7)
+[packages/framework/esm-styleguide/src/nav-group/index.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L8)
 
 ___
 
@@ -6142,15 +6144,15 @@ ___
 
 ___
 
-### GenericNavGroup
+### NavGroup
 
-▸ **GenericNavGroup**(`__namedParameters`): `Element`
+▸ **NavGroup**(`__namedParameters`): `Element`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `GenericNavGroupProps` |
+| `__namedParameters` | `NavGroupProps` |
 
 #### Returns
 
@@ -6158,7 +6160,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/generic-nav-group.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/generic-nav-group.component.tsx#L29)
+[packages/framework/esm-styleguide/src/nav-group/index.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L36)
 
 ___
 
@@ -6286,26 +6288,6 @@ ___
 
 ___
 
-### registerNavGroup
-
-▸ **registerNavGroup**(`slotName`): `void`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `slotName` | `string` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/nav-group.ts:13](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/nav-group.ts#L13)
-
-___
-
 ### setLeftNav
 
 ▸ **setLeftNav**(`__namedParameters`): `void`
@@ -6322,7 +6304,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L20)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L18)
 
 ___
 
@@ -6571,7 +6553,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/left-nav/index.tsx:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L24)
+[packages/framework/esm-styleguide/src/left-nav/index.tsx:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L22)
 
 ___
 
@@ -6606,52 +6588,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useLayoutType.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L26)
-
-___
-
-### useNavGroups
-
-▸ **useNavGroups**(): `T`
-
-#### Returns
-
-`T`
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/nav-group.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/nav-group.ts#L18)
-
-▸ **useNavGroups**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `actions` | [`Actions`](API.md#actions)<`NavGroupStoreState`\> |
-
-#### Returns
-
-`T` & [`BoundActions`](API.md#boundactions)
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/nav-group.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/nav-group.ts#L18)
-
-▸ **useNavGroups**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `actions?` | [`Actions`](API.md#actions)<`NavGroupStoreState`\> |
-
-#### Returns
-
-`T` & [`BoundActions`](API.md#boundactions)
-
-#### Defined in
-
-[packages/framework/esm-styleguide/src/left-nav/nav-group.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/nav-group.ts#L18)
 
 ___
 
