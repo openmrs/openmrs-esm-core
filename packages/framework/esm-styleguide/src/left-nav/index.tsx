@@ -17,7 +17,7 @@ const leftNavStore = createGlobalStore<LeftNavStore>('left-nav', {
   basePath: window.spaBase,
 });
 
-export function setLeftNavi({ name, basePath }) {
+export function setLeftNav({ name, basePath }) {
   leftNavStore.setState({ slotName: name, basePath });
 }
 
