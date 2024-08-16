@@ -5,6 +5,8 @@ import { Type } from '@openmrs/esm-config';
 import { Accordion } from '@carbon/react';
 import { AccordionItem } from '@carbon/react';
 
+export const navGroupFeatureName = 'Nav Group';
+
 export const navGroupConfigSchema = {
   title: {
     _type: Type.String,
