@@ -208,7 +208,7 @@
 - [PatientPhoto](API.md#patientphoto)
 - [isDesktop](API.md#isdesktop)
 - [registerNavGroup](API.md#registernavgroup)
-- [setLeftNavi](API.md#setleftnavi)
+- [setLeftNav](API.md#setleftnav)
 - [showActionableNotification](API.md#showactionablenotification)
 - [showModal](API.md#showmodal)
 - [showNotification](API.md#shownotification)
@@ -6306,9 +6306,9 @@ ___
 
 ___
 
-### setLeftNavi
+### setLeftNav
 
-▸ **setLeftNavi**(`__namedParameters`): `void`
+▸ **setLeftNav**(`__namedParameters`): `void`
 
 #### Parameters
 
