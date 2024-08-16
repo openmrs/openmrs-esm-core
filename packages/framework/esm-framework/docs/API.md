@@ -2082,6 +2082,16 @@ ___
 
 #### Defined in
 
+[packages/framework/esm-styleguide/src/nav-group/index.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L10)
+
+___
+
+### navGroupFeatureName
+
+• `Const` **navGroupFeatureName**: ``"Nav Group"``
+
+#### Defined in
+
 [packages/framework/esm-styleguide/src/nav-group/index.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L8)
 
 ___
@@ -6160,7 +6170,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/nav-group/index.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L36)
+[packages/framework/esm-styleguide/src/nav-group/index.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L38)
 
 ___
 
