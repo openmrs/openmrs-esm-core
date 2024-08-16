@@ -2067,7 +2067,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `isExpanded` | { `_default`: `boolean` = true; `_description`: `string` = 'The name of the slot to create, which links can be added to.'; `_type`: [`Type`](enums/Type.md) = Type.Boolean } |
+| `isExpanded` | { `_default`: `boolean` = true; `_description`: `string` = 'The boolean to determine whether the nav group is expanded or not.'; `_type`: [`Type`](enums/Type.md) = Type.Boolean } |
 | `isExpanded._default` | `boolean` |
 | `isExpanded._description` | `string` |
 | `isExpanded._type` | [`Type`](enums/Type.md) |
