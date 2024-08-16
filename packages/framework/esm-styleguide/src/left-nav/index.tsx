@@ -5,8 +5,6 @@ import { createGlobalStore } from '@openmrs/esm-state';
 import { SideNav } from '@carbon/react';
 import styles from './left-nav.module.scss';
 
-export * from './nav-group';
-
 interface LeftNavStore {
   slotName: string | null;
   basePath: string;
