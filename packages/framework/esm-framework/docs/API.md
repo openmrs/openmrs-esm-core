@@ -6154,7 +6154,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:179](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L179)
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:183](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L183)
 
 ___
 
@@ -6644,7 +6644,7 @@ ___
 
 Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
 The server limits the max number of results being returned, and multiple requests are needed to get the full data set
-if its size exceed this limit.
+if its size exceeds this limit.
 The max number of results per request is configurable server-side
 with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
 
@@ -6682,7 +6682,7 @@ a UseServerInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:77](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L77)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L78)
 
 ___
 
@@ -6692,7 +6692,7 @@ ___
 
 Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
 The server limits the max number of results being returned, and multiple requests are needed to get the full data set
-if its size exceed this limit.
+if its size exceeds this limit.
 The max number of results per request is configurable server-side
 with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
 

@@ -5,9 +5,9 @@ import { InlineLoading } from '@carbon/react';
 import { type CoreTranslationKey, getCoreTranslation } from '@openmrs/esm-translations';
 import { ConfigurableLink, usePatient } from '@openmrs/esm-react-utils';
 import { parseDate } from '@openmrs/esm-utils';
-import { useRelationships } from './useRelationships';
 import { usePatientContactAttributes } from './usePatientAttributes';
 import { usePatientListsForPatient } from './usePatientListsForPatient';
+import { useRelationships } from './useRelationships';
 import styles from './patient-banner-contact-details.module.scss';
 
 interface ContactDetailsProps {
@@ -43,15 +43,15 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
             }
             return <li>--</li>;
           })()}
-          <li style={{ marginTop: '1rem' }}>
-            <ConfigurableLink to={`${window.spaBase}/home/patient-lists`}>
-              {cohorts.length > 3
-                ? getCoreTranslation('seeMoreLists', 'See {{count}} more lists', {
-                    count: cohorts?.length - 3,
-                  })
-                : ''}
-            </ConfigurableLink>
-          </li>
+          {cohorts.length > 3 && (
+            <li className={styles.link}>
+              <ConfigurableLink to={`${window.spaBase}/home/patient-lists`}>
+                {getCoreTranslation('seeMoreLists', 'See {{count}} more lists', {
+                  count: cohorts?.length - 3,
+                })}
+              </ConfigurableLink>
+            </li>
+          )}
         </ul>
       )}
     </>
@@ -61,7 +61,7 @@ const PatientLists: React.FC<{ patientUuid: string }> = ({ patientUuid }) => {
 const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
   const { patient, isLoading } = usePatient(patientId);
   const address = patient?.address?.find((a) => a.use === 'home');
-  const getAddressKey = (url) => url.split('#')[1];
+  const getAddressKey = (url: string) => url.split('#')[1];
 
   if (isLoading) {
     return <InlineLoading description={`${getCoreTranslation('loading', 'Loading')} ...`} role="progressbar" />;
@@ -73,12 +73,16 @@ const Address: React.FC<{ patientId: string }> = ({ patientId }) => {
       <ul>
         {address ? (
           Object.entries(address)
-            .filter(([key]) => key !== 'id')
+            .filter(([key]) => key !== 'id' && key !== 'use')
             .map(([key, value]) =>
               key === 'extension' ? (
                 address.extension?.[0]?.extension?.map((add, i) => (
                   <li key={`address-${key}-${i}`}>
-                    {getCoreTranslation(getAddressKey(add.url), getAddressKey(add.url))}: {add.valueString}
+                    {getCoreTranslation(
+                      getAddressKey(add.url) as CoreTranslationKey,
+                      getAddressKey(add.url) as CoreTranslationKey,
+                    )}
+                    : {add.valueString}
                   </li>
                 ))
               ) : (
