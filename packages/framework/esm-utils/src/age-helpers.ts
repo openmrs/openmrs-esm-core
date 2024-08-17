@@ -4,6 +4,7 @@ import { getLocale } from './omrs-dates';
 import { DurationFormat } from '@formatjs/intl-durationformat';
 import { type DurationInput } from '@formatjs/intl-durationformat/src/types';
 
+let durationFormat: DurationFormat | null = null;
 /**
  * Gets a human readable and locale supported representation of a person's age, given their birthDate,
  * The representation logic follows the guideline here:
@@ -51,5 +52,8 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
     duration['years'] = yearDiff;
   }
 
-  return new DurationFormat(locale, { style: 'short' }).format(duration);
+  // the DurationFormat constructor is a really expensive operation (~100ms). Cache it
+  // so it gets reused
+  durationFormat ??= new DurationFormat(locale, { style: 'short' });
+  return durationFormat.format(duration);
 }
