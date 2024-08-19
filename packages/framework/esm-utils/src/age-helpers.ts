@@ -51,5 +51,5 @@ export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType =
     duration['years'] = yearDiff;
   }
 
-  return new DurationFormat(locale, { style: 'short' }).format(duration);
+  return new DurationFormat(locale, { style: 'short', localeMatcher: 'lookup' }).format(duration);
 }
