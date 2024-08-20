@@ -2075,14 +2075,16 @@ ___
 | `slotName._default` | `string` |
 | `slotName._description` | `string` |
 | `slotName._type` | [`Type`](enums/Type.md) |
-| `title` | { `_default`: `string` = 'My Group'; `_description`: `string` = 'The title of the nav group.'; `_type`: [`Type`](enums/Type.md) = Type.String } |
-| `title._default` | `string` |
+| `title` | { `_default`: { `key`: `string` = 'myGroupKey'; `value`: `string` = 'My Group' } ; `_description`: `string` = 'The title of the nav group.'; `_type`: [`Type`](enums/Type.md) = Type.Object } |
+| `title._default` | { `key`: `string` = 'myGroupKey'; `value`: `string` = 'My Group' } |
+| `title._default.key` | `string` |
+| `title._default.value` | `string` |
 | `title._description` | `string` |
 | `title._type` | [`Type`](enums/Type.md) |
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/nav-group/index.tsx:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L10)
+[packages/framework/esm-styleguide/src/nav-group/index.tsx:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L11)
 
 ___
 
@@ -2092,7 +2094,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/nav-group/index.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L8)
+[packages/framework/esm-styleguide/src/nav-group/index.tsx:9](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L9)
 
 ___
 
@@ -6162,7 +6164,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | `NavGroupProps` |
+| `__namedParameters` | [`NavGroupProps`](interfaces/NavGroupProps.md) |
 
 #### Returns
 
@@ -6170,7 +6172,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/nav-group/index.tsx:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L38)
+[packages/framework/esm-styleguide/src/nav-group/index.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L42)
 
 ___
 
