@@ -4,14 +4,18 @@ import { ExtensionSlot, useConfig } from '@openmrs/esm-react-utils';
 import { Type } from '@openmrs/esm-config';
 import { Accordion } from '@carbon/react';
 import { AccordionItem } from '@carbon/react';
+import { useTranslation } from 'react-i18next';
 
 export const navGroupFeatureName = 'Nav Group';
 
 export const navGroupConfigSchema = {
   title: {
-    _type: Type.String,
+    _type: Type.Object,
     _description: 'The title of the nav group.',
-    _default: 'My Group',
+    _default: {
+      key: 'myGroupKey',
+      value: 'My Group',
+    },
   },
   slotName: {
     _type: Type.String,
@@ -25,22 +29,24 @@ export const navGroupConfigSchema = {
   },
 };
 
-export interface NavGroupConfig {
-  title: string;
+interface NavGroupConfig {
+  title: { key: string; value: string };
   slotName: string;
   isExpanded?: boolean;
 }
 
-interface NavGroupProps {
+export interface NavGroupProps {
   basePath: string;
 }
 
 export function NavGroup({ basePath }: NavGroupProps) {
+  const { t } = useTranslation();
   const { title, slotName, isExpanded } = useConfig<NavGroupConfig>();
+  const translatedTitle = t(title.key, title.value);
   return (
     <Accordion>
-      <AccordionItem open={isExpanded} title={title} style={{ border: 'none' }}>
-        <ExtensionSlot name={slotName ?? title} state={{ basePath }} />
+      <AccordionItem open={isExpanded} title={translatedTitle} style={{ border: 'none' }}>
+        <ExtensionSlot name={slotName ?? translatedTitle} state={{ basePath }} />
       </AccordionItem>
     </Accordion>
   );
