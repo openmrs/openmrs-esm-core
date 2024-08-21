@@ -26,7 +26,7 @@ export * from './icons';
 export * from './pictograms';
 
 defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
-defineExtensionConfigSchema('nav-group', navGroupConfigSchema);
+defineExtensionConfigSchema('global-nav-group-slot', navGroupConfigSchema);
 setupBranding();
 setupLogo();
 setupIcons();

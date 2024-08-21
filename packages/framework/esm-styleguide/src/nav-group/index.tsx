@@ -10,17 +10,14 @@ export const navGroupFeatureName = 'Nav Group';
 
 export const navGroupConfigSchema = {
   title: {
-    _type: Type.Object,
+    _type: Type.String,
     _description: 'The title of the nav group.',
-    _default: {
-      key: 'myGroupKey',
-      value: 'My Group',
-    },
+    _default: 'myGroup',
   },
   slotName: {
     _type: Type.String,
     _description: 'The name of the slot to create, which links can be added to.',
-    _default: 'my-group-nav-slot',
+    _default: 'global-nav-group-slot',
   },
   isExpanded: {
     _type: Type.Boolean,
@@ -30,7 +27,7 @@ export const navGroupConfigSchema = {
 };
 
 interface NavGroupConfig {
-  title: { key: string; value: string };
+  title: string;
   slotName: string;
   isExpanded?: boolean;
 }
@@ -39,14 +36,16 @@ export interface NavGroupProps {
   basePath: string;
 }
 
-export function NavGroup({ basePath }: NavGroupProps) {
+export function GlobalNavGroup({ basePath }: NavGroupProps) {
   const { t } = useTranslation();
   const { title, slotName, isExpanded } = useConfig<NavGroupConfig>();
-  const translatedTitle = t(title.key, title.value);
+  // t('myGroup', 'My Group')
+  const translatedTitle = t(title);
+
   return (
     <Accordion>
       <AccordionItem open={isExpanded} title={translatedTitle} style={{ border: 'none' }}>
-        <ExtensionSlot name={slotName ?? translatedTitle} state={{ basePath }} />
+        <ExtensionSlot name={slotName ?? title} state={{ basePath }} />
       </AccordionItem>
     </Accordion>
   );
