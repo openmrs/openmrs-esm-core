@@ -4,7 +4,7 @@ import { setupIcons } from './icons/icon-registration';
 import { setupBranding } from './brand';
 import { esmStyleGuideSchema } from './config-schema';
 import { setupPictograms } from './pictograms/pictogram-registration';
-import { navGroupConfigSchema } from './nav-group';
+import { globalNavGroupConfigSchema } from './nav-group';
 
 export * from './breakpoints';
 export * from './spinner';
@@ -26,7 +26,7 @@ export * from './icons';
 export * from './pictograms';
 
 defineConfigSchema('@openmrs/esm-styleguide', esmStyleGuideSchema);
-defineExtensionConfigSchema('global-nav-group-slot', navGroupConfigSchema);
+defineExtensionConfigSchema('global-nav-group-slot', globalNavGroupConfigSchema);
 setupBranding();
 setupLogo();
 setupIcons();

@@ -6,9 +6,9 @@ import { Accordion } from '@carbon/react';
 import { AccordionItem } from '@carbon/react';
 import { useTranslation } from 'react-i18next';
 
-export const navGroupFeatureName = 'Nav Group';
+export const globalNavGroupFeatureName = 'Nav Group';
 
-export const navGroupConfigSchema = {
+export const globalNavGroupConfigSchema = {
   title: {
     _type: Type.String,
     _description: 'The title of the nav group.',
@@ -33,7 +33,7 @@ interface NavGroupConfig {
 }
 
 export interface NavGroupProps {
-  basePath: string;
+  basePath?: string;
 }
 
 export function GlobalNavGroup({ basePath }: NavGroupProps) {

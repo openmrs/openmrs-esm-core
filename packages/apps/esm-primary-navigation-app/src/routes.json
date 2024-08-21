@@ -29,6 +29,12 @@
       "order": 0
     },
     {
+      "name": "global-nav-group",
+      "component": "globalNavGroup",
+      "online": true,
+      "offline": true
+    },
+    {
       "name": "change-language",
       "slot": "user-panel-slot",
       "component": "changeLanguageLink",
