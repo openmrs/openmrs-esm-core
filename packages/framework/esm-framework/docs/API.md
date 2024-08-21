@@ -200,7 +200,7 @@
 ### UI Functions
 
 - [CustomOverflowMenu](API.md#customoverflowmenu)
-- [NavGroup](API.md#navgroup)
+- [GlobalNavGroup](API.md#globalnavgroup)
 - [PatientBannerActionsMenu](API.md#patientbanneractionsmenu)
 - [PatientBannerContactDetails](API.md#patientbannercontactdetails)
 - [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
@@ -2071,14 +2071,12 @@ ___
 | `isExpanded._default` | `boolean` |
 | `isExpanded._description` | `string` |
 | `isExpanded._type` | [`Type`](enums/Type.md) |
-| `slotName` | { `_default`: `string` = 'my-group-nav-slot'; `_description`: `string` = 'The name of the slot to create, which links can be added to.'; `_type`: [`Type`](enums/Type.md) = Type.String } |
+| `slotName` | { `_default`: `string` = 'global-nav-group-slot'; `_description`: `string` = 'The name of the slot to create, which links can be added to.'; `_type`: [`Type`](enums/Type.md) = Type.String } |
 | `slotName._default` | `string` |
 | `slotName._description` | `string` |
 | `slotName._type` | [`Type`](enums/Type.md) |
-| `title` | { `_default`: { `key`: `string` = 'myGroupKey'; `value`: `string` = 'My Group' } ; `_description`: `string` = 'The title of the nav group.'; `_type`: [`Type`](enums/Type.md) = Type.Object } |
-| `title._default` | { `key`: `string` = 'myGroupKey'; `value`: `string` = 'My Group' } |
-| `title._default.key` | `string` |
-| `title._default.value` | `string` |
+| `title` | { `_default`: `string` = 'myGroup'; `_description`: `string` = 'The title of the nav group.'; `_type`: [`Type`](enums/Type.md) = Type.String } |
+| `title._default` | `string` |
 | `title._description` | `string` |
 | `title._type` | [`Type`](enums/Type.md) |
 
@@ -6156,9 +6154,9 @@ ___
 
 ___
 
-### NavGroup
+### GlobalNavGroup
 
-▸ **NavGroup**(`__namedParameters`): `Element`
+▸ **GlobalNavGroup**(`__namedParameters`): `Element`
 
 #### Parameters
 
@@ -6172,7 +6170,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/nav-group/index.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L42)
+[packages/framework/esm-styleguide/src/nav-group/index.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L39)
 
 ___
 

@@ -16,4 +16,4 @@
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/nav-group/index.tsx:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L39)
+[packages/framework/esm-styleguide/src/nav-group/index.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/nav-group/index.tsx#L36)
