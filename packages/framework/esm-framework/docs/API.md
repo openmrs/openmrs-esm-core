@@ -2059,9 +2059,9 @@ This provides a light background for form inputs on tablets, in accordance with 
 
 ___
 
-### navGroupConfigSchema
+### globalNavGroupConfigSchema
 
-• `Const` **navGroupConfigSchema**: `Object`
+• `Const` **globalNavGroupConfigSchema**: `Object`
 
 #### Type declaration
 
@@ -2086,9 +2086,9 @@ ___
 
 ___
 
-### navGroupFeatureName
+### globalNavGroupFeatureName
 
-• `Const` **navGroupFeatureName**: ``"Nav Group"``
+• `Const` **globalNavGroupFeatureName**: ``"Nav Group"``
 
 #### Defined in
 

@@ -12,7 +12,7 @@
 
 ### basePath
 
-• **basePath**: `string`
+• `Optional` **basePath**: `string`
 
 #### Defined in
 
