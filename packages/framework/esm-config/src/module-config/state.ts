@@ -171,6 +171,19 @@ export function getExtensionConfig(
   slotName: string,
   extensionId: string,
 ): StoreApi<Omit<ConfigStore, 'translationOverridesLoaded'>> {
+  if (
+    typeof slotName !== 'string' ||
+    typeof extensionId !== 'string' ||
+    slotName === '__proto__' ||
+    extensionId === '__proto__' ||
+    slotName === 'constructor' ||
+    extensionId === 'constructor' ||
+    slotName === 'prototype' ||
+    extensionId === 'prototype'
+  ) {
+    throw new Error('Attempted to call `getExtensionConfig()` with invalid argument');
+  }
+
   const extensionConfigStore = getExtensionsConfigStore();
   const selector = (configStore: ExtensionsConfigStore) => configStore.configs[slotName]?.[extensionId];
 
