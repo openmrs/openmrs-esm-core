@@ -36,7 +36,7 @@ this array does not contain the complete data set.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L14)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:16](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L16)
 
 ___
 
@@ -48,7 +48,7 @@ from useSWRInfinite
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L34)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L36)
 
 ___
 
@@ -60,7 +60,7 @@ Whether there are more results in the data set that have not been fetched yet.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L24)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L26)
 
 ___
 
@@ -72,7 +72,7 @@ from useSWRInfinite
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:49](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L49)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:51](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L51)
 
 ___
 
@@ -84,19 +84,19 @@ from useSWRInfinite
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:44](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L44)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L46)
 
 ___
 
 ### mutate
 
-• **mutate**: `KeyedMutator`<[`FetchResponse`](FetchResponse.md)<[`OpenMRSPaginatedResponse`](OpenMRSPaginatedResponse.md)<`T`\>\>[]\>
+• **mutate**: `InfiniteKeyedMutator`<[`FetchResponse`](FetchResponse.md)<[`OpenMRSPaginatedResponse`](OpenMRSPaginatedResponse.md)<`T`\>\>[]\>
 
 from useSWRInfinite
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L39)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L41)
 
 ___
 
@@ -108,7 +108,7 @@ The total number of rows in the data set.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L19)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L21)
 
 ## UI Methods
 
@@ -124,4 +124,4 @@ callback function to make another fetch of next page's data set.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L29)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L31)
