@@ -4,11 +4,12 @@ import type { Config, ConfigObject, ConfigSchema, ExtensionSlotConfig, Extension
 import { Type } from '../types';
 import { isArray, isBoolean, isUuid, isNumber, isObject, isString } from '../validators/type-validators';
 import { validator } from '../validators/validator';
-import type { ConfigExtensionStore, ConfigInternalStore, ConfigStore } from './state';
+import { type ConfigExtensionStore, type ConfigInternalStore, type ConfigStore } from './state';
 import {
   configInternalStore,
   configExtensionStore,
   getConfigStore,
+  getExtensionConfig,
   getExtensionsConfigStore,
   implementerToolsConfigStore,
   temporaryConfigStore,
@@ -136,6 +137,7 @@ function computeExtensionConfigs(
       configState,
       tempConfigState,
     );
+
     configs[extension.slotName] = {
       ...configs[extension.slotName],
       [extension.extensionId]: { config, loaded: true },
@@ -270,19 +272,44 @@ export function getConfig<T = Record<string, any>>(moduleName: string): Promise<
 }
 
 /** @internal */
-export function getTranslationOverrides(moduleName: string): Promise<Object> {
-  return new Promise<Object>((resolve) => {
-    const store = getConfigStore(moduleName);
-    function update(state: ConfigStore) {
-      if (state.translationOverridesLoaded && state.config) {
-        const translationOverrides = state.config['Translation overrides'] ?? {};
-        resolve(translationOverrides);
-        unsubscribe && unsubscribe();
+export function getTranslationOverrides(
+  moduleName: string,
+  slotName?: string,
+  extensionId?: string,
+): Promise<Record<string, Record<string, string>>> {
+  const promises = [
+    new Promise<Record<string, Record<string, string>>>((resolve) => {
+      const configStore = getConfigStore(moduleName);
+      function update(state: ReturnType<(typeof configStore)['getState']>) {
+        if (state.translationOverridesLoaded && state.config) {
+          const translationOverrides = state.config['Translation overrides'] ?? {};
+          resolve(translationOverrides);
+          unsubscribe && unsubscribe();
+        }
       }
-    }
-    update(store.getState());
-    const unsubscribe = store.subscribe(update);
-  });
+      update(configStore.getState());
+      const unsubscribe = configStore.subscribe(update);
+    }),
+  ];
+
+  if (slotName && extensionId) {
+    promises.push(
+      new Promise<Record<string, Record<string, string>>>((resolve) => {
+        const configStore = getExtensionConfig(slotName, extensionId);
+        function update(state: ReturnType<(typeof configStore)['getState']>) {
+          if (state.loaded && state.config) {
+            const translationOverrides = state.config['Translation overrides'] ?? {};
+            resolve(translationOverrides);
+            unsubscribe && unsubscribe();
+          }
+        }
+        update(configStore.getState());
+        const unsubscribe = configStore.subscribe(update);
+      }),
+    );
+  }
+
+  return Promise.all(promises).then((results) => results.reduce((prev, current) => ({ ...prev, ...current }), {}));
 }
 
 /**

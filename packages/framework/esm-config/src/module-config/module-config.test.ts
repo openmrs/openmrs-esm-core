@@ -1108,8 +1108,13 @@ describe('extension config', () => {
     const moduleLevelConfig = { 'ext-mod': { bar: 'qux' } };
     updateConfigExtensionStore();
     Config.provide(moduleLevelConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt').config;
-    expect(result).toStrictEqual({ bar: 'qux', baz: 'bazzy' });
+    const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'qux',
+      baz: 'bazzy',
+      'Display conditions': { privileges: [] },
+      'Translation overrides': {},
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -1126,8 +1131,13 @@ describe('extension config', () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt#id0').config;
-    expect(result).toStrictEqual({ bar: 'qux', baz: 'quiz' });
+    const result = getExtensionConfig('barSlot', 'fooExt#id0').getState().config;
+    expect(result).toStrictEqual({
+      bar: 'qux',
+      baz: 'quiz',
+      'Display conditions': { privileges: [] },
+      'Translation overrides': {},
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -1154,8 +1164,12 @@ describe('extension config', () => {
     });
     const extensionAtBaseConfig = { fooExt: { qux: 'quxolotl' } };
     Config.provide(extensionAtBaseConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt').config;
-    expect(result).toStrictEqual({ qux: 'quxolotl' });
+    const result = getExtensionConfig('barSlot', 'fooExt').getState().config;
+    expect(result).toStrictEqual({
+      qux: 'quxolotl',
+      'Display conditions': { privileges: [] },
+      'Translation overrides': {},
+    });
     expect(console.error).not.toHaveBeenCalled();
   });
 
@@ -1175,8 +1189,12 @@ describe('extension config', () => {
       },
     };
     Config.provide(configureConfig);
-    const result = getExtensionConfig('barSlot', 'fooExt#id2').config;
-    expect(result).toStrictEqual({ qux: 'quxotic' });
+    const result = getExtensionConfig('barSlot', 'fooExt#id2').getState().config;
+    expect(result).toStrictEqual({
+      qux: 'quxotic',
+      'Display conditions': { privileges: [] },
+      'Translation overrides': {},
+    });
   });
 
   it('validates the extension configure config, with extension config schema', () => {

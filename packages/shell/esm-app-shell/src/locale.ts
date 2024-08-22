@@ -1,7 +1,7 @@
 import * as i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
-import merge from 'lodash-es/merge';
+import { merge } from 'lodash-es';
 import {
   getTranslationOverrides,
   importDynamic,
@@ -55,9 +55,10 @@ export function setupI18n() {
               callback(err, null);
             });
         } else {
-          importDynamic(namespace)
+          const [ns, slotName, extensionId] = namespace.split('___');
+          importDynamic(ns)
             .then((module) =>
-              Promise.all([getImportPromise(module, namespace, language), getTranslationOverrides(namespace)]),
+              Promise.all([getImportPromise(module, ns, language), getTranslationOverrides(ns, slotName, extensionId)]),
             )
             .then(([json, overrides]) => {
               let translations = json ?? {};
