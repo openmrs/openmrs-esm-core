@@ -216,7 +216,7 @@ export function getExtensionConfig(
 /** @internal */
 export function getExtensionConfigFromStore(state: ExtensionsConfigStore, slotName: string, extensionId: string) {
   const extensionConfig = state.configs[slotName]?.[extensionId];
-  return extensionConfig ?? { loaded: false, config: null, translationOverridesLoaded: false };
+  return extensionConfig ?? { loaded: false, config: null };
 }
 
 /**

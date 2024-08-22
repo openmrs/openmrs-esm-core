@@ -309,7 +309,7 @@ export function getTranslationOverrides(
     );
   }
 
-  return Promise.all(promises).then((results) => results.reduce((prev, current) => ({ ...prev, ...current }), {}));
+  return Promise.all(promises).then((results) => results.reduce((prev, current) => mergeDeepRight(prev, current), {}));
 }
 
 /**
