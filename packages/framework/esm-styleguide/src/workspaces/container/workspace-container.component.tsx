@@ -225,7 +225,11 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
             )}
           </HeaderGlobalBar>
         </Header>
-        <div className={styles.workspaceContent}>
+        <div
+          className={classNames(styles.workspaceContent, {
+            [styles.marginWorkspaceContent]: hasOwnSidebar,
+          })}
+        >
           <WorkspaceRenderer
             key={workspaceInstance.name}
             workspace={workspaceInstance}

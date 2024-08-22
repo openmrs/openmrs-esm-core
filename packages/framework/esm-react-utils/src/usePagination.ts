@@ -3,6 +3,15 @@ import { useCallback, useMemo, useState } from 'react';
 
 const defaultResultsPerPage = 10;
 
+/**
+ * Use this hook to paginate data that already exists on the client side.
+ * Note that if the data is obtained from server-side, the caller must handle server-side pagination manually.
+ * @see `useServerPagination` for hook that automatically manages server-side pagination.
+ * @see `useServerInfinite` for hook to get all data loaded onto the client-side
+ * @param data
+ * @param resultsPerPage
+ * @returns
+ */
 export function usePagination<T>(data: Array<T> = [], resultsPerPage = defaultResultsPerPage) {
   const [page, setPage] = useState(1);
   const totalPages = useMemo(

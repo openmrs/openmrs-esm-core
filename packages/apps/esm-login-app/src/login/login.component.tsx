@@ -269,7 +269,7 @@ const Login: React.FC = () => {
           <p className={styles.poweredByTxt}>{t('poweredBy', 'Powered by')}</p>
           <div>
             <svg role="img" className={styles.poweredByLogo}>
-              <use xlinkHref="#omrs-logo-partial-mono"></use>
+              <use href="#omrs-logo-partial-mono"></use>
             </svg>
           </div>
         </div>

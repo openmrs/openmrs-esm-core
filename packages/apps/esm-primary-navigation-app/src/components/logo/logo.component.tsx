@@ -12,7 +12,7 @@ const Logo: React.FC = () => {
         logo.name
       ) : (
         <svg role="img" width={110} height={40}>
-          <use xlinkHref="#omrs-logo-white" />
+          <use href="#omrs-logo-white" />
         </svg>
       )}
     </>

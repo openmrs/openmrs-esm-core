@@ -3,7 +3,12 @@ import { openmrsFetch } from '@openmrs/esm-api/mock';
 import { configSchema } from '@openmrs/esm-config/mock';
 import { getExtensionStore, getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
-import { isDesktop as realIsDesktop, usePagination as realUsePagination } from './src/index';
+import {
+  isDesktop as realIsDesktop,
+  usePagination as realUsePagination,
+  useServerPagination as realUseServerPagination,
+  useServerInfinite as realUseServerInfinite,
+} from './src/index';
 export { ConfigurableLink, useStore, useStoreWithActions, createUseStore } from './src/index';
 import * as utils from '@openmrs/esm-utils';
 
@@ -61,6 +66,10 @@ export const useFeatureFlag = jest.fn().mockReturnValue(true);
 
 export const usePagination = jest.fn(realUsePagination);
 
+export const useServerPagination = jest.fn(realUseServerPagination);
+
+export const useServerInfinite = jest.fn(realUseServerInfinite);
+
 export const useVisit = jest.fn().mockReturnValue({
   error: null,
   mutate: jest.fn(),
@@ -106,3 +115,17 @@ export const toOmrsIsoString = jest.fn().mockImplementation((date: Date) => date
 export const toDateObjectStrict = jest.fn().mockImplementation((date: string) => new Date(date));
 
 export const getLocale = jest.fn().mockReturnValue('en');
+
+export const useAppContext = jest.fn();
+
+export const useAssignedExtensionIds = jest.fn();
+
+export const useConnectivity = jest.fn();
+
+export const useDefineAppContext = jest.fn();
+
+export const useExtensionSlot = jest.fn();
+
+export const useForceUpdate = jest.fn();
+
+export const usePrimaryIdentifierResource = jest.fn();

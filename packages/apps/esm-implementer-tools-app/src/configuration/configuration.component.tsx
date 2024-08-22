@@ -133,6 +133,7 @@ export const Configuration: React.FC<ConfigurationProps> = () => {
                   id="extensionSearch"
                   labelText="Search configuration"
                   onChange={(e) => setFilterText(e.target.value)}
+                  autoComplete="off"
                 />
               </Column>
               <Column className={styles.toggleButtons}>

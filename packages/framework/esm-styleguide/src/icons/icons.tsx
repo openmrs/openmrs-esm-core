@@ -624,7 +624,7 @@ export const Icon = memo(
         width={size}
         viewBox="0 0 16 16"
       >
-        <use xlinkHref={`#${icon}`} />
+        <use href={`#${icon}`} />
       </svg>
     );
   }),

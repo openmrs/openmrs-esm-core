@@ -227,6 +227,8 @@
 - [useOnClickOutside](API.md#useonclickoutside)
 - [usePagination](API.md#usepagination)
 - [usePatientPhoto](API.md#usepatientphoto)
+- [useServerInfinite](API.md#useserverinfinite)
+- [useServerPagination](API.md#useserverpagination)
 
 ### Utility Functions
 
@@ -806,14 +808,13 @@ ___
 
 ### Actions
 
-Ƭ **Actions**<`T`, `U`\>: (`store`: `StoreApi`<`T`\>) => [`BoundActions`](API.md#boundactions)<`U`\> \| [`BoundActions`](API.md#boundactions)<`U`\>
+Ƭ **Actions**<`T`\>: (`store`: `StoreApi`<`T`\>) => `Record`<`string`, [`ActionFunction`](API.md#actionfunction)<`T`\>\> \| `Record`<`string`, [`ActionFunction`](API.md#actionfunction)<`T`\>\>
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `U` | extends [`DefaultBoundActions`](API.md#defaultboundactions) = [`DefaultBoundActions`](API.md#defaultboundactions) |
+| Name |
+| :------ |
+| `T` |
 
 #### Defined in
 
@@ -823,63 +824,15 @@ ___
 
 ### BoundActions
 
-Ƭ **BoundActions**<`T`\>: { [k in keyof T]: T[k] }
+Ƭ **BoundActions**: `Object`
 
-#### Type parameters
+#### Index signature
 
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`DefaultBoundActions`](API.md#defaultboundactions) = [`DefaultBoundActions`](API.md#defaultboundactions) |
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useStore.ts:14](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L14)
-
-___
-
-### CustomActionsFn
-
-Ƭ **CustomActionsFn**<`T`\>: (...`args`: `any`[]) => `Partial`<`T`\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | `unknown` |
-
-#### Type declaration
-
-▸ (...`args`): `Partial`<`T`\>
-
-##### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `...args` | `any`[] |
-
-##### Returns
-
-`Partial`<`T`\>
+▪ [key: `string`]: (...`args`: `any`[]) => `void`
 
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useStore.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L10)
-
-___
-
-### DefaultBoundActions
-
-Ƭ **DefaultBoundActions**<`T`\>: { [key in keyof T]: CustomActionsFn }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `object` = `object` |
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useStore.ts:11](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L11)
 
 ___
 
@@ -924,6 +877,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useLayoutType.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useLayoutType.ts#L4)
+
+___
+
+### PageHeaderProps
+
+Ƭ **PageHeaderProps**: `XOR`<[`PageHeaderWrapperProps`](interfaces/PageHeaderWrapperProps.md), [`PageHeaderContentProps`](interfaces/PageHeaderContentProps.md)\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L29)
 
 ___
 
@@ -1172,6 +1135,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:566](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L566)
+
+___
+
+### AppointmentsPictogram
+
+• `Const` **AppointmentsPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:48](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L48)
 
 ___
 
@@ -1479,6 +1452,16 @@ ___
 
 ___
 
+### HomePictogram
+
+• `Const` **HomePictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L36)
+
+___
+
 ### HospitalBedIcon
 
 • `Const` **HospitalBedIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
@@ -1518,6 +1501,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L262)
+
+___
+
+### LaboratoryPictogram
+
+• `Const` **LaboratoryPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L60)
 
 ___
 
@@ -1655,6 +1648,16 @@ ___
 
 ___
 
+### PatientListsPictogram
+
+• `Const` **PatientListsPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:42](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L42)
+
+___
+
 ### PedestrianFamilyIcon
 
 • `Const` **PedestrianFamilyIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
@@ -1744,6 +1747,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:407](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L407)
+
+___
+
+### ServiceQueuesPictogram
+
+• `Const` **ServiceQueuesPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L54)
 
 ___
 
@@ -1979,6 +1992,62 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/left-nav/index.tsx:31](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/left-nav/index.tsx#L31)
+
+___
+
+### PageHeader
+
+• `Const` **PageHeader**: `React.FC`<[`PageHeaderProps`](API.md#pageheaderprops)\>
+
+The page header is typically located at the top of a dashboard. It includes a pictogram on the left,
+the name of the dashboard or page, and the `implementationName` from the configuration, which is typically
+the name of the clinic or the authority that is using the implementation. It can also include interactive
+content on the right-hand side. It can be used in two ways:
+
+1. Alone, in order to render just the page header, with no content on the right side:
+
+**`example`**
+```tsx
+  <PageHeader title="My Dashboard" illustration={<Illustration />} />
+```
+
+2. Wrapped around the [PageHeaderContent](API.md#pageheadercontent) component, in order to render the page header on the left
+and some other content on the right side:
+
+**`example`**
+```tsx
+  <PageHeader>
+    <PageHeaderContent title="My Dashboard" illustration={<Illustration />} />
+    <Button>Click me</Button>
+  </PageHeader>
+```
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L57)
+
+___
+
+### PageHeaderContent
+
+• `Const` **PageHeaderContent**: `React.FC`<[`PageHeaderContentProps`](interfaces/PageHeaderContentProps.md)\>
+
+The PageHeaderContent component should be used inside the [PageHeader](API.md#pageheader) component. It is used if the page
+header should include some content on the right side, in addition to the pictogram and the name of the page.
+If only the page header is needed, without any additional content, the [PageHeader](API.md#pageheader) component can be used
+on its own, and the PageHeaderContent component is not needed.
+
+**`example`**
+```tsx
+  <PageHeader>
+    <PageHeaderContent title="My Dashboard" illustration={<Illustration />} />
+    <Button>Click me</Button>
+  </PageHeader>
+```
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L85)
 
 ___
 
@@ -4401,33 +4470,33 @@ ___
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L6)
 
-▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
+▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md), `object`\> |
+| `actions` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)<`U`\>
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useExtensionStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L6)
 
-▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
+▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md), `object`\> |
+| `actions?` | [`Actions`](API.md#actions)<[`ExtensionStore`](interfaces/ExtensionStore.md)\> |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)<`U`\>
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
@@ -5908,17 +5977,16 @@ ___
 
 ### createUseStore
 
-▸ **createUseStore**<`T`, `U`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)<`T`, `U`\>) => `T` & [`BoundActions`](API.md#boundactions)<`U`\>(`actions?`: [`Actions`](API.md#actions)<`T`, `U`\>) => `T` & [`BoundActions`](API.md#boundactions)<`U`\>
+▸ **createUseStore**<`T`\>(`store`): () => `T`(`actions`: [`Actions`](API.md#actions)<`T`\>) => `T` & [`BoundActions`](API.md#boundactions)(`actions?`: [`Actions`](API.md#actions)<`T`\>) => `T` & [`BoundActions`](API.md#boundactions)
 
 Whenever possible, use `useStore(yourStore)` instead. This function is for creating a
 custom hook for a specific store.
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `U` | extends `object` = `object` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
@@ -5936,33 +6004,33 @@ custom hook for a specific store.
 
 `T`
 
-▸ (`actions`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
+▸ (`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | [`Actions`](API.md#actions)<`T`, `U`\> |
+| `actions` | [`Actions`](API.md#actions)<`T`\> |
 
 ##### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)<`U`\>
+`T` & [`BoundActions`](API.md#boundactions)
 
-▸ (`actions?`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
+▸ (`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `actions?` | [`Actions`](API.md#actions)<`T`, `U`\> |
+| `actions?` | [`Actions`](API.md#actions)<`T`\> |
 
 ##### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)<`U`\>
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L65)
+[packages/framework/esm-react-utils/src/useStore.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L60)
 
 ___
 
@@ -6035,15 +6103,14 @@ ___
 
 ### useStore
 
-▸ **useStore**<`T`, `U`, `V`\>(`store`): `T`
+▸ **useStore**<`T`, `U`\>(`store`): `T`
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `U` | `T` |
-| `V` | extends `object` = `object` |
+| Name |
+| :------ |
+| `T` |
+| `U` |
 
 #### Parameters
 
@@ -6057,17 +6124,16 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L38)
+[packages/framework/esm-react-utils/src/useStore.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L33)
 
-▸ **useStore**<`T`, `U`, `V`\>(`store`, `select`): `U`
+▸ **useStore**<`T`, `U`\>(`store`, `select`): `U`
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `U` | `U` |
-| `V` | extends `object` = `object` |
+| Name |
+| :------ |
+| `T` |
+| `U` |
 
 #### Parameters
 
@@ -6082,17 +6148,16 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L39)
+[packages/framework/esm-react-utils/src/useStore.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L34)
 
-▸ **useStore**<`T`, `U`, `V`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)<`V`\>
+▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `U` | `U` |
-| `V` | extends `object` = `object` |
+| Name |
+| :------ |
+| `T` |
+| `U` |
 
 #### Parameters
 
@@ -6100,25 +6165,24 @@ ___
 | :------ | :------ |
 | `store` | `StoreApi`<`T`\> |
 | `select` | `undefined` |
-| `actions` | [`Actions`](API.md#actions)<`T`, `V`\> |
+| `actions` | [`Actions`](API.md#actions)<`T`\> |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)<`V`\>
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L40)
+[packages/framework/esm-react-utils/src/useStore.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L35)
 
-▸ **useStore**<`T`, `U`, `V`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)<`V`\>
+▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `U` | `U` |
-| `V` | extends `object` = `object` |
+| Name |
+| :------ |
+| `T` |
+| `U` |
 
 #### Parameters
 
@@ -6126,43 +6190,42 @@ ___
 | :------ | :------ |
 | `store` | `StoreApi`<`T`\> |
 | `select` | (`state`: `T`) => `U` |
-| `actions` | [`Actions`](API.md#actions)<`T`, `V`\> |
+| `actions` | [`Actions`](API.md#actions)<`T`\> |
 
 #### Returns
 
-`U` & [`BoundActions`](API.md#boundactions)<`V`\>
+`U` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:41](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L41)
+[packages/framework/esm-react-utils/src/useStore.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L36)
 
 ___
 
 ### useStoreWithActions
 
-▸ **useStoreWithActions**<`T`, `U`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)<`U`\>
+▸ **useStoreWithActions**<`T`\>(`store`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
 
 #### Type parameters
 
-| Name | Type |
-| :------ | :------ |
-| `T` | `T` |
-| `U` | extends `object` = `object` |
+| Name |
+| :------ |
+| `T` |
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `store` | `StoreApi`<`T`\> | A zustand store |
-| `actions` | [`Actions`](API.md#actions)<`T`, `U`\> |  |
+| `actions` | [`Actions`](API.md#actions)<`T`\> |  |
 
 #### Returns
 
-`T` & [`BoundActions`](API.md#boundactions)<`U`\>
+`T` & [`BoundActions`](API.md#boundactions)
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:57](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L57)
+[packages/framework/esm-react-utils/src/useStore.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L52)
 
 ___
 
@@ -6294,7 +6357,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:179](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L179)
+[packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx:183](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-banner/contact-details/patient-banner-contact-details.component.tsx#L183)
 
 ___
 
@@ -6716,6 +6779,13 @@ ___
 
 ▸ **usePagination**<`T`\>(`data?`, `resultsPerPage?`): `Object`
 
+Use this hook to paginate data that already exists on the client side.
+Note that if the data is obtained from server-side, the caller must handle server-side pagination manually.
+
+**`see`** `useServerPagination` for hook that automatically manages server-side pagination.
+
+**`see`** `useServerInfinite` for hook to get all data loaded onto the client-side
+
 #### Type parameters
 
 | Name |
@@ -6747,7 +6817,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePagination.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L6)
+[packages/framework/esm-react-utils/src/usePagination.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePagination.ts#L15)
 
 ___
 
@@ -6768,6 +6838,118 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L30)
+
+___
+
+### useServerInfinite
+
+▸ **useServerInfinite**<`T`\>(`url`, `fetcher?`): [`UseServerInfiniteReturnObject`](interfaces/UseServerInfiniteReturnObject.md)<`T`\>
+
+Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+The max number of results per request is configurable server-side
+with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
+
+This hook fetches data from a paginated rest endpoint, initially by fetching the first page of the results.
+It provides a callback to load data from subsequent pages as needed. This hook is intended to serve UIs that
+provide infinite loading / scrolling of results.
+
+While not ideal, this hook can be used to fetch the complete data set of results (from all pages) as follows:
+
+     useEffect(() => hasMore && loadMore(), [hasMore])
+
+The above should only be used when there is a need to fetch the complete data set onto the client side (ex:
+need to support client-side sorting or filtering of data).
+
+**`see`** `useServerPagination` for lazy-loading paginated data`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `url` | `string` \| `URL` | `undefined` | The URL of the paginated rest endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side. |
+| `fetcher` | (`key`: `string`) => `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<[`OpenMRSPaginatedResponse`](interfaces/OpenMRSPaginatedResponse.md)<`T`\>\>\> | `openmrsFetch` | The fetcher to use. Defaults to openmrsFetch |
+
+#### Returns
+
+[`UseServerInfiniteReturnObject`](interfaces/UseServerInfiniteReturnObject.md)<`T`\>
+
+a UseServerInfiniteReturnObject object
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L80)
+
+___
+
+### useServerPagination
+
+▸ **useServerPagination**<`T`\>(`url`, `pageSize`, `fetcher?`): `Object`
+
+Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+The max number of results per request is configurable server-side
+with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
+
+For any UI that displays a paginated view of the full data set, we MUST handle the server-side pagination properly,
+or else the UI does not correctly display the full data set.
+This hook does that by providing callback functions for navigating to different pages of the results, and
+lazy-loads the data on each page as needed.
+
+Note that this hook is not suitable for use for situations that require client-side sorting or filtering
+of the data set. In that case, all data must be loaded onto client-side first.
+
+**`see`** `useServerInfinite` for completely loading data (from all pages) onto client side
+
+**`see`** `usePagination` for pagination of client-side data`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `url` | `string` \| `URL` | `undefined` | The URL of the paginated rest endpoint.            It should be populated with any needed GET params, except `limit`, `startIndex` or `totalCount`,            which will be overridden and manipulated by the `goTo*` callbacks |
+| `pageSize` | `number` | `undefined` | The number of results to return per page / fetch. Note that this value MUST NOT exceed            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000). |
+| `fetcher` | (`key`: `string`) => `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<[`OpenMRSPaginatedResponse`](interfaces/OpenMRSPaginatedResponse.md)<`T`\>\>\> | `openmrsFetch` | The fetcher to use. Defaults to openmrsFetch |
+
+#### Returns
+
+`Object`
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `currentPage` | `number` | - |
+| `currentPageSize` | `MutableRefObject`<`number`\> | - |
+| `data` | `undefined` \| `T`[] |  |
+| `error` | `any` | The error object thrown by the fetcher function. |
+| `goTo` | (`page`: `number`) => `void` | - |
+| `goToNext` | () => `void` | - |
+| `goToPrevious` | () => `void` | - |
+| `isLoading` | `boolean` | - |
+| `isValidating` | `boolean` | - |
+| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<[`OpenMRSPaginatedResponse`](interfaces/OpenMRSPaginatedResponse.md)<`T`\>\>\> | - |
+| `paginated` | `boolean` |  |
+| `showNextButton` | `boolean` |  |
+| `showPreviousButton` | `boolean` |  |
+| `totalCount` | `number` |  |
+| `totalPages` | `number` | - |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useServerPagination.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerPagination.ts#L38)
 
 ___
 

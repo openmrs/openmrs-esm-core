@@ -58,6 +58,7 @@ export const ActionMenuButton: React.FC<ActionMenuButtonProps> = ({
         onClick={handler}
         role="button"
         tabIndex={0}
+        size="md"
       >
         <span className={styles.elementContainer}>
           <Tags formOpenInTheBackground={formOpenInTheBackground} getIcon={getIcon} tagContent={tagContent} />
