@@ -6682,7 +6682,7 @@ a UseServerInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L78)
+[packages/framework/esm-react-utils/src/useServerInfinite.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L80)
 
 ___
 
@@ -7149,7 +7149,7 @@ ___
 
 ### useOpenmrsSWR
 
-▸ **useOpenmrsSWR**<`DataType`, `ErrorType`\>(`key`, `options?`): `SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `Partial`<`PublicConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>\>
+▸ **useOpenmrsSWR**<`DataType`, `ErrorType`\>(`key`, `options?`): `SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>
 
 **`beta`**
 
@@ -7202,7 +7202,7 @@ function MyComponent() {
 
 #### Returns
 
-`SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `Partial`<`PublicConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>\>
+`SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>
 
 #### Defined in
 
