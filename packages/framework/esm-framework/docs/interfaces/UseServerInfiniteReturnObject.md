@@ -90,7 +90,7 @@ ___
 
 ### mutate
 
-• **mutate**: `KeyedMutator`<[`FetchResponse`](FetchResponse.md)<[`OpenMRSPaginatedResponse`](OpenMRSPaginatedResponse.md)<`T`\>\>[]\>
+• **mutate**: `InfiniteKeyedMutator`<[`FetchResponse`](FetchResponse.md)<[`OpenMRSPaginatedResponse`](OpenMRSPaginatedResponse.md)<`T`\>\>[]\>
 
 from useSWRInfinite
 

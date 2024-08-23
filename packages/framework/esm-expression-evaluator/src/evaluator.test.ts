@@ -46,6 +46,24 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate('a(1)', { a: (i: number) => i + 1 })).toBe(2);
   });
 
+  it('Should support built-in functions', () => {
+    expect(evaluate('a.includes("v")', { a: 'value' })).toBe(true);
+    expect(evaluate('"value".includes("v")')).toBe(true);
+    expect(evaluate('(3.14159).toPrecision(3)')).toBe('3.14');
+  });
+
+  it('Should give a useful error message for properties on missing objects', () => {
+    expect(() => evaluate('a.b')).toThrow('ReferenceError: a is not defined');
+    expect(() => evaluate('a["b"]')).toThrow('ReferenceError: a is not defined');
+    expect(() => evaluate('a.b.c', { a: {} })).toThrow("TypeError: cannot read properties of undefined (reading 'c')");
+    expect(() => evaluate('a.b["c"]', { a: {} })).toThrow(
+      "TypeError: cannot read properties of undefined (reading 'c')",
+    );
+    expect(() => evaluate('a["b"]["c"]', { a: {} })).toThrow(
+      "TypeError: cannot read properties of undefined (reading 'c')",
+    );
+  });
+
   it('Should not support this', () => {
     expect(() => evaluate('this')).toThrow(
       /Expression evaluator does not support expression of type 'ThisExpression'.*/i,
@@ -60,7 +78,13 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(() => evaluate('a.__proto__', { a: {} })).toThrow(/Cannot access the __proto__ property .*/i);
     expect(() => evaluate('a["__proto__"]', { a: {} })).toThrow(/Cannot access the __proto__ property .*/i);
     expect(() => evaluate('a[b]', { a: {}, b: '__proto__' })).toThrow(/Cannot access the __proto__ property .*/i);
+    expect(() => evaluate('a[b()]', { a: {}, b: () => '__proto__' })).toThrow(
+      /Cannot access the __proto__ property .*/i,
+    );
     expect(() => evaluate('__proto__')).toThrow(/Cannot access the __proto__ property .*/i);
+    expect(() => evaluate('a.prototype', { a: {} })).toThrow(/Cannot access the prototype property .*/i);
+    expect(() => evaluate('a["prototype"]', { a: {} })).toThrow(/Cannot access the prototype property .*/i);
+    expect(() => evaluate('a[b]', { a: {}, b: 'prototype' })).toThrow(/Cannot access the prototype property .*/i);
   });
 
   it('Should support ternaries', () => {
@@ -99,6 +123,7 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate('Math.min(1, 2, 3)')).toBe(1);
     expect(evaluate('undefined')).toBeUndefined();
     expect(evaluate('isNaN(NaN)')).toBe(true);
+    expect(evaluate('Number.isInteger(42)')).toBe(true);
   });
 
   it('Should not support creating arbitrary objects', () => {

@@ -5751,7 +5751,7 @@ An executable AST representation of the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:173](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L173)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L213)
 
 ___
 
@@ -5857,7 +5857,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L107)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:111](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L111)
 
 ___
 
@@ -5883,7 +5883,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:120](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L120)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:124](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L124)
 
 ___
 
@@ -5918,7 +5918,7 @@ The result of evaluating the expression
 
 #### Defined in
 
-[packages/framework/esm-expression-evaluator/src/evaluator.ts:137](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L137)
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:141](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L141)
 
 ___
 
@@ -7352,7 +7352,7 @@ ___
 
 ### useOpenmrsSWR
 
-▸ **useOpenmrsSWR**<`DataType`, `ErrorType`\>(`key`, `options?`): `SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `Partial`<`PublicConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>\>
+▸ **useOpenmrsSWR**<`DataType`, `ErrorType`\>(`key`, `options?`): `SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>
 
 **`beta`**
 
@@ -7405,7 +7405,7 @@ function MyComponent() {
 
 #### Returns
 
-`SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `Partial`<`PublicConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>\>
+`SWRResponse`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `undefined` \| `SWRConfiguration`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>, `ErrorType`, `BareFetcher`<[`FetchResponse`](interfaces/FetchResponse.md)<`DataType`\>\>\>\>
 
 #### Defined in
 

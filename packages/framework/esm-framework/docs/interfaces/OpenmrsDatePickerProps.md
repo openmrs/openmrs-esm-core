@@ -144,7 +144,7 @@ Omit.autoFocus
 
 #### Defined in
 
-node_modules/@react-types/shared/src/events.d.ts:116
+node_modules/@react-types/shared/src/events.d.ts:120
 
 ___
 
@@ -160,7 +160,7 @@ Omit.children
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:54
+node_modules/react-aria-components/dist/types.d.ts:56
 
 ___
 
@@ -544,7 +544,7 @@ Omit.shouldCloseOnSelect
 
 #### Defined in
 
-node_modules/@react-stately/datepicker/dist/types.d.ts:12
+node_modules/@react-stately/datepicker/dist/types.d.ts:21
 
 ___
 
@@ -590,7 +590,7 @@ Omit.slot
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:71
+node_modules/react-aria-components/dist/types.d.ts:73
 
 ___
 
@@ -606,7 +606,7 @@ Omit.style
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:48
+node_modules/react-aria-components/dist/types.d.ts:50
 
 ___
 
@@ -626,7 +626,7 @@ Omit.validationBehavior
 
 #### Defined in
 
-node_modules/react-aria-components/dist/types.d.ts:82
+node_modules/react-aria-components/dist/types.d.ts:84
 
 ___
 
@@ -690,7 +690,7 @@ Omit.onBlur
 
 #### Defined in
 
-node_modules/@react-types/shared/src/events.d.ts:81
+node_modules/@react-types/shared/src/events.d.ts:85
 
 ___
 
@@ -760,7 +760,7 @@ Omit.onFocus
 
 #### Defined in
 
-node_modules/@react-types/shared/src/events.d.ts:79
+node_modules/@react-types/shared/src/events.d.ts:83
 
 ___
 
@@ -786,7 +786,7 @@ Omit.onFocusChange
 
 #### Defined in
 
-node_modules/@react-types/shared/src/events.d.ts:83
+node_modules/@react-types/shared/src/events.d.ts:87
 
 ___
 
@@ -812,7 +812,7 @@ Omit.onKeyDown
 
 #### Defined in
 
-node_modules/@react-types/shared/src/events.d.ts:72
+node_modules/@react-types/shared/src/events.d.ts:76
 
 ___
 
@@ -838,7 +838,7 @@ Omit.onKeyUp
 
 #### Defined in
 
-node_modules/@react-types/shared/src/events.d.ts:74
+node_modules/@react-types/shared/src/events.d.ts:78
 
 ___
 

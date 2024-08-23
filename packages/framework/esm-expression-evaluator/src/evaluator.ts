@@ -233,6 +233,19 @@ function visitExpression(expression: jsep.Expression, variables: VariablesMap, t
   }
 }
 
+function visitExpressionName(expression: jsep.Expression, variables: VariablesMap, thisObj: ThisObj = undefined) {
+  switch (expression.type) {
+    case 'Literal':
+      return (expression as jsep.Literal).value as string;
+    case 'Identifier':
+      return (expression as jsep.Identifier).name;
+    case 'MemberExpression':
+      return visitExpressionName((expression as jsep.MemberExpression).property, variables, thisObj);
+    default:
+      throw `VisitExpressionName does not support expression of type '${expression.type}'`;
+  }
+}
+
 function visitUnaryExpression(expression: jsep.UnaryExpression, variables: VariablesMap, thisObj: ThisObj) {
   const value = visitExpression(expression.argument, variables, thisObj);
 
@@ -327,14 +340,17 @@ function visitArrowFunctionExpression(expression: ArrowExpression, variables: Va
       }
     }) ?? [];
 
-  return function (...rest) {
+  return function (...rest: unknown[]) {
     if (rest.length < params.length) {
       throw `Required argument(s) ${params.slice(rest.length, -1).join(', ')} were not provided`;
     }
 
     const vars = Object.fromEntries(
       params.reduce((acc: Array<[string, VariablesMap['a']]>, p, idx) => {
-        acc.push([p, rest[idx]]);
+        const val = rest[idx];
+        if (isValidVariableType(val)) {
+          acc.push([p, val]);
+        }
         return acc;
       }, []),
     );
@@ -343,13 +359,53 @@ function visitArrowFunctionExpression(expression: ArrowExpression, variables: Va
   }.bind(thisObj);
 }
 
+const unset = Symbol('unset');
+
 function visitMemberExpression(expression: jsep.MemberExpression, variables: VariablesMap, thisObj: ThisObj) {
-  const obj = visitExpression(expression.object, variables, thisObj);
-  if (expression.property.name === '__proto__') {
-    throw { type: 'Illegal property access', message: 'Cannot access the __proto__ property of objects' };
+  let obj = visitExpression(expression.object, variables, thisObj);
+
+  if (obj === undefined) {
+    switch (expression.object.type) {
+      case 'Identifier': {
+        let objectName = visitExpressionName(expression.object, variables, thisObj);
+        throw ReferenceError(`ReferenceError: ${objectName} is not defined`);
+      }
+      case 'MemberExpression': {
+        let propertyName = visitExpressionName(expression.property, variables, thisObj);
+        throw TypeError(`TypeError: cannot read properties of undefined (reading '${propertyName}')`);
+      }
+      default:
+        throw `VisitMemberExpression does not support operator '${expression.object.type}' type`;
+    }
   }
 
-  const result = visitExpression(expression.property, variables, obj);
+  let newObj = obj;
+  if (typeof obj === 'string') {
+    newObj = String.prototype;
+  } else if (typeof obj === 'number') {
+    newObj = Number.prototype;
+  } else if (typeof obj === 'function') {
+    newObj = obj;
+  } else if (typeof obj !== 'object') {
+    throw `VisitMemberExpression does not support member access on type ${typeof obj}`;
+  }
+
+  let result: unknown;
+  switch (expression.property.type) {
+    case 'Identifier':
+    case 'MemberExpression':
+      result = visitExpression(expression.property, variables, newObj);
+      break;
+    default: {
+      const property = visitExpression(expression.property, variables, thisObj);
+      if (typeof property === 'undefined') {
+        throw { type: 'Illegal property access', message: 'No property was supplied to the property access' };
+      }
+      validatePropertyName(property);
+      result = obj[property];
+    }
+  }
+
   if (typeof result === 'function') {
     return result.bind(obj);
   }
@@ -441,19 +497,18 @@ const globals = {
 };
 
 function visitIdentifier(expression: jsep.Identifier, variables: VariablesMap, thisObj: ThisObj) {
-  if (expression.name === '__proto__') {
-    throw { type: 'Illegal property access', message: 'Cannot access the __proto__ property of objects' };
-  } else if (thisObj && expression.name in thisObj) {
+  validatePropertyName(expression.name);
+
+  // we support both `object` and `function` in the same way as technically property access on functions
+  // is possible; the use-case here is to support JS's "static" functions like `Number.isInteger()`, which
+  // is technically reading a property on a function
+  if (thisObj && (typeof thisObj === 'object' || typeof thisObj === 'function') && expression.name in thisObj) {
     const result = thisObj[expression.name];
-    if (result === '__proto__') {
-      throw { type: 'Illegal property access', message: 'Cannot access the __proto__ property of objects' };
-    }
+    validatePropertyName(result);
     return result;
   } else if (variables && expression.name in variables) {
     const result = variables[expression.name];
-    if (result === '__proto__') {
-      throw { type: 'Illegal property access', message: 'Cannot access the __proto__ property of objects' };
-    }
+    validatePropertyName(result);
     return result;
   } else if (expression.name in globals) {
     return globals[expression.name];
@@ -463,10 +518,7 @@ function visitIdentifier(expression: jsep.Identifier, variables: VariablesMap, t
 }
 
 function visitLiteral(expression: jsep.Literal, variables: VariablesMap, thisObj: ThisObj) {
-  if (expression.value === '__proto__') {
-    throw { type: 'Illegal property access', message: 'Cannot access the __proto__ property of objects' };
-  }
-
+  validatePropertyName(expression.value);
   return expression.value;
 }
 
@@ -480,4 +532,43 @@ function handleNullableExpression(variables: VariablesMap, thisObj: ThisObj) {
 
     return visitExpression(expression, variables, thisObj);
   };
+}
+
+function validatePropertyName(name: unknown) {
+  if (name === '__proto__' || name === 'prototype' || name === 'constructor') {
+    throw { type: 'Illegal property access', message: `Cannot access the ${name} property of objects` };
+  }
+}
+
+function isValidVariableType(val: unknown): val is VariablesMap['a'] {
+  if (
+    typeof val === 'string' ||
+    typeof val === 'number' ||
+    typeof val === 'boolean' ||
+    typeof val === 'function' ||
+    val === null ||
+    val instanceof RegExp
+  ) {
+    return true;
+  }
+
+  if (typeof val === 'object') {
+    for (const key of Object.keys(val)) {
+      if (!isValidVariableType(val[key])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  if (Array.isArray(val)) {
+    for (const item of val) {
+      if (!isValidVariableType(item)) {
+        return false;
+      }
+    }
+  }
+
+  return false;
 }
