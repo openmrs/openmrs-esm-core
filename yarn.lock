@@ -2854,12 +2854,14 @@ __metadata:
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
+    "@openmrs/esm-utils": "workspace:*"
     "@types/ramda": "npm:^0.26.44"
     ramda: "npm:^0.26.1"
     single-spa: "npm:^6.0.1"
   peerDependencies:
     "@openmrs/esm-globals": 5.x
     "@openmrs/esm-state": 5.x
+    "@openmrs/esm-utils": 5.x
     single-spa: 5.x
   languageName: unknown
   linkType: soft
