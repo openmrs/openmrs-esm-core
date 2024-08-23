@@ -66,6 +66,12 @@ export const WarningIcon = () => <div>WarningIcon</div>;
 export const AllergiesIcon = () => <div>AllergiesIcon</div>;
 export const Icon = () => <div>Icon</div>;
 
+export const AppointmentsPictogram = () => <div>AppointmentsPictogram</div>;
+export const HomePictogram = () => <div>HomePictogram</div>;
+export const LaboratoryPictogram = () => <div>LaboratoryPictogramPictogram</div>;
+export const PatientListsPictogram = () => <div>PatientListsPictogram</div>;
+export const ServiceQueuesPictogram = () => <div>ServiceQueuesPictogramPictogram</div>;
+
 export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
   const locations = [
     {
