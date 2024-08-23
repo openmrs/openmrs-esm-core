@@ -1,33 +1,35 @@
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { KeyedMutator } from 'swr';
-import useSwrInfinite from 'swr/infinite';
+import useSwrInfinite, { type SWRInfiniteResponse } from 'swr/infinite';
 import useSwrImmutable from 'swr/immutable';
 import {
-  type FetchResponse,
   fhirBaseUrl,
   openmrsFetch,
   refetchCurrentUser,
+  type FetchResponse,
   type Session,
   useDebounce,
 } from '@openmrs/esm-framework';
 import type { LocationEntry, LocationResponse } from './types';
 
+// "swr/infinite" doesn't export InfiniteKeyedMutator directly
+type InfiniteKeyedMutator<T> = SWRInfiniteResponse<T extends (infer I)[] ? I : T>['mutate'];
+
 interface LoginLocationData {
-  locations: Array<LocationEntry>;
-  isLoading: boolean;
-  totalResults: number;
-  hasMore: boolean;
-  loadingNewData: boolean;
-  setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[]>;
-  mutate: KeyedMutator<FetchResponse<LocationResponse>[]>;
   error: Error;
+  hasMore: boolean;
+  isLoading: boolean;
+  loadingNewData: boolean;
+  locations: Array<LocationEntry>;
+  mutate: InfiniteKeyedMutator<FetchResponse<LocationResponse>[]>;
+  setPage: (size: number | ((_size: number) => number)) => Promise<FetchResponse<LocationResponse>[]>;
+  totalResults: number;
 }
 
 export function useLoginLocations(
-  useLoginLocationTag: boolean,
   count: number = 0,
   searchQuery: string = '',
+  useLoginLocationTag: boolean,
 ): LoginLocationData {
   const { t } = useTranslation();
   const debouncedSearchQuery = useDebounce(searchQuery);

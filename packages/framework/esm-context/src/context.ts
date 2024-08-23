@@ -78,12 +78,13 @@ export function getContext<T extends {} = {}, U extends {} = T>(
  */
 export function updateContext<T extends {} = {}>(namespace: string, update: (state: T) => T) {
   contextStore.setState((state) => {
-    if (!(namespace in state)) {
-      state[namespace] = {};
+    const newState = { ...state };
+    if (!(namespace in newState)) {
+      newState[namespace] = {};
     }
 
-    state[namespace] = update(state[namespace] as T);
-    return state;
+    newState[namespace] = update(newState[namespace] as T);
+    return newState;
   });
 }
 
@@ -103,7 +104,6 @@ export function subscribeToContext<T extends {} = {}>(namespace: string, callbac
   callback(Object.freeze(Object.assign({}, previous)));
 
   return contextStore.subscribe((state) => {
-    console.log('deep inside state is', state);
     let current: Readonly<T> | null | undefined = namespace in state ? (state[namespace] as T) : null;
 
     if (current !== previous) {
