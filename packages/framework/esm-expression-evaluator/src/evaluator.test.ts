@@ -1,4 +1,4 @@
-import { compile, evaluate } from './evaluator';
+import { compile, evaluate, evaluateAsBoolean, evaluateAsNumber, evaluateAsType, evaluateAsync } from './evaluator';
 
 describe('OpenMRS Expression Evaluator', () => {
   it('Should evaluate a simple expression', () => {
@@ -116,7 +116,7 @@ describe('OpenMRS Expression Evaluator', () => {
     expect(evaluate('[1, 2, 3].find(v => v === 3)')).toBe(3);
   });
 
-  it('Should support various globals', () => {
+  it('Should support globals', () => {
     expect(evaluate('NaN')).toBeNaN();
     expect(evaluate('Infinity')).toBe(Infinity);
     expect(evaluate('Boolean(true)')).toBe(true);
@@ -128,15 +128,47 @@ describe('OpenMRS Expression Evaluator', () => {
 
   it('Should not support creating arbitrary objects', () => {
     expect(() => evaluate('new object()')).toThrow(/Cannot instantiate object .*/i);
+    class Fn {
+      constructor() {}
+    }
+    expect(() => evaluate('new Fn()', { Fn })).toThrow(/Cannot instantiate object .*/i);
   });
 
-  it('Should not support __proto__ references on supported objects', () => {
+  it('Should not support invalid property references on supported objects', () => {
     expect(() => evaluate('new Date().__proto__')).toThrow(/Cannot access the __proto__ property .*/i);
+    expect(() => evaluate('new Date().prototype')).toThrow(/Cannot access the prototype property .*/i);
+  });
+
+  it('Should not return invalid types', () => {
+    expect(() => evaluate('a', { a: {} })).toThrow(/.* did not produce a valid result/i);
+    expect(() => evaluateAsBoolean('a', { a: 'value' })).toThrow(/.* did not produce a valid result/i);
+    expect(() => evaluateAsNumber('a', { a: true })).toThrow(/.* did not produce a valid result/i);
+    expect(() => evaluateAsType('a', { a: false }, (val): val is 'value' => val === 'value')).toThrow(
+      /.* did not produce a valid result/i,
+    );
   });
 
   it('Should support a compilation phase', () => {
     const exp = compile('1 + 1');
     expect(evaluate(exp)).toBe(2);
+  });
+
+  it('Should not support variable assignement', () => {
+    expect(() => evaluate('var a = 1; a')).toThrow();
+  });
+
+  it('Should support asynchronous evaluation', async () => {
+    await expect(evaluateAsync('1 + 1')).resolves.toBe(2);
+    let a = new Promise((resolve) => {
+      setTimeout(() => resolve(1), 10);
+    });
+    await expect(evaluateAsync('Promise.resolve(a).then((a) => a + 1)', { a })).resolves.toBe(2);
+    a = new Promise((resolve) => {
+      setTimeout(() => resolve(1), 10);
+    });
+    await expect(
+      evaluateAsync('resolve(a).then((a) => a + 1)', { a, resolve: Promise.resolve.bind(Promise) }),
+    ).resolves.toBe(2);
   });
 
   it('Should support real-world use-cases', () => {
@@ -158,9 +190,5 @@ describe('OpenMRS Expression Evaluator', () => {
         },
       ),
     ).toBe(true);
-  });
-
-  it('Should not support variable assignement', () => {
-    expect(() => evaluate('var a = 1; a')).toThrow();
   });
 });
