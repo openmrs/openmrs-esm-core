@@ -34,7 +34,7 @@ export function registerContext<T extends {} = {}>(namespace: string, initialVal
       );
     }
 
-    return Object.assign({}, state, { namespace: initialValue === nothing ? {} : initialValue });
+    return Object.assign({}, state, { [namespace]: initialValue === nothing ? {} : initialValue });
   });
 }
 
