@@ -33,9 +33,9 @@ export function registerContext<T extends {} = {}>(namespace: string, initialVal
         `Attempted to re-register namespace ${namespace} in the app context. Each namespace must be unregistered before the name can be registered again.`,
       );
     }
-
-    state[namespace] = initialValue === nothing ? {} : initialValue;
-    return state;
+    const newState = { ...state };
+    newState[namespace] = initialValue === nothing ? {} : initialValue;
+    return newState;
   });
 }
 
@@ -103,6 +103,7 @@ export function subscribeToContext<T extends {} = {}>(namespace: string, callbac
   callback(Object.freeze(Object.assign({}, previous)));
 
   return contextStore.subscribe((state) => {
+    console.log('deep inside state is', state);
     let current: Readonly<T> | null | undefined = namespace in state ? (state[namespace] as T) : null;
 
     if (current !== previous) {
