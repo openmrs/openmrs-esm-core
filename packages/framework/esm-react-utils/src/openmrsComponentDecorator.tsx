@@ -100,7 +100,14 @@ export function openmrsComponentDecorator<T>(userOpts: ComponentDecoratorOptions
                   {opts.disableTranslations ? (
                     <Comp {...this.props} />
                   ) : (
-                    <I18nextProvider i18n={window.i18next} defaultNS={opts.moduleName}>
+                    <I18nextProvider
+                      i18n={window.i18next}
+                      defaultNS={
+                        this.props._extensionContext
+                          ? `${opts.moduleName}___${this.props._extensionContext.extensionSlotName}___${this.props._extensionContext.extensionId}`
+                          : opts.moduleName
+                      }
+                    >
                       <Comp {...this.props} />
                     </I18nextProvider>
                   )}

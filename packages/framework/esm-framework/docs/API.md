@@ -353,7 +353,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L90)
+[packages/framework/esm-context/src/context.ts:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L89)
 
 ___
 
@@ -3051,7 +3051,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:164](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L164)
+[packages/framework/esm-config/src/module-config/module-config.ts:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L166)
 
 ___
 
@@ -3083,7 +3083,7 @@ for more information about defining a config schema.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:225](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L225)
+[packages/framework/esm-config/src/module-config/module-config.ts:227](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L227)
 
 ___
 
@@ -3115,7 +3115,7 @@ of the execution of a function.
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:257](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L257)
+[packages/framework/esm-config/src/module-config/module-config.ts:259](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L259)
 
 ___
 
@@ -3136,7 +3136,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/module-config/module-config.ts:241](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L241)
+[packages/framework/esm-config/src/module-config/module-config.ts:243](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/module-config/module-config.ts#L243)
 
 ___
 
@@ -3366,7 +3366,7 @@ Returns an _immutable_ version of the state of the namespace as it is currently
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L55)
+[packages/framework/esm-context/src/context.ts:54](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L54)
 
 ___
 
@@ -3433,7 +3433,7 @@ A function to unsubscribe from the context
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L99)
+[packages/framework/esm-context/src/context.ts:98](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L98)
 
 ___
 
@@ -3456,7 +3456,7 @@ will remove the namespace and all associated data.
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L46)
+[packages/framework/esm-context/src/context.ts:45](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L45)
 
 ___
 
@@ -3485,7 +3485,7 @@ Updates a namespace in the global context. If the namespace does not exist, it i
 
 #### Defined in
 
-[packages/framework/esm-context/src/context.ts:79](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L79)
+[packages/framework/esm-context/src/context.ts:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-context/src/context.ts#L78)
 
 ___
 
