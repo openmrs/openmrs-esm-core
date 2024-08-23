@@ -33,9 +33,8 @@ export function registerContext<T extends {} = {}>(namespace: string, initialVal
         `Attempted to re-register namespace ${namespace} in the app context. Each namespace must be unregistered before the name can be registered again.`,
       );
     }
-    const newState = { ...state };
-    newState[namespace] = initialValue === nothing ? {} : initialValue;
-    return newState;
+
+    return Object.assign({}, state, { namespace: initialValue === nothing ? {} : initialValue });
   });
 }
 
@@ -78,13 +77,12 @@ export function getContext<T extends {} = {}, U extends {} = T>(
  */
 export function updateContext<T extends {} = {}>(namespace: string, update: (state: T) => T) {
   contextStore.setState((state) => {
-    const newState = { ...state };
-    if (!(namespace in newState)) {
-      newState[namespace] = {};
+    if (!(namespace in state)) {
+      state[namespace] = {};
     }
 
-    newState[namespace] = update(newState[namespace] as T);
-    return newState;
+    state[namespace] = update(state[namespace] as T);
+    return Object.assign({}, state);
   });
 }
 
