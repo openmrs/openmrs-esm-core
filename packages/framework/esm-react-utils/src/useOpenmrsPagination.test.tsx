@@ -1,6 +1,6 @@
 import { renderHook, cleanup, waitFor, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { useServerPagination, type OpenMRSPaginatedResponse } from './useServerPagination';
+import { useOpenmrsPagination, type OpenMRSPaginatedResponse } from './useOpenmrsPagination';
 
 // returns an sequentially increasing int array of specified length starting at the specified start integer.
 export function getIntArray(start: number, length: number) {
@@ -25,16 +25,26 @@ export async function getTestData(url: string, totalCount: number): Promise<Open
   return { results, links, totalCount } as OpenMRSPaginatedResponse<number>;
 }
 
-describe('useServerPagination', () => {
+describe('useOpenmrsPagination', () => {
   afterEach(cleanup);
 
-  it('should render all rows on 1 page if number of rows < pageSize', async () => {
+  it('should not fetch anything if url is null', async () => {
+    const { result } = renderHook(() =>
+      useOpenmrsPagination(null as any, 50, {
+        fetcher: (url) => getTestData(url, 100).then((data) => ({ data }) as any),
+      }),
+    );
+    expect(result.current.isLoading).toBeFalsy();
+    expect(result.current.data).toBeUndefined();
+  });
+
+  it('should fetch all rows on 1 page if number of rows < pageSize', async () => {
     const pageSize = 20;
     const expectedRowCount = 17;
     const { result } = renderHook(() =>
-      useServerPagination('/1', pageSize, (url) =>
-        getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
-      ),
+      useOpenmrsPagination('http://localhost/1', pageSize, {
+        fetcher: (url) => getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
+      }),
     );
     await waitFor(() => expect(result.current.isLoading).toBeFalsy());
     expect(result.current.totalPages).toEqual(1);
@@ -45,13 +55,13 @@ describe('useServerPagination', () => {
     expect(result.current.data).toEqual(getIntArray(0, 17));
   });
 
-  it('should render 2 pages if pageSize < number of rows <= 2 * pageSize', async () => {
+  it('should fetch 2 pages if pageSize < number of rows <= 2 * pageSize', async () => {
     const pageSize = 20;
     const expectedRowCount = 40;
     const { result } = renderHook(() =>
-      useServerPagination('/2', pageSize, (url) =>
-        getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
-      ),
+      useOpenmrsPagination('http://localhost/2', pageSize, {
+        fetcher: (url) => getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
+      }),
     );
 
     await waitFor(() => expect(result.current.isLoading).toBeFalsy());
@@ -81,14 +91,14 @@ describe('useServerPagination', () => {
     expect(result.current.data).toEqual(getIntArray(0, 20));
   });
 
-  it('should render n pages for n >> 1', async () => {
+  it('should fetch n pages for n >> 1', async () => {
     const pageSize = 20;
     const expectedRowCount = 1337;
     const expectedTotalPages = Math.ceil(expectedRowCount / pageSize);
     const { result } = renderHook(() =>
-      useServerPagination('/3', pageSize, (url) =>
-        getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
-      ),
+      useOpenmrsPagination('http://localhost/3', pageSize, {
+        fetcher: (url) => getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
+      }),
     );
 
     await waitFor(() => expect(result.current.isLoading).toBeFalsy());

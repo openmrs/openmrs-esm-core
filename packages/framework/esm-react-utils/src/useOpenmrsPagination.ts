@@ -1,7 +1,8 @@
 /** @module @category UI */
 import { type FetchResponse, openmrsFetch } from '@openmrs/esm-api';
-import { useCallback, useRef, useState } from 'react';
-import useSWR from 'swr';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import useSWR, { type SWRConfiguration } from 'swr';
+import useSWRImmutable from 'swr/immutable';
 
 export interface OpenMRSPaginatedResponse<T> {
   results: Array<T>;
@@ -9,8 +10,22 @@ export interface OpenMRSPaginatedResponse<T> {
   totalCount: number;
 }
 
+export interface UseServerPaginationOptions<R> {
+  /**
+   * Whether to use useSWR or useSWRInfinite to fetch data
+   */
+  immutable?: boolean;
+
+  /**
+   * The fetcher to use. Defaults to openmrsFetch
+   */
+  fetcher?: (key: string) => Promise<FetchResponse<R>>;
+
+  swrConfig?: SWRConfiguration;
+}
+
 /**
- * Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+ * Most OpenMRS REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
  * The server limits the max number of results being returned, and multiple requests are needed to get the full data set
  * if its size exceeds this limit.
  * The max number of results per request is configurable server-side
@@ -24,7 +39,7 @@ export interface OpenMRSPaginatedResponse<T> {
  * Note that this hook is not suitable for use for situations that require client-side sorting or filtering
  * of the data set. In that case, all data must be loaded onto client-side first.
  *
- * @see `useServerInfinite` for completely loading data (from all pages) onto client side
+ * @see `useOpenmrsInfinite` for completely loading data (from all pages) onto client side
  * @see `usePagination` for pagination of client-side data`
  *
  * @param url The URL of the paginated rest endpoint.
@@ -35,11 +50,63 @@ export interface OpenMRSPaginatedResponse<T> {
  * @param fetcher The fetcher to use. Defaults to openmrsFetch
  * @returns
  */
-export function useServerPagination<T>(
+export function useOpenmrsPagination<T>(
   url: string | URL,
   pageSize: number,
-  fetcher: (key: string) => Promise<FetchResponse<OpenMRSPaginatedResponse<T>>> = openmrsFetch,
+  options: UseServerPaginationOptions<OpenMRSPaginatedResponse<T>> = {},
 ) {
+  return useServerPagination<T, OpenMRSPaginatedResponse<T>>(url, pageSize, openmrsServerPaginationHandlers, options);
+}
+
+type OpenmrsServerPaginationHandlers<T> = ServerPaginationHandlers<T, OpenMRSPaginatedResponse<T>>;
+export const openmrsServerPaginationHandlers: OpenmrsServerPaginationHandlers<any> = {
+  getPaginatedUrl: (url: string | URL, limit: number, startIndex: number) => {
+    if (url) {
+      const urlUrl = new URL(url.toString());
+      urlUrl.searchParams.set('limit', '' + limit);
+      urlUrl.searchParams.set('startIndex', '' + startIndex);
+      urlUrl.searchParams.set('totalCount', 'true');
+      return urlUrl.toString();
+    } else {
+      return null;
+    }
+  },
+  getNextUrl: (response) => {
+    const uri = response?.links?.find((link) => link.rel == 'next')?.uri;
+    if (uri) {
+      const url = new URL(uri);
+
+      // allows frontend proxies to work
+      url.host = window.location.host;
+      url.protocol = window.location.protocol;
+
+      return url.toString();
+    } else {
+      return null;
+    }
+  },
+  getTotalCount: (response) => response?.totalCount ?? Number.NaN,
+  getCurrentPageSize: (response) => response?.results?.length ?? Number.NaN,
+  getData: (response) => response?.results,
+};
+
+export interface ServerPaginationHandlers<T, R> {
+  getPaginatedUrl: (url: string | URL, limit: number, startIndex: number) => string | null;
+  getNextUrl: (response: R | undefined) => string | null;
+  getTotalCount: (response: R | undefined) => number;
+  getCurrentPageSize: (response: R | undefined) => number;
+  getData: (response: R | undefined) => Array<T> | undefined;
+}
+
+export function useServerPagination<T, R>(
+  url: string | URL,
+  pageSize: number,
+  serverPaginationHandlers: ServerPaginationHandlers<T, R>,
+  options: UseServerPaginationOptions<R> = {},
+) {
+  const { getPaginatedUrl, getTotalCount, getCurrentPageSize, getData } = serverPaginationHandlers;
+  const { immutable, swrConfig } = options;
+  const fetcher: (key: string) => Promise<FetchResponse<R>> = options.fetcher ?? openmrsFetch;
   const [currentPage, setCurrentPage] = useState<number>(1); // 1-indexing instead of 0-indexing, to keep consistency with `usePagination`
 
   // Cache the totalCount and currentPageSize so we don't lose them
@@ -51,16 +118,16 @@ export function useServerPagination<T>(
   const limit = pageSize;
   const startIndex = (currentPage - 1) * pageSize;
 
-  const urlUrl = new URL(url, window.location.toString());
-  urlUrl.searchParams.set('limit', '' + limit);
-  urlUrl.searchParams.set('startIndex', '' + startIndex);
-  urlUrl.searchParams.set('totalCount', 'true');
+  const urlUrl = useMemo(() => {
+    return getPaginatedUrl(url, limit, startIndex);
+  }, [url, limit, startIndex]);
 
-  const { data, ...rest } = useSWR(urlUrl.toString(), fetcher);
+  const swr = immutable ? useSWRImmutable : useSWR;
+  const { data, ...rest } = swr(urlUrl, fetcher, swrConfig);
 
   if (data?.data) {
-    totalCount.current = data.data?.totalCount;
-    currentPageSize.current = data.data?.results.length;
+    totalCount.current = getTotalCount(data?.data);
+    currentPageSize.current = getCurrentPageSize(data?.data);
   }
 
   const totalPages = Math.ceil(totalCount.current / pageSize);
@@ -84,7 +151,7 @@ export function useServerPagination<T>(
   }, [url, currentPage, totalPages]);
 
   return {
-    data: data?.data?.results,
+    data: getData(data?.data),
     totalPages,
     totalCount: totalCount.current,
     currentPage,

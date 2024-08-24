@@ -1,13 +1,27 @@
 /** @module @category UI */
-import { useCallback } from 'react';
-import useSWRInfinite, { type SWRInfiniteResponse } from 'swr/infinite';
 import { type FetchResponse, openmrsFetch } from '@openmrs/esm-api';
-import { type OpenMRSPaginatedResponse } from './useServerPagination';
+import { useCallback } from 'react';
+import { type KeyedMutator } from 'swr';
+import useSWRInfinite, { type SWRInfiniteConfiguration, type SWRInfiniteResponse } from 'swr/infinite';
+import {
+  openmrsServerPaginationHandlers,
+  type ServerPaginationHandlers,
+  type OpenMRSPaginatedResponse,
+} from './useOpenmrsPagination';
 
 // "swr/infinite" doesn't export InfiniteKeyedMutator directly
 type InfiniteKeyedMutator<T> = SWRInfiniteResponse<T extends (infer I)[] ? I : T>['mutate'];
 
-export interface UseServerInfiniteReturnObject<T> {
+export interface UseServerInfiniteOptions<R> {
+  /**
+   * The fetcher to use. Defaults to openmrsFetch
+   */
+  fetcher?: (key: string) => Promise<FetchResponse<R>>;
+
+  swrInfiniteConfig?: SWRInfiniteConfiguration;
+}
+
+export interface UseServerInfiniteReturnObject<T, R> {
   /**
    * The data fetched from the server so far. Note that this array contains
    * the aggregate of data from all fetched pages. Unless hasMore == false,
@@ -38,7 +52,7 @@ export interface UseServerInfiniteReturnObject<T> {
   /**
    * from useSWRInfinite
    */
-  mutate: InfiniteKeyedMutator<FetchResponse<OpenMRSPaginatedResponse<T>>[]>;
+  mutate: InfiniteKeyedMutator<FetchResponse<R>[]>;
 
   /**
    * from useSWRInfinite
@@ -62,10 +76,6 @@ export interface UseServerInfiniteReturnObject<T> {
  * It provides a callback to load data from subsequent pages as needed. This hook is intended to serve UIs that
  * provide infinite loading / scrolling of results.
  *
- * While not ideal, this hook can be used to fetch the complete data set of results (from all pages) as follows:
- *
- *      useEffect(() => hasMore && loadMore(), [hasMore])
- *
  * The above should only be used when there is a need to fetch the complete data set onto the client side (ex:
  * need to support client-side sorting or filtering of data).
  *
@@ -77,33 +87,43 @@ export interface UseServerInfiniteReturnObject<T> {
  * @param fetcher The fetcher to use. Defaults to openmrsFetch
  * @returns a UseServerInfiniteReturnObject object
  */
-export function useServerInfinite<T>(
+export function useOpenmrsInfinite<T>(
   url: string | URL,
-  fetcher: (key: string) => Promise<FetchResponse<OpenMRSPaginatedResponse<T>>> = openmrsFetch,
-): UseServerInfiniteReturnObject<T> {
-  const getNextUri = useCallback((data: FetchResponse<OpenMRSPaginatedResponse<T>>) => {
-    return data?.data?.links?.find((link) => link.rel == 'next');
-  }, []);
+  options: UseServerInfiniteOptions<OpenMRSPaginatedResponse<T>> = {},
+): UseServerInfiniteReturnObject<T, OpenMRSPaginatedResponse<T>> {
+  return useServerInfinite<T, OpenMRSPaginatedResponse<T>>(url, openmrsServerPaginationHandlers, options);
+}
 
-  const getKey = useCallback((pageIndex: number, previousPageData: FetchResponse<OpenMRSPaginatedResponse<T>>) => {
-    if (pageIndex == 0) {
-      return url;
-    } else {
-      return getNextUri(previousPageData)?.uri ?? null;
-    }
-  }, []);
+export function useServerInfinite<T, R>(
+  url: string | URL,
+  serverPaginationHandlers: ServerPaginationHandlers<T, R>,
+  options: UseServerInfiniteOptions<R> = {},
+): UseServerInfiniteReturnObject<T, R> {
+  const { swrInfiniteConfig } = options;
+  const { getNextUrl, getTotalCount, getData } = serverPaginationHandlers;
+  const fetcher: (key: string) => Promise<FetchResponse<R>> = options.fetcher ?? openmrsFetch;
+  const getKey = useCallback(
+    (pageIndex: number, previousPageData: FetchResponse<R>) => {
+      if (pageIndex == 0) {
+        return url;
+      } else {
+        return serverPaginationHandlers.getNextUrl(previousPageData.data);
+      }
+    },
+    [url],
+  );
 
-  const { data, size, setSize, ...rest } = useSWRInfinite<FetchResponse<OpenMRSPaginatedResponse<T>>>(getKey, fetcher);
-  const nextUri = data?.[data.length - 1].data?.links?.find((link) => link.rel == 'next');
+  const { data, size, setSize, ...rest } = useSWRInfinite<FetchResponse<R>>(getKey, fetcher, swrInfiniteConfig);
+  const nextUri = getNextUrl(data?.[data.length - 1].data);
 
   const hasMore = nextUri != null;
   const loadMore = () => {
-    setSize(size + 1);
+    setSize((data?.length ?? 0) + 1);
   };
-  const totalCount = data?.[0]?.data?.totalCount;
+  const totalCount = getTotalCount(data?.[0]?.data);
 
   return {
-    data: data?.flatMap((d) => d.data.results),
+    data: data?.flatMap((d) => getData(d.data) as T[]),
     totalCount,
     hasMore,
     loadMore,
