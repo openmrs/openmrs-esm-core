@@ -72,6 +72,8 @@ export const LaboratoryPictogram = () => <div>LaboratoryPictogramPictogram</div>
 export const PatientListsPictogram = () => <div>PatientListsPictogram</div>;
 export const ServiceQueuesPictogram = () => <div>ServiceQueuesPictogramPictogram</div>;
 
+export { PageHeader, PageHeaderContent } from './src/page-header/page-header.component';
+
 export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
   const locations = [
     {

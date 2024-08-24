@@ -1,9 +1,9 @@
 /** @module @category UI */
 import React from 'react';
+import classNames from 'classnames';
 import { useConfig } from '@openmrs/esm-react-utils';
 import { type StyleguideConfigObject } from '../config-schema';
 import styles from './page-header.module.scss';
-import classNames from 'classnames';
 
 export interface PageHeaderContentProps {
   title: string | JSX.Element;

@@ -2,14 +2,15 @@ import React from 'react';
 import { of } from 'rxjs';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { useConfig, useConnectedExtensions, useSession } from '@openmrs/esm-framework';
 import { isDesktop } from './utils';
 import { mockUser } from '../__mocks__/mock-user';
 import { mockSession } from '../__mocks__/mock-session';
 import Root from './root.component';
-import { useConfig, useConnectedExtensions, useSession } from '@openmrs/esm-framework';
 
 const mockUserObservable = of(mockUser);
 const mockSessionObservable = of({ data: mockSession });
+const mockIsDesktop = jest.mocked(isDesktop);
 
 const mockedUseConfig = useConfig as jest.Mock;
 const mockedUseConnectedExtensions = useConnectedExtensions as jest.Mock;
@@ -55,7 +56,7 @@ describe('Root', () => {
 
   describe('when view is desktop', () => {
     beforeEach(() => {
-      (isDesktop as jest.Mock).mockImplementation(() => true);
+      mockIsDesktop.mockImplementation(() => true);
     });
 
     it('does not render side menu button if desktop', async () => {
