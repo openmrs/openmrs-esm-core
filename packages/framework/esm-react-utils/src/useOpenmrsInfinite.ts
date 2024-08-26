@@ -18,6 +18,13 @@ export interface UseServerInfiniteOptions<R> {
    */
   fetcher?: (key: string) => Promise<FetchResponse<R>>;
 
+  /**
+   * If true, sets these options in swrInfintieConfig to false:
+   * revalidateIfStale, revalidateOnFocus, revalidateOnReconnect
+   * This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
+   */
+  immutable?: boolean;
+
   swrInfiniteConfig?: SWRInfiniteConfiguration;
 }
 
@@ -99,7 +106,7 @@ export function useServerInfinite<T, R>(
   serverPaginationHandlers: ServerPaginationHandlers<T, R>,
   options: UseServerInfiniteOptions<R> = {},
 ): UseServerInfiniteReturnObject<T, R> {
-  const { swrInfiniteConfig } = options;
+  const { swrInfiniteConfig, immutable } = options;
   const { getNextUrl, getTotalCount, getData } = serverPaginationHandlers;
   const fetcher: (key: string) => Promise<FetchResponse<R>> = options.fetcher ?? openmrsFetch;
   const getKey = useCallback(
@@ -113,7 +120,16 @@ export function useServerInfinite<T, R>(
     [url],
   );
 
-  const { data, size, setSize, ...rest } = useSWRInfinite<FetchResponse<R>>(getKey, fetcher, swrInfiniteConfig);
+  const { data, size, setSize, ...rest } = useSWRInfinite<FetchResponse<R>>(getKey, fetcher, {
+    ...swrInfiniteConfig,
+    ...(immutable
+      ? {
+          revalidateIfStale: false,
+          revalidateOnFocus: false,
+          revalidateOnReconnect: false,
+        }
+      : {}),
+  });
   const nextUri = getNextUrl(data?.[data.length - 1].data);
 
   const hasMore = nextUri != null;
