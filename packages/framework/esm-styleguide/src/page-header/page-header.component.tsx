@@ -56,12 +56,16 @@ const isPageHeaderWrapperProps = (props: any): props is PageHeaderWrapperProps =
  */
 export const PageHeader: React.FC<PageHeaderProps> = (props) => {
   if (isPageHeaderWrapperProps(props)) {
-    const { children, className } = props;
-    return <div className={classNames(styles.pageHeader, className)}>{children}</div>;
-  } else {
-    const { title, illustration, className } = props;
+    const { children, className, ...rest } = props;
     return (
-      <div className={classNames(styles.pageHeader, className)}>
+      <div className={classNames(styles.pageHeader, className)} {...rest}>
+        {children}
+      </div>
+    );
+  } else {
+    const { title, illustration, className, ...rest } = props;
+    return (
+      <div className={classNames(styles.pageHeader, className)} {...rest}>
         <PageHeaderContent title={title} illustration={illustration} />
       </div>
     );
