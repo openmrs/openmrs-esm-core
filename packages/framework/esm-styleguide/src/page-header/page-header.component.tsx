@@ -87,7 +87,8 @@ export const PageHeader: React.FC<PageHeaderProps> = (props) => {
  * ```
  */
 export const PageHeaderContent: React.FC<PageHeaderContentProps> = ({ title, illustration, className }) => {
-  const { implementationName } = useConfig<StyleguideConfigObject>({
+  const config = useConfig<StyleguideConfigObject>({
+    // Do not remove this property. See https://github.com/openmrs/openmrs-esm-core/pull/1125#issuecomment-2313230513 for more context.
     externalModuleName: '@openmrs/esm-styleguide',
   });
 
@@ -95,7 +96,7 @@ export const PageHeaderContent: React.FC<PageHeaderContentProps> = ({ title, ill
     <div className={classNames(styles.pageHeaderContent, className)}>
       {illustration}
       <div className={styles.pageLabels}>
-        <p>{implementationName}</p>
+        {config?.implementationName && <p>{config.implementationName}</p>}
         <p className={styles.pageName}>{title}</p>
       </div>
     </div>
