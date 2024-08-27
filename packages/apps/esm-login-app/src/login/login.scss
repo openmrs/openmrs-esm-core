@@ -25,6 +25,7 @@
 
 .poweredByTxt {
   @extend .caption01;
+  margin-bottom: 1.5rem;
   text-align: center;
   color: $color-gray-70;
   color: $text-02;
@@ -50,9 +51,38 @@
   margin-left: 0.5rem;
 }
 
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.logosContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  gap: 2rem; 
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding: 2rem;
+  }
+  .poweredByLogo {
+    height: 3.5rem;
+    max-width: 9rem;
+  }
+}
+
 .poweredByLogo {
-  height: 2.5rem;
-  width: 6.5rem;
+  height: 3rem;
+  width: auto; 
+  max-width: 8rem;  
+  object-fit: contain;
+  display: block;
 }
 
 .loginCard {
@@ -63,6 +93,8 @@
   padding: 2.5rem;
   position: relative;
   min-height: fit-content;
+  margin-top: 2.5rem;
+  margin-bottom: -3.0rem;
 }
 
 @media only screen and (min-width: 481px) {

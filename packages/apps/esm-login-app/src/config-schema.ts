@@ -68,6 +68,29 @@ export const configSchema = {
       _description: 'The alternative text for the logo image, displayed when the image cannot be loaded or on hover.',
     },
   },
+  footer: {
+    logos: {
+      _type: Type.Array,
+      _items: {
+        _type: Type.Object,
+        _properties: {
+          src: {
+            _type: Type.String,
+            _required: true,
+            _description: 'The source URL of the logo image',
+            _validations: [validators.isUrl]
+          },
+          alt: {
+            _type: Type.String,
+            _required: true,
+            _description: 'The alternative text for the logo image'
+          }
+        }
+      },
+      _default: [],
+      _description: 'An array of logos to be displayed in the footer.',
+    }
+  },
   showPasswordOnSeparateScreen: {
     _type: Type.Boolean,
     _default: true,
@@ -94,6 +117,12 @@ export interface ConfigSchema {
   logo: {
     alt: string;
     src: string;
+  };
+  footer: {
+    logos: Array<{
+      src: string;
+      alt: string;
+    }>;
   };
   showPasswordOnSeparateScreen: boolean;
 }

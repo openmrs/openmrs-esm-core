@@ -14,6 +14,7 @@ import {
 } from '@openmrs/esm-framework';
 import { type ConfigSchema } from '../config-schema';
 import Logo from '../logo.component';
+import Footer from '../footer.component';
 import styles from './login.scss';
 
 export interface LoginReferrer {
@@ -265,14 +266,9 @@ const Login: React.FC = () => {
             )}
           </form>
         </Tile>
-        <div className={styles.footer}>
-          <p className={styles.poweredByTxt}>{t('poweredBy', 'Powered by')}</p>
           <div>
-            <svg role="img" className={styles.poweredByLogo}>
-              <use href="#omrs-logo-partial-mono"></use>
-            </svg>
+            <Footer t={t} />
           </div>
-        </div>
       </div>
     );
   }
