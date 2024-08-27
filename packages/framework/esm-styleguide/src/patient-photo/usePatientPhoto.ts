@@ -28,12 +28,10 @@ interface PhotoObs {
 }
 
 export function usePatientPhoto(patientUuid: string): UsePatientPhotoResult {
-  const { patientPhotoConceptUuid } = useConfig<StyleguideConfigObject>({
-    externalModuleName: '@openmrs/esm-styleguide',
-  });
+  const config = useConfig<StyleguideConfigObject>();
 
-  const url = patientPhotoConceptUuid
-    ? `${restBaseUrl}/obs?patient=${patientUuid}&concept=${patientPhotoConceptUuid}&v=full`
+  const url = config?.patientPhotoConceptUuid
+    ? `${restBaseUrl}/obs?patient=${patientUuid}&concept=${config.patientPhotoConceptUuid}&v=full`
     : null;
 
   const { data, error, isLoading } = useSWR<{ data: ObsFetchResponse }, Error>(patientUuid ? url : null, openmrsFetch);
