@@ -18,6 +18,7 @@
 
 ### UI Properties
 
+- [immutable](UseServerInfiniteOptions.md#immutable)
 - [swrInfiniteConfig](UseServerInfiniteOptions.md#swrinfiniteconfig)
 
 ### UI Methods
@@ -26,13 +27,27 @@
 
 ## UI Properties
 
+### immutable
+
+• `Optional` **immutable**: `boolean`
+
+If true, sets these options in swrInfintieConfig to false:
+revalidateIfStale, revalidateOnFocus, revalidateOnReconnect
+This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L26)
+
+___
+
 ### swrInfiniteConfig
 
 • `Optional` **swrInfiniteConfig**: `SWRInfiniteConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L21)
+[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L28)
 
 ## UI Methods
 

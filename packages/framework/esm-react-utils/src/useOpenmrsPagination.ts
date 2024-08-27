@@ -21,6 +21,9 @@ export interface UseServerPaginationOptions<R> {
    */
   fetcher?: (key: string) => Promise<FetchResponse<R>>;
 
+  /**
+   * The configuration object for useSWR or useSWRInfinite
+   */
   swrConfig?: SWRConfiguration;
 }
 
@@ -39,15 +42,18 @@ export interface UseServerPaginationOptions<R> {
  * Note that this hook is not suitable for use for situations that require client-side sorting or filtering
  * of the data set. In that case, all data must be loaded onto client-side first.
  *
- * @see `useOpenmrsInfinite` for completely loading data (from all pages) onto client side
+ * @see `useOpenmrsInfinite`
+ * @see `useOpenmrsFetchAll`
  * @see `usePagination` for pagination of client-side data`
+ * @see `useFhirPagination``
  *
- * @param url The URL of the paginated rest endpoint.
+ * @param url The URL of the paginated rest endpoint. \
  *            It should be populated with any needed GET params, except `limit`, `startIndex` or `totalCount`,
- *            which will be overridden and manipulated by the `goTo*` callbacks
+ *            which will be overridden and manipulated by the `goTo*` callbacks.
+ *            Similar to useSWR, this param can be null to disable fetching.
  * @param pageSize The number of results to return per page / fetch. Note that this value MUST NOT exceed
  *            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000).
- * @param fetcher The fetcher to use. Defaults to openmrsFetch
+ * @param options The options object
  * @returns
  */
 export function useOpenmrsPagination<T>(

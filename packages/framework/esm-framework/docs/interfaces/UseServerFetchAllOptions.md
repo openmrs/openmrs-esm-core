@@ -18,6 +18,7 @@
 
 ### UI Properties
 
+- [immutable](UseServerFetchAllOptions.md#immutable)
 - [partialData](UseServerFetchAllOptions.md#partialdata)
 - [swrInfiniteConfig](UseServerFetchAllOptions.md#swrinfiniteconfig)
 
@@ -26,6 +27,24 @@
 - [fetcher](UseServerFetchAllOptions.md#fetcher)
 
 ## UI Properties
+
+### immutable
+
+• `Optional` **immutable**: `boolean`
+
+If true, sets these options in swrInfintieConfig to false:
+revalidateIfStale, revalidateOnFocus, revalidateOnReconnect
+This should be the counterpart of using useSWRImmutable` for `useSWRInfinite`
+
+#### Inherited from
+
+[UseServerInfiniteOptions](UseServerInfiniteOptions.md).[immutable](UseServerInfiniteOptions.md#immutable)
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L26)
+
+___
 
 ### partialData
 
@@ -38,7 +57,7 @@ display all data at once or reduce the number of re-renders (to avoid confusing 
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L17)
+[packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L21)
 
 ___
 
@@ -52,7 +71,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L21)
+[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L28)
 
 ## UI Methods
 

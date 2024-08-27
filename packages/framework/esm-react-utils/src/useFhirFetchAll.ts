@@ -3,16 +3,17 @@ import { getFhirServerPaginationHandlers } from './useFhirPagination';
 import { useServerFetchAll, type UseServerFetchAllOptions } from './useOpenmrsFetchAll';
 
 /**
- * This hook handles fetching results from all pages of a paginated FHIR REST endpoint.
- * @param url The URL of the paginated FHIR REST endpoint.
- * @param partialData If true, the hook will return the data of any page as soon as they are fetched.
- *            This is useful when you want to display data as soon as possible, even if not all pages are fetched.
- *            If false, the returned data will be undefined until all pages are fetched. This is useful when you want to
- *            display all data at once or reduce the number of re-renders (to avoid confusing users).
- * @param fetcher The fetcher to use. Defaults to openmrsFetch
- * @see `useFhirInfinite`
+ * This hook handles fetching results from *all* pages of a paginated FHIR REST endpoint, making multiple requests
+ * as needed.
+ * This function is the FHIR counterpart of `useOpenmrsPagination`.
+ *
  * @see `useFhirPagination`
- * @see `useOpenmrsFetchAll
+ * @see `useFhirInfinite`
+ * @see `useOpenmrsFetchAll``
+ *
+ * @param url The URL of the paginated rest endpoint.
+ *            Similar to useSWRInfinite, this param can be null to disable fetching.
+ * @param options The options object
  * @returns a UseFhirInfiniteReturnObject object
  */
 export function useFhirFetchAll<T extends fhir.ResourceBase>(

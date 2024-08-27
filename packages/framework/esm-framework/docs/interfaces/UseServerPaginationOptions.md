@@ -37,9 +37,11 @@ ___
 
 • `Optional` **swrConfig**: `Partial`<`PublicConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>\>
 
+The configuration object for useSWR or useSWRInfinite
+
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L24)
+[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L27)
 
 ## UI Methods
 

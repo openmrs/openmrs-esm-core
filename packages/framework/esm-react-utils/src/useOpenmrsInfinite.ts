@@ -83,15 +83,15 @@ export interface UseServerInfiniteReturnObject<T, R> {
  * It provides a callback to load data from subsequent pages as needed. This hook is intended to serve UIs that
  * provide infinite loading / scrolling of results.
  *
- * The above should only be used when there is a need to fetch the complete data set onto the client side (ex:
- * need to support client-side sorting or filtering of data).
- *
- * @see `useServerPagination` for lazy-loading paginated data`
+ * @see `useOpenmrsPagination`
+ * @see `useOpenmrsFetchAll`
+ * @see `useFhirInfinite`
  *
  * @param url The URL of the paginated rest endpoint. Note that the `limit` GET param can be set to specify
  *            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined
  *            server-side.
- * @param fetcher The fetcher to use. Defaults to openmrsFetch
+ *            Similar to useSWRInfinite, this param can be null to disable fetching.
+ * @param options The options object
  * @returns a UseServerInfiniteReturnObject object
  */
 export function useOpenmrsInfinite<T>(
@@ -122,6 +122,8 @@ export function useServerInfinite<T, R>(
 
   const { data, size, setSize, ...rest } = useSWRInfinite<FetchResponse<R>>(getKey, fetcher, {
     ...swrInfiniteConfig,
+    // `useSWR` has a useSWRImmutable counterpart, but `useSWRInfinite` does not seem to.
+    // Setting the revalidate params manually if immutable is true, see: https://swr.vercel.app/docs/revalidation
     ...(immutable
       ? {
           revalidateIfStale: false,

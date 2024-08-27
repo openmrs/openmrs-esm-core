@@ -1,8 +1,377 @@
-[Back to README.md](../README.md)
+@openmrs/esm-framework
 
 # @openmrs/esm-framework
 
 ## Table of contents
+
+### API Enumerations
+
+- [VisitMode](enums/VisitMode.md)
+- [VisitStatus](enums/VisitStatus.md)
+
+### Other Enumerations
+
+- [Type](enums/Type.md)
+
+### API Classes
+
+- [OpenmrsFetchError](classes/OpenmrsFetchError.md)
+
+### API Interfaces
+
+- [CurrentPatientOptions](interfaces/CurrentPatientOptions.md)
+- [CurrentPatientState](interfaces/CurrentPatientState.md)
+- [FetchConfig](interfaces/FetchConfig.md)
+- [FetchHeaders](interfaces/FetchHeaders.md)
+- [FetchResponseJson](interfaces/FetchResponseJson.md)
+- [OnlyThePatient](interfaces/OnlyThePatient.md)
+- [PatientWithFullResponse](interfaces/PatientWithFullResponse.md)
+- [PrimaryIdentifier](interfaces/PrimaryIdentifier.md)
+- [UserHasAccessProps](interfaces/UserHasAccessProps.md)
+- [VisitItem](interfaces/VisitItem.md)
+- [VisitReturnType](interfaces/VisitReturnType.md)
+- [VisitStoreState](interfaces/VisitStoreState.md)
+
+### Breadcrumb Interfaces
+
+- [BreadcrumbRegistration](interfaces/BreadcrumbRegistration.md)
+- [BreadcrumbSettings](interfaces/BreadcrumbSettings.md)
+
+### Context Interfaces
+
+- [OpenmrsAppContextProps](interfaces/OpenmrsAppContextProps.md)
+
+### Extension Interfaces
+
+- [AssignedExtension](interfaces/AssignedExtension.md)
+- [CancelLoading](interfaces/CancelLoading.md)
+- [ConnectedExtension](interfaces/ConnectedExtension.md)
+- [ExtensionMeta](interfaces/ExtensionMeta.md)
+- [ExtensionRegistration](interfaces/ExtensionRegistration.md)
+- [ExtensionSlotBaseProps](interfaces/ExtensionSlotBaseProps.md)
+- [ExtensionSlotState](interfaces/ExtensionSlotState.md)
+- [ExtensionStore](interfaces/ExtensionStore.md)
+- [OldExtensionSlotBaseProps](interfaces/OldExtensionSlotBaseProps.md)
+
+### Navigation Interfaces
+
+- [ConfigurableLinkProps](interfaces/ConfigurableLinkProps.md)
+- [NavigateOptions](interfaces/NavigateOptions.md)
+
+### Offline Interfaces
+
+- [ClearDynamicRoutesMessage](interfaces/ClearDynamicRoutesMessage.md)
+- [DynamicOfflineData](interfaces/DynamicOfflineData.md)
+- [DynamicOfflineDataHandler](interfaces/DynamicOfflineDataHandler.md)
+- [DynamicOfflineDataSyncState](interfaces/DynamicOfflineDataSyncState.md)
+- [MessageServiceWorkerResult](interfaces/MessageServiceWorkerResult.md)
+- [OfflineModeResult](interfaces/OfflineModeResult.md)
+- [OfflinePatientArgs](interfaces/OfflinePatientArgs.md)
+- [OfflinePatientDataSyncHandler](interfaces/OfflinePatientDataSyncHandler.md)
+- [OfflinePatientDataSyncState](interfaces/OfflinePatientDataSyncState.md)
+- [OfflinePatientDataSyncStore](interfaces/OfflinePatientDataSyncStore.md)
+- [OmrsServiceWorkerMessage](interfaces/OmrsServiceWorkerMessage.md)
+- [OnImportMapChangedMessage](interfaces/OnImportMapChangedMessage.md)
+- [QueueItemDescriptor](interfaces/QueueItemDescriptor.md)
+- [RegisterDynamicRouteMessage](interfaces/RegisterDynamicRouteMessage.md)
+- [SyncItem](interfaces/SyncItem.md)
+- [SyncProcessOptions](interfaces/SyncProcessOptions.md)
+
+### Other Interfaces
+
+- [Attachment](interfaces/Attachment.md)
+- [AttachmentResponse](interfaces/AttachmentResponse.md)
+- [AuditInfo](interfaces/AuditInfo.md)
+- [Concept](interfaces/Concept.md)
+- [Config](interfaces/Config.md)
+- [ConfigObject](interfaces/ConfigObject.md)
+- [ConfigSchema](interfaces/ConfigSchema.md)
+- [ConnectivityChangedEvent](interfaces/ConnectivityChangedEvent.md)
+- [DisplayConditionsConfigObject](interfaces/DisplayConditionsConfigObject.md)
+- [ErrorStateProps](interfaces/ErrorStateProps.md)
+- [ExtensionData](interfaces/ExtensionData.md)
+- [ExtensionSlotConfig](interfaces/ExtensionSlotConfig.md)
+- [ExtensionSlotConfigObject](interfaces/ExtensionSlotConfigObject.md)
+- [ExtensionSlotConfigureValueObject](interfaces/ExtensionSlotConfigureValueObject.md)
+- [FHIRCode](interfaces/FHIRCode.md)
+- [FHIRResource](interfaces/FHIRResource.md)
+- [FeatureFlagDefinition](interfaces/FeatureFlagDefinition.md)
+- [FetchResponse](interfaces/FetchResponse.md)
+- [ImportMap](interfaces/ImportMap.md)
+- [Link](interfaces/Link.md)
+- [Location](interfaces/Location.md)
+- [LoggedInUser](interfaces/LoggedInUser.md)
+- [LoggedInUserFetchResponse](interfaces/LoggedInUserFetchResponse.md)
+- [NewVisitPayload](interfaces/NewVisitPayload.md)
+- [OpenmrsAppRoutes](interfaces/OpenmrsAppRoutes.md)
+- [OpenmrsDatePickerProps](interfaces/OpenmrsDatePickerProps.md)
+- [OpenmrsResource](interfaces/OpenmrsResource.md)
+- [OpenmrsResourceStrict](interfaces/OpenmrsResourceStrict.md)
+- [Patient](interfaces/Patient.md)
+- [PatientIdentifier](interfaces/PatientIdentifier.md)
+- [PatientIdentifierType](interfaces/PatientIdentifierType.md)
+- [Person](interfaces/Person.md)
+- [PersonAddress](interfaces/PersonAddress.md)
+- [PersonAttribute](interfaces/PersonAttribute.md)
+- [PersonName](interfaces/PersonName.md)
+- [PrecacheStaticDependenciesEvent](interfaces/PrecacheStaticDependenciesEvent.md)
+- [Privilege](interfaces/Privilege.md)
+- [ResourceLoader](interfaces/ResourceLoader.md)
+- [Role](interfaces/Role.md)
+- [Session](interfaces/Session.md)
+- [SessionLocation](interfaces/SessionLocation.md)
+- [ShowActionableNotificationEvent](interfaces/ShowActionableNotificationEvent.md)
+- [SpaConfig](interfaces/SpaConfig.md)
+- [StyleguideConfigObject](interfaces/StyleguideConfigObject.md)
+- [UploadedFile](interfaces/UploadedFile.md)
+- [User](interfaces/User.md)
+- [Visit](interfaces/Visit.md)
+- [VisitType](interfaces/VisitType.md)
+- [WorkspaceContainerProps](interfaces/WorkspaceContainerProps.md)
+- [WorkspaceRegistration](interfaces/WorkspaceRegistration.md)
+
+### UI Interfaces
+
+- [ActionableNotificationDescriptor](interfaces/ActionableNotificationDescriptor.md)
+- [NotificationDescriptor](interfaces/NotificationDescriptor.md)
+- [PageHeaderContentProps](interfaces/PageHeaderContentProps.md)
+- [PageHeaderWrapperProps](interfaces/PageHeaderWrapperProps.md)
+- [PatientBannerActionsMenuProps](interfaces/PatientBannerActionsMenuProps.md)
+- [PatientBannerPatientInfoProps](interfaces/PatientBannerPatientInfoProps.md)
+- [PatientBannerToggleContactDetailsButtonProps](interfaces/PatientBannerToggleContactDetailsButtonProps.md)
+- [PatientPhotoProps](interfaces/PatientPhotoProps.md)
+- [ResponsiveWrapperProps](interfaces/ResponsiveWrapperProps.md)
+- [ShowNotificationEvent](interfaces/ShowNotificationEvent.md)
+- [ShowSnackbarEvent](interfaces/ShowSnackbarEvent.md)
+- [ShowToastEvent](interfaces/ShowToastEvent.md)
+- [SnackbarDescriptor](interfaces/SnackbarDescriptor.md)
+- [SnackbarMeta](interfaces/SnackbarMeta.md)
+- [ToastDescriptor](interfaces/ToastDescriptor.md)
+- [ToastNotificationMeta](interfaces/ToastNotificationMeta.md)
+- [UsePatientPhotoResult](interfaces/UsePatientPhotoResult.md)
+- [UseServerFetchAllOptions](interfaces/UseServerFetchAllOptions.md)
+- [UseServerInfiniteOptions](interfaces/UseServerInfiniteOptions.md)
+- [UseServerPaginationOptions](interfaces/UseServerPaginationOptions.md)
+
+### Utility Interfaces
+
+- [RetryOptions](interfaces/RetryOptions.md)
+
+### Workspace Interfaces
+
+- [ActionMenuButtonProps](interfaces/ActionMenuButtonProps.md)
+- [CloseWorkspaceOptions](interfaces/CloseWorkspaceOptions.md)
+- [DefaultWorkspaceProps](interfaces/DefaultWorkspaceProps.md)
+- [OpenWorkspace](interfaces/OpenWorkspace.md)
+- [Prompt](interfaces/Prompt.md)
+- [WorkspacesInfo](interfaces/WorkspacesInfo.md)
+
+### API Type Aliases
+
+- [CurrentPatient](API.md#currentpatient)
+- [LoadedSessionStore](API.md#loadedsessionstore)
+- [NullablePatient](API.md#nullablepatient)
+- [PatientUuid](API.md#patientuuid)
+- [SessionStore](API.md#sessionstore)
+- [UnloadedSessionStore](API.md#unloadedsessionstore)
+
+### Context Type Aliases
+
+- [ContextCallback](API.md#contextcallback)
+
+### Date and Time Type Aliases
+
+- [DateInput](API.md#dateinput)
+- [FormatDateMode](API.md#formatdatemode)
+- [FormatDateOptions](API.md#formatdateoptions)
+
+### Extension Type Aliases
+
+- [ExtensionProps](API.md#extensionprops)
+- [ExtensionSlotProps](API.md#extensionslotprops)
+
+### Navigation Type Aliases
+
+- [TemplateParams](API.md#templateparams)
+
+### Offline Type Aliases
+
+- [KnownOmrsServiceWorkerMessages](API.md#knownomrsserviceworkermessages)
+- [OfflineMode](API.md#offlinemode)
+- [OmrsOfflineCachingStrategy](API.md#omrsofflinecachingstrategy)
+- [OmrsOfflineHttpHeaderNames](API.md#omrsofflinehttpheadernames)
+- [OmrsOfflineHttpHeaders](API.md#omrsofflinehttpheaders)
+
+### Other Type Aliases
+
+- [ConfigValue](API.md#configvalue)
+- [DateInputValue](API.md#dateinputvalue)
+- [ExtensionDefinition](API.md#extensiondefinition)
+- [IconProps](API.md#iconprops)
+- [ModalDefinition](API.md#modaldefinition)
+- [NameUse](API.md#nameuse)
+- [OpenmrsRoutes](API.md#openmrsroutes)
+- [PageDefinition](API.md#pagedefinition)
+- [PictogramProps](API.md#pictogramprops)
+- [ProvidedConfig](API.md#providedconfig)
+- [SpaEnvironment](API.md#spaenvironment)
+- [SvgIconProps](API.md#svgiconprops)
+- [SvgPictogramProps](API.md#svgpictogramprops)
+- [UpdateVisitPayload](API.md#updatevisitpayload)
+- [Validator](API.md#validator)
+- [ValidatorFunction](API.md#validatorfunction)
+- [WorkspaceDefinition](API.md#workspacedefinition)
+- [WorkspaceWindowState](API.md#workspacewindowstate)
+
+### Store Type Aliases
+
+- [ActionFunction](API.md#actionfunction)
+- [Actions](API.md#actions)
+- [BoundActions](API.md#boundactions)
+
+### Translation Type Aliases
+
+- [CoreTranslationKey](API.md#coretranslationkey)
+
+### UI Type Aliases
+
+- [ActionableNotificationType](API.md#actionablenotificationtype)
+- [InlineNotificationType](API.md#inlinenotificationtype)
+- [LayoutType](API.md#layouttype)
+- [PageHeaderProps](API.md#pageheaderprops)
+- [SnackbarType](API.md#snackbartype)
+- [ToastType](API.md#toasttype)
+
+### Utility Type Aliases
+
+- [ArgumentsTuple](API.md#argumentstuple)
+- [Key](API.md#key)
+- [UseOpenmrsSWROptions](API.md#useopenmrsswroptions)
+
+### API Variables
+
+- [UserHasAccess](API.md#userhasaccess)
+- [attachmentUrl](API.md#attachmenturl)
+- [defaultVisitCustomRepresentation](API.md#defaultvisitcustomrepresentation)
+- [fhirBaseUrl](API.md#fhirbaseurl)
+- [getStartedVisit](API.md#getstartedvisit)
+- [restBaseUrl](API.md#restbaseurl)
+- [sessionEndpoint](API.md#sessionendpoint)
+
+### Config Validation Variables
+
+- [validators](API.md#validators)
+
+### Extension Variables
+
+- [Extension](API.md#extension)
+
+### Offline Variables
+
+- [offlineUuidPrefix](API.md#offlineuuidprefix)
+- [omrsOfflineCachingStrategyHttpHeaderName](API.md#omrsofflinecachingstrategyhttpheadername)
+- [omrsOfflineResponseBodyHttpHeaderName](API.md#omrsofflineresponsebodyhttpheadername)
+- [omrsOfflineResponseStatusHttpHeaderName](API.md#omrsofflineresponsestatushttpheadername)
+
+### Other Variables
+
+- [ActivityIcon](API.md#activityicon)
+- [AddIcon](API.md#addicon)
+- [AllergiesIcon](API.md#allergiesicon)
+- [AppointmentsPictogram](API.md#appointmentspictogram)
+- [ArrowDownIcon](API.md#arrowdownicon)
+- [ArrowLeftIcon](API.md#arrowlefticon)
+- [ArrowRightIcon](API.md#arrowrighticon)
+- [ArrowUpIcon](API.md#arrowupicon)
+- [AttachmentIcon](API.md#attachmenticon)
+- [BabyIcon](API.md#babyicon)
+- [CalendarHeatMapIcon](API.md#calendarheatmapicon)
+- [CalendarIcon](API.md#calendaricon)
+- [CaretDownIcon](API.md#caretdownicon)
+- [CaretLeftIcon](API.md#caretlefticon)
+- [CaretRightIcon](API.md#caretrighticon)
+- [CaretUpIcon](API.md#caretupicon)
+- [ChartAverageIcon](API.md#chartaverageicon)
+- [ChemistryIcon](API.md#chemistryicon)
+- [ChevronDownIcon](API.md#chevrondownicon)
+- [ChevronLeftIcon](API.md#chevronlefticon)
+- [ChevronRightIcon](API.md#chevronrighticon)
+- [ChevronUpIcon](API.md#chevronupicon)
+- [CloseFilledIcon](API.md#closefilledicon)
+- [CloseIcon](API.md#closeicon)
+- [CloseOutlineIcon](API.md#closeoutlineicon)
+- [ConditionsIcon](API.md#conditionsicon)
+- [DocumentAttachmentIcon](API.md#documentattachmenticon)
+- [DocumentIcon](API.md#documenticon)
+- [DownloadIcon](API.md#downloadicon)
+- [EditIcon](API.md#editicon)
+- [ErrorState](API.md#errorstate)
+- [EventScheduleIcon](API.md#eventscheduleicon)
+- [EventsIcon](API.md#eventsicon)
+- [GroupAccessIcon](API.md#groupaccessicon)
+- [GroupIcon](API.md#groupicon)
+- [HomePictogram](API.md#homepictogram)
+- [HospitalBedIcon](API.md#hospitalbedicon)
+- [Icon](API.md#icon)
+- [ImageMedicalIcon](API.md#imagemedicalicon)
+- [InventoryManagementIcon](API.md#inventorymanagementicon)
+- [LaboratoryPictogram](API.md#laboratorypictogram)
+- [ListCheckedIcon](API.md#listcheckedicon)
+- [LocationIcon](API.md#locationicon)
+- [LocationPicker](API.md#locationpicker)
+- [MaximizeIcon](API.md#maximizeicon)
+- [MedicationIcon](API.md#medicationicon)
+- [MessageQueueIcon](API.md#messagequeueicon)
+- [MicroscopeIcon](API.md#microscopeicon)
+- [MoneyIcon](API.md#moneyicon)
+- [MotherIcon](API.md#mothericon)
+- [MovementIcon](API.md#movementicon)
+- [OpenmrsDatePicker](API.md#openmrsdatepicker)
+- [OverflowMenuHorizontalIcon](API.md#overflowmenuhorizontalicon)
+- [OverflowMenuVerticalIcon](API.md#overflowmenuverticalicon)
+- [PasswordIcon](API.md#passwordicon)
+- [PatientListsPictogram](API.md#patientlistspictogram)
+- [PedestrianFamilyIcon](API.md#pedestrianfamilyicon)
+- [PenIcon](API.md#penicon)
+- [Pictogram](API.md#pictogram)
+- [PrinterIcon](API.md#printericon)
+- [RadiologyIcon](API.md#radiologyicon)
+- [RenewIcon](API.md#renewicon)
+- [ResetIcon](API.md#reseticon)
+- [SaveIcon](API.md#saveicon)
+- [SearchIcon](API.md#searchicon)
+- [ServiceQueuesPictogram](API.md#servicequeuespictogram)
+- [ShoppingCartAddItemIcon](API.md#shoppingcartadditemicon)
+- [ShoppingCartArrowDownIcon](API.md#shoppingcartarrowdownicon)
+- [ShoppingCartIcon](API.md#shoppingcarticon)
+- [StickyNoteAddIcon](API.md#stickynoteaddicon)
+- [SwitcherIcon](API.md#switchericon)
+- [TableIcon](API.md#tableicon)
+- [TableOfContentsIcon](API.md#tableofcontentsicon)
+- [TimeIcon](API.md#timeicon)
+- [ToolsIcon](API.md#toolsicon)
+- [TranslateIcon](API.md#translateicon)
+- [TrashCanIcon](API.md#trashcanicon)
+- [TreeViewAltIcon](API.md#treeviewalticon)
+- [UserAvatarIcon](API.md#useravataricon)
+- [UserFollowIcon](API.md#userfollowicon)
+- [UserIcon](API.md#usericon)
+- [UserXrayIcon](API.md#userxrayicon)
+- [ViewIcon](API.md#viewicon)
+- [ViewOffIcon](API.md#viewofficon)
+- [WarningIcon](API.md#warningicon)
+- [backendDependencies](API.md#backenddependencies)
+
+### UI Variables
+
+- [LeftNavMenu](API.md#leftnavmenu)
+- [PageHeader](API.md#pageheader)
+- [PageHeaderContent](API.md#pageheadercontent)
+- [ResponsiveWrapper](API.md#responsivewrapper)
+
+### Workspace Variables
+
+- [ActionMenuButton](API.md#actionmenubutton)
 
 ### API Functions
 
@@ -672,7 +1041,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:592](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L592)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:608](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L608)
 
 ___
 
@@ -1134,7 +1503,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:566](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L566)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:582](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L582)
 
 ___
 
@@ -1194,7 +1563,17 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:571](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L571)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:587](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L587)
+
+___
+
+### BabyIcon
+
+• `Const` **BabyIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L62)
 
 ___
 
@@ -1204,7 +1583,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L62)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L70)
 
 ___
 
@@ -1214,7 +1593,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:70](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L70)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L78)
 
 ___
 
@@ -1224,7 +1603,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:78](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L78)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L86)
 
 ___
 
@@ -1234,7 +1613,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:86](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L86)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L94)
 
 ___
 
@@ -1244,7 +1623,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:94](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L94)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L102)
 
 ___
 
@@ -1254,7 +1633,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:102](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L102)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L110)
 
 ___
 
@@ -1264,7 +1643,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L110)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L118)
 
 ___
 
@@ -1274,7 +1653,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:118](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L118)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:126](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L126)
 
 ___
 
@@ -1284,7 +1663,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:126](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L126)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:134](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L134)
 
 ___
 
@@ -1294,7 +1673,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:134](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L134)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L142)
 
 ___
 
@@ -1304,7 +1683,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:142](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L142)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:150](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L150)
 
 ___
 
@@ -1314,7 +1693,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:150](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L150)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:158](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L158)
 
 ___
 
@@ -1324,7 +1703,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:158](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L158)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L166)
 
 ___
 
@@ -1334,7 +1713,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:174](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L174)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:182](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L182)
 
 ___
 
@@ -1344,7 +1723,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:166](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L166)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:174](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L174)
 
 ___
 
@@ -1358,7 +1737,7 @@ Note this is an alias for ListCheckedIcon
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:578](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L578)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:594](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L594)
 
 ___
 
@@ -1368,7 +1747,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:182](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L182)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:190](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L190)
 
 ___
 
@@ -1378,7 +1757,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:190](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L190)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:198](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L198)
 
 ___
 
@@ -1388,7 +1767,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:198](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L198)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:206](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L206)
 
 ___
 
@@ -1398,7 +1777,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:206](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L206)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:214](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L214)
 
 ___
 
@@ -1418,7 +1797,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:214](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L214)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:222](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L222)
 
 ___
 
@@ -1428,7 +1807,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:222](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L222)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:230](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L230)
 
 ___
 
@@ -1438,7 +1817,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:238](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L238)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:246](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L246)
 
 ___
 
@@ -1448,7 +1827,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:230](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L230)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:238](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L238)
 
 ___
 
@@ -1468,7 +1847,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:246](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L246)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:254](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L254)
 
 ___
 
@@ -1480,7 +1859,7 @@ This is a utility type for custom icons that use the svg-sprite-loader to bundle
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:600](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L600)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:616](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L616)
 
 ___
 
@@ -1490,7 +1869,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:254](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L254)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L262)
 
 ___
 
@@ -1500,7 +1879,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:262](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L262)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L270)
 
 ___
 
@@ -1520,7 +1899,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:270](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L270)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:278](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L278)
 
 ___
 
@@ -1530,7 +1909,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:278](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L278)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:286](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L286)
 
 ___
 
@@ -1550,7 +1929,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:286](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L286)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:294](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L294)
 
 ___
 
@@ -1560,7 +1939,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:294](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L294)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:302](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L302)
 
 ___
 
@@ -1570,7 +1949,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:302](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L302)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:310](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L310)
 
 ___
 
@@ -1580,7 +1959,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:310](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L310)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:318](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L318)
 
 ___
 
@@ -1592,7 +1971,17 @@ Billing
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:319](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L319)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:327](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L327)
+
+___
+
+### MotherIcon
+
+• `Const` **MotherIcon**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`IconProps`](API.md#iconprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/icons/icons.tsx:335](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L335)
 
 ___
 
@@ -1602,7 +1991,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:327](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L327)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:343](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L343)
 
 ___
 
@@ -1624,7 +2013,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:335](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L335)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:351](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L351)
 
 ___
 
@@ -1634,7 +2023,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:343](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L343)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:359](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L359)
 
 ___
 
@@ -1644,7 +2033,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:523](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L523)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:539](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L539)
 
 ___
 
@@ -1664,7 +2053,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:351](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L351)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:367](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L367)
 
 ___
 
@@ -1674,7 +2063,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:359](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L359)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:375](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L375)
 
 ___
 
@@ -1696,7 +2085,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:367](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L367)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:383](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L383)
 
 ___
 
@@ -1706,7 +2095,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:583](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L583)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:599](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L599)
 
 ___
 
@@ -1716,7 +2105,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:375](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L375)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:391](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L391)
 
 ___
 
@@ -1726,7 +2115,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:383](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L383)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:399](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L399)
 
 ___
 
@@ -1736,7 +2125,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:399](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L399)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:415](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L415)
 
 ___
 
@@ -1746,7 +2135,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:407](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L407)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:423](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L423)
 
 ___
 
@@ -1770,7 +2159,7 @@ Note this is an alias for ShoppingCartArrowDownIcon
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:590](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L590)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:606](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L606)
 
 ___
 
@@ -1782,7 +2171,7 @@ Used as a button to add an item to the Order basket from a search
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:433](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L433)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:449](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L449)
 
 ___
 
@@ -1794,7 +2183,7 @@ Order Basket, the UI to enter Orders for Medications, Referrals, Labs, Procedure
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:424](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L424)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:440](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L440)
 
 ___
 
@@ -1806,7 +2195,7 @@ Used as action button to open ward in-patient note workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:442](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L442)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:458](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L458)
 
 ___
 
@@ -1816,7 +2205,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:415](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L415)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:431](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L431)
 
 ___
 
@@ -1826,7 +2215,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:459](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L459)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:475](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L475)
 
 ___
 
@@ -1838,7 +2227,7 @@ Used as a button to add an item to the Order basket from a search
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:451](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L451)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:467](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L467)
 
 ___
 
@@ -1850,7 +2239,7 @@ Lab investigations
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:468](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L468)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:484](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L484)
 
 ___
 
@@ -1860,7 +2249,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:476](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L476)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:492](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L492)
 
 ___
 
@@ -1870,7 +2259,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:391](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L391)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:407](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L407)
 
 ___
 
@@ -1880,7 +2269,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:484](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L484)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:500](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L500)
 
 ___
 
@@ -1890,7 +2279,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:492](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L492)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:508](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L508)
 
 ___
 
@@ -1902,7 +2291,7 @@ User of OpenMRS e.g. My Account
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:501](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L501)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:517](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L517)
 
 ___
 
@@ -1912,7 +2301,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:509](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L509)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:525](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L525)
 
 ___
 
@@ -1922,7 +2311,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:531](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L531)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:547](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L547)
 
 ___
 
@@ -1932,7 +2321,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:517](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L517)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:533](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L533)
 
 ___
 
@@ -1942,7 +2331,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:547](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L547)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:563](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L563)
 
 ___
 
@@ -1952,7 +2341,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:539](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L539)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:555](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L555)
 
 ___
 
@@ -1962,7 +2351,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/icons/icons.tsx:555](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L555)
+[packages/framework/esm-styleguide/src/icons/icons.tsx:571](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L571)
 
 ___
 
@@ -5748,13 +6137,15 @@ ___
 
 ▸ **useFhirFetchAll**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
 
-This hook handles fetching results from all pages of a paginated FHIR REST endpoint.
-
-**`see`** `useFhirInfinite`
+This hook handles fetching results from *all* pages of a paginated FHIR REST endpoint, making multiple requests
+as needed.
+This function is the FHIR counterpart of `useOpenmrsPagination`.
 
 **`see`** `useFhirPagination`
 
-**`see`** `useOpenmrsFetchAll
+**`see`** `useFhirInfinite`
+
+**`see`** `useOpenmrsFetchAll``
 
 #### Type parameters
 
@@ -5766,8 +6157,8 @@ This hook handles fetching results from all pages of a paginated FHIR REST endpo
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `url` | `any` | The URL of the paginated FHIR REST endpoint. |
-| `options` | [`UseServerFetchAllOptions`](interfaces/UseServerFetchAllOptions.md)<`Bundle`\> | - |
+| `url` | `any` | The URL of the paginated rest endpoint.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerFetchAllOptions`](interfaces/UseServerFetchAllOptions.md)<`Bundle`\> | The options object |
 
 #### Returns
 
@@ -5777,13 +6168,25 @@ a UseFhirInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFhirFetchAll.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirFetchAll.ts#L18)
+[packages/framework/esm-react-utils/src/useFhirFetchAll.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirFetchAll.ts#L19)
 
 ___
 
 ### useFhirInfinite
 
 ▸ **useFhirInfinite**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
+
+Fhir REST endpoints that return a list of objects, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+
+This function is the FHIR counterpart of `useOpenmrsInfinite`.
+
+**`see`** `useFhirPagination`
+
+**`see`** `useFhirFetchAll`
+
+**`see`** `useOpenmrsInfinite`
 
 #### Type parameters
 
@@ -5793,18 +6196,20 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `url` | `string` \| `URL` |
-| `options` | [`UseServerInfiniteOptions`](interfaces/UseServerInfiniteOptions.md)<`Bundle`\> |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerInfiniteOptions`](interfaces/UseServerInfiniteOptions.md)<`Bundle`\> | The options object |
 
 #### Returns
 
 `UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
 
+a UseServerInfiniteReturnObject object
+
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFhirInfinite.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L4)
+[packages/framework/esm-react-utils/src/useFhirInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L24)
 
 ___
 
@@ -6307,7 +6712,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFhirPagination.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L38)
+[packages/framework/esm-react-utils/src/useFhirPagination.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L36)
 
 ___
 
@@ -6627,18 +7032,14 @@ ___
 Fhir REST endpoints that return a list of objects, are server-side paginated.
 The server limits the max number of results being returned, and multiple requests are needed to get the full data set
 if its size exceeds this limit.
-The max number of results per request is configurable server-side
-with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
 
-For any UI that displays a paginated view of the full data set, we MUST handle the server-side pagination properly,
-or else the UI does not correctly display the full data set.
-This hook does that by providing callback functions for navigating to different pages of the results, and
-lazy-loads the data on each page as needed.
+This function is the FHIR counterpart of `useOpenmrsPagination`.
 
-Note that this hook is not suitable for use for situations that require client-side sorting or filtering
-of the data set. In that case, all data must be loaded onto client-side first.
+**`see`** `useOpenmrsPagination
 
-**`see`** `useFhirInfinite` for completely loading data (from all pages) onto client side
+**`see`** `useFhirInfinite`
+
+**`see`** `useFhirFetchAll`
 
 **`see`** `usePagination` for pagination of client-side data`
 
@@ -6654,7 +7055,7 @@ of the data set. In that case, all data must be loaded onto client-side first.
 | :------ | :------ | :------ |
 | `url` | `string` \| `URL` | The URL of the paginated rest endpoint.            which will be overridden and manipulated by the `goTo*` callbacks |
 | `pageSize` | `number` | The number of results to return per page / fetch. |
-| `options` | [`UseServerPaginationOptions`](interfaces/UseServerPaginationOptions.md)<`Bundle`\> | - |
+| `options` | [`UseServerPaginationOptions`](interfaces/UseServerPaginationOptions.md)<`Bundle`\> | The options object |
 
 #### Returns
 
@@ -6680,7 +7081,7 @@ of the data set. In that case, all data must be loaded onto client-side first.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useFhirPagination.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L29)
+[packages/framework/esm-react-utils/src/useFhirPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L27)
 
 ___
 
@@ -6730,7 +7131,14 @@ ___
 ▸ **useOpenmrsFetchAll**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `OpenMRSPaginatedResponse`<`T`\>\>
 
 Most OpenMRS REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
-This hook handles fetching results from all pages of a paginated OpenMRS REST endpoint.
+This hook handles fetching results from *all* pages of a paginated OpenMRS REST endpoint, making multiple requests
+as needed.
+
+**`see`** `useOpenmrsPagination`
+
+**`see`** `useOpenmrsInfinite`
+
+**`see`** `useFhirFetchAll`
 
 #### Type parameters
 
@@ -6742,8 +7150,8 @@ This hook handles fetching results from all pages of a paginated OpenMRS REST en
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `url` | `string` \| `URL` | The URL of the paginated OpenMRS REST endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side. |
-| `options` | [`UseServerFetchAllOptions`](interfaces/UseServerFetchAllOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | - |
+| `url` | `string` \| `URL` | The URL of the paginated OpenMRS REST endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerFetchAllOptions`](interfaces/UseServerFetchAllOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | The options object |
 
 #### Returns
 
@@ -6753,7 +7161,7 @@ a UseOpenmrsInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L33)
+[packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L40)
 
 ___
 
@@ -6771,10 +7179,11 @@ This hook fetches data from a paginated rest endpoint, initially by fetching the
 It provides a callback to load data from subsequent pages as needed. This hook is intended to serve UIs that
 provide infinite loading / scrolling of results.
 
-The above should only be used when there is a need to fetch the complete data set onto the client side (ex:
-need to support client-side sorting or filtering of data).
+**`see`** `useOpenmrsPagination`
 
-**`see`** `useServerPagination` for lazy-loading paginated data`
+**`see`** `useOpenmrsFetchAll`
+
+**`see`** `useFhirInfinite`
 
 #### Type parameters
 
@@ -6786,8 +7195,8 @@ need to support client-side sorting or filtering of data).
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `url` | `string` \| `URL` | The URL of the paginated rest endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side. |
-| `options` | [`UseServerInfiniteOptions`](interfaces/UseServerInfiniteOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | - |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerInfiniteOptions`](interfaces/UseServerInfiniteOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | The options object |
 
 #### Returns
 
@@ -6797,7 +7206,7 @@ a UseServerInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L90)
+[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L97)
 
 ___
 
@@ -6819,9 +7228,13 @@ lazy-loads the data on each page as needed.
 Note that this hook is not suitable for use for situations that require client-side sorting or filtering
 of the data set. In that case, all data must be loaded onto client-side first.
 
-**`see`** `useOpenmrsInfinite` for completely loading data (from all pages) onto client side
+**`see`** `useOpenmrsInfinite`
+
+**`see`** `useOpenmrsFetchAll`
 
 **`see`** `usePagination` for pagination of client-side data`
+
+**`see`** `useFhirPagination``
 
 #### Type parameters
 
@@ -6833,9 +7246,9 @@ of the data set. In that case, all data must be loaded onto client-side first.
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `url` | `string` \| `URL` | The URL of the paginated rest endpoint.            It should be populated with any needed GET params, except `limit`, `startIndex` or `totalCount`,            which will be overridden and manipulated by the `goTo*` callbacks |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint. \            It should be populated with any needed GET params, except `limit`, `startIndex` or `totalCount`,            which will be overridden and manipulated by the `goTo*` callbacks.            Similar to useSWR, this param can be null to disable fetching. |
 | `pageSize` | `number` | The number of results to return per page / fetch. Note that this value MUST NOT exceed            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000). |
-| `options` | [`UseServerPaginationOptions`](interfaces/UseServerPaginationOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | - |
+| `options` | [`UseServerPaginationOptions`](interfaces/UseServerPaginationOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | The options object |
 
 #### Returns
 
@@ -6861,7 +7274,7 @@ of the data set. In that case, all data must be loaded onto client-side first.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L53)
+[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L59)
 
 ___
 
