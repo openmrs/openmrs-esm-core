@@ -1,7 +1,7 @@
 /** @module @category UI */
-import React, { useState, useEffect, useCallback } from 'react';
-import { ActionableNotification } from '@carbon/react';
+import React, { useCallback, useState, useEffect } from 'react';
 import classnames from 'classnames';
+import { ActionableNotification } from '@carbon/react';
 import styles from './snackbar.module.scss';
 
 // Design documentation for Snackbars https://zeroheight.com/23a080e38/p/683580-notifications/t/468baf
@@ -16,7 +16,7 @@ export interface SnackbarDescriptor {
   kind?: SnackbarType | string;
   onActionButtonClick?: () => void;
   progressActionLabel?: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   timeoutInMs?: number;
   autoClose?: boolean;
   title: string;
