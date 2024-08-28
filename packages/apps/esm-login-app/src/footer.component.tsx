@@ -12,19 +12,16 @@ const Footer: React.FC<{ t: TFunction }> = ({ t }) => {
     <div className={styles.footer}>
       <p className={styles.poweredByTxt}>{t('poweredBy', 'Powered by')}</p>
       <div className={styles.logosContainer}>
-        {logos.length > 0 ? (
-          logos.map((logo, index) => (
-            <img
-              alt={logo.alt ? t(logo.alt) : t('poweredByLogo', 'Powered By Logo')}
-              className={styles.poweredByLogo}
-              src={interpolateUrl(logo.src)}
-            />
-          ))
-        ) : (
-          <svg role="img" className={styles.poweredByLogo}>
-            <use href="#omrs-logo-full-color"></use>
-          </svg>
-        )}
+        <svg role="img" className={styles.poweredByLogo}>
+          <use href="#omrs-logo-full-color"></use>
+        </svg>
+        {logos.map((logo, index) => (
+          <img
+            alt={logo.alt ? t(logo.alt) : t('poweredByLogo', 'Powered By Logo')}
+            className={styles.poweredByLogo}
+            src={interpolateUrl(logo.src)}
+          />
+        ))}
       </div>
     </div>
   );
