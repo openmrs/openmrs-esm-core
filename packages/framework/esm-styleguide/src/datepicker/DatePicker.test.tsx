@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen , fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { OpenmrsDatePicker, OpenmrsDatePickerProps } from './index';
+import { OpenmrsDatePicker , OpenmrsDatePickerProps } from './index';
+
 
 describe('OpenmrsDatePicker Component', () => {
 
