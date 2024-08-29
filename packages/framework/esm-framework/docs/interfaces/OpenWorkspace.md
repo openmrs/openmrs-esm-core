@@ -16,6 +16,9 @@
 
 - [canHide](OpenWorkspace.md#canhide)
 - [canMaximize](OpenWorkspace.md#canmaximize)
+- [cancelConfirmText](OpenWorkspace.md#cancelconfirmtext)
+- [cancelMessage](OpenWorkspace.md#cancelmessage)
+- [cancelTitle](OpenWorkspace.md#canceltitle)
 - [hasOwnSidebar](OpenWorkspace.md#hasownsidebar)
 - [moduleName](OpenWorkspace.md#modulename)
 - [name](OpenWorkspace.md#name)
@@ -36,6 +39,9 @@
 - [closeWorkspaceWithSavedChanges](OpenWorkspace.md#closeworkspacewithsavedchanges)
 - [load](OpenWorkspace.md#load)
 - [promptBeforeClosing](OpenWorkspace.md#promptbeforeclosing)
+- [setCancelConfirmText](OpenWorkspace.md#setcancelconfirmtext)
+- [setCancelMessage](OpenWorkspace.md#setcancelmessage)
+- [setCancelTitle](OpenWorkspace.md#setcanceltitle)
 - [setTitle](OpenWorkspace.md#settitle)
 
 ## Other Properties
@@ -68,6 +74,48 @@ ___
 
 ___
 
+### cancelConfirmText
+
+• `Optional` **cancelConfirmText**: `string`
+
+#### Inherited from
+
+[WorkspaceRegistration](WorkspaceRegistration.md).[cancelConfirmText](WorkspaceRegistration.md#cancelconfirmtext)
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
+
+___
+
+### cancelMessage
+
+• `Optional` **cancelMessage**: `string`
+
+#### Inherited from
+
+[WorkspaceRegistration](WorkspaceRegistration.md).[cancelMessage](WorkspaceRegistration.md#cancelmessage)
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
+
+___
+
+### cancelTitle
+
+• `Optional` **cancelTitle**: `string`
+
+#### Inherited from
+
+[WorkspaceRegistration](WorkspaceRegistration.md).[cancelTitle](WorkspaceRegistration.md#canceltitle)
+
+#### Defined in
+
+[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
+
+___
+
 ### hasOwnSidebar
 
 • **hasOwnSidebar**: `boolean`
@@ -78,7 +126,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:17](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L17)
+[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
 
 ___
 
@@ -92,7 +140,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L21)
+[packages/framework/esm-extensions/src/workspaces.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L24)
 
 ___
 
@@ -120,7 +168,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L19)
+[packages/framework/esm-extensions/src/workspaces.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L22)
 
 ___
 
@@ -134,7 +182,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L18)
+[packages/framework/esm-extensions/src/workspaces.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L21)
 
 ___
 
@@ -202,7 +250,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:107](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L107)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:117](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L117)
 
 ## Methods
 
@@ -277,7 +325,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/workspaces.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L20)
+[packages/framework/esm-extensions/src/workspaces.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/workspaces.ts#L23)
 
 ___
 
@@ -305,6 +353,82 @@ this workspace is closed; e.g. if there is unsaved data.
 #### Defined in
 
 [packages/framework/esm-styleguide/src/workspaces/workspaces.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L52)
+
+___
+
+### setCancelConfirmText
+
+▸ **setCancelConfirmText**(`cancelConfirmText`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cancelConfirmText` | `string` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[setCancelConfirmText](DefaultWorkspaceProps.md#setcancelconfirmtext)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:82](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L82)
+
+___
+
+### setCancelMessage
+
+▸ **setCancelMessage**(`cancelMessage`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cancelMessage` | `string` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[setCancelMessage](DefaultWorkspaceProps.md#setcancelmessage)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:81](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L81)
+
+___
+
+### setCancelTitle
+
+▸ **setCancelTitle**(`cancelTitle`): `void`
+
+Use these to set the workspace cancel dialog title, message body, and confirm button text
+if it needs to be set dynamically
+(see html-forn-entry.workspace.tsx in esm-patient-forms for an example of this)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `cancelTitle` | `string` |
+
+#### Returns
+
+`void`
+
+#### Inherited from
+
+[DefaultWorkspaceProps](DefaultWorkspaceProps.md).[setCancelTitle](DefaultWorkspaceProps.md#setcanceltitle)
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L80)
 
 ___
 
