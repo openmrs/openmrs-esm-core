@@ -70,6 +70,16 @@ export interface DefaultWorkspaceProps {
    *        elements can also be attached to the workspace header extension slots.
    */
   setTitle(title: string, titleNode?: ReactNode): void;
+
+  /**
+   * Use these to set the workspace cancel dialog title, message body, and confirm button text
+   * if it needs to be set dynamically
+   * (see html-forn-entry.workspace.tsx in esm-patient-forms for an example of this)
+   * @param cancelTitle
+   */
+  setCancelTitle(cancelTitle: string): void;
+  setCancelMessage(cancelMessage: string): void;
+  setCancelConfirmText(cancelConfirmText: string): void;
 }
 
 export interface WorkspaceWindowSize {
@@ -140,7 +150,7 @@ function promptBeforeLaunchingWorkspace(
   };
 
   if (!canCloseWorkspaceWithoutPrompting(workspace.name)) {
-    showWorkspacePrompts('closing-workspace-launching-new-workspace', proceed, workspace.title ?? workspace.name);
+    showWorkspacePrompts('closing-workspace-launching-new-workspace', proceed, workspace);
   } else {
     proceed();
   }
@@ -190,13 +200,19 @@ export function launchWorkspace<
     setTitle: (title: string, titleNode: ReactNode) => {
       newWorkspace.title = title;
       newWorkspace.titleNode = titleNode;
-      store.setState((state) => {
-        const openWorkspaces = state.openWorkspaces.map((w) => (w.name === name ? newWorkspace : w));
-        return {
-          ...state,
-          openWorkspaces,
-        };
-      });
+      updateWorkspaceInStore(newWorkspace);
+    },
+    setCancelTitle: (cancelTitle: string) => {
+      newWorkspace.cancelTitle = cancelTitle;
+      updateWorkspaceInStore(newWorkspace);
+    },
+    setCancelMessage: (cancelMessage: string) => {
+      newWorkspace.cancelMessage = cancelMessage;
+      updateWorkspaceInStore(newWorkspace);
+    },
+    setCancelConfirmText: (cancelConfirmText: string) => {
+      newWorkspace.cancelConfirmText = cancelConfirmText;
+      updateWorkspaceInStore(newWorkspace);
     },
     additionalProps: additionalProps ?? {},
   };
@@ -204,6 +220,16 @@ export function launchWorkspace<
   if (newWorkspace.sidebarFamily) {
     // initialize workspace family store
     getWorkspaceFamilyStore(newWorkspace.sidebarFamily, additionalProps);
+  }
+
+  function updateWorkspaceInStore(workspace: OpenWorkspace) {
+    store.setState((state) => {
+      const openWorkspaces = state.openWorkspaces.map((w) => (w.name === name ? workspace : w));
+      return {
+        ...state,
+        openWorkspaces,
+      };
+    });
   }
 
   function updateStoreWithNewWorkspace(workspaceToBeAdded: OpenWorkspace, restOfTheWorkspaces?: Array<OpenWorkspace>) {
@@ -309,10 +335,10 @@ export function closeWorkspace(name: string, options: CloseWorkspaceOptions = {}
 function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOptions = {}): boolean {
   options = { ...defaultOptions, ...options };
   const store = getWorkspaceStore();
+  const state = store.getState();
+  const workspaceToBeClosed = state.openWorkspaces.find((w) => w.name === name);
 
   const updateStoreWithClosedWorkspace = () => {
-    const state = store.getState();
-    const workspaceToBeClosed = state.openWorkspaces.find((w) => w.name === name);
     const workspaceSidebarFamilyName = workspaceToBeClosed?.sidebarFamily;
     const newOpenWorkspaces = state.openWorkspaces.filter((w) => w.name != name);
     const workspaceFamilyStore = getWorkspaceFamilyStore(workspaceSidebarFamilyName);
@@ -340,8 +366,7 @@ function closeWorkspaceInternal(name: string, options: CloseWorkspaceInternalOpt
   };
 
   if (!canCloseWorkspaceWithoutPrompting(name, options?.ignoreChanges)) {
-    const currentName = getWorkspaceRegistration(name).title ?? name;
-    showWorkspacePrompts('closing-workspace', updateStoreWithClosedWorkspace, currentName);
+    showWorkspacePrompts('closing-workspace', updateStoreWithClosedWorkspace, workspaceToBeClosed);
     return false;
   } else {
     updateStoreWithClosedWorkspace();
@@ -444,7 +469,7 @@ type PromptType = 'closing-workspace' | 'closing-all-workspaces' | 'closing-work
 export function showWorkspacePrompts(
   promptType: PromptType,
   onConfirmation: () => void = () => {},
-  workspaceTitle: string = '',
+  workspace?: OpenWorkspace,
 ) {
   const store = getWorkspaceStore();
 
@@ -452,15 +477,17 @@ export function showWorkspacePrompts(
   switch (promptType) {
     case 'closing-workspace': {
       prompt = {
-        title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
-        body: getCoreTranslation(
-          'unsavedChangesInOpenedWorkspace',
-          `You have unsaved changes in the opened workspace. Do you want to discard these changes?`,
-        ),
+        title: workspace?.cancelTitle ?? getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
+        body:
+          workspace?.cancelMessage ??
+          getCoreTranslation(
+            'unsavedChangesInOpenedWorkspace',
+            `You have unsaved changes in the opened workspace. Do you want to discard these changes?`,
+          ),
         onConfirm: () => {
           onConfirmation?.();
         },
-        confirmText: getCoreTranslation('discard', 'Discard'),
+        confirmText: workspace?.cancelConfirmText ?? getCoreTranslation('discard', 'Discard'),
       };
       break;
     }
@@ -471,11 +498,12 @@ export function showWorkspacePrompts(
         .openWorkspaces.filter(({ name }) => !canCloseWorkspaceWithoutPrompting(name))
         .map(({ title }, indx) => `${indx + 1}. ${title}`);
 
+      // note that, unlike the other two prompts, we don't (yet?) support overriding the prompt when there are multiple workspaces in play
       prompt = {
         title: getCoreTranslation('closingAllWorkspacesPromptTitle', 'You have unsaved changes'),
         body: getCoreTranslation(
           'closingAllWorkspacesPromptBody',
-          'There are unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}',
+          'There may be unsaved changes in the following workspaces. Do you want to discard changes in the following workspaces? {{workspaceNames}}',
           {
             workspaceNames: workspacesNotClosed.join(','),
           },
@@ -491,12 +519,14 @@ export function showWorkspacePrompts(
     }
     case 'closing-workspace-launching-new-workspace': {
       prompt = {
-        title: getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
-        body: getCoreTranslation(
-          'unsavedChangesInWorkspace',
-          'There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
-          { workspaceName: workspaceTitle },
-        ),
+        title: workspace?.cancelTitle ?? getCoreTranslation('unsavedChangesTitleText', 'Unsaved changes'),
+        body:
+          workspace?.cancelMessage ??
+          getCoreTranslation(
+            'unsavedChangesInWorkspace',
+            'There are unsaved changes in {{workspaceName}}. Please save them before opening another workspace.',
+            { workspaceName: workspace?.title ?? workspace?.name },
+          ),
         onConfirm: () => {
           store.setState((state) => ({
             ...state,
@@ -504,7 +534,7 @@ export function showWorkspacePrompts(
           }));
           onConfirmation?.();
         },
-        confirmText: getCoreTranslation('openAnyway', 'Open anyway'),
+        confirmText: workspace?.cancelConfirmText ?? getCoreTranslation('openAnyway', 'Open anyway'),
       };
       break;
     }
