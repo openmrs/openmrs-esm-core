@@ -188,6 +188,9 @@ export function getExtensionConfig(
   const selector = (configStore: ExtensionsConfigStore) => configStore.configs[slotName]?.[extensionId];
 
   return {
+    getInitialState() {
+      return selector(extensionConfigStore.getInitialState());
+    },
     getState() {
       return selector(extensionConfigStore.getState()) ?? { loaded: false, config: null };
     },
