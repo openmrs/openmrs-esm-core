@@ -8,7 +8,7 @@
  * - connected (computed from assigned using connectivity and online / offline)
  */
 
-import type { LoggedInUser } from '@openmrs/esm-api';
+import type { Session } from '@openmrs/esm-api';
 import { getSessionStore, userHasAccess } from '@openmrs/esm-api';
 import type { ExtensionsConfigStore, ExtensionSlotConfigObject, ExtensionSlotsConfigStore } from '@openmrs/esm-config';
 import {
@@ -18,6 +18,7 @@ import {
   getExtensionSlotConfigFromStore,
   getExtensionSlotsConfigStore,
 } from '@openmrs/esm-config';
+import { evaluateAsBoolean } from '@openmrs/esm-expression-evaluator';
 import { featureFlagsStore } from '@openmrs/esm-feature-flags';
 import { isOnline as isOnlineFn } from '@openmrs/esm-utils';
 import isEqual from 'lodash-es/isEqual';
@@ -283,7 +284,7 @@ function getAssignedExtensionsFromSlotData(
   const attachedIds = internalState.slots[slotName].attachedIds;
   const assignedIds = calculateAssignedIds(config, attachedIds);
   const extensions: Array<AssignedExtension> = [];
-  let user: LoggedInUser | undefined = undefined;
+  let session: Session | undefined = undefined;
 
   for (let id of assignedIds) {
     const { config: extensionConfig } = getExtensionConfigFromStore(extensionConfigStoreState, slotName, id);
@@ -297,15 +298,32 @@ function getAssignedExtensionsFromSlotData(
         requiredPrivileges &&
         (typeof requiredPrivileges === 'string' || (Array.isArray(requiredPrivileges) && requiredPrivileges.length > 0))
       ) {
-        if (isUndefined(user)) {
-          user = getSessionStore().getState().session?.user;
+        if (isUndefined(session)) {
+          session = getSessionStore().getState().session ?? undefined;
         }
 
-        if (!user) {
+        if (!session?.user) {
           continue;
         }
 
-        if (!userHasAccess(requiredPrivileges, user)) {
+        if (!userHasAccess(requiredPrivileges, session.user)) {
+          continue;
+        }
+      }
+
+      const displayConditionExpression = extensionConfig?.['Display conditions']?.expression ?? null;
+      if (displayConditionExpression !== null) {
+        if (isUndefined(session)) {
+          session = getSessionStore().getState().session ?? undefined;
+        }
+
+        try {
+          if (!evaluateAsBoolean(displayConditionExpression, { session: session ?? null })) {
+            continue;
+          }
+        } catch (e) {
+          console.error(`Error while evaluating expression ${displayConditionExpression}`, e);
+          // if the expression has an error, we do not display the extension
           continue;
         }
       }

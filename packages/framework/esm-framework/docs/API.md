@@ -181,6 +181,15 @@
 ### Other Functions
 
 - [WorkspaceContainer](API.md#workspacecontainer)
+- [compile](API.md#compile)
+- [evaluate](API.md#evaluate)
+- [evaluateAsBoolean](API.md#evaluateasboolean)
+- [evaluateAsBooleanAsync](API.md#evaluateasbooleanasync)
+- [evaluateAsNumber](API.md#evaluateasnumber)
+- [evaluateAsNumberAsync](API.md#evaluateasnumberasync)
+- [evaluateAsType](API.md#evaluateastype)
+- [evaluateAsTypeAsync](API.md#evaluateastypeasync)
+- [evaluateAsync](API.md#evaluateasync)
 - [isOnline](API.md#isonline)
 
 ### Store Functions
@@ -517,7 +526,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L40)
+[packages/framework/esm-config/src/types.ts:46](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L46)
 
 ___
 
@@ -530,6 +539,18 @@ A type for any of the acceptable date formats
 #### Defined in
 
 [packages/framework/esm-styleguide/src/datepicker/index.tsx:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/datepicker/index.tsx#L73)
+
+___
+
+### DefaultEvaluateReturnType
+
+Ƭ **DefaultEvaluateReturnType**: `string` \| `number` \| `boolean` \| `Date` \| ``null`` \| `undefined`
+
+The valid return types for `evaluate()` and `evaluateAsync()`
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:28](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L28)
 
 ___
 
@@ -640,7 +661,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:62](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L62)
+[packages/framework/esm-config/src/types.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L68)
 
 ___
 
@@ -718,7 +739,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:69](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L69)
+[packages/framework/esm-config/src/types.ts:75](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L75)
 
 ___
 
@@ -742,7 +763,23 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-config/src/types.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L67)
+[packages/framework/esm-config/src/types.ts:73](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-config/src/types.ts#L73)
+
+___
+
+### VariablesMap
+
+Ƭ **VariablesMap**: `Object`
+
+An object containing the variable to use when evaluating this expression
+
+#### Index signature
+
+▪ [key: `string`]: `string` \| `number` \| `boolean` \| `Function` \| `RegExp` \| `object` \| ``null`` \| [`VariablesMap`](API.md#variablesmap) \| [`VariablesMap`](API.md#variablesmap)[]
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L23)
 
 ___
 
@@ -4196,7 +4233,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:143](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L143)
+[packages/framework/esm-extensions/src/extensions.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L144)
 
 ___
 
@@ -4219,7 +4256,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:176](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L176)
+[packages/framework/esm-extensions/src/extensions.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L177)
 
 ___
 
@@ -4241,7 +4278,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:200](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L200)
+[packages/framework/esm-extensions/src/extensions.ts:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L201)
 
 ___
 
@@ -4265,7 +4302,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:335](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L335)
+[packages/framework/esm-extensions/src/extensions.ts:353](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L353)
 
 ___
 
@@ -4292,7 +4329,7 @@ A list of extensions that should be rendered
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:260](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L260)
+[packages/framework/esm-extensions/src/extensions.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L261)
 
 ___
 
@@ -4324,7 +4361,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L91)
+[packages/framework/esm-extensions/src/extensions.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L92)
 
 ___
 
@@ -5736,6 +5773,374 @@ This component also provides everything needed for workspace notifications to be
 #### Defined in
 
 [packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L67)
+
+___
+
+### compile
+
+▸ **compile**(`expression`): `jsep.Expression`
+
+`compile()` is a companion function for use with {@link evaluate()} and the various `evaluateAs*()` functions.
+It processes an expression string into the resulting AST that is executed by those functions. This is useful if
+you have an expression that will need to be evaluated mulitple times, potentially with different values, as the
+lexing and parsing steps can be skipped by using the AST object returned from this.
+
+The returned AST is intended to be opaque to client applications, but, of course, it is possible to manipulate
+the AST before passing it back to {@link evaluate()}, if desired. This might be useful if, for example, certain
+values are known to be constant.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` | The expression to be parsed |
+
+#### Returns
+
+`jsep.Expression`
+
+An executable AST representation of the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:319](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L319)
+
+___
+
+### evaluate
+
+▸ **evaluate**(`expression`, `variables?`): [`DefaultEvaluateReturnType`](API.md#defaultevaluatereturntype)
+
+`evaluate()` implements a relatively safe version of `eval()` that is limited to evaluating synchronous
+Javascript expressions. This allows us to safely add features that depend on user-supplied code without
+polluting the global namespace or needing to support `eval()` and the like.
+
+By default it supports any expression that evalutes to a string, number, boolean, Date, null, or undefined.
+Other values will result in an error.
+
+**`example`**
+```ts
+// shouldDisplayOptionalData will be false
+const shouldDisplayOptionalData = evaluate('!isEmpty(array)', {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+})
+```
+
+Since this only implements the expression lanaguage part of Javascript, there is no support for assigning
+values, creating functions, or creating objects, so the following will throw an error:
+
+**`example`**
+```ts
+evaluate('var a = 1; a');
+```
+
+In addition to string expressions, `evaluate()` can use an existing `jsep.Expression`, such as that returned
+from the `compile()` function. The goal here is to support cases where the same expression will be evaluated
+multiple times, possibly with different variables, e.g.,
+
+**`example`**
+```ts
+const expr = compile('isEmpty(array)');
+
+// then we use it like
+evaluate(expr, {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+
+evaluate(expr, {
+ array: ['value'],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+```
+
+This saves the overhead of parsing the expression everytime and simply allows us to evaluate it.
+
+The `variables` parameter should be used to supply any variables or functions that should be in-scope for
+the evaluation. A very limited number of global objects, like NaN and Infinity are always available, but
+any non-global values will need to be passed as a variable. Note that expressions do not have any access to
+the variables in the scope in which they were defined unless they are supplied here.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+[`DefaultEvaluateReturnType`](API.md#defaultevaluatereturntype)
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L93)
+
+___
+
+### evaluateAsBoolean
+
+▸ **evaluateAsBoolean**(`expression`, `variables?`): `Boolean`
+
+`evaluateAsBoolean()` is a variant of {@link evaluate()} which only supports boolean results. Useful
+if valid expression must return boolean values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`Boolean`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:176](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L176)
+
+___
+
+### evaluateAsBooleanAsync
+
+▸ **evaluateAsBooleanAsync**(`expression`, `variables?`): `Promise`<`Boolean`\>
+
+`evaluateAsBooleanAsync()` is a variant of {@link evaluateAsync()} which only supports boolean results. Useful
+if valid expression must return boolean values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`Promise`<`Boolean`\>
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:189](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L189)
+
+___
+
+### evaluateAsNumber
+
+▸ **evaluateAsNumber**(`expression`, `variables?`): `number`
+
+`evaluateAsNumber()` is a variant of {@link evaluate()} which only supports number results. Useful
+if valid expression must return numeric values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`number`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:202](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L202)
+
+___
+
+### evaluateAsNumberAsync
+
+▸ **evaluateAsNumberAsync**(`expression`, `variables?`): `number`
+
+`evaluateAsNumberAsync()` is a variant of {@link evaluateAsync()} which only supports number results. Useful
+if valid expression must return numeric values.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`number`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:215](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L215)
+
+___
+
+### evaluateAsType
+
+▸ **evaluateAsType**<`T`\>(`expression`, `variables?`, `typePredicate`): `T`
+
+`evaluateAsType()` is a type-safe version of {@link evaluate()} which returns a result if the result
+passes a custom type predicate. The main use-case for this is to narrow the return types allowed based on
+context, e.g., if the expected result should be a number or boolean, you can supply a custom type-guard
+to ensure that only number or boolean results are returned.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+| `typePredicate` | (`result`: `unknown`) => result is T | A [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)  which asserts that the result value matches one of the expected results. |
+
+#### Returns
+
+`T`
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L232)
+
+___
+
+### evaluateAsTypeAsync
+
+▸ **evaluateAsTypeAsync**<`T`\>(`expression`, `variables?`, `typePredicate`): `Promise`<`T`\>
+
+`evaluateAsTypeAsync()` is a type-safe version of {@link evaluateAsync()} which returns a result if the result
+passes a custom type predicate. The main use-case for this is to narrow the return types allowed based on
+context, e.g., if the expected result should be a number or boolean, you can supply a custom type-guard
+to ensure that only number or boolean results are returned.
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+| `typePredicate` | (`result`: `unknown`) => result is T | A [type predicate](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates)  which asserts that the result value matches one of the expected results. |
+
+#### Returns
+
+`Promise`<`T`\>
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:273](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L273)
+
+___
+
+### evaluateAsync
+
+▸ **evaluateAsync**(`expression`, `variables?`): `Promise`<[`DefaultEvaluateReturnType`](API.md#defaultevaluatereturntype)\>
+
+`evaluateAsync()` implements a relatively safe version of `eval()` that can evaluate Javascript expressions
+that use Promises. This allows us to safely add features that depend on user-supplied code without
+polluting the global namespace or needing to support `eval()` and the like.
+
+By default it supports any expression that evalutes to a string, number, boolean, Date, null, or undefined.
+Other values will result in an error.
+
+**`example`**
+```ts
+// shouldDisplayOptionalData will be false
+const shouldDisplayOptionalData = await evaluateAsync('Promise.resolve(!isEmpty(array))', {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+})
+```
+
+Since this only implements the expression lanaguage part of Javascript, there is no support for assigning
+values, creating functions, or creating objects, so the following will throw an error:
+
+**`example`**
+```ts
+evaluateAsync('var a = 1; a');
+```
+
+In addition to string expressions, `evaluate()` can use an existing `jsep.Expression`, such as that returned
+from the `compile()` function. The goal here is to support cases where the same expression will be evaluated
+multiple times, possibly with different variables, e.g.,
+
+**`example`**
+```ts
+const expr = compile('Promise.resolve(isEmpty(array))');
+
+// then we use it like
+evaluateAsync(expr, {
+ array: [],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+
+evaluateAsync(expr, {
+ array: ['value'],
+ isEmpty(arr: unknown) {
+  return Array.isArray(arr) && arr.length === 0;
+ }
+));
+```
+
+This saves the overhead of parsing the expression everytime and simply allows us to evaluate it.
+
+The `variables` parameter should be used to supply any variables or functions that should be in-scope for
+the evaluation. A very limited number of global objects, like NaN and Infinity are always available, but
+any non-global values will need to be passed as a variable. Note that expressions do not have any access to
+the variables in the scope in which they were defined unless they are supplied here.
+
+**Note:** `evaluateAsync()` currently only supports Promise-based asynchronous flows and does not support
+the `await` keyword.
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `expression` | `string` \| `Expression` | The expression to evaluate, either as a string or pre-parsed expression |
+| `variables` | [`VariablesMap`](API.md#variablesmap) | Optional object which contains any variables, functions, etc. that will be available to  the expression. |
+
+#### Returns
+
+`Promise`<[`DefaultEvaluateReturnType`](API.md#defaultevaluatereturntype)\>
+
+The result of evaluating the expression
+
+#### Defined in
+
+[packages/framework/esm-expression-evaluator/src/evaluator.ts:163](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-expression-evaluator/src/evaluator.ts#L163)
 
 ___
 
