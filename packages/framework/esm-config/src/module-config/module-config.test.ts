@@ -1259,11 +1259,13 @@ describe('translation overrides', () => {
     });
     Config.registerModuleWithConfigSystem('corge-module');
     const translationOverrides = await Config.getTranslationOverrides('corge-module');
-    expect(translationOverrides).toStrictEqual({
-      en: {
-        'foo.bar': 'baz',
+    expect(translationOverrides).toStrictEqual([
+      {
+        en: {
+          'foo.bar': 'baz',
+        },
       },
-    });
+    ]);
     Config.defineConfigSchema('corge-module', {
       corges: { _default: false, _type: Type.Boolean },
     });
