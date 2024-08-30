@@ -59,6 +59,14 @@ export const ArrowUpIcon = memo(
 
 /**
  */
+export const BabyIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function BabyIcon(props: IconProps, ref) {
+    return <Icon ref={ref} icon="omrs-icon-baby" iconProps={props} />;
+  }),
+);
+
+/**
+ */
 export const CalendarHeatMapIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function CalendarHeatMap(props: IconProps, ref) {
     return <Icon ref={ref} icon="omrs-icon-calendar-heat-map" iconProps={props} />;
@@ -319,6 +327,14 @@ export const MicroscopeIcon = memo(
 export const MoneyIcon = memo(
   forwardRef<SVGSVGElement, IconProps>(function MoneyIcon(props, ref) {
     return <Icon ref={ref} icon="omrs-icon-money" iconProps={props} />;
+  }),
+);
+
+/**
+ */
+export const MotherIcon = memo(
+  forwardRef<SVGSVGElement, IconProps>(function MotherIcon(props, ref) {
+    return <Icon ref={ref} icon="omrs-icon-mother" iconProps={props} />;
   }),
 );
 
