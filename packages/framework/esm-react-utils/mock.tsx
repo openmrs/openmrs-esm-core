@@ -1,7 +1,7 @@
 import React from 'react';
 import { openmrsFetch } from '@openmrs/esm-api/mock';
 import { configSchema } from '@openmrs/esm-config/mock';
-import { getExtensionStore, getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
+import { getExtensionInternalStore } from '@openmrs/esm-extensions/mock';
 import { createGlobalStore } from '@openmrs/esm-state/mock';
 import {
   isDesktop as realIsDesktop,
@@ -28,7 +28,16 @@ export const useAttachments = jest.fn(() => ({
   isValidating: true,
 }));
 
-export const useConfig = jest.fn().mockImplementation(() => utils.getDefaultsFromConfigSchema(configSchema));
+export const useConfig = jest.fn().mockImplementation((options?: { externalModuleName?: string }) => {
+  if (options?.externalModuleName) {
+    // Return a mock config for the external module
+    return {
+      [options.externalModuleName]: utils.getDefaultsFromConfigSchema(configSchema),
+    };
+  }
+  // Return the default mock implementation for the current module
+  return utils.getDefaultsFromConfigSchema(configSchema);
+});
 
 export const useCurrentPatient = jest.fn(() => []);
 

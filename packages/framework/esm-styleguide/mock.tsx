@@ -6,6 +6,7 @@ export const ArrowDownIcon = () => <div>ArrowDownIcon</div>;
 export const ArrowLeftIcon = () => <div>ArrowLeftIcon</div>;
 export const ArrowRightIcon = () => <div>ArrowRightIcon</div>;
 export const ArrowUpIcon = () => <div>ArrowUpIcon</div>;
+export const BabyIcon = () => <div>BabyIcon</div>;
 export const ChartAverageIcon = () => <div>ChartAverageIcon</div>;
 export const ChemistryIcon = () => <div>ChemistryIcon</div>;
 export const ChevronDownIcon = () => <div>ChevronDownIcon</div>;
@@ -32,6 +33,7 @@ export const MaximizeIcon = () => <div>MaximizeIcon</div>;
 export const MedicationIcon = () => <div>MedicationIcon</div>;
 export const MessageQueueIcon = () => <div>MessageQueueIcon</div>;
 export const MoneyIcon = () => <div>MoneyIcon</div>;
+export const MotherIcon = () => <div>MotherIcon</div>;
 export const MovementIcon = () => <div>MovementIcon</div>;
 export const MicroscopeIcon = () => <div>MicroscopeIcon</div>;
 export const OverflowMenuHorizontalIcon = () => <div>OverflowMenuHorizontalIcon</div>;
@@ -71,6 +73,8 @@ export const HomePictogram = () => <div>HomePictogram</div>;
 export const LaboratoryPictogram = () => <div>LaboratoryPictogramPictogram</div>;
 export const PatientListsPictogram = () => <div>PatientListsPictogram</div>;
 export const ServiceQueuesPictogram = () => <div>ServiceQueuesPictogramPictogram</div>;
+
+export { PageHeader, PageHeaderContent } from './src/page-header/page-header.component';
 
 export const LocationPicker = jest.fn(({ onChange, selectedLocationUuid }) => {
   const locations = [

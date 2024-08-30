@@ -110,7 +110,7 @@ ___
 
 ### subtitle
 
-• `Optional` **subtitle**: `string`
+• `Optional` **subtitle**: `ReactNode`
 
 #### Inherited from
 

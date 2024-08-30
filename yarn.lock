@@ -3295,7 +3295,7 @@ __metadata:
   resolution: "@openmrs/esm-state@workspace:packages/framework/esm-state"
   dependencies:
     "@openmrs/esm-globals": "workspace:*"
-    zustand: "npm:^4.3.6"
+    zustand: "npm:^4.5.5"
   peerDependencies:
     "@openmrs/esm-globals": 5.x
   languageName: unknown
@@ -18332,7 +18332,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:1.2.0, use-sync-external-store@npm:^1.2.0":
+"use-sync-external-store@npm:1.2.2":
+  version: 1.2.2
+  resolution: "use-sync-external-store@npm:1.2.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10/671e9c190aab9a8374a5d468c6ba17f52c38b6fae970110bc196fc1e2b57204149aea9619be49a1bb5207fb6e51d8afd19c3bcb94afe61813fed039821461dc0
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
@@ -19467,19 +19476,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zustand@npm:^4.3.6":
-  version: 4.3.6
-  resolution: "zustand@npm:4.3.6"
+"zustand@npm:^4.5.5":
+  version: 4.5.5
+  resolution: "zustand@npm:4.5.5"
   dependencies:
-    use-sync-external-store: "npm:1.2.0"
+    use-sync-external-store: "npm:1.2.2"
   peerDependencies:
-    immer: ">=9.0"
+    "@types/react": ">=16.8"
+    immer: ">=9.0.6"
     react: ">=16.8"
   peerDependenciesMeta:
+    "@types/react":
+      optional: true
     immer:
       optional: true
     react:
       optional: true
-  checksum: 10/e5fc9b2324808b2644bcb67bcb8c1c4d2ffdc6f1d1d882d76c4d6891d8a0ada7479a4fa49c18a14ef45fd15035f5024713d03c1f9f1280446c4aa7fbe898d930
+  checksum: 10/481b8210187b69678074a1ca51107654c2379688e90407bfcb7961e0803a259742bfd0d77171c3f07e290896ad55fe9659b3863f30d34cb2572650ead1249f25
   languageName: node
   linkType: hard

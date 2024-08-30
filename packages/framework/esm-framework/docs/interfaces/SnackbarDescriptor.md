@@ -79,7 +79,7 @@ ___
 
 ### subtitle
 
-• `Optional` **subtitle**: `string`
+• `Optional` **subtitle**: `ReactNode`
 
 #### Defined in
 

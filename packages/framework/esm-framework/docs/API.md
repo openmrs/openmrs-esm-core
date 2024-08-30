@@ -2436,7 +2436,7 @@ on its own, and the PageHeaderContent component is not needed.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:85](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L85)
+[packages/framework/esm-styleguide/src/page-header/page-header.component.tsx:89](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/page-header/page-header.component.tsx#L89)
 
 ___
 

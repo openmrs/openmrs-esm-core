@@ -1,9 +1,9 @@
 /** @module @category UI */
 import React from 'react';
+import classNames from 'classnames';
 import { useConfig } from '@openmrs/esm-react-utils';
 import { type StyleguideConfigObject } from '../config-schema';
 import styles from './page-header.module.scss';
-import classNames from 'classnames';
 
 export interface PageHeaderContentProps {
   title: string | JSX.Element;
@@ -56,12 +56,16 @@ const isPageHeaderWrapperProps = (props: any): props is PageHeaderWrapperProps =
  */
 export const PageHeader: React.FC<PageHeaderProps> = (props) => {
   if (isPageHeaderWrapperProps(props)) {
-    const { children, className } = props;
-    return <div className={classNames(styles.pageHeader, className)}>{children}</div>;
-  } else {
-    const { title, illustration, className } = props;
+    const { children, className, ...rest } = props;
     return (
-      <div className={classNames(styles.pageHeader, className)}>
+      <div className={classNames(styles.pageHeader, className)} {...rest}>
+        {children}
+      </div>
+    );
+  } else {
+    const { title, illustration, className, ...rest } = props;
+    return (
+      <div className={classNames(styles.pageHeader, className)} {...rest}>
         <PageHeaderContent title={title} illustration={illustration} />
       </div>
     );
@@ -83,7 +87,8 @@ export const PageHeader: React.FC<PageHeaderProps> = (props) => {
  * ```
  */
 export const PageHeaderContent: React.FC<PageHeaderContentProps> = ({ title, illustration, className }) => {
-  const { implementationName } = useConfig<StyleguideConfigObject>({
+  const config = useConfig<StyleguideConfigObject>({
+    // Do not remove this property. See https://github.com/openmrs/openmrs-esm-core/pull/1125#issuecomment-2313230513 for more context.
     externalModuleName: '@openmrs/esm-styleguide',
   });
 
@@ -91,7 +96,7 @@ export const PageHeaderContent: React.FC<PageHeaderContentProps> = ({ title, ill
     <div className={classNames(styles.pageHeaderContent, className)}>
       {illustration}
       <div className={styles.pageLabels}>
-        <p>{implementationName}</p>
+        {config?.implementationName && <p>{config.implementationName}</p>}
         <p className={styles.pageName}>{title}</p>
       </div>
     </div>
