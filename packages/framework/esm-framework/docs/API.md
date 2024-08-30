@@ -876,7 +876,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:47](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L47)
+[packages/framework/esm-translations/src/index.ts:53](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L53)
 
 ___
 
@@ -6470,7 +6470,7 @@ invalid key to this function will result in a type error.
 | :------ | :------ | :------ |
 | `key` | ``"error"`` \| ``"change"`` \| ``"close"`` \| ``"other"`` \| ``"actions"`` \| ``"address"`` \| ``"age"`` \| ``"cancel"`` \| ``"confirm"`` \| ``"contactAdministratorIfIssuePersists"`` \| ``"contactDetails"`` \| ``"errorCopy"`` \| ``"female"`` \| ``"hideDetails"`` \| ``"loading"`` \| ``"male"`` \| ``"patientIdentifierSticker"`` \| ``"patientLists"`` \| ``"print"`` \| ``"printError"`` \| ``"printErrorExplainer"`` \| ``"printIdentifierSticker"`` \| ``"printing"`` \| ``"relationships"`` \| ``"resetOverrides"`` \| ``"scriptLoadingFailed"`` \| ``"scriptLoadingError"`` \| ``"seeMoreLists"`` \| ``"sex"`` \| ``"showDetails"`` \| ``"unknown"`` \| ``"closeAllOpenedWorkspaces"`` \| ``"closingAllWorkspacesPromptBody"`` \| ``"closingAllWorkspacesPromptTitle"`` \| ``"discard"`` \| ``"hide"`` \| ``"maximize"`` \| ``"minimize"`` \| ``"openAnyway"`` \| ``"unsavedChangesInOpenedWorkspace"`` \| ``"unsavedChangesInWorkspace"`` \| ``"unsavedChangesTitleText"`` \| ``"workspaceHeader"`` \| ``"address1"`` \| ``"address2"`` \| ``"address3"`` \| ``"address4"`` \| ``"address5"`` \| ``"address6"`` \| ``"city"`` \| ``"cityVillage"`` \| ``"country"`` \| ``"countyDistrict"`` \| ``"postalCode"`` \| ``"state"`` \| ``"stateProvince"`` | - |
 | `defaultText?` | `string` | - |
-| `options?` | `object` | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
+| `options?` | `Omit`<`TOptions`<`StringMap`\>, ``"defaultValue"`` \| ``"ns"``\> | Object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options           for more information. `ns` and `defaultValue` are already set and may not be used. |
 
 #### Returns
 
@@ -6478,7 +6478,7 @@ invalid key to this function will result in a type error.
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L60)
+[packages/framework/esm-translations/src/index.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L66)
 
 ___
 
@@ -6497,7 +6497,8 @@ Translations within the current app should be accessed with the i18next API, usi
 
 IMPORTANT: This function creates a hidden dependency on the module. Worse yet, it creates
 a dependency specifically on that module's translation keys, which are often regarded as
-"implementation details" and therefore may be volatile.
+"implementation details" and therefore may be volatile. Also note that this function DOES NOT
+load the module's translations if they have not already been loaded via `useTranslation`.
 **This function should therefore be avoided when possible.**
 
 #### Parameters
@@ -6507,7 +6508,7 @@ a dependency specifically on that module's translation keys, which are often reg
 | `moduleName` | `string` | The module to get the translation from, e.g. '@openmrs/esm-login-app' |
 | `key` | `string` | The i18next translation key |
 | `fallback?` | `string` | Fallback text for if the lookup fails |
-| `options?` | `object` | Options object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options            for more information. `ns` and `defaultValue` are already set and may not be used. |
+| `options?` | `Omit`<`TOptions`<`StringMap`\>, ``"defaultValue"`` \| ``"ns"``\> | Options object passed to the i18next `t` function. See https://www.i18next.com/translation-function/essentials#overview-options            for more information. `ns` and `defaultValue` are already set and may not be used. |
 
 #### Returns
 
@@ -6517,7 +6518,7 @@ The translated text as a string
 
 #### Defined in
 
-[packages/framework/esm-translations/src/index.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L39)
+[packages/framework/esm-translations/src/index.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-translations/src/index.ts#L40)
 
 ___
 

@@ -63,9 +63,27 @@ export function setupI18n() {
             .then(([json, overrides]) => {
               let translations = json ?? {};
 
-              if (language in overrides) {
-                translations = merge(translations, overrides[language]);
+              // if we have a slotName and extensionId, it means that we're only loading the namespace for that extension
+              // in that slot, but we _also_ process the base translations for the namespace and any top-level config overrides
+              // so here we also provide the translations for just the namespace before merging everything together
+              if (slotName && extensionId) {
+                if (overrides.length >= 1 && language in overrides[0]) {
+                  window.i18next.addResourceBundle(
+                    language,
+                    ns,
+                    merge(translations, overrides[0][language]),
+                    true,
+                    false,
+                  );
+                } else {
+                  window.i18next.addResourceBundle(language, ns, translations, true, false);
+                }
               }
+
+              translations = merge(
+                translations,
+                overrides.filter((o) => language in o),
+              );
 
               callback(null, translations);
             })
