@@ -2071,7 +2071,7 @@ ___
 | `isExpanded._default` | `boolean` |
 | `isExpanded._description` | `string` |
 | `isExpanded._type` | [`Type`](enums/Type.md) |
-| `slotName` | { `_default`: `string` = 'global-nav-group-slot'; `_description`: `string` = 'The name of the slot to create, which links can be added to.'; `_type`: [`Type`](enums/Type.md) = Type.String } |
+| `slotName` | { `_default`: `string` = 'nav-group-slot'; `_description`: `string` = 'The name of the slot to create, which links can be added to.'; `_type`: [`Type`](enums/Type.md) = Type.String } |
 | `slotName._default` | `string` |
 | `slotName._description` | `string` |
 | `slotName._type` | [`Type`](enums/Type.md) |
