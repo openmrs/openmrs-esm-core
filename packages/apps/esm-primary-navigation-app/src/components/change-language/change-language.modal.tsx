@@ -1,14 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  InlineLoading,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  RadioButton,
-  RadioButtonGroup,
-} from '@carbon/react';
+import { InlineLoading, Modal, ModalBody, RadioButton, RadioButtonGroup } from '@carbon/react';
 import { useConnectivity, useSession } from '@openmrs/esm-framework';
 import { postUserPropertiesOffline, postUserPropertiesOnline } from './change-language.resource';
 import styles from './change-language.scss';
@@ -53,8 +45,23 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
   );
 
   return (
-    <>
-      <ModalHeader closeModal={close} title={t('changeLanguage', 'Change language')} />
+    <Modal
+      open={true}
+      className={styles.customModal}
+      modalHeading={t('changeLanguage', 'Change language')}
+      size="sm"
+      primaryButtonText={
+        isChangingLanguage ? (
+          <InlineLoading description={t('changingLanguage', 'Changing language') + '...'} />
+        ) : (
+          t('change', 'Change')
+        )
+      }
+      primaryButtonDisabled={isChangingLanguage || selectedLocale === session?.locale}
+      secondaryButtonText={t('cancel', 'Cancel')}
+      onRequestSubmit={handleSubmit}
+      onRequestClose={close}
+    >
       <ModalBody>
         <div className={styles.languageOptionsContainer}>
           <RadioButtonGroup
@@ -76,23 +83,6 @@ export default function ChangeLanguageModal({ close }: ChangeLanguageModalProps)
           </RadioButtonGroup>
         </div>
       </ModalBody>
-      <ModalFooter>
-        <Button kind="secondary" onClick={close}>
-          {t('cancel', 'Cancel')}
-        </Button>
-        <Button
-          className={styles.submitButton}
-          disabled={isChangingLanguage || selectedLocale === session?.locale}
-          type="submit"
-          onClick={handleSubmit}
-        >
-          {isChangingLanguage ? (
-            <InlineLoading description={t('changingLanguage', 'Changing language') + '...'} />
-          ) : (
-            <span>{t('change', 'Change')}</span>
-          )}
-        </Button>
-      </ModalFooter>
-    </>
+    </Modal>
   );
 }
