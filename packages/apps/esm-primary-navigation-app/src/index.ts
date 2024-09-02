@@ -15,7 +15,6 @@ import userPanelComponent from './components/user-panel-switcher-item/user-panel
 import changeLanguageLinkComponent from './components/change-language/change-language-link.extension';
 import offlineBannerComponent from './components/offline-banner/offline-banner.component';
 import genericLinkComponent, { genericLinkConfigSchema } from './components/generic-link/generic-link.component';
-import { GlobalNavGroup, globalNavGroupFeatureName } from '@openmrs/esm-framework';
 
 export const importTranslation = require.context('../translations', false, /.json$/, 'lazy');
 
@@ -55,7 +54,4 @@ export const changeLanguageModal = getAsyncLifecycle(
   options,
 );
 
-export const globalNavGroup = getSyncLifecycle(GlobalNavGroup, {
-  featureName: globalNavGroupFeatureName,
-  moduleName,
-});
+export const globalNavGroup = getAsyncLifecycle(() => import('./components/nav-group/nav-group.component'), options);

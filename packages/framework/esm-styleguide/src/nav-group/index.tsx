@@ -17,7 +17,7 @@ export const globalNavGroupConfigSchema = {
   slotName: {
     _type: Type.String,
     _description: 'The name of the slot to create, which links can be added to.',
-    _default: 'global-nav-group-slot',
+    _default: 'nav-group-slot',
   },
   isExpanded: {
     _type: Type.Boolean,
