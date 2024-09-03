@@ -36,8 +36,13 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
         </div>
       </div>
       <div className={styles.demographics}>
-        <span>{gender}</span> &middot; <span>{patient?.birthDate && age(patient.birthDate)}</span> &middot;{' '}
-        <span>{patient?.birthDate && formatDate(parseDate(patient.birthDate), { mode: 'wide', time: false })}</span>
+        <span>{gender}</span>
+        {patient.birthDate && (
+          <>
+            &middot; <span>{age(patient.birthDate)}</span>
+            &middot; <span>{formatDate(parseDate(patient.birthDate), { mode: 'wide', time: false })}</span>
+          </>
+        )}
       </div>
       <div className={styles.row}>
         <div className={styles.identifiers}>

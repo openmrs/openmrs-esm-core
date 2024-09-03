@@ -10,11 +10,15 @@ import { type DurationInput } from '@formatjs/intl-durationformat/src/types';
  * https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://systems.digital.nhs.uk/data/cui/uig/patben.pdf
  * (See Tables 7 and 8)
  *
- * @param birthDate The birthDate.
+ * @param birthDate The birthDate. If birthDate is null, returns null.
  * @param currentDate Optional. If provided, calculates the age of the person at the provided currentDate (instead of now).
  * @returns A human-readable string version of the age.
  */
-export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType = dayjs()): string {
+export function age(birthDate: dayjs.ConfigType, currentDate: dayjs.ConfigType = dayjs()): string | null {
+  if (birthDate == null) {
+    return null;
+  }
+
   const to = dayjs(currentDate);
   const from = dayjs(birthDate);
 
