@@ -13,7 +13,7 @@ import {
 
 export interface UseServerFetchAllOptions<R> extends UseServerInfiniteOptions<R> {
   /**
-   * If true, the data of any page as soon as they are fetched.
+   * If true, the data of any page is returned as soon as they are fetched.
    * This is useful when you want to display data as soon as possible, even if not all pages are fetched.
    * If false, the returned data will be undefined until all pages are fetched. This is useful when you want to
    * display all data at once or reduce the number of re-renders (to avoid confusing users).

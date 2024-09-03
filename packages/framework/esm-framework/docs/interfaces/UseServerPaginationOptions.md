@@ -35,7 +35,7 @@ ___
 
 ### swrConfig
 
-• `Optional` **swrConfig**: `Partial`<`PublicConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>\>
+• `Optional` **swrConfig**: `SWRConfiguration`<`any`, `any`, `BareFetcher`<`any`\>\>
 
 The configuration object for useSWR or useSWRInfinite
 
