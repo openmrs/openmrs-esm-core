@@ -1,19 +1,20 @@
 import '@testing-library/jest-dom';
 import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
-import { useServerInfinite } from './useServerInfinite';
-import { getIntArray, getTestData } from './useServerPagination.test';
+import { useOpenmrsInfinite } from './useOpenmrsInfinite';
+import { getIntArray, getTestData } from './useOpenmrsPagination.test';
 
-describe('useServerInfinite', () => {
+describe('useOpenmrsInfinite', () => {
   afterEach(cleanup);
 
   it('should load all rows with 1 fetch if number of rows < pageSize', async () => {
     const pageSize = 20;
     const expectedRowCount = 17;
     const { result } = renderHook(() =>
-      useServerInfinite(`/1?limit=${pageSize}`, (url) =>
-        getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
-      ),
+      useOpenmrsInfinite(`http://localhost/1?limit=${pageSize}`, {
+        fetcher: (url) => getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
+      }),
     );
+
     await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 
     expect(result.current.data?.length).toBe(expectedRowCount);
@@ -26,9 +27,9 @@ describe('useServerInfinite', () => {
     const pageSize = 20;
     const expectedRowCount = 40;
     const { result } = renderHook(() =>
-      useServerInfinite(`/2?limit=${pageSize}`, (url) =>
-        getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
-      ),
+      useOpenmrsInfinite(`http://localhost/2?limit=${pageSize}`, {
+        fetcher: (url) => getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
+      }),
     );
 
     await waitFor(() => expect(result.current.isLoading).toBeFalsy());
@@ -51,9 +52,9 @@ describe('useServerInfinite', () => {
     const pageSize = 100;
     const expectedRowCount = 1337;
     const { result } = renderHook(() =>
-      useServerInfinite(`/3?limit=${pageSize}`, (url) =>
-        getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
-      ),
+      useOpenmrsInfinite(`http://localhost/3?limit=${pageSize}`, {
+        fetcher: (url) => getTestData(url, expectedRowCount).then((data) => ({ data }) as any),
+      }),
     );
     await waitFor(() => expect(result.current.isLoading).toBeFalsy());
 

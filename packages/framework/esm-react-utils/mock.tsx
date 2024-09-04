@@ -6,8 +6,12 @@ import { createGlobalStore } from '@openmrs/esm-state/mock';
 import {
   isDesktop as realIsDesktop,
   usePagination as realUsePagination,
-  useServerPagination as realUseServerPagination,
-  useServerInfinite as realUseServerInfinite,
+  useOpenmrsPagination as realUseOpenmrsrPagination,
+  useOpenmrsInfinite as realUseOpenmrsInfinite,
+  useOpenmrsFetchAll as realUseOpenmrsFetchAll,
+  useFhirPagination as realUseFhirPagination,
+  useFhirInfinite as realUseFhirInfinite,
+  useFhirFetchAll as realUseFhirFetchAll,
 } from './src/index';
 export { ConfigurableLink, useStore, useStoreWithActions, createUseStore } from './src/index';
 import * as utils from '@openmrs/esm-utils';
@@ -71,9 +75,12 @@ export const useFeatureFlag = jest.fn().mockReturnValue(true);
 
 export const usePagination = jest.fn(realUsePagination);
 
-export const useServerPagination = jest.fn(realUseServerPagination);
-
-export const useServerInfinite = jest.fn(realUseServerInfinite);
+export const useOpenmrsPagination = jest.fn(realUseOpenmrsrPagination);
+export const useOpenmrsInfinite = jest.fn(realUseOpenmrsInfinite);
+export const useOpenmrsFetchAll = jest.fn(realUseOpenmrsFetchAll);
+export const useFhirPagination = jest.fn(realUseFhirPagination);
+export const useFhirInfinite = jest.fn(realUseFhirInfinite);
+export const useFhirFetchAll = jest.fn(realUseFhirFetchAll);
 
 export const useVisit = jest.fn().mockReturnValue({
   error: null,

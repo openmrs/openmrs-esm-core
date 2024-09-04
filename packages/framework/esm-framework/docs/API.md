@@ -191,6 +191,8 @@
 - [evaluateAsTypeAsync](API.md#evaluateastypeasync)
 - [evaluateAsync](API.md#evaluateasync)
 - [isOnline](API.md#isonline)
+- [useFhirFetchAll](API.md#usefhirfetchall)
+- [useFhirInfinite](API.md#usefhirinfinite)
 
 ### Store Functions
 
@@ -214,6 +216,7 @@
 - [PatientBannerPatientInfo](API.md#patientbannerpatientinfo)
 - [PatientBannerToggleContactDetailsButton](API.md#patientbannertogglecontactdetailsbutton)
 - [PatientPhoto](API.md#patientphoto)
+- [getFhirServerPaginationHandlers](API.md#getfhirserverpaginationhandlers)
 - [isDesktop](API.md#isdesktop)
 - [setLeftNav](API.md#setleftnav)
 - [showActionableNotification](API.md#showactionablenotification)
@@ -227,12 +230,14 @@
 - [subscribeToastShown](API.md#subscribetoastshown)
 - [unsetLeftNav](API.md#unsetleftnav)
 - [useBodyScrollLock](API.md#usebodyscrolllock)
+- [useFhirPagination](API.md#usefhirpagination)
 - [useLayoutType](API.md#uselayouttype)
 - [useOnClickOutside](API.md#useonclickoutside)
+- [useOpenmrsFetchAll](API.md#useopenmrsfetchall)
+- [useOpenmrsInfinite](API.md#useopenmrsinfinite)
+- [useOpenmrsPagination](API.md#useopenmrspagination)
 - [usePagination](API.md#usepagination)
 - [usePatientPhoto](API.md#usepatientphoto)
-- [useServerInfinite](API.md#useserverinfinite)
-- [useServerPagination](API.md#useserverpagination)
 
 ### Utility Functions
 
@@ -6164,6 +6169,86 @@ ___
 
 ___
 
+### useFhirFetchAll
+
+▸ **useFhirFetchAll**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
+
+This hook handles fetching results from *all* pages of a paginated FHIR REST endpoint, making multiple requests
+as needed.
+This function is the FHIR counterpart of `useOpenmrsPagination`.
+
+**`see`** `useFhirPagination`
+
+**`see`** `useFhirInfinite`
+
+**`see`** `useOpenmrsFetchAll``
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ResourceBase` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `any` | The URL of the paginated rest endpoint.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerFetchAllOptions`](interfaces/UseServerFetchAllOptions.md)<`Bundle`\> | The options object |
+
+#### Returns
+
+`UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
+
+a UseFhirInfiniteReturnObject object
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useFhirFetchAll.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirFetchAll.ts#L19)
+
+___
+
+### useFhirInfinite
+
+▸ **useFhirInfinite**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
+
+Fhir REST endpoints that return a list of objects, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+
+This function is the FHIR counterpart of `useOpenmrsInfinite`.
+
+**`see`** `useFhirPagination`
+
+**`see`** `useFhirFetchAll`
+
+**`see`** `useOpenmrsInfinite`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ResourceBase` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerInfiniteOptions`](interfaces/UseServerInfiniteOptions.md)<`Bundle`\> | The options object |
+
+#### Returns
+
+`UseServerInfiniteReturnObject`<`T`, `fhir.Bundle`\>
+
+a UseServerInfiniteReturnObject object
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useFhirInfinite.ts:24](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirInfinite.ts#L24)
+
+___
+
 ## Store Functions
 
 ### createGlobalStore
@@ -6648,6 +6733,26 @@ a 48px avatar.
 
 ___
 
+### getFhirServerPaginationHandlers
+
+▸ **getFhirServerPaginationHandlers**<`T`\>(): `FhirServerPaginationHandlers`<`T`\>
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Returns
+
+`FhirServerPaginationHandlers`<`T`\>
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useFhirPagination.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L36)
+
+___
+
 ### isDesktop
 
 ▸ **isDesktop**(`layout`): `boolean`
@@ -6957,6 +7062,66 @@ ___
 
 ___
 
+### useFhirPagination
+
+▸ **useFhirPagination**<`T`\>(`url`, `pageSize`, `options?`): `Object`
+
+Fhir REST endpoints that return a list of objects, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+
+This function is the FHIR counterpart of `useOpenmrsPagination`.
+
+**`see`** `useOpenmrsPagination
+
+**`see`** `useFhirInfinite`
+
+**`see`** `useFhirFetchAll`
+
+**`see`** `usePagination` for pagination of client-side data`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ResourceBase` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint.            which will be overridden and manipulated by the `goTo*` callbacks |
+| `pageSize` | `number` | The number of results to return per page / fetch. |
+| `options` | [`UseServerPaginationOptions`](interfaces/UseServerPaginationOptions.md)<`Bundle`\> | The options object |
+
+#### Returns
+
+`Object`
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `currentPage` | `number` | - |
+| `currentPageSize` | `MutableRefObject`<`number`\> | - |
+| `data` | `undefined` \| `T`[] |  |
+| `error` | `any` | The error object thrown by the fetcher function. |
+| `goTo` | (`page`: `number`) => `void` | - |
+| `goToNext` | () => `void` | - |
+| `goToPrevious` | () => `void` | - |
+| `isLoading` | `boolean` | - |
+| `isValidating` | `boolean` | - |
+| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<`Bundle`\>\> | - |
+| `paginated` | `boolean` |  |
+| `showNextButton` | `boolean` |  |
+| `showPreviousButton` | `boolean` |  |
+| `totalCount` | `number` |  |
+| `totalPages` | `number` | - |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useFhirPagination.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useFhirPagination.ts#L27)
+
+___
+
 ### useLayoutType
 
 ▸ **useLayoutType**(): [`LayoutType`](API.md#layouttype)
@@ -6995,6 +7160,158 @@ ___
 #### Defined in
 
 [packages/framework/esm-react-utils/src/useOnClickOutside.ts:4](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOnClickOutside.ts#L4)
+
+___
+
+### useOpenmrsFetchAll
+
+▸ **useOpenmrsFetchAll**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `OpenMRSPaginatedResponse`<`T`\>\>
+
+Most OpenMRS REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+This hook handles fetching results from *all* pages of a paginated OpenMRS REST endpoint, making multiple requests
+as needed.
+
+**`see`** `useOpenmrsPagination`
+
+**`see`** `useOpenmrsInfinite`
+
+**`see`** `useFhirFetchAll`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated OpenMRS REST endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerFetchAllOptions`](interfaces/UseServerFetchAllOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | The options object |
+
+#### Returns
+
+`UseServerInfiniteReturnObject`<`T`, `OpenMRSPaginatedResponse`<`T`\>\>
+
+a UseOpenmrsInfiniteReturnObject object
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts:40](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsFetchAll.ts#L40)
+
+___
+
+### useOpenmrsInfinite
+
+▸ **useOpenmrsInfinite**<`T`\>(`url`, `options?`): `UseServerInfiniteReturnObject`<`T`, `OpenMRSPaginatedResponse`<`T`\>\>
+
+Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+The max number of results per request is configurable server-side
+with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
+
+This hook fetches data from a paginated rest endpoint, initially by fetching the first page of the results.
+It provides a callback to load data from subsequent pages as needed. This hook is intended to serve UIs that
+provide infinite loading / scrolling of results.
+
+**`see`** `useOpenmrsPagination`
+
+**`see`** `useOpenmrsFetchAll`
+
+**`see`** `useFhirInfinite`
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side.            Similar to useSWRInfinite, this param can be null to disable fetching. |
+| `options` | [`UseServerInfiniteOptions`](interfaces/UseServerInfiniteOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | The options object |
+
+#### Returns
+
+`UseServerInfiniteReturnObject`<`T`, `OpenMRSPaginatedResponse`<`T`\>\>
+
+a UseServerInfiniteReturnObject object
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L97)
+
+___
+
+### useOpenmrsPagination
+
+▸ **useOpenmrsPagination**<`T`\>(`url`, `pageSize`, `options?`): `Object`
+
+Most OpenMRS REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
+The server limits the max number of results being returned, and multiple requests are needed to get the full data set
+if its size exceeds this limit.
+The max number of results per request is configurable server-side
+with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
+
+For any UI that displays a paginated view of the full data set, we MUST handle the server-side pagination properly,
+or else the UI does not correctly display the full data set.
+This hook does that by providing callback functions for navigating to different pages of the results, and
+lazy-loads the data on each page as needed.
+
+Note that this hook is not suitable for use for situations that require client-side sorting or filtering
+of the data set. In that case, all data must be loaded onto client-side first.
+
+**`see`** `useOpenmrsInfinite`
+
+**`see`** `useOpenmrsFetchAll`
+
+**`see`** `usePagination` for pagination of client-side data`
+
+**`see`** `useFhirPagination``
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `url` | `string` \| `URL` | The URL of the paginated rest endpoint. \            It should be populated with any needed GET params, except `limit`, `startIndex` or `totalCount`,            which will be overridden and manipulated by the `goTo*` callbacks.            Similar to useSWR, this param can be null to disable fetching. |
+| `pageSize` | `number` | The number of results to return per page / fetch. Note that this value MUST NOT exceed            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000). |
+| `options` | [`UseServerPaginationOptions`](interfaces/UseServerPaginationOptions.md)<`OpenMRSPaginatedResponse`<`T`\>\> | The options object |
+
+#### Returns
+
+`Object`
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `currentPage` | `number` | - |
+| `currentPageSize` | `MutableRefObject`<`number`\> | - |
+| `data` | `undefined` \| `T`[] |  |
+| `error` | `any` | The error object thrown by the fetcher function. |
+| `goTo` | (`page`: `number`) => `void` | - |
+| `goToNext` | () => `void` | - |
+| `goToPrevious` | () => `void` | - |
+| `isLoading` | `boolean` | - |
+| `isValidating` | `boolean` | - |
+| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<`OpenMRSPaginatedResponse`<`T`\>\>\> | - |
+| `paginated` | `boolean` |  |
+| `showNextButton` | `boolean` |  |
+| `showPreviousButton` | `boolean` |  |
+| `totalCount` | `number` |  |
+| `totalPages` | `number` | - |
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useOpenmrsPagination.ts:59](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsPagination.ts#L59)
 
 ___
 
@@ -7061,118 +7378,6 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/patient-photo/usePatientPhoto.ts#L30)
-
-___
-
-### useServerInfinite
-
-▸ **useServerInfinite**<`T`\>(`url`, `fetcher?`): [`UseServerInfiniteReturnObject`](interfaces/UseServerInfiniteReturnObject.md)<`T`\>
-
-Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
-The server limits the max number of results being returned, and multiple requests are needed to get the full data set
-if its size exceeds this limit.
-The max number of results per request is configurable server-side
-with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
-
-This hook fetches data from a paginated rest endpoint, initially by fetching the first page of the results.
-It provides a callback to load data from subsequent pages as needed. This hook is intended to serve UIs that
-provide infinite loading / scrolling of results.
-
-While not ideal, this hook can be used to fetch the complete data set of results (from all pages) as follows:
-
-     useEffect(() => hasMore && loadMore(), [hasMore])
-
-The above should only be used when there is a need to fetch the complete data set onto the client side (ex:
-need to support client-side sorting or filtering of data).
-
-**`see`** `useServerPagination` for lazy-loading paginated data`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `url` | `string` \| `URL` | `undefined` | The URL of the paginated rest endpoint. Note that the `limit` GET param can be set to specify            the page size; if not set, the page size defaults to the `webservices.rest.maxResultsDefault` value defined            server-side. |
-| `fetcher` | (`key`: `string`) => `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<[`OpenMRSPaginatedResponse`](interfaces/OpenMRSPaginatedResponse.md)<`T`\>\>\> | `openmrsFetch` | The fetcher to use. Defaults to openmrsFetch |
-
-#### Returns
-
-[`UseServerInfiniteReturnObject`](interfaces/UseServerInfiniteReturnObject.md)<`T`\>
-
-a UseServerInfiniteReturnObject object
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useServerInfinite.ts:80](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerInfinite.ts#L80)
-
-___
-
-### useServerPagination
-
-▸ **useServerPagination**<`T`\>(`url`, `pageSize`, `fetcher?`): `Object`
-
-Most REST endpoints that return a list of objects, such as getAll or search, are server-side paginated.
-The server limits the max number of results being returned, and multiple requests are needed to get the full data set
-if its size exceeds this limit.
-The max number of results per request is configurable server-side
-with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassian.net/wiki/spaces/docs/pages/25469882/REST+Module
-
-For any UI that displays a paginated view of the full data set, we MUST handle the server-side pagination properly,
-or else the UI does not correctly display the full data set.
-This hook does that by providing callback functions for navigating to different pages of the results, and
-lazy-loads the data on each page as needed.
-
-Note that this hook is not suitable for use for situations that require client-side sorting or filtering
-of the data set. In that case, all data must be loaded onto client-side first.
-
-**`see`** `useServerInfinite` for completely loading data (from all pages) onto client side
-
-**`see`** `usePagination` for pagination of client-side data`
-
-#### Type parameters
-
-| Name |
-| :------ |
-| `T` |
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `url` | `string` \| `URL` | `undefined` | The URL of the paginated rest endpoint.            It should be populated with any needed GET params, except `limit`, `startIndex` or `totalCount`,            which will be overridden and manipulated by the `goTo*` callbacks |
-| `pageSize` | `number` | `undefined` | The number of results to return per page / fetch. Note that this value MUST NOT exceed            "webservices.rest.maxResultsAbsolute", which should be reasonably high by default (1000). |
-| `fetcher` | (`key`: `string`) => `Promise`<[`FetchResponse`](interfaces/FetchResponse.md)<[`OpenMRSPaginatedResponse`](interfaces/OpenMRSPaginatedResponse.md)<`T`\>\>\> | `openmrsFetch` | The fetcher to use. Defaults to openmrsFetch |
-
-#### Returns
-
-`Object`
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `currentPage` | `number` | - |
-| `currentPageSize` | `MutableRefObject`<`number`\> | - |
-| `data` | `undefined` \| `T`[] |  |
-| `error` | `any` | The error object thrown by the fetcher function. |
-| `goTo` | (`page`: `number`) => `void` | - |
-| `goToNext` | () => `void` | - |
-| `goToPrevious` | () => `void` | - |
-| `isLoading` | `boolean` | - |
-| `isValidating` | `boolean` | - |
-| `mutate` | `KeyedMutator`<[`FetchResponse`](interfaces/FetchResponse.md)<[`OpenMRSPaginatedResponse`](interfaces/OpenMRSPaginatedResponse.md)<`T`\>\>\> | - |
-| `paginated` | `boolean` |  |
-| `showNextButton` | `boolean` |  |
-| `showPreviousButton` | `boolean` |  |
-| `totalCount` | `number` |  |
-| `totalPages` | `number` | - |
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/useServerPagination.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useServerPagination.ts#L38)
 
 ___
 
