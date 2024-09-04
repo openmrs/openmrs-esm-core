@@ -296,6 +296,14 @@ export type WorkspaceDefinition = {
   type: string;
   canHide?: boolean;
   canMaximize?: boolean;
+
+  /**
+   * Allows customizing the title, message and "confirm button" text in the dialog box that is displayed
+   * when you try to close or hide a workspace that requires a prompt before closing
+   */
+  cancelTitle?: string;
+  cancelMessage?: string;
+  cancelConfirmText?: string;
   /**
    * Controls the width of the workspace. The default is "narrow" and this should only be
    * changed to "wider" if the workspace itself has internal navigation, like the form editor.

@@ -1,7 +1,7 @@
 /** @module @category UI */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { useConfig } from '@openmrs/esm-react-utils';
+import { getConfig } from '@openmrs/esm-config';
 import { type StyleguideConfigObject } from '../config-schema';
 import styles from './page-header.module.scss';
 
@@ -87,10 +87,13 @@ export const PageHeader: React.FC<PageHeaderProps> = (props) => {
  * ```
  */
 export const PageHeaderContent: React.FC<PageHeaderContentProps> = ({ title, illustration, className }) => {
-  const config = useConfig<StyleguideConfigObject>({
-    // Do not remove this property. See https://github.com/openmrs/openmrs-esm-core/pull/1125#issuecomment-2313230513 for more context.
-    externalModuleName: '@openmrs/esm-styleguide',
-  });
+  const [config, setConfig] = useState<StyleguideConfigObject | null>(null);
+
+  useEffect(() => {
+    getConfig('@openmrs/esm-styleguide').then((fetchedConfig: StyleguideConfigObject) => {
+      setConfig(fetchedConfig);
+    });
+  }, []);
 
   return (
     <div className={classNames(styles.pageHeaderContent, className)}>

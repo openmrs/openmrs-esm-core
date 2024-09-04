@@ -276,7 +276,7 @@ export function getTranslationOverrides(
   moduleName: string,
   slotName?: string,
   extensionId?: string,
-): Promise<Record<string, Record<string, string>>> {
+): Promise<Array<Record<string, Record<string, string>>>> {
   const promises = [
     new Promise<Record<string, Record<string, string>>>((resolve) => {
       const configStore = getConfigStore(moduleName);
@@ -309,7 +309,7 @@ export function getTranslationOverrides(
     );
   }
 
-  return Promise.all(promises).then((results) => results.reduce((prev, current) => mergeDeepRight(prev, current), {}));
+  return Promise.all(promises);
 }
 
 /**

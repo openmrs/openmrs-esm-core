@@ -30,12 +30,8 @@ export const useAttachments = jest.fn(() => ({
 
 export const useConfig = jest.fn().mockImplementation((options?: { externalModuleName?: string }) => {
   if (options?.externalModuleName) {
-    // Return a mock config for the external module
-    return {
-      [options.externalModuleName]: utils.getDefaultsFromConfigSchema(configSchema),
-    };
+    console.warn(`Mock useConfig called with externalModuleName: ${options.externalModuleName}`);
   }
-  // Return the default mock implementation for the current module
   return utils.getDefaultsFromConfigSchema(configSchema);
 });
 

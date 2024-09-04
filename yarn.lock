@@ -2652,6 +2652,60 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jsep-plugin/arrow@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "@jsep-plugin/arrow@npm:1.0.5"
+  peerDependencies:
+    jsep: ^0.4.0||^1.0.0
+  checksum: 10/73cb2f7464664c17bf62f8bf6a1267abef81b19b4c926332babdabe110d4bf3b00310e060ee5c42d1e61fa7e471dade3e1dba5384262db324ae09ec68346231d
+  languageName: node
+  linkType: hard
+
+"@jsep-plugin/new@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@jsep-plugin/new@npm:1.0.3"
+  peerDependencies:
+    jsep: ^0.4.0||^1.0.0
+  checksum: 10/d9fd7f10fb07e1ecf8e8359c41aa97cec775776934617550c9c5f8742a148f6b77edee30a29b89f88b9bdace6967b3f02a9596b773f3746c67df28d118852eba
+  languageName: node
+  linkType: hard
+
+"@jsep-plugin/numbers@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@jsep-plugin/numbers@npm:1.0.1"
+  peerDependencies:
+    jsep: ^0.4.0||^1.0.0
+  checksum: 10/bf5c75fe8829828112daa2aba68c5c4494056570f02b758357ea6fa9ea949c4d247d850e555dfe506b5b5854af76645eee41e9893f283f20e11a23141d007286
+  languageName: node
+  linkType: hard
+
+"@jsep-plugin/regex@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@jsep-plugin/regex@npm:1.0.3"
+  peerDependencies:
+    jsep: ^0.4.0||^1.0.0
+  checksum: 10/c08c7bd79a164995923ea799949b9f6b18dcf2bd314522ed0dcfc669fd249a06fea200606086c7d54b12d39ce3cfa61d910229e5184c667ead135f6da6997532
+  languageName: node
+  linkType: hard
+
+"@jsep-plugin/template@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@jsep-plugin/template@npm:1.0.4"
+  peerDependencies:
+    jsep: ^0.4.0||^1.0.0
+  checksum: 10/bec2d32b9cf260fe081e895d92b3908bfb0cf11f925571f972944b4b5c92510811fd93c2db15cab96968685db1a689bfbdb9e8909bc2b0fcb719d2129bf8d71b
+  languageName: node
+  linkType: hard
+
+"@jsep-plugin/ternary@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "@jsep-plugin/ternary@npm:1.1.3"
+  peerDependencies:
+    jsep: ^0.4.0||^1.0.0
+  checksum: 10/03425119968d5eea4d0664df58d066759c4bb80dd0651da6034df88e876d286e7de6392406b796b1a92dd6cc76dbbd1cdb9590a7b99933f7af78839673020e82
+  languageName: node
+  linkType: hard
+
 "@leichtgewicht/ip-codec@npm:^2.0.1":
   version: 2.0.4
   resolution: "@leichtgewicht/ip-codec@npm:2.0.4"
@@ -2970,12 +3024,30 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@openmrs/esm-expression-evaluator@workspace:*, @openmrs/esm-expression-evaluator@workspace:packages/framework/esm-expression-evaluator":
+  version: 0.0.0-use.local
+  resolution: "@openmrs/esm-expression-evaluator@workspace:packages/framework/esm-expression-evaluator"
+  dependencies:
+    "@jsep-plugin/arrow": "npm:^1.0.5"
+    "@jsep-plugin/new": "npm:^1.0.3"
+    "@jsep-plugin/numbers": "npm:^1.0.1"
+    "@jsep-plugin/regex": "npm:^1.0.3"
+    "@jsep-plugin/template": "npm:^1.0.4"
+    "@jsep-plugin/ternary": "npm:^1.1.3"
+    cross-env: "npm:^7.0.3"
+    jest: "npm:^29.7.0"
+    jest-cli: "npm:^29.7.0"
+    jsep: "npm:^1.3.9"
+  languageName: unknown
+  linkType: soft
+
 "@openmrs/esm-extensions@workspace:*, @openmrs/esm-extensions@workspace:packages/framework/esm-extensions":
   version: 0.0.0-use.local
   resolution: "@openmrs/esm-extensions@workspace:packages/framework/esm-extensions"
   dependencies:
     "@openmrs/esm-api": "workspace:*"
     "@openmrs/esm-config": "workspace:*"
+    "@openmrs/esm-expression-evaluator": "workspace:*"
     "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-state": "workspace:*"
     "@openmrs/esm-utils": "workspace:*"
@@ -2984,6 +3056,7 @@ __metadata:
   peerDependencies:
     "@openmrs/esm-api": 5.x
     "@openmrs/esm-config": 5.x
+    "@openmrs/esm-expression-evaluator": 5.x
     "@openmrs/esm-feature-flags": 5.x
     "@openmrs/esm-state": 5.x
     "@openmrs/esm-utils": 5.x
@@ -3015,6 +3088,7 @@ __metadata:
     "@openmrs/esm-context": "workspace:*"
     "@openmrs/esm-dynamic-loading": "workspace:*"
     "@openmrs/esm-error-handling": "workspace:*"
+    "@openmrs/esm-expression-evaluator": "workspace:*"
     "@openmrs/esm-extensions": "workspace:*"
     "@openmrs/esm-feature-flags": "workspace:*"
     "@openmrs/esm-globals": "workspace:*"
@@ -12671,6 +12745,13 @@ __metadata:
     canvas:
       optional: true
   checksum: 10/a4cdcff5b07eed87da90b146b82936321533b5efe8124492acf7160ebd5b9cf2b3c2435683592bf1cffb479615245756efb6c173effc1906f845a86ed22af985
+  languageName: node
+  linkType: hard
+
+"jsep@npm:^1.3.9":
+  version: 1.3.9
+  resolution: "jsep@npm:1.3.9"
+  checksum: 10/c60d7064c3b5047f58345e65e7618bbaecf2f46338e56689244db057b0550bf8fb7c1457a7384dfd38aca9acde3ff851d062c3f182cc1fbc66c13cb2ca0b579d
   languageName: node
   linkType: hard
 
