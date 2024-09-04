@@ -81,7 +81,9 @@ export interface UseServerInfiniteReturnObject<T, R> {
  *
  * This hook fetches data from a paginated rest endpoint, initially by fetching the first page of the results.
  * It provides a callback to load data from subsequent pages as needed. This hook is intended to serve UIs that
- * provide infinite loading / scrolling of results.
+ * provide infinite loading / scrolling of results. Unlike `useOpenmrsPagination`, this hook does not allow random access
+ * (and lazy-loading) of any arbitrary page; rather, it fetches pages sequentially starting form the initial page, and the next page
+ * is fetched by calling `loadMore`. See: https://swr.vercel.app/docs/pagination#useswrinfinite
  *
  * @see `useOpenmrsPagination`
  * @see `useOpenmrsFetchAll`
