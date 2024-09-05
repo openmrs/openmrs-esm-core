@@ -104,6 +104,8 @@ yarn build
 
 ### Running tests
 
+#### Unit tests
+
 To run tests for all packages, run:
 
 ```bash
@@ -148,6 +150,31 @@ By default, `turbo` will cache test runs. This means that re-running tests wihou
 yarn turbo run test --force
 ```
 
+#### E2E tests
+
+To run E2E tests locally, follow these steps:
+
+##### Start the Development Server
+
+Begin by spinning up a development server for the frontend module that you want to test. Ensure the server is running before proceeding.
+
+##### Set Up Environment Variables
+
+Copy the example environment variables into a new .env file by running the following command:
+
+```bash
+cp example.env .env
+```
+##### Execute Tests
+
+Run the tests with the following command:
+
+```bash
+yarn test-e2e --ui --headed
+```
+
+Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/pages/150962731/Testing+Frontend+Modules+O3#End-to-end-testing-with-Playwright) to learn more about End-to-End tests.
+
 ### Linking the framework
 
 You probably want to try out your changes to a framework library in a frontend module. Unfortunately, getting
@@ -160,11 +187,11 @@ If you're unsure whether your version of a core package is running, add a `conso
 
 Here are the tools at your disposal for trying to get this to work:
 
-#### Yarn Link
+#### Yarn link
 
 This should be the first thing you try. To link the styleguide, for example, you would use
 
-```
+```sh
 yarn link ../path/to/openmrs-esm-core/packages/framework/esm-styleguide
 ```
 
@@ -182,9 +209,9 @@ want to manually add the line to the `resolutions` field in the `package.json` f
 #### Yalc
 
 Sometimes, the build tooling will simply not work with `yarn link`. In this case, you will need to use `yalc`.
-Install `yalc` on your computer with
+Install `yalc` on your computer with:
 
-```
+```sh
 npm install -g yalc
 ```
 
