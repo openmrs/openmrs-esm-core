@@ -24,4 +24,5 @@ services:
       - db
 
   db:
+    container_name: db
     image: openmrs/openmrs-reference-application-3-db:nightly-with-data
