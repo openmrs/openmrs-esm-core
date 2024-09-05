@@ -64,14 +64,14 @@ jq -n \
       "@openmrs/esm-patient-vitals-app": "next",
       "@openmrs/esm-service-queues-app": "next",
       "@openmrs/esm-system-admin-app": "next"
-  } +
-  '(
+  } + (
     ($apps | split("\n")) as $apps | ($app_names | split(" ") | map("/app/" + .)) as $app_files
     | [$apps, $app_files]
     | transpose
     | map({"key": .[0], "value": .[1]})
     | from_entries
   )' | jq '{"frontendModules": .}' > "$working_dir/spa-assemble-config.json"
+
 echo "Created dynamic spa-assemble-config.json"
 
 echo "Copying tooling, shell and framework..."
