@@ -112,8 +112,7 @@ jobs:
     if: ${{ needs.changes.outputs.test-changes == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Checkout repo
+      - name: Checkout esm-core repo
         uses: actions/checkout@v4
 
       - name: Copy test environment variables
@@ -130,6 +129,12 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Setup local cache server for Turborepo
+        uses: felixmosh/turborepo-gh-artifacts@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ env.TURBO_TOKEN }}
 
       - name: Build apps
         run: yarn turbo run build --color --concurrency=5
