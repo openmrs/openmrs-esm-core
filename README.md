@@ -152,13 +152,25 @@ yarn turbo run test --force
 
 #### E2E tests
 
-To run end-to-end tests, run:
+To run E2E tests locally, follow these steps:
+
+##### Start the Development Server
+Begin by spinning up a development server for the frontend module that you want to test. Ensure the server is running before proceeding.
+
+##### Set Up Environment Variables
+Copy the example environment variables into a new .env file by running the following command:
+
+```bash
+cp example.env .env
+```
+##### Execute Tests
+Now, run the tests with the following command. This will open the playwright UI in headed mode to allow interaction:
 
 ```bash
 yarn test-e2e --ui --headed
 ```
 
-Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/pages/150962731/Testing+Frontend+Modules+O3#End-to-end-testing-with-Playwright) to learn more about End-to-End tests in this project.
+Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/pages/150962731/Testing+Frontend+Modules+O3#End-to-end-testing-with-Playwright) to learn more about End-to-End tests.
 
 ### Linking the framework
 
