@@ -45,7 +45,7 @@ jobs:
               - 'example.env'
               - '.github/workflows/e2e.yml'
 
-  build:
+  run-e2e-on-esm-core:
     needs: changes
     if: ${{ needs.changes.outputs.test-changes == 'true' }}
 
@@ -107,7 +107,7 @@ jobs:
           retention-days: 30
 
 
-  run-other-tests:
+  run-e2e-on-other-repos:
     needs: changes
     if: ${{ needs.changes.outputs.test-changes == 'true' }}
     runs-on: ubuntu-latest
