@@ -86,44 +86,67 @@ jobs:
       - name: Run dev server
         run: bash e2e/support/github/run-e2e-docker-env.sh
 
-      - name: Wait for OpenMRS instance to start
+      - name: Copy test environment variables
+        run: cp example.env .env
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Wait for the OpenMRS instance to start
         run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
 
-      - name: Commit and export Containers
-        run: bash e2e/support/github/commit_and_export_images.sh
+      - name: Run E2E tests
+        run: yarn playwright test
 
-      - name: Upload artifact
+      - name: Upload Report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: e2e_release_env_images
-          path: e2e_release_env_images.tar.gz
-          retention-days: 1
+          name: report-esm-core
+          path: playwright-report/
+          retention-days: 30
+
 
   run-patient-management-e2e-tests:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Create Temporary Directory to Download Docker Images
-        id: tempdir
-        run: echo "tmpdir=$(mktemp -d)" >> "$GITHUB_OUTPUT"
+      - name: Copy test environment variables
+        run: cp example.env .env
 
-      - name: Download Docker Images
-        uses: actions/download-artifact@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          name: e2e_release_env_images
-          path: ${{ steps.tempdir.outputs.tmpdir }}
+          node-version: 18
 
-      - name: Load Docker Images
-        run: |
-          gzip -d ${{ steps.tempdir.outputs.tmpdir }}/e2e_release_env_images.tar.gz
-          docker load --input ${{ steps.tempdir.outputs.tmpdir }}/e2e_release_env_images.tar
-          docker image ls -a
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Spin up an OpenMRS Instance
-        run: docker compose -f docker-compose-run.yml up -d
-        working-directory: e2e/support/github
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Setup local cache server for Turborepo
+        uses: felixmosh/turborepo-gh-artifacts@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ env.TURBO_TOKEN }}
+
+      - name: Build apps
+        run: yarn turbo run build --color --concurrency=5
+
+      - name: Run dev server
+        run: bash e2e/support/github/run-e2e-docker-env.sh
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
 
       - name: Checkout to the repo's main branch
         uses: actions/checkout@v4
@@ -139,10 +162,6 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --immutable
-        working-directory: e2e_repo
-
-      - name: Install Playwright Browsers
-        run: npx playwright install chromium --with-deps
         working-directory: e2e_repo
 
       - name: Wait for the OpenMRS instance to start
