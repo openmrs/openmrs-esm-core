@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { registerWorkspace } from '@openmrs/esm-extensions';
 import { ComponentContext, isDesktop, useLayoutType } from '@openmrs/esm-react-utils';
 import { type DefaultWorkspaceProps, WorkspaceContainer, launchWorkspace, useWorkspaces } from '..';
+import { useTranslation } from 'react-i18next';
 
 jest.mock('./workspace-renderer.component.tsx', () => {
   return {
@@ -17,20 +18,19 @@ jest.mock('./workspace-renderer.component.tsx', () => {
   };
 });
 
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: jest.fn(),
+}));
+
+const mockedUseTranslation = jest.mocked(useTranslation);
+
 const mockedIsDesktop = isDesktop as unknown as jest.Mock;
 const mockedUseLayoutType = useLayoutType as jest.Mock;
 
 window.history.pushState({}, 'Workspace Container', '/workspace-container');
 
 jest.mock('single-spa-react/parcel', () => jest.fn().mockImplementation(() => <div>Parcel</div>));
-jest.mock('@openmrs/esm-translations', () => {
-  const originalModule = jest.requireActual('@openmrs/esm-translations');
-
-  return {
-    ...originalModule,
-    translateFrom: (module, key, defaultValue, options) => defaultValue,
-  };
-});
 
 interface ClinicalFormWorkspaceProps extends DefaultWorkspaceProps {
   patientUuid: string;
@@ -38,9 +38,25 @@ interface ClinicalFormWorkspaceProps extends DefaultWorkspaceProps {
 
 describe('WorkspaceContainer in window mode', () => {
   beforeAll(() => {
+    // @ts-ignore
+    mockedUseTranslation.mockImplementation((namespace) => {
+      const getTranslations = () =>
+        namespace === '@openmrs/foo'
+          ? {
+              clinicalForm: 'Clinical Form',
+            }
+          : namespace === '@openmrs/bar'
+            ? { orderBasket: 'Order basket' }
+            : {};
+
+      return {
+        t: (key: string) => getTranslations()?.[key] ?? key,
+      };
+    });
+
     registerWorkspace({
       name: 'clinical-form',
-      title: 'Clinical Form',
+      title: 'clinicalForm',
       load: jest.fn(),
       moduleName: '@openmrs/foo',
       canHide: true,
@@ -49,12 +65,23 @@ describe('WorkspaceContainer in window mode', () => {
 
     registerWorkspace({
       name: 'order-basket',
-      title: 'Order Basket',
+      title: 'orderBasket',
       load: jest.fn(),
       moduleName: '@openmrs/bar',
       canHide: true,
       canMaximize: true,
     });
+  });
+
+  test('should translate the workspace title inside the workspace container', () => {
+    mockedIsDesktop.mockReturnValue(true);
+    renderWorkspaceWindow();
+    act(() => launchWorkspace('clinical-form'));
+    let header = screen.getByRole('banner');
+    expect(within(header).getByText('Clinical Form')).toBeInTheDocument();
+    act(() => launchWorkspace('order-basket'));
+    header = screen.getByRole('banner');
+    expect(within(header).getByText('Order basket')).toBeInTheDocument();
   });
 
   test('should override title via additional props and via setTitle', async () => {
