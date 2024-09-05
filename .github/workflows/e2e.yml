@@ -136,6 +136,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
 
+      - name: Install dependencies
+        run: yarn install --immutable
+
       - name: Build apps
         run: yarn turbo run build --color --concurrency=5
 
