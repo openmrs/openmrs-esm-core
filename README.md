@@ -151,10 +151,13 @@ yarn turbo run test --force
 ```
 
 #### E2E tests
+
 To run end-to-end tests, run:
+
 ```bash
 yarn test-e2e --ui --headed
 ```
+
 Read the [e2e testing guide](https://openmrs.atlassian.net/wiki/spaces/docs/pages/150962731/Testing+Frontend+Modules+O3#End-to-end-testing-with-Playwright) to learn more about End-to-End tests in this project.
 
 ### Linking the framework
