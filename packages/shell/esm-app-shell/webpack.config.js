@@ -32,13 +32,15 @@ const openmrsDefaultLocale = process.env.OMRS_ESM_DEFAULT_LOCALE || 'en';
 const openmrsImportmapDef = process.env.OMRS_ESM_IMPORTMAP;
 const openmrsImportmapUrl =
   process.env.OMRS_ESM_IMPORTMAP_URL &&
-  (process.env.OMRS_ESM_IMPORTMAP_URL.startsWith('/') || process.env.OMRS_ESM_IMPORTMAP_URL.startsWith('http'))
+  !process.env.OMRS_ESM_IMPORTMAP_URL.startsWith('/') &&
+  !process.env.OMRS_ESM_IMPORTMAP_URL.startsWith('http')
     ? process.env.OMRS_ESM_IMPORTMAP_URL
     : `${openmrsPublicPath}/${process.env.OMRS_ESM_IMPORTMAP_URL}` || `${openmrsPublicPath}/importmap.json`;
 const openmrsRoutesDef = process.env.OMRS_ROUTES;
 const openmrsRoutesUrl =
   process.env.OMRS_ROUTES_URL &&
-  (process.env.OMRS_ROUTES_URL.startsWith('/') || process.env.OMRS_ROUTES_URL.startsWith('http'))
+  !process.env.OMRS_ROUTES_URL.startsWith('/') &&
+  !process.env.OMRS_ROUTES_URL.startsWith('http')
     ? process.env.OMRS_ROUTES_URL
     : `${openmrsPublicPath}/${process.env.OMRS_ROUTES_URL}` || `${openmrsPublicPath}/routes.registry.json`;
 const openmrsCoreApps = process.env.OMRS_ESM_CORE_APPS_DIR || resolve(__dirname, '../../apps');
