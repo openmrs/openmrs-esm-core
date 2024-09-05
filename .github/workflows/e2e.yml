@@ -45,7 +45,7 @@ jobs:
               - 'example.env'
               - '.github/workflows/e2e.yml'
 
-  main:
+  run-e2e-on-esm-core:
     needs: changes
     if: ${{ needs.changes.outputs.test-changes == 'true' }}
 
@@ -74,9 +74,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Install Playwright Browsers
-        run: yarn playwright install chromium --with-deps
-
       - name: Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
         with:
@@ -89,20 +86,99 @@ jobs:
       - name: Run dev server
         run: bash e2e/support/github/run-e2e-docker-env.sh
 
-      - name: Wait for OpenMRS instance to start
+      - name: Copy test environment variables
+        run: cp example.env .env
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Wait for the OpenMRS instance to start
         run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
 
       - name: Run E2E tests
         run: yarn playwright test
 
-      - name: Stop dev server
-        if: '!cancelled()'
-        run: docker stop $(docker ps -a -q)
-
-      - name: Upload report
+      - name: Upload Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: report-esm-core
           path: playwright-report/
+          retention-days: 30
+
+
+  run-e2e-on-other-repos:
+    needs: changes
+    if: ${{ needs.changes.outputs.test-changes == 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo:
+          - openmrs-esm-patient-management
+          - openmrs-esm-patient-chart
+          - openmrs-esm-form-builder
+
+    steps:
+      - name: Checkout esm-core repo
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Setup local cache server for Turborepo
+        uses: felixmosh/turborepo-gh-artifacts@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          server-token: ${{ env.TURBO_TOKEN }}
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build apps
+        run: yarn turbo run build --color --concurrency=5
+
+      - name: Run dev server
+        run: bash e2e/support/github/run-e2e-docker-env.sh
+
+      - name: Checkout to the ${{ matrix.repo }} main branch
+        uses: actions/checkout@v4
+        with:
+          repository: openmrs/${{ matrix.repo }}
+          ref: main
+          path: e2e_repo
+
+      - name: Copy test environment variables
+        run: cp example.env .env
+        working-directory: e2e_repo
+
+      - name: Install dependencies
+        run: yarn install --immutable
+        working-directory: e2e_repo
+
+      - name: Install Playwright Browsers
+        run: npx playwright install chromium --with-deps
+        working-directory: e2e_repo
+
+      - name: Wait for the OpenMRS instance to start
+        run: while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' http://localhost:8080/openmrs/login.htm)" != "200" ]]; do sleep 10; done
+
+      - name: Run E2E tests
+        run: yarn playwright test
+        working-directory: e2e_repo
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-${{ matrix.repo }}
+          path: e2e_repo/playwright-report/
           retention-days: 30
