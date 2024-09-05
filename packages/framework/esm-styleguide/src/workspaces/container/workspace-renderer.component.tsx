@@ -31,7 +31,6 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
   const props = useMemo(
     () =>
       workspace && {
-        title: workspace.title,
         closeWorkspace: workspace.closeWorkspace,
         closeWorkspaceWithSavedChanges: workspace.closeWorkspaceWithSavedChanges,
         promptBeforeClosing: workspace.promptBeforeClosing,
