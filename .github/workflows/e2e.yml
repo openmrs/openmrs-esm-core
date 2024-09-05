@@ -122,8 +122,8 @@ jobs:
           docker image ls -a
 
       - name: Spin up an OpenMRS Instance
-        run: docker compose up -d
-        working-directory: e2e_test_support_files
+        run: docker compose -f docker-compose-run.yml up -d
+        working-directory: e2e/support/github
 
       - name: Checkout to the repo's main branch
         uses: actions/checkout@v4
