@@ -8,9 +8,12 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm_config_legacy_peer_deps=true npm install -g openmrs@${APP_SHELL_VERSION:-next}
 ARG CACHE_BUST
-RUN npm_config_legacy_peer_deps=true openmrs assemble --manifest --mode config --config spa-assemble-config.json --target ./spa
+
+RUN yarn install
+RUN npm_config_legacy_peer_deps=true node packages/tooling/openmrs/dist/cli.js assemble --manifest --mode config --config spa-assemble-config.json --target ./spa
+RUN npm_config_legacy_peer_deps=true node packages/tooling/openmrs/dist/cli.js build --target ./spa
+
 
 FROM --platform=$BUILDPLATFORM openmrs/openmrs-reference-application-3-frontend:nightly as frontend
 FROM nginx:1.23-alpine
