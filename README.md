@@ -164,7 +164,7 @@ Copy the example environment variables into a new .env file by running the follo
 cp example.env .env
 ```
 ##### Execute Tests
-Now, run the tests with the following command. This will open the playwright UI in headed mode to allow interaction:
+Run the tests with the following command:
 
 ```bash
 yarn test-e2e --ui --headed
