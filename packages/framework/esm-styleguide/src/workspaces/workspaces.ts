@@ -550,7 +550,7 @@ export function showWorkspacePrompts(
 }
 
 function getWorkspaceTitle(workspace: WorkspaceRegistration, additionalProps?: object) {
-  return additionalProps?.['workspaceTitle'] ?? translateFrom(workspace.moduleName, workspace.title, workspace.title);
+  return additionalProps?.['workspaceTitle'] ?? workspace.title;
 }
 
 export function resetWorkspaceStore() {

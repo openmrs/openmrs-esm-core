@@ -11,6 +11,7 @@ import ActionMenu from './action-menu.component';
 import { type OpenWorkspace, updateWorkspaceWindowState, useWorkspaces } from '../workspaces';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import styles from './workspace.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export interface WorkspaceContainerProps {
   contextKey: string;
@@ -125,6 +126,7 @@ interface WorkspaceProps {
 }
 
 function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
+  const { t } = useTranslation(workspaceInstance.moduleName);
   const layout = useLayoutType();
   const { workspaceWindowState } = useWorkspaces();
   const isMaximized = workspaceWindowState === 'maximized';
@@ -160,7 +162,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
           {!isDesktop(layout) && !canHide && (
             <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
           )}
-          <HeaderName prefix="">{workspaceInstance.titleNode ?? workspaceInstance.title}</HeaderName>
+          <HeaderName prefix="">{workspaceInstance.titleNode ?? t(workspaceInstance.title)}</HeaderName>
           <div className={styles.overlayHeaderSpacer} />
           <HeaderGlobalBar className={styles.headerButtons}>
             <ExtensionSlot

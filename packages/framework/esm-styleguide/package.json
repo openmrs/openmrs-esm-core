@@ -59,6 +59,7 @@
     "i18next": "21.x",
     "react": "18.x",
     "react-dom": "18.x",
+    "react-i18next": "11.x",
     "rxjs": "6.x"
   },
   "devDependencies": {
