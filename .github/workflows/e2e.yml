@@ -107,16 +107,20 @@ jobs:
           retention-days: 30
 
 
-  run-patient-management-e2e-tests:
+  run-other-tests:
     needs: changes
     if: ${{ needs.changes.outputs.test-changes == 'true' }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo:
+          - openmrs-esm-patient-management
+          - openmrs-esm-patient-chart
+          - openmrs-esm-form-builder
+
     steps:
       - name: Checkout esm-core repo
         uses: actions/checkout@v4
-
-      - name: Copy test environment variables
-        run: cp example.env .env
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -145,10 +149,10 @@ jobs:
       - name: Run dev server
         run: bash e2e/support/github/run-e2e-docker-env.sh
 
-      - name: Checkout to the repo's main branch
+      - name: Checkout to the ${{ matrix.repo }} main branch
         uses: actions/checkout@v4
         with:
-          repository: openmrs/openmrs-esm-patient-management
+          repository: openmrs/${{ matrix.repo }}
           ref: main
           path: e2e_repo
 
@@ -175,6 +179,6 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: report-patient-management
+          name: report-${{ matrix.repo }}
           path: e2e_repo/playwright-report/
           retention-days: 30
