@@ -162,7 +162,7 @@ function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspacePro
           {!isDesktop(layout) && !canHide && (
             <HeaderMenuButton renderMenuIcon={<ArrowLeftIcon />} onClick={closeWorkspace} />
           )}
-          <HeaderName prefix="">{workspaceInstance.titleNode ?? t(workspaceInstance.title)}</HeaderName>
+          <HeaderName prefix="">{workspaceInstance.titleNode ?? workspaceInstance.title}</HeaderName>
           <div className={styles.overlayHeaderSpacer} />
           <HeaderGlobalBar className={styles.headerButtons}>
             <ExtensionSlot
