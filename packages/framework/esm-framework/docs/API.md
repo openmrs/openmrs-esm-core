@@ -7214,9 +7214,7 @@ with the key "webservices.rest.maxResultsDefault". See: https://openmrs.atlassia
 
 This hook fetches data from a paginated rest endpoint, initially by fetching the first page of the results.
 It provides a callback to load data from subsequent pages as needed. This hook is intended to serve UIs that
-provide infinite loading / scrolling of results. Unlike `useOpenmrsPagination`, this hook does not allow random access
-(and lazy-loading) of any arbitrary page; rather, it fetches pages sequentially starting form the initial page, and the next page
-is fetched by calling `loadMore`. See: https://swr.vercel.app/docs/pagination#useswrinfinite
+provide infinite loading / scrolling of results.
 
 **`see`** `useOpenmrsPagination`
 
@@ -7245,7 +7243,7 @@ a UseServerInfiniteReturnObject object
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:99](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L99)
+[packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts:97](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useOpenmrsInfinite.ts#L97)
 
 ___
 
@@ -7387,7 +7385,7 @@ ___
 
 ### age
 
-▸ **age**(`birthDate`, `currentDate?`): `string` \| ``null``
+▸ **age**(`birthDate`, `currentDate?`): `string`
 
 Gets a human readable and locale supported representation of a person's age, given their birthDate,
 The representation logic follows the guideline here:
@@ -7398,12 +7396,12 @@ https://webarchive.nationalarchives.gov.uk/ukgwa/20160921162509mp_/http://system
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `birthDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | The birthDate. If birthDate is null, returns null. |
+| `birthDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | The birthDate. |
 | `currentDate` | `undefined` \| ``null`` \| `string` \| `number` \| `Date` \| `Dayjs` | Optional. If provided, calculates the age of the person at the provided currentDate (instead of now). |
 
 #### Returns
 
-`string` \| ``null``
+`string`
 
 A human-readable string version of the age.
 
