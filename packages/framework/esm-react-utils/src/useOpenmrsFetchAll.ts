@@ -56,7 +56,7 @@ export function useServerFetchAll<T, R>(
     if (hasMore && !error) {
       loadMore();
     }
-  });
+  }, [hasMore]);
 
   if (options.partialData) {
     return response;
