@@ -112,9 +112,9 @@ export function useServerInfinite<T, R>(
   const { getNextUrl, getTotalCount, getData } = serverPaginationHandlers;
   const fetcher: (key: string) => Promise<FetchResponse<R>> = options.fetcher ?? openmrsFetch;
   const getKey = useCallback(
-    (pageIndex: number, previousPageData: FetchResponse<R>) => {
+    (pageIndex: number, previousPageData: FetchResponse<R>): string | null => {
       if (pageIndex == 0) {
-        return url;
+        return url?.toString() ?? null;
       } else {
         return serverPaginationHandlers.getNextUrl(previousPageData.data);
       }
