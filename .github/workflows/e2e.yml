@@ -65,13 +65,14 @@ jobs:
           node-version: 18
 
       - name: Cache dependencies
-        id: cache
+        id: cache-dependencies
         uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
       - name: Setup local cache server for Turborepo
@@ -89,7 +90,15 @@ jobs:
       - name: Copy test environment variables
         run: cp example.env .env
 
+      - name: Cache Playwright Browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('e2e/**/*.ts') }}
+
       - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
 
       - name: Wait for the OpenMRS instance to start
@@ -105,7 +114,6 @@ jobs:
           name: report-esm-core
           path: playwright-report/
           retention-days: 30
-
 
   run-e2e-on-other-repos:
     needs: changes
@@ -128,20 +136,21 @@ jobs:
           node-version: 18
 
       - name: Cache dependencies
-        id: cache
+        id: cache-dependencies
         uses: actions/cache@v4
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: yarn install --immutable
 
       - name: Setup local cache server for Turborepo
         uses: felixmosh/turborepo-gh-artifacts@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           server-token: ${{ env.TURBO_TOKEN }}
-
-      - name: Install dependencies
-        run: yarn install --immutable
 
       - name: Build apps
         run: yarn turbo run build --color --concurrency=5
@@ -164,7 +173,15 @@ jobs:
         run: yarn install --immutable
         working-directory: e2e_repo
 
+      - name: Cache Playwright Browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('e2e_repo/**/*.ts') }}
+
       - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install chromium --with-deps
         working-directory: e2e_repo
 
