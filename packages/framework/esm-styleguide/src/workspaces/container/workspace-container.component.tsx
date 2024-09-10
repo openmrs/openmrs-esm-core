@@ -1,9 +1,10 @@
-import React, { useCallback, useContext, useMemo } from 'react';
+import React, { Suspense, useCallback, useContext, useMemo } from 'react';
 import classNames from 'classnames';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
 import { ComponentContext, ExtensionSlot, isDesktop, useBodyScrollLock, useLayoutType } from '@openmrs/esm-react-utils';
-import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
+import { getCoreTranslation } from '@openmrs/esm-translations';
+import { I18nextProvider, useTranslation } from 'react-i18next';
 
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../../icons';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
@@ -11,7 +12,6 @@ import ActionMenu from './action-menu.component';
 import { type OpenWorkspace, updateWorkspaceWindowState, useWorkspaces } from '../workspaces';
 import { WorkspaceRenderer } from './workspace-renderer.component';
 import styles from './workspace.module.scss';
-import { useTranslation } from 'react-i18next';
 
 export interface WorkspaceContainerProps {
   contextKey: string;
@@ -105,10 +105,14 @@ export function WorkspaceContainer({
           >
             {workspaces.map((workspace, i) => (
               <div
-                key={`workspace-container-${workspace ? workspace.name : 'empty'}`}
+                key={`workspace-container-${workspace ? workspace.name : `empty-${i}`}`}
                 className={classNames({ [styles.hiddenExtraWorkspace]: i !== 0 }, styles.workspaceInnerContainer)}
               >
-                <Workspace workspaceInstance={workspace} additionalWorkspaceProps={additionalWorkspaceProps} />
+                <Suspense fallback={null}>
+                  <I18nextProvider i18n={window.i18next} defaultNS={workspace.moduleName}>
+                    <Workspace workspaceInstance={workspace} additionalWorkspaceProps={additionalWorkspaceProps} />
+                  </I18nextProvider>
+                </Suspense>
               </div>
             ))}
           </div>
@@ -126,7 +130,7 @@ interface WorkspaceProps {
 }
 
 function Workspace({ workspaceInstance, additionalWorkspaceProps }: WorkspaceProps) {
-  const { t } = useTranslation(workspaceInstance.moduleName);
+  const { t } = useTranslation();
   const layout = useLayoutType();
   const { workspaceWindowState } = useWorkspaces();
   const isMaximized = workspaceWindowState === 'maximized';
