@@ -60,12 +60,12 @@ const AppSearchLaunch: React.FC<AppSearchLaunchProps> = () => {
 
       <div className={`${showSearchInput && styles.closeButton}`}>
         <HeaderGlobalAction
-          aria-label={t('searchApp', 'Search App')}
-          aria-labelledby="Search App"
+          aria-label={t('searchModule', 'Search Module')}
+          aria-labelledby="Search Module"
           className={`${showSearchInput ? styles.activeSearchIconButton : styles.searchIconButton}`}
           enterDelayMs={500}
-          name="SearchAppIcon"
-          data-testid="searchAppIcon"
+          name="SearchModuleIcon"
+          data-testid="searchModuleIcon"
           onClick={handleGlobalAction}
         >
           {showSearchInput ? <Close size={20} /> : <Switcher size={20} />}
