@@ -67,7 +67,7 @@ const AppSearchBar = React.forwardRef<HTMLInputElement, AppSearchBarProps>(
             labelText=""
             onChange={(event) => handleChange(event.target.value)}
             onClear={onClear}
-            placeholder={t('searchForApp', 'Search for an application')}
+            placeholder={t('searchForModule', 'Search for module')}
             size={small ? 'sm' : 'lg'}
             value={searchTerm}
             ref={ref}

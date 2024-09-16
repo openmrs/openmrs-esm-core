@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AppSearchBar from '../app-search-bar/app-search-bar.component';
 import debounce from 'lodash-es/debounce';

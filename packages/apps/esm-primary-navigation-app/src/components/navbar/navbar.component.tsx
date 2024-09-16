@@ -22,6 +22,7 @@ import OfflineBanner from '../offline-banner/offline-banner.component';
 import UserMenuPanel from '../navbar-header-panels/user-menu-panel.component';
 import SideMenuPanel from '../navbar-header-panels/side-menu-panel.component';
 import styles from './navbar.scss';
+import AppSearchLaunch from '../app-menu/app-search-icon/app-search-icon.component';
 
 const HeaderItems: React.FC = () => {
   const { t } = useTranslation();
@@ -115,7 +116,7 @@ const HeaderItems: React.FC = () => {
           )}
         </HeaderGlobalBar>
         {!isDesktop(layout) && <SideMenuPanel hidePanel={hidePanel('sideMenu')} expanded={isActivePanel('sideMenu')} />}
-        {showAppMenu && <AppMenuPanel expanded={isActivePanel('appMenu')} hidePanel={hidePanel('appMenu')} />}
+        {showAppMenu && <AppSearchLaunch />}
         <NotificationsMenuPanel expanded={isActivePanel('notificationsMenu')} />
         {showUserMenu && <UserMenuPanel expanded={isActivePanel('userMenu')} hidePanel={hidePanel('userMenu')} />}
       </Header>
