@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: read
-    
+
     steps:
       - uses: actions/checkout@v4
-      - name: Push source file using transifex client
+      - name: 📥 Push source file using transifex client
         uses: transifex/cli-action@v2
         with:
           token: ${{ secrets.TRANSIFEX_TOKEN }}
