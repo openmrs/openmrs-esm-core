@@ -6841,7 +6841,7 @@ body might not vertical-scroll properly.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `modalName` | `string` | The name of the modal to show. |
-| `props` | `Record`<`string`, `any`\> | The optional props to provide to the modal. |
+| `props` | `ModalProps` | The optional props to provide to the modal. |
 | `onClose` | () => `void` | The optional callback to call when the modal is closed. |
 
 #### Returns
@@ -6858,7 +6858,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:207](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L207)
+[packages/framework/esm-styleguide/src/modals/index.tsx:216](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L216)
 
 ___
 

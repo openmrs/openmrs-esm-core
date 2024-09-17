@@ -3,8 +3,15 @@ import { mountRootParcel, type Parcel } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { getModalRegistration } from '@openmrs/esm-extensions';
 import { reportError } from '@openmrs/esm-error-handling';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 
 type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
+type ModalSize = 'xs' | 'sm' | 'md' | 'lg';
+
+interface ModalProps {
+  size?: ModalSize;
+  [key: string]: unknown;
+}
 
 interface ModalInstance {
   container?: HTMLElement;
@@ -12,7 +19,7 @@ interface ModalInstance {
   onClose: () => void;
   parcel?: Parcel | null;
   modalName: string;
-  props: Record<string, any>;
+  props: ModalProps;
 }
 
 interface ModalState {
@@ -31,20 +38,19 @@ function htmlToElement(html: string) {
   return template.content.firstChild as ChildNode;
 }
 
-function createModalFrame() {
+function createModalFrame({ size }: { size: ModalSize }) {
+  const closeTextTranslated = getCoreTranslation('close', 'Close');
   const closeButton = htmlToElement(
-    `
-  <button
-    class="cds--modal-close"
-    type="button">
-    <svg id="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1{fill:#000000;}.cls-2{fill:none;}</style></defs><title>close</title><polygon class="cls-1" points="24 9.4 22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4"/><rect class="cls-2" width="32" height="32"/></svg>
-  </button>`.trim(),
+    `<button class="cds--modal-close" aria-label="${closeTextTranslated}" title="${closeTextTranslated}" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" class="cds--modal-close__icon" xmlns="http://www.w3.org/2000/svg"><path d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"></path></svg></button>`.trim(),
   ) as HTMLButtonElement;
 
   closeButton.addEventListener('click', closeHighestInstance);
   const modalFrame = document.createElement('div');
-  modalFrame.className = 'cds--modal-container';
-
+  modalFrame.className = `cds--modal-container cds--modal-container--${size}`;
+  // we also need to pass the aria label along to the modal container
+  modalFrame.setAttribute('role', 'dialog');
+  modalFrame.setAttribute('tabindex', '-1');
+  modalFrame.setAttribute('aria-modal', 'true');
   modalFrame.append(closeButton);
 
   return modalFrame;
@@ -58,7 +64,7 @@ let parcelCount = 0;
 async function renderModalIntoDOM(
   domElement: HTMLElement,
   modalName: string,
-  additionalProps: Record<string, any> = {},
+  additionalProps: Record<string, unknown> = {},
 ): Promise<Parcel | null> {
   const modalRegistration = getModalRegistration(modalName);
   let parcel: Parcel | null = null;
@@ -105,7 +111,7 @@ function handleModalStateUpdate({ modalStack, modalContainer }: ModalState) {
     modalStack.forEach((instance, index) => {
       switch (instance.state) {
         case 'NEW': {
-          const modalFrame = createModalFrame();
+          const modalFrame = createModalFrame({ size: instance.props?.size ?? 'md' });
           instance.container = modalFrame;
           renderModalIntoDOM(modalFrame, instance.modalName, instance.props).then((parcel) => {
             instance.parcel = parcel;
@@ -204,7 +210,7 @@ export function setupModals(modalContainer: HTMLElement | null) {
  * @param onClose The optional callback to call when the modal is closed.
  * @returns The dispose function to force closing the modal dialog.
  */
-export function showModal(modalName: string, props: Record<string, any> = {}, onClose: () => void = () => {}) {
+export function showModal(modalName: string, props: ModalProps = {}, onClose: () => void = () => {}) {
   const close = () => {
     const state = modalStore.getState();
     const item = state.modalStack.find((m) => m.onClose === onClose);

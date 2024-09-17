@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Header, HeaderGlobalAction, HeaderGlobalBar, HeaderMenuButton, HeaderName } from '@carbon/react';
 import { DownToBottom, Maximize, Minimize } from '@carbon/react/icons';
 import { ComponentContext, ExtensionSlot, isDesktop, useBodyScrollLock, useLayoutType } from '@openmrs/esm-react-utils';
-import { getCoreTranslation, translateFrom } from '@openmrs/esm-translations';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from '../../icons';
 import { WorkspaceNotification } from '../notification/workspace-notification.component';
