@@ -3,6 +3,7 @@ import { mountRootParcel, type Parcel } from 'single-spa';
 import { createGlobalStore } from '@openmrs/esm-state';
 import { getModalRegistration } from '@openmrs/esm-extensions';
 import { reportError } from '@openmrs/esm-error-handling';
+import { getCoreTranslation } from '@openmrs/esm-translations';
 
 type ModalInstanceState = 'NEW' | 'MOUNTED' | 'TO_BE_DELETED';
 type ModalSize = 'xs' | 'sm' | 'md' | 'lg';
@@ -38,18 +39,14 @@ function htmlToElement(html: string) {
 }
 
 function createModalFrame({ size }: { size: ModalSize }) {
+  const closeTextTranslated = getCoreTranslation('close', 'Close');
   const closeButton = htmlToElement(
-    `<button class="cds--modal-close" title="Close" aria-label="Close" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" class="cds--modal-close__icon" xmlns="http://www.w3.org/2000/svg"><path d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"></path></svg></button>`.trim(),
+    `<button class="cds--modal-close" aria-label="${closeTextTranslated}" title="${closeTextTranslated}" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" class="cds--modal-close__icon" xmlns="http://www.w3.org/2000/svg"><path d="M17.4141 16L24 9.4141 22.5859 8 16 14.5859 9.4143 8 8 9.4141 14.5859 16 8 22.5859 9.4143 24 16 17.4141 22.5859 24 24 22.5859 17.4141 16z"></path></svg></button>`.trim(),
   ) as HTMLButtonElement;
 
   closeButton.addEventListener('click', closeHighestInstance);
   const modalFrame = document.createElement('div');
-  modalFrame.className = 'cds--modal-container';
-
-  if (size) {
-    modalFrame.classList.add(`cds--modal-container--${size as ModalSize}`);
-  }
-
+  modalFrame.className = `cds--modal-container cds--modal-container--${size}`;
   // we also need to pass the aria label along to the modal container
   modalFrame.setAttribute('role', 'dialog');
   modalFrame.setAttribute('tabindex', '-1');
