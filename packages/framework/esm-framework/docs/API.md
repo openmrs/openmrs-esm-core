@@ -607,7 +607,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:404](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L404)
+[packages/framework/esm-globals/src/types.ts:396](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L396)
 
 ___
 
@@ -620,7 +620,7 @@ Basically, this is the same as the app routes, with each routes definition keyed
 
 #### Defined in
 
-[packages/framework/esm-globals/src/types.ts:395](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L395)
+[packages/framework/esm-globals/src/types.ts:387](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-globals/src/types.ts#L387)
 
 ___
 
@@ -790,7 +790,7 @@ ___
 
 ### WorkspaceDefinition
 
-Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `cancelConfirmText?`: `string` ; `cancelMessage?`: `string` ; `cancelTitle?`: `string` ; `hasOwnSidebar?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `sidebarFamily?`: `string` ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"``  } & { `component`: `string`  } \| { `component?`: `never`  }
+Ƭ **WorkspaceDefinition**: { `canHide?`: `boolean` ; `canMaximize?`: `boolean` ; `hasOwnSidebar?`: `boolean` ; `name`: `string` ; `preferredWindowSize?`: [`WorkspaceWindowState`](API.md#workspacewindowstate) ; `sidebarFamily?`: `string` ; `title`: `string` ; `type`: `string` ; `width?`: ``"narrow"`` \| ``"wider"`` \| ``"extra-wide"``  } & { `component`: `string`  } \| { `component?`: `never`  }
 
 A definition of a workspace as extracted from an app's routes.json
 
@@ -1764,6 +1764,16 @@ ___
 #### Defined in
 
 [packages/framework/esm-styleguide/src/icons/icons.tsx:599](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/icons/icons.tsx#L599)
+
+___
+
+### RegistrationPictogram
+
+• `Const` **RegistrationPictogram**: `MemoExoticComponent`<`ForwardRefExoticComponent`<[`PictogramProps`](API.md#pictogramprops) & `RefAttributes`<`SVGSVGElement`\>\>\>
+
+#### Defined in
+
+[packages/framework/esm-styleguide/src/pictograms/pictograms.tsx:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/pictograms/pictograms.tsx#L66)
 
 ___
 
@@ -6831,7 +6841,7 @@ body might not vertical-scroll properly.
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `modalName` | `string` | The name of the modal to show. |
-| `props` | `Record`<`string`, `any`\> | The optional props to provide to the modal. |
+| `props` | `ModalProps` | The optional props to provide to the modal. |
 | `onClose` | () => `void` | The optional callback to call when the modal is closed. |
 
 #### Returns
@@ -6848,7 +6858,7 @@ The dispose function to force closing the modal dialog.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/modals/index.tsx:207](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L207)
+[packages/framework/esm-styleguide/src/modals/index.tsx:213](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/modals/index.tsx#L213)
 
 ___
 
@@ -7864,7 +7874,7 @@ Function to close an opened workspace
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:331](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L331)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:305](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L305)
 
 ___
 
@@ -7915,7 +7925,7 @@ prop named `workspaceTitle` will override the title of the workspace.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:188](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L188)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:178](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L178)
 
 ___
 
@@ -7941,7 +7951,7 @@ Use this function to navigate to a new page and launch a workspace on that page.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:289](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L289)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:263](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L263)
 
 ___
 
@@ -7955,4 +7965,4 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:444](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L444)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:419](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L419)

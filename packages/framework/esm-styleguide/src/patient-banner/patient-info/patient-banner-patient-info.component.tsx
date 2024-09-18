@@ -39,8 +39,10 @@ export function PatientBannerPatientInfo({ patient }: PatientBannerPatientInfoPr
         <span>{gender}</span>
         {patient.birthDate && (
           <>
-            &middot; <span>{age(patient.birthDate)}</span>
-            &middot; <span>{formatDate(parseDate(patient.birthDate), { mode: 'wide', time: false })}</span>
+            <span className={styles.separator}>&middot;</span>
+            <span>{age(patient.birthDate)}</span>
+            <span className={styles.separator}>&middot;</span>
+            <span>{formatDate(parseDate(patient.birthDate), { mode: 'wide', time: false })}</span>
           </>
         )}
       </div>
