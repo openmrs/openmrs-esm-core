@@ -73,7 +73,7 @@ describe('workspace system', () => {
       expect(prompt).toBeTruthy();
       expect(prompt.title).toMatch(/unsaved changes/i);
       expect(prompt.body).toMatch(
-        'There are unsaved changes in Allergies. Please save them before opening another workspace.',
+        'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
       );
       expect(prompt.confirmText).toMatch(/Open anyway/i);
       prompt.onConfirm();
@@ -149,7 +149,7 @@ describe('workspace system', () => {
       expect(prompt).toBeTruthy();
       expect(prompt.title).toMatch(/unsaved changes/i);
       expect(prompt.body).toMatch(
-        'There are unsaved changes in Allergies. Please save them before opening another workspace.',
+        'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
       );
       expect(prompt.confirmText).toMatch(/Open anyway/i);
       prompt.onConfirm();
@@ -244,7 +244,7 @@ describe('workspace system', () => {
       const prompt = store.getState().prompt as Prompt;
       expect(prompt).toBeTruthy();
       expect(prompt.body).toMatch(
-        'There are unsaved changes in Conditions. Please save them before opening another workspace.',
+        'There may be unsaved changes in Conditions. Please save them before opening another workspace.',
       );
       // Closing the conditions workspace because it cannot be hidden
       prompt.onConfirm();
@@ -254,7 +254,7 @@ describe('workspace system', () => {
       const prompt2 = store.getState().prompt as Prompt;
       expect(prompt2).toBeTruthy();
       expect(prompt2.body).toMatch(
-        'There are unsaved changes in Allergies. Please save them before opening another workspace.',
+        'There may be unsaved changes in Allergies. Please save them before opening another workspace.',
       );
       prompt2.onConfirm();
       expect(store.getState().openWorkspaces.length).toEqual(2);
@@ -431,7 +431,9 @@ describe('workspace system', () => {
     store.getState().openWorkspaces[0].closeWorkspace({ ignoreChanges: false });
     const prompt = store.getState().prompt as Prompt;
     expect(prompt.title).toMatch(/unsaved changes/i);
-    expect(prompt.body).toBe('You have unsaved changes in the opened workspace. Do you want to discard these changes?');
+    expect(prompt.body).toBe(
+      'You may have unsaved changes in the opened workspace. Do you want to discard these changes?',
+    );
     expect(prompt.confirmText).toBe('Discard');
     prompt.onConfirm();
     expect(store.getState().prompt).toBeNull();

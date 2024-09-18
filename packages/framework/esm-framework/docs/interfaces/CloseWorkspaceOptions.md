@@ -25,7 +25,7 @@ even if the `testFcn` passed to `promptBeforeClosing` returns `true`.
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L19)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L18)
 
 ## Workspace Methods
 
@@ -45,4 +45,4 @@ void
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:26](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L26)
+[packages/framework/esm-styleguide/src/workspaces/workspaces.ts:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/workspaces.ts#L25)
