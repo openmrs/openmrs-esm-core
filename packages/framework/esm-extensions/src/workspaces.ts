@@ -14,9 +14,6 @@ export interface WorkspaceRegistration {
   canHide: boolean;
   canMaximize: boolean;
   width: 'narrow' | 'wider' | 'extra-wide';
-  cancelTitle?: string;
-  cancelMessage?: string;
-  cancelConfirmText?: string;
   hasOwnSidebar: boolean;
   sidebarFamily: string;
   preferredWindowSize: WorkspaceWindowState;
@@ -40,9 +37,6 @@ export interface RegisterWorkspaceOptions {
   canHide?: boolean;
   canMaximize?: boolean;
   width?: 'narrow' | 'wider' | 'extra-wide';
-  cancelTitle?: string;
-  cancelMessage?: string;
-  cancelConfirmText?: string;
   hasOwnSidebar?: boolean;
   sidebarFamily?: string;
   preferredWindowSize?: WorkspaceWindowState;
@@ -66,9 +60,6 @@ export function registerWorkspace(workspace: RegisterWorkspaceOptions) {
         canHide: workspace.canHide ?? false,
         canMaximize: workspace.canMaximize ?? false,
         width: workspace.width ?? 'narrow',
-        cancelTitle: workspace.cancelTitle,
-        cancelMessage: workspace.cancelMessage,
-        cancelConfirmText: workspace.cancelConfirmText,
         hasOwnSidebar: workspace.hasOwnSidebar ?? false,
         sidebarFamily: workspace.sidebarFamily ?? 'default',
       },
@@ -106,9 +97,6 @@ export function getWorkspaceRegistration(name: string): WorkspaceRegistration {
         canHide: workspaceExtension.meta?.canHide ?? false,
         canMaximize: workspaceExtension.meta?.canMaximize ?? false,
         width: workspaceExtension.meta?.width ?? 'narrow',
-        cancelTitle: workspaceExtension.meta?.cancelTitle,
-        cancelMessage: workspaceExtension.meta?.cancelMessage,
-        cancelConfirmText: workspaceExtension.meta?.cancelConfirmText,
         sidebarFamily: 'default',
         hasOwnSidebar: false,
       };

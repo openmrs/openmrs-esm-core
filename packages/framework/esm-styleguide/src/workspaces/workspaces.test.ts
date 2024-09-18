@@ -83,57 +83,6 @@ describe('workspace system', () => {
       expect(openedWorkspace.name).not.toBe('Allergies');
     });
 
-    it('should show a modal with custom cancel messages if set', () => {
-      const store = getWorkspaceStore();
-      registerWorkspace({
-        name: 'allergies',
-        title: 'Allergies',
-        load: jest.fn(),
-        moduleName: '@openmrs/foo',
-        cancelTitle: 'Warning',
-        cancelMessage: 'Warning message.',
-        cancelConfirmText: 'Ignore warning',
-      });
-      launchWorkspace('allergies', { foo: true });
-      expect(store.getState().openWorkspaces.length).toEqual(1);
-      const allergies = store.getState().openWorkspaces?.[0];
-      allergies.promptBeforeClosing(() => true);
-      registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn(), moduleName: '@openmrs/foo' });
-      launchWorkspace('conditions', { foo: true });
-      const prompt = store.getState().prompt as Prompt;
-      expect(prompt).toBeTruthy();
-      expect(prompt.title).toMatch('Warning');
-      expect(prompt.body).toMatch('Warning message.');
-      expect(prompt.confirmText).toMatch('Ignore warning');
-    });
-
-    it('should show a modal with cancel messages set by setCancelTitle, setCancelMessage, and setCancelConfirmText', () => {
-      const store = getWorkspaceStore();
-      registerWorkspace({
-        name: 'allergies',
-        title: 'Allergies',
-        load: jest.fn(),
-        moduleName: '@openmrs/foo',
-        cancelTitle: 'Warning',
-        cancelMessage: 'Warning message.',
-        cancelConfirmText: 'Ignore warning',
-      });
-      launchWorkspace('allergies', { foo: true });
-      expect(store.getState().openWorkspaces.length).toEqual(1);
-      const allergies = store.getState().openWorkspaces?.[0];
-      allergies.promptBeforeClosing(() => true);
-      allergies.setCancelTitle('Different warning');
-      allergies.setCancelMessage('Different warning message.');
-      allergies.setCancelConfirmText('Different ignore warning');
-      registerWorkspace({ name: 'conditions', title: 'Conditions', load: jest.fn(), moduleName: '@openmrs/foo' });
-      launchWorkspace('conditions', { foo: true });
-      const prompt = store.getState().prompt as Prompt;
-      expect(prompt).toBeTruthy();
-      expect(prompt.title).toMatch('Different warning');
-      expect(prompt.body).toMatch('Different warning message.');
-      expect(prompt.confirmText).toMatch('Different ignore warning');
-    });
-
     it('should not show a modal and open the workspace when a workspace is already open and it can hide, both workspaces being of different type', () => {
       const store = getWorkspaceStore();
       registerWorkspace({

@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { WorkspaceRenderer } from './workspace-renderer.component';
-import { getWorkspaceFamilyStore } from '../workspaces';
+import { getWorkspaceFamilyStore, OpenWorkspace } from '../workspaces';
+import Parcel from 'single-spa-react/parcel';
 
 const mockFn = jest.fn();
 
@@ -18,9 +19,6 @@ describe('WorkspaceRenderer', () => {
     const mockedCloseWorkspaceWithSavedChanges = jest.fn();
     const mockedPromptBeforeClosing = jest.fn();
     const mockedSetTitle = jest.fn();
-    const mockedSetCancelTitle = jest.fn();
-    const mockedSetCancelMessage = jest.fn();
-    const mockedSetCancelConfirmText = jest.fn();
     const mockedLoadFn = jest.fn().mockImplementation(() => Promise.resolve({ default: 'file-content' }));
     getWorkspaceFamilyStore('test-sidebar-family')?.setState({
       // Testing that the workspace family state should be overrided by additionalProps
@@ -34,12 +32,10 @@ describe('WorkspaceRenderer', () => {
           closeWorkspace: mockedCloseWorkspace,
           name: 'workspace-name',
           load: mockedLoadFn,
+          title: 'Workspace title',
           closeWorkspaceWithSavedChanges: mockedCloseWorkspaceWithSavedChanges,
           promptBeforeClosing: mockedPromptBeforeClosing,
           setTitle: mockedSetTitle,
-          setCancelTitle: mockedSetCancelTitle,
-          setCancelMessage: mockedSetCancelMessage,
-          setCancelConfirmText: mockedSetCancelConfirmText,
           additionalProps: {
             foo: 'true',
           },
@@ -60,9 +56,6 @@ describe('WorkspaceRenderer', () => {
       closeWorkspaceWithSavedChanges: mockedCloseWorkspaceWithSavedChanges,
       promptBeforeClosing: mockedPromptBeforeClosing,
       setTitle: mockedSetTitle,
-      setCancelTitle: mockedSetCancelTitle,
-      setCancelMessage: mockedSetCancelMessage,
-      setCancelConfirmText: mockedSetCancelConfirmText,
       foo: 'true',
       bar: 'true',
       workspaceFamilyState: {},
