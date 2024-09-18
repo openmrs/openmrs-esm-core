@@ -19,6 +19,9 @@ describe('<ChangePasswordLink/>', () => {
     await user.click(changePasswordLink);
 
     expect(mockShowModal).toHaveBeenCalledTimes(1);
-    expect(mockShowModal).toHaveBeenCalledWith('change-password-modal');
+    expect(mockShowModal).toHaveBeenCalledWith('change-password-modal', {
+      size: 'sm',
+      closeModal: expect.any(Function),
+    });
   });
 });

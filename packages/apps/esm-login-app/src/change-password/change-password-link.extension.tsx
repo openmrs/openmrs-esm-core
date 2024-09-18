@@ -7,7 +7,12 @@ import styles from './change-password.scss';
 const ChangePasswordLink: React.FC = () => {
   const { t } = useTranslation();
 
-  const launchChangePasswordModal = useCallback(() => showModal('change-password-modal'), []);
+  const launchChangePasswordModal = useCallback(() => {
+    const dispose = showModal('change-password-modal', {
+      closeModal: () => dispose(),
+      size: 'sm',
+    });
+  }, []);  
 
   return (
     <SwitcherItem aria-label={t('changePassword', 'ChangePassword')} className={styles.panelItemContainer}>
