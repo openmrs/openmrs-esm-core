@@ -31,14 +31,10 @@ export function WorkspaceRenderer({ workspace, additionalPropsFromPage }: Worksp
   const props = useMemo(
     () =>
       workspace && {
-        title: workspace.title,
         closeWorkspace: workspace.closeWorkspace,
         closeWorkspaceWithSavedChanges: workspace.closeWorkspaceWithSavedChanges,
         promptBeforeClosing: workspace.promptBeforeClosing,
         setTitle: workspace.setTitle,
-        setCancelTitle: workspace.setCancelTitle,
-        setCancelMessage: workspace.setCancelMessage,
-        setCancelConfirmText: workspace.setCancelConfirmText,
         ...additionalPropsFromPage,
         ...workspaceFamilyState,
         ...workspace.additionalProps,
