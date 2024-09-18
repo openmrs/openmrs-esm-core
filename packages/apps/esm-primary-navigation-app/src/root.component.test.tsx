@@ -2,7 +2,7 @@ import React from 'react';
 import { of } from 'rxjs';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useConfig, useConnectedExtensions, useSession } from '@openmrs/esm-framework';
+import { useConfig, useAssignedExtensions, useSession } from '@openmrs/esm-framework';
 import { isDesktop } from './utils';
 import { mockUser } from '../__mocks__/mock-user';
 import { mockSession } from '../__mocks__/mock-session';
@@ -13,13 +13,13 @@ const mockSessionObservable = of({ data: mockSession });
 const mockIsDesktop = jest.mocked(isDesktop);
 
 const mockedUseConfig = useConfig as jest.Mock;
-const mockedUseConnectedExtensions = useConnectedExtensions as jest.Mock;
+const mockedUseAssignedExtensions = useAssignedExtensions as jest.Mock;
 const mockedUseSession = useSession as jest.Mock;
 
 mockedUseConfig.mockReturnValue({
   logo: { src: null, alt: null, name: 'Mock EMR', link: 'Mock EMR' },
 });
-mockedUseConnectedExtensions.mockReturnValue(['mock-extension']);
+mockedUseAssignedExtensions.mockReturnValue(['mock-extension']);
 mockedUseSession.mockReturnValue(mockSession);
 
 jest.mock('./root.resource', () => ({

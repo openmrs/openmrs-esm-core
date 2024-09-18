@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
+import { Help } from '@carbon/react/icons';
 import HelpMenuPopup from './help-popup.component';
 import styles from './help.styles.scss';
-import { Help } from '@carbon/react/icons';
 
 export default function HelpMenu() {
   const [helpMenuOpen, setHelpMenuOpen] = useState(false);
@@ -14,7 +14,7 @@ export default function HelpMenu() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         helpMenuButtonRef.current &&
         !helpMenuButtonRef.current.contains(event.target) &&
@@ -24,12 +24,14 @@ export default function HelpMenu() {
         setHelpMenuOpen(false);
       }
     };
-    document.addEventListener('click', handleClickOutside);
 
+    window.addEventListener(`mousedown`, handleClickOutside);
+    window.addEventListener(`touchstart`, handleClickOutside);
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      window.removeEventListener(`mousedown`, handleClickOutside);
+      window.removeEventListener(`touchstart`, handleClickOutside);
     };
-  }, [helpMenuOpen]);
+  }, []);
 
   return (
     <>

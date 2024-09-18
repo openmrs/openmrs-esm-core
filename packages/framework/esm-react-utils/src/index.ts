@@ -20,6 +20,7 @@ export * from './useDefineAppContext';
 export * from './useExtensionInternalStore';
 export * from './useExtensionSlot';
 export * from './useExtensionSlotMeta';
+export * from './useExtensionSlotStore';
 export * from './useExtensionStore';
 export * from './useFeatureFlag';
 export * from './useForceUpdate';

@@ -8,7 +8,7 @@ import {
   ExtensionSlot,
   ConfigurableLink,
   useSession,
-  useConnectedExtensions,
+  useAssignedExtensions,
   useConfig,
   CloseIcon,
   UserAvatarIcon,
@@ -28,9 +28,9 @@ const HeaderItems: React.FC = () => {
   const config = useConfig();
   const [activeHeaderPanel, setActiveHeaderPanel] = useState<string>(null);
   const layout = useLayoutType();
-  const navMenuItems = useConnectedExtensions('patient-chart-dashboard-slot').map((e) => e.id);
-  const appMenuItems = useConnectedExtensions('app-menu-slot');
-  const userMenuItems = useConnectedExtensions('user-panel-slot');
+  const navMenuItems = useAssignedExtensions('patient-chart-dashboard-slot').map((e) => e.id);
+  const appMenuItems = useAssignedExtensions('app-menu-slot');
+  const userMenuItems = useAssignedExtensions('user-panel-slot');
   const isActivePanel = useCallback((panelName: string) => activeHeaderPanel === panelName, [activeHeaderPanel]);
 
   const togglePanel = useCallback((panelName: string) => {

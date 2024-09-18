@@ -1,24 +1,24 @@
 /** @module @category Extension */
-import isEqual from 'lodash-es/isEqual';
+import { isEqual } from 'lodash-es';
 import type { ConfigExtensionStoreElement, ConfigObject, ExtensionSlotConfigObject } from '@openmrs/esm-config';
 import { configExtensionStore } from '@openmrs/esm-config';
 import { createGlobalStore, getGlobalStore } from '@openmrs/esm-state';
-import type { LifeCycles } from 'single-spa';
+import { type LifeCycles } from 'single-spa';
 
 export interface ExtensionMeta {
   [_: string]: any;
 }
 
 export interface ExtensionRegistration {
-  name: string;
+  readonly name: string;
   load(): Promise<{ default?: LifeCycles } & LifeCycles>;
-  moduleName: string;
-  meta: ExtensionMeta;
-  order?: number;
-  online?: boolean;
-  offline?: boolean;
-  privileges?: string | Array<string>;
-  featureFlag?: string;
+  readonly moduleName: string;
+  readonly meta: Readonly<ExtensionMeta>;
+  readonly order?: number;
+  readonly online?: boolean;
+  readonly offline?: boolean;
+  readonly privileges?: string | Array<string>;
+  readonly featureFlag?: string;
 }
 
 export interface ExtensionInfo extends ExtensionRegistration {
@@ -70,24 +70,25 @@ export interface ExtensionSlotState {
 }
 
 export interface AssignedExtension {
-  id: string;
-  name: string;
-  moduleName: string;
-  meta: ExtensionMeta;
+  readonly id: string;
+  readonly name: string;
+  readonly moduleName: string;
+  readonly meta: Readonly<ExtensionMeta>;
   /** The extension's config. Note that this will be `null` until the slot is mounted. */
-  config: ConfigObject | null;
-  online?: boolean | object;
-  offline?: boolean | object;
-  featureFlag?: string;
+  readonly config: Readonly<ConfigObject> | null;
+  readonly online?: boolean | object;
+  readonly offline?: boolean | object;
+  readonly featureFlag?: string;
 }
 
+/** @deprecated replaced with AssignedExtension */
 export interface ConnectedExtension {
-  id: string;
-  name: string;
-  moduleName: string;
-  meta: ExtensionMeta;
+  readonly id: string;
+  readonly name: string;
+  readonly moduleName: string;
+  readonly meta: Readonly<ExtensionMeta>;
   /** The extension's config. Note that this will be `null` until the slot is mounted. */
-  config: ConfigObject | null;
+  readonly config: Readonly<ConfigObject> | null;
 }
 
 const extensionInternalStore = createGlobalStore<ExtensionInternalStore>('extensionsInternal', {
@@ -148,6 +149,7 @@ function updateConfigExtensionStore(extensionState: ExtensionInternalStore) {
       });
     }
   }
+
   if (!isEqual(configExtensionStore.getState().mountedExtensions, configExtensionRecords)) {
     configExtensionStore.setState({
       mountedExtensions: configExtensionRecords,

@@ -112,7 +112,6 @@
 - [detach](API.md#detach)
 - [detachAll](API.md#detachall)
 - [getAssignedExtensions](API.md#getassignedextensions)
-- [getConnectedExtensions](API.md#getconnectedextensions)
 - [getExtensionNameFromId](API.md#getextensionnamefromid)
 - [getExtensionStore](API.md#getextensionstore)
 - [renderExtension](API.md#renderextension)
@@ -120,6 +119,7 @@
 - [useAssignedExtensions](API.md#useassignedextensions)
 - [useConnectedExtensions](API.md#useconnectedextensions)
 - [useExtensionSlotMeta](API.md#useextensionslotmeta)
+- [useExtensionSlotStore](API.md#useextensionslotstore)
 - [useExtensionStore](API.md#useextensionstore)
 - [useRenderableExtensions](API.md#userenderableextensions)
 
@@ -419,19 +419,9 @@ ___
 
 ## Extension Type Aliases
 
-### ExtensionProps
-
-Ƭ **ExtensionProps**: { `state?`: `Record`<`string`, `any`\> ; `wrap?`: (`slot`: `ReactNode`, `extension`: [`ExtensionData`](interfaces/ExtensionData.md)) => ``null`` \| `ReactElement`<`any`, `any`\>  } & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`slot`: `React.ReactNode`, `extension?`: [`ExtensionData`](interfaces/ExtensionData.md)) => `React.ReactNode`  }
-
-#### Defined in
-
-[packages/framework/esm-react-utils/src/Extension.tsx:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L8)
-
-___
-
 ### ExtensionSlotProps
 
-Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`ConnectedExtension`](interfaces/ConnectedExtension.md)) => `React.ReactNode`  }
+Ƭ **ExtensionSlotProps**: [`OldExtensionSlotBaseProps`](interfaces/OldExtensionSlotBaseProps.md) \| [`ExtensionSlotBaseProps`](interfaces/ExtensionSlotBaseProps.md) & `Omit`<`React.HTMLAttributes`<`HTMLDivElement`\>, ``"children"``\> & { `children?`: `React.ReactNode` \| (`extension`: [`AssignedExtension`](interfaces/AssignedExtension.md), `state?`: `Record`<`string`, `unknown`\>) => `React.ReactNode`  }
 
 #### Defined in
 
@@ -1085,7 +1075,7 @@ ___
 
 ### Extension
 
-• `Const` **Extension**: `React.FC`<[`ExtensionProps`](API.md#extensionprops)\>
+• `Const` **Extension**: `React.FC`<[`ExtensionProps`](interfaces/ExtensionProps.md)\>
 
 Represents the position in the DOM where each extension within
 an extension slot is rendered.
@@ -1097,7 +1087,7 @@ and *must* only be used once within that `<ExtensionSlot>`.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/Extension.tsx:25](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L25)
+[packages/framework/esm-react-utils/src/Extension.tsx:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/Extension.tsx#L20)
 
 ___
 
@@ -2154,7 +2144,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:168](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L168)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:169](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L169)
 
 ___
 
@@ -2306,7 +2296,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:65](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L65)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L66)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`Session`](interfaces/Session.md)\>
 
@@ -2323,7 +2313,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:66](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L66)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L67)
 
 ▸ **getCurrentUser**(`opts`): `Observable`<[`LoggedInUser`](interfaces/LoggedInUser.md)\>
 
@@ -2340,7 +2330,7 @@ leak and source of bugs.
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L67)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L68)
 
 ___
 
@@ -2374,7 +2364,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:192](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L192)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:193](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L193)
 
 ___
 
@@ -2388,7 +2378,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:210](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L210)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:211](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L211)
 
 ___
 
@@ -2402,7 +2392,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L92)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:93](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L93)
 
 ___
 
@@ -2632,7 +2622,7 @@ refetchCurrentUser()
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:154](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L154)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:155](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L155)
 
 ___
 
@@ -2695,7 +2685,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:219](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L219)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:220](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L220)
 
 ___
 
@@ -2715,7 +2705,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:115](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L115)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:116](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L116)
 
 ___
 
@@ -2737,7 +2727,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:232](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L232)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:233](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L233)
 
 ___
 
@@ -2996,7 +2986,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-user.ts:175](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L175)
+[packages/framework/esm-api/src/shared-api-objects/current-user.ts:176](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-user.ts#L176)
 
 ___
 
@@ -4248,7 +4238,7 @@ writing a module for a specific implementation.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:144](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L144)
+[packages/framework/esm-extensions/src/extensions.ts:212](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L212)
 
 ___
 
@@ -4271,7 +4261,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:177](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L177)
+[packages/framework/esm-extensions/src/extensions.ts:245](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L245)
 
 ___
 
@@ -4293,7 +4283,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:201](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L201)
+[packages/framework/esm-extensions/src/extensions.ts:269](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L269)
 
 ___
 
@@ -4317,34 +4307,7 @@ An array of extensions assigned to the named slot
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:353](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L353)
-
-___
-
-### getConnectedExtensions
-
-▸ **getConnectedExtensions**(`assignedExtensions`, `online?`, `enabledFeatureFlags?`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
-
-Filters a list of extensions according to whether they support the
-current connectivity status.
-
-#### Parameters
-
-| Name | Type | Default value | Description |
-| :------ | :------ | :------ | :------ |
-| `assignedExtensions` | [`AssignedExtension`](interfaces/AssignedExtension.md)[] | `undefined` | The list of extensions to filter. |
-| `online` | ``null`` \| `boolean` | `null` | Whether the app is currently online. If `null`, uses `navigator.onLine`. |
-| `enabledFeatureFlags` | ``null`` \| `string`[] | `null` | The names of all enabled feature flags. If `null`, looks    up the feature flags using the feature flags API. |
-
-#### Returns
-
-[`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
-
-A list of extensions that should be rendered
-
-#### Defined in
-
-[packages/framework/esm-extensions/src/extensions.ts:261](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L261)
+[packages/framework/esm-extensions/src/extensions.ts:396](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L396)
 
 ___
 
@@ -4376,7 +4339,7 @@ getExtensionNameFromId("baz")
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/extensions.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L92)
+[packages/framework/esm-extensions/src/extensions.ts:160](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/extensions.ts#L160)
 
 ___
 
@@ -4393,7 +4356,7 @@ state of the extension system.
 
 #### Defined in
 
-[packages/framework/esm-extensions/src/store.ts:124](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L124)
+[packages/framework/esm-extensions/src/store.ts:125](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-extensions/src/store.ts#L125)
 
 ___
 
@@ -4456,7 +4419,6 @@ ___
 ▸ **useAssignedExtensions**(`slotName`): [`AssignedExtension`](interfaces/AssignedExtension.md)[]
 
 Gets the assigned extensions for a given extension slot name.
-Does not consider if offline or online.
 
 #### Parameters
 
@@ -4470,7 +4432,7 @@ Does not consider if offline or online.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useAssignedExtensions.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L10)
+[packages/framework/esm-react-utils/src/useAssignedExtensions.ts:8](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useAssignedExtensions.ts#L8)
 
 ___
 
@@ -4479,7 +4441,8 @@ ___
 ▸ **useConnectedExtensions**(`slotName`): [`ConnectedExtension`](interfaces/ConnectedExtension.md)[]
 
 Gets the assigned extension for a given extension slot name.
-Considers if offline or online, and what feature flags are enabled.
+
+**`deprecated`** Use useAssignedExtensions instead
 
 #### Parameters
 
@@ -4493,7 +4456,7 @@ Considers if offline or online, and what feature flags are enabled.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:15](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L15)
+[packages/framework/esm-react-utils/src/useConnectedExtensions.ts:10](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useConnectedExtensions.ts#L10)
 
 ___
 
@@ -4525,6 +4488,26 @@ Extract meta data from all extension for a given extension slot.
 
 ___
 
+### useExtensionSlotStore
+
+▸ **useExtensionSlotStore**(`slot`): [`ExtensionSlotState`](interfaces/ExtensionSlotState.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `slot` | `string` |
+
+#### Returns
+
+[`ExtensionSlotState`](interfaces/ExtensionSlotState.md)
+
+#### Defined in
+
+[packages/framework/esm-react-utils/src/useExtensionSlotStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionSlotStore.ts#L5)
+
+___
+
 ### useExtensionStore
 
 ▸ **useExtensionStore**(): `T`
@@ -4535,7 +4518,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L6)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ▸ **useExtensionStore**(`actions`): `T` & [`BoundActions`](API.md#boundactions)
 
@@ -4551,7 +4534,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L6)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ▸ **useExtensionStore**(`actions?`): `T` & [`BoundActions`](API.md#boundactions)
 
@@ -4567,13 +4550,13 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useExtensionStore.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L6)
+[packages/framework/esm-react-utils/src/useExtensionStore.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useExtensionStore.ts#L5)
 
 ___
 
 ### useRenderableExtensions
 
-▸ **useRenderableExtensions**(`name`): `React.FC`<`Pick`<[`ExtensionProps`](API.md#extensionprops), ``"state"``\>\>[]
+▸ **useRenderableExtensions**(`name`): `React.FC`<`Pick`<[`ExtensionProps`](interfaces/ExtensionProps.md), ``"state"``\>\>[]
 
 This is an advanced hook for use-cases where its useful to use the extension system,
 but not the `ExtensionSlot` component's rendering of extensions. Use of this hook
@@ -4606,7 +4589,7 @@ return (
 
 #### Returns
 
-`React.FC`<`Pick`<[`ExtensionProps`](API.md#extensionprops), ``"state"``\>\>[]
+`React.FC`<`Pick`<[`ExtensionProps`](interfaces/ExtensionProps.md), ``"state"``\>\>[]
 
 #### Defined in
 
@@ -5787,7 +5770,7 @@ This component also provides everything needed for workspace notifications to be
 
 #### Defined in
 
-[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:68](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L68)
+[packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx:67](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-styleguide/src/workspaces/container/workspace-container.component.tsx#L67)
 
 ___
 
@@ -6288,7 +6271,7 @@ The newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:29](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L29)
+[packages/framework/esm-state/src/state.ts:30](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L30)
 
 ___
 
@@ -6347,7 +6330,7 @@ custom hook for a specific store.
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:60](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L60)
+[packages/framework/esm-react-utils/src/useStore.ts:63](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L63)
 
 ___
 
@@ -6379,11 +6362,43 @@ The found or newly created store.
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:91](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L91)
+[packages/framework/esm-state/src/state.ts:92](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L92)
 
 ___
 
 ### subscribeTo
+
+▸ **subscribeTo**<`T`, `U`\>(`store`, `handle`): () => `void`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | `T` |
+| `U` | `T` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `store` | `StoreApi`<`T`\> |
+| `handle` | (`state`: `T`) => `void` |
+
+#### Returns
+
+`fn`
+
+▸ (): `void`
+
+**`category`** Store
+
+##### Returns
+
+`void`
+
+#### Defined in
+
+[packages/framework/esm-state/src/state.ts:109](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L109)
 
 ▸ **subscribeTo**<`T`, `U`\>(`store`, `select`, `handle`): () => `void`
 
@@ -6408,13 +6423,15 @@ ___
 
 ▸ (): `void`
 
+**`category`** Store
+
 ##### Returns
 
 `void`
 
 #### Defined in
 
-[packages/framework/esm-state/src/state.ts:106](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L106)
+[packages/framework/esm-state/src/state.ts:110](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-state/src/state.ts#L110)
 
 ___
 
@@ -6441,7 +6458,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:33](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L33)
+[packages/framework/esm-react-utils/src/useStore.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L36)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`): `U`
 
@@ -6465,7 +6482,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:34](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L34)
+[packages/framework/esm-react-utils/src/useStore.ts:37](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L37)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `T` & [`BoundActions`](API.md#boundactions)
 
@@ -6490,7 +6507,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:35](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L35)
+[packages/framework/esm-react-utils/src/useStore.ts:38](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L38)
 
 ▸ **useStore**<`T`, `U`\>(`store`, `select`, `actions`): `U` & [`BoundActions`](API.md#boundactions)
 
@@ -6515,7 +6532,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:36](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L36)
+[packages/framework/esm-react-utils/src/useStore.ts:39](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L39)
 
 ___
 
@@ -6542,7 +6559,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/useStore.ts:52](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L52)
+[packages/framework/esm-react-utils/src/useStore.ts:55](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/useStore.ts#L55)
 
 ___
 

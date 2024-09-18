@@ -209,7 +209,7 @@ export function launchWorkspace<
   function updateStoreWithNewWorkspace(workspaceToBeAdded: OpenWorkspace, restOfTheWorkspaces?: Array<OpenWorkspace>) {
     store.setState((state) => {
       const openWorkspaces = [workspaceToBeAdded, ...(restOfTheWorkspaces ?? state.openWorkspaces)];
-      let workspaceWindowState = getUpdatedWorkspaceWindowState(openWorkspaces[0]);
+      let workspaceWindowState = getUpdatedWorkspaceWindowState(workspaceToBeAdded);
 
       return {
         ...state,
@@ -234,8 +234,8 @@ export function launchWorkspace<
   } else if (isWorkspaceAlreadyOpen) {
     const openWorkspace = openWorkspaces[workspaceIndexInOpenWorkspaces];
     // Only update the title if it hasn't been set by `setTitle`
-    if (openWorkspace.title == getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps)) {
-      openWorkspace.title = getWorkspaceTitle(openWorkspace, newWorkspace.additionalProps);
+    if (openWorkspace.title === getWorkspaceTitle(openWorkspace, openWorkspace.additionalProps)) {
+      openWorkspace.title = getWorkspaceTitle(newWorkspace, newWorkspace.additionalProps);
     }
     openWorkspace.additionalProps = newWorkspace.additionalProps;
     const restOfTheWorkspaces = openWorkspaces.filter((w) => w.name != name);
@@ -377,7 +377,7 @@ const initialState: WorkspaceStoreState = {
 export const workspaceStore = createGlobalStore('workspace', initialState);
 
 export function getWorkspaceStore() {
-  return getGlobalStore<WorkspaceStoreState>('workspace', initialState);
+  return workspaceStore;
 }
 
 export function updateWorkspaceWindowState(value: WorkspaceWindowState) {

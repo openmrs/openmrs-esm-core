@@ -1,7 +1,7 @@
 /** @module @category UI */
 import React, { useMemo } from 'react';
 import { OverflowMenuVertical } from '@carbon/react/icons';
-import { ExtensionSlot, useConnectedExtensions } from '@openmrs/esm-react-utils';
+import { ExtensionSlot, useExtensionSlot } from '@openmrs/esm-react-utils';
 import { getCoreTranslation } from '@openmrs/esm-translations';
 import { CustomOverflowMenu } from '../../custom-overflow-menu/custom-overflow-menu.component';
 import styles from './patient-banner-actions-menu.module.scss';
@@ -23,7 +23,7 @@ export function PatientBannerActionsMenu({
   isDeceased,
   additionalActionsSlotState,
 }: PatientBannerActionsMenuProps) {
-  const patientActions = useConnectedExtensions(actionsSlotName);
+  const { extensions: patientActions } = useExtensionSlot(actionsSlotName);
   const patientActionsSlotState = useMemo(
     () => ({ patientUuid, ...additionalActionsSlotState }),
     [patientUuid, additionalActionsSlotState],
