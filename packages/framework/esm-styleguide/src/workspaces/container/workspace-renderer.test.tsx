@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { WorkspaceRenderer } from './workspace-renderer.component';
-import { getWorkspaceFamilyStore } from '../workspaces';
+import { getWorkspaceFamilyStore, OpenWorkspace } from '../workspaces';
 
 const mockFn = jest.fn();
 
@@ -34,6 +34,7 @@ describe('WorkspaceRenderer', () => {
           closeWorkspace: mockedCloseWorkspace,
           name: 'workspace-name',
           load: mockedLoadFn,
+          title: 'Workspace title',
           closeWorkspaceWithSavedChanges: mockedCloseWorkspaceWithSavedChanges,
           promptBeforeClosing: mockedPromptBeforeClosing,
           setTitle: mockedSetTitle,
@@ -56,6 +57,7 @@ describe('WorkspaceRenderer', () => {
     expect(mockFn).toHaveBeenCalledWith({
       config: 'file-content',
       mountParcel: undefined,
+      title: 'Workspace title',
       closeWorkspace: mockedCloseWorkspace,
       closeWorkspaceWithSavedChanges: mockedCloseWorkspaceWithSavedChanges,
       promptBeforeClosing: mockedPromptBeforeClosing,
