@@ -17,8 +17,13 @@ const defaultSwrConfig = {
   errorRetryCount: 3,
   // default fetcher function
   fetcher: openmrsFetch,
-  // only revalidate once every 30 seconds
-  focusThrottleInterval: 30000,
+  // only revalidate once every 10 minutes
+  focusThrottleInterval: 600000,
+  // disable automatic revalidations by default
+  revalidateIfStale: false,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false,
+  refreshInterval: 0,
 };
 
 export interface ComponentDecoratorOptions {
