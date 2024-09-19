@@ -33,7 +33,6 @@
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
 - [useAttachments](API.md#useattachments)
-- [useCurrentPatient](API.md#usecurrentpatient)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [usePrimaryIdentifierCode](API.md#useprimaryidentifiercode)
@@ -272,7 +271,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L7)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L6)
 
 ___
 
@@ -299,7 +298,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L5)
+[packages/framework/esm-react-utils/src/usePatient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L6)
 
 ___
 
@@ -309,7 +308,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L21)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L20)
 
 ___
 
@@ -2203,14 +2202,15 @@ ___
 
 ### fetchPatientData
 
-▸ **fetchPatientData**(`patientUuid`, `fetchInit?`): `Promise`<`fhir.Patient` \| ``null``\>
+▸ **fetchPatientData**(`patientUuid`, `includeOfflinePatients?`, `fetchInit?`): `Promise`<`fhir.Patient` \| ``null``\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `patientUuid` | `string` |
-| `fetchInit?` | [`FetchConfig`](interfaces/FetchConfig.md) |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `patientUuid` | `string` | `undefined` |
+| `includeOfflinePatients` | `boolean` | `true` |
+| `fetchInit?` | [`FetchConfig`](interfaces/FetchConfig.md) | `undefined` |
 
 #### Returns
 
@@ -2218,7 +2218,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L27)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L22)
 
 ___
 
@@ -2832,27 +2832,6 @@ ___
 
 ___
 
-### useCurrentPatient
-
-▸ **useCurrentPatient**(`patientUuid`, `fetchInit?`): `SWRResponse`<``null`` \| `Patient`, `any`, `any`\>
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `patientUuid` | ``null`` \| `string` |
-| `fetchInit?` | [`FetchConfig`](interfaces/FetchConfig.md) |
-
-#### Returns
-
-`SWRResponse`<``null`` \| `Patient`, `any`, `any`\>
-
-#### Defined in
-
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L23)
-
-___
-
 ### useLocations
 
 ▸ **useLocations**(`tagUuidOrName?`): [`Location`](interfaces/Location.md)[]
@@ -2896,12 +2875,12 @@ a route listener is set up to update the patient whenever the route changes.
 | :------ | :------ |
 | `error` | `any` |
 | `isLoading` | `boolean` |
-| `patient` | `undefined` \| ``null`` \| `Patient` |
+| `patient` | `undefined` \| [`NullablePatient`](API.md#nullablepatient) |
 | `patientUuid` | ``null`` \| `string` |
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L18)
+[packages/framework/esm-react-utils/src/usePatient.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L19)
 
 ___
 

@@ -1,6 +1,7 @@
 /** @module @category API */
-import { useMemo } from 'react';
-import { useCurrentPatient } from '@openmrs/esm-api';
+import { useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
+import { fetchPatientData } from '@openmrs/esm-api';
 
 export type NullablePatient = fhir.Patient | null;
 
@@ -16,9 +17,27 @@ function getPatientUuidFromUrl() {
  * a route listener is set up to update the patient whenever the route changes.
  */
 export function usePatient(patientUuid?: string) {
-  const patientUuidFromUrl = getPatientUuidFromUrl();
-  const currentPatientUuid = patientUuid ?? patientUuidFromUrl;
-  const { data: patient, error, isValidating } = useCurrentPatient(currentPatientUuid ?? null, {});
+  const [currentPatientUuid, setCurrentPatientUuid] = useState(patientUuid ?? getPatientUuidFromUrl());
+
+  const {
+    data: patient,
+    error,
+    isValidating,
+  } = useSWR<NullablePatient>(currentPatientUuid ? ['patient', currentPatientUuid] : null, () =>
+    fetchPatientData(currentPatientUuid!, true, {}),
+  );
+
+  useEffect(() => {
+    const handleRouteUpdate = () => {
+      const newPatientUuid = getPatientUuidFromUrl();
+      if (newPatientUuid !== currentPatientUuid) {
+        setCurrentPatientUuid(newPatientUuid);
+      }
+    };
+
+    window.addEventListener('single-spa:routing-event', handleRouteUpdate);
+    return () => window.removeEventListener('single-spa:routing-event', handleRouteUpdate);
+  }, [currentPatientUuid]);
 
   return useMemo(
     () => ({

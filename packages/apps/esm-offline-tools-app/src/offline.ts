@@ -36,11 +36,9 @@ export function setupOffline() {
 export async function fetchPatientData(patientUuid: string, fetchInit?: FetchConfig): Promise<fhir.Patient | null> {
   try {
     const onlinePatient = await openmrsFetch<fhir.Patient>(`${fhirBaseUrl}/Patient/${patientUuid}`, fetchInit);
-    if (onlinePatient.ok) {
-      return onlinePatient.data;
-    }
+    return onlinePatient.data;
   } catch (err) {
-    // If online fetch fails, try offline
     console.error('Failed to fetch patient online:', err);
+    return null;
   }
 }
