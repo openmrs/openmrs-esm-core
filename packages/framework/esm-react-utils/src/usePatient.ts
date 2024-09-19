@@ -1,7 +1,7 @@
 /** @module @category API */
 import { useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
-import { fetchPatientData } from '@openmrs/esm-api';
+import { fetchCurrentPatient } from '@openmrs/esm-api';
 
 export type NullablePatient = fhir.Patient | null;
 
@@ -24,7 +24,7 @@ export function usePatient(patientUuid?: string) {
     error,
     isValidating,
   } = useSWR<NullablePatient>(currentPatientUuid ? ['patient', currentPatientUuid] : null, () =>
-    fetchPatientData(currentPatientUuid!, true, {}),
+    fetchCurrentPatient(currentPatientUuid!, {}),
   );
 
   useEffect(() => {

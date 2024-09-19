@@ -19,10 +19,10 @@ export interface OnlyThePatient extends CurrentPatientOptions {
 
 export type PatientUuid = string | null;
 
-export async function fetchPatientData(
-  patientUuid: string,
-  includeOfflinePatients: boolean = true,
+export async function fetchCurrentPatient(
+  patientUuid: PatientUuid,
   fetchInit?: FetchConfig,
+  includeOfflinePatients: boolean = true,
 ): Promise<fhir.Patient | null> {
   if (patientUuid) {
     let err: Error | null = null;

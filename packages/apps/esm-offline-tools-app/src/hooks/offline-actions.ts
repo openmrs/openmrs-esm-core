@@ -1,6 +1,6 @@
 import uniq from 'lodash-es/uniq';
 import useSWR from 'swr';
-import { fetchPatientData, getFullSynchronizationItems, type SyncItem } from '@openmrs/esm-framework/src/internal';
+import { fetchCurrentPatient, getFullSynchronizationItems, type SyncItem } from '@openmrs/esm-framework/src/internal';
 
 export function usePendingSyncItems() {
   return useSWR('offlineActions/pending', () => getFullSynchronizationItems());
@@ -11,6 +11,6 @@ export function useSyncItemPatients(syncItems?: Array<SyncItem>) {
 
   return useSWR(
     () => ['patients', ...patientUuids],
-    () => Promise.all(patientUuids.map((id) => fetchPatientData(id, true))),
+    () => Promise.all(patientUuids.map((id) => fetchCurrentPatient(id))),
   );
 }

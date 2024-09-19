@@ -1,9 +1,7 @@
 import {
-  type FetchConfig,
-  fhirBaseUrl,
+  fetchCurrentPatient,
   makeUrl,
   messageOmrsServiceWorker,
-  openmrsFetch,
   setupDynamicOfflineDataHandler,
 } from '@openmrs/esm-framework';
 import { cacheForOfflineHeaders } from './constants';
@@ -26,19 +24,9 @@ export function setupOffline() {
         pattern: `/ws/fhir2/R4/Patient/${identifier}`,
       });
 
-      await fetchPatientData(identifier, {
+      await fetchCurrentPatient(identifier, {
         headers: cacheForOfflineHeaders,
       });
     },
   });
-}
-
-export async function fetchPatientData(patientUuid: string, fetchInit?: FetchConfig): Promise<fhir.Patient | null> {
-  try {
-    const onlinePatient = await openmrsFetch<fhir.Patient>(`${fhirBaseUrl}/Patient/${patientUuid}`, fetchInit);
-    return onlinePatient.data;
-  } catch (err) {
-    console.error('Failed to fetch patient online:', err);
-    return null;
-  }
 }

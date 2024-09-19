@@ -1,6 +1,6 @@
 import { getSynchronizationItems } from '@openmrs/esm-offline';
 import { type FetchResponse } from '../types';
-import { fetchPatientData } from './current-patient';
+import { fetchCurrentPatient } from './current-patient';
 import { openmrsFetch } from '../openmrs-fetch';
 
 const mockOpenmrsFetch = jest.mocked(openmrsFetch);
@@ -22,7 +22,7 @@ describe('fetchPatientData', () => {
   });
 
   it('should return null when patientUuid is falsy', async () => {
-    const result = await fetchPatientData('', true);
+    const result = await fetchCurrentPatient('');
     expect(result).toBeNull();
   });
 
@@ -30,7 +30,7 @@ describe('fetchPatientData', () => {
     const mockPatient = { id: '123', name: [{ given: ['John'], family: 'Doe' }] };
     mockOpenmrsFetch.mockResolvedValue({ data: mockPatient, ok: true } as Partial<FetchResponse> as FetchResponse);
 
-    const result = await fetchPatientData('123', true);
+    const result = await fetchCurrentPatient('123');
     expect(result).toEqual(mockPatient);
   });
 
@@ -39,7 +39,7 @@ describe('fetchPatientData', () => {
     mockOpenmrsFetch.mockRejectedValue(new Error('Network error'));
     mockGetSynchronizationItems.mockResolvedValue([{ fhirPatient: mockOfflinePatient }]);
 
-    const result = await fetchPatientData('123', true);
+    const result = await fetchCurrentPatient('123');
     expect(result).toEqual(mockOfflinePatient);
   });
 
@@ -47,6 +47,6 @@ describe('fetchPatientData', () => {
     mockOpenmrsFetch.mockRejectedValue(new Error('Network error'));
     mockGetSynchronizationItems.mockResolvedValue([]);
 
-    await expect(fetchPatientData('123', true)).rejects.toThrow('Network error');
+    await expect(fetchCurrentPatient('123')).rejects.toThrow('Network error');
   });
 });

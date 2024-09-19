@@ -9,7 +9,7 @@
 - [clearCurrentUser](API.md#clearcurrentuser)
 - [createAttachment](API.md#createattachment)
 - [deleteAttachmentPermanently](API.md#deleteattachmentpermanently)
-- [fetchPatientData](API.md#fetchpatientdata)
+- [fetchCurrentPatient](API.md#fetchcurrentpatient)
 - [getAttachmentByUuid](API.md#getattachmentbyuuid)
 - [getAttachments](API.md#getattachments)
 - [getCurrentUser](API.md#getcurrentuser)
@@ -2200,17 +2200,17 @@ ___
 
 ___
 
-### fetchPatientData
+### fetchCurrentPatient
 
-▸ **fetchPatientData**(`patientUuid`, `includeOfflinePatients?`, `fetchInit?`): `Promise`<`fhir.Patient` \| ``null``\>
+▸ **fetchCurrentPatient**(`patientUuid`, `fetchInit?`, `includeOfflinePatients?`): `Promise`<`fhir.Patient` \| ``null``\>
 
 #### Parameters
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `patientUuid` | `string` | `undefined` |
-| `includeOfflinePatients` | `boolean` | `true` |
+| `patientUuid` | [`PatientUuid`](API.md#patientuuid) | `undefined` |
 | `fetchInit?` | [`FetchConfig`](interfaces/FetchConfig.md) | `undefined` |
+| `includeOfflinePatients` | `boolean` | `true` |
 
 #### Returns
 
