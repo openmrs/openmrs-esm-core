@@ -23,7 +23,7 @@ export function usePatient(patientUuid?: string) {
     data: patient,
     error,
     isValidating,
-  } = useSWR<NullablePatient>(currentPatientUuid ? ['patient', currentPatientUuid] : null, () =>
+  } = useSWR<NullablePatient, Error | null>(currentPatientUuid ? ['patient', currentPatientUuid] : null, () =>
     fetchCurrentPatient(currentPatientUuid!, {}),
   );
 

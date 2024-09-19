@@ -2873,7 +2873,7 @@ a route listener is set up to update the patient whenever the route changes.
 
 | Name | Type |
 | :------ | :------ |
-| `error` | `any` |
+| `error` | `undefined` \| ``null`` \| `Error` |
 | `isLoading` | `boolean` |
 | `patient` | `undefined` \| [`NullablePatient`](API.md#nullablepatient) |
 | `patientUuid` | ``null`` \| `string` |
