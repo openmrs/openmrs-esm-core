@@ -71,7 +71,7 @@ export const configSchema = {
   footer: {
     logos: {
       _type: Type.Array,
-      _items: {
+      _elements: {
         _type: Type.Object,
         _properties: {
           src: {

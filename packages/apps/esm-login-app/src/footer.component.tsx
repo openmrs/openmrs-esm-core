@@ -1,10 +1,11 @@
 import React from 'react';
 import { interpolateUrl, useConfig } from '@openmrs/esm-framework';
-import { type TFunction } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { type ConfigSchema } from './config-schema';
 import styles from './login/login.scss';
 
-const Footer: React.FC<{ t: TFunction }> = ({ t }) => {
+const Footer: React.FC = () => {
+  const {t} = useTranslation();
   const config = useConfig<ConfigSchema>();
   const logos = config.footer.logos || [];
 
@@ -17,7 +18,7 @@ const Footer: React.FC<{ t: TFunction }> = ({ t }) => {
         </svg>
         {logos.map((logo, index) => (
           <img
-            alt={logo.alt ? t(logo.alt) : t('poweredByLogo', 'Powered By Logo')}
+            alt={logo.alt ? t(logo.alt) : t('logo', 'Logo')}
             className={styles.poweredByLogo}
             src={interpolateUrl(logo.src)}
           />

@@ -1,4 +1,4 @@
-import { ConfigSchema } from '../src/config-schema';
+import { type ConfigSchema } from '../src/config-schema';
 
 export const mockConfig: ConfigSchema = {
   provider: {
@@ -22,8 +22,8 @@ export const mockConfig: ConfigSchema = {
   footer: {
     logos: [
       {
-        src: null,
-        alt: 'Logo',
+        src: '',
+        alt: '',
       }
     ],
   },

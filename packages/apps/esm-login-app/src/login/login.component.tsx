@@ -266,9 +266,7 @@ const Login: React.FC = () => {
             )}
           </form>
         </Tile>
-          <div>
-            <Footer t={t} />
-          </div>
+       <Footer/>
       </div>
     );
   }

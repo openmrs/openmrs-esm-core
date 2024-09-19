@@ -59,15 +59,17 @@
 }
 
 .logosContainer {
+  margin-right: 0;
   display: flex;
   justify-content: center;
+  flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1.5rem;
   gap: 2rem; 
 }
 
-@media (min-width: 768px) {
+:global(.omrs-breakpoint-gt-phone) {
   .footer {
     padding: 2rem;
   }
@@ -93,8 +95,6 @@
   padding: 2.5rem;
   position: relative;
   min-height: fit-content;
-  margin-top: 2.5rem;
-  margin-bottom: -3.0rem;
 }
 
 @media only screen and (min-width: 481px) {
@@ -148,7 +148,7 @@
 }
 
 .footer {
-  margin-top: 6.75rem;
+  margin-top: 3.0rem;
 }
 
 .loader {

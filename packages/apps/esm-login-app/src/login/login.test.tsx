@@ -35,7 +35,7 @@ describe('Login', () => {
     renderWithRouter(
       Login,
       {},
-      {
+      { 
         route: '/login',
       },
     );
