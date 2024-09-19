@@ -1,50 +1,101 @@
-import { fhirBaseUrl, openmrsFetch } from '../openmrs-fetch';
-import { fetchCurrentPatient } from './current-patient';
+import { renderHook, waitFor } from '@testing-library/react';
+import { getSynchronizationItems } from '@openmrs/esm-offline';
+import { type FetchResponse } from '../types';
+import { useCurrentPatient } from './current-patient';
+import { openmrsFetch } from '../openmrs-fetch';
 
-const mockOpenmrsFetch = openmrsFetch as jest.MockedFunction<any>;
+const mockOpenmrsFetch = jest.mocked(openmrsFetch);
+const mockGetSynchronizationItems = jest.mocked(getSynchronizationItems);
 
 jest.mock('../openmrs-fetch', () => ({
   openmrsFetch: jest.fn(),
+  fhirBaseUrl: '/ws/fhir2/R4',
 }));
 
-describe('current patient', () => {
+jest.mock('@openmrs/esm-offline', () => ({
+  getSynchronizationItems: jest.fn(),
+}));
+
+describe('useCurrentPatient', () => {
   beforeEach(() => {
-    mockOpenmrsFetch.mockReset();
+    jest.clearAllMocks();
   });
 
-  it('fetches the correct patient from a patient chart URL', () => {
-    mockOpenmrsFetch.mockReturnValueOnce(
-      Promise.resolve({
-        data: {},
-      }),
-    );
+  it('returns null when the patient is not found', async () => {
+    mockGetSynchronizationItems.mockResolvedValue([]);
+    mockOpenmrsFetch.mockResolvedValue({
+      data: null,
+      ok: false,
+      status: 404,
+    } as Partial<FetchResponse> as FetchResponse);
 
-    return fetchCurrentPatient('12', undefined, false).then(() => {
-      expect(mockOpenmrsFetch).toHaveBeenCalledWith(`${fhirBaseUrl}/Patient/12`, undefined);
+    const { result } = renderHook(() => useCurrentPatient('234'));
+
+    await waitFor(() => {
+      expect(result.current.data).toEqual(null);
     });
   });
 
-  it('fetches the correct patient from the patient home URL', () => {
-    mockOpenmrsFetch.mockReturnValueOnce(
-      Promise.resolve({
-        data: {},
-      }),
-    );
+  it('fetches and returns the current patient when online', async () => {
+    mockOpenmrsFetch.mockResolvedValue({
+      data: {
+        id: '123',
+        gender: 'male',
+        name: [
+          {
+            id: '456',
+            text: 'James K John',
+            family: 'John',
+            given: ['James', 'K'],
+          },
+        ],
+        birthDate: '2003',
+        deceasedBoolean: false,
+      },
+      ok: true,
+    } as Partial<FetchResponse> as FetchResponse);
 
-    return fetchCurrentPatient('34', undefined, false).then(() => {
-      expect(mockOpenmrsFetch).toHaveBeenCalledWith(`${fhirBaseUrl}/Patient/34`, undefined);
+    const { result } = renderHook(() => useCurrentPatient('123'));
+
+    await waitFor(() => {
+      expect(result.current.data).toEqual({
+        id: '123',
+        gender: 'male',
+        name: [
+          {
+            id: '456',
+            text: 'James K John',
+            family: 'John',
+            given: ['James', 'K'],
+          },
+        ],
+        birthDate: '2003',
+        deceasedBoolean: false,
+      });
+
+      expect(mockOpenmrsFetch).toHaveBeenCalledWith(`/ws/fhir2/R4/Patient/123`, undefined);
     });
   });
 
-  it('can handle dashes and alphanumeric characters in the patient uuid', () => {
-    mockOpenmrsFetch.mockReturnValueOnce(
-      Promise.resolve({
-        data: {},
-      }),
-    );
+  it('fetches offline patient data when online fetch fails', async () => {
+    mockOpenmrsFetch.mockRejectedValue(new Error('Network error'));
+    mockGetSynchronizationItems.mockResolvedValue([{ fhirPatient: { id: '567', name: [{ family: 'Doe' }] } }]);
 
-    return fetchCurrentPatient('34-asdsd-234243h342', undefined, false).then(() => {
-      expect(mockOpenmrsFetch).toHaveBeenCalledWith(`${fhirBaseUrl}/Patient/34-asdsd-234243h342`, undefined);
+    const { result } = renderHook(() => useCurrentPatient('567'));
+
+    await waitFor(() => {
+      expect(result.current.data).toEqual({ id: '567', name: [{ family: 'Doe' }] });
+    });
+  });
+
+  it('returns null when patient is not found online or offline', async () => {
+    mockOpenmrsFetch.mockRejectedValue(new Error('Network error'));
+    mockGetSynchronizationItems.mockResolvedValue([]);
+
+    const { result } = renderHook(() => useCurrentPatient('789'));
+
+    await waitFor(() => {
+      expect(result.current.data).toBeNull();
     });
   });
 });

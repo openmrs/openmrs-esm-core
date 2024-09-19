@@ -1,9 +1,5 @@
 import type { SyncItem } from '@openmrs/esm-framework/src/internal';
-import {
-  fetchCurrentPatient,
-  getFullSynchronizationItems,
-  getSynchronizationItems,
-} from '@openmrs/esm-framework/src/internal';
+import { fetchPatientData, getFullSynchronizationItems } from '@openmrs/esm-framework/src/internal';
 import uniq from 'lodash-es/uniq';
 import useSWR from 'swr';
 
@@ -16,6 +12,6 @@ export function useSyncItemPatients(syncItems?: Array<SyncItem>) {
 
   return useSWR(
     () => ['patients', ...patientUuids],
-    () => Promise.all(patientUuids.map((id) => fetchCurrentPatient(id))),
+    () => Promise.all(patientUuids.map((id) => fetchPatientData(id))),
   );
 }

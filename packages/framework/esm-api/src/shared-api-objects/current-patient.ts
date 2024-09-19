@@ -1,10 +1,11 @@
 /** @module @category API */
+import useSWR from 'swr';
 import { getSynchronizationItems } from '@openmrs/esm-offline';
-import type { FetchConfig } from '../openmrs-fetch';
-import { fhirBaseUrl, openmrsFetch } from '../openmrs-fetch';
-import type { FetchResponse } from '../types';
+import { fhirBaseUrl, openmrsFetch, type FetchConfig } from '../openmrs-fetch';
+import { type FetchResponse } from '../types';
 
 export type CurrentPatient = fhir.Patient | FetchResponse<fhir.Patient>;
+
 export interface CurrentPatientOptions {
   includeConfig?: boolean;
 }
@@ -19,34 +20,22 @@ export interface OnlyThePatient extends CurrentPatientOptions {
 
 export type PatientUuid = string | null;
 
-export async function fetchCurrentPatient(
-  patientUuid: PatientUuid,
-  fetchInit?: FetchConfig,
-  includeOfflinePatients: boolean = true,
-): Promise<fhir.Patient | null> {
-  if (patientUuid) {
-    let err: Error | null = null;
-    const [onlinePatient, offlinePatient] = await Promise.all([
-      openmrsFetch<fhir.Patient>(`${fhirBaseUrl}/Patient/${patientUuid}`, fetchInit).catch<FetchResponse<fhir.Patient>>(
-        (e) => (err = e),
-      ),
-      includeOfflinePatients ? getOfflineRegisteredPatientAsFhirPatient(patientUuid) : Promise.resolve(null),
-    ]);
+export function useCurrentPatient(patientUuid: string | null, fetchInit?: FetchConfig) {
+  return useSWR(patientUuid ? ['patient', patientUuid] : null, () => fetchPatientData(patientUuid!, fetchInit));
+}
 
+export async function fetchPatientData(patientUuid: string, fetchInit?: FetchConfig): Promise<fhir.Patient | null> {
+  try {
+    const onlinePatient = await openmrsFetch<fhir.Patient>(`${fhirBaseUrl}/Patient/${patientUuid}`, fetchInit);
     if (onlinePatient.ok) {
       return onlinePatient.data;
     }
-
-    if (offlinePatient) {
-      return offlinePatient;
-    }
-
-    if (err) {
-      throw err;
-    }
+  } catch (err) {
+    // If online fetch fails, try offline
+    console.error('Failed to fetch patient online:', err);
   }
 
-  return null;
+  return getOfflineRegisteredPatientAsFhirPatient(patientUuid);
 }
 
 async function getOfflineRegisteredPatientAsFhirPatient(patientUuid: string): Promise<fhir.Patient | null> {

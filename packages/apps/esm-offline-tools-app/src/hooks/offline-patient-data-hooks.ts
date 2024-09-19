@@ -1,4 +1,4 @@
-import { fetchCurrentPatient, getSynchronizationItems, getDynamicOfflineDataEntries } from '@openmrs/esm-framework';
+import { fetchPatientData, getSynchronizationItems, getDynamicOfflineDataEntries } from '@openmrs/esm-framework';
 import merge from 'lodash-es/merge';
 import { useMemo } from 'react';
 import type { SWRResponse } from 'swr';
@@ -15,7 +15,7 @@ function useSynchronizationItems<T>(type: string) {
 function useFhirPatients(ids: Array<string>) {
   const stableIds = useMemo(() => [...ids].sort(), [ids]);
   return useSWR(['fhirPatients', stableIds], () =>
-    Promise.all(stableIds.map((patientId) => fetchCurrentPatient(patientId, undefined, false))),
+    Promise.all(stableIds.map((patientId) => fetchPatientData(patientId, undefined))),
   );
 }
 
