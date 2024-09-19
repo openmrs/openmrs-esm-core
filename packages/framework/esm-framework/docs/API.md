@@ -9,7 +9,7 @@
 - [clearCurrentUser](API.md#clearcurrentuser)
 - [createAttachment](API.md#createattachment)
 - [deleteAttachmentPermanently](API.md#deleteattachmentpermanently)
-- [fetchCurrentPatient](API.md#fetchcurrentpatient)
+- [fetchPatientData](API.md#fetchpatientdata)
 - [getAttachmentByUuid](API.md#getattachmentbyuuid)
 - [getAttachments](API.md#getattachments)
 - [getCurrentUser](API.md#getcurrentuser)
@@ -33,6 +33,7 @@
 - [toVisitTypeObject](API.md#tovisittypeobject)
 - [updateVisit](API.md#updatevisit)
 - [useAttachments](API.md#useattachments)
+- [useCurrentPatient](API.md#usecurrentpatient)
 - [useLocations](API.md#uselocations)
 - [usePatient](API.md#usepatient)
 - [usePrimaryIdentifierCode](API.md#useprimaryidentifiercode)
@@ -298,7 +299,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L6)
+[packages/framework/esm-react-utils/src/usePatient.ts:5](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L5)
 
 ___
 
@@ -308,7 +309,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:20](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L20)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:21](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L21)
 
 ___
 
@@ -2200,17 +2201,16 @@ ___
 
 ___
 
-### fetchCurrentPatient
+### fetchPatientData
 
-▸ **fetchCurrentPatient**(`patientUuid`, `fetchInit?`, `includeOfflinePatients?`): `Promise`<`fhir.Patient` \| ``null``\>
+▸ **fetchPatientData**(`patientUuid`, `fetchInit?`): `Promise`<`fhir.Patient` \| ``null``\>
 
 #### Parameters
 
-| Name | Type | Default value |
-| :------ | :------ | :------ |
-| `patientUuid` | [`PatientUuid`](API.md#patientuuid) | `undefined` |
-| `fetchInit?` | [`FetchConfig`](interfaces/FetchConfig.md) | `undefined` |
-| `includeOfflinePatients` | `boolean` | `true` |
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | `string` |
+| `fetchInit?` | [`FetchConfig`](interfaces/FetchConfig.md) |
 
 #### Returns
 
@@ -2218,7 +2218,7 @@ ___
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:22](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L22)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:27](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L27)
 
 ___
 
@@ -2832,6 +2832,27 @@ ___
 
 ___
 
+### useCurrentPatient
+
+▸ **useCurrentPatient**(`patientUuid`, `fetchInit?`): `SWRResponse`<``null`` \| `Patient`, `any`, `any`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `patientUuid` | ``null`` \| `string` |
+| `fetchInit?` | [`FetchConfig`](interfaces/FetchConfig.md) |
+
+#### Returns
+
+`SWRResponse`<``null`` \| `Patient`, `any`, `any`\>
+
+#### Defined in
+
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:23](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L23)
+
+___
+
 ### useLocations
 
 ▸ **useLocations**(`tagUuidOrName?`): [`Location`](interfaces/Location.md)[]
@@ -2873,14 +2894,14 @@ a route listener is set up to update the patient whenever the route changes.
 
 | Name | Type |
 | :------ | :------ |
-| `error` | ``null`` \| `Error` |
+| `error` | `any` |
 | `isLoading` | `boolean` |
-| `patient` | [`NullablePatient`](API.md#nullablepatient) |
+| `patient` | `undefined` \| ``null`` \| `Patient` |
 | `patientUuid` | ``null`` \| `string` |
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L90)
+[packages/framework/esm-react-utils/src/usePatient.ts:18](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L18)
 
 ___
 
