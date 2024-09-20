@@ -19,8 +19,8 @@ const defaultSwrConfig = {
   fetcher: openmrsFetch,
   // only revalidate once every 10 minutes
   focusThrottleInterval: 600000,
+  revalidateIfStale: true,
   // disable automatic revalidations by default
-  revalidateIfStale: false,
   revalidateOnFocus: false,
   revalidateOnReconnect: false,
   refreshInterval: 0,
