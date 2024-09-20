@@ -271,7 +271,7 @@
 
 #### Defined in
 
-[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:7](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L7)
+[packages/framework/esm-api/src/shared-api-objects/current-patient.ts:6](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-api/src/shared-api-objects/current-patient.ts#L6)
 
 ___
 
@@ -2873,14 +2873,14 @@ a route listener is set up to update the patient whenever the route changes.
 
 | Name | Type |
 | :------ | :------ |
-| `error` | ``null`` \| `Error` |
+| `error` | `undefined` \| ``null`` \| `Error` |
 | `isLoading` | `boolean` |
-| `patient` | [`NullablePatient`](API.md#nullablepatient) |
+| `patient` | `undefined` \| [`NullablePatient`](API.md#nullablepatient) |
 | `patientUuid` | ``null`` \| `string` |
 
 #### Defined in
 
-[packages/framework/esm-react-utils/src/usePatient.ts:90](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L90)
+[packages/framework/esm-react-utils/src/usePatient.ts:19](https://github.com/openmrs/openmrs-esm-core/blob/main/packages/framework/esm-react-utils/src/usePatient.ts#L19)
 
 ___
 
