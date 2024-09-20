@@ -4,6 +4,9 @@ export interface StyleguideConfigObject {
   'Brand color #1': string;
   'Brand color #2': string;
   'Brand color #3': string;
+  excludePatientIdentifierCodeTypes: {
+    uuids: Array<string>;
+  };
   implementationName: string;
   patientPhotoConceptUuid: string;
   preferredCalendar: {
@@ -23,6 +26,16 @@ export const esmStyleGuideSchema = {
   'Brand color #3': {
     _default: '#007d79',
     _type: Type.String,
+  },
+  excludePatientIdentifierCodeTypes: {
+    uuids: {
+      _type: Type.Array,
+      _description: 'List of UUIDs of patient identifier types to exclude from rendering in the patient banner',
+      _default: [],
+      _elements: {
+        _type: Type.UUID,
+      },
+    },
   },
   implementationName: {
     _type: Type.String,
