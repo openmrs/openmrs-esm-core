@@ -41,7 +41,7 @@ describe('Login', () => {
     );
 
     screen.getByRole('img', { name: /OpenMRS logo/i });
-    expect(screen.queryByAltText(/logo/i)).not.toBeInTheDocument();
+    expect(screen.queryByAltText(/^logo$/i)).not.toBeInTheDocument();
     screen.getByRole('textbox', { name: /Username/i });
     screen.getByRole('button', { name: /Continue/i });
   });

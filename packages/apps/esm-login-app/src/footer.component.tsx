@@ -18,7 +18,8 @@ const Footer: React.FC = () => {
         </svg>
         {logos.map((logo, index) => (
           <img
-            alt={logo.alt ? t(logo.alt) : t('logo', 'Logo')}
+            key={index}
+            alt={logo.alt ? t(logo.alt) : t('footerlogo', 'Footer Logo')}
             className={styles.poweredByLogo}
             src={interpolateUrl(logo.src)}
           />
